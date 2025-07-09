@@ -33,8 +33,8 @@ export const useRoutes = (tripDate: Date) => {
   return useQuery({
     queryKey: ["schedule", "routes", tripDate.toISOString().split("T")[0]],
     queryFn: () => getRoutes(tripDate),
-    ...createInfrequentUpdateOptions(),
     enabled: !!tripDate,
+    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -67,11 +67,11 @@ export const useRoutesByTerminals = (params: {
       params.arrivingTerminalId,
     ],
     queryFn: () => getRoutesByTerminals(params),
-    ...createInfrequentUpdateOptions(),
     enabled:
       !!params.tripDate &&
       !!params.departingTerminalId &&
       !!params.arrivingTerminalId,
+    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -94,8 +94,8 @@ export const useRoutesWithDisruptions = (tripDate: Date) => {
       tripDate.toISOString().split("T")[0],
     ],
     queryFn: () => getRoutesWithDisruptions(tripDate),
-    ...createInfrequentUpdateOptions(),
     enabled: !!tripDate,
+    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -119,8 +119,8 @@ export const useRouteDetails = (tripDate: Date) => {
       tripDate.toISOString().split("T")[0],
     ],
     queryFn: () => getRouteDetails(tripDate),
-    ...createInfrequentUpdateOptions(),
     enabled: !!tripDate,
+    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -153,11 +153,11 @@ export const useRouteDetailsByTerminals = (params: {
       params.arrivingTerminalId,
     ],
     queryFn: () => getRouteDetailsByTerminals(params),
-    ...createInfrequentUpdateOptions(),
     enabled:
       !!params.tripDate &&
       !!params.departingTerminalId &&
       !!params.arrivingTerminalId,
+    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -182,8 +182,8 @@ export const useRouteDetailsByRoute = (tripDate: Date, routeId: number) => {
       routeId,
     ],
     queryFn: () => getRouteDetailsByRoute({ tripDate, routeId }),
-    ...createInfrequentUpdateOptions(),
     enabled: !!tripDate && !!routeId,
+    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -219,8 +219,8 @@ export const useScheduledRoutesBySeason = (seasonId: number) => {
   return useQuery({
     queryKey: ["schedule", "scheduledRoutes", "bySeason", seasonId],
     queryFn: () => getScheduledRoutesBySeason(seasonId),
-    ...createInfrequentUpdateOptions(),
     enabled: !!seasonId,
+    ...createInfrequentUpdateOptions(),
   });
 };
 

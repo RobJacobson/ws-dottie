@@ -140,58 +140,29 @@ const vessels = await client.wsf.vessels.getVesselLocationsByVesselId(vesselId: 
 // Vessel Verbose (Detailed information)
 const vessels = await client.wsf.vessels.getVesselVerbose();
 const vessels = await client.wsf.vessels.getVesselVerboseByVesselId(vesselId: number);
+```
 
-// Vessel Watch (Real-time status)
-const vessels = await client.wsf.vessels.getVesselWatch();
-const vessels = await client.wsf.vessels.getVesselWatchByVesselId(vesselId: number);
+#### Fares API
+```typescript
+// Fares (Comprehensive fare information)
+const fares = await client.wsf.fares.getFares();
+const fare = await client.wsf.fares.getFareById(fareId: number);
 
-// Vessel Watch Verbose (Detailed real-time status)
-const vessels = await client.wsf.vessels.getVesselWatchVerbose();
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByVesselId(vesselId: number);
+// Fare Categories
+const categories = await client.wsf.fares.getFareCategories();
+const category = await client.wsf.fares.getFareCategoryById(categoryId: number);
 
-// Vessel Watch Verbose by Route
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByRoute(routeId: number);
+// Fare Types
+const types = await client.wsf.fares.getFareTypes();
+const type = await client.wsf.fares.getFareTypeById(typeId: number);
 
-// Vessel Watch Verbose by Terminal
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByTerminal(terminalId: number);
+// Route Fares
+const routeFares = await client.wsf.fares.getRouteFares();
+const routeFare = await client.wsf.fares.getRouteFaresByRouteId(routeId: number);
 
-// Vessel Watch Verbose by Route and Terminal
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByRouteAndTerminal({
-  routeId: number;
-  terminalId: number;
-});
-
-// Vessel Watch Verbose by Route, Terminal, and Direction
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByRouteTerminalDirection({
-  routeId: number;
-  terminalId: number;
-  direction: number;
-});
-
-// Vessel Watch Verbose by Date
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByDate(date: Date);
-
-// Vessel Watch Verbose by Route and Date
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByRouteAndDate({
-  routeId: number;
-  date: Date;
-});
-
-// Vessel Watch Verbose by Date and Time
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByDateTime({
-  date: Date;
-  time: string; // Format: HH:MM
-});
-
-// Vessel Watch Verbose by Route, Terminal, Direction, Date, Time, and Vessel
-const vessels = await client.wsf.vessels.getVesselWatchVerboseByRouteTerminalDirectionDateTimeVessel({
-  routeId: number;
-  terminalId: number;
-  direction: number;
-  date: Date;
-  time: string; // Format: HH:MM
-  vesselId: number;
-});
+// Terminal Fares
+const terminalFares = await client.wsf.fares.getTerminalFares();
+const terminalFare = await client.wsf.fares.getTerminalFaresByTerminalId(terminalId: number);
 ```
 
 #### Terminals API

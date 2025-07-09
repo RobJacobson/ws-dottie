@@ -162,406 +162,62 @@ const createWsfVesselsApi = (config: Required<WsdotConfig>) => ({
       "vessels",
       buildUrl("/vesselverbose/{vesselId}", { vesselId })
     ),
+});
 
-  // Vessel Watch (Real-time Status)
-  getVesselWatch: () =>
-    fetchWsfArray<VesselWatch>(config, "vessels", "/vesselwatch"),
+/**
+ * WSF Fares API factory
+ */
+const createWsfFaresApi = (config: Required<WsdotConfig>) => ({
+  // Fares
+  getFares: () => fetchWsfArray<Fare>(config, "fares", "/fares"),
 
-  getVesselWatchByVesselId: (vesselId: number) =>
-    fetchWsfArray<VesselWatch>(
+  getFareById: (fareId: number) =>
+    fetchWsfArray<Fare>(
       config,
-      "vessels",
-      buildUrl("/vesselwatch/{vesselId}", { vesselId })
+      "fares",
+      buildUrl("/fares/{fareId}", { fareId })
     ),
 
-  // Vessel Watch Verbose (Detailed Real-time Status)
-  getVesselWatchVerbose: () =>
-    fetchWsfArray<VesselWatchVerbose>(config, "vessels", "/vesselwatchverbose"),
+  // Fare Categories
+  getFareCategories: () =>
+    fetchWsfArray<FareCategory>(config, "fares", "/farecategories"),
 
-  getVesselWatchVerboseByVesselId: (vesselId: number) =>
-    fetchWsfArray<VesselWatchVerbose>(
+  getFareCategoryById: (categoryId: number) =>
+    fetchWsfArray<FareCategory>(
       config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{vesselId}", { vesselId })
+      "fares",
+      buildUrl("/farecategories/{categoryId}", { categoryId })
     ),
 
-  // Vessel Watch Verbose by Route
-  getVesselWatchVerboseByRoute: (routeId: number) =>
-    fetchWsfArray<VesselWatchVerbose>(
+  // Fare Types
+  getFareTypes: () => fetchWsfArray<FareType>(config, "fares", "/faretypes"),
+
+  getFareTypeById: (typeId: number) =>
+    fetchWsfArray<FareType>(
       config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}", { routeId })
+      "fares",
+      buildUrl("/faretypes/{typeId}", { typeId })
     ),
 
-  // Vessel Watch Verbose by Terminal
-  getVesselWatchVerboseByTerminal: (terminalId: number) =>
-    fetchWsfArray<VesselWatchVerbose>(
+  // Route Fares
+  getRouteFares: () => fetchWsfArray<RouteFare>(config, "fares", "/routefares"),
+
+  getRouteFaresByRouteId: (routeId: number) =>
+    fetchWsfArray<RouteFare>(
       config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{terminalId}", { terminalId })
+      "fares",
+      buildUrl("/routefares/{routeId}", { routeId })
     ),
 
-  // Vessel Watch Verbose by Route and Terminal
-  getVesselWatchVerboseByRouteAndTerminal: (params: {
-    routeId: number;
-    terminalId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{terminalId}", params)
-    ),
+  // Terminal Fares
+  getTerminalFares: () =>
+    fetchWsfArray<TerminalFare>(config, "fares", "/terminalfares"),
 
-  // Vessel Watch Verbose by Route, Terminal, and Direction
-  getVesselWatchVerboseByRouteTerminalDirection: (params: {
-    routeId: number;
-    terminalId: number;
-    direction: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
+  getTerminalFaresByTerminalId: (terminalId: number) =>
+    fetchWsfArray<TerminalFare>(
       config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{terminalId}/{direction}", params)
-    ),
-
-  // Vessel Watch Verbose by Route and Direction
-  getVesselWatchVerboseByRouteAndDirection: (params: {
-    routeId: number;
-    direction: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{direction}", params)
-    ),
-
-  // Vessel Watch Verbose by Terminal and Direction
-  getVesselWatchVerboseByTerminalAndDirection: (params: {
-    terminalId: number;
-    direction: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{terminalId}/{direction}", params)
-    ),
-
-  // Vessel Watch Verbose by Direction
-  getVesselWatchVerboseByDirection: (direction: number) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{direction}", { direction })
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, Direction, and Date
-  getVesselWatchVerboseByRouteTerminalDirectionDate: (params: {
-    routeId: number;
-    terminalId: number;
-    direction: number;
-    date: Date;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{routeId}/{terminalId}/{direction}/{date}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, and Date
-  getVesselWatchVerboseByRouteTerminalDate: (params: {
-    routeId: number;
-    terminalId: number;
-    date: Date;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{terminalId}/{date}", params)
-    ),
-
-  // Vessel Watch Verbose by Route and Date
-  getVesselWatchVerboseByRouteAndDate: (params: {
-    routeId: number;
-    date: Date;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{date}", params)
-    ),
-
-  // Vessel Watch Verbose by Terminal and Date
-  getVesselWatchVerboseByTerminalAndDate: (params: {
-    terminalId: number;
-    date: Date;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{terminalId}/{date}", params)
-    ),
-
-  // Vessel Watch Verbose by Direction and Date
-  getVesselWatchVerboseByDirectionAndDate: (params: {
-    direction: number;
-    date: Date;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{direction}/{date}", params)
-    ),
-
-  // Vessel Watch Verbose by Date
-  getVesselWatchVerboseByDate: (date: Date) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{date}", { date })
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, Direction, Date, and Time
-  getVesselWatchVerboseByRouteTerminalDirectionDateTime: (params: {
-    routeId: number;
-    terminalId: number;
-    direction: number;
-    date: Date;
-    time: string; // Format: HH:MM
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{routeId}/{terminalId}/{direction}/{date}/{time}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, Date, and Time
-  getVesselWatchVerboseByRouteTerminalDateTime: (params: {
-    routeId: number;
-    terminalId: number;
-    date: Date;
-    time: string; // Format: HH:MM
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{routeId}/{terminalId}/{date}/{time}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Route, Date, and Time
-  getVesselWatchVerboseByRouteDateTime: (params: {
-    routeId: number;
-    date: Date;
-    time: string; // Format: HH:MM
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{date}/{time}", params)
-    ),
-
-  // Vessel Watch Verbose by Terminal, Date, and Time
-  getVesselWatchVerboseByTerminalDateTime: (params: {
-    terminalId: number;
-    date: Date;
-    time: string; // Format: HH:MM
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{terminalId}/{date}/{time}", params)
-    ),
-
-  // Vessel Watch Verbose by Direction, Date, and Time
-  getVesselWatchVerboseByDirectionDateTime: (params: {
-    direction: number;
-    date: Date;
-    time: string; // Format: HH:MM
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{direction}/{date}/{time}", params)
-    ),
-
-  // Vessel Watch Verbose by Date and Time
-  getVesselWatchVerboseByDateTime: (params: {
-    date: Date;
-    time: string; // Format: HH:MM
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{date}/{time}", params)
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, Direction, Date, Time, and Vessel
-  getVesselWatchVerboseByRouteTerminalDirectionDateTimeVessel: (params: {
-    routeId: number;
-    terminalId: number;
-    direction: number;
-    date: Date;
-    time: string; // Format: HH:MM
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{routeId}/{terminalId}/{direction}/{date}/{time}/{vesselId}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, Date, Time, and Vessel
-  getVesselWatchVerboseByRouteTerminalDateTimeVessel: (params: {
-    routeId: number;
-    terminalId: number;
-    date: Date;
-    time: string; // Format: HH:MM
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{routeId}/{terminalId}/{date}/{time}/{vesselId}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Route, Date, Time, and Vessel
-  getVesselWatchVerboseByRouteDateTimeVessel: (params: {
-    routeId: number;
-    date: Date;
-    time: string; // Format: HH:MM
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{date}/{time}/{vesselId}", params)
-    ),
-
-  // Vessel Watch Verbose by Terminal, Date, Time, and Vessel
-  getVesselWatchVerboseByTerminalDateTimeVessel: (params: {
-    terminalId: number;
-    date: Date;
-    time: string; // Format: HH:MM
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{terminalId}/{date}/{time}/{vesselId}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Direction, Date, Time, and Vessel
-  getVesselWatchVerboseByDirectionDateTimeVessel: (params: {
-    direction: number;
-    date: Date;
-    time: string; // Format: HH:MM
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{direction}/{date}/{time}/{vesselId}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Date, Time, and Vessel
-  getVesselWatchVerboseByDateTimeVessel: (params: {
-    date: Date;
-    time: string; // Format: HH:MM
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{date}/{time}/{vesselId}", params)
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, Direction, and Vessel
-  getVesselWatchVerboseByRouteTerminalDirectionVessel: (params: {
-    routeId: number;
-    terminalId: number;
-    direction: number;
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl(
-        "/vesselwatchverbose/{routeId}/{terminalId}/{direction}/{vesselId}",
-        params
-      )
-    ),
-
-  // Vessel Watch Verbose by Route, Terminal, and Vessel
-  getVesselWatchVerboseByRouteTerminalVessel: (params: {
-    routeId: number;
-    terminalId: number;
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{terminalId}/{vesselId}", params)
-    ),
-
-  // Vessel Watch Verbose by Route and Vessel
-  getVesselWatchVerboseByRouteAndVessel: (params: {
-    routeId: number;
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{routeId}/{vesselId}", params)
-    ),
-
-  // Vessel Watch Verbose by Terminal and Vessel
-  getVesselWatchVerboseByTerminalAndVessel: (params: {
-    terminalId: number;
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{terminalId}/{vesselId}", params)
-    ),
-
-  // Vessel Watch Verbose by Direction and Vessel
-  getVesselWatchVerboseByDirectionAndVessel: (params: {
-    direction: number;
-    vesselId: number;
-  }) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{direction}/{vesselId}", params)
-    ),
-
-  // Vessel Watch Verbose by Vessel
-  getVesselWatchVerboseByVessel: (vesselId: number) =>
-    fetchWsfArray<VesselWatchVerbose>(
-      config,
-      "vessels",
-      buildUrl("/vesselwatchverbose/{vesselId}", { vesselId })
+      "fares",
+      buildUrl("/terminalfares/{terminalId}", { terminalId })
     ),
 });
 
@@ -672,6 +328,7 @@ const createWsfTerminalsApi = (config: Required<WsdotConfig>) => ({
 const createWsfApi = (config: Required<WsdotConfig>) => ({
   schedule: createWsfScheduleApi(config),
   vessels: createWsfVesselsApi(config),
+  fares: createWsfFaresApi(config),
   terminals: createWsfTerminalsApi(config),
 });
 
@@ -756,8 +413,11 @@ export type WsdApi = ReturnType<typeof createWsdApi>;
 type Route = any;
 type VesselLocation = any;
 type VesselVerbose = any;
-type VesselWatch = any;
-type VesselWatchVerbose = any;
+type Fare = any;
+type FareCategory = any;
+type FareType = any;
+type RouteFare = any;
+type TerminalFare = any;
 type TerminalBasics = any;
 type TerminalSailingSpace = any;
 type TerminalVerbose = any;
