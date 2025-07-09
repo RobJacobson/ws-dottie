@@ -625,6 +625,45 @@ const createWsfTerminalsApi = (config: Required<WsdotConfig>) => ({
       "terminals",
       buildUrl("/terminalverbose/{terminalId}", { terminalId })
     ),
+
+  // Terminal Locations
+  getTerminalLocations: () =>
+    fetchWsfArray<TerminalLocation>(config, "terminals", "/terminallocations"),
+
+  getTerminalLocationsByTerminalId: (terminalId: number) =>
+    fetchWsfArray<TerminalLocation>(
+      config,
+      "terminals",
+      buildUrl("/terminallocations/{terminalId}", { terminalId })
+    ),
+
+  // Terminal Wait Times
+  getTerminalWaitTimes: () =>
+    fetchWsfArray<TerminalWaitTime>(config, "terminals", "/terminalwaittimes"),
+
+  getTerminalWaitTimesByRoute: (routeId: number) =>
+    fetchWsfArray<TerminalWaitTime>(
+      config,
+      "terminals",
+      buildUrl("/terminalwaittimes/{routeId}", { routeId })
+    ),
+
+  getTerminalWaitTimesByTerminal: (terminalId: number) =>
+    fetchWsfArray<TerminalWaitTime>(
+      config,
+      "terminals",
+      buildUrl("/terminalwaittimes/{terminalId}", { terminalId })
+    ),
+
+  getTerminalWaitTimesByRouteAndTerminal: (params: {
+    routeId: number;
+    terminalId: number;
+  }) =>
+    fetchWsfArray<TerminalWaitTime>(
+      config,
+      "terminals",
+      buildUrl("/terminalwaittimes/{routeId}/{terminalId}", params)
+    ),
 });
 
 /**
@@ -722,6 +761,8 @@ type VesselWatchVerbose = any;
 type TerminalBasics = any;
 type TerminalSailingSpace = any;
 type TerminalVerbose = any;
+type TerminalLocation = any;
+type TerminalWaitTime = any;
 type HighwayCamera = any;
 type TrafficFlow = any;
 type TravelTime = any;
