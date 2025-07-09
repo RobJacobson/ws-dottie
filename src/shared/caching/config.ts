@@ -25,8 +25,6 @@ export const FREQUENT_UPDATE_CONFIG = {
   retry: 3,
   retryDelay: (attemptIndex: number) =>
     Math.min(1000 * 2 ** attemptIndex, 30000),
-  // Queries are enabled by default
-  enabled: true,
 } as const;
 
 /**
@@ -49,8 +47,6 @@ export const INFREQUENT_UPDATE_CONFIG = {
   retry: 5,
   retryDelay: (attemptIndex: number) =>
     Math.min(1000 * 2 ** attemptIndex, 30000),
-  // Queries are enabled by default
-  enabled: true,
 } as const;
 
 /**
@@ -70,8 +66,6 @@ export const CACHE_FLUSH_CONFIG = {
   retry: 5,
   retryDelay: (attemptIndex: number) =>
     Math.min(1000 * 2 ** attemptIndex, 30000),
-  // Queries are enabled by default
-  enabled: true,
 } as const;
 
 /**

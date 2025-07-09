@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
+
 import type { Route } from "../types";
 import {
   getActiveSeasons,
@@ -32,8 +33,8 @@ export const useRoutes = (tripDate: Date) => {
   return useQuery({
     queryKey: ["schedule", "routes", tripDate.toISOString().split("T")[0]],
     queryFn: () => getRoutes(tripDate),
-    enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
+    enabled: !!tripDate,
   });
 };
 
@@ -66,11 +67,11 @@ export const useRoutesByTerminals = (params: {
       params.arrivingTerminalId,
     ],
     queryFn: () => getRoutesByTerminals(params),
+    ...createInfrequentUpdateOptions(),
     enabled:
       !!params.tripDate &&
       !!params.departingTerminalId &&
       !!params.arrivingTerminalId,
-    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -93,8 +94,8 @@ export const useRoutesWithDisruptions = (tripDate: Date) => {
       tripDate.toISOString().split("T")[0],
     ],
     queryFn: () => getRoutesWithDisruptions(tripDate),
-    enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
+    enabled: !!tripDate,
   });
 };
 
@@ -118,8 +119,8 @@ export const useRouteDetails = (tripDate: Date) => {
       tripDate.toISOString().split("T")[0],
     ],
     queryFn: () => getRouteDetails(tripDate),
-    enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
+    enabled: !!tripDate,
   });
 };
 
@@ -152,11 +153,11 @@ export const useRouteDetailsByTerminals = (params: {
       params.arrivingTerminalId,
     ],
     queryFn: () => getRouteDetailsByTerminals(params),
+    ...createInfrequentUpdateOptions(),
     enabled:
       !!params.tripDate &&
       !!params.departingTerminalId &&
       !!params.arrivingTerminalId,
-    ...createInfrequentUpdateOptions(),
   });
 };
 
@@ -181,8 +182,8 @@ export const useRouteDetailsByRoute = (tripDate: Date, routeId: number) => {
       routeId,
     ],
     queryFn: () => getRouteDetailsByRoute({ tripDate, routeId }),
-    enabled: !!tripDate && !!routeId,
     ...createInfrequentUpdateOptions(),
+    enabled: !!tripDate && !!routeId,
   });
 };
 
@@ -218,8 +219,8 @@ export const useScheduledRoutesBySeason = (seasonId: number) => {
   return useQuery({
     queryKey: ["schedule", "scheduledRoutes", "bySeason", seasonId],
     queryFn: () => getScheduledRoutesBySeason(seasonId),
-    enabled: !!seasonId,
     ...createInfrequentUpdateOptions(),
+    enabled: !!seasonId,
   });
 };
 

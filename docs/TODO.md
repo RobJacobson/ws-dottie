@@ -7,10 +7,19 @@
 - [ ] Define error types and error response structures
 
 ## React Query Integration
-- [ ] Let React Query handle loading states
-- [ ] Let React Query handle request deduplication
-- [ ] Document React Query integration patterns
-- [ ] Provide example hooks that work with React Query
+- [x] Let React Query handle loading states
+- [x] Let React Query handle request deduplication
+- [x] Document React Query integration patterns
+- [x] Provide example hooks that work with React Query
+- [x] **Pattern**: Set `enabled` before spread operator when conditional logic is needed
+  ```typescript
+  useQuery({
+    queryKey: ['key'],
+    queryFn: () => fetchData(),
+    enabled: !!someCondition, // conditional logic
+    ...createInfrequentUpdateOptions(), // spread at end
+  });
+  ```
 
 ## Implementation Tasks
 - [x] Create functional URL builder with arrow functions
@@ -21,6 +30,7 @@
 - [x] Implement all WSF Vessels APIs
 - [ ] Write comprehensive tests
 - [x] Create documentation and examples
+- [ ] Create working examples that match actual library exports and types
 - [ ] Set up NPM publishing pipeline
 
 ## Future Considerations
