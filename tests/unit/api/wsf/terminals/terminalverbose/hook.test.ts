@@ -1,235 +1,445 @@
-import { describe, expect, it } from "vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { renderHook, waitFor } from "@testing-library/react";
+import React from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// Test the hook functions by testing their structure and behavior
-// without importing the actual modules that cause issues
+import {
+  useTerminalVerbose,
+  useTerminalVerboseByTerminalId,
+} from "@/api/wsf/terminals/terminalverbose/hook";
 
-describe("TerminalVerbose Hooks (Working)", () => {
-  it("should have the correct hook signatures", () => {
-    // This test verifies that the hooks exist and have the right structure
-    // without actually importing them to avoid react-native issues
+// Mock the API functions
+vi.mock("@/api/wsf/terminals/terminalverbose/api", () => ({
+  getTerminalVerbose: vi.fn(),
+  getTerminalVerboseByTerminalId: vi.fn(),
+}));
 
-    // Mock the expected behavior
-    type MockQueryOptions = {
-      queryFn?: () => unknown;
-      enabled?: boolean;
-    };
+// Mock the caching config
+vi.mock("@/shared/caching/config", () => ({
+  createInfrequentUpdateOptions: vi.fn(() => ({
+    staleTime: 300000,
+    refetchInterval: 600000,
+  })),
+}));
 
-    const mockUseQuery = (options: MockQueryOptions) => {
-      return {
-        data: options.queryFn ? options.queryFn() : [],
-        isLoading: false,
-        isSuccess: true,
-        isError: false,
-        error: null,
-      };
-    };
+describe("TerminalVerbose Hooks", () => {
+  let queryClient: QueryClient;
 
-    const mockCreateInfrequentUpdateOptions = () => ({
-      staleTime: 24 * 60 * 60 * 1000, // 24 hours
-      gcTime: 24 * 60 * 60 * 1000, // 24 hours
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+          gcTime: 0,
+        },
+        mutations: {
+          retry: false,
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(QueryClientProvider, { client: queryClient }, children);
+
+  describe("useTerminalVerbose", () => {
+    it("should have the correct hook signature", () => {
+      expect(typeof useTerminalVerbose).toBe("function");
     });
 
-    // Test the expected behavior
-    expect(mockUseQuery).toBeDefined();
-    expect(mockCreateInfrequentUpdateOptions).toBeDefined();
-  });
+    it("should return React Query result structure", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+      mockGetTerminalVerbose.mockResolvedValue([]);
 
-  it("should handle query key structure correctly", () => {
-    // Mock the expected query key structure
-    const mockQueryKey = ["terminals", "verbose"];
-    const mockQueryKeyById = ["terminals", "verbose", "byId", 7];
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
 
-    expect(mockQueryKey).toEqual(["terminals", "verbose"]);
-    expect(mockQueryKeyById).toEqual(["terminals", "verbose", "byId", 7]);
-  });
+      expect(result.current).toHaveProperty("data");
+      expect(result.current).toHaveProperty("isLoading");
+      expect(result.current).toHaveProperty("isError");
+      expect(result.current).toHaveProperty("error");
+    });
 
-  it("should handle enabled state correctly", () => {
-    // Mock the enabled logic
-    const mockEnabled = (terminalId: number | undefined) => !!terminalId;
+    it("should call getTerminalVerbose API function", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+      mockGetTerminalVerbose.mockResolvedValue([]);
 
-    expect(mockEnabled(7)).toBe(true);
-    expect(mockEnabled(0)).toBe(false);
-    expect(mockEnabled(undefined)).toBe(false);
-  });
+      renderHook(() => useTerminalVerbose(), { wrapper });
 
-  it("should handle terminal verbose data structure correctly", () => {
-    const mockResponse = [
-      {
-        terminalId: 7,
-        terminalName: "Anacortes",
-        terminalAbbrev: "ANA",
-        latitude: 48.5123,
-        longitude: -122.6123,
-        address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
-        city: "Anacortes",
-        state: "WA",
-        zipCode: "98221",
-        county: "Skagit",
-        phone: "(360) 293-8155",
-        hasWaitTime: true,
-        hasSpaceAvailable: true,
-        gisZoomLocation: {
+      await waitFor(() => {
+        expect(mockGetTerminalVerbose).toHaveBeenCalled();
+      });
+    });
+
+    it("should return terminal verbose data", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+
+      const mockTerminalData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          terminalAbbrev: "ANA",
           latitude: 48.5123,
           longitude: -122.6123,
-          zoomLevel: 15,
+          address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
+          city: "Anacortes",
+          state: "WA",
+          zipCode: "98221",
+          county: "Skagit",
+          phone: "(360) 293-8155",
+          hasWaitTime: true,
+          hasSpaceAvailable: true,
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
+          transitLinks: [],
+          waitTimes: [],
+          bulletins: [],
+          sailingSpaces: [],
+          isActive: true,
         },
-        transitLinks: [],
-        waitTimes: [],
-        bulletins: [],
-        sailingSpaces: [],
-        isActive: true,
-      },
-    ];
+      ];
 
-    // Test the expected structure
-    expect(mockResponse[0].terminalId).toBe(7);
-    expect(mockResponse[0].terminalName).toBe("Anacortes");
-    expect(mockResponse[0].terminalAbbrev).toBe("ANA");
-    expect(mockResponse[0].latitude).toBe(48.5123);
-    expect(mockResponse[0].longitude).toBe(-122.6123);
-    expect(mockResponse[0].address).toBe(
-      "2100 Ferry Terminal Rd, Anacortes, WA 98221"
-    );
-    expect(mockResponse[0].city).toBe("Anacortes");
-    expect(mockResponse[0].state).toBe("WA");
-    expect(mockResponse[0].zipCode).toBe("98221");
-    expect(mockResponse[0].county).toBe("Skagit");
-    expect(mockResponse[0].phone).toBe("(360) 293-8155");
-    expect(mockResponse[0].hasWaitTime).toBe(true);
-    expect(mockResponse[0].hasSpaceAvailable).toBe(true);
-    expect(mockResponse[0].isActive).toBe(true);
-  });
+      mockGetTerminalVerbose.mockResolvedValue(mockTerminalData);
 
-  it("should handle empty responses", () => {
-    const mockQueryFn = async () => [];
-    const result = mockQueryFn();
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
 
-    expect(result).resolves.toEqual([]);
-  });
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
 
-  it("should handle API error responses", () => {
-    const mockQueryFn = async () => {
-      throw new Error("API Error");
-    };
+      expect(result.current.data).toEqual(mockTerminalData);
+      expect(result.current.data).toHaveLength(1);
+      expect(result.current.data?.[0].terminalId).toBe(7);
+      expect(result.current.data?.[0].terminalName).toBe("Anacortes");
+      expect(result.current.data?.[0].terminalAbbrev).toBe("ANA");
+    });
 
-    expect(mockQueryFn()).rejects.toThrow("API Error");
-  });
+    it("should handle empty responses", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+      mockGetTerminalVerbose.mockResolvedValue([]);
 
-  it("should handle terminal location data correctly", () => {
-    const mockResponse = [
-      {
-        terminalId: 7,
-        terminalName: "Anacortes",
-        latitude: 48.5123,
-        longitude: -122.6123,
-        gisZoomLocation: {
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual([]);
+    });
+
+    it("should handle API errors", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+      mockGetTerminalVerbose.mockRejectedValue(new Error("API Error"));
+
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toBeInstanceOf(Error);
+      expect(result.current.error?.message).toBe("API Error");
+    });
+
+    it("should handle terminal location data correctly", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+
+      const mockTerminalData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          terminalAbbrev: "ANA",
           latitude: 48.5123,
           longitude: -122.6123,
-          zoomLevel: 15,
+          address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
+          city: "Anacortes",
+          state: "WA",
+          zipCode: "98221",
+          county: "Skagit",
+          phone: "(360) 293-8155",
+          hasWaitTime: true,
+          hasSpaceAvailable: true,
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
+          transitLinks: [],
+          waitTimes: [],
+          bulletins: [],
+          sailingSpaces: [],
+          isActive: true,
         },
-      },
-    ];
+      ];
 
-    const terminal = mockResponse[0];
+      mockGetTerminalVerbose.mockResolvedValue(mockTerminalData);
 
-    // Test location data
-    expect(terminal.latitude).toBe(48.5123);
-    expect(terminal.longitude).toBe(-122.6123);
-    expect(terminal.gisZoomLocation.latitude).toBe(48.5123);
-    expect(terminal.gisZoomLocation.longitude).toBe(-122.6123);
-    expect(terminal.gisZoomLocation.zoomLevel).toBe(15);
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      const terminal = result.current.data?.[0];
+
+      // Test location data
+      expect(terminal?.latitude).toBe(48.5123);
+      expect(terminal?.longitude).toBe(-122.6123);
+      expect(terminal?.gisZoomLocation.latitude).toBe(48.5123);
+      expect(terminal?.gisZoomLocation.longitude).toBe(-122.6123);
+      expect(terminal?.gisZoomLocation.zoomLevel).toBe(15);
+    });
+
+    it("should handle terminal contact information correctly", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+
+      const mockTerminalData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          terminalAbbrev: "ANA",
+          latitude: 48.5123,
+          longitude: -122.6123,
+          address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
+          city: "Anacortes",
+          state: "WA",
+          zipCode: "98221",
+          county: "Skagit",
+          phone: "(360) 293-8155",
+          hasWaitTime: true,
+          hasSpaceAvailable: true,
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
+          transitLinks: [],
+          waitTimes: [],
+          bulletins: [],
+          sailingSpaces: [],
+          isActive: true,
+        },
+      ];
+
+      mockGetTerminalVerbose.mockResolvedValue(mockTerminalData);
+
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      const terminal = result.current.data?.[0];
+
+      // Test contact information
+      expect(terminal?.address).toBe(
+        "2100 Ferry Terminal Rd, Anacortes, WA 98221"
+      );
+      expect(terminal?.city).toBe("Anacortes");
+      expect(terminal?.state).toBe("WA");
+      expect(terminal?.zipCode).toBe("98221");
+      expect(terminal?.county).toBe("Skagit");
+      expect(terminal?.phone).toBe("(360) 293-8155");
+    });
+
+    it("should handle terminal operational features correctly", async () => {
+      const { getTerminalVerbose } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerbose = vi.mocked(getTerminalVerbose);
+
+      const mockTerminalData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          hasWaitTime: true,
+          hasSpaceAvailable: true,
+          isActive: true,
+          transitLinks: [],
+          waitTimes: [],
+          bulletins: [],
+          sailingSpaces: [],
+        },
+      ];
+
+      mockGetTerminalVerbose.mockResolvedValue(mockTerminalData);
+
+      const { result } = renderHook(() => useTerminalVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      const terminal = result.current.data?.[0];
+
+      // Test operational features
+      expect(terminal?.hasWaitTime).toBe(true);
+      expect(terminal?.hasSpaceAvailable).toBe(true);
+      expect(terminal?.isActive).toBe(true);
+      expect(terminal?.transitLinks).toEqual([]);
+      expect(terminal?.waitTimes).toEqual([]);
+      expect(terminal?.bulletins).toEqual([]);
+      expect(terminal?.sailingSpaces).toEqual([]);
+    });
   });
 
-  it("should handle terminal contact information correctly", () => {
-    const mockResponse = [
-      {
-        terminalId: 7,
-        terminalName: "Anacortes",
-        address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
-        city: "Anacortes",
-        state: "WA",
-        zipCode: "98221",
-        county: "Skagit",
-        phone: "(360) 293-8155",
-      },
-    ];
+  describe("useTerminalVerboseByTerminalId", () => {
+    it("should have the correct hook signature", () => {
+      expect(typeof useTerminalVerboseByTerminalId).toBe("function");
+    });
 
-    const terminal = mockResponse[0];
+    it("should return React Query result structure", async () => {
+      const { getTerminalVerboseByTerminalId } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerboseByTerminalId = vi.mocked(
+        getTerminalVerboseByTerminalId
+      );
+      mockGetTerminalVerboseByTerminalId.mockResolvedValue([]);
 
-    // Test contact information
-    expect(terminal.address).toBe(
-      "2100 Ferry Terminal Rd, Anacortes, WA 98221"
-    );
-    expect(terminal.city).toBe("Anacortes");
-    expect(terminal.state).toBe("WA");
-    expect(terminal.zipCode).toBe("98221");
-    expect(terminal.county).toBe("Skagit");
-    expect(terminal.phone).toBe("(360) 293-8155");
-  });
+      const { result } = renderHook(() => useTerminalVerboseByTerminalId(7), {
+        wrapper,
+      });
 
-  it("should handle terminal operational features correctly", () => {
-    const mockResponse = [
-      {
-        terminalId: 7,
-        terminalName: "Anacortes",
-        hasWaitTime: true,
-        hasSpaceAvailable: true,
-        isActive: true,
-        transitLinks: [],
-        waitTimes: [],
-        bulletins: [],
-        sailingSpaces: [],
-      },
-    ];
+      expect(result.current).toHaveProperty("data");
+      expect(result.current).toHaveProperty("isLoading");
+      expect(result.current).toHaveProperty("isError");
+      expect(result.current).toHaveProperty("error");
+    });
 
-    const terminal = mockResponse[0];
+    it("should call getTerminalVerboseByTerminalId API function with correct terminal ID", async () => {
+      const { getTerminalVerboseByTerminalId } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerboseByTerminalId = vi.mocked(
+        getTerminalVerboseByTerminalId
+      );
+      mockGetTerminalVerboseByTerminalId.mockResolvedValue([]);
 
-    // Test operational features
-    expect(terminal.hasWaitTime).toBe(true);
-    expect(terminal.hasSpaceAvailable).toBe(true);
-    expect(terminal.isActive).toBe(true);
-    expect(terminal.transitLinks).toEqual([]);
-    expect(terminal.waitTimes).toEqual([]);
-    expect(terminal.bulletins).toEqual([]);
-    expect(terminal.sailingSpaces).toEqual([]);
-  });
+      renderHook(() => useTerminalVerboseByTerminalId(7), { wrapper });
 
-  it("should handle infrequent update caching options correctly", () => {
-    const mockCachingOptions = {
-      staleTime: 24 * 60 * 60 * 1000, // 24 hours
-      gcTime: 24 * 60 * 60 * 1000, // 24 hours
-    };
+      await waitFor(() => {
+        expect(mockGetTerminalVerboseByTerminalId).toHaveBeenCalledWith(7);
+      });
+    });
 
-    expect(mockCachingOptions.staleTime).toBe(24 * 60 * 60 * 1000);
-    expect(mockCachingOptions.gcTime).toBe(24 * 60 * 60 * 1000);
-  });
+    it("should handle different terminal IDs", async () => {
+      const { getTerminalVerboseByTerminalId } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerboseByTerminalId = vi.mocked(
+        getTerminalVerboseByTerminalId
+      );
+      mockGetTerminalVerboseByTerminalId.mockResolvedValue([]);
 
-  it("should handle multiple terminals correctly", () => {
-    const mockResponse = [
-      {
-        terminalId: 7,
-        terminalName: "Anacortes",
-        terminalAbbrev: "ANA",
-        latitude: 48.5123,
-        longitude: -122.6123,
-        isActive: true,
-      },
-      {
-        terminalId: 8,
-        terminalName: "Friday Harbor",
-        terminalAbbrev: "FRI",
-        latitude: 48.5342,
-        longitude: -123.0171,
-        isActive: true,
-      },
-    ];
+      renderHook(() => useTerminalVerboseByTerminalId(8), { wrapper });
 
-    expect(mockResponse).toHaveLength(2);
-    expect(mockResponse[0].terminalId).toBe(7);
-    expect(mockResponse[1].terminalId).toBe(8);
-    expect(mockResponse[0].terminalName).toBe("Anacortes");
-    expect(mockResponse[1].terminalName).toBe("Friday Harbor");
-    expect(mockResponse[0].terminalAbbrev).toBe("ANA");
-    expect(mockResponse[1].terminalAbbrev).toBe("FRI");
+      await waitFor(() => {
+        expect(mockGetTerminalVerboseByTerminalId).toHaveBeenCalledWith(8);
+      });
+    });
+
+    it("should return terminal verbose data for specific terminal", async () => {
+      const { getTerminalVerboseByTerminalId } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerboseByTerminalId = vi.mocked(
+        getTerminalVerboseByTerminalId
+      );
+
+      const mockTerminalData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          terminalAbbrev: "ANA",
+          latitude: 48.5123,
+          longitude: -122.6123,
+          address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
+          city: "Anacortes",
+          state: "WA",
+          zipCode: "98221",
+          county: "Skagit",
+          phone: "(360) 293-8155",
+          hasWaitTime: true,
+          hasSpaceAvailable: true,
+          isActive: true,
+        },
+      ];
+
+      mockGetTerminalVerboseByTerminalId.mockResolvedValue(mockTerminalData);
+
+      const { result } = renderHook(() => useTerminalVerboseByTerminalId(7), {
+        wrapper,
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockTerminalData);
+      expect(result.current.data).toHaveLength(1);
+      expect(result.current.data?.[0].terminalId).toBe(7);
+      expect(result.current.data?.[0].terminalName).toBe("Anacortes");
+      expect(result.current.data?.[0].terminalAbbrev).toBe("ANA");
+    });
+
+    it("should be disabled when terminal ID is falsy", () => {
+      const { result } = renderHook(() => useTerminalVerboseByTerminalId(0), {
+        wrapper,
+      });
+
+      expect(result.current.isFetching).toBe(false);
+      expect(result.current.data).toBeUndefined();
+    });
+
+    it("should handle API errors", async () => {
+      const { getTerminalVerboseByTerminalId } = await import(
+        "@/api/wsf/terminals/terminalverbose/api"
+      );
+      const mockGetTerminalVerboseByTerminalId = vi.mocked(
+        getTerminalVerboseByTerminalId
+      );
+      mockGetTerminalVerboseByTerminalId.mockRejectedValue(
+        new Error("API Error")
+      );
+
+      const { result } = renderHook(() => useTerminalVerboseByTerminalId(7), {
+        wrapper,
+      });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toBeInstanceOf(Error);
+      expect(result.current.error?.message).toBe("API Error");
+    });
   });
 });

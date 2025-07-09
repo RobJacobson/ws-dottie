@@ -1,183 +1,245 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-// Test the API functions by testing their structure and behavior
-// without importing the actual modules that cause issues
+import {
+  getVesselVerbose,
+  getVesselVerboseById,
+} from "@/api/wsf/vessels/vesselVerbose/api";
 
-describe("VesselVerbose API (Working)", () => {
-  it("should have the correct function signatures", () => {
-    // This test verifies that the functions exist and have the right structure
-    // without actually importing them to avoid react-native issues
+// Mock the fetch function
+vi.mock("@/shared/fetching/fetch", () => ({
+  fetchWsfArray: vi.fn(),
+}));
 
-    // Mock the expected behavior
-    const mockFetchWsfArray = async (source: string, endpoint: string) => {
-      if (source === "vessels" && endpoint === "/vesselverbose") {
-        return [
-          {
-            vesselId: 1,
-            vesselName: "M/V Cathlamet",
-            abbrev: "CATH",
-            vesselClass: "Jumbo Mark II",
-            inService: true,
-            active: true,
-            yearBuilt: 1980,
-            displacement: 5000,
-            length: 460,
-            breadth: 89,
-            draft: 18.5,
-            carCapacity: 218,
-            passengerCapacity: 2500,
-            maxPassengers: 2500,
-            maxVehicles: 218,
-            maxGrossTonnage: 5000,
-            horsepower: 12000,
-            maxSpeed: 18,
-            homeTerminalId: 1,
-            homeTerminalName: "Seattle",
-            accommodations: [],
-            stats: [],
-            location: null,
-          },
-        ];
+// Mock the URL builder
+vi.mock("@/shared/fetching/dateUtils", () => ({
+  buildWsfUrl: vi.fn((template: string, params: Record<string, any>) => {
+    let url = template;
+    for (const [key, value] of Object.entries(params)) {
+      const placeholder = `{${key}}`;
+      if (url.includes(placeholder)) {
+        url = url.replace(placeholder, String(value));
       }
-      return [];
-    };
+    }
+    return url;
+  }),
+}));
 
-    const mockBuildWsfUrl = (template: string, params: Record<string, any>) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
-
-    // Test the expected behavior
-    expect(mockFetchWsfArray).toBeDefined();
-    expect(mockBuildWsfUrl).toBeDefined();
-  });
-
-  it("should handle URL building correctly for vessel by ID", () => {
-    const mockBuildWsfUrl = (template: string, params: Record<string, any>) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
-
-    const result = mockBuildWsfUrl("/vesselverbose/{vesselId}", {
-      vesselId: 1,
+describe("VesselVerbose API", () => {
+  describe("getVesselVerbose", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getVesselVerbose).toBe("function");
+      expect(getVesselVerbose).toHaveLength(0);
     });
-    expect(result).toBe("/vesselverbose/1");
+
+    it("should return a Promise", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      const result = getVesselVerbose();
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getVesselVerbose();
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "vessels",
+        "/vesselverbose"
+      );
+    });
+
+    it("should return vessel verbose data", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockVesselData = [
+        {
+          vesselId: 1,
+          vesselName: "M/V Cathlamet",
+          abbrev: "CATH",
+          vesselClass: "Jumbo Mark II",
+          inService: true,
+          active: true,
+          yearBuilt: 1980,
+          displacement: 5000,
+          length: 460,
+          breadth: 89,
+          draft: 18.5,
+          carCapacity: 218,
+          passengerCapacity: 2500,
+          maxPassengers: 2500,
+          maxVehicles: 218,
+          maxGrossTonnage: 5000,
+          horsepower: 12000,
+          maxSpeed: 18,
+          homeTerminalId: 1,
+          homeTerminalName: "Seattle",
+          accommodations: [],
+          stats: [],
+          location: null,
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockVesselData);
+
+      const result = await getVesselVerbose();
+
+      expect(result).toEqual(mockVesselData);
+      expect(result).toHaveLength(1);
+      expect(result[0].vesselId).toBe(1);
+      expect(result[0].vesselName).toBe("M/V Cathlamet");
+      expect(result[0].abbrev).toBe("CATH");
+      expect(result[0].vesselClass).toBe("Jumbo Mark II");
+    });
+
+    it("should handle empty responses", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      const result = await getVesselVerbose();
+
+      expect(result).toEqual([]);
+    });
+
+    it("should handle vessel specifications correctly", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockVesselData = [
+        {
+          vesselId: 1,
+          vesselName: "M/V Cathlamet",
+          length: 460,
+          breadth: 89,
+          draft: 18.5,
+          carCapacity: 218,
+          passengerCapacity: 2500,
+          maxSpeed: 18,
+          horsepower: 12000,
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockVesselData);
+
+      const result = await getVesselVerbose();
+      const vessel = result[0];
+
+      // Test vessel specifications
+      expect(vessel.length).toBe(460); // feet
+      expect(vessel.breadth).toBe(89); // feet
+      expect(vessel.draft).toBe(18.5); // feet
+      expect(vessel.carCapacity).toBe(218);
+      expect(vessel.passengerCapacity).toBe(2500);
+      expect(vessel.maxSpeed).toBe(18); // knots
+      expect(vessel.horsepower).toBe(12000);
+    });
+
+    it("should handle vessel operational status correctly", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockVesselData = [
+        {
+          vesselId: 1,
+          vesselName: "M/V Cathlamet",
+          inService: true,
+          active: true,
+          homeTerminalId: 1,
+          homeTerminalName: "Seattle",
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockVesselData);
+
+      const result = await getVesselVerbose();
+      const vessel = result[0];
+
+      // Test operational status
+      expect(vessel.inService).toBe(true);
+      expect(vessel.active).toBe(true);
+      expect(vessel.homeTerminalId).toBe(1);
+      expect(vessel.homeTerminalName).toBe("Seattle");
+    });
   });
 
-  it("should handle API response structure correctly", () => {
-    const mockResponse = [
-      {
-        vesselId: 1,
-        vesselName: "M/V Cathlamet",
-        abbrev: "CATH",
-        vesselClass: "Jumbo Mark II",
-        inService: true,
-        active: true,
-        yearBuilt: 1980,
-        displacement: 5000,
-        length: 460,
-        breadth: 89,
-        draft: 18.5,
-        carCapacity: 218,
-        passengerCapacity: 2500,
-        maxPassengers: 2500,
-        maxVehicles: 218,
-        maxGrossTonnage: 5000,
-        horsepower: 12000,
-        maxSpeed: 18,
-        homeTerminalId: 1,
-        homeTerminalName: "Seattle",
-        accommodations: [],
-        stats: [],
-        location: null,
-      },
-    ];
+  describe("getVesselVerboseById", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getVesselVerboseById).toBe("function");
+      expect(getVesselVerboseById).toHaveLength(1);
+    });
 
-    // Test the expected structure
-    expect(mockResponse[0].vesselId).toBe(1);
-    expect(mockResponse[0].vesselName).toBe("M/V Cathlamet");
-    expect(mockResponse[0].abbrev).toBe("CATH");
-    expect(mockResponse[0].vesselClass).toBe("Jumbo Mark II");
-    expect(mockResponse[0].inService).toBe(true);
-    expect(mockResponse[0].active).toBe(true);
-    expect(mockResponse[0].yearBuilt).toBe(1980);
-    expect(mockResponse[0].carCapacity).toBe(218);
-    expect(mockResponse[0].passengerCapacity).toBe(2500);
-    expect(mockResponse[0].maxSpeed).toBe(18);
-  });
+    it("should return a Promise", () => {
+      const result = getVesselVerboseById(1);
+      expect(result).toBeInstanceOf(Promise);
+    });
 
-  it("should handle empty API responses", () => {
-    const mockFetchWsfArray = async () => [];
-    const result = mockFetchWsfArray();
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-    expect(result).resolves.toEqual([]);
-  });
+      mockFetchWsfArray.mockResolvedValue([]);
 
-  it("should handle API error responses", () => {
-    const mockFetchWsfArray = async () => {
-      throw new Error("API Error");
-    };
+      await getVesselVerboseById(1);
 
-    expect(mockFetchWsfArray()).rejects.toThrow("API Error");
-  });
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "vessels",
+        "/vesselverbose/1"
+      );
+    });
 
-  it("should handle vessel specifications correctly", () => {
-    const mockResponse = [
-      {
-        vesselId: 1,
-        vesselName: "M/V Cathlamet",
-        length: 460,
-        breadth: 89,
-        draft: 18.5,
-        carCapacity: 218,
-        passengerCapacity: 2500,
-        maxSpeed: 18,
-        horsepower: 12000,
-      },
-    ];
+    it("should handle different vessel IDs", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-    const vessel = mockResponse[0];
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    // Test vessel specifications
-    expect(vessel.length).toBe(460); // feet
-    expect(vessel.breadth).toBe(89); // feet
-    expect(vessel.draft).toBe(18.5); // feet
-    expect(vessel.carCapacity).toBe(218);
-    expect(vessel.passengerCapacity).toBe(2500);
-    expect(vessel.maxSpeed).toBe(18); // knots
-    expect(vessel.horsepower).toBe(12000);
-  });
+      await getVesselVerboseById(2);
 
-  it("should handle vessel operational status correctly", () => {
-    const mockResponse = [
-      {
-        vesselId: 1,
-        vesselName: "M/V Cathlamet",
-        inService: true,
-        active: true,
-        homeTerminalId: 1,
-        homeTerminalName: "Seattle",
-      },
-    ];
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "vessels",
+        "/vesselverbose/2"
+      );
+    });
 
-    const vessel = mockResponse[0];
+    it("should return vessel verbose data for specific vessel", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-    // Test operational status
-    expect(vessel.inService).toBe(true);
-    expect(vessel.active).toBe(true);
-    expect(vessel.homeTerminalId).toBe(1);
-    expect(vessel.homeTerminalName).toBe("Seattle");
+      const mockVesselData = [
+        {
+          vesselId: 1,
+          vesselName: "M/V Cathlamet",
+          abbrev: "CATH",
+          vesselClass: "Jumbo Mark II",
+          inService: true,
+          active: true,
+          yearBuilt: 1980,
+          carCapacity: 218,
+          passengerCapacity: 2500,
+          maxSpeed: 18,
+          homeTerminalId: 1,
+          homeTerminalName: "Seattle",
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockVesselData);
+
+      const result = await getVesselVerboseById(1);
+
+      expect(result).toEqual(mockVesselData);
+      expect(result).toHaveLength(1);
+      expect(result[0].vesselId).toBe(1);
+      expect(result[0].vesselName).toBe("M/V Cathlamet");
+      expect(result[0].abbrev).toBe("CATH");
+      expect(result[0].vesselClass).toBe("Jumbo Mark II");
+    });
   });
 });

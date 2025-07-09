@@ -1,425 +1,440 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-// Test the API functions by testing their structure and behavior
-// without importing the actual modules that cause issues
+import {
+  getActiveSeasons,
+  getAlerts,
+  getRouteDetails,
+  getRouteDetailsByRoute,
+  getRouteDetailsByTerminals,
+  getRoutes,
+  getRoutesByTerminals,
+  getRoutesWithDisruptions,
+  getScheduledRoutes,
+  getScheduledRoutesBySeason,
+} from "@/api/wsf/schedule/routes/api";
 
-describe("Schedule Routes API (Working)", () => {
-  it("should have the correct function signatures", () => {
-    // This test verifies that the functions exist and have the right structure
-    // without actually importing them to avoid react-native issues
+// Mock the fetch function
+vi.mock("@/shared/fetching/fetch", () => ({
+  fetchWsfArray: vi.fn(),
+}));
 
-    // Mock the expected behavior
-    const mockFetchWsfArray = async (source: string, endpoint: string) => {
-      if (source === "schedule" && endpoint.startsWith("/routes")) {
-        return [
-          {
-            routeId: 1,
-            routeName: "Seattle - Bainbridge Island",
-            routeAbbrev: "SEA-BAI",
-            routeDescription: "Seattle to Bainbridge Island ferry route",
-            routeColor: "#0066CC",
-            sortSeq: 1,
-            crossingTime: 35,
-            distance: 8.6,
-            isActive: true,
-            serviceRoutes: [],
-          },
-        ];
-      }
-      return [];
-    };
-
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
+// Mock the URL builder
+vi.mock("@/shared/fetching/dateUtils", () => ({
+  buildWsfUrl: vi.fn((template: string, params: Record<string, any>) => {
+    let url = template;
+    for (const [key, value] of Object.entries(params)) {
+      const placeholder = `{${key}}`;
+      if (url.includes(placeholder)) {
+        // Format dates as YYYY-MM-DD
+        if (value instanceof Date) {
+          const year = value.getFullYear();
+          const month = String(value.getMonth() + 1).padStart(2, "0");
+          const day = String(value.getDate()).padStart(2, "0");
+          url = url.replace(placeholder, `${year}-${month}-${day}`);
+        } else {
           url = url.replace(placeholder, String(value));
         }
       }
-      return url;
-    };
+    }
+    return url;
+  }),
+}));
 
-    // Test the expected behavior
-    expect(mockFetchWsfArray).toBeDefined();
-    expect(mockBuildWsfUrl).toBeDefined();
-  });
+describe("Schedule Routes API", () => {
+  const testDate = new Date(2024, 3, 1); // April 1, 2024 (month is 0-indexed)
 
-  it("should handle basic routes URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
-
-    const tripDate = new Date("2024-04-01");
-    const result = mockBuildWsfUrl("/routes/{tripDate}", {
-      tripDate: tripDate.toISOString().split("T")[0],
+  describe("getRoutes", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getRoutes).toBe("function");
+      expect(getRoutes).toHaveLength(1);
     });
-    expect(result).toBe("/routes/2024-04-01");
-  });
 
-  it("should handle routes by terminals URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
+    it("should return a Promise", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    const tripDate = new Date("2024-04-01");
-    const result = mockBuildWsfUrl(
-      "/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-      {
-        tripDate: tripDate.toISOString().split("T")[0],
-        departingTerminalId: 1,
-        arrivingTerminalId: 2,
-      }
-    );
-    expect(result).toBe("/routes/2024-04-01/1/2");
-  });
-
-  it("should handle routes with disruptions URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
-
-    const tripDate = new Date("2024-04-01");
-    const result = mockBuildWsfUrl(
-      "/routeshavingservicedisruptions/{tripDate}",
-      {
-        tripDate: tripDate.toISOString().split("T")[0],
-      }
-    );
-    expect(result).toBe("/routeshavingservicedisruptions/2024-04-01");
-  });
-
-  it("should handle route details URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
-
-    const tripDate = new Date("2024-04-01");
-    const result = mockBuildWsfUrl("/routedetails/{tripDate}", {
-      tripDate: tripDate.toISOString().split("T")[0],
+      const result = getRoutes(testDate);
+      expect(result).toBeInstanceOf(Promise);
     });
-    expect(result).toBe("/routedetails/2024-04-01");
-  });
 
-  it("should handle route details by terminals URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-    const tripDate = new Date("2024-04-01");
-    const result = mockBuildWsfUrl(
-      "/routedetails/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-      {
-        tripDate: tripDate.toISOString().split("T")[0],
-        departingTerminalId: 1,
-        arrivingTerminalId: 2,
-      }
-    );
-    expect(result).toBe("/routedetails/2024-04-01/1/2");
-  });
+      mockFetchWsfArray.mockResolvedValue([]);
 
-  it("should handle route details by route ID URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
+      await getRoutes(testDate);
 
-    const tripDate = new Date("2024-04-01");
-    const result = mockBuildWsfUrl("/routedetails/{tripDate}/{routeId}", {
-      tripDate: tripDate.toISOString().split("T")[0],
-      routeId: 1,
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/routes/2024-04-01"
+      );
     });
-    expect(result).toBe("/routedetails/2024-04-01/1");
-  });
 
-  it("should handle scheduled routes by season URL building correctly", () => {
-    const mockBuildWsfUrl = (
-      template: string,
-      params: Record<string, unknown>
-    ) => {
-      let url = template;
-      for (const [key, value] of Object.entries(params)) {
-        const placeholder = `{${key}}`;
-        if (url.includes(placeholder)) {
-          url = url.replace(placeholder, String(value));
-        }
-      }
-      return url;
-    };
+    it("should return route data", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-    const result = mockBuildWsfUrl("/schedroutes/{seasonId}", {
-      seasonId: 1,
+      const mockRouteData = [
+        {
+          routeId: 1,
+          routeName: "Anacortes / Friday Harbor",
+          departingTerminalId: 7,
+          arrivingTerminalId: 8,
+          isActive: true,
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockRouteData);
+
+      const result = await getRoutes(testDate);
+
+      expect(result).toEqual(mockRouteData);
+      expect(result).toHaveLength(1);
+      expect(result[0].routeId).toBe(1);
+      expect(result[0].routeName).toBe("Anacortes / Friday Harbor");
     });
-    expect(result).toBe("/schedroutes/1");
   });
 
-  it("should handle API response structure correctly", () => {
-    const mockResponse = [
-      {
+  describe("getRoutesByTerminals", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getRoutesByTerminals).toBe("function");
+      expect(getRoutesByTerminals).toHaveLength(1);
+    });
+
+    it("should return a Promise", () => {
+      const result = getRoutesByTerminals({
+        tripDate: testDate,
+        departingTerminalId: 7,
+        arrivingTerminalId: 8,
+      });
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getRoutesByTerminals({
+        tripDate: testDate,
+        departingTerminalId: 7,
+        arrivingTerminalId: 8,
+      });
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/routes/2024-04-01/7/8"
+      );
+    });
+
+    it("should return route data for specific terminals", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockRouteData = [
+        {
+          routeId: 1,
+          routeName: "Anacortes / Friday Harbor",
+          departingTerminalId: 7,
+          arrivingTerminalId: 8,
+          isActive: true,
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockRouteData);
+
+      const result = await getRoutesByTerminals({
+        tripDate: testDate,
+        departingTerminalId: 7,
+        arrivingTerminalId: 8,
+      });
+
+      expect(result).toEqual(mockRouteData);
+      expect(result).toHaveLength(1);
+      expect(result[0].routeId).toBe(1);
+      expect(result[0].departingTerminalId).toBe(7);
+      expect(result[0].arrivingTerminalId).toBe(8);
+    });
+  });
+
+  describe("getRoutesWithDisruptions", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getRoutesWithDisruptions).toBe("function");
+      expect(getRoutesWithDisruptions).toHaveLength(1);
+    });
+
+    it("should return a Promise", () => {
+      const result = getRoutesWithDisruptions(testDate);
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getRoutesWithDisruptions(testDate);
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/routeshavingservicedisruptions/2024-04-01"
+      );
+    });
+
+    it("should return routes with disruptions", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockRouteData = [
+        {
+          routeId: 1,
+          routeName: "Anacortes / Friday Harbor",
+          hasDisruption: true,
+          disruptionReason: "Weather",
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockRouteData);
+
+      const result = await getRoutesWithDisruptions(testDate);
+
+      expect(result).toEqual(mockRouteData);
+      expect(result).toHaveLength(1);
+      expect(result[0].hasDisruption).toBe(true);
+    });
+  });
+
+  describe("getRouteDetails", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getRouteDetails).toBe("function");
+      expect(getRouteDetails).toHaveLength(1);
+    });
+
+    it("should return a Promise", () => {
+      const result = getRouteDetails(testDate);
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getRouteDetails(testDate);
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/routedetails/2024-04-01"
+      );
+    });
+
+    it("should return detailed route data", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockRouteData = [
+        {
+          routeId: 1,
+          routeName: "Anacortes / Friday Harbor",
+          vesselId: 1,
+          vesselName: "Walla Walla",
+          departureTime: new Date("2024-04-01T10:00:00Z"),
+          arrivalTime: new Date("2024-04-01T11:30:00Z"),
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockRouteData);
+
+      const result = await getRouteDetails(testDate);
+
+      expect(result).toEqual(mockRouteData);
+      expect(result).toHaveLength(1);
+      expect(result[0].routeId).toBe(1);
+      expect(result[0].vesselName).toBe("Walla Walla");
+    });
+  });
+
+  describe("getRouteDetailsByTerminals", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getRouteDetailsByTerminals).toBe("function");
+      expect(getRouteDetailsByTerminals).toHaveLength(1);
+    });
+
+    it("should return a Promise", () => {
+      const result = getRouteDetailsByTerminals({
+        tripDate: testDate,
+        departingTerminalId: 7,
+        arrivingTerminalId: 8,
+      });
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getRouteDetailsByTerminals({
+        tripDate: testDate,
+        departingTerminalId: 7,
+        arrivingTerminalId: 8,
+      });
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/routedetails/2024-04-01/7/8"
+      );
+    });
+  });
+
+  describe("getRouteDetailsByRoute", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getRouteDetailsByRoute).toBe("function");
+      expect(getRouteDetailsByRoute).toHaveLength(1);
+    });
+
+    it("should return a Promise", () => {
+      const result = getRouteDetailsByRoute({
+        tripDate: testDate,
         routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        routeAbbrev: "SEA-BAI",
-        routeDescription: "Seattle to Bainbridge Island ferry route",
-        routeColor: "#0066CC",
-        sortSeq: 1,
-        crossingTime: 35,
-        distance: 8.6,
-        isActive: true,
-        serviceRoutes: [],
-      },
-    ];
+      });
+      expect(result).toBeInstanceOf(Promise);
+    });
 
-    // Test the expected structure
-    expect(mockResponse[0].routeId).toBe(1);
-    expect(mockResponse[0].routeName).toBe("Seattle - Bainbridge Island");
-    expect(mockResponse[0].routeAbbrev).toBe("SEA-BAI");
-    expect(mockResponse[0].routeDescription).toBe(
-      "Seattle to Bainbridge Island ferry route"
-    );
-    expect(mockResponse[0].routeColor).toBe("#0066CC");
-    expect(mockResponse[0].sortSeq).toBe(1);
-    expect(mockResponse[0].crossingTime).toBe(35);
-    expect(mockResponse[0].distance).toBe(8.6);
-    expect(mockResponse[0].isActive).toBe(true);
-    expect(mockResponse[0].serviceRoutes).toEqual([]);
-  });
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-  it("should handle empty API responses", () => {
-    const mockFetchWsfArray = async () => [];
-    const result = mockFetchWsfArray();
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    expect(result).resolves.toEqual([]);
-  });
-
-  it("should handle API error responses", () => {
-    const mockFetchWsfArray = async () => {
-      throw new Error("API Error");
-    };
-
-    expect(mockFetchWsfArray()).rejects.toThrow("API Error");
-  });
-
-  it("should handle route filtering by terminals correctly", () => {
-    const mockResponse = [
-      {
+      await getRouteDetailsByRoute({
+        tripDate: testDate,
         routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        departingTerminalId: 1,
-        arrivingTerminalId: 2,
-        isActive: true,
-      },
-    ];
+      });
 
-    const route = mockResponse[0];
-
-    // Test terminal filtering
-    expect(route.departingTerminalId).toBe(1);
-    expect(route.arrivingTerminalId).toBe(2);
-    expect(route.isActive).toBe(true);
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/routedetails/2024-04-01/1"
+      );
+    });
   });
 
-  it("should handle route service disruptions correctly", () => {
-    const mockResponse = [
-      {
-        routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        hasDisruption: true,
-        disruptionReason: "Weather conditions",
-        isActive: true,
-      },
-    ];
+  describe("getScheduledRoutes", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getScheduledRoutes).toBe("function");
+      expect(getScheduledRoutes).toHaveLength(0);
+    });
 
-    const route = mockResponse[0];
+    it("should return a Promise", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    // Test disruption information
-    expect(route.hasDisruption).toBe(true);
-    expect(route.disruptionReason).toBe("Weather conditions");
-    expect(route.isActive).toBe(true);
+      const result = getScheduledRoutes();
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getScheduledRoutes();
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/schedroutes"
+      );
+    });
   });
 
-  it("should handle route details correctly", () => {
-    const mockResponse = [
-      {
-        routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        routeDescription: "Detailed route information",
-        crossingTime: 35,
-        distance: 8.6,
-        vesselAssignments: [],
-        sailingTimes: [],
-        isActive: true,
-      },
-    ];
+  describe("getScheduledRoutesBySeason", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getScheduledRoutesBySeason).toBe("function");
+      expect(getScheduledRoutesBySeason).toHaveLength(1);
+    });
 
-    const route = mockResponse[0];
+    it("should return a Promise", () => {
+      const result = getScheduledRoutesBySeason(1);
+      expect(result).toBeInstanceOf(Promise);
+    });
 
-    // Test detailed route information
-    expect(route.routeDescription).toBe("Detailed route information");
-    expect(route.crossingTime).toBe(35); // minutes
-    expect(route.distance).toBe(8.6); // nautical miles
-    expect(route.vesselAssignments).toEqual([]);
-    expect(route.sailingTimes).toEqual([]);
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getScheduledRoutesBySeason(1);
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/schedroutes/1"
+      );
+    });
   });
 
-  it("should handle scheduled routes correctly", () => {
-    const mockResponse = [
-      {
-        routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        seasonId: 1,
-        seasonName: "Winter 2023-2024",
-        isScheduled: true,
-        isActive: true,
-      },
-    ];
+  describe("getActiveSeasons", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getActiveSeasons).toBe("function");
+      expect(getActiveSeasons).toHaveLength(0);
+    });
 
-    const route = mockResponse[0];
+    it("should return a Promise", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    // Test scheduled route information
-    expect(route.seasonId).toBe(1);
-    expect(route.seasonName).toBe("Winter 2023-2024");
-    expect(route.isScheduled).toBe(true);
-    expect(route.isActive).toBe(true);
+      const result = getActiveSeasons();
+      expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      mockFetchWsfArray.mockResolvedValue([]);
+
+      await getActiveSeasons();
+
+      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        "schedule",
+        "/activeseasons"
+      );
+    });
   });
 
-  it("should handle active seasons correctly", () => {
-    const mockResponse = [
-      {
-        seasonId: 1,
-        seasonName: "Winter 2023-2024",
-        startDate: new Date("2023-10-01T00:00:00.000Z"),
-        endDate: new Date("2024-03-31T23:59:59.000Z"),
-        isActive: true,
-        routeIds: [1, 2, 3],
-      },
-    ];
+  describe("getAlerts", () => {
+    it("should have the correct function signature", () => {
+      expect(typeof getAlerts).toBe("function");
+      expect(getAlerts).toHaveLength(0);
+    });
 
-    const season = mockResponse[0];
+    it("should return a Promise", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    // Test active season information
-    expect(season.seasonId).toBe(1);
-    expect(season.seasonName).toBe("Winter 2023-2024");
-    expect(season.startDate).toBeInstanceOf(Date);
-    expect(season.endDate).toBeInstanceOf(Date);
-    expect(season.isActive).toBe(true);
-    expect(season.routeIds).toEqual([1, 2, 3]);
-  });
+      const result = getAlerts();
+      expect(result).toBeInstanceOf(Promise);
+    });
 
-  it("should handle alerts correctly", () => {
-    const mockResponse = [
-      {
-        alertId: 1,
-        routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        alertTitle: "Service Delay",
-        alertMessage: "Service delayed due to weather conditions",
-        startDate: new Date("2024-04-01T14:00:00.000Z"),
-        endDate: new Date("2024-04-01T16:00:00.000Z"),
-        severity: "medium",
-        isActive: true,
-      },
-    ];
+    it("should call fetchWsfArray with correct parameters", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-    const alert = mockResponse[0];
+      mockFetchWsfArray.mockResolvedValue([]);
 
-    // Test alert information
-    expect(alert.alertId).toBe(1);
-    expect(alert.routeId).toBe(1);
-    expect(alert.routeName).toBe("Seattle - Bainbridge Island");
-    expect(alert.alertTitle).toBe("Service Delay");
-    expect(alert.alertMessage).toBe(
-      "Service delayed due to weather conditions"
-    );
-    expect(alert.startDate).toBeInstanceOf(Date);
-    expect(alert.endDate).toBeInstanceOf(Date);
-    expect(alert.severity).toBe("medium");
-    expect(alert.isActive).toBe(true);
-  });
+      await getAlerts();
 
-  it("should handle multiple routes correctly", () => {
-    const mockResponse = [
-      {
-        routeId: 1,
-        routeName: "Seattle - Bainbridge Island",
-        routeAbbrev: "SEA-BAI",
-        isActive: true,
-      },
-      {
-        routeId: 2,
-        routeName: "Edmonds - Kingston",
-        routeAbbrev: "EDM-KIN",
-        isActive: true,
-      },
-    ];
-
-    expect(mockResponse).toHaveLength(2);
-    expect(mockResponse[0].routeId).toBe(1);
-    expect(mockResponse[1].routeId).toBe(2);
-    expect(mockResponse[0].routeName).toBe("Seattle - Bainbridge Island");
-    expect(mockResponse[1].routeName).toBe("Edmonds - Kingston");
-    expect(mockResponse[0].routeAbbrev).toBe("SEA-BAI");
-    expect(mockResponse[1].routeAbbrev).toBe("EDM-KIN");
+      expect(mockFetchWsfArray).toHaveBeenCalledWith("schedule", "/alerts");
+    });
   });
 });

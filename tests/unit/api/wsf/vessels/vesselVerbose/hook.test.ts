@@ -1,168 +1,278 @@
-import { describe, expect, it } from "vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { renderHook, waitFor } from "@testing-library/react";
+import React from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// Test the hook functions by testing their structure and behavior
-// without importing the actual modules that cause issues
+import {
+  useVesselVerbose,
+  useVesselVerboseById,
+} from "@/api/wsf/vessels/vesselVerbose/hook";
 
-describe("VesselVerbose Hooks (Working)", () => {
-  it("should have the correct hook signatures", () => {
-    // This test verifies that the hooks exist and have the right structure
-    // without actually importing them to avoid react-native issues
+// Mock the API functions
+vi.mock("@/api/wsf/vessels/vesselVerbose/api", () => ({
+  getVesselVerbose: vi.fn(),
+  getVesselVerboseById: vi.fn(),
+}));
 
-    // Mock the expected behavior
-    type MockQueryOptions = {
-      queryFn?: () => unknown;
-    };
+// Mock the caching config
+vi.mock("@/shared/caching/config", () => ({
+  createInfrequentUpdateOptions: vi.fn(() => ({
+    staleTime: 300000,
+    refetchInterval: 600000,
+  })),
+}));
 
-    const mockUseQuery = (options: MockQueryOptions) => {
-      return {
-        data: options.queryFn ? options.queryFn() : [],
-        isLoading: false,
-        isSuccess: true,
-        isError: false,
-        error: null,
-      };
-    };
+describe("VesselVerbose Hooks", () => {
+  let queryClient: QueryClient;
 
-    const mockCreateInfrequentUpdateOptions = () => ({
-      staleTime: 24 * 60 * 60 * 1000, // 24 hours
-      gcTime: 24 * 60 * 60 * 1000, // 24 hours
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+          gcTime: 0,
+        },
+        mutations: {
+          retry: false,
+        },
+      },
+    });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(QueryClientProvider, { client: queryClient }, children);
+
+  describe("useVesselVerbose", () => {
+    it("should have the correct hook signature", () => {
+      expect(typeof useVesselVerbose).toBe("function");
     });
 
-    // Test the expected behavior
-    expect(mockUseQuery).toBeDefined();
-    expect(mockCreateInfrequentUpdateOptions).toBeDefined();
+    it("should return React Query result structure", async () => {
+      const { getVesselVerbose } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerbose = vi.mocked(getVesselVerbose);
+      mockGetVesselVerbose.mockResolvedValue([]);
+
+      const { result } = renderHook(() => useVesselVerbose(), { wrapper });
+
+      expect(result.current).toHaveProperty("data");
+      expect(result.current).toHaveProperty("isLoading");
+      expect(result.current).toHaveProperty("isError");
+      expect(result.current).toHaveProperty("error");
+    });
+
+    it("should call getVesselVerbose API function", async () => {
+      const { getVesselVerbose } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerbose = vi.mocked(getVesselVerbose);
+      mockGetVesselVerbose.mockResolvedValue([]);
+
+      renderHook(() => useVesselVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(mockGetVesselVerbose).toHaveBeenCalled();
+      });
+    });
+
+    it("should return vessel verbose data", async () => {
+      const { getVesselVerbose } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerbose = vi.mocked(getVesselVerbose);
+
+      const mockVesselData = [
+        {
+          vesselId: 1,
+          vesselName: "M/V Cathlamet",
+          abbrev: "CATH",
+          vesselClass: "Jumbo Mark II",
+          inService: true,
+          active: true,
+          yearBuilt: 1980,
+          displacement: 5000,
+          length: 460,
+          breadth: 89,
+          draft: 18.5,
+          carCapacity: 218,
+          passengerCapacity: 2500,
+          maxPassengers: 2500,
+          maxVehicles: 218,
+          maxGrossTonnage: 5000,
+          horsepower: 12000,
+          maxSpeed: 18,
+          homeTerminalId: 1,
+          homeTerminalName: "Seattle",
+          accommodations: [],
+          stats: [],
+          location: null,
+        },
+      ];
+
+      mockGetVesselVerbose.mockResolvedValue(mockVesselData);
+
+      const { result } = renderHook(() => useVesselVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockVesselData);
+      expect(result.current.data).toHaveLength(1);
+      expect(result.current.data?.[0].vesselId).toBe(1);
+      expect(result.current.data?.[0].vesselName).toBe("M/V Cathlamet");
+      expect(result.current.data?.[0].abbrev).toBe("CATH");
+      expect(result.current.data?.[0].vesselClass).toBe("Jumbo Mark II");
+    });
+
+    it("should handle empty responses", async () => {
+      const { getVesselVerbose } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerbose = vi.mocked(getVesselVerbose);
+      mockGetVesselVerbose.mockResolvedValue([]);
+
+      const { result } = renderHook(() => useVesselVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual([]);
+    });
+
+    it("should handle API errors", async () => {
+      const { getVesselVerbose } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerbose = vi.mocked(getVesselVerbose);
+      mockGetVesselVerbose.mockRejectedValue(new Error("API Error"));
+
+      const { result } = renderHook(() => useVesselVerbose(), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toBeInstanceOf(Error);
+      expect(result.current.error?.message).toBe("API Error");
+    });
   });
 
-  it("should handle query key structure correctly", () => {
-    // Mock the expected query key structure
-    const mockQueryKey = ["vessels", "verbose"];
-    const mockQueryKeyById = ["vessels", "verbose", "byId", 1];
+  describe("useVesselVerboseById", () => {
+    it("should have the correct hook signature", () => {
+      expect(typeof useVesselVerboseById).toBe("function");
+    });
 
-    expect(mockQueryKey).toEqual(["vessels", "verbose"]);
-    expect(mockQueryKeyById).toEqual(["vessels", "verbose", "byId", 1]);
-  });
+    it("should return React Query result structure", async () => {
+      const { getVesselVerboseById } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerboseById = vi.mocked(getVesselVerboseById);
+      mockGetVesselVerboseById.mockResolvedValue([]);
 
-  it("should handle enabled state correctly", () => {
-    // Mock the enabled logic
-    const mockEnabled = (vesselId: number | undefined) => !!vesselId;
+      const { result } = renderHook(() => useVesselVerboseById(1), { wrapper });
 
-    expect(mockEnabled(1)).toBe(true);
-    expect(mockEnabled(0)).toBe(false);
-    expect(mockEnabled(undefined)).toBe(false);
-  });
+      expect(result.current).toHaveProperty("data");
+      expect(result.current).toHaveProperty("isLoading");
+      expect(result.current).toHaveProperty("isError");
+      expect(result.current).toHaveProperty("error");
+    });
 
-  it("should handle vessel verbose data structure correctly", () => {
-    const mockResponse = [
-      {
-        vesselId: 1,
-        vesselName: "M/V Cathlamet",
-        abbrev: "CATH",
-        vesselClass: "Jumbo Mark II",
-        inService: true,
-        active: true,
-        yearBuilt: 1980,
-        displacement: 5000,
-        length: 460,
-        breadth: 89,
-        draft: 18.5,
-        carCapacity: 218,
-        passengerCapacity: 2500,
-        maxPassengers: 2500,
-        maxVehicles: 218,
-        maxGrossTonnage: 5000,
-        horsepower: 12000,
-        maxSpeed: 18,
-        homeTerminalId: 1,
-        homeTerminalName: "Seattle",
-        accommodations: [],
-        stats: [],
-        location: null,
-      },
-    ];
+    it("should call getVesselVerboseById API function with correct vessel ID", async () => {
+      const { getVesselVerboseById } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerboseById = vi.mocked(getVesselVerboseById);
+      mockGetVesselVerboseById.mockResolvedValue([]);
 
-    // Test the expected structure
-    expect(mockResponse[0].vesselId).toBe(1);
-    expect(mockResponse[0].vesselName).toBe("M/V Cathlamet");
-    expect(mockResponse[0].abbrev).toBe("CATH");
-    expect(mockResponse[0].vesselClass).toBe("Jumbo Mark II");
-    expect(mockResponse[0].inService).toBe(true);
-    expect(mockResponse[0].active).toBe(true);
-    expect(mockResponse[0].yearBuilt).toBe(1980);
-    expect(mockResponse[0].carCapacity).toBe(218);
-    expect(mockResponse[0].passengerCapacity).toBe(2500);
-    expect(mockResponse[0].maxSpeed).toBe(18);
-  });
+      renderHook(() => useVesselVerboseById(1), { wrapper });
 
-  it("should handle empty responses", () => {
-    const mockQueryFn = async () => [];
-    const result = mockQueryFn();
+      await waitFor(() => {
+        expect(mockGetVesselVerboseById).toHaveBeenCalledWith(1);
+      });
+    });
 
-    expect(result).resolves.toEqual([]);
-  });
+    it("should handle different vessel IDs", async () => {
+      const { getVesselVerboseById } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerboseById = vi.mocked(getVesselVerboseById);
+      mockGetVesselVerboseById.mockResolvedValue([]);
 
-  it("should handle API error responses", () => {
-    const mockQueryFn = async () => {
-      throw new Error("API Error");
-    };
+      renderHook(() => useVesselVerboseById(2), { wrapper });
 
-    expect(mockQueryFn()).rejects.toThrow("API Error");
-  });
+      await waitFor(() => {
+        expect(mockGetVesselVerboseById).toHaveBeenCalledWith(2);
+      });
+    });
 
-  it("should handle vessel specifications correctly", () => {
-    const mockResponse = [
-      {
-        vesselId: 1,
-        vesselName: "M/V Cathlamet",
-        length: 460,
-        breadth: 89,
-        draft: 18.5,
-        carCapacity: 218,
-        passengerCapacity: 2500,
-        maxSpeed: 18,
-        horsepower: 12000,
-      },
-    ];
+    it("should return vessel verbose data for specific vessel", async () => {
+      const { getVesselVerboseById } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerboseById = vi.mocked(getVesselVerboseById);
 
-    const vessel = mockResponse[0];
+      const mockVesselData = [
+        {
+          vesselId: 1,
+          vesselName: "M/V Cathlamet",
+          abbrev: "CATH",
+          vesselClass: "Jumbo Mark II",
+          inService: true,
+          active: true,
+          yearBuilt: 1980,
+          carCapacity: 218,
+          passengerCapacity: 2500,
+          maxSpeed: 18,
+          homeTerminalId: 1,
+          homeTerminalName: "Seattle",
+        },
+      ];
 
-    // Test vessel specifications
-    expect(vessel.length).toBe(460); // feet
-    expect(vessel.breadth).toBe(89); // feet
-    expect(vessel.draft).toBe(18.5); // feet
-    expect(vessel.carCapacity).toBe(218);
-    expect(vessel.passengerCapacity).toBe(2500);
-    expect(vessel.maxSpeed).toBe(18); // knots
-    expect(vessel.horsepower).toBe(12000);
-  });
+      mockGetVesselVerboseById.mockResolvedValue(mockVesselData);
 
-  it("should handle vessel operational status correctly", () => {
-    const mockResponse = [
-      {
-        vesselId: 1,
-        vesselName: "M/V Cathlamet",
-        inService: true,
-        active: true,
-        homeTerminalId: 1,
-        homeTerminalName: "Seattle",
-      },
-    ];
+      const { result } = renderHook(() => useVesselVerboseById(1), { wrapper });
 
-    const vessel = mockResponse[0];
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
 
-    // Test operational status
-    expect(vessel.inService).toBe(true);
-    expect(vessel.active).toBe(true);
-    expect(vessel.homeTerminalId).toBe(1);
-    expect(vessel.homeTerminalName).toBe("Seattle");
-  });
+      expect(result.current.data).toEqual(mockVesselData);
+      expect(result.current.data).toHaveLength(1);
+      expect(result.current.data?.[0].vesselId).toBe(1);
+      expect(result.current.data?.[0].vesselName).toBe("M/V Cathlamet");
+      expect(result.current.data?.[0].abbrev).toBe("CATH");
+      expect(result.current.data?.[0].vesselClass).toBe("Jumbo Mark II");
+    });
 
-  it("should handle caching options correctly", () => {
-    const mockCachingOptions = {
-      staleTime: 24 * 60 * 60 * 1000, // 24 hours
-      gcTime: 24 * 60 * 60 * 1000, // 24 hours
-    };
+    it("should be disabled when vessel ID is falsy", () => {
+      const { result } = renderHook(() => useVesselVerboseById(0), { wrapper });
 
-    expect(mockCachingOptions.staleTime).toBe(24 * 60 * 60 * 1000);
-    expect(mockCachingOptions.gcTime).toBe(24 * 60 * 60 * 1000);
+      expect(result.current.isFetching).toBe(false);
+      expect(result.current.data).toBeUndefined();
+    });
+
+    it("should handle API errors", async () => {
+      const { getVesselVerboseById } = await import(
+        "@/api/wsf/vessels/vesselVerbose/api"
+      );
+      const mockGetVesselVerboseById = vi.mocked(getVesselVerboseById);
+      mockGetVesselVerboseById.mockRejectedValue(new Error("API Error"));
+
+      const { result } = renderHook(() => useVesselVerboseById(1), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isError).toBe(true);
+      });
+
+      expect(result.current.error).toBeInstanceOf(Error);
+      expect(result.current.error?.message).toBe("API Error");
+    });
   });
 });

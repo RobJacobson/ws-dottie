@@ -17,8 +17,8 @@ describe("Terminal Basics API", () => {
       expect(getTerminalBasics).toHaveLength(0);
     });
 
-    it("should return a Promise", () => {
-      const { fetchWsfArray } = require("@/shared/fetching/fetch");
+    it("should return a Promise", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
       const mockFetchWsfArray = vi.mocked(fetchWsfArray);
       mockFetchWsfArray.mockResolvedValue([]);
 

@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
-  getTerminalVerbose,
-  getTerminalVerboseByTerminalId,
-} from "@/api/wsf/terminals/terminalverbose/api";
+  getTerminalLocations,
+  getTerminalLocationsByTerminalId,
+} from "@/api/wsf/terminals/terminalLocations/api";
 
 // Mock the fetch function
 vi.mock("@/shared/fetching/fetch", () => ({
@@ -24,11 +24,11 @@ vi.mock("@/shared/fetching/dateUtils", () => ({
   }),
 }));
 
-describe("TerminalVerbose API", () => {
-  describe("getTerminalVerbose", () => {
+describe("TerminalLocations API", () => {
+  describe("getTerminalLocations", () => {
     it("should have the correct function signature", () => {
-      expect(typeof getTerminalVerbose).toBe("function");
-      expect(getTerminalVerbose).toHaveLength(0);
+      expect(typeof getTerminalLocations).toBe("function");
+      expect(getTerminalLocations).toHaveLength(0);
     });
 
     it("should return a Promise", async () => {
@@ -36,7 +36,7 @@ describe("TerminalVerbose API", () => {
       const mockFetchWsfArray = vi.mocked(fetchWsfArray);
       mockFetchWsfArray.mockResolvedValue([]);
 
-      const result = getTerminalVerbose();
+      const result = getTerminalLocations();
       expect(result).toBeInstanceOf(Promise);
     });
 
@@ -46,23 +46,22 @@ describe("TerminalVerbose API", () => {
 
       mockFetchWsfArray.mockResolvedValue([]);
 
-      await getTerminalVerbose();
+      await getTerminalLocations();
 
       expect(mockFetchWsfArray).toHaveBeenCalledWith(
         "terminals",
-        "/terminalverbose"
+        "/terminallocations"
       );
     });
 
-    it("should return terminal verbose data", async () => {
+    it("should return terminal location data", async () => {
       const { fetchWsfArray } = await import("@/shared/fetching/fetch");
       const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-      const mockTerminalData = [
+      const mockLocationData = [
         {
           terminalId: 7,
           terminalName: "Anacortes",
-          terminalAbbrev: "ANA",
           latitude: 48.5123,
           longitude: -122.6123,
           address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
@@ -70,31 +69,25 @@ describe("TerminalVerbose API", () => {
           state: "WA",
           zipCode: "98221",
           county: "Skagit",
-          phone: "(360) 293-8155",
-          hasWaitTime: true,
-          hasSpaceAvailable: true,
           gisZoomLocation: {
             latitude: 48.5123,
             longitude: -122.6123,
             zoomLevel: 15,
           },
-          transitLinks: [],
-          waitTimes: [],
-          bulletins: [],
-          sailingSpaces: [],
           isActive: true,
         },
       ];
 
-      mockFetchWsfArray.mockResolvedValue(mockTerminalData);
+      mockFetchWsfArray.mockResolvedValue(mockLocationData);
 
-      const result = await getTerminalVerbose();
+      const result = await getTerminalLocations();
 
-      expect(result).toEqual(mockTerminalData);
+      expect(result).toEqual(mockLocationData);
       expect(result).toHaveLength(1);
       expect(result[0].terminalId).toBe(7);
       expect(result[0].terminalName).toBe("Anacortes");
-      expect(result[0].terminalAbbrev).toBe("ANA");
+      expect(result[0].latitude).toBe(48.5123);
+      expect(result[0].longitude).toBe(-122.6123);
     });
 
     it("should handle empty responses", async () => {
@@ -103,7 +96,7 @@ describe("TerminalVerbose API", () => {
 
       mockFetchWsfArray.mockResolvedValue([]);
 
-      const result = await getTerminalVerbose();
+      const result = await getTerminalLocations();
 
       expect(result).toEqual([]);
     });
@@ -112,100 +105,139 @@ describe("TerminalVerbose API", () => {
       const { fetchWsfArray } = await import("@/shared/fetching/fetch");
       const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-      const mockTerminalData = [
+      const mockLocationData = [
         {
           terminalId: 7,
           terminalName: "Anacortes",
           latitude: 48.5123,
           longitude: -122.6123,
-          gisZoomLocation: {
-            latitude: 48.5123,
-            longitude: -122.6123,
-            zoomLevel: 15,
-          },
-        },
-      ];
-
-      mockFetchWsfArray.mockResolvedValue(mockTerminalData);
-
-      const result = await getTerminalVerbose();
-      const terminal = result[0];
-
-      // Test location data
-      expect(terminal.latitude).toBe(48.5123);
-      expect(terminal.longitude).toBe(-122.6123);
-      expect(terminal.gisZoomLocation.latitude).toBe(48.5123);
-      expect(terminal.gisZoomLocation.longitude).toBe(-122.6123);
-      expect(terminal.gisZoomLocation.zoomLevel).toBe(15);
-    });
-
-    it("should handle terminal contact information correctly", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      const mockTerminalData = [
-        {
-          terminalId: 7,
-          terminalName: "Anacortes",
           address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
           city: "Anacortes",
           state: "WA",
           zipCode: "98221",
           county: "Skagit",
-          phone: "(360) 293-8155",
-        },
-      ];
-
-      mockFetchWsfArray.mockResolvedValue(mockTerminalData);
-
-      const result = await getTerminalVerbose();
-      const terminal = result[0];
-
-      // Test contact information
-      expect(terminal.address).toBe(
-        "2100 Ferry Terminal Rd, Anacortes, WA 98221"
-      );
-      expect(terminal.city).toBe("Anacortes");
-      expect(terminal.state).toBe("WA");
-      expect(terminal.zipCode).toBe("98221");
-      expect(terminal.county).toBe("Skagit");
-      expect(terminal.phone).toBe("(360) 293-8155");
-    });
-
-    it("should handle terminal operational features correctly", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      const mockTerminalData = [
-        {
-          terminalId: 7,
-          terminalName: "Anacortes",
-          hasWaitTime: true,
-          hasSpaceAvailable: true,
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
           isActive: true,
         },
       ];
 
-      mockFetchWsfArray.mockResolvedValue(mockTerminalData);
+      mockFetchWsfArray.mockResolvedValue(mockLocationData);
 
-      const result = await getTerminalVerbose();
-      const terminal = result[0];
+      const result = await getTerminalLocations();
+      const location = result[0];
 
-      // Test operational features
-      expect(terminal.hasWaitTime).toBe(true);
-      expect(terminal.hasSpaceAvailable).toBe(true);
-      expect(terminal.isActive).toBe(true);
+      // Test location data
+      expect(location.latitude).toBe(48.5123);
+      expect(location.longitude).toBe(-122.6123);
+      expect(location.gisZoomLocation.latitude).toBe(48.5123);
+      expect(location.gisZoomLocation.longitude).toBe(-122.6123);
+      expect(location.gisZoomLocation.zoomLevel).toBe(15);
+    });
+
+    it("should handle terminal address information correctly", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockLocationData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          latitude: 48.5123,
+          longitude: -122.6123,
+          address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
+          city: "Anacortes",
+          state: "WA",
+          zipCode: "98221",
+          county: "Skagit",
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
+          isActive: true,
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockLocationData);
+
+      const result = await getTerminalLocations();
+      const location = result[0];
+
+      // Test address information
+      expect(location.address).toBe(
+        "2100 Ferry Terminal Rd, Anacortes, WA 98221"
+      );
+      expect(location.city).toBe("Anacortes");
+      expect(location.state).toBe("WA");
+      expect(location.zipCode).toBe("98221");
+      expect(location.county).toBe("Skagit");
+    });
+
+    it("should handle multiple terminals correctly", async () => {
+      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
+      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+
+      const mockLocationData = [
+        {
+          terminalId: 7,
+          terminalName: "Anacortes",
+          latitude: 48.5123,
+          longitude: -122.6123,
+          address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
+          city: "Anacortes",
+          state: "WA",
+          zipCode: "98221",
+          county: "Skagit",
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
+          isActive: true,
+        },
+        {
+          terminalId: 8,
+          terminalName: "Friday Harbor",
+          latitude: 48.5342,
+          longitude: -123.0171,
+          address: "1 Front St, Friday Harbor, WA 98250",
+          city: "Friday Harbor",
+          state: "WA",
+          zipCode: "98250",
+          county: "San Juan",
+          gisZoomLocation: {
+            latitude: 48.5342,
+            longitude: -123.0171,
+            zoomLevel: 15,
+          },
+          isActive: true,
+        },
+      ];
+
+      mockFetchWsfArray.mockResolvedValue(mockLocationData);
+
+      const result = await getTerminalLocations();
+
+      expect(result).toHaveLength(2);
+      expect(result[0].terminalId).toBe(7);
+      expect(result[1].terminalId).toBe(8);
+      expect(result[0].terminalName).toBe("Anacortes");
+      expect(result[1].terminalName).toBe("Friday Harbor");
     });
   });
 
-  describe("getTerminalVerboseByTerminalId", () => {
+  describe("getTerminalLocationsByTerminalId", () => {
     it("should have the correct function signature", () => {
-      expect(typeof getTerminalVerboseByTerminalId).toBe("function");
-      expect(getTerminalVerboseByTerminalId).toHaveLength(1);
+      expect(typeof getTerminalLocationsByTerminalId).toBe("function");
+      expect(getTerminalLocationsByTerminalId).toHaveLength(1);
     });
 
     it("should return a Promise", () => {
-      const result = getTerminalVerboseByTerminalId(7);
+      const result = getTerminalLocationsByTerminalId(7);
       expect(result).toBeInstanceOf(Promise);
     });
 
@@ -215,11 +247,11 @@ describe("TerminalVerbose API", () => {
 
       mockFetchWsfArray.mockResolvedValue([]);
 
-      await getTerminalVerboseByTerminalId(7);
+      await getTerminalLocationsByTerminalId(7);
 
       expect(mockFetchWsfArray).toHaveBeenCalledWith(
         "terminals",
-        "/terminalverbose/7"
+        "/terminallocations/7"
       );
     });
 
@@ -229,23 +261,22 @@ describe("TerminalVerbose API", () => {
 
       mockFetchWsfArray.mockResolvedValue([]);
 
-      await getTerminalVerboseByTerminalId(8);
+      await getTerminalLocationsByTerminalId(8);
 
       expect(mockFetchWsfArray).toHaveBeenCalledWith(
         "terminals",
-        "/terminalverbose/8"
+        "/terminallocations/8"
       );
     });
 
-    it("should return terminal verbose data for specific terminal", async () => {
+    it("should return terminal location data for specific terminal", async () => {
       const { fetchWsfArray } = await import("@/shared/fetching/fetch");
       const mockFetchWsfArray = vi.mocked(fetchWsfArray);
 
-      const mockTerminalData = [
+      const mockLocationData = [
         {
           terminalId: 7,
           terminalName: "Anacortes",
-          terminalAbbrev: "ANA",
           latitude: 48.5123,
           longitude: -122.6123,
           address: "2100 Ferry Terminal Rd, Anacortes, WA 98221",
@@ -253,22 +284,25 @@ describe("TerminalVerbose API", () => {
           state: "WA",
           zipCode: "98221",
           county: "Skagit",
-          phone: "(360) 293-8155",
-          hasWaitTime: true,
-          hasSpaceAvailable: true,
+          gisZoomLocation: {
+            latitude: 48.5123,
+            longitude: -122.6123,
+            zoomLevel: 15,
+          },
           isActive: true,
         },
       ];
 
-      mockFetchWsfArray.mockResolvedValue(mockTerminalData);
+      mockFetchWsfArray.mockResolvedValue(mockLocationData);
 
-      const result = await getTerminalVerboseByTerminalId(7);
+      const result = await getTerminalLocationsByTerminalId(7);
 
-      expect(result).toEqual(mockTerminalData);
+      expect(result).toEqual(mockLocationData);
       expect(result).toHaveLength(1);
       expect(result[0].terminalId).toBe(7);
       expect(result[0].terminalName).toBe("Anacortes");
-      expect(result[0].terminalAbbrev).toBe("ANA");
+      expect(result[0].latitude).toBe(48.5123);
+      expect(result[0].longitude).toBe(-122.6123);
     });
   });
 });
