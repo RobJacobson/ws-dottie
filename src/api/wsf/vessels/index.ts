@@ -1,5 +1,8 @@
-// Washington State Ferries Vessels data source
+// WSF Vessels API exports
 
-export * from "./cacheFlushDateVessels";
-export * from "./vesselLocations";
-export * from "./vesselVerbose";
+// API functions
+export * from "./api";
+// React Query hooks
+export * from "./hook";
+// Types
+export * from "./types";

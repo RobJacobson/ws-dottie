@@ -1,8 +1,8 @@
-// Washington State Ferries Terminals data source
+// WSF Terminals API exports
 
-export * from "./cacheFlushDateTerminals";
-export * from "./terminalBasics";
-export * from "./terminalLocations";
-export * from "./terminalSailingSpace";
-export * from "./terminalverbose";
-export * from "./terminalWaitTimes";
+// API functions
+export * from "./api";
+// React Query hooks
+export * from "./hook";
+// Types
+export * from "./types";
