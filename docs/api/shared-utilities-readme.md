@@ -1,21 +1,23 @@
-# WSF Shared Utilities
+# WSDOT API Client Shared Utilities
 
-Shared utilities and configuration for the WSF (Washington State Ferries) data layer, providing core fetch functionality, data transformation, and platform-specific implementations.
+Shared utilities and configuration for the WSDOT API client library, providing core fetch functionality, data transformation, caching, and platform-specific implementations.
 
 ## Overview
 
-This module provides the foundational infrastructure for all WSF API interactions, including:
+This module provides the foundational infrastructure for all WSDOT API interactions, including:
 - Platform-agnostic fetch utilities
 - Automatic data transformation and date parsing
 - Error handling and logging
 - Configuration management
+- React Query caching strategies
+- Type-safe URL building
 
 ## Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   API Modules   │    │   Shared Utils  │    │   Platform      │
-│   (Vessels/etc) │◄──►│   (Fetch/Utils) │◄──►│   (Web/Mobile)  │
+│   (WSF/WSDOT)   │◄──►│   (Fetch/Utils) │◄──►│   (Web/Mobile)  │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
@@ -129,6 +131,54 @@ const url = buildWsfUrl('/schedule/routes', {
 - Base URL configuration
 - Type-safe parameter handling
 
+## React Query Integration
+
+### Caching Configuration
+
+#### `createInfrequentUpdateOptions()`
+Default options for static or infrequently updated data:
+
+```typescript
+const options = createInfrequentUpdateOptions();
+// Returns: { staleTime: 5 * 60 * 1000, refetchInterval: 10 * 60 * 1000 }
+```
+
+#### `createFrequentUpdateOptions()`
+Default options for real-time or frequently updated data:
+
+```typescript
+const options = createFrequentUpdateOptions();
+// Returns: { staleTime: 30 * 1000, refetchInterval: 60 * 1000 }
+```
+
+### Usage Pattern
+```typescript
+import { useQuery } from '@tanstack/react-query';
+import { createInfrequentUpdateOptions } from '@/shared/caching/config';
+
+// For static data (terminals, vessels, fares)
+const { data } = useQuery({
+  queryKey: ['terminals'],
+  queryFn: getTerminals,
+  ...createInfrequentUpdateOptions(),
+});
+
+// For real-time data (vessel locations, sailing space)
+const { data } = useQuery({
+  queryKey: ['vesselLocations'],
+  queryFn: getVesselLocations,
+  ...createFrequentUpdateOptions(),
+});
+
+// Conditional queries - set enabled before spread
+const { data } = useQuery({
+  queryKey: ['terminal', terminalId],
+  queryFn: () => getTerminalById(terminalId),
+  enabled: !!terminalId, // conditional logic
+  ...createInfrequentUpdateOptions(), // spread at end
+});
+```
+
 ## Platform Support
 
 ### Web Platform
@@ -201,12 +251,15 @@ expect(result[0].vesselId).toBe(1);
 ```
 
 ## Configuration
+
+### Base URLs
 ```typescript
 // Base URLs for different API categories
 const API_BASES = {
   vessels: "https://www.wsdot.wa.gov/ferries/api/vessels/rest",
   terminals: "https://www.wsdot.wa.gov/ferries/api/terminals/rest", 
-  schedule: "https://www.wsdot.wa.gov/ferries/api/schedule/rest"
+  schedule: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
+  fares: "https://www.wsdot.wa.gov/ferries/api/fares/rest"
 } as const;
 
 // Access token configuration
@@ -233,7 +286,7 @@ type FetchOptions = {
 
 ### Error Recovery
 - **Automatic Retry**: Exponential backoff for transient failures
-- **Graceful Degradation**: Return null/empty arrays on failure
+- **Graceful Degradation**: Return empty arrays on failure
 - **User Feedback**: Structured error messages for debugging
 - **Logging**: Configurable error logging levels
 
@@ -288,7 +341,7 @@ const data = await fetchWsf('/vessels/vessellocations', options);
 
 ### Basic API Call
 ```typescript
-import { fetchWsf } from '@/data/wsf/shared';
+import { fetchWsf } from '@/shared/fetching';
 
 // Fetch vessel locations
 const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
@@ -303,7 +356,7 @@ const routes = await fetchWsf<Route[]>('/schedule/routes', {
 
 ### URL Building with Parameters
 ```typescript
-import { buildWsfUrl } from '@/data/wsf/shared';
+import { buildWsfUrl } from '@/shared/fetching';
 
 // Build URL with date parameter
 const url = buildWsfUrl('/schedule/routes', {
@@ -317,7 +370,7 @@ const routes = await fetchWsf<Route[]>(url);
 
 ### Error Handling
 ```typescript
-import { fetchWsf } from '@/data/wsf/shared';
+import { fetchWsf } from '@/shared/fetching';
 
 try {
   const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');

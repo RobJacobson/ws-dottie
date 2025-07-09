@@ -10,7 +10,7 @@ import {
 import {
   mockRawTerminalResponse,
   mockRawVesselLocationResponse,
-} from "../../../tests/utils";
+} from "../../utils";
 
 describe("WSF Data Transformation", () => {
   describe("transformWsfData", () => {
