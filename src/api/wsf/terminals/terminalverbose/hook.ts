@@ -3,8 +3,9 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
+
 import type { TerminalVerbose } from "../types";
-import { getTerminalVerbose, getTerminalVerboseById } from "./api";
+import { getTerminalVerbose, getTerminalVerboseByTerminalId } from "./api";
 
 // Main hooks
 /**
@@ -42,10 +43,10 @@ export const useTerminalVerbose = () => {
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @returns React Query result containing an array of TerminalVerbose objects with comprehensive information for the specified terminal
  */
-export const useTerminalVerboseById = (terminalId: number) => {
+export const useTerminalVerboseByTerminalId = (terminalId: number) => {
   return useQuery({
-    queryKey: ["terminals", "verbose", "byId", terminalId],
-    queryFn: () => getTerminalVerboseById(terminalId),
+    queryKey: ["terminals", "verbose", "byTerminalId", terminalId],
+    queryFn: () => getTerminalVerboseByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
   });

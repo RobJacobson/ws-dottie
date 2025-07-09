@@ -196,16 +196,21 @@ const vessels = await client.wsf.vessels.getVesselWatchVerboseByRouteTerminalDir
 
 #### Terminals API
 ```typescript
-// Get terminal sailing space
+// Terminal Basics (Basic terminal information)
+const terminals = await client.wsf.terminals.getTerminalBasics();
+const terminals = await client.wsf.terminals.getTerminalBasicsByTerminalId(terminalId: number);
+
+// Terminal Sailing Space (Real-time space availability)
 const terminals = await client.wsf.terminals.getTerminalSailingSpace();
-
-// Get specific terminal sailing space
 const terminals = await client.wsf.terminals.getTerminalSailingSpaceByTerminalId(terminalId: number);
+const terminals = await client.wsf.terminals.getTerminalSailingSpaceByRoute(routeId: number);
+const terminals = await client.wsf.terminals.getTerminalSailingSpaceByTerminalAndRoute({
+  terminalId: number;
+  routeId: number;
+});
 
-// Get terminal details
+// Terminal Verbose (Detailed terminal information)
 const terminals = await client.wsf.terminals.getTerminalVerbose();
-
-// Get specific terminal details
 const terminals = await client.wsf.terminals.getTerminalVerboseByTerminalId(terminalId: number);
 ```
 

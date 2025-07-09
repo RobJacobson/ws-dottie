@@ -2,6 +2,7 @@
 
 import { buildWsfUrl } from "@/shared/fetching/dateUtils";
 import { fetchWsfArray } from "@/shared/fetching/fetch";
+
 import type { TerminalVerbose } from "../types";
 
 // Main API functions
@@ -35,7 +36,7 @@ export const getTerminalVerbose = (): Promise<TerminalVerbose[]> =>
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @returns Promise resolving to an array of TerminalVerbose objects containing comprehensive information for the specified terminal
  */
-export const getTerminalVerboseById = (
+export const getTerminalVerboseByTerminalId = (
   terminalId: number
 ): Promise<TerminalVerbose[]> =>
   fetchWsfArray<TerminalVerbose>(
