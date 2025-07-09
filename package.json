@@ -1,0 +1,77 @@
+{
+  "name": "wsdot-api-client",
+  "version": "1.0.0",
+  "description": "Complete TypeScript client for WSDOT Traveler Information APIs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react.mjs",
+      "require": "./dist/react.js",
+      "types": "./dist/react.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:integration": "vitest --config vitest.integration.config.ts",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "biome lint",
+    "format": "biome format --write",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "bun run build && bun run test"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-query": ">=3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitest/ui": "^1.0.0",
+    "@biomejs/biome": "^2.0.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-query": "^3.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "wsdot",
+    "washington-state",
+    "transportation",
+    "api",
+    "traffic",
+    "weather",
+    "ferries",
+    "highway-cameras",
+    "travel-times",
+    "typescript",
+    "react",
+    "react-query"
+  ],
+  "author": "Rob <rob@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/wsdot-api-client.git"
+  }
+}
