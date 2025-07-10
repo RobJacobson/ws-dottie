@@ -1,184 +1,299 @@
 // WSF Fares API functions
+// Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 
 import { buildWsfUrl } from "@/shared/fetching/dateUtils";
-import { fetchWsfArray } from "@/shared/fetching/fetch";
+import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 
 import type {
-  Fare,
-  FareCategory,
-  FareType,
-  RouteFare,
-  TerminalFare,
+  FareLineItem,
+  FareLineItemBasic,
+  FareLineItemsParams,
+  FareLineItemVerbose,
+  FaresCacheFlushDate,
+  FaresTerminal,
+  FaresValidDateRange,
+  FareTotal,
+  FareTotalRequest,
+  TerminalCombo,
+  TerminalComboVerbose,
+  TerminalMate,
+  TerminalMatesParams,
+  TerminalParams,
 } from "./types";
 
-// Main API functions
-/**
- * API function for fetching all fares from WSF Fares API
- *
- * Retrieves comprehensive fare information including fare amounts, categories,
- * types, and effective dates. This endpoint provides current fare information
- * for all Washington State Ferries routes and services.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @returns Promise resolving to an array of Fare objects containing comprehensive fare information
- */
-export const getFares = (): Promise<Fare[]> =>
-  fetchWsfArray<Fare>("fares", "/fares");
+// Helper function to parse WSF date format
+const parseWsfDate = (dateString: any): Date => {
+  // Debug: log what we're receiving
+  console.log("parseWsfDate input:", dateString, typeof dateString);
 
-/**
- * API function for fetching a specific fare by ID from WSF Fares API
- *
- * Retrieves comprehensive fare information for a specific fare identified by fare ID,
- * including fare amount, category, type, and effective dates. This endpoint filters
- * the resultset to a single fare, providing detailed information about that specific fare.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @param fareId - The unique identifier for the fare
- * @returns Promise resolving to an array of Fare objects containing comprehensive information for the specified fare
- */
-export const getFareById = (fareId: number): Promise<Fare[]> =>
-  fetchWsfArray<Fare>("fares", buildWsfUrl("/fares/{fareId}", { fareId }));
+  // Handle WSF date format: "/Date(timestamp)/"
+  if (typeof dateString === "string") {
+    const match = dateString.match(/\/Date\((\d+)(?:[+-]\d+)?\)\//);
+    if (match) {
+      return new Date(parseInt(match[1]));
+    }
+    // Handle regular date strings
+    return new Date(dateString);
+  }
 
-/**
- * API function for fetching fare categories from WSF Fares API
- *
- * Retrieves fare category information including category names, descriptions,
- * and types. This endpoint provides information about the different categories
- * of fares available in the WSF system.
- *
- * This data is updated infrequently and provides static category information
- * that changes only when WSF updates their fare structure.
- *
- * @returns Promise resolving to an array of FareCategory objects containing fare category information
- */
-export const getFareCategories = (): Promise<FareCategory[]> =>
-  fetchWsfArray<FareCategory>("fares", "/farecategories");
+  // If it's already a Date object, return it
+  if (dateString instanceof Date) {
+    return dateString;
+  }
 
+  // If it's a number (timestamp), convert it
+  if (typeof dateString === "number") {
+    return new Date(dateString);
+  }
+
+  // Fallback
+  console.warn("Unexpected date format:", dateString);
+  return new Date();
+};
+
+// Cache flush date
 /**
- * API function for fetching a specific fare category by ID from WSF Fares API
+ * Get cache flush date from WSF Fares API
  *
- * Retrieves fare category information for a specific category identified by category ID,
- * including category name, description, and type. This endpoint filters the resultset
- * to a single category, providing detailed information about that specific fare category.
+ * Some of the retrieval operations return data that changes infrequently.
+ * Use this operation to poll for changes. When the date returned is modified,
+ * drop your application cache and retrieve fresh data.
  *
- * This data is updated infrequently and provides static category information
- * that changes only when WSF updates their fare structure.
- *
- * @param categoryId - The unique identifier for the fare category
- * @returns Promise resolving to an array of FareCategory objects containing information for the specified category
+ * @returns Promise resolving to cache flush date
  */
-export const getFareCategoryById = (
-  categoryId: number
-): Promise<FareCategory[]> =>
-  fetchWsfArray<FareCategory>(
+export const getFaresCacheFlushDate =
+  async (): Promise<FaresCacheFlushDate> => {
+    const response = await fetchWsf<string>("fares", "/cacheflushdate");
+    return parseWsfDate(response);
+  };
+
+// Valid date range
+/**
+ * Get valid date range for fares data from WSF Fares API
+ *
+ * Retrieves a date range for which fares data is currently published & available.
+ *
+ * @returns Promise resolving to valid date range information
+ */
+export const getFaresValidDateRange =
+  async (): Promise<FaresValidDateRange> => {
+    const response = await fetchWsf<{ DateFrom: string; DateThru: string }>(
+      "fares",
+      "/validdaterange"
+    );
+    return {
+      DateFrom: response.DateFrom,
+      DateThru: response.DateThru,
+    };
+  };
+
+// Terminals
+/**
+ * Get valid departing terminals for a trip date from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @returns Promise resolving to array of valid departing terminals
+ */
+export const getFaresTerminals = (tripDate: Date): Promise<FaresTerminal[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<FaresTerminal>("fares", `/terminals/${formattedDate}`);
+};
+
+// Terminal mates
+/**
+ * Get arriving terminals for a departing terminal and trip date from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @param terminalID - The departing terminal ID
+ * @returns Promise resolving to array of arriving terminals
+ */
+export const getFaresTerminalMates = (
+  tripDate: Date,
+  terminalID: number
+): Promise<TerminalMate[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<TerminalMate>(
     "fares",
-    buildWsfUrl("/farecategories/{categoryId}", { categoryId })
+    `/terminalmates/${formattedDate}/${terminalID}`
+  );
+};
+
+// Terminal combo
+/**
+ * Get fare collection description for a terminal combination from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @param departingTerminalID - The departing terminal ID
+ * @param arrivingTerminalID - The arriving terminal ID
+ * @returns Promise resolving to terminal combination information
+ */
+export const getTerminalCombo = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number
+): Promise<TerminalCombo[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<TerminalCombo>(
+    "fares",
+    `/terminalcombo/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}`
+  );
+};
+
+// Terminal combo verbose
+/**
+ * Get all terminal combinations for a trip date from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @returns Promise resolving to array of all terminal combinations
+ */
+export const getTerminalComboVerbose = (
+  tripDate: Date
+): Promise<TerminalComboVerbose[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<TerminalComboVerbose>(
+    "fares",
+    `/terminalcomboverbose/${formattedDate}`
+  );
+};
+
+// Fare line items basic
+/**
+ * Get most popular fares for a route from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @param departingTerminalID - The departing terminal ID
+ * @param arrivingTerminalID - The arriving terminal ID
+ * @param roundTrip - Whether this is a round trip (true) or one-way (false)
+ * @returns Promise resolving to array of most popular fare line items
+ */
+export const getFareLineItemsBasic = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  roundTrip: boolean
+): Promise<FareLineItemBasic[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<FareLineItemBasic>(
+    "fares",
+    `/farelineitemsbasic/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
+  );
+};
+
+// Fare line items
+/**
+ * Get all fares for a route from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @param departingTerminalID - The departing terminal ID
+ * @param arrivingTerminalID - The arriving terminal ID
+ * @param roundTrip - Whether this is a round trip (true) or one-way (false)
+ * @returns Promise resolving to array of all fare line items
+ */
+export const getFareLineItems = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  roundTrip: boolean
+): Promise<FareLineItem[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<FareLineItem>(
+    "fares",
+    `/farelineitems/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
+  );
+};
+
+// Fare line items verbose
+/**
+ * Get all fares for all terminal combinations on a trip date from WSF Fares API
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format
+ * @returns Promise resolving to array of all fare line items for all routes
+ */
+export const getFareLineItemsVerbose = (
+  tripDate: Date
+): Promise<FareLineItemVerbose[]> => {
+  const formattedDate = tripDate.toISOString().split("T")[0];
+  return fetchWsfArray<FareLineItemVerbose>(
+    "fares",
+    `/farelineitemsverbose/${formattedDate}`
+  );
+};
+
+// Fare totals
+/**
+ * Calculate fare totals for a set of fare line items from WSF Fares API
+ *
+ * @param request - The fare total calculation request parameters
+ * @returns Promise resolving to fare total calculation
+ */
+export const getFareTotals = (
+  request: FareTotalRequest
+): Promise<FareTotal> => {
+  const formattedDate = request.tripDate.toISOString().split("T")[0];
+  const fareLineItemIDs = request.fareLineItemIDs.join(",");
+  const quantities = request.quantities.join(",");
+
+  return fetchWsf<FareTotal>(
+    "fares",
+    `/faretotals/${formattedDate}/${request.departingTerminalID}/${request.arrivingTerminalID}/${request.roundTrip}/${fareLineItemIDs}/${quantities}`
+  );
+};
+
+// Convenience functions with parameter objects
+/**
+ * Get fare line items using parameter object
+ *
+ * @param params - Fare line items parameters
+ * @returns Promise resolving to array of fare line items
+ */
+export const getFareLineItemsWithParams = (
+  params: FareLineItemsParams
+): Promise<FareLineItem[]> =>
+  getFareLineItems(
+    params.tripDate,
+    params.departingTerminalID,
+    params.arrivingTerminalID,
+    params.roundTrip
   );
 
 /**
- * API function for fetching fare types from WSF Fares API
+ * Get fare line items basic using parameter object
  *
- * Retrieves fare type information including type names, descriptions,
- * and categories. This endpoint provides information about the different types
- * of fares available in the WSF system.
- *
- * This data is updated infrequently and provides static type information
- * that changes only when WSF updates their fare structure.
- *
- * @returns Promise resolving to an array of FareType objects containing fare type information
+ * @param params - Fare line items parameters
+ * @returns Promise resolving to array of basic fare line items
  */
-export const getFareTypes = (): Promise<FareType[]> =>
-  fetchWsfArray<FareType>("fares", "/faretypes");
-
-/**
- * API function for fetching a specific fare type by ID from WSF Fares API
- *
- * Retrieves fare type information for a specific type identified by type ID,
- * including type name, description, and category. This endpoint filters the resultset
- * to a single type, providing detailed information about that specific fare type.
- *
- * This data is updated infrequently and provides static type information
- * that changes only when WSF updates their fare structure.
- *
- * @param typeId - The unique identifier for the fare type
- * @returns Promise resolving to an array of FareType objects containing information for the specified type
- */
-export const getFareTypeById = (typeId: number): Promise<FareType[]> =>
-  fetchWsfArray<FareType>(
-    "fares",
-    buildWsfUrl("/faretypes/{typeId}", { typeId })
+export const getFareLineItemsBasicWithParams = (
+  params: FareLineItemsParams
+): Promise<FareLineItemBasic[]> =>
+  getFareLineItemsBasic(
+    params.tripDate,
+    params.departingTerminalID,
+    params.arrivingTerminalID,
+    params.roundTrip
   );
 
 /**
- * API function for fetching route fares from WSF Fares API
+ * Get terminal mates using parameter object
  *
- * Retrieves fare information for all routes, including route names, fare amounts,
- * and effective dates. This endpoint provides current fare information for all
- * Washington State Ferries routes.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @returns Promise resolving to an array of RouteFare objects containing route fare information
+ * @param params - Terminal mates parameters
+ * @returns Promise resolving to array of terminal mates
  */
-export const getRouteFares = (): Promise<RouteFare[]> =>
-  fetchWsfArray<RouteFare>("fares", "/routefares");
+export const getTerminalMatesWithParams = (
+  params: TerminalMatesParams
+): Promise<TerminalMate[]> =>
+  getFaresTerminalMates(params.tripDate, params.terminalID);
 
 /**
- * API function for fetching route fares by route ID from WSF Fares API
+ * Get terminal combo using parameter object
  *
- * Retrieves fare information for a specific route identified by route ID,
- * including route name, fare amounts, and effective dates. This endpoint filters
- * the resultset to a single route, providing detailed fare information for that route.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @param routeId - The unique identifier for the route
- * @returns Promise resolving to an array of RouteFare objects containing fare information for the specified route
+ * @param tripDate - The trip date
+ * @param departingTerminalID - The departing terminal ID
+ * @param arrivingTerminalID - The arriving terminal ID
+ * @returns Promise resolving to terminal combination information
  */
-export const getRouteFaresByRouteId = (routeId: number): Promise<RouteFare[]> =>
-  fetchWsfArray<RouteFare>(
-    "fares",
-    buildWsfUrl("/routefares/{routeId}", { routeId })
-  );
-
-/**
- * API function for fetching terminal fares from WSF Fares API
- *
- * Retrieves fare information for all terminals, including terminal names, fare amounts,
- * and effective dates. This endpoint provides current fare information for all
- * Washington State Ferries terminals.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @returns Promise resolving to an array of TerminalFare objects containing terminal fare information
- */
-export const getTerminalFares = (): Promise<TerminalFare[]> =>
-  fetchWsfArray<TerminalFare>("fares", "/terminalfares");
-
-/**
- * API function for fetching terminal fares by terminal ID from WSF Fares API
- *
- * Retrieves fare information for a specific terminal identified by terminal ID,
- * including terminal name, fare amounts, and effective dates. This endpoint filters
- * the resultset to a single terminal, providing detailed fare information for that terminal.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @param terminalId - The unique identifier for the terminal
- * @returns Promise resolving to an array of TerminalFare objects containing fare information for the specified terminal
- */
-export const getTerminalFaresByTerminalId = (
-  terminalId: number
-): Promise<TerminalFare[]> =>
-  fetchWsfArray<TerminalFare>(
-    "fares",
-    buildWsfUrl("/terminalfares/{terminalId}", { terminalId })
-  );
+export const getTerminalComboWithParams = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number
+): Promise<TerminalCombo[]> =>
+  getTerminalCombo(tripDate, departingTerminalID, arrivingTerminalID);

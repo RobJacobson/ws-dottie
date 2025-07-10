@@ -5,26 +5,26 @@
  * Based on /vesselbasics endpoint
  */
 export type Vessel = {
-  vesselId: number;
-  vesselName: string;
-  abbrev: string;
-  vesselClass: string;
-  inService: boolean;
-  active: boolean;
-  yearBuilt: number;
-  displacement: number;
-  length: number;
-  breadth: number;
-  draft: number;
-  carCapacity: number;
-  passengerCapacity: number;
-  maxPassengers: number;
-  maxVehicles: number;
-  maxGrossTonnage: number;
-  horsepower: number;
-  maxSpeed: number;
-  homeTerminalId: number;
-  homeTerminalName: string;
+  VesselID: number;
+  VesselName: string;
+  Abbrev: string;
+  VesselClass: string;
+  InService: boolean;
+  Active: boolean;
+  YearBuilt: number;
+  Displacement: number;
+  Length: number;
+  Breadth: number;
+  Draft: number;
+  CarCapacity: number;
+  PassengerCapacity: number;
+  MaxPassengers: number;
+  MaxVehicles: number;
+  MaxGrossTonnage: number;
+  Horsepower: number;
+  MaxSpeed: number;
+  HomeTerminalID: number;
+  HomeTerminalName: string;
 };
 
 /**
@@ -32,11 +32,11 @@ export type Vessel = {
  * Based on /vesselaccommodations endpoint
  */
 export type VesselAccommodation = {
-  vesselId: number;
-  accommodationId: number;
-  accommodationName: string;
-  accommodationDescription: string;
-  isActive: boolean;
+  VesselID: number;
+  AccommodationID: number;
+  AccommodationName: string;
+  AccommodationDescription: string;
+  IsActive: boolean;
 };
 
 /**
@@ -44,77 +44,89 @@ export type VesselAccommodation = {
  * Based on /vesselstats endpoint
  */
 export type VesselStats = {
-  vesselId: number;
-  statId: number;
-  statName: string;
-  statValue: string;
-  statUnit: string;
-  isActive: boolean;
+  VesselID: number;
+  StatID: number;
+  StatName: string;
+  StatValue: string;
+  StatUnit: string;
+  IsActive: boolean;
 };
 
 /**
  * Vessel location from WSF Vessels API
  * Based on /vessellocations endpoint
+ * Note: Data preserves PascalCase keys from WSF API
  */
 export type VesselLocation = {
-  vesselID: number;
-  vesselName: string;
-  longitude: number;
-  latitude: number;
-  heading: number;
-  speed: number;
-  inService: boolean;
-  atDock: boolean;
-  departingTerminalId: number;
-  departingTerminalName: string;
-  arrivingTerminalId: number;
-  arrivingTerminalName: string;
-  scheduledDeparture: Date;
-  estimatedArrival: Date;
-  lastUpdated: Date;
-  leftDock?: Date;
-  eta?: Date;
-  opRouteAbbrev?: string[];
-  vesselPositionNum?: number;
-  sortSeq?: number;
-  managedBy?: number; // 1 for WSF, 2 for KCM
-  timestamp?: Date;
+  VesselID: number;
+  VesselName: string;
+  Longitude: number;
+  Latitude: number;
+  Heading: number;
+  Speed: number;
+  InService: boolean;
+  AtDock: boolean;
+  DepartingTerminalID: number;
+  DepartingTerminalName: string;
+  ArrivingTerminalID: number;
+  ArrivingTerminalName: string;
+  TimeStamp: Date;
+  ScheduledDeparture: Date;
+  EstimatedArrival: Date;
+  LeftDock?: Date;
+  ETA?: Date;
+  OpRouteAbbrev?: string[];
+  VesselPositionNum?: number;
+  SortSeq?: number;
+  ManagedBy?: number; // 1 for WSF, 2 for KCM
 };
 
 /**
  * Vessel verbose information from WSF Vessels API
  * Based on /vesselverbose endpoint
+ * Note: Data preserves PascalCase keys from WSF API
  */
 export type VesselVerbose = {
-  vesselId: number;
-  vesselName: string;
-  abbrev: string;
-  vesselClass: string;
-  inService: boolean;
-  active: boolean;
-  yearBuilt: number;
-  displacement: number;
-  length: number;
-  breadth: number;
-  draft: number;
-  carCapacity: number;
-  passengerCapacity: number;
-  maxPassengers: number;
-  maxVehicles: number;
-  maxGrossTonnage: number;
-  horsepower: number;
-  maxSpeed: number;
-  homeTerminalId: number;
-  homeTerminalName: string;
-  accommodations: VesselAccommodation[];
-  stats: VesselStats[];
-  location: VesselLocation;
+  VesselID: number;
+  VesselName: string;
+  VesselAbbrev: string;
+  Class: {
+    ClassID: number;
+    ClassName: string;
+    PublicDisplayName: string;
+  };
+  Status: number;
+  OwnedByWSF: boolean;
+  YearBuilt: number;
+  Displacement: number;
+  Length: string;
+  Beam: string;
+  Draft: string;
+  SpeedInKnots: number;
+  EngineCount: number;
+  Horsepower: number;
+  MaxPassengerCount: number;
+  RegDeckSpace: number;
+  TallDeckSpace: number;
+  Tonnage: number;
+  PropulsionInfo: string;
+  ADAAccessible: boolean;
+  Elevator: boolean;
+  CarDeckRestroom: boolean;
+  MainCabinGalley: boolean;
+  MainCabinRestroom: boolean;
+  PublicWifi: boolean;
+  ADAInfo: string;
+  VesselNameDesc: string;
+  VesselHistory: string;
+  CityBuilt: string;
+  YearRebuilt?: number;
 };
 
 /**
  * Vessels cache flush date response
  */
 export type VesselsCacheFlushDate = {
-  lastUpdated: Date;
-  source: string;
+  LastUpdated: Date;
+  Source: string;
 };

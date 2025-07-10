@@ -53,15 +53,15 @@ export const useVesselLocations = () => {
  * Hook for fetching vessel location data for a specific vessel from WSF Vessels API
  *
  * Retrieves real-time vessel position, speed, heading, and status information
- * for a specific vessel identified by vessel ID. This endpoint filters the
- * resultset to a single vessel, providing current location data including
- * GPS coordinates, vessel speed, heading direction, and operational status.
+ * for a specific vessel identified by vessel ID. This endpoint returns a single
+ * vessel object, providing current location data including GPS coordinates,
+ * vessel speed, heading direction, and operational status.
  *
  * The data is updated frequently and provides the most current information
  * about the specified vessel's location for tracking and monitoring purposes.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns React Query result containing an array of VesselLocation objects with real-time position data for the specified vessel
+ * @returns React Query result containing a VesselLocation object with real-time position data for the specified vessel
  */
 export const useVesselLocationsByVesselId = (vesselId: number) => {
   return useQuery({
@@ -102,14 +102,14 @@ export const useVesselVerbose = () => {
  *
  * Retrieves comprehensive vessel information for a specific vessel identified by vessel ID,
  * including specifications, capacity, amenities, and operational status. This endpoint
- * filters the resultset to a single vessel, providing detailed information about vessel
- * dimensions, passenger and vehicle capacity, onboard amenities, and current operational status.
+ * returns detailed information about vessel dimensions, passenger and vehicle capacity,
+ * onboard amenities, and current operational status.
  *
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns React Query result containing an array of VesselVerbose objects with comprehensive information for the specified vessel
+ * @returns React Query result containing a VesselVerbose object with comprehensive information for the specified vessel
  */
 export const useVesselVerboseById = (vesselId: number) => {
   return useQuery({

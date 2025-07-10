@@ -6,8 +6,8 @@
  * Based on /validdaterange endpoint
  */
 export type ValidDateRange = {
-  startDate: Date;
-  endDate: Date;
+  StartDate: Date;
+  EndDate: Date;
 };
 
 /**
@@ -15,146 +15,146 @@ export type ValidDateRange = {
  * Based on /routes endpoint
  */
 export type Route = {
-  routeId: number;
-  routeName: string;
-  routeAbbrev: string;
-  routeDescription: string;
-  routeColor: string;
-  sortSeq: number;
-  crossingTime: number;
-  distance: number;
-  isActive: boolean;
-  serviceRoutes: ServiceRoute[];
+  RouteID: number;
+  RouteName: string;
+  RouteAbbrev: string;
+  RouteDescription: string;
+  RouteColor: string;
+  SortSeq: number;
+  CrossingTime: number;
+  Distance: number;
+  IsActive: boolean;
+  ServiceRoutes: ServiceRoute[];
 };
 
 /**
  * Service route information
  */
 export type ServiceRoute = {
-  serviceRouteId: number;
-  serviceRouteName: string;
-  serviceRouteAbbrev: string;
-  isActive: boolean;
+  ServiceRouteID: number;
+  ServiceRouteName: string;
+  ServiceRouteAbbrev: string;
+  IsActive: boolean;
 };
 
 /**
  * Schedule departure information
  */
 export type ScheduleDeparture = {
-  sailingId: number;
-  schedRouteId: number;
-  departureTime: Date;
-  arrivalTime: Date;
-  vesselId: number;
-  vesselName: string;
-  departingTerminalId: number;
-  departingTerminalName: string;
-  arrivingTerminalId: number;
-  arrivingTerminalName: string;
-  isCancelled: boolean;
-  notes?: string;
-  lastUpdated: Date;
+  SailingID: number;
+  SchedRouteID: number;
+  DepartureTime: Date;
+  ArrivalTime: Date;
+  VesselID: number;
+  VesselName: string;
+  DepartingTerminalID: number;
+  DepartingTerminalName: string;
+  ArrivingTerminalID: number;
+  ArrivingTerminalName: string;
+  IsCancelled: boolean;
+  Notes?: string;
+  LastUpdated: Date;
 };
 
 /**
  * Schedule information
  */
 export type Schedule = {
-  routeId: number;
-  routeName: string;
-  sailingDate: Date;
-  departures: ScheduleDeparture[];
-  lastUpdated: Date;
+  RouteID: number;
+  RouteName: string;
+  SailingDate: Date;
+  Departures: ScheduleDeparture[];
+  LastUpdated: Date;
 };
 
 /**
  * Alert information
  */
 export type Alert = {
-  alertId: number;
-  routeId: number;
-  routeName: string;
-  alertTitle: string;
-  alertMessage: string;
-  startDate: Date;
-  endDate: Date;
-  severity: "low" | "medium" | "high";
-  isActive: boolean;
+  AlertID: number;
+  RouteID: number;
+  RouteName: string;
+  AlertTitle: string;
+  AlertMessage: string;
+  StartDate: Date;
+  EndDate: Date;
+  Severity: "low" | "medium" | "high";
+  IsActive: boolean;
 };
 
 /**
  * Active season information
  */
 export type ActiveSeason = {
-  seasonId: number;
-  seasonName: string;
-  startDate: Date;
-  endDate: Date;
-  isActive: boolean;
-  routeIds: number[];
+  SeasonID: number;
+  SeasonName: string;
+  StartDate: Date;
+  EndDate: Date;
+  IsActive: boolean;
+  RouteIDs: number[];
 };
 
 /**
  * Time adjustment information
  */
 export type TimeAdjustment = {
-  adjustmentId: number;
-  routeId: number;
-  sailingId: number;
-  adjustmentMinutes: number;
-  adjustmentReason: string;
-  effectiveDate: Date;
-  isActive: boolean;
+  AdjustmentID: number;
+  RouteID: number;
+  SailingID: number;
+  AdjustmentMinutes: number;
+  AdjustmentReason: string;
+  EffectiveDate: Date;
+  IsActive: boolean;
 };
 
 /**
  * Schedule query parameters
  */
 export type ScheduleParams = {
-  routeId?: number;
-  sailingDate?: Date;
-  vesselId?: number;
-  terminalId?: number;
+  RouteID?: number;
+  SailingDate?: Date;
+  VesselID?: number;
+  TerminalID?: number;
 };
 
 /**
  * Route query parameters
  */
 export type RouteParams = {
-  isActive?: boolean;
-  terminalId?: number;
+  IsActive?: boolean;
+  TerminalID?: number;
 };
 
 /**
  * Time adjustment query parameters
  */
 export type TimeAdjustmentParams = {
-  routeId?: number;
-  sailingDate?: Date;
-  isActive?: boolean;
+  RouteID?: number;
+  SailingDate?: Date;
+  IsActive?: boolean;
 };
 
 /**
  * Alert query parameters
  */
 export type AlertParams = {
-  routeId?: number;
-  severity?: "low" | "medium" | "high";
-  isActive?: boolean;
+  RouteID?: number;
+  Severity?: "low" | "medium" | "high";
+  IsActive?: boolean;
 };
 
 /**
  * Active season query parameters
  */
 export type ActiveSeasonParams = {
-  isActive?: boolean;
-  routeId?: number;
+  IsActive?: boolean;
+  RouteID?: number;
 };
 
 /**
  * Schedule cache flush date response
  */
 export type ScheduleCacheFlushDate = {
-  lastUpdated: Date;
-  source: string;
+  LastUpdated: Date;
+  Source: string;
 };

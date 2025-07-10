@@ -3,6 +3,7 @@
 import log from "@/lib/logger";
 
 import type { LoggingMode } from "./config";
+import { createApiError, type WsdApiError } from "./errors";
 import { type JsonValue, transformWsfData } from "./utils";
 
 // Constants for JSONP request configuration
@@ -30,25 +31,35 @@ const isWebEnvironment = () => {
 
 /**
  * Internal fetch function with platform-specific implementation and WSF data transformation
+ *
+ * - Uses JSONP for web/happy-dom environments to bypass CORS (prioritized if both web and Node are detected)
+ * - Uses native fetch for all other environments (Node.js, Bun, React Native, etc.)
+ * - All errors (including from JSONP) are always wrapped as WsdApiError for consistent error handling
  */
 export const fetchInternal = async <T>(
   url: string,
   endpoint: string,
   logMode?: LoggingMode
-): Promise<T | null> => {
+): Promise<T> => {
   try {
     let response: JsonValue;
 
-    // Use environment-specific fetch method
-    if (isNodeEnvironment()) {
-      // Use native fetch in Node.js environment (for testing)
-      response = (await fetchNative(url)) as JsonValue;
-    } else if (isWebEnvironment()) {
-      // Use JSONP on web to avoid CORS issues
-      response = (await fetchJsonp(url)) as JsonValue;
+    // Prioritize web/happy-dom environments for JSONP (CORS workaround)
+    if (isWebEnvironment()) {
+      try {
+        response = (await fetchJsonp(url)) as JsonValue;
+      } catch (err) {
+        // Always wrap as WsdApiError for consistent error handling
+        throw createApiError(err, endpoint, url);
+      }
     } else {
-      // Use native fetch on mobile platforms (React Native)
-      response = (await fetchNative(url)) as JsonValue;
+      // Fallback: use native fetch for Node.js, Bun, React Native, etc.
+      try {
+        response = (await fetchNative(url)) as JsonValue;
+      } catch (err) {
+        // Always wrap as WsdApiError for consistent error handling
+        throw createApiError(err, endpoint, url);
+      }
     }
 
     // Apply WSF data transformation recursively
@@ -63,7 +74,9 @@ export const fetchInternal = async <T>(
     if (logMode === "debug" || logMode === "info") {
       log.error(`[WSF ${endpoint}] Fetch failed:`, error);
     }
-    return null;
+
+    // Always wrap as WsdApiError for consistent error handling
+    throw createApiError(error, endpoint, url);
   }
 };
 
@@ -104,6 +117,23 @@ const fetchJsonp = (url: string): Promise<unknown> => {
     // Success callback - WSF API calls this with data
     jsonpWindow[callbackName] = (data: unknown) => {
       cleanupWithTimeout();
+
+      // Check if the response contains an error message
+      if (data && typeof data === "object" && "Message" in data) {
+        const errorData = data as { Message: string };
+        const message = errorData.Message.toLowerCase();
+        if (
+          message.includes("failed") ||
+          message.includes("invalid") ||
+          message.includes("not valid") ||
+          message.includes("cannot be used") ||
+          message.includes("error")
+        ) {
+          reject(new Error(errorData.Message));
+          return;
+        }
+      }
+
       resolve(data);
     };
 

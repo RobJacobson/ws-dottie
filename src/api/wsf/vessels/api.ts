@@ -33,23 +33,15 @@ export const getVesselLocations = (): Promise<VesselLocation[]> =>
  * API function for fetching current vessel location data for a specific vessel from WSF Vessels API
  *
  * Retrieves real-time vessel position, speed, heading, and status information
- * for a specific vessel identified by vessel ID. This endpoint filters the
- * resultset to a single vessel, providing current location data including
- * GPS coordinates, vessel speed, heading direction, and operational status.
- *
- * The data is updated frequently and provides the most current information
- * about the specified vessel's location for tracking and monitoring purposes.
+ * for a specific vessel identified by vessel ID. This endpoint returns a single vessel object.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns Promise resolving to an array of VesselLocation objects containing real-time position data for the specified vessel
+ * @returns Promise resolving to a VesselLocation object containing real-time position data for the specified vessel
  */
 export const getVesselLocationsByVesselId = (
   vesselId: number
-): Promise<VesselLocation[]> =>
-  fetchWsfArray<VesselLocation>(
-    "vessels",
-    buildWsfUrl("/vessellocations/{vesselId}", { vesselId })
-  );
+): Promise<VesselLocation> =>
+  fetchWsf<VesselLocation>("vessels", `/vessellocations/${vesselId}`);
 
 // ============================================================================
 // VESSEL VERBOSE API FUNCTIONS
@@ -76,22 +68,19 @@ export const getVesselVerbose = (): Promise<VesselVerbose[]> =>
  *
  * Retrieves comprehensive vessel information for a specific vessel identified by vessel ID,
  * including specifications, capacity, amenities, and operational status. This endpoint
- * filters the resultset to a single vessel, providing detailed information about vessel
- * dimensions, passenger and vehicle capacity, onboard amenities, and current operational status.
+ * returns detailed information about vessel dimensions, passenger and vehicle capacity,
+ * onboard amenities, and current operational status.
  *
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns Promise resolving to an array of VesselVerbose objects containing comprehensive information for the specified vessel
+ * @returns Promise resolving to a VesselVerbose object containing comprehensive information for the specified vessel
  */
 export const getVesselVerboseById = (
   vesselId: number
-): Promise<VesselVerbose[]> =>
-  fetchWsfArray<VesselVerbose>(
-    "vessels",
-    buildWsfUrl("/vesselverbose/{vesselId}", { vesselId })
-  );
+): Promise<VesselVerbose> =>
+  fetchWsf<VesselVerbose>("vessels", `/vesselverbose/${vesselId}`);
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS

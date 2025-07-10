@@ -1,236 +1,288 @@
-// WSF Fares hooks
+// WSF Fares API React Query hooks
+// Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 
 import { useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
 
 import {
-  getFareById,
-  getFareCategories,
-  getFareCategoryById,
-  getFares,
-  getFareTypeById,
-  getFareTypes,
-  getRouteFares,
-  getRouteFaresByRouteId,
-  getTerminalFares,
-  getTerminalFaresByTerminalId,
+  getFareLineItems,
+  getFareLineItemsBasic,
+  getFareLineItemsBasicWithParams,
+  getFareLineItemsVerbose,
+  getFareLineItemsWithParams,
+  getFaresCacheFlushDate,
+  getFaresTerminalMates,
+  getFaresTerminals,
+  getFaresValidDateRange,
+  getFareTotals,
+  getTerminalCombo,
+  getTerminalComboVerbose,
+  getTerminalComboWithParams,
+  getTerminalMatesWithParams,
 } from "./api";
 import type {
-  Fare,
-  FareCategory,
-  FareType,
-  RouteFare,
-  TerminalFare,
+  FareLineItemsParams,
+  FareTotalRequest,
+  TerminalMatesParams,
 } from "./types";
 
-// Main hooks
-/**
- * Hook for fetching all fares from WSF Fares API
- *
- * Retrieves comprehensive fare information including fare amounts, categories,
- * types, and effective dates. This endpoint provides current fare information
- * for all Washington State Ferries routes and services.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @returns React Query result containing an array of Fare objects with comprehensive fare information
- */
-export const useFares = () => {
+// Cache flush date hook
+export const useFaresCacheFlushDate = () => {
   return useQuery({
-    queryKey: ["fares"],
-    queryFn: getFares,
+    queryKey: ["fares", "cacheFlushDate"],
+    queryFn: getFaresCacheFlushDate,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching a specific fare by ID from WSF Fares API
- *
- * Retrieves comprehensive fare information for a specific fare identified by fare ID,
- * including fare amount, category, type, and effective dates. This endpoint filters
- * the resultset to a single fare, providing detailed information about that specific fare.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @param fareId - The unique identifier for the fare
- * @returns React Query result containing an array of Fare objects with comprehensive information for the specified fare
- */
-export const useFareById = (fareId: number) => {
+// Valid date range hook
+export const useFaresValidDateRange = () => {
   return useQuery({
-    queryKey: ["fares", "byId", fareId],
-    queryFn: () => getFareById(fareId),
-    enabled: !!fareId,
+    queryKey: ["fares", "validDateRange"],
+    queryFn: getFaresValidDateRange,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching fare categories from WSF Fares API
- *
- * Retrieves fare category information including category names, descriptions,
- * and types. This endpoint provides information about the different categories
- * of fares available in the WSF system.
- *
- * This data is updated infrequently and provides static category information
- * that changes only when WSF updates their fare structure.
- *
- * @returns React Query result containing an array of FareCategory objects with fare category information
- */
-export const useFareCategories = () => {
+// Terminals hook
+export const useFaresTerminals = (tripDate: Date) => {
   return useQuery({
-    queryKey: ["fares", "categories"],
-    queryFn: getFareCategories,
+    queryKey: ["fares", "terminals", tripDate.toISOString().split("T")[0]],
+    queryFn: () => getFaresTerminals(tripDate),
+    enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching a specific fare category by ID from WSF Fares API
- *
- * Retrieves fare category information for a specific category identified by category ID,
- * including category name, description, and type. This endpoint filters the resultset
- * to a single category, providing detailed information about that specific fare category.
- *
- * This data is updated infrequently and provides static category information
- * that changes only when WSF updates their fare structure.
- *
- * @param categoryId - The unique identifier for the fare category
- * @returns React Query result containing an array of FareCategory objects with information for the specified category
- */
-export const useFareCategoryById = (categoryId: number) => {
+// Terminal mates hook
+export const useFaresTerminalMates = (tripDate: Date, terminalID: number) => {
   return useQuery({
-    queryKey: ["fares", "categories", "byId", categoryId],
-    queryFn: () => getFareCategoryById(categoryId),
-    enabled: !!categoryId,
+    queryKey: [
+      "fares",
+      "terminalMates",
+      tripDate.toISOString().split("T")[0],
+      terminalID,
+    ],
+    queryFn: () => getFaresTerminalMates(tripDate, terminalID),
+    enabled: !!tripDate && !!terminalID,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching fare types from WSF Fares API
- *
- * Retrieves fare type information including type names, descriptions,
- * and categories. This endpoint provides information about the different types
- * of fares available in the WSF system.
- *
- * This data is updated infrequently and provides static type information
- * that changes only when WSF updates their fare structure.
- *
- * @returns React Query result containing an array of FareType objects with fare type information
- */
-export const useFareTypes = () => {
+// Terminal mates hook with params
+export const useFaresTerminalMatesWithParams = (
+  params: TerminalMatesParams
+) => {
   return useQuery({
-    queryKey: ["fares", "types"],
-    queryFn: getFareTypes,
+    queryKey: [
+      "fares",
+      "terminalMates",
+      params.tripDate.toISOString().split("T")[0],
+      params.terminalID,
+    ],
+    queryFn: () => getTerminalMatesWithParams(params),
+    enabled: !!params.tripDate && !!params.terminalID,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching a specific fare type by ID from WSF Fares API
- *
- * Retrieves fare type information for a specific type identified by type ID,
- * including type name, description, and category. This endpoint filters the resultset
- * to a single type, providing detailed information about that specific fare type.
- *
- * This data is updated infrequently and provides static type information
- * that changes only when WSF updates their fare structure.
- *
- * @param typeId - The unique identifier for the fare type
- * @returns React Query result containing an array of FareType objects with information for the specified type
- */
-export const useFareTypeById = (typeId: number) => {
+// Terminal combo hook
+export const useTerminalCombo = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number
+) => {
   return useQuery({
-    queryKey: ["fares", "types", "byId", typeId],
-    queryFn: () => getFareTypeById(typeId),
-    enabled: !!typeId,
+    queryKey: [
+      "fares",
+      "terminalCombo",
+      tripDate.toISOString().split("T")[0],
+      departingTerminalID,
+      arrivingTerminalID,
+    ],
+    queryFn: () =>
+      getTerminalCombo(tripDate, departingTerminalID, arrivingTerminalID),
+    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching route fares from WSF Fares API
- *
- * Retrieves fare information for all routes, including route names, fare amounts,
- * and effective dates. This endpoint provides current fare information for all
- * Washington State Ferries routes.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @returns React Query result containing an array of RouteFare objects with route fare information
- */
-export const useRouteFares = () => {
+// Terminal combo hook with params
+export const useTerminalComboWithParams = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number
+) => {
   return useQuery({
-    queryKey: ["fares", "routes"],
-    queryFn: getRouteFares,
+    queryKey: [
+      "fares",
+      "terminalCombo",
+      tripDate.toISOString().split("T")[0],
+      departingTerminalID,
+      arrivingTerminalID,
+    ],
+    queryFn: () =>
+      getTerminalComboWithParams(
+        tripDate,
+        departingTerminalID,
+        arrivingTerminalID
+      ),
+    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching route fares by route ID from WSF Fares API
- *
- * Retrieves fare information for a specific route identified by route ID,
- * including route name, fare amounts, and effective dates. This endpoint filters
- * the resultset to a single route, providing detailed fare information for that route.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @param routeId - The unique identifier for the route
- * @returns React Query result containing an array of RouteFare objects with fare information for the specified route
- */
-export const useRouteFaresByRouteId = (routeId: number) => {
+// Terminal combo verbose hook
+export const useTerminalComboVerbose = (tripDate: Date) => {
   return useQuery({
-    queryKey: ["fares", "routes", "byRouteId", routeId],
-    queryFn: () => getRouteFaresByRouteId(routeId),
-    enabled: !!routeId,
+    queryKey: [
+      "fares",
+      "terminalComboVerbose",
+      tripDate.toISOString().split("T")[0],
+    ],
+    queryFn: () => getTerminalComboVerbose(tripDate),
+    enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching terminal fares from WSF Fares API
- *
- * Retrieves fare information for all terminals, including terminal names, fare amounts,
- * and effective dates. This endpoint provides current fare information for all
- * Washington State Ferries terminals.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @returns React Query result containing an array of TerminalFare objects with terminal fare information
- */
-export const useTerminalFares = () => {
+// Fare line items basic hook
+export const useFareLineItemsBasic = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  roundTrip: boolean
+) => {
   return useQuery({
-    queryKey: ["fares", "terminals"],
-    queryFn: getTerminalFares,
+    queryKey: [
+      "fares",
+      "fareLineItemsBasic",
+      tripDate.toISOString().split("T")[0],
+      departingTerminalID,
+      arrivingTerminalID,
+      roundTrip,
+    ],
+    queryFn: () =>
+      getFareLineItemsBasic(
+        tripDate,
+        departingTerminalID,
+        arrivingTerminalID,
+        roundTrip
+      ),
+    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
     ...createInfrequentUpdateOptions(),
   });
 };
 
-/**
- * Hook for fetching terminal fares by terminal ID from WSF Fares API
- *
- * Retrieves fare information for a specific terminal identified by terminal ID,
- * including terminal name, fare amounts, and effective dates. This endpoint filters
- * the resultset to a single terminal, providing detailed fare information for that terminal.
- *
- * This data is updated infrequently and provides static fare information
- * that changes only when WSF updates their fare structure.
- *
- * @param terminalId - The unique identifier for the terminal
- * @returns React Query result containing an array of TerminalFare objects with fare information for the specified terminal
- */
-export const useTerminalFaresByTerminalId = (terminalId: number) => {
+// Fare line items hook
+export const useFareLineItems = (
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  roundTrip: boolean
+) => {
   return useQuery({
-    queryKey: ["fares", "terminals", "byTerminalId", terminalId],
-    queryFn: () => getTerminalFaresByTerminalId(terminalId),
-    enabled: !!terminalId,
+    queryKey: [
+      "fares",
+      "fareLineItems",
+      tripDate.toISOString().split("T")[0],
+      departingTerminalID,
+      arrivingTerminalID,
+      roundTrip,
+    ],
+    queryFn: () =>
+      getFareLineItems(
+        tripDate,
+        departingTerminalID,
+        arrivingTerminalID,
+        roundTrip
+      ),
+    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+// Fare line items hook with params
+export const useFareLineItemsWithParams = (params: FareLineItemsParams) => {
+  return useQuery({
+    queryKey: [
+      "fares",
+      "fareLineItems",
+      params.tripDate.toISOString().split("T")[0],
+      params.departingTerminalID,
+      params.arrivingTerminalID,
+      params.roundTrip,
+    ],
+    queryFn: () => getFareLineItemsWithParams(params),
+    enabled:
+      !!params.tripDate &&
+      !!params.departingTerminalID &&
+      !!params.arrivingTerminalID,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+// Fare line items basic hook with params
+export const useFareLineItemsBasicWithParams = (
+  params: FareLineItemsParams
+) => {
+  return useQuery({
+    queryKey: [
+      "fares",
+      "fareLineItemsBasic",
+      params.tripDate.toISOString().split("T")[0],
+      params.departingTerminalID,
+      params.arrivingTerminalID,
+      params.roundTrip,
+    ],
+    queryFn: () => getFareLineItemsBasicWithParams(params),
+    enabled:
+      !!params.tripDate &&
+      !!params.departingTerminalID &&
+      !!params.arrivingTerminalID,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+// Fare line items verbose hook
+export const useFareLineItemsVerbose = (tripDate: Date) => {
+  return useQuery({
+    queryKey: [
+      "fares",
+      "fareLineItemsVerbose",
+      tripDate.toISOString().split("T")[0],
+    ],
+    queryFn: () => getFareLineItemsVerbose(tripDate),
+    enabled: !!tripDate,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+// Fare totals hook
+export const useFareTotals = (request: FareTotalRequest) => {
+  const fareLineItemIDs = request.fareLineItemIDs.join(",");
+  const quantities = request.quantities.join(",");
+
+  return useQuery({
+    queryKey: [
+      "fares",
+      "fareTotals",
+      request.tripDate.toISOString().split("T")[0],
+      request.departingTerminalID,
+      request.arrivingTerminalID,
+      request.roundTrip,
+      fareLineItemIDs,
+      quantities,
+    ],
+    queryFn: () => getFareTotals(request),
+    enabled:
+      !!request.tripDate &&
+      !!request.departingTerminalID &&
+      !!request.arrivingTerminalID &&
+      request.fareLineItemIDs.length > 0 &&
+      request.quantities.length > 0 &&
+      request.fareLineItemIDs.length === request.quantities.length,
     ...createInfrequentUpdateOptions(),
   });
 };

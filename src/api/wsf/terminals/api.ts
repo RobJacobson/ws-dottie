@@ -10,6 +10,7 @@ import type {
   TerminalsCacheFlushDate,
   TerminalVerbose,
   TerminalWaitTime,
+  TerminalWaitTimes,
 } from "./types";
 
 // ============================================================================
@@ -36,12 +37,12 @@ export const getTerminalBasics = (): Promise<TerminalBasics[]> =>
  * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param terminalId - The unique identifier for the terminal
- * @returns Promise resolving to an array of TerminalBasics objects containing basic information for the specified terminal
+ * @returns Promise resolving to a TerminalBasics object containing basic information for the specified terminal
  */
 export const getTerminalBasicsByTerminalId = (
   terminalId: number
-): Promise<TerminalBasics[]> =>
-  fetchWsfArray<TerminalBasics>("terminals", `/terminalbasics/${terminalId}`);
+): Promise<TerminalBasics> =>
+  fetchWsf<TerminalBasics>("terminals", `/terminalbasics/${terminalId}`);
 
 // ============================================================================
 // TERMINAL LOCATIONS API FUNCTIONS
@@ -72,11 +73,8 @@ export const getTerminalLocations = (): Promise<TerminalLocation[]> =>
  */
 export const getTerminalLocationsByTerminalId = (
   terminalId: number
-): Promise<TerminalLocation[]> =>
-  fetchWsfArray<TerminalLocation>(
-    "terminals",
-    `/terminallocations/${terminalId}`
-  );
+): Promise<TerminalLocation> =>
+  fetchWsf<TerminalLocation>("terminals", `/terminallocations/${terminalId}`);
 
 // ============================================================================
 // TERMINAL SAILING SPACE API FUNCTIONS
@@ -110,65 +108,14 @@ export const getTerminalSailingSpace = (): Promise<TerminalSailingSpace[]> =>
  * that changes throughout the day based on current demand and vessel assignments.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
- * @returns Promise resolving to an array of TerminalSailingSpace objects containing real-time space availability information for the specified terminal
+ * @returns Promise resolving to a TerminalSailingSpace object containing real-time space availability information for the specified terminal
  */
 export const getTerminalSailingSpaceByTerminalId = (
   terminalId: number
-): Promise<TerminalSailingSpace[]> =>
-  fetchWsfArray<TerminalSailingSpace>(
+): Promise<TerminalSailingSpace> =>
+  fetchWsf<TerminalSailingSpace>(
     "terminals",
     buildWsfUrl("/terminalsailingspace/{terminalId}", { terminalId })
-  );
-
-/**
- * API function for fetching terminal sailing space data by route from WSF Terminals API
- *
- * Retrieves current space availability information for terminals on a specific route,
- * including vehicle capacity, wait times, and space status. This endpoint filters the resultset
- * to terminals associated with the specified route, providing real-time information about
- * space availability, current vehicle capacity, estimated wait times, and space status
- * for upcoming sailings on that route.
- *
- * This data is updated frequently and provides dynamic terminal capacity information
- * that changes throughout the day based on current demand and vessel assignments.
- *
- * @param routeId - The unique identifier for the route
- * @returns Promise resolving to an array of TerminalSailingSpace objects containing real-time space availability information for terminals on the specified route
- */
-export const getTerminalSailingSpaceByRoute = (
-  routeId: number
-): Promise<TerminalSailingSpace[]> =>
-  fetchWsfArray<TerminalSailingSpace>(
-    "terminals",
-    buildWsfUrl("/terminalsailingspace/route/{routeId}", { routeId })
-  );
-
-/**
- * API function for fetching terminal sailing space data by terminal and route from WSF Terminals API
- *
- * Retrieves current space availability information for a specific terminal on a specific route,
- * including vehicle capacity, wait times, and space status. This endpoint filters the resultset
- * to a single terminal on a specific route, providing real-time information about space availability,
- * current vehicle capacity, estimated wait times, and space status for upcoming sailings.
- *
- * This data is updated frequently and provides dynamic terminal capacity information
- * that changes throughout the day based on current demand and vessel assignments.
- *
- * @param params - Object containing terminal and route information
- * @param params.terminalId - The unique identifier for the terminal
- * @param params.routeId - The unique identifier for the route
- * @returns Promise resolving to an array of TerminalSailingSpace objects containing real-time space availability information for the specified terminal on the specified route
- */
-export const getTerminalSailingSpaceByTerminalAndRoute = (params: {
-  terminalId: number;
-  routeId: number;
-}): Promise<TerminalSailingSpace[]> =>
-  fetchWsfArray<TerminalSailingSpace>(
-    "terminals",
-    buildWsfUrl(
-      "/terminalsailingspace/terminal/{terminalId}/route/{routeId}",
-      params
-    )
   );
 
 // ============================================================================
@@ -183,27 +130,10 @@ export const getTerminalSailingSpaceByTerminalAndRoute = (params: {
  * provides real-time information about terminal congestion and wait times
  * for all WSF terminals.
  *
- * @returns Promise resolving to an array of TerminalWaitTime objects containing wait time information
+ * @returns Promise resolving to an array of TerminalWaitTimes objects containing wait time information
  */
-export const getTerminalWaitTimes = (): Promise<TerminalWaitTime[]> =>
-  fetchWsfArray<TerminalWaitTime>("terminals", "/terminalwaittimes");
-
-/**
- * API function for fetching terminal wait times by route from WSF Terminals API
- *
- * Retrieves current wait time information for terminals on a specific route,
- * including estimated wait times, queue lengths, and congestion data. This
- * endpoint filters the resultset to terminals associated with the specified
- * route, providing real-time information about terminal congestion and wait
- * times for that route.
- *
- * @param routeId - The unique identifier for the route
- * @returns Promise resolving to an array of TerminalWaitTime objects containing wait time information for terminals on the specified route
- */
-export const getTerminalWaitTimesByRoute = (
-  routeId: number
-): Promise<TerminalWaitTime[]> =>
-  fetchWsfArray<TerminalWaitTime>("terminals", `/terminalwaittimes/${routeId}`);
+export const getTerminalWaitTimes = (): Promise<TerminalWaitTimes[]> =>
+  fetchWsfArray<TerminalWaitTimes>("terminals", "/terminalwaittimes");
 
 /**
  * API function for fetching terminal wait times by terminal from WSF Terminals API
@@ -215,38 +145,12 @@ export const getTerminalWaitTimesByRoute = (
  * specific terminal.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
- * @returns Promise resolving to an array of TerminalWaitTime objects containing wait time information for the specified terminal
+ * @returns Promise resolving to a TerminalWaitTimes object containing wait time information for the specified terminal
  */
 export const getTerminalWaitTimesByTerminal = (
   terminalId: number
-): Promise<TerminalWaitTime[]> =>
-  fetchWsfArray<TerminalWaitTime>(
-    "terminals",
-    `/terminalwaittimes/${terminalId}`
-  );
-
-/**
- * API function for fetching terminal wait times by route and terminal from WSF Terminals API
- *
- * Retrieves current wait time information for a specific terminal on a specific
- * route, including estimated wait times, queue lengths, and congestion data.
- * This endpoint filters the resultset to a single terminal on a specific route,
- * providing real-time information about terminal congestion and wait times for
- * that specific terminal-route combination.
- *
- * @param params - Object containing route and terminal information
- * @param params.routeId - The unique identifier for the route
- * @param params.terminalId - The unique identifier for the terminal
- * @returns Promise resolving to an array of TerminalWaitTime objects containing wait time information for the specified terminal on the specified route
- */
-export const getTerminalWaitTimesByRouteAndTerminal = (params: {
-  routeId: number;
-  terminalId: number;
-}): Promise<TerminalWaitTime[]> =>
-  fetchWsfArray<TerminalWaitTime>(
-    "terminals",
-    `/terminalwaittimes/${params.routeId}/${params.terminalId}`
-  );
+): Promise<TerminalWaitTimes> =>
+  fetchWsf<TerminalWaitTimes>("terminals", `/terminalwaittimes/${terminalId}`);
 
 // ============================================================================
 // TERMINAL VERBOSE API FUNCTIONS
@@ -273,19 +177,19 @@ export const getTerminalVerbose = (): Promise<TerminalVerbose[]> =>
  *
  * Retrieves comprehensive terminal information for a specific terminal identified by terminal ID,
  * including location, facilities, parking information, and operational status. This endpoint
- * filters the resultset to a single terminal, providing detailed information about terminal
- * coordinates, available facilities, parking capacity, and current operational status.
+ * returns detailed information about terminal coordinates, available facilities, parking capacity,
+ * and current operational status.
  *
  * This data is updated infrequently and provides static terminal characteristics
  * that don't change often, such as terminal specifications and facilities.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
- * @returns Promise resolving to an array of TerminalVerbose objects containing comprehensive information for the specified terminal
+ * @returns Promise resolving to a TerminalVerbose object containing comprehensive information for the specified terminal
  */
 export const getTerminalVerboseByTerminalId = (
   terminalId: number
-): Promise<TerminalVerbose[]> =>
-  fetchWsfArray<TerminalVerbose>(
+): Promise<TerminalVerbose> =>
+  fetchWsf<TerminalVerbose>(
     "terminals",
     buildWsfUrl("/terminalverbose/{terminalId}", { terminalId })
   );

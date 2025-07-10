@@ -55,4 +55,7 @@ export interface WsdotConfig {
 
 // Legacy compatibility
 export const API_BASES = WSF_BASE_URLS;
-export const API_KEY = process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN || "";
+export const API_KEY =
+  process.env.WSDOT_ACCESS_TOKEN ||
+  process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN ||
+  "";

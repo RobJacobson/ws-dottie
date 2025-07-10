@@ -6,16 +6,17 @@
  * Based on /terminalbasics endpoint
  */
 export type TerminalBasics = {
-  terminalId: number;
-  terminalName: string;
-  terminalAbbrev: string;
-  latitude: number;
-  longitude: number;
-  address: string;
-  phone: string;
-  hasWaitTime: boolean;
-  hasSpaceAvailable: boolean;
-  isActive: boolean;
+  TerminalID: number;
+  TerminalSubjectID: number;
+  RegionID: number;
+  TerminalName: string;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  OverheadPassengerLoading: boolean;
+  Elevator: boolean;
+  WaitingRoom: boolean;
+  FoodService: boolean;
+  Restroom: boolean;
 };
 
 /**
@@ -23,12 +24,12 @@ export type TerminalBasics = {
  * Based on /terminalbulletins endpoint
  */
 export type TerminalBulletin = {
-  terminalId: number;
-  bulletinId: number;
-  bulletinTitle: string;
-  bulletinMessage: string;
-  bulletinDate: Date;
-  isActive: boolean;
+  TerminalID: number;
+  BulletinID: number;
+  BulletinTitle: string;
+  BulletinMessage: string;
+  BulletinDate: Date;
+  IsActive: boolean;
 };
 
 /**
@@ -36,21 +37,59 @@ export type TerminalBulletin = {
  * Based on /terminallocations endpoint
  */
 export type TerminalLocation = {
-  terminalId: number;
-  terminalName: string;
-  latitude: number;
-  longitude: number;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  county: string;
-  gisZoomLocation: {
-    latitude: number;
-    longitude: number;
-    zoomLevel: number;
-  };
-  isActive: boolean;
+  TerminalID: number;
+  TerminalSubjectID: number;
+  RegionID: number;
+  TerminalName: string;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  AddressLineOne: string;
+  AddressLineTwo: string | null;
+  City: string;
+  State: string;
+  ZipCode: string;
+  Country: string;
+  Latitude: number;
+  Longitude: number;
+  Directions: string | null;
+  DispGisZoomLoc: Array<{
+    Latitude: number;
+    Longitude: number;
+    ZoomLevel: number;
+  }>;
+  MapLink: string | null;
+};
+
+/**
+ * Space information for arrival terminals from WSF Terminals API
+ * Based on SpaceForArrivalTerminals array in /terminalsailingspace endpoint
+ */
+export type TerminalArrivalSpace = {
+  TerminalID: number;
+  TerminalName: string;
+  VesselID: number;
+  VesselName: string;
+  DisplayReservableSpace: boolean;
+  ReservableSpaceCount: number | null;
+  ReservableSpaceHexColor: string | null;
+  DisplayDriveUpSpace: boolean;
+  DriveUpSpaceCount: number;
+  DriveUpSpaceHexColor: string;
+  MaxSpaceCount: number;
+  ArrivalTerminalIDs: number[];
+};
+
+/**
+ * Departing space information from WSF Terminals API
+ * Based on DepartingSpaces array in /terminalsailingspace endpoint
+ */
+export type TerminalDepartingSpace = {
+  Departure: Date;
+  IsCancelled: boolean;
+  VesselID: number;
+  VesselName: string;
+  MaxSpaceCount: number;
+  SpaceForArrivalTerminals: TerminalArrivalSpace[];
 };
 
 /**
@@ -58,14 +97,15 @@ export type TerminalLocation = {
  * Based on /terminalsailingspace endpoint
  */
 export type TerminalSailingSpace = {
-  terminalId: number;
-  terminalName: string;
-  sailingId: number;
-  departureTime: Date;
-  driveUpSpaces: number;
-  reservationSpaces: number;
-  totalSpaces: number;
-  isActive: boolean;
+  TerminalID: number;
+  TerminalSubjectID: number;
+  RegionID: number;
+  TerminalName: string;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  DepartingSpaces: TerminalDepartingSpace[];
+  IsNoFareCollected: boolean | null;
+  NoFareCollectedMsg: string | null;
 };
 
 /**
@@ -73,14 +113,14 @@ export type TerminalSailingSpace = {
  * Based on /terminaltransports endpoint
  */
 export type TerminalTransport = {
-  terminalId: number;
-  terminalName: string;
-  transportId: number;
-  transportType: string;
-  transportName: string;
-  transportDescription: string;
-  transportNotes: string;
-  isActive: boolean;
+  TerminalID: number;
+  TerminalName: string;
+  TransportID: number;
+  TransportType: string;
+  TransportName: string;
+  TransportDescription: string;
+  TransportNotes: string;
+  IsActive: boolean;
 };
 
 /**
@@ -88,14 +128,35 @@ export type TerminalTransport = {
  * Based on /terminalwaittimes endpoint
  */
 export type TerminalWaitTime = {
-  terminalId: number;
-  terminalName: string;
-  waitTimeId: number;
-  waitTimeType: "vehicle" | "passenger";
-  waitTimeMinutes: number;
-  waitTimeDescription: string;
-  lastUpdated: Date;
-  isActive: boolean;
+  RouteID: number;
+  RouteName: string;
+  WaitTimeIvrNotes: string | null;
+  WaitTimeLastUpdated: Date;
+  WaitTimeNotes: string | null;
+};
+
+/**
+ * Terminal wait times container from WSF Terminals API
+ * Based on /terminalwaittimes endpoint (parent object containing WaitTimes array)
+ */
+export type TerminalWaitTimes = {
+  TerminalID: number;
+  TerminalSubjectID: number;
+  RegionID: number;
+  TerminalName: string;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  WaitTimes: TerminalWaitTime[];
+};
+
+/**
+ * Terminal transport link from WSF Terminals API
+ * Based on TransitLinks array in /terminalverbose endpoint
+ */
+export type TerminalTransitLink = {
+  LinkName: string;
+  LinkUrl: string;
+  SortSeq: number;
 };
 
 /**
@@ -103,35 +164,69 @@ export type TerminalWaitTime = {
  * Based on /terminalverbose endpoint
  */
 export type TerminalVerbose = {
-  terminalId: number;
-  terminalName: string;
-  terminalAbbrev: string;
-  latitude: number;
-  longitude: number;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  county: string;
-  phone: string;
-  hasWaitTime: boolean;
-  hasSpaceAvailable: boolean;
-  gisZoomLocation: {
-    latitude: number;
-    longitude: number;
-    zoomLevel: number;
-  };
-  transitLinks: TerminalTransport[];
-  waitTimes: TerminalWaitTime[];
-  bulletins: TerminalBulletin[];
-  sailingSpaces: TerminalSailingSpace[];
-  isActive: boolean;
+  TerminalID: number;
+  TerminalSubjectID: number;
+  RegionID: number;
+  TerminalName: string;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  AddressLineOne: string;
+  AddressLineTwo: string | null;
+  City: string;
+  State: string;
+  ZipCode: string;
+  Country: string;
+  Latitude: number;
+  Longitude: number;
+  Directions: string | null;
+  DispGisZoomLoc: Array<{
+    Latitude: number;
+    Longitude: number;
+    ZoomLevel: number;
+  }>;
+  MapLink: string | null;
+  Elevator: boolean;
+  WaitingRoom: boolean;
+  FoodService: boolean;
+  Restroom: boolean;
+  OverheadPassengerLoading: boolean;
+  IsNoFareCollected: boolean | null;
+  NoFareCollectedMsg: string | null;
+  AdaInfo: string | null;
+  AdditionalInfo: string | null;
+  AirportInfo: string | null;
+  AirportShuttleInfo: string | null;
+  BikeInfo: string | null;
+  ChamberOfCommerce: string | null;
+  ConstructionInfo: string | null;
+  FacInfo: string | null;
+  FareDiscountInfo: string | null;
+  FoodServiceInfo: string | null;
+  HovInfo: string | null;
+  LostAndFoundInfo: string | null;
+  MotorcycleInfo: string | null;
+  ParkingInfo: string | null;
+  ParkingShuttleInfo: string | null;
+  RealtimeShutoffFlag: boolean;
+  RealtimeShutoffMessage: string | null;
+  RealtimeIntroMsg: string | null;
+  ResourceStatus: string | null;
+  SecurityInfo: string | null;
+  TallySystemInfo: string | null;
+  TaxiInfo: string | null;
+  TrainInfo: string | null;
+  TruckInfo: string | null;
+  TypeDesc: string | null;
+  VisitorLinks: string | null;
+  Bulletins: TerminalBulletin[];
+  TransitLinks: TerminalTransitLink[];
+  WaitTimes: TerminalWaitTime[];
 };
 
 /**
  * Terminals cache flush date response
  */
 export type TerminalsCacheFlushDate = {
-  lastUpdated: Date;
-  source: string;
+  LastUpdated: Date;
+  Source: string;
 };

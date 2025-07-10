@@ -12,7 +12,7 @@ export type JsonValue =
   | { [key: string]: JsonValue };
 
 /**
- * Type representing transformed data (with Date objects and camelCase keys)
+ * Type representing transformed data (with Date objects and PascalCase keys preserved)
  */
 export type JsonX =
   | string
@@ -110,7 +110,7 @@ const parseDateString = (dateString: string): Date | null => {
 /**
  * Recursively transforms WSF API response data:
  * 1. Converts WSF date strings to JavaScript Date objects
- * 2. Converts PascalCase keys to camelCase
+ * 2. Preserves PascalCase keys (no longer converts to camelCase)
  * 3. Handles nested objects and arrays
  */
 export const transformWsfData = (data: JsonValue): JsonX => {
@@ -128,8 +128,7 @@ export const transformWsfData = (data: JsonValue): JsonX => {
   if (typeof data === "object" && data.constructor === Object) {
     const result: { [key: string]: JsonX } = {};
     for (const [key, value] of Object.entries(data)) {
-      const camelKey = key.charAt(0).toLowerCase() + key.slice(1);
-      result[camelKey] = transformWsfData(value);
+      result[key] = transformWsfData(value);
     }
     return result;
   }

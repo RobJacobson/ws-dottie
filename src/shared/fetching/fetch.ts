@@ -9,15 +9,15 @@ import { fetchInternal } from "./fetchInternal";
  * @param source - The API source: "vessels", "terminals", or "schedule"
  * @param endpoint - The complete API endpoint path (e.g., "/vessellocations/123")
  * @param logMode - Optional logging mode for debugging
- * @returns Promise resolving to the API response or null if fetch fails
+ * @returns Promise resolving to the API response or throws WsdApiError if fetch fails
  */
 export const fetchWsf = async <T>(
   source: WsfSource,
   endpoint: string,
   logMode?: LoggingMode
-): Promise<T | null> => {
+): Promise<T> => {
   const baseUrl = API_BASES[source];
-  const url = `${baseUrl}${endpoint}?api_key=${API_KEY}`;
+  const url = `${baseUrl}${endpoint}?apiaccesscode=${API_KEY}`;
   return await fetchInternal<T>(url, endpoint, logMode);
 };
 
@@ -27,10 +27,10 @@ export const fetchWsf = async <T>(
  * @param source - The API source: "vessels", "terminals", or "schedule"
  * @param endpoint - The complete API endpoint path (e.g., "/vessellocations")
  * @param logMode - Optional logging mode for debugging
- * @returns Promise resolving to an array of API responses or empty array if fetch fails
+ * @returns Promise resolving to an array of API responses or throws WsdApiError if fetch fails
  */
 export const fetchWsfArray = async <T>(
   source: WsfSource,
   endpoint: string,
   logMode?: LoggingMode
-): Promise<T[]> => (await fetchWsf<T[]>(source, endpoint, logMode)) || [];
+): Promise<T[]> => await fetchWsf<T[]>(source, endpoint, logMode);
