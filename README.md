@@ -16,6 +16,33 @@ A TypeScript client library for Washington State Department of Transportation (W
 npm install wsdot-api-client
 ```
 
+## API Access Code Required
+
+**Important**: All WSDOT APIs require an Access Code for authentication. You must register at [https://wsdot.wa.gov/traffic/api/](https://wsdot.wa.gov/traffic/api/) to obtain your Access Code.
+
+### Environment Setup
+
+Set your Access Code as an environment variable:
+
+```bash
+# Add to your .env file
+WSDOT_ACCESS_TOKEN=your_access_code_here
+```
+
+For React Native/Expo applications:
+```bash
+EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_access_code_here
+```
+
+### Development Requirements
+
+**Before implementing any API endpoints:**
+1. **Check official WSDOT API documentation** for exact endpoint specifications
+2. **Use cURL to validate actual data structures** returned by the API
+3. **Update TypeScript types** based on real API responses, not just documentation
+
+See [API Access Requirements](docs/API_ACCESS_REQUIREMENTS.md) for detailed information and official documentation links.
+
 ## Quick Start
 
 ### Basic Usage
@@ -234,34 +261,64 @@ const wsdot = useWsdApi();
 
 ## Error Handling
 
-The library returns empty arrays (`[]`) on errors rather than throwing exceptions, making it perfect for use with React Query and other state management solutions.
+The library provides two error handling approaches:
+
+### Throwing Errors (Recommended)
+Core API functions throw custom `WsdApiError` instances for better error handling and React Query integration:
 
 ```typescript
-// All API calls return empty arrays on error
-const routes = await client.wsf.schedule.getRoutes(new Date());
-// routes will be [] if there's an error, never throws
+import { getFares, WsdApiError } from 'wsdot-api-client';
+
+try {
+  const fares = await getFares();
+  // fares is Fare[]
+} catch (error) {
+  if (error instanceof WsdApiError) {
+    console.error('API Error:', error.getUserMessage());
+    console.error('Error code:', error.code);
+  }
+}
 ```
+
+### Silent Fallback (Legacy)
+
 
 ## React Query Integration
 
 The library is designed to work seamlessly with React Query:
 
 ```typescript
-import { useQuery } from 'react-query';
-import { useWsfApi } from 'wsdot-api-client';
+import { useQuery } from '@tanstack/react-query';
+import { useFares, WsdApiError } from 'wsdot-api-client';
 
-const RouteComponent = () => {
-  const wsf = useWsfApi();
+function App() {
+  const { 
+    data: fares, 
+    isLoading, 
+    isError, 
+    error,
+    refetch 
+  } = useFares();
+
+  if (isLoading) return <div>Loading...</div>;
   
-  const { data: routes = [], isLoading, error } = useQuery({
-    queryKey: ['routes', tripDate],
-    queryFn: () => wsf.schedule.getRoutes(tripDate),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchInterval: 60 * 1000, // Refresh every minute
-  });
+  if (isError) {
+    return (
+      <div>
+        <p>Error: {error instanceof WsdApiError ? error.getUserMessage() : 'Unknown error'}</p>
+        <button onClick={() => refetch()}>Retry</button>
+      </div>
+    );
+  }
   
-  // React Query handles loading states, error states, and caching
-};
+  return (
+    <div>
+      {fares?.map(fare => (
+        <div key={fare.fareId}>{fare.fareName}</div>
+      ))}
+    </div>
+  );
+}
 ```
 
 ## Examples

@@ -3,17 +3,18 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ["tests/**/*.test.ts"],
-    exclude: ["node_modules", "dist"],
+    include: ["tests/e2e/**/*.e2e.test.{ts,tsx}"],
+    exclude: [
+      "tests/unit/**/*",
+      "tests/integration/**/*",
+      "node_modules",
+      "dist",
+    ],
     environment: "jsdom",
     globals: true,
-    setupFiles: ["tests/setup.ts"],
-    // Load environment variables from .env file
-    env: {
-      WSDOT_ACCESS_TOKEN: process.env.WSDOT_ACCESS_TOKEN || "",
-      EXPO_PUBLIC_WSDOT_ACCESS_TOKEN:
-        process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN || "",
-    },
+    testTimeout: 30000, // 30 seconds for API calls
+    hookTimeout: 10000,
+    setupFiles: ["tests/e2e/setup.ts"],
     // Explicitly set module format to avoid CJS deprecation warning
     pool: "forks",
     poolOptions: {
@@ -21,6 +22,8 @@ export default defineConfig({
         singleFork: true,
       },
     },
+    reporters: ["verbose", "json"],
+    outputFile: "test-results/e2e.json",
   },
   resolve: {
     alias: {

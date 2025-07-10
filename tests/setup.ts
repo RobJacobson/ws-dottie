@@ -6,17 +6,20 @@ beforeAll(() => {
   process.env.NODE_ENV = "test";
 
   // Configure API key for testing
-  if (!process.env.WSF_API_KEY) {
-    console.warn("WSF_API_KEY not set - integration tests may fail");
+  const apiKey =
+    process.env.WSDOT_ACCESS_TOKEN ||
+    process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN;
+  if (!apiKey) {
+    console.warn("WSDOT_ACCESS_TOKEN not set - integration tests may fail");
   }
 
   // Set up global test configuration
   global.testConfig = {
-    apiKey: process.env.WSF_API_KEY,
+    apiKey: apiKey,
     baseUrl: "https://www.wsdot.wa.gov/ferries/api",
     timeout: 10000,
     retries: 3,
-    rateLimitDelay: 1000, // 1 second between calls
+    rateLimitDelay: 500, // 1 second between calls
   };
 });
 
@@ -39,12 +42,4 @@ afterEach(() => {
 });
 
 // Global test utilities
-declare global {
-  var testConfig?: {
-    apiKey?: string;
-    baseUrl: string;
-    timeout: number;
-    retries: number;
-    rateLimitDelay: number;
-  };
-}
+// (declare global block removed; now in setup.d.ts)

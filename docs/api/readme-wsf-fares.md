@@ -119,17 +119,59 @@ import {
   useRouteFares,
   useTerminalFares
 } from '@/api/wsf/fares';
+import { WsdApiError } from 'wsdot-api-client';
 
 function FaresComponent() {
   // Default: enabled is true
-  const { data: fares, isLoading: faresLoading } = useFares();
-  const { data: categories, isLoading: categoriesLoading } = useFareCategories();
-  const { data: types, isLoading: typesLoading } = useFareTypes();
-  const { data: routeFares, isLoading: routeFaresLoading } = useRouteFares();
-  const { data: terminalFares, isLoading: terminalFaresLoading } = useTerminalFares();
+  const { 
+    data: fares, 
+    isLoading: faresLoading, 
+    isError: faresError,
+    error: faresErrorData,
+    refetch: refetchFares
+  } = useFares();
+  
+  const { 
+    data: categories, 
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+    error: categoriesErrorData
+  } = useFareCategories();
+  
+  const { 
+    data: types, 
+    isLoading: typesLoading,
+    isError: typesError,
+    error: typesErrorData
+  } = useFareTypes();
+  
+  const { 
+    data: routeFares, 
+    isLoading: routeFaresLoading,
+    isError: routeFaresError,
+    error: routeFaresErrorData
+  } = useRouteFares();
+  
+  const { 
+    data: terminalFares, 
+    isLoading: terminalFaresLoading,
+    isError: terminalFaresError,
+    error: terminalFaresErrorData
+  } = useTerminalFares();
 
   if (faresLoading || categoriesLoading || typesLoading || routeFaresLoading || terminalFaresLoading) {
     return <div>Loading fare data...</div>;
+  }
+
+  // Handle errors
+  if (faresError) {
+    return (
+      <div>
+        <h2>Error Loading Fares</h2>
+        <p>{faresErrorData instanceof WsdApiError ? faresErrorData.getUserMessage() : 'Unknown error'}</p>
+        <button onClick={() => refetchFares()}>Retry</button>
+      </div>
+    );
   }
 
   return (
@@ -267,7 +309,24 @@ All PascalCase keys are converted to camelCase for consistency.
 
 ## Error Handling
 
-All API functions return empty arrays (`[]`) on errors rather than throwing exceptions, making them perfect for use with React Query and other state management solutions.
+The library provides a single error handling approach:
+
+### Throwing Errors (Recommended)
+Core API functions throw custom `WsdApiError` instances for better error handling and React Query integration:
+
+```typescript
+import { getFares, WsdApiError } from 'wsdot-api-client';
+
+try {
+  const fares = await getFares();
+  // fares is Fare[]
+} catch (error) {
+  if (error instanceof WsdApiError) {
+    console.error('API Error:', error.getUserMessage());
+    console.error('Error code:', error.code);
+  }
+}
+```
 
 ## Caching Strategy
 

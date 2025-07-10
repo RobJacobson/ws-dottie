@@ -64,13 +64,13 @@ describe("WSF Vessels API", () => {
 
       const mockVesselData = [
         {
-          vesselId: 1,
-          vesselName: "Walla Walla",
-          latitude: 47.6062,
-          longitude: -122.3321,
-          speed: 12.5,
-          heading: 180,
-          lastUpdated: new Date("2024-01-01T12:00:00Z"),
+          VesselID: 1,
+          VesselName: "Walla Walla",
+          Latitude: 47.6062,
+          Longitude: -122.3321,
+          Speed: 12.5,
+          Heading: 180,
+          LastUpdated: new Date("2024-01-01T12:00:00Z"),
         },
       ];
 
@@ -80,9 +80,9 @@ describe("WSF Vessels API", () => {
 
       expect(result).toEqual(mockVesselData);
       expect(result).toHaveLength(1);
-      expect(result[0].vesselId).toBe(1);
-      expect(result[0].vesselName).toBe("Walla Walla");
-      expect(result[0].latitude).toBe(47.6062);
+      expect(result[0].VesselID).toBe(1);
+      expect(result[0].VesselName).toBe("Walla Walla");
+      expect(result[0].Latitude).toBe(47.6062);
     });
 
     it("should handle empty response", async () => {
@@ -104,63 +104,64 @@ describe("WSF Vessels API", () => {
       expect(getVesselLocationsByVesselId).toHaveLength(1);
     });
 
-    it("should return a Promise", () => {
+    it("should return a Promise", async () => {
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
+      mockFetchWsf.mockResolvedValue({} as any);
+
       const result = getVesselLocationsByVesselId(1);
       expect(result).toBeInstanceOf(Promise);
     });
 
-    it("should call fetchWsfArray with correct parameters", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+    it("should call fetchWsf with correct parameters", async () => {
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
 
-      mockFetchWsfArray.mockResolvedValue([]);
+      mockFetchWsf.mockResolvedValue({} as any);
 
       await getVesselLocationsByVesselId(1);
 
-      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+      expect(mockFetchWsf).toHaveBeenCalledWith(
         "vessels",
         "/vessellocations/1"
       );
     });
 
     it("should handle different vessel IDs", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
 
-      mockFetchWsfArray.mockResolvedValue([]);
+      mockFetchWsf.mockResolvedValue({} as any);
 
       await getVesselLocationsByVesselId(2);
 
-      expect(mockFetchWsfArray).toHaveBeenCalledWith(
+      expect(mockFetchWsf).toHaveBeenCalledWith(
         "vessels",
         "/vessellocations/2"
       );
     });
 
     it("should return vessel location data for specific ID", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
 
-      const mockVesselData = [
-        {
-          vesselId: 1,
-          vesselName: "Walla Walla",
-          latitude: 47.6062,
-          longitude: -122.3321,
-          speed: 12.5,
-          heading: 180,
-          lastUpdated: new Date("2024-01-01T12:00:00Z"),
-        },
-      ];
+      const mockVesselData = {
+        VesselID: 1,
+        VesselName: "Walla Walla",
+        Latitude: 47.6062,
+        Longitude: -122.3321,
+        Speed: 12.5,
+        Heading: 180,
+        LastUpdated: new Date("2024-01-01T12:00:00Z"),
+      };
 
-      mockFetchWsfArray.mockResolvedValue(mockVesselData);
+      mockFetchWsf.mockResolvedValue(mockVesselData);
 
       const result = await getVesselLocationsByVesselId(1);
 
       expect(result).toEqual(mockVesselData);
-      expect(result).toHaveLength(1);
-      expect(result[0].vesselId).toBe(1);
-      expect(result[0].vesselName).toBe("Walla Walla");
+      expect(result.VesselID).toBe(1);
+      expect(result.VesselName).toBe("Walla Walla");
     });
   });
 
@@ -199,13 +200,13 @@ describe("WSF Vessels API", () => {
 
       const mockVesselData = [
         {
-          vesselId: 1,
-          vesselName: "Walla Walla",
-          capacity: 2000,
-          length: 460,
-          beam: 89,
-          draft: 18,
-          isActive: true,
+          VesselID: 1,
+          VesselName: "Walla Walla",
+          MaxPassengerCount: 2000,
+          Length: "460'",
+          Beam: "89'",
+          Draft: "18'",
+          Status: 1,
         },
       ];
 
@@ -215,9 +216,9 @@ describe("WSF Vessels API", () => {
 
       expect(result).toEqual(mockVesselData);
       expect(result).toHaveLength(1);
-      expect(result[0].vesselId).toBe(1);
-      expect(result[0].vesselName).toBe("Walla Walla");
-      expect(result[0].capacity).toBe(2000);
+      expect(result[0].VesselID).toBe(1);
+      expect(result[0].VesselName).toBe("Walla Walla");
+      expect(result[0].MaxPassengerCount).toBe(2000);
     });
   });
 
@@ -232,58 +233,49 @@ describe("WSF Vessels API", () => {
       expect(result).toBeInstanceOf(Promise);
     });
 
-    it("should call fetchWsfArray with correct parameters", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+    it("should call fetchWsf with correct parameters", async () => {
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
 
-      mockFetchWsfArray.mockResolvedValue([]);
+      mockFetchWsf.mockResolvedValue({} as any);
 
       await getVesselVerboseById(1);
 
-      expect(mockFetchWsfArray).toHaveBeenCalledWith(
-        "vessels",
-        "/vesselverbose/1"
-      );
+      expect(mockFetchWsf).toHaveBeenCalledWith("vessels", "/vesselverbose/1");
     });
 
     it("should handle different vessel IDs", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
 
-      mockFetchWsfArray.mockResolvedValue([]);
+      mockFetchWsf.mockResolvedValue({} as any);
 
       await getVesselVerboseById(2);
 
-      expect(mockFetchWsfArray).toHaveBeenCalledWith(
-        "vessels",
-        "/vesselverbose/2"
-      );
+      expect(mockFetchWsf).toHaveBeenCalledWith("vessels", "/vesselverbose/2");
     });
 
     it("should return vessel verbose data for specific ID", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+      const { fetchWsf } = await import("@/shared/fetching/fetch");
+      const mockFetchWsf = vi.mocked(fetchWsf);
 
-      const mockVesselData = [
-        {
-          vesselId: 1,
-          vesselName: "Walla Walla",
-          capacity: 2000,
-          length: 460,
-          beam: 89,
-          draft: 18,
-          isActive: true,
-        },
-      ];
+      const mockVesselData = {
+        VesselID: 1,
+        VesselName: "Walla Walla",
+        MaxPassengerCount: 2000,
+        Length: "460'",
+        Beam: "89'",
+        Draft: "18'",
+        Status: 1,
+      };
 
-      mockFetchWsfArray.mockResolvedValue(mockVesselData);
+      mockFetchWsf.mockResolvedValue(mockVesselData);
 
       const result = await getVesselVerboseById(1);
 
       expect(result).toEqual(mockVesselData);
-      expect(result).toHaveLength(1);
-      expect(result[0].vesselId).toBe(1);
-      expect(result[0].vesselName).toBe("Walla Walla");
+      expect(result.VesselID).toBe(1);
+      expect(result.VesselName).toBe("Walla Walla");
     });
   });
 
@@ -318,8 +310,8 @@ describe("WSF Vessels API", () => {
       const mockFetchWsf = vi.mocked(fetchWsf);
 
       const mockCacheFlushData = {
-        lastUpdated: new Date("2024-01-01T12:00:00Z"),
-        source: "vessels",
+        LastUpdated: new Date("2024-01-01T12:00:00Z"),
+        Source: "vessels",
       };
 
       mockFetchWsf.mockResolvedValue(mockCacheFlushData);
@@ -327,8 +319,8 @@ describe("WSF Vessels API", () => {
       const result = await getCacheFlushDateVessels();
 
       expect(result).toEqual(mockCacheFlushData);
-      expect(result.lastUpdated).toBeInstanceOf(Date);
-      expect(result.source).toBe("vessels");
+      expect(result?.LastUpdated).toBeInstanceOf(Date);
+      expect(result?.Source).toBe("vessels");
     });
   });
 });

@@ -23,63 +23,63 @@ describe("WSF Data Transformation", () => {
 
       const result = transformWsfData(input) as Record<string, any>;
 
-      expect(result.lastUpdate).toBeInstanceOf(Date);
-      expect(result.lastUpdate?.getTime()).toBe(1703123456789);
-      expect(result.departureTime).toBeInstanceOf(Date);
-      expect(result.departureTime?.toISOString()).toBe(
+      expect(result.LastUpdate).toBeInstanceOf(Date);
+      expect(result.LastUpdate?.getTime()).toBe(1703123456789);
+      expect(result.DepartureTime).toBeInstanceOf(Date);
+      expect(result.DepartureTime?.toISOString()).toBe(
         "2023-12-21T22:30:00.000Z"
       );
-      expect(result.arrivalDate).toBeInstanceOf(Date);
-      expect(result.arrivalDate?.toISOString()).toBe(
+      expect(result.ArrivalDate).toBeInstanceOf(Date);
+      expect(result.ArrivalDate?.toISOString()).toBe(
         "2023-12-21T08:00:00.000Z"
       );
     });
 
-    it("should convert PascalCase keys to camelCase", () => {
+    it("should preserve PascalCase keys", () => {
       const input = {
-        VesselId: 1,
+        VesselID: 1,
         VesselName: "Test Vessel",
         LastUpdate: "/Date(1703123456789)/",
       };
 
       const result = transformWsfData(input) as Record<string, any>;
 
-      expect(result.vesselId).toBe(1);
-      expect(result.vesselName).toBe("Test Vessel");
-      expect(result.lastUpdate).toBeInstanceOf(Date);
+      expect(result.VesselID).toBe(1);
+      expect(result.VesselName).toBe("Test Vessel");
+      expect(result.LastUpdate).toBeInstanceOf(Date);
     });
 
     it("should handle nested objects", () => {
       const input = {
         Vessel: {
-          VesselId: 1,
+          VesselID: 1,
           VesselName: "Test Vessel",
           LastUpdate: "/Date(1703123456789)/",
         },
         Route: {
-          RouteId: 1,
+          RouteID: 1,
           RouteName: "Test Route",
         },
       };
 
       const result = transformWsfData(input) as Record<string, any>;
 
-      expect(result.vessel.vesselId).toBe(1);
-      expect(result.vessel.vesselName).toBe("Test Vessel");
-      expect(result.vessel.lastUpdate).toBeInstanceOf(Date);
-      expect(result.route.routeId).toBe(1);
-      expect(result.route.routeName).toBe("Test Route");
+      expect(result.Vessel.VesselID).toBe(1);
+      expect(result.Vessel.VesselName).toBe("Test Vessel");
+      expect(result.Vessel.LastUpdate).toBeInstanceOf(Date);
+      expect(result.Route.RouteID).toBe(1);
+      expect(result.Route.RouteName).toBe("Test Route");
     });
 
     it("should handle arrays", () => {
       const input = [
         {
-          VesselId: 1,
+          VesselID: 1,
           VesselName: "Vessel 1",
           LastUpdate: "/Date(1703123456789)/",
         },
         {
-          VesselId: 2,
+          VesselID: 2,
           VesselName: "Vessel 2",
           LastUpdate: "/Date(1703123456790)/",
         },
@@ -88,12 +88,12 @@ describe("WSF Data Transformation", () => {
       const result = transformWsfData(input) as Record<string, any>[];
 
       expect(Array.isArray(result)).toBe(true);
-      expect(result[0].vesselId).toBe(1);
-      expect(result[0].vesselName).toBe("Vessel 1");
-      expect(result[0].lastUpdate).toBeInstanceOf(Date);
-      expect(result[1].vesselId).toBe(2);
-      expect(result[1].vesselName).toBe("Vessel 2");
-      expect(result[1].lastUpdate).toBeInstanceOf(Date);
+      expect(result[0].VesselID).toBe(1);
+      expect(result[0].VesselName).toBe("Vessel 1");
+      expect(result[0].LastUpdate).toBeInstanceOf(Date);
+      expect(result[1].VesselID).toBe(2);
+      expect(result[1].VesselName).toBe("Vessel 2");
+      expect(result[1].LastUpdate).toBeInstanceOf(Date);
     });
 
     it("should handle mixed date formats", () => {
@@ -110,20 +110,20 @@ describe("WSF Data Transformation", () => {
 
       const result = transformWsfData(input) as Record<string, any>;
 
-      expect(result.wsfDate).toBeInstanceOf(Date);
-      expect(result.wsfDate?.getTime()).toBe(1703123456789);
-      expect(result.isoDate).toBeInstanceOf(Date);
-      expect(result.isoDate?.toISOString()).toBe("2023-12-21T00:00:00.000Z");
-      expect(result.usDate).toBeInstanceOf(Date);
-      expect(result.usDate?.toISOString()).toBe("2023-12-21T08:00:00.000Z");
-      expect(result.isoDateTime).toBeInstanceOf(Date);
-      expect(result.isoDateTime?.toISOString()).toBe(
+      expect(result.WsfDate).toBeInstanceOf(Date);
+      expect(result.WsfDate?.getTime()).toBe(1703123456789);
+      expect(result.IsoDate).toBeInstanceOf(Date);
+      expect(result.IsoDate?.toISOString()).toBe("2023-12-21T00:00:00.000Z");
+      expect(result.UsDate).toBeInstanceOf(Date);
+      expect(result.UsDate?.toISOString()).toBe("2023-12-21T08:00:00.000Z");
+      expect(result.IsoDateTime).toBeInstanceOf(Date);
+      expect(result.IsoDateTime?.toISOString()).toBe(
         "2023-12-21T22:30:00.000Z"
       );
-      expect(result.invalidDate).toBe("not-a-date"); // Should remain unchanged
-      expect(result.regularString).toBe("just a string");
-      expect(result.number).toBe(42);
-      expect(result.boolean).toBe(true);
+      expect(result.InvalidDate).toBe("not-a-date"); // Should remain unchanged
+      expect(result.RegularString).toBe("just a string");
+      expect(result.Number).toBe(42);
+      expect(result.Boolean).toBe(true);
     });
 
     it("should handle null and undefined values", () => {
@@ -136,17 +136,17 @@ describe("WSF Data Transformation", () => {
 
       const result = transformWsfData(input) as Record<string, any>;
 
-      expect(result.nullValue).toBeNull();
-      expect(result.emptyString).toBe("");
-      expect(result.zero).toBe(0);
-      expect(result.false).toBe(false);
+      expect(result.NullValue).toBeNull();
+      expect(result.EmptyString).toBe("");
+      expect(result.Zero).toBe(0);
+      expect(result.False).toBe(false);
     });
 
     it("should handle complex nested structures", () => {
       const input = {
         Vessels: [
           {
-            VesselId: 1,
+            VesselID: 1,
             VesselName: "Vessel 1",
             Location: {
               Latitude: 47.6062,
@@ -155,7 +155,7 @@ describe("WSF Data Transformation", () => {
             },
             Schedules: [
               {
-                ScheduleId: 1,
+                ScheduleID: 1,
                 DepartureTime: "2023-12-21T14:30:00",
                 ArrivalTime: "2023-12-21T15:00:00",
               },
@@ -170,16 +170,16 @@ describe("WSF Data Transformation", () => {
 
       const result = transformWsfData(input) as Record<string, any>;
 
-      expect(result.vessels[0].vesselId).toBe(1);
-      expect(result.vessels[0].vesselName).toBe("Vessel 1");
-      expect(result.vessels[0].location.latitude).toBe(47.6062);
-      expect(result.vessels[0].location.longitude).toBe(-122.3321);
-      expect(result.vessels[0].location.lastUpdate).toBeInstanceOf(Date);
-      expect(result.vessels[0].schedules[0].scheduleId).toBe(1);
-      expect(result.vessels[0].schedules[0].departureTime).toBeInstanceOf(Date);
-      expect(result.vessels[0].schedules[0].arrivalTime).toBeInstanceOf(Date);
-      expect(result.metadata.lastUpdated).toBeInstanceOf(Date);
-      expect(result.metadata.version).toBe("1.0");
+      expect(result.Vessels[0].VesselID).toBe(1);
+      expect(result.Vessels[0].VesselName).toBe("Vessel 1");
+      expect(result.Vessels[0].Location.Latitude).toBe(47.6062);
+      expect(result.Vessels[0].Location.Longitude).toBe(-122.3321);
+      expect(result.Vessels[0].Location.LastUpdate).toBeInstanceOf(Date);
+      expect(result.Vessels[0].Schedules[0].ScheduleID).toBe(1);
+      expect(result.Vessels[0].Schedules[0].DepartureTime).toBeInstanceOf(Date);
+      expect(result.Vessels[0].Schedules[0].ArrivalTime).toBeInstanceOf(Date);
+      expect(result.Metadata.LastUpdated).toBeInstanceOf(Date);
+      expect(result.Metadata.Version).toBe("1.0");
     });
 
     it("should handle real WSF API response format", () => {
@@ -187,21 +187,21 @@ describe("WSF Data Transformation", () => {
         mockRawVesselLocationResponse[0]
       ) as Record<string, any>;
 
-      expect(result.vesselID).toBe(1);
-      expect(result.vesselName).toBe("M/V Cathlamet");
-      expect(result.longitude).toBe(-122.3321);
-      expect(result.latitude).toBe(47.6062);
-      expect(result.heading).toBe(180);
-      expect(result.speed).toBe(12.5);
-      expect(result.inService).toBe(true);
-      expect(result.atDock).toBe(false);
-      expect(result.departingTerminalId).toBe(undefined);
-      expect(result.departingTerminalName).toBe("Seattle");
-      expect(result.arrivingTerminalId).toBe(undefined);
-      expect(result.arrivingTerminalName).toBe("Bainbridge Island");
-      expect(result.scheduledDeparture).toBeInstanceOf(Date);
-      expect(result.estimatedArrival).toBeInstanceOf(Date);
-      expect(result.lastUpdated).toBe(undefined);
+      expect(result.VesselID).toBe(1);
+      expect(result.VesselName).toBe("M/V Cathlamet");
+      expect(result.Longitude).toBe(-122.3321);
+      expect(result.Latitude).toBe(47.6062);
+      expect(result.Heading).toBe(180);
+      expect(result.Speed).toBe(12.5);
+      expect(result.InService).toBe(true);
+      expect(result.AtDock).toBe(false);
+      expect(result.DepartingTerminalID).toBe(1);
+      expect(result.DepartingTerminalName).toBe("Seattle");
+      expect(result.ArrivingTerminalID).toBe(2);
+      expect(result.ArrivingTerminalName).toBe("Bainbridge Island");
+      expect(result.TimeStamp).toBeInstanceOf(Date);
+      expect(result.ScheduledDeparture).toBeInstanceOf(Date);
+      expect(result.EstimatedArrival).toBeInstanceOf(Date);
     });
   });
 });
