@@ -1,6 +1,7 @@
 {
   "name": "wsdot-api-client",
   "version": "1.0.0",
+  "type": "module",
   "description": "Complete TypeScript client for WSDOT Traveler Information APIs",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

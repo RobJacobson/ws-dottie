@@ -96,20 +96,22 @@ export const useRoutesByTerminals = (params: {
   departingTerminalId: number;
   arrivingTerminalId: number;
 }) => {
+  const isEnabled =
+    !!params.tripDate &&
+    !!params.departingTerminalId &&
+    !!params.arrivingTerminalId;
+
   return useQuery({
     queryKey: [
       "schedule",
       "routes",
       "byTerminals",
-      params.tripDate.toISOString().split("T")[0],
+      isEnabled ? params.tripDate.toISOString().split("T")[0] : null,
       params.departingTerminalId,
       params.arrivingTerminalId,
     ],
     queryFn: () => getRoutesByTerminals(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalId &&
-      !!params.arrivingTerminalId,
+    enabled: isEnabled,
     ...createInfrequentUpdateOptions(),
   });
 };

@@ -52,8 +52,8 @@ describe("WSF Caching Configuration", () => {
       expect(INFREQUENT_UPDATE_CONFIG.staleTime).toBe(7 * 24 * 60 * 60 * 1000);
     });
 
-    it("should have correct gc time (1 month)", () => {
-      expect(INFREQUENT_UPDATE_CONFIG.gcTime).toBe(30 * 24 * 60 * 60 * 1000);
+    it("should have correct gc time (2 weeks)", () => {
+      expect(INFREQUENT_UPDATE_CONFIG.gcTime).toBe(14 * 24 * 60 * 60 * 1000);
     });
 
     it("should have refetch interval disabled", () => {

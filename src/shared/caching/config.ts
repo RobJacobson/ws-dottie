@@ -37,8 +37,8 @@ export const FREQUENT_UPDATE_CONFIG = {
 export const INFREQUENT_UPDATE_CONFIG = {
   // Data is considered stale after 1 week (since cache flush will invalidate if it changes)
   staleTime: 1 * WEEK,
-  // Keep in cache for 1 month (aggressive caching since cache flush handles invalidation)
-  gcTime: 1 * MONTH,
+  // Keep in cache for 2 weeks (reduced from 1 month to avoid timeout overflow)
+  gcTime: 2 * WEEK,
   // No automatic refetch interval - rely on cache flush invalidation
   refetchInterval: false,
   // Refetch when window regains focus (but only if stale)
