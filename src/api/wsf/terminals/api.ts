@@ -5,9 +5,11 @@ import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 
 import type {
   TerminalBasics,
+  TerminalBulletin,
   TerminalLocation,
   TerminalSailingSpace,
   TerminalsCacheFlushDate,
+  TerminalTransport,
   TerminalVerbose,
   TerminalWaitTime,
   TerminalWaitTimes,
@@ -116,6 +118,76 @@ export const getTerminalSailingSpaceByTerminalId = (
   fetchWsf<TerminalSailingSpace>(
     "terminals",
     buildWsfUrl("/terminalsailingspace/{terminalId}", { terminalId })
+  );
+
+// ============================================================================
+// TERMINAL BULLETINS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching terminal bulletins from WSF Terminals API
+ *
+ * Retrieves bulletin information for all terminals including announcements,
+ * notices, and important updates. This endpoint provides current bulletin
+ * information for all WSF terminals.
+ *
+ * @returns Promise resolving to an array of TerminalBulletin objects containing bulletin information
+ */
+export const getTerminalBulletins = (): Promise<TerminalBulletin[]> =>
+  fetchWsfArray<TerminalBulletin>("terminals", "/terminalbulletins");
+
+/**
+ * API function for fetching terminal bulletins for a specific terminal from WSF Terminals API
+ *
+ * Retrieves bulletin information for a specific terminal identified by terminal ID,
+ * including announcements, notices, and important updates. This endpoint filters
+ * the resultset to a single terminal, providing current bulletin information
+ * for that specific terminal.
+ *
+ * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @returns Promise resolving to an array of TerminalBulletin objects containing bulletin information for the specified terminal
+ */
+export const getTerminalBulletinsByTerminalId = (
+  terminalId: number
+): Promise<TerminalBulletin[]> =>
+  fetchWsfArray<TerminalBulletin>(
+    "terminals",
+    `/terminalbulletins/${terminalId}`
+  );
+
+// ============================================================================
+// TERMINAL TRANSPORTS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching terminal transports from WSF Terminals API
+ *
+ * Retrieves transportation information for all terminals including transit options,
+ * shuttle services, and transportation connections. This endpoint provides
+ * comprehensive transportation information for all WSF terminals.
+ *
+ * @returns Promise resolving to an array of TerminalTransport objects containing transportation information
+ */
+export const getTerminalTransports = (): Promise<TerminalTransport[]> =>
+  fetchWsfArray<TerminalTransport>("terminals", "/terminaltransports");
+
+/**
+ * API function for fetching terminal transports for a specific terminal from WSF Terminals API
+ *
+ * Retrieves transportation information for a specific terminal identified by terminal ID,
+ * including transit options, shuttle services, and transportation connections.
+ * This endpoint filters the resultset to a single terminal, providing
+ * comprehensive transportation information for that specific terminal.
+ *
+ * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @returns Promise resolving to an array of TerminalTransport objects containing transportation information for the specified terminal
+ */
+export const getTerminalTransportsByTerminalId = (
+  terminalId: number
+): Promise<TerminalTransport[]> =>
+  fetchWsfArray<TerminalTransport>(
+    "terminals",
+    `/terminaltransports/${terminalId}`
   );
 
 // ============================================================================

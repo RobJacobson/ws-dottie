@@ -1,21 +1,13 @@
-// WSF Schedule hooks
+// WSF Schedule API React Query hooks
 
 import { useQuery } from "@tanstack/react-query";
 
-import {
-  createCacheFlushOptions,
-  createInfrequentUpdateOptions,
-} from "@/shared/caching/config";
+import { createInfrequentUpdateOptions } from "@/shared/caching/config";
 
-import type { TerminalBasics as ScheduleTerminal } from "../terminals/types";
-import type { Vessel } from "../vessels/types";
 import {
-  // Routes API functions
   getActiveSeasons,
   getAlerts,
-  // Schedules API functions
   getAllSailings,
-  // Cache Flush Date API functions
   getCacheFlushDateSchedule,
   getRouteDetails,
   getRouteDetailsByRoute,
@@ -30,55 +22,207 @@ import {
   getScheduledRoutesBySeason,
   getScheduleTodayByRoute,
   getScheduleTodayByTerminals,
-  // Terminals API functions
   getTerminalMates,
   getTerminals,
   getTerminalsAndMates,
-  getTerminalsByRoute,
-  // Time Adjustments API functions
+  getTerminalsAndMatesByRoute,
   getTimeAdjustments,
   getTimeAdjustmentsByRoute,
   getTimeAdjustmentsBySchedRoute,
-  // Valid Date Range API functions
   getValidDateRange,
-  // Vessels API functions
-  getVessels,
-  getVesselsByRoute,
 } from "./api";
 import type {
+  ActiveSeason,
+  Alert,
   Route,
-  ScheduleDeparture as Sailing,
+  Sailing,
   Schedule,
   ScheduleCacheFlushDate,
+  ScheduledRoute,
+  ScheduleTerminal,
   TimeAdjustment,
   ValidDateRange,
 } from "./types";
+
+// ============================================================================
+// CACHE FLUSH DATE HOOKS
+// ============================================================================
+
+/**
+ * React Query hook for fetching cache flush date from WSF Schedule API
+ *
+ * Retrieves the cache flush date for the schedule API. This endpoint helps
+ * determine when cached data should be refreshed. When the date returned
+ * from this operation is modified, drop your application cache and retrieve
+ * fresh data from the service.
+ *
+ * @returns React Query result object containing cache flush date information
+ */
+export const useCacheFlushDateSchedule = () =>
+  useQuery({
+    queryKey: ["schedule", "cacheFlushDate"],
+    queryFn: getCacheFlushDateSchedule,
+    ...createInfrequentUpdateOptions(),
+  });
+
+// ============================================================================
+// VALID DATE RANGE HOOKS
+// ============================================================================
+
+/**
+ * React Query hook for fetching valid date range from WSF Schedule API
+ *
+ * Retrieves a date range for which schedule data is currently published & available.
+ * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+ * Please consider using cacheflushdate to coordinate the caching of this data in your application.
+ *
+ * @returns React Query result object containing valid date range information
+ */
+export const useValidDateRange = () =>
+  useQuery({
+    queryKey: ["schedule", "validDateRange"],
+    queryFn: getValidDateRange,
+    ...createInfrequentUpdateOptions(),
+  });
+
+// ============================================================================
+// TERMINALS HOOKS
+// ============================================================================
+
+/**
+ * React Query hook for fetching terminals from WSF Schedule API
+ *
+ * Retrieves valid departing terminals for a given trip date. A valid trip date
+ * may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param options - Optional React Query options
+ * @returns React Query result object containing terminal information
+ */
+export const useTerminals = (
+  tripDate: Date,
+  options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "terminals", tripDate.toISOString().split("T")[0]],
+    queryFn: () => getTerminals(tripDate),
+    enabled: !!tripDate,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
+
+/**
+ * React Query hook for fetching terminals and mates from WSF Schedule API
+ *
+ * Retrieves all valid departing and arriving terminal combinations for a given trip date.
+ * A valid trip date may be determined using validDateRange. Please format the trip date
+ * input as 'YYYY-MM-DD'.
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param options - Optional React Query options
+ * @returns React Query result object containing terminal combinations
+ */
+export const useTerminalsAndMates = (
+  tripDate: Date,
+  options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "terminalsAndMates", tripDate.toISOString().split("T")[0]],
+    queryFn: () => getTerminalsAndMates(tripDate),
+    enabled: !!tripDate,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
+
+/**
+ * React Query hook for fetching terminals and mates by route from WSF Schedule API
+ *
+ * Provides valid departing and arriving terminal combinations for a given trip date and route.
+ * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
+ * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param params - Object containing trip date and route information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.routeId - The unique identifier for the route
+ * @param options - Optional React Query options
+ * @returns React Query result object containing terminal combinations for the route
+ */
+export const useTerminalsAndMatesByRoute = (
+  params: { tripDate: Date; routeId: number },
+  options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
+) =>
+  useQuery({
+    queryKey: [
+      "schedule",
+      "terminalsAndMatesByRoute",
+      params.tripDate.toISOString().split("T")[0],
+      params.routeId,
+    ],
+    queryFn: () => getTerminalsAndMatesByRoute(params),
+    enabled: !!params.tripDate && !!params.routeId,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
+
+/**
+ * React Query hook for fetching terminal mates from WSF Schedule API
+ *
+ * Provides arriving terminals for a given departing terminal and trip date. A valid departing
+ * terminal may be found by using terminals. Similarly, a valid trip date may be determined
+ * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param terminalId - The unique identifier for the departing terminal
+ * @param options - Optional React Query options
+ * @returns React Query result object containing arriving terminals
+ */
+export const useTerminalMates = (
+  tripDate: Date,
+  terminalId: number,
+  options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
+) =>
+  useQuery({
+    queryKey: [
+      "schedule",
+      "terminalMates",
+      tripDate.toISOString().split("T")[0],
+      terminalId,
+    ],
+    queryFn: () => getTerminalMates(tripDate, terminalId),
+    enabled: !!tripDate && !!terminalId,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
 
 // ============================================================================
 // ROUTES HOOKS
 // ============================================================================
 
 /**
- * Hook for fetching all routes from WSF Schedule API
+ * React Query hook for fetching all routes from WSF Schedule API
  *
  * Retrieves the most basic/brief information pertaining to routes for a given trip date.
  * If only a trip date is included, all routes available for that date of travel are returned.
  * Valid trip dates may be determined using the validDateRange endpoint.
  *
  * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @returns React Query result containing an array of Route objects with basic route information
+ * @param options - Optional React Query options
+ * @returns React Query result object containing basic route information
  */
-export const useRoutes = (tripDate: Date) => {
-  return useQuery({
+export const useRoutes = (
+  tripDate: Date,
+  options?: Parameters<typeof useQuery<Route[]>>[0]
+) =>
+  useQuery({
     queryKey: ["schedule", "routes", tripDate.toISOString().split("T")[0]],
     queryFn: () => getRoutes(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching routes between specific terminals from WSF Schedule API
+ * React Query hook for fetching routes between specific terminals from WSF Schedule API
  *
  * Retrieves the most basic/brief information pertaining to routes filtered by departing
  * and arriving terminals for a given trip date. Routes in the resultset are filtered
@@ -89,59 +233,56 @@ export const useRoutes = (tripDate: Date) => {
  * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
  * @param params.departingTerminalId - The unique identifier for the departing terminal
  * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
- * @returns React Query result containing an array of Route objects filtered by terminal combination
+ * @param options - Optional React Query options
+ * @returns React Query result object containing routes filtered by terminal combination
  */
-export const useRoutesByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-}) => {
-  const isEnabled =
-    !!params.tripDate &&
-    !!params.departingTerminalId &&
-    !!params.arrivingTerminalId;
-
-  return useQuery({
+export const useRoutesByTerminals = (
+  params: {
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  },
+  options?: Parameters<typeof useQuery<Route[]>>[0]
+) =>
+  useQuery({
     queryKey: [
       "schedule",
-      "routes",
-      "byTerminals",
-      isEnabled ? params.tripDate.toISOString().split("T")[0] : null,
+      "routesByTerminals",
+      params.tripDate.toISOString().split("T")[0],
       params.departingTerminalId,
       params.arrivingTerminalId,
     ],
     queryFn: () => getRoutesByTerminals(params),
-    enabled: isEnabled,
+    enabled: !!params.tripDate && !!params.departingTerminalId && !!params.arrivingTerminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching routes with service disruptions from WSF Schedule API
+ * React Query hook for fetching routes with service disruptions from WSF Schedule API
  *
  * Retrieves the most basic/brief information for routes currently associated with
  * service disruptions for a given trip date. This endpoint helps identify routes
  * that may have delays, cancellations, or other service issues.
  *
  * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @returns React Query result containing an array of Route objects that have service disruptions
+ * @param options - Optional React Query options
+ * @returns React Query result object containing routes with service disruptions
  */
-export const useRoutesWithDisruptions = (tripDate: Date) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "routes",
-      "withDisruptions",
-      tripDate.toISOString().split("T")[0],
-    ],
+export const useRoutesWithDisruptions = (
+  tripDate: Date,
+  options?: Parameters<typeof useQuery<Route[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "routesWithDisruptions", tripDate.toISOString().split("T")[0]],
     queryFn: () => getRoutesWithDisruptions(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching route details from WSF Schedule API
+ * React Query hook for fetching detailed route information from WSF Schedule API
  *
  * Retrieves highly detailed information pertaining to routes for a given trip date.
  * If only a trip date is included, all routes available for that date of travel are returned.
@@ -149,24 +290,23 @@ export const useRoutesWithDisruptions = (tripDate: Date) => {
  * and operational information.
  *
  * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @returns React Query result containing an array of Route objects with detailed route information
+ * @param options - Optional React Query options
+ * @returns React Query result object containing detailed route information
  */
-export const useRouteDetails = (tripDate: Date) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "routes",
-      "details",
-      tripDate.toISOString().split("T")[0],
-    ],
+export const useRouteDetails = (
+  tripDate: Date,
+  options?: Parameters<typeof useQuery<Route[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "routeDetails", tripDate.toISOString().split("T")[0]],
     queryFn: () => getRouteDetails(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching route details by terminals from WSF Schedule API
+ * React Query hook for fetching detailed route information between specific terminals from WSF Schedule API
  *
  * Retrieves highly detailed information pertaining to routes filtered by departing and
  * arriving terminals for a given trip date. Routes in the resultset are filtered to match
@@ -177,505 +317,418 @@ export const useRouteDetails = (tripDate: Date) => {
  * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
  * @param params.departingTerminalId - The unique identifier for the departing terminal
  * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
- * @returns React Query result containing an array of Route objects with detailed information filtered by terminal combination
+ * @param options - Optional React Query options
+ * @returns React Query result object containing detailed route information filtered by terminal combination
  */
-export const useRouteDetailsByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-}) => {
-  return useQuery({
+export const useRouteDetailsByTerminals = (
+  params: {
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  },
+  options?: Parameters<typeof useQuery<Route[]>>[0]
+) =>
+  useQuery({
     queryKey: [
       "schedule",
-      "routes",
-      "detailsByTerminals",
+      "routeDetailsByTerminals",
       params.tripDate.toISOString().split("T")[0],
       params.departingTerminalId,
       params.arrivingTerminalId,
     ],
     queryFn: () => getRouteDetailsByTerminals(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalId &&
-      !!params.arrivingTerminalId,
+    enabled: !!params.tripDate && !!params.departingTerminalId && !!params.arrivingTerminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching route details by route from WSF Schedule API
+ * React Query hook for fetching detailed route information by route ID from WSF Schedule API
  *
  * Retrieves highly detailed information for a specific route identified by route ID
  * for a given trip date. This endpoint filters the resultset to a single route,
  * providing comprehensive details for that specific route.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param routeId - The unique identifier for the route
- * @returns React Query result containing an array of Route objects with detailed information for the specified route
+ * @param params - Object containing trip date and route information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.routeId - The unique identifier for the route
+ * @param options - Optional React Query options
+ * @returns React Query result object containing detailed information for the specified route
  */
-export const useRouteDetailsByRoute = (tripDate: Date, routeId: number) => {
-  return useQuery({
+export const useRouteDetailsByRoute = (
+  params: { tripDate: Date; routeId: number },
+  options?: Parameters<typeof useQuery<Route[]>>[0]
+) =>
+  useQuery({
     queryKey: [
       "schedule",
-      "routes",
-      "detailsByRoute",
-      tripDate.toISOString().split("T")[0],
-      routeId,
+      "routeDetailsByRoute",
+      params.tripDate.toISOString().split("T")[0],
+      params.routeId,
     ],
-    queryFn: () => getRouteDetailsByRoute({ tripDate, routeId }),
-    enabled: !!tripDate && !!routeId,
+    queryFn: () => getRouteDetailsByRoute(params),
+    enabled: !!params.tripDate && !!params.routeId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
+
+// ============================================================================
+// ACTIVE SEASONS HOOKS
+// ============================================================================
 
 /**
- * Hook for fetching scheduled routes from WSF Schedule API
+ * React Query hook for fetching active seasons from WSF Schedule API
+ *
+ * Retrieves a summary of active seasons. This endpoint provides information about
+ * current and upcoming ferry service seasons, which can be used to determine
+ * valid schedule IDs for other endpoints.
+ *
+ * @param options - Optional React Query options
+ * @returns React Query result object containing active season information
+ */
+export const useActiveSeasons = (
+  options?: Parameters<typeof useQuery<ActiveSeason[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "activeSeasons"],
+    queryFn: getActiveSeasons,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
+
+// ============================================================================
+// SCHEDULED ROUTES HOOKS
+// ============================================================================
+
+/**
+ * React Query hook for fetching scheduled routes from WSF Schedule API
  *
  * Provides a listing of routes that are active for a season. Results include all known
  * scheduled routes spanning current and upcoming seasons. For example, "Anacortes / Sidney B.C."
  * may be a valid route, but if it's not scheduled to run during a specific season,
  * it won't be returned as part of that season's scheduled routes resultset.
  *
- * @returns React Query result containing an array of Route objects representing all scheduled routes
+ * @param options - Optional React Query options
+ * @returns React Query result object containing all scheduled routes
  */
-export const useScheduledRoutes = () => {
-  return useQuery({
+export const useScheduledRoutes = (
+  options?: Parameters<typeof useQuery<ScheduledRoute[]>>[0]
+) =>
+  useQuery({
     queryKey: ["schedule", "scheduledRoutes"],
     queryFn: getScheduledRoutes,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching scheduled routes by season from WSF Schedule API
+ * React Query hook for fetching scheduled routes by season from WSF Schedule API
  *
  * Provides a listing of routes that are active for a specific season identified by schedule ID.
  * Results are filtered to only include scheduled routes for the specified season.
  * Seasons may be determined using the activeSeasons endpoint.
  *
- * @param seasonId - The unique identifier for the season (schedule ID)
- * @returns React Query result containing an array of Route objects representing scheduled routes for the specified season
+ * @param scheduleId - The unique identifier for the season (schedule ID)
+ * @param options - Optional React Query options
+ * @returns React Query result object containing scheduled routes for the specified season
  */
-export const useScheduledRoutesBySeason = (seasonId: number) => {
-  return useQuery({
-    queryKey: ["schedule", "scheduledRoutes", "bySeason", seasonId],
-    queryFn: () => getScheduledRoutesBySeason(seasonId),
-    enabled: !!seasonId,
+export const useScheduledRoutesBySeason = (
+  scheduleId: number,
+  options?: Parameters<typeof useQuery<ScheduledRoute[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "scheduledRoutesBySeason", scheduleId],
+    queryFn: () => getScheduledRoutesBySeason(scheduleId),
+    enabled: !!scheduleId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
-
-/**
- * Hook for fetching active seasons from WSF Schedule API
- *
- * Retrieves a summary of active seasons. This endpoint provides information about
- * current and upcoming ferry service seasons, which can be used to determine
- * valid schedule IDs for other endpoints.
- *
- * @returns React Query result containing an array of Route objects containing active season information
- */
-export const useActiveSeasons = () => {
-  return useQuery({
-    queryKey: ["schedule", "activeSeasons"],
-    queryFn: getActiveSeasons,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching alerts from WSF Schedule API
- *
- * Provides alert information tailored for routes, bulletins, service disruptions, etc.
- * This endpoint returns important notifications and updates that may affect ferry service,
- * including weather-related delays, maintenance notices, and other operational alerts.
- *
- * @returns React Query result containing an array of Route objects containing alert information
- */
-export const useAlerts = () => {
-  return useQuery({
-    queryKey: ["schedule", "alerts"],
-    queryFn: getAlerts,
-    ...createInfrequentUpdateOptions(),
-  });
-};
 
 // ============================================================================
-// SCHEDULES HOOKS
+// SAILINGS HOOKS
 // ============================================================================
 
 /**
- * Hook for fetching schedule by route from WSF Schedule API
+ * React Query hook for fetching sailings from WSF Schedule API
  *
- * Retrieves schedule information for a specific route and date.
- * This data is updated infrequently and provides static schedule
- * information used in route-specific scheduling contexts.
+ * Provides sailings for a particular scheduled route. Sailings are departure times
+ * organized by direction of travel (eastbound / westbound), days of operation groups
+ * (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall).
+ * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
+ * Scheduled routes may be determined using schedRoutes.
  *
- * @param tripDate - The trip date for the schedule
- * @param routeId - The route ID to get schedule for
- * @returns React Query result containing Schedule data
+ * @param params - Object containing scheduled route information
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param options - Optional React Query options
+ * @returns React Query result object containing sailing information
  */
-export const useScheduleByRoute = (tripDate: Date, routeId: number) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "schedules",
-      "byRoute",
-      tripDate.toISOString().split("T")[0],
-      routeId,
-    ],
-    queryFn: () => getScheduleByRoute({ tripDate, routeID: routeId }),
-    enabled: !!tripDate && !!routeId,
+export const useSailings = (
+  params: { schedRouteId: number },
+  options?: Parameters<typeof useQuery<Sailing[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "sailings", params.schedRouteId],
+    queryFn: () => getSailings(params),
+    enabled: !!params.schedRouteId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching schedule by terminals from WSF Schedule API
+ * React Query hook for fetching all sailings from WSF Schedule API
  *
- * Retrieves schedule information for a specific terminal pair and date.
- * This data is updated infrequently and provides static schedule
- * information used in terminal-specific scheduling contexts.
+ * Provides all sailings for a particular scheduled route. Sailings are departure times
+ * organized by direction of travel (eastbound / westbound), days of operation groups
+ * (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall).
+ * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
+ * Scheduled routes may be determined using schedRoutes.
  *
- * @param params - Object containing trip date and terminal IDs
- * @returns React Query result containing Schedule data
+ * @param params - Object containing scheduled route and year information
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param params.year - The year for which to retrieve sailings
+ * @param options - Optional React Query options
+ * @returns React Query result object containing all sailing information
  */
-export const useScheduleByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalID: number;
-  arrivingTerminalID: number;
-}) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "schedules",
-      "byTerminals",
-      params.tripDate.toISOString().split("T")[0],
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-    ],
-    queryFn: () => getScheduleByTerminals(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalID &&
-      !!params.arrivingTerminalID,
+export const useAllSailings = (
+  params: { schedRouteId: number; year: number },
+  options?: Parameters<typeof useQuery<Sailing[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "allSailings", params.schedRouteId, params.year],
+    queryFn: () => getAllSailings(params),
+    enabled: !!params.schedRouteId && !!params.year,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
-
-/**
- * Hook for fetching today's schedule by route from WSF Schedule API
- *
- * Retrieves today's schedule information for a specific route.
- * This data is updated infrequently and provides static schedule
- * information used in route-specific scheduling contexts.
- *
- * @param routeId - The route ID to get today's schedule for
- * @returns React Query result containing Schedule data
- */
-export const useScheduleTodayByRoute = (routeId: number) => {
-  return useQuery({
-    queryKey: ["schedule", "schedules", "todayByRoute", routeId],
-    queryFn: () => getScheduleTodayByRoute({ routeID: routeId }),
-    enabled: !!routeId,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching today's schedule by terminals from WSF Schedule API
- *
- * Retrieves today's schedule information for a specific terminal pair.
- * This data is updated infrequently and provides static schedule
- * information used in terminal-specific scheduling contexts.
- *
- * @param params - Object containing terminal IDs
- * @returns React Query result containing Schedule data
- */
-export const useScheduleTodayByTerminals = (params: {
-  departingTerminalID: number;
-  arrivingTerminalID: number;
-}) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "schedules",
-      "todayByTerminals",
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-    ],
-    queryFn: () => getScheduleTodayByTerminals(params),
-    enabled: !!params.departingTerminalID && !!params.arrivingTerminalID,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching sailings from WSF Schedule API
- *
- * Retrieves sailing information for a specific scheduled route.
- * This data is updated infrequently and provides static sailing
- * information used in scheduled route contexts.
- *
- * @param schedRouteID - The scheduled route ID to get sailings for
- * @returns React Query result containing an array of Sailing objects
- */
-export const useSailings = (schedRouteID: number) => {
-  return useQuery({
-    queryKey: ["schedule", "sailings", schedRouteID],
-    queryFn: () => getSailings({ schedRouteID }),
-    enabled: !!schedRouteID,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching all sailings from WSF Schedule API
- *
- * Retrieves all sailing information for a specific scheduled route and year.
- * This data is updated infrequently and provides static sailing
- * information used in scheduled route contexts.
- *
- * @param schedRouteID - The scheduled route ID to get sailings for
- * @param year - The year to get sailings for
- * @returns React Query result containing an array of Sailing objects
- */
-export const useAllSailings = (schedRouteID: number, year: number) => {
-  return useQuery({
-    queryKey: ["schedule", "allSailings", schedRouteID, year],
-    queryFn: () => getAllSailings({ schedRouteID, year }),
-    enabled: !!schedRouteID && !!year,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-// ============================================================================
-// TERMINALS HOOKS
-// ============================================================================
-
-/**
- * Hook for fetching all terminals from WSF Schedule API
- *
- * Retrieves terminal information for schedule-related operations.
- * This data is updated infrequently and provides static terminal
- * information used in scheduling contexts.
- *
- * @param tripDate - The date for which to get terminal information
- * @returns React Query result with ScheduleTerminal array data
- */
-export const useTerminals = (tripDate: Date) => {
-  return useQuery({
-    queryKey: ["schedule", "terminals", tripDate.toISOString().split("T")[0]],
-    queryFn: () => getTerminals(tripDate),
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching terminals by route from WSF Schedule API
- *
- * Retrieves terminal information for a specific route.
- * This data is updated infrequently and provides static terminal
- * information used in route-specific scheduling contexts.
- *
- * @param routeId - The route ID to get terminals for
- * @returns React Query result with ScheduleTerminal array data
- */
-export const useTerminalsByRoute = (routeId: number) => {
-  return useQuery({
-    queryKey: ["schedule", "terminals", "byRoute", routeId],
-    queryFn: () => getTerminalsByRoute(routeId),
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching terminals and mates from WSF Schedule API
- *
- * Retrieves terminal combinations for schedule-related operations.
- * This data is updated infrequently and provides static terminal
- * pairing information used in scheduling contexts.
- *
- * @param tripDate - The date for which to get terminal combinations
- * @returns React Query result with ScheduleTerminal array data
- */
-export const useTerminalsAndMates = (tripDate: Date) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "terminals",
-      "andMates",
-      tripDate.toISOString().split("T")[0],
-    ],
-    queryFn: () => getTerminalsAndMates(tripDate),
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching terminal mates from WSF Schedule API
- *
- * Retrieves terminal mate information for a specific terminal.
- * This data is updated infrequently and provides static terminal
- * pairing information used in scheduling contexts.
- *
- * @param tripDate - The date for which to get terminal mates
- * @param terminalId - The departing terminal ID
- * @returns React Query result with ScheduleTerminal array data
- */
-export const useTerminalMates = (tripDate: Date, terminalId: number) => {
-  return useQuery({
-    queryKey: [
-      "schedule",
-      "terminals",
-      "mates",
-      tripDate.toISOString().split("T")[0],
-      terminalId,
-    ],
-    queryFn: () => getTerminalMates(tripDate, terminalId),
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-// ============================================================================
-// VESSELS HOOKS
-// ============================================================================
-
-/**
- * Hook for fetching all vessels from WSF Schedule API
- *
- * Retrieves vessel information for schedule-related operations.
- * This data is updated infrequently and provides static vessel
- * information used in scheduling contexts.
- *
- * @returns React Query result containing an array of Vessel objects
- */
-export const useVessels = () => {
-  return useQuery({
-    queryKey: ["schedule", "vessels"],
-    queryFn: getVessels,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for fetching vessels by route from WSF Schedule API
- *
- * Retrieves vessel information for a specific route.
- * This data is updated infrequently and provides static vessel
- * information used in route-specific scheduling contexts.
- *
- * @param routeId - The route ID to get vessels for
- * @returns React Query result containing an array of Vessel objects
- */
-export const useVesselsByRoute = (routeId: number) => {
-  return useQuery({
-    queryKey: ["schedule", "vessels", "byRoute", routeId],
-    queryFn: () => getVesselsByRoute(routeId),
-    enabled: !!routeId,
-    ...createInfrequentUpdateOptions(),
-  });
-};
 
 // ============================================================================
 // TIME ADJUSTMENTS HOOKS
 // ============================================================================
 
 /**
- * Hook for fetching all time adjustments from WSF Schedule API
+ * React Query hook for fetching time adjustments from WSF Schedule API
  *
- * Retrieves time adjustment information for schedule operations.
- * This data is updated infrequently and provides static time
- * adjustment information used in scheduling contexts.
+ * Provides a listing of all additions and cancellations that deviate on specific dates
+ * from the scheduled times found in the sailings resultset (eg. tidal cancellations
+ * affecting Port Townsend departures on 9/9/2014).
  *
- * @returns React Query result containing an array of TimeAdjustment objects
+ * @param options - Optional React Query options
+ * @returns React Query result object containing time adjustment information
  */
-export const useTimeAdjustments = () => {
-  return useQuery({
+export const useTimeAdjustments = (
+  options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
+) =>
+  useQuery({
     queryKey: ["schedule", "timeAdjustments"],
     queryFn: getTimeAdjustments,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching time adjustments by route from WSF Schedule API
+ * React Query hook for fetching time adjustments by route from WSF Schedule API
  *
- * Retrieves time adjustment information for a specific route.
- * This data is updated infrequently and provides static time
- * adjustment information used in route-specific scheduling contexts.
+ * Provides a listing of all additions and cancellations for a route that deviate on
+ * specific dates from the scheduled times found in the sailings resultset (eg. tidal
+ * cancellations affecting Port Townsend departures on 9/9/2014). A valid route may
+ * be determined using routes.
  *
- * @param routeId - The route ID to get time adjustments for
- * @returns React Query result containing an array of TimeAdjustment objects
+ * @param routeId - The unique identifier for the route
+ * @param options - Optional React Query options
+ * @returns React Query result object containing time adjustment information for the route
  */
-export const useTimeAdjustmentsByRoute = (routeId: number) => {
-  return useQuery({
-    queryKey: ["schedule", "timeAdjustments", "byRoute", routeId],
+export const useTimeAdjustmentsByRoute = (
+  routeId: number,
+  options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "timeAdjustmentsByRoute", routeId],
     queryFn: () => getTimeAdjustmentsByRoute(routeId),
     enabled: !!routeId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 /**
- * Hook for fetching time adjustments by scheduled route from WSF Schedule API
+ * React Query hook for fetching time adjustments by scheduled route from WSF Schedule API
  *
- * Retrieves time adjustment information for a specific scheduled route.
- * This data is updated infrequently and provides static time
- * adjustment information used in scheduled route contexts.
+ * Provides a listing of all additions and cancellations for a scheduled route that
+ * deviate on specific dates from the scheduled times found in the sailings resultset
+ * (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid
+ * scheduled route may be determined using schedRoutes.
  *
- * @param schedRouteID - The scheduled route ID to get time adjustments for
- * @returns React Query result containing an array of TimeAdjustment objects
+ * @param schedRouteId - The unique identifier for the scheduled route
+ * @param options - Optional React Query options
+ * @returns React Query result object containing time adjustment information for the scheduled route
  */
-export const useTimeAdjustmentsBySchedRoute = (schedRouteID: number) => {
-  return useQuery({
-    queryKey: ["schedule", "timeAdjustments", "bySchedRoute", schedRouteID],
-    queryFn: () => getTimeAdjustmentsBySchedRoute(schedRouteID),
-    enabled: !!schedRouteID,
+export const useTimeAdjustmentsBySchedRoute = (
+  schedRouteId: number,
+  options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "timeAdjustmentsBySchedRoute", schedRouteId],
+    queryFn: () => getTimeAdjustmentsBySchedRoute(schedRouteId),
+    enabled: !!schedRouteId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
 
 // ============================================================================
-// VALID DATE RANGE HOOKS
+// SCHEDULE HOOKS
 // ============================================================================
 
 /**
- * Hook for fetching valid date range from WSF API
+ * React Query hook for fetching schedule by route from WSF Schedule API
  *
- * Retrieves the valid date range for all WSF API operations.
- * This data is updated infrequently and provides static date
- * range information used to determine which dates are supported by the API.
+ * Provides departure times for a trip date and route. The resultset accounts for all
+ * contingencies, sailing date ranges and time adjustments. Valid routes may be found
+ * using routes. Similarly, a valid trip date may be determined using validDateRange.
+ * Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @returns React Query result with ValidDateRange object
+ * @param params - Object containing trip date and route information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.routeId - The unique identifier for the route
+ * @param options - Optional React Query options
+ * @returns React Query result object containing schedule information
  */
-export const useValidDateRange = () => {
-  return useQuery({
-    queryKey: ["schedule", "validDateRange"],
-    queryFn: getValidDateRange,
+export const useScheduleByRoute = (
+  params: { tripDate: Date; routeId: number },
+  options?: Parameters<typeof useQuery<Schedule[]>>[0]
+) =>
+  useQuery({
+    queryKey: [
+      "schedule",
+      "scheduleByRoute",
+      params.tripDate.toISOString().split("T")[0],
+      params.routeId,
+    ],
+    queryFn: () => getScheduleByRoute(params),
+    enabled: !!params.tripDate && !!params.routeId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};
+
+/**
+ * React Query hook for fetching schedule by terminals from WSF Schedule API
+ *
+ * Provides departure times for a trip date and terminal combination. The resultset
+ * accounts for all contingencies, sailing date ranges and time adjustments. Valid
+ * departing and arriving terminals may be found using terminalsAndMates. Similarly,
+ * a valid trip date may be determined using validDateRange. Please format the trip
+ * date input as 'YYYY-MM-DD'.
+ *
+ * @param params - Object containing trip date and terminal information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param options - Optional React Query options
+ * @returns React Query result object containing schedule information
+ */
+export const useScheduleByTerminals = (
+  params: {
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  },
+  options?: Parameters<typeof useQuery<Schedule[]>>[0]
+) =>
+  useQuery({
+    queryKey: [
+      "schedule",
+      "scheduleByTerminals",
+      params.tripDate.toISOString().split("T")[0],
+      params.departingTerminalId,
+      params.arrivingTerminalId,
+    ],
+    queryFn: () => getScheduleByTerminals(params),
+    enabled: !!params.tripDate && !!params.departingTerminalId && !!params.arrivingTerminalId,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
+
+/**
+ * React Query hook for fetching today's schedule by route from WSF Schedule API
+ *
+ * Provides today's departure times for a route. Valid routes may be found using routes.
+ * For the onlyRemainingTimes value, please indicate 'true' if departure times prior
+ * to now should not be included in the resultset and 'false' if they should be included
+ * in the resultset.
+ *
+ * @param params - Object containing route and time filter information
+ * @param params.routeId - The unique identifier for the route
+ * @param params.onlyRemainingTimes - Whether to include only remaining departure times
+ * @param options - Optional React Query options
+ * @returns React Query result object containing today's schedule information
+ */
+export const useScheduleTodayByRoute = (
+  params: { routeId: number; onlyRemainingTimes?: boolean },
+  options?: Parameters<typeof useQuery<Schedule[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "scheduleTodayByRoute", params.routeId, params.onlyRemainingTimes],
+    queryFn: () => getScheduleTodayByRoute(params),
+    enabled: !!params.routeId,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
+
+/**
+ * React Query hook for fetching today's schedule by terminals from WSF Schedule API
+ *
+ * Provides today's departure times for a terminal combination. Valid departing and
+ * arriving terminals may be found using terminalsAndMates. For the onlyRemainingTimes
+ * value, please indicate 'true' if departure times prior to now should not be included
+ * in the resultset and 'false' if they should be included in the resultset.
+ *
+ * @param params - Object containing terminal and time filter information
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.onlyRemainingTimes - Whether to include only remaining departure times
+ * @param options - Optional React Query options
+ * @returns React Query result object containing today's schedule information
+ */
+export const useScheduleTodayByTerminals = (
+  params: {
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+    onlyRemainingTimes?: boolean;
+  },
+  options?: Parameters<typeof useQuery<Schedule[]>>[0]
+) =>
+  useQuery({
+    queryKey: [
+      "schedule",
+      "scheduleTodayByTerminals",
+      params.departingTerminalId,
+      params.arrivingTerminalId,
+      params.onlyRemainingTimes,
+    ],
+    queryFn: () => getScheduleTodayByTerminals(params),
+    enabled: !!params.departingTerminalId && !!params.arrivingTerminalId,
+    ...createInfrequentUpdateOptions(),
+    ...options,
+  });
 
 // ============================================================================
-// CACHE FLUSH DATE HOOKS
+// ALERTS HOOKS
 // ============================================================================
 
 /**
- * Hook for fetching cache flush date from WSF Schedule API with React Query
+ * React Query hook for fetching alerts from WSF Schedule API
  *
- * Retrieves the last cache flush date for the Schedule API, which indicates
- * when the underlying data was last updated on the server. This hook is used
- * to determine when to invalidate cached schedule data.
+ * Provides alert information tailored for routes, bulletins, service disruptions, etc.
+ * This endpoint returns important notifications and updates that may affect ferry service,
+ * including weather-related delays, maintenance notices, and other operational alerts.
  *
- * The cache flush date changes when any schedule-related data is updated,
- * including routes, schedules, terminals, vessels, time adjustments, and alerts.
- *
- * @returns React Query result with ScheduleCacheFlushDate data
+ * @param options - Optional React Query options
+ * @returns React Query result object containing alert information
  */
-export const useCacheFlushDateSchedule = () => {
-  return useQuery({
-    queryKey: ["schedule", "cacheFlushDate"],
-    queryFn: getCacheFlushDateSchedule,
-    ...createCacheFlushOptions(),
+export const useAlerts = (
+  options?: Parameters<typeof useQuery<Alert[]>>[0]
+) =>
+  useQuery({
+    queryKey: ["schedule", "alerts"],
+    queryFn: getAlerts,
+    ...createInfrequentUpdateOptions(),
+    ...options,
   });
-};

@@ -6,13 +6,131 @@ import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 import type { TerminalBasics as ScheduleTerminal } from "../terminals/types";
 import type { Vessel } from "../vessels/types";
 import type {
+  ActiveSeason,
+  Alert,
   Route,
-  ScheduleDeparture as Sailing,
+  Sailing,
   Schedule,
   ScheduleCacheFlushDate,
+  ScheduledRoute,
   TimeAdjustment,
   ValidDateRange,
 } from "./types";
+
+// ============================================================================
+// CACHE FLUSH DATE API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching cache flush date from WSF Schedule API
+ *
+ * Retrieves the cache flush date for the schedule API. This endpoint helps
+ * determine when cached data should be refreshed. When the date returned
+ * from this operation is modified, drop your application cache and retrieve
+ * fresh data from the service.
+ *
+ * @returns Promise resolving to ScheduleCacheFlushDate object containing cache flush information
+ */
+export const getCacheFlushDateSchedule =
+  (): Promise<ScheduleCacheFlushDate | null> =>
+    fetchWsf<ScheduleCacheFlushDate>("schedule", "/cacheflushdate");
+
+// ============================================================================
+// VALID DATE RANGE API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching valid date range from WSF Schedule API
+ *
+ * Retrieves a date range for which schedule data is currently published & available.
+ * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+ * Please consider using cacheflushdate to coordinate the caching of this data in your application.
+ *
+ * @returns Promise resolving to ValidDateRange object containing valid date range information
+ */
+export const getValidDateRange = (): Promise<ValidDateRange | null> =>
+  fetchWsf<ValidDateRange>("schedule", "/validdaterange");
+
+// ============================================================================
+// TERMINALS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching terminals from WSF Schedule API
+ *
+ * Retrieves valid departing terminals for a given trip date. A valid trip date
+ * may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal information
+ */
+export const getTerminals = (tripDate: Date): Promise<ScheduleTerminal[]> =>
+  fetchWsfArray<ScheduleTerminal>(
+    "schedule",
+    buildWsfUrl("/terminals/{tripDate}", { tripDate })
+  );
+
+/**
+ * API function for fetching terminals and mates from WSF Schedule API
+ *
+ * Retrieves all valid departing and arriving terminal combinations for a given trip date.
+ * A valid trip date may be determined using validDateRange. Please format the trip date
+ * input as 'YYYY-MM-DD'.
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal combinations
+ */
+export const getTerminalsAndMates = (
+  tripDate: Date
+): Promise<ScheduleTerminal[]> =>
+  fetchWsfArray<ScheduleTerminal>(
+    "schedule",
+    buildWsfUrl("/terminalsandmates/{tripDate}", { tripDate })
+  );
+
+/**
+ * API function for fetching terminals and mates by route from WSF Schedule API
+ *
+ * Provides valid departing and arriving terminal combinations for a given trip date and route.
+ * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
+ * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param params - Object containing trip date and route information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.routeId - The unique identifier for the route
+ * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal combinations for the route
+ */
+export const getTerminalsAndMatesByRoute = (params: {
+  tripDate: Date;
+  routeId: number;
+}): Promise<ScheduleTerminal[]> =>
+  fetchWsfArray<ScheduleTerminal>(
+    "schedule",
+    buildWsfUrl("/terminalsandmatesbyroute/{tripDate}/{routeId}", params)
+  );
+
+/**
+ * API function for fetching terminal mates from WSF Schedule API
+ *
+ * Provides arriving terminals for a given departing terminal and trip date. A valid departing
+ * terminal may be found by using terminals. Similarly, a valid trip date may be determined
+ * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param terminalId - The unique identifier for the departing terminal
+ * @returns Promise resolving to an array of ScheduleTerminal objects containing arriving terminals
+ */
+export const getTerminalMates = (
+  tripDate: Date,
+  terminalId: number
+): Promise<ScheduleTerminal[]> =>
+  fetchWsfArray<ScheduleTerminal>(
+    "schedule",
+    buildWsfUrl("/terminalmates/{tripDate}/{terminalId}", {
+      tripDate,
+      terminalId,
+    })
+  );
 
 // ============================================================================
 // ROUTES API FUNCTIONS
@@ -142,36 +260,9 @@ export const getRouteDetailsByRoute = (params: {
     buildWsfUrl("/routedetails/{tripDate}/{routeId}", params)
   );
 
-/**
- * API function for fetching scheduled routes from WSF Schedule API
- *
- * Provides a listing of routes that are active for a season. Results include all known
- * scheduled routes spanning current and upcoming seasons. For example, "Anacortes / Sidney B.C."
- * may be a valid route, but if it's not scheduled to run during a specific season,
- * it won't be returned as part of that season's scheduled routes resultset.
- *
- * @returns Promise resolving to an array of Route objects representing all scheduled routes
- */
-export const getScheduledRoutes = (): Promise<Route[]> =>
-  fetchWsfArray<Route>("schedule", "/schedroutes");
-
-/**
- * API function for fetching scheduled routes by season from WSF Schedule API
- *
- * Provides a listing of routes that are active for a specific season identified by schedule ID.
- * Results are filtered to only include scheduled routes for the specified season.
- * Seasons may be determined using the activeSeasons endpoint.
- *
- * @param seasonId - The unique identifier for the season (schedule ID)
- * @returns Promise resolving to an array of Route objects representing scheduled routes for the specified season
- */
-export const getScheduledRoutesBySeason = (
-  seasonId: number
-): Promise<Route[]> =>
-  fetchWsfArray<Route>(
-    "schedule",
-    buildWsfUrl("/schedroutes/{seasonId}", { seasonId })
-  );
+// ============================================================================
+// ACTIVE SEASONS API FUNCTIONS
+// ============================================================================
 
 /**
  * API function for fetching active seasons from WSF Schedule API
@@ -180,10 +271,254 @@ export const getScheduledRoutesBySeason = (
  * current and upcoming ferry service seasons, which can be used to determine
  * valid schedule IDs for other endpoints.
  *
- * @returns Promise resolving to an array of Route objects containing active season information
+ * @returns Promise resolving to an array of ActiveSeason objects containing active season information
  */
-export const getActiveSeasons = (): Promise<Route[]> =>
-  fetchWsfArray<Route>("schedule", "/activeseasons");
+export const getActiveSeasons = (): Promise<ActiveSeason[]> =>
+  fetchWsfArray<ActiveSeason>("schedule", "/activeseasons");
+
+// ============================================================================
+// SCHEDULED ROUTES API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching scheduled routes from WSF Schedule API
+ *
+ * Provides a listing of routes that are active for a season. Results include all known
+ * scheduled routes spanning current and upcoming seasons. For example, "Anacortes / Sidney B.C."
+ * may be a valid route, but if it's not scheduled to run during a specific season,
+ * it won't be returned as part of that season's scheduled routes resultset.
+ *
+ * @returns Promise resolving to an array of ScheduledRoute objects representing all scheduled routes
+ */
+export const getScheduledRoutes = (): Promise<ScheduledRoute[]> =>
+  fetchWsfArray<ScheduledRoute>("schedule", "/schedroutes");
+
+/**
+ * API function for fetching scheduled routes by season from WSF Schedule API
+ *
+ * Provides a listing of routes that are active for a specific season identified by schedule ID.
+ * Results are filtered to only include scheduled routes for the specified season.
+ * Seasons may be determined using the activeSeasons endpoint.
+ *
+ * @param scheduleId - The unique identifier for the season (schedule ID)
+ * @returns Promise resolving to an array of ScheduledRoute objects representing scheduled routes for the specified season
+ */
+export const getScheduledRoutesBySeason = (
+  scheduleId: number
+): Promise<ScheduledRoute[]> =>
+  fetchWsfArray<ScheduledRoute>(
+    "schedule",
+    buildWsfUrl("/schedroutes/{scheduleId}", { scheduleId })
+  );
+
+// ============================================================================
+// SAILINGS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching sailings from WSF Schedule API
+ *
+ * Provides sailings for a particular scheduled route. Sailings are departure times
+ * organized by direction of travel (eastbound / westbound), days of operation groups
+ * (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall).
+ * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
+ * Scheduled routes may be determined using schedRoutes.
+ *
+ * @param params - Object containing scheduled route information
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @returns Promise resolving to an array of Sailing objects containing sailing information
+ */
+export const getSailings = (params: {
+  schedRouteId: number;
+}): Promise<Sailing[]> =>
+  fetchWsfArray<Sailing>(
+    "schedule",
+    buildWsfUrl("/sailings/{schedRouteId}", params)
+  );
+
+/**
+ * API function for fetching all sailings from WSF Schedule API
+ *
+ * Provides all sailings for a particular scheduled route. Sailings are departure times
+ * organized by direction of travel (eastbound / westbound), days of operation groups
+ * (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall).
+ * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
+ * Scheduled routes may be determined using schedRoutes.
+ *
+ * @param params - Object containing scheduled route and year information
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param params.year - The year for which to retrieve sailings
+ * @returns Promise resolving to an array of Sailing objects containing all sailing information
+ */
+export const getAllSailings = (params: {
+  schedRouteId: number;
+  year: number;
+}): Promise<Sailing[]> =>
+  fetchWsfArray<Sailing>(
+    "schedule",
+    buildWsfUrl("/allsailings/{schedRouteId}/{year}", params)
+  );
+
+// ============================================================================
+// TIME ADJUSTMENTS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching time adjustments from WSF Schedule API
+ *
+ * Provides a listing of all additions and cancellations that deviate on specific dates
+ * from the scheduled times found in the sailings resultset (eg. tidal cancellations
+ * affecting Port Townsend departures on 9/9/2014).
+ *
+ * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information
+ */
+export const getTimeAdjustments = (): Promise<TimeAdjustment[]> =>
+  fetchWsfArray<TimeAdjustment>("schedule", "/timeadj");
+
+/**
+ * API function for fetching time adjustments by route from WSF Schedule API
+ *
+ * Provides a listing of all additions and cancellations for a route that deviate on
+ * specific dates from the scheduled times found in the sailings resultset (eg. tidal
+ * cancellations affecting Port Townsend departures on 9/9/2014). A valid route may
+ * be determined using routes.
+ *
+ * @param routeId - The unique identifier for the route
+ * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the route
+ */
+export const getTimeAdjustmentsByRoute = (
+  routeId: number
+): Promise<TimeAdjustment[]> =>
+  fetchWsfArray<TimeAdjustment>(
+    "schedule",
+    buildWsfUrl("/timeadjbyroute/{routeId}", { routeId })
+  );
+
+/**
+ * API function for fetching time adjustments by scheduled route from WSF Schedule API
+ *
+ * Provides a listing of all additions and cancellations for a scheduled route that
+ * deviate on specific dates from the scheduled times found in the sailings resultset
+ * (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid
+ * scheduled route may be determined using schedRoutes.
+ *
+ * @param schedRouteId - The unique identifier for the scheduled route
+ * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the scheduled route
+ */
+export const getTimeAdjustmentsBySchedRoute = (
+  schedRouteId: number
+): Promise<TimeAdjustment[]> =>
+  fetchWsfArray<TimeAdjustment>(
+    "schedule",
+    buildWsfUrl("/timeadjbyschedroute/{schedRouteId}", { schedRouteId })
+  );
+
+// ============================================================================
+// SCHEDULE API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching schedule by route from WSF Schedule API
+ *
+ * Provides departure times for a trip date and route. The resultset accounts for all
+ * contingencies, sailing date ranges and time adjustments. Valid routes may be found
+ * using routes. Similarly, a valid trip date may be determined using validDateRange.
+ * Please format the trip date input as 'YYYY-MM-DD'.
+ *
+ * @param params - Object containing trip date and route information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.routeId - The unique identifier for the route
+ * @returns Promise resolving to an array of Schedule objects containing schedule information
+ */
+export const getScheduleByRoute = (params: {
+  tripDate: Date;
+  routeId: number;
+}): Promise<Schedule[]> =>
+  fetchWsfArray<Schedule>(
+    "schedule",
+    buildWsfUrl("/schedule/{tripDate}/{routeId}", params)
+  );
+
+/**
+ * API function for fetching schedule by terminals from WSF Schedule API
+ *
+ * Provides departure times for a trip date and terminal combination. The resultset
+ * accounts for all contingencies, sailing date ranges and time adjustments. Valid
+ * departing and arriving terminals may be found using terminalsAndMates. Similarly,
+ * a valid trip date may be determined using validDateRange. Please format the trip
+ * date input as 'YYYY-MM-DD'.
+ *
+ * @param params - Object containing trip date and terminal information
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @returns Promise resolving to an array of Schedule objects containing schedule information
+ */
+export const getScheduleByTerminals = (params: {
+  tripDate: Date;
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+}): Promise<Schedule[]> =>
+  fetchWsfArray<Schedule>(
+    "schedule",
+    buildWsfUrl(
+      "/schedule/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
+      params
+    )
+  );
+
+/**
+ * API function for fetching today's schedule by route from WSF Schedule API
+ *
+ * Provides today's departure times for a route. Valid routes may be found using routes.
+ * For the onlyRemainingTimes value, please indicate 'true' if departure times prior
+ * to now should not be included in the resultset and 'false' if they should be included
+ * in the resultset.
+ *
+ * @param params - Object containing route and time filter information
+ * @param params.routeId - The unique identifier for the route
+ * @param params.onlyRemainingTimes - Whether to include only remaining departure times
+ * @returns Promise resolving to an array of Schedule objects containing today's schedule information
+ */
+export const getScheduleTodayByRoute = (params: {
+  routeId: number;
+  onlyRemainingTimes?: boolean;
+}): Promise<Schedule[]> =>
+  fetchWsfArray<Schedule>(
+    "schedule",
+    buildWsfUrl("/scheduletoday/{routeId}", params)
+  );
+
+/**
+ * API function for fetching today's schedule by terminals from WSF Schedule API
+ *
+ * Provides today's departure times for a terminal combination. Valid departing and
+ * arriving terminals may be found using terminalsAndMates. For the onlyRemainingTimes
+ * value, please indicate 'true' if departure times prior to now should not be included
+ * in the resultset and 'false' if they should be included in the resultset.
+ *
+ * @param params - Object containing terminal and time filter information
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.onlyRemainingTimes - Whether to include only remaining departure times
+ * @returns Promise resolving to an array of Schedule objects containing today's schedule information
+ */
+export const getScheduleTodayByTerminals = (params: {
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+  onlyRemainingTimes?: boolean;
+}): Promise<Schedule[]> =>
+  fetchWsfArray<Schedule>(
+    "schedule",
+    buildWsfUrl(
+      "/scheduletoday/{departingTerminalId}/{arrivingTerminalId}",
+      params
+    )
+  );
+
+// ============================================================================
+// ALERTS API FUNCTIONS
+// ============================================================================
 
 /**
  * API function for fetching alerts from WSF Schedule API
@@ -192,243 +527,7 @@ export const getActiveSeasons = (): Promise<Route[]> =>
  * This endpoint returns important notifications and updates that may affect ferry service,
  * including weather-related delays, maintenance notices, and other operational alerts.
  *
- * @returns Promise resolving to an array of Route objects containing alert information
+ * @returns Promise resolving to an array of Alert objects containing alert information
  */
-export const getAlerts = (): Promise<Route[]> =>
-  fetchWsfArray<Route>("schedule", "/alerts");
-
-// ============================================================================
-// SCHEDULES API FUNCTIONS
-// ============================================================================
-
-/**
- * API function for fetching schedule by route from WSF Schedule API
- */
-export const getScheduleByRoute = (params: {
-  tripDate: Date;
-  routeID: number;
-}): Promise<Schedule[]> =>
-  fetchWsfArray<Schedule>(
-    "schedule",
-    buildWsfUrl("/schedule/{tripDate}/{routeID}", params)
-  );
-
-/**
- * API function for fetching schedule by terminals from WSF Schedule API
- */
-export const getScheduleByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalID: number;
-  arrivingTerminalID: number;
-}): Promise<Schedule[]> =>
-  fetchWsfArray<Schedule>(
-    "schedule",
-    buildWsfUrl(
-      "/schedule/{tripDate}/{departingTerminalID}/{arrivingTerminalID}",
-      params
-    )
-  );
-
-/**
- * API function for fetching today's schedule by route from WSF Schedule API
- */
-export const getScheduleTodayByRoute = (params: {
-  routeID: number;
-  onlyRemainingTimes?: boolean;
-}): Promise<Schedule[]> =>
-  fetchWsfArray<Schedule>(
-    "schedule",
-    buildWsfUrl("/scheduletoday/{routeID}", params)
-  );
-
-/**
- * API function for fetching today's schedule by terminals from WSF Schedule API
- */
-export const getScheduleTodayByTerminals = (params: {
-  departingTerminalID: number;
-  arrivingTerminalID: number;
-  onlyRemainingTimes?: boolean;
-}): Promise<Schedule[]> =>
-  fetchWsfArray<Schedule>(
-    "schedule",
-    buildWsfUrl(
-      "/scheduletoday/{departingTerminalID}/{arrivingTerminalID}",
-      params
-    )
-  );
-
-/**
- * API function for fetching sailings from WSF Schedule API
- */
-export const getSailings = (params: {
-  schedRouteID: number;
-}): Promise<Sailing[]> =>
-  fetchWsfArray<Sailing>(
-    "schedule",
-    buildWsfUrl("/sailings/{schedRouteID}", params)
-  );
-
-/**
- * API function for fetching all sailings from WSF Schedule API
- */
-export const getAllSailings = (params: {
-  schedRouteID: number;
-  year: number;
-}): Promise<Sailing[]> =>
-  fetchWsfArray<Sailing>(
-    "schedule",
-    buildWsfUrl("/allsailings/{schedRouteID}/{year}", params)
-  );
-
-// ============================================================================
-// TERMINALS API FUNCTIONS
-// ============================================================================
-
-/**
- * API function for fetching all terminals from WSF Schedule API
- *
- * Retrieves all valid departing terminals for a specific trip date.
- *
- * @param tripDate - The date for which to get terminal information
- * @returns Promise resolving to an array of ScheduleTerminal objects
- */
-export const getTerminals = (tripDate: Date): Promise<ScheduleTerminal[]> =>
-  fetchWsfArray<ScheduleTerminal>(
-    "schedule",
-    buildWsfUrl("/terminals/{tripDate}", { tripDate })
-  );
-
-/**
- * API function for fetching terminals by route from WSF Schedule API
- *
- * Retrieves all terminal combinations for a specific route.
- *
- * @param routeId - The route ID to get terminals for
- * @returns Promise resolving to an array of ScheduleTerminal objects
- */
-export const getTerminalsByRoute = (
-  routeId: number
-): Promise<ScheduleTerminal[]> =>
-  fetchWsfArray<ScheduleTerminal>(
-    "schedule",
-    buildWsfUrl("/terminalsandmatesbyroute/{routeId}", { routeId })
-  );
-
-/**
- * API function for fetching terminals and mates from WSF Schedule API
- *
- * Retrieves all terminal combinations (departing and arriving) for a specific trip date.
- *
- * @param tripDate - The date for which to get terminal combinations
- * @returns Promise resolving to an array of ScheduleTerminal objects
- */
-export const getTerminalsAndMates = (
-  tripDate: Date
-): Promise<ScheduleTerminal[]> =>
-  fetchWsfArray<ScheduleTerminal>(
-    "schedule",
-    buildWsfUrl("/terminalsandmates/{tripDate}", { tripDate })
-  );
-
-/**
- * API function for fetching terminal mates from WSF Schedule API
- *
- * Retrieves all arriving terminals for a specific departing terminal on a given date.
- *
- * @param tripDate - The date for which to get terminal mates
- * @param terminalId - The departing terminal ID
- * @returns Promise resolving to an array of ScheduleTerminal objects
- */
-export const getTerminalMates = (
-  tripDate: Date,
-  terminalId: number
-): Promise<ScheduleTerminal[]> =>
-  fetchWsfArray<ScheduleTerminal>(
-    "schedule",
-    buildWsfUrl("/terminalmates/{tripDate}/{terminalId}", {
-      tripDate,
-      terminalId,
-    })
-  );
-
-// ============================================================================
-// VESSELS API FUNCTIONS
-// ============================================================================
-
-/**
- * API function for fetching all vessels from WSF Schedule API
- */
-export const getVessels = (): Promise<Vessel[]> =>
-  fetchWsfArray<Vessel>("schedule", "/vessels");
-
-/**
- * API function for fetching vessels by route from WSF Schedule API
- */
-export const getVesselsByRoute = (routeID: number): Promise<Vessel[]> =>
-  fetchWsfArray<Vessel>(
-    "schedule",
-    buildWsfUrl("/vessels/{routeID}", { routeID })
-  );
-
-// ============================================================================
-// TIME ADJUSTMENTS API FUNCTIONS
-// ============================================================================
-
-/**
- * API function for fetching all time adjustments from WSF Schedule API
- */
-export const getTimeAdjustments = (): Promise<TimeAdjustment[]> =>
-  fetchWsfArray<TimeAdjustment>("schedule", "/timeadj");
-
-/**
- * API function for fetching time adjustments by route from WSF Schedule API
- */
-export const getTimeAdjustmentsByRoute = (
-  routeID: number
-): Promise<TimeAdjustment[]> =>
-  fetchWsfArray<TimeAdjustment>(
-    "schedule",
-    buildWsfUrl("/timeadjbyroute/{routeID}", { routeID })
-  );
-
-/**
- * API function for fetching time adjustments by scheduled route from WSF Schedule API
- */
-export const getTimeAdjustmentsBySchedRoute = (
-  schedRouteID: number
-): Promise<TimeAdjustment[]> =>
-  fetchWsfArray<TimeAdjustment>(
-    "schedule",
-    buildWsfUrl("/timeadjbyschedroute/{schedRouteID}", { schedRouteID })
-  );
-
-// ============================================================================
-// VALID DATE RANGE API FUNCTIONS
-// ============================================================================
-
-/**
- * API function for fetching valid date range from WSF API
- * This is a general infrastructure endpoint used across all WSF API operations
- */
-export const getValidDateRange = (): Promise<ValidDateRange | null> =>
-  fetchWsf<ValidDateRange>("schedule", "/validdaterange");
-
-// ============================================================================
-// CACHE FLUSH DATE API FUNCTIONS
-// ============================================================================
-
-/**
- * API function for fetching cache flush date from WSF Schedule API
- *
- * Retrieves the last cache flush date for the Schedule API, which indicates
- * when the underlying data was last updated on the server. This endpoint
- * is used to determine when to invalidate cached schedule data.
- *
- * The cache flush date changes when any schedule-related data is updated,
- * including routes, schedules, terminals, vessels, time adjustments, and alerts.
- *
- * @returns Promise resolving to ScheduleCacheFlushDate object or null if fetch fails
- */
-export const getCacheFlushDateSchedule =
-  (): Promise<ScheduleCacheFlushDate | null> =>
-    fetchWsf<ScheduleCacheFlushDate>("schedule", "/cacheflushdate");
+export const getAlerts = (): Promise<Alert[]> =>
+  fetchWsfArray<Alert>("schedule", "/alerts");

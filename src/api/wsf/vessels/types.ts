@@ -1,6 +1,34 @@
 // Shared types for WSF Vessels API
 
 /**
+ * Vessel class information from WSF Vessels API
+ * Based on Class object in /vesselbasics endpoint
+ */
+export type VesselClass = {
+  ClassID: number;
+  ClassSubjectID: number;
+  ClassName: string;
+  SortSeq: number;
+  DrawingImg: string;
+  SilhouetteImg: string;
+  PublicDisplayName: string;
+};
+
+/**
+ * Vessel basic information from WSF Vessels API
+ * Based on /vesselbasics endpoint
+ */
+export type VesselBasic = {
+  VesselID: number;
+  VesselSubjectID: number;
+  VesselName: string;
+  VesselAbbrev: string;
+  Class: VesselClass;
+  Status: number;
+  OwnedByWSF: boolean;
+};
+
+/**
  * Vessel information from WSF Vessels API
  * Based on /vesselbasics endpoint
  */
@@ -49,6 +77,19 @@ export type VesselStats = {
   StatName: string;
   StatValue: string;
   StatUnit: string;
+  IsActive: boolean;
+};
+
+/**
+ * Vessel history from WSF Vessels API
+ * Based on /vesselhistory endpoint
+ */
+export type VesselHistory = {
+  VesselID: number;
+  VesselName: string;
+  HistoryDate: Date;
+  HistoryDescription: string;
+  HistoryType: string;
   IsActive: boolean;
 };
 

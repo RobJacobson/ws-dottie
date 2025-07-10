@@ -4,10 +4,42 @@ import { buildWsfUrl } from "@/shared/fetching/dateUtils";
 import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 
 import type {
+  VesselAccommodation,
+  VesselBasic,
+  VesselHistory,
   VesselLocation,
+  VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
 } from "./types";
+
+// ============================================================================
+// VESSEL BASICS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching vessel basics from WSF Vessels API
+ *
+ * Retrieves basic vessel information including vessel names, abbreviations,
+ * class information, and operational status. This endpoint provides fundamental
+ * vessel details for all vessels in the WSF fleet.
+ *
+ * @returns Promise resolving to an array of VesselBasic objects containing basic vessel information
+ */
+export const getVesselBasics = (): Promise<VesselBasic[]> =>
+  fetchWsfArray<VesselBasic>("vessels", "/vesselbasics");
+
+/**
+ * API function for fetching vessel basics for a specific vessel from WSF Vessels API
+ *
+ * Retrieves basic vessel information for a specific vessel identified by vessel ID,
+ * including vessel name, abbreviation, class information, and operational status.
+ *
+ * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @returns Promise resolving to a VesselBasic object containing basic information for the specified vessel
+ */
+export const getVesselBasicsById = (vesselId: number): Promise<VesselBasic> =>
+  fetchWsf<VesselBasic>("vessels", `/vesselbasics/${vesselId}`);
 
 // ============================================================================
 // VESSEL LOCATIONS API FUNCTIONS
@@ -42,6 +74,101 @@ export const getVesselLocationsByVesselId = (
   vesselId: number
 ): Promise<VesselLocation> =>
   fetchWsf<VesselLocation>("vessels", `/vessellocations/${vesselId}`);
+
+// ============================================================================
+// VESSEL ACCOMMODATIONS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching vessel accommodations from WSF Vessels API
+ *
+ * Retrieves accommodation information for all vessels including amenities,
+ * facilities, and passenger services. This endpoint provides detailed information
+ * about onboard accommodations and services available on each vessel.
+ *
+ * @returns Promise resolving to an array of VesselAccommodation objects containing accommodation information
+ */
+export const getVesselAccommodations = (): Promise<VesselAccommodation[]> =>
+  fetchWsfArray<VesselAccommodation>("vessels", "/vesselaccommodations");
+
+/**
+ * API function for fetching vessel accommodations for a specific vessel from WSF Vessels API
+ *
+ * Retrieves accommodation information for a specific vessel identified by vessel ID,
+ * including amenities, facilities, and passenger services available on that vessel.
+ *
+ * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @returns Promise resolving to a VesselAccommodation object containing accommodation information for the specified vessel
+ */
+export const getVesselAccommodationsById = (
+  vesselId: number
+): Promise<VesselAccommodation> =>
+  fetchWsf<VesselAccommodation>("vessels", `/vesselaccommodations/${vesselId}`);
+
+// ============================================================================
+// VESSEL STATISTICS API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching vessel statistics from WSF Vessels API
+ *
+ * Retrieves statistical information about vessels including operational metrics,
+ * performance data, and usage statistics. This endpoint provides comprehensive
+ * statistical data for all vessels in the WSF fleet.
+ *
+ * @returns Promise resolving to an array of VesselStats objects containing vessel statistics
+ */
+export const getVesselStats = (): Promise<VesselStats[]> =>
+  fetchWsfArray<VesselStats>("vessels", "/vesselstats");
+
+/**
+ * API function for fetching vessel statistics for a specific vessel from WSF Vessels API
+ *
+ * Retrieves statistical information for a specific vessel identified by vessel ID,
+ * including operational metrics, performance data, and usage statistics.
+ *
+ * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @returns Promise resolving to a VesselStats object containing statistics for the specified vessel
+ */
+export const getVesselStatsById = (vesselId: number): Promise<VesselStats> =>
+  fetchWsf<VesselStats>("vessels", `/vesselstats/${vesselId}`);
+
+// ============================================================================
+// VESSEL HISTORY API FUNCTIONS
+// ============================================================================
+
+/**
+ * API function for fetching vessel history from WSF Vessels API
+ *
+ * Retrieves historical information about all vessels including past operations,
+ * service records, and historical data. This endpoint provides comprehensive
+ * historical data for all vessels in the WSF fleet.
+ *
+ * @returns Promise resolving to an array of VesselHistory objects containing vessel historical information
+ */
+export const getVesselHistory = (): Promise<VesselHistory[]> =>
+  fetchWsfArray<VesselHistory>("vessels", "/vesselhistory");
+
+/**
+ * API function for fetching vessel history for a specific vessel and date range from WSF Vessels API
+ *
+ * Retrieves historical information for a specific vessel identified by vessel name
+ * within a specified date range, including past operations, service records, and historical data.
+ *
+ * @param vesselName - The name of the vessel (e.g., "Cathlamet")
+ * @param dateStart - The start date for the history range (YYYY-MM-DD format)
+ * @param dateEnd - The end date for the history range (YYYY-MM-DD format)
+ * @returns Promise resolving to an array of VesselHistory objects containing historical information for the specified vessel and date range
+ */
+export const getVesselHistoryByVesselAndDateRange = (
+  vesselName: string,
+  dateStart: string,
+  dateEnd: string
+): Promise<VesselHistory[]> =>
+  fetchWsfArray<VesselHistory>(
+    "vessels",
+    `/vesselhistory/${vesselName}/${dateStart}/${dateEnd}`
+  );
 
 // ============================================================================
 // VESSEL VERBOSE API FUNCTIONS
