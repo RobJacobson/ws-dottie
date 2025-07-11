@@ -288,4 +288,150 @@
 - **Test Infrastructure**: 90% complete
 - **Documentation**: 95% up to date
 - **Integration Testing**: 70% complete
-- **WSF APIs**: 100% implemented (vessels, terminals, fares) 
+- **WSF APIs**: 100% implemented (vessels, terminals, fares)
+
+## Testing Approach for New Endpoints
+
+### **Recommended Hybrid Approach: Code-First with TDD for Complex Logic**
+
+#### **For API Endpoints: Code-First**
+**Why code-first for API endpoints:**
+1. **WSDOT API Compliance**: Need to validate actual API responses with cURL first
+2. **TypeScript Types**: Need real API responses to create accurate TypeScript types
+3. **Simple Function Signatures**: Unit tests are primarily function signature validation
+4. **API Documentation**: WSDOT APIs have official documentation that guides implementation
+
+**Process:**
+```bash
+1. Check WSDOT API documentation
+2. Validate with cURL to understand real data structures
+3. Implement API functions with proper TypeScript types
+4. Create unit tests for function signatures
+5. Implement React Query hooks
+6. Create hook unit tests
+```
+
+#### **For Shared Utilities: TDD Approach**
+**Why TDD for utilities:**
+1. **Complex Logic**: Utilities have complex edge cases that benefit from test-first approach
+2. **Pure Functions**: Utilities are typically pure functions that are easier to test
+3. **Multiple Use Cases**: Utilities are used across multiple APIs, so thorough testing is critical
+4. **Refactoring Safety**: TDD provides safety when refactoring shared code
+
+**Process:**
+```bash
+1. Write failing test for utility function
+2. Implement minimal code to pass test
+3. Add more test cases for edge cases
+4. Refactor and improve implementation
+5. Ensure all tests still pass
+```
+
+### **Specific Recommendations by Component Type**
+
+#### **1. API Functions (`api.ts`) - Code-First**
+```typescript
+// 1. Implement based on WSDOT documentation
+export const getHighwayCameras = async (): Promise<Camera[]> => {
+  return fetchWsfArray<Camera>('/highwaycameras/cameras');
+};
+
+// 2. Then create simple signature tests
+it("should have the correct function signature", () => {
+  expect(typeof getHighwayCameras).toBe("function");
+  expect(getHighwayCameras).toHaveLength(0);
+});
+```
+
+#### **2. React Query Hooks (`hook.ts`) - Code-First**
+```typescript
+// 1. Implement hook with proper React Query integration
+export const useHighwayCameras = () => {
+  return useQuery({
+    queryKey: ['highwayCameras'],
+    queryFn: getHighwayCameras,
+    ...createFrequentUpdateOptions(),
+  });
+};
+
+// 2. Then create function signature tests
+it("should be a function", () => {
+  expect(typeof useHighwayCameras).toBe("function");
+});
+```
+
+#### **3. Data Transformers (`converter.ts`) - TDD**
+```typescript
+// 1. Write test first
+it("should transform WSDOT date format", () => {
+  const input = { Time: "/Date(1703123456789)/" };
+  const result = transformWsfData(input);
+  expect(result.Time).toBeInstanceOf(Date);
+});
+
+// 2. Implement transformer
+export const transformWsfData = (data: any) => {
+  // Implementation to make test pass
+};
+```
+
+#### **4. Error Handling Utilities - TDD**
+```typescript
+// 1. Write test for error scenarios
+it("should handle network errors", () => {
+  const error = new NetworkError("Connection failed");
+  expect(error.isRetryable()).toBe(true);
+});
+
+// 2. Implement error handling
+export class NetworkError extends WsdApiError {
+  isRetryable() {
+    return true;
+  }
+}
+```
+
+### **Development Workflow for New API Endpoints**
+```bash
+# 1. Research and validate
+curl "https://wsdot.wa.gov/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson?AccessCode=$WSDOT_ACCESS_TOKEN"
+
+# 2. Create TypeScript types based on real response
+type Camera = {
+  CameraID: number;
+  Title: string;
+  // ... based on actual API response
+};
+
+# 3. Implement API function
+export const getHighwayCameras = async (): Promise<Camera[]> => {
+  return fetchWsfArray<Camera>('/highwaycameras/cameras');
+};
+
+# 4. Create unit tests
+npm run test:unit tests/unit/api/highwayCameras/
+
+# 5. Implement hooks
+export const useHighwayCameras = () => {
+  return useQuery({
+    queryKey: ['highwayCameras'],
+    queryFn: getHighwayCameras,
+    ...createFrequentUpdateOptions(),
+  });
+};
+
+# 6. Create hook tests
+npm run test:unit tests/unit/api/highwayCameras/hook.test.ts
+```
+
+### **Why This Hybrid Approach Works Best**
+1. **API Compliance**: Ensures we match actual WSDOT API behavior
+2. **Type Safety**: TypeScript types based on real data structures
+3. **Efficiency**: Avoids over-engineering for simple signature tests
+4. **Quality**: TDD for complex logic where it provides real value
+5. **Maintainability**: Tests that are easy to understand and maintain
+
+### **When to Deviate from This Approach**
+- **Bug Fixes**: Always write test first to reproduce the bug
+- **Refactoring**: Write tests before refactoring existing code
+- **Complex Business Logic**: Use TDD for any complex decision-making code 

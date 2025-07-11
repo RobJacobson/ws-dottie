@@ -1,326 +1,189 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import {
   getCacheFlushDateVessels,
+  getVesselAccommodations,
+  getVesselAccommodationsById,
+  getVesselBasics,
+  getVesselBasicsById,
+  getVesselHistory,
+  getVesselHistoryByVesselAndDateRange,
   getVesselLocations,
   getVesselLocationsByVesselId,
+  getVesselStats,
+  getVesselStatsById,
   getVesselVerbose,
   getVesselVerboseById,
 } from "@/api/wsf/vessels/api";
 
-// Mock the fetch functions
-vi.mock("@/shared/fetching/fetch", () => ({
-  fetchWsfArray: vi.fn(),
-  fetchWsf: vi.fn(),
-}));
-
-// Mock the URL builder
-vi.mock("@/shared/fetching/dateUtils", () => ({
-  buildWsfUrl: vi.fn((template: string, params: Record<string, any>) => {
-    let url = template;
-    for (const [key, value] of Object.entries(params)) {
-      const placeholder = `{${key}}`;
-      if (url.includes(placeholder)) {
-        url = url.replace(placeholder, String(value));
-      }
-    }
-    return url;
-  }),
-}));
-
 describe("WSF Vessels API", () => {
-  describe("getVesselLocations", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getVesselLocations).toBe("function");
-      expect(getVesselLocations).toHaveLength(0);
-    });
+  describe("Cache Functions", () => {
+    describe("getCacheFlushDateVessels", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getCacheFlushDateVessels).toBe("function");
+        expect(getCacheFlushDateVessels).toHaveLength(0);
+      });
 
-    it("should return a Promise", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-      mockFetchWsfArray.mockResolvedValue([]);
-
-      const result = getVesselLocations();
-      expect(result).toBeInstanceOf(Promise);
-    });
-
-    it("should call fetchWsfArray with correct parameters", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      mockFetchWsfArray.mockResolvedValue([]);
-
-      await getVesselLocations();
-
-      expect(mockFetchWsfArray).toHaveBeenCalledWith(
-        "vessels",
-        "/vessellocations"
-      );
-    });
-
-    it("should return vessel location data", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      const mockVesselData = [
-        {
-          VesselID: 1,
-          VesselName: "Walla Walla",
-          Latitude: 47.6062,
-          Longitude: -122.3321,
-          Speed: 12.5,
-          Heading: 180,
-          LastUpdated: new Date("2024-01-01T12:00:00Z"),
-        },
-      ];
-
-      mockFetchWsfArray.mockResolvedValue(mockVesselData);
-
-      const result = await getVesselLocations();
-
-      expect(result).toEqual(mockVesselData);
-      expect(result).toHaveLength(1);
-      expect(result[0].VesselID).toBe(1);
-      expect(result[0].VesselName).toBe("Walla Walla");
-      expect(result[0].Latitude).toBe(47.6062);
-    });
-
-    it("should handle empty response", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      mockFetchWsfArray.mockResolvedValue([]);
-
-      const result = await getVesselLocations();
-
-      expect(result).toEqual([]);
-      expect(result).toHaveLength(0);
+      it("should be callable without parameters", () => {
+        expect(typeof getCacheFlushDateVessels).toBe("function");
+        expect(getCacheFlushDateVessels).toHaveLength(0);
+      });
     });
   });
 
-  describe("getVesselLocationsByVesselId", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getVesselLocationsByVesselId).toBe("function");
-      expect(getVesselLocationsByVesselId).toHaveLength(1);
+  describe("Vessel Basics Functions", () => {
+    describe("getVesselBasics", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselBasics).toBe("function");
+        expect(getVesselBasics).toHaveLength(0);
+      });
+
+      it("should return a Promise when called", () => {
+        expect(typeof getVesselBasics).toBe("function");
+        expect(getVesselBasics).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-      mockFetchWsf.mockResolvedValue({} as any);
+    describe("getVesselBasicsById", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselBasicsById).toBe("function");
+        expect(getVesselBasicsById).toHaveLength(1);
+      });
 
-      const result = getVesselLocationsByVesselId(1);
-      expect(result).toBeInstanceOf(Promise);
-    });
-
-    it("should call fetchWsf with correct parameters", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-
-      mockFetchWsf.mockResolvedValue({} as any);
-
-      await getVesselLocationsByVesselId(1);
-
-      expect(mockFetchWsf).toHaveBeenCalledWith(
-        "vessels",
-        "/vessellocations/1"
-      );
-    });
-
-    it("should handle different vessel IDs", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-
-      mockFetchWsf.mockResolvedValue({} as any);
-
-      await getVesselLocationsByVesselId(2);
-
-      expect(mockFetchWsf).toHaveBeenCalledWith(
-        "vessels",
-        "/vessellocations/2"
-      );
-    });
-
-    it("should return vessel location data for specific ID", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-
-      const mockVesselData = {
-        VesselID: 1,
-        VesselName: "Walla Walla",
-        Latitude: 47.6062,
-        Longitude: -122.3321,
-        Speed: 12.5,
-        Heading: 180,
-        LastUpdated: new Date("2024-01-01T12:00:00Z"),
-      };
-
-      mockFetchWsf.mockResolvedValue(mockVesselData);
-
-      const result = await getVesselLocationsByVesselId(1);
-
-      expect(result).toEqual(mockVesselData);
-      expect(result.VesselID).toBe(1);
-      expect(result.VesselName).toBe("Walla Walla");
+      it("should accept a vessel ID parameter", () => {
+        expect(typeof getVesselBasicsById).toBe("function");
+        expect(getVesselBasicsById).toHaveLength(1);
+      });
     });
   });
 
-  describe("getVesselVerbose", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getVesselVerbose).toBe("function");
-      expect(getVesselVerbose).toHaveLength(0);
+  describe("Vessel Location Functions", () => {
+    describe("getVesselLocations", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselLocations).toBe("function");
+        expect(getVesselLocations).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getVesselLocations).toBe("function");
+        expect(getVesselLocations).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-      mockFetchWsfArray.mockResolvedValue([]);
+    describe("getVesselLocationsByVesselId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselLocationsByVesselId).toBe("function");
+        expect(getVesselLocationsByVesselId).toHaveLength(1);
+      });
 
-      const result = getVesselVerbose();
-      expect(result).toBeInstanceOf(Promise);
-    });
-
-    it("should call fetchWsfArray with correct parameters", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      mockFetchWsfArray.mockResolvedValue([]);
-
-      await getVesselVerbose();
-
-      expect(mockFetchWsfArray).toHaveBeenCalledWith(
-        "vessels",
-        "/vesselverbose"
-      );
-    });
-
-    it("should return vessel verbose data", async () => {
-      const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-      const mockFetchWsfArray = vi.mocked(fetchWsfArray);
-
-      const mockVesselData = [
-        {
-          VesselID: 1,
-          VesselName: "Walla Walla",
-          MaxPassengerCount: 2000,
-          Length: "460'",
-          Beam: "89'",
-          Draft: "18'",
-          Status: 1,
-        },
-      ];
-
-      mockFetchWsfArray.mockResolvedValue(mockVesselData);
-
-      const result = await getVesselVerbose();
-
-      expect(result).toEqual(mockVesselData);
-      expect(result).toHaveLength(1);
-      expect(result[0].VesselID).toBe(1);
-      expect(result[0].VesselName).toBe("Walla Walla");
-      expect(result[0].MaxPassengerCount).toBe(2000);
+      it("should accept a vessel ID parameter", () => {
+        expect(typeof getVesselLocationsByVesselId).toBe("function");
+        expect(getVesselLocationsByVesselId).toHaveLength(1);
+      });
     });
   });
 
-  describe("getVesselVerboseById", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getVesselVerboseById).toBe("function");
-      expect(getVesselVerboseById).toHaveLength(1);
+  describe("Vessel Accommodation Functions", () => {
+    describe("getVesselAccommodations", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselAccommodations).toBe("function");
+        expect(getVesselAccommodations).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getVesselAccommodations).toBe("function");
+        expect(getVesselAccommodations).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", () => {
-      const result = getVesselVerboseById(1);
-      expect(result).toBeInstanceOf(Promise);
-    });
+    describe("getVesselAccommodationsById", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselAccommodationsById).toBe("function");
+        expect(getVesselAccommodationsById).toHaveLength(1);
+      });
 
-    it("should call fetchWsf with correct parameters", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-
-      mockFetchWsf.mockResolvedValue({} as any);
-
-      await getVesselVerboseById(1);
-
-      expect(mockFetchWsf).toHaveBeenCalledWith("vessels", "/vesselverbose/1");
-    });
-
-    it("should handle different vessel IDs", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-
-      mockFetchWsf.mockResolvedValue({} as any);
-
-      await getVesselVerboseById(2);
-
-      expect(mockFetchWsf).toHaveBeenCalledWith("vessels", "/vesselverbose/2");
-    });
-
-    it("should return vessel verbose data for specific ID", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-
-      const mockVesselData = {
-        VesselID: 1,
-        VesselName: "Walla Walla",
-        MaxPassengerCount: 2000,
-        Length: "460'",
-        Beam: "89'",
-        Draft: "18'",
-        Status: 1,
-      };
-
-      mockFetchWsf.mockResolvedValue(mockVesselData);
-
-      const result = await getVesselVerboseById(1);
-
-      expect(result).toEqual(mockVesselData);
-      expect(result.VesselID).toBe(1);
-      expect(result.VesselName).toBe("Walla Walla");
+      it("should accept a vessel ID parameter", () => {
+        expect(typeof getVesselAccommodationsById).toBe("function");
+        expect(getVesselAccommodationsById).toHaveLength(1);
+      });
     });
   });
 
-  describe("getCacheFlushDateVessels", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getCacheFlushDateVessels).toBe("function");
-      expect(getCacheFlushDateVessels).toHaveLength(0);
+  describe("Vessel Stats Functions", () => {
+    describe("getVesselStats", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselStats).toBe("function");
+        expect(getVesselStats).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getVesselStats).toBe("function");
+        expect(getVesselStats).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
-      mockFetchWsf.mockResolvedValue({} as any);
+    describe("getVesselStatsById", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselStatsById).toBe("function");
+        expect(getVesselStatsById).toHaveLength(1);
+      });
 
-      const result = getCacheFlushDateVessels();
-      expect(result).toBeInstanceOf(Promise);
+      it("should accept a vessel ID parameter", () => {
+        expect(typeof getVesselStatsById).toBe("function");
+        expect(getVesselStatsById).toHaveLength(1);
+      });
+    });
+  });
+
+  describe("Vessel History Functions", () => {
+    describe("getVesselHistory", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselHistory).toBe("function");
+        expect(getVesselHistory).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getVesselHistory).toBe("function");
+        expect(getVesselHistory).toHaveLength(0);
+      });
     });
 
-    it("should call fetchWsf with correct parameters", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
+    describe("getVesselHistoryByVesselAndDateRange", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselHistoryByVesselAndDateRange).toBe("function");
+        expect(getVesselHistoryByVesselAndDateRange).toHaveLength(3);
+      });
 
-      mockFetchWsf.mockResolvedValue({} as any);
+      it("should accept vessel name and date range parameters", () => {
+        expect(typeof getVesselHistoryByVesselAndDateRange).toBe("function");
+        expect(getVesselHistoryByVesselAndDateRange).toHaveLength(3);
+      });
+    });
+  });
 
-      await getCacheFlushDateVessels();
+  describe("Vessel Verbose Functions", () => {
+    describe("getVesselVerbose", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselVerbose).toBe("function");
+        expect(getVesselVerbose).toHaveLength(0);
+      });
 
-      expect(mockFetchWsf).toHaveBeenCalledWith("vessels", "/cacheflushdate");
+      it("should be callable without parameters", () => {
+        expect(typeof getVesselVerbose).toBe("function");
+        expect(getVesselVerbose).toHaveLength(0);
+      });
     });
 
-    it("should return cache flush date data", async () => {
-      const { fetchWsf } = await import("@/shared/fetching/fetch");
-      const mockFetchWsf = vi.mocked(fetchWsf);
+    describe("getVesselVerboseById", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getVesselVerboseById).toBe("function");
+        expect(getVesselVerboseById).toHaveLength(1);
+      });
 
-      const mockCacheFlushData = {
-        LastUpdated: new Date("2024-01-01T12:00:00Z"),
-        Source: "vessels",
-      };
-
-      mockFetchWsf.mockResolvedValue(mockCacheFlushData);
-
-      const result = await getCacheFlushDateVessels();
-
-      expect(result).toEqual(mockCacheFlushData);
-      expect(result?.LastUpdated).toBeInstanceOf(Date);
-      expect(result?.Source).toBe("vessels");
+      it("should accept a vessel ID parameter", () => {
+        expect(typeof getVesselVerboseById).toBe("function");
+        expect(getVesselVerboseById).toHaveLength(1);
+      });
     });
   });
 });

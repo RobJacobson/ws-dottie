@@ -58,18 +58,29 @@ export type Vessel = {
 /**
  * Vessel accommodations from WSF Vessels API
  * Based on /vesselaccommodations endpoint
+ * Note: This matches the specification exactly with accommodation details
  */
 export type VesselAccommodation = {
   VesselID: number;
-  AccommodationID: number;
-  AccommodationName: string;
-  AccommodationDescription: string;
-  IsActive: boolean;
+  VesselSubjectID: number;
+  VesselName: string;
+  VesselAbbrev: string;
+  Class: VesselClass;
+  CarDeckRestroom: boolean;
+  CarDeckShelter: boolean;
+  Elevator: boolean;
+  ADAAccessible: boolean;
+  MainCabinGalley: boolean;
+  MainCabinRestroom: boolean;
+  PublicWifi: boolean;
+  ADAInfo: string;
+  AdditionalInfo: string;
 };
 
 /**
  * Vessel statistics from WSF Vessels API
  * Based on /vesselstats endpoint
+ * Note: This is a placeholder as the specification doesn't detail the exact structure
  */
 export type VesselStats = {
   VesselID: number;
@@ -83,6 +94,7 @@ export type VesselStats = {
 /**
  * Vessel history from WSF Vessels API
  * Based on /vesselhistory endpoint
+ * Note: This is a placeholder as the specification doesn't detail the exact structure
  */
 export type VesselHistory = {
   VesselID: number;
@@ -96,30 +108,36 @@ export type VesselHistory = {
 /**
  * Vessel location from WSF Vessels API
  * Based on /vessellocations endpoint
- * Note: Data preserves PascalCase keys from WSF API
+ * Note: Data preserves PascalCase keys from WSF API and matches specification exactly
  */
 export type VesselLocation = {
   VesselID: number;
   VesselName: string;
-  Longitude: number;
-  Latitude: number;
-  Heading: number;
-  Speed: number;
-  InService: boolean;
-  AtDock: boolean;
+  Mmsi: number;
   DepartingTerminalID: number;
   DepartingTerminalName: string;
+  DepartingTerminalAbbrev: string;
   ArrivingTerminalID: number;
   ArrivingTerminalName: string;
-  TimeStamp: Date;
-  ScheduledDeparture: Date;
-  EstimatedArrival: Date;
-  LeftDock?: Date;
-  ETA?: Date;
-  OpRouteAbbrev?: string[];
-  VesselPositionNum?: number;
-  SortSeq?: number;
-  ManagedBy?: number; // 1 for WSF, 2 for KCM
+  ArrivingTerminalAbbrev: string;
+  Latitude: number;
+  Longitude: number;
+  Speed: number;
+  Heading: number;
+  InService: boolean;
+  AtDock: boolean;
+  LeftDock: string | null; // "/Date(timestamp-timezone)/" format
+  Eta: string | null; // "/Date(timestamp-timezone)/" format
+  EtaBasis: string | null;
+  ScheduledDeparture: string; // "/Date(timestamp-timezone)/" format
+  OpRouteAbbrev: string[];
+  VesselPositionNum: number;
+  SortSeq: number;
+  ManagedBy: number;
+  TimeStamp: string; // "/Date(timestamp-timezone)/" format
+  VesselWatchShutID: number;
+  VesselWatchShutMsg: string;
+  VesselWatchShutFlag: string;
 };
 
 /**

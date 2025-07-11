@@ -30,9 +30,25 @@ const isWebEnvironment = () => {
 };
 
 /**
+ * Detect if we're in a test environment (Happy DOM, jsdom, etc.)
+ */
+const isTestEnvironment = () => {
+  return (
+    (typeof process !== "undefined" && process.env.NODE_ENV === "test") ||
+    (typeof process !== "undefined" &&
+      process.env.VITEST_WORKER_ID !== undefined) ||
+    (typeof window !== "undefined" &&
+      window.navigator?.userAgent?.includes("jsdom")) ||
+    (typeof window !== "undefined" &&
+      window.navigator?.userAgent?.includes("happy-dom"))
+  );
+};
+
+/**
  * Internal fetch function with platform-specific implementation and WSF data transformation
  *
- * - Uses JSONP for web/happy-dom environments to bypass CORS (prioritized if both web and Node are detected)
+ * - Uses native fetch for test environments (Happy DOM, jsdom) to avoid JSONP issues
+ * - Uses JSONP for real web browsers to bypass CORS restrictions
  * - Uses native fetch for all other environments (Node.js, Bun, React Native, etc.)
  * - All errors (including from JSONP) are always wrapped as WsdApiError for consistent error handling
  */
@@ -44,8 +60,16 @@ export const fetchInternal = async <T>(
   try {
     let response: JsonValue;
 
-    // Prioritize web/happy-dom environments for JSONP (CORS workaround)
-    if (isWebEnvironment()) {
+    // Use native fetch for test environments to avoid JSONP issues
+    if (isTestEnvironment()) {
+      try {
+        response = (await fetchNative(url)) as JsonValue;
+      } catch (err) {
+        // Always wrap as WsdApiError for consistent error handling
+        throw createApiError(err, endpoint, url);
+      }
+    } else if (isWebEnvironment()) {
+      // Use JSONP for real web browsers to bypass CORS
       try {
         response = (await fetchJsonp(url)) as JsonValue;
       } catch (err) {
@@ -159,5 +183,22 @@ const fetchNative = async (url: string): Promise<unknown> => {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  // Check if the response contains an error message (same logic as JSONP)
+  if (data && typeof data === "object" && "Message" in data) {
+    const errorData = data as { Message: string };
+    const message = errorData.Message.toLowerCase();
+    if (
+      message.includes("failed") ||
+      message.includes("invalid") ||
+      message.includes("not valid") ||
+      message.includes("cannot be used") ||
+      message.includes("error")
+    ) {
+      throw new Error(errorData.Message);
+    }
+  }
+
+  return data;
 };

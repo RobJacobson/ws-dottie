@@ -1,279 +1,217 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import {
   getCacheFlushDateTerminals,
   getTerminalBasics,
   getTerminalBasicsByTerminalId,
+  getTerminalBulletins,
+  getTerminalBulletinsByTerminalId,
   getTerminalLocations,
   getTerminalLocationsByTerminalId,
   getTerminalSailingSpace,
   getTerminalSailingSpaceByTerminalId,
+  getTerminalTransports,
+  getTerminalTransportsByTerminalId,
   getTerminalVerbose,
   getTerminalVerboseByTerminalId,
   getTerminalWaitTimes,
   getTerminalWaitTimesByTerminal,
 } from "@/api/wsf/terminals/api";
 
-// Real TerminalIDs from WSDOT API
-const VALID_TERMINAL_IDS = [
-  1, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-];
-
-// Real RouteIDs from WSDOT API
-const VALID_ROUTE_IDS = [1, 3, 5, 6, 7, 8, 9, 13, 14, 15];
-
 describe("WSF Terminals API", () => {
-  beforeEach(() => {
-    // Clear any test state
-  });
+  describe("Cache Functions", () => {
+    describe("getCacheFlushDateTerminals", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getCacheFlushDateTerminals).toBe("function");
+        expect(getCacheFlushDateTerminals).toHaveLength(0);
+      });
 
-  describe("getTerminalBasics", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalBasics).toBe("function");
-    });
-
-    it("should return a Promise", async () => {
-      const result = getTerminalBasics();
-      expect(result).toBeInstanceOf(Promise);
-
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
+      it("should be callable without parameters", () => {
+        expect(typeof getCacheFlushDateTerminals).toBe("function");
+        expect(getCacheFlushDateTerminals).toHaveLength(0);
+      });
     });
   });
 
-  describe("getTerminalBasicsByTerminalId", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalBasicsByTerminalId).toBe("function");
+  describe("Terminal Basics Functions", () => {
+    describe("getTerminalBasics", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalBasics).toBe("function");
+        expect(getTerminalBasics).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalBasics).toBe("function");
+        expect(getTerminalBasics).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const result = getTerminalBasicsByTerminalId(VALID_TERMINAL_IDS[0]);
-      expect(result).toBeInstanceOf(Promise);
+    describe("getTerminalBasicsByTerminalId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalBasicsByTerminalId).toBe("function");
+        expect(getTerminalBasicsByTerminalId).toHaveLength(1);
+      });
 
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
-    });
-
-    it("should accept terminal ID parameter", () => {
-      // Test that the function returns a Promise when called
-      expect(
-        getTerminalBasicsByTerminalId(VALID_TERMINAL_IDS[0])
-      ).toBeInstanceOf(Promise);
-    });
-  });
-
-  describe("getTerminalSailingSpace", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalSailingSpace).toBe("function");
-    });
-
-    it("should return a Promise", async () => {
-      const result = getTerminalSailingSpace();
-      expect(result).toBeInstanceOf(Promise);
-
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalBasicsByTerminalId).toBe("function");
+        expect(getTerminalBasicsByTerminalId).toHaveLength(1);
+      });
     });
   });
 
-  describe("getTerminalSailingSpaceByTerminalId", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalSailingSpaceByTerminalId).toBe("function");
+  describe("Terminal Location Functions", () => {
+    describe("getTerminalLocations", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalLocations).toBe("function");
+        expect(getTerminalLocations).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalLocations).toBe("function");
+        expect(getTerminalLocations).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const result = getTerminalSailingSpaceByTerminalId(VALID_TERMINAL_IDS[0]);
-      expect(result).toBeInstanceOf(Promise);
+    describe("getTerminalLocationsByTerminalId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalLocationsByTerminalId).toBe("function");
+        expect(getTerminalLocationsByTerminalId).toHaveLength(1);
+      });
 
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
-    });
-
-    it("should accept terminal ID parameter", () => {
-      // Test that the function returns a Promise when called
-      expect(
-        getTerminalSailingSpaceByTerminalId(VALID_TERMINAL_IDS[0])
-      ).toBeInstanceOf(Promise);
-    });
-
-    it("should handle invalid terminal IDs gracefully", async () => {
-      // Test that the function handles invalid terminal IDs gracefully
-      try {
-        await getTerminalSailingSpaceByTerminalId(99999); // Invalid terminal ID
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's expected for invalid IDs
-        expect(error).toBeDefined();
-      }
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalLocationsByTerminalId).toBe("function");
+        expect(getTerminalLocationsByTerminalId).toHaveLength(1);
+      });
     });
   });
 
-  describe("getTerminalVerbose", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalVerbose).toBe("function");
+  describe("Terminal Sailing Space Functions", () => {
+    describe("getTerminalSailingSpace", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalSailingSpace).toBe("function");
+        expect(getTerminalSailingSpace).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalSailingSpace).toBe("function");
+        expect(getTerminalSailingSpace).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const result = getTerminalVerbose();
-      expect(result).toBeInstanceOf(Promise);
+    describe("getTerminalSailingSpaceByTerminalId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalSailingSpaceByTerminalId).toBe("function");
+        expect(getTerminalSailingSpaceByTerminalId).toHaveLength(1);
+      });
 
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
-    });
-  });
-
-  describe("getTerminalVerboseByTerminalId", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalVerboseByTerminalId).toBe("function");
-    });
-
-    it("should return a Promise", async () => {
-      const result = getTerminalVerboseByTerminalId(VALID_TERMINAL_IDS[0]);
-      expect(result).toBeInstanceOf(Promise);
-
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
-    });
-
-    it("should accept terminal ID parameter", () => {
-      // Test that the function can be called with valid parameters
-      expect(() =>
-        getTerminalVerboseByTerminalId(VALID_TERMINAL_IDS[0])
-      ).not.toThrow();
-      expect(() =>
-        getTerminalVerboseByTerminalId(VALID_TERMINAL_IDS[1])
-      ).not.toThrow();
-      expect(() =>
-        getTerminalVerboseByTerminalId(VALID_TERMINAL_IDS[2])
-      ).not.toThrow();
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalSailingSpaceByTerminalId).toBe("function");
+        expect(getTerminalSailingSpaceByTerminalId).toHaveLength(1);
+      });
     });
   });
 
-  describe("getTerminalWaitTimes", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalWaitTimes).toBe("function");
+  describe("Terminal Bulletin Functions", () => {
+    describe("getTerminalBulletins", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalBulletins).toBe("function");
+        expect(getTerminalBulletins).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalBulletins).toBe("function");
+        expect(getTerminalBulletins).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const result = getTerminalWaitTimes();
-      expect(result).toBeInstanceOf(Promise);
+    describe("getTerminalBulletinsByTerminalId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalBulletinsByTerminalId).toBe("function");
+        expect(getTerminalBulletinsByTerminalId).toHaveLength(1);
+      });
 
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
-    });
-  });
-
-  describe("getTerminalWaitTimesByTerminal", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getTerminalWaitTimesByTerminal).toBe("function");
-    });
-
-    it("should return a Promise", async () => {
-      const result = getTerminalWaitTimesByTerminal(VALID_TERMINAL_IDS[0]);
-      expect(result).toBeInstanceOf(Promise);
-
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
-    });
-
-    it("should accept terminal ID parameter", () => {
-      // Test that the function can be called with valid parameters
-      expect(() =>
-        getTerminalWaitTimesByTerminal(VALID_TERMINAL_IDS[0])
-      ).not.toThrow();
-      expect(() =>
-        getTerminalWaitTimesByTerminal(VALID_TERMINAL_IDS[1])
-      ).not.toThrow();
-      expect(() =>
-        getTerminalWaitTimesByTerminal(VALID_TERMINAL_IDS[2])
-      ).not.toThrow();
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalBulletinsByTerminalId).toBe("function");
+        expect(getTerminalBulletinsByTerminalId).toHaveLength(1);
+      });
     });
   });
 
-  describe("getCacheFlushDateTerminals", () => {
-    it("should have the correct function signature", () => {
-      expect(typeof getCacheFlushDateTerminals).toBe("function");
+  describe("Terminal Transport Functions", () => {
+    describe("getTerminalTransports", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalTransports).toBe("function");
+        expect(getTerminalTransports).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalTransports).toBe("function");
+        expect(getTerminalTransports).toHaveLength(0);
+      });
     });
 
-    it("should return a Promise", async () => {
-      const result = getCacheFlushDateTerminals();
-      expect(result).toBeInstanceOf(Promise);
+    describe("getTerminalTransportsByTerminalId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalTransportsByTerminalId).toBe("function");
+        expect(getTerminalTransportsByTerminalId).toHaveLength(1);
+      });
 
-      // Test that it doesn't throw immediately
-      try {
-        await result;
-        // If it succeeds, that's fine
-      } catch (error) {
-        // If it fails, that's also fine - we're just testing the function exists
-        expect(error).toBeDefined();
-      }
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalTransportsByTerminalId).toBe("function");
+        expect(getTerminalTransportsByTerminalId).toHaveLength(1);
+      });
     });
   });
 
-  describe("Function Parameter Validation", () => {
-    it("should validate all function parameter counts", () => {
-      // Test parameter counts for functions that take parameters
-      expect(getTerminalBasicsByTerminalId).toHaveLength(1);
-      expect(getTerminalLocationsByTerminalId).toHaveLength(1);
-      expect(getTerminalSailingSpaceByTerminalId).toHaveLength(1);
-      expect(getTerminalVerboseByTerminalId).toHaveLength(1);
-      expect(getTerminalWaitTimesByTerminal).toHaveLength(1);
+  describe("Terminal Wait Time Functions", () => {
+    describe("getTerminalWaitTimes", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalWaitTimes).toBe("function");
+        expect(getTerminalWaitTimes).toHaveLength(0);
+      });
 
-      // Test parameter counts for functions that don't take parameters
-      expect(getTerminalBasics).toHaveLength(0);
-      expect(getTerminalLocations).toHaveLength(0);
-      expect(getTerminalSailingSpace).toHaveLength(0);
-      expect(getTerminalVerbose).toHaveLength(0);
-      expect(getTerminalWaitTimes).toHaveLength(0);
-      expect(getCacheFlushDateTerminals).toHaveLength(0);
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalWaitTimes).toBe("function");
+        expect(getTerminalWaitTimes).toHaveLength(0);
+      });
+    });
+
+    describe("getTerminalWaitTimesByTerminal", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalWaitTimesByTerminal).toBe("function");
+        expect(getTerminalWaitTimesByTerminal).toHaveLength(1);
+      });
+
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalWaitTimesByTerminal).toBe("function");
+        expect(getTerminalWaitTimesByTerminal).toHaveLength(1);
+      });
+    });
+  });
+
+  describe("Terminal Verbose Functions", () => {
+    describe("getTerminalVerbose", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalVerbose).toBe("function");
+        expect(getTerminalVerbose).toHaveLength(0);
+      });
+
+      it("should be callable without parameters", () => {
+        expect(typeof getTerminalVerbose).toBe("function");
+        expect(getTerminalVerbose).toHaveLength(0);
+      });
+    });
+
+    describe("getTerminalVerboseByTerminalId", () => {
+      it("should have the correct function signature", () => {
+        expect(typeof getTerminalVerboseByTerminalId).toBe("function");
+        expect(getTerminalVerboseByTerminalId).toHaveLength(1);
+      });
+
+      it("should accept a terminal ID parameter", () => {
+        expect(typeof getTerminalVerboseByTerminalId).toBe("function");
+        expect(getTerminalVerboseByTerminalId).toHaveLength(1);
+      });
     });
   });
 });

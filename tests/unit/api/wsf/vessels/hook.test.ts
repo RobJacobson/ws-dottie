@@ -6,16 +6,32 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   useCacheFlushDateVessels,
+  useVesselAccommodations,
+  useVesselAccommodationsById,
+  useVesselBasics,
+  useVesselBasicsById,
+  useVesselHistory,
+  useVesselHistoryByVesselAndDateRange,
   useVesselLocations,
   useVesselLocationsByVesselId,
+  useVesselStats,
+  useVesselStatsById,
   useVesselVerbose,
   useVesselVerboseById,
 } from "@/api/wsf/vessels/hook";
 
 // Mock the API functions
 vi.mock("@/api/wsf/vessels/api", () => ({
+  getVesselBasics: vi.fn(),
+  getVesselBasicsById: vi.fn(),
+  getVesselAccommodations: vi.fn(),
+  getVesselAccommodationsById: vi.fn(),
   getVesselLocations: vi.fn(),
   getVesselLocationsByVesselId: vi.fn(),
+  getVesselStats: vi.fn(),
+  getVesselStatsById: vi.fn(),
+  getVesselHistory: vi.fn(),
+  getVesselHistoryByVesselAndDateRange: vi.fn(),
   getVesselVerbose: vi.fn(),
   getVesselVerboseById: vi.fn(),
   getCacheFlushDateVessels: vi.fn(),
@@ -395,6 +411,453 @@ describe("WSF Vessels Hooks", () => {
       await waitFor(() => {
         expect(result.current.isSuccess || result.current.isError).toBe(true);
       });
+    });
+  });
+
+  // ============================================================================
+  // NEW HOOK TESTS
+  // ============================================================================
+
+  describe("useVesselBasics", () => {
+    it("should fetch vessel basics successfully", async () => {
+      const { getVesselBasics } = await import("@/api/wsf/vessels/api");
+      const mockGetVesselBasics = vi.mocked(getVesselBasics);
+
+      const mockVesselData = [
+        {
+          VesselID: 1,
+          VesselSubjectID: 1,
+          VesselName: "Cathlamet",
+          VesselAbbrev: "CAT",
+          Class: {
+            ClassID: 10,
+            ClassSubjectID: 310,
+            ClassName: "Issaquah 130",
+            SortSeq: 40,
+            DrawingImg:
+              "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif",
+            SilhouetteImg:
+              "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif",
+            PublicDisplayName: "Issaquah",
+          },
+          Status: 1,
+          OwnedByWSF: true,
+        },
+      ];
+
+      mockGetVesselBasics.mockResolvedValue(mockVesselData);
+
+      const { result } = renderHook(() => useVesselBasics(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockVesselData);
+      expect(mockGetVesselBasics).toHaveBeenCalledTimes(1);
+    });
+
+    it("should use infrequent update options", async () => {
+      const { createInfrequentUpdateOptions } = await import(
+        "@/shared/caching/config"
+      );
+      const mockCreateInfrequentUpdateOptions = vi.mocked(
+        createInfrequentUpdateOptions
+      );
+
+      const { result } = renderHook(() => useVesselBasics(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(mockCreateInfrequentUpdateOptions).toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(result.current.isSuccess || result.current.isError).toBe(true);
+      });
+    });
+  });
+
+  describe("useVesselBasicsById", () => {
+    it("should fetch vessel basics for specific vessel", async () => {
+      const { getVesselBasicsById } = await import("@/api/wsf/vessels/api");
+      const mockGetVesselBasicsById = vi.mocked(getVesselBasicsById);
+
+      const mockVesselData = {
+        VesselID: 1,
+        VesselSubjectID: 1,
+        VesselName: "Cathlamet",
+        VesselAbbrev: "CAT",
+        Class: {
+          ClassID: 10,
+          ClassSubjectID: 310,
+          ClassName: "Issaquah 130",
+          SortSeq: 40,
+          DrawingImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif",
+          SilhouetteImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif",
+          PublicDisplayName: "Issaquah",
+        },
+        Status: 1,
+        OwnedByWSF: true,
+      };
+
+      mockGetVesselBasicsById.mockResolvedValue(mockVesselData);
+
+      const { result } = renderHook(() => useVesselBasicsById(1), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockVesselData);
+      expect(mockGetVesselBasicsById).toHaveBeenCalledWith(1);
+    });
+
+    it("should be disabled when vesselId is falsy", () => {
+      const { result } = renderHook(() => useVesselBasicsById(0), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.data).toBeUndefined();
+      expect(result.current.isFetching).toBe(false);
+    });
+  });
+
+  describe("useVesselAccommodations", () => {
+    it("should fetch vessel accommodations successfully", async () => {
+      const { getVesselAccommodations } = await import("@/api/wsf/vessels/api");
+      const mockGetVesselAccommodations = vi.mocked(getVesselAccommodations);
+
+      const mockAccommodationData = [
+        {
+          VesselID: 1,
+          VesselSubjectID: 1,
+          VesselName: "Cathlamet",
+          VesselAbbrev: "CAT",
+          Class: {
+            ClassID: 10,
+            ClassSubjectID: 310,
+            ClassName: "Issaquah 130",
+            SortSeq: 40,
+            DrawingImg:
+              "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif",
+            SilhouetteImg:
+              "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif",
+            PublicDisplayName: "Issaquah",
+          },
+          CarDeckRestroom: true,
+          CarDeckShelter: false,
+          Elevator: true,
+          ADAAccessible: true,
+          MainCabinGalley: true,
+          MainCabinRestroom: true,
+          PublicWifi: false,
+          ADAInfo:
+            "The MV Cathlamet has elevator access from the auto deck to the passenger deck.",
+          AdditionalInfo: " ",
+        },
+      ];
+
+      mockGetVesselAccommodations.mockResolvedValue(mockAccommodationData);
+
+      const { result } = renderHook(() => useVesselAccommodations(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockAccommodationData);
+      expect(mockGetVesselAccommodations).toHaveBeenCalledTimes(1);
+    });
+
+    it("should use infrequent update options", async () => {
+      const { createInfrequentUpdateOptions } = await import(
+        "@/shared/caching/config"
+      );
+      const mockCreateInfrequentUpdateOptions = vi.mocked(
+        createInfrequentUpdateOptions
+      );
+
+      const { result } = renderHook(() => useVesselAccommodations(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(mockCreateInfrequentUpdateOptions).toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(result.current.isSuccess || result.current.isError).toBe(true);
+      });
+    });
+  });
+
+  describe("useVesselAccommodationsById", () => {
+    it("should fetch vessel accommodations for specific vessel", async () => {
+      const { getVesselAccommodationsById } = await import(
+        "@/api/wsf/vessels/api"
+      );
+      const mockGetVesselAccommodationsById = vi.mocked(
+        getVesselAccommodationsById
+      );
+
+      const mockAccommodationData = {
+        VesselID: 1,
+        VesselSubjectID: 1,
+        VesselName: "Cathlamet",
+        VesselAbbrev: "CAT",
+        Class: {
+          ClassID: 10,
+          ClassSubjectID: 310,
+          ClassName: "Issaquah 130",
+          SortSeq: 40,
+          DrawingImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif",
+          SilhouetteImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif",
+          PublicDisplayName: "Issaquah",
+        },
+        CarDeckRestroom: true,
+        CarDeckShelter: false,
+        Elevator: true,
+        ADAAccessible: true,
+        MainCabinGalley: true,
+        MainCabinRestroom: true,
+        PublicWifi: false,
+        ADAInfo:
+          "The MV Cathlamet has elevator access from the auto deck to the passenger deck.",
+        AdditionalInfo: " ",
+      };
+
+      mockGetVesselAccommodationsById.mockResolvedValue(mockAccommodationData);
+
+      const { result } = renderHook(() => useVesselAccommodationsById(1), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockAccommodationData);
+      expect(mockGetVesselAccommodationsById).toHaveBeenCalledWith(1);
+    });
+
+    it("should be disabled when vesselId is falsy", () => {
+      const { result } = renderHook(() => useVesselAccommodationsById(0), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.data).toBeUndefined();
+      expect(result.current.isFetching).toBe(false);
+    });
+  });
+
+  describe("useVesselStats", () => {
+    it("should fetch vessel stats successfully", async () => {
+      const { getVesselStats } = await import("@/api/wsf/vessels/api");
+      const mockGetVesselStats = vi.mocked(getVesselStats);
+
+      const mockStatsData = [
+        {
+          VesselID: 1,
+          StatID: 1,
+          StatName: "Passenger Capacity",
+          StatValue: "2000",
+          StatUnit: "passengers",
+          IsActive: true,
+        },
+      ];
+
+      mockGetVesselStats.mockResolvedValue(mockStatsData);
+
+      const { result } = renderHook(() => useVesselStats(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockStatsData);
+      expect(mockGetVesselStats).toHaveBeenCalledTimes(1);
+    });
+
+    it("should use infrequent update options", async () => {
+      const { createInfrequentUpdateOptions } = await import(
+        "@/shared/caching/config"
+      );
+      const mockCreateInfrequentUpdateOptions = vi.mocked(
+        createInfrequentUpdateOptions
+      );
+
+      const { result } = renderHook(() => useVesselStats(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(mockCreateInfrequentUpdateOptions).toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(result.current.isSuccess || result.current.isError).toBe(true);
+      });
+    });
+  });
+
+  describe("useVesselStatsById", () => {
+    it("should fetch vessel stats for specific vessel", async () => {
+      const { getVesselStatsById } = await import("@/api/wsf/vessels/api");
+      const mockGetVesselStatsById = vi.mocked(getVesselStatsById);
+
+      const mockStatsData = {
+        VesselID: 1,
+        StatID: 1,
+        StatName: "Passenger Capacity",
+        StatValue: "2000",
+        StatUnit: "passengers",
+        IsActive: true,
+      };
+
+      mockGetVesselStatsById.mockResolvedValue(mockStatsData);
+
+      const { result } = renderHook(() => useVesselStatsById(1), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockStatsData);
+      expect(mockGetVesselStatsById).toHaveBeenCalledWith(1);
+    });
+
+    it("should be disabled when vesselId is falsy", () => {
+      const { result } = renderHook(() => useVesselStatsById(0), {
+        wrapper: createWrapper(),
+      });
+
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.data).toBeUndefined();
+      expect(result.current.isFetching).toBe(false);
+    });
+  });
+
+  describe("useVesselHistory", () => {
+    it("should fetch vessel history successfully", async () => {
+      const { getVesselHistory } = await import("@/api/wsf/vessels/api");
+      const mockGetVesselHistory = vi.mocked(getVesselHistory);
+
+      const mockHistoryData = [
+        {
+          VesselID: 1,
+          VesselName: "Cathlamet",
+          HistoryDate: new Date("2024-01-01T12:00:00Z"),
+          HistoryDescription: "Vessel entered service",
+          HistoryType: "Service Entry",
+          IsActive: true,
+        },
+      ];
+
+      mockGetVesselHistory.mockResolvedValue(mockHistoryData);
+
+      const { result } = renderHook(() => useVesselHistory(), {
+        wrapper: createWrapper(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockHistoryData);
+      expect(mockGetVesselHistory).toHaveBeenCalledTimes(1);
+    });
+
+    it("should use infrequent update options", async () => {
+      const { createInfrequentUpdateOptions } = await import(
+        "@/shared/caching/config"
+      );
+      const mockCreateInfrequentUpdateOptions = vi.mocked(
+        createInfrequentUpdateOptions
+      );
+
+      const { result } = renderHook(() => useVesselHistory(), {
+        wrapper: createWrapper(),
+      });
+
+      expect(mockCreateInfrequentUpdateOptions).toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(result.current.isSuccess || result.current.isError).toBe(true);
+      });
+    });
+  });
+
+  describe("useVesselHistoryByVesselAndDateRange", () => {
+    it("should fetch vessel history for specific vessel and date range", async () => {
+      const { getVesselHistoryByVesselAndDateRange } = await import(
+        "@/api/wsf/vessels/api"
+      );
+      const mockGetVesselHistoryByVesselAndDateRange = vi.mocked(
+        getVesselHistoryByVesselAndDateRange
+      );
+
+      const mockHistoryData = [
+        {
+          VesselID: 1,
+          VesselName: "Cathlamet",
+          HistoryDate: new Date("2024-01-01T12:00:00Z"),
+          HistoryDescription: "Vessel entered service",
+          HistoryType: "Service Entry",
+          IsActive: true,
+        },
+      ];
+
+      const vesselName = "Cathlamet";
+      const dateStart = "2024-01-01";
+      const dateEnd = "2024-01-31";
+
+      mockGetVesselHistoryByVesselAndDateRange.mockResolvedValue(
+        mockHistoryData
+      );
+
+      const { result } = renderHook(
+        () =>
+          useVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd),
+        {
+          wrapper: createWrapper(),
+        }
+      );
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+      });
+
+      expect(result.current.data).toEqual(mockHistoryData);
+      expect(mockGetVesselHistoryByVesselAndDateRange).toHaveBeenCalledWith(
+        vesselName,
+        dateStart,
+        dateEnd
+      );
+    });
+
+    it("should be disabled when parameters are falsy", () => {
+      const { result } = renderHook(
+        () => useVesselHistoryByVesselAndDateRange("", "", ""),
+        {
+          wrapper: createWrapper(),
+        }
+      );
+
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.data).toBeUndefined();
+      expect(result.current.isFetching).toBe(false);
     });
   });
 });

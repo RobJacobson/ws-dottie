@@ -32,10 +32,32 @@ export const trackPerformance = (endpoint: string, duration: number) => {
 export const validateVesselLocation = (data: any) => {
   expect(data).toHaveProperty("VesselID");
   expect(data).toHaveProperty("VesselName");
-  expect(data).toHaveProperty("Longitude");
+  expect(data).toHaveProperty("Mmsi");
+  expect(data).toHaveProperty("DepartingTerminalID");
+  expect(data).toHaveProperty("DepartingTerminalName");
+  expect(data).toHaveProperty("DepartingTerminalAbbrev");
+  expect(data).toHaveProperty("ArrivingTerminalID");
+  expect(data).toHaveProperty("ArrivingTerminalName");
+  expect(data).toHaveProperty("ArrivingTerminalAbbrev");
   expect(data).toHaveProperty("Latitude");
+  expect(data).toHaveProperty("Longitude");
+  expect(data).toHaveProperty("Speed");
+  expect(data).toHaveProperty("Heading");
+  expect(data).toHaveProperty("InService");
+  expect(data).toHaveProperty("AtDock");
+  expect(data).toHaveProperty("LeftDock");
+  expect(data).toHaveProperty("Eta");
+  expect(data).toHaveProperty("EtaBasis");
+  expect(data).toHaveProperty("ScheduledDeparture");
+  expect(data).toHaveProperty("OpRouteAbbrev");
+  expect(Array.isArray(data.OpRouteAbbrev)).toBe(true);
+  expect(data).toHaveProperty("VesselPositionNum");
+  expect(data).toHaveProperty("SortSeq");
+  expect(data).toHaveProperty("ManagedBy");
   expect(data).toHaveProperty("TimeStamp");
-  expect(data.TimeStamp).toBeInstanceOf(Date);
+  expect(data).toHaveProperty("VesselWatchShutID");
+  expect(data).toHaveProperty("VesselWatchShutMsg");
+  expect(data).toHaveProperty("VesselWatchShutFlag");
 };
 
 export const validateVesselVerbose = (data: any) => {
@@ -44,6 +66,61 @@ export const validateVesselVerbose = (data: any) => {
   expect(data).toHaveProperty("RegDeckSpace");
   expect(data).toHaveProperty("MaxPassengerCount");
   expect(data).toHaveProperty("YearBuilt");
+};
+
+export const validateVesselBasic = (data: any) => {
+  expect(data).toHaveProperty("VesselID");
+  expect(data).toHaveProperty("VesselName");
+  expect(data).toHaveProperty("VesselAbbrev");
+  expect(data).toHaveProperty("Class");
+  expect(data.Class).toHaveProperty("ClassID");
+  expect(data.Class).toHaveProperty("ClassName");
+  expect(data.Class).toHaveProperty("PublicDisplayName");
+  expect(data.Class).toHaveProperty("SortSeq");
+  expect(data).toHaveProperty("Status");
+  expect(data).toHaveProperty("OwnedByWSF");
+};
+
+export const validateVesselAccommodation = (data: any) => {
+  expect(data).toHaveProperty("VesselID");
+  expect(data).toHaveProperty("VesselSubjectID");
+  expect(data).toHaveProperty("VesselName");
+  expect(data).toHaveProperty("VesselAbbrev");
+  expect(data).toHaveProperty("Class");
+  expect(data).toHaveProperty("CarDeckRestroom");
+  expect(data).toHaveProperty("CarDeckShelter");
+  expect(data).toHaveProperty("Elevator");
+  expect(data).toHaveProperty("ADAAccessible");
+  expect(data).toHaveProperty("MainCabinGalley");
+  expect(data).toHaveProperty("MainCabinRestroom");
+  expect(data).toHaveProperty("PublicWifi");
+  expect(data).toHaveProperty("ADAInfo");
+  expect(data).toHaveProperty("AdditionalInfo");
+};
+
+export const validateVesselStats = (data: any) => {
+  expect(data).toHaveProperty("VesselID");
+  expect(data).toHaveProperty("StatID");
+  expect(data).toHaveProperty("StatName");
+  expect(data).toHaveProperty("StatValue");
+  expect(data).toHaveProperty("StatUnit");
+  expect(data).toHaveProperty("IsActive");
+};
+
+export const validateVesselHistory = (data: any) => {
+  expect(data).toHaveProperty("VesselId");
+  expect(data).toHaveProperty("Vessel");
+  expect(data).toHaveProperty("Departing");
+  expect(data).toHaveProperty("Arriving");
+  expect(data).toHaveProperty("ScheduledDepart");
+  expect(data).toHaveProperty("ActualDepart");
+  expect(data).toHaveProperty("EstArrival");
+  expect(data).toHaveProperty("Date");
+};
+
+export const validateCacheFlushDate = (data: any) => {
+  expect(data).toHaveProperty("LastUpdated");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
 };
 
 export const validateTerminalBasics = (data: any) => {
@@ -92,10 +169,10 @@ export const validateTerminalLocation = (data: any) => {
   expect(data).toHaveProperty("Country");
   expect(data).toHaveProperty("Latitude");
   expect(data).toHaveProperty("Longitude");
-  expect(data).toHaveProperty("DispGisZoomLoc");
-  expect(Array.isArray(data.DispGisZoomLoc)).toBe(true);
-  if (data.DispGisZoomLoc.length > 0) {
-    const firstZoom = data.DispGisZoomLoc[0];
+  expect(data).toHaveProperty("DispGISZoomLoc");
+  expect(Array.isArray(data.DispGISZoomLoc)).toBe(true);
+  if (data.DispGISZoomLoc.length > 0) {
+    const firstZoom = data.DispGISZoomLoc[0];
     expect(firstZoom).toHaveProperty("Latitude");
     expect(firstZoom).toHaveProperty("Longitude");
     expect(firstZoom).toHaveProperty("ZoomLevel");
