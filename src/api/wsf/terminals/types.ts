@@ -20,16 +20,29 @@ export type TerminalBasics = {
 };
 
 /**
+ * Individual bulletin from WSF Terminals API
+ * Based on Bulletins array in /terminalbulletins endpoint
+ */
+export type TerminalBulletinItem = {
+  BulletinTitle: string;
+  BulletinText: string;
+  BulletinSortSeq: number;
+  BulletinLastUpdated?: Date;
+  BulletinLastUpdatedSortable?: string;
+};
+
+/**
  * Terminal bulletins from WSF Terminals API
  * Based on /terminalbulletins endpoint
  */
 export type TerminalBulletin = {
   TerminalID: number;
-  BulletinID: number;
-  BulletinTitle: string;
-  BulletinMessage: string;
-  BulletinDate: Date;
-  IsActive: boolean;
+  TerminalSubjectID: number;
+  RegionID: number;
+  TerminalName: string;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  Bulletins: TerminalBulletinItem[];
 };
 
 /**
@@ -52,7 +65,7 @@ export type TerminalLocation = {
   Latitude: number;
   Longitude: number;
   Directions: string | null;
-  DispGisZoomLoc: Array<{
+  DispGISZoomLoc: Array<{
     Latitude: number;
     Longitude: number;
     ZoomLevel: number;
@@ -109,18 +122,37 @@ export type TerminalSailingSpace = {
 };
 
 /**
+ * Terminal transport link from WSF Terminals API
+ * Based on TransitLinks array in /terminaltransports and /terminalverbose endpoints
+ */
+export type TerminalTransitLink = {
+  LinkName: string;
+  LinkURL: string;
+  SortSeq: number | null;
+};
+
+/**
  * Terminal transports from WSF Terminals API
  * Based on /terminaltransports endpoint
  */
 export type TerminalTransport = {
   TerminalID: number;
+  TerminalSubjectID: number;
+  RegionID: number;
   TerminalName: string;
-  TransportID: number;
-  TransportType: string;
-  TransportName: string;
-  TransportDescription: string;
-  TransportNotes: string;
-  IsActive: boolean;
+  TerminalAbbrev: string;
+  SortSeq: number;
+  ParkingInfo: string;
+  ParkingShuttleInfo: string | null;
+  AirportInfo: string;
+  AirportShuttleInfo: string;
+  MotorcycleInfo: string;
+  TruckInfo: string;
+  BikeInfo: string;
+  TrainInfo: string | null;
+  TaxiInfo: string | null;
+  HovInfo: string | null;
+  TransitLinks: TerminalTransitLink[];
 };
 
 /**
@@ -150,16 +182,6 @@ export type TerminalWaitTimes = {
 };
 
 /**
- * Terminal transport link from WSF Terminals API
- * Based on TransitLinks array in /terminalverbose endpoint
- */
-export type TerminalTransitLink = {
-  LinkName: string;
-  LinkUrl: string;
-  SortSeq: number;
-};
-
-/**
  * Terminal verbose from WSF Terminals API
  * Based on /terminalverbose endpoint
  */
@@ -179,7 +201,7 @@ export type TerminalVerbose = {
   Latitude: number;
   Longitude: number;
   Directions: string | null;
-  DispGisZoomLoc: Array<{
+  DispGISZoomLoc: Array<{
     Latitude: number;
     Longitude: number;
     ZoomLevel: number;
@@ -218,7 +240,7 @@ export type TerminalVerbose = {
   TruckInfo: string | null;
   TypeDesc: string | null;
   VisitorLinks: string | null;
-  Bulletins: TerminalBulletin[];
+  Bulletins: TerminalBulletinItem[];
   TransitLinks: TerminalTransitLink[];
   WaitTimes: TerminalWaitTime[];
 };

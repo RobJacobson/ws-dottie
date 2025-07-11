@@ -28,15 +28,11 @@ describe("Vessel Cache Flush Date E2E Tests", () => {
       if (data !== null) {
         validateCacheFlushDate(data);
 
-        // Validate data types
-        expect(data.LastUpdated).toBeInstanceOf(Date);
-        expect(typeof data.Source).toBe("string");
-
         // Validate date is reasonable
         const now = new Date();
         const minDate = new Date("2020-01-01"); // Reasonable minimum date
-        expect(data.LastUpdated.getTime()).toBeGreaterThan(minDate.getTime());
-        expect(data.LastUpdated.getTime()).toBeLessThanOrEqual(now.getTime());
+        expect(data.getTime()).toBeGreaterThan(minDate.getTime());
+        expect(data.getTime()).toBeLessThanOrEqual(now.getTime());
       }
 
       // Rate limiting
@@ -52,7 +48,7 @@ describe("Vessel Cache Flush Date E2E Tests", () => {
         // With invalid token, should still work but return null or throw
         const result = await getCacheFlushDateVessels();
         // If it doesn't throw, it should return null or valid data
-        expect(result === null || typeof result === "object").toBe(true);
+        expect(result === null || result instanceof Date).toBe(true);
       } catch (error) {
         // If it throws, that's also acceptable
         expect(error).toBeDefined();
@@ -90,13 +86,14 @@ describe("Vessel Cache Flush Date E2E Tests", () => {
         getCacheFlushDateVessels()
       );
 
-      // Both calls should return same type (null or object)
-      expect(typeof firstCall === "object" || firstCall === null).toBe(true);
-      expect(typeof secondCall === "object" || secondCall === null).toBe(true);
+      // Both calls should return same type (null or Date)
+      expect(firstCall === null || firstCall instanceof Date).toBe(true);
+      expect(secondCall === null || secondCall instanceof Date).toBe(true);
 
-      // If both return data, they should have same structure
+      // If both return data, they should be Date objects
       if (firstCall !== null && secondCall !== null) {
-        expect(Object.keys(firstCall)).toEqual(Object.keys(secondCall));
+        expect(firstCall).toBeInstanceOf(Date);
+        expect(secondCall).toBeInstanceOf(Date);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -106,19 +103,15 @@ describe("Vessel Cache Flush Date E2E Tests", () => {
       const { data } = await measureApiCall(() => getCacheFlushDateVessels());
 
       if (data !== null) {
-        // LastUpdated should be a valid Date object
-        expect(data.LastUpdated).toBeInstanceOf(Date);
-        expect(data.LastUpdated.getTime()).toBeGreaterThan(0);
-
-        // Source should be a non-empty string
-        expect(data.Source).toBeTruthy();
-        expect(typeof data.Source).toBe("string");
+        // Should be a valid Date object
+        expect(data).toBeInstanceOf(Date);
+        expect(data.getTime()).toBeGreaterThan(0);
 
         // Date should be in reasonable range
         const now = new Date();
         const minDate = new Date("2020-01-01"); // Reasonable minimum date
-        expect(data.LastUpdated.getTime()).toBeGreaterThan(minDate.getTime());
-        expect(data.LastUpdated.getTime()).toBeLessThanOrEqual(now.getTime());
+        expect(data.getTime()).toBeGreaterThan(minDate.getTime());
+        expect(data.getTime()).toBeLessThanOrEqual(now.getTime());
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -129,15 +122,14 @@ describe("Vessel Cache Flush Date E2E Tests", () => {
 
       if (data !== null) {
         const now = new Date();
-        const cacheDate = data.LastUpdated;
-        const timeDiff = now.getTime() - cacheDate.getTime();
+        const timeDiff = now.getTime() - data.getTime();
         const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
 
         // Cache flush date should not be more than 1 year old
         expect(daysDiff).toBeLessThan(365);
 
         // Cache flush date should not be in the future
-        expect(cacheDate.getTime()).toBeLessThanOrEqual(now.getTime());
+        expect(data.getTime()).toBeLessThanOrEqual(now.getTime());
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -158,10 +150,9 @@ describe("Vessel Cache Flush Date E2E Tests", () => {
       );
 
       if (cacheFlushDate !== null && vesselBasics.length > 0) {
-        // Cache flush date should be reasonable relative to vessel data
-        // This is a basic consistency check - actual implementation may vary
-        expect(cacheFlushDate.LastUpdated).toBeInstanceOf(Date);
-        expect(cacheFlushDate.Source).toBeTruthy();
+        // Cache flush date should be a valid Date object
+        expect(cacheFlushDate).toBeInstanceOf(Date);
+        expect(cacheFlushDate.getTime()).toBeGreaterThan(0);
       }
 
       await delay(RATE_LIMIT_DELAY);

@@ -78,9 +78,34 @@ const isMmDdYyyyDate = (str: string): boolean => {
 };
 
 /**
+ * Checks if a string matches MM/DD/YYYY HH:MM:SS AM/PM datetime format
+ */
+const isMmDdYyyyDateTime = (str: string): boolean => {
+  const mmDdYyyyDateTimeRegex =
+    /^\d{1,2}\/\d{1,2}\/\d{4}\s+\d{1,2}:\d{2}:\d{2}\s+(AM|PM)$/i;
+  if (!mmDdYyyyDateTimeRegex.test(str)) return false;
+
+  // Validate the date is actually valid
+  const [datePart, timePart] = str.split(" ");
+  const [month, day, year] = datePart.split("/").map(Number);
+  const date = new Date(year, month - 1, day);
+  return (
+    !Number.isNaN(date.getTime()) &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day &&
+    date.getFullYear() === year
+  );
+};
+
+/**
  * Converts a string to a Date object based on its format
  */
 const parseDateString = (dateString: string): Date | null => {
+  // Handle empty strings as null
+  if (dateString === "") {
+    return null;
+  }
+
   // Handle WSF /Date(timestamp)/ format
   if (dateString.startsWith("/Date(")) {
     const middle = dateString.slice(6, 19);
@@ -95,6 +120,11 @@ const parseDateString = (dateString: string): Date | null => {
 
   // Handle YYYY-MM-DD format
   if (isYyyyMmDdDate(dateString)) {
+    return new Date(dateString);
+  }
+
+  // Handle MM/DD/YYYY HH:MM:SS AM/PM format
+  if (isMmDdYyyyDateTime(dateString)) {
     return new Date(dateString);
   }
 
@@ -133,12 +163,19 @@ export const transformWsfData = (data: JsonValue): JsonX => {
     return result;
   }
 
-  // Handle date strings
+  // Handle date strings - always try to parse, returns null for non-date strings
   if (typeof data === "string") {
     const parsedDate = parseDateString(data);
-    if (parsedDate) {
+    if (parsedDate !== null) {
       return parsedDate;
     }
+    // If parseDateString returned null, it means it's either an empty string or not a date
+    // For empty strings, we want to return null; for other strings, return the original
+    if (data === "") {
+      return null;
+    }
+    // If not a date, return the original string
+    return data;
   }
 
   // Return primitives as-is

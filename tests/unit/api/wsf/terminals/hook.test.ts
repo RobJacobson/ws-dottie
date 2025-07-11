@@ -5,16 +5,21 @@ import React from "react";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import {
+  useCacheFlushDateTerminals,
   useTerminalBasics,
   useTerminalBasicsByTerminalId,
+  useTerminalBulletins,
+  useTerminalBulletinsByTerminalId,
   useTerminalLocations,
   useTerminalLocationsByTerminalId,
   useTerminalSailingSpace,
   useTerminalSailingSpaceByTerminalId,
+  useTerminalTransports,
+  useTerminalTransportsByTerminalId,
   useTerminalVerbose,
   useTerminalVerboseByTerminalId,
   useTerminalWaitTimes,
-  useTerminalWaitTimesByTerminal,
+  useTerminalWaitTimesByTerminalId,
 } from "@/api/wsf/terminals/hook";
 
 // Real TerminalIDs from WSDOT API
@@ -54,6 +59,24 @@ describe("WSF Terminals Hooks", () => {
     // Clear any test state
   });
 
+  describe("Cache Flush Date Hooks", () => {
+    it("should have useCacheFlushDateTerminals hook", () => {
+      expect(typeof useCacheFlushDateTerminals).toBe("function");
+    });
+
+    it("should call useCacheFlushDateTerminals without errors", () => {
+      const { result } = renderHook(() => useCacheFlushDateTerminals(), {
+        wrapper: createWrapper(),
+      });
+
+      // Hook should be callable without throwing
+      expect(result.current).toBeDefined();
+      expect(typeof result.current.isLoading).toBe("boolean");
+      expect(typeof result.current.isError).toBe("boolean");
+      expect(typeof result.current.isSuccess).toBe("boolean");
+    });
+  });
+
   describe("Terminal Basics Hooks", () => {
     it("should have useTerminalBasics hook", () => {
       expect(typeof useTerminalBasics).toBe("function");
@@ -90,6 +113,42 @@ describe("WSF Terminals Hooks", () => {
     });
   });
 
+  describe("Terminal Bulletins Hooks", () => {
+    it("should have useTerminalBulletins hook", () => {
+      expect(typeof useTerminalBulletins).toBe("function");
+    });
+
+    it("should have useTerminalBulletinsByTerminalId hook", () => {
+      expect(typeof useTerminalBulletinsByTerminalId).toBe("function");
+    });
+
+    it("should call useTerminalBulletins without errors", () => {
+      const { result } = renderHook(() => useTerminalBulletins(), {
+        wrapper: createWrapper(),
+      });
+
+      // Hook should be callable without throwing
+      expect(result.current).toBeDefined();
+      expect(typeof result.current.isLoading).toBe("boolean");
+      expect(typeof result.current.isError).toBe("boolean");
+      expect(typeof result.current.isSuccess).toBe("boolean");
+    });
+
+    it("should call useTerminalBulletinsByTerminalId without errors", () => {
+      const terminalId = VALID_TERMINAL_IDS[0];
+      const { result } = renderHook(
+        () => useTerminalBulletinsByTerminalId(terminalId),
+        { wrapper: createWrapper() }
+      );
+
+      // Hook should be callable without throwing
+      expect(result.current).toBeDefined();
+      expect(typeof result.current.isLoading).toBe("boolean");
+      expect(typeof result.current.isError).toBe("boolean");
+      expect(typeof result.current.isSuccess).toBe("boolean");
+    });
+  });
+
   describe("Terminal Locations Hooks", () => {
     it("should have useTerminalLocations hook", () => {
       expect(typeof useTerminalLocations).toBe("function");
@@ -111,7 +170,7 @@ describe("WSF Terminals Hooks", () => {
       expect(typeof result.current.isSuccess).toBe("boolean");
     });
 
-    it.skip("should call useTerminalLocationsByTerminalId without errors", () => {
+    it("should call useTerminalLocationsByTerminalId without errors", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
       const { result } = renderHook(
         () => useTerminalLocationsByTerminalId(terminalId),
@@ -147,10 +206,46 @@ describe("WSF Terminals Hooks", () => {
       expect(typeof result.current.isSuccess).toBe("boolean");
     });
 
-    it.skip("should call useTerminalSailingSpaceByTerminalId without errors", () => {
+    it("should call useTerminalSailingSpaceByTerminalId without errors", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
       const { result } = renderHook(
         () => useTerminalSailingSpaceByTerminalId(terminalId),
+        { wrapper: createWrapper() }
+      );
+
+      // Hook should be callable without throwing
+      expect(result.current).toBeDefined();
+      expect(typeof result.current.isLoading).toBe("boolean");
+      expect(typeof result.current.isError).toBe("boolean");
+      expect(typeof result.current.isSuccess).toBe("boolean");
+    });
+  });
+
+  describe("Terminal Transports Hooks", () => {
+    it("should have useTerminalTransports hook", () => {
+      expect(typeof useTerminalTransports).toBe("function");
+    });
+
+    it("should have useTerminalTransportsByTerminalId hook", () => {
+      expect(typeof useTerminalTransportsByTerminalId).toBe("function");
+    });
+
+    it("should call useTerminalTransports without errors", () => {
+      const { result } = renderHook(() => useTerminalTransports(), {
+        wrapper: createWrapper(),
+      });
+
+      // Hook should be callable without throwing
+      expect(result.current).toBeDefined();
+      expect(typeof result.current.isLoading).toBe("boolean");
+      expect(typeof result.current.isError).toBe("boolean");
+      expect(typeof result.current.isSuccess).toBe("boolean");
+    });
+
+    it("should call useTerminalTransportsByTerminalId without errors", () => {
+      const terminalId = VALID_TERMINAL_IDS[0];
+      const { result } = renderHook(
+        () => useTerminalTransportsByTerminalId(terminalId),
         { wrapper: createWrapper() }
       );
 
@@ -183,7 +278,7 @@ describe("WSF Terminals Hooks", () => {
       expect(typeof result.current.isSuccess).toBe("boolean");
     });
 
-    it.skip("should call useTerminalVerboseByTerminalId without errors", () => {
+    it("should call useTerminalVerboseByTerminalId without errors", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
       const { result } = renderHook(
         () => useTerminalVerboseByTerminalId(terminalId),
@@ -203,8 +298,8 @@ describe("WSF Terminals Hooks", () => {
       expect(typeof useTerminalWaitTimes).toBe("function");
     });
 
-    it("should have useTerminalWaitTimesByTerminal hook", () => {
-      expect(typeof useTerminalWaitTimesByTerminal).toBe("function");
+    it("should have useTerminalWaitTimesByTerminalId hook", () => {
+      expect(typeof useTerminalWaitTimesByTerminalId).toBe("function");
     });
 
     it("should call useTerminalWaitTimes without errors", () => {
@@ -219,10 +314,10 @@ describe("WSF Terminals Hooks", () => {
       expect(typeof result.current.isSuccess).toBe("boolean");
     });
 
-    it.skip("should call useTerminalWaitTimesByTerminal without errors", () => {
+    it("should call useTerminalWaitTimesByTerminalId without errors", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
       const { result } = renderHook(
-        () => useTerminalWaitTimesByTerminal(terminalId),
+        () => useTerminalWaitTimesByTerminalId(terminalId),
         { wrapper: createWrapper() }
       );
 
@@ -237,36 +332,79 @@ describe("WSF Terminals Hooks", () => {
   describe("Hook Function Signatures", () => {
     it("should have correct function signatures for all hooks", () => {
       // Test that all hooks are functions
+      expect(typeof useCacheFlushDateTerminals).toBe("function");
       expect(typeof useTerminalBasics).toBe("function");
       expect(typeof useTerminalBasicsByTerminalId).toBe("function");
+      expect(typeof useTerminalBulletins).toBe("function");
+      expect(typeof useTerminalBulletinsByTerminalId).toBe("function");
       expect(typeof useTerminalLocations).toBe("function");
       expect(typeof useTerminalLocationsByTerminalId).toBe("function");
       expect(typeof useTerminalSailingSpace).toBe("function");
       expect(typeof useTerminalSailingSpaceByTerminalId).toBe("function");
+      expect(typeof useTerminalTransports).toBe("function");
+      expect(typeof useTerminalTransportsByTerminalId).toBe("function");
       expect(typeof useTerminalVerbose).toBe("function");
       expect(typeof useTerminalVerboseByTerminalId).toBe("function");
       expect(typeof useTerminalWaitTimes).toBe("function");
-      expect(typeof useTerminalWaitTimesByTerminal).toBe("function");
+      expect(typeof useTerminalWaitTimesByTerminalId).toBe("function");
     });
 
     it("should have correct parameter counts", () => {
       // Test parameter counts for hooks that take parameters
       expect(useTerminalBasicsByTerminalId).toHaveLength(1);
+      expect(useTerminalBulletinsByTerminalId).toHaveLength(1);
       expect(useTerminalLocationsByTerminalId).toHaveLength(1);
       expect(useTerminalSailingSpaceByTerminalId).toHaveLength(1);
+      expect(useTerminalTransportsByTerminalId).toHaveLength(1);
       expect(useTerminalVerboseByTerminalId).toHaveLength(1);
-      expect(useTerminalWaitTimesByTerminal).toHaveLength(1);
+      expect(useTerminalWaitTimesByTerminalId).toHaveLength(1);
 
       // Test parameter counts for hooks that don't take parameters
+      expect(useCacheFlushDateTerminals).toHaveLength(0);
       expect(useTerminalBasics).toHaveLength(0);
+      expect(useTerminalBulletins).toHaveLength(0);
       expect(useTerminalLocations).toHaveLength(0);
       expect(useTerminalSailingSpace).toHaveLength(0);
+      expect(useTerminalTransports).toHaveLength(0);
       expect(useTerminalVerbose).toHaveLength(0);
       expect(useTerminalWaitTimes).toHaveLength(0);
     });
   });
 
   describe("Query Key Validation", () => {
+    it("should generate query keys for useCacheFlushDateTerminals", () => {
+      const queryClient = new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            gcTime: 0,
+            enabled: false, // Disable queries to avoid API calls
+          },
+        },
+      });
+      const wrapper = ({ children }: { children: ReactNode }) => {
+        return React.createElement(
+          QueryClientProvider,
+          { client: queryClient },
+          children
+        );
+      };
+
+      renderHook(() => useCacheFlushDateTerminals(), { wrapper });
+
+      // Verify the query key structure
+      const queries = queryClient.getQueryCache().getAll();
+      const cacheFlushQuery = queries.find(
+        (q) =>
+          q.queryKey[0] === "terminals" && q.queryKey[1] === "cacheFlushDate"
+      );
+      expect(cacheFlushQuery).toBeDefined();
+      expect(cacheFlushQuery?.queryKey).toEqual([
+        "terminals",
+        "cacheFlushDate",
+      ]);
+    });
+
     it("should generate query keys for useTerminalBasics", () => {
       const queryClient = new QueryClient({
         defaultOptions: {
@@ -327,6 +465,35 @@ describe("WSF Terminals Hooks", () => {
       expect(expectedQueryKey[3]).toBe(terminalId);
     });
 
+    it("should generate query keys for useTerminalBulletins", () => {
+      const queryClient = new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            gcTime: 0,
+            enabled: false, // Disable queries to avoid API calls
+          },
+        },
+      });
+      const wrapper = ({ children }: { children: ReactNode }) => {
+        return React.createElement(
+          QueryClientProvider,
+          { client: queryClient },
+          children
+        );
+      };
+
+      renderHook(() => useTerminalBulletins(), { wrapper });
+
+      // Verify the query key structure
+      const queries = queryClient.getQueryCache().getAll();
+      const bulletinsQuery = queries.find(
+        (q) => q.queryKey[0] === "terminals" && q.queryKey[1] === "bulletins"
+      );
+      expect(bulletinsQuery).toBeDefined();
+      expect(bulletinsQuery?.queryKey).toEqual(["terminals", "bulletins"]);
+    });
+
     it("should generate query keys for useTerminalSailingSpace", () => {
       const queryClient = new QueryClient({
         defaultOptions: {
@@ -357,6 +524,35 @@ describe("WSF Terminals Hooks", () => {
         "terminals",
         "sailingSpace",
       ]);
+    });
+
+    it("should generate query keys for useTerminalTransports", () => {
+      const queryClient = new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            gcTime: 0,
+            enabled: false, // Disable queries to avoid API calls
+          },
+        },
+      });
+      const wrapper = ({ children }: { children: ReactNode }) => {
+        return React.createElement(
+          QueryClientProvider,
+          { client: queryClient },
+          children
+        );
+      };
+
+      renderHook(() => useTerminalTransports(), { wrapper });
+
+      // Verify the query key structure
+      const queries = queryClient.getQueryCache().getAll();
+      const transportsQuery = queries.find(
+        (q) => q.queryKey[0] === "terminals" && q.queryKey[1] === "transports"
+      );
+      expect(transportsQuery).toBeDefined();
+      expect(transportsQuery?.queryKey).toEqual(["terminals", "transports"]);
     });
   });
 });

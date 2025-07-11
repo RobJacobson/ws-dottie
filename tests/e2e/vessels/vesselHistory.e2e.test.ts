@@ -316,7 +316,7 @@ describe("Vessel History E2E Tests", () => {
       // Get history for a specific vessel if available
       if (history.length > 0) {
         const firstHistory = history[0];
-        const vesselName = firstHistory.VesselName;
+        const vesselName = firstHistory.Vessel;
         const dateStart = "2024-01-01";
         const dateEnd = "2024-12-31";
 
@@ -329,7 +329,7 @@ describe("Vessel History E2E Tests", () => {
 
         // All entries should have the same vessel name
         specificHistory.forEach((entry) => {
-          expect(entry.VesselName).toBe(vesselName);
+          expect(entry.Vessel).toBe(vesselName);
           validateVesselHistory(entry);
         });
       }

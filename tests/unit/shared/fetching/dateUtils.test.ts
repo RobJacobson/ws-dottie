@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
   buildWsfUrl,
@@ -11,6 +11,7 @@ import {
   getTomorrowWsfFormat,
   isToday,
   isTomorrow,
+  parseWsfDate,
   parseWsfDateTime,
   parseWsfScheduleDate,
   parseWsfTime,
@@ -329,6 +330,50 @@ describe("WSF Date Utilities", () => {
     it("should return formatted date for other dates", () => {
       const futureDate = new Date("2024-12-25T12:00:00.000Z");
       expect(getDateLabel(futureDate)).toBe("12/25/2024");
+    });
+  });
+
+  describe("parseWsfDate", () => {
+    it("should parse WSF /Date(timestamp)/ format", () => {
+      const timestamp = 1703123456789; // December 21, 2023
+      const wsfDateString = `/Date(${timestamp})/`;
+      const result = parseWsfDate(wsfDateString);
+      expect(result.getTime()).toBe(timestamp);
+    });
+
+    it("should parse WSF /Date(timestamp+offset)/ format", () => {
+      const timestamp = 1703123456789; // December 21, 2023
+      const wsfDateString = `/Date(${timestamp}-0800)/`;
+      const result = parseWsfDate(wsfDateString);
+      expect(result.getTime()).toBe(timestamp);
+    });
+
+    it("should parse regular date strings", () => {
+      const dateString = "2024-04-01T12:00:00.000Z";
+      const result = parseWsfDate(dateString);
+      expect(result.toISOString()).toBe(dateString);
+    });
+
+    it("should return Date object as-is", () => {
+      const originalDate = new Date("2024-04-01T12:00:00.000Z");
+      const result = parseWsfDate(originalDate);
+      expect(result).toBe(originalDate);
+    });
+
+    it("should parse timestamp numbers", () => {
+      const timestamp = 1703123456789; // December 21, 2023
+      const result = parseWsfDate(timestamp);
+      expect(result.getTime()).toBe(timestamp);
+    });
+
+    it("should handle unexpected formats with fallback", () => {
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const result = parseWsfDate({} as any); // Pass an object, which is unexpected
+
+      expect(consoleSpy).toHaveBeenCalledWith("Unexpected date format:", {});
+      expect(result).toBeInstanceOf(Date);
+
+      consoleSpy.mockRestore();
     });
   });
 });

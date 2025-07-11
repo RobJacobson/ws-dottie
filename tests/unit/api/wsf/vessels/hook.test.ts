@@ -46,7 +46,7 @@ vi.mock("@/shared/caching/config", () => ({
   })),
   createInfrequentUpdateOptions: vi.fn(() => ({
     staleTime: 604800000,
-    gcTime: 2592000000,
+    gcTime: 1209600000, // 2 weeks instead of 1 month to avoid timeout overflow
     refetchInterval: false,
   })),
   createCacheFlushOptions: vi.fn(() => ({
@@ -93,19 +93,31 @@ describe("WSF Vessels Hooks", () => {
         {
           VesselID: 1,
           VesselName: "Walla Walla",
+          Mmsi: 366772750,
+          DepartingTerminalID: 7,
+          DepartingTerminalName: "Anacortes",
+          DepartingTerminalAbbrev: "ANA",
+          ArrivingTerminalID: 8,
+          ArrivingTerminalName: "Friday Harbor",
+          ArrivingTerminalAbbrev: "FRH",
           Latitude: 47.6062,
           Longitude: -122.3321,
           Speed: 12.5,
           Heading: 180,
-          TimeStamp: new Date("2024-01-01T12:00:00Z"),
           InService: true,
           AtDock: false,
-          DepartingTerminalID: 7,
-          DepartingTerminalName: "Anacortes",
-          ArrivingTerminalID: 8,
-          ArrivingTerminalName: "Friday Harbor",
-          ScheduledDeparture: new Date("2024-01-01T12:30:00Z"),
-          EstimatedArrival: new Date("2024-01-01T13:30:00Z"),
+          LeftDock: null,
+          Eta: null,
+          EtaBasis: null,
+          ScheduledDeparture: "/Date(1752203400000-0700)/",
+          OpRouteAbbrev: ["ana-frh"],
+          VesselPositionNum: 1,
+          SortSeq: 20,
+          ManagedBy: 1,
+          TimeStamp: "/Date(1752177066000-0700)/",
+          VesselWatchShutID: 0,
+          VesselWatchShutMsg: "",
+          VesselWatchShutFlag: "0",
         },
       ];
 
@@ -157,6 +169,9 @@ describe("WSF Vessels Hooks", () => {
       const mockCreateFrequentUpdateOptions = vi.mocked(
         createFrequentUpdateOptions
       );
+      // Fix: mock API to return minimal valid value
+      const { getVesselLocations } = await import("@/api/wsf/vessels/api");
+      vi.mocked(getVesselLocations).mockResolvedValue([]);
 
       const { result } = renderHook(() => useVesselLocations(), {
         wrapper: createWrapper(),
@@ -180,25 +195,35 @@ describe("WSF Vessels Hooks", () => {
         getVesselLocationsByVesselId
       );
 
-      const mockVesselData = [
-        {
-          VesselID: 1,
-          VesselName: "Walla Walla",
-          Latitude: 47.6062,
-          Longitude: -122.3321,
-          Speed: 12.5,
-          Heading: 180,
-          TimeStamp: new Date("2024-01-01T12:00:00Z"),
-          InService: true,
-          AtDock: false,
-          DepartingTerminalID: 7,
-          DepartingTerminalName: "Anacortes",
-          ArrivingTerminalID: 8,
-          ArrivingTerminalName: "Friday Harbor",
-          ScheduledDeparture: new Date("2024-01-01T12:30:00Z"),
-          EstimatedArrival: new Date("2024-01-01T13:30:00Z"),
-        },
-      ];
+      const mockVesselData = {
+        VesselID: 1,
+        VesselName: "Walla Walla",
+        Mmsi: 366772750,
+        DepartingTerminalID: 7,
+        DepartingTerminalName: "Anacortes",
+        DepartingTerminalAbbrev: "ANA",
+        ArrivingTerminalID: 8,
+        ArrivingTerminalName: "Friday Harbor",
+        ArrivingTerminalAbbrev: "FRH",
+        Latitude: 47.6062,
+        Longitude: -122.3321,
+        Speed: 12.5,
+        Heading: 180,
+        InService: true,
+        AtDock: false,
+        LeftDock: null,
+        Eta: null,
+        EtaBasis: null,
+        ScheduledDeparture: "/Date(1752203400000-0700)/",
+        OpRouteAbbrev: ["ana-frh"],
+        VesselPositionNum: 1,
+        SortSeq: 20,
+        ManagedBy: 1,
+        TimeStamp: "/Date(1752177066000-0700)/",
+        VesselWatchShutID: 0,
+        VesselWatchShutMsg: "",
+        VesselWatchShutFlag: "0",
+      };
 
       mockGetVesselLocationsByVesselId.mockResolvedValue(mockVesselData);
 
@@ -237,7 +262,11 @@ describe("WSF Vessels Hooks", () => {
           VesselAbbrev: "WW",
           Class: {
             ClassID: 1,
+            ClassSubjectID: 100,
             ClassName: "Jumbo Mark II",
+            SortSeq: 1,
+            DrawingImg: "https://example.com/drawing.png",
+            SilhouetteImg: "https://example.com/silhouette.png",
             PublicDisplayName: "Jumbo Mark II Class",
           },
           Status: 1,
@@ -289,6 +318,9 @@ describe("WSF Vessels Hooks", () => {
       const mockCreateInfrequentUpdateOptions = vi.mocked(
         createInfrequentUpdateOptions
       );
+      // Fix: mock API to return minimal valid value
+      const { getVesselVerbose } = await import("@/api/wsf/vessels/api");
+      vi.mocked(getVesselVerbose).mockResolvedValue([]);
 
       const { result } = renderHook(() => useVesselVerbose(), {
         wrapper: createWrapper(),
@@ -307,43 +339,45 @@ describe("WSF Vessels Hooks", () => {
       const { getVesselVerboseById } = await import("@/api/wsf/vessels/api");
       const mockGetVesselVerboseById = vi.mocked(getVesselVerboseById);
 
-      const mockVesselData = [
-        {
-          VesselID: 1,
-          VesselName: "Walla Walla",
-          VesselAbbrev: "WW",
-          Class: {
-            ClassID: 1,
-            ClassName: "Jumbo Mark II",
-            PublicDisplayName: "Jumbo Mark II Class",
-          },
-          Status: 1,
-          OwnedByWSF: true,
-          YearBuilt: 1973,
-          Displacement: 6000,
-          Length: "460",
-          Beam: "89",
-          Draft: "18",
-          SpeedInKnots: 18,
-          EngineCount: 4,
-          Horsepower: 12000,
-          MaxPassengerCount: 2000,
-          RegDeckSpace: 200,
-          TallDeckSpace: 0,
-          Tonnage: 6000,
-          PropulsionInfo: "Diesel Electric",
-          ADAAccessible: true,
-          Elevator: true,
-          CarDeckRestroom: true,
-          MainCabinGalley: true,
-          MainCabinRestroom: true,
-          PublicWifi: true,
-          ADAInfo: "ADA accessible",
-          VesselNameDesc: "M/V Walla Walla",
-          VesselHistory: "Built in 1973",
-          CityBuilt: "Seattle",
+      const mockVesselData = {
+        VesselID: 1,
+        VesselName: "Walla Walla",
+        VesselAbbrev: "WW",
+        Class: {
+          ClassID: 1,
+          ClassSubjectID: 100,
+          ClassName: "Jumbo Mark II",
+          SortSeq: 1,
+          DrawingImg: "https://example.com/drawing.png",
+          SilhouetteImg: "https://example.com/silhouette.png",
+          PublicDisplayName: "Jumbo Mark II Class",
         },
-      ];
+        Status: 1,
+        OwnedByWSF: true,
+        YearBuilt: 1973,
+        Displacement: 6000,
+        Length: "460",
+        Beam: "89",
+        Draft: "18",
+        SpeedInKnots: 18,
+        EngineCount: 4,
+        Horsepower: 12000,
+        MaxPassengerCount: 2000,
+        RegDeckSpace: 200,
+        TallDeckSpace: 0,
+        Tonnage: 6000,
+        PropulsionInfo: "Diesel Electric",
+        ADAAccessible: true,
+        Elevator: true,
+        CarDeckRestroom: true,
+        MainCabinGalley: true,
+        MainCabinRestroom: true,
+        PublicWifi: true,
+        ADAInfo: "ADA accessible",
+        VesselNameDesc: "M/V Walla Walla",
+        VesselHistory: "Built in 1973",
+        CityBuilt: "Seattle",
+      };
 
       mockGetVesselVerboseById.mockResolvedValue(mockVesselData);
 
@@ -377,10 +411,7 @@ describe("WSF Vessels Hooks", () => {
       );
       const mockGetCacheFlushDateVessels = vi.mocked(getCacheFlushDateVessels);
 
-      const mockCacheFlushData = {
-        lastUpdated: new Date("2024-01-01T12:00:00Z"),
-        source: "vessels",
-      };
+      const mockCacheFlushData = new Date("2024-01-01T12:00:00Z");
 
       mockGetCacheFlushDateVessels.mockResolvedValue(mockCacheFlushData);
 
@@ -401,6 +432,11 @@ describe("WSF Vessels Hooks", () => {
         "@/shared/caching/config"
       );
       const mockCreateCacheFlushOptions = vi.mocked(createCacheFlushOptions);
+      // Fix: mock API to return minimal valid value
+      const { getCacheFlushDateVessels } = await import(
+        "@/api/wsf/vessels/api"
+      );
+      vi.mocked(getCacheFlushDateVessels).mockResolvedValue(new Date());
 
       const { result } = renderHook(() => useCacheFlushDateVessels(), {
         wrapper: createWrapper(),
@@ -466,6 +502,9 @@ describe("WSF Vessels Hooks", () => {
       const mockCreateInfrequentUpdateOptions = vi.mocked(
         createInfrequentUpdateOptions
       );
+      // Fix: mock API to return minimal valid value
+      const { getVesselBasics } = await import("@/api/wsf/vessels/api");
+      vi.mocked(getVesselBasics).mockResolvedValue([]);
 
       const { result } = renderHook(() => useVesselBasics(), {
         wrapper: createWrapper(),
@@ -585,6 +624,9 @@ describe("WSF Vessels Hooks", () => {
       const mockCreateInfrequentUpdateOptions = vi.mocked(
         createInfrequentUpdateOptions
       );
+      // Fix: mock API to return minimal valid value
+      const { getVesselAccommodations } = await import("@/api/wsf/vessels/api");
+      vi.mocked(getVesselAccommodations).mockResolvedValue([]);
 
       const { result } = renderHook(() => useVesselAccommodations(), {
         wrapper: createWrapper(),
@@ -668,11 +710,45 @@ describe("WSF Vessels Hooks", () => {
       const mockStatsData = [
         {
           VesselID: 1,
-          StatID: 1,
-          StatName: "Passenger Capacity",
-          StatValue: "2000",
-          StatUnit: "passengers",
-          IsActive: true,
+          VesselSubjectID: 1,
+          VesselName: "Cathlamet",
+          VesselAbbrev: "CAT",
+          Class: {
+            ClassID: 10,
+            ClassSubjectID: 310,
+            ClassName: "Issaquah 130",
+            SortSeq: 40,
+            DrawingImg:
+              "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif",
+            SilhouetteImg:
+              "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif",
+            PublicDisplayName: "Issaquah",
+          },
+          VesselNameDesc: "The Cathlamet is a Jumbo Mark II class ferry",
+          VesselHistory:
+            "Built in 1979, the Cathlamet has served the WSF fleet for over 40 years",
+          Beam: "78 feet",
+          CityBuilt: "Seattle, WA",
+          SpeedInKnots: 18,
+          Draft: "16 feet",
+          EngineCount: 4,
+          Horsepower: 12000,
+          Length: "328 feet",
+          MaxPassengerCount: 1500,
+          PassengerOnly: false,
+          FastFerry: false,
+          PropulsionInfo: "Four diesel engines driving four propellers",
+          TallDeckClearance: 0,
+          RegDeckSpace: 90,
+          TallDeckSpace: 0,
+          Tonnage: 2500,
+          Displacement: 2500,
+          YearBuilt: 1979,
+          YearRebuilt: 2005,
+          VesselDrawingImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/cathlamet.gif",
+          SolasCertified: true,
+          MaxPassengerCountForInternational: 1500,
         },
       ];
 
@@ -697,6 +773,9 @@ describe("WSF Vessels Hooks", () => {
       const mockCreateInfrequentUpdateOptions = vi.mocked(
         createInfrequentUpdateOptions
       );
+      // Fix: mock API to return minimal valid value
+      const { getVesselStats } = await import("@/api/wsf/vessels/api");
+      vi.mocked(getVesselStats).mockResolvedValue([]);
 
       const { result } = renderHook(() => useVesselStats(), {
         wrapper: createWrapper(),
@@ -717,11 +796,45 @@ describe("WSF Vessels Hooks", () => {
 
       const mockStatsData = {
         VesselID: 1,
-        StatID: 1,
-        StatName: "Passenger Capacity",
-        StatValue: "2000",
-        StatUnit: "passengers",
-        IsActive: true,
+        VesselSubjectID: 1,
+        VesselName: "Cathlamet",
+        VesselAbbrev: "CAT",
+        Class: {
+          ClassID: 10,
+          ClassSubjectID: 310,
+          ClassName: "Issaquah 130",
+          SortSeq: 40,
+          DrawingImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif",
+          SilhouetteImg:
+            "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif",
+          PublicDisplayName: "Issaquah",
+        },
+        VesselNameDesc: "The Cathlamet is a Jumbo Mark II class ferry",
+        VesselHistory:
+          "Built in 1979, the Cathlamet has served the WSF fleet for over 40 years",
+        Beam: "78 feet",
+        CityBuilt: "Seattle, WA",
+        SpeedInKnots: 18,
+        Draft: "16 feet",
+        EngineCount: 4,
+        Horsepower: 12000,
+        Length: "328 feet",
+        MaxPassengerCount: 1500,
+        PassengerOnly: false,
+        FastFerry: false,
+        PropulsionInfo: "Four diesel engines driving four propellers",
+        TallDeckClearance: 0,
+        RegDeckSpace: 90,
+        TallDeckSpace: 0,
+        Tonnage: 2500,
+        Displacement: 2500,
+        YearBuilt: 1979,
+        YearRebuilt: 2005,
+        VesselDrawingImg:
+          "https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/cathlamet.gif",
+        SolasCertified: true,
+        MaxPassengerCountForInternational: 1500,
       };
 
       mockGetVesselStatsById.mockResolvedValue(mockStatsData);
@@ -756,12 +869,14 @@ describe("WSF Vessels Hooks", () => {
 
       const mockHistoryData = [
         {
-          VesselID: 1,
-          VesselName: "Cathlamet",
-          HistoryDate: new Date("2024-01-01T12:00:00Z"),
-          HistoryDescription: "Vessel entered service",
-          HistoryType: "Service Entry",
-          IsActive: true,
+          VesselId: 1,
+          Vessel: "Cathlamet",
+          Departing: "Anacortes",
+          Arriving: "Friday Harbor",
+          ScheduledDepart: new Date("2024-01-01T12:00:00Z"),
+          ActualDepart: new Date("2024-01-01T12:05:00Z"),
+          EstArrival: new Date("2024-01-01T13:00:00Z"),
+          Date: new Date("2024-01-01T12:00:00Z"),
         },
       ];
 
@@ -786,6 +901,9 @@ describe("WSF Vessels Hooks", () => {
       const mockCreateInfrequentUpdateOptions = vi.mocked(
         createInfrequentUpdateOptions
       );
+      // Fix: mock API to return minimal valid value
+      const { getVesselHistory } = await import("@/api/wsf/vessels/api");
+      vi.mocked(getVesselHistory).mockResolvedValue([]);
 
       const { result } = renderHook(() => useVesselHistory(), {
         wrapper: createWrapper(),
@@ -810,12 +928,14 @@ describe("WSF Vessels Hooks", () => {
 
       const mockHistoryData = [
         {
-          VesselID: 1,
-          VesselName: "Cathlamet",
-          HistoryDate: new Date("2024-01-01T12:00:00Z"),
-          HistoryDescription: "Vessel entered service",
-          HistoryType: "Service Entry",
-          IsActive: true,
+          VesselId: 1,
+          Vessel: "Cathlamet",
+          Departing: "Anacortes",
+          Arriving: "Friday Harbor",
+          ScheduledDepart: new Date("2024-01-01T12:00:00Z"),
+          ActualDepart: new Date("2024-01-01T12:05:00Z"),
+          EstArrival: new Date("2024-01-01T13:00:00Z"),
+          Date: new Date("2024-01-01T12:00:00Z"),
         },
       ];
 

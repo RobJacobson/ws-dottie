@@ -34,6 +34,6 @@ export default defineConfig({
   },
   // Ensure ESM compatibility
   esbuild: {
-    target: "es2020",
+    target: "es2022",
   },
 });

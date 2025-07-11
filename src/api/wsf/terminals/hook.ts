@@ -14,24 +14,32 @@ import {
   // Terminal Basics API functions
   getTerminalBasics,
   getTerminalBasicsByTerminalId,
+  // Terminal Bulletins API functions
+  getTerminalBulletins,
+  getTerminalBulletinsByTerminalId,
   // Terminal Locations API functions
   getTerminalLocations,
   getTerminalLocationsByTerminalId,
   // Terminal Sailing Space API functions
   getTerminalSailingSpace,
   getTerminalSailingSpaceByTerminalId,
+  // Terminal Transports API functions
+  getTerminalTransports,
+  getTerminalTransportsByTerminalId,
   // Terminal Verbose API functions
   getTerminalVerbose,
   getTerminalVerboseByTerminalId,
   // Terminal Wait Times API functions
   getTerminalWaitTimes,
-  getTerminalWaitTimesByTerminal,
+  getTerminalWaitTimesByTerminalId,
 } from "./api";
 import type {
   TerminalBasics,
+  TerminalBulletin,
   TerminalLocation,
   TerminalSailingSpace,
   TerminalsCacheFlushDate,
+  TerminalTransport,
   TerminalVerbose,
   TerminalWaitTime,
   TerminalWaitTimes,
@@ -64,6 +72,53 @@ export const useTerminalBasicsByTerminalId = (terminalId: number) => {
   return useQuery({
     queryKey: ["terminals", "basics", "byTerminalId", terminalId],
     queryFn: () => getTerminalBasicsByTerminalId(terminalId),
+    enabled: !!terminalId,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+// ============================================================================
+// TERMINAL BULLETINS HOOKS
+// ============================================================================
+
+/**
+ * Hook for fetching terminal bulletins from WSF Terminals API
+ *
+ * Retrieves bulletin information for all terminals including announcements,
+ * notices, and important updates. This endpoint provides current bulletin
+ * information for all WSF terminals.
+ *
+ * This data is updated as new bulletins are posted and provides current
+ * announcement information for all terminals.
+ *
+ * @returns React Query result containing an array of TerminalBulletin objects with bulletin information
+ */
+export const useTerminalBulletins = () => {
+  return useQuery({
+    queryKey: ["terminals", "bulletins"],
+    queryFn: getTerminalBulletins,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+/**
+ * Hook for fetching terminal bulletins for a specific terminal from WSF Terminals API
+ *
+ * Retrieves bulletin information for a specific terminal identified by terminal ID,
+ * including announcements, notices, and important updates. This endpoint filters
+ * the resultset to a single terminal, providing current bulletin information
+ * for that specific terminal.
+ *
+ * This data is updated as new bulletins are posted and provides current
+ * announcement information for the specified terminal.
+ *
+ * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @returns React Query result containing an array of TerminalBulletin objects with bulletin information for the specified terminal
+ */
+export const useTerminalBulletinsByTerminalId = (terminalId: number) => {
+  return useQuery({
+    queryKey: ["terminals", "bulletins", "byTerminalId", terminalId],
+    queryFn: () => getTerminalBulletinsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
   });
@@ -165,6 +220,53 @@ export const useTerminalSailingSpaceByTerminalId = (terminalId: number) => {
 };
 
 // ============================================================================
+// TERMINAL TRANSPORTS HOOKS
+// ============================================================================
+
+/**
+ * Hook for fetching terminal transports from WSF Terminals API
+ *
+ * Retrieves transportation information for all terminals including transit options,
+ * shuttle services, and transportation connections. This endpoint provides
+ * comprehensive transportation information for all WSF terminals.
+ *
+ * This data is updated infrequently and provides static transportation
+ * information that doesn't change often, such as transit connections and shuttle services.
+ *
+ * @returns React Query result containing an array of TerminalTransport objects with transportation information
+ */
+export const useTerminalTransports = () => {
+  return useQuery({
+    queryKey: ["terminals", "transports"],
+    queryFn: getTerminalTransports,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+/**
+ * Hook for fetching terminal transports for a specific terminal from WSF Terminals API
+ *
+ * Retrieves transportation information for a specific terminal identified by terminal ID,
+ * including transit options, shuttle services, and transportation connections.
+ * This endpoint filters the resultset to a single terminal, providing
+ * comprehensive transportation information for that specific terminal.
+ *
+ * This data is updated infrequently and provides static transportation
+ * information that doesn't change often, such as transit connections and shuttle services.
+ *
+ * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @returns React Query result containing an array of TerminalTransport objects with transportation information for the specified terminal
+ */
+export const useTerminalTransportsByTerminalId = (terminalId: number) => {
+  return useQuery({
+    queryKey: ["terminals", "transports", "byTerminalId", terminalId],
+    queryFn: () => getTerminalTransportsByTerminalId(terminalId),
+    enabled: !!terminalId,
+    ...createInfrequentUpdateOptions(),
+  });
+};
+
+// ============================================================================
 // TERMINAL WAIT TIMES HOOKS
 // ============================================================================
 
@@ -198,10 +300,10 @@ export const useTerminalWaitTimes = () => {
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @returns React Query result containing a TerminalWaitTimes object with wait time information for the specified terminal
  */
-export const useTerminalWaitTimesByTerminal = (terminalId: number) => {
+export const useTerminalWaitTimesByTerminalId = (terminalId: number) => {
   return useQuery({
-    queryKey: ["terminals", "waitTimes", "byTerminal", terminalId],
-    queryFn: () => getTerminalWaitTimesByTerminal(terminalId),
+    queryKey: ["terminals", "waitTimes", "byTerminalId", terminalId],
+    queryFn: () => getTerminalWaitTimesByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
   });
@@ -237,8 +339,8 @@ export const useTerminalVerbose = () => {
  *
  * Retrieves comprehensive terminal information for a specific terminal identified by terminal ID,
  * including location, facilities, parking information, and operational status. This endpoint
- * returns detailed information about terminal coordinates, available facilities, parking capacity,
- * and current operational status.
+ * provides detailed information about the specified terminal, including terminal coordinates,
+ * available facilities, parking capacity, and current operational status.
  *
  * This data is updated infrequently and provides static terminal characteristics
  * that don't change often, such as terminal specifications and facilities.
@@ -260,7 +362,13 @@ export const useTerminalVerboseByTerminalId = (terminalId: number) => {
 // ============================================================================
 
 /**
- * Hook function for fetching cache flush date from WSF Terminals API with React Query
+ * Hook for fetching terminals cache flush date from WSF Terminals API
+ *
+ * Retrieves the cache flush date for terminals data, which indicates when
+ * the data was last updated. This endpoint provides information about data
+ * freshness for all terminals endpoints.
+ *
+ * @returns React Query result containing a TerminalsCacheFlushDate object with cache flush information
  */
 export const useCacheFlushDateTerminals = () =>
   useQuery({

@@ -1,7 +1,7 @@
 // WSF Fares API functions
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 
-import { buildWsfUrl } from "@/shared/fetching/dateUtils";
+import { buildWsfUrl, parseWsfDate } from "@/shared/fetching/dateUtils";
 import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 
 import type {
@@ -20,36 +20,6 @@ import type {
   TerminalMatesParams,
   TerminalParams,
 } from "./types";
-
-// Helper function to parse WSF date format
-const parseWsfDate = (dateString: any): Date => {
-  // Debug: log what we're receiving
-  console.log("parseWsfDate input:", dateString, typeof dateString);
-
-  // Handle WSF date format: "/Date(timestamp)/"
-  if (typeof dateString === "string") {
-    const match = dateString.match(/\/Date\((\d+)(?:[+-]\d+)?\)\//);
-    if (match) {
-      return new Date(parseInt(match[1]));
-    }
-    // Handle regular date strings
-    return new Date(dateString);
-  }
-
-  // If it's already a Date object, return it
-  if (dateString instanceof Date) {
-    return dateString;
-  }
-
-  // If it's a number (timestamp), convert it
-  if (typeof dateString === "number") {
-    return new Date(dateString);
-  }
-
-  // Fallback
-  console.warn("Unexpected date format:", dateString);
-  return new Date();
-};
 
 // Cache flush date
 /**

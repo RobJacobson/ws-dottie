@@ -32,11 +32,15 @@ describe("Vessel Stats E2E Tests", () => {
 
       // Validate data types
       expect(typeof firstStat.VesselID).toBe("number");
-      expect(typeof firstStat.StatID).toBe("number");
-      expect(typeof firstStat.StatName).toBe("string");
-      expect(typeof firstStat.StatValue).toBe("string");
-      expect(typeof firstStat.StatUnit).toBe("string");
-      expect(typeof firstStat.IsActive).toBe("boolean");
+      expect(typeof firstStat.VesselSubjectID).toBe("number");
+      expect(typeof firstStat.VesselName).toBe("string");
+      expect(typeof firstStat.VesselAbbrev).toBe("string");
+      expect(typeof firstStat.Class).toBe("object");
+      expect(typeof firstStat.VesselNameDesc).toBe("string");
+      expect(typeof firstStat.SpeedInKnots).toBe("number");
+      expect(typeof firstStat.MaxPassengerCount).toBe("number");
+      expect(typeof firstStat.PassengerOnly).toBe("boolean");
+      expect(typeof firstStat.FastFerry).toBe("boolean");
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -175,50 +179,47 @@ describe("Vessel Stats E2E Tests", () => {
       await delay(RATE_LIMIT_DELAY);
     });
 
-    it("should have valid stat data", async () => {
+    it("should have valid vessel specification data", async () => {
       const { data } = await measureApiCall(() => getVesselStats());
 
       data.forEach((stat) => {
         // Vessel ID should be positive
         expect(stat.VesselID).toBeGreaterThan(0);
 
-        // Stat ID should be positive
-        expect(stat.StatID).toBeGreaterThan(0);
+        // Vessel Subject ID should be positive
+        expect(stat.VesselSubjectID).toBeGreaterThan(0);
 
-        // Stat name should be non-empty string
-        expect(stat.StatName).toBeTruthy();
-        expect(typeof stat.StatName).toBe("string");
+        // Vessel name should be non-empty string
+        expect(stat.VesselName).toBeTruthy();
+        expect(typeof stat.VesselName).toBe("string");
 
-        // Stat value should be a string
-        expect(typeof stat.StatValue).toBe("string");
+        // Vessel abbreviation should be a string
+        expect(typeof stat.VesselAbbrev).toBe("string");
 
-        // Stat unit should be a string
-        expect(typeof stat.StatUnit).toBe("string");
+        // Class should be an object
+        expect(typeof stat.Class).toBe("object");
 
-        // IsActive should be a boolean
-        expect(typeof stat.IsActive).toBe("boolean");
+        // Speed should be a positive number
+        expect(stat.SpeedInKnots).toBeGreaterThan(0);
+
+        // Max passenger count should be positive
+        expect(stat.MaxPassengerCount).toBeGreaterThan(0);
+
+        // Boolean flags should be booleans
+        expect(typeof stat.PassengerOnly).toBe("boolean");
+        expect(typeof stat.FastFerry).toBe("boolean");
       });
 
       await delay(RATE_LIMIT_DELAY);
     });
 
-    it("should have unique stat IDs per vessel", async () => {
+    it("should have unique vessel IDs", async () => {
       const { data } = await measureApiCall(() => getVesselStats());
 
-      // Group stats by vessel ID
-      const statsByVessel = new Map<number, number[]>();
-      data.forEach((stat) => {
-        if (!statsByVessel.has(stat.VesselID)) {
-          statsByVessel.set(stat.VesselID, []);
-        }
-        statsByVessel.get(stat.VesselID)?.push(stat.StatID);
-      });
-
-      // Each vessel should have unique stat IDs
-      statsByVessel.forEach((statIds, _vesselId) => {
-        const uniqueStatIds = new Set(statIds);
-        expect(uniqueStatIds.size).toBe(statIds.length);
-      });
+      // Check that all vessel IDs are unique
+      const vesselIds = data.map((stat) => stat.VesselID);
+      const uniqueVesselIds = new Set(vesselIds);
+      expect(uniqueVesselIds.size).toBe(vesselIds.length);
 
       await delay(RATE_LIMIT_DELAY);
     });
@@ -236,13 +237,12 @@ describe("Vessel Stats E2E Tests", () => {
           getVesselStatsById(firstStat.VesselID)
         );
 
-        // Stat data should be valid
+        // Vessel data should be valid and consistent
         expect(basic.VesselID).toBe(firstStat.VesselID);
-        expect(basic.StatID).toBeGreaterThan(0);
-        expect(basic.StatName).toBeTruthy();
-        expect(basic.StatValue).toBeTruthy();
-        expect(basic.StatUnit).toBeTruthy();
-        expect(typeof basic.IsActive).toBe("boolean");
+        expect(basic.VesselName).toBe(firstStat.VesselName);
+        expect(basic.VesselAbbrev).toBe(firstStat.VesselAbbrev);
+        expect(basic.SpeedInKnots).toBe(firstStat.SpeedInKnots);
+        expect(basic.MaxPassengerCount).toBe(firstStat.MaxPassengerCount);
       }
 
       await delay(RATE_LIMIT_DELAY);

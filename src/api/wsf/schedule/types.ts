@@ -6,18 +6,16 @@
  * Based on /validdaterange endpoint
  */
 export type ValidDateRange = {
-  StartDate: Date;
-  EndDate: Date;
+  DateFrom: Date;
+  DateThru: Date;
 };
 
 /**
  * Cache flush date response
  * Based on /cacheflushdate endpoint
+ * Returns a Date object (automatically converted from .NET Date format)
  */
-export type ScheduleCacheFlushDate = {
-  LastUpdated: Date;
-  Source: string;
-};
+export type ScheduleCacheFlushDate = Date;
 
 /**
  * Active schedule season information
@@ -28,8 +26,31 @@ export type ActiveSeason = {
   ScheduleName: string;
   ScheduleSeason: number;
   SchedulePDFUrl: string;
-  ScheduleStart: string; // .NET Date format
-  ScheduleEnd: string; // .NET Date format
+  ScheduleStart: Date; // Automatically converted from .NET Date format
+  ScheduleEnd: Date; // Automatically converted from .NET Date format
+};
+
+/**
+ * Service disruption information
+ * Based on /schedroutes endpoint - ServiceDisruptions array
+ * Currently appears to be empty arrays in API responses
+ */
+export type ServiceDisruption = {
+  // Structure unknown - currently empty arrays in API responses
+  // Placeholder for future implementation when non-empty examples are available
+};
+
+/**
+ * Contingency adjustment information
+ * Based on /schedroutes endpoint - ContingencyAdj array
+ */
+export type ContingencyAdjustment = {
+  DateFrom: Date; // Automatically converted from .NET Date format
+  DateThru: Date; // Automatically converted from .NET Date format
+  EventID: number | null;
+  EventDescription: string | null;
+  AdjType: number;
+  ReplacedBySchedRouteID: number | null;
 };
 
 /**
@@ -45,8 +66,8 @@ export type ScheduledRoute = {
   Description: string;
   SeasonalRouteNotes: string;
   RegionID: number;
-  ServiceDisruptions: any[];
-  ContingencyAdj: any[];
+  ServiceDisruptions: ServiceDisruption[];
+  ContingencyAdj: ContingencyAdjustment[];
 };
 
 /**
@@ -58,7 +79,42 @@ export type Route = {
   RouteAbbrev: string;
   Description: string;
   RegionID: number;
-  ServiceDisruptions: any[];
+  Alerts?: ServiceDisruption[]; // Using ServiceDisruption type for consistency
+};
+
+/**
+ * Route details information
+ * Based on /routedetails endpoint - actual API response structure
+ * This is a single route object with detailed information
+ */
+export type RouteDetails = {
+  RouteID: number;
+  RouteAbbrev: string;
+  Description: string;
+  RegionID: number;
+  CrossingTime: number;
+  ReservationFlag: boolean;
+  PassengerOnlyFlag: boolean;
+  InternationalFlag: boolean;
+  VesselWatchID: number;
+  GeneralRouteNotes: string;
+  SeasonalRouteNotes: string;
+  AdaNotes: string;
+  Alerts: ServiceDisruption[]; // Using ServiceDisruption type for consistency
+};
+
+/**
+ * Annotation information
+ * Based on actual API response structure from /timeadj endpoint
+ */
+export type Annotation = {
+  AnnotationID: number;
+  AnnotationText: string;
+  AnnotationIVRText: string;
+  AdjustedCrossingTime: number | null;
+  AnnotationImg: string;
+  TypeDescription: string;
+  SortSeq: number;
 };
 
 /**
@@ -70,10 +126,10 @@ export type TerminalTime = {
   TerminalID: number;
   TerminalDescription: string;
   TerminalBriefDescription: string;
-  Time: string; // .NET Date format
+  Time: Date; // Automatically converted from .NET Date format
   DepArrIndicator: number | null;
   IsNA: boolean;
-  Annotations: any[];
+  Annotations: Annotation[];
 };
 
 /**
@@ -108,8 +164,8 @@ export type Sailing = {
   DayOpDescription: string;
   DayOpUseForHoliday: boolean;
   ActiveDateRanges: Array<{
-    DateFrom: string; // .NET Date format
-    DateThru: string; // .NET Date format
+    DateFrom: Date; // Automatically converted from .NET Date format
+    DateThru: Date; // Automatically converted from .NET Date format
     EventID: number | null;
     EventDescription: string | null;
   }>;
@@ -129,7 +185,7 @@ export type Alert = {
   RouteAlertFlag: boolean;
   RouteAlertText: string;
   HomepageAlertText: string;
-  PublishDate: string; // .NET Date format
+  PublishDate: Date; // Automatically converted from .NET Date format
   DisruptionDescription: string | null;
   AllRoutesFlag: boolean;
   SortSeq: number;
@@ -142,29 +198,63 @@ export type Alert = {
 
 /**
  * Time adjustment information
- * Based on /timeadj endpoint
+ * Based on /timeadj endpoint - actual API response structure
+ * This is actually a sailing/journey structure with adjustment data embedded
+ * Note: Date fields are automatically converted from .NET Date format to JavaScript Date objects
  */
 export type TimeAdjustment = {
-  AdjustmentID: number;
+  ScheduleID: number;
+  SchedRouteID: number;
   RouteID: number;
+  RouteDescription: string;
+  RouteSortSeq: number;
   SailingID: number;
-  AdjustmentMinutes: number;
-  AdjustmentReason: string;
-  EffectiveDate: Date;
-  IsActive: boolean;
+  SailingDescription: string;
+  ActiveSailingDateRange: {
+    DateFrom: Date; // Automatically converted from .NET Date format
+    DateThru: Date; // Automatically converted from .NET Date format
+    EventID: number | null;
+    EventDescription: string | null;
+  };
+  SailingDir: number;
+  JourneyID: number;
+  VesselID: number;
+  VesselName: string;
+  VesselHandicapAccessible: boolean;
+  VesselPositionNum: number;
+  TerminalID: number;
+  TerminalDescription: string;
+  TerminalBriefDescription: string;
+  JourneyTerminalID: number;
+  DepArrIndicator: number;
+  AdjDateFrom: Date; // Automatically converted from .NET Date format
+  AdjDateThru: Date; // Automatically converted from .NET Date format
+  AdjType: number;
+  TidalAdj: boolean;
+  TimeToAdj: Date; // Automatically converted from .NET Date format (time adjustment)
+  Annotations: Annotation[];
+  EventID: number | null;
+  EventDescription: string | null;
 };
 
 /**
  * Terminal information for schedule API
- * Based on /terminals endpoint
+ * Based on /terminals endpoint - actual API response structure
  */
 export type ScheduleTerminal = {
   TerminalID: number;
-  TerminalName: string;
-  TerminalAbbrev: string;
-  TerminalDescription: string;
-  RegionID: number;
-  IsActive: boolean;
+  Description: string;
+};
+
+/**
+ * Terminal combination information for schedule API
+ * Based on /terminalsandmates endpoint - actual API response structure
+ */
+export type ScheduleTerminalCombo = {
+  DepartingTerminalID: number;
+  DepartingDescription: string;
+  ArrivingTerminalID: number;
+  ArrivingDescription: string;
 };
 
 /**
@@ -177,6 +267,50 @@ export type Schedule = {
   SailingDate: Date;
   Departures: ScheduleDeparture[];
   LastUpdated: Date;
+};
+
+/**
+ * Actual schedule response from WSF API
+ * Based on /schedule endpoint - this is the real structure
+ */
+export type ScheduleResponse = {
+  ScheduleID: number;
+  ScheduleName: string;
+  ScheduleSeason: number;
+  SchedulePDFUrl: string;
+  ScheduleStart: Date;
+  ScheduleEnd: Date;
+  AllRoutes: number[];
+  TerminalCombos: ScheduleResponseTerminalCombo[];
+};
+
+/**
+ * Terminal combination in schedule response
+ */
+export type ScheduleResponseTerminalCombo = {
+  DepartingTerminalID: number;
+  DepartingTerminalName: string;
+  ArrivingTerminalID: number;
+  ArrivingTerminalName: string;
+  SailingNotes: string;
+  Annotations: string[];
+  AnnotationsIVR: string[];
+  Times: ScheduleTime[];
+};
+
+/**
+ * Schedule time information
+ */
+export type ScheduleTime = {
+  DepartingTime: Date;
+  ArrivingTime: Date;
+  LoadingRule: number;
+  VesselID: number;
+  VesselName: string;
+  VesselHandicapAccessible: boolean;
+  VesselPositionNum: number;
+  Routes: number[];
+  AnnotationIndexes: number[];
 };
 
 /**
@@ -224,6 +358,26 @@ export type TimeAdjustmentParams = {
   RouteID?: number;
   SailingDate?: Date;
   IsActive?: boolean;
+};
+
+/**
+ * Alternative format information from WSF API
+ * Based on /alternativeformats/{SubjectName} endpoint
+ */
+export type AlternativeFormat = {
+  AltID: number;
+  SubjectID: number;
+  SubjectName: string;
+  AltTitle: string;
+  AltUrl: string;
+  AltDesc: string;
+  FileType: string;
+  Status: string;
+  SortSeq: number;
+  FromDate: Date | null; // Automatically converted from MM/DD/YYYY format or null if empty string
+  ThruDate: Date | null; // Automatically converted from MM/DD/YYYY format or null if empty string
+  ModifiedDate: Date | null; // Automatically converted from MM/DD/YYYY HH:MM:SS AM/PM format or null if empty string
+  ModifiedBy: string;
 };
 
 /**

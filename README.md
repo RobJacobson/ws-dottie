@@ -71,25 +71,12 @@ const cameras = await wsdotClient.wsdot.traffic.getHighwayCameras();
 
 ```typescript
 import React from 'react';
-import { useQuery } from 'react-query';
-import { createWsdotClient, WsdotProvider, useWsfApi } from 'wsdot-api-client';
+import { useScheduleRoutes, useVesselLocations } from 'wsdot-api-client';
 
-// Create client instance
-const wsdotClient = createWsdotClient({
-  apiKey: process.env.REACT_APP_WSDOT_API_KEY || '',
-  timeout: 15000,
-  logLevel: 'info'
-});
-
-// Component using the API
+// Component using the API - no provider needed!
 const RoutePlanner = () => {
-  const wsf = useWsfApi();
-  
-  const { data: routes = [], isLoading } = useQuery({
-    queryKey: ['routes', new Date()],
-    queryFn: () => wsf.schedule.getRoutes(new Date()),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  });
+  const { data: routes = [], isLoading } = useScheduleRoutes(new Date());
+  const { data: vessels = [] } = useVesselLocations();
   
   if (isLoading) return <div>Loading...</div>;
   
@@ -99,7 +86,7 @@ const RoutePlanner = () => {
       <ul>
         {routes.map((route, index) => (
           <li key={index}>
-            Route {route.routeId}: {route.departingTerminal} → {route.arrivingTerminal}
+            Route {route.RouteID}: {route.Description}
           </li>
         ))}
       </ul>
@@ -107,25 +94,19 @@ const RoutePlanner = () => {
   );
 };
 
-// App with provider
-const App = () => (
-  <WsdotProvider client={wsdotClient}>
-    <RoutePlanner />
-  </WsdotProvider>
-);
+// Simple app - no provider wrapper needed
+const App = () => <RoutePlanner />;
 ```
 
 ## API Reference
 
 ### Configuration
 
-```typescript
-interface WsdotConfig {
-  apiKey: string;           // Required: Your WSDOT API key
-  timeout?: number;         // Optional: Request timeout in ms (default: 10000)
-  retries?: number;         // Optional: Number of retries (default: 3)
-  logLevel?: 'none' | 'info' | 'debug'; // Optional: Logging level (default: 'none')
-}
+The library uses environment variables for configuration:
+
+```bash
+# Required: Your WSDOT API key
+WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
 ### WSF APIs
@@ -247,16 +228,17 @@ const conditions = await client.wsdot.traffic.getMountainPassConditions();
 ## React Hooks
 
 ```typescript
-import { useWsdotClient, useWsfApi, useWsdApi } from 'wsdot-api-client';
+import { 
+  useScheduleRoutes, 
+  useVesselLocations, 
+  useFaresTerminals,
+  useTerminalBasics 
+} from 'wsdot-api-client';
 
-// Get the full client
-const client = useWsdotClient();
-
-// Get WSF APIs
-const wsf = useWsfApi();
-
-// Get WSDOT APIs
-const wsdot = useWsdApi();
+// Use hooks directly - no provider needed!
+const { data: routes } = useScheduleRoutes(new Date());
+const { data: vessels } = useVesselLocations();
+const { data: terminals } = useFaresTerminals();
 ```
 
 ## Error Handling

@@ -1,4 +1,8 @@
+import { config } from "dotenv";
 import { afterAll, afterEach, beforeAll, beforeEach, vi } from "vitest";
+
+// Load environment variables from .env file
+config();
 
 // Global test setup
 beforeAll(() => {

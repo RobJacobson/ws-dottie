@@ -4,9 +4,9 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import {
   getTerminalWaitTimes,
-  getTerminalWaitTimesByTerminal,
+  getTerminalWaitTimesByTerminalId,
   useTerminalWaitTimes,
-  useTerminalWaitTimesByTerminal,
+  useTerminalWaitTimesByTerminalId,
 } from "@/api/wsf/terminals";
 
 import {
@@ -70,10 +70,10 @@ describe("Terminal Wait Times E2E Tests", () => {
 
 
 
-  describe("getTerminalWaitTimesByTerminal", () => {
+  describe("getTerminalWaitTimesByTerminalId", () => {
     it("should fetch terminal wait times by terminal successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalWaitTimesByTerminal(TEST_TERMINAL_ID)
+        getTerminalWaitTimesByTerminalId(TEST_TERMINAL_ID)
       );
 
       // Performance check
@@ -93,7 +93,7 @@ describe("Terminal Wait Times E2E Tests", () => {
 
     it("should handle invalid terminal ID gracefully", async () => {
       try {
-        await getTerminalWaitTimesByTerminal(INVALID_TERMINAL_ID);
+        await getTerminalWaitTimesByTerminalId(INVALID_TERMINAL_ID);
         throw new Error("Should have thrown an error");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -176,10 +176,10 @@ describe("Terminal Wait Times E2E Tests", () => {
 
 
 
-  describe("useTerminalWaitTimesByTerminal", () => {
+  describe("useTerminalWaitTimesByTerminalId", () => {
     it("should fetch terminal wait times by terminal via React Query", async () => {
       const { result } = renderHook(
-        () => useTerminalWaitTimesByTerminal(TEST_TERMINAL_ID),
+        () => useTerminalWaitTimesByTerminalId(TEST_TERMINAL_ID),
         {
           wrapper: ({ children }) => (
             <QueryClientProvider client={queryClient}>

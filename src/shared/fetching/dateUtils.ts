@@ -111,6 +111,41 @@ export const parseWsfDateTime = (dateTimeString: string): Date => {
 };
 
 /**
+ * Parses various WSF date formats to JavaScript Date
+ * Handles WSF /Date(timestamp)/ format, regular date strings, Date objects, and timestamps
+ *
+ * @param dateInput - Date input that can be a string, Date object, or number
+ * @returns JavaScript Date object
+ */
+export const parseWsfDate = (dateInput: string | Date | number): Date => {
+  // If it's already a Date object, return it
+  if (dateInput instanceof Date) {
+    return dateInput;
+  }
+
+  // If it's a number (timestamp), convert it
+  if (typeof dateInput === "number") {
+    return new Date(dateInput);
+  }
+
+  // If it's a string, parse it
+  if (typeof dateInput === "string") {
+    // Handle WSF date format: "/Date(timestamp)/"
+    const match = dateInput.match(/\/Date\((\d+)(?:[+-]\d+)?\)\//);
+    if (match) {
+      return new Date(parseInt(match[1]));
+    }
+
+    // Handle regular date strings
+    return new Date(dateInput);
+  }
+
+  // Fallback
+  console.warn("Unexpected date format:", dateInput);
+  return new Date();
+};
+
+/**
  * Gets today's date in WSF format
  */
 export const getTodayWsfFormat = (): string => {

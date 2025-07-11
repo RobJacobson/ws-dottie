@@ -137,7 +137,7 @@ describe("WSF Data Transformation", () => {
       const result = transformWsfData(input) as Record<string, any>;
 
       expect(result.NullValue).toBeNull();
-      expect(result.EmptyString).toBe("");
+      expect(result.EmptyString).toBeNull(); // Empty strings are converted to null
       expect(result.Zero).toBe(0);
       expect(result.False).toBe(false);
     });

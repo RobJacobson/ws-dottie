@@ -29,33 +29,6 @@ export type VesselBasic = {
 };
 
 /**
- * Vessel information from WSF Vessels API
- * Based on /vesselbasics endpoint
- */
-export type Vessel = {
-  VesselID: number;
-  VesselName: string;
-  Abbrev: string;
-  VesselClass: string;
-  InService: boolean;
-  Active: boolean;
-  YearBuilt: number;
-  Displacement: number;
-  Length: number;
-  Breadth: number;
-  Draft: number;
-  CarCapacity: number;
-  PassengerCapacity: number;
-  MaxPassengers: number;
-  MaxVehicles: number;
-  MaxGrossTonnage: number;
-  Horsepower: number;
-  MaxSpeed: number;
-  HomeTerminalID: number;
-  HomeTerminalName: string;
-};
-
-/**
  * Vessel accommodations from WSF Vessels API
  * Based on /vesselaccommodations endpoint
  * Note: This matches the specification exactly with accommodation details
@@ -80,29 +53,54 @@ export type VesselAccommodation = {
 /**
  * Vessel statistics from WSF Vessels API
  * Based on /vesselstats endpoint
- * Note: This is a placeholder as the specification doesn't detail the exact structure
+ * Note: This endpoint returns detailed vessel specifications, not operational statistics
+ * Based on official WSDOT API VesselStatResponse structure
  */
 export type VesselStats = {
   VesselID: number;
-  StatID: number;
-  StatName: string;
-  StatValue: string;
-  StatUnit: string;
-  IsActive: boolean;
+  VesselSubjectID: number;
+  VesselName: string;
+  VesselAbbrev: string;
+  Class: VesselClass;
+  VesselNameDesc: string;
+  VesselHistory: string;
+  Beam: string;
+  CityBuilt: string;
+  SpeedInKnots: number;
+  Draft: string;
+  EngineCount: number;
+  Horsepower: number;
+  Length: string;
+  MaxPassengerCount: number;
+  PassengerOnly: boolean;
+  FastFerry: boolean;
+  PropulsionInfo: string;
+  TallDeckClearance: number;
+  RegDeckSpace: number;
+  TallDeckSpace: number;
+  Tonnage: number;
+  Displacement: number;
+  YearBuilt: number;
+  YearRebuilt?: number;
+  VesselDrawingImg: string;
+  SolasCertified: boolean;
+  MaxPassengerCountForInternational: number;
 };
 
 /**
  * Vessel history from WSF Vessels API
  * Based on /vesselhistory endpoint
- * Note: This is a placeholder as the specification doesn't detail the exact structure
+ * Note: This matches the official WSF API specification exactly
  */
 export type VesselHistory = {
-  VesselID: number;
-  VesselName: string;
-  HistoryDate: Date;
-  HistoryDescription: string;
-  HistoryType: string;
-  IsActive: boolean;
+  VesselId: number;
+  Vessel: string;
+  Departing: string;
+  Arriving: string;
+  ScheduledDepart: Date | null;
+  ActualDepart: Date | null;
+  EstArrival: Date | null;
+  Date: Date | null;
 };
 
 /**
@@ -143,17 +141,13 @@ export type VesselLocation = {
 /**
  * Vessel verbose information from WSF Vessels API
  * Based on /vesselverbose endpoint
- * Note: Data preserves PascalCase keys from WSF API
+ * Note: Data preserves PascalCase keys from WSF API and matches specification exactly
  */
 export type VesselVerbose = {
   VesselID: number;
   VesselName: string;
   VesselAbbrev: string;
-  Class: {
-    ClassID: number;
-    ClassName: string;
-    PublicDisplayName: string;
-  };
+  Class: VesselClass;
   Status: number;
   OwnedByWSF: boolean;
   YearBuilt: number;
@@ -184,8 +178,7 @@ export type VesselVerbose = {
 
 /**
  * Vessels cache flush date response
+ * Based on /cacheflushdate endpoint
+ * Note: The API returns a date string in "/Date(timestamp-timezone)/" format
  */
-export type VesselsCacheFlushDate = {
-  LastUpdated: Date;
-  Source: string;
-};
+export type VesselsCacheFlushDate = Date;
