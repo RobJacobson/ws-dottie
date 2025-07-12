@@ -266,6 +266,181 @@ export const validateTerminalVerbose = (data: any) => {
   }
 };
 
+// Fares API validation functions
+export const validateFaresCacheFlushDate = (data: any) => {
+  expect(data).toBeInstanceOf(Date);
+  expect(data.getTime()).toBeGreaterThan(0);
+};
+
+export const validateFaresValidDateRange = (data: any) => {
+  expect(data).toHaveProperty("DateFrom");
+  expect(data).toHaveProperty("DateThru");
+  expect(data.DateFrom).toBeInstanceOf(Date);
+  expect(data.DateThru).toBeInstanceOf(Date);
+  expect(data.DateFrom.getTime()).toBeLessThan(data.DateThru.getTime());
+};
+
+export const validateFaresTerminal = (data: any) => {
+  expect(data).toHaveProperty("TerminalID");
+  expect(data).toHaveProperty("Description");
+  expect(typeof data.TerminalID).toBe("number");
+  expect(typeof data.Description).toBe("string");
+  expect(data.TerminalID).toBeGreaterThan(0);
+  expect(data.Description.length).toBeGreaterThan(0);
+};
+
+export const validateFaresTerminalMate = (data: any) => {
+  expect(data).toHaveProperty("TerminalID");
+  expect(data).toHaveProperty("Description");
+  expect(typeof data.TerminalID).toBe("number");
+  expect(typeof data.Description).toBe("string");
+  expect(data.TerminalID).toBeGreaterThan(0);
+  expect(data.Description.length).toBeGreaterThan(0);
+};
+
+export const validateFaresTerminalCombo = (data: any) => {
+  expect(data).toHaveProperty("DepartingDescription");
+  expect(data).toHaveProperty("ArrivingDescription");
+  expect(data).toHaveProperty("CollectionDescription");
+  expect(typeof data.DepartingDescription).toBe("string");
+  expect(typeof data.ArrivingDescription).toBe("string");
+  expect(typeof data.CollectionDescription).toBe("string");
+  expect(data.DepartingDescription.length).toBeGreaterThan(0);
+  expect(data.ArrivingDescription.length).toBeGreaterThan(0);
+  expect(data.CollectionDescription.length).toBeGreaterThan(0);
+};
+
+export const validateFaresTerminalComboVerbose = (data: any) => {
+  expect(data).toHaveProperty("DepartingTerminalID");
+  expect(data).toHaveProperty("DepartingDescription");
+  expect(data).toHaveProperty("ArrivingTerminalID");
+  expect(data).toHaveProperty("ArrivingDescription");
+  expect(data).toHaveProperty("CollectionDescription");
+  expect(typeof data.DepartingTerminalID).toBe("number");
+  expect(typeof data.DepartingDescription).toBe("string");
+  expect(typeof data.ArrivingTerminalID).toBe("number");
+  expect(typeof data.ArrivingDescription).toBe("string");
+  expect(typeof data.CollectionDescription).toBe("string");
+  expect(data.DepartingTerminalID).toBeGreaterThan(0);
+  expect(data.ArrivingTerminalID).toBeGreaterThan(0);
+  expect(data.DepartingDescription.length).toBeGreaterThan(0);
+  expect(data.ArrivingDescription.length).toBeGreaterThan(0);
+  expect(data.CollectionDescription.length).toBeGreaterThan(0);
+};
+
+export const validateFareLineItemBasic = (data: any) => {
+  expect(data).toHaveProperty("FareLineItemID");
+  expect(data).toHaveProperty("FareLineItem");
+  expect(data).toHaveProperty("Category");
+  expect(data).toHaveProperty("DirectionIndependent");
+  expect(data).toHaveProperty("Amount");
+  expect(typeof data.FareLineItemID).toBe("number");
+  expect(typeof data.FareLineItem).toBe("string");
+  expect(typeof data.Category).toBe("string");
+  expect(typeof data.DirectionIndependent).toBe("boolean");
+  expect(typeof data.Amount).toBe("number");
+  expect(data.FareLineItemID).toBeGreaterThan(0);
+  expect(data.FareLineItem.length).toBeGreaterThan(0);
+  expect(data.Category.length).toBeGreaterThan(0);
+  expect(data.Amount).toBeGreaterThanOrEqual(0);
+};
+
+export const validateFareLineItem = (data: any) => {
+  expect(data).toHaveProperty("FareLineItemID");
+  expect(data).toHaveProperty("FareLineItem");
+  expect(data).toHaveProperty("Category");
+  expect(data).toHaveProperty("DirectionIndependent");
+  expect(data).toHaveProperty("Amount");
+  expect(typeof data.FareLineItemID).toBe("number");
+  expect(typeof data.FareLineItem).toBe("string");
+  expect(typeof data.Category).toBe("string");
+  expect(typeof data.DirectionIndependent).toBe("boolean");
+  expect(typeof data.Amount).toBe("number");
+  expect(data.FareLineItemID).toBeGreaterThan(0);
+  expect(data.FareLineItem.length).toBeGreaterThan(0);
+  expect(data.Category.length).toBeGreaterThan(0);
+  expect(data.Amount).toBeGreaterThanOrEqual(0);
+};
+
+export const validateFareLineItemVerbose = (data: any) => {
+  expect(data).toHaveProperty("DepartingTerminalID");
+  expect(data).toHaveProperty("DepartingDescription");
+  expect(data).toHaveProperty("ArrivingTerminalID");
+  expect(data).toHaveProperty("ArrivingDescription");
+  expect(data).toHaveProperty("FareLineItemID");
+  expect(data).toHaveProperty("FareLineItem");
+  expect(data).toHaveProperty("Category");
+  expect(data).toHaveProperty("DirectionIndependent");
+  expect(data).toHaveProperty("Amount");
+  expect(data).toHaveProperty("RoundTrip");
+  expect(typeof data.DepartingTerminalID).toBe("number");
+  expect(typeof data.DepartingDescription).toBe("string");
+  expect(typeof data.ArrivingTerminalID).toBe("number");
+  expect(typeof data.ArrivingDescription).toBe("string");
+  expect(typeof data.FareLineItemID).toBe("number");
+  expect(typeof data.FareLineItem).toBe("string");
+  expect(typeof data.Category).toBe("string");
+  expect(typeof data.DirectionIndependent).toBe("boolean");
+  expect(typeof data.Amount).toBe("number");
+  expect(typeof data.RoundTrip).toBe("boolean");
+};
+
+export const validateFareLineItemsVerboseResponse = (data: any) => {
+  expect(data).toHaveProperty("TerminalComboVerbose");
+  expect(data).toHaveProperty("LineItemLookup");
+  expect(data).toHaveProperty("LineItems");
+  expect(data).toHaveProperty("RoundTripLineItems");
+  expect(Array.isArray(data.TerminalComboVerbose)).toBe(true);
+  expect(Array.isArray(data.LineItemLookup)).toBe(true);
+  expect(Array.isArray(data.LineItems)).toBe(true);
+  expect(Array.isArray(data.RoundTripLineItems)).toBe(true);
+
+  // Validate first terminal combo if available
+  if (data.TerminalComboVerbose.length > 0) {
+    validateFaresTerminalComboVerbose(data.TerminalComboVerbose[0]);
+  }
+
+  // Validate first line item lookup if available
+  if (data.LineItemLookup.length > 0) {
+    const lookup = data.LineItemLookup[0];
+    expect(lookup).toHaveProperty("TerminalComboIndex");
+    expect(lookup).toHaveProperty("LineItemIndex");
+    expect(lookup).toHaveProperty("RoundTripLineItemIndex");
+    expect(typeof lookup.TerminalComboIndex).toBe("number");
+    expect(typeof lookup.LineItemIndex).toBe("number");
+    expect(typeof lookup.RoundTripLineItemIndex).toBe("number");
+  }
+
+  // Validate first line items array if available
+  if (data.LineItems.length > 0 && data.LineItems[0].length > 0) {
+    validateFareLineItem(data.LineItems[0][0]);
+  }
+
+  // Validate first round trip line items array if available
+  if (
+    data.RoundTripLineItems.length > 0 &&
+    data.RoundTripLineItems[0].length > 0
+  ) {
+    validateFareLineItem(data.RoundTripLineItems[0][0]);
+  }
+};
+
+export const validateFareTotal = (data: any) => {
+  expect(data).toHaveProperty("TotalType");
+  expect(data).toHaveProperty("Description");
+  expect(data).toHaveProperty("BriefDescription");
+  expect(data).toHaveProperty("Amount");
+  expect(typeof data.TotalType).toBe("number");
+  expect(typeof data.Description).toBe("string");
+  expect(typeof data.BriefDescription).toBe("string");
+  expect(typeof data.Amount).toBe("number");
+  expect(data.TotalType).toBeGreaterThanOrEqual(0);
+  expect(data.Description.length).toBeGreaterThan(0);
+  expect(data.BriefDescription.length).toBeGreaterThan(0);
+  expect(data.Amount).toBeGreaterThanOrEqual(0);
+};
+
+// Legacy fare validation (keeping for backward compatibility)
 export const validateFare = (data: any) => {
   expect(data).toHaveProperty("FareID");
   expect(data).toHaveProperty("FareName");
@@ -695,4 +870,4 @@ export const INVALID_SCHED_ROUTE_ID = 99999;
 export const INVALID_SCHEDULE_ID = 99999;
 
 // Rate limiting between tests
-export const RATE_LIMIT_DELAY = 1000; // 1 second between API calls
+export const RATE_LIMIT_DELAY = 0; // No delay between API calls

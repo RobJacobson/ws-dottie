@@ -12,6 +12,10 @@ This module integrates with Washington State Ferries Terminals APIs to provide:
 - Detailed terminal facilities and amenities
 - Cache flush date information for data freshness
 
+## WSDOT Documentation
+- [WSF Terminals API Documentation](https://www.wsdot.wa.gov/ferries/api/terminals/documentation/rest.html)
+- [WSF Terminals API Help](https://www.wsdot.wa.gov/ferries/api/terminals/rest/help)
+
 ## API Endpoints
 
 ### Terminals API (`/terminals`)

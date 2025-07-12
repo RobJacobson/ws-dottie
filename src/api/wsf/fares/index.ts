@@ -47,6 +47,7 @@ export type {
   FareTotal,
   FareTotalRequest,
   TerminalCombo,
+  TerminalComboParams,
   TerminalComboVerbose,
   TerminalMate,
   TerminalMatesParams,

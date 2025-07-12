@@ -11,6 +11,10 @@ This module integrates with Washington State Ferries Schedule APIs to provide:
 - Service alerts and disruptions
 - Time adjustments and valid date ranges
 
+## WSDOT Documentation
+- [WSF Schedule API Documentation](https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html)
+- [WSF Schedule API Help](https://www.wsdot.wa.gov/ferries/api/schedule/rest/help)
+
 ## API Endpoints
 
 ### Schedule API (`/schedule`)
@@ -94,30 +98,81 @@ const alerts = await getAlerts();
 
 ### Using Hooks
 ```typescript
-import { useRoutes, useRoutesByTerminals } from '@/api/wsf/schedule/routes';
+import { 
+  useRoutes, 
+  useRoutesByTerminals,
+  useRouteDetails,
+  useRoutesWithDisruptions,
+  useScheduledRoutes,
+  useActiveSeasons,
+  useAlerts
+} from '@/api/wsf/schedule/routes';
 
 function RouteComponent() {
-  // Default: enabled is true
-  const { data: routes, isLoading } = useRoutes();
-  // Override enabled: false
-  const { data: terminalRoutes } = useRoutesByTerminals({
-    tripDate: new Date(),
-    departingTerminalId: 7,
-    arrivingTerminalId: 8
-  }, { enabled: false });
+  const tripDate = new Date('2024-04-01');
+  const departingTerminalId = 7;
+  const arrivingTerminalId = 8;
 
-  if (isLoading) return <div>Loading routes...</div>;
+  // Default: enabled is true
+  const { data: routes, isLoading: routesLoading } = useRoutes(tripDate);
+  const { data: terminalRoutes, isLoading: terminalRoutesLoading } = useRoutesByTerminals({
+    tripDate,
+    departingTerminalId,
+    arrivingTerminalId
+  });
+  const { data: routeDetails, isLoading: detailsLoading } = useRouteDetails(tripDate);
+  const { data: disruptedRoutes, isLoading: disruptionsLoading } = useRoutesWithDisruptions(tripDate);
+  const { data: scheduledRoutes, isLoading: scheduledLoading } = useScheduledRoutes();
+  const { data: activeSeasons, isLoading: seasonsLoading } = useActiveSeasons();
+  const { data: alerts, isLoading: alertsLoading } = useAlerts();
+
+  if (routesLoading || terminalRoutesLoading || detailsLoading || disruptionsLoading || 
+      scheduledLoading || seasonsLoading || alertsLoading) {
+    return <div>Loading route data...</div>;
+  }
 
   return (
     <div>
       <h2>All Routes</h2>
       {routes?.map(route => (
-        <div key={route.routeId}>{route.routeName}</div>
+        <div key={route.routeId}>
+          {route.routeName} - {route.description}
+        </div>
       ))}
       
       <h2>Terminal Routes</h2>
       {terminalRoutes?.map(route => (
-        <div key={route.routeId}>{route.routeName}</div>
+        <div key={route.routeId}>
+          {route.routeName} - {route.description}
+        </div>
+      ))}
+
+      <h2>Route Details</h2>
+      {routeDetails?.map(detail => (
+        <div key={detail.routeId}>
+          {detail.routeName} - Vessel: {detail.vesselName}
+        </div>
+      ))}
+
+      <h2>Service Disruptions</h2>
+      {disruptedRoutes?.map(route => (
+        <div key={route.routeId}>
+          {route.routeName} - {route.disruptionDescription}
+        </div>
+      ))}
+
+      <h2>Active Seasons</h2>
+      {activeSeasons?.map(season => (
+        <div key={season.scheduleId}>
+          {season.description} - {season.startDate} to {season.endDate}
+        </div>
+      ))}
+
+      <h2>Alerts</h2>
+      {alerts?.map(alert => (
+        <div key={alert.alertId}>
+          {alert.alertHeader} - {alert.alertText}
+        </div>
       ))}
     </div>
   );
@@ -129,6 +184,58 @@ All hooks use default caching options with `enabled: true`. You can override `en
 
 ```typescript
 const { data } = useRoutes(tripDate, { enabled: false }); // disables the query
+```
+
+### Using Specific Route Hooks
+```typescript
+import { 
+  useRoutesByTerminals,
+  useRouteDetails,
+  useRoutesWithDisruptions
+} from '@/api/wsf/schedule/routes';
+
+function SpecificRouteComponent({ 
+  tripDate, 
+  departingTerminalId, 
+  arrivingTerminalId 
+}: { 
+  tripDate: Date;
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+}) {
+  const { data: routes } = useRoutesByTerminals({
+    tripDate,
+    departingTerminalId,
+    arrivingTerminalId
+  });
+  const { data: routeDetails } = useRouteDetails(tripDate);
+  const { data: disruptions } = useRoutesWithDisruptions(tripDate);
+
+  return (
+    <div>
+      <h3>Available Routes</h3>
+      {routes?.map(route => (
+        <div key={route.routeId}>
+          {route.routeName} - {route.description}
+        </div>
+      ))}
+      
+      <h3>Route Details</h3>
+      {routeDetails?.map(detail => (
+        <div key={detail.routeId}>
+          {detail.routeName} - Vessel: {detail.vesselName}
+        </div>
+      ))}
+      
+      <h3>Service Disruptions</h3>
+      {disruptions?.map(route => (
+        <div key={route.routeId}>
+          {route.routeName} - {route.disruptionDescription}
+        </div>
+      ))}
+    </div>
+  );
+}
 ```
 
 ## Data Transformation
@@ -147,4 +254,22 @@ All API functions return empty arrays (`[]`) on errors rather than throwing exce
 
 ## Caching Strategy
 
-The hooks use default caching options from `createInfrequentUpdateOptions()` and `createFrequentUpdateOptions()`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook. 
+The hooks use default caching options from `createInfrequentUpdateOptions()` and `createFrequentUpdateOptions()`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
+
+**Caching by Data Type:**
+- **Routes**: Infrequent updates (daily)
+- **Route Details**: Infrequent updates (daily)
+- **Alerts**: Frequent updates (real-time)
+- **Active Seasons**: Infrequent updates (weekly)
+- **Scheduled Routes**: Infrequent updates (weekly)
+
+## Common Use Cases
+
+- **Route Planning**: Find available routes between terminals
+- **Schedule Lookup**: Get departure times and frequencies
+- **Service Monitoring**: Track service disruptions and alerts
+- **Seasonal Planning**: Access seasonal service information
+- **Terminal Navigation**: Find routes serving specific terminals
+- **Real-time Updates**: Monitor alerts and service changes
+- **Historical Analysis**: Review route and schedule data
+- **Travel Planning**: Plan trips with current schedule information 

@@ -8,14 +8,14 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./react": {
+      "types": "./dist/react.d.ts",
       "import": "./dist/react.mjs",
-      "require": "./dist/react.js",
-      "types": "./dist/react.d.ts"
+      "require": "./dist/react.js"
     }
   },
   "files": [
@@ -28,13 +28,17 @@
     "dev": "tsup --watch",
     "test": "vitest",
     "test:unit": "vitest tests/unit/",
-    "test:e2e": "vitest --config vitest.e2e.config.ts",
-    "test:e2e:api": "vitest --config vitest.e2e.api.config.ts",
-    "test:e2e:hook": "vitest --config vitest.e2e.hook.config.ts",
-    "test:e2e:watch": "vitest --config vitest.e2e.config.ts --watch",
-    "test:e2e:api:watch": "vitest --config vitest.e2e.api.config.ts --watch",
-    "test:e2e:hook:watch": "vitest --config vitest.e2e.hook.config.ts --watch",
-    "test:integration": "vitest --config vitest.integration.config.ts",
+    "test:e2e": "vitest --config config/vitest.e2e.config.ts",
+    "test:e2e:api": "vitest --config config/vitest.e2e.api.config.ts",
+    "test:e2e:hook": "vitest --config config/vitest.e2e.hook.config.ts",
+    "test:e2e:watch": "vitest --config config/vitest.e2e.config.ts --watch",
+    "test:e2e:api:watch": "vitest --config config/vitest.e2e.api.config.ts --watch",
+    "test:e2e:hook:watch": "vitest --config config/vitest.e2e.hook.config.ts --watch",
+    "test:e2e:fares": "vitest --config config/vitest.e2e.config.ts tests/e2e/fares/",
+    "test:e2e:schedule": "vitest --config config/vitest.e2e.config.ts tests/e2e/schedule/",
+    "test:e2e:terminals": "vitest --config config/vitest.e2e.config.ts tests/e2e/terminals/",
+    "test:e2e:vessels": "vitest --config config/vitest.e2e.config.ts tests/e2e/vessels/",
+    "test:integration": "vitest --config config/vitest.integration.config.ts",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
     "lint": "biome lint",

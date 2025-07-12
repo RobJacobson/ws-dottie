@@ -1,10 +1,11 @@
 // WSF Fares API types
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
+// API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
 /**
  * Cache flush date response from WSF Fares API
  * Based on /cacheflushdate endpoint
- * Returns: "/Date(timestamp)/"
+ * Returns: "/Date(timestamp)/" format
  */
 export type FaresCacheFlushDate = Date;
 
@@ -13,8 +14,8 @@ export type FaresCacheFlushDate = Date;
  * Based on /validdaterange endpoint
  */
 export type FaresValidDateRange = {
-  DateFrom: string; // WSF date format: "/Date(timestamp)/"
-  DateThru: string; // WSF date format: "/Date(timestamp)/"
+  DateFrom: Date; // WSF date format: "/Date(timestamp)/"
+  DateThru: Date; // WSF date format: "/Date(timestamp)/"
 };
 
 /**
@@ -29,6 +30,7 @@ export type FaresTerminal = {
 /**
  * Terminal mate (arriving terminal) from WSF Fares API
  * Based on /terminalmates/{TripDate}/{TerminalID} endpoint
+ * Same structure as FaresTerminal
  */
 export type TerminalMate = {
   TerminalID: number;
@@ -40,12 +42,9 @@ export type TerminalMate = {
  * Based on /terminalcombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} endpoint
  */
 export type TerminalCombo = {
-  DepartingTerminalID: number;
-  DepartingTerminalName: string;
-  ArrivingTerminalID: number;
-  ArrivingTerminalName: string;
-  FareCollectionDescription: string;
-  IsActive: boolean;
+  DepartingDescription: string;
+  ArrivingDescription: string;
+  CollectionDescription: string;
 };
 
 /**
@@ -54,13 +53,10 @@ export type TerminalCombo = {
  */
 export type TerminalComboVerbose = {
   DepartingTerminalID: number;
-  DepartingTerminalName: string;
+  DepartingDescription: string;
   ArrivingTerminalID: number;
-  ArrivingTerminalName: string;
-  FareCollectionDescription: string;
-  IsActive: boolean;
-  RouteID: number;
-  RouteName: string;
+  ArrivingDescription: string;
+  CollectionDescription: string;
 };
 
 /**
@@ -78,6 +74,7 @@ export type FareLineItem = {
 /**
  * Fare line item basic (most popular fares) from WSF Fares API
  * Based on /farelineitemsbasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} endpoint
+ * Same structure as FareLineItem
  */
 export type FareLineItemBasic = {
   FareLineItemID: number;
@@ -93,17 +90,31 @@ export type FareLineItemBasic = {
  */
 export type FareLineItemVerbose = {
   DepartingTerminalID: number;
-  DepartingTerminalName: string;
+  DepartingDescription: string;
   ArrivingTerminalID: number;
-  ArrivingTerminalName: string;
-  RouteID: number;
-  RouteName: string;
+  ArrivingDescription: string;
   FareLineItemID: number;
   FareLineItem: string;
   Category: string;
   DirectionIndependent: boolean;
   Amount: number;
   RoundTrip: boolean;
+};
+
+/**
+ * Fare line items verbose response from WSF Fares API
+ * Based on /farelineitemsverbose/{TripDate} endpoint
+ * This is the actual response structure from the API
+ */
+export type FareLineItemsVerboseResponse = {
+  TerminalComboVerbose: TerminalComboVerbose[];
+  LineItemLookup: Array<{
+    TerminalComboIndex: number;
+    LineItemIndex: number;
+    RoundTripLineItemIndex: number;
+  }>;
+  LineItems: FareLineItem[][];
+  RoundTripLineItems: FareLineItem[][];
 };
 
 /**
@@ -124,17 +135,10 @@ export type FareTotalRequest = {
  * Based on /faretotals endpoint
  */
 export type FareTotal = {
-  Subtotal: number;
-  Tax: number;
-  Total: number;
-  Currency: string;
-  Breakdown: Array<{
-    FareLineItemID: number;
-    FareLineItem: string;
-    Quantity: number;
-    UnitPrice: number;
-    TotalPrice: number;
-  }>;
+  TotalType: number; // 0 = Depart, 1 = Return, etc.
+  Description: string;
+  BriefDescription: string;
+  Amount: number;
 };
 
 /**
@@ -161,4 +165,13 @@ export type TerminalParams = {
 export type TerminalMatesParams = {
   tripDate: Date;
   terminalID: number;
+};
+
+/**
+ * Parameters for terminal combo queries
+ */
+export type TerminalComboParams = {
+  tripDate: Date;
+  departingTerminalID: number;
+  arrivingTerminalID: number;
 };
