@@ -1,7 +1,7 @@
 // WSF Vessels API functions
 
-import { buildWsfUrl } from "@/shared/fetching/dateUtils";
 import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
+import { buildWsfUrl } from "@/shared/fetching/urlBuilder";
 
 import type {
   VesselAccommodation,

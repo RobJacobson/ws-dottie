@@ -18,33 +18,6 @@ export const dateToWsfPathFormat = (date: Date): string => {
 };
 
 /**
- * Builds a WSF API URL with parameter substitution
- *
- * @param template - URL template with placeholders like "/routes/{tripDate}/{routeId}"
- * @param params - Parameters to substitute (supports string, number, Date, and boolean values)
- * @returns The substituted URL
- */
-export const buildWsfUrl = (
-  template: string,
-  params: Record<string, string | number | Date | boolean> = {}
-): string => {
-  let url = template;
-
-  // Substitute provided parameters
-  for (const [key, value] of Object.entries(params)) {
-    const placeholder = `{${key}}`;
-    if (url.includes(placeholder)) {
-      // Convert Date objects to WSF path format, otherwise convert to string
-      const stringValue =
-        value instanceof Date ? dateToWsfPathFormat(value) : String(value);
-      url = url.replace(placeholder, stringValue);
-    }
-  }
-
-  return url;
-};
-
-/**
  * Converts a JavaScript Date to WSF API time format (HH:MM AM/PM)
  */
 export const dateToWsfTimeFormat = (date: Date): string => {

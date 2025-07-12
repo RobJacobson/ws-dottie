@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
-  buildWsfUrl,
   dateToWsfDateTimeFormat,
   dateToWsfFormat,
   dateToWsfPathFormat,
@@ -16,6 +15,7 @@ import {
   parseWsfScheduleDate,
   parseWsfTime,
 } from "@/shared/fetching/dateUtils";
+import { buildWsfUrl } from "@/shared/fetching/urlBuilder";
 
 describe("WSF Date Utilities", () => {
   describe("dateToWsfFormat", () => {

@@ -24,8 +24,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": resolve(__dirname, "./src"),
-      "@/test": resolve(__dirname, "./tests"),
+      "@": resolve(__dirname, "../src"),
+      "@/test": resolve(__dirname, "../tests"),
     },
   },
   // Ensure ESM compatibility
