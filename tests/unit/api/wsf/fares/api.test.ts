@@ -199,21 +199,19 @@ describe("WSF Fares API", () => {
       });
 
       it("should fetch terminal combo successfully", async () => {
-        const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-        const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+        const { fetchWsf } = await import("@/shared/fetching/fetch");
+        const mockFetchWsf = vi.mocked(fetchWsf);
 
         const tripDate = new Date("2025-01-10");
         const departingTerminalID = 1;
         const arrivingTerminalID = 2;
-        const mockTerminalCombo = [
-          {
-            DepartingDescription: "Anacortes",
-            ArrivingDescription: "Friday Harbor",
-            CollectionDescription: "Standard fare collection",
-          },
-        ];
+        const mockTerminalCombo = {
+          DepartingDescription: "Anacortes",
+          ArrivingDescription: "Friday Harbor",
+          CollectionDescription: "Standard fare collection",
+        };
 
-        mockFetchWsfArray.mockResolvedValue(mockTerminalCombo);
+        mockFetchWsf.mockResolvedValue(mockTerminalCombo);
 
         const result = await getTerminalCombo(
           tripDate,
@@ -222,7 +220,7 @@ describe("WSF Fares API", () => {
         );
 
         expect(result).toEqual(mockTerminalCombo);
-        expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        expect(mockFetchWsf).toHaveBeenCalledWith(
           "fares",
           "/terminalcombo/2025-01-10/1/2"
         );
@@ -383,31 +381,29 @@ describe("WSF Fares API", () => {
       });
 
       it("should fetch verbose fare line items successfully", async () => {
-        const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-        const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+        const { fetchWsf } = await import("@/shared/fetching/fetch");
+        const mockFetchWsf = vi.mocked(fetchWsf);
 
         const tripDate = new Date("2025-01-10");
-        const mockFareLineItemsVerbose = [
-          {
-            DepartingTerminalID: 1,
-            DepartingDescription: "Anacortes",
-            ArrivingTerminalID: 2,
-            ArrivingDescription: "Friday Harbor",
-            FareLineItemID: 1,
-            FareLineItem: "Adult Passenger",
-            Category: "Passenger",
-            DirectionIndependent: true,
-            Amount: 15.5,
-            RoundTrip: false,
-          },
-        ];
+        const mockFareLineItemsVerbose = {
+          DepartingTerminalID: 1,
+          DepartingDescription: "Anacortes",
+          ArrivingTerminalID: 2,
+          ArrivingDescription: "Friday Harbor",
+          FareLineItemID: 1,
+          FareLineItem: "Adult Passenger",
+          Category: "Passenger",
+          DirectionIndependent: true,
+          Amount: 15.5,
+          RoundTrip: false,
+        };
 
-        mockFetchWsfArray.mockResolvedValue(mockFareLineItemsVerbose);
+        mockFetchWsf.mockResolvedValue(mockFareLineItemsVerbose);
 
         const result = await getFareLineItemsVerbose(tripDate);
 
         expect(result).toEqual(mockFareLineItemsVerbose);
-        expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        expect(mockFetchWsf).toHaveBeenCalledWith(
           "fares",
           "/farelineitemsverbose/2025-01-10"
         );
@@ -567,27 +563,25 @@ describe("WSF Fares API", () => {
 
     describe("getTerminalComboWithParams", () => {
       it("should call getTerminalCombo with correct parameters", async () => {
-        const { fetchWsfArray } = await import("@/shared/fetching/fetch");
-        const mockFetchWsfArray = vi.mocked(fetchWsfArray);
+        const { fetchWsf } = await import("@/shared/fetching/fetch");
+        const mockFetchWsf = vi.mocked(fetchWsf);
 
         const params = {
           tripDate: new Date("2025-01-10"),
           departingTerminalID: 1,
           arrivingTerminalID: 2,
         };
-        const mockResult = [
-          {
-            DepartingDescription: "Test",
-            ArrivingDescription: "Test",
-            CollectionDescription: "Test",
-          },
-        ];
-        mockFetchWsfArray.mockResolvedValue(mockResult);
+        const mockResult = {
+          DepartingDescription: "Test",
+          ArrivingDescription: "Test",
+          CollectionDescription: "Test",
+        };
+        mockFetchWsf.mockResolvedValue(mockResult);
 
         const result = await getTerminalComboWithParams(params);
 
         expect(result).toEqual(mockResult);
-        expect(mockFetchWsfArray).toHaveBeenCalledWith(
+        expect(mockFetchWsf).toHaveBeenCalledWith(
           "fares",
           "/terminalcombo/2025-01-10/1/2"
         );
