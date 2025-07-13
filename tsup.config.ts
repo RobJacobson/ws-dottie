@@ -7,5 +7,5 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-query'],
+  external: ['react', 'react-dom', '@tanstack/react-query', '@tanstack/query-core'],
 }) 

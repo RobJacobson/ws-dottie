@@ -3,9 +3,9 @@
 
 import { useEffect, useRef } from "react";
 
-import { useCacheFlushDateSchedule } from "../../schedule/cacheFlushDateSchedule";
-import { useCacheFlushDateTerminals } from "../../terminals/cacheFlushDateTerminals";
-import { useCacheFlushDateVessels } from "../../vessels/cacheFlushDateVessels";
+import { useCacheFlushDateSchedule } from "../../api/wsf/schedule/hook";
+import { useCacheFlushDateTerminals } from "../../api/wsf/terminals/hook";
+import { useCacheFlushDateVessels } from "../../api/wsf/vessels/hook";
 import { useWsfCacheFlushMonitor } from "./invalidation";
 
 /**
@@ -38,33 +38,33 @@ export const WsfCacheProvider = () => {
 
   // Monitor vessels cache flush date changes
   useEffect(() => {
-    const currentFlushDate = vesselsCacheFlushDate?.lastUpdated || null;
+    const currentFlushDate = vesselsCacheFlushDate || null;
     monitorVesselsCacheFlush(
       previousVesselsFlushDate.current,
       currentFlushDate
     );
     previousVesselsFlushDate.current = currentFlushDate;
-  }, [vesselsCacheFlushDate?.lastUpdated, monitorVesselsCacheFlush]);
+  }, [vesselsCacheFlushDate, monitorVesselsCacheFlush]);
 
   // Monitor terminals cache flush date changes
   useEffect(() => {
-    const currentFlushDate = terminalsCacheFlushDate?.lastUpdated || null;
+    const currentFlushDate = terminalsCacheFlushDate || null;
     monitorTerminalsCacheFlush(
       previousTerminalsFlushDate.current,
       currentFlushDate
     );
     previousTerminalsFlushDate.current = currentFlushDate;
-  }, [terminalsCacheFlushDate?.lastUpdated, monitorTerminalsCacheFlush]);
+  }, [terminalsCacheFlushDate, monitorTerminalsCacheFlush]);
 
   // Monitor schedule cache flush date changes
   useEffect(() => {
-    const currentFlushDate = scheduleCacheFlushDate?.lastUpdated || null;
+    const currentFlushDate = scheduleCacheFlushDate || null;
     monitorScheduleCacheFlush(
       previousScheduleFlushDate.current,
       currentFlushDate
     );
     previousScheduleFlushDate.current = currentFlushDate;
-  }, [scheduleCacheFlushDate?.lastUpdated, monitorScheduleCacheFlush]);
+  }, [scheduleCacheFlushDate, monitorScheduleCacheFlush]);
 
   // This component doesn't render anything
   return null;

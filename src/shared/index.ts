@@ -3,7 +3,6 @@
 export * from "./caching/CacheProvider";
 export * from "./caching/config";
 export * from "./caching/invalidation";
-export * from "./caching/persistence";
 export * from "./fetching/dateUtils";
 export * from "./fetching/errors";
 export * from "./fetching/fetch";

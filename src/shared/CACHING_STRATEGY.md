@@ -1,6 +1,6 @@
 # WSF API Caching Strategy
 
-This document explains the caching strategy implemented for the WSF API integration, including React Query configurations, cache invalidation, persistence, and best practices.
+This document explains the caching strategy implemented for the WSF API integration, including React Query configurations, cache invalidation, and best practices.
 
 ## Overview
 
@@ -10,7 +10,6 @@ The WSF API caching strategy is designed to optimize performance and user experi
 2. **Providing real-time updates** for frequently changing data
 3. **Minimizing stale data** through cache invalidation
 4. **Optimizing network usage** with appropriate refetch intervals
-5. **Enabling offline-first experience** with localStorage persistence
 
 ## Type System Integration
 
@@ -32,49 +31,7 @@ const { data: vessels } = useVesselLocations();
 // vessels is typed as VesselLocation[] | undefined
 ```
 
-## Persistence Strategy
 
-### Global Persistence with React Query
-
-The app uses React Query's official persistence system for comprehensive caching:
-
-- **Storage**: localStorage (web) / AsyncStorage (mobile)
-- **Scope**: All queries automatically persisted
-- **Max Age**: 7 days with automatic cleanup
-- **Cache Buster**: `v1` (for app updates)
-- **Graceful Degradation**: Falls back to memory-only if storage unavailable
-
-### Startup Refetch Strategy
-
-On app startup, the system implements a hybrid approach for optimal performance:
-
-1. **Loads persisted data instantly** - No loading spinners, immediate UI rendering
-2. **Selectively refetches real-time data** - Only data that changes frequently
-3. **Preserves infrequent data cache** - Until cache flush invalidation
-
-```typescript
-// Real-time data gets refetched on startup
-queryClient.invalidateQueries({ 
-  queryKey: ["vessels", "locations"],
-  exact: true 
-});
-queryClient.invalidateQueries({ 
-  queryKey: ["terminals", "sailingSpace"],
-  exact: true 
-});
-
-// Infrequent data stays cached until cache flush invalidation
-// useVesselVerbose() - stays cached (vessel specifications)
-// useTerminalVerbose() - stays cached (terminal info)
-// useRoutes() - stays cached (published routes)
-// useSchedules() - stays cached (published schedules)
-```
-
-### Benefits of Hybrid Approach
-- **Better Performance**: Fewer network requests on startup
-- **Improved UX**: Faster app loading with cached data
-- **Efficient Resource Usage**: Only refetch what's likely stale
-- **Automatic Invalidation**: Cache flush dates handle data updates
 
 ## Caching Configurations
 
@@ -171,13 +128,7 @@ All WSF API hooks have been updated with appropriate caching configurations:
 - `useValidDateRange()` - Infrequent updates (API date range)
 - `useCacheFlushDateSchedule()` - Cache flush monitoring
 
-### ✅ Persistence Implementation
 
-- **Global persistence** for all queries using `@tanstack/query-persist-client`
-- **Hybrid startup refetch** - selective invalidation for real-time data only
-- **Cache flush integration** for automatic invalidation of infrequent data
-- **Graceful degradation** - falls back to memory-only if storage unavailable
-- **Cross-platform support** - localStorage (web) and AsyncStorage (mobile)
 
 ## Cache Invalidation Strategy
 
@@ -225,59 +176,7 @@ function MyComponent() {
 }
 ```
 
-## Persistence Setup
 
-### Query Client Configuration
-
-The persistence is configured at the QueryClient level:
-
-```typescript
-import { QueryClient } from '@tanstack/react-query';
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
-import { persistQueryClient } from '@tanstack/react-query-persist-client';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days
-      staleTime: 1000 * 60 * 5, // 5 minutes
-    },
-  },
-});
-
-// Configure persistence
-const persister = createSyncStoragePersister({
-  storage: typeof window !== 'undefined' ? window.localStorage : undefined,
-  key: 'wsf-query-cache',
-});
-
-// Enable persistence
-persistQueryClient({
-  queryClient,
-  persister,
-  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-  buster: 'v1', // Cache buster for app updates
-});
-```
-
-### Startup Invalidation
-
-Configure selective startup invalidation:
-
-```typescript
-// In your app startup code
-useEffect(() => {
-  // Only invalidate real-time data on startup
-  queryClient.invalidateQueries({ 
-    queryKey: ["vessels", "locations"],
-    exact: true 
-  });
-  queryClient.invalidateQueries({ 
-    queryKey: ["terminals", "sailingSpace"],
-    exact: true 
-  });
-}, []);
-```
 
 ## Implementation Examples
 
@@ -292,7 +191,6 @@ function VesselMap() {
   // Data automatically refetches every 5 seconds
   // Cache is considered stale after 30 seconds
   // Queries are invalidated when vessel cache flush date changes
-  // Data is persisted to localStorage for offline access
   
   return (
     <Map>
@@ -314,7 +212,6 @@ function TerminalInfo({ terminalId }: { terminalId: number }) {
   
   // Data is cached for 1 week, no automatic refetch
   // Queries are invalidated when terminal cache flush date changes
-  // Data is persisted to localStorage for offline access
   
   return (
     <div>
@@ -335,7 +232,6 @@ function RouteSchedule({ tripDate }: { tripDate: Date }) {
   
   // Data is cached for 1 week, no automatic refetch
   // Queries are invalidated when schedule cache flush date changes
-  // Data is persisted to localStorage for offline access
   
   return (
     <div>
@@ -401,22 +297,7 @@ queryKey: ["vessels", "locations", "byVesselId", vesselId]
 queryKey: ["vessels"]
 ```
 
-### 5. Monitor Cache Performance
 
-Use React Query DevTools to monitor cache performance:
-
-```tsx
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-function App() {
-  return (
-    <>
-      <YourApp />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </>
-  );
-}
-```
 
 ## Configuration Reference
 
@@ -468,9 +349,7 @@ const {
 
 1. Check if the cache flush date has changed
 2. Verify the `WsfCacheProvider` is mounted
-3. Check React Query DevTools for cache status
-4. Manually invalidate queries if needed
-5. Check localStorage for persisted data
+3. Manually invalidate queries if needed
 
 ### Too Many API Calls
 
@@ -484,14 +363,8 @@ const {
 2. Check if cache invalidation is working
 3. Verify query keys are consistent
 4. Consider manual invalidation for critical updates
-5. Check if persistence is working correctly
 
-### Persistence Issues
 
-1. Check localStorage quota (typically 5-10MB)
-2. Verify the persistence is set up correctly
-3. Check for localStorage errors in console
-4. Ensure the app is running on web platform
 
 ## Testing
 
@@ -501,6 +374,5 @@ The caching system has been thoroughly tested with:
 - ✅ Integration tests for cache invalidation
 - ✅ Performance tests for query optimization
 - ✅ Error handling tests for network failures
-- ✅ Persistence tests for localStorage functionality
 
 All tests pass and the caching system is production-ready. 

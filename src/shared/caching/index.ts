@@ -2,4 +2,3 @@
 
 export * from "./config";
 export * from "./invalidation";
-export * from "./persistence";

@@ -1,7 +1,7 @@
 {
   "name": "wsdot-api-client",
   "version": "1.0.0",
-  "type": "module",
+
   "description": "Complete TypeScript client for WSDOT Traveler Information APIs",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -48,7 +48,7 @@
   },
   "peerDependencies": {
     "react": ">=19.0.0",
-    "react-query": ">=3.0.0"
+    "@tanstack/react-query": ">=5.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.6",
@@ -62,7 +62,7 @@
     "jsdom": "^26.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-query": "^3.0.0",
+    "@tanstack/react-query": "^5.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0",
     "vitest": "^1.0.0"
