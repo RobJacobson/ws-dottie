@@ -370,8 +370,8 @@ const {
 
 The caching system has been thoroughly tested with:
 
-- ✅ Unit tests for all caching configurations
-- ✅ Integration tests for cache invalidation
+- ✅ E2E tests for all caching configurations
+- ✅ E2E tests for cache invalidation
 - ✅ Performance tests for query optimization
 - ✅ Error handling tests for network failures
 

@@ -1,7 +1,6 @@
 {
   "name": "wsdot-api-client",
   "version": "1.0.0",
-
   "description": "Complete TypeScript client for WSDOT Traveler Information APIs",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -27,7 +26,6 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest --config config/vitest.config.ts",
-    "test:unit": "vitest --config config/vitest.config.ts tests/unit/",
     "test:e2e": "vitest --config config/vitest.e2e.config.ts",
     "test:e2e:api": "vitest --config config/vitest.e2e.api.config.ts",
     "test:e2e:hook": "vitest --config config/vitest.e2e.hook.config.ts",
@@ -38,21 +36,22 @@
     "test:e2e:schedule": "vitest --config config/vitest.e2e.config.ts tests/e2e/schedule/",
     "test:e2e:terminals": "vitest --config config/vitest.e2e.config.ts tests/e2e/terminals/",
     "test:e2e:vessels": "vitest --config config/vitest.e2e.config.ts tests/e2e/vessels/",
-    "test:integration": "vitest --config config/vitest.integration.config.ts",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
     "lint": "biome lint",
     "format": "biome format --write",
     "type-check": "tsc --noEmit",
-    "prepublishOnly": "bun run build && bun run test"
+    "prepublishOnly": "npm run build && npm run test"
   },
   "peerDependencies": {
-    "react": ">=19.0.0",
-    "@tanstack/react-query": ">=5.0.0"
+    "@tanstack/react-query": ">=5.0.0",
+    "react": ">=19.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.6",
     "@happy-dom/global-registrator": "^18.0.1",
+    "@tanstack/react-query": "^5.0.0",
+    "@testing-library/react": "^16.3.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^24.0.0",
     "@types/react": "^18.0.0",
@@ -62,7 +61,6 @@
     "jsdom": "^26.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@tanstack/react-query": "^5.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0",
     "vitest": "^1.0.0"

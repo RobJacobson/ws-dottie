@@ -13,7 +13,7 @@ export default defineConfig({
     ],
     environment: "jsdom", // Use jsdom environment for React hook tests
     globals: true,
-    testTimeout: 30000, // 30 seconds for API calls
+    testTimeout: 15000, // 30 seconds for API calls
     hookTimeout: 10000,
     setupFiles: ["tests/e2e/setup.ts"],
     // Explicitly set module format to avoid CJS deprecation warning

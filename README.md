@@ -311,6 +311,29 @@ See the `examples/` directory for complete working examples:
 - `examples/vanilla-js/` - Vanilla JavaScript usage
 - `examples/react-native/` - React Native application
 
+## Testing
+
+The library uses end-to-end (E2E) tests for comprehensive API validation:
+
+- **E2E Tests**: Test complete workflows with live WSDOT APIs
+- **Real API Validation**: All tests validate against actual WSDOT endpoints
+- **Performance Testing**: Includes performance benchmarks for API calls
+- **Error Handling**: Tests error scenarios and edge cases
+
+```bash
+# Run all E2E tests
+npm test
+
+# Run specific E2E test categories
+npm run test:e2e:fares
+npm run test:e2e:schedule
+npm run test:e2e:terminals
+npm run test:e2e:vessels
+
+# Run tests with coverage
+npm run test:coverage
+```
+
 ## Development
 
 ```bash

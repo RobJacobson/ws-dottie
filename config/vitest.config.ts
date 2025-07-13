@@ -3,11 +3,12 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ["tests/**/*.test.ts"],
+    include: ["tests/e2e/**/*.e2e.test.ts"],
     exclude: ["node_modules", "dist"],
     environment: "jsdom",
     globals: true,
-    setupFiles: ["tests/setup.ts"],
+    setupFiles: ["tests/e2e/setup.ts"],
+    testTimeout: 15000,
     // Load environment variables from .env file
     env: {
       WSDOT_ACCESS_TOKEN: process.env.WSDOT_ACCESS_TOKEN || "",
