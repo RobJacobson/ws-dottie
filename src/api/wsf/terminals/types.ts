@@ -244,11 +244,3 @@ export type TerminalVerbose = {
   TransitLinks: TerminalTransitLink[];
   WaitTimes: TerminalWaitTime[];
 };
-
-/**
- * Terminals cache flush date response
- */
-export type TerminalsCacheFlushDate = {
-  LastUpdated: Date;
-  Source: string;
-};

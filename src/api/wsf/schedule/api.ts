@@ -97,18 +97,20 @@ export const getTerminalsAndMates = (
  * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
  * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param params - Object containing trip date and route information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.routeId - The unique identifier for the route
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param routeId - The unique identifier for the route
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations for the route
  */
-export const getTerminalsAndMatesByRoute = (params: {
-  tripDate: Date;
-  routeId: number;
-}): Promise<ScheduleTerminalCombo[]> =>
+export const getTerminalsAndMatesByRoute = (
+  tripDate: Date,
+  routeId: number
+): Promise<ScheduleTerminalCombo[]> =>
   fetchWsfArray<ScheduleTerminalCombo>(
     "schedule",
-    buildWsfUrl("/terminalsandmatesbyroute/{tripDate}/{routeId}", params)
+    buildWsfUrl("/terminalsandmatesbyroute/{tripDate}/{routeId}", {
+      tripDate,
+      routeId,
+    })
   );
 
 /**
@@ -162,22 +164,21 @@ export const getRoutes = (tripDate: Date): Promise<Route[]> =>
  * to match the specified terminal combination. Valid departing and arriving terminals
  * may be found using the terminalsAndMates endpoint.
  *
- * @param params - Object containing trip date and terminal information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @returns Promise resolving to an array of Route objects filtered by terminal combination
  */
-export const getRoutesByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-}): Promise<Route[]> =>
+export const getRoutesByTerminals = (
+  tripDate: Date,
+  departingTerminalId: number,
+  arrivingTerminalId: number
+): Promise<Route[]> =>
   fetchWsfArray<Route>(
     "schedule",
     buildWsfUrl(
       "/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-      params
+      { tripDate, departingTerminalId, arrivingTerminalId }
     )
   );
 
@@ -222,22 +223,21 @@ export const getRouteDetails = (tripDate: Date): Promise<Route[]> =>
  * the specified terminal combination. Valid departing and arriving terminals may be found
  * using the terminalsAndMates endpoint.
  *
- * @param params - Object containing trip date and terminal information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @returns Promise resolving to an array of Route objects with detailed information filtered by terminal combination
  */
-export const getRouteDetailsByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-}): Promise<Route[]> =>
+export const getRouteDetailsByTerminals = (
+  tripDate: Date,
+  departingTerminalId: number,
+  arrivingTerminalId: number
+): Promise<Route[]> =>
   fetchWsfArray<Route>(
     "schedule",
     buildWsfUrl(
       "/routedetails/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-      params
+      { tripDate, departingTerminalId, arrivingTerminalId }
     )
   );
 
@@ -248,18 +248,17 @@ export const getRouteDetailsByTerminals = (params: {
  * for a given trip date. This endpoint filters the resultset to a single route,
  * providing comprehensive details for that specific route.
  *
- * @param params - Object containing trip date and route information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.routeId - The unique identifier for the route
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param routeId - The unique identifier for the route
  * @returns Promise resolving to a RouteDetails object containing detailed information for the specified route
  */
-export const getRouteDetailsByRoute = (params: {
-  tripDate: Date;
-  routeId: number;
-}): Promise<RouteDetails | null> =>
+export const getRouteDetailsByRoute = (
+  tripDate: Date,
+  routeId: number
+): Promise<RouteDetails | null> =>
   fetchWsf<RouteDetails>(
     "schedule",
-    buildWsfUrl("/routedetails/{tripDate}/{routeId}", params)
+    buildWsfUrl("/routedetails/{tripDate}/{routeId}", { tripDate, routeId })
   );
 
 // ============================================================================
@@ -326,16 +325,13 @@ export const getScheduledRoutesBySeason = (
  * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
  * Scheduled routes may be determined using schedRoutes.
  *
- * @param params - Object containing scheduled route information
- * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param schedRouteId - The unique identifier for the scheduled route
  * @returns Promise resolving to an array of Sailing objects containing sailing information
  */
-export const getSailings = (params: {
-  schedRouteId: number;
-}): Promise<Sailing[]> =>
+export const getSailings = (schedRouteId: number): Promise<Sailing[]> =>
   fetchWsfArray<Sailing>(
     "schedule",
-    buildWsfUrl("/sailings/{schedRouteId}", params)
+    buildWsfUrl("/sailings/{schedRouteId}", { schedRouteId })
   );
 
 /**
@@ -347,16 +343,13 @@ export const getSailings = (params: {
  * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
  * Scheduled routes may be determined using schedRoutes.
  *
- * @param params - Object containing scheduled route information
- * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param schedRouteId - The unique identifier for the scheduled route
  * @returns Promise resolving to an array of Sailing objects containing all sailing information
  */
-export const getAllSailings = (params: {
-  schedRouteId: number;
-}): Promise<Sailing[]> =>
+export const getAllSailings = (schedRouteId: number): Promise<Sailing[]> =>
   fetchWsfArray<Sailing>(
     "schedule",
-    buildWsfUrl("/allsailings/{schedRouteId}", params)
+    buildWsfUrl("/allsailings/{schedRouteId}", { schedRouteId })
   );
 
 // ============================================================================
@@ -425,18 +418,17 @@ export const getTimeAdjustmentsBySchedRoute = (
  * using routes. Similarly, a valid trip date may be determined using validDateRange.
  * Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param params - Object containing trip date and route information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.routeId - The unique identifier for the route
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param routeId - The unique identifier for the route
  * @returns Promise resolving to an array of Schedule objects containing schedule information
  */
-export const getScheduleByRoute = (params: {
-  tripDate: Date;
-  routeId: number;
-}): Promise<ScheduleResponse | null> =>
+export const getScheduleByRoute = (
+  tripDate: Date,
+  routeId: number
+): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
-    buildWsfUrl("/schedule/{tripDate}/{routeId}", params)
+    buildWsfUrl("/schedule/{tripDate}/{routeId}", { tripDate, routeId })
   );
 
 /**
@@ -448,22 +440,21 @@ export const getScheduleByRoute = (params: {
  * a valid trip date may be determined using validDateRange. Please format the trip
  * date input as 'YYYY-MM-DD'.
  *
- * @param params - Object containing trip date and terminal information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @returns Promise resolving to an array of Schedule objects containing schedule information
  */
-export const getScheduleByTerminals = (params: {
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-}): Promise<ScheduleResponse | null> =>
+export const getScheduleByTerminals = (
+  tripDate: Date,
+  departingTerminalId: number,
+  arrivingTerminalId: number
+): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
     buildWsfUrl(
       "/schedule/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-      params
+      { tripDate, departingTerminalId, arrivingTerminalId }
     )
   );
 
@@ -475,20 +466,19 @@ export const getScheduleByTerminals = (params: {
  * to now should not be included in the resultset and 'false' if they should be included
  * in the resultset.
  *
- * @param params - Object containing route and time filter information
- * @param params.routeId - The unique identifier for the route
- * @param params.onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
+ * @param routeId - The unique identifier for the route
+ * @param onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
  * @returns Promise resolving to an array of Schedule objects containing today's schedule information
  */
-export const getScheduleTodayByRoute = (params: {
-  routeId: number;
-  onlyRemainingTimes?: boolean;
-}): Promise<ScheduleResponse | null> =>
+export const getScheduleTodayByRoute = (
+  routeId: number,
+  onlyRemainingTimes?: boolean
+): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
     buildWsfUrl("/scheduletoday/{routeId}/{onlyRemainingTimes}", {
-      routeId: params.routeId,
-      onlyRemainingTimes: params.onlyRemainingTimes ?? false,
+      routeId,
+      onlyRemainingTimes: onlyRemainingTimes ?? false,
     })
   );
 
@@ -500,25 +490,24 @@ export const getScheduleTodayByRoute = (params: {
  * value, please indicate 'true' if departure times prior to now should not be included
  * in the resultset and 'false' if they should be included in the resultset.
  *
- * @param params - Object containing terminal and time filter information
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
- * @param params.onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
  * @returns Promise resolving to an array of Schedule objects containing today's schedule information
  */
-export const getScheduleTodayByTerminals = (params: {
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-  onlyRemainingTimes?: boolean;
-}): Promise<ScheduleResponse | null> =>
+export const getScheduleTodayByTerminals = (
+  departingTerminalId: number,
+  arrivingTerminalId: number,
+  onlyRemainingTimes?: boolean
+): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
     buildWsfUrl(
       "/scheduletoday/{departingTerminalId}/{arrivingTerminalId}/{onlyRemainingTimes}",
       {
-        departingTerminalId: params.departingTerminalId,
-        arrivingTerminalId: params.arrivingTerminalId,
-        onlyRemainingTimes: params.onlyRemainingTimes ?? false,
+        departingTerminalId,
+        arrivingTerminalId,
+        onlyRemainingTimes: onlyRemainingTimes ?? false,
       }
     )
   );

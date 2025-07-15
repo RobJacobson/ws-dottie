@@ -1,5 +1,6 @@
 // WSF Vessels API functions
 
+import { toDateStamp } from "@/shared/fetching/dateUtils";
 import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 import { buildWsfUrl } from "@/shared/fetching/urlBuilder";
 
@@ -162,13 +163,16 @@ export const getVesselHistory = (): Promise<VesselHistory[]> =>
  */
 export const getVesselHistoryByVesselAndDateRange = (
   vesselName: string,
-  dateStart: string,
-  dateEnd: string
-): Promise<VesselHistory[]> =>
-  fetchWsfArray<VesselHistory>(
+  dateStart: Date,
+  dateEnd: Date
+): Promise<VesselHistory[]> => {
+  const formattedDateStart = toDateStamp(dateStart);
+  const formattedDateEnd = toDateStamp(dateEnd);
+  return fetchWsfArray<VesselHistory>(
     "vessels",
-    `/vesselhistory/${vesselName}/${dateStart}/${dateEnd}`
+    `/vesselhistory/${vesselName}/${formattedDateStart}/${formattedDateEnd}`
   );
+};
 
 // ============================================================================
 // VESSEL VERBOSE API FUNCTIONS

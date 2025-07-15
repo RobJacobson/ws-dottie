@@ -8,7 +8,6 @@ import type {
   TerminalBulletin,
   TerminalLocation,
   TerminalSailingSpace,
-  TerminalsCacheFlushDate,
   TerminalTransport,
   TerminalVerbose,
   TerminalWaitTime,

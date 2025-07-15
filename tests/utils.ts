@@ -1,5 +1,7 @@
 // Test utilities and mock data for WSF API tests
 
+import { toDateStamp } from "@/shared/fetching/dateUtils";
+
 export const mockRawVesselLocationResponse = [
   {
     VesselID: 1,
@@ -111,8 +113,7 @@ export const createMockErrorResponse = (errorMessage = "Mock error") => ({
 export const createMockWsfDate = (timestamp: number) => `/Date(${timestamp})/`;
 
 // Helper function to create mock ISO date strings
-export const createMockIsoDate = (date: Date) =>
-  date.toISOString().split("T")[0];
+export const createMockIsoDate = (date: Date) => toDateStamp(date);
 
 // Helper function to create mock US date strings
 export const createMockUsDate = (date: Date) => {

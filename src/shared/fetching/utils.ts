@@ -1,5 +1,7 @@
 // WSF shared utilities
 
+import { toDateStamp } from "./dateUtils";
+
 /**
  * Type representing JSON-like data that can be transformed
  */
@@ -42,9 +44,7 @@ const isYyyyMmDdDate = (str: string): boolean => {
 
   // Validate the date is actually valid
   const date = new Date(str);
-  return (
-    !Number.isNaN(date.getTime()) && date.toISOString().split("T")[0] === str
-  );
+  return !Number.isNaN(date.getTime()) && toDateStamp(date) === str;
 };
 
 /**

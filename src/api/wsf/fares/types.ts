@@ -140,38 +140,3 @@ export type FareTotal = {
   BriefDescription: string;
   Amount: number;
 };
-
-/**
- * Parameters for fare line items queries
- */
-export type FareLineItemsParams = {
-  tripDate: Date;
-  departingTerminalID: number;
-  arrivingTerminalID: number;
-  roundTrip: boolean;
-};
-
-/**
- * Parameters for terminal queries
- */
-export type TerminalParams = {
-  tripDate: Date;
-  terminalID?: number;
-};
-
-/**
- * Parameters for terminal mates queries
- */
-export type TerminalMatesParams = {
-  tripDate: Date;
-  terminalID: number;
-};
-
-/**
- * Parameters for terminal combo queries
- */
-export type TerminalComboParams = {
-  tripDate: Date;
-  departingTerminalID: number;
-  arrivingTerminalID: number;
-};

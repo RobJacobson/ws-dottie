@@ -2,6 +2,10 @@
 
 /**
  * Converts a JavaScript Date to WSF API date format (MM/DD/YYYY)
+ *
+ * @example
+ * Input: new Date('2024-12-25')
+ * Output: "12/25/2024"
  */
 export const dateToWsfFormat = (date: Date): string => {
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -12,13 +16,32 @@ export const dateToWsfFormat = (date: Date): string => {
 
 /**
  * Converts a JavaScript Date to WSF API path parameter format (YYYY-MM-DD)
+ *
+ * @example
+ * Input: new Date('2024-12-25')
+ * Output: "2024-12-25"
  */
 export const dateToWsfPathFormat = (date: Date): string => {
   return date.toISOString().split("T")[0]; // YYYY-MM-DD format
 };
 
 /**
+ * Converts a JavaScript Date to ISO date stamp (YYYY-MM-DD)
+ *
+ * @example
+ * Input: new Date('2024-12-25')
+ * Output: "2024-12-25"
+ */
+export const toDateStamp = (date: Date): string => {
+  return date.toISOString().split("T")[0];
+};
+
+/**
  * Converts a JavaScript Date to WSF API time format (HH:MM AM/PM)
+ *
+ * @example
+ * Input: new Date('2024-12-25T14:30:00')
+ * Output: "2:30 PM"
  */
 export const dateToWsfTimeFormat = (date: Date): string => {
   const hours = date.getHours();
@@ -30,6 +53,10 @@ export const dateToWsfTimeFormat = (date: Date): string => {
 
 /**
  * Converts a JavaScript Date to WSF API datetime format (MM/DD/YYYY HH:MM AM/PM)
+ *
+ * @example
+ * Input: new Date('2024-12-25T14:30:00')
+ * Output: "12/25/2024 2:30 PM"
  */
 export const dateToWsfDateTimeFormat = (date: Date): string => {
   return `${dateToWsfFormat(date)} ${dateToWsfTimeFormat(date)}`;
@@ -37,6 +64,10 @@ export const dateToWsfDateTimeFormat = (date: Date): string => {
 
 /**
  * Parses WSF API date format (MM/DD/YYYY) to JavaScript Date
+ *
+ * @example
+ * Input: "12/25/2024"
+ * Output: Date object representing December 25, 2024
  */
 export const parseWsfScheduleDate = (dateString: string): Date => {
   const [month, day, year] = dateString.split("/").map(Number);
@@ -45,6 +76,10 @@ export const parseWsfScheduleDate = (dateString: string): Date => {
 
 /**
  * Parses WSF API time format (HH:MM AM/PM) to JavaScript Date (today's date)
+ *
+ * @example
+ * Input: "2:30 PM"
+ * Output: Date object representing today at 2:30 PM
  */
 export const parseWsfTime = (timeString: string): Date => {
   const [time, ampm] = timeString.split(" ");
@@ -67,6 +102,10 @@ export const parseWsfTime = (timeString: string): Date => {
 
 /**
  * Parses WSF API datetime format (MM/DD/YYYY HH:MM AM/PM) to JavaScript Date
+ *
+ * @example
+ * Input: "12/25/2024 2:30 PM"
+ * Output: Date object representing December 25, 2024 at 2:30 PM
  */
 export const parseWsfDateTime = (dateTimeString: string): Date => {
   const [datePart, timePart] = dateTimeString.split(" ");
@@ -84,11 +123,49 @@ export const parseWsfDateTime = (dateTimeString: string): Date => {
 };
 
 /**
+ * Parses WSF /Date(timestamp)/ format to JavaScript Date
+ * Uses fixed substring operations instead of regex for better performance
+ * WSF timestamps are always 13 digits (milliseconds since epoch)
+ *
+ * @example
+ * Input: "/Date(1703123456789)/"
+ * Output: Date object representing the timestamp
+ */
+export const parseWsfDateString = (dateString: string): Date => {
+  // Check if it's a WSF date format: "/Date(timestamp)/"
+  if (dateString.startsWith("/Date(") && dateString.endsWith(")/")) {
+    // Extract the 13-digit timestamp: positions 6-19
+    // "/Date(" is 6 characters, timestamp is 13 digits
+    const timestamp = dateString.substring(6, 19);
+    return new Date(parseInt(timestamp));
+  }
+
+  // Handle regular date strings
+  return new Date(dateString);
+};
+
+/**
  * Parses various WSF date formats to JavaScript Date
  * Handles WSF /Date(timestamp)/ format, regular date strings, Date objects, and timestamps
  *
  * @param dateInput - Date input that can be a string, Date object, or number
  * @returns JavaScript Date object
+ *
+ * @example
+ * Input: "/Date(1703123456789)/"
+ * Output: Date object representing the timestamp
+ *
+ * @example
+ * Input: "2024-12-25"
+ * Output: Date object representing December 25, 2024
+ *
+ * @example
+ * Input: new Date('2024-12-25')
+ * Output: Same Date object (no conversion)
+ *
+ * @example
+ * Input: 1703123456789
+ * Output: Date object representing the timestamp
  */
 export const parseWsfDate = (dateInput: string | Date | number): Date => {
   // If it's already a Date object, return it
@@ -103,14 +180,7 @@ export const parseWsfDate = (dateInput: string | Date | number): Date => {
 
   // If it's a string, parse it
   if (typeof dateInput === "string") {
-    // Handle WSF date format: "/Date(timestamp)/"
-    const match = dateInput.match(/\/Date\((\d+)(?:[+-]\d+)?\)\//);
-    if (match) {
-      return new Date(parseInt(match[1]));
-    }
-
-    // Handle regular date strings
-    return new Date(dateInput);
+    return parseWsfDateString(dateInput);
   }
 
   // Fallback
@@ -119,14 +189,22 @@ export const parseWsfDate = (dateInput: string | Date | number): Date => {
 };
 
 /**
- * Gets today's date in WSF format
+ * Gets today's date in WSF format (MM/DD/YYYY)
+ *
+ * @example
+ * If today is December 25, 2024
+ * Output: "12/25/2024"
  */
 export const getTodayWsfFormat = (): string => {
   return dateToWsfFormat(new Date());
 };
 
 /**
- * Gets tomorrow's date in WSF format
+ * Gets tomorrow's date in WSF format (MM/DD/YYYY)
+ *
+ * @example
+ * If today is December 25, 2024
+ * Output: "12/26/2024"
  */
 export const getTomorrowWsfFormat = (): string => {
   const tomorrow = new Date();
@@ -136,6 +214,14 @@ export const getTomorrowWsfFormat = (): string => {
 
 /**
  * Checks if a date is today
+ *
+ * @example
+ * Input: new Date() (current date)
+ * Output: true
+ *
+ * @example
+ * Input: new Date('2024-12-25') (when today is not December 25, 2024)
+ * Output: false
  */
 export const isToday = (date: Date): boolean => {
   const today = new Date();
@@ -148,6 +234,14 @@ export const isToday = (date: Date): boolean => {
 
 /**
  * Checks if a date is tomorrow
+ *
+ * @example
+ * Input: tomorrow's date
+ * Output: true
+ *
+ * @example
+ * Input: today's date
+ * Output: false
  */
 export const isTomorrow = (date: Date): boolean => {
   const tomorrow = new Date();
@@ -161,6 +255,18 @@ export const isTomorrow = (date: Date): boolean => {
 
 /**
  * Gets a human-readable date label (Today, Tomorrow, or formatted date)
+ *
+ * @example
+ * Input: today's date
+ * Output: "Today"
+ *
+ * @example
+ * Input: tomorrow's date
+ * Output: "Tomorrow"
+ *
+ * @example
+ * Input: new Date('2024-12-25') (when not today or tomorrow)
+ * Output: "12/25/2024"
  */
 export const getDateLabel = (date: Date): string => {
   if (isToday(date)) return "Today";

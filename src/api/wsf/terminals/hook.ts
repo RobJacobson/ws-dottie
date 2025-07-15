@@ -38,7 +38,6 @@ import type {
   TerminalBulletin,
   TerminalLocation,
   TerminalSailingSpace,
-  TerminalsCacheFlushDate,
   TerminalTransport,
   TerminalVerbose,
   TerminalWaitTime,
@@ -52,13 +51,17 @@ import type {
 /**
  * React Query hook for fetching all terminal basics
  *
+ * @param options - Optional React Query options
  * @returns Query result containing array of TerminalBasics objects
  */
-export const useTerminalBasics = () => {
+export const useTerminalBasics = (
+  options?: Parameters<typeof useQuery<TerminalBasics[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "basics"],
     queryFn: getTerminalBasics,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -66,14 +69,19 @@ export const useTerminalBasics = () => {
  * React Query hook for fetching specific terminal basics by terminal ID
  *
  * @param terminalId - The unique identifier for the terminal
+ * @param options - Optional React Query options
  * @returns Query result containing TerminalBasics object for the specified terminal
  */
-export const useTerminalBasicsByTerminalId = (terminalId: number) => {
+export const useTerminalBasicsByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalBasics>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "basics", "byTerminalId", terminalId],
     queryFn: () => getTerminalBasicsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -91,13 +99,17 @@ export const useTerminalBasicsByTerminalId = (terminalId: number) => {
  * This data is updated as new bulletins are posted and provides current
  * announcement information for all terminals.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalBulletin objects with bulletin information
  */
-export const useTerminalBulletins = () => {
+export const useTerminalBulletins = (
+  options?: Parameters<typeof useQuery<TerminalBulletin[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "bulletins"],
     queryFn: getTerminalBulletins,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -113,14 +125,19 @@ export const useTerminalBulletins = () => {
  * announcement information for the specified terminal.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalBulletin objects with bulletin information for the specified terminal
  */
-export const useTerminalBulletinsByTerminalId = (terminalId: number) => {
+export const useTerminalBulletinsByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalBulletin>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "bulletins", "byTerminalId", terminalId],
     queryFn: () => getTerminalBulletinsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -138,13 +155,17 @@ export const useTerminalBulletinsByTerminalId = (terminalId: number) => {
  * This data is updated infrequently and provides static terminal location
  * information that doesn't change often, such as terminal coordinates and addresses.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalLocation objects with terminal location information
  */
-export const useTerminalLocations = () => {
+export const useTerminalLocations = (
+  options?: Parameters<typeof useQuery<TerminalLocation[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "locations"],
     queryFn: getTerminalLocations,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -160,14 +181,19 @@ export const useTerminalLocations = () => {
  * information that doesn't change often, such as terminal coordinates and addresses.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalLocation objects with location information for the specified terminal
  */
-export const useTerminalLocationsByTerminalId = (terminalId: number) => {
+export const useTerminalLocationsByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalLocation>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "locations", "byTerminalId", terminalId],
     queryFn: () => getTerminalLocationsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -186,13 +212,17 @@ export const useTerminalLocationsByTerminalId = (terminalId: number) => {
  * This data is updated frequently and provides dynamic terminal capacity information
  * that changes throughout the day based on current demand and vessel assignments.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalSailingSpace objects with real-time space availability information
  */
-export const useTerminalSailingSpace = () => {
+export const useTerminalSailingSpace = (
+  options?: Parameters<typeof useQuery<TerminalSailingSpace[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "sailingSpace"],
     queryFn: getTerminalSailingSpace,
     ...createFrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -208,14 +238,19 @@ export const useTerminalSailingSpace = () => {
  * that changes throughout the day based on current demand and vessel assignments.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalSailingSpace objects with real-time space availability information for the specified terminal
  */
-export const useTerminalSailingSpaceByTerminalId = (terminalId: number) => {
+export const useTerminalSailingSpaceByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalSailingSpace>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "sailingSpace", "byTerminalId", terminalId],
     queryFn: () => getTerminalSailingSpaceByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createFrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -233,13 +268,17 @@ export const useTerminalSailingSpaceByTerminalId = (terminalId: number) => {
  * This data is updated infrequently and provides static transportation
  * information that doesn't change often, such as transit connections and shuttle services.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalTransport objects with transportation information
  */
-export const useTerminalTransports = () => {
+export const useTerminalTransports = (
+  options?: Parameters<typeof useQuery<TerminalTransport[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "transports"],
     queryFn: getTerminalTransports,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -255,14 +294,19 @@ export const useTerminalTransports = () => {
  * information that doesn't change often, such as transit connections and shuttle services.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalTransport objects with transportation information for the specified terminal
  */
-export const useTerminalTransportsByTerminalId = (terminalId: number) => {
+export const useTerminalTransportsByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalTransport>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "transports", "byTerminalId", terminalId],
     queryFn: () => getTerminalTransportsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -278,13 +322,17 @@ export const useTerminalTransportsByTerminalId = (terminalId: number) => {
  * provides real-time information about terminal congestion and wait times
  * for all WSF terminals.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalWaitTimes objects with wait time information
  */
-export const useTerminalWaitTimes = () => {
+export const useTerminalWaitTimes = (
+  options?: Parameters<typeof useQuery<TerminalWaitTimes[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "waitTimes"],
     queryFn: getTerminalWaitTimes,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -298,14 +346,19 @@ export const useTerminalWaitTimes = () => {
  * specific terminal.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param options - Optional React Query options
  * @returns React Query result containing a TerminalWaitTimes object with wait time information for the specified terminal
  */
-export const useTerminalWaitTimesByTerminalId = (terminalId: number) => {
+export const useTerminalWaitTimesByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalWaitTimes>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "waitTimes", "byTerminalId", terminalId],
     queryFn: () => getTerminalWaitTimesByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -324,13 +377,17 @@ export const useTerminalWaitTimesByTerminalId = (terminalId: number) => {
  * This data is updated infrequently and provides static terminal characteristics
  * that don't change often, such as terminal specifications and facilities.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalVerbose objects with comprehensive terminal information
  */
-export const useTerminalVerbose = () => {
+export const useTerminalVerbose = (
+  options?: Parameters<typeof useQuery<TerminalVerbose[]>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "verbose"],
     queryFn: getTerminalVerbose,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -346,14 +403,19 @@ export const useTerminalVerbose = () => {
  * that don't change often, such as terminal specifications and facilities.
  *
  * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param options - Optional React Query options
  * @returns React Query result containing a TerminalVerbose object with comprehensive information for the specified terminal
  */
-export const useTerminalVerboseByTerminalId = (terminalId: number) => {
+export const useTerminalVerboseByTerminalId = (
+  terminalId: number,
+  options?: Parameters<typeof useQuery<TerminalVerbose>>[0]
+) => {
   return useQuery({
     queryKey: ["terminals", "verbose", "byTerminalId", terminalId],
     queryFn: () => getTerminalVerboseByTerminalId(terminalId),
     enabled: !!terminalId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -366,13 +428,17 @@ export const useTerminalVerboseByTerminalId = (terminalId: number) => {
  *
  * Retrieves the cache flush date for terminals data, which indicates when
  * the data was last updated. This endpoint provides information about data
- * freshness for all terminals endpoints.
+ * freshness and can be used to determine when to refresh cached terminal data.
  *
- * @returns React Query result containing a TerminalsCacheFlushDate object with cache flush information
+ * @param options - Optional React Query options
+ * @returns React Query result containing cache flush date information
  */
-export const useCacheFlushDateTerminals = () =>
+export const useCacheFlushDateTerminals = (
+  options?: Parameters<typeof useQuery<Date | null>>[0]
+) =>
   useQuery({
     queryKey: ["terminals", "cacheFlushDate"],
     queryFn: getCacheFlushDateTerminals,
     ...createCacheFlushOptions(),
+    ...options,
   });

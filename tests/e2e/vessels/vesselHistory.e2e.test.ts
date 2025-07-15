@@ -93,8 +93,8 @@ describe("Vessel History E2E Tests", () => {
   describe("getVesselHistoryByVesselAndDateRange", () => {
     it("should fetch vessel history for specific vessel and date range successfully", async () => {
       const vesselName = "Cathlamet";
-      const dateStart = "2024-01-01";
-      const dateEnd = "2024-01-31";
+      const dateStart = new Date("2024-01-01");
+      const dateEnd = new Date("2024-01-31");
 
       const { data, duration } = await measureApiCall(() =>
         getVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd)
@@ -122,8 +122,8 @@ describe("Vessel History E2E Tests", () => {
 
     it("should handle invalid vessel name gracefully", async () => {
       const invalidVesselName = "InvalidVesselName";
-      const dateStart = "2024-01-01";
-      const dateEnd = "2024-01-31";
+      const dateStart = new Date("2024-01-01");
+      const dateEnd = new Date("2024-01-31");
 
       try {
         const { data, duration } = await measureApiCall(() =>
@@ -152,8 +152,8 @@ describe("Vessel History E2E Tests", () => {
 
     it("should handle invalid date format gracefully", async () => {
       const vesselName = "Cathlamet";
-      const invalidDateStart = "invalid-date";
-      const invalidDateEnd = "invalid-date";
+      const invalidDateStart = new Date("invalid-date");
+      const invalidDateEnd = new Date("invalid-date");
 
       try {
         const { data, duration } = await measureApiCall(() =>
@@ -172,8 +172,9 @@ describe("Vessel History E2E Tests", () => {
         // Should return empty array or throw for invalid date format
         expect(Array.isArray(data)).toBe(true);
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw an error for invalid dates
+        expect(error).toBeInstanceOf(RangeError);
+        expect((error as RangeError).message).toContain("Invalid time value");
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -181,8 +182,8 @@ describe("Vessel History E2E Tests", () => {
 
     it("should handle future date range", async () => {
       const vesselName = "Cathlamet";
-      const futureDateStart = "2030-01-01";
-      const futureDateEnd = "2030-01-31";
+      const futureDateStart = new Date("2030-01-01");
+      const futureDateEnd = new Date("2030-01-31");
 
       const { data, duration } = await measureApiCall(() =>
         getVesselHistoryByVesselAndDateRange(
@@ -206,8 +207,8 @@ describe("Vessel History E2E Tests", () => {
 
     it("should handle reversed date range", async () => {
       const vesselName = "Cathlamet";
-      const dateStart = "2024-01-31";
-      const dateEnd = "2024-01-01"; // End before start
+      const dateStart = new Date("2024-01-31");
+      const dateEnd = new Date("2024-01-01"); // End before start
 
       try {
         const { data, duration } = await measureApiCall(() =>
@@ -317,8 +318,8 @@ describe("Vessel History E2E Tests", () => {
       if (history.length > 0) {
         const firstHistory = history[0];
         const vesselName = firstHistory.Vessel;
-        const dateStart = "2024-01-01";
-        const dateEnd = "2024-12-31";
+        const dateStart = new Date("2024-01-01");
+        const dateEnd = new Date("2024-12-31");
 
         const { data: specificHistory } = await measureApiCall(() =>
           getVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd)

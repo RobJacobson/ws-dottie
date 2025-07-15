@@ -2,26 +2,21 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { parseWsfDate } from "@/shared/fetching/dateUtils";
+import { parseWsfDate, toDateStamp } from "@/shared/fetching/dateUtils";
 import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
 
 import type {
   FareLineItem,
   FareLineItemBasic,
-  FareLineItemsParams,
   FareLineItemsVerboseResponse,
-  FareLineItemVerbose,
   FaresCacheFlushDate,
   FaresTerminal,
   FaresValidDateRange,
   FareTotal,
   FareTotalRequest,
   TerminalCombo,
-  TerminalComboParams,
   TerminalComboVerbose,
   TerminalMate,
-  TerminalMatesParams,
-  TerminalParams,
 } from "./types";
 
 /**
@@ -65,7 +60,7 @@ export const getFaresValidDateRange =
  * @returns Promise resolving to array of valid departing terminals
  */
 export const getFaresTerminals = (tripDate: Date): Promise<FaresTerminal[]> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsfArray<FaresTerminal>("fares", `/terminals/${formattedDate}`);
 };
 
@@ -80,7 +75,7 @@ export const getFaresTerminalMates = (
   tripDate: Date,
   terminalID: number
 ): Promise<TerminalMate[]> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsfArray<TerminalMate>(
     "fares",
     `/terminalmates/${formattedDate}/${terminalID}`
@@ -100,7 +95,7 @@ export const getTerminalCombo = (
   departingTerminalID: number,
   arrivingTerminalID: number
 ): Promise<TerminalCombo> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsf<TerminalCombo>(
     "fares",
     `/terminalcombo/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}`
@@ -116,7 +111,7 @@ export const getTerminalCombo = (
 export const getTerminalComboVerbose = (
   tripDate: Date
 ): Promise<TerminalComboVerbose[]> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsfArray<TerminalComboVerbose>(
     "fares",
     `/terminalcomboverbose/${formattedDate}`
@@ -138,7 +133,7 @@ export const getFareLineItemsBasic = (
   arrivingTerminalID: number,
   roundTrip: boolean
 ): Promise<FareLineItemBasic[]> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsfArray<FareLineItemBasic>(
     "fares",
     `/farelineitemsbasic/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
@@ -160,7 +155,7 @@ export const getFareLineItems = (
   arrivingTerminalID: number,
   roundTrip: boolean
 ): Promise<FareLineItem[]> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsfArray<FareLineItem>(
     "fares",
     `/farelineitems/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
@@ -176,7 +171,7 @@ export const getFareLineItems = (
 export const getFareLineItemsVerbose = (
   tripDate: Date
 ): Promise<FareLineItemsVerboseResponse> => {
-  const formattedDate = tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(tripDate);
   return fetchWsf<FareLineItemsVerboseResponse>(
     "fares",
     `/farelineitemsverbose/${formattedDate}`
@@ -192,7 +187,7 @@ export const getFareLineItemsVerbose = (
 export const getFareTotals = (
   request: FareTotalRequest
 ): Promise<FareTotal[]> => {
-  const formattedDate = request.tripDate.toISOString().split("T")[0];
+  const formattedDate = toDateStamp(request.tripDate);
   const fareLineItemIDs = request.fareLineItemIDs.join(",");
   const quantities = request.quantities.join(",");
 
@@ -201,63 +196,3 @@ export const getFareTotals = (
     `/faretotals/${formattedDate}/${request.departingTerminalID}/${request.arrivingTerminalID}/${request.roundTrip}/${fareLineItemIDs}/${quantities}`
   );
 };
-
-// Convenience functions with parameter objects
-
-/**
- * Get fare line items using parameter object
- *
- * @param params - Fare line items parameters
- * @returns Promise resolving to array of fare line items
- */
-export const getFareLineItemsWithParams = (
-  params: FareLineItemsParams
-): Promise<FareLineItem[]> =>
-  getFareLineItems(
-    params.tripDate,
-    params.departingTerminalID,
-    params.arrivingTerminalID,
-    params.roundTrip
-  );
-
-/**
- * Get fare line items basic using parameter object
- *
- * @param params - Fare line items parameters
- * @returns Promise resolving to array of basic fare line items
- */
-export const getFareLineItemsBasicWithParams = (
-  params: FareLineItemsParams
-): Promise<FareLineItemBasic[]> =>
-  getFareLineItemsBasic(
-    params.tripDate,
-    params.departingTerminalID,
-    params.arrivingTerminalID,
-    params.roundTrip
-  );
-
-/**
- * Get terminal mates using parameter object
- *
- * @param params - Terminal mates parameters
- * @returns Promise resolving to array of terminal mates
- */
-export const getTerminalMatesWithParams = (
-  params: TerminalMatesParams
-): Promise<TerminalMate[]> =>
-  getFaresTerminalMates(params.tripDate, params.terminalID);
-
-/**
- * Get terminal combo using parameter object
- *
- * @param params - Terminal combo parameters
- * @returns Promise resolving to terminal combination
- */
-export const getTerminalComboWithParams = (
-  params: TerminalComboParams
-): Promise<TerminalCombo> =>
-  getTerminalCombo(
-    params.tripDate,
-    params.departingTerminalID,
-    params.arrivingTerminalID
-  );

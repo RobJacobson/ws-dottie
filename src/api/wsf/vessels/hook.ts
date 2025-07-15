@@ -7,6 +7,7 @@ import {
   createFrequentUpdateOptions,
   createInfrequentUpdateOptions,
 } from "@/shared/caching/config";
+import { toDateStamp } from "@/shared/fetching/dateUtils";
 
 import {
   // Cache Flush Date API functions
@@ -54,13 +55,17 @@ import type {
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselBasic objects with basic vessel information
  */
-export const useVesselBasics = () => {
+export const useVesselBasics = (
+  options?: Parameters<typeof useQuery<VesselBasic[]>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "basics"],
     queryFn: getVesselBasics,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -74,14 +79,19 @@ export const useVesselBasics = () => {
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param options - Optional React Query options
  * @returns React Query result containing a VesselBasic object with basic information for the specified vessel
  */
-export const useVesselBasicsById = (vesselId: number) => {
+export const useVesselBasicsById = (
+  vesselId: number,
+  options?: Parameters<typeof useQuery<VesselBasic>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "basics", "byId", vesselId],
     queryFn: () => getVesselBasicsById(vesselId),
     enabled: !!vesselId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -99,13 +109,17 @@ export const useVesselBasicsById = (vesselId: number) => {
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselAccommodation objects with accommodation information
  */
-export const useVesselAccommodations = () => {
+export const useVesselAccommodations = (
+  options?: Parameters<typeof useQuery<VesselAccommodation[]>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "accommodations"],
     queryFn: getVesselAccommodations,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -119,14 +133,19 @@ export const useVesselAccommodations = () => {
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param options - Optional React Query options
  * @returns React Query result containing a VesselAccommodation object with accommodation information for the specified vessel
  */
-export const useVesselAccommodationsById = (vesselId: number) => {
+export const useVesselAccommodationsById = (
+  vesselId: number,
+  options?: Parameters<typeof useQuery<VesselAccommodation>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "accommodations", "byId", vesselId],
     queryFn: () => getVesselAccommodationsById(vesselId),
     enabled: !!vesselId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -145,13 +164,17 @@ export const useVesselAccommodationsById = (vesselId: number) => {
  * The data is updated frequently and provides the most current information
  * about vessel locations for tracking and monitoring purposes.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselLocation objects with real-time vessel position data
  */
-export const useVesselLocations = () => {
+export const useVesselLocations = (
+  options?: Parameters<typeof useQuery<VesselLocation[]>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "locations"],
     queryFn: getVesselLocations,
     ...createFrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -167,14 +190,19 @@ export const useVesselLocations = () => {
  * about the specified vessel's location for tracking and monitoring purposes.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param options - Optional React Query options
  * @returns React Query result containing a VesselLocation object with real-time position data for the specified vessel
  */
-export const useVesselLocationsByVesselId = (vesselId: number) => {
+export const useVesselLocationsByVesselId = (
+  vesselId: number,
+  options?: Parameters<typeof useQuery<VesselLocation>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "locations", "byVesselId", vesselId],
     queryFn: () => getVesselLocationsByVesselId(vesselId),
     enabled: !!vesselId,
     ...createFrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -192,13 +220,17 @@ export const useVesselLocationsByVesselId = (vesselId: number) => {
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselStats objects with vessel statistics
  */
-export const useVesselStats = () => {
+export const useVesselStats = (
+  options?: Parameters<typeof useQuery<VesselStats[]>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "stats"],
     queryFn: getVesselStats,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -212,14 +244,19 @@ export const useVesselStats = () => {
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param options - Optional React Query options
  * @returns React Query result containing a VesselStats object with statistics for the specified vessel
  */
-export const useVesselStatsById = (vesselId: number) => {
+export const useVesselStatsById = (
+  vesselId: number,
+  options?: Parameters<typeof useQuery<VesselStats>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "stats", "byId", vesselId],
     queryFn: () => getVesselStatsById(vesselId),
     enabled: !!vesselId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -237,13 +274,17 @@ export const useVesselStatsById = (vesselId: number) => {
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselHistory objects with vessel historical information
  */
-export const useVesselHistory = () => {
+export const useVesselHistory = (
+  options?: Parameters<typeof useQuery<VesselHistory[]>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "history"],
     queryFn: getVesselHistory,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -259,12 +300,14 @@ export const useVesselHistory = () => {
  * @param vesselName - The name of the vessel (e.g., "Cathlamet")
  * @param dateStart - The start date for the history range (YYYY-MM-DD format)
  * @param dateEnd - The end date for the history range (YYYY-MM-DD format)
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselHistory objects with historical information for the specified vessel and date range
  */
 export const useVesselHistoryByVesselAndDateRange = (
   vesselName: string,
-  dateStart: string,
-  dateEnd: string
+  dateStart: Date,
+  dateEnd: Date,
+  options?: Parameters<typeof useQuery<VesselHistory[]>>[0]
 ) => {
   return useQuery({
     queryKey: [
@@ -272,13 +315,14 @@ export const useVesselHistoryByVesselAndDateRange = (
       "history",
       "byVesselAndDateRange",
       vesselName,
-      dateStart,
-      dateEnd,
+      toDateStamp(dateStart),
+      toDateStamp(dateEnd),
     ],
     queryFn: () =>
       getVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd),
     enabled: !!(vesselName && dateStart && dateEnd),
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -297,13 +341,17 @@ export const useVesselHistoryByVesselAndDateRange = (
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
+ * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselVerbose objects with comprehensive vessel information
  */
-export const useVesselVerbose = () => {
+export const useVesselVerbose = (
+  options?: Parameters<typeof useQuery<VesselVerbose[]>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "verbose"],
     queryFn: getVesselVerbose,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -319,14 +367,19 @@ export const useVesselVerbose = () => {
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param options - Optional React Query options
  * @returns React Query result containing a VesselVerbose object with comprehensive information for the specified vessel
  */
-export const useVesselVerboseById = (vesselId: number) => {
+export const useVesselVerboseById = (
+  vesselId: number,
+  options?: Parameters<typeof useQuery<VesselVerbose>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "verbose", "byId", vesselId],
     queryFn: () => getVesselVerboseById(vesselId),
     enabled: !!vesselId,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
@@ -337,12 +390,16 @@ export const useVesselVerboseById = (vesselId: number) => {
 /**
  * Hook function for fetching cache flush date from WSF Vessels API with React Query
  *
+ * @param options - Optional React Query options
  * @returns React Query result with VesselCacheFlushDate data
  */
-export const useCacheFlushDateVessels = () => {
+export const useCacheFlushDateVessels = (
+  options?: Parameters<typeof useQuery<VesselsCacheFlushDate | null>>[0]
+) => {
   return useQuery({
     queryKey: ["vessels", "cacheFlushDate"],
     queryFn: getCacheFlushDateVessels,
     ...createCacheFlushOptions(),
+    ...options,
   });
 };

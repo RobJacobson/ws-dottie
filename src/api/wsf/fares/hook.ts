@@ -2,16 +2,15 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { useQuery } from "@tanstack/react-query";
+import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
+import { toDateStamp } from "@/shared/fetching/dateUtils";
 
 import {
   getFareLineItems,
   getFareLineItemsBasic,
-  getFareLineItemsBasicWithParams,
   getFareLineItemsVerbose,
-  getFareLineItemsWithParams,
   getFaresCacheFlushDate,
   getFaresTerminalMates,
   getFaresTerminals,
@@ -19,280 +18,243 @@ import {
   getFareTotals,
   getTerminalCombo,
   getTerminalComboVerbose,
-  getTerminalComboWithParams,
-  getTerminalMatesWithParams,
 } from "./api";
-import type {
-  FareLineItemsParams,
-  FareTotalRequest,
-  TerminalComboParams,
-  TerminalMatesParams,
-} from "./types";
+import type { FareTotalRequest } from "./types";
 
 /**
  * Hook for getting cache flush date from WSF Fares API
  */
-export const useFaresCacheFlushDate = () => {
+export const useFaresCacheFlushDate = (
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFaresCacheFlushDate>>>,
+    "queryKey" | "queryFn"
+  >
+) => {
   return useQuery({
     queryKey: ["fares", "cacheFlushDate"],
     queryFn: getFaresCacheFlushDate,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting valid date range from WSF Fares API
  */
-export const useFaresValidDateRange = () => {
+export const useFaresValidDateRange = (
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFaresValidDateRange>>>,
+    "queryKey" | "queryFn"
+  >
+) => {
   return useQuery({
     queryKey: ["fares", "validDateRange"],
     queryFn: getFaresValidDateRange,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting terminals for a trip date from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
  */
-export const useFaresTerminals = (tripDate: Date | null | undefined) => {
+export const useFaresTerminals = (
+  tripDate: Date,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminals>>>,
+    "queryKey" | "queryFn"
+  >
+) => {
   return useQuery({
-    queryKey: ["fares", "terminals", tripDate?.toISOString().split("T")[0]],
-    queryFn: () => getFaresTerminals(tripDate!),
-    enabled: !!tripDate,
+    queryKey: ["fares", "terminals", toDateStamp(tripDate)],
+    queryFn: () => getFaresTerminals(tripDate),
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting terminal mates from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param terminalID - Required departing terminal ID
  */
 export const useFaresTerminalMates = (
-  tripDate: Date | null | undefined,
-  terminalID: number | null | undefined
+  tripDate: Date,
+  terminalID: number,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminalMates>>>,
+    "queryKey" | "queryFn"
+  >
 ) => {
   return useQuery({
-    queryKey: [
-      "fares",
-      "terminalMates",
-      tripDate?.toISOString().split("T")[0],
-      terminalID,
-    ],
-    queryFn: () => getFaresTerminalMates(tripDate!, terminalID!),
-    enabled: !!tripDate && !!terminalID,
+    queryKey: ["fares", "terminalMates", toDateStamp(tripDate), terminalID],
+    queryFn: () => getFaresTerminalMates(tripDate, terminalID),
     ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for getting terminal mates using parameter object
- */
-export const useFaresTerminalMatesWithParams = (
-  params: TerminalMatesParams
-) => {
-  return useQuery({
-    queryKey: [
-      "fares",
-      "terminalMates",
-      params.tripDate?.toISOString().split("T")[0],
-      params.terminalID,
-    ],
-    queryFn: () => getTerminalMatesWithParams(params),
-    enabled: !!params.tripDate && !!params.terminalID,
-    ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting terminal combo from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param departingTerminalID - Required departing terminal ID
+ * @param arrivingTerminalID - Required arriving terminal ID
  */
 export const useTerminalCombo = (
-  tripDate: Date | null | undefined,
-  departingTerminalID: number | null | undefined,
-  arrivingTerminalID: number | null | undefined
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getTerminalCombo>>>,
+    "queryKey" | "queryFn"
+  >
 ) => {
   return useQuery({
     queryKey: [
       "fares",
       "terminalCombo",
-      tripDate?.toISOString().split("T")[0],
+      toDateStamp(tripDate),
       departingTerminalID,
       arrivingTerminalID,
     ],
     queryFn: () =>
-      getTerminalCombo(tripDate!, departingTerminalID!, arrivingTerminalID!),
-    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
+      getTerminalCombo(tripDate, departingTerminalID, arrivingTerminalID),
     ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for getting terminal combo using parameter object
- */
-export const useTerminalComboWithParams = (params: TerminalComboParams) => {
-  return useQuery({
-    queryKey: [
-      "fares",
-      "terminalCombo",
-      params.tripDate?.toISOString().split("T")[0],
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-    ],
-    queryFn: () => getTerminalComboWithParams(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalID &&
-      !!params.arrivingTerminalID,
-    ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting terminal combo verbose from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
  */
-export const useTerminalComboVerbose = (tripDate: Date | null | undefined) => {
+export const useTerminalComboVerbose = (
+  tripDate: Date,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getTerminalComboVerbose>>>,
+    "queryKey" | "queryFn"
+  >
+) => {
   return useQuery({
-    queryKey: [
-      "fares",
-      "terminalComboVerbose",
-      tripDate?.toISOString().split("T")[0],
-    ],
-    queryFn: () => getTerminalComboVerbose(tripDate!),
-    enabled: !!tripDate,
+    queryKey: ["fares", "terminalComboVerbose", toDateStamp(tripDate)],
+    queryFn: () => getTerminalComboVerbose(tripDate),
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting fare line items basic from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param departingTerminalID - Required departing terminal ID
+ * @param arrivingTerminalID - Required arriving terminal ID
+ * @param roundTrip - Required round trip flag
  */
 export const useFareLineItemsBasic = (
-  tripDate: Date | null | undefined,
-  departingTerminalID: number | null | undefined,
-  arrivingTerminalID: number | null | undefined,
-  roundTrip: boolean
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  roundTrip: boolean,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsBasic>>>,
+    "queryKey" | "queryFn"
+  >
 ) => {
   return useQuery({
     queryKey: [
       "fares",
       "fareLineItemsBasic",
-      tripDate?.toISOString().split("T")[0],
+      toDateStamp(tripDate),
       departingTerminalID,
       arrivingTerminalID,
       roundTrip,
     ],
     queryFn: () =>
       getFareLineItemsBasic(
-        tripDate!,
-        departingTerminalID!,
-        arrivingTerminalID!,
+        tripDate,
+        departingTerminalID,
+        arrivingTerminalID,
         roundTrip
       ),
-    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting fare line items from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param departingTerminalID - Required departing terminal ID
+ * @param arrivingTerminalID - Required arriving terminal ID
+ * @param roundTrip - Required round trip flag
  */
 export const useFareLineItems = (
-  tripDate: Date | null | undefined,
-  departingTerminalID: number | null | undefined,
-  arrivingTerminalID: number | null | undefined,
-  roundTrip: boolean
+  tripDate: Date,
+  departingTerminalID: number,
+  arrivingTerminalID: number,
+  roundTrip: boolean,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFareLineItems>>>,
+    "queryKey" | "queryFn"
+  >
 ) => {
   return useQuery({
     queryKey: [
       "fares",
       "fareLineItems",
-      tripDate?.toISOString().split("T")[0],
+      toDateStamp(tripDate),
       departingTerminalID,
       arrivingTerminalID,
       roundTrip,
     ],
     queryFn: () =>
       getFareLineItems(
-        tripDate!,
-        departingTerminalID!,
-        arrivingTerminalID!,
+        tripDate,
+        departingTerminalID,
+        arrivingTerminalID,
         roundTrip
       ),
-    enabled: !!tripDate && !!departingTerminalID && !!arrivingTerminalID,
     ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for getting fare line items using parameter object
- */
-export const useFareLineItemsWithParams = (params: FareLineItemsParams) => {
-  return useQuery({
-    queryKey: [
-      "fares",
-      "fareLineItems",
-      params.tripDate?.toISOString().split("T")[0],
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-      params.roundTrip,
-    ],
-    queryFn: () => getFareLineItemsWithParams(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalID &&
-      !!params.arrivingTerminalID,
-    ...createInfrequentUpdateOptions(),
-  });
-};
-
-/**
- * Hook for getting fare line items basic using parameter object
- */
-export const useFareLineItemsBasicWithParams = (
-  params: FareLineItemsParams
-) => {
-  return useQuery({
-    queryKey: [
-      "fares",
-      "fareLineItemsBasic",
-      params.tripDate?.toISOString().split("T")[0],
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-      params.roundTrip,
-    ],
-    queryFn: () => getFareLineItemsBasicWithParams(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalID &&
-      !!params.arrivingTerminalID,
-    ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting fare line items verbose from WSF Fares API
+ * @param tripDate - Required trip date (YYYY-MM-DD format)
  */
-export const useFareLineItemsVerbose = (tripDate: Date | null | undefined) => {
+export const useFareLineItemsVerbose = (
+  tripDate: Date,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsVerbose>>>,
+    "queryKey" | "queryFn"
+  >
+) => {
   return useQuery({
-    queryKey: [
-      "fares",
-      "fareLineItemsVerbose",
-      tripDate?.toISOString().split("T")[0],
-    ],
-    queryFn: () => getFareLineItemsVerbose(tripDate!),
-    enabled: !!tripDate,
+    queryKey: ["fares", "fareLineItemsVerbose", toDateStamp(tripDate)],
+    queryFn: () => getFareLineItemsVerbose(tripDate),
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };
 
 /**
  * Hook for getting fare totals from WSF Fares API
+ * @param request - Required fare total calculation request
  */
-export const useFareTotals = (request: FareTotalRequest) => {
+export const useFareTotals = (
+  request: FareTotalRequest,
+  options?: Omit<
+    UseQueryOptions<Awaited<ReturnType<typeof getFareTotals>>>,
+    "queryKey" | "queryFn" | "enabled"
+  >
+) => {
   return useQuery({
     queryKey: [
       "fares",
       "fareTotals",
-      request.tripDate.toISOString().split("T")[0],
+      toDateStamp(request.tripDate),
       request.departingTerminalID,
       request.arrivingTerminalID,
       request.roundTrip,
@@ -301,12 +263,10 @@ export const useFareTotals = (request: FareTotalRequest) => {
     ],
     queryFn: () => getFareTotals(request),
     enabled:
-      !!request.tripDate &&
-      !!request.departingTerminalID &&
-      !!request.arrivingTerminalID &&
       request.fareLineItemIDs.length > 0 &&
       request.quantities.length > 0 &&
       request.fareLineItemIDs.length === request.quantities.length,
     ...createInfrequentUpdateOptions(),
+    ...options,
   });
 };

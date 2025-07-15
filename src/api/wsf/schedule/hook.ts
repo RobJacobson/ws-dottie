@@ -3,8 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
+import { toDateStamp } from "@/shared/fetching/dateUtils";
 
-import type { TerminalBasics } from "../terminals/types";
 import {
   getActiveSeasons,
   getAlerts,
@@ -110,7 +110,7 @@ export const useTerminals = (
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "terminals", tripDate.toISOString().split("T")[0]],
+    queryKey: ["schedule", "terminals", toDateStamp(tripDate)],
     queryFn: () => getTerminals(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -133,11 +133,7 @@ export const useTerminalsAndMates = (
   options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
 ) =>
   useQuery({
-    queryKey: [
-      "schedule",
-      "terminalsAndMates",
-      tripDate.toISOString().split("T")[0],
-    ],
+    queryKey: ["schedule", "terminalsAndMates", toDateStamp(tripDate)],
     queryFn: () => getTerminalsAndMates(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -151,25 +147,25 @@ export const useTerminalsAndMates = (
  * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
  * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param params - Object containing trip date and route information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.routeId - The unique identifier for the route
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param routeId - The unique identifier for the route
  * @param options - Optional React Query options
  * @returns React Query result object containing terminal combinations for the route
  */
 export const useTerminalsAndMatesByRoute = (
-  params: { tripDate: Date; routeId: number },
+  tripDate: Date,
+  routeId: number,
   options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
 ) =>
   useQuery({
     queryKey: [
       "schedule",
       "terminalsAndMatesByRoute",
-      params.tripDate.toISOString().split("T")[0],
-      params.routeId,
+      toDateStamp(tripDate),
+      routeId,
     ],
-    queryFn: () => getTerminalsAndMatesByRoute(params),
-    enabled: !!params.tripDate && !!params.routeId,
+    queryFn: () => getTerminalsAndMatesByRoute(tripDate, routeId),
+    enabled: !!tripDate && !!routeId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -192,12 +188,7 @@ export const useTerminalMates = (
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
-    queryKey: [
-      "schedule",
-      "terminalMates",
-      tripDate.toISOString().split("T")[0],
-      terminalId,
-    ],
+    queryKey: ["schedule", "terminalMates", toDateStamp(tripDate), terminalId],
     queryFn: () => getTerminalMates(tripDate, terminalId),
     enabled: !!tripDate && !!terminalId,
     ...createInfrequentUpdateOptions(),
@@ -224,7 +215,7 @@ export const useRoutes = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routes", tripDate.toISOString().split("T")[0]],
+    queryKey: ["schedule", "routes", toDateStamp(tripDate)],
     queryFn: () => getRoutes(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -239,34 +230,29 @@ export const useRoutes = (
  * to match the specified terminal combination. Valid departing and arriving terminals
  * may be found using the terminalsAndMates endpoint.
  *
- * @param params - Object containing trip date and terminal information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @param options - Optional React Query options
  * @returns React Query result object containing routes filtered by terminal combination
  */
 export const useRoutesByTerminals = (
-  params: {
-    tripDate: Date;
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-  },
+  tripDate: Date,
+  departingTerminalId: number,
+  arrivingTerminalId: number,
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
     queryKey: [
       "schedule",
       "routesByTerminals",
-      params.tripDate.toISOString().split("T")[0],
-      params.departingTerminalId,
-      params.arrivingTerminalId,
+      toDateStamp(tripDate),
+      departingTerminalId,
+      arrivingTerminalId,
     ],
-    queryFn: () => getRoutesByTerminals(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalId &&
-      !!params.arrivingTerminalId,
+    queryFn: () =>
+      getRoutesByTerminals(tripDate, departingTerminalId, arrivingTerminalId),
+    enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -287,11 +273,7 @@ export const useRoutesWithDisruptions = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: [
-      "schedule",
-      "routesWithDisruptions",
-      tripDate.toISOString().split("T")[0],
-    ],
+    queryKey: ["schedule", "routesWithDisruptions", toDateStamp(tripDate)],
     queryFn: () => getRoutesWithDisruptions(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -315,11 +297,7 @@ export const useRouteDetails = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: [
-      "schedule",
-      "routeDetails",
-      tripDate.toISOString().split("T")[0],
-    ],
+    queryKey: ["schedule", "routeDetails", toDateStamp(tripDate)],
     queryFn: () => getRouteDetails(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -334,34 +312,33 @@ export const useRouteDetails = (
  * the specified terminal combination. This endpoint provides comprehensive route details
  * including sailing times, vessel assignments, and operational information.
  *
- * @param params - Object containing trip date and terminal information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @param options - Optional React Query options
  * @returns React Query result object containing detailed route information filtered by terminal combination
  */
 export const useRouteDetailsByTerminals = (
-  params: {
-    tripDate: Date;
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-  },
+  tripDate: Date,
+  departingTerminalId: number,
+  arrivingTerminalId: number,
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
     queryKey: [
       "schedule",
       "routeDetailsByTerminals",
-      params.tripDate.toISOString().split("T")[0],
-      params.departingTerminalId,
-      params.arrivingTerminalId,
+      toDateStamp(tripDate),
+      departingTerminalId,
+      arrivingTerminalId,
     ],
-    queryFn: () => getRouteDetailsByTerminals(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalId &&
-      !!params.arrivingTerminalId,
+    queryFn: () =>
+      getRouteDetailsByTerminals(
+        tripDate,
+        departingTerminalId,
+        arrivingTerminalId
+      ),
+    enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -373,25 +350,25 @@ export const useRouteDetailsByTerminals = (
  * This endpoint provides comprehensive route details including sailing times, vessel assignments,
  * and operational information for the specified route.
  *
- * @param params - Object containing trip date and route information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.routeId - The unique identifier for the route
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param routeId - The unique identifier for the route
  * @param options - Optional React Query options
  * @returns React Query result object containing detailed route information for the specific route
  */
 export const useRouteDetailsByRoute = (
-  params: { tripDate: Date; routeId: number },
+  tripDate: Date,
+  routeId: number,
   options?: Parameters<typeof useQuery<RouteDetails | null>>[0]
 ) =>
   useQuery({
     queryKey: [
       "schedule",
       "routeDetailsByRoute",
-      params.tripDate.toISOString().split("T")[0],
-      params.routeId,
+      toDateStamp(tripDate),
+      routeId,
     ],
-    queryFn: () => getRouteDetailsByRoute(params),
-    enabled: !!params.tripDate && !!params.routeId,
+    queryFn: () => getRouteDetailsByRoute(tripDate, routeId),
+    enabled: !!tripDate && !!routeId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -475,25 +452,24 @@ export const useScheduledRoutesBySeason = (
 /**
  * React Query hook for fetching sailings from WSF Schedule API
  *
- * Provides sailings for a particular scheduled route. Sailings are departure times
+ * Provides a listing of sailings for a scheduled route. Sailings are departure times
  * organized by direction of travel (eastbound / westbound), days of operation groups
  * (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall).
  * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
  * Scheduled routes may be determined using schedRoutes.
  *
- * @param params - Object containing scheduled route information
- * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param schedRouteId - The unique identifier for the scheduled route
  * @param options - Optional React Query options
  * @returns React Query result object containing sailing information
  */
 export const useSailings = (
-  params: { schedRouteId: number },
+  schedRouteId: number,
   options?: Parameters<typeof useQuery<Sailing[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "sailings", params.schedRouteId],
-    queryFn: () => getSailings(params),
-    enabled: !!params.schedRouteId,
+    queryKey: ["schedule", "sailings", schedRouteId],
+    queryFn: () => getSailings(schedRouteId),
+    enabled: !!schedRouteId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -507,19 +483,18 @@ export const useSailings = (
  * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
  * Scheduled routes may be determined using schedRoutes.
  *
- * @param params - Object containing scheduled route information
- * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param schedRouteId - The unique identifier for the scheduled route
  * @param options - Optional React Query options
  * @returns React Query result object containing all sailing information
  */
 export const useAllSailings = (
-  params: { schedRouteId: number },
+  schedRouteId: number,
   options?: Parameters<typeof useQuery<Sailing[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "allSailings", params.schedRouteId],
-    queryFn: () => getAllSailings(params),
-    enabled: !!params.schedRouteId,
+    queryKey: ["schedule", "allSailings", schedRouteId],
+    queryFn: () => getAllSailings(schedRouteId),
+    enabled: !!schedRouteId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -607,25 +582,20 @@ export const useTimeAdjustmentsBySchedRoute = (
  * This endpoint provides comprehensive schedule details including departure times,
  * vessel assignments, and operational information for the specified route.
  *
- * @param params - Object containing trip date and route information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.routeId - The unique identifier for the route
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param routeId - The unique identifier for the route
  * @param options - Optional React Query options
  * @returns React Query result object containing schedule information for the route
  */
 export const useScheduleByRoute = (
-  params: { tripDate: Date; routeId: number },
+  tripDate: Date,
+  routeId: number,
   options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
 ) =>
   useQuery({
-    queryKey: [
-      "schedule",
-      "scheduleByRoute",
-      params.tripDate.toISOString().split("T")[0],
-      params.routeId,
-    ],
-    queryFn: () => getScheduleByRoute(params),
-    enabled: !!params.tripDate && !!params.routeId,
+    queryKey: ["schedule", "scheduleByRoute", toDateStamp(tripDate), routeId],
+    queryFn: () => getScheduleByRoute(tripDate, routeId),
+    enabled: !!tripDate && !!routeId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -637,34 +607,29 @@ export const useScheduleByRoute = (
  * This endpoint provides comprehensive schedule details including departure times,
  * vessel assignments, and operational information for the specified terminal combination.
  *
- * @param params - Object containing trip date and terminal information
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @param options - Optional React Query options
  * @returns React Query result object containing schedule information between terminals
  */
 export const useScheduleByTerminals = (
-  params: {
-    tripDate: Date;
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-  },
+  tripDate: Date,
+  departingTerminalId: number,
+  arrivingTerminalId: number,
   options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
 ) =>
   useQuery({
     queryKey: [
       "schedule",
       "scheduleByTerminals",
-      params.tripDate.toISOString().split("T")[0],
-      params.departingTerminalId,
-      params.arrivingTerminalId,
+      toDateStamp(tripDate),
+      departingTerminalId,
+      arrivingTerminalId,
     ],
-    queryFn: () => getScheduleByTerminals(params),
-    enabled:
-      !!params.tripDate &&
-      !!params.departingTerminalId &&
-      !!params.arrivingTerminalId,
+    queryFn: () =>
+      getScheduleByTerminals(tripDate, departingTerminalId, arrivingTerminalId),
+    enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -676,25 +641,20 @@ export const useScheduleByTerminals = (
  * real-time schedule details including departure times, vessel assignments, and operational
  * information for the specified route on the current date.
  *
- * @param params - Object containing route information and options
- * @param params.routeId - The unique identifier for the route
- * @param params.onlyRemainingTimes - Optional flag to return only remaining departure times
+ * @param routeId - The unique identifier for the route
+ * @param onlyRemainingTimes - Optional flag to return only remaining departure times
  * @param options - Optional React Query options
  * @returns React Query result object containing today's schedule information for the route
  */
 export const useScheduleTodayByRoute = (
-  params: { routeId: number; onlyRemainingTimes?: boolean },
+  routeId: number,
+  onlyRemainingTimes?: boolean,
   options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
 ) =>
   useQuery({
-    queryKey: [
-      "schedule",
-      "scheduleTodayByRoute",
-      params.routeId,
-      params.onlyRemainingTimes,
-    ],
-    queryFn: () => getScheduleTodayByRoute(params),
-    enabled: !!params.routeId,
+    queryKey: ["schedule", "scheduleTodayByRoute", routeId, onlyRemainingTimes],
+    queryFn: () => getScheduleTodayByRoute(routeId, onlyRemainingTimes),
+    enabled: !!routeId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });
@@ -706,31 +666,33 @@ export const useScheduleTodayByRoute = (
  * real-time schedule details including departure times, vessel assignments, and operational
  * information for the specified terminal combination on the current date.
  *
- * @param params - Object containing terminal information and options
- * @param params.departingTerminalId - The unique identifier for the departing terminal
- * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
- * @param params.onlyRemainingTimes - Optional flag to return only remaining departure times
+ * @param departingTerminalId - The unique identifier for the departing terminal
+ * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param onlyRemainingTimes - Optional flag to return only remaining departure times
  * @param options - Optional React Query options
  * @returns React Query result object containing today's schedule information between terminals
  */
 export const useScheduleTodayByTerminals = (
-  params: {
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-    onlyRemainingTimes?: boolean;
-  },
+  departingTerminalId: number,
+  arrivingTerminalId: number,
+  onlyRemainingTimes?: boolean,
   options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
 ) =>
   useQuery({
     queryKey: [
       "schedule",
       "scheduleTodayByTerminals",
-      params.departingTerminalId,
-      params.arrivingTerminalId,
-      params.onlyRemainingTimes,
+      departingTerminalId,
+      arrivingTerminalId,
+      onlyRemainingTimes,
     ],
-    queryFn: () => getScheduleTodayByTerminals(params),
-    enabled: !!params.departingTerminalId && !!params.arrivingTerminalId,
+    queryFn: () =>
+      getScheduleTodayByTerminals(
+        departingTerminalId,
+        arrivingTerminalId,
+        onlyRemainingTimes
+      ),
+    enabled: !!departingTerminalId && !!arrivingTerminalId,
     ...createInfrequentUpdateOptions(),
     ...options,
   });

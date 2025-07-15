@@ -5,9 +5,7 @@
 export {
   getFareLineItems,
   getFareLineItemsBasic,
-  getFareLineItemsBasicWithParams,
   getFareLineItemsVerbose,
-  getFareLineItemsWithParams,
   getFaresCacheFlushDate,
   getFaresTerminalMates,
   getFaresTerminals,
@@ -15,31 +13,24 @@ export {
   getFareTotals,
   getTerminalCombo,
   getTerminalComboVerbose,
-  getTerminalComboWithParams,
-  getTerminalMatesWithParams,
 } from "./api";
 // React Query hooks
 export {
   useFareLineItems,
   useFareLineItemsBasic,
-  useFareLineItemsBasicWithParams,
   useFareLineItemsVerbose,
-  useFareLineItemsWithParams,
   useFaresCacheFlushDate,
   useFaresTerminalMates,
-  useFaresTerminalMatesWithParams,
   useFaresTerminals,
   useFaresValidDateRange,
   useFareTotals,
   useTerminalCombo,
   useTerminalComboVerbose,
-  useTerminalComboWithParams,
 } from "./hook";
 // Types
 export type {
   FareLineItem,
   FareLineItemBasic,
-  FareLineItemsParams,
   FareLineItemVerbose,
   FaresCacheFlushDate,
   FaresTerminal,
@@ -47,9 +38,6 @@ export type {
   FareTotal,
   FareTotalRequest,
   TerminalCombo,
-  TerminalComboParams,
   TerminalComboVerbose,
   TerminalMate,
-  TerminalMatesParams,
-  TerminalParams,
 } from "./types";

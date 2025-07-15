@@ -124,15 +124,15 @@ export type VesselLocation = {
   Heading: number;
   InService: boolean;
   AtDock: boolean;
-  LeftDock: string | null; // "/Date(timestamp-timezone)/" format
-  Eta: string | null; // "/Date(timestamp-timezone)/" format
+  LeftDock: Date | null; // Automatically converted from "/Date(timestamp-timezone)/" format
+  Eta: Date | null; // Automatically converted from "/Date(timestamp-timezone)/" format
   EtaBasis: string | null;
-  ScheduledDeparture: string; // "/Date(timestamp-timezone)/" format
+  ScheduledDeparture: Date; // Automatically converted from "/Date(timestamp-timezone)/" format
   OpRouteAbbrev: string[];
   VesselPositionNum: number;
   SortSeq: number;
   ManagedBy: number;
-  TimeStamp: string; // "/Date(timestamp-timezone)/" format
+  TimeStamp: Date; // Automatically converted from "/Date(timestamp-timezone)/" format
   VesselWatchShutID: number;
   VesselWatchShutMsg: string;
   VesselWatchShutFlag: string;
@@ -180,5 +180,6 @@ export type VesselVerbose = {
  * Vessels cache flush date response
  * Based on /cacheflushdate endpoint
  * Note: The API returns a date string in "/Date(timestamp-timezone)/" format
+ * Returns a Date object (automatically converted from .NET Date format)
  */
 export type VesselsCacheFlushDate = Date;

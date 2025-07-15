@@ -1,6 +1,6 @@
 // Functional URL builder for WSDOT APIs
 
-import { dateToWsfPathFormat } from "./dateUtils";
+import { dateToWsfPathFormat, toDateStamp } from "./dateUtils";
 
 /**
  * Type-safe URL parameter types
@@ -75,8 +75,7 @@ export const buildWsfUrl = (
  */
 export const isDate = (value: any): value is Date => value instanceof Date;
 
-export const formatDate = (date: Date): string =>
-  date.toISOString().split("T")[0];
+export const formatDate = (date: Date): string => toDateStamp(date);
 
 export const logError = (
   config: { logLevel: string },
