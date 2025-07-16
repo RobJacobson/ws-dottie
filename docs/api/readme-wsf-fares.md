@@ -53,7 +53,7 @@ This module integrates with Washington State Ferries Fares APIs to provide:
 
 ### Get Cache Flush Date
 ```typescript
-import { getFaresCacheFlushDate } from '@/api/wsf/fares';
+import { getFaresCacheFlushDate } from 'wsdot-api-client/wsf-fares';
 
 const cacheFlushDate = await getFaresCacheFlushDate();
 // Returns: Date object
@@ -61,7 +61,7 @@ const cacheFlushDate = await getFaresCacheFlushDate();
 
 ### Get Valid Date Range
 ```typescript
-import { getFaresValidDateRange } from '@/api/wsf/fares';
+import { getFaresValidDateRange } from 'wsdot-api-client/wsf-fares';
 
 const validDateRange = await getFaresValidDateRange();
 // Returns: { DateFrom: Date, DateThru: Date }
@@ -69,7 +69,7 @@ const validDateRange = await getFaresValidDateRange();
 
 ### Get Terminals for a Trip Date
 ```typescript
-import { getFaresTerminals } from '@/api/wsf/fares';
+import { getFaresTerminals } from 'wsdot-api-client/wsf-fares';
 
 const terminals = await getFaresTerminals(new Date('2024-04-01'));
 // Returns: FaresTerminal[]
@@ -77,7 +77,7 @@ const terminals = await getFaresTerminals(new Date('2024-04-01'));
 
 ### Get Terminal Mates
 ```typescript
-import { getFaresTerminalMates } from '@/api/wsf/fares';
+import { getFaresTerminalMates } from 'wsdot-api-client/wsf-fares';
 
 const terminalMates = await getFaresTerminalMates(
   new Date('2024-04-01'),
@@ -88,7 +88,7 @@ const terminalMates = await getFaresTerminalMates(
 
 ### Get Terminal Combination
 ```typescript
-import { getTerminalCombo } from '@/api/wsf/fares';
+import { getTerminalCombo } from 'wsdot-api-client/wsf-fares';
 
 const terminalCombo = await getTerminalCombo(
   new Date('2024-04-01'),
@@ -100,7 +100,7 @@ const terminalCombo = await getTerminalCombo(
 
 ### Get All Terminal Combinations
 ```typescript
-import { getTerminalComboVerbose } from '@/api/wsf/fares';
+import { getTerminalComboVerbose } from 'wsdot-api-client/wsf-fares';
 
 const allCombos = await getTerminalComboVerbose(new Date('2024-04-01'));
 // Returns: TerminalComboVerbose[]
@@ -108,7 +108,7 @@ const allCombos = await getTerminalComboVerbose(new Date('2024-04-01'));
 
 ### Get Most Popular Fares
 ```typescript
-import { getFareLineItemsBasic } from '@/api/wsf/fares';
+import { getFareLineItemsBasic } from 'wsdot-api-client/wsf-fares';
 
 const popularFares = await getFareLineItemsBasic(
   new Date('2024-04-01'),
@@ -121,7 +121,7 @@ const popularFares = await getFareLineItemsBasic(
 
 ### Get All Fares for a Route
 ```typescript
-import { getFareLineItems } from '@/api/wsf/fares';
+import { getFareLineItems } from 'wsdot-api-client/wsf-fares';
 
 const allFares = await getFareLineItems(
   new Date('2024-04-01'),
@@ -134,7 +134,7 @@ const allFares = await getFareLineItems(
 
 ### Get All Fares for All Routes
 ```typescript
-import { getFareLineItemsVerbose } from '@/api/wsf/fares';
+import { getFareLineItemsVerbose } from 'wsdot-api-client/wsf-fares';
 
 const allFaresVerbose = await getFareLineItemsVerbose(new Date('2024-04-01'));
 // Returns: FareLineItemVerbose[]
@@ -142,7 +142,7 @@ const allFaresVerbose = await getFareLineItemsVerbose(new Date('2024-04-01'));
 
 ### Calculate Fare Totals
 ```typescript
-import { getFareTotals } from '@/api/wsf/fares';
+import { getFareTotals } from 'wsdot-api-client/wsf-fares';
 
 const fareTotal = await getFareTotals({
   tripDate: new Date('2024-04-01'),
@@ -170,7 +170,7 @@ import {
   useFareLineItems,
   useFareLineItemsVerbose,
   useFareTotals
-} from '@/api/wsf/fares';
+} from 'wsdot-api-client/react/wsf-fares';
 import { WsdApiError } from 'wsdot-api-client';
 
 function FaresComponent() {

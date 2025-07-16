@@ -15,6 +15,46 @@
       "types": "./dist/react.d.ts",
       "import": "./dist/react.mjs",
       "require": "./dist/react.js"
+    },
+    "./wsf-fares": {
+      "types": "./dist/api/wsf-fares/index.d.ts",
+      "import": "./dist/api/wsf-fares/index.mjs",
+      "require": "./dist/api/wsf-fares/index.js"
+    },
+    "./wsf-schedule": {
+      "types": "./dist/api/wsf-schedule/index.d.ts",
+      "import": "./dist/api/wsf-schedule/index.mjs",
+      "require": "./dist/api/wsf-schedule/index.js"
+    },
+    "./wsf-terminals": {
+      "types": "./dist/api/wsf-terminals/index.d.ts",
+      "import": "./dist/api/wsf-terminals/index.mjs",
+      "require": "./dist/api/wsf-terminals/index.js"
+    },
+    "./wsf-vessels": {
+      "types": "./dist/api/wsf-vessels/index.d.ts",
+      "import": "./dist/api/wsf-vessels/index.mjs",
+      "require": "./dist/api/wsf-vessels/index.js"
+    },
+    "./react/wsf-fares": {
+      "types": "./dist/react/wsf-fares/index.d.ts",
+      "import": "./dist/react/wsf-fares/index.mjs",
+      "require": "./dist/react/wsf-fares/index.js"
+    },
+    "./react/wsf-schedule": {
+      "types": "./dist/react/wsf-schedule/index.d.ts",
+      "import": "./dist/react/wsf-schedule/index.mjs",
+      "require": "./dist/react/wsf-schedule/index.js"
+    },
+    "./react/wsf-terminals": {
+      "types": "./dist/react/wsf-terminals/index.d.ts",
+      "import": "./dist/react/wsf-terminals/index.mjs",
+      "require": "./dist/react/wsf-terminals/index.js"
+    },
+    "./react/wsf-vessels": {
+      "types": "./dist/react/wsf-vessels/index.d.ts",
+      "import": "./dist/react/wsf-vessels/index.mjs",
+      "require": "./dist/react/wsf-vessels/index.js"
     }
   },
   "files": [
@@ -32,10 +72,10 @@
     "test:e2e:watch": "vitest --config config/vitest.e2e.config.ts --watch",
     "test:e2e:api:watch": "vitest --config config/vitest.e2e.api.config.ts --watch",
     "test:e2e:hook:watch": "vitest --config config/vitest.e2e.hook.config.ts --watch",
-    "test:e2e:fares": "vitest --config config/vitest.e2e.config.ts tests/e2e/fares/",
-    "test:e2e:schedule": "vitest --config config/vitest.e2e.config.ts tests/e2e/schedule/",
-    "test:e2e:terminals": "vitest --config config/vitest.e2e.config.ts tests/e2e/terminals/",
-    "test:e2e:vessels": "vitest --config config/vitest.e2e.config.ts tests/e2e/vessels/",
+    "test:e2e:fares": "vitest --config config/vitest.e2e.config.ts tests/e2e/wsf-fares/",
+    "test:e2e:schedule": "vitest --config config/vitest.e2e.config.ts tests/e2e/wsf-schedule/",
+    "test:e2e:terminals": "vitest --config config/vitest.e2e.config.ts tests/e2e/wsf-terminals/",
+    "test:e2e:vessels": "vitest --config config/vitest.e2e.config.ts tests/e2e/wsf-vessels/",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
     "lint": "biome lint",
