@@ -1,5 +1,21 @@
 # TODO
 
+## Documentation Consistency - COMPLETED ✅
+
+### Issues Found and Fixed
+- [x] **README.md inconsistencies**: Removed references to unimplemented WSDOT Traveler Information APIs
+- [x] **API Reference section**: Updated to only show actually implemented WSF APIs
+- [x] **Client instance pattern**: Removed references to non-existent `createWsdotClient` and `client.wsdot.*` patterns
+- [x] **Export consistency**: Updated examples to use actual exports (`WsfFares`, `WsfSchedule`, etc.)
+- [x] **WSDOT API status**: Added clear note that WSDOT Traveler Information APIs are documented but not implemented
+
+### Current Documentation Status
+- ✅ **README.md**: Now accurately reflects implemented functionality
+- ✅ **docs/api/**: Contains accurate documentation for implemented WSF APIs
+- ✅ **docs/wsdot-api-reference/**: Contains comprehensive documentation for WSDOT APIs (not yet implemented)
+- ✅ **docs/API_ACCESS_REQUIREMENTS.md**: Accurate and up-to-date
+- ✅ **docs/TODO.md**: Updated with current status
+
 ## Error Handling
 - [x] Decide on error handling strategy (throw vs return null/empty arrays)
 - [x] Implement error boundaries if needed
@@ -34,6 +50,31 @@
 - [ ] Convert mock-based tests to actual code testing
 - [ ] Create working examples that match actual library exports and types
 - [ ] Set up NPM publishing pipeline
+
+## WSDOT Traveler Information APIs - NOT IMPLEMENTED ⚠️
+
+### Current Status
+- [ ] **Highway Cameras API**: Documented but not implemented
+- [ ] **Traffic Flow API**: Documented but not implemented  
+- [ ] **Travel Times API**: Documented but not implemented
+- [ ] **Highway Alerts API**: Documented but not implemented
+- [ ] **Mountain Pass Conditions API**: Documented but not implemented
+- [ ] **Weather Information API**: Documented but not implemented
+- [ ] **Weather Stations API**: Documented but not implemented
+- [ ] **Bridge Clearances API**: Documented but not implemented
+- [ ] **Border Crossings API**: Documented but not implemented
+- [ ] **Commercial Vehicle Restrictions API**: Documented but not implemented
+- [ ] **Toll Rates API**: Documented but not implemented
+- [ ] **Weather Information Extended API**: Documented as unavailable
+
+### Implementation Plan
+1. **Follow development workflow** outlined in API_ACCESS_REQUIREMENTS.md
+2. **Validate with cURL** before implementing any endpoints
+3. **Create TypeScript types** based on actual API responses
+4. **Implement API functions** following WSF API patterns
+5. **Create React Query hooks** for each API
+6. **Write e2e tests** for validation
+7. **Update exports** in main index.ts
 
 ## API Access Code Requirements
 - [x] Document Access Code registration process

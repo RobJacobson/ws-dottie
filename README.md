@@ -1,6 +1,6 @@
 # WSDOT API Client
 
-A TypeScript client library for Washington State Department of Transportation (WSDOT) APIs, including Washington State Ferries (WSF) and Traveler Information APIs.
+A TypeScript client library for Washington State Department of Transportation (WSDOT) APIs, including Washington State Ferries (WSF) APIs.
 
 ## Features
 
@@ -8,7 +8,7 @@ A TypeScript client library for Washington State Department of Transportation (W
 - **Functional**: Pure functions with arrow function syntax
 - **React Query ready**: Perfect integration with React Query for caching and state management
 - **Instance-based**: Configurable client instances with prop drilling support
-- **Comprehensive**: Support for all WSF and WSDOT Traveler Information APIs
+- **Comprehensive**: Support for all WSF APIs
 
 ## Installation
 
@@ -48,23 +48,16 @@ See [API Access Requirements](docs/API_ACCESS_REQUIREMENTS.md) for detailed info
 ### Basic Usage
 
 ```typescript
-import { createWsdotClient } from 'wsdot-api-client';
-
-// Create client instance
-const wsdotClient = createWsdotClient({
-  apiKey: 'your-api-key-here',
-  timeout: 15000,
-  logLevel: 'info'
-});
+import { WsfFares, WsfSchedule, WsfTerminals, WsfVessels } from 'wsdot-api-client';
 
 // Get WSF routes
-const routes = await wsdotClient.wsf.schedule.getRoutes(new Date());
+const routes = await WsfSchedule.getRoutes(new Date());
 
 // Get vessel locations
-const vessels = await wsdotClient.wsf.vessels.getVesselLocations();
+const vessels = await WsfVessels.getVesselLocations();
 
-// Get highway cameras
-const cameras = await wsdotClient.wsdot.traffic.getHighwayCameras();
+// Get terminal basics
+const terminals = await WsfTerminals.getTerminalBasics();
 ```
 
 ### React Integration
@@ -114,115 +107,83 @@ WSDOT_ACCESS_TOKEN=your_api_key_here
 #### Schedule API
 ```typescript
 // Get all routes for a date
-const routes = await client.wsf.schedule.getRoutes(tripDate: Date);
+const routes = await WsfSchedule.getRoutes(tripDate: Date);
 
 // Get routes between specific terminals
-const routes = await client.wsf.schedule.getRoutesByTerminals({
+const routes = await WsfSchedule.getRoutesByTerminals({
   tripDate: Date,
   departingTerminalId: number,
   arrivingTerminalId: number
 });
 
 // Get routes with service disruptions
-const routes = await client.wsf.schedule.getRoutesWithDisruptions(tripDate: Date);
+const routes = await WsfSchedule.getRoutesWithDisruptions(tripDate: Date);
 
 // Get detailed route information
-const routes = await client.wsf.schedule.getRouteDetails(tripDate: Date);
+const routes = await WsfSchedule.getRouteDetails(tripDate: Date);
 
 // Get scheduled routes
-const routes = await client.wsf.schedule.getScheduledRoutes();
+const routes = await WsfSchedule.getScheduledRoutes();
 
 // Get active seasons
-const seasons = await client.wsf.schedule.getActiveSeasons();
+const seasons = await WsfSchedule.getActiveSeasons();
 
 // Get alerts
-const alerts = await client.wsf.schedule.getAlerts();
+const alerts = await WsfSchedule.getAlerts();
 ```
 
 #### Vessels API
 ```typescript
 // Vessel Locations (Real-time positions)
-const vessels = await client.wsf.vessels.getVesselLocations();
-const vessels = await client.wsf.vessels.getVesselLocationsByVesselId(vesselId: number);
+const vessels = await WsfVessels.getVesselLocations();
+const vessels = await WsfVessels.getVesselLocationsByVesselId(vesselId: number);
 
 // Vessel Verbose (Detailed information)
-const vessels = await client.wsf.vessels.getVesselVerbose();
-const vessels = await client.wsf.vessels.getVesselVerboseByVesselId(vesselId: number);
+const vessels = await WsfVessels.getVesselVerbose();
+const vessels = await WsfVessels.getVesselVerboseByVesselId(vesselId: number);
 ```
 
 #### Fares API
 ```typescript
 // Fares (Comprehensive fare information)
-const fares = await client.wsf.fares.getFares();
-const fare = await client.wsf.fares.getFareById(fareId: number);
+const fares = await WsfFares.getFares();
+const fare = await WsfFares.getFareById(fareId: number);
 
 // Fare Categories
-const categories = await client.wsf.fares.getFareCategories();
-const category = await client.wsf.fares.getFareCategoryById(categoryId: number);
+const categories = await WsfFares.getFareCategories();
+const category = await WsfFares.getFareCategoryById(categoryId: number);
 
 // Fare Types
-const types = await client.wsf.fares.getFareTypes();
-const type = await client.wsf.fares.getFareTypeById(typeId: number);
+const types = await WsfFares.getFareTypes();
+const type = await WsfFares.getFareTypeById(typeId: number);
 
 // Route Fares
-const routeFares = await client.wsf.fares.getRouteFares();
-const routeFare = await client.wsf.fares.getRouteFaresByRouteId(routeId: number);
+const routeFares = await WsfFares.getRouteFares();
+const routeFare = await WsfFares.getRouteFaresByRouteId(routeId: number);
 
 // Terminal Fares
-const terminalFares = await client.wsf.fares.getTerminalFares();
-const terminalFare = await client.wsf.fares.getTerminalFaresByTerminalId(terminalId: number);
+const terminalFares = await WsfFares.getTerminalFares();
+const terminalFare = await WsfFares.getTerminalFaresByTerminalId(terminalId: number);
 ```
 
 #### Terminals API
 ```typescript
 // Terminal Basics (Basic terminal information)
-const terminals = await client.wsf.terminals.getTerminalBasics();
-const terminals = await client.wsf.terminals.getTerminalBasicsByTerminalId(terminalId: number);
+const terminals = await WsfTerminals.getTerminalBasics();
+const terminals = await WsfTerminals.getTerminalBasicsByTerminalId(terminalId: number);
 
 // Terminal Sailing Space (Real-time space availability)
-const terminals = await client.wsf.terminals.getTerminalSailingSpace();
-const terminals = await client.wsf.terminals.getTerminalSailingSpaceByTerminalId(terminalId: number);
-const terminals = await client.wsf.terminals.getTerminalSailingSpaceByRoute(routeId: number);
-const terminals = await client.wsf.terminals.getTerminalSailingSpaceByTerminalAndRoute({
+const terminals = await WsfTerminals.getTerminalSailingSpace();
+const terminals = await WsfTerminals.getTerminalSailingSpaceByTerminalId(terminalId: number);
+const terminals = await WsfTerminals.getTerminalSailingSpaceByRoute(routeId: number);
+const terminals = await WsfTerminals.getTerminalSailingSpaceByTerminalAndRoute({
   terminalId: number;
   routeId: number;
 });
 
 // Terminal Verbose (Detailed terminal information)
-const terminals = await client.wsf.terminals.getTerminalVerbose();
-const terminals = await client.wsf.terminals.getTerminalVerboseByTerminalId(terminalId: number);
-```
-
-### WSDOT Traveler Information APIs
-
-#### Traffic API
-```typescript
-// Get highway cameras
-const cameras = await client.wsdot.traffic.getHighwayCameras();
-
-// Get highway cameras by region
-const cameras = await client.wsdot.traffic.getHighwayCamerasByRegion(region: string);
-
-// Get traffic flow
-const traffic = await client.wsdot.traffic.getTrafficFlow();
-
-// Get traffic flow by region
-const traffic = await client.wsdot.traffic.getTrafficFlowByRegion(region: string);
-
-// Get travel times
-const times = await client.wsdot.traffic.getTravelTimes();
-
-// Get travel times by region
-const times = await client.wsdot.traffic.getTravelTimesByRegion(region: string);
-
-// Get highway alerts
-const alerts = await client.wsdot.traffic.getHighwayAlerts();
-
-// Get highway alerts by region
-const alerts = await client.wsdot.traffic.getHighwayAlertsByRegion(region: string);
-
-// Get mountain pass conditions
-const conditions = await client.wsdot.traffic.getMountainPassConditions();
+const terminals = await WsfTerminals.getTerminalVerbose();
+const terminals = await WsfTerminals.getTerminalVerboseByTerminalId(terminalId: number);
 ```
 
 ## React Hooks
@@ -249,10 +210,10 @@ The library provides two error handling approaches:
 Core API functions throw custom `WsdApiError` instances for better error handling and React Query integration:
 
 ```typescript
-import { getFares, WsdApiError } from 'wsdot-api-client';
+import { WsfFares, WsdApiError } from 'wsdot-api-client';
 
 try {
-  const fares = await getFares();
+  const fares = await WsfFares.getFares();
   // fares is Fare[]
 } catch (error) {
   if (error instanceof WsdApiError) {
@@ -263,92 +224,30 @@ try {
 ```
 
 ### Silent Fallback (Legacy)
-
-
-## React Query Integration
-
-The library is designed to work seamlessly with React Query:
+Some functions return null or empty arrays on error for backward compatibility:
 
 ```typescript
-import { useQuery } from '@tanstack/react-query';
-import { useFares, WsdApiError } from 'wsdot-api-client';
+import { WsfFares } from 'wsdot-api-client';
 
-function App() {
-  const { 
-    data: fares, 
-    isLoading, 
-    isError, 
-    error,
-    refetch 
-  } = useFares();
-
-  if (isLoading) return <div>Loading...</div>;
-  
-  if (isError) {
-    return (
-      <div>
-        <p>Error: {error instanceof WsdApiError ? error.getUserMessage() : 'Unknown error'}</p>
-        <button onClick={() => refetch()}>Retry</button>
-      </div>
-    );
-  }
-  
-  return (
-    <div>
-      {fares?.map(fare => (
-        <div key={fare.fareId}>{fare.fareName}</div>
-      ))}
-    </div>
-  );
+const fares = await WsfFares.getFares();
+// fares is Fare[] | null
+if (fares) {
+  // Process fares
 }
 ```
 
-## Examples
+## WSDOT Traveler Information APIs
 
-See the `examples/` directory for complete working examples:
+**Note**: WSDOT Traveler Information APIs (Highway Cameras, Traffic Flow, Weather Information, etc.) are documented in the [WSDOT API Reference](docs/wsdot-api-reference/) but are not yet implemented in this client library.
 
-- `examples/react-web/` - React web application
-- `examples/vanilla-js/` - Vanilla JavaScript usage
-- `examples/react-native/` - React Native application
+For these APIs, you can:
+1. Use the official WSDOT REST endpoints directly
+2. Check the [API Access Requirements](docs/API_ACCESS_REQUIREMENTS.md) for documentation links
+3. Follow the development workflow outlined in [TODO.md](docs/TODO.md) to implement new APIs
 
-## Testing
+## Contributing
 
-The library uses end-to-end (E2E) tests for comprehensive API validation:
-
-- **E2E Tests**: Test complete workflows with live WSDOT APIs
-- **Real API Validation**: All tests validate against actual WSDOT endpoints
-- **Performance Testing**: Includes performance benchmarks for API calls
-- **Error Handling**: Tests error scenarios and edge cases
-
-```bash
-# Run all E2E tests
-npm test
-
-# Run specific E2E test categories
-npm run test:e2e:fares
-npm run test:e2e:schedule
-npm run test:e2e:terminals
-npm run test:e2e:vessels
-
-# Run tests with coverage
-npm run test:coverage
-```
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Run tests
-npm test
-
-# Build the library
-npm run build
-
-# Run in development mode
-npm run dev
-```
+See [TODO.md](docs/TODO.md) for current development status and implementation tasks.
 
 ## License
 

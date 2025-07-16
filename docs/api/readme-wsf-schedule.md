@@ -43,53 +43,53 @@ This module integrates with Washington State Ferries Schedule APIs to provide:
 
 ### Get Routes for a Date
 ```typescript
-import { getRoutes } from '@/api/wsf/schedule/routes';
+import { getRoutes } from 'wsdot-api-client/wsf-schedule';
 
 const routes = await getRoutes(new Date('2024-04-01'));
 ```
 
 ### Get Routes Between Specific Terminals
 ```typescript
-import { getRoutesByTerminals } from '@/api/wsf/schedule/routes';
+import { getRoutesByTerminals } from 'wsdot-api-client/wsf-schedule';
 
-const routes = await getRoutesByTerminals({
-  tripDate: new Date('2024-04-01'),
-  departingTerminalId: 7, // Anacortes
-  arrivingTerminalId: 8  // Friday Harbor
-});
+const routes = await getRoutesByTerminals(
+  new Date('2024-04-01'),
+  7, // Anacortes
+  8  // Friday Harbor
+);
 ```
 
 ### Get Routes with Service Disruptions
 ```typescript
-import { getRoutesWithDisruptions } from '@/api/wsf/schedule/routes';
+import { getRoutesWithDisruptions } from 'wsdot-api-client/wsf-schedule';
 
 const disruptedRoutes = await getRoutesWithDisruptions(new Date('2024-04-01'));
 ```
 
 ### Get Detailed Route Information
 ```typescript
-import { getRouteDetails } from '@/api/wsf/schedule/routes';
+import { getRouteDetails } from 'wsdot-api-client/wsf-schedule';
 
 const detailedRoutes = await getRouteDetails(new Date('2024-04-01'));
 ```
 
 ### Get Scheduled Routes
 ```typescript
-import { getScheduledRoutes } from '@/api/wsf/schedule/routes';
+import { getScheduledRoutes } from 'wsdot-api-client/wsf-schedule';
 
 const scheduledRoutes = await getScheduledRoutes();
 ```
 
 ### Get Active Seasons
 ```typescript
-import { getActiveSeasons } from '@/api/wsf/schedule/routes';
+import { getActiveSeasons } from 'wsdot-api-client/wsf-schedule';
 
 const seasons = await getActiveSeasons();
 ```
 
 ### Get Alerts
 ```typescript
-import { getAlerts } from '@/api/wsf/schedule/routes';
+import { getAlerts } from 'wsdot-api-client/wsf-schedule';
 
 const alerts = await getAlerts();
 ```
@@ -106,7 +106,7 @@ import {
   useScheduledRoutes,
   useActiveSeasons,
   useAlerts
-} from '@/api/wsf/schedule/routes';
+} from 'wsdot-api-client/react/wsf-schedule';
 
 function RouteComponent() {
   const tripDate = new Date('2024-04-01');
@@ -115,11 +115,11 @@ function RouteComponent() {
 
   // Default: enabled is true
   const { data: routes, isLoading: routesLoading } = useRoutes(tripDate);
-  const { data: terminalRoutes, isLoading: terminalRoutesLoading } = useRoutesByTerminals({
+  const { data: terminalRoutes, isLoading: terminalRoutesLoading } = useRoutesByTerminals(
     tripDate,
     departingTerminalId,
     arrivingTerminalId
-  });
+  );
   const { data: routeDetails, isLoading: detailsLoading } = useRouteDetails(tripDate);
   const { data: disruptedRoutes, isLoading: disruptionsLoading } = useRoutesWithDisruptions(tripDate);
   const { data: scheduledRoutes, isLoading: scheduledLoading } = useScheduledRoutes();
@@ -135,43 +135,43 @@ function RouteComponent() {
     <div>
       <h2>All Routes</h2>
       {routes?.map(route => (
-        <div key={route.routeId}>
-          {route.routeName} - {route.description}
+        <div key={route.RouteID}>
+          {route.RouteName} - {route.Description}
         </div>
       ))}
       
       <h2>Terminal Routes</h2>
       {terminalRoutes?.map(route => (
-        <div key={route.routeId}>
-          {route.routeName} - {route.description}
+        <div key={route.RouteID}>
+          {route.RouteName} - {route.Description}
         </div>
       ))}
 
       <h2>Route Details</h2>
       {routeDetails?.map(detail => (
-        <div key={detail.routeId}>
-          {detail.routeName} - Vessel: {detail.vesselName}
+        <div key={detail.RouteID}>
+          {detail.RouteName} - Vessel: {detail.VesselName}
         </div>
       ))}
 
       <h2>Service Disruptions</h2>
       {disruptedRoutes?.map(route => (
-        <div key={route.routeId}>
-          {route.routeName} - {route.disruptionDescription}
+        <div key={route.RouteID}>
+          {route.RouteName} - {route.DisruptionDescription}
         </div>
       ))}
 
       <h2>Active Seasons</h2>
       {activeSeasons?.map(season => (
-        <div key={season.scheduleId}>
-          {season.description} - {season.startDate} to {season.endDate}
+        <div key={season.ScheduleID}>
+          {season.Description} - {season.StartDate} to {season.EndDate}
         </div>
       ))}
 
       <h2>Alerts</h2>
       {alerts?.map(alert => (
-        <div key={alert.alertId}>
-          {alert.alertHeader} - {alert.alertText}
+        <div key={alert.AlertID}>
+          {alert.AlertHeader} - {alert.AlertText}
         </div>
       ))}
     </div>
@@ -192,45 +192,24 @@ import {
   useRoutesByTerminals,
   useRouteDetails,
   useRoutesWithDisruptions
-} from '@/api/wsf/schedule/routes';
+} from 'wsdot-api-client/react/wsf-schedule';
 
 function SpecificRouteComponent({ 
   tripDate, 
   departingTerminalId, 
   arrivingTerminalId 
-}: { 
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
 }) {
-  const { data: routes } = useRoutesByTerminals({
-    tripDate,
-    departingTerminalId,
+  const { data: routes } = useRoutesByTerminals(
+    tripDate, 
+    departingTerminalId, 
     arrivingTerminalId
-  });
-  const { data: routeDetails } = useRouteDetails(tripDate);
-  const { data: disruptions } = useRoutesWithDisruptions(tripDate);
-
+  );
+  
   return (
     <div>
-      <h3>Available Routes</h3>
       {routes?.map(route => (
-        <div key={route.routeId}>
-          {route.routeName} - {route.description}
-        </div>
-      ))}
-      
-      <h3>Route Details</h3>
-      {routeDetails?.map(detail => (
-        <div key={detail.routeId}>
-          {detail.routeName} - Vessel: {detail.vesselName}
-        </div>
-      ))}
-      
-      <h3>Service Disruptions</h3>
-      {disruptions?.map(route => (
-        <div key={route.routeId}>
-          {route.routeName} - {route.disruptionDescription}
+        <div key={route.RouteID}>
+          {route.RouteName}: {route.Description}
         </div>
       ))}
     </div>
@@ -238,38 +217,86 @@ function SpecificRouteComponent({
 }
 ```
 
-## Data Transformation
+## Available Functions
 
-The API automatically transforms WSF date formats to JavaScript Date objects:
+### Route Functions
+- `getRoutes(tripDate: Date)` - Get all routes for a date
+- `getRoutesByTerminals(tripDate: Date, departingTerminalId: number, arrivingTerminalId: number)` - Get routes between specific terminals
+- `getRoutesWithDisruptions(tripDate: Date)` - Get routes with service disruptions
+- `getRouteDetails(tripDate: Date)` - Get detailed route information
+- `getRouteDetailsByTerminals(tripDate: Date, departingTerminalId: number, arrivingTerminalId: number)` - Get detailed routes between terminals
+- `getRouteDetailsByRoute(tripDate: Date, routeId: number)` - Get detailed information for a specific route
 
-- **`/Date(timestamp)/`** → `Date` object
-- **`YYYY-MM-DD`** → `Date` object
-- **`MM/DD/YYYY`** → `Date` object
+### Schedule Functions
+- `getScheduleByRoute(tripDate: Date, routeId: number)` - Get schedule for a specific route
+- `getScheduleByTerminals(tripDate: Date, departingTerminalId: number, arrivingTerminalId: number)` - Get schedule between terminals
+- `getScheduleTodayByRoute(routeId: number, onlyRemainingTimes?: boolean)` - Get today's schedule for a route
+- `getScheduleTodayByTerminals(departingTerminalId: number, arrivingTerminalId: number, onlyRemainingTimes?: boolean)` - Get today's schedule between terminals
 
-All PascalCase keys are converted to camelCase for consistency.
+### Terminal Functions
+- `getTerminals(tripDate: Date)` - Get all terminals for a date
+- `getTerminalsAndMates(tripDate: Date)` - Get all terminal combinations
+- `getTerminalsAndMatesByRoute(tripDate: Date, routeId: number)` - Get terminal combinations for a route
+- `getTerminalMates(tripDate: Date, terminalId: number)` - Get arriving terminals for a departing terminal
+
+### Seasonal Functions
+- `getActiveSeasons()` - Get active service seasons
+- `getScheduledRoutes()` - Get all scheduled routes
+- `getScheduledRoutesBySeason(scheduleId: number)` - Get scheduled routes for a season
+- `getSailings(schedRouteId: number)` - Get sailings for a scheduled route
+- `getAllSailings(schedRouteId: number)` - Get all sailings for a scheduled route
+
+### Time Adjustment Functions
+- `getTimeAdjustments()` - Get all time adjustments
+- `getTimeAdjustmentsByRoute(routeId: number)` - Get time adjustments for a route
+- `getTimeAdjustmentsBySchedRoute(schedRouteId: number)` - Get time adjustments for a scheduled route
+
+### Utility Functions
+- `getCacheFlushDateSchedule()` - Get cache flush date
+- `getValidDateRange()` - Get valid date range for schedules
+- `getAlerts()` - Get service alerts
+- `getAlternativeFormats(subjectName: string)` - Get alternative formats
 
 ## Error Handling
 
-All API functions return empty arrays (`[]`) on errors rather than throwing exceptions, making them perfect for use with React Query and other state management solutions.
+All functions throw `WsdApiError` instances on failure:
 
-## Caching Strategy
+```typescript
+import { getRoutes, WsdApiError } from 'wsdot-api-client/wsf-schedule';
 
-The hooks use default caching options from `createInfrequentUpdateOptions()` and `createFrequentUpdateOptions()`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
+try {
+  const routes = await getRoutes(new Date());
+  // Process routes
+} catch (error) {
+  if (error instanceof WsdApiError) {
+    console.error('Schedule API Error:', error.getUserMessage());
+  }
+}
+```
 
-**Caching by Data Type:**
-- **Routes**: Infrequent updates (daily)
-- **Route Details**: Infrequent updates (daily)
-- **Alerts**: Frequent updates (real-time)
-- **Active Seasons**: Infrequent updates (weekly)
-- **Scheduled Routes**: Infrequent updates (weekly)
+## TypeScript Types
 
-## Common Use Cases
+```typescript
+type Route = {
+  RouteID: number;
+  RouteName: string;
+  Description: string;
+  // ... other properties
+};
 
-- **Route Planning**: Find available routes between terminals
-- **Schedule Lookup**: Get departure times and frequencies
-- **Service Monitoring**: Track service disruptions and alerts
-- **Seasonal Planning**: Access seasonal service information
-- **Terminal Navigation**: Find routes serving specific terminals
-- **Real-time Updates**: Monitor alerts and service changes
-- **Historical Analysis**: Review route and schedule data
-- **Travel Planning**: Plan trips with current schedule information 
+type ScheduleResponse = {
+  RouteID: number;
+  RouteName: string;
+  Departures: Departure[];
+  // ... other properties
+};
+
+type Alert = {
+  AlertID: number;
+  AlertHeader: string;
+  AlertText: string;
+  // ... other properties
+};
+```
+
+See the full type definitions in the source code for complete type information. 

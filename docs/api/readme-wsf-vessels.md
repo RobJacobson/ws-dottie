@@ -1,15 +1,16 @@
 # WSF Vessels API
 
-The WSF Vessels API provides comprehensive access to Washington State Ferries vessel information, including real-time positions, vessel details, accommodations, statistics, and historical data.
+The WSF Vessels API provides comprehensive access to Washington State Ferries vessel information, including vessel details, real-time locations, accommodations, statistics, and historical data.
 
 ## Overview
 
 This module integrates with Washington State Ferries Vessels APIs to provide:
-- Real-time vessel tracking and positions
-- Vessel specifications, capacity, and amenities
-- Vessel accommodations and passenger services
+- Basic vessel information and status
+- Real-time vessel locations and tracking
+- Detailed vessel specifications and capabilities
+- Vessel accommodations and amenities
 - Vessel statistics and performance data
-- Vessel history and operational records
+- Historical vessel data and records
 - Cache flush date information for data freshness
 
 ## WSDOT Documentation
@@ -22,31 +23,32 @@ This module integrates with Washington State Ferries Vessels APIs to provide:
 **Base URL**: `https://www.wsdot.wa.gov/ferries/api/vessels/rest`
 
 #### Available Endpoints
-- `/vesselbasics` - Basic vessel information and operational status
+- `/vesselbasics` - Basic vessel information and status
 - `/vesselbasics/{VesselID}` - Specific vessel basics by ID
-- `/vessellocations` - Real-time vessel positions, speeds, and headings
+- `/vessellocations` - Real-time vessel locations and tracking
 - `/vessellocations/{VesselID}` - Specific vessel location by ID
-- `/vesselverbose` - Vessel specifications, capacity, and amenities
+- `/vesselverbose` - Detailed vessel specifications and capabilities
 - `/vesselverbose/{VesselID}` - Specific vessel verbose by ID
-- `/vesselaccommodations` - Vessel accommodations and passenger services
+- `/vesselaccommodations` - Vessel accommodations and amenities
 - `/vesselaccommodations/{VesselID}` - Specific vessel accommodations by ID
 - `/vesselstats` - Vessel statistics and performance data
 - `/vesselstats/{VesselID}` - Specific vessel statistics by ID
-- `/vesselhistory` - Vessel history and operational records
-- `/vesselhistory/{VesselName}/{DateStart}/{DateEnd}` - Vessel history by name and date range
+- `/vesselhistory` - Historical vessel data and records
+- `/vesselhistory/{VesselName}/{StartDate}/{EndDate}` - Vessel history by name and date range
 - `/cacheflushdate` - Cache flush date information
 
 #### Data Types
-- `VesselBasic` - Basic vessel information and status
-- `VesselLocation` - Current position and status
-- `VesselVerbose` - Vessel details and specifications
-- `VesselAccommodation` - Vessel accommodations and services
-- `VesselStats` - Vessel statistics and performance
-- `VesselHistory` - Vessel history and records
+- `VesselBasics` - Basic vessel information and status
+- `VesselLocation` - Real-time vessel location and tracking data
+- `VesselVerbose` - Detailed vessel specifications and capabilities
+- `VesselAccommodation` - Vessel accommodations and amenities
+- `VesselStats` - Vessel statistics and performance data
+- `VesselHistory` - Historical vessel data and records
 
 #### Update Frequency
-- **Locations**: Every 30 seconds
-- **Vessel Details**: Daily (static data)
+- **Vessel Basics**: Daily
+- **Vessel Locations**: Real-time (5-minute updates)
+- **Vessel Verbose**: Weekly (static data)
 - **Accommodations**: Weekly (static data)
 - **Statistics**: Daily
 - **History**: Updated as new records are added
@@ -55,84 +57,84 @@ This module integrates with Washington State Ferries Vessels APIs to provide:
 
 ### Get All Vessel Basics
 ```typescript
-import { getVesselBasics } from '@/api/wsf/vessels';
+import { getVesselBasics } from 'wsdot-api-client/wsf-vessels';
 
 const vessels = await getVesselBasics();
 ```
 
 ### Get Specific Vessel Basics
 ```typescript
-import { getVesselBasicsById } from '@/api/wsf/vessels';
+import { getVesselBasicsById } from 'wsdot-api-client/wsf-vessels';
 
 const vessel = await getVesselBasicsById(1); // Vessel ID
 ```
 
 ### Get All Vessel Locations
 ```typescript
-import { getVesselLocations } from '@/api/wsf/vessels';
+import { getVesselLocations } from 'wsdot-api-client/wsf-vessels';
 
 const vessels = await getVesselLocations();
 ```
 
 ### Get Specific Vessel Location
 ```typescript
-import { getVesselLocationsByVesselId } from '@/api/wsf/vessels';
+import { getVesselLocationsByVesselId } from 'wsdot-api-client/wsf-vessels';
 
 const vessel = await getVesselLocationsByVesselId(1); // Vessel ID
 ```
 
 ### Get All Vessel Verbose
 ```typescript
-import { getVesselVerbose } from '@/api/wsf/vessels';
+import { getVesselVerbose } from 'wsdot-api-client/wsf-vessels';
 
 const vessels = await getVesselVerbose();
 ```
 
 ### Get Specific Vessel Verbose
 ```typescript
-import { getVesselVerboseById } from '@/api/wsf/vessels';
+import { getVesselVerboseById } from 'wsdot-api-client/wsf-vessels';
 
 const vessel = await getVesselVerboseById(1); // Vessel ID
 ```
 
 ### Get All Vessel Accommodations
 ```typescript
-import { getVesselAccommodations } from '@/api/wsf/vessels';
+import { getVesselAccommodations } from 'wsdot-api-client/wsf-vessels';
 
 const accommodations = await getVesselAccommodations();
 ```
 
 ### Get Specific Vessel Accommodations
 ```typescript
-import { getVesselAccommodationsById } from '@/api/wsf/vessels';
+import { getVesselAccommodationsById } from 'wsdot-api-client/wsf-vessels';
 
 const accommodation = await getVesselAccommodationsById(1); // Vessel ID
 ```
 
 ### Get All Vessel Statistics
 ```typescript
-import { getVesselStats } from '@/api/wsf/vessels';
+import { getVesselStats } from 'wsdot-api-client/wsf-vessels';
 
 const stats = await getVesselStats();
 ```
 
 ### Get Specific Vessel Statistics
 ```typescript
-import { getVesselStatsById } from '@/api/wsf/vessels';
+import { getVesselStatsById } from 'wsdot-api-client/wsf-vessels';
 
 const stats = await getVesselStatsById(1); // Vessel ID
 ```
 
 ### Get All Vessel History
 ```typescript
-import { getVesselHistory } from '@/api/wsf/vessels';
+import { getVesselHistory } from 'wsdot-api-client/wsf-vessels';
 
 const history = await getVesselHistory();
 ```
 
 ### Get Vessel History by Name and Date Range
 ```typescript
-import { getVesselHistoryByVesselAndDateRange } from '@/api/wsf/vessels';
+import { getVesselHistoryByVesselAndDateRange } from 'wsdot-api-client/wsf-vessels';
 
 const history = await getVesselHistoryByVesselAndDateRange(
   "Cathlamet",
@@ -152,7 +154,7 @@ import {
   useVesselAccommodations,
   useVesselStats,
   useVesselHistory
-} from '@/api/wsf/vessels';
+} from 'wsdot-api-client/react/wsf-vessels';
 
 function VesselComponent() {
   // Default: enabled is true
@@ -230,7 +232,7 @@ import {
   useVesselVerboseById,
   useVesselAccommodationsById,
   useVesselStatsById
-} from '@/api/wsf/vessels';
+} from 'wsdot-api-client/react/wsf-vessels';
 
 function SingleVesselComponent({ vesselId }: { vesselId: number }) {
   const { data: basic } = useVesselBasicsById(vesselId);
@@ -269,61 +271,21 @@ All API functions return empty arrays (`[]`) on errors rather than throwing exce
 
 The hooks use default caching options from `createInfrequentUpdateOptions()` and `createFrequentUpdateOptions()`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
 
+**Caching by Data Type:**
+- **Vessel Basics**: Infrequent updates (daily)
+- **Vessel Locations**: Frequent updates (real-time)
+- **Vessel Verbose**: Infrequent updates (static data)
+- **Accommodations**: Infrequent updates (static data)
+- **Statistics**: Infrequent updates (daily)
+- **History**: Infrequent updates (as needed)
+
 ## Common Use Cases
 
-- **Real-time Tracking**: Monitor vessel positions and movements
-- **Fleet Management**: Track all vessels in the WSF fleet
-- **Passenger Information**: Display vessel amenities and services
-- **Performance Monitoring**: Analyze vessel statistics and metrics
-- **Historical Analysis**: Review vessel operational history
-- **Capacity Planning**: Check vessel specifications and capacity
-- **Service Status**: Monitor vessel operational status
-- **Route Planning**: Use vessel location data for travel planning
-
-## Testing Status
-
-### ✅ **E2E Tests - COMPLETED**
-- **API Functions**: 100% passing (18/18 tests)
-- **React Query Hooks**: 100% passing (17/17 tests)
-- **Query Key Validation**: 100% passing (3/3 tests)
-
-### ✅ **E2E Tests - UPDATED**
-- All e2e tests updated to use real API endpoints
-- Error handling updated to accept both `API_ERROR` and `NETWORK_ERROR`
-- Data structure expectations aligned with actual WSDOT API responses
-
-### ✅ **E2E Tests - COMPLETED**
-- Real API validation for all endpoints
-- Performance benchmarking (2-second LTE target)
-- Caching behavior validation
-
-## API Compliance
-
-### ✅ **Real WSDOT API Alignment**
-This implementation is **100% compliant** with the official WSDOT Vessels API:
-
-- **Validated endpoints** with cURL testing
-- **Correct data structures** based on actual API responses
-- **Proper error handling** for real API scenarios
-- **Accurate property names** (PascalCase with uppercase "ID")
-- **Correct return types** (objects for specific IDs, arrays for all data)
-
-### ❌ **Removed Non-Existent Endpoints**
-The following endpoints were removed as they don't exist in the real WSDOT API:
-- `getVesselLocationsByRoute` - No route-based vessel location endpoint
-- `getVesselStatsByRoute` - No route-based vessel statistics endpoint
-
-## Performance
-
-### **Caching Strategy**
-- **Frequent data** (vessel locations): 30-second stale time, 1-minute refetch
-- **Infrequent data** (basics, accommodations, stats, verbose): 5-minute stale time, 10-minute refetch
-- **Historical data**: 1-hour stale time, 2-hour refetch
-- **Automatic background updates** for real-time data
-- **Query deduplication** prevents duplicate API calls
-
-### **Error Recovery**
-- **Automatic retry** for network failures
-- **Graceful degradation** with user-friendly error messages
-- **Cache invalidation** on authentication errors
-- **Background refresh** for stale data 
+- **Vessel Tracking**: Monitor real-time vessel locations and movements
+- **Fleet Management**: Access comprehensive vessel information and status
+- **Passenger Information**: Display vessel details and amenities
+- **Performance Monitoring**: Track vessel statistics and performance data
+- **Historical Analysis**: Review vessel history and operational records
+- **Real-time Updates**: Monitor vessel movements and status changes
+- **Travel Planning**: Plan trips with current vessel information
+- **Fleet Overview**: Get comprehensive fleet status and capabilities 
