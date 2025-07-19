@@ -3,7 +3,7 @@
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
 import { parseWsfDate, toDateStamp } from "@/shared/fetching/dateUtils";
-import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
+import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
   FareLineItem,
@@ -60,7 +60,7 @@ export const getFaresValidDateRange =
  */
 export const getFaresTerminals = (tripDate: Date): Promise<FaresTerminal[]> => {
   const formattedDate = toDateStamp(tripDate);
-  return fetchWsfArray<FaresTerminal>("fares", `/terminals/${formattedDate}`);
+  return fetchWsf<FaresTerminal[]>("fares", `/terminals/${formattedDate}`);
 };
 
 /**
@@ -75,7 +75,7 @@ export const getFaresTerminalMates = (
   terminalID: number
 ): Promise<TerminalMate[]> => {
   const formattedDate = toDateStamp(tripDate);
-  return fetchWsfArray<TerminalMate>(
+  return fetchWsf<TerminalMate[]>(
     "fares",
     `/terminalmates/${formattedDate}/${terminalID}`
   );
@@ -111,7 +111,7 @@ export const getTerminalComboVerbose = (
   tripDate: Date
 ): Promise<TerminalComboVerbose[]> => {
   const formattedDate = toDateStamp(tripDate);
-  return fetchWsfArray<TerminalComboVerbose>(
+  return fetchWsf<TerminalComboVerbose[]>(
     "fares",
     `/terminalcomboverbose/${formattedDate}`
   );
@@ -133,7 +133,7 @@ export const getFareLineItemsBasic = (
   roundTrip: boolean
 ): Promise<FareLineItemBasic[]> => {
   const formattedDate = toDateStamp(tripDate);
-  return fetchWsfArray<FareLineItemBasic>(
+  return fetchWsf<FareLineItemBasic[]>(
     "fares",
     `/farelineitemsbasic/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
   );
@@ -155,7 +155,7 @@ export const getFareLineItems = (
   roundTrip: boolean
 ): Promise<FareLineItem[]> => {
   const formattedDate = toDateStamp(tripDate);
-  return fetchWsfArray<FareLineItem>(
+  return fetchWsf<FareLineItem[]>(
     "fares",
     `/farelineitems/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
   );
@@ -200,7 +200,7 @@ export const getFareTotals = (
   const fareLineItemIDsString = fareLineItemIDs.join(",");
   const quantitiesString = quantities.join(",");
 
-  return fetchWsfArray<FareTotal>(
+  return fetchWsf<FareTotal[]>(
     "fares",
     `/faretotals/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}/${fareLineItemIDsString}/${quantitiesString}`
   );

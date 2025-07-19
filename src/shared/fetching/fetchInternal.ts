@@ -114,7 +114,6 @@ const generateCallbackName = () =>
  * Web JSONP fetch (bypasses CORS restrictions) - returns parsed data directly
  */
 const fetchJsonp = (url: string): Promise<unknown> => {
-  log.debug("fetchJsonp", url);
   return new Promise((resolve, reject) => {
     const callbackName = generateCallbackName();
     const script = document.createElement("script");

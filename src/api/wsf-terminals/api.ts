@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
+import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
   TerminalBasics,
@@ -26,7 +26,7 @@ import type {
  * @returns Promise resolving to an array of TerminalBasics objects containing basic terminal information
  */
 export const getTerminalBasics = (): Promise<TerminalBasics[]> =>
-  fetchWsfArray<TerminalBasics>("terminals", "/terminalbasics");
+  fetchWsf<TerminalBasics[]>("terminals", "/terminalbasics");
 
 /**
  * API function for fetching specific terminal basics from WSF Terminals API
@@ -57,7 +57,7 @@ export const getTerminalBasicsByTerminalId = (
  * @returns Promise resolving to an array of TerminalLocation objects containing terminal location information
  */
 export const getTerminalLocations = (): Promise<TerminalLocation[]> =>
-  fetchWsfArray<TerminalLocation>("terminals", "/terminallocations");
+  fetchWsf<TerminalLocation[]>("terminals", "/terminallocations");
 
 /**
  * API function for fetching terminal location for a specific terminal from WSF Terminals API
@@ -93,7 +93,7 @@ export const getTerminalLocationsByTerminalId = (
  * @returns Promise resolving to an array of TerminalSailingSpace objects containing real-time space availability information
  */
 export const getTerminalSailingSpace = (): Promise<TerminalSailingSpace[]> =>
-  fetchWsfArray<TerminalSailingSpace>("terminals", "/terminalsailingspace");
+  fetchWsf<TerminalSailingSpace[]>("terminals", "/terminalsailingspace");
 
 /**
  * API function for fetching terminal sailing space data for a specific terminal from WSF Terminals API
@@ -131,7 +131,7 @@ export const getTerminalSailingSpaceByTerminalId = (
  * @returns Promise resolving to an array of TerminalBulletin objects containing bulletin information
  */
 export const getTerminalBulletins = (): Promise<TerminalBulletin[]> =>
-  fetchWsfArray<TerminalBulletin>("terminals", "/terminalbulletins");
+  fetchWsf<TerminalBulletin[]>("terminals", "/terminalbulletins");
 
 /**
  * API function for fetching terminal bulletins for a specific terminal from WSF Terminals API
@@ -162,7 +162,7 @@ export const getTerminalBulletinsByTerminalId = (
  * @returns Promise resolving to an array of TerminalTransport objects containing transportation information
  */
 export const getTerminalTransports = (): Promise<TerminalTransport[]> =>
-  fetchWsfArray<TerminalTransport>("terminals", "/terminaltransports");
+  fetchWsf<TerminalTransport[]>("terminals", "/terminaltransports");
 
 /**
  * API function for fetching terminal transports for a specific terminal from WSF Terminals API
@@ -194,7 +194,7 @@ export const getTerminalTransportsByTerminalId = (
  * @returns Promise resolving to an array of TerminalWaitTimes objects containing wait time information
  */
 export const getTerminalWaitTimes = (): Promise<TerminalWaitTimes[]> =>
-  fetchWsfArray<TerminalWaitTimes>("terminals", "/terminalwaittimes");
+  fetchWsf<TerminalWaitTimes[]>("terminals", "/terminalwaittimes");
 
 /**
  * API function for fetching terminal wait times by terminal from WSF Terminals API
@@ -231,7 +231,7 @@ export const getTerminalWaitTimesByTerminalId = (
  * @returns Promise resolving to an array of TerminalVerbose objects containing comprehensive terminal information
  */
 export const getTerminalVerbose = (): Promise<TerminalVerbose[]> =>
-  fetchWsfArray<TerminalVerbose>("terminals", "/terminalverbose");
+  fetchWsf<TerminalVerbose[]>("terminals", "/terminalverbose");
 
 /**
  * API function for fetching terminal verbose data for a specific terminal from WSF Terminals API

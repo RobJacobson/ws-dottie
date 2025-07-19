@@ -47,7 +47,7 @@ This module integrates with Washington State Ferries Vessels APIs to provide:
 
 #### Update Frequency
 - **Vessel Basics**: Daily
-- **Vessel Locations**: Real-time (5-minute updates)
+- **Vessel Locations**: Real-time (5-second updates)
 - **Vessel Verbose**: Weekly (static data)
 - **Accommodations**: Weekly (static data)
 - **Statistics**: Daily

@@ -1,7 +1,7 @@
 // WSF Schedule API functions
 
 import { toDateStamp } from "@/shared/fetching/dateUtils";
-import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
+import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
   ActiveSeason,
@@ -10,8 +10,6 @@ import type {
   Route,
   RouteDetails,
   Sailing,
-  Schedule,
-  ScheduleCacheFlushDate,
   ScheduledRoute,
   ScheduleResponse,
   ScheduleTerminal,
@@ -67,7 +65,7 @@ export const getValidDateRange = (): Promise<ValidDateRange | null> =>
  * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal information
  */
 export const getTerminals = (tripDate: Date): Promise<ScheduleTerminal[]> =>
-  fetchWsfArray<ScheduleTerminal>(
+  fetchWsf<ScheduleTerminal[]>(
     "schedule",
     `/terminals/${toDateStamp(tripDate)}`
   );
@@ -85,7 +83,7 @@ export const getTerminals = (tripDate: Date): Promise<ScheduleTerminal[]> =>
 export const getTerminalsAndMates = (
   tripDate: Date
 ): Promise<ScheduleTerminalCombo[]> =>
-  fetchWsfArray<ScheduleTerminalCombo>(
+  fetchWsf<ScheduleTerminalCombo[]>(
     "schedule",
     `/terminalsandmates/${toDateStamp(tripDate)}`
   );
@@ -105,7 +103,7 @@ export const getTerminalsAndMatesByRoute = (
   tripDate: Date,
   routeId: number
 ): Promise<ScheduleTerminalCombo[]> =>
-  fetchWsfArray<ScheduleTerminalCombo>(
+  fetchWsf<ScheduleTerminalCombo[]>(
     "schedule",
     `/terminalsandmatesbyroute/${toDateStamp(tripDate)}/${routeId}`
   );
@@ -125,7 +123,7 @@ export const getTerminalMates = (
   tripDate: Date,
   terminalId: number
 ): Promise<ScheduleTerminal[]> =>
-  fetchWsfArray<ScheduleTerminal>(
+  fetchWsf<ScheduleTerminal[]>(
     "schedule",
     `/terminalmates/${toDateStamp(tripDate)}/${terminalId}`
   );
@@ -145,7 +143,7 @@ export const getTerminalMates = (
  * @returns Promise resolving to an array of Route objects containing basic route information
  */
 export const getRoutes = (tripDate: Date): Promise<Route[]> =>
-  fetchWsfArray<Route>("schedule", `/routes/${toDateStamp(tripDate)}`);
+  fetchWsf<Route[]>("schedule", `/routes/${toDateStamp(tripDate)}`);
 
 /**
  * API function for fetching routes between specific terminals from WSF Schedule API
@@ -165,7 +163,7 @@ export const getRoutesByTerminals = (
   departingTerminalId: number,
   arrivingTerminalId: number
 ): Promise<Route[]> =>
-  fetchWsfArray<Route>(
+  fetchWsf<Route[]>(
     "schedule",
     `/routes/${toDateStamp(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
   );
@@ -181,7 +179,7 @@ export const getRoutesByTerminals = (
  * @returns Promise resolving to an array of Route objects that have service disruptions
  */
 export const getRoutesWithDisruptions = (tripDate: Date): Promise<Route[]> =>
-  fetchWsfArray<Route>(
+  fetchWsf<Route[]>(
     "schedule",
     `/routeshavingservicedisruptions/${toDateStamp(tripDate)}`
   );
@@ -198,7 +196,7 @@ export const getRoutesWithDisruptions = (tripDate: Date): Promise<Route[]> =>
  * @returns Promise resolving to an array of Route objects containing detailed route information
  */
 export const getRouteDetails = (tripDate: Date): Promise<Route[]> =>
-  fetchWsfArray<Route>("schedule", `/routedetails/${toDateStamp(tripDate)}`);
+  fetchWsf<Route[]>("schedule", `/routedetails/${toDateStamp(tripDate)}`);
 
 /**
  * API function for fetching detailed route information between specific terminals from WSF Schedule API
@@ -218,7 +216,7 @@ export const getRouteDetailsByTerminals = (
   departingTerminalId: number,
   arrivingTerminalId: number
 ): Promise<Route[]> =>
-  fetchWsfArray<Route>(
+  fetchWsf<Route[]>(
     "schedule",
     `/routedetails/${toDateStamp(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
   );
@@ -257,7 +255,7 @@ export const getRouteDetailsByRoute = (
  * @returns Promise resolving to an array of ActiveSeason objects containing active season information
  */
 export const getActiveSeasons = (): Promise<ActiveSeason[]> =>
-  fetchWsfArray<ActiveSeason>("schedule", "/activeseasons");
+  fetchWsf<ActiveSeason[]>("schedule", "/activeseasons");
 
 // ============================================================================
 // SCHEDULED ROUTES API FUNCTIONS
@@ -274,7 +272,7 @@ export const getActiveSeasons = (): Promise<ActiveSeason[]> =>
  * @returns Promise resolving to an array of ScheduledRoute objects representing all scheduled routes
  */
 export const getScheduledRoutes = (): Promise<ScheduledRoute[]> =>
-  fetchWsfArray<ScheduledRoute>("schedule", "/schedroutes");
+  fetchWsf<ScheduledRoute[]>("schedule", "/schedroutes");
 
 /**
  * API function for fetching scheduled routes by season from WSF Schedule API
@@ -289,7 +287,7 @@ export const getScheduledRoutes = (): Promise<ScheduledRoute[]> =>
 export const getScheduledRoutesBySeason = (
   scheduleId: number
 ): Promise<ScheduledRoute[]> =>
-  fetchWsfArray<ScheduledRoute>("schedule", `/schedroutes/${scheduleId}`);
+  fetchWsf<ScheduledRoute[]>("schedule", `/schedroutes/${scheduleId}`);
 
 // ============================================================================
 // SAILINGS API FUNCTIONS
@@ -308,7 +306,7 @@ export const getScheduledRoutesBySeason = (
  * @returns Promise resolving to an array of Sailing objects containing sailing information
  */
 export const getSailings = (schedRouteId: number): Promise<Sailing[]> =>
-  fetchWsfArray<Sailing>("schedule", `/sailings/${schedRouteId}`);
+  fetchWsf<Sailing[]>("schedule", `/sailings/${schedRouteId}`);
 
 /**
  * API function for fetching all sailings from WSF Schedule API
@@ -323,7 +321,7 @@ export const getSailings = (schedRouteId: number): Promise<Sailing[]> =>
  * @returns Promise resolving to an array of Sailing objects containing all sailing information
  */
 export const getAllSailings = (schedRouteId: number): Promise<Sailing[]> =>
-  fetchWsfArray<Sailing>("schedule", `/allsailings/${schedRouteId}`);
+  fetchWsf<Sailing[]>("schedule", `/allsailings/${schedRouteId}`);
 
 // ============================================================================
 // TIME ADJUSTMENTS API FUNCTIONS
@@ -339,7 +337,7 @@ export const getAllSailings = (schedRouteId: number): Promise<Sailing[]> =>
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information
  */
 export const getTimeAdjustments = (): Promise<TimeAdjustment[]> =>
-  fetchWsfArray<TimeAdjustment>("schedule", "/timeadj");
+  fetchWsf<TimeAdjustment[]>("schedule", "/timeadj");
 
 /**
  * API function for fetching time adjustments by route from WSF Schedule API
@@ -355,7 +353,7 @@ export const getTimeAdjustments = (): Promise<TimeAdjustment[]> =>
 export const getTimeAdjustmentsByRoute = (
   routeId: number
 ): Promise<TimeAdjustment[]> =>
-  fetchWsfArray<TimeAdjustment>("schedule", `/timeadjbyroute/${routeId}`);
+  fetchWsf<TimeAdjustment[]>("schedule", `/timeadjbyroute/${routeId}`);
 
 /**
  * API function for fetching time adjustments by scheduled route from WSF Schedule API
@@ -371,7 +369,7 @@ export const getTimeAdjustmentsByRoute = (
 export const getTimeAdjustmentsBySchedRoute = (
   schedRouteId: number
 ): Promise<TimeAdjustment[]> =>
-  fetchWsfArray<TimeAdjustment>(
+  fetchWsf<TimeAdjustment[]>(
     "schedule",
     `/timeadjbyschedroute/${schedRouteId}`
   );
@@ -390,7 +388,7 @@ export const getTimeAdjustmentsBySchedRoute = (
  *
  * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
  * @param routeId - The unique identifier for the route
- * @returns Promise resolving to an array of Schedule objects containing schedule information
+ * @returns Promise resolving to a ScheduleResponse object containing schedule information, or null if no schedule found
  */
 export const getScheduleByRoute = (
   tripDate: Date,
@@ -413,7 +411,7 @@ export const getScheduleByRoute = (
  * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
  * @param departingTerminalId - The unique identifier for the departing terminal
  * @param arrivingTerminalId - The unique identifier for the arriving terminal
- * @returns Promise resolving to an array of Schedule objects containing schedule information
+ * @returns Promise resolving to a ScheduleResponse object containing schedule information, or null if no schedule found
  */
 export const getScheduleByTerminals = (
   tripDate: Date,
@@ -435,15 +433,15 @@ export const getScheduleByTerminals = (
  *
  * @param routeId - The unique identifier for the route
  * @param onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
- * @returns Promise resolving to an array of Schedule objects containing today's schedule information
+ * @returns Promise resolving to a ScheduleResponse object containing today's schedule information, or null if no schedule found
  */
 export const getScheduleTodayByRoute = (
   routeId: number,
-  onlyRemainingTimes?: boolean
+  onlyRemainingTimes: boolean = false
 ): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
-    `/scheduletoday/${routeId}/${onlyRemainingTimes ?? false}`
+    `/scheduletoday/${routeId}/${onlyRemainingTimes}`
   );
 
 /**
@@ -457,16 +455,16 @@ export const getScheduleTodayByRoute = (
  * @param departingTerminalId - The unique identifier for the departing terminal
  * @param arrivingTerminalId - The unique identifier for the arriving terminal
  * @param onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
- * @returns Promise resolving to an array of Schedule objects containing today's schedule information
+ * @returns Promise resolving to a ScheduleResponse object containing today's schedule information, or null if no schedule found
  */
 export const getScheduleTodayByTerminals = (
   departingTerminalId: number,
   arrivingTerminalId: number,
-  onlyRemainingTimes?: boolean
+  onlyRemainingTimes: boolean = false
 ): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
-    `/scheduletoday/${departingTerminalId}/${arrivingTerminalId}/${onlyRemainingTimes ?? false}`
+    `/scheduletoday/${departingTerminalId}/${arrivingTerminalId}/${onlyRemainingTimes}`
   );
 
 // ============================================================================
@@ -483,7 +481,7 @@ export const getScheduleTodayByTerminals = (
  * @returns Promise resolving to an array of Alert objects containing alert information
  */
 export const getAlerts = (): Promise<Alert[]> =>
-  fetchWsfArray<Alert>("schedule", "/alerts");
+  fetchWsf<Alert[]>("schedule", "/alerts");
 
 // ============================================================================
 // ALTERNATIVE FORMATS API FUNCTIONS
@@ -502,7 +500,7 @@ export const getAlerts = (): Promise<Alert[]> =>
 export const getAlternativeFormats = (
   subjectName: string
 ): Promise<AlternativeFormat[]> =>
-  fetchWsfArray<AlternativeFormat>(
+  fetchWsf<AlternativeFormat[]>(
     "schedule",
     `/alternativeformats/${subjectName}`
   );

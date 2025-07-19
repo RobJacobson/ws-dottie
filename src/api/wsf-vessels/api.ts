@@ -1,7 +1,7 @@
 // WSF Vessels API functions
 
 import { toDateStamp } from "@/shared/fetching/dateUtils";
-import { fetchWsf, fetchWsfArray } from "@/shared/fetching/fetch";
+import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
   VesselAccommodation,
@@ -27,7 +27,7 @@ import type {
  * @returns Promise resolving to an array of VesselBasic objects containing basic vessel information
  */
 export const getVesselBasics = (): Promise<VesselBasic[]> =>
-  fetchWsfArray<VesselBasic>("vessels", "/vesselbasics");
+  fetchWsf<VesselBasic[]>("vessels", "/vesselbasics");
 
 /**
  * API function for fetching vessel basics for a specific vessel from WSF Vessels API
@@ -59,7 +59,7 @@ export const getVesselBasicsById = (vesselId: number): Promise<VesselBasic> =>
  * @returns Promise resolving to an array of VesselLocation objects containing real-time vessel position data
  */
 export const getVesselLocations = (): Promise<VesselLocation[]> =>
-  fetchWsfArray<VesselLocation>("vessels", "/vessellocations");
+  fetchWsf<VesselLocation[]>("vessels", "/vessellocations");
 
 /**
  * API function for fetching current vessel location data for a specific vessel from WSF Vessels API
@@ -89,7 +89,7 @@ export const getVesselLocationsByVesselId = (
  * @returns Promise resolving to an array of VesselAccommodation objects containing accommodation information
  */
 export const getVesselAccommodations = (): Promise<VesselAccommodation[]> =>
-  fetchWsfArray<VesselAccommodation>("vessels", "/vesselaccommodations");
+  fetchWsf<VesselAccommodation[]>("vessels", "/vesselaccommodations");
 
 /**
  * API function for fetching vessel accommodations for a specific vessel from WSF Vessels API
@@ -119,7 +119,7 @@ export const getVesselAccommodationsById = (
  * @returns Promise resolving to an array of VesselStats objects containing vessel statistics
  */
 export const getVesselStats = (): Promise<VesselStats[]> =>
-  fetchWsfArray<VesselStats>("vessels", "/vesselstats");
+  fetchWsf<VesselStats[]>("vessels", "/vesselstats");
 
 /**
  * API function for fetching vessel statistics for a specific vessel from WSF Vessels API
@@ -147,7 +147,7 @@ export const getVesselStatsById = (vesselId: number): Promise<VesselStats> =>
  * @returns Promise resolving to an array of VesselHistory objects containing vessel historical information
  */
 export const getVesselHistory = (): Promise<VesselHistory[]> =>
-  fetchWsfArray<VesselHistory>("vessels", "/vesselhistory");
+  fetchWsf<VesselHistory[]>("vessels", "/vesselhistory");
 
 /**
  * API function for fetching vessel history for a specific vessel and date range from WSF Vessels API
@@ -167,7 +167,7 @@ export const getVesselHistoryByVesselAndDateRange = (
 ): Promise<VesselHistory[]> => {
   const formattedDateStart = toDateStamp(dateStart);
   const formattedDateEnd = toDateStamp(dateEnd);
-  return fetchWsfArray<VesselHistory>(
+  return fetchWsf<VesselHistory[]>(
     "vessels",
     `/vesselhistory/${vesselName}/${formattedDateStart}/${formattedDateEnd}`
   );
@@ -191,7 +191,7 @@ export const getVesselHistoryByVesselAndDateRange = (
  * @returns Promise resolving to an array of VesselVerbose objects containing comprehensive vessel information
  */
 export const getVesselVerbose = (): Promise<VesselVerbose[]> =>
-  fetchWsfArray<VesselVerbose>("vessels", "/vesselverbose");
+  fetchWsf<VesselVerbose[]>("vessels", "/vesselverbose");
 
 /**
  * API function for fetching vessel verbose data for a specific vessel from WSF Vessels API

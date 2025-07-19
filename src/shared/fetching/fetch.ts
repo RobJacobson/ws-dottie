@@ -20,17 +20,3 @@ export const fetchWsf = async <T>(
   const url = `${baseUrl}${endpoint}?apiaccesscode=${API_KEY}`;
   return await fetchInternal<T>(url, endpoint, logMode);
 };
-
-/**
- * Fetches array data from WSF API with a complete URL
- *
- * @param source - The API source: "vessels", "terminals", or "schedule"
- * @param endpoint - The complete API endpoint path (e.g., "/vessellocations")
- * @param logMode - Optional logging mode for debugging
- * @returns Promise resolving to an array of API responses or throws WsdApiError if fetch fails
- */
-export const fetchWsfArray = async <T>(
-  source: WsfSource,
-  endpoint: string,
-  logMode?: LoggingMode
-): Promise<T[]> => await fetchWsf<T[]>(source, endpoint, logMode);
