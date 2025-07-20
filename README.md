@@ -238,12 +238,126 @@ if (fares) {
 
 ## WSDOT Traveler Information APIs
 
-**Note**: WSDOT Traveler Information APIs (Highway Cameras, Traffic Flow, Weather Information, etc.) are documented in the [WSDOT API Reference](docs/wsdot-api-reference/) but are not yet implemented in this client library.
+The library now includes comprehensive support for all WSDOT Traveler Information APIs, providing real-time data for Washington State highways, traffic, weather, and transportation infrastructure.
 
-For these APIs, you can:
-1. Use the official WSDOT REST endpoints directly
-2. Check the [API Access Requirements](docs/API_ACCESS_REQUIREMENTS.md) for documentation links
-3. Follow the development workflow outlined in [TODO.md](docs/TODO.md) to implement new APIs
+### Border Crossings API
+```typescript
+import { WsdotBorderCrossings } from 'wsdot-api-client';
+
+// Get border crossing wait times
+const crossings = await WsdotBorderCrossings.getBorderCrossings();
+```
+
+### Bridge Clearances API
+```typescript
+import { WsdotBridgeClearances } from 'wsdot-api-client';
+
+// Get bridge clearance information
+const clearances = await WsdotBridgeClearances.getBridgeClearances();
+```
+
+### Commercial Vehicle Restrictions API
+```typescript
+import { WsdotCommercialVehicleRestrictions } from 'wsdot-api-client';
+
+// Get commercial vehicle restrictions
+const restrictions = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
+```
+
+### Highway Alerts API
+```typescript
+import { WsdotHighwayAlerts } from 'wsdot-api-client';
+
+// Get highway alerts
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
+```
+
+### Highway Cameras API
+```typescript
+import { WsdotHighwayCameras } from 'wsdot-api-client';
+
+// Get highway camera feeds
+const cameras = await WsdotHighwayCameras.getHighwayCameras();
+```
+
+### Mountain Pass Conditions API
+```typescript
+import { WsdotMountainPassConditions } from 'wsdot-api-client';
+
+// Get mountain pass conditions
+const passes = await WsdotMountainPassConditions.getMountainPassConditions();
+```
+
+### Toll Rates API
+```typescript
+import { WsdotTollRates } from 'wsdot-api-client';
+
+// Get toll rates
+const tolls = await WsdotTollRates.getTollRates();
+```
+
+### Traffic Flow API
+```typescript
+import { WsdotTrafficFlow } from 'wsdot-api-client';
+
+// Get traffic flow data
+const flows = await WsdotTrafficFlow.getTrafficFlows();
+```
+
+### Travel Times API
+```typescript
+import { WsdotTravelTimes } from 'wsdot-api-client';
+
+// Get travel times
+const times = await WsdotTravelTimes.getTravelTimes();
+```
+
+### Weather Information API
+```typescript
+import { WsdotWeatherInformation } from 'wsdot-api-client';
+
+// Get weather information
+const weather = await WsdotWeatherInformation.getWeatherInformation();
+```
+
+### Weather Information Extended API
+```typescript
+import { WsdotWeatherInformationExtended } from 'wsdot-api-client';
+
+// Get extended weather information
+const weatherExtended = await WsdotWeatherInformationExtended.getWeatherInformationExtended();
+```
+
+### Weather Stations API
+```typescript
+import { WsdotWeatherStations } from 'wsdot-api-client';
+
+// Get weather station locations
+const stations = await WsdotWeatherStations.getWeatherStations();
+```
+
+### WSDOT React Hooks
+
+All WSDOT APIs include React Query hooks for easy integration:
+
+```typescript
+import { 
+  useBorderCrossings,
+  useHighwayCameras,
+  useTrafficFlows,
+  useWeatherInformation,
+  useWeatherStations
+} from 'wsdot-api-client';
+
+// Use hooks directly - no provider needed!
+const { data: crossings } = useBorderCrossings();
+const { data: cameras } = useHighwayCameras();
+const { data: flows } = useTrafficFlows();
+const { data: weather } = useWeatherInformation();
+const { data: stations } = useWeatherStations();
+```
+
+For detailed documentation on each WSDOT API, see the [WSDOT API Reference](docs/wsdot-api-reference/).
 
 ## Contributing
 

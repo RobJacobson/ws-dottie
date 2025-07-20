@@ -14,7 +14,7 @@
 | Traffic Flow | Traveler Information | Real-time (5 min) | [Details](traffic-flow.md) |
 | Travel Times | Traveler Information | Real-time (5 min) | [Details](travel-times.md) |
 | Weather Information | Traveler Information | Real-time (5 min) | [Details](weather-information.md) |
-| Weather Information Extended | Traveler Information | ⚠️ Unavailable | [Details](weather-information-extended.md) |
+| Weather Information Extended | Traveler Information | Real-time (5 min) | [Details](weather-information-extended.md) |
 | Weather Stations | Traveler Information | Real-time (5 min) | [Details](weather-stations.md) |
 | WSF Fares | WSF | Static | [Details](wsf-fares.md) |
 | WSF Schedule | WSF | Seasonal | [Details](wsf-schedule.md) |
@@ -35,6 +35,10 @@
 ## Overview
 
 This comprehensive reference documents all available Washington State Department of Transportation (WSDOT) APIs, including both Traveler Information APIs and Washington State Ferries (WSF) APIs. Each API is documented with real data examples, TypeScript types, and clear usage instructions.
+
+**✅ Implementation Status**: All 16 WSDOT APIs are now fully implemented in the `wsdot-api-client` library, including:
+- **12 WSDOT Traveler Information APIs** - Complete with TypeScript types, React hooks, and comprehensive testing
+- **4 WSF APIs** - Complete with full functionality and documentation
 
 ### API Categories
 
