@@ -179,26 +179,26 @@ src/api/wsdot-[api-name]/
 #### Documentation ✅ COMPLETED
 - [x] **Create `docs/api/readme-wsdot-commercial-vehicle-restrictions.md`**
 
-### 2.4 Highway Alerts API
+### 2.4 Highway Alerts API ✅ COMPLETED
 
-#### Research & Validation
-- [ ] **cURL Documentation**
-  - [ ] `https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help`
-  - [ ] `https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html`
-- [ ] **cURL Endpoint Testing**
+#### Research & Validation ✅ COMPLETED
+- [x] **cURL Documentation**
+  - [x] `https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help`
+  - [x] `https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html`
+- [x] **cURL Endpoint Testing**
 
-#### Implementation
-- [ ] **Create `src/api/wsdot-highway-alerts/types.ts`**
-- [ ] **Create `src/api/wsdot-highway-alerts/api.ts`**
-- [ ] **Create `src/api/wsdot-highway-alerts/hook.ts`**
-- [ ] **Create `src/api/wsdot-highway-alerts/index.ts`**
+#### Implementation ✅ COMPLETED
+- [x] **Create `src/api/wsdot-highway-alerts/types.ts`**
+- [x] **Create `src/api/wsdot-highway-alerts/api.ts`**
+- [x] **Create `src/api/wsdot-highway-alerts/hook.ts`**
+- [x] **Create `src/api/wsdot-highway-alerts/index.ts`**
 
-#### Testing
-- [ ] **Create `tests/e2e/wsdot-highway-alerts/highwayAlertsBasics.e2e.test.ts`**
-- [ ] **Create `tests/e2e/wsdot-highway-alerts/highwayAlertsGetData.e2e.test.ts`**
+#### Testing ✅ COMPLETED
+- [x] **Create `tests/e2e/wsdot-highway-alerts/highwayAlertsBasics.e2e.test.ts`**
+- [x] **Create `tests/e2e/wsdot-highway-alerts/highwayAlertsGetData.e2e.test.ts`**
 
-#### Documentation
-- [ ] **Create `docs/api/readme-wsdot-highway-alerts.md`**
+#### Documentation ✅ COMPLETED
+- [x] **Create `docs/api/readme-wsdot-highway-alerts.md`**
 
 ### 2.5 Highway Cameras API
 
