@@ -262,7 +262,7 @@ When no Access Code is provided or an invalid Access Code is used, APIs return:
 The library uses `WsdotApiError` instances for consistent error handling across both WSF and WSDOT Traveler Information APIs:
 
 ```typescript
-import { WsdotApiError } from 'wsdot-api-client';
+import { WsdotApiError } from 'ws-dottie';
 
 try {
   const data = await getHighwayCameras();

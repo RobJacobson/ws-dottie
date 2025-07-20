@@ -1,7 +1,7 @@
 {
-  "name": "wsdot-api-client",
+  "name": "ws-dottie",
   "version": "1.0.0",
-  "description": "Complete TypeScript client for WSDOT Traveler Information APIs",
+  "description": "The complete TypeScript client for Washington State's real-time transportation data",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -126,6 +126,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/wsdot-api-client.git"
+    "url": "https://github.com/yourusername/ws-dottie.git"
   }
 }

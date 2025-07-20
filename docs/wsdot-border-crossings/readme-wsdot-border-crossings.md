@@ -35,7 +35,7 @@ This module integrates with WSDOT Border Crossings API to provide:
 
 ### Get All Border Crossings
 ```typescript
-import { getBorderCrossings } from 'wsdot-api-client/wsdot-border-crossings';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 const borderCrossings = await getBorderCrossings();
 // Returns: BorderCrossingData[]
@@ -43,7 +43,7 @@ const borderCrossings = await getBorderCrossings();
 
 ### Access Border Crossing Data
 ```typescript
-import { getBorderCrossings } from 'wsdot-api-client/wsdot-border-crossings';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 const crossings = await getBorderCrossings();
 
@@ -63,7 +63,7 @@ crossings.forEach(crossing => {
 
 ### Using Hooks
 ```typescript
-import { useBorderCrossings } from 'wsdot-api-client/react/wsdot-border-crossings';
+import { useBorderCrossings } from 'ws-dottie/react/wsdot-border-crossings';
 
 function BorderCrossingsComponent() {
   // Default: enabled is true, frequent updates
@@ -129,7 +129,7 @@ All PascalCase keys are preserved as-is for consistency with WSDOT API.
 The library provides consistent error handling with `WsdotApiError` instances:
 
 ```typescript
-import { getBorderCrossings, WsdotApiError } from 'wsdot-api-client/wsdot-border-crossings';
+import { getBorderCrossings, WsdotApiError } from 'ws-dottie/wsdot-border-crossings';
 
 try {
   const crossings = await getBorderCrossings();

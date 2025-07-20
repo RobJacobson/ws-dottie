@@ -39,7 +39,7 @@ This module integrates with WSDOT Highway Alerts API to provide:
 
 ### Get All Highway Alerts
 ```typescript
-import { getHighwayAlerts } from 'wsdot-api-client/wsdot-highway-alerts';
+import { getHighwayAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 const alerts = await getHighwayAlerts();
 // Returns: HighwayAlert[]
@@ -47,7 +47,7 @@ const alerts = await getHighwayAlerts();
 
 ### Get Specific Alert by ID
 ```typescript
-import { getHighwayAlertById } from 'wsdot-api-client/wsdot-highway-alerts';
+import { getHighwayAlertById } from 'ws-dottie/wsdot-highway-alerts';
 
 const alert = await getHighwayAlertById(655472);
 // Returns: HighwayAlert
@@ -55,7 +55,7 @@ const alert = await getHighwayAlertById(655472);
 
 ### Get Alerts by Map Area
 ```typescript
-import { getHighwayAlertsByMapArea } from 'wsdot-api-client/wsdot-highway-alerts';
+import { getHighwayAlertsByMapArea } from 'ws-dottie/wsdot-highway-alerts';
 
 const alerts = await getHighwayAlertsByMapArea("Northwest");
 // Returns: HighwayAlert[]
@@ -63,7 +63,7 @@ const alerts = await getHighwayAlertsByMapArea("Northwest");
 
 ### Access Alert Data
 ```typescript
-import { getHighwayAlerts } from 'wsdot-api-client/wsdot-highway-alerts';
+import { getHighwayAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 const alerts = await getHighwayAlerts();
 
@@ -90,7 +90,7 @@ alerts.forEach(alert => {
 
 ### Using Hooks
 ```typescript
-import { useHighwayAlerts, useHighwayAlertById, useHighwayAlertsByMapArea } from 'wsdot-api-client/react/wsdot-highway-alerts';
+import { useHighwayAlerts, useHighwayAlertById, useHighwayAlertsByMapArea } from 'ws-dottie/react/wsdot-highway-alerts';
 
 function HighwayAlertsComponent() {
   // Get all alerts
@@ -171,7 +171,7 @@ All PascalCase keys are preserved as-is for consistency with WSDOT API.
 The library provides consistent error handling with `WsdotApiError` instances:
 
 ```typescript
-import { getHighwayAlerts, WsdotApiError } from 'wsdot-api-client/wsdot-highway-alerts';
+import { getHighwayAlerts, WsdotApiError } from 'ws-dottie/wsdot-highway-alerts';
 
 try {
   const alerts = await getHighwayAlerts();

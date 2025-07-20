@@ -57,84 +57,84 @@ This module integrates with Washington State Ferries Vessels APIs to provide:
 
 ### Get All Vessel Basics
 ```typescript
-import { getVesselBasics } from 'wsdot-api-client/wsf-vessels';
+import { getVesselBasics } from 'ws-dottie/wsf-vessels';
 
 const vessels = await getVesselBasics();
 ```
 
 ### Get Specific Vessel Basics
 ```typescript
-import { getVesselBasicsById } from 'wsdot-api-client/wsf-vessels';
+import { getVesselBasicsById } from 'ws-dottie/wsf-vessels';
 
 const vessel = await getVesselBasicsById(1); // Vessel ID
 ```
 
 ### Get All Vessel Locations
 ```typescript
-import { getVesselLocations } from 'wsdot-api-client/wsf-vessels';
+import { getVesselLocations } from 'ws-dottie/wsf-vessels';
 
 const vessels = await getVesselLocations();
 ```
 
 ### Get Specific Vessel Location
 ```typescript
-import { getVesselLocationsByVesselId } from 'wsdot-api-client/wsf-vessels';
+import { getVesselLocationsByVesselId } from 'ws-dottie/wsf-vessels';
 
 const vessel = await getVesselLocationsByVesselId(1); // Vessel ID
 ```
 
 ### Get All Vessel Verbose
 ```typescript
-import { getVesselVerbose } from 'wsdot-api-client/wsf-vessels';
+import { getVesselVerbose } from 'ws-dottie/wsf-vessels';
 
 const vessels = await getVesselVerbose();
 ```
 
 ### Get Specific Vessel Verbose
 ```typescript
-import { getVesselVerboseById } from 'wsdot-api-client/wsf-vessels';
+import { getVesselVerboseById } from 'ws-dottie/wsf-vessels';
 
 const vessel = await getVesselVerboseById(1); // Vessel ID
 ```
 
 ### Get All Vessel Accommodations
 ```typescript
-import { getVesselAccommodations } from 'wsdot-api-client/wsf-vessels';
+import { getVesselAccommodations } from 'ws-dottie/wsf-vessels';
 
 const accommodations = await getVesselAccommodations();
 ```
 
 ### Get Specific Vessel Accommodations
 ```typescript
-import { getVesselAccommodationsById } from 'wsdot-api-client/wsf-vessels';
+import { getVesselAccommodationsById } from 'ws-dottie/wsf-vessels';
 
 const accommodation = await getVesselAccommodationsById(1); // Vessel ID
 ```
 
 ### Get All Vessel Statistics
 ```typescript
-import { getVesselStats } from 'wsdot-api-client/wsf-vessels';
+import { getVesselStats } from 'ws-dottie/wsf-vessels';
 
 const stats = await getVesselStats();
 ```
 
 ### Get Specific Vessel Statistics
 ```typescript
-import { getVesselStatsById } from 'wsdot-api-client/wsf-vessels';
+import { getVesselStatsById } from 'ws-dottie/wsf-vessels';
 
 const stats = await getVesselStatsById(1); // Vessel ID
 ```
 
 ### Get All Vessel History
 ```typescript
-import { getVesselHistory } from 'wsdot-api-client/wsf-vessels';
+import { getVesselHistory } from 'ws-dottie/wsf-vessels';
 
 const history = await getVesselHistory();
 ```
 
 ### Get Vessel History by Name and Date Range
 ```typescript
-import { getVesselHistoryByVesselAndDateRange } from 'wsdot-api-client/wsf-vessels';
+import { getVesselHistoryByVesselAndDateRange } from 'ws-dottie/wsf-vessels';
 
 const history = await getVesselHistoryByVesselAndDateRange(
   "Cathlamet",
@@ -154,7 +154,7 @@ import {
   useVesselAccommodations,
   useVesselStats,
   useVesselHistory
-} from 'wsdot-api-client/react/wsf-vessels';
+} from 'ws-dottie/react/wsf-vessels';
 
 function VesselComponent() {
   // Default: enabled is true
@@ -232,7 +232,7 @@ import {
   useVesselVerboseById,
   useVesselAccommodationsById,
   useVesselStatsById
-} from 'wsdot-api-client/react/wsf-vessels';
+} from 'ws-dottie/react/wsf-vessels';
 
 function SingleVesselComponent({ vesselId }: { vesselId: number }) {
   const { data: basic } = useVesselBasicsById(vesselId);

@@ -43,14 +43,14 @@ This module integrates with Washington State Ferries Schedule APIs to provide:
 
 ### Get Routes for a Date
 ```typescript
-import { getRoutes } from 'wsdot-api-client/wsf-schedule';
+import { getRoutes } from 'ws-dottie/wsf-schedule';
 
 const routes = await getRoutes(new Date('2024-04-01'));
 ```
 
 ### Get Routes Between Specific Terminals
 ```typescript
-import { getRoutesByTerminals } from 'wsdot-api-client/wsf-schedule';
+import { getRoutesByTerminals } from 'ws-dottie/wsf-schedule';
 
 const routes = await getRoutesByTerminals(
   new Date('2024-04-01'),
@@ -61,35 +61,35 @@ const routes = await getRoutesByTerminals(
 
 ### Get Routes with Service Disruptions
 ```typescript
-import { getRoutesWithDisruptions } from 'wsdot-api-client/wsf-schedule';
+import { getRoutesWithDisruptions } from 'ws-dottie/wsf-schedule';
 
 const disruptedRoutes = await getRoutesWithDisruptions(new Date('2024-04-01'));
 ```
 
 ### Get Detailed Route Information
 ```typescript
-import { getRouteDetails } from 'wsdot-api-client/wsf-schedule';
+import { getRouteDetails } from 'ws-dottie/wsf-schedule';
 
 const detailedRoutes = await getRouteDetails(new Date('2024-04-01'));
 ```
 
 ### Get Scheduled Routes
 ```typescript
-import { getScheduledRoutes } from 'wsdot-api-client/wsf-schedule';
+import { getScheduledRoutes } from 'ws-dottie/wsf-schedule';
 
 const scheduledRoutes = await getScheduledRoutes();
 ```
 
 ### Get Active Seasons
 ```typescript
-import { getActiveSeasons } from 'wsdot-api-client/wsf-schedule';
+import { getActiveSeasons } from 'ws-dottie/wsf-schedule';
 
 const seasons = await getActiveSeasons();
 ```
 
 ### Get Alerts
 ```typescript
-import { getAlerts } from 'wsdot-api-client/wsf-schedule';
+import { getAlerts } from 'ws-dottie/wsf-schedule';
 
 const alerts = await getAlerts();
 ```
@@ -106,7 +106,7 @@ import {
   useScheduledRoutes,
   useActiveSeasons,
   useAlerts
-} from 'wsdot-api-client/react/wsf-schedule';
+} from 'ws-dottie/react/wsf-schedule';
 
 function RouteComponent() {
   const tripDate = new Date('2024-04-01');
@@ -192,7 +192,7 @@ import {
   useRoutesByTerminals,
   useRouteDetails,
   useRoutesWithDisruptions
-} from 'wsdot-api-client/react/wsf-schedule';
+} from 'ws-dottie/react/wsf-schedule';
 
 function SpecificRouteComponent({ 
   tripDate, 
@@ -262,7 +262,7 @@ function SpecificRouteComponent({
 All functions throw `WsdApiError` instances on failure:
 
 ```typescript
-import { getRoutes, WsdApiError } from 'wsdot-api-client/wsf-schedule';
+import { getRoutes, WsdApiError } from 'ws-dottie/wsf-schedule';
 
 try {
   const routes = await getRoutes(new Date());

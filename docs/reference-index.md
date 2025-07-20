@@ -36,7 +36,7 @@
 
 This comprehensive reference documents all available Washington State Department of Transportation (WSDOT) APIs, including both Traveler Information APIs and Washington State Ferries (WSF) APIs. Each API is documented with real data examples, TypeScript types, and clear usage instructions.
 
-**✅ Implementation Status**: All 16 WSDOT APIs are now fully implemented in the `wsdot-api-client` library, including:
+**✅ Implementation Status**: All 16 WSDOT APIs are now fully implemented in the `ws-dottie` library, including:
 - **12 WSDOT Traveler Information APIs** - Complete with TypeScript types, React hooks, and comprehensive testing
 - **4 WSF APIs** - Complete with full functionality and documentation
 

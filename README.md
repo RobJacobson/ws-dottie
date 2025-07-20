@@ -1,368 +1,281 @@
-# WSDOT API Client
+# 🚢 WS-Dottie
 
-A TypeScript client library for Washington State Department of Transportation (WSDOT) APIs, including Washington State Ferries (WSF) APIs.
+> **The complete TypeScript client for Washington State's real-time transportation data**
 
-## Features
+[![npm version](https://badge.fury.io/js/ws-dottie.svg)](https://badge.fury.io/js/ws-dottie)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-- **Type-safe**: Full TypeScript support with compile-time validation
-- **Functional**: Pure functions with arrow function syntax
-- **React Query ready**: Perfect integration with React Query for caching and state management
-- **Instance-based**: Configurable client instances with prop drilling support
-- **Comprehensive**: Support for all WSF APIs
+Access **real-time data** from Washington State Department of Transportation (WSDOT) APIs with zero configuration. From ferry schedules and vessel locations to highway cameras and weather conditions - everything you need to build transportation apps that keep users informed.
 
-## Installation
+## ✨ Why WS-Dottie?
 
-```bash
-npm install wsdot-api-client
-```
-
-## API Access Code Required
-
-**Important**: All WSDOT APIs require an Access Code for authentication. You must register at [https://wsdot.wa.gov/traffic/api/](https://wsdot.wa.gov/traffic/api/) to obtain your Access Code.
-
-### Environment Setup
-
-Set your Access Code as an environment variable:
-
-```bash
-# Add to your .env file
-WSDOT_ACCESS_TOKEN=your_access_code_here
-```
-
-For React Native/Expo applications:
-```bash
-EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_access_code_here
-```
-
-### Development Requirements
-
-**Before implementing any API endpoints:**
-1. **Check official WSDOT API documentation** for exact endpoint specifications
-2. **Use cURL to validate actual data structures** returned by the API
-3. **Update TypeScript types** based on real API responses, not just documentation
-
-See [API Access Requirements](docs/API_ACCESS_REQUIREMENTS.md) for detailed information and official documentation links.
-
-## Quick Start
-
-### Basic Usage
-
+### 🚀 **Zero Configuration React Query Integration**
 ```typescript
-import { WsfFares, WsfSchedule, WsfTerminals, WsfVessels } from 'wsdot-api-client';
+import { useVesselLocations, useHighwayCameras } from 'ws-dottie';
 
-// Get WSF routes
-const routes = await WsfSchedule.getRoutes(new Date());
-
-// Get vessel locations
-const vessels = await WsfVessels.getVesselLocations();
-
-// Get terminal basics
-const terminals = await WsfTerminals.getTerminalBasics();
-```
-
-### React Integration
-
-```typescript
-import React from 'react';
-import { useScheduleRoutes, useVesselLocations } from 'wsdot-api-client';
-
-// Component using the API - no provider needed!
-const RoutePlanner = () => {
-  const { data: routes = [], isLoading } = useScheduleRoutes(new Date());
-  const { data: vessels = [] } = useVesselLocations();
+function FerryTracker() {
+  // Real-time vessel positions with automatic caching and updates
+  const { data: vessels } = useVesselLocations();
   
-  if (isLoading) return <div>Loading...</div>;
+  // Live highway camera feeds
+  const { data: cameras } = useHighwayCameras();
   
   return (
     <div>
-      <h1>WSF Routes</h1>
-      <ul>
-        {routes.map((route, index) => (
-          <li key={index}>
-            Route {route.RouteID}: {route.Description}
-          </li>
-        ))}
-      </ul>
+      {vessels?.map(vessel => (
+        <div key={vessel.VesselID}>
+          {vessel.VesselName} - {vessel.Latitude}, {vessel.Longitude}
+        </div>
+      ))}
     </div>
   );
-};
-
-// Simple app - no provider wrapper needed
-const App = () => <RoutePlanner />;
+}
 ```
 
-## API Reference
+### 🛡️ **Type-Safe from Day One**
+Full TypeScript support with compile-time validation. No more guessing API response structures:
 
-### Configuration
+```typescript
+// Fully typed responses - no 'any' types here!
+const vessels: VesselLocation[] = await WsfVessels.getVesselLocations();
+const cameras: HighwayCamera[] = await WsdotHighwayCameras.getHighwayCameras();
+const weather: WeatherInformation[] = await WsdotWeatherInformation.getWeatherInformation();
+```
 
-The library uses environment variables for configuration:
+### 🌊 **Complete WSF (Washington State Ferries) Coverage**
+- **Real-time vessel tracking** with GPS coordinates
+- **Live sailing schedules** and route information
+- **Terminal wait times** and sailing space availability
+- **Comprehensive fare information** for all routes
+- **Service alerts** and disruptions
 
+### 🛣️ **Full WSDOT Traveler Information APIs**
+- **Highway cameras** - Live traffic camera feeds
+- **Traffic flow data** - Real-time congestion information
+- **Travel times** - Current travel duration estimates
+- **Weather conditions** - Road weather and mountain pass conditions
+- **Highway alerts** - Active incidents and closures
+- **Border crossing wait times** - International border conditions
+- **Toll rates** - Current toll pricing
+- **Bridge clearances** - Height restrictions for commercial vehicles
+
+## 🚀 Quick Start
+
+### Installation
 ```bash
-# Required: Your WSDOT API key
-WSDOT_ACCESS_TOKEN=your_api_key_here
+npm install ws-dottie
 ```
 
-### WSF APIs
+### Get Your API Key
+Register at [WSDOT Traffic API](https://wsdot.wa.gov/traffic/api/) to get your access code.
 
-#### Schedule API
-```typescript
-// Get all routes for a date
-const routes = await WsfSchedule.getRoutes(tripDate: Date);
-
-// Get routes between specific terminals
-const routes = await WsfSchedule.getRoutesByTerminals({
-  tripDate: Date,
-  departingTerminalId: number,
-  arrivingTerminalId: number
-});
-
-// Get routes with service disruptions
-const routes = await WsfSchedule.getRoutesWithDisruptions(tripDate: Date);
-
-// Get detailed route information
-const routes = await WsfSchedule.getRouteDetails(tripDate: Date);
-
-// Get scheduled routes
-const routes = await WsfSchedule.getScheduledRoutes();
-
-// Get active seasons
-const seasons = await WsfSchedule.getActiveSeasons();
-
-// Get alerts
-const alerts = await WsfSchedule.getAlerts();
+### Environment Setup
+```bash
+# .env
+WSDOT_ACCESS_TOKEN=your_access_code_here
 ```
 
-#### Vessels API
+### Your First Real-Time App
 ```typescript
-// Vessel Locations (Real-time positions)
+import React from 'react';
+import { useVesselLocations, useHighwayCameras } from 'ws-dottie';
+
+function TransportationDashboard() {
+  const { data: vessels, isLoading: vesselsLoading } = useVesselLocations();
+  const { data: cameras, isLoading: camerasLoading } = useHighwayCameras();
+  
+  if (vesselsLoading || camerasLoading) {
+    return <div>Loading real-time data...</div>;
+  }
+  
+  return (
+    <div>
+      <h2>🚢 Active Ferries: {vessels?.length || 0}</h2>
+      <h2>📹 Highway Cameras: {cameras?.length || 0}</h2>
+      
+      {/* Your UI components here */}
+    </div>
+  );
+}
+```
+
+## 🎯 Key Features
+
+### 🔄 **Automatic Data Refresh**
+React Query hooks automatically handle:
+- **Intelligent caching** to minimize API calls
+- **Background updates** to keep data fresh
+- **Error retry logic** for network issues
+- **Loading states** for better UX
+
+### 📱 **Universal Compatibility**
+- **React Web** - Full browser support
+- **React Native** - Mobile app development
+- **Node.js** - Server-side applications
+- **Vanilla TypeScript** - Any TypeScript project
+
+### 🎛️ **Flexible Configuration**
+```typescript
+// Use default settings
 const vessels = await WsfVessels.getVesselLocations();
-const vessels = await WsfVessels.getVesselLocationsByVesselId(vesselId: number);
 
-// Vessel Verbose (Detailed information)
-const vessels = await WsfVessels.getVesselVerbose();
-const vessels = await WsfVessels.getVesselVerboseByVesselId(vesselId: number);
-```
-
-#### Fares API
-```typescript
-// Fares (Comprehensive fare information)
-const fares = await WsfFares.getFares();
-const fare = await WsfFares.getFareById(fareId: number);
-
-// Fare Categories
-const categories = await WsfFares.getFareCategories();
-const category = await WsfFares.getFareCategoryById(categoryId: number);
-
-// Fare Types
-const types = await WsfFares.getFareTypes();
-const type = await WsfFares.getFareTypeById(typeId: number);
-
-// Route Fares
-const routeFares = await WsfFares.getRouteFares();
-const routeFare = await WsfFares.getRouteFaresByRouteId(routeId: number);
-
-// Terminal Fares
-const terminalFares = await WsfFares.getTerminalFares();
-const terminalFare = await WsfFares.getTerminalFaresByTerminalId(terminalId: number);
-```
-
-#### Terminals API
-```typescript
-// Terminal Basics (Basic terminal information)
-const terminals = await WsfTerminals.getTerminalBasics();
-const terminals = await WsfTerminals.getTerminalBasicsByTerminalId(terminalId: number);
-
-// Terminal Sailing Space (Real-time space availability)
-const terminals = await WsfTerminals.getTerminalSailingSpace();
-const terminals = await WsfTerminals.getTerminalSailingSpaceByTerminalId(terminalId: number);
-const terminals = await WsfTerminals.getTerminalSailingSpaceByRoute(routeId: number);
-const terminals = await WsfTerminals.getTerminalSailingSpaceByTerminalAndRoute({
-  terminalId: number;
-  routeId: number;
+// Or customize caching and refresh behavior
+const { data: vessels } = useVesselLocations({
+  refetchInterval: 30000, // Update every 30 seconds
+  staleTime: 60000,       // Consider data fresh for 1 minute
 });
-
-// Terminal Verbose (Detailed terminal information)
-const terminals = await WsfTerminals.getTerminalVerbose();
-const terminals = await WsfTerminals.getTerminalVerboseByTerminalId(terminalId: number);
 ```
 
-## React Hooks
+## 📊 Available APIs
 
+### 🚢 Washington State Ferries (WSF)
+| API | Description | Real-time |
+|-----|-------------|-----------|
+| **Vessel Locations** | GPS coordinates of all active ferries | ✅ |
+| **Schedules** | Route schedules and service information | ✅ |
+| **Terminals** | Wait times, sailing space, terminal info | ✅ |
+| **Fares** | Complete fare structure and pricing | ✅ |
+
+### 🛣️ WSDOT Traveler Information
+| API | Description | Real-time |
+|-----|-------------|-----------|
+| **Highway Cameras** | Live traffic camera feeds | ✅ |
+| **Traffic Flow** | Congestion and traffic patterns | ✅ |
+| **Travel Times** | Current travel duration estimates | ✅ |
+| **Weather Information** | Road conditions and weather | ✅ |
+| **Highway Alerts** | Active incidents and closures | ✅ |
+| **Mountain Passes** | Pass conditions and restrictions | ✅ |
+| **Border Crossings** | International border wait times | ✅ |
+| **Toll Rates** | Current toll pricing | ✅ |
+| **Bridge Clearances** | Height restrictions | ✅ |
+
+## 🛠️ Advanced Usage
+
+### Custom React Query Configuration
 ```typescript
-import { 
-  useScheduleRoutes, 
-  useVesselLocations, 
-  useFaresTerminals,
-  useTerminalBasics 
-} from 'wsdot-api-client';
+import { useVesselLocations } from 'ws-dottie';
 
-// Use hooks directly - no provider needed!
-const { data: routes } = useScheduleRoutes(new Date());
-const { data: vessels } = useVesselLocations();
-const { data: terminals } = useFaresTerminals();
+function RealTimeTracker() {
+  const { data: vessels, error, isLoading } = useVesselLocations({
+    // Update vessel positions every 15 seconds
+    refetchInterval: 15000,
+    
+    // Keep data fresh for 30 seconds
+    staleTime: 30000,
+    
+    // Retry failed requests up to 3 times
+    retry: 3,
+    
+    // Only fetch when component is visible
+    enabled: true,
+  });
+  
+  if (error) {
+    return <div>Error loading vessel data: {error.message}</div>;
+  }
+  
+  return (
+    <div>
+      {vessels?.map(vessel => (
+        <VesselMarker key={vessel.VesselID} vessel={vessel} />
+      ))}
+    </div>
+  );
+}
 ```
 
-## Error Handling
-
-The library provides two error handling approaches:
-
-### Throwing Errors (Recommended)
-Core API functions throw custom `WsdApiError` instances for better error handling and React Query integration:
-
+### Error Handling
 ```typescript
-import { WsfFares, WsdApiError } from 'wsdot-api-client';
+import { WsfVessels, WsdApiError } from 'ws-dottie';
 
 try {
-  const fares = await WsfFares.getFares();
-  // fares is Fare[]
+  const vessels = await WsfVessels.getVesselLocations();
+  // Process vessels data
 } catch (error) {
   if (error instanceof WsdApiError) {
     console.error('API Error:', error.getUserMessage());
-    console.error('Error code:', error.code);
+    console.error('Error Code:', error.code);
+    console.error('Status:', error.status);
   }
 }
 ```
 
-### Silent Fallback (Legacy)
-Some functions return null or empty arrays on error for backward compatibility:
-
+### Server-Side Usage
 ```typescript
-import { WsfFares } from 'wsdot-api-client';
+import { WsdotHighwayCameras } from 'ws-dottie';
 
-const fares = await WsfFares.getFares();
-// fares is Fare[] | null
-if (fares) {
-  // Process fares
+// In your API route or server function
+export async function GET() {
+  const cameras = await WsdotHighwayCameras.getHighwayCameras();
+  
+  return Response.json({
+    cameras: cameras.slice(0, 10), // Return first 10 cameras
+    timestamp: new Date().toISOString(),
+  });
 }
 ```
 
-## WSDOT Traveler Information APIs
+## 🧪 Testing
 
-The library now includes comprehensive support for all WSDOT Traveler Information APIs, providing real-time data for Washington State highways, traffic, weather, and transportation infrastructure.
+Comprehensive test suite with real API integration:
 
-### Border Crossings API
-```typescript
-import { WsdotBorderCrossings } from 'wsdot-api-client';
+```bash
+# Run all tests
+npm test
 
-// Get border crossing wait times
-const crossings = await WsdotBorderCrossings.getBorderCrossings();
+# Run end-to-end tests against real WSDOT APIs
+npm run test:e2e
+
+# Test specific API endpoints
+npm run test:e2e:fares
+npm run test:e2e:vessels
+npm run test:e2e:cameras
 ```
 
-### Bridge Clearances API
-```typescript
-import { WsdotBridgeClearances } from 'wsdot-api-client';
+## 🤝 Contributing
 
-// Get bridge clearance information
-const clearances = await WsdotBridgeClearances.getBridgeClearances();
+We welcome contributions! This is an open-source project that serves the Washington State developer community.
+
+### Development Setup
+```bash
+git clone https://github.com/yourusername/ws-dottie.git
+cd ws-dottie
+npm install
+
+# Set up your WSDOT API key
+echo "WSDOT_ACCESS_TOKEN=your_key_here" > .env
+
+# Start development
+npm run dev
 ```
 
-### Commercial Vehicle Restrictions API
-```typescript
-import { WsdotCommercialVehicleRestrictions } from 'wsdot-api-client';
+### Areas for Contribution
+- **New API endpoints** - Help us add more WSDOT APIs
+- **Performance improvements** - Optimize caching and data fetching
+- **Documentation** - Improve examples and guides
+- **Testing** - Add more comprehensive test coverage
+- **TypeScript types** - Enhance type safety and definitions
 
-// Get commercial vehicle restrictions
-const restrictions = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
-```
+## 📚 Documentation
 
-### Highway Alerts API
-```typescript
-import { WsdotHighwayAlerts } from 'wsdot-api-client';
+- **[API Reference](docs/reference-index.md)** - Complete API documentation
+- **[Implementation Guides](docs/)** - Detailed guides for each endpoint
+- **[Examples](examples/)** - Working code examples
+- **[API Access Requirements](docs/API_ACCESS_REQUIREMENTS.md)** - Getting your API key
 
-// Get highway alerts
-const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
-```
+## 📄 License
 
-### Highway Cameras API
-```typescript
-import { WsdotHighwayCameras } from 'wsdot-api-client';
+MIT License - see [LICENSE](LICENSE) for details.
 
-// Get highway camera feeds
-const cameras = await WsdotHighwayCameras.getHighwayCameras();
-```
+## 🙏 Acknowledgments
 
-### Mountain Pass Conditions API
-```typescript
-import { WsdotMountainPassConditions } from 'wsdot-api-client';
+- **WSDOT** for providing comprehensive transportation data APIs
+- **React Query** team for the excellent caching and state management library
+- **Washington State developers** for building amazing transportation applications
 
-// Get mountain pass conditions
-const passes = await WsdotMountainPassConditions.getMountainPassConditions();
-```
+---
 
-### Toll Rates API
-```typescript
-import { WsdotTollRates } from 'wsdot-api-client';
+**Built with ❤️ for the Washington State developer community**
 
-// Get toll rates
-const tolls = await WsdotTollRates.getTollRates();
-```
-
-### Traffic Flow API
-```typescript
-import { WsdotTrafficFlow } from 'wsdot-api-client';
-
-// Get traffic flow data
-const flows = await WsdotTrafficFlow.getTrafficFlows();
-```
-
-### Travel Times API
-```typescript
-import { WsdotTravelTimes } from 'wsdot-api-client';
-
-// Get travel times
-const times = await WsdotTravelTimes.getTravelTimes();
-```
-
-### Weather Information API
-```typescript
-import { WsdotWeatherInformation } from 'wsdot-api-client';
-
-// Get weather information
-const weather = await WsdotWeatherInformation.getWeatherInformation();
-```
-
-### Weather Information Extended API
-```typescript
-import { WsdotWeatherInformationExtended } from 'wsdot-api-client';
-
-// Get extended weather information
-const weatherExtended = await WsdotWeatherInformationExtended.getWeatherInformationExtended();
-```
-
-### Weather Stations API
-```typescript
-import { WsdotWeatherStations } from 'wsdot-api-client';
-
-// Get weather station locations
-const stations = await WsdotWeatherStations.getWeatherStations();
-```
-
-### WSDOT React Hooks
-
-All WSDOT APIs include React Query hooks for easy integration:
-
-```typescript
-import { 
-  useBorderCrossings,
-  useHighwayCameras,
-  useTrafficFlows,
-  useWeatherInformation,
-  useWeatherStations
-} from 'wsdot-api-client';
-
-// Use hooks directly - no provider needed!
-const { data: crossings } = useBorderCrossings();
-const { data: cameras } = useHighwayCameras();
-const { data: flows } = useTrafficFlows();
-const { data: weather } = useWeatherInformation();
-const { data: stations } = useWeatherStations();
-```
-
-For detailed documentation on each WSDOT API, see the [WSDOT API Reference](docs/wsdot-api-reference/).
-
-## Contributing
-
-See [TODO.md](docs/TODO.md) for current development status and implementation tasks.
-
-## License
-
-MIT 
+*Keep your users informed with real-time transportation data from the source.* 

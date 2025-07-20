@@ -53,70 +53,70 @@ This module integrates with Washington State Ferries Terminals APIs to provide:
 
 ### Get All Terminal Basics
 ```typescript
-import { getTerminalBasics } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalBasics } from 'ws-dottie/wsf-terminals';
 
 const terminals = await getTerminalBasics();
 ```
 
 ### Get Specific Terminal Basics
 ```typescript
-import { getTerminalBasicsByTerminalId } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalBasicsByTerminalId } from 'ws-dottie/wsf-terminals';
 
 const terminal = await getTerminalBasicsByTerminalId(7); // Anacortes
 ```
 
 ### Get All Terminal Sailing Space
 ```typescript
-import { getTerminalSailingSpace } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalSailingSpace } from 'ws-dottie/wsf-terminals';
 
 const spaceData = await getTerminalSailingSpace();
 ```
 
 ### Get Terminal Sailing Space by Terminal ID
 ```typescript
-import { getTerminalSailingSpaceByTerminalId } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalSailingSpaceByTerminalId } from 'ws-dottie/wsf-terminals';
 
 const spaceData = await getTerminalSailingSpaceByTerminalId(7); // Anacortes
 ```
 
 ### Get All Terminal Verbose
 ```typescript
-import { getTerminalVerbose } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalVerbose } from 'ws-dottie/wsf-terminals';
 
 const terminals = await getTerminalVerbose();
 ```
 
 ### Get Specific Terminal Verbose
 ```typescript
-import { getTerminalVerboseByTerminalId } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalVerboseByTerminalId } from 'ws-dottie/wsf-terminals';
 
 const terminal = await getTerminalVerboseByTerminalId(7); // Anacortes
 ```
 
 ### Get All Terminal Locations
 ```typescript
-import { getTerminalLocations } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 const locations = await getTerminalLocations();
 ```
 
 ### Get Specific Terminal Location
 ```typescript
-import { getTerminalLocationsByTerminalId } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalLocationsByTerminalId } from 'ws-dottie/wsf-terminals';
 
 const location = await getTerminalLocationsByTerminalId(7); // Anacortes
 ```
 
 ### Get All Terminal Wait Times
 ```typescript
-import { getTerminalWaitTimes } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalWaitTimes } from 'ws-dottie/wsf-terminals';
 
 const waitTimes = await getTerminalWaitTimes();
 ```
 
 ### Get Terminal Wait Times by Terminal
 ```typescript
-import { getTerminalWaitTimesByTerminal } from 'wsdot-api-client/wsf-terminals';
+import { getTerminalWaitTimesByTerminal } from 'ws-dottie/wsf-terminals';
 
 const waitTimes = await getTerminalWaitTimesByTerminal(7); // Anacortes
 ```
@@ -136,7 +136,7 @@ import {
   useTerminalSailingSpaceByTerminalId,
   useTerminalWaitTimesByTerminal,
   useTerminalVerboseByTerminalId
-} from 'wsdot-api-client/react/wsf-terminals';
+} from 'ws-dottie/react/wsf-terminals';
 
 function TerminalComponent() {
   // Default: enabled is true
@@ -204,7 +204,7 @@ import {
   useTerminalSailingSpaceByTerminalId,
   useTerminalWaitTimesByTerminal,
   useTerminalVerboseByTerminalId
-} from 'wsdot-api-client/react/wsf-terminals';
+} from 'ws-dottie/react/wsf-terminals';
 
 function SingleTerminalComponent({ terminalId }: { terminalId: number }) {
   const { data: basics } = useTerminalBasicsByTerminalId(terminalId);

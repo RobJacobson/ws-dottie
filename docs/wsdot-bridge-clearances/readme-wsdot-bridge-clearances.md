@@ -38,7 +38,7 @@ This module integrates with WSDOT Bridge Clearances API to provide:
 
 ### Get Bridge Clearances for I-5
 ```typescript
-import { getBridgeClearances } from 'wsdot-api-client/wsdot-bridge-clearances';
+import { getBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
 
 const bridgeClearances = await getBridgeClearances("005");
 // Returns: BridgeDataGIS[]
@@ -46,7 +46,7 @@ const bridgeClearances = await getBridgeClearances("005");
 
 ### Access Bridge Clearance Data
 ```typescript
-import { getBridgeClearances } from 'wsdot-api-client/wsdot-bridge-clearances';
+import { getBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
 
 const clearances = await getBridgeClearances("005");
 
@@ -65,7 +65,7 @@ clearances.forEach(bridge => {
 
 ### Using Hooks
 ```typescript
-import { useBridgeClearances } from 'wsdot-api-client/react/wsdot-bridge-clearances';
+import { useBridgeClearances } from 'ws-dottie/react/wsdot-bridge-clearances';
 
 function BridgeClearancesComponent() {
   // Default: enabled is true, infrequent updates
@@ -127,7 +127,7 @@ All PascalCase keys are preserved as-is for consistency with WSDOT API.
 The library provides consistent error handling with `WsdotApiError` instances:
 
 ```typescript
-import { getBridgeClearances, WsdotApiError } from 'wsdot-api-client/wsdot-bridge-clearances';
+import { getBridgeClearances, WsdotApiError } from 'ws-dottie/wsdot-bridge-clearances';
 
 try {
   const clearances = await getBridgeClearances("005");

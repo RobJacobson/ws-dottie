@@ -1,10 +1,10 @@
-// Vanilla JavaScript example using WSDOT API client
+// Vanilla JavaScript example using WS-Dottie
 
 import {
   getFaresTerminals,
   getScheduleRoutes,
   getVesselLocations,
-} from "wsdot-api-client";
+} from "ws-dottie";
 
 // No client creation needed - functions work directly!
 
@@ -46,7 +46,7 @@ const getTerminals = async () => {
 
 // Run examples
 const runExamples = async () => {
-  console.log("=== WSDOT API Client Examples ===");
+  console.log("=== WS-Dottie Examples ===");
 
   await getRoutesForToday();
   await fetchVesselLocations();

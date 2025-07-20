@@ -718,7 +718,7 @@ Each API implementation is considered complete when:
 - **Caching**: Appropriate caching strategies for each API type
 
 ### **Library Status:**
-The `wsdot-api-client` library now provides complete coverage of all Washington State Department of Transportation APIs, making it the most comprehensive WSDOT API client available.
+The `ws-dottie` library now provides complete coverage of all Washington State Department of Transportation APIs, making it the most comprehensive WSDOT API client available.
 
 ## Next Steps
 
