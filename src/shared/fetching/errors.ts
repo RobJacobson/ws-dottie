@@ -20,7 +20,7 @@ export interface ErrorContext {
 /**
  * Base error class for WSDOT API client errors
  */
-export class WsdApiError extends Error {
+export class WsdotApiError extends Error {
   public readonly code: ErrorCode;
   public readonly context: ErrorContext;
 
@@ -30,7 +30,7 @@ export class WsdApiError extends Error {
     context: Partial<ErrorContext> = {}
   ) {
     super(message);
-    this.name = "WsdApiError";
+    this.name = "WsdotApiError";
     this.code = code;
     this.context = {
       timestamp: new Date(),
@@ -75,7 +75,7 @@ export class WsdApiError extends Error {
 /**
  * Network-related errors (connection failures, timeouts)
  */
-export class NetworkError extends WsdApiError {
+export class NetworkError extends WsdotApiError {
   constructor(message: string, context?: Partial<ErrorContext>) {
     super(message, "NETWORK_ERROR", context);
     this.name = "NetworkError";
@@ -85,7 +85,7 @@ export class NetworkError extends WsdApiError {
 /**
  * API server errors (HTTP 4xx/5xx responses)
  */
-export class ApiError extends WsdApiError {
+export class ApiError extends WsdotApiError {
   constructor(
     message: string,
     status?: number,
@@ -99,7 +99,7 @@ export class ApiError extends WsdApiError {
 /**
  * Data transformation errors (parsing, validation)
  */
-export class TransformError extends WsdApiError {
+export class TransformError extends WsdotApiError {
   constructor(message: string, context?: Partial<ErrorContext>) {
     super(message, "TRANSFORM_ERROR", context);
     this.name = "TransformError";
@@ -109,7 +109,7 @@ export class TransformError extends WsdApiError {
 /**
  * Timeout errors
  */
-export class TimeoutError extends WsdApiError {
+export class TimeoutError extends WsdotApiError {
   constructor(message: string, context?: Partial<ErrorContext>) {
     super(message, "TIMEOUT_ERROR", context);
     this.name = "TimeoutError";
@@ -119,7 +119,7 @@ export class TimeoutError extends WsdApiError {
 /**
  * CORS-related errors
  */
-export class CorsError extends WsdApiError {
+export class CorsError extends WsdotApiError {
   constructor(message: string, context?: Partial<ErrorContext>) {
     super(message, "CORS_ERROR", context);
     this.name = "CorsError";
@@ -129,7 +129,7 @@ export class CorsError extends WsdApiError {
 /**
  * Rate limiting errors
  */
-export class RateLimitError extends WsdApiError {
+export class RateLimitError extends WsdotApiError {
   constructor(message: string, context?: Partial<ErrorContext>) {
     super(message, "RATE_LIMIT_ERROR", context);
     this.name = "RateLimitError";
@@ -139,7 +139,7 @@ export class RateLimitError extends WsdApiError {
 /**
  * Invalid response errors
  */
-export class InvalidResponseError extends WsdApiError {
+export class InvalidResponseError extends WsdotApiError {
   constructor(message: string, context?: Partial<ErrorContext>) {
     super(message, "INVALID_RESPONSE", context);
     this.name = "InvalidResponseError";
@@ -154,10 +154,10 @@ export function createApiError(
   endpoint: string,
   url?: string,
   status?: number
-): WsdApiError {
+): WsdotApiError {
   const context: Partial<ErrorContext> = { endpoint, url, status };
 
-  if (error instanceof WsdApiError) {
+  if (error instanceof WsdotApiError) {
     return error;
   }
 
@@ -180,10 +180,10 @@ export function createApiError(
       return new ApiError(error.message, status, context);
     }
 
-    return new WsdApiError(error.message, "NETWORK_ERROR", context);
+    return new WsdotApiError(error.message, "NETWORK_ERROR", context);
   }
 
-  return new WsdApiError(
+  return new WsdotApiError(
     typeof error === "string" ? error : "Unknown error occurred",
     "NETWORK_ERROR",
     context

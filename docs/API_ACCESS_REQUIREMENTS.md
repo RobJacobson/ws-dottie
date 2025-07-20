@@ -84,6 +84,15 @@ All API requests automatically include the access code parameter:
 - **WSF APIs**: `?apiaccesscode={ACCESS_CODE}`
 - **WSDOT Traveler Information APIs**: `?AccessCode={ACCESS_CODE}`
 
+### WSDOT Traveler Information API Authentication
+
+WSDOT Traveler Information APIs use the same Access Code as WSF APIs, but with a different parameter name:
+
+- **Parameter Name**: `AccessCode` (not `apiaccesscode`)
+- **Registration**: Same registration process at https://wsdot.wa.gov/traffic/api/
+- **Environment Variable**: Same `WSDOT_ACCESS_TOKEN` environment variable
+- **Error Messages**: Similar authentication error responses
+
 ## API Endpoints Requiring Access Codes
 
 ### WSF APIs (Washington State Ferries)
@@ -93,6 +102,8 @@ All API requests automatically include the access code parameter:
 - Terminal Sailing Space: `/ferries/api/terminals/rest/terminalsailingspace`
 - Schedule Routes: `/ferries/api/schedule/rest/routes`
 - Fares: `/ferries/api/fares/rest/fares`
+
+
 
 ### WSDOT Traveler Information APIs
 - Highway Cameras: `/Traffic/api/HighwayCameras/HighwayCamerasREST.svc`
@@ -245,6 +256,34 @@ When no Access Code is provided or an invalid Access Code is used, APIs return:
   "Message": "Use of WSDOT Traveler API failed. Please make sure you've registered (at this location https://wsdot.wa.gov/traffic/api/) for a developer Access Code. This value should then be passed with every service request."
 }
 ```
+
+### WSDOT API Error Handling
+
+The library uses `WsdotApiError` instances for consistent error handling across both WSF and WSDOT Traveler Information APIs:
+
+```typescript
+import { WsdotApiError } from 'wsdot-api-client';
+
+try {
+  const data = await getHighwayCameras();
+} catch (error) {
+  if (error instanceof WsdotApiError) {
+    console.error('API Error:', error.getUserMessage());
+    console.error('Error code:', error.code);
+  }
+}
+```
+
+### Error Types
+
+Both WSF and WSDOT APIs may throw `WsdotApiError` with the following error codes:
+- **`API_ERROR`**: Invalid parameters, invalid terminal combinations, or other API-level errors
+- **`NETWORK_ERROR`**: Network connectivity issues or HTTP errors (400, 500, etc.)
+- **`TIMEOUT_ERROR`**: Request timeout errors
+- **`CORS_ERROR`**: Cross-origin request failures (web browsers only)
+- **`TRANSFORM_ERROR`**: Data transformation or parsing errors
+- **`RATE_LIMIT_ERROR`**: Rate limiting errors
+- **`INVALID_RESPONSE`**: Invalid response format errors
 
 ### Validation
 

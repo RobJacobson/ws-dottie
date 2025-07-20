@@ -1,6 +1,6 @@
 import { expect } from "vitest";
 
-import { WsdApiError } from "@/shared/fetching/errors";
+import { WsdotApiError } from "@/shared/fetching/errors";
 
 // Rate limiting utility - be respectful to WSF API
 export const delay = (ms: number) =>
@@ -834,7 +834,7 @@ export const validateApiError = (
   error: any,
   expectedCode?: string | string[]
 ) => {
-  expect(error).toBeInstanceOf(WsdApiError);
+  expect(error).toBeInstanceOf(WsdotApiError);
   expect(error).toHaveProperty("code");
   expect(error).toHaveProperty("message");
   expect(error).toHaveProperty("getUserMessage");

@@ -318,7 +318,7 @@ describe("Fares Terminals E2E Tests", () => {
           expect(Array.isArray(data)).toBe(true);
         }
       } catch (error) {
-        // Should throw WsdApiError for invalid terminal ID
+        // Should throw WsdotApiError for invalid terminal ID
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
@@ -343,7 +343,7 @@ describe("Fares Terminals E2E Tests", () => {
           expect(Array.isArray(data)).toBe(true);
         }
       } catch (error) {
-        // Should throw WsdApiError for invalid terminal combination
+        // Should throw WsdotApiError for invalid terminal combination
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 

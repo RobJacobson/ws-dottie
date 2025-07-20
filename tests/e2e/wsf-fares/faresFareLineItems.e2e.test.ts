@@ -539,7 +539,7 @@ describe("Fares Fare Line Items E2E Tests", () => {
           expect(Array.isArray(data)).toBe(true);
         }
       } catch (error) {
-        // Should throw WsdApiError for invalid terminal combination
+        // Should throw WsdotApiError for invalid terminal combination
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
@@ -570,7 +570,7 @@ describe("Fares Fare Line Items E2E Tests", () => {
           expect(Array.isArray(data)).toBe(true);
         }
       } catch (error) {
-        // Should throw WsdApiError for invalid fare line item IDs
+        // Should throw WsdotApiError for invalid fare line item IDs
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
@@ -601,7 +601,7 @@ describe("Fares Fare Line Items E2E Tests", () => {
           expect(Array.isArray(data)).toBe(true);
         }
       } catch (error) {
-        // Should throw WsdApiError for mismatched arrays
+        // Should throw WsdotApiError for mismatched arrays
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 

@@ -3,7 +3,7 @@
 import log from "@/lib/logger";
 
 import type { LoggingMode } from "./config";
-import { createApiError, type WsdApiError } from "./errors";
+import { createApiError, type WsdotApiError } from "./errors";
 import { type JsonValue, transformWsdotData } from "./utils";
 
 // Constants for JSONP request configuration
@@ -50,7 +50,7 @@ const isTestEnvironment = () => {
  * - Uses native fetch for test environments (Happy DOM, jsdom) to avoid JSONP issues
  * - Uses JSONP for real web browsers to bypass CORS restrictions
  * - Uses native fetch for all other environments (Node.js, Bun, React Native, etc.)
- * - All errors (including from JSONP) are always wrapped as WsdApiError for consistent error handling
+ * - All errors (including from JSONP) are always wrapped as WsdotApiError for consistent error handling
  */
 export const fetchInternal = async <T>(
   url: string,
@@ -65,7 +65,7 @@ export const fetchInternal = async <T>(
       try {
         response = (await fetchNative(url)) as JsonValue;
       } catch (err) {
-        // Always wrap as WsdApiError for consistent error handling
+        // Always wrap as WsdotApiError for consistent error handling
         throw createApiError(err, endpoint, url);
       }
     } else if (isWebEnvironment()) {
@@ -73,7 +73,7 @@ export const fetchInternal = async <T>(
       try {
         response = (await fetchJsonp(url)) as JsonValue;
       } catch (err) {
-        // Always wrap as WsdApiError for consistent error handling
+        // Always wrap as WsdotApiError for consistent error handling
         throw createApiError(err, endpoint, url);
       }
     } else {
@@ -81,7 +81,7 @@ export const fetchInternal = async <T>(
       try {
         response = (await fetchNative(url)) as JsonValue;
       } catch (err) {
-        // Always wrap as WsdApiError for consistent error handling
+        // Always wrap as WsdotApiError for consistent error handling
         throw createApiError(err, endpoint, url);
       }
     }
