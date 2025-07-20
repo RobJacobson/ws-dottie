@@ -4,7 +4,7 @@ import log from "@/lib/logger";
 
 import type { LoggingMode } from "./config";
 import { createApiError, type WsdApiError } from "./errors";
-import { type JsonValue, transformWsfData } from "./utils";
+import { type JsonValue, transformWsdotData } from "./utils";
 
 // Constants for JSONP request configuration
 const JSONP_TIMEOUT_MS = 30_000; // 30 seconds
@@ -87,7 +87,7 @@ export const fetchInternal = async <T>(
     }
 
     // Apply WSF data transformation recursively
-    const transformedResponse = transformWsfData(response) as T;
+    const transformedResponse = transformWsdotData(response) as T;
 
     if (logMode === "debug") {
       log.debug(`[WSF ${endpoint}] Response transformed:`, transformedResponse);
@@ -105,10 +105,6 @@ export const fetchInternal = async <T>(
 };
 
 // Helper functions
-
-// Generate unique JSONP callback name to avoid conflicts
-const generateCallbackName = () =>
-  `jsonp_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
 /**
  * Web JSONP fetch (bypasses CORS restrictions) - returns parsed data directly
@@ -171,6 +167,10 @@ const fetchJsonp = (url: string): Promise<unknown> => {
     document.head.appendChild(script);
   });
 };
+
+// Generate unique JSONP callback name to avoid conflicts
+const generateCallbackName = () =>
+  `jsonp_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
 /**
  * Native fetch for mobile platforms - returns parsed data directly
