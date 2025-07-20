@@ -155,26 +155,29 @@ src/api/wsdot-[api-name]/
 #### Documentation ✅ COMPLETED
 - [x] **Create `docs/api/readme-wsdot-bridge-clearances.md`**
 
-### 2.3 Commercial Vehicle Restrictions API
+### 2.3 Commercial Vehicle Restrictions API ✅ COMPLETED
 
-#### Research & Validation
-- [ ] **cURL Documentation**
-  - [ ] `https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help`
-  - [ ] `https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html`
-- [ ] **cURL Endpoint Testing**
+#### Research & Validation ✅ COMPLETED
+- [x] **cURL Documentation**
+  - [x] `https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help`
+  - [x] `https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html`
+- [x] **cURL Endpoint Testing**
+  - [x] Test all available endpoints
+  - [x] Validate response structures
+  - [x] Identify required parameters
 
-#### Implementation
-- [ ] **Create `src/api/wsdot-commercial-vehicle-restrictions/types.ts`**
-- [ ] **Create `src/api/wsdot-commercial-vehicle-restrictions/api.ts`**
-- [ ] **Create `src/api/wsdot-commercial-vehicle-restrictions/hook.ts`**
-- [ ] **Create `src/api/wsdot-commercial-vehicle-restrictions/index.ts`**
+#### Implementation ✅ COMPLETED
+- [x] **Create `src/api/wsdot-commercial-vehicle-restrictions/types.ts`**
+- [x] **Create `src/api/wsdot-commercial-vehicle-restrictions/api.ts`**
+- [x] **Create `src/api/wsdot-commercial-vehicle-restrictions/hook.ts`**
+- [x] **Create `src/api/wsdot-commercial-vehicle-restrictions/index.ts`**
 
-#### Testing
-- [ ] **Create `tests/e2e/wsdot-commercial-vehicle-restrictions/cvRestrictionsBasics.e2e.test.ts`**
-- [ ] **Create `tests/e2e/wsdot-commercial-vehicle-restrictions/cvRestrictionsGetData.e2e.test.ts`**
+#### Testing ✅ COMPLETED
+- [x] **Create `tests/e2e/wsdot-commercial-vehicle-restrictions/cvRestrictionsBasics.e2e.test.ts`**
+- [x] **Create `tests/e2e/wsdot-commercial-vehicle-restrictions/cvRestrictionsGetData.e2e.test.ts`**
 
-#### Documentation
-- [ ] **Create `docs/api/readme-wsdot-commercial-vehicle-restrictions.md`**
+#### Documentation ✅ COMPLETED
+- [x] **Create `docs/api/readme-wsdot-commercial-vehicle-restrictions.md`**
 
 ### 2.4 Highway Alerts API
 
