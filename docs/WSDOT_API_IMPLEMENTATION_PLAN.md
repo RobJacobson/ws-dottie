@@ -88,48 +88,48 @@ src/api/wsdot-[api-name]/
 - Use actual test data constants where possible
 - Group tests by functionality
 
-### 2.1 Border Crossings API
+### 2.1 Border Crossings API ✅ COMPLETED
 
-#### Research & Validation
-- [ ] **cURL Documentation**
-  - [ ] `https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help`
-  - [ ] `https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html`
-- [ ] **cURL Endpoint Testing**
-  - [ ] Test all available endpoints with real data
-  - [ ] Validate response structures
-  - [ ] Identify required parameters
+#### Research & Validation ✅ COMPLETED
+- [x] **cURL Documentation**
+  - [x] `https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help`
+  - [x] `https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html`
+- [x] **cURL Endpoint Testing**
+  - [x] Test all available endpoints with real data
+  - [x] Validate response structures
+  - [x] Identify required parameters
 
-#### Implementation
-- [ ] **Create `src/api/wsdot-border-crossings/types.ts`**
-  - [ ] Define all response types based on cURL validation
-  - [ ] Use PascalCase property names
-  - [ ] Type date fields as `Date`
-- [ ] **Create `src/api/wsdot-border-crossings/api.ts`**
-  - [ ] Implement all API functions
-  - [ ] Use `fetchWsdot` function
-  - [ ] Include comprehensive JSDoc comments
-- [ ] **Create `src/api/wsdot-border-crossings/hook.ts`**
-  - [ ] Implement React Query hooks for all functions
-  - [ ] Use appropriate caching strategies
-  - [ ] Include proper TypeScript types
-- [ ] **Create `src/api/wsdot-border-crossings/index.ts`**
-  - [ ] Export all types, functions, and hooks
+#### Implementation ✅ COMPLETED
+- [x] **Create `src/api/wsdot-border-crossings/types.ts`**
+  - [x] Define all response types based on cURL validation
+  - [x] Use PascalCase property names
+  - [x] Type date fields as `Date`
+- [x] **Create `src/api/wsdot-border-crossings/api.ts`**
+  - [x] Implement all API functions
+  - [x] Use `fetchWsdot` function
+  - [x] Include comprehensive JSDoc comments
+- [x] **Create `src/api/wsdot-border-crossings/hook.ts`**
+  - [x] Implement React Query hooks for all functions
+  - [x] Use appropriate caching strategies
+  - [x] Include proper TypeScript types
+- [x] **Create `src/api/wsdot-border-crossings/index.ts`**
+  - [x] Export all types, functions, and hooks
 
-#### Testing
-- [ ] **Create `tests/e2e/wsdot-border-crossings/borderCrossingsBasics.e2e.test.ts`**
-  - [ ] Test basic functionality
-  - [ ] Include performance benchmarks
-  - [ ] Use real API validation
-- [ ] **Create `tests/e2e/wsdot-border-crossings/borderCrossingsGetData.e2e.test.ts`**
-  - [ ] Test data retrieval endpoints
-  - [ ] Validate response structures
-  - [ ] Test error scenarios
+#### Testing ✅ COMPLETED
+- [x] **Create `tests/e2e/wsdot-border-crossings/borderCrossingsBasics.e2e.test.ts`**
+  - [x] Test basic functionality
+  - [x] Include performance benchmarks
+  - [x] Use real API validation
+- [x] **Create `tests/e2e/wsdot-border-crossings/borderCrossingsGetData.e2e.test.ts`**
+  - [x] Test data retrieval endpoints
+  - [x] Validate response structures
+  - [x] Test error scenarios
 
-#### Documentation
-- [ ] **Create `docs/api/readme-wsdot-border-crossings.md`**
-  - [ ] Follow WSF API documentation pattern
-  - [ ] Include usage examples
-  - [ ] Document all endpoints and types
+#### Documentation ✅ COMPLETED
+- [x] **Create `docs/api/readme-wsdot-border-crossings.md`**
+  - [x] Follow WSF API documentation pattern
+  - [x] Include usage examples
+  - [x] Document all endpoints and types
 
 ### 2.2 Bridge Clearances API
 
