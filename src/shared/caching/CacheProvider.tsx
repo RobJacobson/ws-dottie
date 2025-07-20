@@ -3,9 +3,9 @@
 
 import { useEffect, useRef } from "react";
 
-import { useCacheFlushDateSchedule } from "../../api/wsf/schedule/hook";
-import { useCacheFlushDateTerminals } from "../../api/wsf/terminals/hook";
-import { useCacheFlushDateVessels } from "../../api/wsf/vessels/hook";
+import { useCacheFlushDateSchedule } from "../../api/wsf-schedule/hook";
+import { useCacheFlushDateTerminals } from "../../api/wsf-terminals/hook";
+import { useCacheFlushDateVessels } from "../../api/wsf-vessels/hook";
 import { useWsfCacheFlushMonitor } from "./invalidation";
 
 /**

@@ -1,6 +1,6 @@
 import { expect } from "vitest";
 
-import { WsdApiError } from "@/shared/fetching/errors";
+import { WsdotApiError } from "@/shared/fetching/errors";
 
 // Rate limiting utility - be respectful to WSF API
 export const delay = (ms: number) =>
@@ -834,7 +834,7 @@ export const validateApiError = (
   error: any,
   expectedCode?: string | string[]
 ) => {
-  expect(error).toBeInstanceOf(WsdApiError);
+  expect(error).toBeInstanceOf(WsdotApiError);
   expect(error).toHaveProperty("code");
   expect(error).toHaveProperty("message");
   expect(error).toHaveProperty("getUserMessage");
@@ -847,6 +847,163 @@ export const validateApiError = (
     }
   }
 };
+
+// WSDOT-specific validation functions
+export const validateBorderCrossing = (data: any) => {
+  expect(data).toHaveProperty("BorderCrossingID");
+  expect(data).toHaveProperty("BorderCrossingName");
+  expect(data).toHaveProperty("WaitTime");
+  expect(data).toHaveProperty("LaneStatus");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.BorderCrossingID).toBe("number");
+  expect(typeof data.BorderCrossingName).toBe("string");
+  expect(typeof data.WaitTime).toBe("number");
+  expect(typeof data.LaneStatus).toBe("string");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateBridgeClearance = (data: any) => {
+  expect(data).toHaveProperty("BridgeID");
+  expect(data).toHaveProperty("BridgeName");
+  expect(data).toHaveProperty("ClearanceHeight");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.BridgeID).toBe("number");
+  expect(typeof data.BridgeName).toBe("string");
+  expect(typeof data.ClearanceHeight).toBe("number");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateCommercialVehicleRestriction = (data: any) => {
+  expect(data).toHaveProperty("RestrictionID");
+  expect(data).toHaveProperty("RestrictionType");
+  expect(data).toHaveProperty("StartRoadwayLocation");
+  expect(data).toHaveProperty("EndRoadwayLocation");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.RestrictionID).toBe("number");
+  expect(typeof data.RestrictionType).toBe("string");
+  expect(data.StartRoadwayLocation).toBeDefined();
+  expect(data.EndRoadwayLocation).toBeDefined();
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateRoadwayLocation = (data: any) => {
+  expect(data).toHaveProperty("Description");
+  expect(data).toHaveProperty("Direction");
+  expect(data).toHaveProperty("Latitude");
+  expect(data).toHaveProperty("Longitude");
+  expect(data).toHaveProperty("MilePost");
+  expect(data).toHaveProperty("RoadName");
+  expect(typeof data.Description).toBe("string");
+  expect(typeof data.Direction).toBe("string");
+  expect(typeof data.Latitude).toBe("number");
+  expect(typeof data.Longitude).toBe("number");
+  expect(typeof data.MilePost).toBe("number");
+  expect(typeof data.RoadName).toBe("string");
+};
+
+export const validateHighwayAlert = (data: any) => {
+  expect(data).toHaveProperty("AlertID");
+  expect(data).toHaveProperty("AlertType");
+  expect(data).toHaveProperty("StartRoadwayLocation");
+  expect(data).toHaveProperty("EndRoadwayLocation");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.AlertID).toBe("number");
+  expect(typeof data.AlertType).toBe("string");
+  expect(data.StartRoadwayLocation).toBeDefined();
+  expect(data.EndRoadwayLocation).toBeDefined();
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateHighwayCamera = (data: any) => {
+  expect(data).toHaveProperty("CameraID");
+  expect(data).toHaveProperty("CameraName");
+  expect(data).toHaveProperty("Latitude");
+  expect(data).toHaveProperty("Longitude");
+  expect(data).toHaveProperty("ImageURL");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.CameraID).toBe("number");
+  expect(typeof data.CameraName).toBe("string");
+  expect(typeof data.Latitude).toBe("number");
+  expect(typeof data.Longitude).toBe("number");
+  expect(typeof data.ImageURL).toBe("string");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateMountainPassCondition = (data: any) => {
+  expect(data).toHaveProperty("PassID");
+  expect(data).toHaveProperty("PassName");
+  expect(data).toHaveProperty("RoadCondition");
+  expect(data).toHaveProperty("WeatherCondition");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.PassID).toBe("number");
+  expect(typeof data.PassName).toBe("string");
+  expect(typeof data.RoadCondition).toBe("string");
+  expect(typeof data.WeatherCondition).toBe("string");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateTollRate = (data: any) => {
+  expect(data).toHaveProperty("TollRouteID");
+  expect(data).toHaveProperty("TollRouteName");
+  expect(data).toHaveProperty("Rate");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.TollRouteID).toBe("number");
+  expect(typeof data.TollRouteName).toBe("string");
+  expect(typeof data.Rate).toBe("number");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateTrafficFlow = (data: any) => {
+  expect(data).toHaveProperty("FlowID");
+  expect(data).toHaveProperty("FlowName");
+  expect(data).toHaveProperty("FlowValue");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.FlowID).toBe("number");
+  expect(typeof data.FlowName).toBe("string");
+  expect(typeof data.FlowValue).toBe("number");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateTravelTime = (data: any) => {
+  expect(data).toHaveProperty("TravelTimeID");
+  expect(data).toHaveProperty("TravelTimeName");
+  expect(data).toHaveProperty("CurrentTime");
+  expect(data).toHaveProperty("TypicalTime");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.TravelTimeID).toBe("number");
+  expect(typeof data.TravelTimeName).toBe("string");
+  expect(typeof data.CurrentTime).toBe("number");
+  expect(typeof data.TypicalTime).toBe("number");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateWeatherInformation = (data: any) => {
+  expect(data).toHaveProperty("WeatherStationID");
+  expect(data).toHaveProperty("Temperature");
+  expect(data).toHaveProperty("Humidity");
+  expect(data).toHaveProperty("WindSpeed");
+  expect(data).toHaveProperty("LastUpdated");
+  expect(typeof data.WeatherStationID).toBe("number");
+  expect(typeof data.Temperature).toBe("number");
+  expect(typeof data.Humidity).toBe("number");
+  expect(typeof data.WindSpeed).toBe("number");
+  expect(data.LastUpdated).toBeInstanceOf(Date);
+};
+
+export const validateWeatherStation = (data: any) => {
+  expect(data).toHaveProperty("StationCode");
+  expect(data).toHaveProperty("StationName");
+  expect(data).toHaveProperty("Latitude");
+  expect(data).toHaveProperty("Longitude");
+  expect(typeof data.StationCode).toBe("number");
+  expect(typeof data.StationName).toBe("string");
+  expect(typeof data.Latitude).toBe("number");
+  expect(typeof data.Longitude).toBe("number");
+};
+
+// WSDOT performance benchmarks
+export const WSDOT_PERFORMANCE_BENCHMARK = 2000; // 2 seconds
+export const WSDOT_RATE_LIMIT_DELAY = 100; // 100ms between WSDOT API calls
 
 // Test data constants
 export const TEST_VESSEL_ID = 1; // M/V Cathlamet
@@ -869,6 +1026,26 @@ export const INVALID_ROUTE_ID = 99999;
 export const INVALID_FARE_ID = 99999;
 export const INVALID_SCHED_ROUTE_ID = 99999;
 export const INVALID_SCHEDULE_ID = 99999;
+
+// WSDOT Test data constants
+export const TEST_BORDER_CROSSING_ID = 1; // Peace Arch
+export const TEST_BRIDGE_ID = 1; // I-5 Columbia River Bridge
+export const TEST_CAMERA_ID = 1; // I-5 at MP 0.0
+export const TEST_ALERT_ID = 1; // Sample alert ID
+export const TEST_PASS_ID = 1; // Snoqualmie Pass
+export const TEST_TOLL_ROUTE_ID = 1; // SR 520 Bridge
+export const TEST_TRAVEL_TIME_ID = 1; // Sample travel time corridor
+export const TEST_WEATHER_STATION_ID = 1909; // S 144th St on SB I-5
+
+// WSDOT Invalid test data
+export const INVALID_BORDER_CROSSING_ID = 99999;
+export const INVALID_BRIDGE_ID = 99999;
+export const INVALID_CAMERA_ID = 99999;
+export const INVALID_ALERT_ID = 99999;
+export const INVALID_PASS_ID = 99999;
+export const INVALID_TOLL_ROUTE_ID = 99999;
+export const INVALID_TRAVEL_TIME_ID = 99999;
+export const INVALID_WEATHER_STATION_ID = 99999;
 
 // Rate limiting between tests
 export const RATE_LIMIT_DELAY = 0; // No delay between API calls

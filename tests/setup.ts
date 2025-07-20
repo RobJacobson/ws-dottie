@@ -18,7 +18,7 @@ beforeAll(() => {
   }
 
   // Set up global test configuration
-  global.testConfig = {
+  (global as any).testConfig = {
     apiKey: apiKey,
     baseUrl: "https://www.wsdot.wa.gov/ferries/api",
     timeout: 10000,
@@ -29,8 +29,8 @@ beforeAll(() => {
 
 afterAll(() => {
   // Cleanup global test state
-  if (global.testConfig) {
-    delete global.testConfig;
+  if ((global as any).testConfig) {
+    delete (global as any).testConfig;
   }
 });
 

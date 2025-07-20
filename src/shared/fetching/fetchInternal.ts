@@ -3,8 +3,8 @@
 import log from "@/lib/logger";
 
 import type { LoggingMode } from "./config";
-import { createApiError, type WsdApiError } from "./errors";
-import { type JsonValue, transformWsfData } from "./utils";
+import { createApiError, type WsdotApiError } from "./errors";
+import { type JsonValue, transformWsdotData } from "./utils";
 
 // Constants for JSONP request configuration
 const JSONP_TIMEOUT_MS = 30_000; // 30 seconds
@@ -50,7 +50,7 @@ const isTestEnvironment = () => {
  * - Uses native fetch for test environments (Happy DOM, jsdom) to avoid JSONP issues
  * - Uses JSONP for real web browsers to bypass CORS restrictions
  * - Uses native fetch for all other environments (Node.js, Bun, React Native, etc.)
- * - All errors (including from JSONP) are always wrapped as WsdApiError for consistent error handling
+ * - All errors (including from JSONP) are always wrapped as WsdotApiError for consistent error handling
  */
 export const fetchInternal = async <T>(
   url: string,
@@ -65,7 +65,7 @@ export const fetchInternal = async <T>(
       try {
         response = (await fetchNative(url)) as JsonValue;
       } catch (err) {
-        // Always wrap as WsdApiError for consistent error handling
+        // Always wrap as WsdotApiError for consistent error handling
         throw createApiError(err, endpoint, url);
       }
     } else if (isWebEnvironment()) {
@@ -73,7 +73,7 @@ export const fetchInternal = async <T>(
       try {
         response = (await fetchJsonp(url)) as JsonValue;
       } catch (err) {
-        // Always wrap as WsdApiError for consistent error handling
+        // Always wrap as WsdotApiError for consistent error handling
         throw createApiError(err, endpoint, url);
       }
     } else {
@@ -81,13 +81,13 @@ export const fetchInternal = async <T>(
       try {
         response = (await fetchNative(url)) as JsonValue;
       } catch (err) {
-        // Always wrap as WsdApiError for consistent error handling
+        // Always wrap as WsdotApiError for consistent error handling
         throw createApiError(err, endpoint, url);
       }
     }
 
     // Apply WSF data transformation recursively
-    const transformedResponse = transformWsfData(response) as T;
+    const transformedResponse = transformWsdotData(response) as T;
 
     if (logMode === "debug") {
       log.debug(`[WSF ${endpoint}] Response transformed:`, transformedResponse);
@@ -106,15 +106,10 @@ export const fetchInternal = async <T>(
 
 // Helper functions
 
-// Generate unique JSONP callback name to avoid conflicts
-const generateCallbackName = () =>
-  `jsonp_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-
 /**
  * Web JSONP fetch (bypasses CORS restrictions) - returns parsed data directly
  */
 const fetchJsonp = (url: string): Promise<unknown> => {
-  log.debug("fetchJsonp", url);
   return new Promise((resolve, reject) => {
     const callbackName = generateCallbackName();
     const script = document.createElement("script");
@@ -172,6 +167,10 @@ const fetchJsonp = (url: string): Promise<unknown> => {
     document.head.appendChild(script);
   });
 };
+
+// Generate unique JSONP callback name to avoid conflicts
+const generateCallbackName = () =>
+  `jsonp_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
 /**
  * Native fetch for mobile platforms - returns parsed data directly

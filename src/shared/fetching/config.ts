@@ -35,7 +35,7 @@ export const WSDOT_BASE_URLS = {
     "https://wsdot.wa.gov/Traffic/api/WeatherInformation/WeatherInformationREST.svc",
   weatherStations:
     "https://wsdot.wa.gov/Traffic/api/WeatherStations/WeatherStationsREST.svc",
-  weatherInformationExtended: "https://wsdot.wa.gov/Traffic/api/Scanweb",
+  weatherInformationExtended: "https://wsdot.wa.gov/Traffic/api/api/Scanweb",
 } as const;
 
 // API source types

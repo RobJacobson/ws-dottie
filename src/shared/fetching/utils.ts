@@ -16,24 +16,109 @@ export type JsonValue =
 /**
  * Type representing transformed data (with Date objects and PascalCase keys preserved)
  */
-export type JsonX =
+export type JsonWithDates =
   | string
   | number
   | boolean
   | null
   | Date
-  | JsonX[]
-  | { [key: string]: JsonX };
+  | JsonWithDates[]
+  | { [key: string]: JsonWithDates };
 
 /**
  * Generic type for transformed JSON objects
  */
-export type TransformedJson = { [key: string]: JsonX };
+export type TransformedJson = { [key: string]: JsonWithDates };
 
 /**
  * Generic type for transformed JSON arrays
  */
-export type TransformedJsonArray = JsonX[];
+export type TransformedJsonArray = JsonWithDates[];
+
+/**
+ * Recursively transforms WSF API response data:
+ * 1. Converts WSF date strings to JavaScript Date objects
+ * 2. Preserves PascalCase keys (no longer converts to camelCase)
+ * 3. Handles nested objects and arrays
+ */
+export const transformWsdotData = (data: JsonValue): JsonWithDates => {
+  // Handle null input
+  if (data === null) {
+    return null;
+  }
+
+  // Handle arrays
+  if (Array.isArray(data)) {
+    return data.map(transformWsdotData);
+  }
+
+  // Handle objects (but not Date objects, which are also typeof 'object')
+  if (typeof data === "object" && data.constructor === Object) {
+    const result: { [key: string]: JsonWithDates } = {};
+    for (const [key, value] of Object.entries(data)) {
+      result[key] = transformWsdotData(value);
+    }
+    return result;
+  }
+
+  // Handle date strings - always try to parse, returns null for non-date strings
+  if (typeof data === "string") {
+    const parsedDate = parseDateString(data);
+    if (parsedDate !== null) {
+      return parsedDate;
+    }
+    // If parseDateString returned null, it means it's either an empty string or not a date
+    // For empty strings, we want to return null; for other strings, return the original
+    if (data === "") {
+      return null;
+    }
+    // If not a date, return the original string
+    return data;
+  }
+
+  // Return primitives as-is
+  return data;
+};
+
+/**
+ * Converts a string to a Date object based on its format
+ */
+const parseDateString = (dateString: string): Date | null => {
+  // Handle empty strings as null
+  if (dateString === "") {
+    return null;
+  }
+
+  // Handle WSF /Date(timestamp)/ format
+  if (dateString.startsWith("/Date(")) {
+    const middle = dateString.slice(6, 19);
+    const timestamp = parseInt(middle);
+    return new Date(timestamp);
+  }
+
+  // Handle ISO datetime format (YYYY-MM-DDTHH:mm:ss)
+  if (isIsoDateTime(dateString)) {
+    return new Date(dateString);
+  }
+
+  // Handle YYYY-MM-DD format
+  if (isYyyyMmDdDate(dateString)) {
+    return new Date(dateString);
+  }
+
+  // Handle MM/DD/YYYY HH:MM:SS AM/PM format
+  if (isMmDdYyyyDateTime(dateString)) {
+    return new Date(dateString);
+  }
+
+  // Handle MM/DD/YYYY format
+  if (isMmDdYyyyDate(dateString)) {
+    const [month, day, year] = dateString.split("/").map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  return null;
+};
 
 /**
  * Checks if a string matches YYYY-MM-DD date format
@@ -95,89 +180,4 @@ const isMmDdYyyyDateTime = (str: string): boolean => {
     date.getDate() === day &&
     date.getFullYear() === year
   );
-};
-
-/**
- * Converts a string to a Date object based on its format
- */
-const parseDateString = (dateString: string): Date | null => {
-  // Handle empty strings as null
-  if (dateString === "") {
-    return null;
-  }
-
-  // Handle WSF /Date(timestamp)/ format
-  if (dateString.startsWith("/Date(")) {
-    const middle = dateString.slice(6, 19);
-    const timestamp = parseInt(middle);
-    return new Date(timestamp);
-  }
-
-  // Handle ISO datetime format (YYYY-MM-DDTHH:mm:ss)
-  if (isIsoDateTime(dateString)) {
-    return new Date(dateString);
-  }
-
-  // Handle YYYY-MM-DD format
-  if (isYyyyMmDdDate(dateString)) {
-    return new Date(dateString);
-  }
-
-  // Handle MM/DD/YYYY HH:MM:SS AM/PM format
-  if (isMmDdYyyyDateTime(dateString)) {
-    return new Date(dateString);
-  }
-
-  // Handle MM/DD/YYYY format
-  if (isMmDdYyyyDate(dateString)) {
-    const [month, day, year] = dateString.split("/").map(Number);
-    return new Date(year, month - 1, day);
-  }
-
-  return null;
-};
-
-/**
- * Recursively transforms WSF API response data:
- * 1. Converts WSF date strings to JavaScript Date objects
- * 2. Preserves PascalCase keys (no longer converts to camelCase)
- * 3. Handles nested objects and arrays
- */
-export const transformWsfData = (data: JsonValue): JsonX => {
-  // Handle null input
-  if (data === null) {
-    return null;
-  }
-
-  // Handle arrays
-  if (Array.isArray(data)) {
-    return data.map(transformWsfData);
-  }
-
-  // Handle objects (but not Date objects, which are also typeof 'object')
-  if (typeof data === "object" && data.constructor === Object) {
-    const result: { [key: string]: JsonX } = {};
-    for (const [key, value] of Object.entries(data)) {
-      result[key] = transformWsfData(value);
-    }
-    return result;
-  }
-
-  // Handle date strings - always try to parse, returns null for non-date strings
-  if (typeof data === "string") {
-    const parsedDate = parseDateString(data);
-    if (parsedDate !== null) {
-      return parsedDate;
-    }
-    // If parseDateString returned null, it means it's either an empty string or not a date
-    // For empty strings, we want to return null; for other strings, return the original
-    if (data === "") {
-      return null;
-    }
-    // If not a date, return the original string
-    return data;
-  }
-
-  // Return primitives as-is
-  return data;
 };
