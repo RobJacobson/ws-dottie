@@ -42,6 +42,7 @@ export const fetchWsdot = async <T>(
   logMode?: LoggingMode
 ): Promise<T> => {
   const baseUrl = WSDOT_BASE_URLS[source];
-  const url = `${baseUrl}${endpoint}?AccessCode=${API_KEY}`;
+  const separator = endpoint.includes("?") ? "&" : "?";
+  const url = `${baseUrl}${endpoint}${separator}AccessCode=${API_KEY}`;
   return await fetchInternal<T>(url, endpoint, logMode);
 };
