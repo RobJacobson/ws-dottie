@@ -9,40 +9,30 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "../../shared/caching/config";
-import type { LoggingMode } from "../../shared/fetching/config";
 import {
-  getActiveHighwayCameras,
   getHighwayCamera,
   getHighwayCameras,
-  getHighwayCamerasByRegion,
-  getHighwayCamerasByRoute,
   searchHighwayCameras,
 } from "./api";
 import type {
-  Camera,
-  CameraResponse,
-  CameraSearchParams,
-  CameraSearchResponse,
-  CamerasResponse,
+  GetCameraResponse,
+  GetCamerasResponse,
+  SearchCamerasParams,
+  SearchCamerasResponse,
 } from "./types";
 
 /**
  * React Query hook for getting all highway cameras
  *
- * @param logMode - Optional logging mode for debugging
- * @returns React Query result with all cameras
- *
- * @example
- * ```typescript
- * const { data: cameras, isLoading, error } = useHighwayCameras();
- * ```
+ * @param options - Optional query options
+ * @returns React Query result containing all camera data
  */
-export const useHighwayCameras = (logMode?: LoggingMode) => {
-  return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "all"],
-    queryFn: () => getHighwayCameras(logMode),
+export const useHighwayCameras = (options?: { enabled?: boolean }) => {
+  return useQuery<GetCamerasResponse>({
+    queryKey: ["wsdot", "highwayCameras", "all"],
+    queryFn: () => getHighwayCameras(),
     ...createInfrequentUpdateOptions(),
-    enabled: true,
+    enabled: options?.enabled ?? true,
   });
 };
 
@@ -50,121 +40,40 @@ export const useHighwayCameras = (logMode?: LoggingMode) => {
  * React Query hook for getting a specific highway camera by ID
  *
  * @param cameraID - The unique camera identifier
- * @param logMode - Optional logging mode for debugging
- * @returns React Query result with the specific camera
- *
- * @example
- * ```typescript
- * const { data: camera, isLoading, error } = useHighwayCamera(9987);
- * ```
+ * @param options - Optional query options
+ * @returns React Query result containing the camera data
  */
-export const useHighwayCamera = (cameraID: number, logMode?: LoggingMode) => {
-  return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "camera", cameraID],
-    queryFn: () => getHighwayCamera(cameraID, logMode),
+export const useHighwayCamera = (
+  cameraID: number,
+  options?: {
+    enabled?: boolean;
+  }
+) => {
+  return useQuery<GetCameraResponse>({
+    queryKey: ["wsdot", "highwayCameras", "camera", cameraID],
+    queryFn: () => getHighwayCamera(cameraID),
     ...createInfrequentUpdateOptions(),
-    enabled: true,
+    enabled: (options?.enabled ?? true) && cameraID > 0,
   });
 };
 
 /**
- * React Query hook for searching highway cameras with optional filters
+ * React Query hook for searching highway cameras with filters
  *
- * @param params - Search parameters to filter cameras
- * @param logMode - Optional logging mode for debugging
- * @returns React Query result with matching cameras
- *
- * @example
- * ```typescript
- * // Search for cameras on SR 9 in NW region
- * const { data: cameras, isLoading, error } = useSearchHighwayCameras({
- *   StateRoute: '9',
- *   Region: 'NW'
- * });
- *
- * // Search for cameras in a milepost range
- * const { data: cameras, isLoading, error } = useSearchHighwayCameras({
- *   StartingMilepost: 10,
- *   EndingMilepost: 20
- * });
- * ```
+ * @param params - Search parameters (StateRoute, Region, StartingMilepost, EndingMilepost)
+ * @param options - Optional query options
+ * @returns React Query result containing filtered camera data
  */
 export const useSearchHighwayCameras = (
-  params: CameraSearchParams = {},
-  logMode?: LoggingMode
+  params: SearchCamerasParams,
+  options?: {
+    enabled?: boolean;
+  }
 ) => {
-  return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "search", params],
-    queryFn: () => searchHighwayCameras(params, logMode),
+  return useQuery<SearchCamerasResponse>({
+    queryKey: ["wsdot", "highwayCameras", "search", params],
+    queryFn: () => searchHighwayCameras(params),
     ...createInfrequentUpdateOptions(),
-    enabled: true,
-  });
-};
-
-/**
- * React Query hook for getting all active highway cameras
- *
- * @param logMode - Optional logging mode for debugging
- * @returns React Query result with active cameras only
- *
- * @example
- * ```typescript
- * const { data: activeCameras, isLoading, error } = useActiveHighwayCameras();
- * ```
- */
-export const useActiveHighwayCameras = (logMode?: LoggingMode) => {
-  return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "active"],
-    queryFn: () => getActiveHighwayCameras(logMode),
-    ...createInfrequentUpdateOptions(),
-    enabled: true,
-  });
-};
-
-/**
- * React Query hook for getting cameras for a specific region
- *
- * @param region - Region code (NW, NC, SC, SW, ER, OL, OS, WA)
- * @param logMode - Optional logging mode for debugging
- * @returns React Query result with cameras in the specified region
- *
- * @example
- * ```typescript
- * const { data: nwCameras, isLoading, error } = useHighwayCamerasByRegion('NW');
- * ```
- */
-export const useHighwayCamerasByRegion = (
-  region: string,
-  logMode?: LoggingMode
-) => {
-  return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "region", region],
-    queryFn: () => getHighwayCamerasByRegion(region, logMode),
-    ...createInfrequentUpdateOptions(),
-    enabled: true,
-  });
-};
-
-/**
- * React Query hook for getting cameras for a specific state route
- *
- * @param stateRoute - State route (e.g., "9", "I-5", "SR 520")
- * @param logMode - Optional logging mode for debugging
- * @returns React Query result with cameras on the specified route
- *
- * @example
- * ```typescript
- * const { data: i5Cameras, isLoading, error } = useHighwayCamerasByRoute('I-5');
- * ```
- */
-export const useHighwayCamerasByRoute = (
-  stateRoute: string,
-  logMode?: LoggingMode
-) => {
-  return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "route", stateRoute],
-    queryFn: () => getHighwayCamerasByRoute(stateRoute, logMode),
-    ...createInfrequentUpdateOptions(),
-    enabled: true,
+    enabled: options?.enabled ?? true,
   });
 };

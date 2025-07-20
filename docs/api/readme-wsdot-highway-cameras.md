@@ -1,51 +1,95 @@
 # WSDOT Highway Cameras API
 
-Complete API client for WSDOT Highway Cameras with TypeScript types, API functions, and React Query hooks.
+The WSDOT Highway Cameras API provides access to real-time traffic camera data from Washington State Department of Transportation cameras across the state.
 
 ## Overview
 
-The WSDOT Highway Cameras API provides access to real-time traffic camera feeds and metadata across Washington State highways. This API allows you to retrieve camera information, search for cameras by location or route, and access camera images.
+This API allows you to:
+- Retrieve all highway cameras
+- Get specific camera information by ID
+- Search cameras by region, state route, or milepost range
+- Access camera images and location data
 
-## Features
+## API Endpoints
 
-- **Complete TypeScript Support**: Full type definitions for all API responses
-- **React Query Integration**: Ready-to-use hooks with caching and error handling
-- **Real-time Data**: Access to live traffic camera feeds
-- **Flexible Search**: Filter cameras by region, route, or milepost range
-- **Performance Optimized**: Built-in caching and performance monitoring
+### Get All Cameras
 
-## Installation
-
-```bash
-npm install @ferryjoy/wsdot-api-client
-```
-
-## Quick Start
-
-### Basic Usage
+Retrieves all highway cameras from the WSDOT system.
 
 ```typescript
-import { getHighwayCameras, getHighwayCamera } from '@ferryjoy/wsdot-api-client';
+import { getHighwayCameras } from '@wsdot/api';
 
-// Get all cameras
 const cameras = await getHighwayCameras();
-console.log(`Found ${cameras.length} cameras`);
-
-// Get a specific camera
-const camera = await getHighwayCamera(9987);
-console.log(`Camera: ${camera.Title}`);
 ```
 
-### React Usage
+**Response Type:** `Camera[]`
+
+### Get Camera by ID
+
+Retrieves a specific camera by its unique identifier.
 
 ```typescript
-import { useHighwayCameras, useHighwayCamera } from '@ferryjoy/wsdot-api-client';
+import { getHighwayCamera } from '@wsdot/api';
+
+const camera = await getHighwayCamera(9987);
+```
+
+**Parameters:**
+- `cameraID` (number): The unique camera identifier
+
+**Response Type:** `Camera`
+
+### Search Cameras
+
+Search for cameras using various filters.
+
+```typescript
+import { searchHighwayCameras } from '@wsdot/api';
+
+// Search by region
+const nwCameras = await searchHighwayCameras({ Region: 'NW' });
+
+// Search by state route
+const i5Cameras = await searchHighwayCameras({ StateRoute: 'I-5' });
+
+// Search by milepost range
+const rangeCameras = await searchHighwayCameras({
+  StartingMilepost: 10,
+  EndingMilepost: 20
+});
+
+// Combined search
+const filteredCameras = await searchHighwayCameras({
+  Region: 'NW',
+  StateRoute: '9',
+  StartingMilepost: 0,
+  EndingMilepost: 50
+});
+```
+
+**Parameters:**
+- `params` (SearchCamerasParams): Search parameters
+  - `StateRoute?` (string): State route number (e.g., "9", "405")
+  - `Region?` (string): Region code (NW, NC, SC, SW, ER, OL, OS, WA)
+  - `StartingMilepost?` (number): Starting milepost for search range
+  - `EndingMilepost?` (number): Ending milepost for search range
+
+**Response Type:** `Camera[]`
+
+## React Hooks
+
+### useHighwayCameras
+
+React Query hook for getting all highway cameras.
+
+```typescript
+import { useHighwayCameras } from '@wsdot/api/react';
 
 function CameraList() {
   const { data: cameras, isLoading, error } = useHighwayCameras();
 
   if (isLoading) return <div>Loading cameras...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div>Error loading cameras</div>;
 
   return (
     <div>
@@ -53,7 +97,6 @@ function CameraList() {
         <div key={camera.CameraID}>
           <h3>{camera.Title}</h3>
           <img src={camera.ImageURL} alt={camera.Title} />
-          <p>Region: {camera.Region}</p>
         </div>
       ))}
     </div>
@@ -61,13 +104,63 @@ function CameraList() {
 }
 ```
 
-## API Reference
+### useHighwayCamera
 
-### Types
+React Query hook for getting a specific camera by ID.
 
-#### `Camera`
+```typescript
+import { useHighwayCamera } from '@wsdot/api/react';
 
-Represents a highway camera with complete metadata.
+function CameraDetail({ cameraId }: { cameraId: number }) {
+  const { data: camera, isLoading, error } = useHighwayCamera(cameraId);
+
+  if (isLoading) return <div>Loading camera...</div>;
+  if (error) return <div>Error loading camera</div>;
+
+  return (
+    <div>
+      <h2>{camera?.Title}</h2>
+      <img src={camera?.ImageURL} alt={camera?.Title} />
+      <p>Location: {camera?.CameraLocation.RoadName} at MP {camera?.CameraLocation.MilePost}</p>
+    </div>
+  );
+}
+```
+
+### useSearchHighwayCameras
+
+React Query hook for searching cameras with filters.
+
+```typescript
+import { useSearchHighwayCameras } from '@wsdot/api/react';
+
+function RegionalCameras({ region }: { region: string }) {
+  const { data: cameras, isLoading, error } = useSearchHighwayCameras({
+    Region: region
+  });
+
+  if (isLoading) return <div>Loading cameras...</div>;
+  if (error) return <div>Error loading cameras</div>;
+
+  return (
+    <div>
+      <h2>Cameras in {region} Region</h2>
+      {cameras?.map(camera => (
+        <div key={camera.CameraID}>
+          <h3>{camera.Title}</h3>
+          <img src={camera.ImageURL} alt={camera.Title} />
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Data Types
+
+### Camera
+
+Represents a highway camera with all its associated data.
 
 ```typescript
 type Camera = {
@@ -88,7 +181,7 @@ type Camera = {
 };
 ```
 
-#### `CameraLocation`
+### CameraLocation
 
 Represents the location information for a camera.
 
@@ -99,256 +192,97 @@ type CameraLocation = {
   Latitude: number;                    // Latitude coordinate
   Longitude: number;                   // Longitude coordinate
   MilePost: number;                    // Milepost location
-  RoadName: string;                    // Road name (e.g., "SR 9", "I-5")
+  RoadName: string;                    // Road name (e.g., "SR 9", "I-405")
 };
 ```
 
-#### `CameraSearchParams`
+### SearchCamerasParams
 
 Parameters for searching cameras.
 
 ```typescript
-type CameraSearchParams = {
-  StateRoute?: string;                 // State route to filter by (e.g., "9", "I-5")
-  Region?: string;                     // Region to filter by (NW, NC, SC, SW, ER, OL, OS, WA)
-  StartingMilepost?: number;           // Starting milepost for range search
-  EndingMilepost?: number;             // Ending milepost for range search
+type SearchCamerasParams = {
+  StateRoute?: string;                 // State route number (e.g., "9", "405")
+  Region?: string;                     // Region code (NW, NC, SC, SW, ER, OL, OS, WA)
+  StartingMilepost?: number;           // Starting milepost for search range
+  EndingMilepost?: number;             // Ending milepost for search range
 };
 ```
 
-### API Functions
+## Region Codes
 
-#### `getHighwayCameras(logMode?)`
+The following region codes are available:
 
-Retrieves all highway cameras.
-
-```typescript
-const cameras = await getHighwayCameras();
-// Returns: Camera[]
-```
-
-#### `getHighwayCamera(cameraID, logMode?)`
-
-Retrieves a specific camera by ID.
-
-```typescript
-const camera = await getHighwayCamera(9987);
-// Returns: Camera
-```
-
-#### `searchHighwayCameras(params?, logMode?)`
-
-Searches for cameras with optional filters.
-
-```typescript
-// Search by region
-const cameras = await searchHighwayCameras({ Region: 'NW' });
-
-// Search by route
-const cameras = await searchHighwayCameras({ StateRoute: '9' });
-
-// Search with multiple parameters
-const cameras = await searchHighwayCameras({
-  Region: 'NW',
-  StateRoute: '9',
-  StartingMilepost: 10,
-  EndingMilepost: 20,
-});
-// Returns: Camera[]
-```
-
-#### `getActiveHighwayCameras(logMode?)`
-
-Retrieves only active cameras.
-
-```typescript
-const activeCameras = await getActiveHighwayCameras();
-// Returns: Camera[]
-```
-
-#### `getHighwayCamerasByRegion(region, logMode?)`
-
-Retrieves cameras for a specific region.
-
-```typescript
-const nwCameras = await getHighwayCamerasByRegion('NW');
-// Returns: Camera[]
-```
-
-#### `getHighwayCamerasByRoute(stateRoute, logMode?)`
-
-Retrieves cameras for a specific state route.
-
-```typescript
-const i5Cameras = await getHighwayCamerasByRoute('I-5');
-// Returns: Camera[]
-```
-
-### React Query Hooks
-
-#### `useHighwayCameras(logMode?)`
-
-React Query hook for getting all highway cameras.
-
-```typescript
-const { data: cameras, isLoading, error } = useHighwayCameras();
-```
-
-#### `useHighwayCamera(cameraID, logMode?)`
-
-React Query hook for getting a specific camera by ID.
-
-```typescript
-const { data: camera, isLoading, error } = useHighwayCamera(9987);
-```
-
-#### `useSearchHighwayCameras(params?, logMode?)`
-
-React Query hook for searching cameras with optional filters.
-
-```typescript
-const { data: cameras, isLoading, error } = useSearchHighwayCameras({
-  Region: 'NW',
-  StateRoute: '9'
-});
-```
-
-#### `useActiveHighwayCameras(logMode?)`
-
-React Query hook for getting only active cameras.
-
-```typescript
-const { data: activeCameras, isLoading, error } = useActiveHighwayCameras();
-```
-
-#### `useHighwayCamerasByRegion(region, logMode?)`
-
-React Query hook for getting cameras by region.
-
-```typescript
-const { data: nwCameras, isLoading, error } = useHighwayCamerasByRegion('NW');
-```
-
-#### `useHighwayCamerasByRoute(stateRoute, logMode?)`
-
-React Query hook for getting cameras by route.
-
-```typescript
-const { data: i5Cameras, isLoading, error } = useHighwayCamerasByRoute('I-5');
-```
+- **NW**: Northwest Region
+- **NC**: North Central Region
+- **SC**: South Central Region
+- **SW**: Southwest Region
+- **ER**: Eastern Region
+- **OL**: Olympic Region
+- **OS**: Oregon State (external cameras)
+- **WA**: Washington State (general)
 
 ## Examples
 
-### Display Camera Feed
+### Get All Active Cameras
 
 ```typescript
-import { useHighwayCamera } from '@ferryjoy/wsdot-api-client';
+import { getHighwayCameras } from '@wsdot/api';
 
-function CameraFeed({ cameraId }: { cameraId: number }) {
-  const { data: camera, isLoading, error } = useHighwayCamera(cameraId);
+const allCameras = await getHighwayCameras();
+const activeCameras = allCameras.filter(camera => camera.IsActive);
 
-  if (isLoading) return <div>Loading camera...</div>;
-  if (error) return <div>Error loading camera</div>;
-  if (!camera) return <div>Camera not found</div>;
-
-  return (
-    <div>
-      <h2>{camera.Title}</h2>
-      <img 
-        src={camera.ImageURL} 
-        alt={camera.Title}
-        width={camera.ImageWidth}
-        height={camera.ImageHeight}
-      />
-      <p>Location: {camera.CameraLocation.RoadName} at MP {camera.CameraLocation.MilePost}</p>
-      <p>Region: {camera.Region}</p>
-      <p>Status: {camera.IsActive ? 'Active' : 'Inactive'}</p>
-    </div>
-  );
-}
+console.log(`Found ${activeCameras.length} active cameras`);
 ```
 
-### Search Cameras by Location
+### Find Cameras on a Specific Route
 
 ```typescript
-import { useSearchHighwayCameras } from '@ferryjoy/wsdot-api-client';
+import { searchHighwayCameras } from '@wsdot/api';
 
-function CameraSearch() {
-  const [region, setRegion] = useState('NW');
-  const [route, setRoute] = useState('');
+const i5Cameras = await searchHighwayCameras({ StateRoute: 'I-5' });
+console.log(`Found ${i5Cameras.length} cameras on I-5`);
+```
 
-  const { data: cameras, isLoading } = useSearchHighwayCameras({
-    Region: region,
-    StateRoute: route || undefined,
-  });
+### Get Camera Images for a Region
+
+```typescript
+import { searchHighwayCameras } from '@wsdot/api';
+
+const nwCameras = await searchHighwayCameras({ Region: 'NW' });
+
+nwCameras.forEach(camera => {
+  console.log(`${camera.Title}: ${camera.ImageURL}`);
+});
+```
+
+### React Component with Camera Grid
+
+```typescript
+import { useHighwayCameras } from '@wsdot/api/react';
+
+function CameraGrid() {
+  const { data: cameras, isLoading, error } = useHighwayCameras();
+
+  if (isLoading) return <div>Loading cameras...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <select value={region} onChange={(e) => setRegion(e.target.value)}>
-        <option value="NW">Northwest</option>
-        <option value="NC">North Central</option>
-        <option value="SC">South Central</option>
-        <option value="SW">Southwest</option>
-        <option value="ER">Eastern</option>
-        <option value="OL">Olympic</option>
-        <option value="OS">Oregon</option>
-        <option value="WA">Washington</option>
-      </select>
-
-      <input 
-        type="text" 
-        placeholder="Route (e.g., I-5, SR 520)"
-        value={route}
-        onChange={(e) => setRoute(e.target.value)}
-      />
-
-      {isLoading ? (
-        <div>Searching cameras...</div>
-      ) : (
-        <div>
-          <h3>Found {cameras?.length || 0} cameras</h3>
-          {cameras?.map(camera => (
-            <div key={camera.CameraID}>
-              <h4>{camera.Title}</h4>
-              <p>{camera.CameraLocation.RoadName} at MP {camera.CameraLocation.MilePost}</p>
-            </div>
-          ))}
+    <div className="camera-grid">
+      {cameras?.map(camera => (
+        <div key={camera.CameraID} className="camera-card">
+          <h3>{camera.Title}</h3>
+          <img 
+            src={camera.ImageURL} 
+            alt={camera.Title}
+            width={camera.ImageWidth}
+            height={camera.ImageHeight}
+          />
+          <p>{camera.CameraLocation.RoadName} at MP {camera.CameraLocation.MilePost}</p>
+          <p>Region: {camera.Region}</p>
+          {camera.IsActive && <span className="status-active">Active</span>}
         </div>
-      )}
-    </div>
-  );
-}
-```
-
-### Camera Map
-
-```typescript
-import { useHighwayCameras } from '@ferryjoy/wsdot-api-client';
-
-function CameraMap() {
-  const { data: cameras, isLoading } = useHighwayCameras();
-
-  if (isLoading) return <div>Loading camera map...</div>;
-
-  return (
-    <div>
-      <h2>Washington State Traffic Cameras</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
-        {cameras?.map(camera => (
-          <div key={camera.CameraID} style={{ border: '1px solid #ccc', padding: '1rem' }}>
-            <h3>{camera.Title}</h3>
-            <img 
-              src={camera.ImageURL} 
-              alt={camera.Title}
-              style={{ width: '100%', height: 'auto' }}
-            />
-            <p><strong>Location:</strong> {camera.CameraLocation.RoadName} at MP {camera.CameraLocation.MilePost}</p>
-            <p><strong>Region:</strong> {camera.Region}</p>
-            <p><strong>Status:</strong> {camera.IsActive ? '🟢 Active' : '🔴 Inactive'}</p>
-            <p><strong>Coordinates:</strong> {camera.CameraLocation.Latitude.toFixed(4)}, {camera.CameraLocation.Longitude.toFixed(4)}</p>
-          </div>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
@@ -356,59 +290,34 @@ function CameraMap() {
 
 ## Error Handling
 
-All API functions throw `WsdotApiError` instances when requests fail. React Query hooks provide error states automatically.
+The API functions throw `WsdotApiError` instances when requests fail. Handle errors appropriately:
 
 ```typescript
-import { WsdotApiError } from '@ferryjoy/wsdot-api-client';
+import { getHighwayCameras, WsdotApiError } from '@wsdot/api';
 
 try {
-  const camera = await getHighwayCamera(999999);
+  const cameras = await getHighwayCameras();
+  console.log(`Retrieved ${cameras.length} cameras`);
 } catch (error) {
   if (error instanceof WsdotApiError) {
-    console.error('API Error:', error.message);
-    console.error('Error Code:', error.code);
+    console.error(`API Error: ${error.message}`);
+  } else {
+    console.error('Unexpected error:', error);
   }
 }
 ```
 
 ## Performance
 
-The API is optimized for performance with:
+All API endpoints are designed to return data within 2 seconds. The React hooks use appropriate caching strategies to minimize API calls and improve performance.
 
-- **Caching**: React Query hooks include intelligent caching
-- **Rate Limiting**: Built-in rate limiting to respect API limits
-- **Performance Monitoring**: Automatic performance tracking
-- **2-Second Target**: All endpoints target sub-2-second response times
+## Rate Limiting
 
-## Data Sources
+The WSDOT API has rate limiting in place. The client automatically handles rate limiting and retries, but be mindful of making too many requests in a short period.
 
-This API integrates with the official WSDOT Traveler Information APIs:
+## Related APIs
 
-- **Base URL**: `https://wsdot.wa.gov/traffic/api/HighwayCameras/HighwayCamerasREST.svc`
-- **Documentation**: [WSDOT Highway Cameras API](https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html)
-- **Help Page**: [API Help](https://wsdot.wa.gov/traffic/api/HighwayCameras/HighwayCamerasREST.svc/Help)
-
-## Regions
-
-The API supports the following WSDOT regions:
-
-- **NW**: Northwest
-- **NC**: North Central  
-- **SC**: South Central
-- **SW**: Southwest
-- **ER**: Eastern
-- **OL**: Olympic
-- **OS**: Oregon
-- **WA**: Washington
-
-## Road Types
-
-Cameras are available for various road types:
-
-- **Interstates**: I-5, I-90, I-405, etc.
-- **State Routes**: SR 520, SR 99, SR 9, etc.
-- **US Highways**: US 2, US 97, US 101, etc.
-
-## License
-
-This API client is part of the @ferryjoy/wsdot-api-client package. See the main package documentation for licensing information. 
+- [WSDOT Border Crossings API](./readme-wsdot-border-crossings.md)
+- [WSDOT Bridge Clearances API](./readme-wsdot-bridge-clearances.md)
+- [WSDOT Commercial Vehicle Restrictions API](./readme-wsdot-commercial-vehicle-restrictions.md)
+- [WSDOT Highway Alerts API](./readme-wsdot-highway-alerts.md) 

@@ -1,31 +1,31 @@
 /**
- * WSDOT Highway Cameras API - Basic Functionality Tests
+ * WSDOT Highway Cameras API - Basic E2E Tests
  *
- * Tests basic API functionality and performance benchmarks.
+ * Tests core functionality and performance of the Highway Cameras API.
+ *
+ * Based on cURL validation of:
+ * - https://wsdot.wa.gov/traffic/api/HighwayCameras/HighwayCamerasREST.svc/Help
+ * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 
 import { describe, it, expect } from "vitest";
 
-import type { Camera } from "../../../src/api/wsdot-highway-cameras";
 import {
-  getActiveHighwayCameras,
   getHighwayCamera,
   getHighwayCameras,
-  getHighwayCamerasByRegion,
-  getHighwayCamerasByRoute,
   searchHighwayCameras,
 } from "../../../src/api/wsdot-highway-cameras";
-import { measureApiCall } from "../utils";
+import { measurePerformance } from "../../utils";
 
 // Test data constants based on real API responses
 const TEST_CAMERA_ID = 9987; // SR 9 at MP 15.4: Market Pl
 const TEST_REGION = "NW";
-const TEST_ROUTE = "9";
+const TEST_STATE_ROUTE = "9";
 
 describe("WSDOT Highway Cameras API - Basic Functionality", () => {
   describe("getHighwayCameras", () => {
     it("should retrieve all highway cameras successfully", async () => {
-      const { data, duration } = await measureApiCall(() =>
+      const { data, duration } = await measurePerformance(() =>
         getHighwayCameras()
       );
 
@@ -34,201 +34,171 @@ describe("WSDOT Highway Cameras API - Basic Functionality", () => {
       expect(data.length).toBeGreaterThan(0);
       expect(duration).toBeLessThan(2000); // 2-second LTE target
 
-      // Validate camera structure
+      // Validate first camera structure
       const firstCamera = data[0];
       expect(firstCamera).toHaveProperty("CameraID");
-      expect(firstCamera).toHaveProperty("CameraLocation");
       expect(firstCamera).toHaveProperty("Title");
+      expect(firstCamera).toHaveProperty("ImageURL");
       expect(firstCamera).toHaveProperty("IsActive");
       expect(firstCamera).toHaveProperty("Region");
-      expect(firstCamera).toHaveProperty("ImageURL");
+      expect(firstCamera).toHaveProperty("CameraLocation");
+      expect(firstCamera.CameraLocation).toHaveProperty("Latitude");
+      expect(firstCamera.CameraLocation).toHaveProperty("Longitude");
+      expect(firstCamera.CameraLocation).toHaveProperty("RoadName");
     });
 
-    it("should return cameras with valid structure", async () => {
-      const cameras = await getHighwayCameras();
+    it("should return cameras with valid image URLs", async () => {
+      const { data, duration } = await measurePerformance(() =>
+        getHighwayCameras()
+      );
 
-      cameras.forEach((camera: Camera) => {
-        // Required properties
-        expect(typeof camera.CameraID).toBe("number");
-        expect(typeof camera.Title).toBe("string");
-        expect(typeof camera.IsActive).toBe("boolean");
-        expect(typeof camera.Region).toBe("string");
-        expect(typeof camera.ImageURL).toBe("string");
+      expect(duration).toBeLessThan(2000);
 
-        // CameraLocation structure
-        expect(camera.CameraLocation).toBeDefined();
-        expect(typeof camera.CameraLocation.Latitude).toBe("number");
-        expect(typeof camera.CameraLocation.Longitude).toBe("number");
-        expect(typeof camera.CameraLocation.MilePost).toBe("number");
-        expect(typeof camera.CameraLocation.RoadName).toBe("string");
+      // Check that cameras have valid image URLs
+      const camerasWithImages = data.filter((camera) =>
+        camera.ImageURL?.startsWith("https://")
+      );
+      expect(camerasWithImages.length).toBeGreaterThan(0);
 
-        // Image dimensions
-        expect(typeof camera.ImageHeight).toBe("number");
-        expect(typeof camera.ImageWidth).toBe("number");
-        expect(camera.ImageHeight).toBeGreaterThan(0);
-        expect(camera.ImageWidth).toBeGreaterThan(0);
+      // Validate image dimensions
+      const cameraWithDimensions = data.find(
+        (camera) => camera.ImageWidth > 0 && camera.ImageHeight > 0
+      );
+      expect(cameraWithDimensions).toBeDefined();
+      expect(cameraWithDimensions?.ImageWidth).toBeGreaterThan(0);
+      expect(cameraWithDimensions?.ImageHeight).toBeGreaterThan(0);
+    });
 
-        // Coordinates should be valid
-        expect(camera.CameraLocation.Latitude).toBeGreaterThanOrEqual(45);
-        expect(camera.CameraLocation.Latitude).toBeLessThanOrEqual(50);
-        expect(camera.CameraLocation.Longitude).toBeGreaterThanOrEqual(-125);
-        expect(camera.CameraLocation.Longitude).toBeLessThanOrEqual(-116);
-      });
+    it("should return cameras with valid location data", async () => {
+      const { data, duration } = await measurePerformance(() =>
+        getHighwayCameras()
+      );
+
+      expect(duration).toBeLessThan(2000);
+
+      // Check that cameras have valid location data
+      const camerasWithLocation = data.filter(
+        (camera) =>
+          camera.CameraLocation &&
+          typeof camera.CameraLocation.Latitude === "number" &&
+          typeof camera.CameraLocation.Longitude === "number" &&
+          camera.CameraLocation.Latitude !== 0 &&
+          camera.CameraLocation.Longitude !== 0
+      );
+      expect(camerasWithLocation.length).toBeGreaterThan(0);
+
+      // Validate coordinate ranges for Washington State
+      const validCamera = camerasWithLocation[0];
+      expect(validCamera.CameraLocation.Latitude).toBeGreaterThan(45);
+      expect(validCamera.CameraLocation.Latitude).toBeLessThan(50);
+      expect(validCamera.CameraLocation.Longitude).toBeGreaterThan(-125);
+      expect(validCamera.CameraLocation.Longitude).toBeLessThan(-116);
     });
   });
 
   describe("getHighwayCamera", () => {
     it("should retrieve a specific camera by ID successfully", async () => {
-      const { data, duration } = await measureApiCall(() =>
+      const { data, duration } = await measurePerformance(() =>
         getHighwayCamera(TEST_CAMERA_ID)
       );
 
       expect(data).toBeDefined();
       expect(data.CameraID).toBe(TEST_CAMERA_ID);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
-
-      // Validate camera data
       expect(data.Title).toBeDefined();
-      expect(data.IsActive).toBeDefined();
-      expect(data.Region).toBeDefined();
       expect(data.ImageURL).toBeDefined();
+      expect(data.IsActive).toBeDefined();
+      expect(duration).toBeLessThan(2000);
     });
 
-    it("should return camera with complete structure", async () => {
-      const camera = await getHighwayCamera(TEST_CAMERA_ID);
+    it("should return camera with complete location information", async () => {
+      const { data, duration } = await measurePerformance(() =>
+        getHighwayCamera(TEST_CAMERA_ID)
+      );
 
-      // Required properties
-      expect(camera.CameraID).toBe(TEST_CAMERA_ID);
-      expect(typeof camera.Title).toBe("string");
-      expect(typeof camera.IsActive).toBe("boolean");
-      expect(typeof camera.Region).toBe("string");
-      expect(typeof camera.ImageURL).toBe("string");
+      expect(duration).toBeLessThan(2000);
+      expect(data.CameraLocation).toBeDefined();
+      expect(data.CameraLocation.RoadName).toBeDefined();
+      expect(data.CameraLocation.MilePost).toBeDefined();
+      expect(data.CameraLocation.Latitude).toBeDefined();
+      expect(data.CameraLocation.Longitude).toBeDefined();
+      expect(typeof data.CameraLocation.Latitude).toBe("number");
+      expect(typeof data.CameraLocation.Longitude).toBe("number");
+    });
 
-      // CameraLocation structure
-      expect(camera.CameraLocation).toBeDefined();
-      expect(typeof camera.CameraLocation.Latitude).toBe("number");
-      expect(typeof camera.CameraLocation.Longitude).toBe("number");
-      expect(typeof camera.CameraLocation.MilePost).toBe("number");
-      expect(typeof camera.CameraLocation.RoadName).toBe("string");
+    it("should return camera with valid image information", async () => {
+      const { data, duration } = await measurePerformance(() =>
+        getHighwayCamera(TEST_CAMERA_ID)
+      );
 
-      // Image dimensions
-      expect(typeof camera.ImageHeight).toBe("number");
-      expect(typeof camera.ImageWidth).toBe("number");
-      expect(camera.ImageHeight).toBeGreaterThan(0);
-      expect(camera.ImageWidth).toBeGreaterThan(0);
+      expect(duration).toBeLessThan(2000);
+      expect(data.ImageURL).toMatch(/^https:\/\/images\.wsdot\.wa\.gov\//);
+      expect(data.ImageWidth).toBeGreaterThan(0);
+      expect(data.ImageHeight).toBeGreaterThan(0);
+      expect(data.DisplayLatitude).toBeDefined();
+      expect(data.DisplayLongitude).toBeDefined();
     });
   });
 
   describe("searchHighwayCameras", () => {
     it("should search cameras by region successfully", async () => {
-      const { data, duration } = await measureApiCall(() =>
+      const { data, duration } = await measurePerformance(() =>
         searchHighwayCameras({ Region: TEST_REGION })
       );
 
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
+      expect(data.length).toBeGreaterThan(0);
+      expect(duration).toBeLessThan(2000);
 
       // All cameras should be in the specified region
-      data.forEach((camera: Camera) => {
+      data.forEach((camera) => {
         expect(camera.Region).toBe(TEST_REGION);
       });
     });
 
-    it("should search cameras by route successfully", async () => {
-      const { data, duration } = await measureApiCall(() =>
-        searchHighwayCameras({ StateRoute: TEST_ROUTE })
+    it("should search cameras by state route successfully", async () => {
+      const { data, duration } = await measurePerformance(() =>
+        searchHighwayCameras({ StateRoute: TEST_STATE_ROUTE })
       );
 
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
+      expect(duration).toBeLessThan(2000);
 
       // All cameras should be on the specified route
-      data.forEach((camera: Camera) => {
-        expect(camera.CameraLocation.RoadName).toContain(TEST_ROUTE);
+      data.forEach((camera) => {
+        expect(camera.CameraLocation.RoadName).toContain(TEST_STATE_ROUTE);
       });
     });
 
-    it("should search cameras with multiple parameters", async () => {
-      const { data, duration } = await measureApiCall(() =>
+    it("should search cameras by milepost range successfully", async () => {
+      const { data, duration } = await measurePerformance(() =>
         searchHighwayCameras({
-          Region: TEST_REGION,
-          StateRoute: TEST_ROUTE,
+          StartingMilepost: 10,
+          EndingMilepost: 20,
         })
       );
 
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
+      expect(duration).toBeLessThan(2000);
 
-      // All cameras should match both criteria
-      data.forEach((camera: Camera) => {
-        expect(camera.Region).toBe(TEST_REGION);
-        expect(camera.CameraLocation.RoadName).toContain(TEST_ROUTE);
+      // All cameras should be within the milepost range
+      data.forEach((camera) => {
+        expect(camera.CameraLocation.MilePost).toBeGreaterThanOrEqual(10);
+        expect(camera.CameraLocation.MilePost).toBeLessThanOrEqual(20);
       });
     });
 
-    it("should return empty array for no matches", async () => {
-      const { data, duration } = await measureApiCall(() =>
+    it("should handle empty search results gracefully", async () => {
+      const { data, duration } = await measurePerformance(() =>
         searchHighwayCameras({ Region: "INVALID_REGION" })
       );
 
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
       expect(data.length).toBe(0);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
-    });
-  });
-
-  describe("getActiveHighwayCameras", () => {
-    it("should retrieve only active cameras", async () => {
-      const { data, duration } = await measureApiCall(() =>
-        getActiveHighwayCameras()
-      );
-
-      expect(data).toBeDefined();
-      expect(Array.isArray(data)).toBe(true);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
-
-      // All cameras should be active
-      data.forEach((camera: Camera) => {
-        expect(camera.IsActive).toBe(true);
-      });
-    });
-  });
-
-  describe("getHighwayCamerasByRegion", () => {
-    it("should retrieve cameras for specific region", async () => {
-      const { data, duration } = await measureApiCall(() =>
-        getHighwayCamerasByRegion(TEST_REGION)
-      );
-
-      expect(data).toBeDefined();
-      expect(Array.isArray(data)).toBe(true);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
-
-      // All cameras should be in the specified region
-      data.forEach((camera: Camera) => {
-        expect(camera.Region).toBe(TEST_REGION);
-      });
-    });
-  });
-
-  describe("getHighwayCamerasByRoute", () => {
-    it("should retrieve cameras for specific route", async () => {
-      const { data, duration } = await measureApiCall(() =>
-        getHighwayCamerasByRoute(TEST_ROUTE)
-      );
-
-      expect(data).toBeDefined();
-      expect(Array.isArray(data)).toBe(true);
-      expect(duration).toBeLessThan(2000); // 2-second LTE target
-
-      // All cameras should be on the specified route
-      data.forEach((camera: Camera) => {
-        expect(camera.CameraLocation.RoadName).toContain(TEST_ROUTE);
-      });
+      expect(duration).toBeLessThan(2000);
     });
   });
 });

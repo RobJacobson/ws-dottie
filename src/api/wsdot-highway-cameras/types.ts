@@ -20,7 +20,7 @@ export type CameraLocation = {
   Longitude: number;
   /** Milepost location */
   MilePost: number;
-  /** Road name (e.g., "SR 9", "I-5") */
+  /** Road name (e.g., "SR 9", "I-405") */
   RoadName: string;
 };
 
@@ -59,30 +59,30 @@ export type Camera = {
 };
 
 /**
- * Search parameters for filtering cameras
+ * Response type for GetCamerasAsJson endpoint
  */
-export type CameraSearchParams = {
-  /** State route to filter by (e.g., "9", "I-5") */
+export type GetCamerasResponse = Camera[];
+
+/**
+ * Response type for GetCameraAsJson endpoint
+ */
+export type GetCameraResponse = Camera;
+
+/**
+ * Search parameters for SearchCamerasAsJson endpoint
+ */
+export type SearchCamerasParams = {
+  /** State route number (e.g., "9", "405") */
   StateRoute?: string;
-  /** Region to filter by (NW, NC, SC, SW, ER, OL, OS, WA) */
+  /** Region code (NW, NC, SC, SW, ER, OL, OS, WA) */
   Region?: string;
-  /** Starting milepost for range search */
+  /** Starting milepost for search range */
   StartingMilepost?: number;
-  /** Ending milepost for range search */
+  /** Ending milepost for search range */
   EndingMilepost?: number;
 };
 
 /**
- * Response type for camera search results
+ * Response type for SearchCamerasAsJson endpoint
  */
-export type CameraSearchResponse = Camera[];
-
-/**
- * Response type for all cameras
- */
-export type CamerasResponse = Camera[];
-
-/**
- * Response type for single camera
- */
-export type CameraResponse = Camera;
+export type SearchCamerasResponse = Camera[];
