@@ -39,15 +39,6 @@ export class WsdotApiError extends Error {
   }
 
   /**
-   * Check if this error is retryable
-   */
-  isRetryable(): boolean {
-    return ["NETWORK_ERROR", "TIMEOUT_ERROR", "RATE_LIMIT_ERROR"].includes(
-      this.code
-    );
-  }
-
-  /**
    * Get a user-friendly error message
    */
   getUserMessage(): string {
@@ -73,80 +64,6 @@ export class WsdotApiError extends Error {
 }
 
 /**
- * Network-related errors (connection failures, timeouts)
- */
-export class NetworkError extends WsdotApiError {
-  constructor(message: string, context?: Partial<ErrorContext>) {
-    super(message, "NETWORK_ERROR", context);
-    this.name = "NetworkError";
-  }
-}
-
-/**
- * API server errors (HTTP 4xx/5xx responses)
- */
-export class ApiError extends WsdotApiError {
-  constructor(
-    message: string,
-    status?: number,
-    context?: Partial<ErrorContext>
-  ) {
-    super(message, "API_ERROR", { ...context, status });
-    this.name = "ApiError";
-  }
-}
-
-/**
- * Data transformation errors (parsing, validation)
- */
-export class TransformError extends WsdotApiError {
-  constructor(message: string, context?: Partial<ErrorContext>) {
-    super(message, "TRANSFORM_ERROR", context);
-    this.name = "TransformError";
-  }
-}
-
-/**
- * Timeout errors
- */
-export class TimeoutError extends WsdotApiError {
-  constructor(message: string, context?: Partial<ErrorContext>) {
-    super(message, "TIMEOUT_ERROR", context);
-    this.name = "TimeoutError";
-  }
-}
-
-/**
- * CORS-related errors
- */
-export class CorsError extends WsdotApiError {
-  constructor(message: string, context?: Partial<ErrorContext>) {
-    super(message, "CORS_ERROR", context);
-    this.name = "CorsError";
-  }
-}
-
-/**
- * Rate limiting errors
- */
-export class RateLimitError extends WsdotApiError {
-  constructor(message: string, context?: Partial<ErrorContext>) {
-    super(message, "RATE_LIMIT_ERROR", context);
-    this.name = "RateLimitError";
-  }
-}
-
-/**
- * Invalid response errors
- */
-export class InvalidResponseError extends WsdotApiError {
-  constructor(message: string, context?: Partial<ErrorContext>) {
-    super(message, "INVALID_RESPONSE", context);
-    this.name = "InvalidResponseError";
-  }
-}
-
-/**
  * Create appropriate error type based on the error context
  */
 export function createApiError(
@@ -165,19 +82,19 @@ export function createApiError(
     const message = error.message.toLowerCase();
 
     if (message.includes("timeout") || message.includes("timed out")) {
-      return new TimeoutError(error.message, context);
+      return new WsdotApiError(error.message, "TIMEOUT_ERROR", context);
     }
 
     if (message.includes("cors") || message.includes("cross-origin")) {
-      return new CorsError(error.message, context);
+      return new WsdotApiError(error.message, "CORS_ERROR", context);
     }
 
     if (message.includes("network") || message.includes("fetch")) {
-      return new NetworkError(error.message, context);
+      return new WsdotApiError(error.message, "NETWORK_ERROR", context);
     }
 
     if (status && status >= 400) {
-      return new ApiError(error.message, status, context);
+      return new WsdotApiError(error.message, "API_ERROR", context);
     }
 
     return new WsdotApiError(error.message, "NETWORK_ERROR", context);

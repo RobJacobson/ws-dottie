@@ -183,6 +183,8 @@ const { data } = useQuery({
 
 ### Web Platform
 - **JSONP Implementation**: Bypasses CORS restrictions
+  - **WSDOT APIs**: Uses separate JSONP endpoints (e.g., `GetAlertsAsJsonp`)
+  - **WSF APIs**: Uses regular endpoints with callback parameter
 - **Error Handling**: Comprehensive error detection and recovery
 - **Fallback Support**: Graceful degradation when JSONP fails
 

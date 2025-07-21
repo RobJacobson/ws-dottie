@@ -14,43 +14,40 @@ export const useWsfCacheInvalidation = () => {
   const queryClient = useQueryClient();
 
   /**
-   * Invalidate all vessel-related queries when vessels cache flush date changes
+   * Generic function to invalidate queries by key
    */
-  const invalidateVesselQueries = () => {
-    queryClient.invalidateQueries({ queryKey: ["vessels"] });
+  const invalidateQueries = (queryKey: string[]) => {
+    queryClient.invalidateQueries({ queryKey });
   };
 
   /**
-   * Invalidate all terminal-related queries when terminals cache flush date changes
+   * Invalidate all vessel-related queries
    */
-  const invalidateTerminalQueries = () => {
-    queryClient.invalidateQueries({ queryKey: ["terminals"] });
-  };
+  const invalidateVesselQueries = () => invalidateQueries(["vessels"]);
 
   /**
-   * Invalidate all schedule-related queries when schedule cache flush date changes
+   * Invalidate all terminal-related queries
    */
-  const invalidateScheduleQueries = () => {
-    queryClient.invalidateQueries({ queryKey: ["schedule"] });
-  };
+  const invalidateTerminalQueries = () => invalidateQueries(["terminals"]);
+
+  /**
+   * Invalidate all schedule-related queries
+   */
+  const invalidateScheduleQueries = () => invalidateQueries(["schedule"]);
 
   /**
    * Invalidate specific vessel queries by type
    */
   const invalidateVesselQueriesByType = (
     type: "locations" | "verbose" | "basics"
-  ) => {
-    queryClient.invalidateQueries({ queryKey: ["vessels", type] });
-  };
+  ) => invalidateQueries(["vessels", type]);
 
   /**
    * Invalidate specific terminal queries by type
    */
   const invalidateTerminalQueriesByType = (
     type: "sailingSpace" | "verbose" | "basics" | "locations" | "waitTimes"
-  ) => {
-    queryClient.invalidateQueries({ queryKey: ["terminals", type] });
-  };
+  ) => invalidateQueries(["terminals", type]);
 
   /**
    * Invalidate specific schedule queries by type
@@ -63,17 +60,15 @@ export const useWsfCacheInvalidation = () => {
       | "vessels"
       | "timeAdjustments"
       | "alerts"
-  ) => {
-    queryClient.invalidateQueries({ queryKey: ["schedule", type] });
-  };
+  ) => invalidateQueries(["schedule", type]);
 
   /**
    * Invalidate all WSF queries (use sparingly)
    */
   const invalidateAllWsfQueries = () => {
-    queryClient.invalidateQueries({ queryKey: ["vessels"] });
-    queryClient.invalidateQueries({ queryKey: ["terminals"] });
-    queryClient.invalidateQueries({ queryKey: ["schedule"] });
+    invalidateVesselQueries();
+    invalidateTerminalQueries();
+    invalidateScheduleQueries();
   };
 
   return {
@@ -89,12 +84,26 @@ export const useWsfCacheInvalidation = () => {
 
 /**
  * Hook for monitoring cache flush dates and automatically invalidating queries
- *
- * This hook should be used in a high-level component to monitor cache flush dates
- * and automatically invalidate related queries when data changes.
  */
 export const useWsfCacheFlushMonitor = () => {
   const queryClient = useQueryClient();
+
+  /**
+   * Generic function to monitor cache flush date changes
+   */
+  const monitorCacheFlush = (
+    queryKey: string[],
+    lastFlushDate: Date | null,
+    currentFlushDate: Date | null
+  ) => {
+    if (
+      lastFlushDate &&
+      currentFlushDate &&
+      lastFlushDate.getTime() !== currentFlushDate.getTime()
+    ) {
+      queryClient.invalidateQueries({ queryKey });
+    }
+  };
 
   /**
    * Monitor vessels cache flush date and invalidate vessel queries when it changes
@@ -102,15 +111,7 @@ export const useWsfCacheFlushMonitor = () => {
   const monitorVesselsCacheFlush = (
     lastFlushDate: Date | null,
     currentFlushDate: Date | null
-  ) => {
-    if (
-      lastFlushDate &&
-      currentFlushDate &&
-      lastFlushDate.getTime() !== currentFlushDate.getTime()
-    ) {
-      queryClient.invalidateQueries({ queryKey: ["vessels"] });
-    }
-  };
+  ) => monitorCacheFlush(["vessels"], lastFlushDate, currentFlushDate);
 
   /**
    * Monitor terminals cache flush date and invalidate terminal queries when it changes
@@ -118,15 +119,7 @@ export const useWsfCacheFlushMonitor = () => {
   const monitorTerminalsCacheFlush = (
     lastFlushDate: Date | null,
     currentFlushDate: Date | null
-  ) => {
-    if (
-      lastFlushDate &&
-      currentFlushDate &&
-      lastFlushDate.getTime() !== currentFlushDate.getTime()
-    ) {
-      queryClient.invalidateQueries({ queryKey: ["terminals"] });
-    }
-  };
+  ) => monitorCacheFlush(["terminals"], lastFlushDate, currentFlushDate);
 
   /**
    * Monitor schedule cache flush date and invalidate schedule queries when it changes
@@ -134,15 +127,7 @@ export const useWsfCacheFlushMonitor = () => {
   const monitorScheduleCacheFlush = (
     lastFlushDate: Date | null,
     currentFlushDate: Date | null
-  ) => {
-    if (
-      lastFlushDate &&
-      currentFlushDate &&
-      lastFlushDate.getTime() !== currentFlushDate.getTime()
-    ) {
-      queryClient.invalidateQueries({ queryKey: ["schedule"] });
-    }
-  };
+  ) => monitorCacheFlush(["schedule"], lastFlushDate, currentFlushDate);
 
   return {
     monitorVesselsCacheFlush,

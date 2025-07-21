@@ -201,7 +201,11 @@ document.head.appendChild(script);
 
 ### WSF APIs
 
-WSF APIs do not support JSONP and return JSON data directly.
+WSF APIs support JSONP via callback parameter on regular endpoints:
+
+```bash
+curl "https://www.wsdot.wa.gov/ferries/api/vessels/rest/vessellocations?apiaccesscode=YOUR_CODE&callback=myCallback"
+```
 
 ## Best Practices
 

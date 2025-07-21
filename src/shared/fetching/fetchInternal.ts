@@ -47,10 +47,23 @@ const isTestEnvironment = () => {
 /**
  * Internal fetch function with platform-specific implementation and WSF data transformation
  *
- * - Uses native fetch for test environments (Happy DOM, jsdom) to avoid JSONP issues
- * - Uses JSONP for real web browsers to bypass CORS restrictions
- * - Uses native fetch for all other environments (Node.js, Bun, React Native, etc.)
- * - All errors (including from JSONP) are always wrapped as WsdotApiError for consistent error handling
+ * PLATFORM-SPECIFIC BEHAVIOR:
+ * - Test environments (Happy DOM, jsdom): Uses native fetch to avoid JSONP complexity in tests
+ * - Web browsers: Uses JSONP to bypass CORS restrictions (both WSF and WSDOT APIs have CORS restrictions)
+ * - Other environments (Node.js, Bun, React Native): Uses native fetch since CORS doesn't apply
+ *
+ * WHY DIFFERENT METHODS:
+ * - Both WSF and WSDOT APIs have CORS restrictions in web browsers
+ * - WSDOT APIs use separate JSONP endpoints (e.g., GetAlertsAsJsonp instead of GetAlertsAsJson)
+ * - WSF APIs use regular endpoints with callback parameter
+ * - JSONP is used to bypass CORS restrictions for cross-origin requests
+ * - Test environments can use native fetch since they don't enforce CORS
+ * - Server-side environments don't have CORS restrictions
+ *
+ * ERROR HANDLING:
+ * - All errors (including from JSONP) are wrapped as WsdotApiError for consistent handling
+ * - JSONP errors include timeout, script load failures, and API error messages
+ * - Native fetch errors include HTTP status codes and network issues
  */
 export const fetchInternal = async <T>(
   url: string,

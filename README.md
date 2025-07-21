@@ -43,6 +43,26 @@ const cameras: HighwayCamera[] = await WsdotHighwayCameras.getHighwayCameras();
 const weather: WeatherInformation[] = await WsdotWeatherInformation.getWeatherInformation();
 ```
 
+### 🌐 **CORS-Free API Access**
+Built-in support for both native fetch and JSONP to handle CORS restrictions automatically:
+
+- **Web Browsers**: Uses JSONP to bypass CORS limitations
+  - **WSDOT APIs**: Uses separate JSONP endpoints (e.g., `GetAlertsAsJsonp`)
+  - **WSF APIs**: Uses regular endpoints with callback parameter
+- **Node.js/React Native**: Uses native fetch for optimal performance
+- **Test Environments**: Uses native fetch to avoid JSONP complications
+- **Automatic Fallback**: Seamlessly switches between methods based on environment
+
+```typescript
+// Works in browsers without CORS issues
+const cameras = await getHighwayCameras();
+
+// Works in Node.js with native fetch
+const vessels = await getVesselLocations();
+
+// Same API, different underlying transport - you don't need to worry about it!
+```
+
 ### 🌊 **Complete WSF (Washington State Ferries) Coverage**
 - **Real-time vessel tracking** with GPS coordinates
 - **Live sailing schedules** and route information
@@ -99,6 +119,101 @@ function TransportationDashboard() {
   );
 }
 ```
+
+## 📦 Modular Imports for Optimal Bundle Size
+
+WS-Dottie supports modular imports to minimize your bundle size. Instead of importing everything, you can import only the APIs you need:
+
+### 🎯 **Import Only What You Use**
+
+```typescript
+// ❌ Old approach - imports everything (~126KB)
+import { WsfFares, WsdotHighwayCameras } from 'ws-dottie';
+
+// ✅ New approach - imports only what you need (~27KB)
+import { getFareLineItems } from 'ws-dottie/wsf-fares';
+import { getHighwayCameras } from 'ws-dottie/wsdot-highway-cameras';
+```
+
+### 🚀 **Available Subpath Exports**
+
+#### **WSF (Washington State Ferries) APIs**
+```typescript
+// Ferry APIs (~13-17KB each)
+import { getVesselLocations } from 'ws-dottie/wsf-vessels';
+import { getTerminalWaitTimes } from 'ws-dottie/wsf-terminals';
+import { getScheduleByRoute } from 'ws-dottie/wsf-schedule';
+import { getFareLineItems } from 'ws-dottie/wsf-fares';
+```
+
+#### **WSDOT (Washington State Department of Transportation) APIs**
+```typescript
+// Highway & Traffic APIs (~13-16KB each)
+import { getHighwayCameras } from 'ws-dottie/wsdot-highway-cameras';
+import { getTrafficFlow } from 'ws-dottie/wsdot-traffic-flow';
+import { getTravelTimes } from 'ws-dottie/wsdot-travel-times';
+import { getWeatherInformation } from 'ws-dottie/wsdot-weather-information';
+import { getHighwayAlerts } from 'ws-dottie/wsdot-highway-alerts';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
+import { getTollRates } from 'ws-dottie/wsdot-toll-rates';
+import { getBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
+import { getMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions';
+import { getCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions';
+import { getWeatherStations } from 'ws-dottie/wsdot-weather-stations';
+import { getWeatherInformationExtended } from 'ws-dottie/wsdot-weather-information-extended';
+```
+
+#### **React Hooks (Individual APIs)**
+```typescript
+// React Query hooks for specific APIs (~15-25KB each)
+import { useVesselLocations } from 'ws-dottie/react/wsf-vessels';
+import { useTerminalWaitTimes } from 'ws-dottie/react/wsf-terminals';
+import { useScheduleByRoute } from 'ws-dottie/react/wsf-schedule';
+import { useFareLineItems } from 'ws-dottie/react/wsf-fares';
+```
+
+#### **Core Utilities**
+```typescript
+// Shared utilities only (~23KB)
+import { createFrequentUpdateOptions } from 'ws-dottie/core';
+```
+
+
+
+### 📊 **Bundle Sizes**
+
+| Import Method | Bundle Size | Use Case |
+|---------------|-------------|----------|
+| `import { WsfFares } from 'ws-dottie'` | ~126KB | Full library access |
+| `import { getFareLineItems } from 'ws-dottie/wsf-fares'` | ~13KB | Single API |
+| `import { useFareLineItems } from 'ws-dottie/react/wsf-fares'` | ~19KB | React + single API |
+| `import { createFrequentUpdateOptions } from 'ws-dottie/core'` | ~23KB | Utilities only |
+
+**💡 Pro Tip**: Use modular imports to reduce your bundle size by up to **79%** when you only need specific APIs!
+
+### 🔧 **Internal Optimizations**
+
+The library uses internal optimizations for better performance and smaller bundles:
+
+- **Separate Fetch Bundles**: WSF and WSDOT APIs use separate internal fetch functions to avoid including unnecessary BASE_URLS
+- **Public API**: Users continue to use high-level functions like `getHighwayCameras`, `getVesselBasics`, etc.
+- **Benefits**: Reduced bundle size, better tree-shaking, optimized performance
+
+**Example Usage (Public API unchanged):**
+```typescript
+// High-level API functions (recommended)
+import { getHighwayCameras } from 'ws-dottie/wsdot-highway-cameras';
+import { getVesselBasics } from 'ws-dottie/wsf-vessels';
+
+const cameras = await getHighwayCameras();
+const vessels = await getVesselBasics();
+```
+
+**Benefits:**
+- **Clean public API** - Users don't need to know about internal implementation details
+- **Type-safe** - High-level functions provide proper TypeScript types
+- **Consistent interface** - All API functions follow the same patterns
+- **Optimized bundles** - Internal optimizations reduce bundle size automatically
 
 ## 🎯 Key Features
 
