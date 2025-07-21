@@ -85,8 +85,19 @@ Automatically transforms WSF API responses with date parsing and key conversion.
 - **Pattern-based detection** - No need to maintain field name lists
 - **Robust validation** - Ensures dates are valid before conversion
 - **Recursive processing** - Handles nested objects and arrays
-- **CamelCase conversion** - Converts PascalCase keys to camelCase
+- **PascalCase preservation** - Maintains original API key casing
+- **Field filtering** - Automatically removes unreliable and undocumented fields
 - **Error handling** - Graceful fallback for invalid dates
+
+**Field Filtering:**
+The JSON reviver automatically filters out unreliable and undocumented fields to improve data quality and reduce memory usage:
+
+- **VesselWatch Fields**: The following fields are automatically removed from VesselLocation responses as they are unreliable and undocumented:
+  - `VesselWatchShutID`
+  - `VesselWatchShutMsg`
+  - `VesselWatchShutFlag`
+  - `VesselWatchStatus`
+  - `VesselWatchMsg`
 
 #### Example Transformation
 ```typescript

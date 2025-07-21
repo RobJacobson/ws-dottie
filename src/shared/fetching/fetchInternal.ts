@@ -4,7 +4,7 @@ import log from "@/lib/logger";
 
 import type { LoggingMode } from "./config";
 import { createApiError, type WsdotApiError } from "./errors";
-import { type JsonValue, transformWsdotData } from "./utils";
+import { type JsonValue, parseWsdotJson } from "./parseJson";
 
 // Constants for JSONP request configuration
 const JSONP_TIMEOUT_MS = 30_000; // 30 seconds
@@ -99,8 +99,8 @@ export const fetchInternal = async <T>(
       }
     }
 
-    // Apply WSF data transformation recursively
-    const transformedResponse = transformWsdotData(response) as T;
+    // Apply WSF data transformation using JSON reviver
+    const transformedResponse = parseWsdotJson<T>(JSON.stringify(response));
 
     if (logMode === "debug") {
       log.debug(`[WSF ${endpoint}] Response transformed:`, transformedResponse);

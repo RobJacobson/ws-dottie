@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
 // API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
 
 import type { TrafficFlow, TrafficFlowsResponse } from "./types";
 

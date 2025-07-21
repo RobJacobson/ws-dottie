@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
 
 import type { WeatherStationData, WeatherStationsResponse } from "./types";
 

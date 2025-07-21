@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { fetchWsf } from "@/shared/fetching/fetch";
+import { fetchWsf } from "@/shared/fetching/fetchWsf";
 
 import type {
   TerminalBasics,

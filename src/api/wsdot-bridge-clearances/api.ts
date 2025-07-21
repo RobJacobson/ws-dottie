@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
 
 import type { BridgeClearancesResponse } from "./types";
 

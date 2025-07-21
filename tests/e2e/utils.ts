@@ -110,9 +110,8 @@ export const validateVesselLocation = (data: VesselLocation) => {
   expect(data).toHaveProperty("SortSeq");
   expect(data).toHaveProperty("ManagedBy");
   expect(data).toHaveProperty("TimeStamp");
-  expect(data).toHaveProperty("VesselWatchShutID");
-  expect(data).toHaveProperty("VesselWatchShutMsg");
-  expect(data).toHaveProperty("VesselWatchShutFlag");
+  // Note: VesselWatch fields (VesselWatchShutID, VesselWatchShutMsg, VesselWatchShutFlag,
+  // VesselWatchStatus, VesselWatchMsg) are automatically filtered out during JSON parsing
 };
 
 export const validateVesselVerbose = (data: VesselVerbose) => {

@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
 
 import type {
   TollRate,

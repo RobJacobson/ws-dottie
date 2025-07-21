@@ -6,7 +6,7 @@ import {
   jsDateToYyyyMmDd,
   wsdotDateToJsDate,
 } from "@/shared/fetching/dateUtils";
-import { fetchWsf } from "@/shared/fetching/fetch";
+import { fetchWsf } from "@/shared/fetching/fetchWsf";
 
 import type {
   FareLineItem,

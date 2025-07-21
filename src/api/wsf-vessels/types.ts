@@ -106,7 +106,9 @@ export type VesselHistory = {
 /**
  * Vessel location from WSF Vessels API
  * Based on /vessellocations endpoint
- * Note: Data preserves PascalCase keys from WSF API and matches specification exactly
+ * Note: VesselWatch fields (VesselWatchShutID, VesselWatchShutMsg, VesselWatchShutFlag,
+ * VesselWatchStatus, VesselWatchMsg) are automatically filtered out during JSON parsing
+ * as they are unreliable and undocumented
  */
 export type VesselLocation = {
   VesselID: number;
@@ -133,9 +135,6 @@ export type VesselLocation = {
   SortSeq: number;
   ManagedBy: number;
   TimeStamp: Date; // Automatically converted from "/Date(timestamp-timezone)/" format
-  VesselWatchShutID: number;
-  VesselWatchShutMsg: string;
-  VesselWatchShutFlag: string;
 };
 
 /**

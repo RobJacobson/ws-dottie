@@ -261,7 +261,18 @@ The API automatically transforms WSF date formats to JavaScript Date objects:
 - **`YYYY-MM-DD`** → `Date` object
 - **`MM/DD/YYYY`** → `Date` object
 
-All PascalCase keys are converted to camelCase for consistency.
+All PascalCase keys are preserved from the original API responses.
+
+### Field Filtering
+
+The API automatically filters out unreliable and undocumented fields to improve data quality and reduce memory usage:
+
+- **VesselWatch Fields**: The following fields are automatically removed from VesselLocation responses as they are unreliable and undocumented:
+  - `VesselWatchShutID`
+  - `VesselWatchShutMsg`
+  - `VesselWatchShutFlag`
+  - `VesselWatchStatus`
+  - `VesselWatchMsg`
 
 ## Error Handling
 

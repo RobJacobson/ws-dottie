@@ -7,7 +7,7 @@
  */
 
 import type { LoggingMode } from "../../shared/fetching/config";
-import { fetchWsdot } from "../../shared/fetching/fetch";
+import { fetchWsdot } from "../../shared/fetching/fetchWsdot";
 import type {
   GetCameraResponse,
   GetCamerasResponse,
