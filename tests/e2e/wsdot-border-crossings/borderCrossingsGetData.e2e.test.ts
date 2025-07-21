@@ -121,10 +121,11 @@ describe("Border Crossings Get Data E2E Tests", () => {
           `Wait time stats: min=${minWait}, max=${maxWait}, avg=${avgWait.toFixed(1)}`
         );
 
-        // Wait times should be reasonable (0-300 minutes)
-        expect(minWait).toBeGreaterThanOrEqual(0);
+        // Wait times should be reasonable (-1 to 300 minutes, where -1 indicates closed/no data)
+        expect(minWait).toBeGreaterThanOrEqual(-1);
         expect(maxWait).toBeLessThanOrEqual(300);
-        expect(avgWait).toBeGreaterThanOrEqual(0);
+        // Average can be negative if many crossings are closed (-1)
+        expect(avgWait).toBeGreaterThanOrEqual(-1);
         expect(avgWait).toBeLessThanOrEqual(100);
       }
 

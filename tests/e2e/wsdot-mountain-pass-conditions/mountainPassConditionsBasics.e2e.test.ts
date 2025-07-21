@@ -46,6 +46,13 @@ describe("WSDOT Mountain Pass Conditions API - Basic Functionality", () => {
     it("should be callable and return a promise", async () => {
       const result = getMountainPassConditionById(TEST_PASS_ID);
       expect(result).toBeInstanceOf(Promise);
+      // Ensure the promise is handled to prevent unhandled rejection
+      try {
+        await result;
+      } catch (error) {
+        // Expected to fail with 404
+        expect(error).toBeInstanceOf(WsdotApiError);
+      }
     });
 
     it("should handle API errors gracefully", async () => {
@@ -53,6 +60,7 @@ describe("WSDOT Mountain Pass Conditions API - Basic Functionality", () => {
         await getMountainPassConditionById(TEST_PASS_ID);
         // If successful, that's fine
       } catch (error) {
+        // 404 is expected for this endpoint based on testing
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
     });

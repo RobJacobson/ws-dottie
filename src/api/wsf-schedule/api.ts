@@ -1,6 +1,6 @@
 // WSF Schedule API functions
 
-import { toDateStamp } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
@@ -67,7 +67,7 @@ export const getValidDateRange = (): Promise<ValidDateRange | null> =>
 export const getTerminals = (tripDate: Date): Promise<ScheduleTerminal[]> =>
   fetchWsf<ScheduleTerminal[]>(
     "schedule",
-    `/terminals/${toDateStamp(tripDate)}`
+    `/terminals/${jsDateToYyyyMmDd(tripDate)}`
   );
 
 /**
@@ -85,7 +85,7 @@ export const getTerminalsAndMates = (
 ): Promise<ScheduleTerminalCombo[]> =>
   fetchWsf<ScheduleTerminalCombo[]>(
     "schedule",
-    `/terminalsandmates/${toDateStamp(tripDate)}`
+    `/terminalsandmates/${jsDateToYyyyMmDd(tripDate)}`
   );
 
 /**
@@ -105,7 +105,7 @@ export const getTerminalsAndMatesByRoute = (
 ): Promise<ScheduleTerminalCombo[]> =>
   fetchWsf<ScheduleTerminalCombo[]>(
     "schedule",
-    `/terminalsandmatesbyroute/${toDateStamp(tripDate)}/${routeId}`
+    `/terminalsandmatesbyroute/${jsDateToYyyyMmDd(tripDate)}/${routeId}`
   );
 
 /**
@@ -125,7 +125,7 @@ export const getTerminalMates = (
 ): Promise<ScheduleTerminal[]> =>
   fetchWsf<ScheduleTerminal[]>(
     "schedule",
-    `/terminalmates/${toDateStamp(tripDate)}/${terminalId}`
+    `/terminalmates/${jsDateToYyyyMmDd(tripDate)}/${terminalId}`
   );
 
 // ============================================================================
@@ -143,7 +143,7 @@ export const getTerminalMates = (
  * @returns Promise resolving to an array of Route objects containing basic route information
  */
 export const getRoutes = (tripDate: Date): Promise<Route[]> =>
-  fetchWsf<Route[]>("schedule", `/routes/${toDateStamp(tripDate)}`);
+  fetchWsf<Route[]>("schedule", `/routes/${jsDateToYyyyMmDd(tripDate)}`);
 
 /**
  * API function for fetching routes between specific terminals from WSF Schedule API
@@ -165,7 +165,7 @@ export const getRoutesByTerminals = (
 ): Promise<Route[]> =>
   fetchWsf<Route[]>(
     "schedule",
-    `/routes/${toDateStamp(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
+    `/routes/${jsDateToYyyyMmDd(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
   );
 
 /**
@@ -181,7 +181,7 @@ export const getRoutesByTerminals = (
 export const getRoutesWithDisruptions = (tripDate: Date): Promise<Route[]> =>
   fetchWsf<Route[]>(
     "schedule",
-    `/routeshavingservicedisruptions/${toDateStamp(tripDate)}`
+    `/routeshavingservicedisruptions/${jsDateToYyyyMmDd(tripDate)}`
   );
 
 /**
@@ -196,7 +196,7 @@ export const getRoutesWithDisruptions = (tripDate: Date): Promise<Route[]> =>
  * @returns Promise resolving to an array of Route objects containing detailed route information
  */
 export const getRouteDetails = (tripDate: Date): Promise<Route[]> =>
-  fetchWsf<Route[]>("schedule", `/routedetails/${toDateStamp(tripDate)}`);
+  fetchWsf<Route[]>("schedule", `/routedetails/${jsDateToYyyyMmDd(tripDate)}`);
 
 /**
  * API function for fetching detailed route information between specific terminals from WSF Schedule API
@@ -218,7 +218,7 @@ export const getRouteDetailsByTerminals = (
 ): Promise<Route[]> =>
   fetchWsf<Route[]>(
     "schedule",
-    `/routedetails/${toDateStamp(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
+    `/routedetails/${jsDateToYyyyMmDd(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
   );
 
 /**
@@ -238,7 +238,7 @@ export const getRouteDetailsByRoute = (
 ): Promise<RouteDetails | null> =>
   fetchWsf<RouteDetails>(
     "schedule",
-    `/routedetails/${toDateStamp(tripDate)}/${routeId}`
+    `/routedetails/${jsDateToYyyyMmDd(tripDate)}/${routeId}`
   );
 
 // ============================================================================
@@ -396,7 +396,7 @@ export const getScheduleByRoute = (
 ): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
-    `/schedule/${toDateStamp(tripDate)}/${routeId}`
+    `/schedule/${jsDateToYyyyMmDd(tripDate)}/${routeId}`
   );
 
 /**
@@ -420,7 +420,7 @@ export const getScheduleByTerminals = (
 ): Promise<ScheduleResponse | null> =>
   fetchWsf<ScheduleResponse>(
     "schedule",
-    `/schedule/${toDateStamp(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
+    `/schedule/${jsDateToYyyyMmDd(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
   );
 
 /**

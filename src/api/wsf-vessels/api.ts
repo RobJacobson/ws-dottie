@@ -1,6 +1,6 @@
 // WSF Vessels API functions
 
-import { toDateStamp } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
@@ -165,8 +165,8 @@ export const getVesselHistoryByVesselAndDateRange = (
   dateStart: Date,
   dateEnd: Date
 ): Promise<VesselHistory[]> => {
-  const formattedDateStart = toDateStamp(dateStart);
-  const formattedDateEnd = toDateStamp(dateEnd);
+  const formattedDateStart = jsDateToYyyyMmDd(dateStart);
+  const formattedDateEnd = jsDateToYyyyMmDd(dateEnd);
   return fetchWsf<VesselHistory[]>(
     "vessels",
     `/vesselhistory/${vesselName}/${formattedDateStart}/${formattedDateEnd}`

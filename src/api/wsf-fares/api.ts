@@ -2,7 +2,10 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { parseWsfDate, toDateStamp } from "@/shared/fetching/dateUtils";
+import {
+  jsDateToYyyyMmDd,
+  wsdotDateToJsDate,
+} from "@/shared/fetching/dateUtils";
 import { fetchWsf } from "@/shared/fetching/fetch";
 
 import type {
@@ -30,7 +33,11 @@ import type {
 export const getFaresCacheFlushDate =
   async (): Promise<FaresCacheFlushDate> => {
     const response = await fetchWsf<string>("fares", "/cacheflushdate");
-    return parseWsfDate(response);
+    const date = wsdotDateToJsDate(response);
+    if (!date) {
+      throw new Error(`Invalid cache flush date format: ${response}`);
+    }
+    return date;
   };
 
 /**
@@ -46,9 +53,19 @@ export const getFaresValidDateRange =
       "fares",
       "/validdaterange"
     );
+    const dateFrom = wsdotDateToJsDate(response.DateFrom);
+    const dateThru = wsdotDateToJsDate(response.DateThru);
+
+    if (!dateFrom) {
+      throw new Error(`Invalid DateFrom format: ${response.DateFrom}`);
+    }
+    if (!dateThru) {
+      throw new Error(`Invalid DateThru format: ${response.DateThru}`);
+    }
+
     return {
-      DateFrom: parseWsfDate(response.DateFrom),
-      DateThru: parseWsfDate(response.DateThru),
+      DateFrom: dateFrom,
+      DateThru: dateThru,
     };
   };
 
@@ -59,7 +76,7 @@ export const getFaresValidDateRange =
  * @returns Promise resolving to array of valid departing terminals
  */
 export const getFaresTerminals = (tripDate: Date): Promise<FaresTerminal[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<FaresTerminal[]>("fares", `/terminals/${formattedDate}`);
 };
 
@@ -74,7 +91,7 @@ export const getFaresTerminalMates = (
   tripDate: Date,
   terminalID: number
 ): Promise<TerminalMate[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<TerminalMate[]>(
     "fares",
     `/terminalmates/${formattedDate}/${terminalID}`
@@ -94,7 +111,7 @@ export const getTerminalCombo = (
   departingTerminalID: number,
   arrivingTerminalID: number
 ): Promise<TerminalCombo> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<TerminalCombo>(
     "fares",
     `/terminalcombo/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}`
@@ -110,7 +127,7 @@ export const getTerminalCombo = (
 export const getTerminalComboVerbose = (
   tripDate: Date
 ): Promise<TerminalComboVerbose[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<TerminalComboVerbose[]>(
     "fares",
     `/terminalcomboverbose/${formattedDate}`
@@ -132,7 +149,7 @@ export const getFareLineItemsBasic = (
   arrivingTerminalID: number,
   roundTrip: boolean
 ): Promise<FareLineItemBasic[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<FareLineItemBasic[]>(
     "fares",
     `/farelineitemsbasic/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
@@ -154,7 +171,7 @@ export const getFareLineItems = (
   arrivingTerminalID: number,
   roundTrip: boolean
 ): Promise<FareLineItem[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<FareLineItem[]>(
     "fares",
     `/farelineitems/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
@@ -170,7 +187,7 @@ export const getFareLineItems = (
 export const getFareLineItemsVerbose = (
   tripDate: Date
 ): Promise<FareLineItemsVerboseResponse> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   return fetchWsf<FareLineItemsVerboseResponse>(
     "fares",
     `/farelineitemsverbose/${formattedDate}`
@@ -196,7 +213,7 @@ export const getFareTotals = (
   fareLineItemIDs: number[],
   quantities: number[]
 ): Promise<FareTotal[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   const fareLineItemIDsString = fareLineItemIDs.join(",");
   const quantitiesString = quantities.join(",");
 

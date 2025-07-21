@@ -113,15 +113,16 @@ describe("Border Crossings Basics E2E Tests", () => {
       const { data } = await measureApiCall(() => getBorderCrossings());
 
       if (data && data.length > 0) {
-        // All wait times should be non-negative numbers
+        // Wait times should be numbers (including -1 for closed/no data)
         data.forEach((crossing) => {
-          expect(crossing.WaitTime).toBeGreaterThanOrEqual(0);
           expect(typeof crossing.WaitTime).toBe("number");
+          // -1 is valid (indicates closed/no data), otherwise should be non-negative
+          expect(crossing.WaitTime >= -1).toBe(true);
         });
 
-        // At least some crossings should have reasonable wait times
+        // At least some crossings should have reasonable wait times (including -1)
         const hasReasonableWaitTimes = data.some(
-          (crossing) => crossing.WaitTime >= 0 && crossing.WaitTime <= 300
+          (crossing) => crossing.WaitTime >= -1 && crossing.WaitTime <= 300
         );
         expect(hasReasonableWaitTimes).toBe(true);
       }

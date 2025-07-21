@@ -1,6 +1,6 @@
 // Test utilities and mock data for WSF API tests
 
-import { toDateStamp } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 
 export const mockRawVesselLocationResponse = [
   {
@@ -113,7 +113,7 @@ export const createMockErrorResponse = (errorMessage = "Mock error") => ({
 export const createMockWsfDate = (timestamp: number) => `/Date(${timestamp})/`;
 
 // Helper function to create mock ISO date strings
-export const createMockIsoDate = (date: Date) => toDateStamp(date);
+export const createMockIsoDate = (date: Date) => jsDateToYyyyMmDd(date);
 
 // Helper function to create mock US date strings
 export const createMockUsDate = (date: Date) => {

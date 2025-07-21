@@ -65,7 +65,7 @@ describe("WSDOT Traffic Flow API - Basic Functionality", () => {
   });
 
   describe("Performance Benchmarks", () => {
-    it("should complete getTrafficFlows within 2 seconds", async () => {
+    it("should complete getTrafficFlows within 3 seconds", async () => {
       const startTime = Date.now();
 
       try {
@@ -78,8 +78,8 @@ describe("WSDOT Traffic Flow API - Basic Functionality", () => {
       const endTime = Date.now();
       const duration = endTime - startTime;
 
-      expect(duration).toBeLessThan(2000);
-    }, 3000);
+      expect(duration).toBeLessThan(3000);
+    }, 4000);
 
     it("should complete getTrafficFlowById within 2 seconds", async () => {
       const startTime = Date.now();

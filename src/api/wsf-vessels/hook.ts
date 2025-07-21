@@ -7,7 +7,7 @@ import {
   createFrequentUpdateOptions,
   createInfrequentUpdateOptions,
 } from "@/shared/caching/config";
-import { toDateStamp } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 
 import {
   // Cache Flush Date API functions
@@ -315,8 +315,8 @@ export const useVesselHistoryByVesselAndDateRange = (
       "history",
       "byVesselAndDateRange",
       vesselName,
-      toDateStamp(dateStart),
-      toDateStamp(dateEnd),
+      jsDateToYyyyMmDd(dateStart),
+      jsDateToYyyyMmDd(dateEnd),
     ],
     queryFn: () =>
       getVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd),
