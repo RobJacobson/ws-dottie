@@ -1,6 +1,7 @@
 {
   "name": "ws-dottie",
   "version": "1.0.0",
+  "type": "module",
   "description": "The complete TypeScript client for Washington State's real-time transportation data",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
