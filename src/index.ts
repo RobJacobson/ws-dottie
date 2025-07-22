@@ -66,6 +66,4 @@ export * from "./shared/fetching/config";
 export * from "./shared/fetching/dateUtils";
 export * from "./shared/fetching/errors";
 export * from "./shared/fetching/fetchInternal";
-export * from "./shared/fetching/fetchWsdot";
-export * from "./shared/fetching/fetchWsf";
 export * from "./shared/fetching/parseJson";

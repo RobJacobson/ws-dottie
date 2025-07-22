@@ -31,30 +31,35 @@ This module provides the foundational infrastructure for all WSDOT API interacti
 
 ### Fetch Functions
 
-#### `fetchWsf<T>(path: string, options?: FetchOptions)`
-Main fetch function for WSF APIs with automatic transformation.
+#### `createFetchFunction(baseUrl: string)`
+Creates a module-scoped fetch function for a specific API endpoint with automatic transformation.
 
 ```typescript
-const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
+// Module-scoped fetch function for WSF vessels API
+const fetchVessels = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
+);
+
+// Usage in API functions
+export const getVesselLocations = (): Promise<VesselLocation[]> =>
+  fetchVessels<VesselLocation[]>("/vessellocations");
 ```
 
 **Features:**
 - Automatic date parsing and data transformation
-- Platform-specific fetch implementation
+- Platform-specific fetch implementation (JSONP for web, native fetch for Node.js)
 - Comprehensive error handling
 - Type-safe responses
+- Module-scoped configuration for better organization
 
-#### `fetchWsfArray<T>(path: string, options?: FetchOptions)`
-Convenience function for fetching arrays with proper typing.
-
-```typescript
-const routes = await fetchWsfArray<Route>('/schedule/routes');
-```
+#### `fetchInternal(url: string, options?: FetchOptions)`
+Platform-specific fetch implementation with comprehensive error handling.
 
 **Features:**
-- Ensures array return type
-- Handles empty responses gracefully
-- Same transformation and error handling as `fetchWsf`
+- Web: JSONP implementation for CORS bypass
+- Mobile: Native fetch with error handling
+- Automatic fallback between platforms
+- Structured error responses
 
 #### `fetchInternal(url: string, options?: FetchOptions)`
 Platform-specific fetch implementation with comprehensive error handling.

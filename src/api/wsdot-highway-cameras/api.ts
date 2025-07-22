@@ -7,13 +7,18 @@
  */
 
 import type { LoggingMode } from "../../shared/fetching/config";
-import { fetchWsdot } from "../../shared/fetching/fetchWsdot";
+import { createFetchFunction } from "../../shared/fetching/fetchApi";
 import type {
   GetCameraResponse,
   GetCamerasResponse,
   SearchCamerasParams,
   SearchCamerasResponse,
 } from "./types";
+
+// Module-scoped fetch function for highway cameras API
+const fetchHighwayCameras = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
+);
 
 /**
  * Get all highway cameras
@@ -22,15 +27,10 @@ import type {
  * @returns Promise containing all camera data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getHighwayCameras = async (
+export const getHighwayCameras = (
   logMode?: LoggingMode
-): Promise<GetCamerasResponse> => {
-  return await fetchWsdot<GetCamerasResponse>(
-    "highwayCameras",
-    "/GetCamerasAsJson",
-    logMode
-  );
-};
+): Promise<GetCamerasResponse> =>
+  fetchHighwayCameras<GetCamerasResponse>("/GetCamerasAsJson", logMode);
 
 /**
  * Get a specific highway camera by ID
@@ -40,16 +40,14 @@ export const getHighwayCameras = async (
  * @returns Promise containing the camera data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getHighwayCamera = async (
+export const getHighwayCamera = (
   cameraID: number,
   logMode?: LoggingMode
-): Promise<GetCameraResponse> => {
-  return await fetchWsdot<GetCameraResponse>(
-    "highwayCameras",
+): Promise<GetCameraResponse> =>
+  fetchHighwayCameras<GetCameraResponse>(
     `/GetCameraAsJson?CameraID=${cameraID}`,
     logMode
   );
-};
 
 /**
  * Search for highway cameras with optional filters
@@ -81,9 +79,5 @@ export const searchHighwayCameras = async (
   const queryString = searchParams.toString();
   const endpoint = `/SearchCamerasAsJson${queryString ? `?${queryString}` : ""}`;
 
-  return await fetchWsdot<SearchCamerasResponse>(
-    "highwayCameras",
-    endpoint,
-    logMode
-  );
+  return fetchHighwayCameras<SearchCamerasResponse>(endpoint, logMode);
 };

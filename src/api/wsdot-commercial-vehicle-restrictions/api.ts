@@ -2,12 +2,17 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
 // API Help: https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   CommercialVehicleRestrictionsResponse,
   CommercialVehicleRestrictionsWithIdResponse,
 } from "./types";
+
+// Module-scoped fetch function for commercial vehicle restrictions API
+const fetchCommercialVehicleRestrictions = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/CVRestrictions/CVRestrictionsREST.svc"
+);
 
 /**
  * Get commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
@@ -18,12 +23,10 @@ import type {
  * @returns Promise resolving to array of commercial vehicle restriction data
  */
 export const getCommercialVehicleRestrictions =
-  async (): Promise<CommercialVehicleRestrictionsResponse> => {
-    return fetchWsdot<CommercialVehicleRestrictionsResponse>(
-      "commercialVehicleRestrictions",
+  (): Promise<CommercialVehicleRestrictionsResponse> =>
+    fetchCommercialVehicleRestrictions<CommercialVehicleRestrictionsResponse>(
       "/GetCommercialVehicleRestrictionsAsJson"
     );
-  };
 
 /**
  * Get commercial vehicle restrictions with unique IDs from WSDOT Commercial Vehicle Restrictions API
@@ -35,9 +38,7 @@ export const getCommercialVehicleRestrictions =
  * @returns Promise resolving to array of commercial vehicle restriction data with unique IDs
  */
 export const getCommercialVehicleRestrictionsWithId =
-  async (): Promise<CommercialVehicleRestrictionsWithIdResponse> => {
-    return fetchWsdot<CommercialVehicleRestrictionsWithIdResponse>(
-      "commercialVehicleRestrictions",
+  (): Promise<CommercialVehicleRestrictionsWithIdResponse> =>
+    fetchCommercialVehicleRestrictions<CommercialVehicleRestrictionsWithIdResponse>(
       "/GetCommercialVehicleRestrictionsWithIdAsJson"
     );
-  };

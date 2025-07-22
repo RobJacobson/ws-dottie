@@ -23,52 +23,7 @@ export default defineConfig([
       };
     },
   },
-  // WSF fetch bundle - only includes WSF BASE_URLS
-  {
-    entry: ["src/shared/fetching/fetchWsf.ts"],
-    format: ["cjs", "esm"],
-    dts: true,
-    splitting: false,
-    sourcemap: true,
-    clean: false,
-    minify: true, // Enable minification to remove comments
-    external: [
-      "react",
-      "react-dom",
-      "@tanstack/react-query",
-      "@tanstack/query-core",
-    ],
-    outDir: "dist",
-    outExtension({ format }) {
-      return {
-        js: format === "cjs" ? ".js" : ".mjs",
-      };
-    },
-    name: "wsf-fetch",
-  },
-  // WSDOT fetch bundle - only includes WSDOT BASE_URLS
-  {
-    entry: ["src/shared/fetching/fetchWsdot.ts"],
-    format: ["cjs", "esm"],
-    dts: true,
-    splitting: false,
-    sourcemap: true,
-    clean: false,
-    minify: true, // Enable minification to remove comments
-    external: [
-      "react",
-      "react-dom",
-      "@tanstack/react-query",
-      "@tanstack/query-core",
-    ],
-    outDir: "dist",
-    outExtension({ format }) {
-      return {
-        js: format === "cjs" ? ".js" : ".mjs",
-      };
-    },
-    name: "wsdot-fetch",
-  },
+
   // Main bundles - full library access
   {
     entry: ["src/index.ts", "src/react.ts"],

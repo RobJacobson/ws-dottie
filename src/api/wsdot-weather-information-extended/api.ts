@@ -2,12 +2,17 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_traveler_a_p_i_1_1_controller_1_1_scanweb_controller.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/api/Scanweb
 
-import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   WeatherInformationExtendedResponse,
   WeatherReading,
 } from "./types";
+
+// Module-scoped fetch function for weather information extended API
+const fetchWeatherInformationExtended = createFetchFunction(
+  "https://wsdot.wa.gov/traffic/api/api/Scanweb"
+);
 
 /**
  * Retrieves extended weather information from WSDOT API
@@ -23,9 +28,5 @@ import type {
  * ```
  */
 export const getWeatherInformationExtended =
-  async (): Promise<WeatherInformationExtendedResponse> => {
-    return await fetchWsdot<WeatherInformationExtendedResponse>(
-      "weatherInformationExtended",
-      ""
-    );
-  };
+  (): Promise<WeatherInformationExtendedResponse> =>
+    fetchWeatherInformationExtended<WeatherInformationExtendedResponse>("");

@@ -2,9 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type { WeatherInfo, WeatherInformationResponse } from "./types";
+
+// Module-scoped fetch function for weather information API
+const fetchWeatherInformation = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
+);
 
 /**
  * Retrieves all weather information from WSDOT API
@@ -18,13 +23,10 @@ import type { WeatherInfo, WeatherInformationResponse } from "./types";
  * console.log(weatherInfo[0].TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformation =
-  async (): Promise<WeatherInformationResponse> => {
-    return await fetchWsdot<WeatherInformationResponse>(
-      "weatherInformation",
-      "/GetCurrentWeatherInformationAsJson"
-    );
-  };
+export const getWeatherInformation = (): Promise<WeatherInformationResponse> =>
+  fetchWeatherInformation<WeatherInformationResponse>(
+    "/GetCurrentWeatherInformationAsJson"
+  );
 
 /**
  * Retrieves weather information for a specific station by ID from WSDOT API
@@ -39,14 +41,12 @@ export const getWeatherInformation =
  * console.log(weatherInfo.TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformationByStationId = async (
+export const getWeatherInformationByStationId = (
   stationId: number
-): Promise<WeatherInfo> => {
-  return await fetchWsdot<WeatherInfo>(
-    "weatherInformation",
+): Promise<WeatherInfo> =>
+  fetchWeatherInformation<WeatherInfo>(
     `/GetCurrentWeatherInformationByStationIDAsJson?StationID=${stationId}`
   );
-};
 
 /**
  * Retrieves weather information for multiple stations from WSDOT API
@@ -61,11 +61,9 @@ export const getWeatherInformationByStationId = async (
  * console.log(weatherInfo.length); // 3
  * ```
  */
-export const getWeatherInformationForStations = async (
+export const getWeatherInformationForStations = (
   stationIds: string
-): Promise<WeatherInformationResponse> => {
-  return await fetchWsdot<WeatherInformationResponse>(
-    "weatherInformation",
+): Promise<WeatherInformationResponse> =>
+  fetchWeatherInformation<WeatherInformationResponse>(
     `/GetCurrentWeatherForStationsAsJson?StationList=${stationIds}`
   );
-};

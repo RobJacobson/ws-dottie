@@ -2,9 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type { BorderCrossingsResponse } from "./types";
+
+// Module-scoped fetch function for border crossings API
+const fetchBorderCrossings = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
+);
 
 /**
  * Get border crossing wait times from WSDOT Border Crossings API
@@ -14,10 +19,5 @@ import type { BorderCrossingsResponse } from "./types";
  *
  * @returns Promise resolving to array of border crossing data
  */
-export const getBorderCrossings =
-  async (): Promise<BorderCrossingsResponse> => {
-    return fetchWsdot<BorderCrossingsResponse>(
-      "borderCrossings",
-      "/GetBorderCrossingsAsJson"
-    );
-  };
+export const getBorderCrossings = async (): Promise<BorderCrossingsResponse> =>
+  fetchBorderCrossings<BorderCrossingsResponse>("/GetBorderCrossingsAsJson");

@@ -2,12 +2,17 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetchWsdot";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   MountainPassCondition,
   MountainPassConditionsResponse,
 } from "./types";
+
+// Module-scoped fetch function for mountain pass conditions API
+const fetchMountainPassConditions = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
+);
 
 /**
  * Retrieves all mountain pass conditions from WSDOT API
@@ -22,12 +27,10 @@ import type {
  * ```
  */
 export const getMountainPassConditions =
-  async (): Promise<MountainPassConditionsResponse> => {
-    return await fetchWsdot<MountainPassConditionsResponse>(
-      "mountainPassConditions",
+  (): Promise<MountainPassConditionsResponse> =>
+    fetchMountainPassConditions<MountainPassConditionsResponse>(
       "/GetMountainPassConditionsAsJson"
     );
-  };
 
 /**
  * Retrieves a specific mountain pass condition by ID
@@ -43,11 +46,9 @@ export const getMountainPassConditions =
  * console.log(condition.MountainPassName); // "Blewett Pass US 97"
  * ```
  */
-export const getMountainPassConditionById = async (
+export const getMountainPassConditionById = (
   passConditionId: number
-): Promise<MountainPassCondition> => {
-  return await fetchWsdot<MountainPassCondition>(
-    "mountainPassConditions",
+): Promise<MountainPassCondition> =>
+  fetchMountainPassConditions<MountainPassCondition>(
     `/GetMountainPassConditionAsJson?PassConditionID=${passConditionId}`
   );
-};
