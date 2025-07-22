@@ -7,9 +7,6 @@ import { describe, expect, it } from "vitest";
 import { getWeatherStations } from "@/api/wsdot-weather-stations";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
-import { validateApiError } from "../utils";
-import { logUnexpectedError } from "../../utils";
-
 describe("WSDOT Weather Stations API - Data Retrieval", () => {
   describe("getWeatherStations", () => {
     it("should retrieve weather stations with valid data structure", async () => {

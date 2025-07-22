@@ -1,9 +1,6 @@
 import { expect } from "vitest";
 
-import type {
-  BorderCrossingData,
-  BorderCrossingLocation,
-} from "@/api/wsdot-border-crossings/types";
+import type { BorderCrossingData } from "@/api/wsdot-border-crossings/types";
 import type { BridgeDataGIS } from "@/api/wsdot-bridge-clearances/types";
 import type {
   CommercialVehicleRestriction,
@@ -50,7 +47,6 @@ import type {
   TerminalLocation,
   TerminalSailingSpace,
   TerminalVerbose,
-  TerminalWaitTime,
   TerminalWaitTimes,
 } from "@/api/wsf-terminals/types";
 // Import proper types for validation functions

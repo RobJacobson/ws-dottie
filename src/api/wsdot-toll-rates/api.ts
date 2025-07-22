@@ -5,9 +5,7 @@
 import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
-  TollRate,
   TollRatesResponse,
-  TollTripInfo,
   TollTripInfoResponse,
   TollTripRatesResponse,
 } from "./types";

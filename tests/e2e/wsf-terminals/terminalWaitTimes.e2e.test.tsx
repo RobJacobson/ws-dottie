@@ -13,11 +13,9 @@ import {
 
 import {
   delay,
-  INVALID_ROUTE_ID,
   INVALID_TERMINAL_ID,
   measureApiCall,
   RATE_LIMIT_DELAY,
-  TEST_ROUTE_ID,
   TEST_TERMINAL_ID,
   trackPerformance,
   validateApiError,

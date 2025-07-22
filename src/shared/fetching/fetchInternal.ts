@@ -3,7 +3,7 @@
 import log from "@/lib/logger";
 
 import type { LoggingMode } from "./config";
-import { createApiError, type WsdotApiError } from "./errors";
+import { createApiError } from "./errors";
 import { type JsonValue, parseWsdotJson } from "./parseJson";
 
 // Constants for JSONP request configuration

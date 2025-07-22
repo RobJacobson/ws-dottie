@@ -8,7 +8,6 @@ import { getTrafficFlowById, getTrafficFlows } from "@/api/wsdot-traffic-flow";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
-import { logUnexpectedError } from "../../utils";
 
 // Test data constants based on cURL validation
 const TEST_FLOW_ID = 2482; // Real flow ID from cURL testing

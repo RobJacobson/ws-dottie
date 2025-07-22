@@ -4,8 +4,6 @@ import {
   getFareLineItems,
   getFareLineItemsBasic,
   getFareLineItemsVerbose,
-  getFaresTerminalMates,
-  getFaresTerminals,
   getFaresValidDateRange,
   getFareTotals,
 } from "@/api/wsf-fares";
@@ -17,12 +15,10 @@ import {
   RATE_LIMIT_DELAY,
   trackPerformance,
   VALID_TERMINAL_PAIR_1,
-  VALID_TERMINAL_PAIR_2,
   validateApiError,
   validateFareLineItem,
   validateFareLineItemBasic,
   validateFareLineItemsVerboseResponse,
-  validateFareLineItemVerbose,
   validateFareTotal,
 } from "../utils";
 

@@ -12,7 +12,6 @@ import {
   RATE_LIMIT_DELAY,
   trackPerformance,
   validateActiveSeason,
-  validateApiError,
   validateScheduleCacheFlushDate,
   validateValidDateRange,
 } from "../utils";

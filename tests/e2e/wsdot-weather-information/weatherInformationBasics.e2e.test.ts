@@ -12,7 +12,6 @@ import {
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
-import { logUnexpectedError } from "../../utils";
 
 // Test data constants based on cURL validation
 const TEST_STATION_ID = 1909; // Real station ID from cURL testing

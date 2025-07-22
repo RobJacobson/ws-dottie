@@ -7,7 +7,6 @@ import {
   measureApiCall,
   RATE_LIMIT_DELAY,
   trackPerformance,
-  validateApiError,
   validateCacheFlushDate,
 } from "../utils";
 

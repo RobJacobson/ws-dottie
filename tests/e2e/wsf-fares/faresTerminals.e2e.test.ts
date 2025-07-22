@@ -15,7 +15,6 @@ import {
   RATE_LIMIT_DELAY,
   trackPerformance,
   VALID_TERMINAL_PAIR_1,
-  VALID_TERMINAL_PAIR_2,
   validateApiError,
   validateFaresTerminal,
   validateFaresTerminalCombo,

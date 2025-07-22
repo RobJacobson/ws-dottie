@@ -15,7 +15,6 @@ import {
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
-import { logUnexpectedError } from "../../utils";
 
 describe("WSDOT Highway Alerts API - Basic Functionality", () => {
   describe("API Functions", () => {

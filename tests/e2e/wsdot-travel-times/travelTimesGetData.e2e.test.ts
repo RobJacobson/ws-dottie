@@ -8,7 +8,6 @@ import { getTravelTimeById, getTravelTimes } from "@/api/wsdot-travel-times";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
-import { logUnexpectedError } from "../../utils";
 
 // Test data constants based on cURL validation
 const TEST_TRAVEL_TIME_ID = 2; // Real travel time ID from cURL testing

@@ -11,7 +11,6 @@ import {
 } from "@/api/wsdot-highway-alerts";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
-import { logUnexpectedError } from "../../utils";
 import { validateApiError } from "../utils";
 
 // Test data constants based on cURL validation

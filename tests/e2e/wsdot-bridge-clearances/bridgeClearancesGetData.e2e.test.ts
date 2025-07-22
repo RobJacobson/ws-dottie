@@ -7,7 +7,6 @@ import {
   measureApiCall,
   RATE_LIMIT_DELAY,
   trackPerformance,
-  validateApiError,
 } from "../utils";
 
 describe("Bridge Clearances Get Data E2E Tests", () => {

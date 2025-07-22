@@ -40,14 +40,11 @@ import type {
   Route,
   RouteDetails,
   Sailing,
-  Schedule,
-  ScheduleCacheFlushDate,
   ScheduledRoute,
   ScheduleResponse,
   ScheduleTerminal,
   ScheduleTerminalCombo,
   TimeAdjustment,
-  ValidDateRange,
 } from "./types";
 
 // ============================================================================

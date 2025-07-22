@@ -4,10 +4,7 @@
 
 import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
-import type {
-  WeatherInformationExtendedResponse,
-  WeatherReading,
-} from "./types";
+import type { WeatherInformationExtendedResponse } from "./types";
 
 // Module-scoped fetch function for weather information extended API
 const fetchWeatherInformationExtended = createFetchFunction(
