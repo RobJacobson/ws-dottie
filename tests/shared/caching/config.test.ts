@@ -7,7 +7,7 @@ import {
   createInfrequentUpdateOptions,
   FREQUENT_UPDATE_CONFIG,
   INFREQUENT_UPDATE_CONFIG,
-} from "../config";
+} from "@/shared/caching/config";
 
 describe("WSF Caching Configuration", () => {
   describe("FREQUENT_UPDATE_CONFIG", () => {

@@ -133,6 +133,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest --config config/vitest.config.ts",
+    "test:unit": "vitest --config config/vitest.unit.config.ts",
     "test:e2e": "vitest --config config/vitest.e2e.config.ts",
     "test:e2e:api": "vitest --config config/vitest.e2e.api.config.ts",
     "test:e2e:hook": "vitest --config config/vitest.e2e.hook.config.ts",

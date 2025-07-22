@@ -14,15 +14,6 @@ type JSONPCallback = (data: unknown) => void;
 type JSONPWindow = Window & Record<string, JSONPCallback | undefined>;
 
 /**
- * Detect if we're in a Node.js environment
- */
-const isNodeEnvironment = () => {
-  return (
-    typeof process !== "undefined" && process.versions && process.versions.node
-  );
-};
-
-/**
  * Detect if we're in a web browser environment
  */
 const isWebEnvironment = () => {
