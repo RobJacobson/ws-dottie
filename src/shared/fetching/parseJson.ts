@@ -1,17 +1,12 @@
 /**
  * JSON parsing utilities for WSDOT and WSF APIs
  *
- * This module provides specialized JSON parsing that automatically transforms
- * API responses into JavaScript-friendly data structures. It handles:
- * - WSDOT date strings in "/Date(timestamp)/" format
- * - WSF Schedule date formats (MM/DD/YYYY and MM/DD/YYYY HH:MM:SS AM/PM)
- * - Preserves PascalCase property names from APIs
- *
- * Use parseWsdotJson() for automatic transformation or wsdotDateReviver
- * as a custom reviver with JSON.parse().
+ * Automatically transforms API responses into JavaScript-friendly data structures:
+ * - WSDOT date strings: "/Date(timestamp)/" format
+ * - WSF Schedule dates: "MM/DD/YYYY" and "MM/DD/YYYY HH:MM:SS AM/PM" formats
+ * - Filters out unreliable VesselWatch fields
+ * - Preserves PascalCase property names
  */
-
-/** biome-ignore-all lint/suspicious/noExplicitAny: <JSON parsing> */
 
 /**
  * Type representing JSON-like data that can be transformed
@@ -37,8 +32,10 @@ export type JsonWithDates =
   | JsonWithDates[]
   | { [key: string]: JsonWithDates };
 
-// Regex patterns for WSF Schedule date formats
+// Regex pattern for WSF Schedule date-only format (MM/DD/YYYY)
 const MM_DD_YYYY_REGEX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+
+// Regex pattern for WSF Schedule datetime format (MM/DD/YYYY HH:MM:SS AM/PM)
 const MM_DD_YYYY_DATETIME_REGEX =
   /^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2}):(\d{2})\s+(AM|PM)$/i;
 
@@ -52,112 +49,9 @@ const VESSEL_WATCH_FIELDS = new Set([
 ]);
 
 /**
- * Parse MM/DD/YYYY date format to JavaScript Date or null
- *
- * Handles WSF Schedule date-only fields like FromDate and ThruDate
- *
- * @param dateString - Date string in MM/DD/YYYY format (e.g., "12/25/2024")
- * @returns JavaScript Date object or null if invalid
- *
- * @example
- * ```typescript
- * parseMmDdYyyyDate("12/25/2024") // Returns Date object for Dec 25, 2024
- * parseMmDdYyyyDate("02/30/2024") // Returns null (invalid date)
- * parseMmDdYyyyDate("") // Returns null
- * ```
- */
-const parseMmDdYyyyDate = (dateString: string): Date | null => {
-  if (dateString === "") {
-    return null;
-  }
-
-  const match = dateString.match(MM_DD_YYYY_REGEX);
-  if (!match) {
-    return null;
-  }
-
-  const [, month, day, year] = match.map(Number);
-
-  // Validate date components
-  if (month < 1 || month > 12 || day < 1 || day > 31 || year < 1900) {
-    return null;
-  }
-
-  try {
-    const date = new Date(year, month - 1, day);
-    // Check if the date is valid (handles edge cases like Feb 30)
-    if (
-      date.getFullYear() !== year ||
-      date.getMonth() !== month - 1 ||
-      date.getDate() !== day
-    ) {
-      return null;
-    }
-    return date;
-  } catch {
-    return null;
-  }
-};
-
-/**
- * Parse MM/DD/YYYY HH:MM:SS AM/PM datetime format to JavaScript Date or null
- *
- * Handles WSF Schedule datetime fields like ModifiedDate
- *
- * @param dateTimeString - DateTime string in MM/DD/YYYY HH:MM:SS AM/PM format
- * @returns JavaScript Date object or null if invalid
- *
- * @example
- * ```typescript
- * parseMmDdYyyyDateTime("12/25/2024 02:30:45 PM") // Returns Date object
- * parseMmDdYyyyDateTime("12/25/2024 12:00:00 AM") // Returns Date object
- * parseMmDdYyyyDateTime("invalid") // Returns null
- * ```
- */
-const parseMmDdYyyyDateTime = (dateTimeString: string): Date | null => {
-  if (dateTimeString === "") {
-    return null;
-  }
-
-  const match = dateTimeString.match(MM_DD_YYYY_DATETIME_REGEX);
-  if (!match) {
-    return null;
-  }
-
-  // Extract all parts from regex capture groups
-  const [, month, day, year, hours, minutes, seconds, ampm] = match.map(Number);
-  const ampmStr = match[7]; // AM/PM is not a number
-
-  const adjustedHours = convert12To24Hour(hours, ampmStr.toUpperCase());
-  try {
-    return new Date(year, month - 1, day, adjustedHours, minutes, seconds, 0);
-  } catch {
-    return null;
-  }
-};
-
-/**
- * Convert 12-hour format to 24-hour format
- *
- * @param h - Hour in 12-hour format (1-12)
- * @param ampm - "AM" or "PM"
- * @returns Hour in 24-hour format (0-23)
- *
- * @example
- * ```typescript
- * convert12To24Hour(2, "PM") // Returns 14
- * convert12To24Hour(12, "AM") // Returns 0
- * convert12To24Hour(12, "PM") // Returns 12
- * ```
- */
-const convert12To24Hour = (h: number, ampm: string) =>
-  ampm === "PM" && h !== 12 ? h + 12 : ampm === "AM" && h === 12 ? 0 : h;
-
-/**
  * JSON reviver function that transforms WSDOT and WSF API data
  *
- * This function can be used as the second parameter to JSON.parse() to automatically
- * transform date strings during JSON parsing. It handles:
+ * Handles:
  * - WSF Schedule date formats (FromDate, ThruDate, ModifiedDate)
  * - WSDOT date strings in "/Date(timestamp)/" format
  * - Filters out unreliable VesselWatch fields from VesselLocation objects
@@ -188,31 +82,129 @@ export const wsdotDateReviver = (
 ): JsonWithDates | undefined => {
   // Filter out unreliable VesselWatch fields from VesselLocation objects
   if (VESSEL_WATCH_FIELDS.has(key)) {
-    return undefined; // Remove these fields from the result
+    return undefined;
   }
 
-  // Handle WSF Schedule alternative formats date-only fields (FromDate, ThruDate)
-  if (typeof value === "string" && (key === "FromDate" || key === "ThruDate")) {
-    return parseMmDdYyyyDate(value);
+  // Early return for non-string values
+  if (typeof value !== "string") {
+    return value;
   }
 
-  // Handle WSF Schedule alternative formats datetime field (ModifiedDate)
-  if (typeof value === "string" && key === "ModifiedDate") {
-    return parseMmDdYyyyDateTime(value);
+  // Handle WSF Schedule field-specific date parsing
+  const wsfParser = WSF_DATE_PARSERS.get(key);
+  if (wsfParser) {
+    return wsfParser(value);
   }
 
-  // Handle WSDOT date strings - try to parse, returns original value if not a date
-  if (
-    typeof value === "string" &&
-    value.startsWith("/Date(") &&
-    value.endsWith(")/")
-  ) {
+  // Handle WSDOT date strings
+  if (isWsdotDateString(value)) {
     return wsdotDateTimestampToJsDate(value);
   }
 
-  // Return all other values as-is (objects, arrays, primitives)
   return value;
 };
+
+/**
+ * Parse MM/DD/YYYY date format to JavaScript Date or null
+ *
+ * Handles WSF Schedule date-only fields like FromDate and ThruDate
+ *
+ * @param dateString - Date string in MM/DD/YYYY format (e.g., "12/25/2024")
+ * @returns JavaScript Date object or null if invalid
+ *
+ * @example
+ * ```typescript
+ * parseMmDdYyyyDate("12/25/2024") // Returns Date object for Dec 25, 2024
+ * parseMmDdYyyyDate("02/30/2024") // Returns null (invalid date)
+ * parseMmDdYyyyDate("") // Returns null
+ * ```
+ */
+const parseMmDdYyyyDate = (dateString: string): Date | null => {
+  if (!dateString) return null;
+
+  const match = dateString.match(MM_DD_YYYY_REGEX);
+  if (!match) return null;
+
+  const [, month, day, year] = match.map(Number);
+
+  // Validate date components
+  if (month < 1 || month > 12 || day < 1 || day > 31 || year < 1900) {
+    return null;
+  }
+
+  const date = new Date(year, month - 1, day);
+
+  // Validate the created date matches the input (handles edge cases like Feb 30)
+  return date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+    ? date
+    : null;
+};
+
+/**
+ * Parse MM/DD/YYYY HH:MM:SS AM/PM datetime format to JavaScript Date or null
+ *
+ * Handles WSF Schedule datetime fields like ModifiedDate
+ *
+ * @param dateTimeString - DateTime string in MM/DD/YYYY HH:MM:SS AM/PM format
+ * @returns JavaScript Date object or null if invalid
+ *
+ * @example
+ * ```typescript
+ * parseMmDdYyyyDateTime("12/25/2024 02:30:45 PM") // Returns Date object
+ * parseMmDdYyyyDateTime("12/25/2024 12:00:00 AM") // Returns Date object
+ * parseMmDdYyyyDateTime("invalid") // Returns null
+ * ```
+ */
+const parseMmDdYyyyDateTime = (dateTimeString: string): Date | null => {
+  if (!dateTimeString) return null;
+
+  const match = dateTimeString.match(MM_DD_YYYY_DATETIME_REGEX);
+  if (!match) return null;
+
+  const [, month, day, year, hours, minutes, seconds] = match.map(Number);
+  const ampm = match[7].toUpperCase();
+
+  const adjustedHours = convert12To24Hour(hours, ampm);
+  const date = new Date(
+    year,
+    month - 1,
+    day,
+    adjustedHours,
+    minutes,
+    seconds,
+    0
+  );
+
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+/**
+ * Convert 12-hour format to 24-hour format
+ *
+ * @param h - Hour in 12-hour format (1-12)
+ * @param ampm - "AM" or "PM"
+ * @returns Hour in 24-hour format (0-23)
+ */
+const convert12To24Hour = (hour: number, ampm: string): number => {
+  if (ampm === "PM") return hour === 12 ? 12 : hour + 12;
+  if (ampm === "AM") return hour === 12 ? 0 : hour;
+  return hour;
+};
+
+// Field-specific date parsers for WSF Schedule API
+const WSF_DATE_PARSERS = new Map<string, (value: string) => Date | null>([
+  ["FromDate", parseMmDdYyyyDate],
+  ["ThruDate", parseMmDdYyyyDate],
+  ["ModifiedDate", parseMmDdYyyyDateTime],
+]);
+
+/**
+ * Check if a string is a valid WSDOT date string
+ */
+const isWsdotDateString = (value: string): boolean =>
+  value.length >= 19 && value.startsWith("/Date(") && value.endsWith(")/");
 
 /**
  * Parse JSON string with automatic WSDOT and WSF date conversion
@@ -240,7 +232,7 @@ export const wsdotDateReviver = (
  * const data = parseWsdotJson<ApiResponse>(wsdotJson);
  * ```
  */
-export const parseWsdotJson = <T = any>(text: string): T => {
+export const parseWsdotJson = <T = JsonWithDates>(text: string): T => {
   return JSON.parse(text, wsdotDateReviver) as T;
 };
 
@@ -261,12 +253,13 @@ export const parseWsdotJson = <T = any>(text: string): T => {
  * ```
  */
 const wsdotDateTimestampToJsDate = (dateString: string): Date | null => {
-  const middle = dateString.slice(6, 19);
-  const timestamp = parseInt(middle);
+  const timestamp = parseInt(dateString.slice(6, 19), 10);
 
-  try {
-    return new Date(timestamp);
-  } catch {
+  // Validate timestamp is a valid positive number
+  if (Number.isNaN(timestamp) || timestamp < 0) {
     return null;
   }
+
+  const date = new Date(timestamp);
+  return Number.isNaN(date.getTime()) ? null : date;
 };
