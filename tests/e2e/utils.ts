@@ -32,13 +32,10 @@ import type {
   RouteDetails,
   Sailing,
   Schedule,
-  ScheduleDeparture,
   ScheduledRoute,
   ScheduleResponse,
-  ScheduleResponseTerminalCombo,
   ScheduleTerminal,
   ScheduleTerminalCombo,
-  ScheduleTime,
   TimeAdjustment,
   ValidDateRange,
 } from "@/api/wsf-schedule/types";
@@ -709,73 +706,6 @@ export const validateScheduleResponse = (data: ScheduleResponse) => {
   expect(data.ScheduleEnd).toBeInstanceOf(Date);
   expect(Array.isArray(data.AllRoutes)).toBe(true);
   expect(Array.isArray(data.TerminalCombos)).toBe(true);
-};
-
-export const validateTerminalCombo = (data: ScheduleResponseTerminalCombo) => {
-  expect(data).toHaveProperty("DepartingTerminalID");
-  expect(data).toHaveProperty("DepartingTerminalName");
-  expect(data).toHaveProperty("ArrivingTerminalID");
-  expect(data).toHaveProperty("ArrivingTerminalName");
-  expect(data).toHaveProperty("SailingNotes");
-  expect(data).toHaveProperty("Annotations");
-  expect(data).toHaveProperty("AnnotationsIVR");
-  expect(data).toHaveProperty("Times");
-  expect(typeof data.DepartingTerminalID).toBe("number");
-  expect(typeof data.DepartingTerminalName).toBe("string");
-  expect(typeof data.ArrivingTerminalID).toBe("number");
-  expect(typeof data.ArrivingTerminalName).toBe("string");
-  expect(typeof data.SailingNotes).toBe("string");
-  expect(Array.isArray(data.Annotations)).toBe(true);
-  expect(Array.isArray(data.AnnotationsIVR)).toBe(true);
-  expect(Array.isArray(data.Times)).toBe(true);
-};
-
-export const validateScheduleTime = (data: ScheduleTime) => {
-  expect(data).toHaveProperty("DepartingTime");
-  expect(data).toHaveProperty("ArrivingTime");
-  expect(data).toHaveProperty("LoadingRule");
-  expect(data).toHaveProperty("VesselID");
-  expect(data).toHaveProperty("VesselName");
-  expect(data).toHaveProperty("VesselHandicapAccessible");
-  expect(data).toHaveProperty("VesselPositionNum");
-  expect(data).toHaveProperty("Routes");
-  expect(data).toHaveProperty("AnnotationIndexes");
-  expect(data.DepartingTime).toBeInstanceOf(Date);
-  expect(data.ArrivingTime).toBeInstanceOf(Date);
-  expect(typeof data.LoadingRule).toBe("number");
-  expect(typeof data.VesselID).toBe("number");
-  expect(typeof data.VesselName).toBe("string");
-  expect(typeof data.VesselHandicapAccessible).toBe("boolean");
-  expect(typeof data.VesselPositionNum).toBe("number");
-  expect(Array.isArray(data.Routes)).toBe(true);
-  expect(Array.isArray(data.AnnotationIndexes)).toBe(true);
-};
-
-export const validateScheduleDeparture = (data: ScheduleDeparture) => {
-  expect(data).toHaveProperty("SailingID");
-  expect(data).toHaveProperty("SchedRouteID");
-  expect(data).toHaveProperty("DepartureTime");
-  expect(data).toHaveProperty("ArrivalTime");
-  expect(data).toHaveProperty("VesselID");
-  expect(data).toHaveProperty("VesselName");
-  expect(data).toHaveProperty("DepartingTerminalID");
-  expect(data).toHaveProperty("DepartingTerminalName");
-  expect(data).toHaveProperty("ArrivingTerminalID");
-  expect(data).toHaveProperty("ArrivingTerminalName");
-  expect(data).toHaveProperty("IsCancelled");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.SailingID).toBe("number");
-  expect(typeof data.SchedRouteID).toBe("number");
-  expect(data.DepartureTime).toBeInstanceOf(Date);
-  expect(data.ArrivalTime).toBeInstanceOf(Date);
-  expect(typeof data.VesselID).toBe("number");
-  expect(typeof data.VesselName).toBe("string");
-  expect(typeof data.DepartingTerminalID).toBe("number");
-  expect(typeof data.DepartingTerminalName).toBe("string");
-  expect(typeof data.ArrivingTerminalID).toBe("number");
-  expect(typeof data.ArrivingTerminalName).toBe("string");
-  expect(typeof data.IsCancelled).toBe("boolean");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
 };
 
 export const validateTimeAdjustment = (data: TimeAdjustment) => {
