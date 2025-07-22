@@ -305,7 +305,9 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
         expect(typeof adjustment.TerminalID).toBe("number");
         expect(adjustment.AdjDateFrom).toBeInstanceOf(Date);
         expect(adjustment.AdjDateThru).toBeInstanceOf(Date);
-        expect(adjustment.TimeToAdj).toBeInstanceOf(Date);
+        expect(
+          adjustment.TimeToAdj === null || adjustment.TimeToAdj instanceof Date
+        ).toBe(true);
         expect(Array.isArray(adjustment.Annotations)).toBe(true);
       }
 

@@ -228,7 +228,11 @@ type HistoricalTollRates = TollRate[];
 
 ## JSONP Support
 
-This API does not support JSONP. All endpoints return JSON data directly.
+This API supports JSONP responses. Add a `callback` parameter to receive JSONP format:
+
+```bash
+curl "https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJsonp?AccessCode=$WSDOT_ACCESS_CODE&callback=myCallback"
+```
 
 ## Troubleshooting
 

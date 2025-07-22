@@ -1,1 +1,1 @@
-export * from "../../api/wsf-vessels/hook"; 
+export * from "../../api/wsf-vessels/hook";

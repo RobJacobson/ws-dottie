@@ -35,10 +35,7 @@ export type ActiveSeason = {
  * Based on /schedroutes endpoint - ServiceDisruptions array
  * Currently appears to be empty arrays in API responses
  */
-export type ServiceDisruption = {
-  // Structure unknown - currently empty arrays in API responses
-  // Placeholder for future implementation when non-empty examples are available
-};
+export type ServiceDisruption = Record<string, unknown>;
 
 /**
  * Contingency adjustment information
@@ -231,7 +228,7 @@ export type TimeAdjustment = {
   AdjDateThru: Date; // Automatically converted from .NET Date format
   AdjType: number;
   TidalAdj: boolean;
-  TimeToAdj: Date; // Automatically converted from .NET Date format (time adjustment)
+  TimeToAdj: Date | null; // Automatically converted from .NET Date format (time adjustment) or null if invalid
   Annotations: Annotation[];
   EventID: number | null;
   EventDescription: string | null;

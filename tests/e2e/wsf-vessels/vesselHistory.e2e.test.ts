@@ -4,6 +4,7 @@ import {
   getVesselHistory,
   getVesselHistoryByVesselAndDateRange,
 } from "@/api/wsf-vessels";
+import type { VesselHistory } from "@/api/wsf-vessels/types";
 
 import {
   delay,
@@ -32,24 +33,23 @@ describe("Vessel History E2E Tests", () => {
       validateVesselHistory(firstHistory);
 
       // Validate data types
-      expect(typeof (firstHistory as any).VesselId).toBe("number");
-      expect(typeof (firstHistory as any).Vessel).toBe("string");
+      expect(typeof firstHistory.VesselId).toBe("number");
+      expect(typeof firstHistory.Vessel).toBe("string");
       // Date fields may be null
       expect(
-        (firstHistory as any).Date === null ||
-          (firstHistory as any).Date instanceof Date
+        firstHistory.Date === null || firstHistory.Date instanceof Date
       ).toBe(true);
       expect(
-        (firstHistory as any).ScheduledDepart === null ||
-          (firstHistory as any).ScheduledDepart instanceof Date
+        firstHistory.ScheduledDepart === null ||
+          firstHistory.ScheduledDepart instanceof Date
       ).toBe(true);
       expect(
-        (firstHistory as any).ActualDepart === null ||
-          (firstHistory as any).ActualDepart instanceof Date
+        firstHistory.ActualDepart === null ||
+          firstHistory.ActualDepart instanceof Date
       ).toBe(true);
       expect(
-        (firstHistory as any).EstArrival === null ||
-          (firstHistory as any).EstArrival instanceof Date
+        firstHistory.EstArrival === null ||
+          firstHistory.EstArrival instanceof Date
       ).toBe(true);
 
       // Rate limiting
@@ -114,7 +114,7 @@ describe("Vessel History E2E Tests", () => {
       if (data.length > 0) {
         const firstHistory = data[0];
         validateVesselHistory(firstHistory);
-        expect((firstHistory as any).Vessel).toBe(vesselName);
+        expect(firstHistory.Vessel).toBe(vesselName);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -261,26 +261,26 @@ describe("Vessel History E2E Tests", () => {
     it("should have valid history data", async () => {
       const { data } = await measureApiCall(() => getVesselHistory());
 
-      data.forEach((history) => {
+      data.forEach((history: VesselHistory) => {
         // Vessel ID should be positive
-        expect((history as any).VesselId).toBeGreaterThan(0);
+        expect(history.VesselId).toBeGreaterThan(0);
 
         // Vessel name should be non-empty string
-        expect((history as any).Vessel).toBeTruthy();
-        expect(typeof (history as any).Vessel).toBe("string");
+        expect(history.Vessel).toBeTruthy();
+        expect(typeof history.Vessel).toBe("string");
 
         // Date fields may be null or valid dates
-        if ((history as any).Date !== null) {
-          expect((history as any).Date).toBeInstanceOf(Date);
+        if (history.Date !== null) {
+          expect(history.Date).toBeInstanceOf(Date);
         }
-        if ((history as any).ScheduledDepart !== null) {
-          expect((history as any).ScheduledDepart).toBeInstanceOf(Date);
+        if (history.ScheduledDepart !== null) {
+          expect(history.ScheduledDepart).toBeInstanceOf(Date);
         }
-        if ((history as any).ActualDepart !== null) {
-          expect((history as any).ActualDepart).toBeInstanceOf(Date);
+        if (history.ActualDepart !== null) {
+          expect(history.ActualDepart).toBeInstanceOf(Date);
         }
-        if ((history as any).EstArrival !== null) {
-          expect((history as any).EstArrival).toBeInstanceOf(Date);
+        if (history.EstArrival !== null) {
+          expect(history.EstArrival).toBeInstanceOf(Date);
         }
       });
 
@@ -293,15 +293,11 @@ describe("Vessel History E2E Tests", () => {
       const now = new Date();
       const minDate = new Date("1900-01-01"); // Reasonable minimum date
 
-      data.forEach((history) => {
+      data.forEach((history: VesselHistory) => {
         // History date should be in reasonable range if not null
-        if ((history as any).Date !== null) {
-          expect((history as any).Date.getTime()).toBeGreaterThan(
-            minDate.getTime()
-          );
-          expect((history as any).Date.getTime()).toBeLessThanOrEqual(
-            now.getTime()
-          );
+        if (history.Date !== null) {
+          expect(history.Date.getTime()).toBeGreaterThan(minDate.getTime());
+          expect(history.Date.getTime()).toBeLessThanOrEqual(now.getTime());
         }
       });
 

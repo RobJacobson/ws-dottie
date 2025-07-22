@@ -5,13 +5,7 @@ import {
   getCommercialVehicleRestrictionsWithId,
 } from "@/api/wsdot-commercial-vehicle-restrictions";
 
-import {
-  delay,
-  measureApiCall,
-  RATE_LIMIT_DELAY,
-  trackPerformance,
-  validateApiError,
-} from "../utils";
+import { measureApiCall, trackPerformance } from "../utils";
 
 describe("Commercial Vehicle Restrictions Get Data E2E Tests", () => {
   describe("Data Retrieval", () => {

@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
-import { toDateStamp } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 
 import {
   getActiveSeasons,
@@ -40,14 +40,11 @@ import type {
   Route,
   RouteDetails,
   Sailing,
-  Schedule,
-  ScheduleCacheFlushDate,
   ScheduledRoute,
   ScheduleResponse,
   ScheduleTerminal,
   ScheduleTerminalCombo,
   TimeAdjustment,
-  ValidDateRange,
 } from "./types";
 
 // ============================================================================
@@ -110,7 +107,7 @@ export const useTerminals = (
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "terminals", toDateStamp(tripDate)],
+    queryKey: ["schedule", "terminals", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminals(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -133,7 +130,7 @@ export const useTerminalsAndMates = (
   options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "terminalsAndMates", toDateStamp(tripDate)],
+    queryKey: ["schedule", "terminalsAndMates", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminalsAndMates(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -161,7 +158,7 @@ export const useTerminalsAndMatesByRoute = (
     queryKey: [
       "schedule",
       "terminalsAndMatesByRoute",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       routeId,
     ],
     queryFn: () => getTerminalsAndMatesByRoute(tripDate, routeId),
@@ -188,7 +185,12 @@ export const useTerminalMates = (
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "terminalMates", toDateStamp(tripDate), terminalId],
+    queryKey: [
+      "schedule",
+      "terminalMates",
+      jsDateToYyyyMmDd(tripDate),
+      terminalId,
+    ],
     queryFn: () => getTerminalMates(tripDate, terminalId),
     enabled: !!tripDate && !!terminalId,
     ...createInfrequentUpdateOptions(),
@@ -215,7 +217,7 @@ export const useRoutes = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routes", toDateStamp(tripDate)],
+    queryKey: ["schedule", "routes", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRoutes(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -246,7 +248,7 @@ export const useRoutesByTerminals = (
     queryKey: [
       "schedule",
       "routesByTerminals",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalId,
       arrivingTerminalId,
     ],
@@ -273,7 +275,7 @@ export const useRoutesWithDisruptions = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routesWithDisruptions", toDateStamp(tripDate)],
+    queryKey: ["schedule", "routesWithDisruptions", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRoutesWithDisruptions(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -297,7 +299,7 @@ export const useRouteDetails = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routeDetails", toDateStamp(tripDate)],
+    queryKey: ["schedule", "routeDetails", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRouteDetails(tripDate),
     enabled: !!tripDate,
     ...createInfrequentUpdateOptions(),
@@ -328,7 +330,7 @@ export const useRouteDetailsByTerminals = (
     queryKey: [
       "schedule",
       "routeDetailsByTerminals",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalId,
       arrivingTerminalId,
     ],
@@ -364,7 +366,7 @@ export const useRouteDetailsByRoute = (
     queryKey: [
       "schedule",
       "routeDetailsByRoute",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       routeId,
     ],
     queryFn: () => getRouteDetailsByRoute(tripDate, routeId),
@@ -593,7 +595,12 @@ export const useScheduleByRoute = (
   options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "scheduleByRoute", toDateStamp(tripDate), routeId],
+    queryKey: [
+      "schedule",
+      "scheduleByRoute",
+      jsDateToYyyyMmDd(tripDate),
+      routeId,
+    ],
     queryFn: () => getScheduleByRoute(tripDate, routeId),
     enabled: !!tripDate && !!routeId,
     ...createInfrequentUpdateOptions(),
@@ -623,7 +630,7 @@ export const useScheduleByTerminals = (
     queryKey: [
       "schedule",
       "scheduleByTerminals",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalId,
       arrivingTerminalId,
     ],

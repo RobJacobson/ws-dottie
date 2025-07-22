@@ -47,8 +47,8 @@ export type WeatherReading = {
   PrecipitationAccumulation: number | null;
   BarometricPressure: number | null;
   SnowDepth: number | null;
-  SurfaceMeasurements: SurfaceMeasurement[];
-  SubSurfaceMeasurements: SubSurfaceMeasurement[];
+  SurfaceMeasurements: SurfaceMeasurement[] | null;
+  SubSurfaceMeasurements: SubSurfaceMeasurement[] | null;
 };
 
 /**

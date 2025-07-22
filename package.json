@@ -1,6 +1,7 @@
 {
   "name": "ws-dottie",
   "version": "1.0.0",
+  "type": "module",
   "description": "The complete TypeScript client for Washington State's real-time transportation data",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -16,6 +17,12 @@
       "import": "./dist/react.mjs",
       "require": "./dist/react.js"
     },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.js"
+    },
+
     "./wsf-fares": {
       "types": "./dist/api/wsf-fares/index.d.ts",
       "import": "./dist/api/wsf-fares/index.mjs",
@@ -35,6 +42,66 @@
       "types": "./dist/api/wsf-vessels/index.d.ts",
       "import": "./dist/api/wsf-vessels/index.mjs",
       "require": "./dist/api/wsf-vessels/index.js"
+    },
+    "./wsdot-border-crossings": {
+      "types": "./dist/api/wsdot-border-crossings/index.d.ts",
+      "import": "./dist/api/wsdot-border-crossings/index.mjs",
+      "require": "./dist/api/wsdot-border-crossings/index.js"
+    },
+    "./wsdot-bridge-clearances": {
+      "types": "./dist/api/wsdot-bridge-clearances/index.d.ts",
+      "import": "./dist/api/wsdot-bridge-clearances/index.mjs",
+      "require": "./dist/api/wsdot-bridge-clearances/index.js"
+    },
+    "./wsdot-commercial-vehicle-restrictions": {
+      "types": "./dist/api/wsdot-commercial-vehicle-restrictions/index.d.ts",
+      "import": "./dist/api/wsdot-commercial-vehicle-restrictions/index.mjs",
+      "require": "./dist/api/wsdot-commercial-vehicle-restrictions/index.js"
+    },
+    "./wsdot-highway-alerts": {
+      "types": "./dist/api/wsdot-highway-alerts/index.d.ts",
+      "import": "./dist/api/wsdot-highway-alerts/index.mjs",
+      "require": "./dist/api/wsdot-highway-alerts/index.js"
+    },
+    "./wsdot-highway-cameras": {
+      "types": "./dist/api/wsdot-highway-cameras/index.d.ts",
+      "import": "./dist/api/wsdot-highway-cameras/index.mjs",
+      "require": "./dist/api/wsdot-highway-cameras/index.js"
+    },
+    "./wsdot-mountain-pass-conditions": {
+      "types": "./dist/api/wsdot-mountain-pass-conditions/index.d.ts",
+      "import": "./dist/api/wsdot-mountain-pass-conditions/index.mjs",
+      "require": "./dist/api/wsdot-mountain-pass-conditions/index.js"
+    },
+    "./wsdot-toll-rates": {
+      "types": "./dist/api/wsdot-toll-rates/index.d.ts",
+      "import": "./dist/api/wsdot-toll-rates/index.mjs",
+      "require": "./dist/api/wsdot-toll-rates/index.js"
+    },
+    "./wsdot-traffic-flow": {
+      "types": "./dist/api/wsdot-traffic-flow/index.d.ts",
+      "import": "./dist/api/wsdot-traffic-flow/index.mjs",
+      "require": "./dist/api/wsdot-traffic-flow/index.js"
+    },
+    "./wsdot-travel-times": {
+      "types": "./dist/api/wsdot-travel-times/index.d.ts",
+      "import": "./dist/api/wsdot-travel-times/index.mjs",
+      "require": "./dist/api/wsdot-travel-times/index.js"
+    },
+    "./wsdot-weather-information": {
+      "types": "./dist/api/wsdot-weather-information/index.d.ts",
+      "import": "./dist/api/wsdot-weather-information/index.mjs",
+      "require": "./dist/api/wsdot-weather-information/index.js"
+    },
+    "./wsdot-weather-information-extended": {
+      "types": "./dist/api/wsdot-weather-information-extended/index.d.ts",
+      "import": "./dist/api/wsdot-weather-information-extended/index.mjs",
+      "require": "./dist/api/wsdot-weather-information-extended/index.js"
+    },
+    "./wsdot-weather-stations": {
+      "types": "./dist/api/wsdot-weather-stations/index.d.ts",
+      "import": "./dist/api/wsdot-weather-stations/index.mjs",
+      "require": "./dist/api/wsdot-weather-stations/index.js"
     },
     "./react/wsf-fares": {
       "types": "./dist/react/wsf-fares/index.d.ts",
@@ -66,6 +133,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest --config config/vitest.config.ts",
+    "test:unit": "vitest --config config/vitest.unit.config.ts",
     "test:e2e": "vitest --config config/vitest.e2e.config.ts",
     "test:e2e:api": "vitest --config config/vitest.e2e.api.config.ts",
     "test:e2e:hook": "vitest --config config/vitest.e2e.hook.config.ts",
@@ -78,8 +146,8 @@
     "test:e2e:vessels": "vitest --config config/vitest.e2e.config.ts tests/e2e/wsf-vessels/",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
-    "lint": "biome lint",
-    "format": "biome format --write",
+    "lint": "biome lint src/ tests/",
+    "format": "biome format --write src/ tests/",
     "type-check": "tsc --noEmit",
     "prepublishOnly": "npm run build && npm run test"
   },

@@ -18,6 +18,8 @@ This API endpoint is currently **not accessible** and may have been:
 - Temporarily unavailable
 - Integrated into other services
 
+**Note**: This API does not follow the standard `AsJson` → `AsJsonp` pattern and is not supported by the JSONP conversion logic.
+
 ## Alternative APIs
 
 For weather information, consider using these available WSDOT APIs:

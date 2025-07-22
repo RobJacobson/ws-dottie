@@ -2,12 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { getCommercialVehicleRestrictions } from "@/api/wsdot-commercial-vehicle-restrictions";
 
-import {
-  delay,
-  measureApiCall,
-  RATE_LIMIT_DELAY,
-  trackPerformance,
-} from "../utils";
+import { measureApiCall, trackPerformance } from "../utils";
 
 describe("Commercial Vehicle Restrictions Basics E2E Tests", () => {
   describe("getCommercialVehicleRestrictions", () => {

@@ -1,5 +1,60 @@
 import { expect } from "vitest";
 
+import type { BorderCrossingData } from "@/api/wsdot-border-crossings/types";
+import type { BridgeDataGIS } from "@/api/wsdot-bridge-clearances/types";
+import type {
+  CommercialVehicleRestriction,
+  RoadwayLocation,
+} from "@/api/wsdot-commercial-vehicle-restrictions/types";
+import type { HighwayAlert } from "@/api/wsdot-highway-alerts/types";
+import type { Camera } from "@/api/wsdot-highway-cameras/types";
+import type { MountainPassCondition } from "@/api/wsdot-mountain-pass-conditions/types";
+import type { TollRate } from "@/api/wsdot-toll-rates/types";
+import type { TrafficFlow } from "@/api/wsdot-traffic-flow/types";
+import type { TravelTimeRoute } from "@/api/wsdot-travel-times/types";
+import type { WeatherInfo } from "@/api/wsdot-weather-information/types";
+import type { WeatherStationData } from "@/api/wsdot-weather-stations/types";
+import type {
+  FareLineItem,
+  FareLineItemsVerboseResponse,
+  FareLineItemVerbose,
+  FaresTerminal,
+  FareTotal,
+  TerminalCombo,
+  TerminalComboVerbose,
+  TerminalMate,
+} from "@/api/wsf-fares/types";
+import type {
+  ActiveSeason,
+  Alert,
+  AlternativeFormat,
+  Route,
+  RouteDetails,
+  Sailing,
+  Schedule,
+  ScheduledRoute,
+  ScheduleResponse,
+  ScheduleTerminal,
+  ScheduleTerminalCombo,
+  TimeAdjustment,
+  ValidDateRange,
+} from "@/api/wsf-schedule/types";
+import type {
+  TerminalBasics,
+  TerminalLocation,
+  TerminalSailingSpace,
+  TerminalVerbose,
+  TerminalWaitTimes,
+} from "@/api/wsf-terminals/types";
+// Import proper types for validation functions
+import type {
+  VesselAccommodation,
+  VesselBasic,
+  VesselHistory,
+  VesselLocation,
+  VesselStats,
+  VesselVerbose,
+} from "@/api/wsf-vessels/types";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 // Rate limiting utility - be respectful to WSF API
@@ -29,7 +84,7 @@ export const trackPerformance = (endpoint: string, duration: number) => {
 };
 
 // Data validation utilities
-export const validateVesselLocation = (data: any) => {
+export const validateVesselLocation = (data: VesselLocation) => {
   expect(data).toHaveProperty("VesselID");
   expect(data).toHaveProperty("VesselName");
   expect(data).toHaveProperty("Mmsi");
@@ -55,12 +110,11 @@ export const validateVesselLocation = (data: any) => {
   expect(data).toHaveProperty("SortSeq");
   expect(data).toHaveProperty("ManagedBy");
   expect(data).toHaveProperty("TimeStamp");
-  expect(data).toHaveProperty("VesselWatchShutID");
-  expect(data).toHaveProperty("VesselWatchShutMsg");
-  expect(data).toHaveProperty("VesselWatchShutFlag");
+  // Note: VesselWatch fields (VesselWatchShutID, VesselWatchShutMsg, VesselWatchShutFlag,
+  // VesselWatchStatus, VesselWatchMsg) are automatically filtered out during JSON parsing
 };
 
-export const validateVesselVerbose = (data: any) => {
+export const validateVesselVerbose = (data: VesselVerbose) => {
   expect(data).toHaveProperty("VesselID");
   expect(data).toHaveProperty("VesselName");
   expect(data).toHaveProperty("RegDeckSpace");
@@ -68,7 +122,7 @@ export const validateVesselVerbose = (data: any) => {
   expect(data).toHaveProperty("YearBuilt");
 };
 
-export const validateVesselBasic = (data: any) => {
+export const validateVesselBasic = (data: VesselBasic) => {
   expect(data).toHaveProperty("VesselID");
   expect(data).toHaveProperty("VesselName");
   expect(data).toHaveProperty("VesselAbbrev");
@@ -81,7 +135,7 @@ export const validateVesselBasic = (data: any) => {
   expect(data).toHaveProperty("OwnedByWSF");
 };
 
-export const validateVesselAccommodation = (data: any) => {
+export const validateVesselAccommodation = (data: VesselAccommodation) => {
   expect(data).toHaveProperty("VesselID");
   expect(data).toHaveProperty("VesselSubjectID");
   expect(data).toHaveProperty("VesselName");
@@ -98,7 +152,7 @@ export const validateVesselAccommodation = (data: any) => {
   expect(data).toHaveProperty("AdditionalInfo");
 };
 
-export const validateVesselStats = (data: any) => {
+export const validateVesselStats = (data: VesselStats) => {
   expect(data).toHaveProperty("VesselID");
   expect(data).toHaveProperty("VesselSubjectID");
   expect(data).toHaveProperty("VesselName");
@@ -128,7 +182,7 @@ export const validateVesselStats = (data: any) => {
   expect(data).toHaveProperty("MaxPassengerCountForInternational");
 };
 
-export const validateVesselHistory = (data: any) => {
+export const validateVesselHistory = (data: VesselHistory) => {
   expect(data).toHaveProperty("VesselId");
   expect(data).toHaveProperty("Vessel");
   expect(data).toHaveProperty("Departing");
@@ -139,12 +193,12 @@ export const validateVesselHistory = (data: any) => {
   expect(data).toHaveProperty("Date");
 };
 
-export const validateCacheFlushDate = (data: any) => {
+export const validateCacheFlushDate = (data: Date) => {
   expect(data).toBeInstanceOf(Date);
   expect(data.getTime()).toBeGreaterThan(0);
 };
 
-export const validateTerminalBasics = (data: any) => {
+export const validateTerminalBasics = (data: TerminalBasics) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("TerminalName");
   expect(data).toHaveProperty("TerminalAbbrev");
@@ -156,7 +210,7 @@ export const validateTerminalBasics = (data: any) => {
   expect(data).toHaveProperty("Restroom");
 };
 
-export const validateTerminalSailingSpace = (data: any) => {
+export const validateTerminalSailingSpace = (data: TerminalSailingSpace) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("TerminalName");
   expect(data).toHaveProperty("TerminalAbbrev");
@@ -176,7 +230,7 @@ export const validateTerminalSailingSpace = (data: any) => {
   }
 };
 
-export const validateTerminalLocation = (data: any) => {
+export const validateTerminalLocation = (data: TerminalLocation) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("TerminalSubjectID");
   expect(data).toHaveProperty("RegionID");
@@ -200,7 +254,7 @@ export const validateTerminalLocation = (data: any) => {
   }
 };
 
-export const validateTerminalWaitTimes = (data: any) => {
+export const validateTerminalWaitTimes = (data: TerminalWaitTimes) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("TerminalSubjectID");
   expect(data).toHaveProperty("RegionID");
@@ -208,19 +262,28 @@ export const validateTerminalWaitTimes = (data: any) => {
   expect(data).toHaveProperty("TerminalAbbrev");
   expect(data).toHaveProperty("SortSeq");
   expect(data).toHaveProperty("WaitTimes");
+  expect(typeof data.TerminalID).toBe("number");
+  expect(typeof data.TerminalSubjectID).toBe("number");
+  expect(typeof data.RegionID).toBe("number");
+  expect(typeof data.TerminalName).toBe("string");
+  expect(typeof data.TerminalAbbrev).toBe("string");
+  expect(typeof data.SortSeq).toBe("number");
   expect(Array.isArray(data.WaitTimes)).toBe(true);
 
-  // Validate first wait time if it exists
-  if (data.WaitTimes.length > 0) {
-    const firstWaitTime = data.WaitTimes[0];
-    expect(firstWaitTime).toHaveProperty("RouteID");
-    expect(firstWaitTime).toHaveProperty("RouteName");
-    expect(firstWaitTime).toHaveProperty("WaitTimeLastUpdated");
-    expect(firstWaitTime.WaitTimeLastUpdated).toBeInstanceOf(Date);
-  }
+  // Validate each wait time entry
+  data.WaitTimes.forEach((waitTime) => {
+    expect(waitTime).toHaveProperty("RouteID");
+    expect(waitTime).toHaveProperty("RouteName");
+    expect(waitTime).toHaveProperty("WaitTimeIvrNotes");
+    expect(waitTime).toHaveProperty("WaitTimeLastUpdated");
+    expect(waitTime).toHaveProperty("WaitTimeNotes");
+    expect(typeof waitTime.RouteID).toBe("number");
+    expect(typeof waitTime.RouteName).toBe("string");
+    expect(waitTime.WaitTimeLastUpdated).toBeInstanceOf(Date);
+  });
 };
 
-export const validateTerminalVerbose = (data: any) => {
+export const validateTerminalVerbose = (data: TerminalVerbose) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("TerminalSubjectID");
   expect(data).toHaveProperty("RegionID");
@@ -267,12 +330,12 @@ export const validateTerminalVerbose = (data: any) => {
 };
 
 // Fares API validation functions
-export const validateFaresCacheFlushDate = (data: any) => {
+export const validateFaresCacheFlushDate = (data: Date) => {
   expect(data).toBeInstanceOf(Date);
   expect(data.getTime()).toBeGreaterThan(0);
 };
 
-export const validateFaresValidDateRange = (data: any) => {
+export const validateFaresValidDateRange = (data: ValidDateRange) => {
   expect(data).toHaveProperty("DateFrom");
   expect(data).toHaveProperty("DateThru");
   expect(data.DateFrom).toBeInstanceOf(Date);
@@ -280,7 +343,7 @@ export const validateFaresValidDateRange = (data: any) => {
   expect(data.DateFrom.getTime()).toBeLessThan(data.DateThru.getTime());
 };
 
-export const validateFaresTerminal = (data: any) => {
+export const validateFaresTerminal = (data: FaresTerminal) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("Description");
   expect(typeof data.TerminalID).toBe("number");
@@ -289,7 +352,7 @@ export const validateFaresTerminal = (data: any) => {
   expect(data.Description.length).toBeGreaterThan(0);
 };
 
-export const validateFaresTerminalMate = (data: any) => {
+export const validateFaresTerminalMate = (data: TerminalMate) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("Description");
   expect(typeof data.TerminalID).toBe("number");
@@ -298,7 +361,7 @@ export const validateFaresTerminalMate = (data: any) => {
   expect(data.Description.length).toBeGreaterThan(0);
 };
 
-export const validateFaresTerminalCombo = (data: any) => {
+export const validateFaresTerminalCombo = (data: TerminalCombo) => {
   expect(data).toHaveProperty("DepartingDescription");
   expect(data).toHaveProperty("ArrivingDescription");
   expect(data).toHaveProperty("CollectionDescription");
@@ -310,7 +373,9 @@ export const validateFaresTerminalCombo = (data: any) => {
   expect(data.CollectionDescription.length).toBeGreaterThan(0);
 };
 
-export const validateFaresTerminalComboVerbose = (data: any) => {
+export const validateFaresTerminalComboVerbose = (
+  data: TerminalComboVerbose
+) => {
   expect(data).toHaveProperty("DepartingTerminalID");
   expect(data).toHaveProperty("DepartingDescription");
   expect(data).toHaveProperty("ArrivingTerminalID");
@@ -328,7 +393,7 @@ export const validateFaresTerminalComboVerbose = (data: any) => {
   expect(data.CollectionDescription.length).toBeGreaterThan(0);
 };
 
-export const validateFareLineItemBasic = (data: any) => {
+export const validateFareLineItemBasic = (data: FareLineItem) => {
   expect(data).toHaveProperty("FareLineItemID");
   expect(data).toHaveProperty("FareLineItem");
   expect(data).toHaveProperty("Category");
@@ -345,7 +410,7 @@ export const validateFareLineItemBasic = (data: any) => {
   expect(data.Amount).toBeGreaterThanOrEqual(0);
 };
 
-export const validateFareLineItem = (data: any) => {
+export const validateFareLineItem = (data: FareLineItem) => {
   expect(data).toHaveProperty("FareLineItemID");
   expect(data).toHaveProperty("FareLineItem");
   expect(data).toHaveProperty("Category");
@@ -362,7 +427,7 @@ export const validateFareLineItem = (data: any) => {
   expect(data.Amount).toBeGreaterThanOrEqual(0);
 };
 
-export const validateFareLineItemVerbose = (data: any) => {
+export const validateFareLineItemVerbose = (data: FareLineItemVerbose) => {
   expect(data).toHaveProperty("DepartingTerminalID");
   expect(data).toHaveProperty("DepartingDescription");
   expect(data).toHaveProperty("ArrivingTerminalID");
@@ -385,7 +450,9 @@ export const validateFareLineItemVerbose = (data: any) => {
   expect(typeof data.RoundTrip).toBe("boolean");
 };
 
-export const validateFareLineItemsVerboseResponse = (data: any) => {
+export const validateFareLineItemsVerboseResponse = (
+  data: FareLineItemsVerboseResponse
+) => {
   expect(data).toHaveProperty("TerminalComboVerbose");
   expect(data).toHaveProperty("LineItemLookup");
   expect(data).toHaveProperty("LineItems");
@@ -425,7 +492,7 @@ export const validateFareLineItemsVerboseResponse = (data: any) => {
   }
 };
 
-export const validateFareTotal = (data: any) => {
+export const validateFareTotal = (data: FareTotal) => {
   expect(data).toHaveProperty("TotalType");
   expect(data).toHaveProperty("Description");
   expect(data).toHaveProperty("BriefDescription");
@@ -441,6 +508,7 @@ export const validateFareTotal = (data: any) => {
 };
 
 // Legacy fare validation (keeping for backward compatibility)
+// biome-ignore lint/suspicious/noExplicitAny: Legacy fare structure doesn't match current API types
 export const validateFare = (data: any) => {
   expect(data).toHaveProperty("FareID");
   expect(data).toHaveProperty("FareName");
@@ -449,7 +517,7 @@ export const validateFare = (data: any) => {
   expect(data.LastUpdated).toBeInstanceOf(Date);
 };
 
-export const validateRoute = (data: any) => {
+export const validateRoute = (data: Route) => {
   expect(data).toHaveProperty("RouteID");
   expect(data).toHaveProperty("RouteAbbrev");
   expect(data).toHaveProperty("Description");
@@ -460,7 +528,7 @@ export const validateRoute = (data: any) => {
   expect(typeof data.RegionID).toBe("number");
 };
 
-export const validateRouteDetails = (data: any) => {
+export const validateRouteDetails = (data: RouteDetails) => {
   expect(data).toHaveProperty("RouteID");
   expect(data).toHaveProperty("RouteAbbrev");
   expect(data).toHaveProperty("Description");
@@ -493,12 +561,12 @@ export const validateRouteDetails = (data: any) => {
 };
 
 // Schedule API validation functions
-export const validateScheduleCacheFlushDate = (data: any) => {
+export const validateScheduleCacheFlushDate = (data: Date) => {
   expect(data).toBeInstanceOf(Date);
   expect(data.getTime()).toBeGreaterThan(0);
 };
 
-export const validateValidDateRange = (data: any) => {
+export const validateValidDateRange = (data: ValidDateRange) => {
   expect(data).toHaveProperty("DateFrom");
   expect(data).toHaveProperty("DateThru");
   expect(data.DateFrom).toBeInstanceOf(Date);
@@ -506,7 +574,7 @@ export const validateValidDateRange = (data: any) => {
   expect(data.DateFrom.getTime()).toBeLessThan(data.DateThru.getTime());
 };
 
-export const validateActiveSeason = (data: any) => {
+export const validateActiveSeason = (data: ActiveSeason) => {
   expect(data).toHaveProperty("ScheduleID");
   expect(data).toHaveProperty("ScheduleName");
   expect(data).toHaveProperty("ScheduleSeason");
@@ -521,7 +589,7 @@ export const validateActiveSeason = (data: any) => {
   expect(data.ScheduleEnd).toBeInstanceOf(Date);
 };
 
-export const validateScheduledRoute = (data: any) => {
+export const validateScheduledRoute = (data: ScheduledRoute) => {
   expect(data).toHaveProperty("ScheduleID");
   expect(data).toHaveProperty("SchedRouteID");
   expect(data).toHaveProperty("ContingencyOnly");
@@ -545,14 +613,14 @@ export const validateScheduledRoute = (data: any) => {
   expect(Array.isArray(data.ContingencyAdj)).toBe(true);
 };
 
-export const validateScheduleTerminal = (data: any) => {
+export const validateScheduleTerminal = (data: ScheduleTerminal) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("Description");
   expect(typeof data.TerminalID).toBe("number");
   expect(typeof data.Description).toBe("string");
 };
 
-export const validateScheduleTerminalCombo = (data: any) => {
+export const validateScheduleTerminalCombo = (data: ScheduleTerminalCombo) => {
   expect(data).toHaveProperty("DepartingTerminalID");
   expect(data).toHaveProperty("DepartingDescription");
   expect(data).toHaveProperty("ArrivingTerminalID");
@@ -563,7 +631,7 @@ export const validateScheduleTerminalCombo = (data: any) => {
   expect(typeof data.ArrivingDescription).toBe("string");
 };
 
-export const validateScheduleRoute = (data: any) => {
+export const validateScheduleRoute = (data: Route) => {
   expect(data).toHaveProperty("RouteID");
   expect(data).toHaveProperty("RouteAbbrev");
   expect(data).toHaveProperty("Description");
@@ -578,7 +646,7 @@ export const validateScheduleRoute = (data: any) => {
   expect(typeof data.RegionID).toBe("number");
 };
 
-export const validateSailing = (data: any) => {
+export const validateSailing = (data: Sailing) => {
   expect(data).toHaveProperty("ScheduleID");
   expect(data).toHaveProperty("SchedRouteID");
   expect(data).toHaveProperty("RouteID");
@@ -608,7 +676,7 @@ export const validateSailing = (data: any) => {
   expect(Array.isArray(data.Journs)).toBe(true);
 };
 
-export const validateSchedule = (data: any) => {
+export const validateSchedule = (data: Schedule) => {
   expect(data).toHaveProperty("RouteID");
   expect(data).toHaveProperty("RouteName");
   expect(data).toHaveProperty("SailingDate");
@@ -621,7 +689,7 @@ export const validateSchedule = (data: any) => {
   expect(data.LastUpdated).toBeInstanceOf(Date);
 };
 
-export const validateScheduleResponse = (data: any) => {
+export const validateScheduleResponse = (data: ScheduleResponse) => {
   expect(data).toHaveProperty("ScheduleID");
   expect(data).toHaveProperty("ScheduleName");
   expect(data).toHaveProperty("ScheduleSeason");
@@ -640,74 +708,7 @@ export const validateScheduleResponse = (data: any) => {
   expect(Array.isArray(data.TerminalCombos)).toBe(true);
 };
 
-export const validateTerminalCombo = (data: any) => {
-  expect(data).toHaveProperty("DepartingTerminalID");
-  expect(data).toHaveProperty("DepartingTerminalName");
-  expect(data).toHaveProperty("ArrivingTerminalID");
-  expect(data).toHaveProperty("ArrivingTerminalName");
-  expect(data).toHaveProperty("SailingNotes");
-  expect(data).toHaveProperty("Annotations");
-  expect(data).toHaveProperty("AnnotationsIVR");
-  expect(data).toHaveProperty("Times");
-  expect(typeof data.DepartingTerminalID).toBe("number");
-  expect(typeof data.DepartingTerminalName).toBe("string");
-  expect(typeof data.ArrivingTerminalID).toBe("number");
-  expect(typeof data.ArrivingTerminalName).toBe("string");
-  expect(typeof data.SailingNotes).toBe("string");
-  expect(Array.isArray(data.Annotations)).toBe(true);
-  expect(Array.isArray(data.AnnotationsIVR)).toBe(true);
-  expect(Array.isArray(data.Times)).toBe(true);
-};
-
-export const validateScheduleTime = (data: any) => {
-  expect(data).toHaveProperty("DepartingTime");
-  expect(data).toHaveProperty("ArrivingTime");
-  expect(data).toHaveProperty("LoadingRule");
-  expect(data).toHaveProperty("VesselID");
-  expect(data).toHaveProperty("VesselName");
-  expect(data).toHaveProperty("VesselHandicapAccessible");
-  expect(data).toHaveProperty("VesselPositionNum");
-  expect(data).toHaveProperty("Routes");
-  expect(data).toHaveProperty("AnnotationIndexes");
-  expect(data.DepartingTime).toBeInstanceOf(Date);
-  expect(data.ArrivingTime).toBeInstanceOf(Date);
-  expect(typeof data.LoadingRule).toBe("number");
-  expect(typeof data.VesselID).toBe("number");
-  expect(typeof data.VesselName).toBe("string");
-  expect(typeof data.VesselHandicapAccessible).toBe("boolean");
-  expect(typeof data.VesselPositionNum).toBe("number");
-  expect(Array.isArray(data.Routes)).toBe(true);
-  expect(Array.isArray(data.AnnotationIndexes)).toBe(true);
-};
-
-export const validateScheduleDeparture = (data: any) => {
-  expect(data).toHaveProperty("SailingID");
-  expect(data).toHaveProperty("SchedRouteID");
-  expect(data).toHaveProperty("DepartureTime");
-  expect(data).toHaveProperty("ArrivalTime");
-  expect(data).toHaveProperty("VesselID");
-  expect(data).toHaveProperty("VesselName");
-  expect(data).toHaveProperty("DepartingTerminalID");
-  expect(data).toHaveProperty("DepartingTerminalName");
-  expect(data).toHaveProperty("ArrivingTerminalID");
-  expect(data).toHaveProperty("ArrivingTerminalName");
-  expect(data).toHaveProperty("IsCancelled");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.SailingID).toBe("number");
-  expect(typeof data.SchedRouteID).toBe("number");
-  expect(data.DepartureTime).toBeInstanceOf(Date);
-  expect(data.ArrivalTime).toBeInstanceOf(Date);
-  expect(typeof data.VesselID).toBe("number");
-  expect(typeof data.VesselName).toBe("string");
-  expect(typeof data.DepartingTerminalID).toBe("number");
-  expect(typeof data.DepartingTerminalName).toBe("string");
-  expect(typeof data.ArrivingTerminalID).toBe("number");
-  expect(typeof data.ArrivingTerminalName).toBe("string");
-  expect(typeof data.IsCancelled).toBe("boolean");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
-};
-
-export const validateTimeAdjustment = (data: any) => {
+export const validateTimeAdjustment = (data: TimeAdjustment) => {
   expect(data).toHaveProperty("ScheduleID");
   expect(data).toHaveProperty("SchedRouteID");
   expect(data).toHaveProperty("RouteID");
@@ -744,7 +745,7 @@ export const validateTimeAdjustment = (data: any) => {
   expect(data.AdjDateThru).toBeInstanceOf(Date);
   expect(typeof data.AdjType).toBe("number");
   expect(typeof data.TidalAdj).toBe("boolean");
-  expect(data.TimeToAdj).toBeInstanceOf(Date);
+  expect(data.TimeToAdj === null || data.TimeToAdj instanceof Date).toBe(true);
   expect(Array.isArray(data.Annotations)).toBe(true);
 
   // Validate ActiveSailingDateRange structure
@@ -756,7 +757,7 @@ export const validateTimeAdjustment = (data: any) => {
   expect(data.ActiveSailingDateRange.DateThru).toBeInstanceOf(Date);
 };
 
-export const validateAlert = (data: any) => {
+export const validateAlert = (data: Alert) => {
   expect(data).toHaveProperty("BulletinID");
   expect(data).toHaveProperty("BulletinFlag");
   expect(data).toHaveProperty("BulletinText");
@@ -799,7 +800,7 @@ export const validateAlert = (data: any) => {
   expect(data.IVRText === null || typeof data.IVRText === "string").toBe(true);
 };
 
-export const validateAlternativeFormat = (data: any) => {
+export const validateAlternativeFormat = (data: AlternativeFormat) => {
   expect(data).toHaveProperty("AltID");
   expect(data).toHaveProperty("SubjectID");
   expect(data).toHaveProperty("SubjectName");
@@ -831,7 +832,7 @@ export const validateAlternativeFormat = (data: any) => {
 
 // Error validation
 export const validateApiError = (
-  error: any,
+  error: unknown,
   expectedCode?: string | string[]
 ) => {
   expect(error).toBeInstanceOf(WsdotApiError);
@@ -841,52 +842,48 @@ export const validateApiError = (
 
   if (expectedCode) {
     if (Array.isArray(expectedCode)) {
-      expect(expectedCode).toContain(error.code);
+      expect(expectedCode).toContain((error as WsdotApiError).code);
     } else {
-      expect(error.code).toBe(expectedCode);
+      expect((error as WsdotApiError).code).toBe(expectedCode);
     }
   }
 };
 
 // WSDOT-specific validation functions
-export const validateBorderCrossing = (data: any) => {
-  expect(data).toHaveProperty("BorderCrossingID");
-  expect(data).toHaveProperty("BorderCrossingName");
+export const validateBorderCrossing = (data: BorderCrossingData) => {
+  expect(data).toHaveProperty("CrossingName");
   expect(data).toHaveProperty("WaitTime");
-  expect(data).toHaveProperty("LaneStatus");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.BorderCrossingID).toBe("number");
-  expect(typeof data.BorderCrossingName).toBe("string");
+  expect(data).toHaveProperty("Time");
+  expect(data).toHaveProperty("BorderCrossingLocation");
+  expect(typeof data.CrossingName).toBe("string");
   expect(typeof data.WaitTime).toBe("number");
-  expect(typeof data.LaneStatus).toBe("string");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.Time).toBeInstanceOf(Date);
+  expect(data.BorderCrossingLocation).toBeDefined();
 };
 
-export const validateBridgeClearance = (data: any) => {
-  expect(data).toHaveProperty("BridgeID");
-  expect(data).toHaveProperty("BridgeName");
-  expect(data).toHaveProperty("ClearanceHeight");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.BridgeID).toBe("number");
-  expect(typeof data.BridgeName).toBe("string");
-  expect(typeof data.ClearanceHeight).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+export const validateBridgeClearance = (data: BridgeDataGIS) => {
+  expect(data).toHaveProperty("BridgeNumber");
+  expect(data).toHaveProperty("VerticalClearanceMaximumInches");
+  expect(data).toHaveProperty("APILastUpdate");
+  expect(typeof data.BridgeNumber).toBe("string");
+  expect(typeof data.VerticalClearanceMaximumInches).toBe("number");
+  expect(data.APILastUpdate).toBeInstanceOf(Date);
 };
 
-export const validateCommercialVehicleRestriction = (data: any) => {
-  expect(data).toHaveProperty("RestrictionID");
+export const validateCommercialVehicleRestriction = (
+  data: CommercialVehicleRestriction
+) => {
   expect(data).toHaveProperty("RestrictionType");
   expect(data).toHaveProperty("StartRoadwayLocation");
   expect(data).toHaveProperty("EndRoadwayLocation");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.RestrictionID).toBe("number");
-  expect(typeof data.RestrictionType).toBe("string");
+  expect(data).toHaveProperty("DatePosted");
+  expect(typeof data.RestrictionType).toBe("number");
   expect(data.StartRoadwayLocation).toBeDefined();
   expect(data.EndRoadwayLocation).toBeDefined();
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.DatePosted).toBeInstanceOf(Date);
 };
 
-export const validateRoadwayLocation = (data: any) => {
+export const validateRoadwayLocation = (data: RoadwayLocation) => {
   expect(data).toHaveProperty("Description");
   expect(data).toHaveProperty("Direction");
   expect(data).toHaveProperty("Latitude");
@@ -901,96 +898,96 @@ export const validateRoadwayLocation = (data: any) => {
   expect(typeof data.RoadName).toBe("string");
 };
 
-export const validateHighwayAlert = (data: any) => {
+export const validateHighwayAlert = (data: HighwayAlert) => {
   expect(data).toHaveProperty("AlertID");
-  expect(data).toHaveProperty("AlertType");
+  expect(data).toHaveProperty("EventCategory");
   expect(data).toHaveProperty("StartRoadwayLocation");
   expect(data).toHaveProperty("EndRoadwayLocation");
-  expect(data).toHaveProperty("LastUpdated");
+  expect(data).toHaveProperty("LastUpdatedTime");
   expect(typeof data.AlertID).toBe("number");
-  expect(typeof data.AlertType).toBe("string");
+  expect(typeof data.EventCategory).toBe("string");
   expect(data.StartRoadwayLocation).toBeDefined();
   expect(data.EndRoadwayLocation).toBeDefined();
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.LastUpdatedTime).toBeInstanceOf(Date);
 };
 
-export const validateHighwayCamera = (data: any) => {
+export const validateHighwayCamera = (data: Camera) => {
   expect(data).toHaveProperty("CameraID");
-  expect(data).toHaveProperty("CameraName");
-  expect(data).toHaveProperty("Latitude");
-  expect(data).toHaveProperty("Longitude");
+  expect(data).toHaveProperty("Title");
+  expect(data).toHaveProperty("DisplayLatitude");
+  expect(data).toHaveProperty("DisplayLongitude");
   expect(data).toHaveProperty("ImageURL");
-  expect(data).toHaveProperty("LastUpdated");
   expect(typeof data.CameraID).toBe("number");
-  expect(typeof data.CameraName).toBe("string");
-  expect(typeof data.Latitude).toBe("number");
-  expect(typeof data.Longitude).toBe("number");
+  expect(typeof data.Title).toBe("string");
+  expect(typeof data.DisplayLatitude).toBe("number");
+  expect(typeof data.DisplayLongitude).toBe("number");
   expect(typeof data.ImageURL).toBe("string");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
 };
 
-export const validateMountainPassCondition = (data: any) => {
-  expect(data).toHaveProperty("PassID");
-  expect(data).toHaveProperty("PassName");
+export const validateMountainPassCondition = (data: MountainPassCondition) => {
+  expect(data).toHaveProperty("MountainPassId");
+  expect(data).toHaveProperty("MountainPassName");
   expect(data).toHaveProperty("RoadCondition");
   expect(data).toHaveProperty("WeatherCondition");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.PassID).toBe("number");
-  expect(typeof data.PassName).toBe("string");
+  expect(data).toHaveProperty("DateUpdated");
+  expect(typeof data.MountainPassId).toBe("number");
+  expect(typeof data.MountainPassName).toBe("string");
   expect(typeof data.RoadCondition).toBe("string");
   expect(typeof data.WeatherCondition).toBe("string");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.DateUpdated).toBeInstanceOf(Date);
 };
 
-export const validateTollRate = (data: any) => {
-  expect(data).toHaveProperty("TollRouteID");
-  expect(data).toHaveProperty("TollRouteName");
-  expect(data).toHaveProperty("Rate");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.TollRouteID).toBe("number");
-  expect(typeof data.TollRouteName).toBe("string");
-  expect(typeof data.Rate).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+export const validateTollRate = (data: TollRate) => {
+  expect(data).toHaveProperty("TripName");
+  expect(data).toHaveProperty("CurrentToll");
+  expect(data).toHaveProperty("StartLocationName");
+  expect(data).toHaveProperty("EndLocationName");
+  expect(data).toHaveProperty("TimeUpdated");
+  expect(typeof data.TripName).toBe("string");
+  expect(typeof data.CurrentToll).toBe("number");
+  expect(typeof data.StartLocationName).toBe("string");
+  expect(typeof data.EndLocationName).toBe("string");
+  expect(data.TimeUpdated).toBeInstanceOf(Date);
 };
 
-export const validateTrafficFlow = (data: any) => {
-  expect(data).toHaveProperty("FlowID");
-  expect(data).toHaveProperty("FlowName");
-  expect(data).toHaveProperty("FlowValue");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.FlowID).toBe("number");
-  expect(typeof data.FlowName).toBe("string");
-  expect(typeof data.FlowValue).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+export const validateTrafficFlow = (data: TrafficFlow) => {
+  expect(data).toHaveProperty("FlowDataID");
+  expect(data).toHaveProperty("FlowReadingValue");
+  expect(data).toHaveProperty("StationName");
+  expect(data).toHaveProperty("Time");
+  expect(typeof data.FlowDataID).toBe("number");
+  expect(typeof data.FlowReadingValue).toBe("number");
+  expect(typeof data.StationName).toBe("string");
+  expect(data.Time).toBeInstanceOf(Date);
 };
 
-export const validateTravelTime = (data: any) => {
+export const validateTravelTime = (data: TravelTimeRoute) => {
   expect(data).toHaveProperty("TravelTimeID");
-  expect(data).toHaveProperty("TravelTimeName");
+  expect(data).toHaveProperty("Name");
   expect(data).toHaveProperty("CurrentTime");
-  expect(data).toHaveProperty("TypicalTime");
-  expect(data).toHaveProperty("LastUpdated");
+  expect(data).toHaveProperty("AverageTime");
+  expect(data).toHaveProperty("TimeUpdated");
   expect(typeof data.TravelTimeID).toBe("number");
-  expect(typeof data.TravelTimeName).toBe("string");
+  expect(typeof data.Name).toBe("string");
   expect(typeof data.CurrentTime).toBe("number");
-  expect(typeof data.TypicalTime).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(typeof data.AverageTime).toBe("number");
+  expect(data.TimeUpdated).toBeInstanceOf(Date);
 };
 
-export const validateWeatherInformation = (data: any) => {
-  expect(data).toHaveProperty("WeatherStationID");
-  expect(data).toHaveProperty("Temperature");
-  expect(data).toHaveProperty("Humidity");
-  expect(data).toHaveProperty("WindSpeed");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.WeatherStationID).toBe("number");
-  expect(typeof data.Temperature).toBe("number");
-  expect(typeof data.Humidity).toBe("number");
-  expect(typeof data.WindSpeed).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+export const validateWeatherInformation = (data: WeatherInfo) => {
+  expect(data).toHaveProperty("StationID");
+  expect(data).toHaveProperty("TemperatureInFahrenheit");
+  expect(data).toHaveProperty("RelativeHumidity");
+  expect(data).toHaveProperty("WindSpeedInMPH");
+  expect(data).toHaveProperty("ReadingTime");
+  expect(typeof data.StationID).toBe("number");
+  expect(typeof data.TemperatureInFahrenheit).toBe("number");
+  expect(typeof data.RelativeHumidity).toBe("number");
+  expect(typeof data.WindSpeedInMPH).toBe("number");
+  expect(data.ReadingTime).toBeInstanceOf(Date);
 };
 
-export const validateWeatherStation = (data: any) => {
+export const validateWeatherStation = (data: WeatherStationData) => {
   expect(data).toHaveProperty("StationCode");
   expect(data).toHaveProperty("StationName");
   expect(data).toHaveProperty("Latitude");

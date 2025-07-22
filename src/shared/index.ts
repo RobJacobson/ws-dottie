@@ -5,6 +5,5 @@ export * from "./caching/config";
 export * from "./caching/invalidation";
 export * from "./fetching/dateUtils";
 export * from "./fetching/errors";
-export * from "./fetching/fetch";
 export * from "./fetching/fetchInternal";
-export * from "./fetching/utils";
+export * from "./fetching/parseJson";

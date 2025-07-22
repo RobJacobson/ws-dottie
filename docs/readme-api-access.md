@@ -257,6 +257,14 @@ When no Access Code is provided or an invalid Access Code is used, APIs return:
 }
 ```
 
+### CORS and JSONP Support
+
+**WSDOT Traveler Information APIs**: Use separate JSONP endpoints (e.g., `GetAlertsAsJsonp` instead of `GetAlertsAsJson`) for web browser access.
+
+**WSF APIs**: Support JSONP via callback parameter on regular endpoints.
+
+Both API types have CORS restrictions in web browsers, requiring JSONP for cross-origin requests.
+
 ### WSDOT API Error Handling
 
 The library uses `WsdotApiError` instances for consistent error handling across both WSF and WSDOT Traveler Information APIs:

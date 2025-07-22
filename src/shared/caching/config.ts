@@ -6,7 +6,6 @@ const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const WEEK = 7 * DAY;
-const MONTH = 30 * DAY;
 
 /**
  * Caching configuration for frequently updated data (every few seconds to minutes)
@@ -22,9 +21,9 @@ export const FREQUENT_UPDATE_CONFIG = {
   // Refetch when window regains focus
   refetchOnWindowFocus: true,
   // Retry up to 3 times with exponential backoff
-  retry: 3,
+  retry: 10,
   retryDelay: (attemptIndex: number) =>
-    Math.min(1000 * 2 ** attemptIndex, 30000),
+    Math.min(SECOND * 2 ** attemptIndex, SECOND),
 } as const;
 
 /**
@@ -44,9 +43,9 @@ export const INFREQUENT_UPDATE_CONFIG = {
   // Refetch when window regains focus (but only if stale)
   refetchOnWindowFocus: true,
   // Retry up to 5 times with exponential backoff
-  retry: 5,
+  retry: 10,
   retryDelay: (attemptIndex: number) =>
-    Math.min(1000 * 2 ** attemptIndex, 30000),
+    Math.min(MINUTE * 2 ** attemptIndex, MINUTE),
 } as const;
 
 /**
@@ -63,9 +62,9 @@ export const CACHE_FLUSH_CONFIG = {
   // Refetch when window regains focus
   refetchOnWindowFocus: true,
   // Retry up to 5 times with exponential backoff
-  retry: 5,
+  retry: 10,
   retryDelay: (attemptIndex: number) =>
-    Math.min(1000 * 2 ** attemptIndex, 30000),
+    Math.min(10 * SECOND * 2 ** attemptIndex, 10 * SECOND),
 } as const;
 
 /**

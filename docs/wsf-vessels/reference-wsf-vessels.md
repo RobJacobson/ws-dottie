@@ -360,9 +360,9 @@ type VesselLocation = {
   SortSeq: number;
   ManagedBy: number;
   TimeStamp: string; // "/Date(timestamp-timezone)/" format
-  VesselWatchShutID: number;
-  VesselWatchShutMsg: string;
-  VesselWatchShutFlag: string;
+  // Note: VesselWatch fields (VesselWatchShutID, VesselWatchShutMsg, VesselWatchShutFlag,
+  // VesselWatchStatus, VesselWatchMsg) are automatically filtered out during JSON parsing
+  // as they are unreliable and undocumented
 };
 
 type VesselAccommodation = {

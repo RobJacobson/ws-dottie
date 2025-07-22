@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
 
+import {
+  useWsfCacheFlushMonitor,
+  useWsfCacheInvalidation,
+} from "@/shared/caching/invalidation";
+
 describe("WSF Cache Invalidation", () => {
   describe("Function Signatures", () => {
     it("should have useWsfCacheInvalidation function", () => {
@@ -182,33 +187,3 @@ describe("WSF Cache Invalidation", () => {
     });
   });
 });
-
-// Mock functions for testing (these would normally be imported)
-function useWsfCacheInvalidation() {
-  return {
-    invalidateVesselQueries: () => {},
-    invalidateTerminalQueries: () => {},
-    invalidateScheduleQueries: () => {},
-    invalidateVesselQueriesByType: (_type: string) => {},
-    invalidateTerminalQueriesByType: (_type: string) => {},
-    invalidateScheduleQueriesByType: (_type: string) => {},
-    invalidateAllWsfQueries: () => {},
-  };
-}
-
-function useWsfCacheFlushMonitor() {
-  return {
-    monitorVesselsCacheFlush: (
-      _lastDate: Date | null,
-      _currentDatee: Date | null
-    ) => {},
-    monitorTerminalsCacheFlush: (
-      _lastDate: Date | null,
-      _currentDatee: Date | null
-    ) => {},
-    monitorScheduleCacheFlush: (
-      _lastDate: Date | null,
-      _currentDatee: Date | null
-    ) => {},
-  };
-}

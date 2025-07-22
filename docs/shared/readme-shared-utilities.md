@@ -5,12 +5,14 @@ Shared utilities and configuration for the WSDOT API client library, providing c
 ## Overview
 
 This module provides the foundational infrastructure for all WSDOT API interactions, including:
-- Platform-agnostic fetch utilities
+- Platform-agnostic fetch utilities with unified `createFetchFunction` approach
 - Automatic data transformation and date parsing
 - Error handling and logging
 - Configuration management
 - React Query caching strategies
 - Type-safe URL building
+
+> **Note**: The fetch functions described in this documentation are internal implementation details. For normal usage, use the public API functions exported from the main library (e.g., `WsfVessels.getVesselLocations()`).
 
 ## Architecture
 
@@ -31,30 +33,35 @@ This module provides the foundational infrastructure for all WSDOT API interacti
 
 ### Fetch Functions
 
-#### `fetchWsf<T>(path: string, options?: FetchOptions)`
-Main fetch function for WSF APIs with automatic transformation.
+#### `createFetchFunction(baseUrl: string)`
+Creates a module-scoped fetch function for a specific API endpoint with automatic transformation.
 
 ```typescript
-const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
+// Module-scoped fetch function for WSF vessels API
+const fetchVessels = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
+);
+
+// Usage in API functions
+export const getVesselLocations = (): Promise<VesselLocation[]> =>
+  fetchVessels<VesselLocation[]>("/vessellocations");
 ```
 
 **Features:**
 - Automatic date parsing and data transformation
-- Platform-specific fetch implementation
+- Platform-specific fetch implementation (JSONP for web, native fetch for Node.js)
 - Comprehensive error handling
 - Type-safe responses
+- Module-scoped configuration for better organization
 
-#### `fetchWsfArray<T>(path: string, options?: FetchOptions)`
-Convenience function for fetching arrays with proper typing.
-
-```typescript
-const routes = await fetchWsfArray<Route>('/schedule/routes');
-```
+#### `fetchInternal(url: string, options?: FetchOptions)`
+Platform-specific fetch implementation with comprehensive error handling.
 
 **Features:**
-- Ensures array return type
-- Handles empty responses gracefully
-- Same transformation and error handling as `fetchWsf`
+- Web: JSONP implementation for CORS bypass
+- Mobile: Native fetch with error handling
+- Automatic fallback between platforms
+- Structured error responses
 
 #### `fetchInternal(url: string, options?: FetchOptions)`
 Platform-specific fetch implementation with comprehensive error handling.
@@ -85,8 +92,19 @@ Automatically transforms WSF API responses with date parsing and key conversion.
 - **Pattern-based detection** - No need to maintain field name lists
 - **Robust validation** - Ensures dates are valid before conversion
 - **Recursive processing** - Handles nested objects and arrays
-- **CamelCase conversion** - Converts PascalCase keys to camelCase
+- **PascalCase preservation** - Maintains original API key casing
+- **Field filtering** - Automatically removes unreliable and undocumented fields
 - **Error handling** - Graceful fallback for invalid dates
+
+**Field Filtering:**
+The JSON reviver automatically filters out unreliable and undocumented fields to improve data quality and reduce memory usage:
+
+- **VesselWatch Fields**: The following fields are automatically removed from VesselLocation responses as they are unreliable and undocumented:
+  - `VesselWatchShutID`
+  - `VesselWatchShutMsg`
+  - `VesselWatchShutFlag`
+  - `VesselWatchStatus`
+  - `VesselWatchMsg`
 
 #### Example Transformation
 ```typescript
@@ -183,6 +201,8 @@ const { data } = useQuery({
 
 ### Web Platform
 - **JSONP Implementation**: Bypasses CORS restrictions
+  - **WSDOT APIs**: Uses separate JSONP endpoints (e.g., `GetAlertsAsJsonp`)
+  - **WSF APIs**: Uses regular endpoints with callback parameter
 - **Error Handling**: Comprehensive error detection and recovery
 - **Fallback Support**: Graceful degradation when JSONP fails
 
@@ -311,13 +331,9 @@ type FetchError = {
 
 ### Logging Configuration
 ```typescript
-// Enable debug logging for specific endpoints
-const options: FetchOptions = {
-  logLevel: 'debug',
-  timeout: 10000
-};
-
-const data = await fetchWsf('/vessels/vessellocations', options);
+// Logging is handled automatically by the fetch functions
+// Debug information is available in development mode
+// Error logging is automatic for all API calls
 ```
 
 ## Performance Optimizations
@@ -339,41 +355,38 @@ const data = await fetchWsf('/vessels/vessellocations', options);
 
 ## Usage Examples
 
-### Basic API Call
+### Module-Scoped Fetch Functions
 ```typescript
-import { fetchWsf } from '@/shared/fetching';
+import { createFetchFunction } from '@/shared/fetching/fetchApi';
 
-// Fetch vessel locations
-const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
+// Create module-scoped fetch function for WSF vessels API
+const fetchVessels = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
+);
 
-// Fetch with options
-const routes = await fetchWsf<Route[]>('/schedule/routes', {
-  timeout: 5000,
-  retries: 3,
-  logLevel: 'debug'
-});
+// API functions using the module-scoped fetch
+export const getVesselLocations = (): Promise<VesselLocation[]> =>
+  fetchVessels<VesselLocation[]>("/vessellocations");
+
+export const getVesselBasics = (): Promise<VesselBasic[]> =>
+  fetchVessels<VesselBasic[]>("/vesselbasics");
 ```
 
-### URL Building with Parameters
+### Direct API Usage
 ```typescript
-import { buildWsfUrl } from '@/shared/fetching';
+import { WsfVessels } from 'ws-dottie';
 
-// Build URL with date parameter
-const url = buildWsfUrl('/schedule/routes', {
-  date: new Date('2023-12-21'),
-  terminalId: 1
-});
-
-// Use in fetch
-const routes = await fetchWsf<Route[]>(url);
+// Use the public API functions
+const vessels = await WsfVessels.getVesselLocations();
+const basics = await WsfVessels.getVesselBasics();
 ```
 
 ### Error Handling
 ```typescript
-import { fetchWsf } from '@/shared/fetching';
+import { WsfVessels } from 'ws-dottie';
 
 try {
-  const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
+  const vessels = await WsfVessels.getVesselLocations();
   return vessels || [];
 } catch (error) {
   console.error('Failed to fetch vessels:', error);

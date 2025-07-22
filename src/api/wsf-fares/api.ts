@@ -2,14 +2,13 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { parseWsfDate, toDateStamp } from "@/shared/fetching/dateUtils";
-import { fetchWsf } from "@/shared/fetching/fetch";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   FareLineItem,
   FareLineItemBasic,
   FareLineItemsVerboseResponse,
-  FaresCacheFlushDate,
   FaresTerminal,
   FaresValidDateRange,
   FareTotal,
@@ -17,6 +16,11 @@ import type {
   TerminalComboVerbose,
   TerminalMate,
 } from "./types";
+
+// Module-scoped fetch function for WSF fares API
+const fetchFares = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/fares/rest"
+);
 
 /**
  * Get cache flush date from WSF Fares API
@@ -27,11 +31,8 @@ import type {
  *
  * @returns Promise resolving to cache flush date
  */
-export const getFaresCacheFlushDate =
-  async (): Promise<FaresCacheFlushDate> => {
-    const response = await fetchWsf<string>("fares", "/cacheflushdate");
-    return parseWsfDate(response);
-  };
+export const getFaresCacheFlushDate = (): Promise<Date | null> =>
+  fetchFares<Date>("/cacheflushdate");
 
 /**
  * Get valid date range for fares data from WSF Fares API
@@ -40,17 +41,8 @@ export const getFaresCacheFlushDate =
  *
  * @returns Promise resolving to valid date range information
  */
-export const getFaresValidDateRange =
-  async (): Promise<FaresValidDateRange> => {
-    const response = await fetchWsf<{ DateFrom: string; DateThru: string }>(
-      "fares",
-      "/validdaterange"
-    );
-    return {
-      DateFrom: parseWsfDate(response.DateFrom),
-      DateThru: parseWsfDate(response.DateThru),
-    };
-  };
+export const getFaresValidDateRange = (): Promise<FaresValidDateRange> =>
+  fetchFares<FaresValidDateRange>("/validdaterange");
 
 /**
  * Get valid departing terminals for a trip date from WSF Fares API
@@ -59,8 +51,8 @@ export const getFaresValidDateRange =
  * @returns Promise resolving to array of valid departing terminals
  */
 export const getFaresTerminals = (tripDate: Date): Promise<FaresTerminal[]> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<FaresTerminal[]>("fares", `/terminals/${formattedDate}`);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<FaresTerminal[]>(`/terminals/${formattedDate}`);
 };
 
 /**
@@ -74,9 +66,8 @@ export const getFaresTerminalMates = (
   tripDate: Date,
   terminalID: number
 ): Promise<TerminalMate[]> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<TerminalMate[]>(
-    "fares",
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<TerminalMate[]>(
     `/terminalmates/${formattedDate}/${terminalID}`
   );
 };
@@ -94,9 +85,8 @@ export const getTerminalCombo = (
   departingTerminalID: number,
   arrivingTerminalID: number
 ): Promise<TerminalCombo> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<TerminalCombo>(
-    "fares",
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<TerminalCombo>(
     `/terminalcombo/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}`
   );
 };
@@ -110,9 +100,8 @@ export const getTerminalCombo = (
 export const getTerminalComboVerbose = (
   tripDate: Date
 ): Promise<TerminalComboVerbose[]> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<TerminalComboVerbose[]>(
-    "fares",
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<TerminalComboVerbose[]>(
     `/terminalcomboverbose/${formattedDate}`
   );
 };
@@ -132,9 +121,8 @@ export const getFareLineItemsBasic = (
   arrivingTerminalID: number,
   roundTrip: boolean
 ): Promise<FareLineItemBasic[]> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<FareLineItemBasic[]>(
-    "fares",
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<FareLineItemBasic[]>(
     `/farelineitemsbasic/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
   );
 };
@@ -154,9 +142,8 @@ export const getFareLineItems = (
   arrivingTerminalID: number,
   roundTrip: boolean
 ): Promise<FareLineItem[]> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<FareLineItem[]>(
-    "fares",
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<FareLineItem[]>(
     `/farelineitems/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}`
   );
 };
@@ -170,9 +157,8 @@ export const getFareLineItems = (
 export const getFareLineItemsVerbose = (
   tripDate: Date
 ): Promise<FareLineItemsVerboseResponse> => {
-  const formattedDate = toDateStamp(tripDate);
-  return fetchWsf<FareLineItemsVerboseResponse>(
-    "fares",
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
+  return fetchFares<FareLineItemsVerboseResponse>(
     `/farelineitemsverbose/${formattedDate}`
   );
 };
@@ -196,12 +182,11 @@ export const getFareTotals = (
   fareLineItemIDs: number[],
   quantities: number[]
 ): Promise<FareTotal[]> => {
-  const formattedDate = toDateStamp(tripDate);
+  const formattedDate = jsDateToYyyyMmDd(tripDate);
   const fareLineItemIDsString = fareLineItemIDs.join(",");
   const quantitiesString = quantities.join(",");
 
-  return fetchWsf<FareTotal[]>(
-    "fares",
+  return fetchFares<FareTotal[]>(
     `/faretotals/${formattedDate}/${departingTerminalID}/${arrivingTerminalID}/${roundTrip}/${fareLineItemIDsString}/${quantitiesString}`
   );
 };

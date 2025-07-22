@@ -5,7 +5,7 @@
 import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
 
 import { createInfrequentUpdateOptions } from "@/shared/caching/config";
-import { toDateStamp } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 
 import {
   getFareLineItems,
@@ -66,7 +66,7 @@ export const useFaresTerminals = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "terminals", toDateStamp(tripDate)],
+    queryKey: ["fares", "terminals", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getFaresTerminals(tripDate),
     ...createInfrequentUpdateOptions(),
     ...options,
@@ -87,7 +87,12 @@ export const useFaresTerminalMates = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "terminalMates", toDateStamp(tripDate), terminalID],
+    queryKey: [
+      "fares",
+      "terminalMates",
+      jsDateToYyyyMmDd(tripDate),
+      terminalID,
+    ],
     queryFn: () => getFaresTerminalMates(tripDate, terminalID),
     ...createInfrequentUpdateOptions(),
     ...options,
@@ -113,7 +118,7 @@ export const useTerminalCombo = (
     queryKey: [
       "fares",
       "terminalCombo",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalID,
       arrivingTerminalID,
     ],
@@ -136,7 +141,7 @@ export const useTerminalComboVerbose = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "terminalComboVerbose", toDateStamp(tripDate)],
+    queryKey: ["fares", "terminalComboVerbose", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminalComboVerbose(tripDate),
     ...createInfrequentUpdateOptions(),
     ...options,
@@ -164,7 +169,7 @@ export const useFareLineItemsBasic = (
     queryKey: [
       "fares",
       "fareLineItemsBasic",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalID,
       arrivingTerminalID,
       roundTrip,
@@ -202,7 +207,7 @@ export const useFareLineItems = (
     queryKey: [
       "fares",
       "fareLineItems",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalID,
       arrivingTerminalID,
       roundTrip,
@@ -231,7 +236,7 @@ export const useFareLineItemsVerbose = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "fareLineItemsVerbose", toDateStamp(tripDate)],
+    queryKey: ["fares", "fareLineItemsVerbose", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getFareLineItemsVerbose(tripDate),
     ...createInfrequentUpdateOptions(),
     ...options,
@@ -263,7 +268,7 @@ export const useFareTotals = (
     queryKey: [
       "fares",
       "fareTotals",
-      toDateStamp(tripDate),
+      jsDateToYyyyMmDd(tripDate),
       departingTerminalID,
       arrivingTerminalID,
       roundTrip,

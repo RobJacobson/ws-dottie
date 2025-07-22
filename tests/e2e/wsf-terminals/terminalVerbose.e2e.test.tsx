@@ -116,9 +116,12 @@ describe("Terminal Verbose E2E Tests", () => {
       });
 
       // Wait for data to load
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      }, { timeout: 10000 });
+      await waitFor(
+        () => {
+          expect(result.current.isSuccess).toBe(true);
+        },
+        { timeout: 10000 }
+      );
 
       // Validate response
       expect(result.current.data).toBeDefined();
@@ -126,7 +129,9 @@ describe("Terminal Verbose E2E Tests", () => {
       expect(result.current.data?.length).toBeGreaterThan(0);
 
       // Validate terminal
-      validateTerminalVerbose(result.current.data?.[0]);
+      if (result.current.data?.[0]) {
+        validateTerminalVerbose(result.current.data[0]);
+      }
 
       // Performance check
       expect(result.current.dataUpdatedAt).toBeDefined();
@@ -187,9 +192,12 @@ describe("Terminal Verbose E2E Tests", () => {
       );
 
       // Wait for data to load
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      }, { timeout: 10000 });
+      await waitFor(
+        () => {
+          expect(result.current.isSuccess).toBe(true);
+        },
+        { timeout: 10000 }
+      );
 
       // Validate response
       expect(result.current.data).toBeDefined();
@@ -197,7 +205,9 @@ describe("Terminal Verbose E2E Tests", () => {
       expect(Array.isArray(result.current.data)).toBe(false);
 
       // Validate terminal
-      validateTerminalVerbose(result.current.data!);
+      if (result.current.data) {
+        validateTerminalVerbose(result.current.data);
+      }
       expect(result.current.data?.TerminalID).toBe(TEST_TERMINAL_ID);
 
       await delay(RATE_LIMIT_DELAY);
@@ -210,4 +220,4 @@ describe("Terminal Verbose E2E Tests", () => {
       await delay(RATE_LIMIT_DELAY);
     });
   });
-}); 
+});

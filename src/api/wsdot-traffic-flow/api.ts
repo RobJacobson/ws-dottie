@@ -2,47 +2,32 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
 // API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type { TrafficFlow, TrafficFlowsResponse } from "./types";
 
-/**
- * Retrieves all traffic flow data from WSDOT API
- *
- * @returns Promise resolving to an array of traffic flow data
- * @throws {WsdotApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const trafficFlows = await getTrafficFlows();
- * console.log(trafficFlows[0].FlowReadingValue); // 1
- * ```
- */
-export const getTrafficFlows = async (): Promise<TrafficFlowsResponse> => {
-  return await fetchWsdot<TrafficFlowsResponse>(
-    "trafficFlow",
-    "/GetTrafficFlowsAsJson"
-  );
-};
+// Module-scoped fetch function for WSDOT traffic flow API
+const fetchTrafficFlow = createFetchFunction(
+  "https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc"
+);
 
 /**
- * Retrieves a specific traffic flow by ID from WSDOT API
+ * Get all traffic flow data from WSDOT Traffic Flow API
  *
- * @param flowDataId - The ID of the specific traffic flow station
- * @returns Promise resolving to a traffic flow record
- * @throws {WsdotApiError} When the API request fails
+ * Retrieves current traffic flow readings from all flow stations.
  *
- * @example
- * ```typescript
- * const trafficFlow = await getTrafficFlowById(2482);
- * console.log(trafficFlow.FlowReadingValue); // 1
- * ```
+ * @returns Promise resolving to array of traffic flow data
  */
-export const getTrafficFlowById = async (
-  flowDataId: number
-): Promise<TrafficFlow> => {
-  return await fetchWsdot<TrafficFlow>(
-    "trafficFlow",
-    `/GetTrafficFlowAsJson?FlowDataID=${flowDataId}`
+export const getTrafficFlows = (): Promise<TrafficFlowsResponse> =>
+  fetchTrafficFlow<TrafficFlowsResponse>("/GetTrafficFlowsAsJson");
+
+/**
+ * Get specific traffic flow by ID from WSDOT Traffic Flow API
+ *
+ * @param flowDataID - The ID of the specific traffic flow station
+ * @returns Promise resolving to traffic flow record
+ */
+export const getTrafficFlowById = (flowDataID: number): Promise<TrafficFlow> =>
+  fetchTrafficFlow<TrafficFlow>(
+    `/GetTrafficFlowAsJson?FlowDataID=${flowDataID}`
   );
-};

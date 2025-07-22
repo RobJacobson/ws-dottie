@@ -2,15 +2,18 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
-  TollRate,
   TollRatesResponse,
-  TollTripInfo,
   TollTripInfoResponse,
   TollTripRatesResponse,
 } from "./types";
+
+// Module-scoped fetch function for toll rates API
+const fetchTollRates = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/TollRates/TollRatesREST.svc"
+);
 
 /**
  * Retrieves all current toll rates from WSDOT API
@@ -24,12 +27,8 @@ import type {
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const getTollRates = async (): Promise<TollRatesResponse> => {
-  return await fetchWsdot<TollRatesResponse>(
-    "tollRates",
-    "/GetTollRatesAsJson"
-  );
-};
+export const getTollRates = (): Promise<TollRatesResponse> =>
+  fetchTollRates<TollRatesResponse>("/GetTollRatesAsJson");
 
 /**
  * Retrieves toll trip information with geometry data from WSDOT API
@@ -43,12 +42,8 @@ export const getTollRates = async (): Promise<TollRatesResponse> => {
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = async (): Promise<TollTripInfoResponse> => {
-  return await fetchWsdot<TollTripInfoResponse>(
-    "tollRates",
-    "/GetTollTripInfoAsJson"
-  );
-};
+export const getTollTripInfo = (): Promise<TollTripInfoResponse> =>
+  fetchTollRates<TollTripInfoResponse>("/GetTollTripInfoAsJson");
 
 /**
  * Retrieves toll trip rates with messages and update times from WSDOT API
@@ -63,9 +58,5 @@ export const getTollTripInfo = async (): Promise<TollTripInfoResponse> => {
  * console.log(tripRates.Trips[0].Toll); // 0
  * ```
  */
-export const getTollTripRates = async (): Promise<TollTripRatesResponse> => {
-  return await fetchWsdot<TollTripRatesResponse>(
-    "tollRates",
-    "/GetTollTripRatesAsJson"
-  );
-};
+export const getTollTripRates = (): Promise<TollTripRatesResponse> =>
+  fetchTollRates<TollTripRatesResponse>("/GetTollTripRatesAsJson");

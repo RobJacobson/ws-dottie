@@ -115,9 +115,12 @@ describe("WSDOT Travel Times API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
+            error instanceof Error ? error.constructor.name : "Unknown"
           );
-          console.log("Error message:", (error as any).message || "No message");
+          console.log(
+            "Error message:",
+            error instanceof Error ? error.message : "No message"
+          );
         }
         // Test passes regardless of error type
       }

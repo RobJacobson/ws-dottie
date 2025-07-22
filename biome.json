@@ -8,6 +8,7 @@
   "files": {
     "ignoreUnknown": false
   },
+
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -19,7 +20,7 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedImports": "off",
+        "noUnusedImports": "warn",
         "noUnusedVariables": "off",
         "useHookAtTopLevel": "error",
         "useExhaustiveDependencies": "warn"

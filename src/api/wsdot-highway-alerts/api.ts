@@ -2,9 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type { HighwayAlert, HighwayAlertsResponse } from "./types";
+
+// Module-scoped fetch function for highway alerts API
+const fetchHighwayAlerts = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
+);
 
 /**
  * Get all highway alerts from WSDOT Highway Alerts API
@@ -14,9 +19,8 @@ import type { HighwayAlert, HighwayAlertsResponse } from "./types";
  *
  * @returns Promise resolving to array of highway alert data
  */
-export const getHighwayAlerts = async (): Promise<HighwayAlertsResponse> => {
-  return fetchWsdot<HighwayAlertsResponse>("highwayAlerts", "/GetAlertsAsJson");
-};
+export const getHighwayAlerts = (): Promise<HighwayAlertsResponse> =>
+  fetchHighwayAlerts<HighwayAlertsResponse>("/GetAlertsAsJson");
 
 /**
  * Get a specific highway alert by ID from WSDOT Highway Alerts API
@@ -26,14 +30,8 @@ export const getHighwayAlerts = async (): Promise<HighwayAlertsResponse> => {
  * @param alertId - The unique identifier for the highway alert
  * @returns Promise resolving to a single highway alert
  */
-export const getHighwayAlertById = async (
-  alertId: number
-): Promise<HighwayAlert> => {
-  return fetchWsdot<HighwayAlert>(
-    "highwayAlerts",
-    `/GetAlertAsJson?AlertID=${alertId}`
-  );
-};
+export const getHighwayAlertById = (alertId: number): Promise<HighwayAlert> =>
+  fetchHighwayAlerts<HighwayAlert>(`/GetAlertAsJson?AlertID=${alertId}`);
 
 /**
  * Get highway alerts by map area from WSDOT Highway Alerts API
@@ -44,11 +42,9 @@ export const getHighwayAlertById = async (
  * @param mapArea - The map area identifier to filter alerts
  * @returns Promise resolving to array of highway alert data for the specified area
  */
-export const getHighwayAlertsByMapArea = async (
+export const getHighwayAlertsByMapArea = (
   mapArea: string
-): Promise<HighwayAlertsResponse> => {
-  return fetchWsdot<HighwayAlertsResponse>(
-    "highwayAlerts",
+): Promise<HighwayAlertsResponse> =>
+  fetchHighwayAlerts<HighwayAlertsResponse>(
     `/GetAlertsByMapAreaAsJson?MapArea=${encodeURIComponent(mapArea)}`
   );
-};

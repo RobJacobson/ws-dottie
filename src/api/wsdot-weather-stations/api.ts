@@ -2,9 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
 
-import { fetchWsdot } from "@/shared/fetching/fetch";
+import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
-import type { WeatherStationData, WeatherStationsResponse } from "./types";
+import type { WeatherStationsResponse } from "./types";
+
+// Module-scoped fetch function for weather stations API
+const fetchWeatherStations = createFetchFunction(
+  "https://wsdot.wa.gov/Traffic/api/WeatherStations/WeatherStationsREST.svc"
+);
 
 /**
  * Retrieves a list of WSDOT weather stations
@@ -19,10 +24,5 @@ import type { WeatherStationData, WeatherStationsResponse } from "./types";
  * console.log(weatherStations[0].StationName); // "S 144th St on SB I-5 at mp 155.32"
  * ```
  */
-export const getWeatherStations =
-  async (): Promise<WeatherStationsResponse> => {
-    return await fetchWsdot<WeatherStationsResponse>(
-      "weatherStations",
-      "/GetCurrentStationsAsJson"
-    );
-  };
+export const getWeatherStations = (): Promise<WeatherStationsResponse> =>
+  fetchWeatherStations<WeatherStationsResponse>("/GetCurrentStationsAsJson");
