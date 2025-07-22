@@ -2,9 +2,9 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-import { createInfrequentUpdateOptions } from "@/shared/caching/config";
+import { REACT_QUERY } from "@/shared/caching/config";
 
 import { getBridgeClearances } from "./api";
 import type { BridgeClearancesResponse } from "./types";
@@ -21,16 +21,13 @@ import type { BridgeClearancesResponse } from "./types";
  */
 export const useBridgeClearances = (
   route: string,
-  options?: Omit<
-    UseQueryOptions<BridgeClearancesResponse>,
-    "queryKey" | "queryFn"
-  >
+  options?: Parameters<typeof useQuery<BridgeClearancesResponse>>[0]
 ) => {
   return useQuery({
-    queryKey: ["bridgeClearances", route],
+    queryKey: ["bridge-clearances", route],
     queryFn: () => getBridgeClearances(route),
     enabled: !!route,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };

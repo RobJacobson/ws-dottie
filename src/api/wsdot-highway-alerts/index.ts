@@ -13,7 +13,7 @@ export {
   useHighwayAlertById,
   useHighwayAlerts,
   useHighwayAlertsByMapArea,
-} from "./hook";
+} from "./queries";
 // Export types
 export type {
   HighwayAlert,

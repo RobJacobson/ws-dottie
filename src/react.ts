@@ -144,42 +144,42 @@ export type {
 // ============================================================================
 
 // Fares API hooks
-export * from "@/api/wsf-fares/hook";
+export * from "@/api/wsf-fares/queries";
 // Schedule API hooks
-export * from "@/api/wsf-schedule/hook";
+export * from "@/api/wsf-schedule/queries";
 // Terminals API hooks
-export * from "@/api/wsf-terminals/hook";
+export * from "@/api/wsf-terminals/queries";
 // Vessels API hooks
-export * from "@/api/wsf-vessels/hook";
+export * from "@/api/wsf-vessels/queries";
 
 // ============================================================================
 // WSDOT (Washington State Department of Transportation) API React Query Hooks
 // ============================================================================
 
 // Border Crossings API hooks
-export * from "@/api/wsdot-border-crossings/hook";
+export * from "@/api/wsdot-border-crossings/queries";
 // Bridge Clearances API hooks
-export * from "@/api/wsdot-bridge-clearances/hook";
+export * from "@/api/wsdot-bridge-clearances/queries";
 // Commercial Vehicle Restrictions API hooks
-export * from "@/api/wsdot-commercial-vehicle-restrictions/hook";
+export * from "@/api/wsdot-commercial-vehicle-restrictions/queries";
 // Highway Alerts API hooks
-export * from "@/api/wsdot-highway-alerts/hook";
+export * from "@/api/wsdot-highway-alerts/queries";
 // Highway Cameras API hooks
-export * from "@/api/wsdot-highway-cameras/hook";
+export * from "@/api/wsdot-highway-cameras/queries";
 // Mountain Pass Conditions API hooks
-export * from "@/api/wsdot-mountain-pass-conditions/hook";
+export * from "@/api/wsdot-mountain-pass-conditions/queries";
 // Toll Rates API hooks
-export * from "@/api/wsdot-toll-rates/hook";
+export * from "@/api/wsdot-toll-rates/queries";
 // Traffic Flow API hooks
-export * from "@/api/wsdot-traffic-flow/hook";
+export * from "@/api/wsdot-traffic-flow/queries";
 // Travel Times API hooks
-export * from "@/api/wsdot-travel-times/hook";
+export * from "@/api/wsdot-travel-times/queries";
 // Weather Information API hooks
-export * from "@/api/wsdot-weather-information/hook";
+export * from "@/api/wsdot-weather-information/queries";
 // Weather Information Extended API hooks
-export * from "@/api/wsdot-weather-information-extended/hook";
+export * from "@/api/wsdot-weather-information-extended/queries";
 // Weather Stations API hooks
-export * from "@/api/wsdot-weather-stations/hook";
+export * from "@/api/wsdot-weather-stations/queries";
 
 // ============================================================================
 // Shared Utilities
@@ -187,3 +187,27 @@ export * from "@/api/wsdot-weather-stations/hook";
 
 // Shared caching utilities
 export * from "@/shared/caching";
+
+// React Query hooks for all APIs
+
+// WSDOT APIs
+export * from "./api/wsdot-border-crossings/queries";
+export * from "./api/wsdot-bridge-clearances/queries";
+export * from "./api/wsdot-commercial-vehicle-restrictions/queries";
+export * from "./api/wsdot-highway-alerts/queries";
+export * from "./api/wsdot-highway-cameras/queries";
+export * from "./api/wsdot-mountain-pass-conditions/queries";
+export * from "./api/wsdot-toll-rates/queries";
+export * from "./api/wsdot-traffic-flow/queries";
+export * from "./api/wsdot-travel-times/queries";
+export * from "./api/wsdot-weather-information/queries";
+export * from "./api/wsdot-weather-information-extended/queries";
+export * from "./api/wsdot-weather-stations/queries";
+export * from "./api/wsf-fares/queries";
+export * from "./api/wsf-schedule/cache";
+export * from "./api/wsf-schedule/queries";
+export * from "./api/wsf-terminals/cache";
+export * from "./api/wsf-terminals/queries";
+export * from "./api/wsf-vessels/cache";
+// WSF APIs
+export * from "./api/wsf-vessels/queries";

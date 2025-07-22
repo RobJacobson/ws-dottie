@@ -1,71 +1,40 @@
-// WSF Cache Provider Component
+// Generic Cache Provider Component
 // Monitors cache flush dates and automatically invalidates queries when data changes
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
-import { useCacheFlushDateSchedule } from "../../api/wsf-schedule/hook";
-import { useCacheFlushDateTerminals } from "../../api/wsf-terminals/hook";
-import { useCacheFlushDateVessels } from "../../api/wsf-vessels/hook";
-import { useWsfCacheFlushMonitor } from "./invalidation";
-
 /**
- * WSF Cache Provider Component
+ * Generic Cache Provider Component
  *
- * This component monitors cache flush dates from all WSF APIs and automatically
- * invalidates related queries when the cache flush date changes, indicating
+ * This component monitors cache flush dates and automatically
+ * invalidates queries when the cache flush date changes, indicating
  * that the underlying data has been updated on the server.
  *
- * This component should be placed high in the component tree, ideally near
- * the root of your application, to ensure all WSF queries are properly
- * invalidated when data changes.
+ * @param queryKey - The React Query key to invalidate when cache flush date changes
+ * @param useCacheFlushDateHook - Hook that returns cache flush date data
+ * @returns null (this component doesn't render anything)
  */
-export const WsfCacheProvider = () => {
-  const {
-    monitorVesselsCacheFlush,
-    monitorTerminalsCacheFlush,
-    monitorScheduleCacheFlush,
-  } = useWsfCacheFlushMonitor();
+export const CacheProvider = <T extends Date | null | undefined>(
+  queryKey: string[],
+  useCacheFlushDateHook: () => { data: T }
+) => {
+  const queryClient = useQueryClient();
+  const previousFlushDate = useRef<Date | null>(null);
+  const { data: currentFlushDate } = useCacheFlushDateHook();
 
-  // Cache flush date queries
-  const { data: vesselsCacheFlushDate } = useCacheFlushDateVessels();
-  const { data: terminalsCacheFlushDate } = useCacheFlushDateTerminals();
-  const { data: scheduleCacheFlushDate } = useCacheFlushDateSchedule();
-
-  // Store previous cache flush dates to detect changes
-  const previousVesselsFlushDate = useRef<Date | null>(null);
-  const previousTerminalsFlushDate = useRef<Date | null>(null);
-  const previousScheduleFlushDate = useRef<Date | null>(null);
-
-  // Monitor vessels cache flush date changes
   useEffect(() => {
-    const currentFlushDate = vesselsCacheFlushDate || null;
-    monitorVesselsCacheFlush(
-      previousVesselsFlushDate.current,
-      currentFlushDate
-    );
-    previousVesselsFlushDate.current = currentFlushDate;
-  }, [vesselsCacheFlushDate, monitorVesselsCacheFlush]);
-
-  // Monitor terminals cache flush date changes
-  useEffect(() => {
-    const currentFlushDate = terminalsCacheFlushDate || null;
-    monitorTerminalsCacheFlush(
-      previousTerminalsFlushDate.current,
-      currentFlushDate
-    );
-    previousTerminalsFlushDate.current = currentFlushDate;
-  }, [terminalsCacheFlushDate, monitorTerminalsCacheFlush]);
-
-  // Monitor schedule cache flush date changes
-  useEffect(() => {
-    const currentFlushDate = scheduleCacheFlushDate || null;
-    monitorScheduleCacheFlush(
-      previousScheduleFlushDate.current,
-      currentFlushDate
-    );
-    previousScheduleFlushDate.current = currentFlushDate;
-  }, [scheduleCacheFlushDate, monitorScheduleCacheFlush]);
+    if (
+      previousFlushDate.current &&
+      currentFlushDate &&
+      previousFlushDate.current.getTime() !== currentFlushDate.getTime()
+    ) {
+      queryClient.invalidateQueries({ queryKey });
+    }
+    
+    previousFlushDate.current = currentFlushDate || null;
+  }, [currentFlushDate, queryClient, queryKey]);
 
   // This component doesn't render anything
   return null;
-};
+}; 

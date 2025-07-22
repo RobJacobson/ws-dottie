@@ -4,13 +4,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createInfrequentUpdateOptions } from "@/shared/caching";
+import { REACT_QUERY } from "@/shared/caching";
 
 import { getMountainPassConditionById, getMountainPassConditions } from "./api";
-import type {
-  MountainPassCondition,
-  MountainPassConditionsResponse,
-} from "./types";
+import type { MountainPassCondition } from "./types";
 
 /**
  * React Query hook for retrieving all mountain pass conditions
@@ -35,11 +32,14 @@ import type {
  * );
  * ```
  */
-export const useMountainPassConditions = () => {
-  return useQuery<MountainPassConditionsResponse>({
-    queryKey: ["mountainPassConditions"],
+export const useMountainPassConditions = (
+  options?: Parameters<typeof useQuery<MountainPassCondition[]>>[0]
+) => {
+  return useQuery({
+    queryKey: ["mountain-pass-conditions"],
     queryFn: getMountainPassConditions,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...options,
   });
 };
 
@@ -70,7 +70,7 @@ export const useMountainPassConditionById = (passConditionId: number) => {
   return useQuery<MountainPassCondition>({
     queryKey: ["mountainPassCondition", passConditionId],
     queryFn: () => getMountainPassConditionById(passConditionId),
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     enabled: passConditionId > 0,
   });
 };

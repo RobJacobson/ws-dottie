@@ -2,16 +2,16 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-import { createFrequentUpdateOptions } from "@/shared/caching/config";
+import { REACT_QUERY } from "@/shared/caching/config";
 
 import {
   getHighwayAlertById,
   getHighwayAlerts,
   getHighwayAlertsByMapArea,
 } from "./api";
-import type { HighwayAlert, HighwayAlertsResponse } from "./types";
+import type { HighwayAlert } from "./types";
 
 /**
  * Hook for getting all highway alerts from WSDOT Highway Alerts API
@@ -23,12 +23,12 @@ import type { HighwayAlert, HighwayAlertsResponse } from "./types";
  * @returns React Query result with highway alert data
  */
 export const useHighwayAlerts = (
-  options?: UseQueryOptions<HighwayAlertsResponse>
+  options?: Parameters<typeof useQuery<HighwayAlert[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "highwayAlerts"],
+    queryKey: ["highway-alerts"],
     queryFn: getHighwayAlerts,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -45,13 +45,13 @@ export const useHighwayAlerts = (
  */
 export const useHighwayAlertById = (
   alertId: number,
-  options?: UseQueryOptions<HighwayAlert>
+  options?: Parameters<typeof useQuery<HighwayAlert>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "highwayAlerts", "byId", alertId],
+    queryKey: ["highway-alerts", "byId", alertId],
     queryFn: () => getHighwayAlertById(alertId),
     enabled: !!alertId,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -68,13 +68,13 @@ export const useHighwayAlertById = (
  */
 export const useHighwayAlertsByMapArea = (
   mapArea: string,
-  options?: UseQueryOptions<HighwayAlertsResponse>
+  options?: Parameters<typeof useQuery<HighwayAlert[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "highwayAlerts", "byMapArea", mapArea],
+    queryKey: ["highway-alerts", "byMapArea", mapArea],
     queryFn: () => getHighwayAlertsByMapArea(mapArea),
     enabled: !!mapArea,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
     ...options,
   });
 };

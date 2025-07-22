@@ -2,12 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import {
-  createCacheFlushOptions,
-  createFrequentUpdateOptions,
-  createInfrequentUpdateOptions,
-} from "@/shared/caching/config";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
+import { REACT_QUERY } from "@/shared/caching/config";
 
 import {
   // Cache Flush Date API functions
@@ -64,7 +59,7 @@ export const useVesselBasics = (
   return useQuery({
     queryKey: ["vessels", "basics"],
     queryFn: getVesselBasics,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -90,7 +85,7 @@ export const useVesselBasicsById = (
     queryKey: ["vessels", "basics", "byId", vesselId],
     queryFn: () => getVesselBasicsById(vesselId),
     enabled: !!vesselId,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -118,7 +113,7 @@ export const useVesselAccommodations = (
   return useQuery({
     queryKey: ["vessels", "accommodations"],
     queryFn: getVesselAccommodations,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -144,7 +139,7 @@ export const useVesselAccommodationsById = (
     queryKey: ["vessels", "accommodations", "byId", vesselId],
     queryFn: () => getVesselAccommodationsById(vesselId),
     enabled: !!vesselId,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -173,7 +168,7 @@ export const useVesselLocations = (
   return useQuery({
     queryKey: ["vessels", "locations"],
     queryFn: getVesselLocations,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -201,7 +196,7 @@ export const useVesselLocationsByVesselId = (
     queryKey: ["vessels", "locations", "byVesselId", vesselId],
     queryFn: () => getVesselLocationsByVesselId(vesselId),
     enabled: !!vesselId,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -229,7 +224,7 @@ export const useVesselStats = (
   return useQuery({
     queryKey: ["vessels", "stats"],
     queryFn: getVesselStats,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -255,7 +250,7 @@ export const useVesselStatsById = (
     queryKey: ["vessels", "stats", "byId", vesselId],
     queryFn: () => getVesselStatsById(vesselId),
     enabled: !!vesselId,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -283,7 +278,7 @@ export const useVesselHistory = (
   return useQuery({
     queryKey: ["vessels", "history"],
     queryFn: getVesselHistory,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -315,13 +310,13 @@ export const useVesselHistoryByVesselAndDateRange = (
       "history",
       "byVesselAndDateRange",
       vesselName,
-      jsDateToYyyyMmDd(dateStart),
-      jsDateToYyyyMmDd(dateEnd),
+      dateStart,
+      dateEnd,
     ],
     queryFn: () =>
       getVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd),
-    enabled: !!(vesselName && dateStart && dateEnd),
-    ...createInfrequentUpdateOptions(),
+    enabled: !!vesselName && !!dateStart && !!dateEnd,
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -350,7 +345,7 @@ export const useVesselVerbose = (
   return useQuery({
     queryKey: ["vessels", "verbose"],
     queryFn: getVesselVerbose,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -378,7 +373,7 @@ export const useVesselVerboseById = (
     queryKey: ["vessels", "verbose", "byId", vesselId],
     queryFn: () => getVesselVerboseById(vesselId),
     enabled: !!vesselId,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -397,9 +392,9 @@ export const useCacheFlushDateVessels = (
   options?: Parameters<typeof useQuery<VesselsCacheFlushDate | null>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "cacheFlushDate"],
+    queryKey: ["vessels", "cache-flush-date"],
     queryFn: getCacheFlushDateVessels,
-    ...createCacheFlushOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
     ...options,
   });
 };

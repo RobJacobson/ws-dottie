@@ -19,7 +19,7 @@ export {
   useHighwayCamera,
   useHighwayCameras,
   useSearchHighwayCameras,
-} from "./hook";
+} from "./queries";
 // Export types
 export type {
   Camera,

@@ -11,7 +11,7 @@ export {
 export {
   useTrafficFlowById,
   useTrafficFlows,
-} from "./hook";
+} from "./queries";
 // TypeScript types
 export type {
   FlowStationLocation,

@@ -4,10 +4,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createFrequentUpdateOptions } from "@/shared/caching";
+import { REACT_QUERY } from "@/shared/caching";
 
 import { getTrafficFlowById, getTrafficFlows } from "./api";
-import type { TrafficFlow, TrafficFlowsResponse } from "./types";
+import type { TrafficFlow } from "./types";
 
 /**
  * React Query hook for retrieving all traffic flow data
@@ -35,10 +35,10 @@ import type { TrafficFlow, TrafficFlowsResponse } from "./types";
  * ```
  */
 export const useTrafficFlows = () => {
-  return useQuery<TrafficFlowsResponse>({
-    queryKey: ["trafficFlows"],
+  return useQuery({
+    queryKey: ["traffic-flows"],
     queryFn: getTrafficFlows,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
   });
 };
 
@@ -65,11 +65,15 @@ export const useTrafficFlows = () => {
  * );
  * ```
  */
-export const useTrafficFlowById = (flowDataId: number) => {
-  return useQuery<TrafficFlow>({
-    queryKey: ["trafficFlow", flowDataId],
+export const useTrafficFlowById = (
+  flowDataId: number,
+  options?: Parameters<typeof useQuery<TrafficFlow>>[0]
+) => {
+  return useQuery({
+    queryKey: ["traffic-flow", "byId", flowDataId],
     queryFn: () => getTrafficFlowById(flowDataId),
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
     enabled: flowDataId > 0,
+    ...options,
   });
 };

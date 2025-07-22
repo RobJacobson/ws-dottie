@@ -401,7 +401,7 @@ try {
 
 ## Caching Strategy
 
-The hooks use default caching options from `createInfrequentUpdateOptions()`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
+The hooks use default caching options from `REACT_QUERY.WEEKLY_UPDATES`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
 
 **Caching by Data Type:**
 - **Cache Flush Date**: Infrequent updates (daily)

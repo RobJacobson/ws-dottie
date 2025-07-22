@@ -106,16 +106,16 @@ const { data: vessels } = useVesselLocations();
 ```typescript
 import { 
   WsfCacheProvider,
-  useWsfCacheInvalidation,
-  createFrequentUpdateOptions,
-  createInfrequentUpdateOptions
+  
+  REACT_QUERY,
 } from '@wsdot/api-client/react';
 
 // Cache provider for automatic invalidation
 <WsfCacheProvider />
 
 // Manual cache invalidation
-const { invalidateVesselQueries } = useWsfCacheInvalidation();
+const queryClient = useQueryClient();
+queryClient.invalidateQueries({ queryKey: ["vessels"] });
 ```
 
 ### Fetching

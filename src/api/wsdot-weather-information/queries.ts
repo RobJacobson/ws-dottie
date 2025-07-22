@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createFrequentUpdateOptions } from "@/shared/caching";
+import { REACT_QUERY } from "@/shared/caching";
 
 import {
   getWeatherInformation,
@@ -39,11 +39,14 @@ import type { WeatherInfo, WeatherInformationResponse } from "./types";
  * );
  * ```
  */
-export const useWeatherInformation = () => {
-  return useQuery<WeatherInformationResponse>({
-    queryKey: ["weatherInformation"],
+export const useWeatherInformation = (
+  options?: Parameters<typeof useQuery<WeatherInformationResponse>>[0]
+) => {
+  return useQuery({
+    queryKey: ["weather-information"],
     queryFn: getWeatherInformation,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.HOURLY_UPDATES,
+    ...options,
   });
 };
 
@@ -72,12 +75,16 @@ export const useWeatherInformation = () => {
  * );
  * ```
  */
-export const useWeatherInformationByStationId = (stationId: number) => {
-  return useQuery<WeatherInfo>({
-    queryKey: ["weatherInformation", stationId],
+export const useWeatherInformationByStationId = (
+  stationId: number,
+  options?: Parameters<typeof useQuery<WeatherInfo>>[0]
+) => {
+  return useQuery({
+    queryKey: ["weather-information", "byStationId", stationId],
     queryFn: () => getWeatherInformationByStationId(stationId),
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.HOURLY_UPDATES,
     enabled: stationId > 0,
+    ...options,
   });
 };
 
@@ -108,11 +115,15 @@ export const useWeatherInformationByStationId = (stationId: number) => {
  * );
  * ```
  */
-export const useWeatherInformationForStations = (stationIds: string) => {
-  return useQuery<WeatherInformationResponse>({
-    queryKey: ["weatherInformation", "stations", stationIds],
+export const useWeatherInformationForStations = (
+  stationIds: string,
+  options?: Parameters<typeof useQuery<WeatherInformationResponse>>[0]
+) => {
+  return useQuery({
+    queryKey: ["weather-information", "forStations", stationIds],
     queryFn: () => getWeatherInformationForStations(stationIds),
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.HOURLY_UPDATES,
     enabled: stationIds.length > 0,
+    ...options,
   });
 };

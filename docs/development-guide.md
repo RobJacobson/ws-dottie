@@ -109,12 +109,12 @@ export const getVesselLocations = async (): Promise<VesselLocation[]> => {
 };
 ```
 
-### 2. Consistent Naming Conventions
+### 1. Naming Conventions
 
-- **API functions**: `get*`, `fetch*` (e.g., `getVesselLocations`)
-- **React hooks**: `use*` (e.g., `useVesselLocations`)
+- **Functions**: camelCase (e.g., `getVesselLocations`)
 - **Types**: PascalCase (e.g., `VesselLocation`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `FREQUENT_UPDATE_CONFIG`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `REACT_QUERY.REALTIME_UPDATES`)
+- **Files**: kebab-case (e.g., `vessel-locations.ts`)
 
 ### 3. Error Handling
 
@@ -161,50 +161,85 @@ export type Schedule = {
 
 The library implements a sophisticated caching strategy using React Query with three distinct configurations:
 
-### 1. Frequent Update Configuration
+### 1. Real-time Configuration
 
 For real-time data that changes frequently (every few seconds to minutes):
 
 ```typescript
-export const FREQUENT_UPDATE_CONFIG = {
-  staleTime: 30 * SECOND,        // Data considered stale after 30s
-  gcTime: 2 * MINUTE,            // Keep in cache for 2 minutes
-  refetchInterval: 5 * SECOND,   // Refetch every 5 seconds
-  refetchOnWindowFocus: true,    // Refetch when window regains focus
-  retry: 3,                      // Retry up to 3 times
-};
+export const REACT_QUERY = {
+  REALTIME_UPDATES: {
+    staleTime: 30 * SECOND,        // Data considered stale after 30s
+    gcTime: 2 * MINUTE,            // Keep in cache for 2 minutes
+    refetchInterval: 5 * SECOND,   // Refetch every 5 seconds
+    refetchOnWindowFocus: true,    // Refetch when window regains focus
+    retry: 1,                      // Retry once with 2-second delay
+  },
+  MINUTE_UPDATES: {
+    staleTime: 5 * MINUTE,         // Data considered stale after 5 minutes
+    gcTime: 10 * MINUTE,           // Keep in cache for 10 minutes
+    refetchInterval: 1 * MINUTE,   // Refetch every 1 minute
+    refetchOnWindowFocus: true,    // Refetch when window regains focus
+    retry: false,                  // No retries
+  },
+  HOURLY_UPDATES: {
+    staleTime: 2 * HOUR,            // Data considered stale after 2 hours
+    gcTime: 4 * HOUR,               // Keep in cache for 4 hours
+    refetchInterval: 1 * HOUR,      // Refetch every 1 hour
+    refetchOnWindowFocus: true,     // Refetch when window regains focus
+    retry: 5,                       // Retry up to 5 times
+  },
+  DAILY_UPDATES: {
+    staleTime: 1 * DAY,             // Data considered stale after 1 day
+    gcTime: 2 * DAY,                // Keep in cache for 2 days
+    refetchInterval: 1 * DAY,       // Refetch every 1 day
+    refetchOnWindowFocus: true,     // Refetch when window regains focus
+    retry: 5,                       // Retry up to 5 times
+  },
+  WEEKLY_UPDATES: {
+    staleTime: 1 * WEEK,           // Data considered stale after 1 week
+    gcTime: 2 * WEEK,              // Keep in cache for 2 weeks
+    refetchInterval: false,        // No automatic refetch
+    refetchOnWindowFocus: true,    // Refetch when window regains focus
+    retry: 5,                      // Retry up to 5 times
+  },
+} as const;
 ```
 
-**Use cases**: Vessel locations, terminal wait times, highway alerts
+**Use cases**: 
+- `REALTIME_UPDATES`: Vessel locations, terminal wait times
+- `MINUTE_UPDATES`: Highway alerts, border crossings, traffic flow, travel times, toll rates, cache flush coordination
+- `HOURLY_UPDATES`: Weather forecasts, traffic patterns, moderate frequency data
+- `DAILY_UPDATES`: Schedule changes, fare updates, daily reports
+- `WEEKLY_UPDATES`: Terminal info, vessel specs, routes, schedules
 
-### 2. Infrequent Update Configuration
+### 2. Weekly Update Configuration
 
 For static data that changes rarely (daily to weekly):
 
 ```typescript
-export const INFREQUENT_UPDATE_CONFIG = {
+REACT_QUERY.WEEKLY_UPDATES: {
   staleTime: 1 * WEEK,           // Data considered stale after 1 week
   gcTime: 2 * WEEK,              // Keep in cache for 2 weeks
   refetchInterval: false,        // No automatic refetch
   refetchOnWindowFocus: true,    // Refetch when window regains focus
   retry: 5,                      // Retry up to 5 times
-};
+}
 ```
 
 **Use cases**: Terminal information, vessel specifications, routes, schedules
 
-### 3. Cache Flush Configuration
+### 3. Minute Update Configuration
 
 For cache flush date monitoring:
 
 ```typescript
-export const CACHE_FLUSH_CONFIG = {
+REACT_QUERY.MINUTE_UPDATES: {
   staleTime: 5 * MINUTE,         // Data considered stale after 5 minutes
   gcTime: 10 * MINUTE,           // Keep in cache for 10 minutes
-  refetchInterval: 2 * MINUTE,   // Refetch every 2 minutes
+  refetchInterval: 1 * MINUTE,   // Refetch every 1 minute
   refetchOnWindowFocus: true,    // Refetch when window regains focus
-  retry: 5,                      // Retry up to 5 times
-};
+  retry: false,                  // No retries
+}
 ```
 
 ### Automatic Cache Invalidation
@@ -228,15 +263,15 @@ export const WsfCacheProvider = () => {
 You can also manually invalidate cache when needed:
 
 ```typescript
-import { useWsfCacheInvalidation } from '@/shared/caching';
+import { useQueryClient } from '@tanstack/react-query';
 
-const { invalidateVesselQueries, invalidateTerminalQueries } = useWsfCacheInvalidation();
+const queryClient = useQueryClient();
 
 // Invalidate all vessel queries
-invalidateVesselQueries();
+queryClient.invalidateQueries({ queryKey: ["vessels"] });
 
 // Invalidate specific terminal queries
-invalidateTerminalQueriesByType('waitTimes');
+queryClient.invalidateQueries({ queryKey: ["terminals", "waitTimes"] });
 ```
 
 ## Error Handling
@@ -398,7 +433,7 @@ export const useVesselBasics = (
   return useQuery({
     queryKey: ["vessels", "basics"],
     queryFn: getVesselBasics,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -416,6 +451,40 @@ export const useVesselLocationsByVesselId = (
     ...options,
   });
 };
+```
+
+### Usage Examples
+
+```typescript
+// Real-time data (vessel locations, wait times)
+const { data: vessels } = useVesselLocations({
+  ...REACT_QUERY.REALTIME_UPDATES,
+});
+
+// Frequently changing data (highway alerts, traffic flow)
+const { data: alerts } = useHighwayAlerts({
+  ...REACT_QUERY.MINUTE_UPDATES,
+});
+
+// Static data (terminals, routes)
+const { data: terminals } = useTerminalBasics({
+  ...REACT_QUERY.WEEKLY_UPDATES,
+});
+
+// Cache flush coordination
+const { data: cacheFlush } = useCacheFlushDate({
+  ...REACT_QUERY.MINUTE_UPDATES,
+});
+
+// Hourly updates (weather forecasts)
+const { data: weather } = useWeatherForecast({
+  ...REACT_QUERY.HOURLY_UPDATES,
+});
+
+// Daily updates (schedule changes)
+const { data: schedules } = useScheduleUpdates({
+  ...REACT_QUERY.DAILY_UPDATES,
+});
 ```
 
 ### Provider Setup
@@ -561,7 +630,7 @@ import { useVesselLocations } from '@/react';
 import { getVesselLocations } from '@/api/wsf-vessels';
 
 // Not recommended - imports everything
-import * as WsfVessels from '@/api/wsf-vessels';
+import * as WsfVessels from '@wsdot/api-client';
 ```
 
 ### Memory Management
@@ -572,114 +641,3 @@ React Query automatically manages cache memory:
 // Cache garbage collection
 gcTime: 2 * WEEK, // Keep in cache for 2 weeks
 ```
-
-## Getting Started
-
-### Installation
-
-```bash
-npm install @wsdot/api-client
-```
-
-### Basic Setup
-
-```typescript
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WsfCacheProvider } from '@wsdot/api-client/react';
-
-const queryClient = new QueryClient();
-
-const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <WsfCacheProvider />
-      <YourApp />
-    </QueryClientProvider>
-  );
-};
-```
-
-### First API Call
-
-```typescript
-import { useVesselBasics } from '@wsdot/api-client/react';
-
-const VesselList = () => {
-  const { data: vessels, isLoading, error } = useVesselBasics();
-
-  if (isLoading) return <div>Loading vessels...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <div>
-      {vessels?.map(vessel => (
-        <div key={vessel.VesselID}>{vessel.VesselName}</div>
-      ))}
-    </div>
-  );
-};
-```
-
-### Environment Configuration
-
-Set up your API key:
-
-```bash
-# .env file
-WSDOT_ACCESS_TOKEN=your_api_key_here
-```
-
-The library automatically reads the API key from environment variables.
-
-### Next Steps
-
-1. **Explore the API Reference** for detailed endpoint documentation
-2. **Check the examples** in the `examples/` directory
-3. **Review the caching strategy** for optimal performance
-4. **Set up error boundaries** for production applications
-
-## Best Practices
-
-### 1. Use Appropriate Caching Strategies
-
-- Use frequent update hooks for real-time data
-- Use infrequent update hooks for static data
-- Let the cache provider handle automatic invalidation
-
-### 2. Handle Loading and Error States
-
-```typescript
-const { data, isLoading, error } = useSomeApi();
-
-if (isLoading) return <LoadingSpinner />;
-if (error) return <ErrorMessage error={error} />;
-if (!data) return <NoDataMessage />;
-```
-
-### 3. Optimize Bundle Size
-
-```typescript
-// Good - tree-shakable
-import { useVesselLocations } from '@wsdot/api-client/react';
-
-// Avoid - imports everything
-import * as WsfVessels from '@wsdot/api-client';
-```
-
-### 4. Monitor Performance
-
-```typescript
-// Use performance monitoring in development
-const { data, duration } = await measureApiCall(getVesselLocations);
-console.log(`API call took ${duration}ms`);
-```
-
-### 5. Handle Rate Limiting
-
-The library handles rate limiting automatically, but be mindful of:
-
-- Making too many requests simultaneously
-- Not caching data appropriately
-- Ignoring error responses
-
-This development guide should help you get started with the WSDOT API client library. For detailed API documentation, see the API Reference guide. 

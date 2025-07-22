@@ -5,9 +5,12 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/.expo": true
+    "**/.expo": true,
+    ".env": true,
+    "biome.json": true,
+    "package-lock.json": true
   },
-  "hide-files.files": [],
+  "hide-files.files": [".env", "biome.json", "package-lock.json"],
   "editor.codeActionsOnSave": {
     "quickfix.biome": "explicit",
     "source.organizeImports.biome": "explicit"

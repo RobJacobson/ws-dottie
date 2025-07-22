@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createInfrequentUpdateOptions } from "@/shared/caching";
+import { REACT_QUERY } from "@/shared/caching";
 
 import { getWeatherStations } from "./api";
 import type { WeatherStationsResponse } from "./types";
@@ -35,10 +35,13 @@ import type { WeatherStationsResponse } from "./types";
  * );
  * ```
  */
-export const useWeatherStations = () => {
-  return useQuery<WeatherStationsResponse>({
-    queryKey: ["weatherStations"],
+export const useWeatherStations = (
+  options?: Parameters<typeof useQuery<WeatherStationsResponse>>[0]
+) => {
+  return useQuery({
+    queryKey: ["weather-stations"],
     queryFn: getWeatherStations,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...options,
   });
 };

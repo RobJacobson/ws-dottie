@@ -8,15 +8,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createInfrequentUpdateOptions } from "../../shared/caching/config";
+import { REACT_QUERY } from "../../shared/caching/config";
 import {
   getHighwayCamera,
   getHighwayCameras,
   searchHighwayCameras,
 } from "./api";
 import type {
+  Camera,
   GetCameraResponse,
-  GetCamerasResponse,
   SearchCamerasParams,
   SearchCamerasResponse,
 } from "./types";
@@ -27,12 +27,14 @@ import type {
  * @param options - Optional query options
  * @returns React Query result containing all camera data
  */
-export const useHighwayCameras = (options?: { enabled?: boolean }) => {
-  return useQuery<GetCamerasResponse>({
-    queryKey: ["wsdot", "highwayCameras", "all"],
+export const useHighwayCameras = (
+  options?: Parameters<typeof useQuery<Camera[]>>[0]
+) => {
+  return useQuery({
+    queryKey: ["highway-cameras"],
     queryFn: () => getHighwayCameras(),
-    ...createInfrequentUpdateOptions(),
-    enabled: options?.enabled ?? true,
+    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...options,
   });
 };
 
@@ -52,7 +54,7 @@ export const useHighwayCamera = (
   return useQuery<GetCameraResponse>({
     queryKey: ["wsdot", "highwayCameras", "camera", cameraID],
     queryFn: () => getHighwayCamera(cameraID),
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     enabled: (options?.enabled ?? true) && cameraID > 0,
   });
 };
@@ -73,7 +75,7 @@ export const useSearchHighwayCameras = (
   return useQuery<SearchCamerasResponse>({
     queryKey: ["wsdot", "highwayCameras", "search", params],
     queryFn: () => searchHighwayCameras(params),
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     enabled: options?.enabled ?? true,
   });
 };

@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createFrequentUpdateOptions } from "@/shared/caching";
+import { REACT_QUERY } from "@/shared/caching";
 
 import { getWeatherInformationExtended } from "./api";
 import type { WeatherInformationExtendedResponse } from "./types";
@@ -37,10 +37,13 @@ import type { WeatherInformationExtendedResponse } from "./types";
  * );
  * ```
  */
-export const useWeatherInformationExtended = () => {
-  return useQuery<WeatherInformationExtendedResponse>({
-    queryKey: ["weatherInformationExtended"],
+export const useWeatherInformationExtended = (
+  options?: Parameters<typeof useQuery<WeatherInformationExtendedResponse>>[0]
+) => {
+  return useQuery({
+    queryKey: ["weather-information-extended"],
     queryFn: getWeatherInformationExtended,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.HOURLY_UPDATES,
+    ...options,
   });
 };

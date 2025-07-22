@@ -11,7 +11,7 @@ export {
 export {
   useTravelTimeById,
   useTravelTimes,
-} from "./hook";
+} from "./queries";
 // TypeScript types
 export type {
   TravelTimeEndpoint,

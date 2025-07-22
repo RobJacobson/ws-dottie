@@ -4,10 +4,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { createFrequentUpdateOptions } from "@/shared/caching";
+import { REACT_QUERY } from "@/shared/caching";
 
 import { getTravelTimeById, getTravelTimes } from "./api";
-import type { TravelTimeRoute, TravelTimesResponse } from "./types";
+import type { TravelTimeRoute } from "./types";
 
 /**
  * React Query hook for retrieving all travel times
@@ -35,11 +35,14 @@ import type { TravelTimeRoute, TravelTimesResponse } from "./types";
  * );
  * ```
  */
-export const useTravelTimes = () => {
-  return useQuery<TravelTimesResponse>({
-    queryKey: ["travelTimes"],
+export const useTravelTimes = (
+  options?: Parameters<typeof useQuery<TravelTimeRoute[]>>[0]
+) => {
+  return useQuery({
+    queryKey: ["travel-times"],
     queryFn: getTravelTimes,
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
+    ...options,
   });
 };
 
@@ -68,11 +71,15 @@ export const useTravelTimes = () => {
  * );
  * ```
  */
-export const useTravelTimeById = (travelTimeId: number) => {
-  return useQuery<TravelTimeRoute>({
-    queryKey: ["travelTime", travelTimeId],
+export const useTravelTimeById = (
+  travelTimeId: number,
+  options?: Parameters<typeof useQuery<TravelTimeRoute>>[0]
+) => {
+  return useQuery({
+    queryKey: ["travel-time", "byId", travelTimeId],
     queryFn: () => getTravelTimeById(travelTimeId),
-    ...createFrequentUpdateOptions(),
+    ...REACT_QUERY.MINUTE_UPDATES,
     enabled: travelTimeId > 0,
+    ...options,
   });
 };

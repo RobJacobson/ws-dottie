@@ -162,13 +162,14 @@ try {
 }
 ```
 
-## Caching
+## Caching Strategy
 
-The React Query hooks use frequent update caching strategies:
+The hooks use `REACT_QUERY.MINUTE_UPDATES` for traffic flow data since this data changes frequently but not every few seconds:
 
-- **Stale Time**: 30 seconds (data considered fresh for 30 seconds)
-- **Cache Time**: 2 minutes (data kept in cache for 2 minutes)
-- **Refetch Interval**: 30 seconds (automatically refetch every 30 seconds)
+- **Stale Time**: 5 minutes (data considered stale after 5 minutes)
+- **Refetch Interval**: 1 minute (refetch every 1 minute)
+- **Retries**: None (simple polling)
+- **Garbage Collection**: 10 minutes (keep in cache for 10 minutes)
 
 ## Examples
 

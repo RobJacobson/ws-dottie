@@ -4,7 +4,7 @@
 
 import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
 
-import { createInfrequentUpdateOptions } from "@/shared/caching/config";
+import { REACT_QUERY } from "@/shared/caching/config";
 
 import {
   getCommercialVehicleRestrictions,
@@ -26,12 +26,14 @@ import type {
  * @returns React Query result with commercial vehicle restriction data
  */
 export const useCommercialVehicleRestrictions = (
-  options?: UseQueryOptions<CommercialVehicleRestrictionsResponse>
+  options?: Parameters<
+    typeof useQuery<CommercialVehicleRestrictionsResponse[]>
+  >[0]
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "commercialVehicleRestrictions"],
+    queryKey: ["commercial-vehicle-restrictions"],
     queryFn: getCommercialVehicleRestrictions,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -53,7 +55,7 @@ export const useCommercialVehicleRestrictionsWithId = (
   return useQuery({
     queryKey: ["wsdot", "commercialVehicleRestrictions", "withId"],
     queryFn: getCommercialVehicleRestrictionsWithId,
-    ...createInfrequentUpdateOptions(),
+    ...REACT_QUERY.WEEKLY_UPDATES,
     ...options,
   });
 };
