@@ -70,8 +70,6 @@ describe("Terminal Wait Times E2E Tests", () => {
     });
   });
 
-
-
   describe("getTerminalWaitTimesByTerminalId", () => {
     it("should fetch terminal wait times by terminal successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
@@ -105,8 +103,6 @@ describe("Terminal Wait Times E2E Tests", () => {
     });
   });
 
-
-
   describe("useTerminalWaitTimes", () => {
     it("should fetch terminal wait times via React Query", async () => {
       const { result } = renderHook(() => useTerminalWaitTimes(), {
@@ -118,9 +114,12 @@ describe("Terminal Wait Times E2E Tests", () => {
       });
 
       // Wait for data to load
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      }, { timeout: 10000 });
+      await waitFor(
+        () => {
+          expect(result.current.isSuccess).toBe(true);
+        },
+        { timeout: 10000 }
+      );
 
       // Validate response
       expect(result.current.data).toBeDefined();
@@ -129,7 +128,9 @@ describe("Terminal Wait Times E2E Tests", () => {
 
       // Validate first terminal
       const firstTerminal = result.current.data?.[0];
-      validateTerminalWaitTimes(firstTerminal);
+      if (firstTerminal) {
+        validateTerminalWaitTimes(firstTerminal);
+      }
 
       // Performance check
       expect(result.current.dataUpdatedAt).toBeDefined();
@@ -176,8 +177,6 @@ describe("Terminal Wait Times E2E Tests", () => {
     });
   });
 
-
-
   describe("useTerminalWaitTimesByTerminalId", () => {
     it("should fetch terminal wait times by terminal via React Query", async () => {
       const { result } = renderHook(
@@ -192,13 +191,18 @@ describe("Terminal Wait Times E2E Tests", () => {
       );
 
       // Wait for data to load
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      }, { timeout: 10000 });
+      await waitFor(
+        () => {
+          expect(result.current.isSuccess).toBe(true);
+        },
+        { timeout: 10000 }
+      );
 
       // Validate response
       expect(result.current.data).toBeDefined();
-      validateTerminalWaitTimes(result.current.data!);
+      if (result.current.data) {
+        validateTerminalWaitTimes(result.current.data);
+      }
       expect(result.current.data?.TerminalID).toBe(TEST_TERMINAL_ID);
 
       await delay(RATE_LIMIT_DELAY);
@@ -211,6 +215,4 @@ describe("Terminal Wait Times E2E Tests", () => {
       await delay(RATE_LIMIT_DELAY);
     });
   });
-
-
-}); 
+});

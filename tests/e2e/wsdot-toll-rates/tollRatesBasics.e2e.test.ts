@@ -12,6 +12,7 @@ import {
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
+import { logUnexpectedError } from "../../utils";
 
 describe("WSDOT Toll Rates API - Basic Functionality", () => {
   describe("API Function Availability", () => {

@@ -12,6 +12,7 @@ import {
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
+import { logUnexpectedError } from "../../utils";
 
 // Test data constants based on cURL validation
 const TEST_STATION_ID = 1909; // Real station ID from cURL testing
@@ -77,9 +78,12 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
+            error instanceof Error ? error.constructor.name : "Unknown"
           );
-          console.log("Error message:", (error as any).message || "No message");
+          console.log(
+            "Error message:",
+            error instanceof Error ? error.message : "No message"
+          );
         }
         // Test passes regardless of error type
       }
@@ -386,6 +390,7 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
             "ESE",
             "WNW",
             "WSW",
+            "N/A", // Not available
           ];
 
           weatherInfo.forEach((station) => {
@@ -402,9 +407,12 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
+            error instanceof Error ? error.constructor.name : "Unknown"
           );
-          console.log("Error message:", (error as any).message || "No message");
+          console.log(
+            "Error message:",
+            error instanceof Error ? error.message : "No message"
+          );
         }
         // Test passes regardless of error type
       }

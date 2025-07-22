@@ -72,8 +72,8 @@ export const mockRawScheduleResponse = [
     DepartingTerminalName: "Seattle",
     ArrivingTerminalID: 2,
     ArrivingTerminalName: "Bainbridge Island",
-    DepartureTime: "2023-12-21T14:30:00",
-    ArrivalTime: "2023-12-21T15:00:00",
+    DepartureTime: "/Date(1703123400000)/",
+    ArrivalTime: null,
     VesselID: 1,
     VesselName: "M/V Cathlamet",
     IsActive: true,
@@ -121,4 +121,19 @@ export const createMockUsDate = (date: Date) => {
   const day = String(date.getDate()).padStart(2, "0");
   const year = date.getFullYear();
   return `${month}/${day}/${year}`;
+};
+
+// Helper function to get error information for logging
+export const getErrorInfo = (error: unknown) => {
+  return {
+    type: error instanceof Error ? error.constructor.name : "Unknown",
+    message: error instanceof Error ? error.message : "No message",
+  };
+};
+
+// Helper function to log unexpected errors
+export const logUnexpectedError = (error: unknown) => {
+  const errorInfo = getErrorInfo(error);
+  console.log("Unexpected error type:", errorInfo.type);
+  console.log("Error message:", errorInfo.message);
 };

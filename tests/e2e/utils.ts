@@ -5,12 +5,16 @@ import type {
   BorderCrossingLocation,
 } from "@/api/wsdot-border-crossings/types";
 import type { BridgeDataGIS } from "@/api/wsdot-bridge-clearances/types";
-import type { CommercialVehicleRestriction } from "@/api/wsdot-commercial-vehicle-restrictions/types";
+import type {
+  CommercialVehicleRestriction,
+  RoadwayLocation,
+} from "@/api/wsdot-commercial-vehicle-restrictions/types";
 import type { HighwayAlert } from "@/api/wsdot-highway-alerts/types";
 import type { Camera } from "@/api/wsdot-highway-cameras/types";
 import type { MountainPassCondition } from "@/api/wsdot-mountain-pass-conditions/types";
 import type { TollRate } from "@/api/wsdot-toll-rates/types";
 import type { TrafficFlow } from "@/api/wsdot-traffic-flow/types";
+import type { TravelTimeRoute } from "@/api/wsdot-travel-times/types";
 import type { WeatherInfo } from "@/api/wsdot-weather-information/types";
 import type { WeatherStationData } from "@/api/wsdot-weather-stations/types";
 import type {
@@ -24,6 +28,7 @@ import type {
   TerminalMate,
 } from "@/api/wsf-fares/types";
 import type {
+  ActiveSeason,
   Alert,
   AlternativeFormat,
   Route,
@@ -38,6 +43,7 @@ import type {
   ScheduleTerminalCombo,
   ScheduleTime,
   TimeAdjustment,
+  ValidDateRange,
 } from "@/api/wsf-schedule/types";
 import type {
   TerminalBasics,
@@ -45,6 +51,7 @@ import type {
   TerminalSailingSpace,
   TerminalVerbose,
   TerminalWaitTime,
+  TerminalWaitTimes,
 } from "@/api/wsf-terminals/types";
 // Import proper types for validation functions
 import type {
@@ -193,8 +200,7 @@ export const validateVesselHistory = (data: VesselHistory) => {
   expect(data).toHaveProperty("Date");
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: Cache flush date is a Date object, but the API response structure varies
-export const validateCacheFlushDate = (data: any) => {
+export const validateCacheFlushDate = (data: Date) => {
   expect(data).toBeInstanceOf(Date);
   expect(data.getTime()).toBeGreaterThan(0);
 };
@@ -255,8 +261,7 @@ export const validateTerminalLocation = (data: TerminalLocation) => {
   }
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: Terminal wait times structure includes container object with WaitTimes array
-export const validateTerminalWaitTimes = (data: any) => {
+export const validateTerminalWaitTimes = (data: TerminalWaitTimes) => {
   expect(data).toHaveProperty("TerminalID");
   expect(data).toHaveProperty("TerminalSubjectID");
   expect(data).toHaveProperty("RegionID");
@@ -264,16 +269,25 @@ export const validateTerminalWaitTimes = (data: any) => {
   expect(data).toHaveProperty("TerminalAbbrev");
   expect(data).toHaveProperty("SortSeq");
   expect(data).toHaveProperty("WaitTimes");
+  expect(typeof data.TerminalID).toBe("number");
+  expect(typeof data.TerminalSubjectID).toBe("number");
+  expect(typeof data.RegionID).toBe("number");
+  expect(typeof data.TerminalName).toBe("string");
+  expect(typeof data.TerminalAbbrev).toBe("string");
+  expect(typeof data.SortSeq).toBe("number");
   expect(Array.isArray(data.WaitTimes)).toBe(true);
 
-  // Validate first wait time if it exists
-  if (data.WaitTimes.length > 0) {
-    const firstWaitTime = data.WaitTimes[0];
-    expect(firstWaitTime).toHaveProperty("RouteID");
-    expect(firstWaitTime).toHaveProperty("RouteName");
-    expect(firstWaitTime).toHaveProperty("WaitTimeLastUpdated");
-    expect(firstWaitTime.WaitTimeLastUpdated).toBeInstanceOf(Date);
-  }
+  // Validate each wait time entry
+  data.WaitTimes.forEach((waitTime) => {
+    expect(waitTime).toHaveProperty("RouteID");
+    expect(waitTime).toHaveProperty("RouteName");
+    expect(waitTime).toHaveProperty("WaitTimeIvrNotes");
+    expect(waitTime).toHaveProperty("WaitTimeLastUpdated");
+    expect(waitTime).toHaveProperty("WaitTimeNotes");
+    expect(typeof waitTime.RouteID).toBe("number");
+    expect(typeof waitTime.RouteName).toBe("string");
+    expect(waitTime.WaitTimeLastUpdated).toBeInstanceOf(Date);
+  });
 };
 
 export const validateTerminalVerbose = (data: TerminalVerbose) => {
@@ -323,14 +337,12 @@ export const validateTerminalVerbose = (data: TerminalVerbose) => {
 };
 
 // Fares API validation functions
-// biome-ignore lint/suspicious/noExplicitAny: Cache flush date is a Date object, but the API response structure varies
-export const validateFaresCacheFlushDate = (data: any) => {
+export const validateFaresCacheFlushDate = (data: Date) => {
   expect(data).toBeInstanceOf(Date);
   expect(data.getTime()).toBeGreaterThan(0);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: Valid date range structure varies by API endpoint
-export const validateFaresValidDateRange = (data: any) => {
+export const validateFaresValidDateRange = (data: ValidDateRange) => {
   expect(data).toHaveProperty("DateFrom");
   expect(data).toHaveProperty("DateThru");
   expect(data.DateFrom).toBeInstanceOf(Date);
@@ -556,12 +568,12 @@ export const validateRouteDetails = (data: RouteDetails) => {
 };
 
 // Schedule API validation functions
-export const validateScheduleCacheFlushDate = (data: any) => {
+export const validateScheduleCacheFlushDate = (data: Date) => {
   expect(data).toBeInstanceOf(Date);
   expect(data.getTime()).toBeGreaterThan(0);
 };
 
-export const validateValidDateRange = (data: any) => {
+export const validateValidDateRange = (data: ValidDateRange) => {
   expect(data).toHaveProperty("DateFrom");
   expect(data).toHaveProperty("DateThru");
   expect(data.DateFrom).toBeInstanceOf(Date);
@@ -569,7 +581,7 @@ export const validateValidDateRange = (data: any) => {
   expect(data.DateFrom.getTime()).toBeLessThan(data.DateThru.getTime());
 };
 
-export const validateActiveSeason = (data: any) => {
+export const validateActiveSeason = (data: ActiveSeason) => {
   expect(data).toHaveProperty("ScheduleID");
   expect(data).toHaveProperty("ScheduleName");
   expect(data).toHaveProperty("ScheduleSeason");
@@ -807,7 +819,7 @@ export const validateTimeAdjustment = (data: TimeAdjustment) => {
   expect(data.AdjDateThru).toBeInstanceOf(Date);
   expect(typeof data.AdjType).toBe("number");
   expect(typeof data.TidalAdj).toBe("boolean");
-  expect(data.TimeToAdj).toBeInstanceOf(Date);
+  expect(data.TimeToAdj === null || data.TimeToAdj instanceof Date).toBe(true);
   expect(Array.isArray(data.Annotations)).toBe(true);
 
   // Validate ActiveSailingDateRange structure
@@ -894,7 +906,7 @@ export const validateAlternativeFormat = (data: AlternativeFormat) => {
 
 // Error validation
 export const validateApiError = (
-  error: any,
+  error: unknown,
   expectedCode?: string | string[]
 ) => {
   expect(error).toBeInstanceOf(WsdotApiError);
@@ -904,55 +916,48 @@ export const validateApiError = (
 
   if (expectedCode) {
     if (Array.isArray(expectedCode)) {
-      expect(expectedCode).toContain(error.code);
+      expect(expectedCode).toContain((error as WsdotApiError).code);
     } else {
-      expect(error.code).toBe(expectedCode);
+      expect((error as WsdotApiError).code).toBe(expectedCode);
     }
   }
 };
 
 // WSDOT-specific validation functions
-// biome-ignore lint/suspicious/noExplicitAny: Border crossing validation uses legacy property names that don't match current API
-export const validateBorderCrossing = (data: any) => {
-  expect(data).toHaveProperty("BorderCrossingID");
-  expect(data).toHaveProperty("BorderCrossingName");
+export const validateBorderCrossing = (data: BorderCrossingData) => {
+  expect(data).toHaveProperty("CrossingName");
   expect(data).toHaveProperty("WaitTime");
-  expect(data).toHaveProperty("LaneStatus");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.BorderCrossingID).toBe("number");
-  expect(typeof data.BorderCrossingName).toBe("string");
+  expect(data).toHaveProperty("Time");
+  expect(data).toHaveProperty("BorderCrossingLocation");
+  expect(typeof data.CrossingName).toBe("string");
   expect(typeof data.WaitTime).toBe("number");
-  expect(typeof data.LaneStatus).toBe("string");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.Time).toBeInstanceOf(Date);
+  expect(data.BorderCrossingLocation).toBeDefined();
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: Bridge clearance validation uses legacy property names that don't match current API
-export const validateBridgeClearance = (data: any) => {
-  expect(data).toHaveProperty("BridgeID");
-  expect(data).toHaveProperty("BridgeName");
-  expect(data).toHaveProperty("ClearanceHeight");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.BridgeID).toBe("number");
-  expect(typeof data.BridgeName).toBe("string");
-  expect(typeof data.ClearanceHeight).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+export const validateBridgeClearance = (data: BridgeDataGIS) => {
+  expect(data).toHaveProperty("BridgeNumber");
+  expect(data).toHaveProperty("VerticalClearanceMaximumInches");
+  expect(data).toHaveProperty("APILastUpdate");
+  expect(typeof data.BridgeNumber).toBe("string");
+  expect(typeof data.VerticalClearanceMaximumInches).toBe("number");
+  expect(data.APILastUpdate).toBeInstanceOf(Date);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: Commercial vehicle restriction validation uses legacy property names
-export const validateCommercialVehicleRestriction = (data: any) => {
-  expect(data).toHaveProperty("RestrictionID");
+export const validateCommercialVehicleRestriction = (
+  data: CommercialVehicleRestriction
+) => {
   expect(data).toHaveProperty("RestrictionType");
   expect(data).toHaveProperty("StartRoadwayLocation");
   expect(data).toHaveProperty("EndRoadwayLocation");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.RestrictionID).toBe("number");
-  expect(typeof data.RestrictionType).toBe("string");
+  expect(data).toHaveProperty("DatePosted");
+  expect(typeof data.RestrictionType).toBe("number");
   expect(data.StartRoadwayLocation).toBeDefined();
   expect(data.EndRoadwayLocation).toBeDefined();
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.DatePosted).toBeInstanceOf(Date);
 };
 
-export const validateRoadwayLocation = (data: BorderCrossingLocation) => {
+export const validateRoadwayLocation = (data: RoadwayLocation) => {
   expect(data).toHaveProperty("Description");
   expect(data).toHaveProperty("Direction");
   expect(data).toHaveProperty("Latitude");
@@ -969,91 +974,91 @@ export const validateRoadwayLocation = (data: BorderCrossingLocation) => {
 
 export const validateHighwayAlert = (data: HighwayAlert) => {
   expect(data).toHaveProperty("AlertID");
-  expect(data).toHaveProperty("AlertType");
+  expect(data).toHaveProperty("EventCategory");
   expect(data).toHaveProperty("StartRoadwayLocation");
   expect(data).toHaveProperty("EndRoadwayLocation");
-  expect(data).toHaveProperty("LastUpdated");
+  expect(data).toHaveProperty("LastUpdatedTime");
   expect(typeof data.AlertID).toBe("number");
-  expect(typeof data.AlertType).toBe("string");
+  expect(typeof data.EventCategory).toBe("string");
   expect(data.StartRoadwayLocation).toBeDefined();
   expect(data.EndRoadwayLocation).toBeDefined();
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.LastUpdatedTime).toBeInstanceOf(Date);
 };
 
 export const validateHighwayCamera = (data: Camera) => {
   expect(data).toHaveProperty("CameraID");
-  expect(data).toHaveProperty("CameraName");
-  expect(data).toHaveProperty("Latitude");
-  expect(data).toHaveProperty("Longitude");
+  expect(data).toHaveProperty("Title");
+  expect(data).toHaveProperty("DisplayLatitude");
+  expect(data).toHaveProperty("DisplayLongitude");
   expect(data).toHaveProperty("ImageURL");
-  expect(data).toHaveProperty("LastUpdated");
   expect(typeof data.CameraID).toBe("number");
-  expect(typeof data.CameraName).toBe("string");
-  expect(typeof data.Latitude).toBe("number");
-  expect(typeof data.Longitude).toBe("number");
+  expect(typeof data.Title).toBe("string");
+  expect(typeof data.DisplayLatitude).toBe("number");
+  expect(typeof data.DisplayLongitude).toBe("number");
   expect(typeof data.ImageURL).toBe("string");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
 };
 
 export const validateMountainPassCondition = (data: MountainPassCondition) => {
-  expect(data).toHaveProperty("PassID");
-  expect(data).toHaveProperty("PassName");
+  expect(data).toHaveProperty("MountainPassId");
+  expect(data).toHaveProperty("MountainPassName");
   expect(data).toHaveProperty("RoadCondition");
   expect(data).toHaveProperty("WeatherCondition");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.PassID).toBe("number");
-  expect(typeof data.PassName).toBe("string");
+  expect(data).toHaveProperty("DateUpdated");
+  expect(typeof data.MountainPassId).toBe("number");
+  expect(typeof data.MountainPassName).toBe("string");
   expect(typeof data.RoadCondition).toBe("string");
   expect(typeof data.WeatherCondition).toBe("string");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data.DateUpdated).toBeInstanceOf(Date);
 };
 
 export const validateTollRate = (data: TollRate) => {
-  expect(data).toHaveProperty("TollRouteID");
-  expect(data).toHaveProperty("TollRouteName");
-  expect(data).toHaveProperty("Rate");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.TollRouteID).toBe("number");
-  expect(typeof data.TollRouteName).toBe("string");
-  expect(typeof data.Rate).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data).toHaveProperty("TripName");
+  expect(data).toHaveProperty("CurrentToll");
+  expect(data).toHaveProperty("StartLocationName");
+  expect(data).toHaveProperty("EndLocationName");
+  expect(data).toHaveProperty("TimeUpdated");
+  expect(typeof data.TripName).toBe("string");
+  expect(typeof data.CurrentToll).toBe("number");
+  expect(typeof data.StartLocationName).toBe("string");
+  expect(typeof data.EndLocationName).toBe("string");
+  expect(data.TimeUpdated).toBeInstanceOf(Date);
 };
 
 export const validateTrafficFlow = (data: TrafficFlow) => {
-  expect(data).toHaveProperty("FlowID");
-  expect(data).toHaveProperty("FlowName");
-  expect(data).toHaveProperty("FlowValue");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.FlowID).toBe("number");
-  expect(typeof data.FlowName).toBe("string");
-  expect(typeof data.FlowValue).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data).toHaveProperty("FlowDataID");
+  expect(data).toHaveProperty("FlowReadingValue");
+  expect(data).toHaveProperty("StationName");
+  expect(data).toHaveProperty("Time");
+  expect(typeof data.FlowDataID).toBe("number");
+  expect(typeof data.FlowReadingValue).toBe("number");
+  expect(typeof data.StationName).toBe("string");
+  expect(data.Time).toBeInstanceOf(Date);
 };
 
-export const validateTravelTime = (data: any) => {
+export const validateTravelTime = (data: TravelTimeRoute) => {
   expect(data).toHaveProperty("TravelTimeID");
-  expect(data).toHaveProperty("TravelTimeName");
+  expect(data).toHaveProperty("Name");
   expect(data).toHaveProperty("CurrentTime");
-  expect(data).toHaveProperty("TypicalTime");
-  expect(data).toHaveProperty("LastUpdated");
+  expect(data).toHaveProperty("AverageTime");
+  expect(data).toHaveProperty("TimeUpdated");
   expect(typeof data.TravelTimeID).toBe("number");
-  expect(typeof data.TravelTimeName).toBe("string");
+  expect(typeof data.Name).toBe("string");
   expect(typeof data.CurrentTime).toBe("number");
-  expect(typeof data.TypicalTime).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(typeof data.AverageTime).toBe("number");
+  expect(data.TimeUpdated).toBeInstanceOf(Date);
 };
 
 export const validateWeatherInformation = (data: WeatherInfo) => {
-  expect(data).toHaveProperty("WeatherStationID");
-  expect(data).toHaveProperty("Temperature");
-  expect(data).toHaveProperty("Humidity");
-  expect(data).toHaveProperty("WindSpeed");
-  expect(data).toHaveProperty("LastUpdated");
-  expect(typeof data.WeatherStationID).toBe("number");
-  expect(typeof data.Temperature).toBe("number");
-  expect(typeof data.Humidity).toBe("number");
-  expect(typeof data.WindSpeed).toBe("number");
-  expect(data.LastUpdated).toBeInstanceOf(Date);
+  expect(data).toHaveProperty("StationID");
+  expect(data).toHaveProperty("TemperatureInFahrenheit");
+  expect(data).toHaveProperty("RelativeHumidity");
+  expect(data).toHaveProperty("WindSpeedInMPH");
+  expect(data).toHaveProperty("ReadingTime");
+  expect(typeof data.StationID).toBe("number");
+  expect(typeof data.TemperatureInFahrenheit).toBe("number");
+  expect(typeof data.RelativeHumidity).toBe("number");
+  expect(typeof data.WindSpeedInMPH).toBe("number");
+  expect(data.ReadingTime).toBeInstanceOf(Date);
 };
 
 export const validateWeatherStation = (data: WeatherStationData) => {

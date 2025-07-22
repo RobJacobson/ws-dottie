@@ -145,8 +145,8 @@
     "test:e2e:vessels": "vitest --config config/vitest.e2e.config.ts tests/e2e/wsf-vessels/",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
-    "lint": "biome lint",
-    "format": "biome format --write",
+    "lint": "biome lint src/ tests/",
+    "format": "biome format --write src/ tests/",
     "type-check": "tsc --noEmit",
     "prepublishOnly": "npm run build && npm run test"
   },

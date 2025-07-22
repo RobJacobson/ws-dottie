@@ -11,6 +11,7 @@ import {
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
+import { logUnexpectedError } from "../../utils";
 
 // Test data constants based on cURL validation
 const TEST_PASS_ID = 1; // Real pass ID from cURL testing

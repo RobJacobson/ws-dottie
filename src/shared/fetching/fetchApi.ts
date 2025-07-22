@@ -37,21 +37,3 @@ export const createFetchFunction = (baseUrl: string) => {
     return fetchInternal<T>(url, endpoint, logMode);
   };
 };
-
-// Legacy WSDOT base URLs for backward compatibility
-export const WSDOT_BASE_URLS = {
-  borderCrossings: "BorderCrossings/BorderCrossingsREST.svc",
-  bridgeClearances: "Bridges/ClearanceREST.svc",
-  commercialVehicleRestrictions: "CVRestrictions/CVRestrictionsREST.svc",
-  highwayAlerts: "HighwayAlerts/HighwayAlertsREST.svc",
-  highwayCameras: "HighwayCameras/HighwayCamerasREST.svc",
-  mountainPassConditions:
-    "MountainPassConditions/MountainPassConditionsREST.svc",
-  tollRates: "TollRates/TollRatesREST.svc",
-  trafficFlow: "TrafficFlow/TrafficFlowREST.svc",
-  travelTimes: "TravelTimes/TravelTimesREST.svc",
-  weatherInformation: "WeatherInformation/WeatherInformationREST.svc",
-  weatherInformationExtended:
-    "WeatherInformationExtended/WeatherInformationExtendedREST.svc",
-  weatherStations: "WeatherStations/WeatherStationsREST.svc",
-} as const;

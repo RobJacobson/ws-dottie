@@ -11,6 +11,7 @@ import {
 } from "@/api/wsdot-toll-rates";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
+import { logUnexpectedError } from "../../utils";
 import { validateApiError } from "../utils";
 
 describe("WSDOT Toll Rates API - Data Retrieval", () => {
@@ -92,11 +93,7 @@ describe("WSDOT Toll Rates API - Data Retrieval", () => {
           // API error is expected
         } else {
           // Log the actual error for debugging
-          console.log(
-            "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
-          );
-          console.log("Error message:", (error as any).message || "No message");
+          logUnexpectedError(error);
         }
         // Test passes regardless of error type
       }
@@ -151,8 +148,10 @@ describe("WSDOT Toll Rates API - Data Retrieval", () => {
           expect(typeof firstTrip.TravelDirection).toBe("string");
           expect(typeof firstTrip.TripName).toBe("string");
 
-          // Validate date object
-          expect(firstTrip.ModifiedDate).toBeInstanceOf(Date);
+          // Validate date object (can be null)
+          if (firstTrip.ModifiedDate !== null) {
+            expect(firstTrip.ModifiedDate).toBeInstanceOf(Date);
+          }
 
           // Validate coordinates are reasonable for Washington State
           expect(firstTrip.StartLatitude).toBeGreaterThan(45);
@@ -190,11 +189,7 @@ describe("WSDOT Toll Rates API - Data Retrieval", () => {
           // API error is expected
         } else {
           // Log the actual error for debugging
-          console.log(
-            "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
-          );
-          console.log("Error message:", (error as any).message || "No message");
+          logUnexpectedError(error);
         }
         // Test passes regardless of error type
       }

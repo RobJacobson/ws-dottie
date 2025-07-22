@@ -89,17 +89,19 @@ describe("Border Crossings Get Data E2E Tests", () => {
 
         // Validate location data structure
         crossingsWithLocation.forEach((crossing) => {
-          const location = crossing.BorderCrossingLocation!;
-          expect(location).toHaveProperty("Description");
-          expect(location).toHaveProperty("Latitude");
-          expect(location).toHaveProperty("Longitude");
-          expect(location).toHaveProperty("RoadName");
+          const location = crossing.BorderCrossingLocation;
+          if (location) {
+            expect(location).toHaveProperty("Description");
+            expect(location).toHaveProperty("Latitude");
+            expect(location).toHaveProperty("Longitude");
+            expect(location).toHaveProperty("RoadName");
 
-          // Validate coordinate ranges
-          expect(location.Latitude).toBeGreaterThan(48);
-          expect(location.Latitude).toBeLessThan(50);
-          expect(location.Longitude).toBeGreaterThan(-123);
-          expect(location.Longitude).toBeLessThan(-122);
+            // Validate coordinate ranges
+            expect(location.Latitude).toBeGreaterThan(48);
+            expect(location.Latitude).toBeLessThan(50);
+            expect(location.Longitude).toBeGreaterThan(-123);
+            expect(location.Longitude).toBeLessThan(-122);
+          }
         });
       }
 

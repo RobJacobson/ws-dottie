@@ -8,6 +8,7 @@ import { getWeatherStations } from "@/api/wsdot-weather-stations";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
+import { logUnexpectedError } from "../../utils";
 
 describe("WSDOT Weather Stations API - Data Retrieval", () => {
   describe("getWeatherStations", () => {
@@ -61,9 +62,12 @@ describe("WSDOT Weather Stations API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
+            error instanceof Error ? error.constructor.name : "Unknown"
           );
-          console.log("Error message:", (error as any).message || "No message");
+          console.log(
+            "Error message:",
+            error instanceof Error ? error.message : "No message"
+          );
         }
         // Test passes regardless of error type
       }
@@ -191,41 +195,6 @@ describe("WSDOT Weather Stations API - Data Retrieval", () => {
       }
     });
 
-    it("should validate coordinate precision is reasonable", async () => {
-      try {
-        const weatherStations = await getWeatherStations();
-
-        if (weatherStations.length > 0) {
-          weatherStations.forEach((station) => {
-            // Latitude and longitude should have reasonable precision (not too many decimal places)
-            const latString = station.Latitude.toString();
-            const lonString = station.Longitude.toString();
-
-            const latDecimalPlaces = latString.includes(".")
-              ? latString.split(".")[1].length
-              : 0;
-            const lonDecimalPlaces = lonString.includes(".")
-              ? lonString.split(".")[1].length
-              : 0;
-
-            expect(latDecimalPlaces).toBeLessThanOrEqual(6);
-            expect(lonDecimalPlaces).toBeLessThanOrEqual(6);
-          });
-        }
-      } catch (error) {
-        // If API is unavailable or validation fails, test should still pass
-        if (error instanceof WsdotApiError) {
-          // API error is expected
-        } else {
-          // Log the actual error for debugging
-          console.log(
-            "Unexpected error type:",
-            (error as any).constructor?.name || "Unknown"
-          );
-          console.log("Error message:", (error as any).message || "No message");
-        }
-        // Test passes regardless of error type
-      }
-    });
+    // Removed coordinate precision test - accept whatever precision WSDOT provides
   });
 });

@@ -1,1 +1,1 @@
-export * from "../../api/wsf-fares/hook"; 
+export * from "../../api/wsf-fares/hook";

@@ -8,6 +8,7 @@ import { getWeatherInformationExtended } from "@/api/wsdot-weather-information-e
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
+import { logUnexpectedError } from "../../utils";
 
 describe("WSDOT Weather Information Extended API - Basic Functionality", () => {
   describe("API Function Availability", () => {

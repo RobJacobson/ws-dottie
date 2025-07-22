@@ -2,19 +2,22 @@
 
 const log = {
   debug: (...args: unknown[]) => {
-    if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
-      console.debug('[WSF Debug]', ...args);
+    if (
+      typeof process !== "undefined" &&
+      process.env.NODE_ENV === "development"
+    ) {
+      console.debug("[WSF Debug]", ...args);
     }
   },
   info: (...args: unknown[]) => {
-    console.info('[WSF Info]', ...args);
+    console.info("[WSF Info]", ...args);
   },
   warn: (...args: unknown[]) => {
-    console.warn('[WSF Warn]', ...args);
+    console.warn("[WSF Warn]", ...args);
   },
   error: (...args: unknown[]) => {
-    console.error('[WSF Error]', ...args);
+    console.error("[WSF Error]", ...args);
   },
 };
 
-export default log; 
+export default log;

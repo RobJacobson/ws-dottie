@@ -8,6 +8,7 @@ import { getWeatherStations } from "@/api/wsdot-weather-stations";
 import { WsdotApiError } from "@/shared/fetching/errors";
 
 import { validateApiError } from "../utils";
+import { logUnexpectedError } from "../../utils";
 
 describe("WSDOT Weather Stations API - Basic Functionality", () => {
   describe("API Function Availability", () => {

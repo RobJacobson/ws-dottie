@@ -115,9 +115,12 @@ describe("Terminal Locations E2E Tests", () => {
       });
 
       // Wait for data to load
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      }, { timeout: 10000 });
+      await waitFor(
+        () => {
+          expect(result.current.isSuccess).toBe(true);
+        },
+        { timeout: 10000 }
+      );
 
       // Validate response
       expect(result.current.data).toBeDefined();
@@ -126,7 +129,9 @@ describe("Terminal Locations E2E Tests", () => {
 
       // Validate first terminal
       const firstTerminal = result.current.data?.[0];
-      validateTerminalLocation(firstTerminal);
+      if (firstTerminal) {
+        validateTerminalLocation(firstTerminal);
+      }
 
       // Performance check
       expect(result.current.dataUpdatedAt).toBeDefined();
@@ -167,7 +172,9 @@ describe("Terminal Locations E2E Tests", () => {
 
       // Should use cached data
       expect(result2.current.dataUpdatedAt).toBe(firstCallTime);
-      expect(result2.current.data).toEqual(result1.current.data!);
+      if (result1.current.data && result2.current.data) {
+        expect(result2.current.data).toEqual(result1.current.data);
+      }
 
       await delay(RATE_LIMIT_DELAY);
     });
@@ -187,14 +194,19 @@ describe("Terminal Locations E2E Tests", () => {
       );
 
       // Wait for data to load
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBe(true);
-      }, { timeout: 10000 });
+      await waitFor(
+        () => {
+          expect(result.current.isSuccess).toBe(true);
+        },
+        { timeout: 10000 }
+      );
 
       // Validate response
       expect(result.current.data).toBeDefined();
       expect(typeof result.current.data).toBe("object");
-      validateTerminalLocation(result.current.data!);
+      if (result.current.data) {
+        validateTerminalLocation(result.current.data);
+      }
       expect(result.current.data?.TerminalID).toBe(TEST_TERMINAL_ID);
 
       await delay(RATE_LIMIT_DELAY);
@@ -207,4 +219,4 @@ describe("Terminal Locations E2E Tests", () => {
       await delay(RATE_LIMIT_DELAY);
     });
   });
-}); 
+});

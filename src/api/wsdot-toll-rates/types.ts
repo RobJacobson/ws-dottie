@@ -32,7 +32,7 @@ export type TollTripInfo = {
   EndLongitude: number;
   EndMilepost: number;
   Geometry: string; // GeoJSON LineString geometry
-  ModifiedDate: Date; // Converted from WSDOT date format "/Date(timestamp)/"
+  ModifiedDate: Date | null; // Converted from WSDOT date format "/Date(timestamp)/" or null if not available
   StartLatitude: number;
   StartLocationName: string;
   StartLongitude: number;
