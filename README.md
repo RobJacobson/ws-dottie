@@ -63,6 +63,25 @@ const vessels = await getVesselLocations();
 // Same API, different underlying transport - you don't need to worry about it!
 ```
 
+### 🔧 **Unified Fetch Architecture**
+All API modules use a unified `createFetchFunction` approach for consistent behavior:
+
+- **Module-Scoped Configuration**: Each API module has its own fetch function with the correct base URL
+- **Automatic Transformation**: Date parsing and data transformation happen automatically
+- **Platform Detection**: Automatically chooses the best fetch method for your environment
+- **Error Handling**: Consistent error handling across all APIs
+- **Type Safety**: Full TypeScript support with proper type inference
+
+```typescript
+// Internal implementation (you don't need to worry about this)
+const fetchVessels = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
+);
+
+// Public API (this is what you use)
+const vessels = await WsfVessels.getVesselLocations();
+```
+
 ### 🌊 **Complete WSF (Washington State Ferries) Coverage**
 - **Real-time vessel tracking** with GPS coordinates
 - **Live sailing schedules** and route information

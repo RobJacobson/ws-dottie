@@ -5,12 +5,14 @@ Shared utilities and configuration for the WSDOT API client library, providing c
 ## Overview
 
 This module provides the foundational infrastructure for all WSDOT API interactions, including:
-- Platform-agnostic fetch utilities
+- Platform-agnostic fetch utilities with unified `createFetchFunction` approach
 - Automatic data transformation and date parsing
 - Error handling and logging
 - Configuration management
 - React Query caching strategies
 - Type-safe URL building
+
+> **Note**: The fetch functions described in this documentation are internal implementation details. For normal usage, use the public API functions exported from the main library (e.g., `WsfVessels.getVesselLocations()`).
 
 ## Architecture
 
@@ -329,13 +331,9 @@ type FetchError = {
 
 ### Logging Configuration
 ```typescript
-// Enable debug logging for specific endpoints
-const options: FetchOptions = {
-  logLevel: 'debug',
-  timeout: 10000
-};
-
-const data = await fetchWsf('/vessels/vessellocations', options);
+// Logging is handled automatically by the fetch functions
+// Debug information is available in development mode
+// Error logging is automatic for all API calls
 ```
 
 ## Performance Optimizations
@@ -357,41 +355,38 @@ const data = await fetchWsf('/vessels/vessellocations', options);
 
 ## Usage Examples
 
-### Basic API Call
+### Module-Scoped Fetch Functions
 ```typescript
-import { fetchWsf } from '@/shared/fetching';
+import { createFetchFunction } from '@/shared/fetching/fetchApi';
 
-// Fetch vessel locations
-const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
+// Create module-scoped fetch function for WSF vessels API
+const fetchVessels = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
+);
 
-// Fetch with options
-const routes = await fetchWsf<Route[]>('/schedule/routes', {
-  timeout: 5000,
-  retries: 3,
-  logLevel: 'debug'
-});
+// API functions using the module-scoped fetch
+export const getVesselLocations = (): Promise<VesselLocation[]> =>
+  fetchVessels<VesselLocation[]>("/vessellocations");
+
+export const getVesselBasics = (): Promise<VesselBasic[]> =>
+  fetchVessels<VesselBasic[]>("/vesselbasics");
 ```
 
-### URL Building with Parameters
+### Direct API Usage
 ```typescript
-import { buildWsfUrl } from '@/shared/fetching';
+import { WsfVessels } from 'ws-dottie';
 
-// Build URL with date parameter
-const url = buildWsfUrl('/schedule/routes', {
-  date: new Date('2023-12-21'),
-  terminalId: 1
-});
-
-// Use in fetch
-const routes = await fetchWsf<Route[]>(url);
+// Use the public API functions
+const vessels = await WsfVessels.getVesselLocations();
+const basics = await WsfVessels.getVesselBasics();
 ```
 
 ### Error Handling
 ```typescript
-import { fetchWsf } from '@/shared/fetching';
+import { WsfVessels } from 'ws-dottie';
 
 try {
-  const vessels = await fetchWsf<VesselLocation[]>('/vessels/vessellocations');
+  const vessels = await WsfVessels.getVesselLocations();
   return vessels || [];
 } catch (error) {
   console.error('Failed to fetch vessels:', error);

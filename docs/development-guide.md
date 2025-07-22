@@ -55,11 +55,32 @@ Each API endpoint follows a consistent structure:
 
 ```
 api/endpoint-name/
-├── api.ts          # Raw API functions (fetch calls)
+├── api.ts          # Raw API functions (using createFetchFunction)
 ├── hook.ts         # React Query hooks
 ├── types.ts        # TypeScript type definitions
 └── index.ts        # Module exports
 ```
+
+### Fetch Architecture
+
+All API modules use a unified `createFetchFunction` approach:
+
+```typescript
+// Each API module creates its own fetch function
+const fetchVessels = createFetchFunction(
+  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
+);
+
+// API functions use the module-scoped fetch
+export const getVesselLocations = (): Promise<VesselLocation[]> =>
+  fetchVessels<VesselLocation[]>("/vessellocations");
+```
+
+This approach provides:
+- **Module-scoped configuration** with correct base URLs
+- **Automatic platform detection** (JSONP for web, native fetch for Node.js)
+- **Consistent error handling** across all APIs
+- **Type-safe responses** with proper TypeScript inference
 
 ### Entry Points
 
