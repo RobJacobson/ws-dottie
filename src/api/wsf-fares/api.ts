@@ -2,17 +2,13 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import {
-  jsDateToYyyyMmDd,
-  wsdotDateToJsDate,
-} from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 import { fetchWsf } from "@/shared/fetching/fetchWsf";
 
 import type {
   FareLineItem,
   FareLineItemBasic,
   FareLineItemsVerboseResponse,
-  FaresCacheFlushDate,
   FaresTerminal,
   FaresValidDateRange,
   FareTotal,
@@ -30,15 +26,8 @@ import type {
  *
  * @returns Promise resolving to cache flush date
  */
-export const getFaresCacheFlushDate =
-  async (): Promise<FaresCacheFlushDate> => {
-    const response = await fetchWsf<string>("fares", "/cacheflushdate");
-    const date = wsdotDateToJsDate(response);
-    if (!date) {
-      throw new Error(`Invalid cache flush date format: ${response}`);
-    }
-    return date;
-  };
+export const getFaresCacheFlushDate = async (): Promise<Date | null> =>
+  fetchWsf<Date>("fares", "/cacheflushdate");
 
 /**
  * Get valid date range for fares data from WSF Fares API
@@ -47,27 +36,8 @@ export const getFaresCacheFlushDate =
  *
  * @returns Promise resolving to valid date range information
  */
-export const getFaresValidDateRange =
-  async (): Promise<FaresValidDateRange> => {
-    const response = await fetchWsf<{ DateFrom: string; DateThru: string }>(
-      "fares",
-      "/validdaterange"
-    );
-    const dateFrom = wsdotDateToJsDate(response.DateFrom);
-    const dateThru = wsdotDateToJsDate(response.DateThru);
-
-    if (!dateFrom) {
-      throw new Error(`Invalid DateFrom format: ${response.DateFrom}`);
-    }
-    if (!dateThru) {
-      throw new Error(`Invalid DateThru format: ${response.DateThru}`);
-    }
-
-    return {
-      DateFrom: dateFrom,
-      DateThru: dateThru,
-    };
-  };
+export const getFaresValidDateRange = async (): Promise<FaresValidDateRange> =>
+  await fetchWsf<FaresValidDateRange>("fares", "/validdaterange");
 
 /**
  * Get valid departing terminals for a trip date from WSF Fares API
