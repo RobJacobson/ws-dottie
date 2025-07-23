@@ -34,7 +34,7 @@ export type {
   BorderCrossingLocation,
 } from "./api/wsdot-border-crossings/types";
 // WSDOT Bridge Clearances Types
-export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/types";
+export type { BridgeClearance as BridgeDataGIS } from "./api/wsdot-bridge-clearances/types";
 // WSDOT Commercial Vehicle Restrictions Types
 export type {
   CommercialVehicleRestriction,

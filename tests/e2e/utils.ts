@@ -1,7 +1,7 @@
 import { expect } from "vitest";
 
 import type { BorderCrossingData } from "@/api/wsdot-border-crossings/types";
-import type { BridgeDataGIS } from "@/api/wsdot-bridge-clearances/types";
+import type { BridgeClearance } from "@/api/wsdot-bridge-clearances/types";
 import type {
   CommercialVehicleRestriction,
   RoadwayLocation,
@@ -861,7 +861,7 @@ export const validateBorderCrossing = (data: BorderCrossingData) => {
   expect(data.BorderCrossingLocation).toBeDefined();
 };
 
-export const validateBridgeClearance = (data: BridgeDataGIS) => {
+export const validateBridgeClearance = (data: BridgeClearance) => {
   expect(data).toHaveProperty("BridgeNumber");
   expect(data).toHaveProperty("VerticalClearanceMaximumInches");
   expect(data).toHaveProperty("APILastUpdate");
