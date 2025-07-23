@@ -15,12 +15,7 @@ import {
   getHighwayCameras,
   searchHighwayCameras,
 } from "./api";
-import type {
-  Camera,
-  GetCameraResponse,
-  SearchCamerasParams,
-  SearchCamerasResponse,
-} from "./types";
+import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
 
 /**
  * React Query hook for getting all highway cameras
@@ -73,7 +68,7 @@ export const useSearchHighwayCameras = (
     enabled?: boolean;
   }
 ) => {
-  return useQuery<SearchCamerasResponse>({
+  return useQuery<Camera[]>({
     queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],
     queryFn: () => searchHighwayCameras(params),
     ...tanstackQueryOptions.WEEKLY_UPDATES,

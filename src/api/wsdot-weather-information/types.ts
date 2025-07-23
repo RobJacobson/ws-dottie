@@ -23,7 +23,6 @@ export type WeatherInfo = {
   WindGustSpeedInMPH: number | null;
   WindSpeedInMPH: number | null;
 };
-
 /**
  * Response types for weather information API
  */

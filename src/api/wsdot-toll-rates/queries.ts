@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getTollRates, getTollTripInfo, getTollTripRates } from "./api";
-import type { TollRatesResponse } from "./types";
+import type { TollRate } from "./types";
 
 /**
  * React Query hook for retrieving all toll rates
@@ -35,7 +35,7 @@ import type { TollRatesResponse } from "./types";
  * ```
  */
 export const useTollRates = (
-  options?: Parameters<typeof useQuery<TollRatesResponse>>[0]
+  options?: Parameters<typeof useQuery<TollRate[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollRates"],

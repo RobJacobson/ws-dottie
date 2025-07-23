@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type { BridgeClearancesResponse } from "./types";
+import type { BridgeDataGIS } from "./types";
 
 // Module-scoped fetch function for bridge clearances API
-const fetchBridgeClearances = createFetchFunction(
+const fetchBridgeClearances = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/Bridges/ClearanceREST.svc"
 );
 
@@ -22,8 +22,8 @@ const fetchBridgeClearances = createFetchFunction(
  */
 export const getBridgeClearances = async (
   route: string
-): Promise<BridgeClearancesResponse> => {
-  return fetchBridgeClearances<BridgeClearancesResponse>(
+): Promise<BridgeDataGIS[]> => {
+  return fetchBridgeClearances<BridgeDataGIS[]>(
     `/GetClearancesAsJson?Route=${encodeURIComponent(route)}`
   );
 };

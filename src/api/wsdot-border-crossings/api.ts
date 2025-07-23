@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type { BorderCrossingsResponse } from "./types";
+import type { BorderCrossingData } from "./types";
 
 // Module-scoped fetch function for border crossings API
-const fetchBorderCrossings = createFetchFunction(
+const fetchBorderCrossings = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
 );
 
@@ -19,5 +19,5 @@ const fetchBorderCrossings = createFetchFunction(
  *
  * @returns Promise resolving to array of border crossing data
  */
-export const getBorderCrossings = async (): Promise<BorderCrossingsResponse> =>
-  fetchBorderCrossings<BorderCrossingsResponse>("/GetBorderCrossingsAsJson");
+export const getBorderCrossings = async (): Promise<BorderCrossingData[]> =>
+  fetchBorderCrossings<BorderCrossingData[]>("/GetBorderCrossingsAsJson");

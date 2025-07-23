@@ -59,11 +59,6 @@ export type Camera = {
 };
 
 /**
- * Response type for GetCamerasAsJson endpoint
- */
-export type GetCamerasResponse = Camera[];
-
-/**
  * Response type for GetCameraAsJson endpoint
  */
 export type GetCameraResponse = Camera;
@@ -81,8 +76,3 @@ export type SearchCamerasParams = {
   /** Ending milepost for search range */
   EndingMilepost?: number;
 };
-
-/**
- * Response type for SearchCamerasAsJson endpoint
- */
-export type SearchCamerasResponse = Camera[];

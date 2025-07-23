@@ -25,9 +25,3 @@ export type BorderCrossingData = {
   Time: Date; // WSDOT date format: "/Date(timestamp)/"
   WaitTime: number; // Wait time in minutes
 };
-
-/**
- * Response from GetBorderCrossingsAsJson endpoint
- * Returns an array of border crossing data
- */
-export type BorderCrossingsResponse = BorderCrossingData[];

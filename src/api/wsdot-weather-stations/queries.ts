@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getWeatherStations } from "./api";
-import type { WeatherStationsResponse } from "./types";
+import type { WeatherStationData } from "./types";
 
 /**
  * React Query hook for retrieving WSDOT weather stations
@@ -36,7 +36,7 @@ import type { WeatherStationsResponse } from "./types";
  * ```
  */
 export const useWeatherStations = (
-  options?: Parameters<typeof useQuery<WeatherStationsResponse>>[0]
+  options?: Parameters<typeof useQuery<WeatherStationData[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsdot", "weather-stations", "getWeatherStations"],

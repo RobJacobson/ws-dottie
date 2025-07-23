@@ -58,9 +58,3 @@ export type TollTripRatesResponse = {
   LastUpdated: Date; // Converted from WSDOT date format "/Date(timestamp)/"
   Trips: TollTripRate[];
 };
-
-/**
- * Response types for toll rates API
- */
-export type TollRatesResponse = TollRate[];
-export type TollTripInfoResponse = TollTripInfo[];

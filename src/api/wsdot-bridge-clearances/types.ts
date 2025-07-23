@@ -27,9 +27,3 @@ export type BridgeDataGIS = {
   VerticalClearanceMinimumFeetInch: string;
   VerticalClearanceMinimumInches: number;
 };
-
-/**
- * Response type for bridge clearances API
- * Array of bridge clearance data
- */
-export type BridgeClearancesResponse = BridgeDataGIS[];

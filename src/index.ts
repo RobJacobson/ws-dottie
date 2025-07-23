@@ -34,7 +34,7 @@ export type {
   BorderCrossingLocation,
 } from "./api/wsdot-border-crossings/types";
 // WSDOT Bridge Clearances Types
-export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/types";
+export type { BridgeClearance as BridgeDataGIS } from "./api/wsdot-bridge-clearances/types";
 // WSDOT Commercial Vehicle Restrictions Types
 export type {
   CommercialVehicleRestriction,
@@ -51,22 +51,17 @@ export type {
   Camera,
   CameraLocation,
   GetCameraResponse,
-  GetCamerasResponse,
   SearchCamerasParams,
-  SearchCamerasResponse,
 } from "./api/wsdot-highway-cameras/types";
 // WSDOT Mountain Pass Conditions Types
 export type {
   MountainPassCondition,
-  MountainPassConditionsResponse,
   TravelRestriction,
 } from "./api/wsdot-mountain-pass-conditions/types";
 // WSDOT Toll Rates Types
 export type {
   TollRate,
-  TollRatesResponse,
   TollTripInfo,
-  TollTripInfoResponse,
   TollTripRate,
   TollTripRatesResponse,
 } from "./api/wsdot-toll-rates/types";
@@ -74,31 +69,22 @@ export type {
 export type {
   FlowStationLocation,
   TrafficFlow,
-  TrafficFlowsResponse,
 } from "./api/wsdot-traffic-flow/types";
 // WSDOT Travel Times Types
 export type {
   TravelTimeEndpoint,
   TravelTimeRoute,
-  TravelTimesResponse,
 } from "./api/wsdot-travel-times/types";
 // WSDOT Weather Information Types
-export type {
-  WeatherInfo,
-  WeatherInformationResponse,
-} from "./api/wsdot-weather-information/types";
+export type { WeatherInfo } from "./api/wsdot-weather-information/types";
 // WSDOT Weather Information Extended Types
 export type {
   SubSurfaceMeasurement,
   SurfaceMeasurement,
-  WeatherInformationExtendedResponse,
   WeatherReading,
 } from "./api/wsdot-weather-information-extended/types";
 // WSDOT Weather Stations Types
-export type {
-  WeatherStationData,
-  WeatherStationsResponse,
-} from "./api/wsdot-weather-stations/types";
+export type { WeatherStationData } from "./api/wsdot-weather-stations/types";
 // WSF Fares Types
 export type {
   FareLineItem,
