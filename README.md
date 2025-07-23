@@ -1,5 +1,14 @@
 # WS-Dottie 🚢
 
+[![npm version](https://img.shields.io/npm/v/ws-dottie.svg)](https://www.npmjs.com/package/ws-dottie)
+[![npm downloads](https://img.shields.io/npm/dm/ws-dottie.svg)](https://www.npmjs.com/package/ws-dottie)
+[![npm license](https://img.shields.io/npm/l/ws-dottie.svg)](https://www.npmjs.com/package/ws-dottie)
+[![bundle size](https://img.shields.io/bundlephobia/min/ws-dottie.svg)](https://bundlephobia.com/result?p=ws-dottie)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)
+
 > **Say hello to Dottie, your friendly TypeScript companion for Washington State transportation APIs**
 
 Meet Dottie - she's not just another API wrapper, she's your cheerful guide through Washington State's transportation data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state.
