@@ -4,16 +4,15 @@ import { Link } from "react-router-dom";
 import { WsfVessels } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsfVesselsPage() {
-  const [selectedVesselBasics, setSelectedVesselBasics] = useState<any>(null);
-  const [selectedVesselLocations, setSelectedVesselLocations] =
-    useState<any>(null);
-  const [selectedVesselAccommodations, setSelectedVesselAccommodations] =
-    useState<any>(null);
-  const [selectedVesselStats, setSelectedVesselStats] = useState<any>(null);
-  const [selectedVesselHistory, setSelectedVesselHistory] = useState<any>(null);
-  const [selectedVesselVerbose, setSelectedVesselVerbose] = useState<any>(null);
+  const [selectedVesselBasics, setSelectedVesselBasics] = useState<ApiItem | null>(null);
+  const [selectedVesselLocations, setSelectedVesselLocations] = useState<ApiItem | null>(null);
+  const [selectedVesselAccommodations, setSelectedVesselAccommodations] = useState<ApiItem | null>(null);
+  const [selectedVesselStats, setSelectedVesselStats] = useState<ApiItem | null>(null);
+  const [selectedVesselHistory, setSelectedVesselHistory] = useState<ApiItem | null>(null);
+  const [selectedVesselVerbose, setSelectedVesselVerbose] = useState<ApiItem | null>(null);
 
   // React Query hooks
   const vesselBasics = WsfVessels.useVesselBasics();
@@ -62,7 +61,7 @@ function WsfVesselsPage() {
           getItemName={(item) =>
             item.vesselName || item.name || "Unknown Vessel"
           }
-          getItemId={(item) => item.vesselId || item.id}
+          getItemId={(item) => item.vesselId || item.id || "unknown"}
         />
 
         {/* Vessel Locations */}
@@ -78,7 +77,7 @@ function WsfVesselsPage() {
           getItemName={(item) =>
             item.vesselName || item.name || "Unknown Vessel"
           }
-          getItemId={(item) => item.vesselId || item.id}
+          getItemId={(item) => item.vesselId || item.id || "unknown"}
         />
 
         {/* Vessel Accommodations */}
@@ -94,7 +93,7 @@ function WsfVesselsPage() {
           getItemName={(item) =>
             item.vesselName || item.name || "Unknown Vessel"
           }
-          getItemId={(item) => item.vesselId || item.id}
+          getItemId={(item) => item.vesselId || item.id || "unknown"}
         />
 
         {/* Vessel Statistics */}
@@ -110,7 +109,7 @@ function WsfVesselsPage() {
           getItemName={(item) =>
             item.vesselName || item.name || "Unknown Vessel"
           }
-          getItemId={(item) => item.vesselId || item.id}
+          getItemId={(item) => item.vesselId || item.id || "unknown"}
         />
 
         {/* Vessel History */}
@@ -126,7 +125,7 @@ function WsfVesselsPage() {
           getItemName={(item) =>
             item.vesselName || item.name || "Unknown Vessel"
           }
-          getItemId={(item) => item.vesselId || item.id}
+          getItemId={(item) => item.vesselId || item.id || "unknown"}
         />
 
         {/* Vessel Verbose */}
@@ -142,14 +141,14 @@ function WsfVesselsPage() {
           getItemName={(item) =>
             item.vesselName || item.name || "Unknown Vessel"
           }
-          getItemId={(item) => item.vesselId || item.id}
+          getItemId={(item) => item.vesselId || item.id || "unknown"}
         />
 
         {/* Cache Flush Date */}
         <ApiDataDisplay
           title="Cache Flush Date"
           description="Date when the vessel data cache was last flushed"
-          data={cacheFlushDate.data}
+          data={cacheFlushDate.data ? { cacheFlushDate: cacheFlushDate.data } : null}
           isLoading={cacheFlushDate.isLoading}
           error={cacheFlushDate.error}
         />

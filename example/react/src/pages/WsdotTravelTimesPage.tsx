@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { Clock, ArrowLeft } from "lucide-react";
 import { WsdotTravelTimes } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsdotTravelTimesPage() {
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks
   const data = WsdotTravelTimes.useTravelTimes();

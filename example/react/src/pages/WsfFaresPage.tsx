@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsfFaresPage() {
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // Mock data for demo
   const mockData = {

@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { WsdotHighwayAlerts } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsdotHighwayAlertsPage() {
-  const [selectedAlert, setSelectedAlert] = useState<any>(null);
+  const [selectedAlert, setSelectedAlert] = useState<ApiItem | null>(null);
 
   // React Query hooks
   const highwayAlerts = WsdotHighwayAlerts.useHighwayAlerts();
@@ -27,12 +28,8 @@ function WsdotHighwayAlertsPage() {
             <AlertTriangle className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              WSDOT Highway Alerts
-            </h1>
-            <p className="text-gray-600">
-              Real-time highway alerts and incidents
-            </p>
+            <h1 className="text-3xl font-bold text-gray-900">WSDOT Highway Alerts</h1>
+            <p className="text-gray-600">Real-time highway alerts and incidents</p>
           </div>
         </div>
       </div>
@@ -48,10 +45,8 @@ function WsdotHighwayAlertsPage() {
           selectedItem={selectedAlert}
           onItemSelect={setSelectedAlert}
           items={highwayAlerts.data}
-          getItemName={(item) =>
-            item.headlineDescription || item.description || "Alert"
-          }
-          getItemId={(item) => item.eventId || item.id}
+          getItemName={(item) => item.headlineDescription || item.description || "Alert"}
+          getItemId={(item) => item.eventId || item.id || "unknown"}
         />
       </div>
     </div>

@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { DollarSign, ArrowLeft } from "lucide-react";
 import { WsdotTollRates } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsdotTollRatesPage() {
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks
   const data = WsdotTollRates.useTollRates();

@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { WsdotHighwayCameras } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsdotHighwayCamerasPage() {
-  const [selectedCamera, setSelectedCamera] = useState<any>(null);
+  const [selectedCamera, setSelectedCamera] = useState<ApiItem | null>(null);
 
   // React Query hooks
   const cameras = WsdotHighwayCameras.useHighwayCameras();
@@ -27,12 +28,8 @@ function WsdotHighwayCamerasPage() {
             <Camera className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              WSDOT Highway Cameras
-            </h1>
-            <p className="text-gray-600">
-              Live highway camera feeds and locations
-            </p>
+            <h1 className="text-3xl font-bold text-gray-900">WSDOT Highway Cameras</h1>
+            <p className="text-gray-600">Live highway camera feeds and locations</p>
           </div>
         </div>
       </div>
@@ -48,10 +45,8 @@ function WsdotHighwayCamerasPage() {
           selectedItem={selectedCamera}
           onItemSelect={setSelectedCamera}
           items={cameras.data}
-          getItemName={(item) =>
-            item.title || item.cameraName || item.description || "Camera"
-          }
-          getItemId={(item) => item.cameraId || item.id}
+          getItemName={(item) => item.title || item.cameraName || item.description || "Camera"}
+          getItemId={(item) => item.cameraId || item.id || "unknown"}
         />
       </div>
     </div>

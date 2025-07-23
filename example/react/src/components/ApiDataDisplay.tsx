@@ -1,23 +1,19 @@
-import {
-  AlertCircle,
-  CheckCircle,
-  ChevronDown,
-  ChevronUp,
-  Loader2,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { useState } from "react";
+
+import type { ApiItem } from "@/types/api";
 
 interface ApiDataDisplayProps {
   title: string;
   description?: string;
-  data: any;
+  data: ApiItem[] | ApiItem | null | undefined;
   isLoading: boolean;
-  error: any;
-  selectedItem?: any;
-  onItemSelect?: (item: any) => void;
-  items?: Array<any>;
-  getItemName?: (item: any) => string;
-  getItemId?: (item: any) => string | number;
+  error: Error | null;
+  selectedItem?: ApiItem | null;
+  onItemSelect?: (item: ApiItem) => void;
+  items?: ApiItem[];
+  getItemName?: (item: ApiItem) => string;
+  getItemId?: (item: ApiItem) => string | number;
 }
 
 function ApiDataDisplay({
@@ -29,13 +25,12 @@ function ApiDataDisplay({
   selectedItem,
   onItemSelect,
   items,
-  getItemName = (item) => item.name || item.title || item.id || "Unknown",
-  getItemId = (item) =>
-    item.id || item.vesselId || item.terminalId || "unknown",
+  getItemName = (item) => item.name || item.title || item.description || "Unknown",
+  getItemId = (item) => item.id || item.vesselId || item.terminalId || "unknown",
 }: ApiDataDisplayProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const renderData = (data: any, depth = 0): React.ReactElement => {
+  const renderData = (data: unknown, depth = 0): React.ReactElement => {
     if (data === null || data === undefined) {
       return <span className="text-gray-500 italic">null</span>;
     }
@@ -49,11 +44,7 @@ function ApiDataDisplay({
     }
 
     if (typeof data === "boolean") {
-      return (
-        <span className={data ? "text-green-600" : "text-red-600"}>
-          {data.toString()}
-        </span>
-      );
+      return <span className={data ? "text-green-600" : "text-red-600"}>{data.toString()}</span>;
     }
 
     if (Array.isArray(data)) {
@@ -64,11 +55,9 @@ function ApiDataDisplay({
         <div className="ml-4">
           <span className="text-gray-600">[</span>
           {data.map((item, index) => (
-            <div key={index} className="ml-4">
+            <div key={`array-item-${index}-${depth}`} className="ml-4">
               {renderData(item, depth + 1)}
-              {index < data.length - 1 && (
-                <span className="text-gray-600">,</span>
-              )}
+              {index < data.length - 1 && <span className="text-gray-600">,</span>}
             </div>
           ))}
           <span className="text-gray-600">]</span>
@@ -77,7 +66,7 @@ function ApiDataDisplay({
     }
 
     if (typeof data === "object") {
-      const keys = Object.keys(data);
+      const keys = Object.keys(data as Record<string, unknown>);
       if (keys.length === 0) {
         return <span className="text-gray-500 italic">{"{}"}</span>;
       }
@@ -85,13 +74,11 @@ function ApiDataDisplay({
         <div className="ml-4">
           <span className="text-gray-600">{"{"}</span>
           {keys.map((key, index) => (
-            <div key={key} className="ml-4">
+            <div key={`object-key-${key}-${depth}`} className="ml-4">
               <span className="text-purple-600">"{key}"</span>
               <span className="text-gray-600">: </span>
-              {renderData(data[key], depth + 1)}
-              {index < keys.length - 1 && (
-                <span className="text-gray-600">,</span>
-              )}
+              {renderData((data as Record<string, unknown>)[key], depth + 1)}
+              {index < keys.length - 1 && <span className="text-gray-600">,</span>}
             </div>
           ))}
           <span className="text-gray-600">{"}"}</span>
@@ -108,20 +95,14 @@ function ApiDataDisplay({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
-            {description && (
-              <p className="text-gray-600 text-sm mt-1">{description}</p>
-            )}
+            {description && <p className="text-gray-600 text-sm mt-1">{description}</p>}
           </div>
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
             className="text-gray-500 hover:text-gray-700 transition-colors"
           >
-            {isExpanded ? (
-              <ChevronUp className="w-5 h-5" />
-            ) : (
-              <ChevronDown className="w-5 h-5" />
-            )}
+            {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </button>
         </div>
 
@@ -150,18 +131,13 @@ function ApiDataDisplay({
         {/* Dropdown for array data */}
         {items && items.length > 0 && onItemSelect && (
           <div className="mb-4">
-            <label
-              htmlFor="item-select"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="item-select" className="block text-sm font-medium text-gray-700 mb-2">
               Select Item:
             </label>
             <select
               id="item-select"
               onChange={(e) => {
-                const selected = items.find(
-                  (item) => getItemId(item).toString() === e.target.value
-                );
+                const selected = items.find((item) => getItemId(item).toString() === e.target.value);
                 if (selected) onItemSelect(selected);
               }}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

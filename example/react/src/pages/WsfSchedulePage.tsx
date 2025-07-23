@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { WsfSchedule } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsfSchedulePage() {
-  const [selectedRoute, setSelectedRoute] = useState<any>(null);
-  const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
+  const [selectedRoute, setSelectedRoute] = useState<ApiItem | null>(null);
+  const [selectedSchedule, setSelectedSchedule] = useState<ApiItem | null>(null);
 
   // React Query hooks - using today's date for demo
   const today = new Date();
@@ -48,7 +49,7 @@ function WsfSchedulePage() {
           onItemSelect={setSelectedRoute}
           items={routes.data}
           getItemName={(item) => item.routeName || item.description || "Route"}
-          getItemId={(item) => item.routeId || item.id}
+          getItemId={(item) => item.routeId || item.id || "unknown"}
         />
 
         {/* Scheduled Routes */}
@@ -61,10 +62,8 @@ function WsfSchedulePage() {
           selectedItem={selectedSchedule}
           onItemSelect={setSelectedSchedule}
           items={scheduledRoutes.data}
-          getItemName={(item) =>
-            item.scheduleName || item.description || "Scheduled Route"
-          }
-          getItemId={(item) => item.scheduleId || item.id}
+          getItemName={(item) => item.scheduleName || item.description || "Scheduled Route"}
+          getItemId={(item) => item.scheduleId || item.id || "unknown"}
         />
       </div>
     </div>

@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { WsdotBridgeClearances } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
+import type { ApiItem } from "@/types/api";
 
 function WsdotBridgeClearancesPage() {
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks - using I-5 as example route
   const data = WsdotBridgeClearances.useBridgeClearances("005");
