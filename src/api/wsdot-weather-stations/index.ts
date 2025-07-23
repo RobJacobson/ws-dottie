@@ -5,7 +5,7 @@
 // API functions
 export { getWeatherStations } from "./api";
 // React Query hooks
-export { useWeatherStations } from "./hook";
+export { useWeatherStations } from "./queries";
 // TypeScript types
 export type {
   WeatherStationData,

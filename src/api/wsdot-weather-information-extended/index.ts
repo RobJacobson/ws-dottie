@@ -5,7 +5,7 @@
 // API functions
 export { getWeatherInformationExtended } from "./api";
 // React Query hooks
-export { useWeatherInformationExtended } from "./hook";
+export { useWeatherInformationExtended } from "./queries";
 // TypeScript types
 export type {
   SubSurfaceMeasurement,

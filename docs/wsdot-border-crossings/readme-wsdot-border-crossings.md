@@ -156,12 +156,12 @@ The API may throw `WsdotApiError` with the following error codes:
 
 ## Caching Strategy
 
-The hooks use `createFrequentUpdateOptions()` for border crossing data since wait times change frequently:
+The hooks use `REACT_QUERY.MINUTE_UPDATES` for border crossing data since wait times change frequently but not every few seconds:
 
-- **Stale Time**: 30 seconds (data considered stale after 30 seconds)
-- **Refetch Interval**: 60 seconds (automatically refetch every minute)
-- **Background Updates**: Enabled for real-time data
-- **Query Deduplication**: Prevents duplicate API calls
+- **Stale Time**: 5 minutes (data considered stale after 5 minutes)
+- **Refetch Interval**: 1 minute (refetch every 1 minute)
+- **Retries**: None (simple polling)
+- **Garbage Collection**: 10 minutes (keep in cache for 10 minutes)
 
 ## Common Use Cases
 

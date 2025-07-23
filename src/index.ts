@@ -2,68 +2,59 @@
 // Main entry point for the WSDOT API client library
 
 // ============================================================================
-// WSDOT (Washington State Department of Transportation) API Modules
+// API Modules (Namespace Exports)
 // ============================================================================
 
-// Border Crossings API
+// WSDOT APIs
 export * as WsdotBorderCrossings from "./api/wsdot-border-crossings";
-// Bridge Clearances API
 export * as WsdotBridgeClearances from "./api/wsdot-bridge-clearances";
-// Commercial Vehicle Restrictions API
 export * as WsdotCommercialVehicleRestrictions from "./api/wsdot-commercial-vehicle-restrictions";
-// Highway Alerts API
 export * as WsdotHighwayAlerts from "./api/wsdot-highway-alerts";
-// Highway Cameras API
 export * as WsdotHighwayCameras from "./api/wsdot-highway-cameras";
-// Mountain Pass Conditions API
 export * as WsdotMountainPassConditions from "./api/wsdot-mountain-pass-conditions";
-// Toll Rates API
 export * as WsdotTollRates from "./api/wsdot-toll-rates";
-// Traffic Flow API
 export * as WsdotTrafficFlow from "./api/wsdot-traffic-flow";
-// Travel Times API
 export * as WsdotTravelTimes from "./api/wsdot-travel-times";
-// Weather Information API
 export * as WsdotWeatherInformation from "./api/wsdot-weather-information";
-// Weather Information Extended API
 export * as WsdotWeatherInformationExtended from "./api/wsdot-weather-information-extended";
-// Weather Stations API
 export * as WsdotWeatherStations from "./api/wsdot-weather-stations";
-
-// ============================================================================
-// WSF (Washington State Ferries) API Modules
-// ============================================================================
-
-// Fares API
+// WSF APIs
 export * as WsfFares from "./api/wsf-fares";
-// Schedule API
 export * as WsfSchedule from "./api/wsf-schedule";
-// Terminals API
 export * as WsfTerminals from "./api/wsf-terminals";
-// Vessels API
 export * as WsfVessels from "./api/wsf-vessels";
 
 // ============================================================================
-// React Integration
+// TanStack Query Configuration
 // ============================================================================
 
-// React-specific exports (hooks, types, and utilities)
-export * from "./react";
+export { tanstackQueryOptions } from "./shared/caching/config";
+
+// ============================================================================
+// React Hooks (Direct Exports)
+// ============================================================================
+
+// WSDOT Hooks
+export * from "@/api/wsdot-border-crossings/queries";
+export * from "@/api/wsdot-bridge-clearances/queries";
+export * from "@/api/wsdot-commercial-vehicle-restrictions/queries";
+export * from "@/api/wsdot-highway-alerts/queries";
+export * from "@/api/wsdot-highway-cameras/queries";
+export * from "@/api/wsdot-mountain-pass-conditions/queries";
+export * from "@/api/wsdot-toll-rates/queries";
+export * from "@/api/wsdot-traffic-flow/queries";
+export * from "@/api/wsdot-travel-times/queries";
+export * from "@/api/wsdot-weather-information/queries";
+export * from "@/api/wsdot-weather-information-extended/queries";
+export * from "@/api/wsdot-weather-stations/queries";
+// WSF Hooks
+export * from "@/api/wsf-fares/queries";
+export * from "@/api/wsf-schedule/queries";
+export * from "@/api/wsf-terminals/queries";
+export * from "@/api/wsf-vessels/queries";
 
 // ============================================================================
 // Shared Utilities
 // ============================================================================
 
-// Shared utilities (caching, fetching, etc.)
 export * from "./shared";
-
-// ============================================================================
-// Legacy Exports (for backward compatibility)
-// ============================================================================
-
-// Individual shared module exports for backward compatibility
-export * from "./shared/fetching/config";
-export * from "./shared/fetching/dateUtils";
-export * from "./shared/fetching/errors";
-export * from "./shared/fetching/fetchInternal";
-export * from "./shared/fetching/parseJson";

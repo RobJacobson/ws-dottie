@@ -11,7 +11,7 @@ export {
 export {
   useMountainPassConditionById,
   useMountainPassConditions,
-} from "./hook";
+} from "./queries";
 // TypeScript types
 export type {
   MountainPassCondition,

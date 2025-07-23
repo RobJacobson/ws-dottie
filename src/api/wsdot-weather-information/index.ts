@@ -13,7 +13,7 @@ export {
   useWeatherInformation,
   useWeatherInformationByStationId,
   useWeatherInformationForStations,
-} from "./hook";
+} from "./queries";
 // TypeScript types
 export type {
   WeatherInfo,

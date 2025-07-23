@@ -7,7 +7,7 @@ import React from "react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { getCacheFlushDateTerminals } from "@/api/wsf-terminals";
-import { useCacheFlushDateTerminals } from "@/react/wsf-terminals";
+import { useCacheFlushDateTerminals } from "@/api/wsf-terminals";
 
 // Test wrapper component
 const createWrapper = () => {

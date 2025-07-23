@@ -11,7 +11,7 @@ import {
 import {
   useTerminalBulletins,
   useTerminalBulletinsByTerminalId,
-} from "@/react/wsf-terminals";
+} from "@/api/wsf-terminals";
 
 // Real TerminalIDs from WSDOT API
 const VALID_TERMINAL_IDS = [

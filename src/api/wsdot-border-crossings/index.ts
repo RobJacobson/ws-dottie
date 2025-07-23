@@ -4,7 +4,7 @@
 // API functions
 export { getBorderCrossings } from "./api";
 // React Query hooks
-export { useBorderCrossings } from "./hook";
+export { useBorderCrossings } from "./queries";
 // TypeScript types
 export type {
   BorderCrossingData,

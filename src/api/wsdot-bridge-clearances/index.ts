@@ -4,7 +4,7 @@
 // API functions
 export { getBridgeClearances } from "./api";
 // React Query hooks
-export { useBridgeClearances } from "./hook";
+export { useBridgeClearances } from "./queries";
 // TypeScript types
 export type {
   BridgeClearancesResponse,

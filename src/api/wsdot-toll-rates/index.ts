@@ -13,7 +13,7 @@ export {
   useTollRates,
   useTollTripInfo,
   useTollTripRates,
-} from "./hook";
+} from "./queries";
 // TypeScript types
 export type {
   TollRate,

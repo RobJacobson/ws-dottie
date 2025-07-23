@@ -10,7 +10,7 @@ export {
 export {
   useCommercialVehicleRestrictions,
   useCommercialVehicleRestrictionsWithId,
-} from "./hook";
+} from "./queries";
 // TypeScript types
 export type {
   CommercialVehicleRestriction,

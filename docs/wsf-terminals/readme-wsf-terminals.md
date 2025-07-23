@@ -258,7 +258,7 @@ All API functions return empty arrays (`[]`) on errors rather than throwing exce
 
 ## Caching Strategy
 
-The hooks use default caching options from `createInfrequentUpdateOptions()` and `createFrequentUpdateOptions()`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
+The hooks use default caching options from `REACT_QUERY.WEEKLY_UPDATES` and `REACT_QUERY.REALTIME_UPDATES`. You do not need to set `enabled`, `refetchInterval`, or `staleTime` manually—these are handled automatically. You can override any option by passing an options object to the hook.
 
 **Caching by Data Type:**
 - **Terminal Basics**: Infrequent updates (static data)

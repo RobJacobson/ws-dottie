@@ -155,7 +155,7 @@ The API may throw `WsdotApiError` with the following error codes:
 
 ## Caching Strategy
 
-The hooks use `createInfrequentUpdateOptions()` for bridge clearance data since this data is relatively static:
+The hooks use `REACT_QUERY.WEEKLY_UPDATES` for bridge clearance data since this data is relatively static:
 
 - **Stale Time**: 5 minutes (data considered stale after 5 minutes)
 - **Refetch Interval**: 10 minutes (automatically refetch every 10 minutes)

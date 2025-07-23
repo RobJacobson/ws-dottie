@@ -242,3 +242,5 @@ bun.lockb
 
 # Shim for WSDOT API E2E tests
 test-e2e.sh
+
+.vscode/
