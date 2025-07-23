@@ -23,7 +23,7 @@ beforeAll(() => {
     baseUrl: "https://www.wsdot.wa.gov/ferries/api",
     timeout: 10000,
     retries: 3,
-    rateLimitDelay: 0, // No delay between calls
+    rateLimitDelay: 1000, // No delay between calls
   };
 });
 
