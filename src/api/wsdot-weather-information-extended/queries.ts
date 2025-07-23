@@ -41,7 +41,11 @@ export const useWeatherInformationExtended = (
   options?: Parameters<typeof useQuery<WeatherInformationExtendedResponse>>[0]
 ) => {
   return useQuery({
-    queryKey: ["weather-information-extended"],
+    queryKey: [
+      "wsdot",
+      "weather-information-extended",
+      "getWeatherInformationExtended",
+    ],
     queryFn: getWeatherInformationExtended,
     ...tanstackQueryOptions.HOURLY_UPDATES,
     ...options,

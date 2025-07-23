@@ -53,7 +53,7 @@ export const useTerminalBasics = (
   options?: Parameters<typeof useQuery<TerminalBasics[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "basics"],
+    queryKey: ["wsf", "terminals", "basics"],
     queryFn: getTerminalBasics,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -72,7 +72,7 @@ export const useTerminalBasicsByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalBasics>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "basics", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "basics", "byTerminalId", terminalId],
     queryFn: () => getTerminalBasicsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -101,7 +101,7 @@ export const useTerminalBulletins = (
   options?: Parameters<typeof useQuery<TerminalBulletin[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "bulletins"],
+    queryKey: ["wsf", "terminals", "bulletins"],
     queryFn: getTerminalBulletins,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -128,7 +128,7 @@ export const useTerminalBulletinsByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalBulletin>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "bulletins", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "bulletins", "byTerminalId", terminalId],
     queryFn: () => getTerminalBulletinsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -157,7 +157,7 @@ export const useTerminalLocations = (
   options?: Parameters<typeof useQuery<TerminalLocation[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "locations"],
+    queryKey: ["wsf", "terminals", "locations"],
     queryFn: getTerminalLocations,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -184,7 +184,7 @@ export const useTerminalLocationsByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalLocation>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "locations", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "locations", "byTerminalId", terminalId],
     queryFn: () => getTerminalLocationsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -214,7 +214,7 @@ export const useTerminalSailingSpace = (
   options?: Parameters<typeof useQuery<TerminalSailingSpace[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "sailing-space"],
+    queryKey: ["wsf", "terminals", "sailing-space"],
     queryFn: getTerminalSailingSpace,
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
@@ -241,7 +241,7 @@ export const useTerminalSailingSpaceByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalSailingSpace>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "sailingSpace", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "sailingSpace", "byTerminalId", terminalId],
     queryFn: () => getTerminalSailingSpaceByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.REALTIME_UPDATES,
@@ -270,7 +270,7 @@ export const useTerminalTransports = (
   options?: Parameters<typeof useQuery<TerminalTransport[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "transports"],
+    queryKey: ["wsf", "terminals", "transports"],
     queryFn: getTerminalTransports,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -297,7 +297,7 @@ export const useTerminalTransportsByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalTransport>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "transports", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "transports", "byTerminalId", terminalId],
     queryFn: () => getTerminalTransportsByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -324,7 +324,7 @@ export const useTerminalWaitTimes = (
   options?: Parameters<typeof useQuery<TerminalWaitTimes[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "wait-times"],
+    queryKey: ["wsf", "terminals", "wait-times"],
     queryFn: getTerminalWaitTimes,
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
@@ -349,7 +349,7 @@ export const useTerminalWaitTimesByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalWaitTimes>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "wait-times", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "wait-times", "byTerminalId", terminalId],
     queryFn: () => getTerminalWaitTimesByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -379,7 +379,7 @@ export const useTerminalVerbose = (
   options?: Parameters<typeof useQuery<TerminalVerbose[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "verbose"],
+    queryKey: ["wsf", "terminals", "verbose"],
     queryFn: getTerminalVerbose,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -406,7 +406,7 @@ export const useTerminalVerboseByTerminalId = (
   options?: Parameters<typeof useQuery<TerminalVerbose>>[0]
 ) => {
   return useQuery({
-    queryKey: ["terminals", "verbose", "byTerminalId", terminalId],
+    queryKey: ["wsf", "terminals", "verbose", "byTerminalId", terminalId],
     queryFn: () => getTerminalVerboseByTerminalId(terminalId),
     enabled: !!terminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -432,7 +432,7 @@ export const useCacheFlushDateTerminals = (
   options?: Parameters<typeof useQuery<Date | null>>[0]
 ) =>
   useQuery({
-    queryKey: ["terminals", "cache-flush-date"],
+    queryKey: ["wsf", "terminals", "cache-flush-date"],
     queryFn: getCacheFlushDateTerminals,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

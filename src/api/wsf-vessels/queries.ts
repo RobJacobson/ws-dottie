@@ -57,7 +57,7 @@ export const useVesselBasics = (
   options?: Parameters<typeof useQuery<VesselBasic[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "basics"],
+    queryKey: ["wsf", "vessels", "basics"],
     queryFn: getVesselBasics,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -82,7 +82,7 @@ export const useVesselBasicsById = (
   options?: Parameters<typeof useQuery<VesselBasic>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "basics", "byId", vesselId],
+    queryKey: ["wsf", "vessels", "basics", "byId", vesselId],
     queryFn: () => getVesselBasicsById(vesselId),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -111,7 +111,7 @@ export const useVesselAccommodations = (
   options?: Parameters<typeof useQuery<VesselAccommodation[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "accommodations"],
+    queryKey: ["wsf", "vessels", "accommodations"],
     queryFn: getVesselAccommodations,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -136,7 +136,7 @@ export const useVesselAccommodationsById = (
   options?: Parameters<typeof useQuery<VesselAccommodation>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "accommodations", "byId", vesselId],
+    queryKey: ["wsf", "vessels", "accommodations", "byId", vesselId],
     queryFn: () => getVesselAccommodationsById(vesselId),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -166,7 +166,7 @@ export const useVesselLocations = (
   options?: Parameters<typeof useQuery<VesselLocation[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "locations"],
+    queryKey: ["wsf", "vessels", "locations"],
     queryFn: getVesselLocations,
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
@@ -193,7 +193,7 @@ export const useVesselLocationsByVesselId = (
   options?: Parameters<typeof useQuery<VesselLocation>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "locations", "byVesselId", vesselId],
+    queryKey: ["wsf", "vessels", "locations", "byVesselId", vesselId],
     queryFn: () => getVesselLocationsByVesselId(vesselId),
     enabled: !!vesselId,
     ...tanstackQueryOptions.REALTIME_UPDATES,
@@ -222,7 +222,7 @@ export const useVesselStats = (
   options?: Parameters<typeof useQuery<VesselStats[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "stats"],
+    queryKey: ["wsf", "vessels", "stats"],
     queryFn: getVesselStats,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -247,7 +247,7 @@ export const useVesselStatsById = (
   options?: Parameters<typeof useQuery<VesselStats>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "stats", "byId", vesselId],
+    queryKey: ["wsf", "vessels", "stats", "byId", vesselId],
     queryFn: () => getVesselStatsById(vesselId),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -276,7 +276,7 @@ export const useVesselHistory = (
   options?: Parameters<typeof useQuery<VesselHistory[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "history"],
+    queryKey: ["wsf", "vessels", "history"],
     queryFn: getVesselHistory,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -306,6 +306,7 @@ export const useVesselHistoryByVesselAndDateRange = (
 ) => {
   return useQuery({
     queryKey: [
+      "wsf",
       "vessels",
       "history",
       "byVesselAndDateRange",
@@ -343,7 +344,7 @@ export const useVesselVerbose = (
   options?: Parameters<typeof useQuery<VesselVerbose[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "verbose"],
+    queryKey: ["wsf", "vessels", "verbose"],
     queryFn: getVesselVerbose,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -370,7 +371,7 @@ export const useVesselVerboseById = (
   options?: Parameters<typeof useQuery<VesselVerbose>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "verbose", "byId", vesselId],
+    queryKey: ["wsf", "vessels", "verbose", "byId", vesselId],
     queryFn: () => getVesselVerboseById(vesselId),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -392,7 +393,7 @@ export const useCacheFlushDateVessels = (
   options?: Parameters<typeof useQuery<VesselsCacheFlushDate | null>>[0]
 ) => {
   return useQuery({
-    queryKey: ["vessels", "cache-flush-date"],
+    queryKey: ["wsf", "vessels", "cache-flush-date"],
     queryFn: getCacheFlushDateVessels,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

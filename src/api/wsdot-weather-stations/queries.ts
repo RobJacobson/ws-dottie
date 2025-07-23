@@ -39,7 +39,7 @@ export const useWeatherStations = (
   options?: Parameters<typeof useQuery<WeatherStationsResponse>>[0]
 ) => {
   return useQuery({
-    queryKey: ["weather-stations"],
+    queryKey: ["wsdot", "weather-stations", "getWeatherStations"],
     queryFn: getWeatherStations,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,

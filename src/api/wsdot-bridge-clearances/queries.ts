@@ -24,7 +24,7 @@ export const useBridgeClearances = (
   options?: Parameters<typeof useQuery<BridgeClearancesResponse>>[0]
 ) => {
   return useQuery({
-    queryKey: ["bridge-clearances", route],
+    queryKey: ["wsdot", "bridge-clearances", "getBridgeClearances", route],
     queryFn: () => getBridgeClearances(route),
     enabled: !!route,
     ...tanstackQueryOptions.WEEKLY_UPDATES,

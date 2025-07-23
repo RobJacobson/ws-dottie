@@ -30,7 +30,7 @@ export const useFaresCacheFlushDate = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "cacheFlushDate"],
+    queryKey: ["wsf", "fares", "cacheFlushDate"],
     queryFn: getFaresCacheFlushDate,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -47,7 +47,7 @@ export const useFaresValidDateRange = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "validDateRange"],
+    queryKey: ["wsf", "fares", "validDateRange"],
     queryFn: getFaresValidDateRange,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -66,7 +66,7 @@ export const useFaresTerminals = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "terminals", jsDateToYyyyMmDd(tripDate)],
+    queryKey: ["wsf", "fares", "terminals", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getFaresTerminals(tripDate),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -88,6 +88,7 @@ export const useFaresTerminalMates = (
 ) => {
   return useQuery({
     queryKey: [
+      "wsf",
       "fares",
       "terminalMates",
       jsDateToYyyyMmDd(tripDate),
@@ -116,6 +117,7 @@ export const useTerminalCombo = (
 ) => {
   return useQuery({
     queryKey: [
+      "wsf",
       "fares",
       "terminalCombo",
       jsDateToYyyyMmDd(tripDate),
@@ -141,7 +143,12 @@ export const useTerminalComboVerbose = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "terminalComboVerbose", jsDateToYyyyMmDd(tripDate)],
+    queryKey: [
+      "wsf",
+      "fares",
+      "terminalComboVerbose",
+      jsDateToYyyyMmDd(tripDate),
+    ],
     queryFn: () => getTerminalComboVerbose(tripDate),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -167,6 +174,7 @@ export const useFareLineItemsBasic = (
 ) => {
   return useQuery({
     queryKey: [
+      "wsf",
       "fares",
       "fareLineItemsBasic",
       jsDateToYyyyMmDd(tripDate),
@@ -205,6 +213,7 @@ export const useFareLineItems = (
 ) => {
   return useQuery({
     queryKey: [
+      "wsf",
       "fares",
       "fareLineItems",
       jsDateToYyyyMmDd(tripDate),
@@ -236,7 +245,12 @@ export const useFareLineItemsVerbose = (
   >
 ) => {
   return useQuery({
-    queryKey: ["fares", "fareLineItemsVerbose", jsDateToYyyyMmDd(tripDate)],
+    queryKey: [
+      "wsf",
+      "fares",
+      "fareLineItemsVerbose",
+      jsDateToYyyyMmDd(tripDate),
+    ],
     queryFn: () => getFareLineItemsVerbose(tripDate),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -266,6 +280,7 @@ export const useFareTotals = (
 ) => {
   return useQuery({
     queryKey: [
+      "wsf",
       "fares",
       "fareTotals",
       jsDateToYyyyMmDd(tripDate),

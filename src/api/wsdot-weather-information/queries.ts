@@ -43,9 +43,9 @@ export const useWeatherInformation = (
   options?: Parameters<typeof useQuery<WeatherInformationResponse>>[0]
 ) => {
   return useQuery({
-    queryKey: ["weather-information"],
+    queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
     queryFn: getWeatherInformation,
-    ...tanstackQueryOptions.HOURLY_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -80,10 +80,15 @@ export const useWeatherInformationByStationId = (
   options?: Parameters<typeof useQuery<WeatherInfo>>[0]
 ) => {
   return useQuery({
-    queryKey: ["weather-information", "byStationId", stationId],
+    queryKey: [
+      "wsdot",
+      "weather-information",
+      "getWeatherInformationByStationId",
+      stationId,
+    ],
     queryFn: () => getWeatherInformationByStationId(stationId),
-    ...tanstackQueryOptions.HOURLY_UPDATES,
-    enabled: stationId > 0,
+    enabled: !!stationId,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -116,14 +121,19 @@ export const useWeatherInformationByStationId = (
  * ```
  */
 export const useWeatherInformationForStations = (
-  stationIds: string,
+  stationIds: number[],
   options?: Parameters<typeof useQuery<WeatherInformationResponse>>[0]
 ) => {
   return useQuery({
-    queryKey: ["weather-information", "forStations", stationIds],
+    queryKey: [
+      "wsdot",
+      "weather-information",
+      "getWeatherInformationForStations",
+      stationIds,
+    ],
     queryFn: () => getWeatherInformationForStations(stationIds),
-    ...tanstackQueryOptions.HOURLY_UPDATES,
-    enabled: stationIds.length > 0,
+    enabled: !!stationIds && stationIds.length > 0,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };

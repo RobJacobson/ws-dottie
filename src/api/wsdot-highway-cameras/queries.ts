@@ -32,7 +32,7 @@ export const useHighwayCameras = (
   options?: Parameters<typeof useQuery<Camera[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["highway-cameras"],
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
     queryFn: () => getHighwayCameras(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -53,7 +53,7 @@ export const useHighwayCamera = (
   }
 ) => {
   return useQuery<GetCameraResponse>({
-    queryKey: ["wsdot", "highwayCameras", "camera", cameraID],
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", cameraID],
     queryFn: () => getHighwayCamera(cameraID),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: (options?.enabled ?? true) && cameraID > 0,
@@ -74,7 +74,7 @@ export const useSearchHighwayCameras = (
   }
 ) => {
   return useQuery<SearchCamerasResponse>({
-    queryKey: ["wsdot", "highwayCameras", "search", params],
+    queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],
     queryFn: () => searchHighwayCameras(params),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: options?.enabled ?? true,
