@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getBridgeClearances } from "./api";
 import type { BridgeClearancesResponse } from "./types";
@@ -27,7 +27,7 @@ export const useBridgeClearances = (
     queryKey: ["bridge-clearances", route],
     queryFn: () => getBridgeClearances(route),
     enabled: !!route,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };

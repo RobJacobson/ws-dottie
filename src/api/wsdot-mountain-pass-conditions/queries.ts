@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getMountainPassConditionById, getMountainPassConditions } from "./api";
 import type { MountainPassCondition } from "./types";
@@ -38,7 +38,7 @@ export const useMountainPassConditions = (
   return useQuery({
     queryKey: ["mountain-pass-conditions"],
     queryFn: getMountainPassConditions,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -70,7 +70,7 @@ export const useMountainPassConditionById = (passConditionId: number) => {
   return useQuery<MountainPassCondition>({
     queryKey: ["mountainPassCondition", passConditionId],
     queryFn: () => getMountainPassConditionById(passConditionId),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: passConditionId > 0,
   });
 };

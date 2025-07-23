@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import {
   // Cache Flush Date API functions
@@ -55,7 +55,7 @@ export const useTerminalBasics = (
   return useQuery({
     queryKey: ["terminals", "basics"],
     queryFn: getTerminalBasics,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -75,7 +75,7 @@ export const useTerminalBasicsByTerminalId = (
     queryKey: ["terminals", "basics", "byTerminalId", terminalId],
     queryFn: () => getTerminalBasicsByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -103,7 +103,7 @@ export const useTerminalBulletins = (
   return useQuery({
     queryKey: ["terminals", "bulletins"],
     queryFn: getTerminalBulletins,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -131,7 +131,7 @@ export const useTerminalBulletinsByTerminalId = (
     queryKey: ["terminals", "bulletins", "byTerminalId", terminalId],
     queryFn: () => getTerminalBulletinsByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -159,7 +159,7 @@ export const useTerminalLocations = (
   return useQuery({
     queryKey: ["terminals", "locations"],
     queryFn: getTerminalLocations,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -187,7 +187,7 @@ export const useTerminalLocationsByTerminalId = (
     queryKey: ["terminals", "locations", "byTerminalId", terminalId],
     queryFn: () => getTerminalLocationsByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -216,7 +216,7 @@ export const useTerminalSailingSpace = (
   return useQuery({
     queryKey: ["terminals", "sailing-space"],
     queryFn: getTerminalSailingSpace,
-    ...REACT_QUERY.REALTIME_UPDATES,
+    ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -244,7 +244,7 @@ export const useTerminalSailingSpaceByTerminalId = (
     queryKey: ["terminals", "sailingSpace", "byTerminalId", terminalId],
     queryFn: () => getTerminalSailingSpaceByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.REALTIME_UPDATES,
+    ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -272,7 +272,7 @@ export const useTerminalTransports = (
   return useQuery({
     queryKey: ["terminals", "transports"],
     queryFn: getTerminalTransports,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -300,7 +300,7 @@ export const useTerminalTransportsByTerminalId = (
     queryKey: ["terminals", "transports", "byTerminalId", terminalId],
     queryFn: () => getTerminalTransportsByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -326,7 +326,7 @@ export const useTerminalWaitTimes = (
   return useQuery({
     queryKey: ["terminals", "wait-times"],
     queryFn: getTerminalWaitTimes,
-    ...REACT_QUERY.REALTIME_UPDATES,
+    ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -352,7 +352,7 @@ export const useTerminalWaitTimesByTerminalId = (
     queryKey: ["terminals", "wait-times", "byTerminalId", terminalId],
     queryFn: () => getTerminalWaitTimesByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -381,7 +381,7 @@ export const useTerminalVerbose = (
   return useQuery({
     queryKey: ["terminals", "verbose"],
     queryFn: getTerminalVerbose,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -409,7 +409,7 @@ export const useTerminalVerboseByTerminalId = (
     queryKey: ["terminals", "verbose", "byTerminalId", terminalId],
     queryFn: () => getTerminalVerboseByTerminalId(terminalId),
     enabled: !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -434,6 +434,6 @@ export const useCacheFlushDateTerminals = (
   useQuery({
     queryKey: ["terminals", "cache-flush-date"],
     queryFn: getCacheFlushDateTerminals,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

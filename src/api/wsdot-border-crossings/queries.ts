@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getBorderCrossings } from "./api";
 import type { BorderCrossingData } from "./types";
@@ -24,7 +24,7 @@ export const useBorderCrossings = (
   return useQuery({
     queryKey: ["border-crossings"],
     queryFn: getBorderCrossings,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };

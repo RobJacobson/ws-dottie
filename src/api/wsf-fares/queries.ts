@@ -4,7 +4,7 @@
 
 import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 
 import {
@@ -32,7 +32,7 @@ export const useFaresCacheFlushDate = (
   return useQuery({
     queryKey: ["fares", "cacheFlushDate"],
     queryFn: getFaresCacheFlushDate,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -49,7 +49,7 @@ export const useFaresValidDateRange = (
   return useQuery({
     queryKey: ["fares", "validDateRange"],
     queryFn: getFaresValidDateRange,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -68,7 +68,7 @@ export const useFaresTerminals = (
   return useQuery({
     queryKey: ["fares", "terminals", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getFaresTerminals(tripDate),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -94,7 +94,7 @@ export const useFaresTerminalMates = (
       terminalID,
     ],
     queryFn: () => getFaresTerminalMates(tripDate, terminalID),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -124,7 +124,7 @@ export const useTerminalCombo = (
     ],
     queryFn: () =>
       getTerminalCombo(tripDate, departingTerminalID, arrivingTerminalID),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -143,7 +143,7 @@ export const useTerminalComboVerbose = (
   return useQuery({
     queryKey: ["fares", "terminalComboVerbose", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminalComboVerbose(tripDate),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -181,7 +181,7 @@ export const useFareLineItemsBasic = (
         arrivingTerminalID,
         roundTrip
       ),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -219,7 +219,7 @@ export const useFareLineItems = (
         arrivingTerminalID,
         roundTrip
       ),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -238,7 +238,7 @@ export const useFareLineItemsVerbose = (
   return useQuery({
     queryKey: ["fares", "fareLineItemsVerbose", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getFareLineItemsVerbose(tripDate),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -288,7 +288,7 @@ export const useFareTotals = (
       fareLineItemIDs.length > 0 &&
       quantities.length > 0 &&
       fareLineItemIDs.length === quantities.length,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };

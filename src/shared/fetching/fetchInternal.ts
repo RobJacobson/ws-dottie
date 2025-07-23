@@ -1,6 +1,6 @@
 // Internal fetch function for WSF API
 
-import log from "@/lib/logger";
+import log from "@/shared/logger";
 
 import type { LoggingMode } from "./config";
 import { createApiError } from "./errors";

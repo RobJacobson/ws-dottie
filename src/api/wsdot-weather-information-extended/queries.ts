@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getWeatherInformationExtended } from "./api";
 import type { WeatherInformationExtendedResponse } from "./types";
@@ -43,7 +43,7 @@ export const useWeatherInformationExtended = (
   return useQuery({
     queryKey: ["weather-information-extended"],
     queryFn: getWeatherInformationExtended,
-    ...REACT_QUERY.HOURLY_UPDATES,
+    ...tanstackQueryOptions.HOURLY_UPDATES,
     ...options,
   });
 };

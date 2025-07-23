@@ -8,7 +8,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "../../shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 import {
   getHighwayCamera,
   getHighwayCameras,
@@ -33,7 +33,7 @@ export const useHighwayCameras = (
   return useQuery({
     queryKey: ["highway-cameras"],
     queryFn: () => getHighwayCameras(),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -54,7 +54,7 @@ export const useHighwayCamera = (
   return useQuery<GetCameraResponse>({
     queryKey: ["wsdot", "highwayCameras", "camera", cameraID],
     queryFn: () => getHighwayCamera(cameraID),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: (options?.enabled ?? true) && cameraID > 0,
   });
 };
@@ -75,7 +75,7 @@ export const useSearchHighwayCameras = (
   return useQuery<SearchCamerasResponse>({
     queryKey: ["wsdot", "highwayCameras", "search", params],
     queryFn: () => searchHighwayCameras(params),
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: options?.enabled ?? true,
   });
 };

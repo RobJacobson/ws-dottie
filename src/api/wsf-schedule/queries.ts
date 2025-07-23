@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
 
 import {
@@ -65,7 +65,7 @@ export const useCacheFlushDateSchedule = () =>
   useQuery({
     queryKey: ["schedule", "cacheFlushDate"],
     queryFn: getCacheFlushDateSchedule,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
   });
 
 // ============================================================================
@@ -85,7 +85,7 @@ export const useValidDateRange = () =>
   useQuery({
     queryKey: ["schedule", "validDateRange"],
     queryFn: getValidDateRange,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
   });
 
 // ============================================================================
@@ -110,7 +110,7 @@ export const useTerminals = (
     queryKey: ["schedule", "terminals", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminals(tripDate),
     enabled: !!tripDate,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -133,7 +133,7 @@ export const useTerminalsAndMates = (
     queryKey: ["schedule", "terminalsAndMates", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminalsAndMates(tripDate),
     enabled: !!tripDate,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -163,7 +163,7 @@ export const useTerminalsAndMatesByRoute = (
     ],
     queryFn: () => getTerminalsAndMatesByRoute(tripDate, routeId),
     enabled: !!tripDate && !!routeId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -193,7 +193,7 @@ export const useTerminalMates = (
     ],
     queryFn: () => getTerminalMates(tripDate, terminalId),
     enabled: !!tripDate && !!terminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -220,7 +220,7 @@ export const useRoutes = (
     queryKey: ["schedule", "routes", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRoutes(tripDate),
     enabled: !!tripDate,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -255,7 +255,7 @@ export const useRoutesByTerminals = (
     queryFn: () =>
       getRoutesByTerminals(tripDate, departingTerminalId, arrivingTerminalId),
     enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -278,7 +278,7 @@ export const useRoutesWithDisruptions = (
     queryKey: ["schedule", "routesWithDisruptions", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRoutesWithDisruptions(tripDate),
     enabled: !!tripDate,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -302,7 +302,7 @@ export const useRouteDetails = (
     queryKey: ["schedule", "routeDetails", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRouteDetails(tripDate),
     enabled: !!tripDate,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -341,7 +341,7 @@ export const useRouteDetailsByTerminals = (
         arrivingTerminalId
       ),
     enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -371,7 +371,7 @@ export const useRouteDetailsByRoute = (
     ],
     queryFn: () => getRouteDetailsByRoute(tripDate, routeId),
     enabled: !!tripDate && !!routeId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -395,7 +395,7 @@ export const useActiveSeasons = (
   useQuery({
     queryKey: ["schedule", "activeSeasons"],
     queryFn: getActiveSeasons,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -420,7 +420,7 @@ export const useScheduledRoutes = (
   useQuery({
     queryKey: ["schedule", "scheduledRoutes"],
     queryFn: getScheduledRoutes,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -443,7 +443,7 @@ export const useScheduledRoutesBySeason = (
     queryKey: ["schedule", "scheduledRoutesBySeason", scheduleId],
     queryFn: () => getScheduledRoutesBySeason(scheduleId),
     enabled: !!scheduleId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -472,7 +472,7 @@ export const useSailings = (
     queryKey: ["schedule", "sailings", schedRouteId],
     queryFn: () => getSailings(schedRouteId),
     enabled: !!schedRouteId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -497,7 +497,7 @@ export const useAllSailings = (
     queryKey: ["schedule", "allSailings", schedRouteId],
     queryFn: () => getAllSailings(schedRouteId),
     enabled: !!schedRouteId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -521,7 +521,7 @@ export const useTimeAdjustments = (
   useQuery({
     queryKey: ["schedule", "timeAdjustments"],
     queryFn: getTimeAdjustments,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -545,7 +545,7 @@ export const useTimeAdjustmentsByRoute = (
     queryKey: ["schedule", "timeAdjustmentsByRoute", routeId],
     queryFn: () => getTimeAdjustmentsByRoute(routeId),
     enabled: !!routeId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -569,7 +569,7 @@ export const useTimeAdjustmentsBySchedRoute = (
     queryKey: ["schedule", "timeAdjustmentsBySchedRoute", schedRouteId],
     queryFn: () => getTimeAdjustmentsBySchedRoute(schedRouteId),
     enabled: !!schedRouteId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -603,7 +603,7 @@ export const useScheduleByRoute = (
     ],
     queryFn: () => getScheduleByRoute(tripDate, routeId),
     enabled: !!tripDate && !!routeId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -637,7 +637,7 @@ export const useScheduleByTerminals = (
     queryFn: () =>
       getScheduleByTerminals(tripDate, departingTerminalId, arrivingTerminalId),
     enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -662,7 +662,7 @@ export const useScheduleTodayByRoute = (
     queryKey: ["schedule", "scheduleTodayByRoute", routeId, onlyRemainingTimes],
     queryFn: () => getScheduleTodayByRoute(routeId, onlyRemainingTimes),
     enabled: !!routeId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -700,7 +700,7 @@ export const useScheduleTodayByTerminals = (
         onlyRemainingTimes
       ),
     enabled: !!departingTerminalId && !!arrivingTerminalId,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -722,7 +722,7 @@ export const useAlerts = (options?: Parameters<typeof useQuery<Alert[]>>[0]) =>
   useQuery({
     queryKey: ["schedule", "alerts"],
     queryFn: getAlerts,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 
@@ -749,6 +749,6 @@ export const useAlternativeFormats = (
     queryKey: ["schedule", "alternativeFormats", subjectName],
     queryFn: () => getAlternativeFormats(subjectName),
     enabled: !!subjectName,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });

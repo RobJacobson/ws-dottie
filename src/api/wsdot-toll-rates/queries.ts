@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getTollRates, getTollTripInfo, getTollTripRates } from "./api";
 import type { TollRatesResponse } from "./types";
@@ -40,7 +40,7 @@ export const useTollRates = (
   return useQuery({
     queryKey: ["toll-rates"],
     queryFn: getTollRates,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -74,7 +74,7 @@ export const useTollTripInfo = () => {
   return useQuery({
     queryKey: ["toll-trip-info"],
     queryFn: getTollTripInfo,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
   });
 };
 
@@ -108,6 +108,6 @@ export const useTollTripRates = () => {
   return useQuery({
     queryKey: ["toll-trip-rates"],
     queryFn: getTollTripRates,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
   });
 };

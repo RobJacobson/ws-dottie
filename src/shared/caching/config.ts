@@ -8,24 +8,7 @@ const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const WEEK = 7 * DAY;
 
-/**
- * React Query configuration options organized by update frequency
- *
- * Provides self-documenting options for different data update patterns:
- * - REALTIME_UPDATES: Every few seconds (vessel locations, wait times)
- * - MINUTE_UPDATES: Every minute (cache flush coordination)
- * - HOURLY_UPDATES: Every hour (moderate real-time data)
- * - DAILY_UPDATES: Daily (infrequently changing data)
- * - WEEKLY_UPDATES: Weekly or longer (static data like terminals, routes)
- *
- * Usage:
- * ```typescript
- * const { data: vessels } = useVesselLocations({
- *   ...REACT_QUERY.REALTIME_UPDATES,
- * });
- * ```
- */
-export const REACT_QUERY = {
+export const tanstackQueryOptions = {
   /**
    * Real-time data updates (every few seconds to minutes)
    * Examples: Vessel locations, terminal sailing space, wait times, highway alerts

@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getTrafficFlowById, getTrafficFlows } from "./api";
 import type { TrafficFlow } from "./types";
@@ -38,7 +38,7 @@ export const useTrafficFlows = () => {
   return useQuery({
     queryKey: ["traffic-flows"],
     queryFn: getTrafficFlows,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
   });
 };
 
@@ -72,7 +72,7 @@ export const useTrafficFlowById = (
   return useQuery({
     queryKey: ["traffic-flow", "byId", flowDataId],
     queryFn: () => getTrafficFlowById(flowDataId),
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     enabled: flowDataId > 0,
     ...options,
   });

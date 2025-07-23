@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import {
   getHighwayAlertById,
@@ -28,7 +28,7 @@ export const useHighwayAlerts = (
   return useQuery({
     queryKey: ["highway-alerts"],
     queryFn: getHighwayAlerts,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -51,7 +51,7 @@ export const useHighwayAlertById = (
     queryKey: ["highway-alerts", "byId", alertId],
     queryFn: () => getHighwayAlertById(alertId),
     enabled: !!alertId,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -74,7 +74,7 @@ export const useHighwayAlertsByMapArea = (
     queryKey: ["highway-alerts", "byMapArea", mapArea],
     queryFn: () => getHighwayAlertsByMapArea(mapArea),
     enabled: !!mapArea,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };

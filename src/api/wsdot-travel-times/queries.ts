@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getTravelTimeById, getTravelTimes } from "./api";
 import type { TravelTimeRoute } from "./types";
@@ -41,7 +41,7 @@ export const useTravelTimes = (
   return useQuery({
     queryKey: ["travel-times"],
     queryFn: getTravelTimes,
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -78,7 +78,7 @@ export const useTravelTimeById = (
   return useQuery({
     queryKey: ["travel-time", "byId", travelTimeId],
     queryFn: () => getTravelTimeById(travelTimeId),
-    ...REACT_QUERY.MINUTE_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     enabled: travelTimeId > 0,
     ...options,
   });

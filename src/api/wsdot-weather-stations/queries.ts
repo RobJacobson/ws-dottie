@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getWeatherStations } from "./api";
 import type { WeatherStationsResponse } from "./types";
@@ -41,7 +41,7 @@ export const useWeatherStations = (
   return useQuery({
     queryKey: ["weather-stations"],
     queryFn: getWeatherStations,
-    ...REACT_QUERY.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };

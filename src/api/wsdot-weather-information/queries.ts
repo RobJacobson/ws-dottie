@@ -4,7 +4,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { REACT_QUERY } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import {
   getWeatherInformation,
@@ -45,7 +45,7 @@ export const useWeatherInformation = (
   return useQuery({
     queryKey: ["weather-information"],
     queryFn: getWeatherInformation,
-    ...REACT_QUERY.HOURLY_UPDATES,
+    ...tanstackQueryOptions.HOURLY_UPDATES,
     ...options,
   });
 };
@@ -82,7 +82,7 @@ export const useWeatherInformationByStationId = (
   return useQuery({
     queryKey: ["weather-information", "byStationId", stationId],
     queryFn: () => getWeatherInformationByStationId(stationId),
-    ...REACT_QUERY.HOURLY_UPDATES,
+    ...tanstackQueryOptions.HOURLY_UPDATES,
     enabled: stationId > 0,
     ...options,
   });
@@ -122,7 +122,7 @@ export const useWeatherInformationForStations = (
   return useQuery({
     queryKey: ["weather-information", "forStations", stationIds],
     queryFn: () => getWeatherInformationForStations(stationIds),
-    ...REACT_QUERY.HOURLY_UPDATES,
+    ...tanstackQueryOptions.HOURLY_UPDATES,
     enabled: stationIds.length > 0,
     ...options,
   });
