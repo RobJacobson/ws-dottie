@@ -15,7 +15,4 @@ export {
   useWeatherInformationForStations,
 } from "./queries";
 // TypeScript types
-export type {
-  WeatherInfo,
-  WeatherInformationResponse,
-} from "./types";
+export type { WeatherInfo } from "./types";

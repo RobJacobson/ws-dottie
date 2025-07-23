@@ -1,7 +1,9 @@
 // WSF Vessels API functions
+// Documentation: https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
+// API Help: https://www.wsdot.wa.gov/ferries/api/vessels/rest/help
 
+import { createApiClient } from "@/shared/fetching/apiClient";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   VesselAccommodation,
@@ -14,7 +16,7 @@ import type {
 } from "./types";
 
 // Module-scoped fetch function for WSF vessels API
-const fetchVessels = createFetchFunction(
+const fetchVessels = createApiClient(
   "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
 );
 

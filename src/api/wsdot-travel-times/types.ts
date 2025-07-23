@@ -29,7 +29,6 @@ export type TravelTimeRoute = {
   TimeUpdated: Date; // Converted from WSDOT date format "/Date(timestamp)/"
   TravelTimeID: number;
 };
-
 /**
  * Response types for travel times API
  */

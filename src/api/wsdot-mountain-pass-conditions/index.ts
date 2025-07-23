@@ -15,6 +15,5 @@ export {
 // TypeScript types
 export type {
   MountainPassCondition,
-  MountainPassConditionsResponse,
   TravelRestriction,
 } from "./types";

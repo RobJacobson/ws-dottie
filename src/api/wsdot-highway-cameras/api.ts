@@ -6,17 +6,13 @@
  * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 
-import type { LoggingMode } from "../../shared/fetching/config";
-import { createFetchFunction } from "../../shared/fetching/fetchApi";
-import type {
-  GetCameraResponse,
-  GetCamerasResponse,
-  SearchCamerasParams,
-  SearchCamerasResponse,
-} from "./types";
+import { createApiClient } from "@/shared/fetching/apiClient";
+import type { LoggingMode } from "@/shared/fetching/config";
+
+import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
 
 // Module-scoped fetch function for highway cameras API
-const fetchHighwayCameras = createFetchFunction(
+const fetchHighwayCameras = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
 );
 
@@ -27,10 +23,8 @@ const fetchHighwayCameras = createFetchFunction(
  * @returns Promise containing all camera data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getHighwayCameras = (
-  logMode?: LoggingMode
-): Promise<GetCamerasResponse> =>
-  fetchHighwayCameras<GetCamerasResponse>("/GetCamerasAsJson", logMode);
+export const getHighwayCameras = (logMode?: LoggingMode): Promise<Camera[]> =>
+  fetchHighwayCameras<Camera[]>("/GetCamerasAsJson", logMode);
 
 /**
  * Get a specific highway camera by ID
@@ -60,7 +54,7 @@ export const getHighwayCamera = (
 export const searchHighwayCameras = async (
   params: SearchCamerasParams,
   logMode?: LoggingMode
-): Promise<SearchCamerasResponse> => {
+): Promise<Camera[]> => {
   const searchParams = new URLSearchParams();
 
   if (params.StateRoute) {
@@ -79,5 +73,5 @@ export const searchHighwayCameras = async (
   const queryString = searchParams.toString();
   const endpoint = `/SearchCamerasAsJson${queryString ? `?${queryString}` : ""}`;
 
-  return fetchHighwayCameras<SearchCamerasResponse>(endpoint, logMode);
+  return fetchHighwayCameras<Camera[]>(endpoint, logMode);
 };

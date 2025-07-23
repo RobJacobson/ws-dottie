@@ -1,7 +1,9 @@
 // WSF Schedule API functions
+// Documentation: https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html
+// API Help: https://www.wsdot.wa.gov/ferries/api/schedule/rest/help
 
+import { createApiClient } from "@/shared/fetching/apiClient";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   ActiveSeason,
@@ -19,7 +21,7 @@ import type {
 } from "./types";
 
 // Module-scoped fetch function for WSF schedule API
-const fetchSchedule = createFetchFunction(
+const fetchSchedule = createApiClient(
   "https://www.wsdot.wa.gov/ferries/api/schedule/rest"
 );
 

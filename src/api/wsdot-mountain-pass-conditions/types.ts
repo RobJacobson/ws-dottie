@@ -28,8 +28,3 @@ export type MountainPassCondition = {
   TravelAdvisoryActive: boolean;
   WeatherCondition: string;
 };
-
-/**
- * Response type for mountain pass conditions API
- */
-export type MountainPassConditionsResponse = MountainPassCondition[];

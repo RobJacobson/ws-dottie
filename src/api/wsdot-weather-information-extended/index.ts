@@ -10,6 +10,5 @@ export { useWeatherInformationExtended } from "./queries";
 export type {
   SubSurfaceMeasurement,
   SurfaceMeasurement,
-  WeatherInformationExtendedResponse,
   WeatherReading,
 } from "./types";

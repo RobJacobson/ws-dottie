@@ -11,7 +11,7 @@ import {
   getWeatherInformationByStationId,
   getWeatherInformationForStations,
 } from "./api";
-import type { WeatherInfo, WeatherInformationResponse } from "./types";
+import type { WeatherInfo } from "./types";
 
 /**
  * React Query hook for retrieving all weather information
@@ -40,7 +40,7 @@ import type { WeatherInfo, WeatherInformationResponse } from "./types";
  * ```
  */
 export const useWeatherInformation = (
-  options?: Parameters<typeof useQuery<WeatherInformationResponse>>[0]
+  options?: Parameters<typeof useQuery<WeatherInfo[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
@@ -96,12 +96,12 @@ export const useWeatherInformationByStationId = (
 /**
  * React Query hook for retrieving weather information for multiple stations
  *
- * @param stationIds - Comma-separated list of station IDs
+ * @param stationIds - Array of station IDs
  * @returns React Query result containing weather information data
  *
  * @example
  * ```typescript
- * const { data: weatherInfo, isLoading, error } = useWeatherInformationForStations("1909,1910,1928");
+ * const { data: weatherInfo, isLoading, error } = useWeatherInformationForStations([1909, 1910, 1928]);
  *
  * if (isLoading) return <div>Loading...</div>;
  * if (error) return <div>Error: {error.message}</div>;
@@ -122,7 +122,7 @@ export const useWeatherInformationByStationId = (
  */
 export const useWeatherInformationForStations = (
   stationIds: number[],
-  options?: Parameters<typeof useQuery<WeatherInformationResponse>>[0]
+  options?: Parameters<typeof useQuery<WeatherInfo[]>>[0]
 ) => {
   return useQuery({
     queryKey: [
@@ -131,7 +131,7 @@ export const useWeatherInformationForStations = (
       "getWeatherInformationForStations",
       stationIds,
     ],
-    queryFn: () => getWeatherInformationForStations(stationIds),
+    queryFn: () => getWeatherInformationForStations(stationIds.join(",")),
     enabled: !!stationIds && stationIds.length > 0,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

@@ -16,5 +16,4 @@ export {
 export type {
   FlowStationLocation,
   TrafficFlow,
-  TrafficFlowsResponse,
 } from "./types";

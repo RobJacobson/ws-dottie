@@ -26,8 +26,3 @@ export type TrafficFlow = {
   StationName: string;
   Time: Date; // Converted from WSDOT date format "/Date(timestamp)/"
 };
-
-/**
- * Response types for traffic flow API
- */
-export type TrafficFlowsResponse = TrafficFlow[];

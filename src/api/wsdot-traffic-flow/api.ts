@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
 // API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type { TrafficFlow, TrafficFlowsResponse } from "./types";
+import type { TrafficFlow } from "./types";
 
 // Module-scoped fetch function for WSDOT traffic flow API
-const fetchTrafficFlow = createFetchFunction(
+const fetchTrafficFlow = createApiClient(
   "https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc"
 );
 
@@ -18,8 +18,8 @@ const fetchTrafficFlow = createFetchFunction(
  *
  * @returns Promise resolving to array of traffic flow data
  */
-export const getTrafficFlows = (): Promise<TrafficFlowsResponse> =>
-  fetchTrafficFlow<TrafficFlowsResponse>("/GetTrafficFlowsAsJson");
+export const getTrafficFlows = (): Promise<TrafficFlow[]> =>
+  fetchTrafficFlow<TrafficFlow[]>("/GetTrafficFlowsAsJson");
 
 /**
  * Get specific traffic flow by ID from WSDOT Traffic Flow API

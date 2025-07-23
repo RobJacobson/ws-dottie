@@ -2,8 +2,8 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
+import { createApiClient } from "@/shared/fetching/apiClient";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
 
 import type {
   FareLineItem,
@@ -18,7 +18,7 @@ import type {
 } from "./types";
 
 // Module-scoped fetch function for WSF fares API
-const fetchFares = createFetchFunction(
+const fetchFares = createApiClient(
   "https://www.wsdot.wa.gov/ferries/api/fares/rest"
 );
 

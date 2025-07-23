@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___travel_times.html
 // API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type { TravelTimeRoute, TravelTimesResponse } from "./types";
+import type { TravelTimeRoute } from "./types";
 
 // Module-scoped fetch function for travel times API
-const fetchTravelTimes = createFetchFunction(
+const fetchTravelTimes = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/TravelTimes/TravelTimesREST.svc"
 );
 
@@ -23,8 +23,8 @@ const fetchTravelTimes = createFetchFunction(
  * console.log(travelTimes[0].CurrentTime); // 30
  * ```
  */
-export const getTravelTimes = (): Promise<TravelTimesResponse> =>
-  fetchTravelTimes<TravelTimesResponse>("/GetTravelTimesAsJson");
+export const getTravelTimes = (): Promise<TravelTimeRoute[]> =>
+  fetchTravelTimes<TravelTimeRoute[]>("/GetTravelTimesAsJson");
 
 /**
  * Retrieves a specific travel time route by ID from WSDOT API

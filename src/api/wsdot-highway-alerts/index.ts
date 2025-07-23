@@ -17,6 +17,5 @@ export {
 // Export types
 export type {
   HighwayAlert,
-  HighwayAlertsResponse,
   RoadwayLocation,
 } from "./types";

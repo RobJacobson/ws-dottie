@@ -2,15 +2,15 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
 // API Help: https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
 import type {
-  CommercialVehicleRestrictionsResponse,
-  CommercialVehicleRestrictionsWithIdResponse,
+  CommercialVehicleRestriction,
+  CommercialVehicleRestrictionWithId,
 } from "./types";
 
 // Module-scoped fetch function for commercial vehicle restrictions API
-const fetchCommercialVehicleRestrictions = createFetchFunction(
+const fetchCommercialVehicleRestrictions = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/CVRestrictions/CVRestrictionsREST.svc"
 );
 
@@ -22,11 +22,12 @@ const fetchCommercialVehicleRestrictions = createFetchFunction(
  *
  * @returns Promise resolving to array of commercial vehicle restriction data
  */
-export const getCommercialVehicleRestrictions =
-  (): Promise<CommercialVehicleRestrictionsResponse> =>
-    fetchCommercialVehicleRestrictions<CommercialVehicleRestrictionsResponse>(
-      "/GetCommercialVehicleRestrictionsAsJson"
-    );
+export const getCommercialVehicleRestrictions = (): Promise<
+  CommercialVehicleRestriction[]
+> =>
+  fetchCommercialVehicleRestrictions<CommercialVehicleRestriction[]>(
+    "/GetCommercialVehicleRestrictionsAsJson"
+  );
 
 /**
  * Get commercial vehicle restrictions with unique IDs from WSDOT Commercial Vehicle Restrictions API
@@ -37,8 +38,9 @@ export const getCommercialVehicleRestrictions =
  *
  * @returns Promise resolving to array of commercial vehicle restriction data with unique IDs
  */
-export const getCommercialVehicleRestrictionsWithId =
-  (): Promise<CommercialVehicleRestrictionsWithIdResponse> =>
-    fetchCommercialVehicleRestrictions<CommercialVehicleRestrictionsWithIdResponse>(
-      "/GetCommercialVehicleRestrictionsWithIdAsJson"
-    );
+export const getCommercialVehicleRestrictionsWithId = (): Promise<
+  CommercialVehicleRestrictionWithId[]
+> =>
+  fetchCommercialVehicleRestrictions<CommercialVehicleRestrictionWithId[]>(
+    "/GetCommercialVehicleRestrictionsWithIdAsJson"
+  );

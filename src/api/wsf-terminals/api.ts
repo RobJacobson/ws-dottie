@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
 import type {
   TerminalBasics,
@@ -13,7 +13,7 @@ import type {
 } from "./types";
 
 // Module-scoped fetch function for WSF terminals API
-const fetchTerminals = createFetchFunction(
+const fetchTerminals = createApiClient(
   "https://www.wsdot.wa.gov/ferries/api/terminals/rest"
 );
 

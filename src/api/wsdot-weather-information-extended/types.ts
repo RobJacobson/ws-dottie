@@ -50,8 +50,3 @@ export type WeatherReading = {
   SurfaceMeasurements: SurfaceMeasurement[] | null;
   SubSurfaceMeasurements: SubSurfaceMeasurement[] | null;
 };
-
-/**
- * Response types for weather information extended API
- */
-export type WeatherInformationExtendedResponse = WeatherReading[];

@@ -9,5 +9,4 @@ export { useBorderCrossings } from "./queries";
 export type {
   BorderCrossingData,
   BorderCrossingLocation,
-  BorderCrossingsResponse,
 } from "./types";

@@ -17,9 +17,7 @@ export {
 // TypeScript types
 export type {
   TollRate,
-  TollRatesResponse,
   TollTripInfo,
-  TollTripInfoResponse,
   TollTripRate,
   TollTripRatesResponse,
 } from "./types";
