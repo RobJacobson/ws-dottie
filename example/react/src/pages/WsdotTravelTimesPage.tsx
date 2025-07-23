@@ -1,0 +1,60 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Clock, ArrowLeft } from "lucide-react";
+import { WsdotTravelTimes } from "ws-dottie";
+import ApiDataDisplay from "@/components/ApiDataDisplay";
+
+function WsdotTravelTimesPage() {
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+
+  // React Query hooks
+  const data = WsdotTravelTimes.useTravelTimes();
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Header */}
+      <div className="mb-8">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors mb-4"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Home
+        </Link>
+        <div className="flex items-center gap-3">
+          <div className="bg-teal-500 p-3 rounded-lg">
+            <Clock className="w-8 h-8 text-white" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              WSDOT Travel Times
+            </h1>
+            <p className="text-gray-600">Travel time estimates and routes</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        {/* Data Display */}
+        <ApiDataDisplay
+          title="Travel Times"
+          description="Travel time estimates and routes"
+          data={data.data}
+          isLoading={data.isLoading}
+          error={data.error}
+          selectedItem={selectedItem}
+          onItemSelect={setSelectedItem}
+          items={data.data}
+          getItemName={(item) =>
+            item.name || item.title || item.description || "Item"
+          }
+          getItemId={(item) =>
+            item.id || item.vesselId || item.terminalId || "unknown"
+          }
+        />
+      </div>
+    </div>
+  );
+}
+
+export default WsdotTravelTimesPage;
