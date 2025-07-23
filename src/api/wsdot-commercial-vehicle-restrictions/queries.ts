@@ -11,8 +11,8 @@ import {
   getCommercialVehicleRestrictionsWithId,
 } from "./api";
 import type {
-  CommercialVehicleRestrictionsResponse,
-  CommercialVehicleRestrictionsWithIdResponse,
+  CommercialVehicleRestriction,
+  CommercialVehicleRestrictionWithId,
 } from "./types";
 
 /**
@@ -26,12 +26,14 @@ import type {
  * @returns React Query result with commercial vehicle restriction data
  */
 export const useCommercialVehicleRestrictions = (
-  options?: Parameters<
-    typeof useQuery<CommercialVehicleRestrictionsResponse>
-  >[0]
+  options?: Parameters<typeof useQuery<CommercialVehicleRestriction[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["commercial-vehicle-restrictions"],
+    queryKey: [
+      "wsdot",
+      "commercial-vehicle-restrictions",
+      "getCommercialVehicleRestrictions",
+    ],
     queryFn: getCommercialVehicleRestrictions,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -50,10 +52,14 @@ export const useCommercialVehicleRestrictions = (
  * @returns React Query result with commercial vehicle restriction data with unique IDs
  */
 export const useCommercialVehicleRestrictionsWithId = (
-  options?: UseQueryOptions<CommercialVehicleRestrictionsWithIdResponse>
+  options?: UseQueryOptions<CommercialVehicleRestrictionWithId[]>
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "commercialVehicleRestrictions", "withId"],
+    queryKey: [
+      "wsdot",
+      "commercial-vehicle-restrictions",
+      "getCommercialVehicleRestrictionsWithId",
+    ],
     queryFn: getCommercialVehicleRestrictionsWithId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,

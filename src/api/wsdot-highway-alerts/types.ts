@@ -33,8 +33,3 @@ export type HighwayAlert = {
   StartRoadwayLocation: RoadwayLocation;
   StartTime: Date; // Converted from WSDOT date format "/Date(timestamp)/"
 };
-
-/**
- * Response type for highway alerts API
- */
-export type HighwayAlertsResponse = HighwayAlert[];

@@ -63,7 +63,7 @@ import type {
  */
 export const useCacheFlushDateSchedule = () =>
   useQuery({
-    queryKey: ["schedule", "cacheFlushDate"],
+    queryKey: ["wsf", "schedule", "cacheFlushDate"],
     queryFn: getCacheFlushDateSchedule,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
   });
@@ -83,7 +83,7 @@ export const useCacheFlushDateSchedule = () =>
  */
 export const useValidDateRange = () =>
   useQuery({
-    queryKey: ["schedule", "validDateRange"],
+    queryKey: ["wsf", "schedule", "validDateRange"],
     queryFn: getValidDateRange,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
   });
@@ -107,7 +107,7 @@ export const useTerminals = (
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "terminals", jsDateToYyyyMmDd(tripDate)],
+    queryKey: ["wsf", "schedule", "terminals", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getTerminals(tripDate),
     enabled: !!tripDate,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -130,7 +130,12 @@ export const useTerminalsAndMates = (
   options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "terminalsAndMates", jsDateToYyyyMmDd(tripDate)],
+    queryKey: [
+      "wsf",
+      "schedule",
+      "terminalsAndMates",
+      jsDateToYyyyMmDd(tripDate),
+    ],
     queryFn: () => getTerminalsAndMates(tripDate),
     enabled: !!tripDate,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -156,6 +161,7 @@ export const useTerminalsAndMatesByRoute = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "terminalsAndMatesByRoute",
       jsDateToYyyyMmDd(tripDate),
@@ -186,6 +192,7 @@ export const useTerminalMates = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "terminalMates",
       jsDateToYyyyMmDd(tripDate),
@@ -217,7 +224,7 @@ export const useRoutes = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routes", jsDateToYyyyMmDd(tripDate)],
+    queryKey: ["wsf", "schedule", "routes", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRoutes(tripDate),
     enabled: !!tripDate,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -246,6 +253,7 @@ export const useRoutesByTerminals = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "routesByTerminals",
       jsDateToYyyyMmDd(tripDate),
@@ -275,7 +283,12 @@ export const useRoutesWithDisruptions = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routesWithDisruptions", jsDateToYyyyMmDd(tripDate)],
+    queryKey: [
+      "wsf",
+      "schedule",
+      "routesWithDisruptions",
+      jsDateToYyyyMmDd(tripDate),
+    ],
     queryFn: () => getRoutesWithDisruptions(tripDate),
     enabled: !!tripDate,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -299,7 +312,7 @@ export const useRouteDetails = (
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "routeDetails", jsDateToYyyyMmDd(tripDate)],
+    queryKey: ["wsf", "schedule", "routeDetails", jsDateToYyyyMmDd(tripDate)],
     queryFn: () => getRouteDetails(tripDate),
     enabled: !!tripDate,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -328,6 +341,7 @@ export const useRouteDetailsByTerminals = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "routeDetailsByTerminals",
       jsDateToYyyyMmDd(tripDate),
@@ -364,6 +378,7 @@ export const useRouteDetailsByRoute = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "routeDetailsByRoute",
       jsDateToYyyyMmDd(tripDate),
@@ -393,7 +408,7 @@ export const useActiveSeasons = (
   options?: Parameters<typeof useQuery<ActiveSeason[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "activeSeasons"],
+    queryKey: ["wsf", "schedule", "activeSeasons"],
     queryFn: getActiveSeasons,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -418,7 +433,7 @@ export const useScheduledRoutes = (
   options?: Parameters<typeof useQuery<ScheduledRoute[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "scheduledRoutes"],
+    queryKey: ["wsf", "schedule", "scheduledRoutes"],
     queryFn: getScheduledRoutes,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -440,7 +455,7 @@ export const useScheduledRoutesBySeason = (
   options?: Parameters<typeof useQuery<ScheduledRoute[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "scheduledRoutesBySeason", scheduleId],
+    queryKey: ["wsf", "schedule", "scheduledRoutesBySeason", scheduleId],
     queryFn: () => getScheduledRoutesBySeason(scheduleId),
     enabled: !!scheduleId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -469,7 +484,7 @@ export const useSailings = (
   options?: Parameters<typeof useQuery<Sailing[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "sailings", schedRouteId],
+    queryKey: ["wsf", "schedule", "sailings", schedRouteId],
     queryFn: () => getSailings(schedRouteId),
     enabled: !!schedRouteId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -494,7 +509,7 @@ export const useAllSailings = (
   options?: Parameters<typeof useQuery<Sailing[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "allSailings", schedRouteId],
+    queryKey: ["wsf", "schedule", "allSailings", schedRouteId],
     queryFn: () => getAllSailings(schedRouteId),
     enabled: !!schedRouteId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -519,7 +534,7 @@ export const useTimeAdjustments = (
   options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "timeAdjustments"],
+    queryKey: ["wsf", "schedule", "timeAdjustments"],
     queryFn: getTimeAdjustments,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -542,7 +557,7 @@ export const useTimeAdjustmentsByRoute = (
   options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "timeAdjustmentsByRoute", routeId],
+    queryKey: ["wsf", "schedule", "timeAdjustmentsByRoute", routeId],
     queryFn: () => getTimeAdjustmentsByRoute(routeId),
     enabled: !!routeId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -566,7 +581,7 @@ export const useTimeAdjustmentsBySchedRoute = (
   options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "timeAdjustmentsBySchedRoute", schedRouteId],
+    queryKey: ["wsf", "schedule", "timeAdjustmentsBySchedRoute", schedRouteId],
     queryFn: () => getTimeAdjustmentsBySchedRoute(schedRouteId),
     enabled: !!schedRouteId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -596,6 +611,7 @@ export const useScheduleByRoute = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "scheduleByRoute",
       jsDateToYyyyMmDd(tripDate),
@@ -628,6 +644,7 @@ export const useScheduleByTerminals = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "scheduleByTerminals",
       jsDateToYyyyMmDd(tripDate),
@@ -659,7 +676,13 @@ export const useScheduleTodayByRoute = (
   options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "scheduleTodayByRoute", routeId, onlyRemainingTimes],
+    queryKey: [
+      "wsf",
+      "schedule",
+      "scheduleTodayByRoute",
+      routeId,
+      onlyRemainingTimes,
+    ],
     queryFn: () => getScheduleTodayByRoute(routeId, onlyRemainingTimes),
     enabled: !!routeId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
@@ -687,6 +710,7 @@ export const useScheduleTodayByTerminals = (
 ) =>
   useQuery({
     queryKey: [
+      "wsf",
       "schedule",
       "scheduleTodayByTerminals",
       departingTerminalId,
@@ -720,7 +744,7 @@ export const useScheduleTodayByTerminals = (
  */
 export const useAlerts = (options?: Parameters<typeof useQuery<Alert[]>>[0]) =>
   useQuery({
-    queryKey: ["schedule", "alerts"],
+    queryKey: ["wsf", "schedule", "alerts"],
     queryFn: getAlerts,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -746,7 +770,7 @@ export const useAlternativeFormats = (
   options?: Parameters<typeof useQuery<AlternativeFormat[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["schedule", "alternativeFormats", subjectName],
+    queryKey: ["wsf", "schedule", "alternativeFormats", subjectName],
     queryFn: () => getAlternativeFormats(subjectName),
     enabled: !!subjectName,
     ...tanstackQueryOptions.WEEKLY_UPDATES,

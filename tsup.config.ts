@@ -21,4 +21,6 @@ export default defineConfig({
     };
   },
   treeshake: true,
+  // Ensure proper type exports
+  noExternal: [],
 });

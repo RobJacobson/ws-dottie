@@ -36,7 +36,11 @@ export const useMountainPassConditions = (
   options?: Parameters<typeof useQuery<MountainPassCondition[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["mountain-pass-conditions"],
+    queryKey: [
+      "wsdot",
+      "mountain-pass-conditions",
+      "getMountainPassConditions",
+    ],
     queryFn: getMountainPassConditions,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -68,7 +72,12 @@ export const useMountainPassConditions = (
  */
 export const useMountainPassConditionById = (passConditionId: number) => {
   return useQuery<MountainPassCondition>({
-    queryKey: ["mountainPassCondition", passConditionId],
+    queryKey: [
+      "wsdot",
+      "mountain-pass-conditions",
+      "getMountainPassConditionById",
+      passConditionId,
+    ],
     queryFn: () => getMountainPassConditionById(passConditionId),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: passConditionId > 0,

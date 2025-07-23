@@ -26,7 +26,7 @@ export const useHighwayAlerts = (
   options?: Parameters<typeof useQuery<HighwayAlert[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["highway-alerts"],
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlerts"],
     queryFn: getHighwayAlerts,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
@@ -48,7 +48,7 @@ export const useHighwayAlertById = (
   options?: Parameters<typeof useQuery<HighwayAlert>>[0]
 ) => {
   return useQuery({
-    queryKey: ["highway-alerts", "byId", alertId],
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertById", alertId],
     queryFn: () => getHighwayAlertById(alertId),
     enabled: !!alertId,
     ...tanstackQueryOptions.MINUTE_UPDATES,
@@ -71,7 +71,7 @@ export const useHighwayAlertsByMapArea = (
   options?: Parameters<typeof useQuery<HighwayAlert[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["highway-alerts", "byMapArea", mapArea],
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea", mapArea],
     queryFn: () => getHighwayAlertsByMapArea(mapArea),
     enabled: !!mapArea,
     ...tanstackQueryOptions.MINUTE_UPDATES,

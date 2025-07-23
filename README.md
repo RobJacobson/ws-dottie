@@ -13,7 +13,7 @@
 
 Meet Dottie - she's not just another API wrapper, she's your cheerful guide through Washington State's transportation data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state.
 
-More exactly, WS-Dottie is a delightful TypeScript client library that wraps the Washington State Department of Transportation (WSDOT) and Washington State Ferries (WSF) APIs with smart caching, automatic JSONP/fetch switching, and seamless React Query integration. This little library allows you to fetch free, real-time commuter data with ease!
+WS-Dottie is a delightful TypeScript client library that wraps the Washington State Department of Transportation (WSDOT) and Washington State Ferries (WSF) APIs with smart caching, strict typing, automatic use of JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration. This little library allows you to fetch free, real-time commuter data with ease!
 
 ## ✨ Features
 

@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getTollRates, getTollTripInfo, getTollTripRates } from "./api";
-import type { TollRatesResponse } from "./types";
+import type { TollRate } from "./types";
 
 /**
  * React Query hook for retrieving all toll rates
@@ -35,10 +35,10 @@ import type { TollRatesResponse } from "./types";
  * ```
  */
 export const useTollRates = (
-  options?: Parameters<typeof useQuery<TollRatesResponse>>[0]
+  options?: Parameters<typeof useQuery<TollRate[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["toll-rates"],
+    queryKey: ["wsdot", "toll-rates", "getTollRates"],
     queryFn: getTollRates,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
@@ -72,7 +72,7 @@ export const useTollRates = (
  */
 export const useTollTripInfo = () => {
   return useQuery({
-    queryKey: ["toll-trip-info"],
+    queryKey: ["wsdot", "toll-rates", "getTollTripInfo"],
     queryFn: getTollTripInfo,
     ...tanstackQueryOptions.MINUTE_UPDATES,
   });
@@ -106,7 +106,7 @@ export const useTollTripInfo = () => {
  */
 export const useTollTripRates = () => {
   return useQuery({
-    queryKey: ["toll-trip-rates"],
+    queryKey: ["wsdot", "toll-rates", "getTollTripRates"],
     queryFn: getTollTripRates,
     ...tanstackQueryOptions.MINUTE_UPDATES,
   });

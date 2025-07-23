@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 
 import { getBridgeClearances } from "./api";
-import type { BridgeClearancesResponse } from "./types";
+import type { BridgeDataGIS } from "./types";
 
 /**
  * Hook for getting bridge clearances from WSDOT Bridge Clearances API
@@ -21,10 +21,10 @@ import type { BridgeClearancesResponse } from "./types";
  */
 export const useBridgeClearances = (
   route: string,
-  options?: Parameters<typeof useQuery<BridgeClearancesResponse>>[0]
+  options?: Parameters<typeof useQuery<BridgeDataGIS[]>>[0]
 ) => {
   return useQuery({
-    queryKey: ["bridge-clearances", route],
+    queryKey: ["wsdot", "bridge-clearances", "getBridgeClearances", route],
     queryFn: () => getBridgeClearances(route),
     enabled: !!route,
     ...tanstackQueryOptions.WEEKLY_UPDATES,

@@ -57,15 +57,3 @@ export type CommercialVehicleRestrictionWithId =
   CommercialVehicleRestriction & {
     UniqueID: string;
   };
-
-/**
- * Response type for commercial vehicle restrictions
- */
-export type CommercialVehicleRestrictionsResponse =
-  CommercialVehicleRestriction[];
-
-/**
- * Response type for commercial vehicle restrictions with unique IDs
- */
-export type CommercialVehicleRestrictionsWithIdResponse =
-  CommercialVehicleRestrictionWithId[];

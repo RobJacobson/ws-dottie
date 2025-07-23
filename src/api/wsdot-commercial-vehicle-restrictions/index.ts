@@ -14,8 +14,6 @@ export {
 // TypeScript types
 export type {
   CommercialVehicleRestriction,
-  CommercialVehicleRestrictionsResponse,
-  CommercialVehicleRestrictionsWithIdResponse,
   CommercialVehicleRestrictionWithId,
   RoadwayLocation,
 } from "./types";

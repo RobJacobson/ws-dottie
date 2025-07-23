@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type { HighwayAlert, HighwayAlertsResponse } from "./types";
+import type { HighwayAlert } from "./types";
 
 // Module-scoped fetch function for highway alerts API
-const fetchHighwayAlerts = createFetchFunction(
+const fetchHighwayAlerts = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
 );
 
@@ -19,8 +19,8 @@ const fetchHighwayAlerts = createFetchFunction(
  *
  * @returns Promise resolving to array of highway alert data
  */
-export const getHighwayAlerts = (): Promise<HighwayAlertsResponse> =>
-  fetchHighwayAlerts<HighwayAlertsResponse>("/GetAlertsAsJson");
+export const getHighwayAlerts = (): Promise<HighwayAlert[]> =>
+  fetchHighwayAlerts<HighwayAlert[]>("/GetAlertsAsJson");
 
 /**
  * Get a specific highway alert by ID from WSDOT Highway Alerts API
@@ -44,7 +44,7 @@ export const getHighwayAlertById = (alertId: number): Promise<HighwayAlert> =>
  */
 export const getHighwayAlertsByMapArea = (
   mapArea: string
-): Promise<HighwayAlertsResponse> =>
-  fetchHighwayAlerts<HighwayAlertsResponse>(
+): Promise<HighwayAlert[]> =>
+  fetchHighwayAlerts<HighwayAlert[]>(
     `/GetAlertsByMapAreaAsJson?MapArea=${encodeURIComponent(mapArea)}`
   );

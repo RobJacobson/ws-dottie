@@ -6,7 +6,4 @@ export { getBridgeClearances } from "./api";
 // React Query hooks
 export { useBridgeClearances } from "./queries";
 // TypeScript types
-export type {
-  BridgeClearancesResponse,
-  BridgeDataGIS,
-} from "./types";
+export type { BridgeDataGIS } from "./types";

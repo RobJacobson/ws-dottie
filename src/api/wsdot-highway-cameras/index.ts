@@ -25,7 +25,5 @@ export type {
   Camera,
   CameraLocation,
   GetCameraResponse,
-  GetCamerasResponse,
   SearchCamerasParams,
-  SearchCamerasResponse,
 } from "./types";

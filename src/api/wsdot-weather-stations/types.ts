@@ -12,8 +12,3 @@ export type WeatherStationData = {
   StationCode: number;
   StationName: string;
 };
-
-/**
- * Response types for weather stations API
- */
-export type WeatherStationsResponse = WeatherStationData[];

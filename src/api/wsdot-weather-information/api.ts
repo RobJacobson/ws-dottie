@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type { WeatherInfo, WeatherInformationResponse } from "./types";
+import type { WeatherInfo } from "./types";
 
 // Module-scoped fetch function for weather information API
-const fetchWeatherInformation = createFetchFunction(
+const fetchWeatherInformation = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
 );
 
@@ -23,10 +23,8 @@ const fetchWeatherInformation = createFetchFunction(
  * console.log(weatherInfo[0].TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformation = (): Promise<WeatherInformationResponse> =>
-  fetchWeatherInformation<WeatherInformationResponse>(
-    "/GetCurrentWeatherInformationAsJson"
-  );
+export const getWeatherInformation = (): Promise<WeatherInfo[]> =>
+  fetchWeatherInformation<WeatherInfo[]>("/GetCurrentWeatherInformationAsJson");
 
 /**
  * Retrieves weather information for a specific station by ID from WSDOT API
@@ -63,7 +61,7 @@ export const getWeatherInformationByStationId = (
  */
 export const getWeatherInformationForStations = (
   stationIds: string
-): Promise<WeatherInformationResponse> =>
-  fetchWeatherInformation<WeatherInformationResponse>(
+): Promise<WeatherInfo[]> =>
+  fetchWeatherInformation<WeatherInfo[]>(
     `/GetCurrentWeatherForStationsAsJson?StationList=${stationIds}`
   );

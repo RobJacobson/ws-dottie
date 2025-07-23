@@ -2,16 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { createFetchFunction } from "@/shared/fetching/fetchApi";
+import { createApiClient } from "@/shared/fetching/apiClient";
 
-import type {
-  TollRatesResponse,
-  TollTripInfoResponse,
-  TollTripRatesResponse,
-} from "./types";
+import type { TollRate, TollTripInfo, TollTripRatesResponse } from "./types";
 
 // Module-scoped fetch function for toll rates API
-const fetchTollRates = createFetchFunction(
+const fetchTollRates = createApiClient(
   "https://wsdot.wa.gov/Traffic/api/TollRates/TollRatesREST.svc"
 );
 
@@ -27,8 +23,8 @@ const fetchTollRates = createFetchFunction(
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const getTollRates = (): Promise<TollRatesResponse> =>
-  fetchTollRates<TollRatesResponse>("/GetTollRatesAsJson");
+export const getTollRates = (): Promise<TollRate[]> =>
+  fetchTollRates<TollRate[]>("/GetTollRatesAsJson");
 
 /**
  * Retrieves toll trip information with geometry data from WSDOT API
@@ -42,8 +38,8 @@ export const getTollRates = (): Promise<TollRatesResponse> =>
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = (): Promise<TollTripInfoResponse> =>
-  fetchTollRates<TollTripInfoResponse>("/GetTollTripInfoAsJson");
+export const getTollTripInfo = (): Promise<TollTripInfo[]> =>
+  fetchTollRates<TollTripInfo[]>("/GetTollTripInfoAsJson");
 
 /**
  * Retrieves toll trip rates with messages and update times from WSDOT API
