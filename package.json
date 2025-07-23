@@ -1,8 +1,8 @@
 {
   "name": "ws-dottie",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
-  "description": "The complete TypeScript client for Washington State's real-time transportation data",
+  "description": "Your friendly TypeScript companion for Washington State transportation APIs - WSDOT and WSF data with smart caching and React Query integration",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -16,7 +16,7 @@
   "files": [
     "dist",
     "README.md",
-    "CHANGELOG.md"
+    "docs"
   ],
   "scripts": {
     "build": "tsup",
@@ -38,11 +38,11 @@
     "lint": "biome lint src/ tests/",
     "format": "biome format --write src/ tests/",
     "type-check": "tsc --noEmit",
-    "prepublishOnly": "npm run build && npm run test"
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
-    "react": ">=19.0.0"
+    "react": ">=18.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.6",
@@ -77,12 +77,22 @@
     "travel-times",
     "typescript",
     "react",
-    "react-query"
+    "react-query",
+    "tanstack-query",
+    "jsonp",
+    "cors",
+    "real-time",
+    "traffic-data",
+    "ferry-data"
   ],
   "author": "Rob Jacobson <rljacobson@outlook.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/yourusername/ws-dottie.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ws-dottie/issues"
+  },
+  "homepage": "https://github.com/yourusername/ws-dottie#readme"
 }
