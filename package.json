@@ -89,10 +89,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/robjacobson/ws-dottie.git"
+    "url": "https://github.com/RobJacobson/ws-dottie.git"
   },
   "bugs": {
-    "url": "https://github.com/robjacobson/ws-dottie/issues"
+    "url": "https://github.com/RobJacobson/ws-dottie/issues"
   },
-  "homepage": "https://github.com/robjacobson/ws-dottie#readme"
+  "homepage": "https://github.com/RobJacobson/ws-dottie#readme"
 }
