@@ -9,6 +9,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+
 import {
   getHighwayCamera,
   getHighwayCameras,

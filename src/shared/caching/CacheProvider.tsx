@@ -31,10 +31,10 @@ export const CacheProvider = <T extends Date | null | undefined>(
     ) {
       queryClient.invalidateQueries({ queryKey });
     }
-    
+
     previousFlushDate.current = currentFlushDate || null;
   }, [currentFlushDate, queryClient, queryKey]);
 
   // This component doesn't render anything
   return null;
-}; 
+};
