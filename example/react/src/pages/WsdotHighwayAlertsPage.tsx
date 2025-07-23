@@ -1,7 +1,7 @@
 import { AlertTriangle, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { WsdotHighwayAlerts } from "ws-dottie";
+import { useHighwayAlerts } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
@@ -10,7 +10,7 @@ function WsdotHighwayAlertsPage() {
   const [selectedAlert, setSelectedAlert] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const highwayAlerts = WsdotHighwayAlerts.useHighwayAlerts();
+  const highwayAlerts = useHighwayAlerts();
 
   return (
     <div className="container mx-auto px-4 py-8">

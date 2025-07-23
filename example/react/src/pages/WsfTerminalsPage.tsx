@@ -1,7 +1,7 @@
+import { ArrowLeft, Building } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Building, ArrowLeft } from "lucide-react";
-import { WsfTerminals } from "ws-dottie";
+import { useTerminalBasics, } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
 
@@ -9,7 +9,7 @@ function WsfTerminalsPage() {
   const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const data = WsfTerminals.useTerminalBasics();
+  const data = useTerminalBasics();
 
   return (
     <div className="container mx-auto px-4 py-8">

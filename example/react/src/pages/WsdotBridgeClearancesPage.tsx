@@ -1,7 +1,7 @@
 import { ArrowLeft, Building } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { WsdotBridgeClearances } from "ws-dottie";
+import { useBridgeClearances } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
@@ -10,7 +10,7 @@ function WsdotBridgeClearancesPage() {
   const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks - using I-5 as example route
-  const data = WsdotBridgeClearances.useBridgeClearances("005");
+  const data = useBridgeClearances("005");
 
   return (
     <div className="container mx-auto px-4 py-8">

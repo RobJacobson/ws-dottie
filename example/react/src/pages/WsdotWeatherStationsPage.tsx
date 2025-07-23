@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Thermometer, ArrowLeft } from "lucide-react";
-import { WsdotWeatherStations } from "ws-dottie";
+import { useWeatherStations } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
 
@@ -9,7 +9,7 @@ function WsdotWeatherStationsPage() {
   const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const data = WsdotWeatherStations.useWeatherStations();
+  const data = useWeatherStations();
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -1,7 +1,7 @@
+import { ArrowLeft, CloudRain } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CloudRain, ArrowLeft } from "lucide-react";
-import { WsdotWeatherInformationExtended } from "ws-dottie";
+import { useWeatherInformationExtended } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
 
@@ -9,7 +9,7 @@ function WsdotWeatherInformationExtendedPage() {
   const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const data = WsdotWeatherInformationExtended.useWeatherInformationExtended();
+  const data = useWeatherInformationExtended();
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { TrafficCone, ArrowLeft } from "lucide-react";
-import { WsdotCommercialVehicleRestrictions } from "ws-dottie";
+import { useCommercialVehicleRestrictions } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
 
@@ -10,7 +10,7 @@ function WsdotCommercialVehicleRestrictionsPage() {
 
   // React Query hooks
   const data =
-    WsdotCommercialVehicleRestrictions.useCommercialVehicleRestrictions();
+    useCommercialVehicleRestrictions();
 
   return (
     <div className="container mx-auto px-4 py-8">

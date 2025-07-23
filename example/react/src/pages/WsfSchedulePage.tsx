@@ -1,7 +1,7 @@
 import { ArrowLeft, Calendar } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { WsfSchedule } from "ws-dottie";
+import { useRoutes, useScheduledRoutes } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
@@ -12,8 +12,8 @@ function WsfSchedulePage() {
 
   // React Query hooks - using today's date for demo
   const today = new Date();
-  const routes = WsfSchedule.useRoutes(today);
-  const scheduledRoutes = WsfSchedule.useScheduledRoutes();
+  const routes = useRoutes(today);
+  const scheduledRoutes = useScheduledRoutes();
 
   return (
     <div className="container mx-auto px-4 py-8">

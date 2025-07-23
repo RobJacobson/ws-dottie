@@ -1,7 +1,7 @@
 import { ArrowLeft, Camera } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { WsdotHighwayCameras } from "ws-dottie";
+import { useHighwayCameras } from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
@@ -10,7 +10,7 @@ function WsdotHighwayCamerasPage() {
   const [selectedCamera, setSelectedCamera] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const cameras = WsdotHighwayCameras.useHighwayCameras();
+  const cameras = useHighwayCameras();
 
   return (
     <div className="container mx-auto px-4 py-8">

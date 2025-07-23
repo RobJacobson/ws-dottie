@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Car, ArrowLeft } from "lucide-react";
-import { WsdotBorderCrossings } from "ws-dottie";
+import { useBorderCrossings } from "ws-dottie";
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
 
@@ -9,7 +9,7 @@ function WsdotBorderCrossingsPage() {
   const [selectedItem, setSelectedItem] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const data = WsdotBorderCrossings.useBorderCrossings();
+  const data = useBorderCrossings();
 
   return (
     <div className="container mx-auto px-4 py-8">

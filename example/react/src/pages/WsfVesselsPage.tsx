@@ -1,7 +1,15 @@
 import { ArrowLeft, Ship } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { WsfVessels } from "ws-dottie";
+import { 
+  useCacheFlushDateVessels, 
+  useVesselAccommodations, 
+  useVesselBasics, 
+  useVesselHistory, 
+  useVesselLocations, 
+  useVesselStats, 
+  useVesselVerbose 
+} from "ws-dottie";
 
 import ApiDataDisplay from "@/components/ApiDataDisplay";
 import type { ApiItem } from "@/types/api";
@@ -15,13 +23,13 @@ function WsfVesselsPage() {
   const [selectedVesselVerbose, setSelectedVesselVerbose] = useState<ApiItem | null>(null);
 
   // React Query hooks
-  const vesselBasics = WsfVessels.useVesselBasics();
-  const vesselLocations = WsfVessels.useVesselLocations();
-  const vesselAccommodations = WsfVessels.useVesselAccommodations();
-  const vesselStats = WsfVessels.useVesselStats();
-  const vesselHistory = WsfVessels.useVesselHistory();
-  const vesselVerbose = WsfVessels.useVesselVerbose();
-  const cacheFlushDate = WsfVessels.useCacheFlushDateVessels();
+  const vesselBasics = useVesselBasics();
+  const vesselLocations = useVesselLocations();
+  const vesselAccommodations = useVesselAccommodations();
+  const vesselStats = useVesselStats();
+  const vesselHistory = useVesselHistory();
+  const vesselVerbose = useVesselVerbose();
+  const cacheFlushDate = useCacheFlushDateVessels();
 
   return (
     <div className="container mx-auto px-4 py-8">
