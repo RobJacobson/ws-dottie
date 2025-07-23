@@ -25,6 +25,151 @@ export * as WsfTerminals from "./api/wsf-terminals";
 export * as WsfVessels from "./api/wsf-vessels";
 
 // ============================================================================
+// Direct Type Exports (for better compatibility)
+// ============================================================================
+
+// WSDOT Border Crossings Types
+export type {
+  BorderCrossingData,
+  BorderCrossingLocation,
+} from "./api/wsdot-border-crossings/types";
+// WSDOT Bridge Clearances Types
+export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/types";
+// WSDOT Commercial Vehicle Restrictions Types
+export type {
+  CommercialVehicleRestriction,
+  CommercialVehicleRestrictionWithId,
+  RoadwayLocation as CVRoadwayLocation,
+} from "./api/wsdot-commercial-vehicle-restrictions/types";
+// WSDOT Highway Alerts Types
+export type {
+  HighwayAlert,
+  RoadwayLocation,
+} from "./api/wsdot-highway-alerts/types";
+// WSDOT Highway Cameras Types
+export type {
+  Camera,
+  CameraLocation,
+  GetCameraResponse,
+  GetCamerasResponse,
+  SearchCamerasParams,
+  SearchCamerasResponse,
+} from "./api/wsdot-highway-cameras/types";
+// WSDOT Mountain Pass Conditions Types
+export type {
+  MountainPassCondition,
+  MountainPassConditionsResponse,
+  TravelRestriction,
+} from "./api/wsdot-mountain-pass-conditions/types";
+// WSDOT Toll Rates Types
+export type {
+  TollRate,
+  TollRatesResponse,
+  TollTripInfo,
+  TollTripInfoResponse,
+  TollTripRate,
+  TollTripRatesResponse,
+} from "./api/wsdot-toll-rates/types";
+// WSDOT Traffic Flow Types
+export type {
+  FlowStationLocation,
+  TrafficFlow,
+  TrafficFlowsResponse,
+} from "./api/wsdot-traffic-flow/types";
+// WSDOT Travel Times Types
+export type {
+  TravelTimeEndpoint,
+  TravelTimeRoute,
+  TravelTimesResponse,
+} from "./api/wsdot-travel-times/types";
+// WSDOT Weather Information Types
+export type {
+  WeatherInfo,
+  WeatherInformationResponse,
+} from "./api/wsdot-weather-information/types";
+// WSDOT Weather Information Extended Types
+export type {
+  SubSurfaceMeasurement,
+  SurfaceMeasurement,
+  WeatherInformationExtendedResponse,
+  WeatherReading,
+} from "./api/wsdot-weather-information-extended/types";
+// WSDOT Weather Stations Types
+export type {
+  WeatherStationData,
+  WeatherStationsResponse,
+} from "./api/wsdot-weather-stations/types";
+// WSF Fares Types
+export type {
+  FareLineItem,
+  FareLineItemBasic,
+  FareLineItemVerbose,
+  FaresCacheFlushDate,
+  FaresTerminal,
+  FaresValidDateRange,
+  FareTotal,
+  TerminalCombo,
+  TerminalComboVerbose,
+  TerminalMate,
+} from "./api/wsf-fares/types";
+// WSF Schedule Types
+export type {
+  ActiveSeason,
+  ActiveSeasonParams,
+  Alert,
+  AlertParams,
+  AlternativeFormat,
+  Annotation,
+  ContingencyAdjustment,
+  Journey,
+  Route,
+  RouteDetails,
+  RouteParams,
+  Sailing,
+  Schedule,
+  ScheduleCacheFlushDate,
+  ScheduleDeparture,
+  ScheduledRoute,
+  ScheduleParams,
+  ScheduleResponse,
+  ScheduleResponseTerminalCombo,
+  ScheduleTerminal,
+  ScheduleTerminalCombo,
+  ScheduleTime,
+  ServiceDisruption,
+  TerminalTime,
+  TimeAdjustment,
+  TimeAdjustmentParams,
+  ValidDateRange,
+} from "./api/wsf-schedule/types";
+// WSF Terminals Types
+export type {
+  TerminalArrivalSpace,
+  TerminalBasics,
+  TerminalBulletin,
+  TerminalBulletinItem,
+  TerminalDepartingSpace,
+  TerminalLocation,
+  TerminalSailingSpace,
+  TerminalTransitLink,
+  TerminalTransport,
+  TerminalVerbose,
+  TerminalWaitTime,
+  TerminalWaitTimes,
+} from "./api/wsf-terminals/types";
+// WSF Vessels Types
+export type {
+  VesselAccommodation,
+  VesselBasic,
+  VesselClass,
+  VesselHistory,
+  VesselLocation,
+  VesselStats,
+  VesselsCacheFlushDate,
+  VesselVerbose,
+} from "./api/wsf-vessels/types";
+
+// ============================================================================
 // TanStack Query Configuration
 // ============================================================================
 
