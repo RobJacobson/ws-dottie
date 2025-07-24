@@ -2,8 +2,8 @@
 
 import type { LoggingMode } from "@/shared/logger";
 
-import { createApiClient } from "./apiClient";
 import { configManager } from "./configManager";
+import { createApiClient } from "./createApiClient";
 import { jsDateToYyyyMmDd } from "./dateUtils";
 import type { JsonWithDates } from "./parseJson";
 

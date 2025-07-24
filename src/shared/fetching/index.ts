@@ -1,7 +1,7 @@
 // Fetching utilities
 
-export * from "./apiClient";
 export * from "./configManager";
+export * from "./createApiClient";
 export * from "./dateUtils";
 export * from "./errors";
 export * from "./parseJson";
