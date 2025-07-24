@@ -2,6 +2,16 @@
 // Main entry point for the WSDOT API client library
 
 // ============================================================================
+// Configuration
+// ============================================================================
+
+export {
+  configManager,
+  type WsdotConfig,
+} from "./shared/fetching/configManager";
+export type { LoggingMode } from "./shared/logger";
+
+// ============================================================================
 // API Modules (Namespace Exports)
 // ============================================================================
 
