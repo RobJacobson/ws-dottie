@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
 // API Help: https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type {
   CommercialVehicleRestriction,

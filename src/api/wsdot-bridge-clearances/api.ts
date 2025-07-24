@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type { BridgeDataGIS } from "./types";
 

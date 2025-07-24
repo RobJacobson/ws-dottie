@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type { WeatherStationData } from "./types";
 

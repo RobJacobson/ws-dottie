@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/vessels/rest/help
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type {
   VesselAccommodation,

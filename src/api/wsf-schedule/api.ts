@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/schedule/rest/help
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type {
   ActiveSeason,

@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___travel_times.html
 // API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type { TravelTimeRoute } from "./types";
 

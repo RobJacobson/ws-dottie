@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type {
   TerminalBasics,

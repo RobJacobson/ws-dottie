@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/apiUtils";
+import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
 
 import type { HighwayAlert } from "./types";
 
