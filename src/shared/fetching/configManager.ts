@@ -50,31 +50,42 @@ let globalConfig: WsdotConfig | null = null;
 
 // Initialize config from environment if not already set
 const initializeConfig = (): WsdotConfig => {
-  if (!globalConfig) {
-    const apiKey = getApiKeyFromEnv();
-    if (!apiKey) {
-      throw new Error(
-        "WSDOT_ACCESS_TOKEN is required. Set it via WSDOT_ACCESS_TOKEN environment variable."
-      );
-    }
-    globalConfig = {
-      WSDOT_ACCESS_TOKEN: apiKey,
-      WSDOT_BASE_URL: getBaseUrlFromEnv() || DEFAULT_BASE_URL,
-    };
+  // Return existing config if already initialized
+  if (globalConfig) {
+    return globalConfig;
   }
+
+  // Read from environment variables
+  const apiKey = getApiKeyFromEnv();
+  if (!apiKey) {
+    throw new Error(
+      "WSDOT_ACCESS_TOKEN is required. Set it via WSDOT_ACCESS_TOKEN environment variable."
+    );
+  }
+
+  // Create and store the config
+  globalConfig = {
+    WSDOT_ACCESS_TOKEN: apiKey,
+    WSDOT_BASE_URL: getBaseUrlFromEnv() || DEFAULT_BASE_URL,
+  };
+
   return globalConfig;
 };
 
 // Configuration management functions
-export const getApiKey = (): string => {
+const getApiKey = (): string => {
   return initializeConfig().WSDOT_ACCESS_TOKEN;
 };
 
-export const getBaseUrl = (): string => {
+const getBaseUrl = (): string => {
   return initializeConfig().WSDOT_BASE_URL || DEFAULT_BASE_URL;
 };
 
-export const clearConfig = (): void => {
+const setConfig = (config: WsdotConfig): void => {
+  globalConfig = config;
+};
+
+const clearConfig = (): void => {
   globalConfig = null;
 };
 
@@ -82,5 +93,6 @@ export const clearConfig = (): void => {
 export const configManager = {
   getApiKey,
   getBaseUrl,
+  setConfig,
   clearConfig,
 };

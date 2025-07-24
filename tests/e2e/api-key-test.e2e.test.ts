@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { getApiKey } from "@/shared/fetching/configManager";
+import { configManager } from "@/shared/fetching/configManager";
 
 describe("API Key Configuration E2E Test", () => {
   it("should have API key loaded from environment", () => {
-    const apiKey = getApiKey();
+    const apiKey = configManager.getApiKey();
     console.log("API Key length:", apiKey.length);
     console.log("API Key starts with:", `${apiKey.substring(0, 4)}...`);
 
