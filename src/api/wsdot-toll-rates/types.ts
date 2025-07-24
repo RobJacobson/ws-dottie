@@ -54,7 +54,7 @@ export type TollTripRate = {
 /**
  * Toll trip rates response structure
  */
-export type TollTripRatesResponse = {
+export type TollTripRates = {
   LastUpdated: Date; // Converted from WSDOT date format "/Date(timestamp)/"
   Trips: TollTripRate[];
 };

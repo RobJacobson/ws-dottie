@@ -49,12 +49,13 @@ export const useTravelTimes = (
 /**
  * React Query hook for retrieving a specific travel time by ID
  *
- * @param travelTimeId - The ID of the specific travel time route
+ * @param params - Object containing travelTimeId
+ * @param params.travelTimeId - The ID of the specific travel time route
  * @returns React Query result containing travel time data
  *
  * @example
  * ```typescript
- * const { data: travelTime, isLoading, error } = useTravelTimeById(2);
+ * const { data: travelTime, isLoading, error } = useTravelTimeById({ travelTimeId: 2 });
  *
  * if (isLoading) return <div>Loading...</div>;
  * if (error) return <div>Error: {error.message}</div>;
@@ -72,14 +73,18 @@ export const useTravelTimes = (
  * ```
  */
 export const useTravelTimeById = (
-  travelTimeId: number,
+  params: { travelTimeId: number },
   options?: Parameters<typeof useQuery<TravelTimeRoute>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "travel-times", "getTravelTimeById", travelTimeId],
-    queryFn: () => getTravelTimeById({ travelTimeId }),
+    queryKey: [
+      "wsdot",
+      "travel-times",
+      "getTravelTimeById",
+      params.travelTimeId,
+    ],
+    queryFn: () => getTravelTimeById({ travelTimeId: params.travelTimeId }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
-    enabled: travelTimeId > 0,
     ...options,
   });
 };

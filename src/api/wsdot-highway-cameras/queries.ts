@@ -37,21 +37,19 @@ export const useHighwayCameras = (
 /**
  * React Query hook for getting a specific highway camera by ID
  *
- * @param cameraID - The unique camera identifier
+ * @param params - Object containing cameraID
  * @param options - Optional query options
  * @returns React Query result containing the camera data
  */
 export const useHighwayCamera = (
-  cameraID: number,
-  options?: {
-    enabled?: boolean;
-  }
+  params: { cameraID: number },
+  options?: Parameters<typeof useQuery<GetCameraResponse>>[0]
 ) => {
   return useQuery<GetCameraResponse>({
-    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", cameraID],
-    queryFn: () => getHighwayCamera({ cameraID }),
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params.cameraID],
+    queryFn: () => getHighwayCamera({ cameraID: params.cameraID }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
-    enabled: (options?.enabled ?? true) && cameraID > 0,
+    ...options,
   });
 };
 
@@ -64,14 +62,12 @@ export const useHighwayCamera = (
  */
 export const useSearchHighwayCameras = (
   params: SearchCamerasParams,
-  options?: {
-    enabled?: boolean;
-  }
+  options?: Parameters<typeof useQuery<Camera[]>>[0]
 ) => {
   return useQuery<Camera[]>({
     queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],
     queryFn: () => searchHighwayCameras(params),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
-    enabled: options?.enabled ?? true,
+    ...options,
   });
 };

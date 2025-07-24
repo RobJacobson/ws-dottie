@@ -83,7 +83,6 @@ export const useVesselBasicsById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "basics", "byId", vesselId],
     queryFn: () => getVesselBasicsById({ vesselId }),
-    enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -137,7 +136,6 @@ export const useVesselAccommodationsById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations", "byId", vesselId],
     queryFn: () => getVesselAccommodationsById({ vesselId }),
-    enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -194,7 +192,6 @@ export const useVesselLocationsByVesselId = (
   return useQuery({
     queryKey: ["wsf", "vessels", "locations", "byVesselId", vesselId],
     queryFn: () => getVesselLocationsByVesselId({ vesselId }),
-    enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -248,7 +245,6 @@ export const useVesselStatsById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "stats", "byId", vesselId],
     queryFn: () => getVesselStatsById({ vesselId }),
-    enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -315,7 +311,6 @@ export const useVesselHistoryByVesselAndDateRange = (
     ],
     queryFn: () =>
       getVesselHistoryByVesselAndDateRange({ vesselName, dateStart, dateEnd }),
-    enabled: !!vesselName && !!dateStart && !!dateEnd,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -369,7 +364,6 @@ export const useVesselVerboseById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose", "byId", vesselId],
     queryFn: () => getVesselVerboseById({ vesselId }),
-    enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });

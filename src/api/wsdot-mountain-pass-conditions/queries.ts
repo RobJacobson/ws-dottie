@@ -80,6 +80,5 @@ export const useMountainPassConditionById = (passConditionId: number) => {
     ],
     queryFn: () => getMountainPassConditionById({ passConditionId }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
-    enabled: passConditionId > 0,
   });
 };

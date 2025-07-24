@@ -56,18 +56,19 @@ export const useFaresValidDateRange = (
 
 /**
  * Hook for getting terminals for a trip date from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  */
 export const useFaresTerminals = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminals>>>,
     "queryKey" | "queryFn"
   >
 ) => {
   return useQuery({
-    queryKey: ["wsf", "fares", "terminals", jsDateToYyyyMmDd(tripDate)],
-    queryFn: () => getFaresTerminals({ tripDate }),
+    queryKey: ["wsf", "fares", "terminals", jsDateToYyyyMmDd(params.tripDate)],
+    queryFn: () => getFaresTerminals({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -75,12 +76,12 @@ export const useFaresTerminals = (
 
 /**
  * Hook for getting terminal mates from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
- * @param terminalID - Required departing terminal ID
+ * @param params - Object containing tripDate and terminalID
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.terminalID - Required departing terminal ID
  */
 export const useFaresTerminalMates = (
-  tripDate: Date,
-  terminalID: number,
+  params: { tripDate: Date; terminalID: number },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminalMates>>>,
     "queryKey" | "queryFn"
@@ -91,10 +92,14 @@ export const useFaresTerminalMates = (
       "wsf",
       "fares",
       "terminalMates",
-      jsDateToYyyyMmDd(tripDate),
-      terminalID,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.terminalID,
     ],
-    queryFn: () => getFaresTerminalMates({ tripDate, terminalID }),
+    queryFn: () =>
+      getFaresTerminalMates({
+        tripDate: params.tripDate,
+        terminalID: params.terminalID,
+      }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -102,14 +107,17 @@ export const useFaresTerminalMates = (
 
 /**
  * Hook for getting terminal combo from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
- * @param departingTerminalID - Required departing terminal ID
- * @param arrivingTerminalID - Required arriving terminal ID
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalID - Required departing terminal ID
+ * @param params.arrivingTerminalID - Required arriving terminal ID
  */
 export const useTerminalCombo = (
-  tripDate: Date,
-  departingTerminalID: number,
-  arrivingTerminalID: number,
+  params: {
+    tripDate: Date;
+    departingTerminalID: number;
+    arrivingTerminalID: number;
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getTerminalCombo>>>,
     "queryKey" | "queryFn"
@@ -120,12 +128,16 @@ export const useTerminalCombo = (
       "wsf",
       "fares",
       "terminalCombo",
-      jsDateToYyyyMmDd(tripDate),
-      departingTerminalID,
-      arrivingTerminalID,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.departingTerminalID,
+      params.arrivingTerminalID,
     ],
     queryFn: () =>
-      getTerminalCombo({ tripDate, departingTerminalID, arrivingTerminalID }),
+      getTerminalCombo({
+        tripDate: params.tripDate,
+        departingTerminalID: params.departingTerminalID,
+        arrivingTerminalID: params.arrivingTerminalID,
+      }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -133,10 +145,11 @@ export const useTerminalCombo = (
 
 /**
  * Hook for getting terminal combo verbose from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  */
 export const useTerminalComboVerbose = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getTerminalComboVerbose>>>,
     "queryKey" | "queryFn"
@@ -147,9 +160,9 @@ export const useTerminalComboVerbose = (
       "wsf",
       "fares",
       "terminalComboVerbose",
-      jsDateToYyyyMmDd(tripDate),
+      jsDateToYyyyMmDd(params.tripDate),
     ],
-    queryFn: () => getTerminalComboVerbose({ tripDate }),
+    queryFn: () => getTerminalComboVerbose({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -157,16 +170,19 @@ export const useTerminalComboVerbose = (
 
 /**
  * Hook for getting basic fare line items from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
- * @param departingTerminalID - Required departing terminal ID
- * @param arrivingTerminalID - Required arriving terminal ID
- * @param roundTrip - Whether this is a round trip
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalID - Required departing terminal ID
+ * @param params.arrivingTerminalID - Required arriving terminal ID
+ * @param params.roundTrip - Whether this is a round trip
  */
 export const useFareLineItemsBasic = (
-  tripDate: Date,
-  departingTerminalID: number,
-  arrivingTerminalID: number,
-  roundTrip: boolean,
+  params: {
+    tripDate: Date;
+    departingTerminalID: number;
+    arrivingTerminalID: number;
+    roundTrip: boolean;
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsBasic>>>,
     "queryKey" | "queryFn"
@@ -177,17 +193,17 @@ export const useFareLineItemsBasic = (
       "wsf",
       "fares",
       "fareLineItemsBasic",
-      jsDateToYyyyMmDd(tripDate),
-      departingTerminalID,
-      arrivingTerminalID,
-      roundTrip,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.departingTerminalID,
+      params.arrivingTerminalID,
+      params.roundTrip,
     ],
     queryFn: () =>
       getFareLineItemsBasic({
-        tripDate,
-        departingTerminalID,
-        arrivingTerminalID,
-        roundTrip,
+        tripDate: params.tripDate,
+        departingTerminalID: params.departingTerminalID,
+        arrivingTerminalID: params.arrivingTerminalID,
+        roundTrip: params.roundTrip,
       }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -196,16 +212,19 @@ export const useFareLineItemsBasic = (
 
 /**
  * Hook for getting fare line items from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
- * @param departingTerminalID - Required departing terminal ID
- * @param arrivingTerminalID - Required arriving terminal ID
- * @param roundTrip - Whether this is a round trip
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalID - Required departing terminal ID
+ * @param params.arrivingTerminalID - Required arriving terminal ID
+ * @param params.roundTrip - Whether this is a round trip
  */
 export const useFareLineItems = (
-  tripDate: Date,
-  departingTerminalID: number,
-  arrivingTerminalID: number,
-  roundTrip: boolean,
+  params: {
+    tripDate: Date;
+    departingTerminalID: number;
+    arrivingTerminalID: number;
+    roundTrip: boolean;
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItems>>>,
     "queryKey" | "queryFn"
@@ -216,17 +235,17 @@ export const useFareLineItems = (
       "wsf",
       "fares",
       "fareLineItems",
-      jsDateToYyyyMmDd(tripDate),
-      departingTerminalID,
-      arrivingTerminalID,
-      roundTrip,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.departingTerminalID,
+      params.arrivingTerminalID,
+      params.roundTrip,
     ],
     queryFn: () =>
       getFareLineItems({
-        tripDate,
-        departingTerminalID,
-        arrivingTerminalID,
-        roundTrip,
+        tripDate: params.tripDate,
+        departingTerminalID: params.departingTerminalID,
+        arrivingTerminalID: params.arrivingTerminalID,
+        roundTrip: params.roundTrip,
       }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -235,10 +254,11 @@ export const useFareLineItems = (
 
 /**
  * Hook for getting verbose fare line items from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  */
 export const useFareLineItemsVerbose = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsVerbose>>>,
     "queryKey" | "queryFn"
@@ -249,9 +269,9 @@ export const useFareLineItemsVerbose = (
       "wsf",
       "fares",
       "fareLineItemsVerbose",
-      jsDateToYyyyMmDd(tripDate),
+      jsDateToYyyyMmDd(params.tripDate),
     ],
-    queryFn: () => getFareLineItemsVerbose({ tripDate }),
+    queryFn: () => getFareLineItemsVerbose({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -259,20 +279,23 @@ export const useFareLineItemsVerbose = (
 
 /**
  * Hook for getting fare totals from WSF Fares API
- * @param tripDate - Required trip date (YYYY-MM-DD format)
- * @param departingTerminalID - Required departing terminal ID
- * @param arrivingTerminalID - Required arriving terminal ID
- * @param roundTrip - Whether this is a round trip
- * @param fareLineItemIDs - Array of fare line item IDs
- * @param quantities - Array of quantities corresponding to fare line item IDs
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip, fareLineItemIDs, quantities
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalID - Required departing terminal ID
+ * @param params.arrivingTerminalID - Required arriving terminal ID
+ * @param params.roundTrip - Whether this is a round trip
+ * @param params.fareLineItemIDs - Array of fare line item IDs
+ * @param params.quantities - Array of quantities corresponding to fare line item IDs
  */
 export const useFareTotals = (
-  tripDate: Date,
-  departingTerminalID: number,
-  arrivingTerminalID: number,
-  roundTrip: boolean,
-  fareLineItemIDs: number[],
-  quantities: number[],
+  params: {
+    tripDate: Date;
+    departingTerminalID: number;
+    arrivingTerminalID: number;
+    roundTrip: boolean;
+    fareLineItemIDs: number[];
+    quantities: number[];
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFareTotals>>>,
     "queryKey" | "queryFn" | "enabled"
@@ -283,29 +306,22 @@ export const useFareTotals = (
       "wsf",
       "fares",
       "fareTotals",
-      jsDateToYyyyMmDd(tripDate),
-      departingTerminalID,
-      arrivingTerminalID,
-      roundTrip,
-      fareLineItemIDs,
-      quantities,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.departingTerminalID,
+      params.arrivingTerminalID,
+      params.roundTrip,
+      params.fareLineItemIDs,
+      params.quantities,
     ],
     queryFn: () =>
       getFareTotals({
-        tripDate,
-        departingTerminalID,
-        arrivingTerminalID,
-        roundTrip,
-        fareLineItemIDs,
-        quantities,
+        tripDate: params.tripDate,
+        departingTerminalID: params.departingTerminalID,
+        arrivingTerminalID: params.arrivingTerminalID,
+        roundTrip: params.roundTrip,
+        fareLineItemIDs: params.fareLineItemIDs,
+        quantities: params.quantities,
       }),
-    enabled:
-      !!tripDate &&
-      !!departingTerminalID &&
-      !!arrivingTerminalID &&
-      !!fareLineItemIDs &&
-      !!quantities &&
-      fareLineItemIDs.length === quantities.length,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });

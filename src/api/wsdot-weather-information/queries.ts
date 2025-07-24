@@ -87,7 +87,6 @@ export const useWeatherInformationByStationId = (
       stationId,
     ],
     queryFn: () => getWeatherInformationByStationId({ stationId }),
-    enabled: !!stationId,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
@@ -133,7 +132,6 @@ export const useWeatherInformationForStations = (
     ],
     queryFn: () =>
       getWeatherInformationForStations({ stationIds: stationIds.join(",") }),
-    enabled: !!stationIds && stationIds.length > 0,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

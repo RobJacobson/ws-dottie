@@ -100,20 +100,25 @@ export const useValidDateRange = (
  * React Query hook for fetching terminals from WSF Schedule API
  *
  * Retrieves all valid departing terminals for a given trip date. A valid trip date
- * may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * may be determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  * @param options - Optional React Query options
  * @returns React Query result object containing departing terminals
  */
 export const useTerminals = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["wsf", "schedule", "terminals", jsDateToYyyyMmDd(tripDate)],
-    queryFn: () => getTerminals({ tripDate }),
-    enabled: !!tripDate,
+    queryKey: [
+      "wsf",
+      "schedule",
+      "terminals",
+      jsDateToYyyyMmDd(params.tripDate),
+    ],
+    queryFn: () => getTerminals({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -122,15 +127,15 @@ export const useTerminals = (
  * React Query hook for fetching terminals and mates from WSF Schedule API
  *
  * Retrieves all valid departing and arriving terminal combinations for a given trip date.
- * A valid trip date may be determined using validDateRange. Please format the trip date
- * input as 'YYYY-MM-DD'.
+ * A valid trip date may be determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  * @param options - Optional React Query options
  * @returns React Query result object containing terminal combinations
  */
 export const useTerminalsAndMates = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
 ) =>
   useQuery({
@@ -138,10 +143,9 @@ export const useTerminalsAndMates = (
       "wsf",
       "schedule",
       "terminalsAndMates",
-      jsDateToYyyyMmDd(tripDate),
+      jsDateToYyyyMmDd(params.tripDate),
     ],
-    queryFn: () => getTerminalsAndMates({ tripDate }),
-    enabled: !!tripDate,
+    queryFn: () => getTerminalsAndMates({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -151,16 +155,16 @@ export const useTerminalsAndMates = (
  *
  * Provides valid departing and arriving terminal combinations for a given trip date and route.
  * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param routeId - The unique identifier for the route
+ * @param params - Object containing tripDate and routeId
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
  * @param options - Optional React Query options
  * @returns React Query result object containing terminal combinations for the route
  */
 export const useTerminalsAndMatesByRoute = (
-  tripDate: Date,
-  routeId: number,
+  params: { tripDate: Date; routeId: number },
   options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
 ) =>
   useQuery({
@@ -168,11 +172,14 @@ export const useTerminalsAndMatesByRoute = (
       "wsf",
       "schedule",
       "terminalsAndMatesByRoute",
-      jsDateToYyyyMmDd(tripDate),
-      routeId,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.routeId,
     ],
-    queryFn: () => getTerminalsAndMatesByRoute({ tripDate, routeId }),
-    enabled: !!tripDate && !!routeId,
+    queryFn: () =>
+      getTerminalsAndMatesByRoute({
+        tripDate: params.tripDate,
+        routeId: params.routeId,
+      }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -182,16 +189,16 @@ export const useTerminalsAndMatesByRoute = (
  *
  * Provides arriving terminals for a given departing terminal and trip date. A valid departing
  * terminal may be found by using terminals. Similarly, a valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param terminalId - The unique identifier for the departing terminal
+ * @param params - Object containing tripDate and terminalId
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.terminalId - The unique identifier for the departing terminal
  * @param options - Optional React Query options
  * @returns React Query result object containing arriving terminals
  */
 export const useTerminalMates = (
-  tripDate: Date,
-  terminalId: number,
+  params: { tripDate: Date; terminalId: number },
   options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
 ) =>
   useQuery({
@@ -199,11 +206,14 @@ export const useTerminalMates = (
       "wsf",
       "schedule",
       "terminalMates",
-      jsDateToYyyyMmDd(tripDate),
-      terminalId,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.terminalId,
     ],
-    queryFn: () => getTerminalMates({ tripDate, terminalId }),
-    enabled: !!tripDate && !!terminalId,
+    queryFn: () =>
+      getTerminalMates({
+        tripDate: params.tripDate,
+        terminalId: params.terminalId,
+      }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -216,20 +226,20 @@ export const useTerminalMates = (
  * React Query hook for fetching routes from WSF Schedule API
  *
  * Retrieves all valid routes for a given trip date. A valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  * @param options - Optional React Query options
  * @returns React Query result object containing routes
  */
 export const useRoutes = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["wsf", "schedule", "routes", jsDateToYyyyMmDd(tripDate)],
-    queryFn: () => getRoutes({ tripDate }),
-    enabled: !!tripDate,
+    queryKey: ["wsf", "schedule", "routes", jsDateToYyyyMmDd(params.tripDate)],
+    queryFn: () => getRoutes({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -239,18 +249,21 @@ export const useRoutes = (
  *
  * Provides valid routes for a given terminal combination and trip date. Valid terminal
  * combinations may be found using terminalsAndMates. Similarly, a valid trip date may be
- * determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param departingTerminalId - The unique identifier for the departing terminal
- * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params - Object containing tripDate, departingTerminalId, and arrivingTerminalId
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
  * @param options - Optional React Query options
  * @returns React Query result object containing routes for the terminal combination
  */
 export const useRoutesByTerminals = (
-  tripDate: Date,
-  departingTerminalId: number,
-  arrivingTerminalId: number,
+  params: {
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  },
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
@@ -258,17 +271,16 @@ export const useRoutesByTerminals = (
       "wsf",
       "schedule",
       "routesByTerminals",
-      jsDateToYyyyMmDd(tripDate),
-      departingTerminalId,
-      arrivingTerminalId,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.departingTerminalId,
+      params.arrivingTerminalId,
     ],
     queryFn: () =>
       getRoutesByTerminals({
-        tripDate,
-        departingTerminalId,
-        arrivingTerminalId,
+        tripDate: params.tripDate,
+        departingTerminalId: params.departingTerminalId,
+        arrivingTerminalId: params.arrivingTerminalId,
       }),
-    enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -277,14 +289,15 @@ export const useRoutesByTerminals = (
  * React Query hook for fetching routes with disruptions from WSF Schedule API
  *
  * Retrieves all valid routes with disruption information for a given trip date. A valid
- * trip date may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * trip date may be determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
  * @param options - Optional React Query options
  * @returns React Query result object containing routes with disruption information
  */
 export const useRoutesWithDisruptions = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
@@ -292,10 +305,9 @@ export const useRoutesWithDisruptions = (
       "wsf",
       "schedule",
       "routesWithDisruptions",
-      jsDateToYyyyMmDd(tripDate),
+      jsDateToYyyyMmDd(params.tripDate),
     ],
-    queryFn: () => getRoutesWithDisruptions({ tripDate }),
-    enabled: !!tripDate,
+    queryFn: () => getRoutesWithDisruptions({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -310,18 +322,24 @@ export const useRoutesWithDisruptions = (
  * Retrieves detailed information for all routes on a given trip date. A valid trip date
  * may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate and optional enabled flag
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.enabled - Optional flag to enable/disable the query
  * @param options - Optional React Query options
  * @returns React Query result object containing route details
  */
 export const useRouteDetails = (
-  tripDate: Date,
+  params: { tripDate: Date },
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
-    queryKey: ["wsf", "schedule", "routeDetails", jsDateToYyyyMmDd(tripDate)],
-    queryFn: () => getRouteDetails({ tripDate }),
-    enabled: !!tripDate,
+    queryKey: [
+      "wsf",
+      "schedule",
+      "routeDetails",
+      jsDateToYyyyMmDd(params.tripDate),
+    ],
+    queryFn: () => getRouteDetails({ tripDate: params.tripDate }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -333,16 +351,20 @@ export const useRouteDetails = (
  * Valid terminal combinations may be found using terminalsAndMates. Similarly, a valid trip
  * date may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param departingTerminalId - The unique identifier for the departing terminal
- * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional enabled flag
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.enabled - Optional flag to enable/disable the query
  * @param options - Optional React Query options
  * @returns React Query result object containing route details for the terminal combination
  */
 export const useRouteDetailsByTerminals = (
-  tripDate: Date,
-  departingTerminalId: number,
-  arrivingTerminalId: number,
+  params: {
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  },
   options?: Parameters<typeof useQuery<Route[]>>[0]
 ) =>
   useQuery({
@@ -350,17 +372,16 @@ export const useRouteDetailsByTerminals = (
       "wsf",
       "schedule",
       "routeDetailsByTerminals",
-      jsDateToYyyyMmDd(tripDate),
-      departingTerminalId,
-      arrivingTerminalId,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.departingTerminalId,
+      params.arrivingTerminalId,
     ],
     queryFn: () =>
       getRouteDetailsByTerminals({
-        tripDate,
-        departingTerminalId,
-        arrivingTerminalId,
+        tripDate: params.tripDate,
+        departingTerminalId: params.departingTerminalId,
+        arrivingTerminalId: params.arrivingTerminalId,
       }),
-    enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -372,14 +393,15 @@ export const useRouteDetailsByTerminals = (
  * may be found using routes. Similarly, a valid trip date may be determined using
  * validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param routeId - The unique identifier for the route
+ * @param params - Object containing tripDate, routeId and optional enabled flag
+ * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.routeId - The unique identifier for the route
+ * @param params.enabled - Optional flag to enable/disable the query
  * @param options - Optional React Query options
  * @returns React Query result object containing route details for the specified route
  */
 export const useRouteDetailsByRoute = (
-  tripDate: Date,
-  routeId: number,
+  params: { tripDate: Date; routeId: number },
   options?: Parameters<typeof useQuery<RouteDetails | null>>[0]
 ) =>
   useQuery({
@@ -387,11 +409,14 @@ export const useRouteDetailsByRoute = (
       "wsf",
       "schedule",
       "routeDetailsByRoute",
-      jsDateToYyyyMmDd(tripDate),
-      routeId,
+      jsDateToYyyyMmDd(params.tripDate),
+      params.routeId,
     ],
-    queryFn: () => getRouteDetailsByRoute({ tripDate, routeId }),
-    enabled: !!tripDate && !!routeId,
+    queryFn: () =>
+      getRouteDetailsByRoute({
+        tripDate: params.tripDate,
+        routeId: params.routeId,
+      }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -457,7 +482,6 @@ export const useScheduledRoutesBySeason = (
   useQuery({
     queryKey: ["wsf", "schedule", "scheduledRoutes", "bySeason", scheduleId],
     queryFn: () => getScheduledRoutesBySeason({ scheduleId }),
-    enabled: !!scheduleId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -483,7 +507,6 @@ export const useSailings = (
   useQuery({
     queryKey: ["wsf", "schedule", "sailings", schedRouteId],
     queryFn: () => getSailings({ schedRouteId }),
-    enabled: !!schedRouteId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -505,7 +528,6 @@ export const useAllSailings = (
   useQuery({
     queryKey: ["wsf", "schedule", "allSailings", schedRouteId],
     queryFn: () => getAllSailings({ schedRouteId }),
-    enabled: !!schedRouteId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -548,7 +570,6 @@ export const useTimeAdjustmentsByRoute = (
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments", "byRoute", routeId],
     queryFn: () => getTimeAdjustmentsByRoute({ routeId }),
-    enabled: !!routeId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -575,7 +596,6 @@ export const useTimeAdjustmentsBySchedRoute = (
       schedRouteId,
     ],
     queryFn: () => getTimeAdjustmentsBySchedRoute({ schedRouteId }),
-    enabled: !!schedRouteId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -610,7 +630,6 @@ export const useScheduleByRoute = (
       routeId,
     ],
     queryFn: () => getScheduleByRoute({ tripDate, routeId }),
-    enabled: !!tripDate && !!routeId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -649,7 +668,6 @@ export const useScheduleByTerminals = (
         departingTerminalId,
         arrivingTerminalId,
       }),
-    enabled: !!tripDate && !!departingTerminalId && !!arrivingTerminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -678,7 +696,6 @@ export const useScheduleTodayByRoute = (
       onlyRemainingTimes,
     ],
     queryFn: () => getScheduleTodayByRoute({ routeId, onlyRemainingTimes }),
-    enabled: !!routeId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -716,7 +733,6 @@ export const useScheduleTodayByTerminals = (
         arrivingTerminalId,
         onlyRemainingTimes,
       }),
-    enabled: !!departingTerminalId && !!arrivingTerminalId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -761,7 +777,6 @@ export const useAlternativeFormats = (
   useQuery({
     queryKey: ["wsf", "schedule", "alternativeFormats", subjectName],
     queryFn: () => getAlternativeFormats({ subjectName }),
-    enabled: !!subjectName,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });

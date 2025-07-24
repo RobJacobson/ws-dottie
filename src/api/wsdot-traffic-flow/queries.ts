@@ -73,7 +73,6 @@ export const useTrafficFlowById = (
     queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById", flowDataId],
     queryFn: () => getTrafficFlowById({ flowDataID: flowDataId }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
-    enabled: flowDataId > 0,
     ...options,
   });
 };
