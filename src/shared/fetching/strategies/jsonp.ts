@@ -121,6 +121,18 @@ export const fetchJsonp: FetchStrategy = (url: string): Promise<string> => {
     jsonpWindow[callbackName] = (data: unknown) => {
       cleanupWithTimeout();
 
+      // Treat null, undefined, or empty string/object as an error
+      if (
+        data == null ||
+        (typeof data === "string" && !data.trim()) ||
+        (typeof data === "object" &&
+          data !== null &&
+          Object.keys(data).length === 0)
+      ) {
+        reject(new Error("API returned empty response (invalid JSONP)"));
+        return;
+      }
+
       try {
         const result = processApiResponse(data);
         resolve(result);

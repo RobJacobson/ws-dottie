@@ -22,9 +22,18 @@ export const fetchNative: FetchStrategy = async (
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    const error = new Error(`HTTP ${response.status}: ${response.statusText}`);
+    (error as any).status = response.status;
+    throw error;
   }
 
-  const data = await response.json();
+  // Read the response as text to check for empty body
+  const text = await response.text();
+  if (!text.trim()) {
+    throw new Error("API returned HTTP 200 with empty body (invalid response)");
+  }
+
+  // Parse as JSON
+  const data = JSON.parse(text);
   return processApiResponse(data);
 };
