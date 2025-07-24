@@ -9,6 +9,7 @@
 import { createApiClient } from "@/shared/fetching/apiClient";
 import { createFetchFactory } from "@/shared/fetching/apiUtils";
 import { configManager } from "@/shared/fetching/configManager";
+import type { LoggingMode } from "@/shared/logger";
 
 import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
 
@@ -25,6 +26,12 @@ const createWsdotHighwayCamerasFetch = createFetchFactory(
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise containing all camera data
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const cameras = await getHighwayCameras();
+ * console.log(cameras[0].Title); // "I-5 @ NE 85th St"
+ * ```
  */
 export const getHighwayCameras =
   createWsdotHighwayCamerasFetch<Camera[]>("/GetCamerasAsJson");
@@ -39,6 +46,12 @@ export const getHighwayCameras =
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific camera data
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const camera = await getHighwayCamera({ cameraID: 1001 });
+ * console.log(camera.Title); // "I-5 @ NE 85th St"
+ * ```
  */
 export const getHighwayCamera = createWsdotHighwayCamerasFetch<
   { cameraID: number },
@@ -59,6 +72,12 @@ export const getHighwayCamera = createWsdotHighwayCamerasFetch<
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing filtered camera data
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const cameras = await searchHighwayCameras({ StateRoute: "5" });
+ * console.log(cameras[0].Title); // "I-5 @ NE 85th St"
+ * ```
  */
 export const searchHighwayCameras = async (
   params: SearchCamerasParams,

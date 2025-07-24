@@ -12,24 +12,16 @@ import type { MountainPassCondition } from "./types";
 /**
  * React Query hook for retrieving all mountain pass conditions
  *
+ * Returns current mountain pass conditions across Washington State, including
+ * road conditions, restrictions, and travel advisories.
+ *
+ * @param options - Optional query options
  * @returns React Query result containing mountain pass conditions data
  *
  * @example
  * ```typescript
- * const { data: conditions, isLoading, error } = useMountainPassConditions();
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     {conditions?.map(condition => (
- *       <div key={condition.MountainPassId}>
- *         {condition.MountainPassName}: {condition.RoadCondition}
- *       </div>
- *     ))}
- *   </div>
- * );
+ * const { data: conditions } = useMountainPassConditions();
+ * console.log(conditions[0].MountainPassName); // "Blewett Pass US 97"
  * ```
  */
 export const useMountainPassConditions = (
@@ -51,34 +43,34 @@ export const useMountainPassConditions = (
  * React Query hook for retrieving a specific mountain pass condition by ID
  * Note: This endpoint may not work as expected based on testing
  *
- * @param passConditionId - The ID of the specific mountain pass condition
+ * Returns detailed information about a specific mountain pass condition
+ * identified by its ID.
+ *
+ * @param params - Object containing passConditionId
+ * @param params.passConditionId - The ID of the specific mountain pass condition
+ * @param options - Optional query options
  * @returns React Query result containing mountain pass condition data
  *
  * @example
  * ```typescript
- * const { data: condition, isLoading, error } = useMountainPassConditionById(1);
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     <h2>{condition?.MountainPassName}</h2>
- *     <p>Temperature: {condition?.TemperatureInFahrenheit}°F</p>
- *     <p>Road Condition: {condition?.RoadCondition}</p>
- *   </div>
- * );
+ * const { data: condition } = useMountainPassConditionById({ passConditionId: 1 });
+ * console.log(condition.MountainPassName); // "Blewett Pass US 97"
  * ```
  */
-export const useMountainPassConditionById = (passConditionId: number) => {
+export const useMountainPassConditionById = (
+  params: { passConditionId: number },
+  options?: Parameters<typeof useQuery<MountainPassCondition>>[0]
+) => {
   return useQuery<MountainPassCondition>({
     queryKey: [
       "wsdot",
       "mountain-pass-conditions",
       "getMountainPassConditionById",
-      passConditionId,
+      params.passConditionId,
     ],
-    queryFn: () => getMountainPassConditionById({ passConditionId }),
+    queryFn: () =>
+      getMountainPassConditionById({ passConditionId: params.passConditionId }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...options,
   });
 };

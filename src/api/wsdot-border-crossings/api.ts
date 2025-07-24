@@ -19,6 +19,13 @@ const createWsdotBorderCrossingsFetch = createFetchFactory(
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to array of border crossing data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const crossings = await getBorderCrossings();
+ * console.log(crossings[0].CrossingName); // "Peace Arch"
+ * ```
  */
 export const getBorderCrossings = createWsdotBorderCrossingsFetch<
   BorderCrossingData[]

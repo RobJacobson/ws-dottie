@@ -20,12 +20,6 @@ const createWsdotMountainPassConditionsFetch = createFetchFactory(
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise containing all mountain pass condition data
  * @throws {WsdotApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const conditions = await getMountainPassConditions();
- * console.log(conditions[0].MountainPassName); // "Blewett Pass US 97"
- * ```
  */
 export const getMountainPassConditions = createWsdotMountainPassConditionsFetch<
   MountainPassCondition[]
@@ -43,12 +37,6 @@ export const getMountainPassConditions = createWsdotMountainPassConditionsFetch<
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific mountain pass condition data
  * @throws {WsdotApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const condition = await getMountainPassConditionById({ passConditionId: 1 });
- * console.log(condition.MountainPassName); // "Blewett Pass US 97"
- * ```
  */
 export const getMountainPassConditionById =
   createWsdotMountainPassConditionsFetch<

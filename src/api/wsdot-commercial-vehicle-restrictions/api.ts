@@ -22,6 +22,13 @@ const createWsdotCommercialVehicleRestrictionsFetch = createFetchFactory(
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to array of commercial vehicle restriction data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const restrictions = await getCommercialVehicleRestrictions();
+ * console.log(restrictions[0].RouteName); // "I-5"
+ * ```
  */
 export const getCommercialVehicleRestrictions =
   createWsdotCommercialVehicleRestrictionsFetch<CommercialVehicleRestriction[]>(
@@ -37,6 +44,13 @@ export const getCommercialVehicleRestrictions =
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to array of commercial vehicle restriction data with unique IDs
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const restrictions = await getCommercialVehicleRestrictionsWithId();
+ * console.log(restrictions[0].RestrictionID); // 12345
+ * ```
  */
 export const getCommercialVehicleRestrictionsWithId =
   createWsdotCommercialVehicleRestrictionsFetch<

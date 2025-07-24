@@ -38,6 +38,13 @@ const createWsfScheduleFetch = createFetchFactory(
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to Date object containing cache flush information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const flushDate = await getCacheFlushDateSchedule();
+ * console.log(flushDate); // "2024-01-15T10:30:00Z"
+ * ```
  */
 export const getCacheFlushDateSchedule =
   createWsfScheduleFetch<Date>("/cacheflushdate");
@@ -55,6 +62,13 @@ export const getCacheFlushDateSchedule =
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to ValidDateRange object containing valid date range information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const dateRange = await getValidDateRange();
+ * console.log(dateRange.StartDate); // "2024-01-01T00:00:00Z"
+ * ```
  */
 export const getValidDateRange =
   createWsfScheduleFetch<ValidDateRange>("/validdaterange");
@@ -67,12 +81,19 @@ export const getValidDateRange =
  * API function for fetching terminals from WSF Schedule API
  *
  * Retrieves valid departing terminals for a given trip date. A valid trip date
- * may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * may be determined using validDateRange.
  *
  * @param params - Object containing tripDate and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminals = await getTerminals({ tripDate: new Date('2024-01-15') });
+ * console.log(terminals[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminals = createWsfScheduleFetch<
   { tripDate: Date },
@@ -83,13 +104,13 @@ export const getTerminals = createWsfScheduleFetch<
  * API function for fetching terminals and mates from WSF Schedule API
  *
  * Retrieves all valid departing and arriving terminal combinations for a given trip date.
- * A valid trip date may be determined using validDateRange. Please format the trip date
- * input as 'YYYY-MM-DD'.
+ * A valid trip date may be determined using validDateRange.
  *
  * @param params - Object containing tripDate and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations
+ * @throws {WsfApiError} When the API request fails
  */
 export const getTerminalsAndMates = createWsfScheduleFetch<
   { tripDate: Date },
@@ -101,13 +122,14 @@ export const getTerminalsAndMates = createWsfScheduleFetch<
  *
  * Provides valid departing and arriving terminal combinations for a given trip date and route.
  * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
  * @param params - Object containing tripDate, routeId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.routeId - The unique identifier for the route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations for the route
+ * @throws {WsfApiError} When the API request fails
  */
 export const getTerminalsAndMatesByRoute = createWsfScheduleFetch<
   { tripDate: Date; routeId: number },
@@ -119,13 +141,14 @@ export const getTerminalsAndMatesByRoute = createWsfScheduleFetch<
  *
  * Provides arriving terminals for a given departing terminal and trip date. A valid departing
  * terminal may be found by using terminals. Similarly, a valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
  * @param params - Object containing tripDate, terminalId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.terminalId - The unique identifier for the departing terminal
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminal objects containing arriving terminals
+ * @throws {WsfApiError} When the API request fails
  */
 export const getTerminalMates = createWsfScheduleFetch<
   { tripDate: Date; terminalId: number },
@@ -144,9 +167,16 @@ export const getTerminalMates = createWsfScheduleFetch<
  * Valid trip dates may be determined using the validDateRange endpoint.
  *
  * @param params - Object containing tripDate and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects containing basic route information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const routes = await getRoutes({ tripDate: new Date('2024-01-15') });
+ * console.log(routes[0].RouteAbbrev); // "ANA-SID"
+ * ```
  */
 export const getRoutes = createWsfScheduleFetch<{ tripDate: Date }, Route[]>(
   `/routes/{tripDate}`
@@ -161,11 +191,12 @@ export const getRoutes = createWsfScheduleFetch<{ tripDate: Date }, Route[]>(
  * may be found using the terminalsAndMates endpoint.
  *
  * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.departingTerminalId - The unique identifier for the departing terminal
  * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects filtered by terminal combination
+ * @throws {WsfApiError} When the API request fails
  */
 export const getRoutesByTerminals = createWsfScheduleFetch<
   { tripDate: Date; departingTerminalId: number; arrivingTerminalId: number },
@@ -180,9 +211,10 @@ export const getRoutesByTerminals = createWsfScheduleFetch<
  * that may have delays, cancellations, or other service issues.
  *
  * @param params - Object containing tripDate and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects that have service disruptions
+ * @throws {WsfApiError} When the API request fails
  */
 export const getRoutesWithDisruptions = createWsfScheduleFetch<
   { tripDate: Date },
@@ -198,9 +230,10 @@ export const getRoutesWithDisruptions = createWsfScheduleFetch<
  * and operational information.
  *
  * @param params - Object containing tripDate and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects containing detailed route information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getRouteDetails = createWsfScheduleFetch<
   { tripDate: Date },
@@ -216,11 +249,12 @@ export const getRouteDetails = createWsfScheduleFetch<
  * using the terminalsAndMates endpoint.
  *
  * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.departingTerminalId - The unique identifier for the departing terminal
  * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects with detailed information filtered by terminal combination
+ * @throws {WsfApiError} When the API request fails
  */
 export const getRouteDetailsByTerminals = createWsfScheduleFetch<
   { tripDate: Date; departingTerminalId: number; arrivingTerminalId: number },
@@ -235,10 +269,11 @@ export const getRouteDetailsByTerminals = createWsfScheduleFetch<
  * providing comprehensive details for that specific route.
  *
  * @param params - Object containing tripDate, routeId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.routeId - The unique identifier for the route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a RouteDetails object containing detailed information for the specified route
+ * @throws {WsfApiError} When the API request fails
  */
 export const getRouteDetailsByRoute = createWsfScheduleFetch<
   { tripDate: Date; routeId: number },
@@ -258,6 +293,7 @@ export const getRouteDetailsByRoute = createWsfScheduleFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ActiveSeason objects containing active season information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getActiveSeasons =
   createWsfScheduleFetch<ActiveSeason[]>("/activeseasons");
@@ -276,6 +312,7 @@ export const getActiveSeasons =
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduledRoute objects representing all scheduled routes
+ * @throws {WsfApiError} When the API request fails
  */
 export const getScheduledRoutes =
   createWsfScheduleFetch<ScheduledRoute[]>("/schedroutes");
@@ -291,6 +328,7 @@ export const getScheduledRoutes =
  * @param params.scheduleId - The unique identifier for the season (schedule ID)
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduledRoute objects representing scheduled routes for the specified season
+ * @throws {WsfApiError} When the API request fails
  */
 export const getScheduledRoutesBySeason = createWsfScheduleFetch<
   { scheduleId: number },
@@ -314,6 +352,7 @@ export const getScheduledRoutesBySeason = createWsfScheduleFetch<
  * @param params.schedRouteId - The unique identifier for the scheduled route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Sailing objects containing sailing information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getSailings = createWsfScheduleFetch<
   { schedRouteId: number },
@@ -333,6 +372,7 @@ export const getSailings = createWsfScheduleFetch<
  * @param params.schedRouteId - The unique identifier for the scheduled route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Sailing objects containing all sailing information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getAllSailings = createWsfScheduleFetch<
   { schedRouteId: number },
@@ -352,6 +392,7 @@ export const getAllSailings = createWsfScheduleFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getTimeAdjustments =
   createWsfScheduleFetch<TimeAdjustment[]>("/timeadj");
@@ -368,6 +409,7 @@ export const getTimeAdjustments =
  * @param params.routeId - The unique identifier for the route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the route
+ * @throws {WsfApiError} When the API request fails
  */
 export const getTimeAdjustmentsByRoute = createWsfScheduleFetch<
   { routeId: number },
@@ -386,6 +428,7 @@ export const getTimeAdjustmentsByRoute = createWsfScheduleFetch<
  * @param params.schedRouteId - The unique identifier for the scheduled route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the scheduled route
+ * @throws {WsfApiError} When the API request fails
  */
 export const getTimeAdjustmentsBySchedRoute = createWsfScheduleFetch<
   { schedRouteId: number },
@@ -402,13 +445,13 @@ export const getTimeAdjustmentsBySchedRoute = createWsfScheduleFetch<
  * Provides departure times for a trip date and route. The resultset accounts for all
  * contingencies, sailing date ranges and time adjustments. Valid routes may be found
  * using routes. Similarly, a valid trip date may be determined using validDateRange.
- * Please format the trip date input as 'YYYY-MM-DD'.
  *
  * @param params - Object containing tripDate, routeId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.routeId - The unique identifier for the route
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
 export const getScheduleByRoute = createWsfScheduleFetch<
   { tripDate: Date; routeId: number },
@@ -421,15 +464,15 @@ export const getScheduleByRoute = createWsfScheduleFetch<
  * Provides departure times for a trip date and terminal combination. The resultset
  * accounts for all contingencies, sailing date ranges and time adjustments. Valid
  * departing and arriving terminals may be found using terminalsAndMates. Similarly,
- * a valid trip date may be determined using validDateRange. Please format the trip
- * date input as 'YYYY-MM-DD'.
+ * a valid trip date may be determined using validDateRange.
  *
  * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional logMode
- * @param params.tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params.tripDate - The trip date as a Date object
  * @param params.departingTerminalId - The unique identifier for the departing terminal
  * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
 export const getScheduleByTerminals = createWsfScheduleFetch<
   { tripDate: Date; departingTerminalId: number; arrivingTerminalId: number },
@@ -449,6 +492,7 @@ export const getScheduleByTerminals = createWsfScheduleFetch<
  * @param params.onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing today's schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
 export const getScheduleTodayByRoute = createWsfScheduleFetch<
   { routeId: number; onlyRemainingTimes?: boolean },
@@ -469,6 +513,7 @@ export const getScheduleTodayByRoute = createWsfScheduleFetch<
  * @param params.onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing today's schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
 export const getScheduleTodayByTerminals = createWsfScheduleFetch<
   {
@@ -494,6 +539,7 @@ export const getScheduleTodayByTerminals = createWsfScheduleFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Alert objects containing alert information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getAlerts = createWsfScheduleFetch<Alert[]>("/alerts");
 
@@ -512,6 +558,7 @@ export const getAlerts = createWsfScheduleFetch<Alert[]>("/alerts");
  * @param params.subjectName - The subject name for which to retrieve alternative formats
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of AlternativeFormat objects containing format information
+ * @throws {WsfApiError} When the API request fails
  */
 export const getAlternativeFormats = createWsfScheduleFetch<
   { subjectName: string },

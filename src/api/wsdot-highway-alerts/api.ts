@@ -20,6 +20,12 @@ const createWsdotHighwayAlertsFetch = createFetchFactory(
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise containing all highway alert data
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const alerts = await getHighwayAlerts();
+ * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
+ * ```
  */
 export const getHighwayAlerts =
   createWsdotHighwayAlertsFetch<HighwayAlert[]>("/GetAlertsAsJson");
@@ -34,6 +40,12 @@ export const getHighwayAlerts =
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific highway alert data
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const alert = await getHighwayAlertById({ alertId: 12345 });
+ * console.log(alert.HeadlineDescription); // "Collision on I-5"
+ * ```
  */
 export const getHighwayAlertById = createWsdotHighwayAlertsFetch<
   { alertId: number },
@@ -50,6 +62,12 @@ export const getHighwayAlertById = createWsdotHighwayAlertsFetch<
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing filtered highway alert data
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const alerts = await getHighwayAlertsByMapArea({ mapArea: "Seattle" });
+ * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
+ * ```
  */
 export const getHighwayAlertsByMapArea = createWsdotHighwayAlertsFetch<
   { mapArea: string },

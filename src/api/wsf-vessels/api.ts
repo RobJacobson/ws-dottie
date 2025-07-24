@@ -32,6 +32,12 @@ const createWsfVesselsFetch = createFetchFactory(
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselBasic objects containing basic vessel information
+ *
+ * @example
+ * ```typescript
+ * const vessels = await getVesselBasics();
+ * console.log(vessels[0].VesselName); // "M/V Cathlamet"
+ * ```
  */
 export const getVesselBasics =
   createWsfVesselsFetch<VesselBasic[]>("/vesselbasics");
@@ -46,6 +52,12 @@ export const getVesselBasics =
  * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselBasic object containing basic information for the specified vessel
+ *
+ * @example
+ * ```typescript
+ * const vessel = await getVesselBasicsById({ vesselId: 1 });
+ * console.log(vessel.VesselName); // "M/V Cathlamet"
+ * ```
  */
 export const getVesselBasicsById = createWsfVesselsFetch<
   { vesselId: number },
@@ -69,6 +81,12 @@ export const getVesselBasicsById = createWsfVesselsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselLocation objects containing real-time vessel position data
+ *
+ * @example
+ * ```typescript
+ * const locations = await getVesselLocations();
+ * console.log(locations[0].VesselName); // "M/V Cathlamet"
+ * ```
  */
 export const getVesselLocations =
   createWsfVesselsFetch<VesselLocation[]>("/vessellocations");

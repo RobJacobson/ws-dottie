@@ -11,30 +11,17 @@ import type { WeatherReading } from "./types";
 
 /**
  * React Query hook for retrieving extended weather information
- * This endpoint provides additional weather readings including surface and subsurface measurements
  *
+ * Retrieves additional weather readings including surface and subsurface
+ * measurements from WSDOT weather stations.
+ *
+ * @param options - Optional query options
  * @returns React Query result containing extended weather information data
  *
  * @example
  * ```typescript
- * const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     {weatherReadings?.map(reading => (
- *       <div key={reading.StationId}>
- *         <h3>{reading.StationName}</h3>
- *         <p>Air Temperature: {reading.AirTemperature}°C</p>
- *         <p>Elevation: {reading.Elevation} ft</p>
- *         <p>Surface Temperature: {reading.SurfaceMeasurements[0]?.SurfaceTemperature}°C</p>
- *         <p>Snow Depth: {reading.SnowDepth} cm</p>
- *       </div>
- *     ))}
- *   </div>
- * );
+ * const { data: weatherReadings } = useWeatherInformationExtended();
+ * console.log(weatherReadings[0].AirTemperature); // 14.7
  * ```
  */
 export const useWeatherInformationExtended = (

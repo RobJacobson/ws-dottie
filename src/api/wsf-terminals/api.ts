@@ -1,7 +1,6 @@
 // WSF Terminals API functions
 
 import { createFetchFactory } from "@/shared/fetching/apiUtils";
-import type { LoggingMode } from "@/shared/logger";
 
 import type {
   TerminalBasics,
@@ -31,6 +30,13 @@ const createWsfTerminalsFetch = createFetchFactory(
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalBasics objects containing basic terminal information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminals = await getTerminalBasics();
+ * console.log(terminals[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalBasics =
   createWsfTerminalsFetch<TerminalBasics[]>("/terminalbasics");
@@ -43,8 +49,16 @@ export const getTerminalBasics =
  * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalBasics object containing basic information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminal = await getTerminalBasicsByTerminalId({ terminalId: 7 });
+ * console.log(terminal.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalBasicsByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -64,6 +78,13 @@ export const getTerminalBasicsByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalLocation objects containing terminal location information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const locations = await getTerminalLocations();
+ * console.log(locations[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalLocations =
   createWsfTerminalsFetch<TerminalLocation[]>("/terminallocations");
@@ -77,8 +98,16 @@ export const getTerminalLocations =
  * that specific terminal.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalLocation objects containing location information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const location = await getTerminalLocationsByTerminalId({ terminalId: 7 });
+ * console.log(location.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalLocationsByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -98,6 +127,13 @@ export const getTerminalLocationsByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalSailingSpace objects containing sailing space information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const sailingSpaces = await getTerminalSailingSpace();
+ * console.log(sailingSpaces[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalSailingSpace = createWsfTerminalsFetch<
   TerminalSailingSpace[]
@@ -112,8 +148,16 @@ export const getTerminalSailingSpace = createWsfTerminalsFetch<
  * configuration for that specific terminal.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalSailingSpace object containing sailing space information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const sailingSpace = await getTerminalSailingSpaceByTerminalId({ terminalId: 7 });
+ * console.log(sailingSpace.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalSailingSpaceByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -133,6 +177,13 @@ export const getTerminalSailingSpaceByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalBulletin objects containing bulletin information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const bulletins = await getTerminalBulletins();
+ * console.log(bulletins[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalBulletins =
   createWsfTerminalsFetch<TerminalBulletin[]>("/terminalbulletins");
@@ -146,8 +197,16 @@ export const getTerminalBulletins =
  * specific terminal.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalBulletin object containing bulletin information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const bulletin = await getTerminalBulletinsByTerminalId({ terminalId: 7 });
+ * console.log(bulletin.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalBulletinsByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -167,6 +226,13 @@ export const getTerminalBulletinsByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalTransport objects containing transport information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const transports = await getTerminalTransports();
+ * console.log(transports[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalTransports = createWsfTerminalsFetch<
   TerminalTransport[]
@@ -181,8 +247,16 @@ export const getTerminalTransports = createWsfTerminalsFetch<
  * connections for that specific terminal.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalTransport object containing transport information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const transport = await getTerminalTransportsByTerminalId({ terminalId: 7 });
+ * console.log(transport.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalTransportsByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -202,6 +276,13 @@ export const getTerminalTransportsByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalWaitTimes objects containing wait time information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const waitTimes = await getTerminalWaitTimes();
+ * console.log(waitTimes[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalWaitTimes =
   createWsfTerminalsFetch<TerminalWaitTimes[]>("/terminalwaittimes");
@@ -215,8 +296,16 @@ export const getTerminalWaitTimes =
  * specific terminal.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalWaitTimes object containing wait time information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const waitTime = await getTerminalWaitTimesByTerminalId({ terminalId: 7 });
+ * console.log(waitTime.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalWaitTimesByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -236,6 +325,13 @@ export const getTerminalWaitTimesByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalVerbose objects containing comprehensive terminal information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminals = await getTerminalVerbose();
+ * console.log(terminals[0].TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalVerbose =
   createWsfTerminalsFetch<TerminalVerbose[]>("/terminalverbose");
@@ -248,8 +344,16 @@ export const getTerminalVerbose =
  * providing the most detailed information available for that specific terminal.
  *
  * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalVerbose object containing comprehensive terminal information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminal = await getTerminalVerboseByTerminalId({ terminalId: 7 });
+ * console.log(terminal.TerminalName); // "Anacortes"
+ * ```
  */
 export const getTerminalVerboseByTerminalId = createWsfTerminalsFetch<
   { terminalId: number },
@@ -269,6 +373,13 @@ export const getTerminalVerboseByTerminalId = createWsfTerminalsFetch<
  *
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to cache flush date
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const flushDate = await getCacheFlushDateTerminals();
+ * console.log(flushDate); // "2024-01-15T10:30:00Z"
+ * ```
  */
 export const getCacheFlushDateTerminals = createWsfTerminalsFetch<Date | null>(
   "/cacheflushdate"

@@ -22,6 +22,12 @@ const createWsdotBridgeClearancesFetch = createFetchFactory(
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing bridge clearance data for the specified route
  * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const clearances = await getBridgeClearances({ route: "005" });
+ * console.log(clearances[0].BridgeName); // "Aurora Bridge"
+ * ```
  */
 export const getBridgeClearances = createWsdotBridgeClearancesFetch<
   { route: string },
