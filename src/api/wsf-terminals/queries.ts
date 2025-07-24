@@ -65,7 +65,7 @@ export const useTerminalBasics = (
   return useQuery({
     queryKey: ["wsf", "terminals", "basics"],
     queryFn: () => getTerminalBasics(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -96,7 +96,7 @@ export const useTerminalBasicsByTerminalId = (
     queryKey: ["wsf", "terminals", "basics", "byTerminalId", params.terminalId],
     queryFn: () =>
       getTerminalBasicsByTerminalId({ terminalId: params.terminalId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -127,7 +127,7 @@ export const useTerminalBulletins = (
   return useQuery({
     queryKey: ["wsf", "terminals", "bulletins"],
     queryFn: () => getTerminalBulletins(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -165,7 +165,7 @@ export const useTerminalBulletinsByTerminalId = (
     ],
     queryFn: () =>
       getTerminalBulletinsByTerminalId({ terminalId: params.terminalId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -196,7 +196,7 @@ export const useTerminalLocations = (
   return useQuery({
     queryKey: ["wsf", "terminals", "locations"],
     queryFn: () => getTerminalLocations(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -234,7 +234,7 @@ export const useTerminalLocationsByTerminalId = (
     ],
     queryFn: () =>
       getTerminalLocationsByTerminalId({ terminalId: params.terminalId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -335,7 +335,7 @@ export const useTerminalTransports = (
   return useQuery({
     queryKey: ["wsf", "terminals", "transports"],
     queryFn: () => getTerminalTransports(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -373,7 +373,7 @@ export const useTerminalTransportsByTerminalId = (
     ],
     queryFn: () =>
       getTerminalTransportsByTerminalId({ terminalId: params.terminalId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -404,7 +404,7 @@ export const useTerminalWaitTimes = (
   return useQuery({
     queryKey: ["wsf", "terminals", "wait-times"],
     queryFn: () => getTerminalWaitTimes(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -473,7 +473,7 @@ export const useTerminalVerbose = (
   return useQuery({
     queryKey: ["wsf", "terminals", "verbose"],
     queryFn: () => getTerminalVerbose(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -510,7 +510,7 @@ export const useTerminalVerboseByTerminalId = (
     ],
     queryFn: () =>
       getTerminalVerboseByTerminalId({ terminalId: params.terminalId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -541,6 +541,6 @@ export const useCacheFlushDateTerminals = (
   useQuery({
     queryKey: ["wsf", "terminals", "cache-flush-date"],
     queryFn: () => getCacheFlushDateTerminals(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });

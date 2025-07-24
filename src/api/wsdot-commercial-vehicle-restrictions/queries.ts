@@ -40,7 +40,7 @@ export const useCommercialVehicleRestrictions = (
       "getCommercialVehicleRestrictions",
     ],
     queryFn: () => getCommercialVehicleRestrictions(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -71,7 +71,7 @@ export const useCommercialVehicleRestrictionsWithId = (
       "getCommercialVehicleRestrictionsWithId",
     ],
     queryFn: () => getCommercialVehicleRestrictionsWithId(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

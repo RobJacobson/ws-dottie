@@ -45,7 +45,7 @@ export const useFaresCacheFlushDate = (
   return useQuery({
     queryKey: ["wsf", "fares", "cacheFlushDate"],
     queryFn: () => getFaresCacheFlushDate(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -73,7 +73,7 @@ export const useFaresValidDateRange = (
   return useQuery({
     queryKey: ["wsf", "fares", "validDateRange"],
     queryFn: () => getFaresValidDateRange(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -105,7 +105,7 @@ export const useFaresTerminals = (
   return useQuery({
     queryKey: ["wsf", "fares", "terminals", jsDateToYyyyMmDd(params.tripDate)],
     queryFn: () => getFaresTerminals({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -143,7 +143,7 @@ export const useFaresTerminalMates = (
         tripDate: params.tripDate,
         terminalID: params.terminalID,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -187,7 +187,7 @@ export const useTerminalCombo = (
         departingTerminalID: params.departingTerminalID,
         arrivingTerminalID: params.arrivingTerminalID,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -218,7 +218,7 @@ export const useTerminalComboVerbose = (
       jsDateToYyyyMmDd(params.tripDate),
     ],
     queryFn: () => getTerminalComboVerbose({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -266,7 +266,7 @@ export const useFareLineItemsBasic = (
         arrivingTerminalID: params.arrivingTerminalID,
         roundTrip: params.roundTrip,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -315,7 +315,7 @@ export const useFareLineItems = (
         arrivingTerminalID: params.arrivingTerminalID,
         roundTrip: params.roundTrip,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -347,7 +347,7 @@ export const useFareLineItemsVerbose = (
       jsDateToYyyyMmDd(params.tripDate),
     ],
     queryFn: () => getFareLineItemsVerbose({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -403,7 +403,7 @@ export const useFareTotals = (
         fareLineItemIDs: params.fareLineItemIDs,
         quantities: params.quantities,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

@@ -38,7 +38,7 @@ export const useBridgeClearances = (
       params.route,
     ],
     queryFn: () => getBridgeClearances({ route: params.route }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

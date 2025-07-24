@@ -62,7 +62,7 @@ export const useVesselBasics = (
   return useQuery({
     queryKey: ["wsf", "vessels", "basics"],
     queryFn: () => getVesselBasics(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -91,7 +91,7 @@ export const useVesselBasicsById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "basics", "byId", params.vesselId],
     queryFn: () => getVesselBasicsById({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -123,7 +123,7 @@ export const useVesselAccommodations = (
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations"],
     queryFn: () => getVesselAccommodations(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -146,7 +146,7 @@ export const useVesselAccommodationsById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations", "byId", params.vesselId],
     queryFn: () => getVesselAccommodationsById({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -181,7 +181,7 @@ export const useVesselLocations = (
   return useQuery({
     queryKey: ["wsf", "vessels", "locations"],
     queryFn: () => getVesselLocations(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -210,7 +210,7 @@ export const useVesselLocationsByVesselId = (
   return useQuery({
     queryKey: ["wsf", "vessels", "locations", "byVesselId", params.vesselId],
     queryFn: () => getVesselLocationsByVesselId({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -235,7 +235,7 @@ export const useVesselStats = (
   return useQuery({
     queryKey: ["wsf", "vessels", "stats"],
     queryFn: () => getVesselStats(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -258,7 +258,7 @@ export const useVesselStatsById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "stats", "byId", params.vesselId],
     queryFn: () => getVesselStatsById({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -283,7 +283,7 @@ export const useVesselHistory = (
   return useQuery({
     queryKey: ["wsf", "vessels", "history"],
     queryFn: () => getVesselHistory(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -321,7 +321,7 @@ export const useVesselHistoryByVesselAndDateRange = (
         dateStart: params.dateStart,
         dateEnd: params.dateEnd,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -346,7 +346,7 @@ export const useVesselVerbose = (
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose"],
     queryFn: () => getVesselVerbose(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -369,7 +369,7 @@ export const useVesselVerboseById = (
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose", "byId", params.vesselId],
     queryFn: () => getVesselVerboseById({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -394,7 +394,7 @@ export const useCacheFlushDateVessels = (
   return useQuery({
     queryKey: ["wsf", "vessels", "cacheFlushDate"],
     queryFn: () => getCacheFlushDateVessels(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

@@ -37,7 +37,7 @@ export const useHighwayCameras = (
   return useQuery({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
     queryFn: () => getHighwayCameras(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -65,7 +65,7 @@ export const useHighwayCamera = (
   return useQuery<GetCameraResponse>({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params.cameraID],
     queryFn: () => getHighwayCamera({ cameraID: params.cameraID }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -97,7 +97,7 @@ export const useSearchHighwayCameras = (
   return useQuery<Camera[]>({
     queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],
     queryFn: () => searchHighwayCameras(params),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

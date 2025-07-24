@@ -75,7 +75,7 @@ export const useCacheFlushDateSchedule = (
   useQuery({
     queryKey: ["wsf", "schedule", "cacheFlushDate"],
     queryFn: () => getCacheFlushDateSchedule(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -105,7 +105,7 @@ export const useValidDateRange = (
   useQuery({
     queryKey: ["wsf", "schedule", "validDateRange"],
     queryFn: () => getValidDateRange(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -142,7 +142,7 @@ export const useTerminals = (
       jsDateToYyyyMmDd(params.tripDate),
     ],
     queryFn: () => getTerminals({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -169,7 +169,7 @@ export const useTerminalsAndMates = (
       jsDateToYyyyMmDd(params.tripDate),
     ],
     queryFn: () => getTerminalsAndMates({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -203,7 +203,7 @@ export const useTerminalsAndMatesByRoute = (
         tripDate: params.tripDate,
         routeId: params.routeId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -237,7 +237,7 @@ export const useTerminalMates = (
         tripDate: params.tripDate,
         terminalId: params.terminalId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -270,7 +270,7 @@ export const useRoutes = (
   useQuery({
     queryKey: ["wsf", "schedule", "routes", jsDateToYyyyMmDd(params.tripDate)],
     queryFn: () => getRoutes({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -312,7 +312,7 @@ export const useRoutesByTerminals = (
         departingTerminalId: params.departingTerminalId,
         arrivingTerminalId: params.arrivingTerminalId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -340,7 +340,7 @@ export const useRoutesWithDisruptions = (
       jsDateToYyyyMmDd(params.tripDate),
     ],
     queryFn: () => getRoutesWithDisruptions({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -373,7 +373,7 @@ export const useRouteDetails = (
       jsDateToYyyyMmDd(params.tripDate),
     ],
     queryFn: () => getRouteDetails({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -415,7 +415,7 @@ export const useRouteDetailsByTerminals = (
         departingTerminalId: params.departingTerminalId,
         arrivingTerminalId: params.arrivingTerminalId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -449,7 +449,7 @@ export const useRouteDetailsByRoute = (
         tripDate: params.tripDate,
         routeId: params.routeId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -473,7 +473,7 @@ export const useActiveSeasons = (
   useQuery({
     queryKey: ["wsf", "schedule", "activeSeasons"],
     queryFn: () => getActiveSeasons(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -498,7 +498,7 @@ export const useScheduledRoutes = (
   useQuery({
     queryKey: ["wsf", "schedule", "scheduledRoutes"],
     queryFn: () => getScheduledRoutes(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -528,7 +528,7 @@ export const useScheduledRoutesBySeason = (
     ],
     queryFn: () =>
       getScheduledRoutesBySeason({ scheduleId: params.scheduleId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -557,7 +557,7 @@ export const useSailings = (
   useQuery({
     queryKey: ["wsf", "schedule", "sailings", params.schedRouteId],
     queryFn: () => getSailings({ schedRouteId: params.schedRouteId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -582,7 +582,7 @@ export const useAllSailings = (
   useQuery({
     queryKey: ["wsf", "schedule", "allSailings", params.schedRouteId],
     queryFn: () => getAllSailings({ schedRouteId: params.schedRouteId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -606,7 +606,7 @@ export const useTimeAdjustments = (
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments"],
     queryFn: () => getTimeAdjustments(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -630,7 +630,7 @@ export const useTimeAdjustmentsByRoute = (
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments", "byRoute", params.routeId],
     queryFn: () => getTimeAdjustmentsByRoute({ routeId: params.routeId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -661,7 +661,7 @@ export const useTimeAdjustmentsBySchedRoute = (
     ],
     queryFn: () =>
       getTimeAdjustmentsBySchedRoute({ schedRouteId: params.schedRouteId }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -699,7 +699,7 @@ export const useScheduleByRoute = (
         tripDate: params.tripDate,
         routeId: params.routeId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -741,7 +741,7 @@ export const useScheduleByTerminals = (
         departingTerminalId: params.departingTerminalId,
         arrivingTerminalId: params.arrivingTerminalId,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -776,7 +776,7 @@ export const useScheduleTodayByRoute = (
         routeId: params.routeId,
         onlyRemainingTimes: params.onlyRemainingTimes,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -818,7 +818,7 @@ export const useScheduleTodayByTerminals = (
         arrivingTerminalId: params.arrivingTerminalId,
         onlyRemainingTimes: params.onlyRemainingTimes,
       }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -840,7 +840,7 @@ export const useAlerts = (options?: Parameters<typeof useQuery<Alert[]>>[0]) =>
   useQuery({
     queryKey: ["wsf", "schedule", "alerts"],
     queryFn: () => getAlerts(),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 
@@ -867,6 +867,6 @@ export const useAlternativeFormats = (
   useQuery({
     queryKey: ["wsf", "schedule", "alternativeFormats", params.subjectName],
     queryFn: () => getAlternativeFormats({ subjectName: params.subjectName }),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
