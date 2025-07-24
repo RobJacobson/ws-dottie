@@ -44,7 +44,7 @@ export const useWeatherInformation = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
-    queryFn: getWeatherInformation,
+    queryFn: () => getWeatherInformation(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
@@ -86,7 +86,7 @@ export const useWeatherInformationByStationId = (
       "getWeatherInformationByStationId",
       stationId,
     ],
-    queryFn: () => getWeatherInformationByStationId(stationId),
+    queryFn: () => getWeatherInformationByStationId({ stationId }),
     enabled: !!stationId,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
@@ -131,7 +131,8 @@ export const useWeatherInformationForStations = (
       "getWeatherInformationForStations",
       stationIds,
     ],
-    queryFn: () => getWeatherInformationForStations(stationIds.join(",")),
+    queryFn: () =>
+      getWeatherInformationForStations({ stationIds: stationIds.join(",") }),
     enabled: !!stationIds && stationIds.length > 0,
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

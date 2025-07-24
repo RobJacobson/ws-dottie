@@ -46,7 +46,7 @@ export const useWeatherInformationExtended = (
       "weather-information-extended",
       "getWeatherInformationExtended",
     ],
-    queryFn: getWeatherInformationExtended,
+    queryFn: () => getWeatherInformationExtended(),
     ...tanstackQueryOptions.HOURLY_UPDATES,
     ...options,
   });

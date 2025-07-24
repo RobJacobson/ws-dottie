@@ -43,22 +43,21 @@ import type {
 /**
  * Hook for fetching vessel basics from WSF Vessels API
  *
- * Retrieves basic vessel information including vessel names, abbreviations,
- * class information, and operational status. This endpoint provides fundamental
- * vessel details for all vessels in the WSF fleet.
+ * Retrieves basic vessel information for all vessels in the Washington State Ferries fleet,
+ * including vessel names, abbreviations, class information, and operational status.
  *
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselBasic objects with basic vessel information
+ * @returns React Query result containing an array of VesselBasic objects with basic information for all vessels
  */
 export const useVesselBasics = (
   options?: Parameters<typeof useQuery<VesselBasic[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "basics"],
-    queryFn: getVesselBasics,
+    queryFn: () => getVesselBasics(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -83,7 +82,7 @@ export const useVesselBasicsById = (
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "basics", "byId", vesselId],
-    queryFn: () => getVesselBasicsById(vesselId),
+    queryFn: () => getVesselBasicsById({ vesselId }),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -112,7 +111,7 @@ export const useVesselAccommodations = (
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations"],
-    queryFn: getVesselAccommodations,
+    queryFn: () => getVesselAccommodations(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -137,7 +136,7 @@ export const useVesselAccommodationsById = (
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations", "byId", vesselId],
-    queryFn: () => getVesselAccommodationsById(vesselId),
+    queryFn: () => getVesselAccommodationsById({ vesselId }),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -157,18 +156,18 @@ export const useVesselAccommodationsById = (
  * vessel speed, heading direction, and operational status.
  *
  * The data is updated frequently and provides the most current information
- * about vessel locations for tracking and monitoring purposes.
+ * about vessel locations and movements across the ferry system.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselLocation objects with real-time vessel position data
+ * @returns React Query result containing an array of VesselLocation objects with real-time location data for all vessels
  */
 export const useVesselLocations = (
   options?: Parameters<typeof useQuery<VesselLocation[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "locations"],
-    queryFn: getVesselLocations,
-    ...tanstackQueryOptions.REALTIME_UPDATES,
+    queryFn: () => getVesselLocations(),
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -177,16 +176,16 @@ export const useVesselLocations = (
  * Hook for fetching vessel location data for a specific vessel from WSF Vessels API
  *
  * Retrieves real-time vessel position, speed, heading, and status information
- * for a specific vessel identified by vessel ID. This endpoint returns a single
- * vessel object, providing current location data including GPS coordinates,
- * vessel speed, heading direction, and operational status.
+ * for a specific vessel identified by vessel ID. This endpoint provides current
+ * location data for the specified vessel, including GPS coordinates, vessel speed,
+ * heading direction, and operational status.
  *
  * The data is updated frequently and provides the most current information
- * about the specified vessel's location for tracking and monitoring purposes.
+ * about the vessel's location and movement.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
  * @param options - Optional React Query options
- * @returns React Query result containing a VesselLocation object with real-time position data for the specified vessel
+ * @returns React Query result containing a VesselLocation object with real-time location data for the specified vessel
  */
 export const useVesselLocationsByVesselId = (
   vesselId: number,
@@ -194,9 +193,9 @@ export const useVesselLocationsByVesselId = (
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "locations", "byVesselId", vesselId],
-    queryFn: () => getVesselLocationsByVesselId(vesselId),
+    queryFn: () => getVesselLocationsByVesselId({ vesselId }),
     enabled: !!vesselId,
-    ...tanstackQueryOptions.REALTIME_UPDATES,
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
@@ -208,22 +207,22 @@ export const useVesselLocationsByVesselId = (
 /**
  * Hook for fetching vessel statistics from WSF Vessels API
  *
- * Retrieves statistical information about vessels including operational metrics,
+ * Retrieves statistical information for all vessels including operational metrics,
  * performance data, and usage statistics. This endpoint provides comprehensive
- * statistical data for all vessels in the WSF fleet.
+ * statistical data about vessel operations and performance across the WSF fleet.
  *
- * This data is updated infrequently and provides static vessel characteristics
- * that don't change often, such as vessel specifications and capabilities.
+ * The data is updated periodically and provides historical and current statistical
+ * information about vessel operations and performance.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselStats objects with vessel statistics
+ * @returns React Query result containing an array of VesselStats objects with statistical information for all vessels
  */
 export const useVesselStats = (
   options?: Parameters<typeof useQuery<VesselStats[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "stats"],
-    queryFn: getVesselStats,
+    queryFn: () => getVesselStats(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -233,14 +232,14 @@ export const useVesselStats = (
  * Hook for fetching vessel statistics for a specific vessel from WSF Vessels API
  *
  * Retrieves statistical information for a specific vessel identified by vessel ID,
- * including operational metrics, performance data, and usage statistics.
+ * including operational metrics, performance data, and usage statistics for that vessel.
  *
- * This data is updated infrequently and provides static vessel characteristics
- * that don't change often, such as vessel specifications and capabilities.
+ * The data is updated periodically and provides historical and current statistical
+ * information about the vessel's operations and performance.
  *
  * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
  * @param options - Optional React Query options
- * @returns React Query result containing a VesselStats object with statistics for the specified vessel
+ * @returns React Query result containing a VesselStats object with statistical information for the specified vessel
  */
 export const useVesselStatsById = (
   vesselId: number,
@@ -248,7 +247,7 @@ export const useVesselStatsById = (
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "stats", "byId", vesselId],
-    queryFn: () => getVesselStatsById(vesselId),
+    queryFn: () => getVesselStatsById({ vesselId }),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -260,43 +259,43 @@ export const useVesselStatsById = (
 // ============================================================================
 
 /**
- * Hook for fetching vessel history from WSF Vessels API
+ * Hook for fetching vessel history data from WSF Vessels API
  *
- * Retrieves historical information about all vessels including past operations,
- * service records, and historical data. This endpoint provides comprehensive
- * historical data for all vessels in the WSF fleet.
+ * Retrieves historical vessel data including past routes, schedules, and operational
+ * history for all vessels in the WSF fleet. This endpoint provides comprehensive
+ * historical information about vessel operations and movements over time.
  *
- * This data is updated infrequently and provides static vessel characteristics
- * that don't change often, such as vessel specifications and capabilities.
+ * The data is updated periodically and provides historical information about
+ * vessel operations, routes, and schedules.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselHistory objects with vessel historical information
+ * @returns React Query result containing an array of VesselHistory objects with historical data for all vessels
  */
 export const useVesselHistory = (
   options?: Parameters<typeof useQuery<VesselHistory[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "history"],
-    queryFn: getVesselHistory,
+    queryFn: () => getVesselHistory(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
 
 /**
- * Hook for fetching vessel history for a specific vessel and date range from WSF Vessels API
+ * Hook for fetching vessel history data for a specific vessel and date range from WSF Vessels API
  *
- * Retrieves historical information for a specific vessel identified by vessel name
- * within a specified date range, including past operations, service records, and historical data.
+ * Retrieves historical vessel data for a specific vessel within a specified date range,
+ * including past routes, schedules, and operational history for that vessel.
  *
- * This data is updated infrequently and provides static vessel characteristics
- * that don't change often, such as vessel specifications and capabilities.
+ * The data is updated periodically and provides historical information about
+ * the vessel's operations, routes, and schedules within the specified time period.
  *
- * @param vesselName - The name of the vessel (e.g., "Cathlamet")
- * @param dateStart - The start date for the history range (YYYY-MM-DD format)
- * @param dateEnd - The end date for the history range (YYYY-MM-DD format)
+ * @param vesselName - The name of the vessel (e.g., "M/V Cathlamet")
+ * @param dateStart - The start date for the history range
+ * @param dateEnd - The end date for the history range
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselHistory objects with historical information for the specified vessel and date range
+ * @returns React Query result containing an array of VesselHistory objects with historical data for the specified vessel and date range
  */
 export const useVesselHistoryByVesselAndDateRange = (
   vesselName: string,
@@ -311,11 +310,11 @@ export const useVesselHistoryByVesselAndDateRange = (
       "history",
       "byVesselAndDateRange",
       vesselName,
-      dateStart,
-      dateEnd,
+      dateStart.toISOString(),
+      dateEnd.toISOString(),
     ],
     queryFn: () =>
-      getVesselHistoryByVesselAndDateRange(vesselName, dateStart, dateEnd),
+      getVesselHistoryByVesselAndDateRange({ vesselName, dateStart, dateEnd }),
     enabled: !!vesselName && !!dateStart && !!dateEnd,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -327,37 +326,34 @@ export const useVesselHistoryByVesselAndDateRange = (
 // ============================================================================
 
 /**
- * Hook for fetching vessel verbose data from WSF Vessels API
+ * Hook for fetching verbose vessel data from WSF Vessels API
  *
- * Retrieves comprehensive vessel information including specifications, capacity,
- * amenities, and operational status. This endpoint provides detailed information
- * about all vessels in the WSF fleet, including vessel dimensions, passenger
- * and vehicle capacity, onboard amenities, and current operational status.
+ * Retrieves comprehensive vessel information for all vessels including detailed
+ * specifications, capabilities, and operational data. This endpoint provides
+ * the most complete vessel information available from the WSF API.
  *
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselVerbose objects with comprehensive vessel information
+ * @returns React Query result containing an array of VesselVerbose objects with comprehensive information for all vessels
  */
 export const useVesselVerbose = (
   options?: Parameters<typeof useQuery<VesselVerbose[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose"],
-    queryFn: getVesselVerbose,
+    queryFn: () => getVesselVerbose(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };
 
 /**
- * Hook for fetching vessel verbose data for a specific vessel from WSF Vessels API
+ * Hook for fetching verbose vessel data for a specific vessel from WSF Vessels API
  *
  * Retrieves comprehensive vessel information for a specific vessel identified by vessel ID,
- * including specifications, capacity, amenities, and operational status. This endpoint
- * returns detailed information about vessel dimensions, passenger and vehicle capacity,
- * onboard amenities, and current operational status.
+ * including detailed specifications, capabilities, and operational data for that vessel.
  *
  * This data is updated infrequently and provides static vessel characteristics
  * that don't change often, such as vessel specifications and capabilities.
@@ -372,7 +368,7 @@ export const useVesselVerboseById = (
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose", "byId", vesselId],
-    queryFn: () => getVesselVerboseById(vesselId),
+    queryFn: () => getVesselVerboseById({ vesselId }),
     enabled: !!vesselId,
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
@@ -384,18 +380,22 @@ export const useVesselVerboseById = (
 // ============================================================================
 
 /**
- * Hook function for fetching cache flush date from WSF Vessels API with React Query
+ * Hook for fetching cache flush date from WSF Vessels API
+ *
+ * Retrieves the cache flush date for the vessels data, indicating when the
+ * vessel data was last updated. This endpoint provides information about
+ * the freshness of the vessel data cache.
  *
  * @param options - Optional React Query options
- * @returns React Query result with VesselCacheFlushDate data
+ * @returns React Query result containing the cache flush date for vessels data
  */
 export const useCacheFlushDateVessels = (
   options?: Parameters<typeof useQuery<VesselsCacheFlushDate | null>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "vessels", "cache-flush-date"],
-    queryFn: getCacheFlushDateVessels,
-    ...tanstackQueryOptions.MINUTE_UPDATES,
+    queryKey: ["wsf", "vessels", "cacheFlushDate"],
+    queryFn: () => getCacheFlushDateVessels(),
+    ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
 };

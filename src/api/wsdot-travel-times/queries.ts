@@ -40,7 +40,7 @@ export const useTravelTimes = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "travel-times", "getTravelTimes"],
-    queryFn: getTravelTimes,
+    queryFn: () => getTravelTimes(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
@@ -77,7 +77,7 @@ export const useTravelTimeById = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "travel-times", "getTravelTimeById", travelTimeId],
-    queryFn: () => getTravelTimeById(travelTimeId),
+    queryFn: () => getTravelTimeById({ travelTimeId }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     enabled: travelTimeId > 0,
     ...options,

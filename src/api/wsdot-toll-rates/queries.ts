@@ -39,7 +39,7 @@ export const useTollRates = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollRates"],
-    queryFn: getTollRates,
+    queryFn: () => getTollRates(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
@@ -73,7 +73,7 @@ export const useTollRates = (
 export const useTollTripInfo = () => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripInfo"],
-    queryFn: getTollTripInfo,
+    queryFn: () => getTollTripInfo(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
   });
 };
@@ -107,7 +107,7 @@ export const useTollTripInfo = () => {
 export const useTollTripRates = () => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripRates"],
-    queryFn: getTollTripRates,
+    queryFn: () => getTollTripRates(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
   });
 };

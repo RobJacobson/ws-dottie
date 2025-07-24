@@ -37,7 +37,7 @@ import type { TrafficFlow } from "./types";
 export const useTrafficFlows = () => {
   return useQuery({
     queryKey: ["wsdot", "traffic-flow", "getTrafficFlows"],
-    queryFn: getTrafficFlows,
+    queryFn: () => getTrafficFlows(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
   });
 };
@@ -71,7 +71,7 @@ export const useTrafficFlowById = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById", flowDataId],
-    queryFn: () => getTrafficFlowById(flowDataId),
+    queryFn: () => getTrafficFlowById({ flowDataID: flowDataId }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     enabled: flowDataId > 0,
     ...options,

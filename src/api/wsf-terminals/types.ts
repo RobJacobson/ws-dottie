@@ -160,9 +160,9 @@ export type TerminalTransport = {
  * Based on /terminalwaittimes endpoint
  */
 export type TerminalWaitTime = {
-  RouteID: number;
-  RouteName: string;
-  WaitTimeIvrNotes: string | null;
+  RouteID: number | null;
+  RouteName: string | null;
+  WaitTimeIVRNotes: string | null;
   WaitTimeLastUpdated: Date;
   WaitTimeNotes: string | null;
 };

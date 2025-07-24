@@ -40,7 +40,7 @@ export const useWeatherStations = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "weather-stations", "getWeatherStations"],
-    queryFn: getWeatherStations,
+    queryFn: () => getWeatherStations(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });

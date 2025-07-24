@@ -23,7 +23,7 @@ export const useBorderCrossings = (
 ) => {
   return useQuery({
     queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],
-    queryFn: getBorderCrossings,
+    queryFn: () => getBorderCrossings(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

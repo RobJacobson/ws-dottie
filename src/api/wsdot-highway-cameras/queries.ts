@@ -49,7 +49,7 @@ export const useHighwayCamera = (
 ) => {
   return useQuery<GetCameraResponse>({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", cameraID],
-    queryFn: () => getHighwayCamera(cameraID),
+    queryFn: () => getHighwayCamera({ cameraID }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: (options?.enabled ?? true) && cameraID > 0,
   });

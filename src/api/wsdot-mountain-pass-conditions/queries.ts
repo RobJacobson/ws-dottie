@@ -41,7 +41,7 @@ export const useMountainPassConditions = (
       "mountain-pass-conditions",
       "getMountainPassConditions",
     ],
-    queryFn: getMountainPassConditions,
+    queryFn: () => getMountainPassConditions(),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     ...options,
   });
@@ -78,7 +78,7 @@ export const useMountainPassConditionById = (passConditionId: number) => {
       "getMountainPassConditionById",
       passConditionId,
     ],
-    queryFn: () => getMountainPassConditionById(passConditionId),
+    queryFn: () => getMountainPassConditionById({ passConditionId }),
     ...tanstackQueryOptions.WEEKLY_UPDATES,
     enabled: passConditionId > 0,
   });
