@@ -2,7 +2,15 @@
 
 Welcome to WS-Dottie! This guide will help you get up and running with Washington State's transportation APIs.
 
-## 📦 Installation
+## 🚀 Quick Setup
+
+### 1. Get Your Free API Key
+
+WS-Dottie requires a WSDOT API key to access the transportation data. The good news? **It's completely free!** 
+
+Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required, no usage limits, no hidden fees.
+
+### 2. Install WS-Dottie
 
 Install WS-Dottie using your preferred package manager:
 
@@ -14,35 +22,49 @@ yarn add ws-dottie
 pnpm add ws-dottie
 ```
 
-## 🔑 API Key Setup
+### 3. Configure Your API Key
 
-WS-Dottie requires a WSDOT API key to access the transportation data. Get your free API key from the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access).
+WS-Dottie offers flexible configuration options to fit your deployment needs:
 
-### Environment Configuration
+#### Option A: Environment Variables (Recommended)
 
-#### Node.js Applications
-Set your API key as an environment variable:
-
+**Node.js Applications**
 ```bash
 export WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
-#### React/Expo Applications
-For React applications, use the Expo public environment variable:
-
+**React/Expo Applications**
 ```bash
 export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
-#### .env File
-You can also create a `.env` file in your project root:
-
+**Using a .env file**
 ```env
 WSDOT_ACCESS_TOKEN=your_api_key_here
 EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
-## 🚀 Basic Usage
+#### Option B: Runtime Configuration
+
+For dynamic environments or when you need to configure at runtime:
+
+```javascript
+import { configManager } from 'ws-dottie';
+
+// Configure at runtime
+configManager.setConfig({
+  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
+  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional: route through proxy
+});
+```
+
+This approach is useful for:
+- Applications that load configuration from external sources
+- Multi-tenant applications with different API keys
+- Development environments with different configurations
+- Routing requests through proxy servers for security or monitoring
+
+## 🎯 Basic Usage
 
 ### Node.js Applications
 
@@ -51,11 +73,11 @@ WS-Dottie provides direct API functions for Node.js applications:
 ```javascript
 import { WsfVessels, WsdotHighwayAlerts, WsdotApiError } from 'ws-dottie';
 
-// Get vessel locations
+// Get real-time ferry locations
 const vessels = await WsfVessels.getVesselLocations();
-console.log(`Found ${vessels.length} vessels`);
+console.log(`Found ${vessels.length} active vessels`);
 
-// Get highway alerts
+// Get current highway alerts
 const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 console.log(`Found ${alerts.length} active alerts`);
 
@@ -80,7 +102,7 @@ import {
   WsdotApiError 
 } from 'ws-dottie';
 
-function FerryApp() {
+function TransportationDashboard() {
   const { data: vessels, isLoading, error } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
 
@@ -90,8 +112,9 @@ function FerryApp() {
 
   return (
     <div>
-      {isLoading ? 'Loading vessels...' : `Found ${vessels?.length} vessels`}
-      <div>Active alerts: {alerts?.length || 0}</div>
+      <h2>Active Ferries: {vessels?.length || 0}</h2>
+      <h2>Highway Alerts: {alerts?.length || 0}</h2>
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 }
@@ -110,12 +133,31 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <FerryApp />
+      <TransportationDashboard />
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
 ```
+
+## 🔍 Debugging and Logging
+
+WS-Dottie includes optional logging to help you troubleshoot API calls:
+
+```javascript
+import { WsfVessels } from 'ws-dottie';
+
+// Enable debug logging for a specific call
+const vessels = await WsfVessels.getVesselLocations('debug');
+
+// Or use info-level logging
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts('info');
+```
+
+Logging modes:
+- `'debug'` - Detailed request/response information
+- `'info'` - Basic request information
+- `'none'` - No logging (default)
 
 ## 📊 Caching Configuration
 
@@ -157,24 +199,24 @@ function CustomVesselApp() {
 }
 ```
 
-## 🎯 Available APIs
+## 🎯 Available Data Sources
 
 ### WSDOT APIs
-- **Highway Alerts** - Real-time traffic alerts and incidents
-- **Traffic Flow** - Current traffic conditions and speeds
+- **Highway Alerts** - Real-time traffic incidents and construction updates
+- **Traffic Flow** - Current traffic speeds and congestion data
 - **Travel Times** - Estimated travel times between locations
-- **Toll Rates** - Current toll pricing information
+- **Toll Rates** - Real-time toll pricing for managed lanes
 - **Weather Information** - Road weather conditions and forecasts
-- **Highway Cameras** - Live traffic camera feeds
-- **Bridge Clearances** - Bridge height restrictions
-- **Mountain Pass Conditions** - Pass status and restrictions
+- **Highway Cameras** - Live traffic camera feeds across the state
+- **Bridge Clearances** - Height restrictions for commercial vehicles
+- **Mountain Pass Conditions** - Pass status and travel restrictions
 - **Commercial Vehicle Restrictions** - Truck and commercial vehicle limits
-- **Border Crossings** - Border wait times and conditions
-- **Weather Stations** - Weather station data and readings
+- **Border Crossings** - Wait times and conditions at border crossings
+- **Weather Stations** - Weather station data and road conditions
 
 ### WSF APIs
 - **Vessels** - Real-time vessel locations and status
-- **Terminals** - Terminal wait times and conditions
+- **Terminals** - Terminal wait times and sailing space
 - **Schedules** - Ferry schedules and sailing times
 - **Fares** - Fare information and pricing
 

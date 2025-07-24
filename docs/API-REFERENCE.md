@@ -17,6 +17,7 @@ import {
   useHighwayAlerts,
   
   // Configuration
+  configManager,
   tanstackQueryOptions,
   
   // Error handling
@@ -28,9 +29,11 @@ import {
 } from 'ws-dottie';
 ```
 
-## 🔑 Authentication
+## 🔑 Configuration
 
-All API calls require a WSDOT API key. Set it as an environment variable:
+WS-Dottie provides flexible configuration options for different deployment scenarios.
+
+### Environment Variables (Recommended)
 
 ```bash
 # Node.js applications
@@ -38,6 +41,24 @@ export WSDOT_ACCESS_TOKEN=your_api_key_here
 
 # React/Expo applications
 export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
+
+# Optional: Custom base URL for proxy routing
+export WSDOT_BASE_URL=https://your-proxy-server.com
+```
+
+### Runtime Configuration
+
+```javascript
+import { configManager } from 'ws-dottie';
+
+// Configure at runtime
+configManager.setConfig({
+  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
+  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional
+});
+
+// Clear configuration (useful for testing)
+configManager.clearConfig();
 ```
 
 ## 🎯 API Modules
@@ -51,17 +72,17 @@ import { WsfVessels } from 'ws-dottie';
 // Get all vessel locations
 const vessels = await WsfVessels.getVesselLocations();
 
-// Get vessel details
-const vessel = await WsfVessels.getVesselVerbose(vesselId);
+// Get vessel details with logging
+const vessel = await WsfVessels.getVesselVerbose({ vesselId: 123 }, 'debug');
 
 // Get vessel history
-const history = await WsfVessels.getVesselHistory(vesselId);
+const history = await WsfVessels.getVesselHistory({ vesselId: 123 });
 
 // Get vessel statistics
-const stats = await WsfVessels.getVesselStats(vesselId);
+const stats = await WsfVessels.getVesselStats({ vesselId: 123 });
 
 // Get vessel accommodations
-const accommodations = await WsfVessels.getVesselAccommodations(vesselId);
+const accommodations = await WsfVessels.getVesselAccommodations({ vesselId: 123 });
 
 // Get cache flush date
 const flushDate = await WsfVessels.getCacheFlushDate();
@@ -107,7 +128,7 @@ const routes = await WsfSchedule.getRoutes();
 const scheduledRoutes = await WsfSchedule.getScheduledRoutes();
 
 // Get schedules for a route
-const schedules = await WsfSchedule.getSchedules(routeId);
+const schedules = await WsfSchedule.getSchedules({ routeId: 123 });
 
 // Get terminals
 const terminals = await WsfSchedule.getTerminals();
@@ -120,11 +141,16 @@ const flushDate = await WsfSchedule.getCacheFlushDate();
 ```javascript
 import { WsfFares } from 'ws-dottie';
 
-// Get fare line items
-const fareItems = await WsfFares.getFareLineItems();
+// Get fare line items with parameters
+const fareItems = await WsfFares.getFareLineItems({
+  tripDate: new Date('2024-01-15'),
+  departingTerminalID: 7,
+  arrivingTerminalID: 8,
+  roundTrip: false
+});
 
-// Get terminals
-const terminals = await WsfFares.getTerminals();
+// Get terminals for a date
+const terminals = await WsfFares.getTerminals({ tripDate: new Date('2024-01-15') });
 
 // Get valid date range
 const dateRange = await WsfFares.getValidDateRange();
@@ -138,6 +164,9 @@ import { WsdotHighwayAlerts } from 'ws-dottie';
 
 // Get all highway alerts
 const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
+
+// Get specific alert by ID
+const alert = await WsdotHighwayAlerts.getAlert({ alertId: 123 });
 ```
 
 #### Traffic Flow API
@@ -174,8 +203,8 @@ const tripRates = await WsdotTollRates.getTollTripRates();
 ```javascript
 import { WsdotWeatherInformation } from 'ws-dottie';
 
-// Get weather information
-const weather = await WsdotWeatherInformation.getWeatherInformation(stationIds);
+// Get weather information for specific stations
+const weather = await WsdotWeatherInformation.getWeatherInformation({ stationIds: [1, 2, 3] });
 ```
 
 #### Weather Information Extended API
@@ -183,7 +212,7 @@ const weather = await WsdotWeatherInformation.getWeatherInformation(stationIds);
 import { WsdotWeatherInformationExtended } from 'ws-dottie';
 
 // Get extended weather information
-const weather = await WsdotWeatherInformationExtended.getWeatherInformationExtended(stationIds);
+const weather = await WsdotWeatherInformationExtended.getWeatherInformationExtended({ stationIds: [1, 2, 3] });
 ```
 
 #### Weather Stations API
@@ -202,18 +231,21 @@ import { WsdotHighwayCameras } from 'ws-dottie';
 const cameras = await WsdotHighwayCameras.getCameras();
 
 // Get specific camera
-const camera = await WsdotHighwayCameras.getCamera(cameraId);
+const camera = await WsdotHighwayCameras.getCamera({ cameraID: 1001 });
 
-// Search cameras
-const searchResults = await WsdotHighwayCameras.searchCameras(params);
+// Search cameras with filters
+const searchResults = await WsdotHighwayCameras.searchCameras({
+  StateRoute: "5",
+  Region: "Northwest"
+});
 ```
 
 #### Bridge Clearances API
 ```javascript
 import { WsdotBridgeClearances } from 'ws-dottie';
 
-// Get bridge clearances
-const clearances = await WsdotBridgeClearances.getBridgeClearances(route);
+// Get bridge clearances for a route
+const clearances = await WsdotBridgeClearances.getBridgeClearances({ route: "005" });
 ```
 
 #### Mountain Pass Conditions API
@@ -296,6 +328,7 @@ import {
 function MyComponent() {
   const { data: vessels, isLoading, error } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
+  const { data: camera } = useCamera({ cameraID: 1001 });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -304,6 +337,7 @@ function MyComponent() {
     <div>
       <h2>Vessels: {vessels?.length}</h2>
       <h2>Alerts: {alerts?.length}</h2>
+      <h2>Camera: {camera?.Title}</h2>
     </div>
   );
 }
@@ -342,6 +376,28 @@ const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
 | DAILY_UPDATES | 1d | 2d | 1d | 5 |
 | WEEKLY_UPDATES | 1w | 2w | false | 5 |
 
+## 🔍 Logging
+
+WS-Dottie includes optional logging for debugging API calls:
+
+```javascript
+import { WsfVessels } from 'ws-dottie';
+
+// Enable debug logging
+const vessels = await WsfVessels.getVesselLocations('debug');
+
+// Enable info logging
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts('info');
+
+// No logging (default)
+const cameras = await WsdotHighwayCameras.getCameras();
+```
+
+### Logging Modes
+- `'debug'` - Detailed request/response information
+- `'info'` - Basic request information  
+- `'none'` - No logging (default)
+
 ## 🚨 Error Handling
 
 All APIs throw `WsdotApiError` for consistent error handling:
@@ -356,6 +412,7 @@ try {
     console.log('API Error:', error.message);
     console.log('Status:', error.status);
     console.log('Details:', error.details);
+    console.log('User Message:', error.getUserMessage());
   }
 }
 ```
@@ -365,6 +422,16 @@ try {
 - `NETWORK_ERROR` - Network connection failed
 - `TIMEOUT_ERROR` - Request timed out
 - `CORS_ERROR` - CORS error (should not happen with JSONP)
+- `TRANSFORM_ERROR` - Data transformation failed
+- `INVALID_RESPONSE` - Invalid response format
+- `RATE_LIMIT_ERROR` - Rate limit exceeded
+
+### User-Friendly Messages
+```javascript
+const error = new WsdotApiError('Network failed', 'NETWORK_ERROR');
+console.log(error.getUserMessage()); 
+// "Network connection failed. Please check your internet connection."
+```
 
 ## 📅 Data Formats
 

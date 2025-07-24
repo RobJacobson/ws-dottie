@@ -11,30 +11,35 @@
 
 > **Say hello to Dottie, your friendly TypeScript companion for Washington State transportation APIs**
 
-Meet Dottie - she's not just another API wrapper, she's your cheerful guide through Washington State's transportation data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state.
+Meet Dottie - she's not just another API wrapper, she's your cheerful guide through Washington State's transportation data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state. 
 
-WS-Dottie is a delightful TypeScript client library that wraps the Washington State Department of Transportation (WSDOT) and Washington State Ferries (WSF) APIs with smart caching, strict typing, automatic use of JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration. This little library allows you to fetch free, real-time commuter data with ease!
+This delightful TypeScript client library provides easy access to Washington State's rich transportation data - from real-time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a hobby project to track your daily commute or developing enterprise applications for transportation planning, WS-Dottie gives you a safe, reliable way to tap into this data firehose with smart caching, strict typing, automatic JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration.
 
-## ✨ Features
+## ✨ What You Can Build
 
-- 🚗 **WSDOT APIs**: Highway alerts, traffic flow, travel times, toll rates, weather, cameras, and more
-- 🚢 **WSF APIs**: Vessel locations, terminal wait times, schedules, fares, and real-time data
-- 🔄 **Smart Caching**: Built-in TanStack Query integration with optimized caching strategies
-- 🌐 **Cross-Platform**: Automatic JSONP for web browsers, native fetch for Node.js
-- 📱 **React Ready**: Hooks for all APIs with automatic cache management
-- 🎯 **TypeScript**: Full type safety with comprehensive type definitions
-- 🚀 **Tree-Shaking**: Only import what you need to keep bundles small
+- **🚢 Ferry Tracking Apps** - Real-time vessel locations, terminal wait times, and sailing schedules
+- **🚗 Traffic Monitoring Dashboards** - Live traffic flow, travel times, and highway alerts
+- **🌤️ Weather & Road Condition Apps** - Weather station data and mountain pass conditions
+- **📷 Camera Feeds** - Access to hundreds of traffic cameras across Washington
+- **💰 Toll Rate Calculators** - Real-time toll pricing for planning trips
+- **🚛 Commercial Vehicle Tools** - Bridge clearances and vehicle restrictions
+- **🌉 Border Crossing Apps** - Wait times and conditions at border crossings
 
-## 📦 Installation
+## 🚀 Quick Start
+
+### 1. Get Your Free API Key
+
+Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required - the API is completely free.
+
+### 2. Install WS-Dottie
 
 ```bash
 npm install ws-dottie
 ```
 
-## 🔑 API Key Setup
+### 3. Configure Your API Key
 
-Get your free API key from [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access):
-
+**Option A: Environment Variables (Recommended)**
 ```bash
 # For Node.js applications
 export WSDOT_ACCESS_TOKEN=your_api_key_here
@@ -43,54 +48,79 @@ export WSDOT_ACCESS_TOKEN=your_api_key_here
 export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
-## 🚀 Quick Start
-
-### Node.js Application
-
+**Option B: Runtime Configuration**
 ```javascript
-import { WsfVessels, WsdotHighwayAlerts, WsdotApiError } from 'ws-dottie';
+import { configManager } from 'ws-dottie';
 
-// Get vessel locations
-const vessels = await WsfVessels.getVesselLocations();
-
-// Get highway alerts
-const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
-
-// Handle errors gracefully
-try {
-  const data = await WsfVessels.getVesselLocations();
-} catch (error) {
-  if (error instanceof WsdotApiError) {
-    console.log('API Error:', error.message);
-  }
-}
+// Configure at runtime (useful for dynamic environments)
+configManager.setConfig({
+  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
+  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional: route through proxy
+});
 ```
 
-### React Application
+### 4. Start Building
 
+**Node.js Application**
 ```javascript
-import { 
-  useVesselLocations, 
-  useHighwayAlerts, 
-  WsdotApiError,
-  tanstackQueryOptions 
-} from 'ws-dottie';
+import { WsfVessels, WsdotHighwayAlerts } from 'ws-dottie';
 
-function FerryApp() {
-  const { data: vessels, isLoading, error } = useVesselLocations();
+// Get real-time ferry locations
+const vessels = await WsfVessels.getVesselLocations();
+console.log(`Found ${vessels.length} active vessels`);
+
+// Get current highway alerts
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
+console.log(`Found ${alerts.length} active alerts`);
+```
+
+**React Application**
+```javascript
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+
+function TransportationDashboard() {
+  const { data: vessels, isLoading } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
-
-  if (error instanceof WsdotApiError) {
-    return <div>API Error: {error.message}</div>;
-  }
 
   return (
     <div>
-      {isLoading ? 'Loading...' : `Found ${vessels?.length} vessels`}
+      <h2>Active Ferries: {vessels?.length || 0}</h2>
+      <h2>Highway Alerts: {alerts?.length || 0}</h2>
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 }
 ```
+
+## 📊 Available Data Sources
+
+### WSDOT APIs
+- **Highway Alerts** - Real-time traffic incidents and construction updates
+- **Traffic Flow** - Current traffic speeds and congestion data
+- **Travel Times** - Estimated travel times between locations
+- **Toll Rates** - Real-time toll pricing for managed lanes
+- **Weather Information** - Road weather conditions and forecasts
+- **Highway Cameras** - Live traffic camera feeds across the state
+- **Bridge Clearances** - Height restrictions for commercial vehicles
+- **Mountain Pass Conditions** - Pass status and travel restrictions
+- **Commercial Vehicle Restrictions** - Truck and commercial vehicle limits
+- **Border Crossings** - Wait times and conditions at border crossings
+- **Weather Stations** - Weather station data and road conditions
+
+### WSF APIs
+- **Vessels** - Real-time vessel locations and status
+- **Terminals** - Terminal wait times and sailing space
+- **Schedules** - Ferry schedules and sailing times
+- **Fares** - Fare information and pricing
+
+## 🔧 Features
+
+- **🔄 Smart Caching** - Built-in TanStack Query integration with optimized caching strategies
+- **🌐 Cross-Platform** - Works in browsers (JSONP) and Node.js (fetch)
+- **📱 React Ready** - Hooks for all APIs with automatic cache management
+- **🎯 TypeScript** - Full type safety with comprehensive type definitions
+- **🔍 Debugging** - Optional logging for troubleshooting API calls
+- **⚡ Tree-Shaking** - Only import what you need to keep bundles small
 
 ## 📚 Documentation
 
@@ -98,49 +128,27 @@ function FerryApp() {
 - **[API Reference](./docs/API-REFERENCE.md)** - Complete API documentation
 - **[Examples](./docs/EXAMPLES.md)** - Common use cases and patterns
 
-## 🎯 Available APIs
+## 🎯 Example Projects
 
-### WSDOT APIs
-- **Highway Alerts** - Real-time traffic alerts and incidents
-- **Traffic Flow** - Current traffic conditions and speeds
-- **Travel Times** - Estimated travel times between locations
-- **Toll Rates** - Current toll pricing information
-- **Weather Information** - Road weather conditions and forecasts
-- **Highway Cameras** - Live traffic camera feeds
-- **Bridge Clearances** - Bridge height restrictions
-- **Mountain Pass Conditions** - Pass status and restrictions
-- **Commercial Vehicle Restrictions** - Truck and commercial vehicle limits
-- **Border Crossings** - Border wait times and conditions
-- **Weather Stations** - Weather station data and readings
+Here are some projects you could build with WS-Dottie:
 
-### WSF APIs
-- **Vessels** - Real-time vessel locations and status
-- **Terminals** - Terminal wait times and conditions
-- **Schedules** - Ferry schedules and sailing times
-- **Fares** - Fare information and pricing
+### For Hobbyists
+- **Ferry Tracker** - Real-time map showing vessel locations and wait times
+- **Traffic Camera Viewer** - Browse and view traffic cameras by region
+- **Weather Dashboard** - Road conditions and weather for your commute
+- **Toll Calculator** - Plan trips with real-time toll pricing
 
-## 🔧 Caching Configuration
+### For Developers
+- **Transportation Analytics** - Analyze traffic patterns and ferry usage
+- **Route Planning** - Integrate real-time data into navigation apps
+- **Emergency Response** - Monitor highway alerts and conditions
+- **Logistics Tools** - Commercial vehicle routing with restrictions
 
-WS-Dottie includes optimized caching strategies for different data types:
-
-```javascript
-import { tanstackQueryOptions } from 'ws-dottie';
-
-// Real-time data (5-second updates)
-const realtimeConfig = tanstackQueryOptions.REALTIME_UPDATES;
-
-// Minute updates (1-minute intervals)
-const minuteConfig = tanstackQueryOptions.MINUTE_UPDATES;
-
-// Hourly updates (1-hour intervals)
-const hourlyConfig = tanstackQueryOptions.HOURLY_UPDATES;
-
-// Daily updates (24-hour intervals)
-const dailyConfig = tanstackQueryOptions.DAILY_UPDATES;
-
-// Weekly updates (manual refresh only)
-const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
-```
+### For Enterprise
+- **Fleet Management** - Track vehicles with real-time traffic data
+- **Supply Chain Planning** - Optimize routes using traffic and weather data
+- **Public Safety** - Monitor transportation infrastructure
+- **Urban Planning** - Analyze transportation patterns and trends
 
 ## 🤝 Contributing
 
