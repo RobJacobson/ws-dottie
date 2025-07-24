@@ -176,7 +176,7 @@ describe("Terminal Wait Times E2E Tests", () => {
   describe("useTerminalWaitTimesByTerminalId", () => {
     it("should fetch terminal wait times by terminal via React Query", async () => {
       const { result } = renderHook(
-        () => useTerminalWaitTimesByTerminalId(TEST_TERMINAL_ID),
+        () => useTerminalWaitTimesByTerminalId({ terminalId: TEST_TERMINAL_ID }),
         {
           wrapper: ({ children }) => (
             <QueryClientProvider client={queryClient}>

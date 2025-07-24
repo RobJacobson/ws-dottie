@@ -202,7 +202,7 @@ describe("Terminal Bulletins E2E Tests", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
 
       const { result } = renderHook(
-        () => useTerminalBulletinsByTerminalId(terminalId),
+        () => useTerminalBulletinsByTerminalId({ terminalId }),
         { wrapper: createWrapper() }
       );
 
@@ -223,7 +223,7 @@ describe("Terminal Bulletins E2E Tests", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
 
       const { result } = renderHook(
-        () => useTerminalBulletinsByTerminalId(terminalId),
+        () => useTerminalBulletinsByTerminalId({ terminalId }),
         { wrapper: createWrapper() }
       );
 

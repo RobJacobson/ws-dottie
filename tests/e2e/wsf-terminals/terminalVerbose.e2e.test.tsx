@@ -179,7 +179,7 @@ describe("Terminal Verbose E2E Tests", () => {
   describe("useTerminalVerboseByTerminalId", () => {
     it("should fetch specific terminal verbose data via React Query", async () => {
       const { result } = renderHook(
-        () => useTerminalVerboseByTerminalId(TEST_TERMINAL_ID),
+        () => useTerminalVerboseByTerminalId({ terminalId: TEST_TERMINAL_ID }),
         {
           wrapper: ({ children }) => (
             <QueryClientProvider client={queryClient}>

@@ -181,7 +181,7 @@ describe("Terminal Locations E2E Tests", () => {
   describe("useTerminalLocationsByTerminalId", () => {
     it("should fetch specific terminal location via React Query", async () => {
       const { result } = renderHook(
-        () => useTerminalLocationsByTerminalId(TEST_TERMINAL_ID),
+        () => useTerminalLocationsByTerminalId({ terminalId: TEST_TERMINAL_ID }),
         {
           wrapper: ({ children }) => (
             <QueryClientProvider client={queryClient}>

@@ -198,7 +198,7 @@ describe("Terminal Transports E2E Tests", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
 
       const { result } = renderHook(
-        () => useTerminalTransportsByTerminalId(terminalId),
+        () => useTerminalTransportsByTerminalId({ terminalId }),
         { wrapper: createWrapper() }
       );
 
@@ -219,7 +219,7 @@ describe("Terminal Transports E2E Tests", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
 
       const { result } = renderHook(
-        () => useTerminalTransportsByTerminalId(terminalId),
+        () => useTerminalTransportsByTerminalId({ terminalId }),
         { wrapper: createWrapper() }
       );
 
