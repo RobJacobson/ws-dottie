@@ -83,7 +83,7 @@ describe("Terminal Basics E2E Tests", () => {
   describe("getTerminalBasicsByTerminalId", () => {
     it("should fetch specific terminal basics successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalBasicsByTerminalId(TEST_TERMINAL_ID)
+        getTerminalBasicsByTerminalId({ terminalId: TEST_TERMINAL_ID })
       );
 
       // Performance tracking
@@ -104,7 +104,7 @@ describe("Terminal Basics E2E Tests", () => {
     it("should handle invalid terminal ID gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getTerminalBasicsByTerminalId(INVALID_TERMINAL_ID)
+          getTerminalBasicsByTerminalId({ terminalId: INVALID_TERMINAL_ID })
         );
 
         trackPerformance(
@@ -125,7 +125,7 @@ describe("Terminal Basics E2E Tests", () => {
     it("should handle negative terminal ID", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getTerminalBasicsByTerminalId(-1)
+          getTerminalBasicsByTerminalId({ terminalId: -1 })
         );
 
         trackPerformance("getTerminalBasicsByTerminalId(-1)", duration);
@@ -143,7 +143,7 @@ describe("Terminal Basics E2E Tests", () => {
     it("should handle zero terminal ID", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getTerminalBasicsByTerminalId(0)
+          getTerminalBasicsByTerminalId({ terminalId: 0 })
         );
 
         trackPerformance("getTerminalBasicsByTerminalId(0)", duration);

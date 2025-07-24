@@ -88,7 +88,7 @@ describe("Terminal Bulletins API E2E Tests", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
       const startTime = Date.now();
 
-      const result = await getTerminalBulletinsByTerminalId(terminalId);
+      const result = await getTerminalBulletinsByTerminalId({ terminalId });
 
       const duration = Date.now() - startTime;
       console.log(
@@ -113,8 +113,9 @@ describe("Terminal Bulletins API E2E Tests", () => {
       const invalidTerminalId = 99999;
 
       try {
-        const result =
-          await getTerminalBulletinsByTerminalId(invalidTerminalId);
+        const result = await getTerminalBulletinsByTerminalId({
+          terminalId: invalidTerminalId,
+        });
         // Should return empty bulletins array for invalid terminal ID
         expect(Array.isArray(result.Bulletins)).toBe(true);
         expect(result.Bulletins.length).toBe(0);

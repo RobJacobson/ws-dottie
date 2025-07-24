@@ -5,11 +5,9 @@ import { beforeAll, describe, expect, it } from "vitest";
 import {
   getTerminalWaitTimes,
   getTerminalWaitTimesByTerminalId,
-} from "@/api/wsf-terminals";
-import {
   useTerminalWaitTimes,
   useTerminalWaitTimesByTerminalId,
-} from "@/react/wsf-terminals";
+} from "@/api/wsf-terminals";
 
 import {
   delay,
@@ -71,7 +69,7 @@ describe("Terminal Wait Times E2E Tests", () => {
   describe("getTerminalWaitTimesByTerminalId", () => {
     it("should fetch terminal wait times by terminal successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalWaitTimesByTerminalId(TEST_TERMINAL_ID)
+        getTerminalWaitTimesByTerminalId({ terminalId: TEST_TERMINAL_ID })
       );
 
       // Performance check
@@ -91,7 +89,7 @@ describe("Terminal Wait Times E2E Tests", () => {
 
     it("should handle invalid terminal ID gracefully", async () => {
       try {
-        await getTerminalWaitTimesByTerminalId(INVALID_TERMINAL_ID);
+        await getTerminalWaitTimesByTerminalId({ terminalId: INVALID_TERMINAL_ID });
         throw new Error("Should have thrown an error");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

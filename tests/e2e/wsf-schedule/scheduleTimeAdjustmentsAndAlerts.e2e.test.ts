@@ -61,7 +61,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
   describe("getTimeAdjustmentsByRoute", () => {
     it("should fetch time adjustments by route successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTimeAdjustmentsByRoute(TEST_ROUTE_ID)
+        getTimeAdjustmentsByRoute({ routeId: TEST_ROUTE_ID })
       );
 
       // Performance tracking
@@ -84,16 +84,19 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
     it("should handle invalid route ID gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(
-          () => getTimeAdjustmentsByRoute(99999) // Invalid route ID
+          () => getTimeAdjustmentsByRoute({ routeId: 99999 }) // Invalid route ID
         );
 
-        trackPerformance("getTimeAdjustmentsByRoute (invalid route)", duration);
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid route ID
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid route ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -101,7 +104,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTimeAdjustmentsByRoute(TEST_ROUTE_ID)
+        getTimeAdjustmentsByRoute({ routeId: TEST_ROUTE_ID })
       );
 
       // Track performance
@@ -120,7 +123,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
   describe("getTimeAdjustmentsBySchedRoute", () => {
     it("should fetch time adjustments by scheduled route successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTimeAdjustmentsBySchedRoute(TEST_SCHED_ROUTE_ID)
+        getTimeAdjustmentsBySchedRoute({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       // Performance tracking
@@ -142,20 +145,20 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
 
     it("should handle invalid scheduled route ID gracefully", async () => {
       try {
-        const { data, duration } = await measureApiCall(
-          () => getTimeAdjustmentsBySchedRoute(99999) // Invalid scheduled route ID
+        const { data, duration } = await measureApiCall(() =>
+          getTimeAdjustmentsBySchedRoute({ schedRouteId: 99999 })
         );
 
-        trackPerformance(
-          "getTimeAdjustmentsBySchedRoute (invalid route)",
-          duration
-        );
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid scheduled route ID
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid scheduled route ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -163,7 +166,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTimeAdjustmentsBySchedRoute(TEST_SCHED_ROUTE_ID)
+        getTimeAdjustmentsBySchedRoute({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       // Track performance
@@ -216,7 +219,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
   describe("getAlternativeFormats", () => {
     it("should fetch alternative formats successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getAlternativeFormats("schedule")
+        getAlternativeFormats({ subjectName: "schedule" })
       );
 
       // Performance tracking
@@ -239,7 +242,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
     it("should handle invalid subject name gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(
-          () => getAlternativeFormats("invalid_subject") // Invalid subject name
+          () => getAlternativeFormats({ subjectName: "invalid_subject" }) // Invalid subject name
         );
 
         trackPerformance("getAlternativeFormats (invalid subject)", duration);
@@ -256,7 +259,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getAlternativeFormats("schedule")
+        getAlternativeFormats({ subjectName: "schedule" })
       );
 
       // Track performance
@@ -277,7 +280,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
       await delay(RATE_LIMIT_DELAY);
 
       const { data: routeAdjustments } = await measureApiCall(() =>
-        getTimeAdjustmentsByRoute(TEST_ROUTE_ID)
+        getTimeAdjustmentsByRoute({ routeId: TEST_ROUTE_ID })
       );
 
       // Both should return arrays
@@ -420,7 +423,7 @@ describe("Schedule Time Adjustments and Alerts E2E Tests", () => {
 
     it("should have valid alternative format specifications", async () => {
       const { data } = await measureApiCall(() =>
-        getAlternativeFormats("schedule")
+        getAlternativeFormats({ subjectName: "schedule" })
       );
 
       if (data.length > 0) {

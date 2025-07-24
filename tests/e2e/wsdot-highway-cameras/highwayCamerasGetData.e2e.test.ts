@@ -284,7 +284,7 @@ describe("WSDOT Highway Cameras API - Data Retrieval", () => {
 
       for (const cameraId of testCameraIds) {
         const { data, duration } = await measureApiCall(() =>
-          getHighwayCamera(cameraId)
+          getHighwayCamera({ cameraID: cameraId })
         );
 
         expect(duration).toBeLessThan(2000);
@@ -297,11 +297,11 @@ describe("WSDOT Highway Cameras API - Data Retrieval", () => {
 
     it("should return consistent data for the same camera", async () => {
       const { data: camera1, duration: duration1 } = await measureApiCall(() =>
-        getHighwayCamera(TEST_CAMERA_ID)
+        getHighwayCamera({ cameraID: TEST_CAMERA_ID })
       );
 
       const { data: camera2, duration: duration2 } = await measureApiCall(() =>
-        getHighwayCamera(TEST_CAMERA_ID)
+        getHighwayCamera({ cameraID: TEST_CAMERA_ID })
       );
 
       expect(duration1).toBeLessThan(2000);

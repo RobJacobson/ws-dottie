@@ -112,7 +112,9 @@ describe("WSDOT Traffic Flow API - Data Retrieval", () => {
   describe("getTrafficFlowById", () => {
     it("should retrieve specific traffic flow by ID with valid data structure", async () => {
       try {
-        const trafficFlow = await getTrafficFlowById(TEST_FLOW_ID);
+        const trafficFlow = await getTrafficFlowById({
+          flowDataID: TEST_FLOW_ID,
+        });
 
         // Validate response is a single object
         expect(typeof trafficFlow).toBe("object");
@@ -176,7 +178,7 @@ describe("WSDOT Traffic Flow API - Data Retrieval", () => {
 
     it("should throw error for invalid flow ID", async () => {
       try {
-        await getTrafficFlowById(999999);
+        await getTrafficFlowById({ flowDataID: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

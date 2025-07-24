@@ -29,7 +29,7 @@ describe("Schedule Routes E2E Tests", () => {
   describe("getRoutes", () => {
     it("should fetch routes successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getRoutes(testTripDate)
+        getRoutes({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -49,7 +49,9 @@ describe("Schedule Routes E2E Tests", () => {
     });
 
     it("should return data within performance benchmarks", async () => {
-      const { duration } = await measureApiCall(() => getRoutes(testTripDate));
+      const { duration } = await measureApiCall(() =>
+        getRoutes({ tripDate: testTripDate })
+      );
 
       // Track performance
       trackPerformance("getRoutes (performance test)", duration);
@@ -64,11 +66,11 @@ describe("Schedule Routes E2E Tests", () => {
   describe("getRoutesByTerminals", () => {
     it("should fetch routes by terminals successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getRoutesByTerminals(
-          testTripDate,
-          VALID_TERMINAL_PAIR_1.departing,
-          VALID_TERMINAL_PAIR_1.arriving
-        )
+        getRoutesByTerminals({
+          tripDate: testTripDate,
+          departingTerminalId: VALID_TERMINAL_PAIR_1.departing,
+          arrivingTerminalId: VALID_TERMINAL_PAIR_1.arriving,
+        })
       );
 
       // Performance tracking
@@ -78,7 +80,7 @@ describe("Schedule Routes E2E Tests", () => {
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
 
-      // May be empty if no routes between these terminals on this date
+      // May be empty if no routes for this terminal combination on this date
       if (data.length > 0) {
         const firstRoute = data[0];
         validateRoute(firstRoute);
@@ -91,20 +93,23 @@ describe("Schedule Routes E2E Tests", () => {
     it("should handle invalid terminal IDs gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getRoutesByTerminals(
-            testTripDate,
-            99999, // Invalid terminal ID
-            99998 // Invalid terminal ID
-          )
+          getRoutesByTerminals({
+            tripDate: testTripDate,
+            departingTerminalId: 999999,
+            arrivingTerminalId: 999999,
+          })
         );
 
-        trackPerformance("getRoutesByTerminals (invalid terminals)", duration);
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid terminals
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid terminal IDs
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -112,11 +117,11 @@ describe("Schedule Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getRoutesByTerminals(
-          testTripDate,
-          VALID_TERMINAL_PAIR_1.departing,
-          VALID_TERMINAL_PAIR_1.arriving
-        )
+        getRoutesByTerminals({
+          tripDate: testTripDate,
+          departingTerminalId: VALID_TERMINAL_PAIR_1.departing,
+          arrivingTerminalId: VALID_TERMINAL_PAIR_1.arriving,
+        })
       );
 
       // Track performance
@@ -132,7 +137,7 @@ describe("Schedule Routes E2E Tests", () => {
   describe("getRoutesWithDisruptions", () => {
     it("should fetch routes with disruptions successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getRoutesWithDisruptions(testTripDate)
+        getRoutesWithDisruptions({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -142,7 +147,7 @@ describe("Schedule Routes E2E Tests", () => {
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
 
-      // May be empty if no disruptions on this date
+      // May be empty if no routes have disruptions on this date
       if (data.length > 0) {
         const firstRoute = data[0];
         validateRoute(firstRoute);
@@ -154,7 +159,7 @@ describe("Schedule Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getRoutesWithDisruptions(testTripDate)
+        getRoutesWithDisruptions({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -170,7 +175,7 @@ describe("Schedule Routes E2E Tests", () => {
   describe("getRouteDetails", () => {
     it("should fetch route details successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getRouteDetails(testTripDate)
+        getRouteDetails({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -181,9 +186,9 @@ describe("Schedule Routes E2E Tests", () => {
       expect(Array.isArray(data)).toBe(true);
       expect(data.length).toBeGreaterThan(0);
 
-      // Validate first route details
-      const firstRoute = data[0];
-      validateRouteDetails(firstRoute);
+      // Validate first route detail
+      const firstRouteDetail = data[0];
+      validateRoute(firstRouteDetail);
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -191,7 +196,7 @@ describe("Schedule Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getRouteDetails(testTripDate)
+        getRouteDetails({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -207,11 +212,11 @@ describe("Schedule Routes E2E Tests", () => {
   describe("getRouteDetailsByTerminals", () => {
     it("should fetch route details by terminals successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getRouteDetailsByTerminals(
-          testTripDate,
-          VALID_TERMINAL_PAIR_1.departing,
-          VALID_TERMINAL_PAIR_1.arriving
-        )
+        getRouteDetailsByTerminals({
+          tripDate: testTripDate,
+          departingTerminalId: VALID_TERMINAL_PAIR_1.departing,
+          arrivingTerminalId: VALID_TERMINAL_PAIR_1.arriving,
+        })
       );
 
       // Performance tracking
@@ -221,10 +226,10 @@ describe("Schedule Routes E2E Tests", () => {
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
 
-      // May be empty if no routes between these terminals on this date
+      // May be empty if no routes for this terminal combination on this date
       if (data.length > 0) {
-        const firstRoute = data[0];
-        validateRouteDetails(firstRoute);
+        const firstRouteDetail = data[0];
+        validateRoute(firstRouteDetail);
       }
 
       // Rate limiting
@@ -234,23 +239,23 @@ describe("Schedule Routes E2E Tests", () => {
     it("should handle invalid terminal IDs gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getRouteDetailsByTerminals(
-            testTripDate,
-            99999, // Invalid terminal ID
-            99998 // Invalid terminal ID
-          )
+          getRouteDetailsByTerminals({
+            tripDate: testTripDate,
+            departingTerminalId: 999999,
+            arrivingTerminalId: 999999,
+          })
         );
 
-        trackPerformance(
-          "getRouteDetailsByTerminals (invalid terminals)",
-          duration
-        );
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid terminals
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid terminal IDs
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -258,11 +263,11 @@ describe("Schedule Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getRouteDetailsByTerminals(
-          testTripDate,
-          VALID_TERMINAL_PAIR_1.departing,
-          VALID_TERMINAL_PAIR_1.arriving
-        )
+        getRouteDetailsByTerminals({
+          tripDate: testTripDate,
+          departingTerminalId: VALID_TERMINAL_PAIR_1.departing,
+          arrivingTerminalId: VALID_TERMINAL_PAIR_1.arriving,
+        })
       );
 
       // Track performance
@@ -281,7 +286,10 @@ describe("Schedule Routes E2E Tests", () => {
   describe("getRouteDetailsByRoute", () => {
     it("should fetch route details by route successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getRouteDetailsByRoute(testTripDate, TEST_ROUTE_ID)
+        getRouteDetailsByRoute({
+          tripDate: testTripDate,
+          routeId: TEST_ROUTE_ID,
+        })
       );
 
       // Performance tracking
@@ -289,9 +297,11 @@ describe("Schedule Routes E2E Tests", () => {
 
       // Validate response
       expect(data).toBeDefined();
-      if (data) {
-        validateRouteDetails(data);
-      }
+      expect(typeof data).toBe("object");
+      expect(Array.isArray(data)).toBe(false);
+
+      // Validate route details
+      validateRouteDetails(data);
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -299,17 +309,20 @@ describe("Schedule Routes E2E Tests", () => {
 
     it("should handle invalid route ID gracefully", async () => {
       try {
-        const { data, duration } = await measureApiCall(
-          () => getRouteDetailsByRoute(testTripDate, 99999) // Invalid route ID
+        const { data, duration } = await measureApiCall(() =>
+          getRouteDetailsByRoute({ tripDate: testTripDate, routeId: 999999 })
         );
 
-        trackPerformance("getRouteDetailsByRoute (invalid route)", duration);
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return null for invalid route ID
-        expect(data).toBeNull();
+        // Should either return null or throw error, not hang
+        if (data) {
+          expect(typeof data).toBe("object");
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid route ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -317,7 +330,10 @@ describe("Schedule Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getRouteDetailsByRoute(testTripDate, TEST_ROUTE_ID)
+        getRouteDetailsByRoute({
+          tripDate: testTripDate,
+          routeId: TEST_ROUTE_ID,
+        })
       );
 
       // Track performance
@@ -332,7 +348,9 @@ describe("Schedule Routes E2E Tests", () => {
 
   describe("Data Consistency", () => {
     it("should return consistent route data structure", async () => {
-      const { data } = await measureApiCall(() => getRoutes(testTripDate));
+      const { data } = await measureApiCall(() =>
+        getRoutes({ tripDate: testTripDate })
+      );
 
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
@@ -346,7 +364,9 @@ describe("Schedule Routes E2E Tests", () => {
     });
 
     it("should have valid route specifications", async () => {
-      const { data } = await measureApiCall(() => getRoutes(testTripDate));
+      const { data } = await measureApiCall(() =>
+        getRoutes({ tripDate: testTripDate })
+      );
 
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);

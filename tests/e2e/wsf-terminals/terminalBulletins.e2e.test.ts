@@ -7,8 +7,6 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   getTerminalBulletins,
   getTerminalBulletinsByTerminalId,
-} from "@/api/wsf-terminals";
-import {
   useTerminalBulletins,
   useTerminalBulletinsByTerminalId,
 } from "@/api/wsf-terminals";
@@ -119,7 +117,7 @@ describe("Terminal Bulletins E2E Tests", () => {
       const terminalId = VALID_TERMINAL_IDS[0];
       const startTime = Date.now();
 
-      const result = await getTerminalBulletinsByTerminalId(terminalId);
+      const result = await getTerminalBulletinsByTerminalId({ terminalId });
 
       const duration = Date.now() - startTime;
       console.log(
@@ -142,8 +140,9 @@ describe("Terminal Bulletins E2E Tests", () => {
       const invalidTerminalId = 99999;
 
       try {
-        const result =
-          await getTerminalBulletinsByTerminalId(invalidTerminalId);
+        const result = await getTerminalBulletinsByTerminalId({
+          terminalId: invalidTerminalId,
+        });
         // Should return undefined or throw for invalid terminal ID
         expect(result).toBeUndefined();
       } catch (error) {

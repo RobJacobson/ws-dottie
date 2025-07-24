@@ -13,7 +13,7 @@ describe("Bridge Clearances Basics E2E Tests", () => {
   describe("getBridgeClearances", () => {
     it("should fetch bridge clearances data successfully", async () => {
       const { data, duration } = await measureApiCall(
-        () => getBridgeClearances("005") // I-5 route
+        () => getBridgeClearances({ route: "005" }) // I-5 route
       );
 
       // Performance tracking
@@ -89,7 +89,7 @@ describe("Bridge Clearances Basics E2E Tests", () => {
 
     it("should handle invalid route parameter", async () => {
       try {
-        await getBridgeClearances("INVALID_ROUTE");
+        await getBridgeClearances({ route: "INVALID_ROUTE" });
         throw new Error("Expected error for invalid route");
       } catch (error) {
         expect(error).toBeDefined();

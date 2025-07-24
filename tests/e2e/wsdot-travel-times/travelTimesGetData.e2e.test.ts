@@ -140,7 +140,9 @@ describe("WSDOT Travel Times API - Data Retrieval", () => {
   describe("getTravelTimeById", () => {
     it("should retrieve specific travel time by ID with valid data structure", async () => {
       try {
-        const travelTime = await getTravelTimeById(TEST_TRAVEL_TIME_ID);
+        const travelTime = await getTravelTimeById({
+          travelTimeId: TEST_TRAVEL_TIME_ID,
+        });
 
         // Validate response is a single object
         expect(typeof travelTime).toBe("object");
@@ -232,7 +234,7 @@ describe("WSDOT Travel Times API - Data Retrieval", () => {
 
     it("should throw error for invalid travel time ID", async () => {
       try {
-        await getTravelTimeById(999999);
+        await getTravelTimeById({ travelTimeId: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

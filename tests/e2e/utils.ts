@@ -1,7 +1,7 @@
 import { expect } from "vitest";
 
 import type { BorderCrossingData } from "@/api/wsdot-border-crossings/types";
-import type { BridgeClearance } from "@/api/wsdot-bridge-clearances/types";
+import type { BridgeDataGIS } from "@/api/wsdot-bridge-clearances/types";
 import type {
   CommercialVehicleRestriction,
   RoadwayLocation,
@@ -274,11 +274,17 @@ export const validateTerminalWaitTimes = (data: TerminalWaitTimes) => {
   data.WaitTimes.forEach((waitTime) => {
     expect(waitTime).toHaveProperty("RouteID");
     expect(waitTime).toHaveProperty("RouteName");
-    expect(waitTime).toHaveProperty("WaitTimeIvrNotes");
+    expect(waitTime).toHaveProperty("WaitTimeIVRNotes");
     expect(waitTime).toHaveProperty("WaitTimeLastUpdated");
     expect(waitTime).toHaveProperty("WaitTimeNotes");
-    expect(typeof waitTime.RouteID).toBe("number");
-    expect(typeof waitTime.RouteName).toBe("string");
+    // RouteID can be null in the API response
+    if (waitTime.RouteID !== null) {
+      expect(typeof waitTime.RouteID).toBe("number");
+    }
+    // RouteName can be null in the API response
+    if (waitTime.RouteName !== null) {
+      expect(typeof waitTime.RouteName).toBe("string");
+    }
     expect(waitTime.WaitTimeLastUpdated).toBeInstanceOf(Date);
   });
 };
@@ -861,7 +867,7 @@ export const validateBorderCrossing = (data: BorderCrossingData) => {
   expect(data.BorderCrossingLocation).toBeDefined();
 };
 
-export const validateBridgeClearance = (data: BridgeClearance) => {
+export const validateBridgeClearance = (data: BridgeDataGIS) => {
   expect(data).toHaveProperty("BridgeNumber");
   expect(data).toHaveProperty("VerticalClearanceMaximumInches");
   expect(data).toHaveProperty("APILastUpdate");

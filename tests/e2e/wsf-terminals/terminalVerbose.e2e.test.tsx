@@ -5,11 +5,9 @@ import { beforeAll, describe, expect, it } from "vitest";
 import {
   getTerminalVerbose,
   getTerminalVerboseByTerminalId,
-} from "@/api/wsf-terminals";
-import {
   useTerminalVerbose,
   useTerminalVerboseByTerminalId,
-} from "@/react/wsf-terminals";
+} from "@/api/wsf-terminals";
 
 import {
   delay,
@@ -71,7 +69,7 @@ describe("Terminal Verbose E2E Tests", () => {
   describe("getTerminalVerboseByTerminalId", () => {
     it("should fetch specific terminal verbose data successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalVerboseByTerminalId(TEST_TERMINAL_ID)
+        getTerminalVerboseByTerminalId({ terminalId: TEST_TERMINAL_ID })
       );
 
       // Performance check
@@ -95,7 +93,7 @@ describe("Terminal Verbose E2E Tests", () => {
 
     it("should handle invalid terminal ID gracefully", async () => {
       try {
-        await getTerminalVerboseByTerminalId(INVALID_TERMINAL_ID);
+        await getTerminalVerboseByTerminalId({ terminalId: INVALID_TERMINAL_ID });
         throw new Error("Should have thrown an error");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

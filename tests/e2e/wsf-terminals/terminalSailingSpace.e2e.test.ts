@@ -31,7 +31,7 @@ describe("Terminal Sailing Space E2E Tests", () => {
 
   it("should fetch sailing space by terminalId", async () => {
     const { data, duration } = await measureApiCall(() =>
-      getTerminalSailingSpaceByTerminalId(TEST_TERMINAL_ID)
+      getTerminalSailingSpaceByTerminalId({ terminalId: TEST_TERMINAL_ID })
     );
     trackPerformance(
       `getTerminalSailingSpaceByTerminalId(${TEST_TERMINAL_ID})`,
@@ -47,7 +47,7 @@ describe("Terminal Sailing Space E2E Tests", () => {
   it("should handle invalid terminalId gracefully", async () => {
     try {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalSailingSpaceByTerminalId(INVALID_TERMINAL_ID)
+        getTerminalSailingSpaceByTerminalId({ terminalId: INVALID_TERMINAL_ID })
       );
       trackPerformance(
         `getTerminalSailingSpaceByTerminalId(${INVALID_TERMINAL_ID})`,
@@ -65,7 +65,7 @@ describe("Terminal Sailing Space E2E Tests", () => {
   it("should handle negative terminal ID", async () => {
     try {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalSailingSpaceByTerminalId(-1)
+        getTerminalSailingSpaceByTerminalId({ terminalId: -1 })
       );
       trackPerformance("getTerminalSailingSpaceByTerminalId(-1)", duration);
       // Should return undefined or throw for negative ID
@@ -80,7 +80,7 @@ describe("Terminal Sailing Space E2E Tests", () => {
   it("should handle zero terminal ID", async () => {
     try {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalSailingSpaceByTerminalId(0)
+        getTerminalSailingSpaceByTerminalId({ terminalId: 0 })
       );
       trackPerformance("getTerminalSailingSpaceByTerminalId(0)", duration);
       // Should return undefined or throw for zero ID

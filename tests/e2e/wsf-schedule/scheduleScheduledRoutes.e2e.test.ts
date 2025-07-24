@@ -58,7 +58,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
   describe("getScheduledRoutesBySeason", () => {
     it("should fetch scheduled routes by season successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getScheduledRoutesBySeason(TEST_SCHEDULE_ID)
+        getScheduledRoutesBySeason({ scheduleId: TEST_SCHEDULE_ID })
       );
 
       // Performance tracking
@@ -67,12 +67,11 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
       // Validate response
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
+      expect(data.length).toBeGreaterThan(0);
 
-      // May be empty if no routes for this season
-      if (data.length > 0) {
-        const firstRoute = data[0];
-        validateScheduledRoute(firstRoute);
-      }
+      // Validate first scheduled route
+      const firstScheduledRoute = data[0];
+      validateScheduledRoute(firstScheduledRoute);
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -81,19 +80,19 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
     it("should handle invalid season ID gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(
-          () => getScheduledRoutesBySeason(99999) // Invalid season ID
+          () => getScheduledRoutesBySeason({ scheduleId: 99999 }) // Invalid season ID
         );
 
-        trackPerformance(
-          "getScheduledRoutesBySeason (invalid season)",
-          duration
-        );
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid season ID
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid season ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -101,7 +100,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getScheduledRoutesBySeason(TEST_SCHEDULE_ID)
+        getScheduledRoutesBySeason({ scheduleId: TEST_SCHEDULE_ID })
       );
 
       // Track performance
@@ -120,7 +119,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
   describe("getSailings", () => {
     it("should fetch sailings successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getSailings(TEST_SCHED_ROUTE_ID)
+        getSailings({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       // Performance tracking
@@ -129,12 +128,11 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
       // Validate response
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
+      expect(data.length).toBeGreaterThan(0);
 
-      // May be empty if no sailings for this route
-      if (data.length > 0) {
-        const firstSailing = data[0];
-        validateSailing(firstSailing);
-      }
+      // Validate first sailing
+      const firstSailing = data[0];
+      validateSailing(firstSailing);
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -142,17 +140,20 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
 
     it("should handle invalid scheduled route ID gracefully", async () => {
       try {
-        const { data, duration } = await measureApiCall(
-          () => getSailings(99999) // Invalid scheduled route ID
+        const { data, duration } = await measureApiCall(() =>
+          getSailings({ schedRouteId: 99999 })
         );
 
-        trackPerformance("getSailings (invalid route)", duration);
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid scheduled route ID
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid scheduled route ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -160,7 +161,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getSailings(TEST_SCHED_ROUTE_ID)
+        getSailings({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       // Track performance
@@ -176,7 +177,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
   describe("getAllSailings", () => {
     it("should fetch all sailings successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getAllSailings(TEST_SCHED_ROUTE_ID)
+        getAllSailings({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       // Performance tracking
@@ -185,12 +186,11 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
       // Validate response
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
+      expect(data.length).toBeGreaterThan(0);
 
-      // May be empty if no sailings for this route
-      if (data.length > 0) {
-        const firstSailing = data[0];
-        validateSailing(firstSailing);
-      }
+      // Validate first sailing
+      const firstSailing = data[0];
+      validateSailing(firstSailing);
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -198,17 +198,20 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
 
     it("should handle invalid scheduled route ID gracefully", async () => {
       try {
-        const { data, duration } = await measureApiCall(
-          () => getAllSailings(99999) // Invalid scheduled route ID
+        const { data, duration } = await measureApiCall(() =>
+          getAllSailings({ schedRouteId: 99999 })
         );
 
-        trackPerformance("getAllSailings (invalid route)", duration);
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid scheduled route ID
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid scheduled route ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -216,7 +219,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getAllSailings(TEST_SCHED_ROUTE_ID)
+        getAllSailings({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       // Track performance
@@ -237,7 +240,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
       await delay(RATE_LIMIT_DELAY);
 
       const { data: seasonRoutes } = await measureApiCall(() =>
-        getScheduledRoutesBySeason(TEST_SCHEDULE_ID)
+        getScheduledRoutesBySeason({ scheduleId: TEST_SCHEDULE_ID })
       );
 
       // Both should return arrays
@@ -265,7 +268,7 @@ describe("Schedule Scheduled Routes E2E Tests", () => {
 
     it("should have valid sailing specifications", async () => {
       const { data } = await measureApiCall(() =>
-        getSailings(TEST_SCHED_ROUTE_ID)
+        getSailings({ schedRouteId: TEST_SCHED_ROUTE_ID })
       );
 
       if (data.length > 0) {

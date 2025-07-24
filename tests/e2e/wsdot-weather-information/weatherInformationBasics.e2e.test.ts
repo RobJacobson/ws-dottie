@@ -50,13 +50,15 @@ describe("WSDOT Weather Information API - Basic Functionality", () => {
 
   describe("getWeatherInformationByStationId", () => {
     it("should be callable and return a promise", async () => {
-      const result = getWeatherInformationByStationId(TEST_STATION_ID);
+      const result = getWeatherInformationByStationId({
+        stationId: TEST_STATION_ID,
+      });
       expect(result).toBeInstanceOf(Promise);
     });
 
     it("should handle API errors gracefully", async () => {
       try {
-        await getWeatherInformationByStationId(TEST_STATION_ID);
+        await getWeatherInformationByStationId({ stationId: TEST_STATION_ID });
         // If successful, that's fine
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -65,7 +67,7 @@ describe("WSDOT Weather Information API - Basic Functionality", () => {
 
     it("should throw error for invalid station ID", async () => {
       try {
-        await getWeatherInformationByStationId(999999);
+        await getWeatherInformationByStationId({ stationId: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -75,13 +77,17 @@ describe("WSDOT Weather Information API - Basic Functionality", () => {
 
   describe("getWeatherInformationForStations", () => {
     it("should be callable and return a promise", async () => {
-      const result = getWeatherInformationForStations(TEST_STATION_IDS);
+      const result = getWeatherInformationForStations({
+        stationIds: TEST_STATION_IDS,
+      });
       expect(result).toBeInstanceOf(Promise);
     });
 
     it("should handle API errors gracefully", async () => {
       try {
-        await getWeatherInformationForStations(TEST_STATION_IDS);
+        await getWeatherInformationForStations({
+          stationIds: TEST_STATION_IDS,
+        });
         // If successful, that's fine
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -90,7 +96,7 @@ describe("WSDOT Weather Information API - Basic Functionality", () => {
 
     it("should throw error for invalid station IDs", async () => {
       try {
-        await getWeatherInformationForStations("999999,999998");
+        await getWeatherInformationForStations({ stationIds: "999999,999998" });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -119,7 +125,7 @@ describe("WSDOT Weather Information API - Basic Functionality", () => {
       const startTime = Date.now();
 
       try {
-        await getWeatherInformationByStationId(TEST_STATION_ID);
+        await getWeatherInformationByStationId({ stationId: TEST_STATION_ID });
       } catch (error) {
         // API errors are expected and acceptable
         expect(error).toBeInstanceOf(WsdotApiError);
@@ -135,7 +141,9 @@ describe("WSDOT Weather Information API - Basic Functionality", () => {
       const startTime = Date.now();
 
       try {
-        await getWeatherInformationForStations(TEST_STATION_IDS);
+        await getWeatherInformationForStations({
+          stationIds: TEST_STATION_IDS,
+        });
       } catch (error) {
         // API errors are expected and acceptable
         expect(error).toBeInstanceOf(WsdotApiError);

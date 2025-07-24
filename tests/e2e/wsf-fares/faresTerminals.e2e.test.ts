@@ -35,7 +35,7 @@ describe("Fares Terminals E2E Tests", () => {
   describe("getFaresTerminals", () => {
     it("should fetch terminals for a valid trip date successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getFaresTerminals(testTripDate)
+        getFaresTerminals({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -59,7 +59,7 @@ describe("Fares Terminals E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getFaresTerminals(testTripDate)
+        getFaresTerminals({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -76,7 +76,7 @@ describe("Fares Terminals E2E Tests", () => {
       const validDateRange = await getFaresValidDateRange();
       const futureDate = new Date(validDateRange.DateThru);
       const { data, duration } = await measureApiCall(() =>
-        getFaresTerminals(futureDate)
+        getFaresTerminals({ tripDate: futureDate })
       );
 
       trackPerformance("getFaresTerminals (future date)", duration);
@@ -98,7 +98,10 @@ describe("Fares Terminals E2E Tests", () => {
       const testTerminalID = VALID_TERMINAL_PAIR_1.departing;
 
       const { data, duration } = await measureApiCall(() =>
-        getFaresTerminalMates(testTripDate, testTerminalID)
+        getFaresTerminalMates({
+          tripDate: testTripDate,
+          terminalID: testTerminalID,
+        })
       );
 
       // Performance tracking
@@ -124,7 +127,10 @@ describe("Fares Terminals E2E Tests", () => {
       const testTerminalID = VALID_TERMINAL_PAIR_1.departing;
 
       const { duration } = await measureApiCall(() =>
-        getFaresTerminalMates(testTripDate, testTerminalID)
+        getFaresTerminalMates({
+          tripDate: testTripDate,
+          terminalID: testTerminalID,
+        })
       );
 
       // Track performance
@@ -144,7 +150,11 @@ describe("Fares Terminals E2E Tests", () => {
       const arrivingTerminalID = VALID_TERMINAL_PAIR_1.arriving;
 
       const { data, duration } = await measureApiCall(() =>
-        getTerminalCombo(testTripDate, departingTerminalID, arrivingTerminalID)
+        getTerminalCombo({
+          tripDate: testTripDate,
+          departingTerminalID: departingTerminalID,
+          arrivingTerminalID: arrivingTerminalID,
+        })
       );
 
       // Performance tracking
@@ -170,7 +180,11 @@ describe("Fares Terminals E2E Tests", () => {
       const arrivingTerminalID = VALID_TERMINAL_PAIR_1.arriving;
 
       const { duration } = await measureApiCall(() =>
-        getTerminalCombo(testTripDate, departingTerminalID, arrivingTerminalID)
+        getTerminalCombo({
+          tripDate: testTripDate,
+          departingTerminalID: departingTerminalID,
+          arrivingTerminalID: arrivingTerminalID,
+        })
       );
 
       // Track performance
@@ -186,7 +200,7 @@ describe("Fares Terminals E2E Tests", () => {
   describe("getTerminalComboVerbose", () => {
     it("should fetch terminal combo verbose successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalComboVerbose(testTripDate)
+        getTerminalComboVerbose({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -207,7 +221,7 @@ describe("Fares Terminals E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTerminalComboVerbose(testTripDate)
+        getTerminalComboVerbose({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -224,7 +238,7 @@ describe("Fares Terminals E2E Tests", () => {
       const validDateRange = await getFaresValidDateRange();
       const futureDate = new Date(validDateRange.DateThru);
       const { data, duration } = await measureApiCall(() =>
-        getTerminalComboVerbose(futureDate)
+        getTerminalComboVerbose({ tripDate: futureDate })
       );
 
       trackPerformance("getTerminalComboVerbose (future date)", duration);
@@ -243,12 +257,12 @@ describe("Fares Terminals E2E Tests", () => {
   describe("Data Consistency", () => {
     it("should return consistent terminal data across calls", async () => {
       const { data: firstCall } = await measureApiCall(() =>
-        getFaresTerminals(testTripDate)
+        getFaresTerminals({ tripDate: testTripDate })
       );
       await delay(RATE_LIMIT_DELAY);
 
       const { data: secondCall } = await measureApiCall(() =>
-        getFaresTerminals(testTripDate)
+        getFaresTerminals({ tripDate: testTripDate })
       );
 
       // Both calls should return arrays
@@ -271,7 +285,7 @@ describe("Fares Terminals E2E Tests", () => {
 
     it("should have valid terminal IDs", async () => {
       const { data } = await measureApiCall(() =>
-        getFaresTerminals(testTripDate)
+        getFaresTerminals({ tripDate: testTripDate })
       );
 
       if (data && data.length > 0) {
@@ -287,7 +301,7 @@ describe("Fares Terminals E2E Tests", () => {
 
     it("should have unique terminal IDs", async () => {
       const { data } = await measureApiCall(() =>
-        getFaresTerminals(testTripDate)
+        getFaresTerminals({ tripDate: testTripDate })
       );
 
       if (data && data.length > 0) {
@@ -306,7 +320,10 @@ describe("Fares Terminals E2E Tests", () => {
     it("should handle invalid terminal IDs gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getFaresTerminalMates(testTripDate, INVALID_TERMINAL_ID)
+          getFaresTerminalMates({
+            tripDate: testTripDate,
+            terminalID: INVALID_TERMINAL_ID,
+          })
         );
 
         // Should complete within reasonable time
@@ -327,11 +344,11 @@ describe("Fares Terminals E2E Tests", () => {
     it("should handle invalid terminal combinations gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getTerminalCombo(
-            testTripDate,
-            INVALID_TERMINAL_ID,
-            INVALID_TERMINAL_ID
-          )
+          getTerminalCombo({
+            tripDate: testTripDate,
+            departingTerminalID: INVALID_TERMINAL_ID,
+            arrivingTerminalID: INVALID_TERMINAL_ID,
+          })
         );
 
         // Should complete within reasonable time

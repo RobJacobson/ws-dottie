@@ -13,7 +13,7 @@ describe("Bridge Clearances Get Data E2E Tests", () => {
   describe("Data Retrieval", () => {
     it("should return multiple bridge clearances for I-5", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getBridgeClearances("005")
+        getBridgeClearances({ route: "005" })
       );
 
       // Performance tracking
@@ -33,7 +33,7 @@ describe("Bridge Clearances Get Data E2E Tests", () => {
 
     it("should return valid bridge clearance data structure", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getBridgeClearances("005")
+        getBridgeClearances({ route: "005" })
       );
 
       // Performance tracking
@@ -100,7 +100,7 @@ describe("Bridge Clearances Get Data E2E Tests", () => {
 
     it("should handle empty route parameter", async () => {
       try {
-        await getBridgeClearances("");
+        await getBridgeClearances({ route: "" });
         throw new Error("Expected error for empty route");
       } catch (error) {
         expect(error).toBeDefined();
@@ -113,7 +113,7 @@ describe("Bridge Clearances Get Data E2E Tests", () => {
 
     it("should handle non-existent route", async () => {
       try {
-        await getBridgeClearances("999999");
+        await getBridgeClearances({ route: "999999" });
         // API may return empty array for non-existent routes
       } catch (error) {
         expect(error).toBeDefined();
@@ -134,7 +134,7 @@ describe("Bridge Clearances Get Data E2E Tests", () => {
 
     it("should handle API errors with proper error types", async () => {
       try {
-        await getBridgeClearances("INVALID_ROUTE");
+        await getBridgeClearances({ route: "INVALID_ROUTE" });
         // API may return empty array or throw error
       } catch (error) {
         if (error) {

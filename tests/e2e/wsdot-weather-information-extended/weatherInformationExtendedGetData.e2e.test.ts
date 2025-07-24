@@ -275,7 +275,7 @@ describe("WSDOT Weather Information Extended API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            error.constructor?.name || "Unknown"
+            (error as Error).constructor?.name || "Unknown"
           );
           console.log(
             "Error message:",
@@ -321,7 +321,7 @@ describe("WSDOT Weather Information Extended API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            error.constructor?.name || "Unknown"
+            (error as Error).constructor?.name || "Unknown"
           );
           console.log(
             "Error message:",
@@ -381,7 +381,7 @@ describe("WSDOT Weather Information Extended API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            error.constructor?.name || "Unknown"
+            (error as Error).constructor?.name || "Unknown"
           );
           console.log(
             "Error message:",
@@ -427,7 +427,7 @@ describe("WSDOT Weather Information Extended API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            error.constructor?.name || "Unknown"
+            (error as Error).constructor?.name || "Unknown"
           );
           console.log(
             "Error message:",
@@ -458,7 +458,7 @@ describe("WSDOT Weather Information Extended API - Data Retrieval", () => {
           // Log the actual error for debugging
           console.log(
             "Unexpected error type:",
-            error.constructor?.name || "Unknown"
+            (error as Error).constructor?.name || "Unknown"
           );
           console.log(
             "Error message:",

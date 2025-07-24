@@ -139,7 +139,9 @@ describe("WSDOT Mountain Pass Conditions API - Data Retrieval", () => {
   describe("getMountainPassConditionById", () => {
     it("should retrieve specific pass condition by ID with valid data structure", async () => {
       try {
-        const condition = await getMountainPassConditionById(TEST_PASS_ID);
+        const condition = await getMountainPassConditionById({
+          passConditionId: TEST_PASS_ID,
+        });
 
         // Validate response is a single object
         expect(typeof condition).toBe("object");
@@ -207,7 +209,7 @@ describe("WSDOT Mountain Pass Conditions API - Data Retrieval", () => {
 
     it("should throw error for invalid pass ID", async () => {
       try {
-        await getMountainPassConditionById(999999);
+        await getMountainPassConditionById({ passConditionId: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

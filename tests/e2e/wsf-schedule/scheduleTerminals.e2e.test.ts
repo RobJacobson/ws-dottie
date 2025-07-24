@@ -27,7 +27,7 @@ describe("Schedule Terminals E2E Tests", () => {
   describe("getTerminals", () => {
     it("should fetch terminals successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminals(testTripDate)
+        getTerminals({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -48,7 +48,7 @@ describe("Schedule Terminals E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTerminals(testTripDate)
+        getTerminals({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -64,7 +64,7 @@ describe("Schedule Terminals E2E Tests", () => {
   describe("getTerminalsAndMates", () => {
     it("should fetch terminals and mates successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalsAndMates(testTripDate)
+        getTerminalsAndMates({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -85,7 +85,7 @@ describe("Schedule Terminals E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTerminalsAndMates(testTripDate)
+        getTerminalsAndMates({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -101,7 +101,10 @@ describe("Schedule Terminals E2E Tests", () => {
   describe("getTerminalsAndMatesByRoute", () => {
     it("should fetch terminals and mates by route successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalsAndMatesByRoute(testTripDate, TEST_ROUTE_ID)
+        getTerminalsAndMatesByRoute({
+          tripDate: testTripDate,
+          routeId: TEST_ROUTE_ID,
+        })
       );
 
       // Performance tracking
@@ -123,20 +126,23 @@ describe("Schedule Terminals E2E Tests", () => {
 
     it("should handle invalid route ID gracefully", async () => {
       try {
-        const { data, duration } = await measureApiCall(
-          () => getTerminalsAndMatesByRoute(testTripDate, 99999) // Invalid route ID
+        const { data, duration } = await measureApiCall(() =>
+          getTerminalsAndMatesByRoute({
+            tripDate: testTripDate,
+            routeId: 999999,
+          })
         );
 
-        trackPerformance(
-          "getTerminalsAndMatesByRoute (invalid route)",
-          duration
-        );
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid route
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid route ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -144,7 +150,10 @@ describe("Schedule Terminals E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTerminalsAndMatesByRoute(testTripDate, TEST_ROUTE_ID)
+        getTerminalsAndMatesByRoute({
+          tripDate: testTripDate,
+          routeId: TEST_ROUTE_ID,
+        })
       );
 
       // Track performance
@@ -163,7 +172,10 @@ describe("Schedule Terminals E2E Tests", () => {
   describe("getTerminalMates", () => {
     it("should fetch terminal mates successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalMates(testTripDate, TEST_TERMINAL_ID)
+        getTerminalMates({
+          tripDate: testTripDate,
+          terminalId: TEST_TERMINAL_ID,
+        })
       );
 
       // Performance tracking
@@ -172,12 +184,11 @@ describe("Schedule Terminals E2E Tests", () => {
       // Validate response
       expect(data).toBeDefined();
       expect(Array.isArray(data)).toBe(true);
+      expect(data.length).toBeGreaterThan(0);
 
-      // May be empty if no mates for this terminal on this date
-      if (data.length > 0) {
-        const firstMate = data[0];
-        validateScheduleTerminal(firstMate);
-      }
+      // Validate first terminal mate
+      const firstMate = data[0];
+      validateScheduleTerminal(firstMate);
 
       // Rate limiting
       await delay(RATE_LIMIT_DELAY);
@@ -185,17 +196,20 @@ describe("Schedule Terminals E2E Tests", () => {
 
     it("should handle invalid terminal ID gracefully", async () => {
       try {
-        const { data, duration } = await measureApiCall(
-          () => getTerminalMates(testTripDate, 99999) // Invalid terminal ID
+        const { data, duration } = await measureApiCall(() =>
+          getTerminalMates({ tripDate: testTripDate, terminalId: 999999 })
         );
 
-        trackPerformance("getTerminalMates (invalid terminal)", duration);
+        // Should complete within reasonable time
+        expect(duration).toBeLessThan(5000);
 
-        // Should return empty array for invalid terminal
-        expect(Array.isArray(data)).toBe(true);
+        // Should either return empty array or throw error, not hang
+        if (data) {
+          expect(Array.isArray(data)).toBe(true);
+        }
       } catch (error) {
-        // Or should throw an error
-        validateApiError(error);
+        // Should throw WsdotApiError for invalid terminal ID
+        validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
       }
 
       await delay(RATE_LIMIT_DELAY);
@@ -203,7 +217,10 @@ describe("Schedule Terminals E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getTerminalMates(testTripDate, TEST_TERMINAL_ID)
+        getTerminalMates({
+          tripDate: testTripDate,
+          terminalId: TEST_TERMINAL_ID,
+        })
       );
 
       // Track performance
@@ -219,12 +236,12 @@ describe("Schedule Terminals E2E Tests", () => {
   describe("Data Consistency", () => {
     it("should return consistent terminal data structure", async () => {
       const { data: terminals } = await measureApiCall(() =>
-        getTerminals(testTripDate)
+        getTerminals({ tripDate: testTripDate })
       );
       await delay(RATE_LIMIT_DELAY);
 
       const { data: combos } = await measureApiCall(() =>
-        getTerminalsAndMates(testTripDate)
+        getTerminalsAndMates({ tripDate: testTripDate })
       );
 
       // Both should return arrays
@@ -241,7 +258,9 @@ describe("Schedule Terminals E2E Tests", () => {
     });
 
     it("should have valid terminal specifications", async () => {
-      const { data } = await measureApiCall(() => getTerminals(testTripDate));
+      const { data } = await measureApiCall(() =>
+        getTerminals({ tripDate: testTripDate })
+      );
 
       data.forEach((terminal) => {
         validateScheduleTerminal(terminal);

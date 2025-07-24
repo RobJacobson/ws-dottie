@@ -102,8 +102,9 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
   describe("getWeatherInformationByStationId", () => {
     it("should retrieve specific weather information by station ID with valid data structure", async () => {
       try {
-        const weatherInfo =
-          await getWeatherInformationByStationId(TEST_STATION_ID);
+        const weatherInfo = await getWeatherInformationByStationId({
+          stationId: TEST_STATION_ID,
+        });
 
         // Validate response is a single object
         expect(typeof weatherInfo).toBe("object");
@@ -152,7 +153,7 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
 
     it("should throw error for invalid station ID", async () => {
       try {
-        await getWeatherInformationByStationId(999999);
+        await getWeatherInformationByStationId({ stationId: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -163,8 +164,9 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
   describe("getWeatherInformationForStations", () => {
     it("should retrieve weather information for multiple stations with valid data structure", async () => {
       try {
-        const weatherInfo =
-          await getWeatherInformationForStations(TEST_STATION_IDS);
+        const weatherInfo = await getWeatherInformationForStations({
+          stationIds: TEST_STATION_IDS,
+        });
 
         // Validate response is an array
         expect(Array.isArray(weatherInfo)).toBe(true);
@@ -220,7 +222,7 @@ describe("WSDOT Weather Information API - Data Retrieval", () => {
 
     it("should throw error for invalid station IDs", async () => {
       try {
-        await getWeatherInformationForStations("999999,999998");
+        await getWeatherInformationForStations({ stationIds: "999999,999998" });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

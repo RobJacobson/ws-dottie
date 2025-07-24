@@ -41,12 +41,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
   describe("getFareLineItemsBasic", () => {
     it("should fetch basic fare line items for valid route successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false // one-way
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false, // one-way
+        })
       );
 
       // Performance tracking
@@ -70,12 +70,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
 
       // Track performance
@@ -89,12 +89,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should handle round trip parameter", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          true // round trip
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: true, // round trip
+        })
       );
 
       trackPerformance("getFareLineItemsBasic (round trip)", duration);
@@ -114,12 +114,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
       const validDateRange = await getFaresValidDateRange();
       const futureDate = new Date(validDateRange.DateThru);
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          futureDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: futureDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
 
       trackPerformance("getFareLineItemsBasic (future date)", duration);
@@ -138,12 +138,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
   describe("getFareLineItems", () => {
     it("should fetch all fare line items for valid route successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItems(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false // one-way
-        )
+        getFareLineItems({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false, // one-way
+        })
       );
 
       // Performance tracking
@@ -167,12 +167,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getFareLineItems(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItems({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
 
       // Track performance
@@ -186,12 +186,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should handle round trip parameter", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItems(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          true // round trip
-        )
+        getFareLineItems({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: true, // round trip
+        })
       );
 
       trackPerformance("getFareLineItems (round trip)", duration);
@@ -210,7 +210,7 @@ describe("Fares Fare Line Items E2E Tests", () => {
   describe("getFareLineItemsVerbose", () => {
     it("should fetch verbose fare line items successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItemsVerbose(testTripDate)
+        getFareLineItemsVerbose({ tripDate: testTripDate })
       );
 
       // Performance tracking
@@ -254,7 +254,7 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should return data within performance benchmarks", async () => {
       const { duration } = await measureApiCall(() =>
-        getFareLineItemsVerbose(testTripDate)
+        getFareLineItemsVerbose({ tripDate: testTripDate })
       );
 
       // Track performance
@@ -271,7 +271,7 @@ describe("Fares Fare Line Items E2E Tests", () => {
       const validDateRange = await getFaresValidDateRange();
       const futureDate = new Date(validDateRange.DateThru);
       const { data, duration } = await measureApiCall(() =>
-        getFareLineItemsVerbose(futureDate)
+        getFareLineItemsVerbose({ tripDate: futureDate })
       );
 
       trackPerformance("getFareLineItemsVerbose (future date)", duration);
@@ -297,12 +297,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
     it("should calculate fare totals for valid request successfully", async () => {
       // First get fare line items to find valid IDs
       const { data: fareLineItems } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
       await delay(RATE_LIMIT_DELAY);
 
@@ -319,14 +319,14 @@ describe("Fares Fare Line Items E2E Tests", () => {
       const quantities = [2, 1]; // 2 of first item, 1 of second item
 
       const { data, duration } = await measureApiCall(() =>
-        getFareTotals(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false,
-          fareLineItemIDs,
-          quantities
-        )
+        getFareTotals({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+          fareLineItemIDs: fareLineItemIDs,
+          quantities: quantities,
+        })
       );
 
       // Performance tracking
@@ -350,12 +350,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
     it("should return data within performance benchmarks", async () => {
       // Get fare line items first
       const { data: fareLineItems } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
       await delay(RATE_LIMIT_DELAY);
 
@@ -368,14 +368,14 @@ describe("Fares Fare Line Items E2E Tests", () => {
       const quantities = [1];
 
       const { duration } = await measureApiCall(() =>
-        getFareTotals(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false,
-          fareLineItemIDs,
-          quantities
-        )
+        getFareTotals({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+          fareLineItemIDs: fareLineItemIDs,
+          quantities: quantities,
+        })
       );
 
       // Track performance
@@ -390,12 +390,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
     it("should handle round trip calculations", async () => {
       // Get fare line items first
       const { data: fareLineItems } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          true // round trip
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: true, // round trip
+        })
       );
       await delay(RATE_LIMIT_DELAY);
 
@@ -408,14 +408,14 @@ describe("Fares Fare Line Items E2E Tests", () => {
       const quantities = [1];
 
       const { data, duration } = await measureApiCall(() =>
-        getFareTotals(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          true,
-          fareLineItemIDs,
-          quantities
-        )
+        getFareTotals({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: true,
+          fareLineItemIDs: fareLineItemIDs,
+          quantities: quantities,
+        })
       );
 
       trackPerformance("getFareTotals (round trip)", duration);
@@ -434,22 +434,22 @@ describe("Fares Fare Line Items E2E Tests", () => {
   describe("Data Consistency", () => {
     it("should return consistent fare line item data across calls", async () => {
       const { data: firstCall } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
       await delay(RATE_LIMIT_DELAY);
 
       const { data: secondCall } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
 
       // Both calls should return arrays
@@ -474,12 +474,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should have valid fare line item IDs", async () => {
       const { data } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
 
       if (data && data.length > 0) {
@@ -495,12 +495,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
     it("should have valid fare amounts", async () => {
       const { data } = await measureApiCall(() =>
-        getFareLineItemsBasic(
-          testTripDate,
-          testDepartingTerminalID,
-          testArrivingTerminalID,
-          false
-        )
+        getFareLineItemsBasic({
+          tripDate: testTripDate,
+          departingTerminalID: testDepartingTerminalID,
+          arrivingTerminalID: testArrivingTerminalID,
+          roundTrip: false,
+        })
       );
 
       if (data && data.length > 0) {
@@ -519,12 +519,12 @@ describe("Fares Fare Line Items E2E Tests", () => {
     it("should handle invalid terminal combinations gracefully", async () => {
       try {
         const { data, duration } = await measureApiCall(() =>
-          getFareLineItemsBasic(
-            testTripDate,
-            INVALID_TERMINAL_ID,
-            INVALID_TERMINAL_ID,
-            false
-          )
+          getFareLineItemsBasic({
+            tripDate: testTripDate,
+            departingTerminalID: INVALID_TERMINAL_ID,
+            arrivingTerminalID: INVALID_TERMINAL_ID,
+            roundTrip: false,
+          })
         );
 
         // Should complete within reasonable time
@@ -548,14 +548,14 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
       try {
         const { data, duration } = await measureApiCall(() =>
-          getFareTotals(
-            testTripDate,
-            testDepartingTerminalID,
-            testArrivingTerminalID,
-            false,
-            invalidFareLineItemIDs,
-            quantities
-          )
+          getFareTotals({
+            tripDate: testTripDate,
+            departingTerminalID: testDepartingTerminalID,
+            arrivingTerminalID: testArrivingTerminalID,
+            roundTrip: false,
+            fareLineItemIDs: invalidFareLineItemIDs,
+            quantities: quantities,
+          })
         );
 
         // Should complete within reasonable time
@@ -579,14 +579,14 @@ describe("Fares Fare Line Items E2E Tests", () => {
 
       try {
         const { data, duration } = await measureApiCall(() =>
-          getFareTotals(
-            testTripDate,
-            testDepartingTerminalID,
-            testArrivingTerminalID,
-            false,
-            fareLineItemIDs,
-            quantities
-          )
+          getFareTotals({
+            tripDate: testTripDate,
+            departingTerminalID: testDepartingTerminalID,
+            arrivingTerminalID: testArrivingTerminalID,
+            roundTrip: false,
+            fareLineItemIDs: fareLineItemIDs,
+            quantities: quantities,
+          })
         );
 
         // Should complete within reasonable time

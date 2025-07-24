@@ -8,11 +8,9 @@ import { beforeAll, describe, expect, it } from "vitest";
 import {
   getTerminalLocations,
   getTerminalLocationsByTerminalId,
-} from "@/api/wsf-terminals";
-import {
   useTerminalLocations,
   useTerminalLocationsByTerminalId,
-} from "@/react/wsf-terminals";
+} from "@/api/wsf-terminals";
 
 import {
   delay,
@@ -75,7 +73,7 @@ describe("Terminal Locations E2E Tests", () => {
   describe("getTerminalLocationsByTerminalId", () => {
     it("should fetch specific terminal location successfully", async () => {
       const { data, duration } = await measureApiCall(() =>
-        getTerminalLocationsByTerminalId(TEST_TERMINAL_ID)
+        getTerminalLocationsByTerminalId({ terminalId: TEST_TERMINAL_ID })
       );
 
       // Performance check
@@ -94,7 +92,7 @@ describe("Terminal Locations E2E Tests", () => {
 
     it("should handle invalid terminal ID gracefully", async () => {
       try {
-        await getTerminalLocationsByTerminalId(INVALID_TERMINAL_ID);
+        await getTerminalLocationsByTerminalId({ terminalId: INVALID_TERMINAL_ID });
         throw new Error("Should have thrown an error");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);

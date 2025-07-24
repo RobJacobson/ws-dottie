@@ -169,7 +169,7 @@ describe("Border Crossings Get Data E2E Tests", () => {
       // This test would require mocking the API call with invalid credentials
       // For now, we'll just verify the function exists and can be called
       expect(typeof getBorderCrossings).toBe("function");
-      expect(getBorderCrossings).toHaveLength(0);
+      expect(getBorderCrossings).toHaveLength(2);
 
       await delay(RATE_LIMIT_DELAY);
     });

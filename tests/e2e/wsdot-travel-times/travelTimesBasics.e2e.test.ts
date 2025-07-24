@@ -41,13 +41,13 @@ describe("WSDOT Travel Times API - Basic Functionality", () => {
 
   describe("getTravelTimeById", () => {
     it("should be callable and return a promise", async () => {
-      const result = getTravelTimeById(TEST_TRAVEL_TIME_ID);
+      const result = getTravelTimeById({ travelTimeId: TEST_TRAVEL_TIME_ID });
       expect(result).toBeInstanceOf(Promise);
     });
 
     it("should handle API errors gracefully", async () => {
       try {
-        await getTravelTimeById(TEST_TRAVEL_TIME_ID);
+        await getTravelTimeById({ travelTimeId: TEST_TRAVEL_TIME_ID });
         // If successful, that's fine
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -56,7 +56,7 @@ describe("WSDOT Travel Times API - Basic Functionality", () => {
 
     it("should throw error for invalid travel time ID", async () => {
       try {
-        await getTravelTimeById(999999);
+        await getTravelTimeById({ travelTimeId: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -85,7 +85,7 @@ describe("WSDOT Travel Times API - Basic Functionality", () => {
       const startTime = Date.now();
 
       try {
-        await getTravelTimeById(TEST_TRAVEL_TIME_ID);
+        await getTravelTimeById({ travelTimeId: TEST_TRAVEL_TIME_ID });
       } catch (error) {
         // API errors are expected and acceptable
         expect(error).toBeInstanceOf(WsdotApiError);

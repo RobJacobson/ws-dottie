@@ -44,7 +44,9 @@ describe("WSDOT Mountain Pass Conditions API - Basic Functionality", () => {
 
   describe("getMountainPassConditionById", () => {
     it("should be callable and return a promise", async () => {
-      const result = getMountainPassConditionById(TEST_PASS_ID);
+      const result = getMountainPassConditionById({
+        passConditionId: TEST_PASS_ID,
+      });
       expect(result).toBeInstanceOf(Promise);
       // Ensure the promise is handled to prevent unhandled rejection
       try {
@@ -57,7 +59,7 @@ describe("WSDOT Mountain Pass Conditions API - Basic Functionality", () => {
 
     it("should handle API errors gracefully", async () => {
       try {
-        await getMountainPassConditionById(TEST_PASS_ID);
+        await getMountainPassConditionById({ passConditionId: TEST_PASS_ID });
         // If successful, that's fine
       } catch (error) {
         // 404 is expected for this endpoint based on testing
@@ -67,7 +69,7 @@ describe("WSDOT Mountain Pass Conditions API - Basic Functionality", () => {
 
     it("should throw error for invalid pass ID", async () => {
       try {
-        await getMountainPassConditionById(999999);
+        await getMountainPassConditionById({ passConditionId: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -96,7 +98,7 @@ describe("WSDOT Mountain Pass Conditions API - Basic Functionality", () => {
       const startTime = Date.now();
 
       try {
-        await getMountainPassConditionById(TEST_PASS_ID);
+        await getMountainPassConditionById({ passConditionId: TEST_PASS_ID });
       } catch (error) {
         // API errors are expected and acceptable
         expect(error).toBeInstanceOf(WsdotApiError);

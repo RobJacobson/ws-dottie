@@ -41,13 +41,13 @@ describe("WSDOT Traffic Flow API - Basic Functionality", () => {
 
   describe("getTrafficFlowById", () => {
     it("should be callable and return a promise", async () => {
-      const result = getTrafficFlowById(TEST_FLOW_ID);
+      const result = getTrafficFlowById({ flowDataID: TEST_FLOW_ID });
       expect(result).toBeInstanceOf(Promise);
     });
 
     it("should handle API errors gracefully", async () => {
       try {
-        await getTrafficFlowById(TEST_FLOW_ID);
+        await getTrafficFlowById({ flowDataID: TEST_FLOW_ID });
         // If successful, that's fine
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -56,7 +56,7 @@ describe("WSDOT Traffic Flow API - Basic Functionality", () => {
 
     it("should throw error for invalid flow ID", async () => {
       try {
-        await getTrafficFlowById(999999);
+        await getTrafficFlowById({ flowDataID: 999999 });
         throw new Error("Expected error was not thrown");
       } catch (error) {
         validateApiError(error, ["API_ERROR", "NETWORK_ERROR"]);
@@ -85,7 +85,7 @@ describe("WSDOT Traffic Flow API - Basic Functionality", () => {
       const startTime = Date.now();
 
       try {
-        await getTrafficFlowById(TEST_FLOW_ID);
+        await getTrafficFlowById({ flowDataID: TEST_FLOW_ID });
       } catch (error) {
         // API errors are expected and acceptable
         expect(error).toBeInstanceOf(WsdotApiError);
