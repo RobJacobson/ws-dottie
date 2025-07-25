@@ -115,12 +115,16 @@ function TransportationDashboard() {
 
 ## 🔧 Features
 
-- **🔄 Smart Caching** - Built-in TanStack Query integration with optimized caching strategies
+- **🔄 Smart Caching** - Built-in TanStack Query integration with optimized caching strategies for different data types
 - **🌐 Cross-Platform** - Works in browsers (JSONP) and Node.js (fetch)
 - **📱 React Ready** - Hooks for all APIs with automatic cache management
-- **🎯 TypeScript** - Full type safety with comprehensive type definitions
+- **🎯 Strong Typing** - Comprehensive TypeScript types for all APIs, parameters, and responses
+- **📦 Parameter Objects** - Consistent single-parameter object pattern for all API calls
+- **⚙️ Flexible Configuration** - Environment variables or runtime configuration with type-safe interface
 - **🔍 Debugging** - Optional logging for troubleshooting API calls
 - **⚡ Tree-Shaking** - Only import what you need to keep bundles small
+- **🛡️ Error Handling** - Consistent error types with user-friendly messages
+- **📅 Date Conversion** - Automatic conversion of .NET date strings to JavaScript Date objects
 
 ## 📚 Documentation
 
