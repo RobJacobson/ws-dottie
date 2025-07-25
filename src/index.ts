@@ -8,7 +8,7 @@
 export {
   configManager,
   type WsdotConfig,
-} from "./shared/fetching/configManager";
+} from "./shared/config";
 export type { LoggingMode } from "./shared/logger";
 
 // ============================================================================
@@ -73,7 +73,7 @@ export type {
   TollRate,
   TollTripInfo,
   TollTripRate,
-  TollTripRatesResponse,
+  TollTripRates,
 } from "./api/wsdot-toll-rates/types";
 // WSDOT Traffic Flow Types
 export type {
