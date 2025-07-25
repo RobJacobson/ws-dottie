@@ -379,6 +379,44 @@ function CustomVesselTracker() {
 }
 ```
 
+### Advanced Caching Customization
+
+WS-Dottie's caching strategies can be customized using spread operators with TanStack Query options:
+
+```javascript
+import { useVesselLocations, tanstackQueryOptions } from 'ws-dottie';
+
+function AdvancedVesselTracker() {
+  // Custom 5-minute update strategy with different parameters
+  const { data: vessels } = useVesselLocations({
+    ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
+    refetchInterval: 5 * 60 * 1000, // 5 minutes
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: 3, // 3 retries
+    retryDelay: 5 * 1000, // 5 second delay between retries
+  });
+
+  return (
+    <div>
+      <h2>Vessels (5-minute updates)</h2>
+      {vessels?.map(vessel => (
+        <div key={vessel.VesselID}>
+          <strong>{vessel.VesselName}</strong>
+          <div>Last Update: {vessel.LastUpdate.toLocaleTimeString()}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+This approach allows you to:
+- **Extend base strategies** - Start with a predefined strategy and customize specific options
+- **Mix and match** - Combine different aspects of various strategies
+- **Fine-tune performance** - Optimize caching for your specific use case
+- **Maintain consistency** - Keep the base strategy's proven defaults while customizing only what you need
+
 ### Multiple API Integration
 
 ```javascript
