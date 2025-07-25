@@ -5,7 +5,7 @@
 import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
 import {
   getFareLineItems,

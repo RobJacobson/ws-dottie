@@ -389,7 +389,7 @@ export const useVesselVerboseById = (
  * @returns React Query result containing the cache flush date for vessels data
  */
 export const useCacheFlushDateVessels = (
-  options?: Parameters<typeof useQuery<VesselsCacheFlushDate | null>>[0]
+  options?: Parameters<typeof useQuery<VesselsCacheFlushDate>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "cacheFlushDate"],

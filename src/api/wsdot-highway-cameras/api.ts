@@ -6,9 +6,8 @@
  * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 
-import { configManager } from "@/shared/fetching/configManager";
-import { createApiClient } from "@/shared/fetching/createApiClient";
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { configManager } from "@/shared/config";
+import { createApiClient, createFetchFactory } from "@/shared/fetching/api";
 import type { LoggingMode } from "@/shared/logger";
 
 import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";

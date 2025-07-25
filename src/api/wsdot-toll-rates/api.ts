@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type { TollRate, TollTripInfo, TollTripRates } from "./types";
 

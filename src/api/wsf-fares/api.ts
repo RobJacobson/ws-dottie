@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   FareLineItem,
@@ -38,9 +38,8 @@ const createWsfFaresFetch = createFetchFactory(
  * console.log(flushDate); // "2024-01-15T10:30:00Z"
  * ```
  */
-export const getFaresCacheFlushDate = createWsfFaresFetch<Date | null>(
-  "/cacheflushdate"
-);
+export const getFaresCacheFlushDate =
+  createWsfFaresFetch<Date>("/cacheflushdate");
 
 /**
  * Get valid date range for fares data from WSF Fares API

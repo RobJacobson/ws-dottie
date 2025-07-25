@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type { MountainPassCondition } from "./types";
 

@@ -23,6 +23,7 @@ export type SubSurfaceMeasurement = {
 /**
  * Extended weather reading data from WSDOT Weather Information Extended API
  * Based on actual API response structure and WeatherReading class documentation
+ * Updated 2024-12-19: ReadingTime can be null in actual API responses despite documentation
  */
 export type WeatherReading = {
   StationId: string;
@@ -30,7 +31,7 @@ export type WeatherReading = {
   Latitude: number;
   Longitude: number;
   Elevation: number;
-  ReadingTime: Date; // Converted from ISO date string
+  ReadingTime: Date | null; // Converted from ISO date string, can be null
   AirTemperature: number | null;
   RelativeHumidty: number | null; // Note: API has typo "Humidty" instead of "Humidity"
   AverageWindSpeed: number | null;

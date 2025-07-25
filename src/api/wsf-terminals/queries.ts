@@ -532,11 +532,11 @@ export const useTerminalVerboseByTerminalId = (
  * @example
  * ```typescript
  * const { data: flushDate } = useCacheFlushDateTerminals();
- * console.log(flushDate); // "2024-01-15T10:30:00Z"
+ * console.log(flushDate); // "2024-01-15T10:00:00Z"
  * ```
  */
 export const useCacheFlushDateTerminals = (
-  options?: Parameters<typeof useQuery<Date | null>>[0]
+  options?: Parameters<typeof useQuery<Date>>[0]
 ) =>
   useQuery({
     queryKey: ["wsf", "terminals", "cache-flush-date"],

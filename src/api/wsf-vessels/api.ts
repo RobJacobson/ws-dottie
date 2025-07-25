@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/vessels/rest/help
 
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   VesselAccommodation,
@@ -259,7 +259,7 @@ export const getVesselVerboseById = createWsfVesselsFetch<
  * the freshness of the cached vessel data.
  *
  * @param logMode - Optional logging mode for debugging API calls
- * @returns Promise resolving to a VesselsCacheFlushDate object containing the cache flush date, or null if not available
+ * @returns Promise resolving to a VesselsCacheFlushDate object containing the cache flush date
  */
 export const getCacheFlushDateVessels =
-  createWsfVesselsFetch<VesselsCacheFlushDate | null>("/cacheflushdate");
+  createWsfVesselsFetch<VesselsCacheFlushDate>("/cacheflushdate");

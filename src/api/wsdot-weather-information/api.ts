@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type { WeatherInfo } from "./types";
 

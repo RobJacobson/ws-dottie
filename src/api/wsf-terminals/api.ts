@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { createFetchFactory } from "@/shared/fetching/createFetchFactory";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   TerminalBasics,
@@ -381,6 +381,5 @@ export const getTerminalVerboseByTerminalId = createWsfTerminalsFetch<
  * console.log(flushDate); // "2024-01-15T10:30:00Z"
  * ```
  */
-export const getCacheFlushDateTerminals = createWsfTerminalsFetch<Date | null>(
-  "/cacheflushdate"
-);
+export const getCacheFlushDateTerminals =
+  createWsfTerminalsFetch<Date>("/cacheflushdate");

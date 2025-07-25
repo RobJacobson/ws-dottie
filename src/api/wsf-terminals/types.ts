@@ -86,7 +86,7 @@ export type TerminalArrivalSpace = {
   ReservableSpaceCount: number | null;
   ReservableSpaceHexColor: string | null;
   DisplayDriveUpSpace: boolean;
-  DriveUpSpaceCount: number;
+  DriveUpSpaceCount: number; // Can be negative to indicate overflow
   DriveUpSpaceHexColor: string;
   MaxSpaceCount: number;
   ArrivalTerminalIDs: number[];
@@ -134,6 +134,7 @@ export type TerminalTransitLink = {
 /**
  * Terminal transports from WSF Terminals API
  * Based on /terminaltransports endpoint
+ * Updated 2024-12-19: AirportInfo, AirportShuttleInfo, and BikeInfo can be null in actual API responses
  */
 export type TerminalTransport = {
   TerminalID: number;
@@ -144,11 +145,11 @@ export type TerminalTransport = {
   SortSeq: number;
   ParkingInfo: string;
   ParkingShuttleInfo: string | null;
-  AirportInfo: string;
-  AirportShuttleInfo: string;
+  AirportInfo: string | null; // Can be null in actual API responses
+  AirportShuttleInfo: string | null; // Can be null in actual API responses
   MotorcycleInfo: string;
   TruckInfo: string;
-  BikeInfo: string;
+  BikeInfo: string | null; // Can be null in actual API responses
   TrainInfo: string | null;
   TaxiInfo: string | null;
   HovInfo: string | null;
@@ -184,6 +185,7 @@ export type TerminalWaitTimes = {
 /**
  * Terminal verbose from WSF Terminals API
  * Based on /terminalverbose endpoint
+ * Updated 2024-12-19: Several field type inconsistencies discovered during validation
  */
 export type TerminalVerbose = {
   TerminalID: number;
@@ -219,7 +221,7 @@ export type TerminalVerbose = {
   AirportInfo: string | null;
   AirportShuttleInfo: string | null;
   BikeInfo: string | null;
-  ChamberOfCommerce: string | null;
+  ChamberOfCommerce: TerminalTransitLink | null; // Actually an object, not a string
   ConstructionInfo: string | null;
   FacInfo: string | null;
   FareDiscountInfo: string | null;
@@ -229,8 +231,8 @@ export type TerminalVerbose = {
   MotorcycleInfo: string | null;
   ParkingInfo: string | null;
   ParkingShuttleInfo: string | null;
-  RealtimeShutoffFlag: boolean;
-  RealtimeShutoffMessage: string | null;
+  REALTIME_SHUTOFF_FLAG: boolean; // API returns this exact field name
+  REALTIME_SHUTOFF_MESSAGE: string | null; // API returns this exact field name
   RealtimeIntroMsg: string | null;
   ResourceStatus: string | null;
   SecurityInfo: string | null;
@@ -239,7 +241,7 @@ export type TerminalVerbose = {
   TrainInfo: string | null;
   TruckInfo: string | null;
   TypeDesc: string | null;
-  VisitorLinks: string | null;
+  VisitorLinks: any[] | null; // Actually an array, not a string
   Bulletins: TerminalBulletinItem[];
   TransitLinks: TerminalTransitLink[];
   WaitTimes: TerminalWaitTime[];

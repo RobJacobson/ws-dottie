@@ -32,6 +32,7 @@ export type VesselBasic = {
  * Vessel accommodations from WSF Vessels API
  * Based on /vesselaccommodations endpoint
  * Note: This matches the specification exactly with accommodation details
+ * Updated 2024-12-19: AdditionalInfo can be null in actual API responses
  */
 export type VesselAccommodation = {
   VesselID: number;
@@ -47,7 +48,7 @@ export type VesselAccommodation = {
   MainCabinRestroom: boolean;
   PublicWifi: boolean;
   ADAInfo: string;
-  AdditionalInfo: string;
+  AdditionalInfo: string | null; // Can be null if no additional information is available
 };
 
 /**
@@ -55,6 +56,7 @@ export type VesselAccommodation = {
  * Based on /vesselstats endpoint
  * Note: This endpoint returns detailed vessel specifications, not operational statistics
  * Based on official WSDOT API VesselStatResponse structure
+ * Updated 2024-12-19: Some fields can be null in actual API responses despite documentation
  */
 export type VesselStats = {
   VesselID: number;
@@ -63,7 +65,7 @@ export type VesselStats = {
   VesselAbbrev: string;
   Class: VesselClass;
   VesselNameDesc: string;
-  VesselHistory: string;
+  VesselHistory: string | null;
   Beam: string;
   CityBuilt: string;
   SpeedInKnots: number;
@@ -81,22 +83,23 @@ export type VesselStats = {
   Tonnage: number;
   Displacement: number;
   YearBuilt: number;
-  YearRebuilt?: number;
-  VesselDrawingImg: string;
+  YearRebuilt: number | null; // Can be null if vessel was never rebuilt
+  VesselDrawingImg: string | null;
   SolasCertified: boolean;
-  MaxPassengerCountForInternational: number;
+  MaxPassengerCountForInternational: number | null;
 };
 
 /**
  * Vessel history from WSF Vessels API
  * Based on /vesselhistory endpoint
  * Note: This matches the official WSF API specification exactly
+ * Updated 2024-12-19: Departing and Arriving can be null in actual API responses
  */
 export type VesselHistory = {
   VesselId: number;
   Vessel: string;
-  Departing: string;
-  Arriving: string;
+  Departing: string | null; // Can be null if departure information is not available
+  Arriving: string | null; // Can be null if arrival information is not available
   ScheduledDepart: Date | null;
   ActualDepart: Date | null;
   EstArrival: Date | null;
@@ -109,6 +112,7 @@ export type VesselHistory = {
  * Note: VesselWatch fields (VesselWatchShutID, VesselWatchShutMsg, VesselWatchShutFlag,
  * VesselWatchStatus, VesselWatchMsg) are automatically filtered out during JSON parsing
  * as they are unreliable and undocumented
+ * Updated 2024-12-19: Some fields can be null in actual API responses despite documentation
  */
 export type VesselLocation = {
   VesselID: number;
@@ -117,9 +121,9 @@ export type VesselLocation = {
   DepartingTerminalID: number;
   DepartingTerminalName: string;
   DepartingTerminalAbbrev: string;
-  ArrivingTerminalID: number;
-  ArrivingTerminalName: string;
-  ArrivingTerminalAbbrev: string;
+  ArrivingTerminalID: number | null; // Can be null if vessel is not en route to a terminal
+  ArrivingTerminalName: string | null; // Can be null if vessel is not en route to a terminal
+  ArrivingTerminalAbbrev: string | null; // Can be null if vessel is not en route to a terminal
   Latitude: number;
   Longitude: number;
   Speed: number;
@@ -129,9 +133,9 @@ export type VesselLocation = {
   LeftDock: Date | null; // Automatically converted from "/Date(timestamp-timezone)/" format
   Eta: Date | null; // Automatically converted from "/Date(timestamp-timezone)/" format
   EtaBasis: string | null;
-  ScheduledDeparture: Date; // Automatically converted from "/Date(timestamp-timezone)/" format
+  ScheduledDeparture: Date | null; // Can be null if no scheduled departure is available
   OpRouteAbbrev: string[];
-  VesselPositionNum: number;
+  VesselPositionNum: number | null; // Can be null if position number is not available
   SortSeq: number;
   ManagedBy: number;
   TimeStamp: Date; // Automatically converted from "/Date(timestamp-timezone)/" format
@@ -141,6 +145,7 @@ export type VesselLocation = {
  * Vessel verbose information from WSF Vessels API
  * Based on /vesselverbose endpoint
  * Note: Data preserves PascalCase keys from WSF API and matches specification exactly
+ * Updated 2024-12-19: VesselHistory and YearRebuilt can be null in actual API responses
  */
 export type VesselVerbose = {
   VesselID: number;
@@ -170,9 +175,9 @@ export type VesselVerbose = {
   PublicWifi: boolean;
   ADAInfo: string;
   VesselNameDesc: string;
-  VesselHistory: string;
+  VesselHistory: string | null; // Can be null if vessel history is not available
   CityBuilt: string;
-  YearRebuilt?: number;
+  YearRebuilt: number | null; // Can be null if vessel was never rebuilt
 };
 
 /**

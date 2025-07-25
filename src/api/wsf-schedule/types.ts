@@ -89,14 +89,14 @@ export type RouteDetails = {
   RouteAbbrev: string;
   Description: string;
   RegionID: number;
-  CrossingTime: number;
+  CrossingTime: number | null; // Can be null if crossing time is not available
   ReservationFlag: boolean;
   PassengerOnlyFlag: boolean;
   InternationalFlag: boolean;
   VesselWatchID: number;
   GeneralRouteNotes: string;
   SeasonalRouteNotes: string;
-  AdaNotes: string;
+  AdaNotes: string | null; // Can be null if ADA notes are not available
   Alerts: ServiceDisruption[]; // Using ServiceDisruption type for consistency
 };
 
@@ -123,7 +123,7 @@ export type TerminalTime = {
   TerminalID: number;
   TerminalDescription: string;
   TerminalBriefDescription: string;
-  Time: Date; // Automatically converted from .NET Date format
+  Time: Date | null; // Automatically converted from .NET Date format or null if no time available
   DepArrIndicator: number | null;
   IsNA: boolean;
   Annotations: Annotation[];
