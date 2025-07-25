@@ -2,6 +2,16 @@
 // Main entry point for the WSDOT API client library
 
 // ============================================================================
+// Configuration
+// ============================================================================
+
+export {
+  configManager,
+  type WsdotConfig,
+} from "./shared/config";
+export type { LoggingMode } from "./shared/logger";
+
+// ============================================================================
 // API Modules (Namespace Exports)
 // ============================================================================
 
@@ -63,7 +73,7 @@ export type {
   TollRate,
   TollTripInfo,
   TollTripRate,
-  TollTripRatesResponse,
+  TollTripRates,
 } from "./api/wsdot-toll-rates/types";
 // WSDOT Traffic Flow Types
 export type {

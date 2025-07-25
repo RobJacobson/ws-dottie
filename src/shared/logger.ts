@@ -1,5 +1,8 @@
 // Simple logger for the WSDOT API client library
 
+// Logging modes for individual API calls
+export type LoggingMode = "none" | "info" | "debug";
+
 const isDevelopment =
   typeof process !== "undefined" && process.env.NODE_ENV === "development";
 

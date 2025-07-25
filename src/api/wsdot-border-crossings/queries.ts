@@ -17,13 +17,19 @@ import type { BorderCrossingData } from "./types";
  *
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with border crossing data
+ *
+ * @example
+ * ```typescript
+ * const { data: crossings } = useBorderCrossings();
+ * console.log(crossings?.[0]?.CrossingName); // "Peace Arch"
+ * ```
  */
 export const useBorderCrossings = (
   options?: Parameters<typeof useQuery<BorderCrossingData[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],
-    queryFn: getBorderCrossings,
+    queryFn: () => getBorderCrossings(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

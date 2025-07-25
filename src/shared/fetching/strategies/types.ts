@@ -2,7 +2,10 @@
  * Strong type for isomorphic fetch functions
  * Both JSONP and native fetch return raw JSON strings for processing by parseWsdotJson
  */
-export type FetchStrategy = (url: string) => Promise<string>;
+export type FetchStrategy = (
+  url: string,
+  expectedType?: "array" | "object"
+) => Promise<string>;
 
 /**
  * JSONP callback types for web CORS workaround

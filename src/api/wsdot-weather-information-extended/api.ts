@@ -2,20 +2,23 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_traveler_a_p_i_1_1_controller_1_1_scanweb_controller.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/api/Scanweb
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type { WeatherReading } from "./types";
 
-// Module-scoped fetch function for weather information extended API
-const fetchWeatherInformationExtended = createApiClient(
+// Create a factory function for WSDOT Weather Information Extended API
+const createWsdotWeatherInformationExtendedFetch = createFetchFactory(
   "https://wsdot.wa.gov/traffic/api/api/Scanweb"
 );
 
 /**
- * Retrieves extended weather information from WSDOT API
- * This endpoint provides additional weather readings including surface and subsurface measurements
+ * Get extended weather information from WSDOT Weather Information Extended API
  *
- * @returns Promise resolving to an array of extended weather readings
+ * Retrieves additional weather readings including surface and subsurface
+ * measurements from WSDOT weather stations.
+ *
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing extended weather readings data
  * @throws {WsdotApiError} When the API request fails
  *
  * @example
@@ -24,5 +27,5 @@ const fetchWeatherInformationExtended = createApiClient(
  * console.log(weatherReadings[0].AirTemperature); // 14.7
  * ```
  */
-export const getWeatherInformationExtended = (): Promise<WeatherReading[]> =>
-  fetchWeatherInformationExtended<WeatherReading[]>("");
+export const getWeatherInformationExtended =
+  createWsdotWeatherInformationExtendedFetch<WeatherReading[]>("");

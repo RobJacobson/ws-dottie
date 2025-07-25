@@ -46,16 +46,26 @@ import type {
 /**
  * React Query hook for fetching all terminal basics
  *
+ * Retrieves the most basic/brief information pertaining to terminals.
+ * This includes location, contact details, and basic status information.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
+ *
  * @param options - Optional React Query options
  * @returns Query result containing array of TerminalBasics objects
+ *
+ * @example
+ * ```typescript
+ * const { data: terminals } = useTerminalBasics();
+ * console.log(terminals?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalBasics = (
   options?: Parameters<typeof useQuery<TerminalBasics[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "basics"],
-    queryFn: getTerminalBasics,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getTerminalBasics(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -63,19 +73,30 @@ export const useTerminalBasics = (
 /**
  * React Query hook for fetching specific terminal basics by terminal ID
  *
- * @param terminalId - The unique identifier for the terminal
+ * Retrieves the most basic/brief information for a specific terminal identified by terminal ID.
+ * This includes location, contact details, and basic status information for the specified terminal.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
+ *
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
  * @returns Query result containing TerminalBasics object for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: terminal } = useTerminalBasicsByTerminalId({ terminalId: 7 });
+ * console.log(terminal?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalBasicsByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalBasics>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "basics", "byTerminalId", terminalId],
-    queryFn: () => getTerminalBasicsByTerminalId(terminalId),
-    enabled: !!terminalId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryKey: ["wsf", "terminals", "basics", "byTerminalId", params.terminalId],
+    queryFn: () =>
+      getTerminalBasicsByTerminalId({ terminalId: params.terminalId }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -91,19 +112,22 @@ export const useTerminalBasicsByTerminalId = (
  * notices, and important updates. This endpoint provides current bulletin
  * information for all WSF terminals.
  *
- * This data is updated as new bulletins are posted and provides current
- * announcement information for all terminals.
- *
  * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalBulletin objects with bulletin information
+ *
+ * @example
+ * ```typescript
+ * const { data: bulletins } = useTerminalBulletins();
+ * console.log(bulletins?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalBulletins = (
   options?: Parameters<typeof useQuery<TerminalBulletin[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "bulletins"],
-    queryFn: getTerminalBulletins,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getTerminalBulletins(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -112,26 +136,36 @@ export const useTerminalBulletins = (
  * Hook for fetching terminal bulletins for a specific terminal from WSF Terminals API
  *
  * Retrieves bulletin information for a specific terminal identified by terminal ID,
- * including announcements, notices, and important updates. This endpoint filters
- * the resultset to a single terminal, providing current bulletin information
- * for that specific terminal.
+ * including announcements, notices, and important updates. This endpoint filters the
+ * resultset to a single terminal, providing current bulletin information for that
+ * specific terminal.
  *
- * This data is updated as new bulletins are posted and provides current
- * announcement information for the specified terminal.
- *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
- * @returns React Query result containing an array of TerminalBulletin objects with bulletin information for the specified terminal
+ * @returns React Query result containing a TerminalBulletin object with bulletin information for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: bulletin } = useTerminalBulletinsByTerminalId({ terminalId: 7 });
+ * console.log(bulletin?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalBulletinsByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalBulletin>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "bulletins", "byTerminalId", terminalId],
-    queryFn: () => getTerminalBulletinsByTerminalId(terminalId),
-    enabled: !!terminalId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryKey: [
+      "wsf",
+      "terminals",
+      "bulletins",
+      "byTerminalId",
+      params.terminalId,
+    ],
+    queryFn: () =>
+      getTerminalBulletinsByTerminalId({ terminalId: params.terminalId }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -147,19 +181,22 @@ export const useTerminalBulletinsByTerminalId = (
  * addresses, and geographic data. This endpoint provides the physical
  * location details for all WSF terminals.
  *
- * This data is updated infrequently and provides static terminal location
- * information that doesn't change often, such as terminal coordinates and addresses.
- *
  * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalLocation objects with terminal location information
+ *
+ * @example
+ * ```typescript
+ * const { data: locations } = useTerminalLocations();
+ * console.log(locations?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalLocations = (
   options?: Parameters<typeof useQuery<TerminalLocation[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "locations"],
-    queryFn: getTerminalLocations,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getTerminalLocations(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -172,22 +209,32 @@ export const useTerminalLocations = (
  * resultset to a single terminal, providing the physical location details for
  * that specific terminal.
  *
- * This data is updated infrequently and provides static terminal location
- * information that doesn't change often, such as terminal coordinates and addresses.
- *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalLocation objects with location information for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: location } = useTerminalLocationsByTerminalId({ terminalId: 7 });
+ * console.log(location?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalLocationsByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalLocation>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "locations", "byTerminalId", terminalId],
-    queryFn: () => getTerminalLocationsByTerminalId(terminalId),
-    enabled: !!terminalId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryKey: [
+      "wsf",
+      "terminals",
+      "locations",
+      "byTerminalId",
+      params.terminalId,
+    ],
+    queryFn: () =>
+      getTerminalLocationsByTerminalId({ terminalId: params.terminalId }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -204,18 +251,21 @@ export const useTerminalLocationsByTerminalId = (
  * information about space availability at all WSF terminals, including current
  * vehicle capacity, estimated wait times, and space status for upcoming sailings.
  *
- * This data is updated frequently and provides dynamic terminal capacity information
- * that changes throughout the day based on current demand and vessel assignments.
- *
  * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalSailingSpace objects with real-time space availability information
+ *
+ * @example
+ * ```typescript
+ * const { data: sailingSpaces } = useTerminalSailingSpace();
+ * console.log(sailingSpaces?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalSailingSpace = (
   options?: Parameters<typeof useQuery<TerminalSailingSpace[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "sailing-space"],
-    queryFn: getTerminalSailingSpace,
+    queryFn: () => getTerminalSailingSpace(),
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
@@ -226,24 +276,34 @@ export const useTerminalSailingSpace = (
  *
  * Retrieves current space availability information for a specific terminal identified by terminal ID,
  * including vehicle capacity, wait times, and space status. This endpoint filters the resultset
- * to a single terminal, providing real-time information about space availability, current
- * vehicle capacity, estimated wait times, and space status for upcoming sailings.
+ * to a single terminal, providing real-time information about space availability at that specific
+ * terminal, including current vehicle capacity, estimated wait times, and space status for upcoming sailings.
  *
- * This data is updated frequently and provides dynamic terminal capacity information
- * that changes throughout the day based on current demand and vessel assignments.
- *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
- * @returns React Query result containing an array of TerminalSailingSpace objects with real-time space availability information for the specified terminal
+ * @returns React Query result containing a TerminalSailingSpace object with real-time space availability information for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: sailingSpace } = useTerminalSailingSpaceByTerminalId({ terminalId: 7 });
+ * console.log(sailingSpace?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalSailingSpaceByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalSailingSpace>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "sailingSpace", "byTerminalId", terminalId],
-    queryFn: () => getTerminalSailingSpaceByTerminalId(terminalId),
-    enabled: !!terminalId,
+    queryKey: [
+      "wsf",
+      "terminals",
+      "sailingSpace",
+      "byTerminalId",
+      params.terminalId,
+    ],
+    queryFn: () =>
+      getTerminalSailingSpaceByTerminalId({ terminalId: params.terminalId }),
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
@@ -256,23 +316,26 @@ export const useTerminalSailingSpaceByTerminalId = (
 /**
  * Hook for fetching terminal transports from WSF Terminals API
  *
- * Retrieves transportation information for all terminals including transit options,
- * shuttle services, and transportation connections. This endpoint provides
- * comprehensive transportation information for all WSF terminals.
- *
- * This data is updated infrequently and provides static transportation
- * information that doesn't change often, such as transit connections and shuttle services.
+ * Retrieves transport information for all terminals including connections,
+ * routes, and transportation options. This endpoint provides detailed
+ * information about transportation connections for all WSF terminals.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing an array of TerminalTransport objects with transportation information
+ * @returns React Query result containing an array of TerminalTransport objects with transport information
+ *
+ * @example
+ * ```typescript
+ * const { data: transports } = useTerminalTransports();
+ * console.log(transports?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalTransports = (
   options?: Parameters<typeof useQuery<TerminalTransport[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "transports"],
-    queryFn: getTerminalTransports,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getTerminalTransports(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -280,27 +343,37 @@ export const useTerminalTransports = (
 /**
  * Hook for fetching terminal transports for a specific terminal from WSF Terminals API
  *
- * Retrieves transportation information for a specific terminal identified by terminal ID,
- * including transit options, shuttle services, and transportation connections.
- * This endpoint filters the resultset to a single terminal, providing
- * comprehensive transportation information for that specific terminal.
+ * Retrieves transport information for a specific terminal identified by terminal ID,
+ * including connections, routes, and transportation options. This endpoint filters the
+ * resultset to a single terminal, providing detailed information about transportation
+ * connections for that specific terminal.
  *
- * This data is updated infrequently and provides static transportation
- * information that doesn't change often, such as transit connections and shuttle services.
- *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
- * @returns React Query result containing an array of TerminalTransport objects with transportation information for the specified terminal
+ * @returns React Query result containing a TerminalTransport object with transport information for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: transport } = useTerminalTransportsByTerminalId({ terminalId: 7 });
+ * console.log(transport?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalTransportsByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalTransport>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "transports", "byTerminalId", terminalId],
-    queryFn: () => getTerminalTransportsByTerminalId(terminalId),
-    enabled: !!terminalId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryKey: [
+      "wsf",
+      "terminals",
+      "transports",
+      "byTerminalId",
+      params.terminalId,
+    ],
+    queryFn: () =>
+      getTerminalTransportsByTerminalId({ terminalId: params.terminalId }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -312,47 +385,64 @@ export const useTerminalTransportsByTerminalId = (
 /**
  * Hook for fetching terminal wait times from WSF Terminals API
  *
- * Retrieves current wait time information for all terminals including
- * estimated wait times, queue lengths, and congestion data. This endpoint
- * provides real-time information about terminal congestion and wait times
- * for all WSF terminals.
+ * Retrieves wait time information for all terminals including current wait times,
+ * estimated wait times, and wait time trends. This endpoint provides real-time
+ * wait time data for all WSF terminals.
  *
  * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalWaitTimes objects with wait time information
+ *
+ * @example
+ * ```typescript
+ * const { data: waitTimes } = useTerminalWaitTimes();
+ * console.log(waitTimes?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalWaitTimes = (
   options?: Parameters<typeof useQuery<TerminalWaitTimes[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "wait-times"],
-    queryFn: getTerminalWaitTimes,
-    ...tanstackQueryOptions.REALTIME_UPDATES,
+    queryFn: () => getTerminalWaitTimes(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
 
 /**
- * Hook for fetching terminal wait times by terminal from WSF Terminals API
+ * Hook for fetching terminal wait times for a specific terminal from WSF Terminals API
  *
- * Retrieves current wait time information for a specific terminal identified
- * by terminal ID, including estimated wait times, queue lengths, and congestion
- * data. This endpoint filters the resultset to a single terminal, providing
- * real-time information about terminal congestion and wait times for that
+ * Retrieves wait time information for a specific terminal identified by terminal ID,
+ * including current wait times, estimated wait times, and wait time trends. This endpoint
+ * filters the resultset to a single terminal, providing real-time wait time data for that
  * specific terminal.
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
  * @returns React Query result containing a TerminalWaitTimes object with wait time information for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: waitTime } = useTerminalWaitTimesByTerminalId({ terminalId: 7 });
+ * console.log(waitTime?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalWaitTimesByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalWaitTimes>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "wait-times", "byTerminalId", terminalId],
-    queryFn: () => getTerminalWaitTimesByTerminalId(terminalId),
-    enabled: !!terminalId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryKey: [
+      "wsf",
+      "terminals",
+      "wait-times",
+      "byTerminalId",
+      params.terminalId,
+    ],
+    queryFn: () =>
+      getTerminalWaitTimesByTerminalId({ terminalId: params.terminalId }),
+    ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -364,24 +454,26 @@ export const useTerminalWaitTimesByTerminalId = (
 /**
  * Hook for fetching terminal verbose data from WSF Terminals API
  *
- * Retrieves comprehensive terminal information including location, facilities,
- * parking information, and operational status. This endpoint provides detailed
- * information about all terminals in the WSF system, including terminal
- * coordinates, available facilities, parking capacity, and current operational status.
- *
- * This data is updated infrequently and provides static terminal characteristics
- * that don't change often, such as terminal specifications and facilities.
+ * Retrieves comprehensive terminal information including all available data
+ * for all terminals. This endpoint provides the most detailed information
+ * available for all WSF terminals in a single call.
  *
  * @param options - Optional React Query options
  * @returns React Query result containing an array of TerminalVerbose objects with comprehensive terminal information
+ *
+ * @example
+ * ```typescript
+ * const { data: terminals } = useTerminalVerbose();
+ * console.log(terminals?.[0]?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalVerbose = (
   options?: Parameters<typeof useQuery<TerminalVerbose[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "verbose"],
-    queryFn: getTerminalVerbose,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getTerminalVerbose(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -390,26 +482,35 @@ export const useTerminalVerbose = (
  * Hook for fetching terminal verbose data for a specific terminal from WSF Terminals API
  *
  * Retrieves comprehensive terminal information for a specific terminal identified by terminal ID,
- * including location, facilities, parking information, and operational status. This endpoint
- * provides detailed information about the specified terminal, including terminal coordinates,
- * available facilities, parking capacity, and current operational status.
+ * including all available data. This endpoint filters the resultset to a single terminal,
+ * providing the most detailed information available for that specific terminal.
  *
- * This data is updated infrequently and provides static terminal characteristics
- * that don't change often, such as terminal specifications and facilities.
- *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
- * @returns React Query result containing a TerminalVerbose object with comprehensive information for the specified terminal
+ * @returns React Query result containing a TerminalVerbose object with comprehensive terminal information for the specified terminal
+ *
+ * @example
+ * ```typescript
+ * const { data: terminal } = useTerminalVerboseByTerminalId({ terminalId: 7 });
+ * console.log(terminal?.TerminalName); // "Anacortes"
+ * ```
  */
 export const useTerminalVerboseByTerminalId = (
-  terminalId: number,
+  params: { terminalId: number },
   options?: Parameters<typeof useQuery<TerminalVerbose>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "verbose", "byTerminalId", terminalId],
-    queryFn: () => getTerminalVerboseByTerminalId(terminalId),
-    enabled: !!terminalId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryKey: [
+      "wsf",
+      "terminals",
+      "verbose",
+      "byTerminalId",
+      params.terminalId,
+    ],
+    queryFn: () =>
+      getTerminalVerboseByTerminalId({ terminalId: params.terminalId }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -419,21 +520,27 @@ export const useTerminalVerboseByTerminalId = (
 // ============================================================================
 
 /**
- * Hook for fetching terminals cache flush date from WSF Terminals API
+ * Hook for fetching cache flush date from WSF Terminals API
  *
- * Retrieves the cache flush date for terminals data, which indicates when
- * the data was last updated. This endpoint provides information about data
- * freshness and can be used to determine when to refresh cached terminal data.
+ * Retrieves the cache flush date for terminals data. This endpoint provides
+ * information about when the terminals data was last updated, which can be
+ * used to coordinate caching strategies.
  *
  * @param options - Optional React Query options
- * @returns React Query result containing cache flush date information
+ * @returns React Query result containing cache flush date
+ *
+ * @example
+ * ```typescript
+ * const { data: flushDate } = useCacheFlushDateTerminals();
+ * console.log(flushDate); // "2024-01-15T10:00:00Z"
+ * ```
  */
 export const useCacheFlushDateTerminals = (
-  options?: Parameters<typeof useQuery<Date | null>>[0]
+  options?: Parameters<typeof useQuery<Date>>[0]
 ) =>
   useQuery({
     queryKey: ["wsf", "terminals", "cache-flush-date"],
-    queryFn: getCacheFlushDateTerminals,
-    ...tanstackQueryOptions.MINUTE_UPDATES,
+    queryFn: () => getCacheFlushDateTerminals(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });

@@ -19,5 +19,5 @@ export type {
   TollRate,
   TollTripInfo,
   TollTripRate,
-  TollTripRatesResponse,
+  TollTripRates,
 } from "./types";

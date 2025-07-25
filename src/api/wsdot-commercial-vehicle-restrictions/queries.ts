@@ -19,11 +19,16 @@ import type {
  * Hook for getting commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
  *
  * Returns commercial vehicle restriction data including weight limits, bridge restrictions,
- * and other commercial vehicle limitations across Washington State highways. Uses infrequent
- * update options since restriction data is relatively static.
+ * and other commercial vehicle limitations across Washington State highways.
  *
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with commercial vehicle restriction data
+ *
+ * @example
+ * ```typescript
+ * const { data: restrictions } = useCommercialVehicleRestrictions();
+ * console.log(restrictions?.[0]?.RouteName); // "I-5"
+ * ```
  */
 export const useCommercialVehicleRestrictions = (
   options?: Parameters<typeof useQuery<CommercialVehicleRestriction[]>>[0]
@@ -34,8 +39,8 @@ export const useCommercialVehicleRestrictions = (
       "commercial-vehicle-restrictions",
       "getCommercialVehicleRestrictions",
     ],
-    queryFn: getCommercialVehicleRestrictions,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getCommercialVehicleRestrictions(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -45,11 +50,16 @@ export const useCommercialVehicleRestrictions = (
  *
  * Returns commercial vehicle restriction data including weight limits, bridge restrictions,
  * and other commercial vehicle limitations across Washington State highways. This endpoint
- * includes unique identifiers for each restriction. Uses infrequent update options since
- * restriction data is relatively static.
+ * includes unique identifiers for each restriction.
  *
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with commercial vehicle restriction data with unique IDs
+ *
+ * @example
+ * ```typescript
+ * const { data: restrictions } = useCommercialVehicleRestrictionsWithId();
+ * console.log(restrictions?.[0]?.RestrictionID); // 12345
+ * ```
  */
 export const useCommercialVehicleRestrictionsWithId = (
   options?: UseQueryOptions<CommercialVehicleRestrictionWithId[]>
@@ -60,8 +70,8 @@ export const useCommercialVehicleRestrictionsWithId = (
       "commercial-vehicle-restrictions",
       "getCommercialVehicleRestrictionsWithId",
     ],
-    queryFn: getCommercialVehicleRestrictionsWithId,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getCommercialVehicleRestrictionsWithId(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

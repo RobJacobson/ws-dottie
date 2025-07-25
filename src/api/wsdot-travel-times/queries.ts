@@ -12,35 +12,17 @@ import type { TravelTimeRoute } from "./types";
 /**
  * React Query hook for retrieving all travel times
  *
+ * Retrieves current travel time data for all monitored routes.
+ *
+ * @param options - Optional query options
  * @returns React Query result containing travel times data
- *
- * @example
- * ```typescript
- * const { data: travelTimes, isLoading, error } = useTravelTimes();
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     {travelTimes?.map(route => (
- *       <div key={route.TravelTimeID}>
- *         <h3>{route.Name}</h3>
- *         <p>Current Time: {route.CurrentTime} minutes</p>
- *         <p>Average Time: {route.AverageTime} minutes</p>
- *         <p>Distance: {route.Distance} miles</p>
- *       </div>
- *     ))}
- *   </div>
- * );
- * ```
  */
 export const useTravelTimes = (
   options?: Parameters<typeof useQuery<TravelTimeRoute[]>>[0]
 ) => {
   return useQuery({
     queryKey: ["wsdot", "travel-times", "getTravelTimes"],
-    queryFn: getTravelTimes,
+    queryFn: () => getTravelTimes(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
@@ -49,37 +31,27 @@ export const useTravelTimes = (
 /**
  * React Query hook for retrieving a specific travel time by ID
  *
- * @param travelTimeId - The ID of the specific travel time route
+ * Returns detailed information about a specific travel time route
+ * identified by its ID.
+ *
+ * @param params - Object containing travelTimeId
+ * @param params.travelTimeId - The ID of the specific travel time route
+ * @param options - Optional query options
  * @returns React Query result containing travel time data
- *
- * @example
- * ```typescript
- * const { data: travelTime, isLoading, error } = useTravelTimeById(2);
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     <h2>{travelTime?.Name}</h2>
- *     <p>Current Time: {travelTime?.CurrentTime} minutes</p>
- *     <p>Average Time: {travelTime?.AverageTime} minutes</p>
- *     <p>Distance: {travelTime?.Distance} miles</p>
- *     <p>From: {travelTime?.StartPoint.Description}</p>
- *     <p>To: {travelTime?.EndPoint.Description}</p>
- *   </div>
- * );
- * ```
  */
 export const useTravelTimeById = (
-  travelTimeId: number,
+  params: { travelTimeId: number },
   options?: Parameters<typeof useQuery<TravelTimeRoute>>[0]
 ) => {
   return useQuery({
-    queryKey: ["wsdot", "travel-times", "getTravelTimeById", travelTimeId],
-    queryFn: () => getTravelTimeById(travelTimeId),
+    queryKey: [
+      "wsdot",
+      "travel-times",
+      "getTravelTimeById",
+      params.travelTimeId,
+    ],
+    queryFn: () => getTravelTimeById({ travelTimeId: params.travelTimeId }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
-    enabled: travelTimeId > 0,
     ...options,
   });
 };

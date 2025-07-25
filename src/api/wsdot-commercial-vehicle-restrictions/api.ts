@@ -2,15 +2,15 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
 // API Help: https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionWithId,
 } from "./types";
 
-// Module-scoped fetch function for commercial vehicle restrictions API
-const fetchCommercialVehicleRestrictions = createApiClient(
+// Create a factory function for WSDOT Commercial Vehicle Restrictions API
+const createWsdotCommercialVehicleRestrictionsFetch = createFetchFactory(
   "https://wsdot.wa.gov/Traffic/api/CVRestrictions/CVRestrictionsREST.svc"
 );
 
@@ -20,12 +20,18 @@ const fetchCommercialVehicleRestrictions = createApiClient(
  * Returns commercial vehicle restriction data including weight limits, bridge restrictions,
  * and other commercial vehicle limitations across Washington State highways.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to array of commercial vehicle restriction data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const restrictions = await getCommercialVehicleRestrictions();
+ * console.log(restrictions[0].RouteName); // "I-5"
+ * ```
  */
-export const getCommercialVehicleRestrictions = (): Promise<
-  CommercialVehicleRestriction[]
-> =>
-  fetchCommercialVehicleRestrictions<CommercialVehicleRestriction[]>(
+export const getCommercialVehicleRestrictions =
+  createWsdotCommercialVehicleRestrictionsFetch<CommercialVehicleRestriction[]>(
     "/GetCommercialVehicleRestrictionsAsJson"
   );
 
@@ -36,11 +42,17 @@ export const getCommercialVehicleRestrictions = (): Promise<
  * and other commercial vehicle limitations across Washington State highways. This endpoint
  * includes unique identifiers for each restriction.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to array of commercial vehicle restriction data with unique IDs
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const restrictions = await getCommercialVehicleRestrictionsWithId();
+ * console.log(restrictions[0].RestrictionID); // 12345
+ * ```
  */
-export const getCommercialVehicleRestrictionsWithId = (): Promise<
-  CommercialVehicleRestrictionWithId[]
-> =>
-  fetchCommercialVehicleRestrictions<CommercialVehicleRestrictionWithId[]>(
-    "/GetCommercialVehicleRestrictionsWithIdAsJson"
-  );
+export const getCommercialVehicleRestrictionsWithId =
+  createWsdotCommercialVehicleRestrictionsFetch<
+    CommercialVehicleRestrictionWithId[]
+  >("/GetCommercialVehicleRestrictionsWithIdAsJson");

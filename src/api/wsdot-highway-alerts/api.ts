@@ -2,12 +2,12 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type { HighwayAlert } from "./types";
 
-// Module-scoped fetch function for highway alerts API
-const fetchHighwayAlerts = createApiClient(
+// Create a factory function for WSDOT Highway Alerts API
+const createWsdotHighwayAlertsFetch = createFetchFactory(
   "https://wsdot.wa.gov/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
 );
 
@@ -17,34 +17,59 @@ const fetchHighwayAlerts = createApiClient(
  * Returns current traffic alerts in JSON format. This endpoint provides
  * all active highway alerts across Washington State.
  *
- * @returns Promise resolving to array of highway alert data
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing all highway alert data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const alerts = await getHighwayAlerts();
+ * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
+ * ```
  */
-export const getHighwayAlerts = (): Promise<HighwayAlert[]> =>
-  fetchHighwayAlerts<HighwayAlert[]>("/GetAlertsAsJson");
+export const getHighwayAlerts =
+  createWsdotHighwayAlertsFetch<HighwayAlert[]>("/GetAlertsAsJson");
 
 /**
  * Get a specific highway alert by ID from WSDOT Highway Alerts API
  *
- * Returns a single highway alert in JSON format based on the provided AlertID.
+ * Returns detailed information about a specific highway alert identified by its ID.
  *
- * @param alertId - The unique identifier for the highway alert
- * @returns Promise resolving to a single highway alert
+ * @param params - Object containing alertId and optional logMode
+ * @param params.alertId - The unique identifier of the highway alert
+ * @param params.logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing the specific highway alert data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const alert = await getHighwayAlertById({ alertId: 12345 });
+ * console.log(alert.HeadlineDescription); // "Collision on I-5"
+ * ```
  */
-export const getHighwayAlertById = (alertId: number): Promise<HighwayAlert> =>
-  fetchHighwayAlerts<HighwayAlert>(`/GetAlertAsJson?AlertID=${alertId}`);
+export const getHighwayAlertById = createWsdotHighwayAlertsFetch<
+  { alertId: number },
+  HighwayAlert
+>("/GetAlertAsJson?AlertID={alertId}");
 
 /**
  * Get highway alerts by map area from WSDOT Highway Alerts API
  *
- * Returns current traffic alerts limited to a specific map area in JSON format.
- * The MapArea parameter filters alerts to a specific geographic region.
+ * Returns highway alerts filtered by a specific map area or region.
  *
- * @param mapArea - The map area identifier to filter alerts
- * @returns Promise resolving to array of highway alert data for the specified area
+ * @param params - Object containing mapArea and optional logMode
+ * @param params.mapArea - The map area or region to filter alerts by
+ * @param params.logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing filtered highway alert data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const alerts = await getHighwayAlertsByMapArea({ mapArea: "Seattle" });
+ * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
+ * ```
  */
-export const getHighwayAlertsByMapArea = (
-  mapArea: string
-): Promise<HighwayAlert[]> =>
-  fetchHighwayAlerts<HighwayAlert[]>(
-    `/GetAlertsByMapAreaAsJson?MapArea=${encodeURIComponent(mapArea)}`
-  );
+export const getHighwayAlertsByMapArea = createWsdotHighwayAlertsFetch<
+  { mapArea: string },
+  HighwayAlert[]
+>("/GetAlertsByMapAreaAsJson?MapArea={mapArea}");
