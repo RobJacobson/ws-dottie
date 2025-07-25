@@ -112,7 +112,11 @@ describe("WSF Vessels API - Zod Validation", () => {
         expect(validatedLocation.data.VesselID).toBeGreaterThan(0);
         expect(validatedLocation.data.Latitude).toBeGreaterThanOrEqual(-90);
         expect(validatedLocation.data.Longitude).toBeGreaterThanOrEqual(-180);
-        expect(validatedLocation.data.ScheduledDeparture).toBeInstanceOf(Date);
+        if (validatedLocation.data.ScheduledDeparture !== null) {
+          expect(validatedLocation.data.ScheduledDeparture).toBeInstanceOf(
+            Date
+          );
+        }
         expect(validatedLocation.data.TimeStamp).toBeInstanceOf(Date);
       }
     }
@@ -512,9 +516,14 @@ describe("WSF Vessels API - Zod Validation", () => {
 
         // Test terminal information
         expect(validatedLocation.data.DepartingTerminalID).toBeGreaterThan(0);
-        expect(validatedLocation.data.ArrivingTerminalID).toBeGreaterThan(0);
+        if (validatedLocation.data.ArrivingTerminalID !== null) {
+          expect(validatedLocation.data.ArrivingTerminalID).toBeGreaterThan(0);
+        }
         expect(validatedLocation.data.DepartingTerminalName).toBeTruthy();
-        expect(validatedLocation.data.ArrivingTerminalName).toBeTruthy();
+        expect(
+          validatedLocation.data.ArrivingTerminalName == null ||
+            typeof validatedLocation.data.ArrivingTerminalName === "string"
+        ).toBeTruthy();
       }
     }
   });

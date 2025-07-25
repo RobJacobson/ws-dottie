@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { configManager } from "@/shared/fetching/configManager";
+import { configManager } from "@/shared/config";
 
 describe("API Key Configuration E2E Test", () => {
   it("should have API key loaded from environment", () => {
