@@ -3,20 +3,20 @@ import { useState } from "react";
 
 import type { ApiItem } from "@/types/api";
 
-interface ApiDataDisplayProps {
+type ApiDataDisplayProps = {
   title: string;
   description?: string;
   data: ApiItem[] | ApiItem | null | undefined;
   isLoading: boolean;
   error: Error | null;
   selectedItem?: ApiItem | null;
-  onItemSelect?: (item: ApiItem) => void;
+  onItemSelect?: (item: ApiItem | null) => void;
   items?: ApiItem[];
   getItemName?: (item: ApiItem) => string;
   getItemId?: (item: ApiItem) => string | number;
-}
+};
 
-function ApiDataDisplay({
+const ApiDataDisplay = ({
   title,
   description,
   data,
@@ -27,7 +27,7 @@ function ApiDataDisplay({
   items,
   getItemName = (item) => item.name || item.title || item.description || "Unknown",
   getItemId = (item) => item.id || item.vesselId || item.terminalId || "unknown",
-}: ApiDataDisplayProps) {
+}: ApiDataDisplayProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const renderData = (data: unknown, depth = 0): React.ReactElement => {
@@ -100,89 +100,108 @@ function ApiDataDisplay({
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-gray-500 hover:text-gray-700 transition-colors"
+            className="flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors"
           >
-            {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            {isExpanded ? (
+              <>
+                <ChevronUp className="w-4 h-4" />
+                <span className="text-sm">Collapse</span>
+              </>
+            ) : (
+              <>
+                <ChevronDown className="w-4 h-4" />
+                <span className="text-sm">Expand</span>
+              </>
+            )}
           </button>
         </div>
 
-        {/* Status indicator */}
-        <div className="flex items-center gap-2 mb-4">
-          {isLoading && (
-            <div className="flex items-center gap-2 text-blue-600">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span className="text-sm">Loading...</span>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+            <span className="ml-2 text-gray-600">Loading data...</span>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <AlertCircle className="w-5 h-5 text-red-600" />
+            <div>
+              <p className="text-red-800 font-medium">Error loading data</p>
+              <p className="text-red-600 text-sm">{error.message}</p>
             </div>
-          )}
-          {error && (
-            <div className="flex items-center gap-2 text-red-600">
-              <AlertCircle className="w-4 h-4" />
-              <span className="text-sm">Error: {error.message}</span>
+          </div>
+        )}
+
+        {/* Success State */}
+        {!isLoading && !error && data && (
+          <div className="space-y-4">
+            {/* Item Selection Dropdown */}
+            {items && items.length > 0 && onItemSelect && (
+              <div className="flex items-center gap-3">
+                <label htmlFor="item-select" className="text-sm font-medium text-gray-700">
+                  Select Item:
+                </label>
+                <select
+                  id="item-select"
+                  value={selectedItem ? getItemId(selectedItem) : ""}
+                  onChange={(e) => {
+                    const selected = items.find(item => getItemId(item) === e.target.value);
+                    onItemSelect(selected || null);
+                  }}
+                  className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="">All Items</option>
+                  {items.map((item) => (
+                    <option key={getItemId(item)} value={getItemId(item)}>
+                      {getItemName(item)}
+                    </option>
+                  ))}
+                </select>
+                {selectedItem && (
+                  <button
+                    type="button"
+                    onClick={() => onItemSelect(null)}
+                    className="text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Data Display */}
+            <div className="bg-gray-50 rounded-lg p-4">
+              {isExpanded ? (
+                <pre className="text-sm text-gray-800 whitespace-pre-wrap">
+                  {JSON.stringify(data, null, 2)}
+                </pre>
+              ) : (
+                <div className="text-sm text-gray-800">
+                  {renderData(data)}
+                </div>
+              )}
             </div>
-          )}
-          {data && !isLoading && !error && (
+
+            {/* Success Indicator */}
             <div className="flex items-center gap-2 text-green-600">
               <CheckCircle className="w-4 h-4" />
               <span className="text-sm">Data loaded successfully</span>
             </div>
-          )}
-        </div>
-
-        {/* Dropdown for array data */}
-        {items && items.length > 0 && onItemSelect && (
-          <div className="mb-4">
-            <label htmlFor="item-select" className="block text-sm font-medium text-gray-700 mb-2">
-              Select Item:
-            </label>
-            <select
-              id="item-select"
-              onChange={(e) => {
-                const selected = items.find((item) => getItemId(item).toString() === e.target.value);
-                if (selected) onItemSelect(selected);
-              }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Select an item...</option>
-              {items.map((item) => (
-                <option key={getItemId(item)} value={getItemId(item)}>
-                  {getItemId(item)} - {getItemName(item)}
-                </option>
-              ))}
-            </select>
           </div>
         )}
 
-        {/* Data display */}
-        {isExpanded && (
-          <div className="mt-4">
-            {isLoading && (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-              </div>
-            )}
-
-            {error && (
-              <div className="bg-red-50 border border-red-200 rounded-md p-4">
-                <div className="flex items-center gap-2 text-red-800">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="font-medium">Error</span>
-                </div>
-                <p className="text-red-700 mt-2">{error.message}</p>
-              </div>
-            )}
-
-            {data && !isLoading && !error && (
-              <div className="bg-gray-50 rounded-md p-4 overflow-x-auto">
-                <pre className="text-sm font-mono text-gray-800 whitespace-pre-wrap">
-                  {renderData(selectedItem || data)}
-                </pre>
-              </div>
-            )}
+        {/* Empty State */}
+        {!isLoading && !error && !data && (
+          <div className="text-center py-8 text-gray-500">
+            <p>No data available</p>
           </div>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default ApiDataDisplay;
