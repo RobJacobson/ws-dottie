@@ -11,7 +11,7 @@ import type {
 
 // Create a factory function for WSDOT Commercial Vehicle Restrictions API
 const createWsdotCommercialVehicleRestrictionsFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/CVRestrictions/CVRestrictionsREST.svc"
+  "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc"
 );
 
 /**

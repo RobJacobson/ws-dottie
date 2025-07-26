@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.ts"],
-  format: ["cjs", "esm"],
+  format: ["esm"], // Only ESM format for better bundler compatibility
   dts: true,
   splitting: false,
   sourcemap: true,
@@ -17,7 +17,7 @@ export default defineConfig({
   outDir: "dist",
   outExtension({ format }) {
     return {
-      js: format === "cjs" ? ".js" : ".mjs",
+      js: ".mjs", // Always use .mjs extension
     };
   },
   treeshake: true,

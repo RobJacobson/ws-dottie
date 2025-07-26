@@ -8,7 +8,7 @@ import type { HighwayAlert } from "./types";
 
 // Create a factory function for WSDOT Highway Alerts API
 const createWsdotHighwayAlertsFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
 );
 
 /**

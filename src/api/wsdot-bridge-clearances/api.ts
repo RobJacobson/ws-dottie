@@ -8,7 +8,7 @@ import type { BridgeDataGIS } from "./types";
 
 // Create a factory function for WSDOT Bridge Clearances API
 const createWsdotBridgeClearancesFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/Bridges/ClearanceREST.svc"
+  "/Traffic/api/Bridges/ClearanceREST.svc"
 );
 
 /**

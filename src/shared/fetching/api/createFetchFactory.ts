@@ -12,11 +12,12 @@
  * - Automatic date formatting for Date objects
  * - URL construction with proper query parameter handling
  * - Function overloads for cleaner API
+ * - Configurable base URL support via WSDOT_BASE_URL environment variable
  *
  * Usage:
  * ```typescript
- * // Create a factory for a specific base URL
- * const createFetch = createFetchFactory("https://api.example.com");
+ * // Create a factory for a specific API path (base URL is configurable)
+ * const createFetch = createFetchFactory("/api/endpoint");
  *
  * // Create a simple fetch function
  * const getData = createFetch<MyResponseType>("/endpoint");
@@ -39,12 +40,13 @@ import { jsDateToYyyyMmDd } from "../parsing";
 import { createApiClient } from "./createApiClient";
 
 /**
- * Creates a factory function that returns fetch functions pre-configured with a specific base URL
+ * Creates a factory function that returns fetch functions pre-configured with a specific API path
+ * The base URL is automatically determined from configManager.getBaseUrl()
  *
- * @param baseUrl - The base URL for the API
- * @returns A function that creates fetch functions for the specified base URL
+ * @param apiPath - The API path to append to the base URL (e.g., "/ferries/api/vessels/rest")
+ * @returns A function that creates fetch functions for the specified API path
  */
-export const createFetchFactory = (baseUrl: string) => {
+export const createFetchFactory = (apiPath: string) => {
   const fetchFn = createApiClient();
 
   // Function overloads for cleaner API
@@ -66,7 +68,7 @@ export const createFetchFactory = (baseUrl: string) => {
       const endpoint = interpolateParams(endpointTemplate, params);
 
       // Build the complete URL with API key parameter
-      const url = buildUrl(baseUrl, endpoint);
+      const url = buildUrl(apiPath, endpoint);
 
       // Use the API client to make the request
       return fetchFn<T>(url, logMode);
@@ -77,11 +79,11 @@ export const createFetchFactory = (baseUrl: string) => {
 };
 
 /**
- * Determines the API key parameter name based on the base URL
+ * Determines the API key parameter name based on the API path
  * WSF APIs use "apiaccesscode", WSDOT APIs use "AccessCode"
  */
-const getApiKeyParam = (baseUrl: string): string => {
-  const isWsf = baseUrl.includes("wsdot.wa.gov/ferries");
+const getApiKeyParam = (apiPath: string): string => {
+  const isWsf = apiPath.includes("/ferries/");
   return isWsf ? "apiaccesscode" : "AccessCode";
 };
 
@@ -104,12 +106,13 @@ const interpolateParams = (
 };
 
 /**
- * Constructs a complete URL with API key parameter
+ * Constructs a complete URL with configurable base URL and API key parameter
  */
-const buildUrl = (baseUrl: string, endpoint: string): string => {
-  const apiKeyParam = getApiKeyParam(baseUrl);
+const buildUrl = (apiPath: string, endpoint: string): string => {
+  const baseUrl = configManager.getBaseUrl();
+  const apiKeyParam = getApiKeyParam(apiPath);
   const separator = endpoint.includes("?") ? "&" : "?";
-  return `${baseUrl}${endpoint}${separator}${apiKeyParam}=${configManager.getApiKey()}`;
+  return `${baseUrl}${apiPath}${endpoint}${separator}${apiKeyParam}=${configManager.getApiKey()}`;
 };
 
 const substituteParam = (

@@ -8,7 +8,7 @@ import type { TrafficFlow } from "./types";
 
 // Create a factory function for WSDOT Traffic Flow API
 const createWsdotTrafficFlowFetch = createFetchFactory(
-  "https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc"
+  "/traffic/api/TrafficFlow/TrafficFlowREST.svc"
 );
 
 /**

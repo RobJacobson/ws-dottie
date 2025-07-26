@@ -8,7 +8,7 @@ import type { TollRate, TollTripInfo, TollTripRates } from "./types";
 
 // Create a factory function for WSDOT Toll Rates API
 const createWsdotTollRatesFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/TollRates/TollRatesREST.svc"
+  "/Traffic/api/TollRates/TollRatesREST.svc"
 );
 
 /**

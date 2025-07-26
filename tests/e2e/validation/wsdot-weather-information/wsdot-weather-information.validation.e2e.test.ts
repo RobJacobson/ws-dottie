@@ -1,78 +1,78 @@
 import { describe, expect, it } from "vitest";
+
 import { getWeatherInformation } from "@/api/wsdot-weather-information";
+
+import { validateAndReturn } from "../../utils-zod";
 import { validators } from "./validator";
 
 describe("WSDOT Weather Information API - Zod Validation", () => {
   it("should validate weather information data structure using Zod", async () => {
     console.log("🚀 Testing WSDOT Weather Information API validation...");
-    const weatherInfo = await getWeatherInformation();
-    const validatedData = validators.weatherInformationArray.validateSafe(weatherInfo);
-    if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Weather information validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
-    }
-    expect(validatedData.data).toBeDefined();
-    expect(Array.isArray(validatedData.data)).toBe(true);
-    expect(validatedData.data.length).toBeGreaterThan(0);
-    console.log(`✅ Successfully validated ${validatedData.data.length} weather information records`);
+    const weatherData = await getWeatherInformation();
+
+    // Use utility for validation
+    const validatedData = validateAndReturn(
+      validators.weatherInformationArray,
+      weatherData,
+      "weather information array"
+    );
+
+    expect(validatedData).toBeDefined();
+    expect(Array.isArray(validatedData)).toBe(true);
+    expect(validatedData.length).toBeGreaterThan(0);
+    console.log(
+      `✅ Successfully validated ${validatedData.length} weather information records`
+    );
   });
 
   it("should validate individual weather information data", async () => {
-    const weatherInfo = await getWeatherInformation();
-    if (weatherInfo.length > 0) {
-      const firstWeather = weatherInfo[0];
-      const validatedWeather = validators.weatherInfo.validateSafe(firstWeather);
-      if (!validatedWeather.success) {
-        console.error("Individual validation failed:", validatedWeather.error.errors);
-        throw new Error(`Individual weather validation failed: ${JSON.stringify(validatedWeather.error.errors, null, 2)}`);
-      }
-      expect(validatedWeather.data.StationID).toBeDefined();
-      expect(typeof validatedWeather.data.StationID).toBe("number");
-      expect(validatedWeather.data.StationName).toBeDefined();
-      expect(typeof validatedWeather.data.StationName).toBe("string");
-      expect(validatedWeather.data.ReadingTime).toBeInstanceOf(Date);
-      expect(typeof validatedWeather.data.Latitude).toBe("number");
-      expect(typeof validatedWeather.data.Longitude).toBe("number");
+    const weatherData = await getWeatherInformation();
+    if (weatherData.length > 0) {
+      const firstWeather = weatherData[0];
+
+      // Use utility for individual validation
+      const validatedWeather = validateAndReturn(
+        validators.weatherInfo,
+        firstWeather,
+        "individual weather information"
+      );
+
+      expect(validatedWeather.StationID).toBeDefined();
+      expect(typeof validatedWeather.StationID).toBe("number");
+      expect(validatedWeather.StationName).toBeDefined();
+      expect(typeof validatedWeather.StationName).toBe("string");
+      expect(typeof validatedWeather.TemperatureInFahrenheit).toBe("number");
+      expect(typeof validatedWeather.RelativeHumidity).toBe("number");
+      expect(typeof validatedWeather.WindSpeedInMPH).toBe("number");
+      expect(typeof validatedWeather.WindDirectionCardinal).toBe("string");
+      expect(validatedWeather.ReadingTime).toBeInstanceOf(Date);
     }
   });
 
   it("should handle nullable weather fields correctly", async () => {
-    const weatherInfo = await getWeatherInformation();
-    for (const weather of weatherInfo) {
-      const validatedWeather = validators.weatherInfo.validateSafe(weather);
-      if (!validatedWeather.success) {
-        console.error("Nullable validation failed:", validatedWeather.error.errors);
-        throw new Error(`Nullable field validation failed: ${JSON.stringify(validatedWeather.error.errors, null, 2)}`);
+    const weatherData = await getWeatherInformation();
+    for (const weather of weatherData) {
+      // Use utility for validation
+      const validatedWeather = validateAndReturn(
+        validators.weatherInfo,
+        weather,
+        "nullable weather fields"
+      );
+
+      if (validatedWeather.BarometricPressure !== null) {
+        expect(typeof validatedWeather.BarometricPressure).toBe("number");
       }
-      if (validatedWeather.data.BarometricPressure !== null) {
-        expect(typeof validatedWeather.data.BarometricPressure).toBe("number");
+      if (validatedWeather.PrecipitationInInches !== null) {
+        expect(typeof validatedWeather.PrecipitationInInches).toBe("number");
       }
-      if (validatedWeather.data.PrecipitationInInches !== null) {
-        expect(typeof validatedWeather.data.PrecipitationInInches).toBe("number");
+      if (validatedWeather.Visibility !== null) {
+        expect(typeof validatedWeather.Visibility).toBe("number");
       }
-      if (validatedWeather.data.RelativeHumidity !== null) {
-        expect(typeof validatedWeather.data.RelativeHumidity).toBe("number");
+      if (validatedWeather.WindGustSpeedInMPH !== null) {
+        expect(typeof validatedWeather.WindGustSpeedInMPH).toBe("number");
       }
-      if (validatedWeather.data.SkyCoverage !== null) {
-        expect(typeof validatedWeather.data.SkyCoverage).toBe("string");
-      }
-      if (validatedWeather.data.TemperatureInFahrenheit !== null) {
-        expect(typeof validatedWeather.data.TemperatureInFahrenheit).toBe("number");
-      }
-      if (validatedWeather.data.Visibility !== null) {
-        expect(typeof validatedWeather.data.Visibility).toBe("number");
-      }
-      if (validatedWeather.data.WindDirection !== null) {
-        expect(typeof validatedWeather.data.WindDirection).toBe("number");
-      }
-      if (validatedWeather.data.WindDirectionCardinal !== null) {
-        expect(typeof validatedWeather.data.WindDirectionCardinal).toBe("string");
-      }
-      if (validatedWeather.data.WindGustSpeedInMPH !== null) {
-        expect(typeof validatedWeather.data.WindGustSpeedInMPH).toBe("number");
-      }
-      if (validatedWeather.data.WindSpeedInMPH !== null) {
-        expect(typeof validatedWeather.data.WindSpeedInMPH).toBe("number");
+      if (validatedWeather.SkyCoverage !== null) {
+        expect(typeof validatedWeather.SkyCoverage).toBe("string");
       }
     }
   });
@@ -97,33 +97,34 @@ describe("WSDOT Weather Information API - Zod Validation", () => {
         WindSpeedInMPH: "not a number",
       },
     ];
-    const result = validators.weatherInformationArray.validateSafe(malformedData);
+
+    // Use utility for validation with error details
+    const result =
+      validators.weatherInformationArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.error.errors).toBeDefined();
+      expect(Array.isArray(result.error.errors)).toBe(true);
       expect(result.error.errors.length).toBeGreaterThan(0);
-      console.log("Validation Error Details:", {
-        context: "malformed weather information",
-        errors: result.error.errors,
-        received: malformedData,
-      });
     }
   });
 
   it("should demonstrate the power of single-line validation", async () => {
-    const weatherInfo = await getWeatherInformation();
-    const validatedData = validators.weatherInformationArray.validateSafe(weatherInfo);
-    if (!validatedData.success) {
-      throw new Error("Single-line validation failed");
-    }
-    const firstWeather = validatedData.data[0];
-    expect(firstWeather.StationID).toBeDefined();
-    expect(firstWeather.StationName).toBeDefined();
-    expect(firstWeather.ReadingTime).toBeInstanceOf(Date);
-    expect(typeof firstWeather.Latitude).toBe("number");
-    expect(typeof firstWeather.Longitude).toBe("number");
-    console.log("✅ Single-line validation successful - all data is type-safe!");
+    const weatherData = await getWeatherInformation();
+
+    // Single-line validation using utility
+    const validatedWeather = validateAndReturn(
+      validators.weatherInformationArray,
+      weatherData,
+      "weather information"
+    );
+
+    expect(validatedWeather.length).toBeGreaterThan(0);
+    console.log(
+      "✅ Single-line validation successful - all data is type-safe!"
+    );
   });
 
   console.log("✅ WSDOT Weather Information API validation tests completed");
-}); 
+});

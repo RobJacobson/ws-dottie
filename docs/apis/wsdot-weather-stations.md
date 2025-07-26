@@ -11,7 +11,24 @@ The Weather Stations API provides basic information about WSDOT weather stations
 - Complete list of all WSDOT-maintained weather stations
 - Geographic distribution of weather monitoring infrastructure
 
+## Features
+
+| Feature | Description |
+|---------|-------------|
+| **Station Metadata** | Location, identification codes, and descriptive names |
+| **Geographic Coverage** | Weather stations across Washington State highways |
+| **Station Discovery** | Find available weather stations in specific areas |
+| **Weather Data Integration** | Use station codes with Weather Information API |
+| **Geographic Filtering** | Filter stations by location or region |
+| **Station Mapping** | Display weather station locations on maps |
+| **Route Planning** | Find weather stations along travel routes |
+| **Static Data** | Relatively stable station information |
+
 ## API Endpoints
+
+| Endpoint | Method | Description | Returns |
+|----------|--------|-------------|---------|
+| `GetCurrentStationsAsJson` | GET | Retrieve list of all weather stations | `WeatherStationData[]` |
 
 ### Get Weather Stations
 
@@ -25,32 +42,19 @@ const weatherStations = await getWeatherStations();
 
 **Returns:** `Promise<WeatherStationData[]>`
 
-## React Query Hooks
+## React Integration
 
-### useWeatherStations
+For React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
 
-React Query hook for retrieving WSDOT weather stations.
+### React Hook Usage
 
 ```typescript
-import { useWeatherStations } from '@wsdot/api-client';
+import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
 
-function WeatherStationsComponent() {
+function WeatherComponent() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <div>
-      {weatherStations?.map(station => (
-        <div key={station.StationCode}>
-          <h3>{station.StationName}</h3>
-          <p>Station Code: {station.StationCode}</p>
-          <p>Location: ({station.Latitude}, {station.Longitude})</p>
-        </div>
-      ))}
-    </div>
-  );
+  
+  // Component implementation
 }
 ```
 
@@ -65,7 +69,7 @@ type WeatherStationData = {
   Latitude: number;        // Station latitude coordinate
   Longitude: number;       // Station longitude coordinate
   StationCode: number;     // Unique station identifier
-  StationName: string;     // Human-readable station name with location
+  StationName: string | null; // Human-readable station name with location
 };
 ```
 
@@ -77,45 +81,38 @@ Array of weather station data records.
 type WeatherStationsResponse = WeatherStationData[];
 ```
 
-## Error Handling
+## Parameters
 
-All functions throw `WsdotApiError` instances when the API request fails. Common error scenarios include:
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `options` | `object` | No | `{}` | Optional configuration object |
+| `options.logMode` | `'none' \| 'basic' \| 'detailed'` | No | `'none'` | Logging level for API calls |
 
-- **API_ERROR**: The WSDOT API returned an error response
-- **NETWORK_ERROR**: Network connectivity issues
-- **TIMEOUT_ERROR**: Request timed out
+## React Hooks
 
-```typescript
-import { getWeatherStations } from '@wsdot/api-client';
-import { WsdotApiError } from '@wsdot/api-client';
+| Hook | Description | Returns |
+|------|-------------|---------|
+| `useWeatherStations(options?)` | Fetches weather station metadata | `UseQueryResult<WeatherStationData[], WsdotApiError>` |
 
-try {
-  const weatherStations = await getWeatherStations();
-  console.log('Weather stations retrieved:', weatherStations.length);
-} catch (error) {
-  if (error instanceof WsdotApiError) {
-    console.error('WSDOT API Error:', error.message);
-    console.error('Error Code:', error.code);
-  } else {
-    console.error('Unexpected error:', error);
-  }
-}
-```
+## Caching Strategy
 
-## Caching
+| Strategy | Duration | Description |
+|----------|----------|-------------|
+| **Default Caching** | 24 hours | Long-term caching for static station data |
+| **Stale Time** | 12 hours | Data considered fresh for 12 hours |
+| **Background Refetch** | Disabled | No background refetch for static data |
+| **Error Retry** | 3 attempts | Retries failed requests up to 3 times |
 
-The React Query hooks use infrequent update caching strategies:
+## Common Patterns
 
-- **Stale Time**: 5 minutes (data considered fresh for 5 minutes)
-- **Cache Time**: 10 minutes (data kept in cache for 10 minutes)
-- **Refetch Interval**: None (manual refetch only)
+For information about error handling, caching strategies, and other common patterns, see the [API Reference](../API-REFERENCE.md) documentation.
 
 ## Examples
 
 ### Weather Station Map
 
 ```typescript
-import { useWeatherStations } from '@wsdot/api-client';
+import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
 
 function WeatherStationMap() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
@@ -135,10 +132,10 @@ function WeatherStationMap() {
               left: `${((station.Longitude + 125) / 9) * 100}%`,
               top: `${((50 - station.Latitude) / 5) * 100}%`
             }}
-            title={station.StationName}
+            title={station.StationName || `Station ${station.StationCode}`}
           >
             <div className="marker-tooltip">
-              <strong>{station.StationName}</strong>
+              <strong>{station.StationName || `Station ${station.StationCode}`}</strong>
               <br />
               Code: {station.StationCode}
               <br />
@@ -155,7 +152,7 @@ function WeatherStationMap() {
 ### Station Search and Filter
 
 ```typescript
-import { useWeatherStations } from '@wsdot/api-client';
+import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
 import { useState, useMemo } from 'react';
 
 function WeatherStationSearch() {
@@ -167,7 +164,8 @@ function WeatherStationSearch() {
     if (!weatherStations) return [];
     
     return weatherStations.filter(station => {
-      const matchesSearch = station.StationName.toLowerCase().includes(searchTerm.toLowerCase());
+      const stationName = station.StationName || `Station ${station.StationCode}`;
+      const matchesSearch = stationName.toLowerCase().includes(searchTerm.toLowerCase());
       
       let matchesRegion = true;
       if (region === 'seattle') {
@@ -210,7 +208,7 @@ function WeatherStationSearch() {
         
         {filteredStations.map(station => (
           <div key={station.StationCode} className="station-card">
-            <h3>{station.StationName}</h3>
+            <h3>{station.StationName || `Station ${station.StationCode}`}</h3>
             <p><strong>Station Code:</strong> {station.StationCode}</p>
             <p><strong>Coordinates:</strong> {station.Latitude.toFixed(4)}, {station.Longitude.toFixed(4)}</p>
             <p><strong>Region:</strong> {
@@ -230,7 +228,7 @@ function WeatherStationSearch() {
 ### Station Statistics Dashboard
 
 ```typescript
-import { useWeatherStations } from '@wsdot/api-client';
+import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
 
 function WeatherStationStats() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
@@ -307,7 +305,7 @@ function WeatherStationStats() {
               {weatherStations?.map(station => (
                 <tr key={station.StationCode}>
                   <td>{station.StationCode}</td>
-                  <td>{station.StationName}</td>
+                  <td>{station.StationName || `Station ${station.StationCode}`}</td>
                   <td>{station.Latitude.toFixed(4)}</td>
                   <td>{station.Longitude.toFixed(4)}</td>
                   <td>{
@@ -330,7 +328,7 @@ function WeatherStationStats() {
 ### Station Proximity Finder
 
 ```typescript
-import { useWeatherStations } from '@wsdot/api-client';
+import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
 import { useState, useMemo } from 'react';
 
 function StationProximityFinder() {
@@ -401,7 +399,7 @@ function StationProximityFinder() {
           <div key={station.StationCode} className="nearby-station">
             <div className="station-rank">#{index + 1}</div>
             <div className="station-info">
-              <h4>{station.StationName}</h4>
+              <h4>{station.StationName || `Station ${station.StationCode}`}</h4>
               <p><strong>Distance:</strong> {station.distance.toFixed(2)} miles</p>
               <p><strong>Station Code:</strong> {station.StationCode}</p>
               <p><strong>Coordinates:</strong> {station.Latitude.toFixed(4)}, {station.Longitude.toFixed(4)}</p>
@@ -417,7 +415,7 @@ function StationProximityFinder() {
 ### Station Export Utility
 
 ```typescript
-import { useWeatherStations } from '@wsdot/api-client';
+import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
 
 function StationExport() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
@@ -428,7 +426,7 @@ function StationExport() {
     const csvContent = [
       'StationCode,StationName,Latitude,Longitude',
       ...weatherStations.map(station => 
-        `${station.StationCode},"${station.StationName}",${station.Latitude},${station.Longitude}`
+        `${station.StationCode},"${station.StationName || `Station ${station.StationCode}`}",${station.Latitude},${station.Longitude}`
       )
     ].join('\n');
     
@@ -454,7 +452,7 @@ function StationExport() {
         },
         properties: {
           stationCode: station.StationCode,
-          stationName: station.StationName
+          stationName: station.StationName || `Station ${station.StationCode}`
         }
       }))
     };
@@ -495,6 +493,26 @@ function StationExport() {
 }
 ```
 
+## Common Use Cases
+
+### Station Discovery
+Find available weather stations in specific areas for weather data analysis.
+
+### Weather Data Integration
+Use station codes with Weather Information API to get current weather readings.
+
+### Geographic Filtering
+Filter stations by location or region for targeted weather monitoring.
+
+### Station Mapping
+Display weather station locations on interactive maps for visualization.
+
+### Data Source Identification
+Identify which stations provide weather data for specific locations.
+
+### Route Planning
+Find weather stations along travel routes for trip planning.
+
 ## API Documentation
 
 - **WSDOT Documentation**: [Weather Stations Class](https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html)
@@ -503,13 +521,14 @@ function StationExport() {
 ## Notes
 
 - Station codes are unique integer identifiers
-- Station names typically include location information (street names, highway designations, mile markers)
-- Coordinates are in decimal degrees format
+- Station names typically include location information (street names, highway designations, mileposts)
+- Coordinates are in decimal degrees format (WGS84)
 - All stations are located within Washington State boundaries
 - Station data is relatively static and doesn't change frequently
 - Geographic coordinates can be used with mapping libraries for visualization
 - Station codes can be used to correlate with weather data from other APIs
 - Station names provide human-readable location descriptions
 - The API provides a complete inventory of WSDOT weather monitoring infrastructure
-- Data is cached infrequently since station information changes rarely
-- Station locations are useful for weather data analysis and geographic filtering 
+- Data is cached for extended periods since station information changes rarely
+- Station locations are useful for weather data analysis and geographic filtering
+- Highway references in station names help identify locations along specific routes 

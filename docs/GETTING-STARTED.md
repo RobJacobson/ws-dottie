@@ -140,203 +140,6 @@ function App() {
 }
 ```
 
-## 🔍 Debugging and Logging
-
-WS-Dottie includes optional logging to help you troubleshoot API calls:
-
-```javascript
-import { WsfVessels } from 'ws-dottie';
-
-// Enable debug logging for a specific call
-const vessels = await WsfVessels.getVesselLocations('debug');
-
-// Or use info-level logging
-const alerts = await WsdotHighwayAlerts.getHighwayAlerts('info');
-```
-
-Logging modes:
-- `'debug'` - Detailed request/response information
-- `'info'` - Basic request information
-- `'none'` - No logging (default)
-
-## 📊 Caching Configuration
-
-WS-Dottie includes optimized caching strategies for different data types:
-
-```javascript
-import { tanstackQueryOptions } from 'ws-dottie';
-
-// Real-time data (5-second updates)
-const realtimeConfig = tanstackQueryOptions.REALTIME_UPDATES;
-
-// Minute updates (1-minute intervals)
-const minuteConfig = tanstackQueryOptions.MINUTE_UPDATES;
-
-// Hourly updates (1-hour intervals)
-const hourlyConfig = tanstackQueryOptions.HOURLY_UPDATES;
-
-// Daily updates (24-hour intervals)
-const dailyConfig = tanstackQueryOptions.DAILY_UPDATES;
-
-// Weekly updates (manual refresh only)
-const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
-```
-
-### Configuration Details
-
-| Strategy | Stale Time | GC Time | Refetch Interval | Retry |
-|----------|------------|---------|------------------|-------|
-| REALTIME_UPDATES | 30s | 2m | 5s | 1 |
-| MINUTE_UPDATES | 5m | 10m | 1m | false |
-| HOURLY_UPDATES | 2h | 4h | 1h | 5 |
-| DAILY_UPDATES | 1d | 2d | 1d | 5 |
-| WEEKLY_UPDATES | 1w | 2w | false | 5 |
-
-### Custom Caching
-
-You can override the default caching behavior:
-
-```javascript
-import { useVesselLocations } from 'ws-dottie';
-
-function CustomVesselApp() {
-  const { data: vessels } = useVesselLocations({
-    staleTime: 30 * 1000, // 30 seconds
-    refetchInterval: 10 * 1000, // 10 seconds
-  });
-
-  return <div>Vessels: {vessels?.length}</div>;
-}
-```
-
-### Advanced Caching Customization
-
-WS-Dottie's caching strategies can be customized using spread operators with TanStack Query options:
-
-```javascript
-import { useVesselLocations, tanstackQueryOptions } from 'ws-dottie';
-
-function AdvancedVesselTracker() {
-  // Custom 5-minute update strategy with different parameters
-  const { data: vessels } = useVesselLocations({
-    ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
-    refetchInterval: 5 * 60 * 1000, // 5 minutes
-    staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: 3, // 3 retries
-    retryDelay: 5 * 1000, // 5 second delay between retries
-  });
-
-  return (
-    <div>
-      <h2>Vessels (5-minute updates)</h2>
-      {vessels?.map(vessel => (
-        <div key={vessel.VesselID}>
-          <strong>{vessel.VesselName}</strong>
-          <div>Last Update: {vessel.LastUpdate.toLocaleTimeString()}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
-This approach allows you to:
-- **Extend base strategies** - Start with a predefined strategy and customize specific options
-- **Mix and match** - Combine different aspects of various strategies
-- **Fine-tune performance** - Optimize caching for your specific use case
-- **Maintain consistency** - Keep the base strategy's proven defaults while customizing only what you need
-
-## 🎯 Strong Typing
-
-WS-Dottie provides comprehensive TypeScript types for all APIs, parameters, and responses:
-
-```javascript
-import { 
-  WsfVessels, 
-  WsdotHighwayAlerts,
-  VesselLocation,
-  HighwayAlert 
-} from 'ws-dottie';
-
-// All API functions are fully typed
-const vessels: VesselLocation[] = await WsfVessels.getVesselLocations();
-const alerts: HighwayAlert[] = await WsdotHighwayAlerts.getHighwayAlerts();
-
-// Parameter objects are strongly typed
-const camera = await WsdotHighwayCameras.getCamera({ cameraID: 1001 });
-const fares = await WsfFares.getFareLineItems({
-  tripDate: new Date('2024-01-15'),
-  departingTerminalID: 7,
-  arrivingTerminalID: 8,
-  roundTrip: false
-});
-```
-
-### Type Safety Features
-- **Parameter Objects** - All API calls use consistent single-parameter object patterns
-- **Response Types** - All API responses are fully typed with TypeScript interfaces
-- **Error Types** - Consistent error handling with typed error objects
-- **Configuration Types** - Type-safe configuration interface
-
-## 📦 Parameter Object Pattern
-
-All WS-Dottie API functions use a consistent parameter object pattern for better maintainability and type safety:
-
-```javascript
-import { WsdotHighwayCameras, WsfFares } from 'ws-dottie';
-
-// Single parameter object for all API calls
-const camera = await WsdotHighwayCameras.getCamera({ 
-  cameraID: 1001 
-});
-
-const searchResults = await WsdotHighwayCameras.searchCameras({
-  StateRoute: "5",
-  Region: "Northwest"
-});
-
-const fares = await WsfFares.getFareLineItems({
-  tripDate: new Date('2024-01-15'),
-  departingTerminalID: 7,
-  arrivingTerminalID: 8,
-  roundTrip: false
-});
-```
-
-This pattern provides:
-- **Consistency** - All APIs follow the same parameter structure
-- **Type Safety** - TypeScript ensures correct parameter types
-- **Extensibility** - Easy to add optional parameters without breaking changes
-- **Readability** - Clear parameter names and structure
-
-## ⚙️ Configuration Interface
-
-WS-Dottie provides a type-safe configuration interface:
-
-```javascript
-import { configManager } from 'ws-dottie';
-
-// Type-safe configuration interface
-interface WsdotConfig {
-  WSDOT_ACCESS_TOKEN: string;
-  WSDOT_BASE_URL?: string;
-}
-
-// Set configuration at runtime
-configManager.setConfig({
-  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
-  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional
-});
-
-// Get current configuration
-const apiKey = configManager.getApiKey();
-const baseUrl = configManager.getBaseUrl();
-
-// Clear configuration (useful for testing)
-configManager.clearConfig();
-```
-
 ## 🎯 Available Data Sources
 
 ### WSDOT APIs
@@ -388,10 +191,40 @@ try {
 }
 ```
 
+## 🧩 Consistent Parameter Object Pattern
+
+All WS-Dottie fetch functions and React hooks use a **single, optional, strongly-typed options parameter**. This pattern ensures consistency, type safety, and extensibility across the entire library.
+
+**Example:**
+
+```typescript
+// Fetch function
+const camera = await WsdotHighwayCameras.getCamera({ cameraID: 1001 });
+
+// React hook
+const { data: camera } = useCamera({ cameraID: 1001 });
+```
+
+- If no parameters are required, you may call the function with no arguments or with an empty object: `getBorderCrossings()` or `getBorderCrossings({})`.
+- All parameters are passed as named properties of the options object.
+- All options are fully type-checked with TypeScript.
+
+## 🔧 Advanced Configuration
+
+For advanced configuration options including:
+- **Debugging and Logging** - Troubleshoot API calls with detailed logging
+- **Advanced Caching** - Customize caching strategies and performance optimization
+- **Strong Typing** - TypeScript features and type safety
+- **Parameter Object Patterns** - Consistent API parameter structures
+
+See the [API Reference](./API-REFERENCE.md) documentation for comprehensive configuration details.
+
 ## 🚀 Next Steps
 
-- Check out the [API Reference](./API-REFERENCE.md) for detailed documentation
-- Explore [Examples](./EXAMPLES.md) for common use cases
+- Browse the [Documentation Index](./INDEX.md) for complete navigation
+- Check out the [API Reference](./API-REFERENCE.md) for detailed documentation and advanced configuration
+- Explore [Examples](./EXAMPLES.md) for common use cases and patterns
+- Browse the [API Overview](./API-OVERVIEW.md) for quick comparison and use case mapping
 - Join our community for support and updates
 
 ---

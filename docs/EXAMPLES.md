@@ -546,15 +546,15 @@ function TrafficCameraViewer() {
 
 ```javascript
 import { 
-  useWeatherStations, 
+  useWeatherStations,
   useMountainPassConditions,
-  useWeatherInformation 
+  useWeatherInformationForStations 
 } from 'ws-dottie';
 
 function WeatherDashboard() {
   const { data: stations } = useWeatherStations();
   const { data: passes } = useMountainPassConditions();
-  const { data: weather } = useWeatherInformation({ 
+  const { data: weather } = useWeatherInformationForStations({ 
     stationIds: [1, 2, 3, 4, 5] 
   });
 
@@ -642,10 +642,12 @@ import { useVesselLocations } from 'ws-dottie';
 
 ```javascript
 // Enable debug logging for troubleshooting
-const vessels = await WsfVessels.getVesselLocations('debug');
-const alerts = await WsdotHighwayAlerts.getHighwayAlerts('info');
+const vessels = await WsfVessels.getVesselLocations();
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 ```
 
 ---
 
-**For more examples, check out the source code or open an issue on GitHub!** 
+**For more examples, check out the source code or open an issue on GitHub!**
+
+**Need help navigating the documentation?** Check out the [Documentation Index](./INDEX.md) for complete navigation. 

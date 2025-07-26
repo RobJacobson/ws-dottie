@@ -8,7 +8,7 @@ import type { WeatherReading } from "./types";
 
 // Create a factory function for WSDOT Weather Information Extended API
 const createWsdotWeatherInformationExtendedFetch = createFetchFactory(
-  "https://wsdot.wa.gov/traffic/api/api/Scanweb"
+  "/traffic/api/api/Scanweb"
 );
 
 /**

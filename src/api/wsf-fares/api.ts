@@ -17,9 +17,7 @@ import type {
 } from "./types";
 
 // Create a factory function for WSF Fares API
-const createWsfFaresFetch = createFetchFactory(
-  "https://www.wsdot.wa.gov/ferries/api/fares/rest"
-);
+const createWsfFaresFetch = createFetchFactory("/ferries/api/fares/rest");
 
 /**
  * Get cache flush date from WSF Fares API

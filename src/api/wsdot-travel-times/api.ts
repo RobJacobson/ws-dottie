@@ -8,7 +8,7 @@ import type { TravelTimeRoute } from "./types";
 
 // Create a factory function for WSDOT Travel Times API
 const createWsdotTravelTimesFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/TravelTimes/TravelTimesREST.svc"
+  "/Traffic/api/TravelTimes/TravelTimesREST.svc"
 );
 
 /**
