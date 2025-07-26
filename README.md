@@ -43,21 +43,33 @@ npm install ws-dottie
 ```bash
 # For Node.js applications
 export WSDOT_ACCESS_TOKEN=your_api_key_here
+```
 
-# For React/Expo applications
-export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
+**Using a .env file**
+```env
+WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
 **Option B: Runtime Configuration**
+
+For dynamic environments or when you need to configure at runtime:
+
 ```javascript
 import { configManager } from 'ws-dottie';
 
-// Configure at runtime (useful for dynamic environments)
-configManager.setConfig({
-  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
-  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional: route through proxy
-});
+// Set API key only (recommended for web clients)
+configManager.setApiKey('your_api_key_here');
+
+// Set base URL only (optional: route through proxy)
+configManager.setBaseUrl('https://your-proxy-server.com');
 ```
+
+This approach is useful for:
+- Web applications that need to pass environment variables from server to client
+- Applications that load configuration from external sources
+- Multi-tenant applications with different API keys
+- Development environments with different configurations
+- Routing requests through proxy servers for security or monitoring
 
 ### 4. Start Building
 

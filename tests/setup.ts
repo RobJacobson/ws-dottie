@@ -10,9 +10,7 @@ beforeAll(() => {
   process.env.NODE_ENV = "test";
 
   // Configure API key for testing
-  const apiKey =
-    process.env.WSDOT_ACCESS_TOKEN ||
-    process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN;
+  const apiKey = process.env.WSDOT_ACCESS_TOKEN;
   if (!apiKey) {
     console.warn("WSDOT_ACCESS_TOKEN not set - integration tests may fail");
   }

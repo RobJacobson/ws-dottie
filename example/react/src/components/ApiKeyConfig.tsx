@@ -103,7 +103,7 @@ const ApiKeyConfig = () => {
           <div className="text-xs text-blue-800 space-y-1">
             <p>• <strong>Configuration Object:</strong> Pass config to API functions</p>
             <p>• <strong>Global Configuration:</strong> Use setConfig()</p>
-            <p>• <strong>Environment Variables:</strong> WSDOT_ACCESS_TOKEN, EXPO_PUBLIC_WSDOT_ACCESS_TOKEN, etc.</p>
+            <p>• <strong>Environment Variables:</strong> WSDOT_ACCESS_TOKEN, etc.</p>
           </div>
         </div>
       </div>

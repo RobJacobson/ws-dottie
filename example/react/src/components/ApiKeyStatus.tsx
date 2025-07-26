@@ -4,8 +4,8 @@ const ApiKeyStatus = () => {
   // Check if API key is configured - use a universal approach
   const getApiKeyFromEnv = (): string => {
     // Node.js environment
-    if (typeof process !== "undefined" && process.env?.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN) {
-      return process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN;
+    if (typeof process !== "undefined" && process.env?.WSDOT_ACCESS_TOKEN) {
+      return process.env.WSDOT_ACCESS_TOKEN;
     }
     
     // For Vite applications, environment variables are handled at build time

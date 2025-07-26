@@ -598,56 +598,7 @@ function WeatherDashboard() {
 ```javascript
 // Check your environment variables
 console.log('WSDOT_ACCESS_TOKEN:', process.env.WSDOT_ACCESS_TOKEN);
-console.log('EXPO_PUBLIC_WSDOT_ACCESS_TOKEN:', process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN);
-
-// Or check runtime configuration
-import { configManager } from 'ws-dottie';
-console.log('API Key:', configManager.getApiKey());
 ```
 
 **"QueryClient not found" error**
-```javascript
-// Make sure TanStack Query is installed and configured
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <YourApp />
-    </QueryClientProvider>
-  );
-}
 ```
-
-**Network errors in browser**
-```javascript
-// WS-Dottie automatically uses JSONP for browsers
-// Check your browser's network tab for CORS errors
-// Ensure your API key is valid
-```
-
-### Performance Optimization
-
-```javascript
-// Use selective imports to reduce bundle size
-import { useVesselLocations } from 'ws-dottie';
-
-// Instead of importing everything
-// import * as WSdot from 'ws-dottie';
-```
-
-### Debug Mode
-
-```javascript
-// Enable debug logging for troubleshooting
-const vessels = await WsfVessels.getVesselLocations();
-const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
-```
-
----
-
-**For more examples, check out the source code or open an issue on GitHub!**
-
-**Need help navigating the documentation?** Check out the [Documentation Index](./INDEX.md) for complete navigation. 

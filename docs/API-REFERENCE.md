@@ -38,24 +38,20 @@ WS-Dottie provides flexible configuration options for different deployment scena
 ```bash
 # Node.js applications
 export WSDOT_ACCESS_TOKEN=your_api_key_here
-
-# React/Expo applications
-export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
-
-# Optional: Custom base URL for proxy routing
-export WSDOT_BASE_URL=https://your-proxy-server.com
 ```
 
-### Runtime Configuration
+#### Runtime Configuration
+
+For web applications or dynamic environments:
 
 ```javascript
 import { configManager } from 'ws-dottie';
 
-// Configure at runtime
-configManager.setConfig({
-  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
-  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional
-});
+// Set API key only (recommended for web clients)
+configManager.setApiKey('your_api_key_here');
+
+// Set base URL only (optional: route through proxy)
+configManager.setBaseUrl('https://your-proxy-server.com');
 
 // Clear configuration (useful for testing)
 configManager.clearConfig();

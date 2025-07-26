@@ -14,11 +14,11 @@
  *
  * Usage:
  * ```typescript
- * // Set configuration manually
- * configManager.setConfig({
- *   WSDOT_ACCESS_TOKEN: "your-api-key",
- *   WSDOT_BASE_URL: "https://custom.wsdot.wa.gov"
- * });
+ * // Set API key only
+ * configManager.setApiKey("your-api-key");
+ *
+ * // Set base URL only
+ * configManager.setBaseUrl("https://custom.wsdot.wa.gov");
  *
  * // Get API key (auto-initializes from environment if not set)
  * const apiKey = configManager.getApiKey();
@@ -54,67 +54,59 @@ const getEnvVar = (key: string): string | undefined => {
   return undefined;
 };
 
-// Get API key from environment variables
-const getApiKeyFromEnv = (): string => {
-  const apiKey =
-    getEnvVar("WSDOT_ACCESS_TOKEN") ||
-    getEnvVar("EXPO_PUBLIC_WSDOT_ACCESS_TOKEN");
-  return apiKey || "";
-};
+// Initialize configuration from environment variables at module load
+const initializeFromEnv = (): WsdotConfig => {
+  const apiKey = getEnvVar("WSDOT_ACCESS_TOKEN") || "";
+  const baseUrl = getEnvVar("WSDOT_BASE_URL") || DEFAULT_BASE_URL;
 
-// Get base URL from environment variables
-const getBaseUrlFromEnv = (): string | undefined => {
-  return getEnvVar("WSDOT_BASE_URL") || getEnvVar("EXPO_PUBLIC_WSDOT_BASE_URL");
-};
-
-// Global configuration state
-let globalConfig: WsdotConfig | null = null;
-
-// Initialize config from environment if not already set
-const initializeConfig = (): WsdotConfig => {
-  // Return existing config if already initialized
-  if (globalConfig) {
-    return globalConfig;
-  }
-
-  // Read from environment variables
-  const apiKey = getApiKeyFromEnv();
-  if (!apiKey) {
-    throw new Error(
-      "WSDOT_ACCESS_TOKEN is required. Set it via WSDOT_ACCESS_TOKEN environment variable."
-    );
-  }
-
-  // Create and store the config
-  globalConfig = {
+  return {
     WSDOT_ACCESS_TOKEN: apiKey,
-    WSDOT_BASE_URL: getBaseUrlFromEnv() || DEFAULT_BASE_URL,
+    WSDOT_BASE_URL: baseUrl,
   };
-
-  return globalConfig;
 };
+
+// Global configuration state - initialized from environment at module load
+let globalConfig: WsdotConfig = initializeFromEnv();
 
 // Configuration management functions
 const getApiKey = (): string => {
-  return initializeConfig().WSDOT_ACCESS_TOKEN;
+  if (!globalConfig.WSDOT_ACCESS_TOKEN) {
+    throw new Error(
+      "WSDOT_ACCESS_TOKEN is required. Set it via WSDOT_ACCESS_TOKEN environment variable or use configManager.setApiKey()."
+    );
+  }
+  return globalConfig.WSDOT_ACCESS_TOKEN;
 };
 
 const getBaseUrl = (): string => {
-  return initializeConfig().WSDOT_BASE_URL || DEFAULT_BASE_URL;
+  return globalConfig.WSDOT_BASE_URL || DEFAULT_BASE_URL;
 };
 
-const setConfig = (config: WsdotConfig): void => {
-  globalConfig = config;
+const setApiKey = (apiKey: string): void => {
+  if (!apiKey || apiKey.trim() === "") {
+    throw new Error("API key cannot be empty");
+  }
+
+  globalConfig.WSDOT_ACCESS_TOKEN = apiKey.trim();
+};
+
+const setBaseUrl = (baseUrl: string): void => {
+  if (!baseUrl || baseUrl.trim() === "") {
+    throw new Error("Base URL cannot be empty");
+  }
+
+  globalConfig.WSDOT_BASE_URL = baseUrl.trim();
 };
 
 const clearConfig = (): void => {
-  globalConfig = null;
+  globalConfig = initializeFromEnv();
 };
 
 // Configuration manager object for clean interface
 export const configManager = {
   getApiKey,
   getBaseUrl,
-  setConfig,
+  setApiKey,
+  setBaseUrl,
   clearConfig,
 };
