@@ -13,7 +13,24 @@ The Weather Information Extended API provides enhanced weather data including:
 - Elevation data for weather stations
 - Real-time weather updates with detailed sensor readings
 
+## Features
+
+| Feature | Description |
+|---------|-------------|
+| **Extended Weather Data** | Surface and subsurface temperature measurements |
+| **Road Condition Monitoring** | Surface temperature, freezing temperature, and road condition codes |
+| **Comprehensive Precipitation** | Multiple time period precipitation measurements (1h, 3h, 6h, 12h, 24h) |
+| **Snow Monitoring** | Snow depth measurements in centimeters |
+| **Elevation Data** | Station elevation information for altitude-based analysis |
+| **Real-time Updates** | Live weather station readings with frequent updates |
+| **Geographic Coverage** | Weather stations across Washington State |
+| **Detailed Sensor Data** | Multiple sensors per station for comprehensive readings |
+
 ## API Endpoints
+
+| Endpoint | Method | Description | Returns |
+|----------|--------|-------------|---------|
+| `/api/Scanweb` | GET | Extended weather information from all WSDOT weather stations | `WeatherReading[]` |
 
 ### Get Extended Weather Information
 
@@ -27,34 +44,19 @@ const weatherReadings = await getWeatherInformationExtended();
 
 **Returns:** `Promise<WeatherReading[]>`
 
-## React Query Hooks
+## React Integration
 
-### useWeatherInformationExtended
+For React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
 
-React Query hook for retrieving extended weather information.
+### React Hook Usage
 
 ```typescript
-import { useWeatherInformationExtended } from '@wsdot/api-client';
+import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
 
-function WeatherInformationExtendedComponent() {
+function WeatherComponent() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <div>
-      {weatherReadings?.map(reading => (
-        <div key={reading.StationId}>
-          <h3>{reading.StationName}</h3>
-          <p>Air Temperature: {reading.AirTemperature}°C</p>
-          <p>Elevation: {reading.Elevation} ft</p>
-          <p>Surface Temperature: {reading.SurfaceMeasurements[0]?.SurfaceTemperature}°C</p>
-          <p>Snow Depth: {reading.SnowDepth} cm</p>
-        </div>
-      ))}
-    </div>
-  );
+  
+  // Component implementation
 }
 ```
 
@@ -71,7 +73,7 @@ type WeatherReading = {
   Latitude: number;                            // Station latitude coordinate
   Longitude: number;                           // Station longitude coordinate
   Elevation: number;                           // Station elevation in feet
-  ReadingTime: Date;                           // When the reading was taken
+  ReadingTime: Date | null;                    // When the reading was taken (can be null)
   AirTemperature: number | null;               // Air temperature in Celsius
   RelativeHumidty: number | null;              // Relative humidity percentage (note: API typo)
   AverageWindSpeed: number | null;             // Average wind speed
@@ -88,8 +90,8 @@ type WeatherReading = {
   PrecipitationAccumulation: number | null;    // Total precipitation accumulation
   BarometricPressure: number | null;           // Barometric pressure
   SnowDepth: number | null;                    // Snow depth in centimeters
-  SurfaceMeasurements: SurfaceMeasurement[];   // Road surface measurements
-  SubSurfaceMeasurements: SubSurfaceMeasurement[]; // Below-surface measurements
+  SurfaceMeasurements: SurfaceMeasurement[] | null;   // Road surface measurements
+  SubSurfaceMeasurements: SubSurfaceMeasurement[] | null; // Below-surface measurements
 };
 ```
 
@@ -125,45 +127,38 @@ Array of extended weather reading records.
 type WeatherInformationExtendedResponse = WeatherReading[];
 ```
 
-## Error Handling
+## Parameters
 
-All functions throw `WsdotApiError` instances when the API request fails. Common error scenarios include:
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `options` | `object` | No | `{}` | Optional configuration object |
+| `options.logMode` | `'none' \| 'basic' \| 'detailed'` | No | `'none'` | Logging level for API calls |
 
-- **API_ERROR**: The WSDOT API returned an error response
-- **NETWORK_ERROR**: Network connectivity issues
-- **TIMEOUT_ERROR**: Request timed out
+## React Hooks
 
-```typescript
-import { getWeatherInformationExtended } from '@wsdot/api-client';
-import { WsdotApiError } from '@wsdot/api-client';
+| Hook | Description | Returns |
+|------|-------------|---------|
+| `useWeatherInformationExtended(options?)` | Fetches extended weather information | `UseQueryResult<WeatherReading[], WsdotApiError>` |
 
-try {
-  const weatherReadings = await getWeatherInformationExtended();
-  console.log('Extended weather readings retrieved:', weatherReadings.length);
-} catch (error) {
-  if (error instanceof WsdotApiError) {
-    console.error('WSDOT API Error:', error.message);
-    console.error('Error Code:', error.code);
-  } else {
-    console.error('Unexpected error:', error);
-  }
-}
-```
+## Caching Strategy
 
-## Caching
+| Strategy | Duration | Description |
+|----------|----------|-------------|
+| **Default Caching** | 5 minutes | Standard caching for weather data |
+| **Stale Time** | 2 minutes | Data considered fresh for 2 minutes |
+| **Background Refetch** | Enabled | Automatically refetches in background |
+| **Error Retry** | 3 attempts | Retries failed requests up to 3 times |
 
-The React Query hooks use frequent update caching strategies:
+## Common Patterns
 
-- **Stale Time**: 30 seconds (data considered fresh for 30 seconds)
-- **Cache Time**: 2 minutes (data kept in cache for 2 minutes)
-- **Refetch Interval**: 30 seconds (automatically refetch every 30 seconds)
+For information about error handling, caching strategies, and other common patterns, see the [API Reference](../API-REFERENCE.md) documentation.
 
 ## Examples
 
 ### Weather Station Dashboard
 
 ```typescript
-import { useWeatherInformationExtended } from '@wsdot/api-client';
+import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
 
 function WeatherStationDashboard() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -182,7 +177,7 @@ function WeatherStationDashboard() {
               <p><strong>Station ID:</strong> {reading.StationId}</p>
               <p><strong>Elevation:</strong> {reading.Elevation} ft</p>
               <p><strong>Coordinates:</strong> ({reading.Latitude}, {reading.Longitude})</p>
-              <p><strong>Last Updated:</strong> {reading.ReadingTime.toLocaleString()}</p>
+              <p><strong>Last Updated:</strong> {reading.ReadingTime?.toLocaleString()}</p>
             </div>
             
             <div className="air-conditions">
@@ -212,7 +207,7 @@ function WeatherStationDashboard() {
               <p><strong>Snow Depth:</strong> {reading.SnowDepth} cm</p>
             </div>
             
-            {reading.SurfaceMeasurements.length > 0 && (
+            {reading.SurfaceMeasurements && reading.SurfaceMeasurements.length > 0 && (
               <div className="surface-measurements">
                 <h4>Surface Measurements</h4>
                 {reading.SurfaceMeasurements.map((measurement, index) => (
@@ -226,7 +221,7 @@ function WeatherStationDashboard() {
               </div>
             )}
             
-            {reading.SubSurfaceMeasurements.length > 0 && (
+            {reading.SubSurfaceMeasurements && reading.SubSurfaceMeasurements.length > 0 && (
               <div className="subsurface-measurements">
                 <h4>Subsurface Measurements</h4>
                 {reading.SubSurfaceMeasurements.map((measurement, index) => (
@@ -248,7 +243,7 @@ function WeatherStationDashboard() {
 ### Road Condition Monitoring
 
 ```typescript
-import { useWeatherInformationExtended } from '@wsdot/api-client';
+import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
 
 function RoadConditionMonitor() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -257,11 +252,11 @@ function RoadConditionMonitor() {
   if (error) return <div>Error: {error.message}</div>;
 
   const stationsWithSurfaceData = weatherReadings?.filter(reading => 
-    reading.SurfaceMeasurements.length > 0
+    reading.SurfaceMeasurements && reading.SurfaceMeasurements.length > 0
   ) || [];
 
   const freezingConditions = stationsWithSurfaceData.filter(reading => 
-    reading.SurfaceMeasurements.some(measurement => 
+    reading.SurfaceMeasurements?.some(measurement => 
       measurement.SurfaceTemperature !== null && measurement.SurfaceTemperature <= 0
     )
   );
@@ -300,7 +295,7 @@ function RoadConditionMonitor() {
             <div key={reading.StationId} className="alert freezing">
               <h4>{reading.StationName}</h4>
               <p><strong>Elevation:</strong> {reading.Elevation} ft</p>
-              {reading.SurfaceMeasurements.map(measurement => (
+              {reading.SurfaceMeasurements?.map(measurement => (
                 <div key={measurement.SensorId}>
                   <p><strong>Surface Temperature:</strong> {measurement.SurfaceTemperature}°C</p>
                   <p><strong>Freezing Temperature:</strong> {measurement.RoadFreezingTemperature}°C</p>
@@ -333,7 +328,7 @@ function RoadConditionMonitor() {
 ### Snow Monitoring
 
 ```typescript
-import { useWeatherInformationExtended } from '@wsdot/api-client';
+import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
 
 function SnowMonitor() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -424,7 +419,7 @@ function SnowMonitor() {
 ### Precipitation Analysis
 
 ```typescript
-import { useWeatherInformationExtended } from '@wsdot/api-client';
+import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
 
 function PrecipitationAnalysis() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -526,7 +521,7 @@ function PrecipitationAnalysis() {
 ### Elevation-Based Weather Analysis
 
 ```typescript
-import { useWeatherInformationExtended } from '@wsdot/api-client';
+import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
 
 function ElevationWeatherAnalysis() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -622,6 +617,23 @@ function ElevationWeatherAnalysis() {
   );
 }
 ```
+
+## Common Use Cases
+
+### Road Condition Monitoring
+Monitor road surface temperatures and conditions for winter maintenance operations.
+
+### Snow Depth Tracking
+Track snow accumulation across different elevations and regions.
+
+### Precipitation Analysis
+Analyze precipitation patterns across multiple time periods for flood monitoring.
+
+### Weather Station Network
+Build comprehensive weather monitoring dashboards with extended sensor data.
+
+### Elevation-Based Analysis
+Compare weather conditions across different elevation zones.
 
 ## API Documentation
 
