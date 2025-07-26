@@ -1,44 +1,55 @@
 import { describe, expect, it } from "vitest";
+
 import { getHighwayCameras } from "@/api/wsdot-highway-cameras";
+
+import { validateAndReturn } from "../../utils-zod";
 import { validators } from "./validator";
 
 describe("WSDOT Highway Cameras API - Zod Validation", () => {
   it("should validate highway cameras data structure using Zod", async () => {
     console.log("🚀 Testing WSDOT Highway Cameras API validation...");
     const cameras = await getHighwayCameras();
-    const validatedData = validators.camerasArray.validateSafe(cameras);
-    if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Highway cameras validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
-    }
-    expect(validatedData.data).toBeDefined();
-    expect(Array.isArray(validatedData.data)).toBe(true);
-    expect(validatedData.data.length).toBeGreaterThan(0);
-    console.log(`✅ Successfully validated ${validatedData.data.length} highway cameras`);
+
+    // Use utility for validation
+    const validatedData = validateAndReturn(
+      validators.camerasArray,
+      cameras,
+      "highway cameras array"
+    );
+
+    expect(validatedData).toBeDefined();
+    expect(Array.isArray(validatedData)).toBe(true);
+    expect(validatedData.length).toBeGreaterThan(0);
+    console.log(
+      `✅ Successfully validated ${validatedData.length} highway cameras`
+    );
   });
 
   it("should validate individual highway camera data", async () => {
     const cameras = await getHighwayCameras();
     if (cameras.length > 0) {
       const firstCamera = cameras[0];
-      const validatedCamera = validators.camera.validateSafe(firstCamera);
-      if (!validatedCamera.success) {
-        console.error("Individual validation failed:", validatedCamera.error.errors);
-        throw new Error(`Individual camera validation failed: ${JSON.stringify(validatedCamera.error.errors, null, 2)}`);
-      }
-      expect(validatedCamera.data.CameraID).toBeDefined();
-      expect(typeof validatedCamera.data.CameraID).toBe("number");
-      expect(validatedCamera.data.Title).toBeDefined();
-      expect(typeof validatedCamera.data.Title).toBe("string");
-      expect(validatedCamera.data.ImageURL).toBeDefined();
-      expect(typeof validatedCamera.data.ImageURL).toBe("string");
-      expect(typeof validatedCamera.data.IsActive).toBe("boolean");
-      expect(typeof validatedCamera.data.Region).toBe("string");
-      expect(typeof validatedCamera.data.ImageWidth).toBe("number");
-      expect(typeof validatedCamera.data.ImageHeight).toBe("number");
-      expect(typeof validatedCamera.data.DisplayLatitude).toBe("number");
-      expect(typeof validatedCamera.data.DisplayLongitude).toBe("number");
-      expect(typeof validatedCamera.data.SortOrder).toBe("number");
+
+      // Use utility for individual validation
+      const validatedCamera = validateAndReturn(
+        validators.camera,
+        firstCamera,
+        "individual highway camera"
+      );
+
+      expect(validatedCamera.CameraID).toBeDefined();
+      expect(typeof validatedCamera.CameraID).toBe("number");
+      expect(validatedCamera.Title).toBeDefined();
+      expect(typeof validatedCamera.Title).toBe("string");
+      expect(validatedCamera.ImageURL).toBeDefined();
+      expect(typeof validatedCamera.ImageURL).toBe("string");
+      expect(typeof validatedCamera.IsActive).toBe("boolean");
+      expect(typeof validatedCamera.Region).toBe("string");
+      expect(typeof validatedCamera.ImageWidth).toBe("number");
+      expect(typeof validatedCamera.ImageHeight).toBe("number");
+      expect(typeof validatedCamera.DisplayLatitude).toBe("number");
+      expect(typeof validatedCamera.DisplayLongitude).toBe("number");
+      expect(typeof validatedCamera.SortOrder).toBe("number");
     }
   });
 
@@ -46,18 +57,25 @@ describe("WSDOT Highway Cameras API - Zod Validation", () => {
     const cameras = await getHighwayCameras();
     if (cameras.length > 0) {
       const firstCamera = cameras[0];
-      const validatedCamera = validators.camera.validateSafe(firstCamera);
-      if (validatedCamera.success) {
-        expect(typeof validatedCamera.data.CameraLocation.RoadName).toBe("string");
-        expect(typeof validatedCamera.data.CameraLocation.Latitude).toBe("number");
-        expect(typeof validatedCamera.data.CameraLocation.Longitude).toBe("number");
-        expect(typeof validatedCamera.data.CameraLocation.MilePost).toBe("number");
-        if (validatedCamera.data.CameraLocation.Description !== null) {
-          expect(typeof validatedCamera.data.CameraLocation.Description).toBe("string");
-        }
-        if (validatedCamera.data.CameraLocation.Direction !== null) {
-          expect(typeof validatedCamera.data.CameraLocation.Direction).toBe("string");
-        }
+
+      // Use utility for validation
+      const validatedCamera = validateAndReturn(
+        validators.camera,
+        firstCamera,
+        "camera location data"
+      );
+
+      expect(typeof validatedCamera.CameraLocation.RoadName).toBe("string");
+      expect(typeof validatedCamera.CameraLocation.Latitude).toBe("number");
+      expect(typeof validatedCamera.CameraLocation.Longitude).toBe("number");
+      expect(typeof validatedCamera.CameraLocation.MilePost).toBe("number");
+      if (validatedCamera.CameraLocation.Description !== null) {
+        expect(typeof validatedCamera.CameraLocation.Description).toBe(
+          "string"
+        );
+      }
+      if (validatedCamera.CameraLocation.Direction !== null) {
+        expect(typeof validatedCamera.CameraLocation.Direction).toBe("string");
       }
     }
   });
@@ -65,19 +83,21 @@ describe("WSDOT Highway Cameras API - Zod Validation", () => {
   it("should handle nullable fields correctly", async () => {
     const cameras = await getHighwayCameras();
     for (const camera of cameras) {
-      const validatedCamera = validators.camera.validateSafe(camera);
-      if (!validatedCamera.success) {
-        console.error("Nullable validation failed:", validatedCamera.error.errors);
-        throw new Error(`Nullable field validation failed: ${JSON.stringify(validatedCamera.error.errors, null, 2)}`);
+      // Use utility for validation
+      const validatedCamera = validateAndReturn(
+        validators.camera,
+        camera,
+        "nullable fields validation"
+      );
+
+      if (validatedCamera.CameraOwner !== null) {
+        expect(typeof validatedCamera.CameraOwner).toBe("string");
       }
-      if (validatedCamera.data.CameraOwner !== null) {
-        expect(typeof validatedCamera.data.CameraOwner).toBe("string");
+      if (validatedCamera.Description !== null) {
+        expect(typeof validatedCamera.Description).toBe("string");
       }
-      if (validatedCamera.data.Description !== null) {
-        expect(typeof validatedCamera.data.Description).toBe("string");
-      }
-      if (validatedCamera.data.OwnerURL !== null) {
-        expect(typeof validatedCamera.data.OwnerURL).toBe("string");
+      if (validatedCamera.OwnerURL !== null) {
+        expect(typeof validatedCamera.OwnerURL).toBe("string");
       }
     }
   });
@@ -101,38 +121,31 @@ describe("WSDOT Highway Cameras API - Zod Validation", () => {
         Title: 131,
       },
     ];
+
+    // Use utility for validation with error details
     const result = validators.camerasArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
+
     if (!result.success) {
       expect(result.error.errors).toBeDefined();
+      expect(Array.isArray(result.error.errors)).toBe(true);
       expect(result.error.errors.length).toBeGreaterThan(0);
-      console.log("Validation Error Details:", {
-        context: "malformed highway cameras",
-        errors: result.error.errors,
-        received: malformedData,
-      });
     }
   });
 
   it("should demonstrate the power of single-line validation", async () => {
     const cameras = await getHighwayCameras();
-    const validatedData = validators.camerasArray.validateSafe(cameras);
-    if (!validatedData.success) {
-      throw new Error("Single-line validation failed");
-    }
-    const firstCamera = validatedData.data[0];
-    expect(firstCamera.CameraID).toBeDefined();
-    expect(firstCamera.Title).toBeDefined();
-    expect(firstCamera.ImageURL).toBeDefined();
-    expect(typeof firstCamera.IsActive).toBe("boolean");
-    expect(typeof firstCamera.Region).toBe("string");
-    expect(typeof firstCamera.ImageWidth).toBe("number");
-    expect(typeof firstCamera.ImageHeight).toBe("number");
-    expect(typeof firstCamera.DisplayLatitude).toBe("number");
-    expect(typeof firstCamera.DisplayLongitude).toBe("number");
-    expect(typeof firstCamera.SortOrder).toBe("number");
-    console.log("✅ Single-line validation successful - all data is type-safe!");
-  });
 
-  console.log("✅ WSDOT Highway Cameras API validation tests completed");
-}); 
+    // Single-line validation using utility
+    const validatedCameras = validateAndReturn(
+      validators.camerasArray,
+      cameras,
+      "highway cameras"
+    );
+
+    expect(validatedCameras.length).toBeGreaterThan(0);
+    console.log(
+      "✅ Single-line validation successful - all data is type-safe!"
+    );
+  });
+});

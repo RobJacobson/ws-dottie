@@ -16,19 +16,26 @@ import {
   getVesselVerboseById,
 } from "@/api/wsf-vessels";
 
+import { validateAndReturn } from "../../utils-zod";
 import { validators } from "./validator";
 
 describe("WSF Vessels API - Zod Validation", () => {
   it("should validate vessel basics data structure using Zod", async () => {
     const vesselBasics = await getVesselBasics();
 
-    // Validate the entire array structure
-    const validatedBasics =
-      validators.vesselBasicArray.validateSafe(vesselBasics);
-    expect(validatedBasics.success).toBe(true);
+    // Validate the entire array structure using utility
+    const validatedBasics = validateAndReturn(
+      validators.vesselBasicArray,
+      vesselBasics,
+      "vessel basics array"
+    );
 
-    if (validatedBasics.success && validatedBasics.data.length > 0) {
-      const firstVessel = validatedBasics.data[0];
+    expect(validatedBasics).toBeDefined();
+    expect(Array.isArray(validatedBasics)).toBe(true);
+    expect(validatedBasics.length).toBeGreaterThan(0);
+
+    if (validatedBasics.length > 0) {
+      const firstVessel = validatedBasics[0];
 
       // Test individual vessel basic properties
       expect(firstVessel.VesselID).toBeGreaterThan(0);
@@ -45,14 +52,17 @@ describe("WSF Vessels API - Zod Validation", () => {
 
     if (vesselBasics.length > 0) {
       const firstVessel = vesselBasics[0];
-      const validatedVessel = validators.vesselBasic.validateSafe(firstVessel);
-      expect(validatedVessel.success).toBe(true);
 
-      if (validatedVessel.success) {
-        expect(validatedVessel.data.VesselID).toBeGreaterThan(0);
-        expect(validatedVessel.data.VesselName).toBeTruthy();
-        expect(validatedVessel.data.Class.ClassID).toBeGreaterThan(0);
-      }
+      // Use utility for individual validation
+      const validatedVessel = validateAndReturn(
+        validators.vesselBasic,
+        firstVessel,
+        "individual vessel basic"
+      );
+
+      expect(validatedVessel.VesselID).toBeGreaterThan(0);
+      expect(validatedVessel.VesselName).toBeTruthy();
+      expect(validatedVessel.Class.ClassID).toBeGreaterThan(0);
     }
   });
 
@@ -65,26 +75,34 @@ describe("WSF Vessels API - Zod Validation", () => {
         vesselId: firstVesselId,
       });
 
-      const validatedVessel = validators.vesselBasic.validateSafe(vesselBasic);
-      expect(validatedVessel.success).toBe(true);
+      // Use utility for validation
+      const validatedVessel = validateAndReturn(
+        validators.vesselBasic,
+        vesselBasic,
+        "vessel basic by ID"
+      );
 
-      if (validatedVessel.success) {
-        expect(validatedVessel.data.VesselID).toBe(firstVesselId);
-        expect(validatedVessel.data.VesselName).toBeTruthy();
-      }
+      expect(validatedVessel.VesselID).toBe(firstVesselId);
+      expect(validatedVessel.VesselName).toBeTruthy();
     }
   });
 
   it("should validate vessel locations data structure using Zod", async () => {
     const vesselLocations = await getVesselLocations();
 
-    // Validate the entire array structure
-    const validatedLocations =
-      validators.vesselLocationArray.validateSafe(vesselLocations);
-    expect(validatedLocations.success).toBe(true);
+    // Validate the entire array structure using utility
+    const validatedLocations = validateAndReturn(
+      validators.vesselLocationArray,
+      vesselLocations,
+      "vessel locations array"
+    );
 
-    if (validatedLocations.success && validatedLocations.data.length > 0) {
-      const firstLocation = validatedLocations.data[0];
+    expect(validatedLocations).toBeDefined();
+    expect(Array.isArray(validatedLocations)).toBe(true);
+    expect(validatedLocations.length).toBeGreaterThan(0);
+
+    if (validatedLocations.length > 0) {
+      const firstLocation = validatedLocations[0];
 
       // Test individual vessel location properties
       expect(firstLocation.VesselID).toBeGreaterThan(0);
@@ -104,20 +122,19 @@ describe("WSF Vessels API - Zod Validation", () => {
 
     if (vesselLocations.length > 0) {
       const firstLocation = vesselLocations[0];
-      const validatedLocation =
-        validators.vesselLocation.validateSafe(firstLocation);
-      expect(validatedLocation.success).toBe(true);
 
-      if (validatedLocation.success) {
-        expect(validatedLocation.data.VesselID).toBeGreaterThan(0);
-        expect(validatedLocation.data.Latitude).toBeGreaterThanOrEqual(-90);
-        expect(validatedLocation.data.Longitude).toBeGreaterThanOrEqual(-180);
-        if (validatedLocation.data.ScheduledDeparture !== null) {
-          expect(validatedLocation.data.ScheduledDeparture).toBeInstanceOf(
-            Date
-          );
-        }
-        expect(validatedLocation.data.TimeStamp).toBeInstanceOf(Date);
+      // Use utility for individual validation
+      const validatedLocation = validateAndReturn(
+        validators.vesselLocation,
+        firstLocation,
+        "individual vessel location"
+      );
+
+      expect(validatedLocation.VesselID).toBeGreaterThan(0);
+      expect(validatedLocation.Latitude).toBeGreaterThanOrEqual(-90);
+      expect(validatedLocation.Longitude).toBeGreaterThanOrEqual(-180);
+      if (validatedLocation.ScheduledDeparture !== null) {
+        expect(validatedLocation.ScheduledDeparture).toBeInstanceOf(Date);
       }
     }
   });
@@ -131,32 +148,35 @@ describe("WSF Vessels API - Zod Validation", () => {
         vesselId: firstVesselId,
       });
 
-      const validatedLocation =
-        validators.vesselLocation.validateSafe(vesselLocation);
-      expect(validatedLocation.success).toBe(true);
+      // Use utility for validation
+      const validatedLocation = validateAndReturn(
+        validators.vesselLocation,
+        vesselLocation,
+        "vessel location by ID"
+      );
 
-      if (validatedLocation.success) {
-        expect(validatedLocation.data.VesselID).toBe(firstVesselId);
-        expect(validatedLocation.data.Latitude).toBeGreaterThanOrEqual(-90);
-        expect(validatedLocation.data.Longitude).toBeGreaterThanOrEqual(-180);
-      }
+      expect(validatedLocation.VesselID).toBe(firstVesselId);
+      expect(validatedLocation.Latitude).toBeGreaterThanOrEqual(-90);
+      expect(validatedLocation.Longitude).toBeGreaterThanOrEqual(-180);
     }
   });
 
   it("should validate vessel accommodations data structure using Zod", async () => {
     const vesselAccommodations = await getVesselAccommodations();
 
-    // Validate the entire array structure
-    const validatedAccommodations =
-      validators.vesselAccommodationArray.validateSafe(vesselAccommodations);
+    // Validate the entire array structure using utility
+    const validatedAccommodations = validateAndReturn(
+      validators.vesselAccommodationArray,
+      vesselAccommodations,
+      "vessel accommodations array"
+    );
 
-    expect(validatedAccommodations.success).toBe(true);
+    expect(validatedAccommodations).toBeDefined();
+    expect(Array.isArray(validatedAccommodations)).toBe(true);
+    expect(validatedAccommodations.length).toBeGreaterThan(0);
 
-    if (
-      validatedAccommodations.success &&
-      validatedAccommodations.data.length > 0
-    ) {
-      const firstAccommodation = validatedAccommodations.data[0];
+    if (validatedAccommodations.length > 0) {
+      const firstAccommodation = validatedAccommodations[0];
 
       // Test individual vessel accommodation properties
       expect(firstAccommodation.VesselID).toBeGreaterThan(0);
@@ -175,17 +195,17 @@ describe("WSF Vessels API - Zod Validation", () => {
 
     if (vesselAccommodations.length > 0) {
       const firstAccommodation = vesselAccommodations[0];
-      const validatedAccommodation =
-        validators.vesselAccommodation.validateSafe(firstAccommodation);
-      expect(validatedAccommodation.success).toBe(true);
 
-      if (validatedAccommodation.success) {
-        expect(validatedAccommodation.data.VesselID).toBeGreaterThan(0);
-        expect(validatedAccommodation.data.VesselName).toBeTruthy();
-        expect(typeof validatedAccommodation.data.ADAAccessible).toBe(
-          "boolean"
-        );
-      }
+      // Use utility for individual validation
+      const validatedAccommodation = validateAndReturn(
+        validators.vesselAccommodation,
+        firstAccommodation,
+        "individual vessel accommodation"
+      );
+
+      expect(validatedAccommodation.VesselID).toBeGreaterThan(0);
+      expect(validatedAccommodation.VesselName).toBeTruthy();
+      expect(typeof validatedAccommodation.ADAAccessible).toBe("boolean");
     }
   });
 
@@ -198,28 +218,34 @@ describe("WSF Vessels API - Zod Validation", () => {
         vesselId: firstVesselId,
       });
 
-      const validatedAccommodation =
-        validators.vesselAccommodation.validateSafe(vesselAccommodation);
-      expect(validatedAccommodation.success).toBe(true);
+      // Use utility for validation
+      const validatedAccommodation = validateAndReturn(
+        validators.vesselAccommodation,
+        vesselAccommodation,
+        "vessel accommodation by ID"
+      );
 
-      if (validatedAccommodation.success) {
-        expect(validatedAccommodation.data.VesselID).toBe(firstVesselId);
-        expect(validatedAccommodation.data.VesselName).toBeTruthy();
-      }
+      expect(validatedAccommodation.VesselID).toBe(firstVesselId);
+      expect(validatedAccommodation.VesselName).toBeTruthy();
     }
   });
 
   it("should validate vessel stats data structure using Zod", async () => {
     const vesselStats = await getVesselStats();
 
-    // Validate the entire array structure
-    const validatedStats =
-      validators.vesselStatsArray.validateSafe(vesselStats);
+    // Validate the entire array structure using utility
+    const validatedStats = validateAndReturn(
+      validators.vesselStatsArray,
+      vesselStats,
+      "vessel stats array"
+    );
 
-    expect(validatedStats.success).toBe(true);
+    expect(validatedStats).toBeDefined();
+    expect(Array.isArray(validatedStats)).toBe(true);
+    expect(validatedStats.length).toBeGreaterThan(0);
 
-    if (validatedStats.success && validatedStats.data.length > 0) {
-      const firstStat = validatedStats.data[0];
+    if (validatedStats.length > 0) {
+      const firstStat = validatedStats[0];
 
       // Test individual vessel stats properties
       expect(firstStat.VesselID).toBeGreaterThan(0);
@@ -252,26 +278,29 @@ describe("WSF Vessels API - Zod Validation", () => {
 
     if (vesselStats.length > 0) {
       const firstStat = vesselStats[0];
-      const validatedStat = validators.vesselStats.validateSafe(firstStat);
-      expect(validatedStat.success).toBe(true);
 
-      if (validatedStat.success) {
-        expect(validatedStat.data.VesselID).toBeGreaterThan(0);
-        expect(validatedStat.data.SpeedInKnots).toBeGreaterThan(0);
-        expect(validatedStat.data.YearBuilt).toBeGreaterThan(1900);
+      // Use utility for individual validation
+      const validatedStat = validateAndReturn(
+        validators.vesselStats,
+        firstStat,
+        "individual vessel stats"
+      );
 
-        // Test nullable fields
-        if (validatedStat.data.VesselHistory !== null) {
-          expect(typeof validatedStat.data.VesselHistory).toBe("string");
-        }
-        if (validatedStat.data.VesselDrawingImg !== null) {
-          expect(typeof validatedStat.data.VesselDrawingImg).toBe("string");
-        }
-        if (validatedStat.data.MaxPassengerCountForInternational !== null) {
-          expect(
-            validatedStat.data.MaxPassengerCountForInternational
-          ).toBeGreaterThan(0);
-        }
+      expect(validatedStat.VesselID).toBeGreaterThan(0);
+      expect(validatedStat.SpeedInKnots).toBeGreaterThan(0);
+      expect(validatedStat.YearBuilt).toBeGreaterThan(1900);
+
+      // Test nullable fields
+      if (validatedStat.VesselHistory !== null) {
+        expect(typeof validatedStat.VesselHistory).toBe("string");
+      }
+      if (validatedStat.VesselDrawingImg !== null) {
+        expect(typeof validatedStat.VesselDrawingImg).toBe("string");
+      }
+      if (validatedStat.MaxPassengerCountForInternational !== null) {
+        expect(validatedStat.MaxPassengerCountForInternational).toBeGreaterThan(
+          0
+        );
       }
     }
   });
