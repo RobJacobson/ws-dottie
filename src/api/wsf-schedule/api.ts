@@ -20,9 +20,7 @@ import type {
 } from "./types";
 
 // Create a factory function for WSF Schedule API
-const createWsfScheduleFetch = createFetchFactory(
-  "https://www.wsdot.wa.gov/ferries/api/schedule/rest"
-);
+const createWsfScheduleFetch = createFetchFactory("/ferries/api/schedule/rest");
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS

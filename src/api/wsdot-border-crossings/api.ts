@@ -8,7 +8,7 @@ import type { BorderCrossingData } from "./types";
 
 // Create a factory function for WSDOT Border Crossings API
 const createWsdotBorderCrossingsFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
+  "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
 );
 
 /**

@@ -8,7 +8,7 @@ import type { WeatherStationData } from "./types";
 
 // Create a factory function for WSDOT Weather Stations API
 const createWsdotWeatherStationsFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/WeatherStations/WeatherStationsREST.svc"
+  "/Traffic/api/WeatherStations/WeatherStationsREST.svc"
 );
 
 /**

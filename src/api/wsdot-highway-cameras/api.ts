@@ -14,7 +14,7 @@ import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
 
 // Create a factory function for WSDOT Highway Cameras API
 const createWsdotHighwayCamerasFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
+  "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
 );
 
 /**

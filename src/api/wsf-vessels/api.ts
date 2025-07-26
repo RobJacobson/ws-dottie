@@ -15,9 +15,7 @@ import type {
 } from "./types";
 
 // Create a factory function for WSF Vessels API
-const createWsfVesselsFetch = createFetchFactory(
-  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
-);
+const createWsfVesselsFetch = createFetchFactory("/ferries/api/vessels/rest");
 
 // ============================================================================
 // VESSEL BASICS API FUNCTIONS

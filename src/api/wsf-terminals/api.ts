@@ -14,7 +14,7 @@ import type {
 
 // Create a factory function for WSF Terminals API
 const createWsfTerminalsFetch = createFetchFactory(
-  "https://www.wsdot.wa.gov/ferries/api/terminals/rest"
+  "/ferries/api/terminals/rest"
 );
 
 // ============================================================================

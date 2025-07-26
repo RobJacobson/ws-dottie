@@ -8,7 +8,7 @@ import type { MountainPassCondition } from "./types";
 
 // Create a factory function for WSDOT Mountain Pass Conditions API
 const createWsdotMountainPassConditionsFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
+  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
 );
 
 /**

@@ -8,7 +8,7 @@ import type { WeatherInfo } from "./types";
 
 // Create a factory function for WSDOT Weather Information API
 const createWsdotWeatherInformationFetch = createFetchFactory(
-  "https://wsdot.wa.gov/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
+  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
 );
 
 /**
