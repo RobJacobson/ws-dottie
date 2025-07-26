@@ -37,40 +37,34 @@ export interface WsdotConfig {
   WSDOT_BASE_URL?: string;
 }
 
+// Helper function to safely access environment variables
+const getEnvVar = (key: string): string | undefined => {
+  // Node.js environment
+  if (typeof process !== "undefined" && process.env) {
+    return process.env[key];
+  }
+
+  // Browser environment - try to access via window object if available
+  if (typeof window !== "undefined" && (window as any).__ENV__) {
+    return (window as any).__ENV__[key];
+  }
+
+  // For bundlers that inject environment variables, we'll rely on the consuming application
+  // to provide these via configuration rather than trying to access them directly
+  return undefined;
+};
+
 // Get API key from environment variables
 const getApiKeyFromEnv = (): string => {
-  // Node.js environment
-  if (typeof process !== "undefined" && process.env?.WSDOT_ACCESS_TOKEN) {
-    return process.env.WSDOT_ACCESS_TOKEN;
-  }
-
-  // Browser environment - let build tools handle the rest
-  if (typeof import.meta !== "undefined") {
-    const env = (import.meta as { env?: { WSDOT_ACCESS_TOKEN?: string } }).env;
-    if (env?.WSDOT_ACCESS_TOKEN) {
-      return env.WSDOT_ACCESS_TOKEN;
-    }
-  }
-
-  return "";
+  const apiKey =
+    getEnvVar("WSDOT_ACCESS_TOKEN") ||
+    getEnvVar("EXPO_PUBLIC_WSDOT_ACCESS_TOKEN");
+  return apiKey || "";
 };
 
 // Get base URL from environment variables
 const getBaseUrlFromEnv = (): string | undefined => {
-  // Node.js environment
-  if (typeof process !== "undefined" && process.env?.WSDOT_BASE_URL) {
-    return process.env.WSDOT_BASE_URL;
-  }
-
-  // Browser environment - let build tools handle the rest
-  if (typeof import.meta !== "undefined") {
-    const env = (import.meta as { env?: { WSDOT_BASE_URL?: string } }).env;
-    if (env?.WSDOT_BASE_URL) {
-      return env.WSDOT_BASE_URL;
-    }
-  }
-
-  return undefined;
+  return getEnvVar("WSDOT_BASE_URL") || getEnvVar("EXPO_PUBLIC_WSDOT_BASE_URL");
 };
 
 // Global configuration state
