@@ -82,7 +82,7 @@ Welcome to the WS-Dottie documentation! This index provides organized access to 
 ### Data Update Frequencies
 | API Category | Update Frequency | Caching Strategy |
 |--------------|------------------|------------------|
-| Real-time (Vessels, Alerts) | 30-60 seconds | REALTIME_UPDATES |
+| Real-time (Vessels, Alerts) | 5-10 seconds | REALTIME_UPDATES |
 | Frequent (Wait Times, Traffic) | 1-5 minutes | MINUTE_UPDATES |
 | Static (Terminals, Cameras) | 1 hour | HOURLY_UPDATES |
 | Historical (Schedules, Fares) | 1 day | DAILY_UPDATES |

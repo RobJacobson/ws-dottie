@@ -392,7 +392,7 @@ function AdvancedVesselTracker() {
     ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
     refetchInterval: 5 * 60 * 1000, // 5 minutes
     staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
     retry: 3, // 3 retries
     retryDelay: 5 * 1000, // 5 second delay between retries
   });

@@ -145,7 +145,7 @@ import { useVesselLocations } from 'ws-dottie';
 
 function CustomVesselApp() {
   const { data: vessels } = useVesselLocations({
-    staleTime: 30 * 1000, // 30 seconds
+    staleTime: 5 * 1000, // 5 seconds
     refetchInterval: 10 * 1000, // 10 seconds
   });
 
@@ -166,7 +166,7 @@ function AdvancedVesselTracker() {
     ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
     refetchInterval: 5 * 60 * 1000, // 5 minutes
     staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
     retry: 3, // 3 retries
     retryDelay: 5 * 1000, // 5 second delay between retries
   });
@@ -585,7 +585,7 @@ import { useVesselLocations } from 'ws-dottie';
 
 function CustomVesselApp() {
   const { data: vessels } = useVesselLocations({
-    staleTime: 30 * 1000, // 30 seconds
+    staleTime: 5 * 1000, // 5 seconds
     refetchInterval: 10 * 1000, // 10 seconds
   });
 
@@ -606,7 +606,7 @@ function AdvancedVesselTracker() {
     ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
     refetchInterval: 5 * 60 * 1000, // 5 minutes
     staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
     retry: 3, // 3 retries
     retryDelay: 5 * 1000, // 5 second delay between retries
   });
@@ -719,7 +719,7 @@ const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
 ### Performance Optimization
 
 #### **Caching Strategy**
-- **Frequent updates** (30-second stale time, 60-second refetch)
+- **Frequent updates** (5-second stale time, 5-second refetch)
 - **Real-time data** with automatic background updates
 - **Query deduplication** prevents duplicate API calls
 - **Optimized for real-time applications**
