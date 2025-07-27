@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { BridgeDataGIS } from "./types";
 
 // Create a factory function for WSDOT Bridge Clearances API
-const createWsdotBridgeClearancesFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/Bridges/ClearanceREST.svc"
 );
 
@@ -29,7 +29,7 @@ const createWsdotBridgeClearancesFetch = createFetchFactory(
  * console.log(clearances[0].BridgeName); // "Aurora Bridge"
  * ```
  */
-export const getBridgeClearances = createWsdotBridgeClearancesFetch<
+export const getBridgeClearances = createFetch<
   { route: string },
   BridgeDataGIS[]
 >("/GetClearancesAsJson?Route={route}");

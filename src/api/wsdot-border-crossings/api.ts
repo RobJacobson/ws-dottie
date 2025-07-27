@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { BorderCrossingData } from "./types";
 
 // Create a factory function for WSDOT Border Crossings API
-const createWsdotBorderCrossingsFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
 );
 
@@ -27,6 +27,6 @@ const createWsdotBorderCrossingsFetch = createFetchFactory(
  * console.log(crossings[0].CrossingName); // "Peace Arch"
  * ```
  */
-export const getBorderCrossings = createWsdotBorderCrossingsFetch<
-  BorderCrossingData[]
->("/GetBorderCrossingsAsJson");
+export const getBorderCrossings = createFetch<BorderCrossingData[]>(
+  "/GetBorderCrossingsAsJson"
+);

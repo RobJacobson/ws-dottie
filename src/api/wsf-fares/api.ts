@@ -17,7 +17,7 @@ import type {
 } from "./types";
 
 // Create a factory function for WSF Fares API
-const createWsfFaresFetch = createFetchFactory("/ferries/api/fares/rest");
+const createFetch = createFetchFactory("/ferries/api/fares/rest");
 
 /**
  * Get cache flush date from WSF Fares API
@@ -36,8 +36,7 @@ const createWsfFaresFetch = createFetchFactory("/ferries/api/fares/rest");
  * console.log(flushDate); // "2024-01-15T10:30:00Z"
  * ```
  */
-export const getFaresCacheFlushDate =
-  createWsfFaresFetch<Date>("/cacheflushdate");
+export const getFaresCacheFlushDate = createFetch<Date>("/cacheflushdate");
 
 /**
  * Get valid date range for fares data from WSF Fares API
@@ -55,7 +54,7 @@ export const getFaresCacheFlushDate =
  * ```
  */
 export const getFaresValidDateRange =
-  createWsfFaresFetch<FaresValidDateRange>("/validdaterange");
+  createFetch<FaresValidDateRange>("/validdaterange");
 
 /**
  * Get valid departing terminals for a trip date from WSF Fares API
@@ -75,7 +74,7 @@ export const getFaresValidDateRange =
  * console.log(terminals[0].TerminalName); // "Anacortes"
  * ```
  */
-export const getFaresTerminals = createWsfFaresFetch<
+export const getFaresTerminals = createFetch<
   { tripDate: Date },
   FaresTerminal[]
 >("/terminals/{tripDate}");
@@ -94,7 +93,7 @@ export const getFaresTerminals = createWsfFaresFetch<
  * @returns Promise resolving to array of arriving terminals
  * @throws {WsfApiError} When the API request fails
  */
-export const getFaresTerminalMates = createWsfFaresFetch<
+export const getFaresTerminalMates = createFetch<
   { tripDate: Date; terminalID: number },
   TerminalMate[]
 >("/terminalmates/{tripDate}/{terminalID}");
@@ -113,7 +112,7 @@ export const getFaresTerminalMates = createWsfFaresFetch<
  * @returns Promise resolving to terminal combination information
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalCombo = createWsfFaresFetch<
+export const getTerminalCombo = createFetch<
   { tripDate: Date; departingTerminalID: number; arrivingTerminalID: number },
   TerminalCombo
 >("/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}");
@@ -130,7 +129,7 @@ export const getTerminalCombo = createWsfFaresFetch<
  * @returns Promise resolving to array of all terminal combinations
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalComboVerbose = createWsfFaresFetch<
+export const getTerminalComboVerbose = createFetch<
   { tripDate: Date },
   TerminalComboVerbose[]
 >("/terminalcomboverbose/{tripDate}");
@@ -150,7 +149,7 @@ export const getTerminalComboVerbose = createWsfFaresFetch<
  * @returns Promise resolving to array of most popular fare line items
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareLineItemsBasic = createWsfFaresFetch<
+export const getFareLineItemsBasic = createFetch<
   {
     tripDate: Date;
     departingTerminalID: number;
@@ -178,7 +177,7 @@ export const getFareLineItemsBasic = createWsfFaresFetch<
  * @returns Promise resolving to array of all fare line items
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareLineItems = createWsfFaresFetch<
+export const getFareLineItems = createFetch<
   {
     tripDate: Date;
     departingTerminalID: number;
@@ -203,7 +202,7 @@ export const getFareLineItems = createWsfFaresFetch<
  * @returns Promise resolving to complex object with all fare line items for all routes
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareLineItemsVerbose = createWsfFaresFetch<
+export const getFareLineItemsVerbose = createFetch<
   { tripDate: Date },
   FareLineItemsVerboseResponse
 >("/farelineitemsverbose/{tripDate}");
@@ -225,7 +224,7 @@ export const getFareLineItemsVerbose = createWsfFaresFetch<
  * @returns Promise resolving to fare total calculation
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareTotals = createWsfFaresFetch<
+export const getFareTotals = createFetch<
   {
     tripDate: Date;
     departingTerminalID: number;

@@ -11,8 +11,6 @@ export default defineConfig({
     // Load environment variables from .env file
     env: {
       WSDOT_ACCESS_TOKEN: process.env.WSDOT_ACCESS_TOKEN || "",
-      EXPO_PUBLIC_WSDOT_ACCESS_TOKEN:
-        process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN || "",
     },
     // Explicitly set module format to avoid CJS deprecation warning
     pool: "forks",

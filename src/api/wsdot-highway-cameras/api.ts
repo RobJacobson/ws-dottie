@@ -13,7 +13,7 @@ import type { LoggingMode } from "@/shared/logger";
 import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
 
 // Create a factory function for WSDOT Highway Cameras API
-const createWsdotHighwayCamerasFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
 );
 
@@ -32,8 +32,7 @@ const createWsdotHighwayCamerasFetch = createFetchFactory(
  * console.log(cameras[0].Title); // "I-5 @ NE 85th St"
  * ```
  */
-export const getHighwayCameras =
-  createWsdotHighwayCamerasFetch<Camera[]>("/GetCamerasAsJson");
+export const getHighwayCameras = createFetch<Camera[]>("/GetCamerasAsJson");
 
 /**
  * Get a specific highway camera by ID
@@ -52,7 +51,7 @@ export const getHighwayCameras =
  * console.log(camera.Title); // "I-5 @ NE 85th St"
  * ```
  */
-export const getHighwayCamera = createWsdotHighwayCamerasFetch<
+export const getHighwayCamera = createFetch<
   { cameraID: number },
   GetCameraResponse
 >("/GetCameraAsJson?CameraID={cameraID}");

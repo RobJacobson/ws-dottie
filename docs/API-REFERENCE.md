@@ -31,31 +31,26 @@ import {
 
 ## 🔑 Configuration
 
-WS-Dottie provides flexible configuration options for different deployment scenarios.
+WS-Dottie requires a WSDOT API key to access transportation data. Get your free key from the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access).
 
 ### Environment Variables (Recommended)
 
 ```bash
-# Node.js applications
 export WSDOT_ACCESS_TOKEN=your_api_key_here
-
-# React/Expo applications
-export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
-
-# Optional: Custom base URL for proxy routing
-export WSDOT_BASE_URL=https://your-proxy-server.com
 ```
 
-### Runtime Configuration
+#### Runtime Configuration
+
+For web applications or dynamic environments:
 
 ```javascript
 import { configManager } from 'ws-dottie';
 
-// Configure at runtime
-configManager.setConfig({
-  WSDOT_ACCESS_TOKEN: 'your_api_key_here',
-  WSDOT_BASE_URL: 'https://your-proxy-server.com' // Optional
-});
+// Set API key only (recommended for web clients)
+configManager.setApiKey('your_api_key_here');
+
+// Set base URL only (optional: route through proxy)
+configManager.setBaseUrl('https://your-proxy-server.com');
 
 // Clear configuration (useful for testing)
 configManager.clearConfig();
@@ -87,6 +82,28 @@ const baseUrl = configManager.getBaseUrl();
 // Clear configuration (useful for testing)
 configManager.clearConfig();
 ```
+
+## 📦 Module Format Support
+
+WS-Dottie supports both CommonJS and ES Module formats:
+
+### ES Modules (Recommended)
+
+```javascript
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { configManager } from 'ws-dottie';
+import { tanstackQueryOptions } from 'ws-dottie';
+```
+
+### CommonJS
+
+```javascript
+const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
+const { configManager } = require('ws-dottie');
+const { tanstackQueryOptions } = require('ws-dottie');
+```
+
+The library automatically provides the appropriate format based on your environment. Modern bundlers and Node.js will choose the optimal format automatically.
 
 ## 🔍 Debugging and Logging
 
@@ -149,7 +166,7 @@ import { useVesselLocations } from 'ws-dottie';
 
 function CustomVesselApp() {
   const { data: vessels } = useVesselLocations({
-    staleTime: 30 * 1000, // 30 seconds
+    staleTime: 5 * 1000, // 5 seconds
     refetchInterval: 10 * 1000, // 10 seconds
   });
 
@@ -170,7 +187,7 @@ function AdvancedVesselTracker() {
     ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
     refetchInterval: 5 * 60 * 1000, // 5 minutes
     staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
     retry: 3, // 3 retries
     retryDelay: 5 * 1000, // 5 second delay between retries
   });
@@ -589,7 +606,7 @@ import { useVesselLocations } from 'ws-dottie';
 
 function CustomVesselApp() {
   const { data: vessels } = useVesselLocations({
-    staleTime: 30 * 1000, // 30 seconds
+    staleTime: 5 * 1000, // 5 seconds
     refetchInterval: 10 * 1000, // 10 seconds
   });
 
@@ -610,7 +627,7 @@ function AdvancedVesselTracker() {
     ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
     refetchInterval: 5 * 60 * 1000, // 5 minutes
     staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
     retry: 3, // 3 retries
     retryDelay: 5 * 1000, // 5 second delay between retries
   });
@@ -723,7 +740,7 @@ const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
 ### Performance Optimization
 
 #### **Caching Strategy**
-- **Frequent updates** (30-second stale time, 60-second refetch)
+- **Frequent updates** (5-second stale time, 5-second refetch)
 - **Real-time data** with automatic background updates
 - **Query deduplication** prevents duplicate API calls
 - **Optimized for real-time applications**
@@ -934,7 +951,7 @@ Based on actual API responses, the implementation correctly handles:
 
 ## 📊 Bundle Size
 
-The complete WS-Dottie package is approximately **36KB** (CJS) or **29KB** (ESM), including:
+The complete WS-Dottie package is approximately **36KB** (CJS) or **34KB** (ESM), including:
 - All API functions
 - All React hooks
 - All TypeScript types

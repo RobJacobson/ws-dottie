@@ -9,6 +9,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import {
   getHighwayCamera,
@@ -32,7 +33,7 @@ import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
  * ```
  */
 export const useHighwayCameras = (
-  options?: Parameters<typeof useQuery<Camera[]>>[0]
+  options?: QueryOptionsWithoutKey<Camera[]>
 ) => {
   return useQuery({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
@@ -60,7 +61,7 @@ export const useHighwayCameras = (
  */
 export const useHighwayCamera = (
   params: { cameraID: number },
-  options?: Parameters<typeof useQuery<GetCameraResponse>>[0]
+  options?: QueryOptionsWithoutKey<GetCameraResponse>
 ) => {
   return useQuery<GetCameraResponse>({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params.cameraID],
@@ -92,7 +93,7 @@ export const useHighwayCamera = (
  */
 export const useSearchHighwayCameras = (
   params: SearchCamerasParams,
-  options?: Parameters<typeof useQuery<Camera[]>>[0]
+  options?: QueryOptionsWithoutKey<Camera[]>
 ) => {
   return useQuery<Camera[]>({
     queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],

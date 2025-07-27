@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { WeatherInfo } from "./types";
 
 // Create a factory function for WSDOT Weather Information API
-const createWsdotWeatherInformationFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
 );
 
@@ -26,9 +26,9 @@ const createWsdotWeatherInformationFetch = createFetchFactory(
  * console.log(weatherInfo[0].TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformation = createWsdotWeatherInformationFetch<
-  WeatherInfo[]
->("/GetCurrentWeatherInformationAsJson");
+export const getWeatherInformation = createFetch<WeatherInfo[]>(
+  "/GetCurrentWeatherInformationAsJson"
+);
 
 /**
  * Get weather information for a specific station by ID from WSDOT Weather Information API
@@ -48,10 +48,10 @@ export const getWeatherInformation = createWsdotWeatherInformationFetch<
  * console.log(weatherInfo.TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformationByStationId =
-  createWsdotWeatherInformationFetch<{ stationId: number }, WeatherInfo>(
-    "/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}"
-  );
+export const getWeatherInformationByStationId = createFetch<
+  { stationId: number },
+  WeatherInfo
+>("/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}");
 
 /**
  * Get weather information for multiple stations from WSDOT Weather Information API
@@ -71,7 +71,7 @@ export const getWeatherInformationByStationId =
  * console.log(weatherInfo.length); // 3
  * ```
  */
-export const getWeatherInformationForStations =
-  createWsdotWeatherInformationFetch<{ stationIds: string }, WeatherInfo[]>(
-    "/GetCurrentWeatherForStationsAsJson?StationList={stationIds}"
-  );
+export const getWeatherInformationForStations = createFetch<
+  { stationIds: string },
+  WeatherInfo[]
+>("/GetCurrentWeatherForStationsAsJson?StationList={stationIds}");

@@ -1,8 +1,19 @@
 import { AlertCircle, CheckCircle } from "lucide-react";
 
 const ApiKeyStatus = () => {
-  // Check if API key is configured
-  const apiKey = import.meta.env?.VITE_WSDOT_ACCESS_TOKEN;
+  // Check if API key is configured - use a universal approach
+  const getApiKeyFromEnv = (): string => {
+    // Node.js environment
+    if (typeof process !== "undefined" && process.env?.WSDOT_ACCESS_TOKEN) {
+      return process.env.WSDOT_ACCESS_TOKEN;
+    }
+    
+    // For Vite applications, environment variables are handled at build time
+    // For other bundlers, we'll rely on the ws-dottie library's internal handling
+    return "";
+  };
+
+  const apiKey = getApiKeyFromEnv();
   const hasApiKey = apiKey && apiKey !== "your_api_key_here" && apiKey.length > 0;
 
   if (hasApiKey) {

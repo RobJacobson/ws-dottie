@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { clearConfig, getApiKey, setConfig, type WsdotConfig } from "ws-dottie";
+import { configManager, type WsdotConfig } from "ws-dottie";
 
 // Helper function to get API key from environment (for comparison)
 const getApiKeyFromEnv = (): string => {
+  // Node.js environment
   if (typeof process !== "undefined" && process.env?.WSDOT_ACCESS_TOKEN) {
     return process.env.WSDOT_ACCESS_TOKEN;
   }
-  if (typeof import.meta !== "undefined" && (import.meta as any).env?.WSDOT_ACCESS_TOKEN) {
-    return (import.meta as any).env.WSDOT_ACCESS_TOKEN;
-  }
+  
+  // For Vite applications, environment variables are handled at build time
+  // For other bundlers, we'll rely on the ws-dottie library's internal handling
   return "";
 };
 
@@ -21,18 +22,18 @@ const ApiKeyConfig = () => {
       const config: WsdotConfig = {
         WSDOT_ACCESS_TOKEN: apiKey.trim(),
       };
-      setConfig(config);
+      configManager.setConfig(config);
       setIsConfigured(true);
     }
   };
 
   const handleClear = () => {
-    clearConfig();
+    configManager.clearConfig();
     setApiKey("");
     setIsConfigured(false);
   };
 
-  const currentApiKey = getApiKey();
+  const currentApiKey = configManager.getApiKey();
   const hasCustomConfig = currentApiKey && currentApiKey !== getApiKeyFromEnv();
 
   return (
@@ -102,7 +103,7 @@ const ApiKeyConfig = () => {
           <div className="text-xs text-blue-800 space-y-1">
             <p>• <strong>Configuration Object:</strong> Pass config to API functions</p>
             <p>• <strong>Global Configuration:</strong> Use setConfig()</p>
-            <p>• <strong>Environment Variables:</strong> VITE_WSDOT_ACCESS_TOKEN, etc.</p>
+            <p>• <strong>Environment Variables:</strong> WSDOT_ACCESS_TOKEN, etc.</p>
           </div>
         </div>
       </div>

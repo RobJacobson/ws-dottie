@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { TrafficFlow } from "./types";
 
 // Create a factory function for WSDOT Traffic Flow API
-const createWsdotTrafficFlowFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/traffic/api/TrafficFlow/TrafficFlowREST.svc"
 );
 
@@ -20,7 +20,7 @@ const createWsdotTrafficFlowFetch = createFetchFactory(
  * @returns Promise containing all traffic flow data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getTrafficFlows = createWsdotTrafficFlowFetch<TrafficFlow[]>(
+export const getTrafficFlows = createFetch<TrafficFlow[]>(
   "/GetTrafficFlowsAsJson"
 );
 
@@ -36,7 +36,7 @@ export const getTrafficFlows = createWsdotTrafficFlowFetch<TrafficFlow[]>(
  * @returns Promise containing the specific traffic flow data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getTrafficFlowById = createWsdotTrafficFlowFetch<
+export const getTrafficFlowById = createFetch<
   { flowDataID: number },
   TrafficFlow
 >("/GetTrafficFlowAsJson?FlowDataID={flowDataID}");
