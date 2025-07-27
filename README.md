@@ -71,7 +71,23 @@ This approach is useful for:
 - Development environments with different configurations
 - Routing requests through proxy servers for security or monitoring
 
-### 4. Start Building
+### 4. Module Format Support
+
+WS-Dottie supports both CommonJS and ES Module formats:
+
+**ES Modules (Recommended)**
+```javascript
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+```
+
+**CommonJS**
+```javascript
+const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
+```
+
+The library automatically provides the appropriate format based on your environment. Modern bundlers and Node.js will choose the optimal format automatically.
+
+### 5. Start Building
 
 **Node.js Application**
 ```javascript

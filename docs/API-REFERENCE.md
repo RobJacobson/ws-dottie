@@ -31,12 +31,11 @@ import {
 
 ## 🔑 Configuration
 
-WS-Dottie provides flexible configuration options for different deployment scenarios.
+WS-Dottie requires a WSDOT API key to access transportation data. Get your free key from the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access).
 
 ### Environment Variables (Recommended)
 
 ```bash
-# Node.js applications
 export WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
@@ -83,6 +82,28 @@ const baseUrl = configManager.getBaseUrl();
 // Clear configuration (useful for testing)
 configManager.clearConfig();
 ```
+
+## 📦 Module Format Support
+
+WS-Dottie supports both CommonJS and ES Module formats:
+
+### ES Modules (Recommended)
+
+```javascript
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { configManager } from 'ws-dottie';
+import { tanstackQueryOptions } from 'ws-dottie';
+```
+
+### CommonJS
+
+```javascript
+const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
+const { configManager } = require('ws-dottie');
+const { tanstackQueryOptions } = require('ws-dottie');
+```
+
+The library automatically provides the appropriate format based on your environment. Modern bundlers and Node.js will choose the optimal format automatically.
 
 ## 🔍 Debugging and Logging
 
@@ -930,7 +951,7 @@ Based on actual API responses, the implementation correctly handles:
 
 ## 📊 Bundle Size
 
-The complete WS-Dottie package is approximately **36KB** (CJS) or **29KB** (ESM), including:
+The complete WS-Dottie package is approximately **36KB** (CJS) or **34KB** (ESM), including:
 - All API functions
 - All React hooks
 - All TypeScript types
