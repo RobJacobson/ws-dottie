@@ -2,8 +2,8 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_traveler_a_p_i_1_1_controller_1_1_scanweb_controller.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/api/Scanweb
 
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -28,7 +28,7 @@ import type { WeatherReading } from "./types";
  */
 export const useWeatherInformationExtended = (
   options?: QueryOptionsWithoutKey<WeatherReading[]>
-): UseQueryResult<WeatherInformation[], Error> => {
+): UseQueryResult<WeatherReading[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

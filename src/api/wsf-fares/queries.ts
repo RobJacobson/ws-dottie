@@ -2,7 +2,8 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
@@ -19,6 +20,13 @@ import {
   getTerminalCombo,
   getTerminalComboVerbose,
 } from "./api";
+import type {
+  FareLineItem,
+  FareLineItemsVerboseResponse,
+  FaresValidDateRange,
+  FareTotal,
+  TerminalComboVerbose,
+} from "./types";
 
 /**
  * Hook for getting cache flush date from WSF Fares API
@@ -69,7 +77,7 @@ export const useFaresValidDateRange = (
     UseQueryOptions<Awaited<ReturnType<typeof getFaresValidDateRange>>>,
     "queryKey" | "queryFn"
   >
-): UseQueryResult<FareLineItem[], Error> => {
+): UseQueryResult<FaresValidDateRange, Error> => {
   return useQuery({
     queryKey: ["wsf", "fares", "validDateRange"],
     queryFn: () => getFaresValidDateRange(),
@@ -209,7 +217,7 @@ export const useTerminalComboVerbose = (
     UseQueryOptions<Awaited<ReturnType<typeof getTerminalComboVerbose>>>,
     "queryKey" | "queryFn"
   >
-): UseQueryResult<TerminalVerbose[], Error> => {
+): UseQueryResult<TerminalComboVerbose[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -338,7 +346,7 @@ export const useFareLineItemsVerbose = (
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsVerbose>>>,
     "queryKey" | "queryFn"
   >
-): UseQueryResult<FareLineItem[], Error> => {
+): UseQueryResult<FareLineItemsVerboseResponse, Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -381,7 +389,7 @@ export const useFareTotals = (
     UseQueryOptions<Awaited<ReturnType<typeof getFareTotals>>>,
     "queryKey" | "queryFn" | "enabled"
   >
-): UseQueryResult<FareLineItem[], Error> => {
+): UseQueryResult<FareTotal[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -394,15 +402,8 @@ export const useFareTotals = (
       params.fareLineItemIDs,
       params.quantities,
     ],
-    queryFn: () =>
-      getFareTotals({
-        tripDate: params.tripDate,
-        departingTerminalID: params.departingTerminalID,
-        arrivingTerminalID: params.arrivingTerminalID,
-        roundTrip: params.roundTrip,
-        fareLineItemIDs: params.fareLineItemIDs,
-        quantities: params.quantities,
-      }),
+    queryFn: () => getFareTotals(params),
+    enabled: params.fareLineItemIDs.length > 0 && params.quantities.length > 0,
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });

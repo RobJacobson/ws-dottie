@@ -2,8 +2,8 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -31,7 +31,7 @@ import type { BridgeDataGIS } from "./types";
 export const useBridgeClearances = (
   params: { route: string },
   options?: QueryOptionsWithoutKey<BridgeDataGIS[]>
-): UseQueryResult<BridgeClearance[], Error> => {
+): UseQueryResult<BridgeDataGIS[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
