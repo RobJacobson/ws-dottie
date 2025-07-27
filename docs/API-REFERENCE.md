@@ -313,8 +313,12 @@ const vessels = await WsfVessels.getVesselLocations();
 // Get vessel details with logging
 const vessel = await WsfVessels.getVesselVerboseById({ vesselId: 123 });
 
-// Get vessel history
-const history = await WsfVessels.getVesselHistory();
+// Get vessel history for a specific vessel and date range
+const history = await WsfVessels.getVesselHistoryByVesselAndDateRange({
+  vesselName: "Spokane",
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
 
 // Get vessel statistics
 const stats = await WsfVessels.getVesselStatsById({ vesselId: 123 });
@@ -579,7 +583,9 @@ function TransportationDashboard() {
 import { 
   useVesselLocations,
   useVesselVerbose,
-  useVesselHistory,
+  useVesselHistoryByVesselAndDateRange,
+  useMultipleVesselHistories,
+  useAllVesselHistories,
   useVesselStats,
   useVesselAccommodations,
   useTerminalBasics,

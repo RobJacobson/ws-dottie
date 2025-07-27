@@ -306,7 +306,7 @@ export const useVesselHistoryByVesselAndDateRange = (
         dateStart: params.dateStart,
         dateEnd: params.dateEnd,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -362,7 +362,7 @@ export const useMultipleVesselHistories = (
         dateEnd: params.dateEnd,
         batchSize: params.batchSize,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
@@ -409,7 +409,7 @@ export const useAllVesselHistories = (
         dateEnd: params.dateEnd,
         batchSize: params.batchSize,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
 };
