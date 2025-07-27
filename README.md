@@ -9,11 +9,10 @@
 [![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
 [![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)
 
-> **Say hello to Dottie, your friendly TypeScript companion for Washington State transportation APIs**
 
-Meet Dottie - she's not just another API wrapper, she's your cheerful guide through Washington State's transportation data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state. 
+Meet Dottie - she's not just another API wrapper, she's your cheerful guide through the Washington State Department of Transportation's data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state. 
 
-This delightful TypeScript client library provides easy access to Washington State's rich transportation data - from real-time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a hobby project to track your daily commute or developing enterprise applications for transportation planning, WS-Dottie gives you a safe, reliable way to tap into this data firehose with smart caching, strict typing, automatic JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration.
+This friendly TypeScript client library provides type-safe data fetching from sixteen different Washington State transportation APIs - from real-time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a hobby project to track your daily commute or developing enterprise applications for transportation planning, WS-Dottie gives you a safe, reliable way to tap into this data firehose with smart caching, strict typing, automatic JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration.
 
 ## ✨ What You Can Build
 
@@ -181,6 +180,26 @@ Here are some projects you could build with WS-Dottie:
 - **Supply Chain Planning** - Optimize routes using traffic and weather data
 - **Public Safety** - Monitor transportation infrastructure
 - **Urban Planning** - Analyze transportation patterns and trends
+
+## 🧪 Testing
+
+WS-Dottie includes comprehensive testing with support for both Node.js and browser environments.
+
+```bash
+# Quick test commands
+npm run test:unit                    # Unit tests
+npm run test:e2e:validation         # E2E tests (Node.js)
+npm run test:e2e:validation:jsonp   # E2E tests (Browser/JSONP)
+npm run test:e2e:hook               # React hook tests
+
+# Watch mode for development
+npm run test:e2e:validation:watch
+npm run test:e2e:validation:jsonp:watch
+```
+
+**JSONP Testing**: Use `--jsonp` flag or `JSONP=true` environment variable to test browser environment compatibility.
+
+📖 **For detailed testing information, see [Testing Guide](./docs/TESTING.md)**
 
 ## 🤝 Contributing
 

@@ -1,6 +1,10 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vitest/config";
 
+// Check for JSONP flag from environment variable
+const isJsonpEnabled =
+  process.env.FORCE_JSONP === "true" || process.env.JSONP === "true";
+
 export default defineConfig({
   test: {
     include: [
@@ -16,11 +20,11 @@ export default defineConfig({
       "node_modules",
       "dist",
     ],
-    // Use happy-dom environment when FORCE_JSONP is enabled for JSONP testing
-    environment: process.env.FORCE_JSONP === "true" ? "happy-dom" : "node",
+    // Use happy-dom environment when JSONP is enabled for browser simulation
+    environment: isJsonpEnabled ? "happy-dom" : "node",
     globals: true,
     // Increase timeout for JSONP tests since they take longer
-    testTimeout: process.env.FORCE_JSONP === "true" ? 30000 : 15000,
+    testTimeout: isJsonpEnabled ? 30000 : 15000,
     hookTimeout: 10000,
     setupFiles: ["tests/e2e/setup.ts"],
     // Explicitly set module format to avoid CJS deprecation warning
