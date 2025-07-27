@@ -7,8 +7,11 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import {
+  getAllVesselHistories,
   // Cache Flush Date API functions
   getCacheFlushDateVessels,
+  // Multiple Vessel History API functions
+  getMultipleVesselHistories,
   // Vessel Accommodations API functions
   getVesselAccommodations,
   getVesselAccommodationsById,
@@ -16,7 +19,6 @@ import {
   getVesselBasics,
   getVesselBasicsById,
   // Vessel History API functions
-  getVesselHistory,
   getVesselHistoryByVesselAndDateRange,
   // Vessel Locations API functions
   getVesselLocations,
@@ -272,27 +274,6 @@ export const useVesselStatsById = (
 // ============================================================================
 
 /**
- * Hook for fetching vessel history data from WSF Vessels API
- *
- * Retrieves historical vessel data for all vessels in the WSF fleet,
- * including past routes, schedules, and operational history. This endpoint
- * provides comprehensive historical information about vessel operations.
- *
- * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselHistory objects with historical data for all vessels
- */
-export const useVesselHistory = (
-  options?: QueryOptionsWithoutKey<VesselHistory[]>
-): UseQueryResult<VesselHistory[], Error> => {
-  return useQuery({
-    queryKey: ["wsf", "vessels", "history"],
-    queryFn: () => getVesselHistory(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
-
-/**
  * Hook for fetching vessel history data for a specific vessel and date range from WSF Vessels API
  *
  * Retrieves historical vessel data for a specific vessel within a specified date range,
@@ -324,6 +305,109 @@ export const useVesselHistoryByVesselAndDateRange = (
         vesselName: params.vesselName,
         dateStart: params.dateStart,
         dateEnd: params.dateEnd,
+      }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
+  });
+};
+
+/**
+ * Hook for fetching vessel history data for multiple vessels and date range
+ *
+ * This hook fetches historical data for multiple vessels by making parallel API calls
+ * to the vessel history endpoint for each vessel. This is useful when you need historical
+ * data for multiple vessels over the same time period.
+ *
+ * @param params - Object containing vesselNames, dateStart, dateEnd, and optional batchSize
+ * @param params.vesselNames - Array of vessel names to fetch history for (e.g., ["Spokane", "Walla Walla"])
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.batchSize - Optional batch size for processing requests (default: 6)
+ * @param options - Optional React Query options
+ * @returns React Query result containing an array of VesselHistory objects with historical data for all specified vessels
+ *
+ * @example
+ * ```typescript
+ * const { data: history } = useMultipleVesselHistories({
+ *   vesselNames: ["Spokane", "Walla Walla"],
+ *   dateStart: new Date("2024-01-01"),
+ *   dateEnd: new Date("2024-01-02")
+ * });
+ * ```
+ */
+export const useMultipleVesselHistories = (
+  params: {
+    vesselNames: string[];
+    dateStart: Date;
+    dateEnd: Date;
+    batchSize?: number;
+  },
+  options?: QueryOptionsWithoutKey<VesselHistory[]>
+): UseQueryResult<VesselHistory[], Error> => {
+  return useQuery({
+    queryKey: [
+      "wsf",
+      "vessels",
+      "history",
+      "multipleVessels",
+      params.vesselNames.sort(), // Sort for consistent cache key
+      params.dateStart.toISOString(),
+      params.dateEnd.toISOString(),
+      params.batchSize,
+    ],
+    queryFn: () =>
+      getMultipleVesselHistories({
+        vesselNames: params.vesselNames,
+        dateStart: params.dateStart,
+        dateEnd: params.dateEnd,
+        batchSize: params.batchSize,
+      }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
+  });
+};
+
+/**
+ * Hook for fetching vessel history data for all vessels in the WSF fleet
+ *
+ * This hook fetches historical data for all 21 vessels in the Washington State Ferries fleet
+ * by making batched API calls to the vessel history endpoint. This provides comprehensive
+ * historical data for the entire fleet over a specified time period.
+ *
+ * @param params - Object containing dateStart, dateEnd, and optional batchSize
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.batchSize - Optional batch size for processing requests (default: 6)
+ * @param options - Optional React Query options
+ * @returns React Query result containing an array of VesselHistory objects with historical data for all vessels
+ *
+ * @example
+ * ```typescript
+ * const { data: allHistory } = useAllVesselHistories({
+ *   dateStart: new Date("2024-01-01"),
+ *   dateEnd: new Date("2024-01-02")
+ * });
+ * ```
+ */
+export const useAllVesselHistories = (
+  params: { dateStart: Date; dateEnd: Date; batchSize?: number },
+  options?: QueryOptionsWithoutKey<VesselHistory[]>
+): UseQueryResult<VesselHistory[], Error> => {
+  return useQuery({
+    queryKey: [
+      "wsf",
+      "vessels",
+      "history",
+      "allVessels",
+      params.dateStart.toISOString(),
+      params.dateEnd.toISOString(),
+      params.batchSize,
+    ],
+    queryFn: () =>
+      getAllVesselHistories({
+        dateStart: params.dateStart,
+        dateEnd: params.dateEnd,
+        batchSize: params.batchSize,
       }),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

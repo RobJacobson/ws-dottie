@@ -3,5 +3,4 @@
 export * from "./caching/CacheProvider";
 export * from "./caching/config";
 export * from "./fetching";
-export * from "./hooks";
 export * from "./types";

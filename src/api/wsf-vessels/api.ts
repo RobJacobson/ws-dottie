@@ -176,18 +176,6 @@ export const getVesselStatsById = createFetch<
 // ============================================================================
 
 /**
- * API function for fetching vessel history data from WSF Vessels API
- *
- * Retrieves historical vessel data for all vessels in the WSF fleet,
- * including past routes, schedules, and operational history. This endpoint
- * provides comprehensive historical information about vessel operations.
- *
- * @param logMode - Optional logging mode for debugging API calls
- * @returns Promise resolving to an array of VesselHistory objects containing historical vessel data
- */
-export const getVesselHistory = createFetch<VesselHistory[]>("/vesselhistory");
-
-/**
  * API function for fetching vessel history data for a specific vessel and date range from WSF Vessels API
  *
  * Retrieves historical vessel data for a specific vessel within a specified date range,
@@ -208,6 +196,117 @@ export const getVesselHistoryByVesselAndDateRange = createFetch<
   },
   VesselHistory[]
 >("/vesselhistory/{vesselName}/{dateStart}/{dateEnd}");
+
+/**
+ * Helper function for fetching vessel history data for multiple vessels and date range
+ *
+ * This function fetches historical data for multiple vessels by making parallel API calls
+ * to the vessel history endpoint for each vessel. This is useful when you need historical
+ * data for multiple vessels over the same time period.
+ *
+ * @param params - Object containing vesselNames, dateStart, dateEnd, and optional batchSize
+ * @param params.vesselNames - Array of vessel names to fetch history for (e.g., ["Spokane", "Walla Walla"])
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.batchSize - Optional batch size for processing requests (default: 6)
+ * @returns Promise resolving to an array of VesselHistory objects containing historical data for all specified vessels
+ *
+ * @example
+ * ```typescript
+ * const history = await getMultipleVesselHistories({
+ *   vesselNames: ["Spokane", "Walla Walla"],
+ *   dateStart: new Date("2024-01-01"),
+ *   dateEnd: new Date("2024-01-02")
+ * });
+ * console.log(history.length); // Total number of history records for all vessels
+ * ```
+ */
+export const getMultipleVesselHistories = async (params: {
+  vesselNames: string[];
+  dateStart: Date;
+  dateEnd: Date;
+  batchSize?: number;
+}): Promise<VesselHistory[]> => {
+  const { vesselNames, dateStart, dateEnd, batchSize = 6 } = params;
+  const results: VesselHistory[] = [];
+
+  // Process in batches to avoid overwhelming the server and browser connection limits
+  for (let i = 0; i < vesselNames.length; i += batchSize) {
+    const batch = vesselNames.slice(i, i + batchSize);
+    const batchPromises = batch.map((vesselName) =>
+      getVesselHistoryByVesselAndDateRange({
+        vesselName,
+        dateStart,
+        dateEnd,
+      })
+    );
+
+    const batchResults = await Promise.all(batchPromises);
+    results.push(...batchResults.flat());
+  }
+
+  return results;
+};
+
+/**
+ * Helper function for fetching vessel history data for all vessels in the WSF fleet
+ *
+ * This function fetches historical data for all 21 vessels in the Washington State Ferries fleet
+ * by making batched API calls to the vessel history endpoint. This provides comprehensive
+ * historical data for the entire fleet over a specified time period.
+ *
+ * @param params - Object containing dateStart, dateEnd, and optional batchSize
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.batchSize - Optional batch size for processing requests (default: 6)
+ * @returns Promise resolving to an array of VesselHistory objects containing historical data for all vessels
+ *
+ * @example
+ * ```typescript
+ * const allHistory = await getAllVesselHistories({
+ *   dateStart: new Date("2024-01-01"),
+ *   dateEnd: new Date("2024-01-02")
+ * });
+ * console.log(allHistory.length); // Total number of history records for all 21 vessels
+ * ```
+ */
+export const getAllVesselHistories = async (params: {
+  dateStart: Date;
+  dateEnd: Date;
+  batchSize?: number;
+}): Promise<VesselHistory[]> => {
+  // All vessels in the WSF fleet (as of 2024)
+  const allVesselNames = [
+    "Cathlamet",
+    "Chelan",
+    "Chetzemoka",
+    "Chimacum",
+    "Issaquah",
+    "Kaleetan",
+    "Kennewick",
+    "Kitsap",
+    "Kittitas",
+    "Puyallup",
+    "Salish",
+    "Samish",
+    "Sealth",
+    "Spokane",
+    "Suquamish",
+    "Tacoma",
+    "Tillikum",
+    "Tokitae",
+    "Walla Walla",
+    "Wenatchee",
+    "Yakima",
+  ];
+
+  return getMultipleVesselHistories({
+    vesselNames: allVesselNames,
+    dateStart: params.dateStart,
+    dateEnd: params.dateEnd,
+    batchSize: params.batchSize,
+  });
+};
 
 // ============================================================================
 // VESSEL VERBOSE API FUNCTIONS
