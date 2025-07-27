@@ -15,7 +15,7 @@ import type {
 } from "./types";
 
 // Create a factory function for WSF Vessels API
-const createWsfVesselsFetch = createFetchFactory("/ferries/api/vessels/rest");
+const createFetch = createFetchFactory("/ferries/api/vessels/rest");
 
 // ============================================================================
 // VESSEL BASICS API FUNCTIONS
@@ -37,8 +37,7 @@ const createWsfVesselsFetch = createFetchFactory("/ferries/api/vessels/rest");
  * console.log(vessels[0].VesselName); // "M/V Cathlamet"
  * ```
  */
-export const getVesselBasics =
-  createWsfVesselsFetch<VesselBasic[]>("/vesselbasics");
+export const getVesselBasics = createFetch<VesselBasic[]>("/vesselbasics");
 
 /**
  * API function for fetching vessel basics for a specific vessel from WSF Vessels API
@@ -57,7 +56,7 @@ export const getVesselBasics =
  * console.log(vessel.VesselName); // "M/V Cathlamet"
  * ```
  */
-export const getVesselBasicsById = createWsfVesselsFetch<
+export const getVesselBasicsById = createFetch<
   { vesselId: number },
   VesselBasic
 >("/vesselbasics/{vesselId}");
@@ -87,7 +86,7 @@ export const getVesselBasicsById = createWsfVesselsFetch<
  * ```
  */
 export const getVesselLocations =
-  createWsfVesselsFetch<VesselLocation[]>("/vessellocations");
+  createFetch<VesselLocation[]>("/vessellocations");
 
 /**
  * API function for fetching current vessel location data for a specific vessel from WSF Vessels API
@@ -100,7 +99,7 @@ export const getVesselLocations =
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselLocation object containing real-time position data for the specified vessel
  */
-export const getVesselLocationsByVesselId = createWsfVesselsFetch<
+export const getVesselLocationsByVesselId = createFetch<
   { vesselId: number },
   VesselLocation
 >("/vessellocations/{vesselId}");
@@ -120,9 +119,9 @@ export const getVesselLocationsByVesselId = createWsfVesselsFetch<
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselAccommodation objects containing accommodation information
  */
-export const getVesselAccommodations = createWsfVesselsFetch<
-  VesselAccommodation[]
->("/vesselaccommodations");
+export const getVesselAccommodations = createFetch<VesselAccommodation[]>(
+  "/vesselaccommodations"
+);
 
 /**
  * API function for fetching vessel accommodation data for a specific vessel from WSF Vessels API
@@ -135,7 +134,7 @@ export const getVesselAccommodations = createWsfVesselsFetch<
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselAccommodation object containing accommodation information for the specified vessel
  */
-export const getVesselAccommodationsById = createWsfVesselsFetch<
+export const getVesselAccommodationsById = createFetch<
   { vesselId: number },
   VesselAccommodation
 >("/vesselaccommodations/{vesselId}");
@@ -154,8 +153,7 @@ export const getVesselAccommodationsById = createWsfVesselsFetch<
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselStats objects containing vessel statistics
  */
-export const getVesselStats =
-  createWsfVesselsFetch<VesselStats[]>("/vesselstats");
+export const getVesselStats = createFetch<VesselStats[]>("/vesselstats");
 
 /**
  * API function for fetching vessel statistics for a specific vessel from WSF Vessels API
@@ -168,7 +166,7 @@ export const getVesselStats =
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselStats object containing statistics for the specified vessel
  */
-export const getVesselStatsById = createWsfVesselsFetch<
+export const getVesselStatsById = createFetch<
   { vesselId: number },
   VesselStats
 >("/vesselstats/{vesselId}");
@@ -187,8 +185,7 @@ export const getVesselStatsById = createWsfVesselsFetch<
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselHistory objects containing historical vessel data
  */
-export const getVesselHistory =
-  createWsfVesselsFetch<VesselHistory[]>("/vesselhistory");
+export const getVesselHistory = createFetch<VesselHistory[]>("/vesselhistory");
 
 /**
  * API function for fetching vessel history data for a specific vessel and date range from WSF Vessels API
@@ -203,7 +200,7 @@ export const getVesselHistory =
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselHistory objects containing historical data for the specified vessel and date range
  */
-export const getVesselHistoryByVesselAndDateRange = createWsfVesselsFetch<
+export const getVesselHistoryByVesselAndDateRange = createFetch<
   {
     vesselName: string;
     dateStart: Date;
@@ -226,8 +223,7 @@ export const getVesselHistoryByVesselAndDateRange = createWsfVesselsFetch<
  * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselVerbose objects containing comprehensive vessel information
  */
-export const getVesselVerbose =
-  createWsfVesselsFetch<VesselVerbose[]>("/vesselverbose");
+export const getVesselVerbose = createFetch<VesselVerbose[]>("/vesselverbose");
 
 /**
  * API function for fetching verbose vessel data for a specific vessel from WSF Vessels API
@@ -240,7 +236,7 @@ export const getVesselVerbose =
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselVerbose object containing comprehensive information for the specified vessel
  */
-export const getVesselVerboseById = createWsfVesselsFetch<
+export const getVesselVerboseById = createFetch<
   { vesselId: number },
   VesselVerbose
 >("/vesselverbose/{vesselId}");
@@ -260,4 +256,4 @@ export const getVesselVerboseById = createWsfVesselsFetch<
  * @returns Promise resolving to a VesselsCacheFlushDate object containing the cache flush date
  */
 export const getCacheFlushDateVessels =
-  createWsfVesselsFetch<VesselsCacheFlushDate>("/cacheflushdate");
+  createFetch<VesselsCacheFlushDate>("/cacheflushdate");

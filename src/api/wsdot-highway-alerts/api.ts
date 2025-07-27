@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { HighwayAlert } from "./types";
 
 // Create a factory function for WSDOT Highway Alerts API
-const createWsdotHighwayAlertsFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
 );
 
@@ -27,8 +27,7 @@ const createWsdotHighwayAlertsFetch = createFetchFactory(
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlerts =
-  createWsdotHighwayAlertsFetch<HighwayAlert[]>("/GetAlertsAsJson");
+export const getHighwayAlerts = createFetch<HighwayAlert[]>("/GetAlertsAsJson");
 
 /**
  * Get a specific highway alert by ID from WSDOT Highway Alerts API
@@ -47,7 +46,7 @@ export const getHighwayAlerts =
  * console.log(alert.HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertById = createWsdotHighwayAlertsFetch<
+export const getHighwayAlertById = createFetch<
   { alertId: number },
   HighwayAlert
 >("/GetAlertAsJson?AlertID={alertId}");
@@ -69,7 +68,7 @@ export const getHighwayAlertById = createWsdotHighwayAlertsFetch<
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertsByMapArea = createWsdotHighwayAlertsFetch<
+export const getHighwayAlertsByMapArea = createFetch<
   { mapArea: string },
   HighwayAlert[]
 >("/GetAlertsByMapAreaAsJson?MapArea={mapArea}");

@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { MountainPassCondition } from "./types";
 
 // Create a factory function for WSDOT Mountain Pass Conditions API
-const createWsdotMountainPassConditionsFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
 );
 
@@ -21,9 +21,9 @@ const createWsdotMountainPassConditionsFetch = createFetchFactory(
  * @returns Promise containing all mountain pass condition data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getMountainPassConditions = createWsdotMountainPassConditionsFetch<
-  MountainPassCondition[]
->("/GetMountainPassConditionsAsJson");
+export const getMountainPassConditions = createFetch<MountainPassCondition[]>(
+  "/GetMountainPassConditionsAsJson"
+);
 
 /**
  * Retrieves a specific mountain pass condition by ID
@@ -38,8 +38,7 @@ export const getMountainPassConditions = createWsdotMountainPassConditionsFetch<
  * @returns Promise containing the specific mountain pass condition data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getMountainPassConditionById =
-  createWsdotMountainPassConditionsFetch<
-    { passConditionId: number },
-    MountainPassCondition
-  >("/GetMountainPassConditionAsJson?PassConditionID={passConditionId}");
+export const getMountainPassConditionById = createFetch<
+  { passConditionId: number },
+  MountainPassCondition
+>("/GetMountainPassConditionAsJson?PassConditionID={passConditionId}");

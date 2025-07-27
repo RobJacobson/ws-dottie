@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { TollRate, TollTripInfo, TollTripRates } from "./types";
 
 // Create a factory function for WSDOT Toll Rates API
-const createWsdotTollRatesFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/TollRates/TollRatesREST.svc"
 );
 
@@ -27,9 +27,7 @@ const createWsdotTollRatesFetch = createFetchFactory(
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const getTollRates = createWsdotTollRatesFetch<TollRate[]>(
-  "/GetTollRatesAsJson"
-);
+export const getTollRates = createFetch<TollRate[]>("/GetTollRatesAsJson");
 
 /**
  * Retrieves toll trip information with geometry data from WSDOT API
@@ -47,7 +45,7 @@ export const getTollRates = createWsdotTollRatesFetch<TollRate[]>(
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = createWsdotTollRatesFetch<TollTripInfo[]>(
+export const getTollTripInfo = createFetch<TollTripInfo[]>(
   "/GetTollTripInfoAsJson"
 );
 
@@ -68,6 +66,6 @@ export const getTollTripInfo = createWsdotTollRatesFetch<TollTripInfo[]>(
  * console.log(tripRates.Trips[0].Toll); // 0
  * ```
  */
-export const getTollTripRates = createWsdotTollRatesFetch<TollTripRates>(
+export const getTollTripRates = createFetch<TollTripRates>(
   "/GetTollTripRatesAsJson"
 );

@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { TravelTimeRoute } from "./types";
 
 // Create a factory function for WSDOT Travel Times API
-const createWsdotTravelTimesFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/TravelTimes/TravelTimesREST.svc"
 );
 
@@ -26,7 +26,7 @@ const createWsdotTravelTimesFetch = createFetchFactory(
  * console.log(travelTimes[0].CurrentTime); // 30
  * ```
  */
-export const getTravelTimes = createWsdotTravelTimesFetch<TravelTimeRoute[]>(
+export const getTravelTimes = createFetch<TravelTimeRoute[]>(
   "/GetTravelTimesAsJson"
 );
 
@@ -48,7 +48,7 @@ export const getTravelTimes = createWsdotTravelTimesFetch<TravelTimeRoute[]>(
  * console.log(travelTime.CurrentTime); // 30
  * ```
  */
-export const getTravelTimeById = createWsdotTravelTimesFetch<
+export const getTravelTimeById = createFetch<
   { travelTimeId: number },
   TravelTimeRoute
 >("/GetTravelTimeAsJson?TravelTimeID={travelTimeId}");

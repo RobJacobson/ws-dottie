@@ -164,7 +164,8 @@ export const useVesselAccommodationsById = (
  * vessel speed, heading direction, and operational status.
  *
  * The data is updated frequently and provides the most current information
- * about vessel locations for tracking and monitoring purposes.
+ * about vessel locations for tracking and monitoring purposes. This hook uses
+ * real-time caching configuration with 5-second refresh intervals.
  *
  * @param options - Optional React Query options
  * @returns React Query result containing an array of VesselLocation objects with real-time location data for all vessels
@@ -181,7 +182,7 @@ export const useVesselLocations = (
   return useQuery({
     queryKey: ["wsf", "vessels", "locations"],
     queryFn: () => getVesselLocations(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
 };
@@ -191,6 +192,7 @@ export const useVesselLocations = (
  *
  * Retrieves real-time vessel position, speed, heading, and status information
  * for a specific vessel identified by vessel ID. This endpoint returns a single vessel object.
+ * This hook uses real-time caching configuration with 5-second refresh intervals.
  *
  * @param params - Object containing vesselId
  * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
@@ -210,7 +212,7 @@ export const useVesselLocationsByVesselId = (
   return useQuery({
     queryKey: ["wsf", "vessels", "locations", "byVesselId", params.vesselId],
     queryFn: () => getVesselLocationsByVesselId({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
 };

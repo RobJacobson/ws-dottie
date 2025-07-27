@@ -7,7 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { WeatherStationData } from "./types";
 
 // Create a factory function for WSDOT Weather Stations API
-const createWsdotWeatherStationsFetch = createFetchFactory(
+const createFetch = createFetchFactory(
   "/Traffic/api/WeatherStations/WeatherStationsREST.svc"
 );
 
@@ -20,6 +20,6 @@ const createWsdotWeatherStationsFetch = createFetchFactory(
  * @returns Promise containing weather stations data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getWeatherStations = createWsdotWeatherStationsFetch<
-  WeatherStationData[]
->("/GetCurrentStationsAsJson");
+export const getWeatherStations = createFetch<WeatherStationData[]>(
+  "/GetCurrentStationsAsJson"
+);

@@ -7,9 +7,7 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type { WeatherReading } from "./types";
 
 // Create a factory function for WSDOT Weather Information Extended API
-const createWsdotWeatherInformationExtendedFetch = createFetchFactory(
-  "/traffic/api/api/Scanweb"
-);
+const createFetch = createFetchFactory("/traffic/api/api/Scanweb");
 
 /**
  * Get extended weather information from WSDOT Weather Information Extended API
@@ -27,5 +25,4 @@ const createWsdotWeatherInformationExtendedFetch = createFetchFactory(
  * console.log(weatherReadings[0].AirTemperature); // 14.7
  * ```
  */
-export const getWeatherInformationExtended =
-  createWsdotWeatherInformationExtendedFetch<WeatherReading[]>("");
+export const getWeatherInformationExtended = createFetch<WeatherReading[]>("");
