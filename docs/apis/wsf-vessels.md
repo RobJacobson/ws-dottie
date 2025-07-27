@@ -23,6 +23,10 @@ This module provides access to the WSF Vessels API, which offers comprehensive i
 | **Travel Planning** | Check vessel availability and routes | ✅ Available |
 | **Accessibility Information** | Provide ADA and accommodation details | ✅ Available |
 
+> **📝 Note**: The general vessel history endpoint (`/vesselhistory`) is deprecated and returns minimal data. Use the date-range specific endpoints (`/vesselhistory/{VesselName}/{DateStart}/{DateEnd}`) for complete historical data.
+>
+> **⚡ Performance Note**: The `getMultipleVesselHistories` and `getAllVesselHistories` functions use batched processing (default: 6 concurrent requests) to avoid overwhelming the server and browser connection limits. This provides optimal performance while maintaining reliability.
+
 ### Data Update Frequency
 
 | Data Type | Update Frequency | Cache Strategy | Notes |
@@ -49,6 +53,7 @@ This module provides access to the WSF Vessels API, which offers comprehensive i
 | `vesselverbose` | GET | Get all vessel verbose data | None | `VesselVerbose[]` |
 | `vesselaccommodations` | GET | Get all vessel accommodations | None | `VesselAccommodation[]` |
 | `vesselstats` | GET | Get all vessel statistics | None | `VesselStats[]` |
+| `vesselhistory/{VesselName}/{DateStart}/{DateEnd}` | GET | Get vessel history for specific vessel and date range | `VesselName`, `DateStart`, `DateEnd` | `VesselHistory[]` |
 | `cacheflushdate` | GET | Get cache flush date | None | `VesselsCacheFlushDate` |
 
 ### Base URL
@@ -77,7 +82,26 @@ const accommodations = await wsfVessels.getVesselAccommodations();
 
 // Get vessel statistics
 const stats = await wsfVessels.getVesselStats();
-```
+
+// Get vessel history for a specific vessel and date range
+const history = await wsfVessels.getVesselHistoryByVesselAndDateRange({
+  vesselName: "Spokane",
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
+
+// Get vessel history for multiple vessels
+const multiVesselHistory = await wsfVessels.getMultipleVesselHistories({
+  vesselNames: ["Spokane", "Walla Walla"],
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
+
+// Get vessel history for all vessels in the fleet
+const allVesselHistory = await wsfVessels.getAllVesselHistories({
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
 
 ### Parameter Examples
 
@@ -87,6 +111,9 @@ const stats = await wsfVessels.getVesselStats();
 | `getVesselBasicsByVesselId` | `{ vesselId: number }` | `getVesselBasicsByVesselId({ vesselId: 1 })` | Get specific vessel basics |
 | `getVesselLocations` | None | `getVesselLocations()` | Get all vessel locations |
 | `getVesselAccommodations` | None | `getVesselAccommodations()` | Get all vessel accommodations |
+| `getVesselHistoryByVesselAndDateRange` | `{ vesselName: string, dateStart: Date, dateEnd: Date }` | `getVesselHistoryByVesselAndDateRange({ vesselName: "Spokane", dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for specific vessel and date range |
+| `getMultipleVesselHistories` | `{ vesselNames: string[], dateStart: Date, dateEnd: Date, batchSize?: number }` | `getMultipleVesselHistories({ vesselNames: ["Spokane", "Walla Walla"], dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for multiple vessels |
+| `getAllVesselHistories` | `{ dateStart: Date, dateEnd: Date, batchSize?: number }` | `getAllVesselHistories({ dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for all 21 vessels in the fleet |
 
 ### Common Use Cases
 
@@ -150,6 +177,7 @@ function VesselsList() {
 | `VesselLocation` | Vessel location data | `VesselID`, `Latitude`, `Longitude`, `Speed`, `Heading` |
 | `VesselAccommodation` | Vessel accommodation data | `VesselID`, `PassengerCapacity`, `VehicleCapacity` |
 | `VesselStats` | Vessel statistics | `VesselID`, `OperationalHours`, `PassengersCarried` |
+| `VesselHistory` | Vessel historical data | `VesselId`, `Vessel`, `Departing`, `Arriving`, `ScheduledDepart`, `ActualDepart`, `EstArrival`, `Date` |
 
 ### Detailed Type Definitions
 
@@ -187,6 +215,17 @@ type VesselStats = {
   VesselName: string;                            // Name of the vessel
   LastUpdated: string;                           // Last update timestamp
 };
+
+type VesselHistory = {
+  VesselId: number;                              // Unique identifier for the vessel
+  Vessel: string;                                // Name of the vessel
+  Departing: string | null;                      // Departure terminal name
+  Arriving: string | null;                       // Arrival terminal name
+  ScheduledDepart: Date | null;                  // Scheduled departure time
+  ActualDepart: Date | null;                     // Actual departure time
+  EstArrival: Date | null;                       // Estimated arrival time
+  Date: Date | null;                             // Date of the trip
+};
 ```
 
 ## Common Use Cases
@@ -211,6 +250,41 @@ const locations = await wsfVessels.getVesselLocations();
 const vessel = await wsfVessels.getVesselBasicsByVesselId({ vesselId: 1 });
 const accommodations = await wsfVessels.getVesselAccommodations();
 // Display detailed vessel information for travelers
+```
+
+### Use Case 3: Vessel Historical Analysis
+**Scenario**: Analyze vessel performance and operational patterns over time
+**Solution**: Use the `getVesselHistoryByVesselAndDateRange` and `getVesselHistoryForMultipleVessels` functions to retrieve historical data
+
+```typescript
+// Implementation example - Single vessel analysis
+const history = await wsfVessels.getVesselHistoryByVesselAndDateRange({
+  vesselName: "Spokane",
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-31")
+});
+
+// Analyze on-time performance for single vessel
+const onTimeTrips = history.filter(trip => 
+  trip.ActualDepart && trip.ScheduledDepart && 
+  Math.abs(trip.ActualDepart.getTime() - trip.ScheduledDepart.getTime()) < 5 * 60 * 1000 // Within 5 minutes
+);
+
+console.log(`Spokane on-time performance: ${(onTimeTrips.length / history.length * 100).toFixed(1)}%`);
+
+// Implementation example - Fleet-wide analysis
+const allVesselHistory = await wsfVessels.getAllVesselHistories({
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-31")
+});
+
+// Analyze fleet-wide on-time performance
+const fleetOnTimeTrips = allVesselHistory.filter(trip => 
+  trip.ActualDepart && trip.ScheduledDepart && 
+  Math.abs(trip.ActualDepart.getTime() - trip.ScheduledDepart.getTime()) < 5 * 60 * 1000
+);
+
+console.log(`Fleet-wide on-time performance: ${(fleetOnTimeTrips.length / allVesselHistory.length * 100).toFixed(1)}%`);
 ```
 
 ## Performance & Caching
