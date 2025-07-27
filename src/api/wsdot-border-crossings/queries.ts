@@ -2,8 +2,8 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -28,7 +28,7 @@ import type { BorderCrossingData } from "./types";
  */
 export const useBorderCrossings = (
   options?: QueryOptionsWithoutKey<BorderCrossingData[]>
-): UseQueryResult<BorderCrossing[], Error> => {
+): UseQueryResult<BorderCrossingData[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],
     queryFn: () => getBorderCrossings(),
