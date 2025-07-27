@@ -214,9 +214,9 @@ This approach allows you to:
 
 ## 🎯 Strong Typing
 
-WS-Dottie provides comprehensive TypeScript types for all APIs, parameters, and responses:
+WS-Dottie provides comprehensive TypeScript types for all APIs, parameters, and responses with **automatic type inference**:
 
-```javascript
+```typescript
 import { 
   WsfVessels, 
   WsdotHighwayAlerts,
@@ -236,13 +236,19 @@ const fares = await WsfFares.getFareLineItems({
   arrivingTerminalID: 8,
   roundTrip: false
 });
+
+// React hooks provide automatic type inference - no manual typing needed!
+const { data: hookVessels } = useVesselLocations(); // TypeScript knows: VesselLocation[] | undefined
+const { data: hookAlerts } = useHighwayAlerts(); // TypeScript knows: HighwayAlert[] | undefined
 ```
 
 ### Type Safety Features
+- **Automatic Type Inference** - React hooks automatically infer return types without manual annotations
 - **Parameter Objects** - All API calls use consistent single-parameter object patterns
 - **Response Types** - All API responses are fully typed with TypeScript interfaces
 - **Error Types** - Consistent error handling with typed error objects
 - **Configuration Types** - Type-safe configuration interface
+- **TanStack Query Integration** - Seamless compatibility with all TanStack Query features
 
 ## 🧩 Consistent Parameter Object Pattern
 
@@ -528,6 +534,46 @@ function App() {
 }
 ```
 
+### 🎯 Automatic Type Safety
+
+WS-Dottie hooks provide **automatic type inference** with TanStack Query, eliminating the need for manual type annotations:
+
+```typescript
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+
+function TransportationDashboard() {
+  // Automatic type inference - no manual typing needed!
+  const { data: vessels, isLoading, error } = useVesselLocations();
+  const { data: alerts } = useHighwayAlerts();
+
+  // TypeScript automatically knows:
+  // - vessels: VesselLocation[] | undefined
+  // - alerts: HighwayAlert[] | undefined
+  // - isLoading: boolean
+  // - error: Error | null
+
+  return (
+    <div>
+      <h2>Vessels: {vessels?.length || 0}</h2>
+      <h2>Alerts: {alerts?.length || 0}</h2>
+      {isLoading && <div>Loading...</div>}
+    </div>
+  );
+}
+```
+
+**Key Benefits:**
+- **Zero Type Annotations** - No need for `as UseQueryResult<Type, Error>` casting
+- **Full IntelliSense** - Complete autocomplete and type checking
+- **TanStack Query Integration** - Seamless compatibility with all TanStack Query features
+- **Consistent Patterns** - All hooks follow the same type-safe structure
+
+**Type Safety Features:**
+- **Automatic Return Type Inference** - All hooks return properly typed `UseQueryResult<T, Error>`
+- **Parameter Type Safety** - All hook parameters are fully type-checked
+- **Error Type Safety** - Consistent error handling with typed error objects
+- **Generic Compatibility** - Works with all TanStack Query options and configurations
+
 ### WSF Hooks
 ```javascript
 import { 
@@ -576,10 +622,11 @@ import {
 ```
 
 ### Basic Hook Usage
-```javascript
+```typescript
 import { useVesselLocations, useHighwayAlerts, WsdotApiError } from 'ws-dottie';
 
 function TransportationDashboard() {
+  // Automatic type inference - TypeScript knows all types automatically
   const { data: vessels, isLoading, error } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
 
@@ -599,17 +646,19 @@ function TransportationDashboard() {
 
 ### Custom Caching
 
-You can override the default caching behavior:
+You can override the default caching behavior with full type safety:
 
-```javascript
+```typescript
 import { useVesselLocations } from 'ws-dottie';
 
 function CustomVesselApp() {
+  // TypeScript automatically infers the correct types even with custom options
   const { data: vessels } = useVesselLocations({
     staleTime: 5 * 1000, // 5 seconds
     refetchInterval: 10 * 1000, // 10 seconds
   });
 
+  // vessels is still properly typed as VesselLocation[] | undefined
   return <div>Vessels: {vessels?.length}</div>;
 }
 ```
@@ -618,11 +667,12 @@ function CustomVesselApp() {
 
 WS-Dottie's caching strategies can be customized using spread operators with TanStack Query options:
 
-```javascript
+```typescript
 import { useVesselLocations, tanstackQueryOptions } from 'ws-dottie';
 
 function AdvancedVesselTracker() {
   // Custom 5-minute update strategy with different parameters
+  // TypeScript maintains full type safety even with complex configurations
   const { data: vessels } = useVesselLocations({
     ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
     refetchInterval: 5 * 60 * 1000, // 5 minutes
@@ -654,10 +704,11 @@ This approach allows you to:
 
 ### Error Handling in React Components
 
-```javascript
+```typescript
 import { useVesselLocations, WsdotApiError } from 'ws-dottie';
 
 function VesselList() {
+  // TypeScript automatically infers error types for proper error handling
   const { data: vessels, isLoading, isFetching, error } = useVesselLocations();
 
   if (isLoading) {
@@ -688,7 +739,7 @@ function VesselList() {
 
 All hooks use default caching options with `enabled: true`. You can override `enabled` or any other React Query option:
 
-```javascript
+```typescript
 const { data } = useVesselLocations(undefined, { enabled: false }); // disables the query
 ```
 
