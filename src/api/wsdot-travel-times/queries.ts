@@ -5,6 +5,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getTravelTimeById, getTravelTimes } from "./api";
 import type { TravelTimeRoute } from "./types";
@@ -18,7 +19,7 @@ import type { TravelTimeRoute } from "./types";
  * @returns React Query result containing travel times data
  */
 export const useTravelTimes = (
-  options?: Parameters<typeof useQuery<TravelTimeRoute[]>>[0]
+  options?: QueryOptionsWithoutKey<TravelTimeRoute[]>
 ) => {
   return useQuery({
     queryKey: ["wsdot", "travel-times", "getTravelTimes"],
@@ -41,7 +42,7 @@ export const useTravelTimes = (
  */
 export const useTravelTimeById = (
   params: { travelTimeId: number },
-  options?: Parameters<typeof useQuery<TravelTimeRoute>>[0]
+  options?: QueryOptionsWithoutKey<TravelTimeRoute>
 ) => {
   return useQuery({
     queryKey: [

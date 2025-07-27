@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import {
   // Cache Flush Date API functions
@@ -60,7 +61,7 @@ import type {
  * ```
  */
 export const useTerminalBasics = (
-  options?: Parameters<typeof useQuery<TerminalBasics[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalBasics[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "basics"],
@@ -90,7 +91,7 @@ export const useTerminalBasics = (
  */
 export const useTerminalBasicsByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalBasics>>[0]
+  options?: QueryOptionsWithoutKey<TerminalBasics>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "basics", "byTerminalId", params.terminalId],
@@ -122,7 +123,7 @@ export const useTerminalBasicsByTerminalId = (
  * ```
  */
 export const useTerminalBulletins = (
-  options?: Parameters<typeof useQuery<TerminalBulletin[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalBulletin[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "bulletins"],
@@ -153,7 +154,7 @@ export const useTerminalBulletins = (
  */
 export const useTerminalBulletinsByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalBulletin>>[0]
+  options?: QueryOptionsWithoutKey<TerminalBulletin>
 ) => {
   return useQuery({
     queryKey: [
@@ -191,7 +192,7 @@ export const useTerminalBulletinsByTerminalId = (
  * ```
  */
 export const useTerminalLocations = (
-  options?: Parameters<typeof useQuery<TerminalLocation[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalLocation[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "locations"],
@@ -222,7 +223,7 @@ export const useTerminalLocations = (
  */
 export const useTerminalLocationsByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalLocation>>[0]
+  options?: QueryOptionsWithoutKey<TerminalLocation>
 ) => {
   return useQuery({
     queryKey: [
@@ -261,7 +262,7 @@ export const useTerminalLocationsByTerminalId = (
  * ```
  */
 export const useTerminalSailingSpace = (
-  options?: Parameters<typeof useQuery<TerminalSailingSpace[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalSailingSpace[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "sailing-space"],
@@ -292,7 +293,7 @@ export const useTerminalSailingSpace = (
  */
 export const useTerminalSailingSpaceByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalSailingSpace>>[0]
+  options?: QueryOptionsWithoutKey<TerminalSailingSpace>
 ) => {
   return useQuery({
     queryKey: [
@@ -330,7 +331,7 @@ export const useTerminalSailingSpaceByTerminalId = (
  * ```
  */
 export const useTerminalTransports = (
-  options?: Parameters<typeof useQuery<TerminalTransport[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalTransport[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "transports"],
@@ -361,7 +362,7 @@ export const useTerminalTransports = (
  */
 export const useTerminalTransportsByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalTransport>>[0]
+  options?: QueryOptionsWithoutKey<TerminalTransport>
 ) => {
   return useQuery({
     queryKey: [
@@ -399,7 +400,7 @@ export const useTerminalTransportsByTerminalId = (
  * ```
  */
 export const useTerminalWaitTimes = (
-  options?: Parameters<typeof useQuery<TerminalWaitTimes[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalWaitTimes[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "wait-times"],
@@ -430,7 +431,7 @@ export const useTerminalWaitTimes = (
  */
 export const useTerminalWaitTimesByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalWaitTimes>>[0]
+  options?: QueryOptionsWithoutKey<TerminalWaitTimes>
 ) => {
   return useQuery({
     queryKey: [
@@ -468,7 +469,7 @@ export const useTerminalWaitTimesByTerminalId = (
  * ```
  */
 export const useTerminalVerbose = (
-  options?: Parameters<typeof useQuery<TerminalVerbose[]>>[0]
+  options?: QueryOptionsWithoutKey<TerminalVerbose[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "terminals", "verbose"],
@@ -498,7 +499,7 @@ export const useTerminalVerbose = (
  */
 export const useTerminalVerboseByTerminalId = (
   params: { terminalId: number },
-  options?: Parameters<typeof useQuery<TerminalVerbose>>[0]
+  options?: QueryOptionsWithoutKey<TerminalVerbose>
 ) => {
   return useQuery({
     queryKey: [
@@ -536,7 +537,7 @@ export const useTerminalVerboseByTerminalId = (
  * ```
  */
 export const useCacheFlushDateTerminals = (
-  options?: Parameters<typeof useQuery<Date>>[0]
+  options?: QueryOptionsWithoutKey<Date>
 ) =>
   useQuery({
     queryKey: ["wsf", "terminals", "cache-flush-date"],

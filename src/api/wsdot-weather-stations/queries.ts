@@ -5,6 +5,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getWeatherStations } from "./api";
 import type { WeatherStationData } from "./types";
@@ -24,7 +25,7 @@ import type { WeatherStationData } from "./types";
  * ```
  */
 export const useWeatherStations = (
-  options?: Parameters<typeof useQuery<WeatherStationData[]>>[0]
+  options?: QueryOptionsWithoutKey<WeatherStationData[]>
 ) => {
   return useQuery({
     queryKey: ["wsdot", "weather-stations", "getWeatherStations"],

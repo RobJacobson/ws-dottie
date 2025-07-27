@@ -5,6 +5,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getMountainPassConditionById, getMountainPassConditions } from "./api";
 import type { MountainPassCondition } from "./types";
@@ -25,7 +26,7 @@ import type { MountainPassCondition } from "./types";
  * ```
  */
 export const useMountainPassConditions = (
-  options?: Parameters<typeof useQuery<MountainPassCondition[]>>[0]
+  options?: QueryOptionsWithoutKey<MountainPassCondition[]>
 ) => {
   return useQuery({
     queryKey: [
@@ -59,7 +60,7 @@ export const useMountainPassConditions = (
  */
 export const useMountainPassConditionById = (
   params: { passConditionId: number },
-  options?: Parameters<typeof useQuery<MountainPassCondition>>[0]
+  options?: QueryOptionsWithoutKey<MountainPassCondition>
 ) => {
   return useQuery<MountainPassCondition>({
     queryKey: [

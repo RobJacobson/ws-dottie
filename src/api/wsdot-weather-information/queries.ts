@@ -5,6 +5,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import {
   getWeatherInformation,
@@ -22,7 +23,7 @@ import type { WeatherInfo } from "./types";
  * @returns React Query result containing weather information data
  */
 export const useWeatherInformation = (
-  options?: Parameters<typeof useQuery<WeatherInfo[]>>[0]
+  options?: QueryOptionsWithoutKey<WeatherInfo[]>
 ) => {
   return useQuery({
     queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
@@ -45,7 +46,7 @@ export const useWeatherInformation = (
  */
 export const useWeatherInformationByStationId = (
   params: { stationId: number },
-  options?: Parameters<typeof useQuery<WeatherInfo>>[0]
+  options?: QueryOptionsWithoutKey<WeatherInfo>
 ) => {
   return useQuery({
     queryKey: [
@@ -74,7 +75,7 @@ export const useWeatherInformationByStationId = (
  */
 export const useWeatherInformationForStations = (
   params: { stationIds: number[] },
-  options?: Parameters<typeof useQuery<WeatherInfo[]>>[0]
+  options?: QueryOptionsWithoutKey<WeatherInfo[]>
 ) => {
   return useQuery({
     queryKey: [

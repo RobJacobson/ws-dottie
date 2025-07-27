@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import {
   getActiveSeasons,
@@ -70,7 +71,7 @@ import type {
  * ```
  */
 export const useCacheFlushDateSchedule = (
-  options?: Parameters<typeof useQuery<Date>>[0]
+  options?: QueryOptionsWithoutKey<Date>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "cacheFlushDate"],
@@ -100,7 +101,7 @@ export const useCacheFlushDateSchedule = (
  * ```
  */
 export const useValidDateRange = (
-  options?: Parameters<typeof useQuery<ValidDateRange>>[0]
+  options?: QueryOptionsWithoutKey<ValidDateRange>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "validDateRange"],
@@ -132,7 +133,7 @@ export const useValidDateRange = (
  */
 export const useTerminals = (
   params: { tripDate: Date },
-  options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleTerminal[]>
 ) =>
   useQuery({
     queryKey: [
@@ -159,7 +160,7 @@ export const useTerminals = (
  */
 export const useTerminalsAndMates = (
   params: { tripDate: Date },
-  options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleTerminalCombo[]>
 ) =>
   useQuery({
     queryKey: [
@@ -188,7 +189,7 @@ export const useTerminalsAndMates = (
  */
 export const useTerminalsAndMatesByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: Parameters<typeof useQuery<ScheduleTerminalCombo[]>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleTerminalCombo[]>
 ) =>
   useQuery({
     queryKey: [
@@ -222,7 +223,7 @@ export const useTerminalsAndMatesByRoute = (
  */
 export const useTerminalMates = (
   params: { tripDate: Date; terminalId: number },
-  options?: Parameters<typeof useQuery<ScheduleTerminal[]>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleTerminal[]>
 ) =>
   useQuery({
     queryKey: [
@@ -265,7 +266,7 @@ export const useTerminalMates = (
  */
 export const useRoutes = (
   params: { tripDate: Date },
-  options?: Parameters<typeof useQuery<Route[]>>[0]
+  options?: QueryOptionsWithoutKey<Route[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "routes", jsDateToYyyyMmDd(params.tripDate)],
@@ -295,7 +296,7 @@ export const useRoutesByTerminals = (
     departingTerminalId: number;
     arrivingTerminalId: number;
   },
-  options?: Parameters<typeof useQuery<Route[]>>[0]
+  options?: QueryOptionsWithoutKey<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -330,7 +331,7 @@ export const useRoutesByTerminals = (
  */
 export const useRoutesWithDisruptions = (
   params: { tripDate: Date },
-  options?: Parameters<typeof useQuery<Route[]>>[0]
+  options?: QueryOptionsWithoutKey<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -363,7 +364,7 @@ export const useRoutesWithDisruptions = (
  */
 export const useRouteDetails = (
   params: { tripDate: Date },
-  options?: Parameters<typeof useQuery<Route[]>>[0]
+  options?: QueryOptionsWithoutKey<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -398,7 +399,7 @@ export const useRouteDetailsByTerminals = (
     departingTerminalId: number;
     arrivingTerminalId: number;
   },
-  options?: Parameters<typeof useQuery<Route[]>>[0]
+  options?: QueryOptionsWithoutKey<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -434,7 +435,7 @@ export const useRouteDetailsByTerminals = (
  */
 export const useRouteDetailsByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: Parameters<typeof useQuery<RouteDetails | null>>[0]
+  options?: QueryOptionsWithoutKey<RouteDetails | null>
 ) =>
   useQuery({
     queryKey: [
@@ -468,7 +469,7 @@ export const useRouteDetailsByRoute = (
  * @returns React Query result object containing active seasons
  */
 export const useActiveSeasons = (
-  options?: Parameters<typeof useQuery<ActiveSeason[]>>[0]
+  options?: QueryOptionsWithoutKey<ActiveSeason[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "activeSeasons"],
@@ -493,7 +494,7 @@ export const useActiveSeasons = (
  * @returns React Query result object containing scheduled routes
  */
 export const useScheduledRoutes = (
-  options?: Parameters<typeof useQuery<ScheduledRoute[]>>[0]
+  options?: QueryOptionsWithoutKey<ScheduledRoute[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "scheduledRoutes"],
@@ -516,7 +517,7 @@ export const useScheduledRoutes = (
  */
 export const useScheduledRoutesBySeason = (
   params: { scheduleId: number },
-  options?: Parameters<typeof useQuery<ScheduledRoute[]>>[0]
+  options?: QueryOptionsWithoutKey<ScheduledRoute[]>
 ) =>
   useQuery({
     queryKey: [
@@ -552,7 +553,7 @@ export const useScheduledRoutesBySeason = (
  */
 export const useSailings = (
   params: { schedRouteId: number },
-  options?: Parameters<typeof useQuery<Sailing[]>>[0]
+  options?: QueryOptionsWithoutKey<Sailing[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "sailings", params.schedRouteId],
@@ -577,7 +578,7 @@ export const useSailings = (
  */
 export const useAllSailings = (
   params: { schedRouteId: number },
-  options?: Parameters<typeof useQuery<Sailing[]>>[0]
+  options?: QueryOptionsWithoutKey<Sailing[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "allSailings", params.schedRouteId],
@@ -601,7 +602,7 @@ export const useAllSailings = (
  * @returns React Query result object containing time adjustments
  */
 export const useTimeAdjustments = (
-  options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
+  options?: QueryOptionsWithoutKey<TimeAdjustment[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments"],
@@ -625,7 +626,7 @@ export const useTimeAdjustments = (
  */
 export const useTimeAdjustmentsByRoute = (
   params: { routeId: number },
-  options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
+  options?: QueryOptionsWithoutKey<TimeAdjustment[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments", "byRoute", params.routeId],
@@ -649,7 +650,7 @@ export const useTimeAdjustmentsByRoute = (
  */
 export const useTimeAdjustmentsBySchedRoute = (
   params: { schedRouteId: number },
-  options?: Parameters<typeof useQuery<TimeAdjustment[]>>[0]
+  options?: QueryOptionsWithoutKey<TimeAdjustment[]>
 ) =>
   useQuery({
     queryKey: [
@@ -684,7 +685,7 @@ export const useTimeAdjustmentsBySchedRoute = (
  */
 export const useScheduleByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -724,7 +725,7 @@ export const useScheduleByTerminals = (
     departingTerminalId: number;
     arrivingTerminalId: number;
   },
-  options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -761,7 +762,7 @@ export const useScheduleByTerminals = (
  */
 export const useScheduleTodayByRoute = (
   params: { routeId: number; onlyRemainingTimes?: boolean },
-  options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -801,7 +802,7 @@ export const useScheduleTodayByTerminals = (
     arrivingTerminalId: number;
     onlyRemainingTimes?: boolean;
   },
-  options?: Parameters<typeof useQuery<ScheduleResponse | null>>[0]
+  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -836,7 +837,7 @@ export const useScheduleTodayByTerminals = (
  * @param options - Optional React Query options
  * @returns React Query result object containing alerts
  */
-export const useAlerts = (options?: Parameters<typeof useQuery<Alert[]>>[0]) =>
+export const useAlerts = (options?: QueryOptionsWithoutKey<Alert[]>) =>
   useQuery({
     queryKey: ["wsf", "schedule", "alerts"],
     queryFn: () => getAlerts(),
@@ -862,7 +863,7 @@ export const useAlerts = (options?: Parameters<typeof useQuery<Alert[]>>[0]) =>
  */
 export const useAlternativeFormats = (
   params: { subjectName: string },
-  options?: Parameters<typeof useQuery<AlternativeFormat[]>>[0]
+  options?: QueryOptionsWithoutKey<AlternativeFormat[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "alternativeFormats", params.subjectName],

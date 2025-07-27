@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import {
   // Cache Flush Date API functions
@@ -57,7 +58,7 @@ import type {
  * ```
  */
 export const useVesselBasics = (
-  options?: Parameters<typeof useQuery<VesselBasic[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselBasic[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "basics"],
@@ -86,7 +87,7 @@ export const useVesselBasics = (
  */
 export const useVesselBasicsById = (
   params: { vesselId: number },
-  options?: Parameters<typeof useQuery<VesselBasic>>[0]
+  options?: QueryOptionsWithoutKey<VesselBasic>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "basics", "byId", params.vesselId],
@@ -118,7 +119,7 @@ export const useVesselBasicsById = (
  * ```
  */
 export const useVesselAccommodations = (
-  options?: Parameters<typeof useQuery<VesselAccommodation[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselAccommodation[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations"],
@@ -141,7 +142,7 @@ export const useVesselAccommodations = (
  */
 export const useVesselAccommodationsById = (
   params: { vesselId: number },
-  options?: Parameters<typeof useQuery<VesselAccommodation>>[0]
+  options?: QueryOptionsWithoutKey<VesselAccommodation>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations", "byId", params.vesselId],
@@ -177,7 +178,7 @@ export const useVesselAccommodationsById = (
  * ```
  */
 export const useVesselLocations = (
-  options?: Parameters<typeof useQuery<VesselLocation[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselLocation[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "locations"],
@@ -207,7 +208,7 @@ export const useVesselLocations = (
  */
 export const useVesselLocationsByVesselId = (
   params: { vesselId: number },
-  options?: Parameters<typeof useQuery<VesselLocation>>[0]
+  options?: QueryOptionsWithoutKey<VesselLocation>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "locations", "byVesselId", params.vesselId],
@@ -232,7 +233,7 @@ export const useVesselLocationsByVesselId = (
  * @returns React Query result containing an array of VesselStats objects with statistical information for all vessels
  */
 export const useVesselStats = (
-  options?: Parameters<typeof useQuery<VesselStats[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselStats[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "stats"],
@@ -255,7 +256,7 @@ export const useVesselStats = (
  */
 export const useVesselStatsById = (
   params: { vesselId: number },
-  options?: Parameters<typeof useQuery<VesselStats>>[0]
+  options?: QueryOptionsWithoutKey<VesselStats>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "stats", "byId", params.vesselId],
@@ -280,7 +281,7 @@ export const useVesselStatsById = (
  * @returns React Query result containing an array of VesselHistory objects with historical data for all vessels
  */
 export const useVesselHistory = (
-  options?: Parameters<typeof useQuery<VesselHistory[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselHistory[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "history"],
@@ -305,7 +306,7 @@ export const useVesselHistory = (
  */
 export const useVesselHistoryByVesselAndDateRange = (
   params: { vesselName: string; dateStart: Date; dateEnd: Date },
-  options?: Parameters<typeof useQuery<VesselHistory[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselHistory[]>
 ) => {
   return useQuery({
     queryKey: [
@@ -343,7 +344,7 @@ export const useVesselHistoryByVesselAndDateRange = (
  * @returns React Query result containing an array of VesselVerbose objects with comprehensive information for all vessels
  */
 export const useVesselVerbose = (
-  options?: Parameters<typeof useQuery<VesselVerbose[]>>[0]
+  options?: QueryOptionsWithoutKey<VesselVerbose[]>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose"],
@@ -366,7 +367,7 @@ export const useVesselVerbose = (
  */
 export const useVesselVerboseById = (
   params: { vesselId: number },
-  options?: Parameters<typeof useQuery<VesselVerbose>>[0]
+  options?: QueryOptionsWithoutKey<VesselVerbose>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose", "byId", params.vesselId],
@@ -391,7 +392,7 @@ export const useVesselVerboseById = (
  * @returns React Query result containing the cache flush date for vessels data
  */
 export const useCacheFlushDateVessels = (
-  options?: Parameters<typeof useQuery<VesselsCacheFlushDate>>[0]
+  options?: QueryOptionsWithoutKey<VesselsCacheFlushDate>
 ) => {
   return useQuery({
     queryKey: ["wsf", "vessels", "cacheFlushDate"],
