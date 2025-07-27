@@ -66,8 +66,9 @@ Welcome to the WS-Dottie documentation! This index provides organized access to 
 
 ### React Integration
 - **[Getting Started - React Setup](./GETTING-STARTED.md#react-applications)** - Basic React setup
-- **[API Reference - React Hooks](./API-REFERENCE.md#react-hooks)** - Complete React hooks reference
+- **[API Reference - React Hooks](./API-REFERENCE.md#react-hooks)** - Complete React hooks reference with automatic type inference
 - **[Examples - React Patterns](./EXAMPLES.md#react-application)** - React usage examples
+- **[Type Safety](./API-REFERENCE.md#automatic-type-safety)** - Automatic type inference with TanStack Query
 
 ### Performance & Caching
 - **[API Reference - Performance](./API-REFERENCE.md#performance--caching)** - Caching strategies and optimization
@@ -90,7 +91,8 @@ Welcome to the WS-Dottie documentation! This index provides organized access to 
 
 ### Common Patterns
 - **[Parameter Object Pattern](./API-REFERENCE.md#parameter-object-pattern)** - Consistent API parameter structure
-- **[React Hooks](./API-REFERENCE.md#react-hooks)** - TanStack Query integration
+- **[React Hooks](./API-REFERENCE.md#react-hooks)** - TanStack Query integration with automatic type inference
+- **[Type Safety](./API-REFERENCE.md#strong-typing)** - Comprehensive TypeScript support
 - **[Error Handling](./API-REFERENCE.md#error-handling)** - Consistent error types
 - **[Data Transformation](./API-REFERENCE.md#data-transformation)** - Date conversion and field filtering
 
