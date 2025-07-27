@@ -34,6 +34,7 @@ This module provides access to the WSF Vessels API, which offers comprehensive i
 | **Vessel Locations** | Real-time | `MINUTE_UPDATES` | Updated continuously as vessels move |
 | **Vessel Data** | Static | `WEEKLY_UPDATES` | Updated when vessel information changes |
 | **Statistics** | Daily | `DAILY_UPDATES` | Updated daily with operational data |
+| **Historical Data** | Minute-level | `MINUTE_UPDATES` | Updated every minute for fresh historical data |
 
 ## WSF Documentation
 
@@ -289,14 +290,14 @@ console.log(`Fleet-wide on-time performance: ${(fleetOnTimeTrips.length / allVes
 
 ## Performance & Caching
 
-This API uses the **WEEKLY_UPDATES** caching strategy for static data and **MINUTE_UPDATES** for real-time data. For detailed information about caching configuration, performance optimization, and advanced caching options, see the [Performance & Caching](../API-REFERENCE.md#performance--caching) section in the API Reference.
+This API uses the **WEEKLY_UPDATES** caching strategy for static data, **MINUTE_UPDATES** for real-time and historical data, and **DAILY_UPDATES** for statistics. For detailed information about caching configuration, performance optimization, and advanced caching options, see the [Performance & Caching](../API-REFERENCE.md#performance--caching) section in the API Reference.
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 7 days (static), 5 minutes (real-time) | Data considered fresh for 7 days (static) or 5 minutes (real-time) |
-| **Refetch Interval** | 7 days (static), 5 minutes (real-time) | Automatically refetch data every 7 days (static) or 5 minutes (real-time) |
-| **GC Time** | 14 days (static), 10 minutes (real-time) | Keep unused data in cache for 14 days (static) or 10 minutes (real-time) |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 7 days (static), 1 minute (real-time/historical), 1 day (statistics) | Data considered fresh for 7 days (static), 1 minute (real-time/historical), or 1 day (statistics) |
+| **Refetch Interval** | 7 days (static), 1 minute (real-time/historical), 1 day (statistics) | Automatically refetch data every 7 days (static), 1 minute (real-time/historical), or 1 day (statistics) |
+| **GC Time** | 14 days (static), 1 hour (real-time/historical), 2 days (statistics) | Keep unused data in cache for 14 days (static), 1 hour (real-time/historical), or 2 days (statistics) |
+| **Retry** | 5 attempts (static), 0 attempts (real-time/historical), 5 attempts (statistics) | Retry failed requests up to 5 times (static/statistics) or no retries (real-time/historical) |
 
 ## Common Patterns
 
