@@ -3,6 +3,7 @@
 // API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
 
 import { useQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -20,7 +21,7 @@ import type { TravelTimeRoute } from "./types";
  */
 export const useTravelTimes = (
   options?: QueryOptionsWithoutKey<TravelTimeRoute[]>
-) => {
+): UseQueryResult<TravelTime[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "travel-times", "getTravelTimes"],
     queryFn: () => getTravelTimes(),
@@ -43,7 +44,7 @@ export const useTravelTimes = (
 export const useTravelTimeById = (
   params: { travelTimeId: number },
   options?: QueryOptionsWithoutKey<TravelTimeRoute>
-) => {
+): UseQueryResult<TravelTime, Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

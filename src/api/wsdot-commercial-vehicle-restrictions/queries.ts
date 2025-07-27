@@ -3,6 +3,7 @@
 // API Help: https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help
 
 import { useQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -33,7 +34,7 @@ import type {
  */
 export const useCommercialVehicleRestrictions = (
   options?: QueryOptionsWithoutKey<CommercialVehicleRestriction[]>
-) => {
+): UseQueryResult<CommercialVehicleRestriction[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -64,7 +65,7 @@ export const useCommercialVehicleRestrictions = (
  */
 export const useCommercialVehicleRestrictionsWithId = (
   options?: QueryOptionsWithoutKey<CommercialVehicleRestrictionWithId[]>
-) => {
+): UseQueryResult<CommercialVehicleRestriction[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

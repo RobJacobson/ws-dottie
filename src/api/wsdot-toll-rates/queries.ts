@@ -3,6 +3,7 @@
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
 import { useQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -25,7 +26,7 @@ import type { TollRate, TollTripInfo, TollTripRates } from "./types";
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const useTollRates = (options?: QueryOptionsWithoutKey<TollRate[]>) => {
+export const useTollRates = (options?: QueryOptionsWithoutKey<TollRate[]>): UseQueryResult<TollRate[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollRates"],
     queryFn: () => getTollRates(),
@@ -51,7 +52,7 @@ export const useTollRates = (options?: QueryOptionsWithoutKey<TollRate[]>) => {
  */
 export const useTollTripInfo = (
   options?: QueryOptionsWithoutKey<TollTripInfo[]>
-) => {
+): UseQueryResult<TollRate[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripInfo"],
     queryFn: () => getTollTripInfo(),
@@ -78,7 +79,7 @@ export const useTollTripInfo = (
  */
 export const useTollTripRates = (
   options?: QueryOptionsWithoutKey<TollTripRates>
-) => {
+): UseQueryResult<TollRate[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripRates"],
     queryFn: () => getTollTripRates(),

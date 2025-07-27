@@ -2,6 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
@@ -25,7 +26,7 @@ import type { HighwayAlert } from "./types";
  */
 export const useHighwayAlerts = (
   options?: QueryOptionsWithoutKey<HighwayAlert[]>
-) => {
+): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "highway-alerts", "getHighwayAlerts"],
     queryFn: () => getHighwayAlerts(),
@@ -47,7 +48,7 @@ export const useHighwayAlerts = (
 export const useHighwayAlertById = (
   params: { alertId: number },
   options?: QueryOptionsWithoutKey<HighwayAlert>
-) => {
+): UseQueryResult<HighwayAlert, Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -74,7 +75,7 @@ export const useHighwayAlertById = (
 export const useHighwayAlertsByMapArea = (
   params: { mapArea: string },
   options?: QueryOptionsWithoutKey<HighwayAlert[]>
-) => {
+): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

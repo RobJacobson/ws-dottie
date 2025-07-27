@@ -3,6 +3,7 @@
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
 import { useQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -27,7 +28,7 @@ import type { MountainPassCondition } from "./types";
  */
 export const useMountainPassConditions = (
   options?: QueryOptionsWithoutKey<MountainPassCondition[]>
-) => {
+): UseQueryResult<MountainPassCondition[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -61,7 +62,7 @@ export const useMountainPassConditions = (
 export const useMountainPassConditionById = (
   params: { passConditionId: number },
   options?: QueryOptionsWithoutKey<MountainPassCondition>
-) => {
+): UseQueryResult<MountainPassCondition, Error> => {
   return useQuery<MountainPassCondition>({
     queryKey: [
       "wsdot",
