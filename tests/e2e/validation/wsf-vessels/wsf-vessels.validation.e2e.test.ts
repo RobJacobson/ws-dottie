@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  getAllVesselHistories,
   getCacheFlushDateVessels,
+  getMultipleVesselHistories,
   getVesselAccommodations,
   getVesselAccommodationsById,
   getVesselBasics,
   getVesselBasicsById,
-  getVesselHistory,
   getVesselHistoryByVesselAndDateRange,
   getVesselLocations,
   getVesselLocationsByVesselId,
@@ -323,89 +324,230 @@ describe("WSF Vessels API - Zod Validation", () => {
     }
   });
 
-  it("should validate vessel history data structure using Zod", async () => {
-    const vesselHistory = await getVesselHistory();
+  it("should validate vessel history by vessel and date range", async () => {
+    const dateStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+    const dateEnd = new Date();
+    const testVessel = "Spokane";
 
-    // Validate the entire array structure
+    const vesselHistoryByRange = await getVesselHistoryByVesselAndDateRange({
+      vesselName: testVessel,
+      dateStart,
+      dateEnd,
+    });
+
     const validatedHistory =
-      validators.vesselHistoryArray.validateSafe(vesselHistory);
-
+      validators.vesselHistoryArray.validateSafe(vesselHistoryByRange);
     expect(validatedHistory.success).toBe(true);
 
     if (validatedHistory.success && validatedHistory.data.length > 0) {
-      const firstHistory = validatedHistory.data[0];
+      expect(validatedHistory.data[0].Vessel).toBe(testVessel);
+    }
+  });
 
-      // Test individual vessel history properties
+  it("should validate multiple vessel histories data structure using Zod", async () => {
+    const dateStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+    const dateEnd = new Date();
+    const testVessels = ["Spokane", "Walla Walla", "Kaleetan"];
+
+    const multipleVesselHistories = await getMultipleVesselHistories({
+      vesselNames: testVessels,
+      dateStart,
+      dateEnd,
+      batchSize: 3, // Small batch for testing
+    });
+
+    // Validate the entire array structure using utility
+    const validatedHistories = validateAndReturn(
+      validators.vesselHistoryArray,
+      multipleVesselHistories,
+      "multiple vessel histories array"
+    );
+
+    expect(validatedHistories).toBeDefined();
+    expect(Array.isArray(validatedHistories)).toBe(true);
+    expect(validatedHistories.length).toBeGreaterThan(0);
+
+    // Verify that we have data from all requested vessels
+    const vesselNamesInResults = [
+      ...new Set(validatedHistories.map((h) => h.Vessel)),
+    ];
+    expect(vesselNamesInResults.length).toBeGreaterThan(0);
+
+    // Check that all vessels in results are from our test list
+    vesselNamesInResults.forEach((vesselName) => {
+      expect(testVessels).toContain(vesselName);
+    });
+
+    // Validate individual history records
+    if (validatedHistories.length > 0) {
+      const firstHistory = validatedHistories[0];
       expect(firstHistory.VesselId).toBeGreaterThan(0);
       expect(firstHistory.Vessel).toBeTruthy();
-      if (firstHistory.Departing !== null) {
-        expect(firstHistory.Departing).toBeTruthy();
-      }
-      if (firstHistory.Arriving !== null) {
-        expect(firstHistory.Arriving).toBeTruthy();
-      }
-
-      // Test nullable date fields
-      if (firstHistory.ScheduledDepart !== null) {
-        expect(firstHistory.ScheduledDepart).toBeInstanceOf(Date);
-      }
-      if (firstHistory.ActualDepart !== null) {
-        expect(firstHistory.ActualDepart).toBeInstanceOf(Date);
-      }
-      if (firstHistory.EstArrival !== null) {
-        expect(firstHistory.EstArrival).toBeInstanceOf(Date);
-      }
-      if (firstHistory.Date !== null) {
-        expect(firstHistory.Date).toBeInstanceOf(Date);
-      }
+      expect(testVessels).toContain(firstHistory.Vessel);
     }
   });
 
-  it("should validate individual vessel history data", async () => {
-    const vesselHistory = await getVesselHistory();
+  it("should validate all vessel histories data structure using Zod", async () => {
+    const dateStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+    const dateEnd = new Date();
 
-    if (vesselHistory.length > 0) {
-      const firstHistory = vesselHistory[0];
-      const validatedHistory =
-        validators.vesselHistory.validateSafe(firstHistory);
-      expect(validatedHistory.success).toBe(true);
+    const allVesselHistories = await getAllVesselHistories({
+      dateStart,
+      dateEnd,
+      batchSize: 6, // Default batch size
+    });
 
-      if (validatedHistory.success) {
-        expect(validatedHistory.data.VesselId).toBeGreaterThan(0);
-        expect(validatedHistory.data.Vessel).toBeTruthy();
-        if (validatedHistory.data.Departing !== null) {
-          expect(validatedHistory.data.Departing).toBeTruthy();
-        }
-        if (validatedHistory.data.Arriving !== null) {
-          expect(validatedHistory.data.Arriving).toBeTruthy();
-        }
-      }
+    // Validate the entire array structure using utility
+    const validatedHistories = validateAndReturn(
+      validators.vesselHistoryArray,
+      allVesselHistories,
+      "all vessel histories array"
+    );
+
+    expect(validatedHistories).toBeDefined();
+    expect(Array.isArray(validatedHistories)).toBe(true);
+    expect(validatedHistories.length).toBeGreaterThan(0);
+
+    // Verify that we have data from multiple vessels (indicating fleet-wide data)
+    const vesselNamesInResults = [
+      ...new Set(validatedHistories.map((h) => h.Vessel)),
+    ];
+    expect(vesselNamesInResults.length).toBeGreaterThan(1); // Should have multiple vessels
+
+    // Check that vessel names are valid WSF vessel names
+    const expectedVesselNames = [
+      "Cathlamet",
+      "Chelan",
+      "Chetzemoka",
+      "Chimacum",
+      "Issaquah",
+      "Kaleetan",
+      "Kennewick",
+      "Kitsap",
+      "Kittitas",
+      "Puyallup",
+      "Salish",
+      "Samish",
+      "Sealth",
+      "Spokane",
+      "Suquamish",
+      "Tacoma",
+      "Tillikum",
+      "Tokitae",
+      "Walla Walla",
+      "Wenatchee",
+      "Yakima",
+    ];
+
+    vesselNamesInResults.forEach((vesselName) => {
+      expect(expectedVesselNames).toContain(vesselName);
+    });
+
+    // Validate individual history records
+    if (validatedHistories.length > 0) {
+      const firstHistory = validatedHistories[0];
+      expect(firstHistory.VesselId).toBeGreaterThan(0);
+      expect(firstHistory.Vessel).toBeTruthy();
+      expect(expectedVesselNames).toContain(firstHistory.Vessel);
     }
   });
 
-  it("should validate vessel history by vessel and date range", async () => {
-    const vesselHistory = await getVesselHistory();
+  it("should validate multiple vessel histories with custom batch size", async () => {
+    const dateStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+    const dateEnd = new Date();
+    const testVessels = [
+      "Spokane",
+      "Walla Walla",
+      "Kaleetan",
+      "Cathlamet",
+      "Chelan",
+    ];
 
-    if (vesselHistory.length > 0) {
-      const firstHistory = vesselHistory[0];
-      const vesselName = firstHistory.Vessel;
-      const dateStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
-      const dateEnd = new Date();
+    const multipleVesselHistories = await getMultipleVesselHistories({
+      vesselNames: testVessels,
+      dateStart,
+      dateEnd,
+      batchSize: 2, // Custom small batch size
+    });
 
-      const vesselHistoryByRange = await getVesselHistoryByVesselAndDateRange({
-        vesselName,
-        dateStart,
-        dateEnd,
-      });
+    // Validate the entire array structure
+    const validatedHistories = validateAndReturn(
+      validators.vesselHistoryArray,
+      multipleVesselHistories,
+      "multiple vessel histories with custom batch size"
+    );
 
-      const validatedHistory =
-        validators.vesselHistoryArray.validateSafe(vesselHistoryByRange);
-      expect(validatedHistory.success).toBe(true);
+    expect(validatedHistories).toBeDefined();
+    expect(Array.isArray(validatedHistories)).toBe(true);
+    expect(validatedHistories.length).toBeGreaterThan(0);
 
-      if (validatedHistory.success && validatedHistory.data.length > 0) {
-        expect(validatedHistory.data[0].Vessel).toBe(vesselName);
-      }
-    }
+    // Verify that we have data from all requested vessels
+    const vesselNamesInResults = [
+      ...new Set(validatedHistories.map((h) => h.Vessel)),
+    ];
+    expect(vesselNamesInResults.length).toBeGreaterThan(0);
+
+    // Check that all vessels in results are from our test list
+    vesselNamesInResults.forEach((vesselName) => {
+      expect(testVessels).toContain(vesselName);
+    });
+  });
+
+  it("should validate all vessel histories with custom batch size", async () => {
+    const dateStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days ago
+    const dateEnd = new Date();
+
+    const allVesselHistories = await getAllVesselHistories({
+      dateStart,
+      dateEnd,
+      batchSize: 4, // Custom batch size
+    });
+
+    // Validate the entire array structure
+    const validatedHistories = validateAndReturn(
+      validators.vesselHistoryArray,
+      allVesselHistories,
+      "all vessel histories with custom batch size"
+    );
+
+    expect(validatedHistories).toBeDefined();
+    expect(Array.isArray(validatedHistories)).toBe(true);
+    expect(validatedHistories.length).toBeGreaterThan(0);
+
+    // Verify that we have data from multiple vessels
+    const vesselNamesInResults = [
+      ...new Set(validatedHistories.map((h) => h.Vessel)),
+    ];
+    expect(vesselNamesInResults.length).toBeGreaterThan(1);
+
+    // Check that vessel names are valid WSF vessel names
+    const expectedVesselNames = [
+      "Cathlamet",
+      "Chelan",
+      "Chetzemoka",
+      "Chimacum",
+      "Issaquah",
+      "Kaleetan",
+      "Kennewick",
+      "Kitsap",
+      "Kittitas",
+      "Puyallup",
+      "Salish",
+      "Samish",
+      "Sealth",
+      "Spokane",
+      "Suquamish",
+      "Tacoma",
+      "Tillikum",
+      "Tokitae",
+      "Walla Walla",
+      "Wenatchee",
+      "Yakima",
+    ];
+
+    vesselNamesInResults.forEach((vesselName) => {
+      expect(expectedVesselNames).toContain(vesselName);
+    });
   });
 
   it("should validate vessel verbose data structure using Zod", async () => {
@@ -583,32 +725,6 @@ describe("WSF Vessels API - Zod Validation", () => {
         // Test optional fields
         if (validatedStat.data.YearRebuilt !== undefined) {
           expect(validatedStat.data.YearRebuilt).toBeGreaterThan(1900);
-        }
-      }
-    }
-  });
-
-  it("should validate vessel history date fields", async () => {
-    const vesselHistory = await getVesselHistory();
-
-    if (vesselHistory.length > 0) {
-      const firstHistory = vesselHistory[0];
-      const validatedHistory =
-        validators.vesselHistory.validateSafe(firstHistory);
-
-      if (validatedHistory.success) {
-        // Test nullable date fields
-        if (validatedHistory.data.ScheduledDepart !== null) {
-          expect(validatedHistory.data.ScheduledDepart).toBeInstanceOf(Date);
-        }
-        if (validatedHistory.data.ActualDepart !== null) {
-          expect(validatedHistory.data.ActualDepart).toBeInstanceOf(Date);
-        }
-        if (validatedHistory.data.EstArrival !== null) {
-          expect(validatedHistory.data.EstArrival).toBeInstanceOf(Date);
-        }
-        if (validatedHistory.data.Date !== null) {
-          expect(validatedHistory.data.Date).toBeInstanceOf(Date);
         }
       }
     }
