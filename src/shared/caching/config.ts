@@ -19,10 +19,10 @@ export const tanstackQueryOptions = {
    * - Conservative retry strategy for WSF API's 1000ms+ latency
    */
   REALTIME_UPDATES: {
-    // Data is considered stale after 30 seconds
-    staleTime: 30 * SECOND,
+    // Data is considered stale after 5 seconds (same as refetch interval)
+    staleTime: 5 * SECOND,
     // Keep in cache for 2 minutes
-    gcTime: 2 * MINUTE,
+    gcTime: 1 * HOUR,
     // Refetch every 5 seconds when component is active
     refetchInterval: 5 * SECOND,
     // Refetch when window regains focus
@@ -43,9 +43,9 @@ export const tanstackQueryOptions = {
    */
   MINUTE_UPDATES: {
     // Data is considered stale after 5 minutes
-    staleTime: 5 * MINUTE,
+    staleTime: 1 * MINUTE,
     // Keep in cache for 10 minutes
-    gcTime: 10 * MINUTE,
+    gcTime: 1 * HOUR,
     // Refetch every 1 minute to check for updates
     refetchInterval: 1 * MINUTE,
     // Refetch when window regains focus
@@ -65,7 +65,7 @@ export const tanstackQueryOptions = {
    */
   HOURLY_UPDATES: {
     // Data is considered stale after 2 hours
-    staleTime: 2 * HOUR,
+    staleTime: 1 * HOUR,
     // Keep in cache for 4 hours
     gcTime: 4 * HOUR,
     // Refetch every 1 hour to check for updates
