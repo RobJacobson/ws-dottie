@@ -3,6 +3,7 @@
 // API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
 
 import { useQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -26,7 +27,7 @@ import type { WeatherStationData } from "./types";
  */
 export const useWeatherStations = (
   options?: QueryOptionsWithoutKey<WeatherStationData[]>
-) => {
+): UseQueryResult<WeatherInformation[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "weather-stations", "getWeatherStations"],
     queryFn: () => getWeatherStations(),

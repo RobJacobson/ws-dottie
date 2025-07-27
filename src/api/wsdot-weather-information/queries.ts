@@ -3,6 +3,7 @@
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
 import { useQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -24,7 +25,7 @@ import type { WeatherInfo } from "./types";
  */
 export const useWeatherInformation = (
   options?: QueryOptionsWithoutKey<WeatherInfo[]>
-) => {
+): UseQueryResult<WeatherInformation[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
     queryFn: () => getWeatherInformation(),
@@ -47,7 +48,7 @@ export const useWeatherInformation = (
 export const useWeatherInformationByStationId = (
   params: { stationId: number },
   options?: QueryOptionsWithoutKey<WeatherInfo>
-) => {
+): UseQueryResult<WeatherInformation[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -76,7 +77,7 @@ export const useWeatherInformationByStationId = (
 export const useWeatherInformationForStations = (
   params: { stationIds: number[] },
   options?: QueryOptionsWithoutKey<WeatherInfo[]>
-) => {
+): UseQueryResult<WeatherInformation[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

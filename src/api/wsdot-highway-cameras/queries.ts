@@ -6,6 +6,7 @@
  * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
@@ -34,7 +35,7 @@ import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
  */
 export const useHighwayCameras = (
   options?: QueryOptionsWithoutKey<Camera[]>
-) => {
+): UseQueryResult<Camera[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
     queryFn: () => getHighwayCameras(),
@@ -62,7 +63,7 @@ export const useHighwayCameras = (
 export const useHighwayCamera = (
   params: { cameraID: number },
   options?: QueryOptionsWithoutKey<GetCameraResponse>
-) => {
+): UseQueryResult<GetCameraResponse, Error> => {
   return useQuery<GetCameraResponse>({
     queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params.cameraID],
     queryFn: () => getHighwayCamera({ cameraID: params.cameraID }),
@@ -94,7 +95,7 @@ export const useHighwayCamera = (
 export const useSearchHighwayCameras = (
   params: SearchCamerasParams,
   options?: QueryOptionsWithoutKey<Camera[]>
-) => {
+): UseQueryResult<Camera[], Error> => {
   return useQuery<Camera[]>({
     queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],
     queryFn: () => searchHighwayCameras(params),

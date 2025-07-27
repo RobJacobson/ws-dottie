@@ -41,7 +41,7 @@ export const useFaresCacheFlushDate = (
     UseQueryOptions<Awaited<ReturnType<typeof getFaresCacheFlushDate>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<Date, Error> => {
   return useQuery({
     queryKey: ["wsf", "fares", "cacheFlushDate"],
     queryFn: () => getFaresCacheFlushDate(),
@@ -69,7 +69,7 @@ export const useFaresValidDateRange = (
     UseQueryOptions<Awaited<ReturnType<typeof getFaresValidDateRange>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<FareLineItem[], Error> => {
   return useQuery({
     queryKey: ["wsf", "fares", "validDateRange"],
     queryFn: () => getFaresValidDateRange(),
@@ -101,7 +101,7 @@ export const useFaresTerminals = (
     UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminals>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<any, Error> => {
   return useQuery({
     queryKey: ["wsf", "fares", "terminals", jsDateToYyyyMmDd(params.tripDate)],
     queryFn: () => getFaresTerminals({ tripDate: params.tripDate }),
@@ -129,7 +129,7 @@ export const useFaresTerminalMates = (
     UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminalMates>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<any, Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -171,7 +171,7 @@ export const useTerminalCombo = (
     UseQueryOptions<Awaited<ReturnType<typeof getTerminalCombo>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<any, Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -209,7 +209,7 @@ export const useTerminalComboVerbose = (
     UseQueryOptions<Awaited<ReturnType<typeof getTerminalComboVerbose>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<TerminalVerbose[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -248,7 +248,7 @@ export const useFareLineItemsBasic = (
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsBasic>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<FareLineItem[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -297,7 +297,7 @@ export const useFareLineItems = (
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItems>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<FareLineItem[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -338,7 +338,7 @@ export const useFareLineItemsVerbose = (
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsVerbose>>>,
     "queryKey" | "queryFn"
   >
-) => {
+): UseQueryResult<FareLineItem[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
@@ -381,7 +381,7 @@ export const useFareTotals = (
     UseQueryOptions<Awaited<ReturnType<typeof getFareTotals>>>,
     "queryKey" | "queryFn" | "enabled"
   >
-) => {
+): UseQueryResult<FareLineItem[], Error> => {
   return useQuery({
     queryKey: [
       "wsf",
