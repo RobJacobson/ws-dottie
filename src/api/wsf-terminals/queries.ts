@@ -538,7 +538,7 @@ export const useTerminalVerboseByTerminalId = (
  * ```
  */
 export const useCacheFlushDateTerminals = (
-  options?: QueryOptionsWithoutKey<Date>
+  options?: QueryOptionsWithoutKey<Date | null>
 ) =>
   useQuery({
     queryKey: ["wsf", "terminals", "cache-flush-date"],
