@@ -244,3 +244,6 @@ bun.lockb
 test-e2e.sh
 
 .vscode/
+ 
+# Exclude example app from the public repo for now
+example/
