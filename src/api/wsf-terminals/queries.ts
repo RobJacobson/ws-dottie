@@ -1,7 +1,7 @@
 // WSF Terminals hooks
 
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
@@ -39,7 +39,7 @@ import type {
   TerminalTransport,
   TerminalVerbose,
   TerminalWaitTimes,
-} from "./types";
+} from "./schemas";
 
 // ============================================================================
 // TERMINAL BASICS HOOKS

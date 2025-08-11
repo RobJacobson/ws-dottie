@@ -20,4 +20,4 @@ export type {
   TollTripInfo,
   TollTripRate,
   TollTripRates,
-} from "./types";
+} from "./schemas";

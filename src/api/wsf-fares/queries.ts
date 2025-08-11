@@ -26,7 +26,7 @@ import type {
   FaresValidDateRange,
   FareTotal,
   TerminalComboVerbose,
-} from "./types";
+} from "./schemas";
 
 /**
  * Hook for getting cache flush date from WSF Fares API

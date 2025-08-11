@@ -9,7 +9,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getBorderCrossings } from "./api";
-import type { BorderCrossingData } from "./types";
+import type { BorderCrossingData } from "./schemas";
 
 /**
  * Hook for getting border crossing wait times from WSDOT Border Crossings API

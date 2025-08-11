@@ -9,7 +9,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getBridgeClearances } from "./api";
-import type { BridgeDataGIS } from "./types";
+import type { BridgeDataGIS } from "./schemas";
 
 /**
  * Hook for getting bridge clearances from WSDOT Bridge Clearances API

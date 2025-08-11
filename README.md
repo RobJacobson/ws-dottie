@@ -14,6 +14,16 @@ Meet Dottie - she's not just another API wrapper, she's your cheerful guide thro
 
 This friendly TypeScript client library provides type-safe data fetching from sixteen different Washington State transportation APIs - from real-time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a hobby project to track your daily commute or developing enterprise applications for transportation planning, WS-Dottie gives you a safe, reliable way to tap into this data firehose with smart caching, strict typing, automatic JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration.
 
+### Zod-powered validation (Zod 4)
+
+WS‑Dottie uses Zod 4 schemas for runtime validation and type inference across all APIs. That means:
+- Strong, generated TypeScript types from a single source of truth
+- Early detection of upstream shape drifts and edge cases
+- Safe transformations of date strings and nullable fields
+- Pass‑through philosophy for unknown fields (we don’t strip upstream data)
+
+Practically, API functions fetch raw data, validate and transform it with Zod, and then return fully typed results. This improves reliability without adding complexity to your app code.
+
 ## ✨ What You Can Build
 
 - **🚢 Ferry Tracking Apps** - Real-time vessel locations, terminal wait times, and sailing schedules
@@ -145,13 +155,13 @@ function TransportationDashboard() {
 - **🔄 Smart Caching** - Built-in TanStack Query integration with optimized caching strategies for different data types
 - **🌐 Cross-Platform** - Works in browsers (JSONP) and Node.js (fetch)
 - **📱 React Ready** - Hooks for all APIs with automatic cache management
-- **🎯 Strong Typing** - Comprehensive TypeScript types for all APIs, parameters, and responses
+ - **🎯 Strong Typing** - Zod‑inferred TypeScript types for all APIs, parameters, and responses
 - **📦 Parameter Objects** - Consistent single-parameter object pattern for all API calls
 - **⚙️ Flexible Configuration** - Environment variables or runtime configuration with type-safe interface
 - **🔍 Debugging** - Optional logging for troubleshooting API calls
 - **⚡ Tree-Shaking** - Only import what you need to keep bundles small
 - **🛡️ Error Handling** - Consistent error types with user-friendly messages
-- **📅 Date Conversion** - Automatic conversion of .NET date strings to JavaScript Date objects
+ - **📅 Date Conversion** - Automatic conversion of upstream date strings to JavaScript Date objects (via a lean parser today; moving toward Zod‑only transforms)
 
 ## 📚 Documentation
 

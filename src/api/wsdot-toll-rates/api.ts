@@ -4,7 +4,12 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { TollRate, TollTripInfo, TollTripRates } from "./types";
+import type { TollRate, TollTripInfo, TollTripRates } from "./schemas";
+import {
+  tollRateArraySchema,
+  tollTripInfoArraySchema,
+  tollTripRatesSchema,
+} from "./schemas";
 
 // Create a factory function for WSDOT Toll Rates API
 const createFetch = createFetchFactory(
@@ -27,7 +32,11 @@ const createFetch = createFetchFactory(
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const getTollRates = createFetch<TollRate[]>("/GetTollRatesAsJson");
+export const getTollRates = async () => {
+  const fetcher = createFetch("/GetTollRatesAsJson");
+  const data = await fetcher();
+  return tollRateArraySchema.parse(data) as TollRate[];
+};
 
 /**
  * Retrieves toll trip information with geometry data from WSDOT API
@@ -45,9 +54,11 @@ export const getTollRates = createFetch<TollRate[]>("/GetTollRatesAsJson");
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = createFetch<TollTripInfo[]>(
-  "/GetTollTripInfoAsJson"
-);
+export const getTollTripInfo = async () => {
+  const fetcher = createFetch("/GetTollTripInfoAsJson");
+  const data = await fetcher();
+  return tollTripInfoArraySchema.parse(data) as TollTripInfo[];
+};
 
 /**
  * Retrieves toll trip rates with messages and update times from WSDOT API
@@ -66,6 +77,8 @@ export const getTollTripInfo = createFetch<TollTripInfo[]>(
  * console.log(tripRates.Trips[0].Toll); // 0
  * ```
  */
-export const getTollTripRates = createFetch<TollTripRates>(
-  "/GetTollTripRatesAsJson"
-);
+export const getTollTripRates = async () => {
+  const fetcher = createFetch("/GetTollTripRatesAsJson");
+  const data = await fetcher();
+  return tollTripRatesSchema.parse(data) as TollTripRates;
+};

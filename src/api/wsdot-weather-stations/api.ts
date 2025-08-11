@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { WeatherStationData } from "./types";
+import type { WeatherStationData } from "./schemas";
+import { weatherStationDataArraySchema } from "./schemas";
 
 // Create a factory function for WSDOT Weather Stations API
 const createFetch = createFetchFactory(
@@ -20,6 +21,8 @@ const createFetch = createFetchFactory(
  * @returns Promise containing weather stations data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getWeatherStations = createFetch<WeatherStationData[]>(
-  "/GetCurrentStationsAsJson"
-);
+export const getWeatherStations = async () => {
+  const fetcher = createFetch("/GetCurrentStationsAsJson");
+  const data = await fetcher();
+  return weatherStationDataArraySchema.parse(data) as WeatherStationData[];
+};

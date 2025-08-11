@@ -2,14 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
 // API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
 
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getTrafficFlowById, getTrafficFlows } from "./api";
-import type { TrafficFlow } from "./types";
+import type { TrafficFlow } from "./schemas";
 
 /**
  * React Query hook for retrieving all traffic flow data

@@ -17,7 +17,7 @@ import {
   getHighwayCameras,
   searchHighwayCameras,
 } from "./api";
-import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
+import type { Camera, GetCameraResponse, SearchCamerasParams } from "./schemas";
 
 /**
  * React Query hook for getting all highway cameras

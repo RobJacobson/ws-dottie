@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { TrafficFlow } from "./types";
+import type { TrafficFlow } from "./schemas";
+import { trafficFlowArraySchema, trafficFlowSchema } from "./schemas";
 
 // Create a factory function for WSDOT Traffic Flow API
 const createFetch = createFetchFactory(
@@ -20,9 +21,11 @@ const createFetch = createFetchFactory(
  * @returns Promise containing all traffic flow data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getTrafficFlows = createFetch<TrafficFlow[]>(
-  "/GetTrafficFlowsAsJson"
-);
+export const getTrafficFlows = async () => {
+  const fetcher = createFetch("/GetTrafficFlowsAsJson");
+  const data = await fetcher();
+  return trafficFlowArraySchema.parse(data) as TrafficFlow[];
+};
 
 /**
  * Get specific traffic flow by ID from WSDOT Traffic Flow API
@@ -36,7 +39,10 @@ export const getTrafficFlows = createFetch<TrafficFlow[]>(
  * @returns Promise containing the specific traffic flow data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getTrafficFlowById = createFetch<
-  { flowDataID: number },
-  TrafficFlow
->("/GetTrafficFlowAsJson?FlowDataID={flowDataID}");
+export const getTrafficFlowById = async (params: { flowDataID: number }) => {
+  const fetcher = createFetch<{ flowDataID: number }>(
+    "/GetTrafficFlowAsJson?FlowDataID={flowDataID}"
+  );
+  const data = await fetcher(params);
+  return trafficFlowSchema.parse(data) as TrafficFlow;
+};

@@ -38,7 +38,7 @@ import type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
-} from "./types";
+} from "./schemas";
 
 // ============================================================================
 // VESSEL BASICS HOOKS

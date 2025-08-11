@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { TravelTimeRoute } from "./types";
+import type { TravelTimeRoute } from "./schemas";
+import { travelTimeRouteSchema, travelTimesArraySchema } from "./schemas";
 
 // Create a factory function for WSDOT Travel Times API
 const createFetch = createFetchFactory(
@@ -26,9 +27,11 @@ const createFetch = createFetchFactory(
  * console.log(travelTimes[0].CurrentTime); // 30
  * ```
  */
-export const getTravelTimes = createFetch<TravelTimeRoute[]>(
-  "/GetTravelTimesAsJson"
-);
+export const getTravelTimes = async () => {
+  const fetcher = createFetch("/GetTravelTimesAsJson");
+  const data = await fetcher();
+  return travelTimesArraySchema.parse(data) as TravelTimeRoute[];
+};
 
 /**
  * Get specific travel time by ID from WSDOT Travel Times API
@@ -48,7 +51,10 @@ export const getTravelTimes = createFetch<TravelTimeRoute[]>(
  * console.log(travelTime.CurrentTime); // 30
  * ```
  */
-export const getTravelTimeById = createFetch<
-  { travelTimeId: number },
-  TravelTimeRoute
->("/GetTravelTimeAsJson?TravelTimeID={travelTimeId}");
+export const getTravelTimeById = async (params: { travelTimeId: number }) => {
+  const fetcher = createFetch<{ travelTimeId: number }>(
+    "/GetTravelTimeAsJson?TravelTimeID={travelTimeId}"
+  );
+  const data = await fetcher(params);
+  return travelTimeRouteSchema.parse(data) as TravelTimeRoute;
+};

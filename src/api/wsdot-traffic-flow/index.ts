@@ -16,4 +16,4 @@ export {
 export type {
   FlowStationLocation,
   TrafficFlow,
-} from "./types";
+} from "./schemas";

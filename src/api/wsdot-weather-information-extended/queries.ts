@@ -9,7 +9,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getWeatherInformationExtended } from "./api";
-import type { WeatherReading } from "./types";
+import type { WeatherReading } from "./schemas";
 
 /**
  * React Query hook for retrieving extended weather information

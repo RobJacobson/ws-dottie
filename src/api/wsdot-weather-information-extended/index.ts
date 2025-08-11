@@ -11,4 +11,4 @@ export type {
   SubSurfaceMeasurement,
   SurfaceMeasurement,
   WeatherReading,
-} from "./types";
+} from "./schemas";
