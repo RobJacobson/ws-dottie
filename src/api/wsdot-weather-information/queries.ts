@@ -13,7 +13,7 @@ import {
   getWeatherInformationByStationId,
   getWeatherInformationForStations,
 } from "./api";
-import type { WeatherInfo } from "./types";
+import type { WeatherInfo } from "./schemas";
 
 /**
  * React Query hook for retrieving all weather information

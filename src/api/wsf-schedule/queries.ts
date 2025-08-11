@@ -1,7 +1,6 @@
 // WSF Schedule API React Query hooks
 
 import { useQuery } from "@tanstack/react-query";
-import type { UseQueryResult } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
@@ -48,7 +47,7 @@ import type {
   ScheduleTerminalCombo,
   TimeAdjustment,
   ValidDateRange,
-} from "./types";
+} from "./schemas";
 
 // ============================================================================
 // CACHE FLUSH DATE HOOKS

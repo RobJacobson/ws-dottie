@@ -8,13 +8,26 @@ import type {
   FareLineItem,
   FareLineItemBasic,
   FareLineItemsVerboseResponse,
+  FaresCacheFlushDate,
   FaresTerminal,
   FaresValidDateRange,
   FareTotal,
   TerminalCombo,
   TerminalComboVerbose,
   TerminalMate,
-} from "./types";
+} from "./schemas";
+import {
+  fareLineItemsArraySchema,
+  fareLineItemsBasicArraySchema,
+  fareLineItemsVerboseResponseSchema,
+  faresCacheFlushDateSchema,
+  faresTerminalsArraySchema,
+  faresValidDateRangeSchema,
+  fareTotalsArraySchema,
+  terminalComboSchema,
+  terminalComboVerboseArraySchema,
+  terminalMatesArraySchema,
+} from "./schemas";
 
 // Create a factory function for WSF Fares API
 const createFetch = createFetchFactory("/ferries/api/fares/rest");
@@ -36,7 +49,11 @@ const createFetch = createFetchFactory("/ferries/api/fares/rest");
  * console.log(flushDate); // "2024-01-15T10:30:00Z"
  * ```
  */
-export const getFaresCacheFlushDate = createFetch<Date>("/cacheflushdate");
+export const getFaresCacheFlushDate = async () => {
+  const fetcher = createFetch("/cacheflushdate");
+  const data = await fetcher();
+  return faresCacheFlushDateSchema.parse(data) as FaresCacheFlushDate;
+};
 
 /**
  * Get valid date range for fares data from WSF Fares API
@@ -53,8 +70,11 @@ export const getFaresCacheFlushDate = createFetch<Date>("/cacheflushdate");
  * console.log(dateRange.StartDate); // "2024-01-01T00:00:00Z"
  * ```
  */
-export const getFaresValidDateRange =
-  createFetch<FaresValidDateRange>("/validdaterange");
+export const getFaresValidDateRange = async () => {
+  const fetcher = createFetch("/validdaterange");
+  const data = await fetcher();
+  return faresValidDateRangeSchema.parse(data) as FaresValidDateRange;
+};
 
 /**
  * Get valid departing terminals for a trip date from WSF Fares API
@@ -74,10 +94,11 @@ export const getFaresValidDateRange =
  * console.log(terminals[0].TerminalName); // "Anacortes"
  * ```
  */
-export const getFaresTerminals = createFetch<
-  { tripDate: Date },
-  FaresTerminal[]
->("/terminals/{tripDate}");
+export const getFaresTerminals = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>("/terminals/{tripDate}");
+  const data = await fetcher(params);
+  return faresTerminalsArraySchema.parse(data) as FaresTerminal[];
+};
 
 /**
  * Get arriving terminals for a departing terminal and trip date from WSF Fares API
@@ -93,10 +114,16 @@ export const getFaresTerminals = createFetch<
  * @returns Promise resolving to array of arriving terminals
  * @throws {WsfApiError} When the API request fails
  */
-export const getFaresTerminalMates = createFetch<
-  { tripDate: Date; terminalID: number },
-  TerminalMate[]
->("/terminalmates/{tripDate}/{terminalID}");
+export const getFaresTerminalMates = async (params: {
+  tripDate: Date;
+  terminalID: number;
+}) => {
+  const fetcher = createFetch<{ tripDate: Date; terminalID: number }>(
+    "/terminalmates/{tripDate}/{terminalID}"
+  );
+  const data = await fetcher(params);
+  return terminalMatesArraySchema.parse(data) as TerminalMate[];
+};
 
 /**
  * Get fare collection description for a terminal combination from WSF Fares API
@@ -112,10 +139,19 @@ export const getFaresTerminalMates = createFetch<
  * @returns Promise resolving to terminal combination information
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalCombo = createFetch<
-  { tripDate: Date; departingTerminalID: number; arrivingTerminalID: number },
-  TerminalCombo
->("/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}");
+export const getTerminalCombo = async (params: {
+  tripDate: Date;
+  departingTerminalID: number;
+  arrivingTerminalID: number;
+}) => {
+  const fetcher = createFetch<{
+    tripDate: Date;
+    departingTerminalID: number;
+    arrivingTerminalID: number;
+  }>("/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}");
+  const data = await fetcher(params);
+  return terminalComboSchema.parse(data) as TerminalCombo;
+};
 
 /**
  * Get all terminal combinations for a trip date from WSF Fares API
@@ -129,10 +165,13 @@ export const getTerminalCombo = createFetch<
  * @returns Promise resolving to array of all terminal combinations
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalComboVerbose = createFetch<
-  { tripDate: Date },
-  TerminalComboVerbose[]
->("/terminalcomboverbose/{tripDate}");
+export const getTerminalComboVerbose = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(
+    "/terminalcomboverbose/{tripDate}"
+  );
+  const data = await fetcher(params);
+  return terminalComboVerboseArraySchema.parse(data) as TerminalComboVerbose[];
+};
 
 /**
  * Get most popular fares for a route from WSF Fares API
@@ -149,17 +188,23 @@ export const getTerminalComboVerbose = createFetch<
  * @returns Promise resolving to array of most popular fare line items
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareLineItemsBasic = createFetch<
-  {
+export const getFareLineItemsBasic = async (params: {
+  tripDate: Date;
+  departingTerminalID: number;
+  arrivingTerminalID: number;
+  roundTrip: boolean;
+}) => {
+  const fetcher = createFetch<{
     tripDate: Date;
     departingTerminalID: number;
     arrivingTerminalID: number;
     roundTrip: boolean;
-  },
-  FareLineItemBasic[]
->(
-  "/farelineitemsbasic/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}"
-);
+  }>(
+    "/farelineitemsbasic/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}"
+  );
+  const data = await fetcher(params);
+  return fareLineItemsBasicArraySchema.parse(data) as FareLineItemBasic[];
+};
 
 /**
  * Get all fares for a route from WSF Fares API
@@ -177,17 +222,23 @@ export const getFareLineItemsBasic = createFetch<
  * @returns Promise resolving to array of all fare line items
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareLineItems = createFetch<
-  {
+export const getFareLineItems = async (params: {
+  tripDate: Date;
+  departingTerminalID: number;
+  arrivingTerminalID: number;
+  roundTrip: boolean;
+}) => {
+  const fetcher = createFetch<{
     tripDate: Date;
     departingTerminalID: number;
     arrivingTerminalID: number;
     roundTrip: boolean;
-  },
-  FareLineItem[]
->(
-  "/farelineitems/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}"
-);
+  }>(
+    "/farelineitems/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}"
+  );
+  const data = await fetcher(params);
+  return fareLineItemsArraySchema.parse(data) as FareLineItem[];
+};
 
 /**
  * Get all fares for all terminal combinations on a trip date from WSF Fares API
@@ -202,10 +253,15 @@ export const getFareLineItems = createFetch<
  * @returns Promise resolving to complex object with all fare line items for all routes
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareLineItemsVerbose = createFetch<
-  { tripDate: Date },
-  FareLineItemsVerboseResponse
->("/farelineitemsverbose/{tripDate}");
+export const getFareLineItemsVerbose = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(
+    "/farelineitemsverbose/{tripDate}"
+  );
+  const data = await fetcher(params);
+  return fareLineItemsVerboseResponseSchema.parse(
+    data
+  ) as FareLineItemsVerboseResponse;
+};
 
 /**
  * Calculate fare totals for a set of fare line items from WSF Fares API
@@ -224,16 +280,24 @@ export const getFareLineItemsVerbose = createFetch<
  * @returns Promise resolving to fare total calculation
  * @throws {WsfApiError} When the API request fails
  */
-export const getFareTotals = createFetch<
-  {
+export const getFareTotals = async (params: {
+  tripDate: Date;
+  departingTerminalID: number;
+  arrivingTerminalID: number;
+  roundTrip: boolean;
+  fareLineItemIDs: number[];
+  quantities: number[];
+}) => {
+  const fetcher = createFetch<{
     tripDate: Date;
     departingTerminalID: number;
     arrivingTerminalID: number;
     roundTrip: boolean;
     fareLineItemIDs: number[];
     quantities: number[];
-  },
-  FareTotal[]
->(
-  "/faretotals/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}/{fareLineItemIDs}/{quantities}"
-);
+  }>(
+    "/faretotals/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}/{fareLineItemIDs}/{quantities}"
+  );
+  const data = await fetcher(params);
+  return fareTotalsArraySchema.parse(data) as FareTotal[];
+};

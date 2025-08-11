@@ -18,4 +18,4 @@ export {
 export type {
   HighwayAlert,
   RoadwayLocation,
-} from "./types";
+} from "./schemas";

@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { BorderCrossingData } from "./types";
+import type { BorderCrossingData } from "./schemas";
+import { borderCrossingDataArraySchema } from "./schemas";
 
 // Create a factory function for WSDOT Border Crossings API
 const createFetch = createFetchFactory(
@@ -27,6 +28,9 @@ const createFetch = createFetchFactory(
  * console.log(crossings[0].CrossingName); // "Peace Arch"
  * ```
  */
-export const getBorderCrossings = createFetch<BorderCrossingData[]>(
-  "/GetBorderCrossingsAsJson"
-);
+export const getBorderCrossings = async () => {
+  const fetcher = createFetch("/GetBorderCrossingsAsJson");
+  const data = await fetcher();
+  // Validate strictly but with passthrough on objects
+  return borderCrossingDataArraySchema.parse(data) as BorderCrossingData[];
+};

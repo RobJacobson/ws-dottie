@@ -13,7 +13,7 @@ import {
   getHighwayAlerts,
   getHighwayAlertsByMapArea,
 } from "./api";
-import type { HighwayAlert } from "./types";
+import type { HighwayAlert } from "./schemas";
 
 /**
  * Hook for getting all highway alerts from WSDOT Highway Alerts API

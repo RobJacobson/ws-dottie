@@ -4,7 +4,11 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { MountainPassCondition } from "./types";
+import type { MountainPassCondition } from "./schemas";
+import {
+  mountainPassConditionArraySchema,
+  mountainPassConditionSchema,
+} from "./schemas";
 
 // Create a factory function for WSDOT Mountain Pass Conditions API
 const createFetch = createFetchFactory(
@@ -21,9 +25,13 @@ const createFetch = createFetchFactory(
  * @returns Promise containing all mountain pass condition data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getMountainPassConditions = createFetch<MountainPassCondition[]>(
-  "/GetMountainPassConditionsAsJson"
-);
+export const getMountainPassConditions = async () => {
+  const fetcher = createFetch("/GetMountainPassConditionsAsJson");
+  const data = await fetcher();
+  return mountainPassConditionArraySchema.parse(
+    data
+  ) as MountainPassCondition[];
+};
 
 /**
  * Retrieves a specific mountain pass condition by ID
@@ -38,7 +46,12 @@ export const getMountainPassConditions = createFetch<MountainPassCondition[]>(
  * @returns Promise containing the specific mountain pass condition data
  * @throws {WsdotApiError} When the API request fails
  */
-export const getMountainPassConditionById = createFetch<
-  { passConditionId: number },
-  MountainPassCondition
->("/GetMountainPassConditionAsJson?PassConditionID={passConditionId}");
+export const getMountainPassConditionById = async (params: {
+  passConditionId: number;
+}) => {
+  const fetcher = createFetch<{ passConditionId: number }>(
+    "/GetMountainPassConditionAsJson?PassConditionID={passConditionId}"
+  );
+  const data = await fetcher(params);
+  return mountainPassConditionSchema.parse(data) as MountainPassCondition;
+};

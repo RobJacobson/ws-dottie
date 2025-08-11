@@ -1,14 +1,14 @@
 /**
  * JSON parsing utilities for WSDOT and WSF APIs
  *
- * This module provides the core JSON parsing functionality with automatic transformation:
- * - Uses imported date parsing functions from dateParsers.ts
- * - Uses imported VesselWatch filtering from vesselWatchFilter.ts
- * - Preserves PascalCase property names
- * - Normalizes empty responses based on expected type
+ * Lean JSON parsing with a reviver that converts known WSDOT/WSF date string
+ * formats into JavaScript Date objects. It:
+ * - Uses helpers from `dateParsers.ts` (WSF field-specific dates and WSDOT "/Date(...)" strings)
+ * - Preserves upstream PascalCase property names
+ * - Performs no field filtering and no structural normalization
  *
- * The module focuses solely on JSON parsing and transformation, delegating
- * specialized concerns (date parsing, field filtering) to dedicated modules.
+ * Note: Structural validation and additional transformations are handled by Zod
+ * schemas downstream. This file intentionally keeps parsing minimal.
  */
 
 import {
@@ -16,7 +16,7 @@ import {
   WSF_DATE_PARSERS,
   wsdotDateTimestampToJsDate,
 } from "./dateParsers";
-import { filterVesselWatchFields } from "./vesselWatchFilter";
+// Note: We intentionally do not filter VesselWatch fields here to keep responses pass-through
 
 /**
  * Type representing JSON-like data that can be transformed
@@ -43,32 +43,21 @@ export type JsonWithDates =
   | { [key: string]: JsonWithDates };
 
 /**
- * Parse JSON string with automatic WSDOT and WSF date conversion and response normalization
- *
- * This is the main public function that combines JSON parsing with date conversion
- * and empty response normalization. It handles the complete transformation pipeline:
- * 1. Parse JSON with date reviver
- * 2. Normalize empty responses based on expected type
+ * Parse JSON string with automatic WSDOT and WSF date conversion.
  *
  * @param text - The JSON string to parse
- * @param expectedType - The expected return type ('array' or 'object') for normalization
- * @returns The parsed and normalized object with Date objects for date strings
+ * @returns The parsed object with Date objects for recognized date strings
  *
  * @example
  * ```typescript
  * // WSDOT API response
  * const wsdotJson = '{"Time": "/Date(1753121700000-0700)/", "Name": "Test"}';
- * const data = parseWsdotJson(wsdotJson, 'object');
+ * const data = parseWsdotJson(wsdotJson);
  * // data.Time is now a Date object, data.Name remains a string
- *
- * // WSF Schedule API response with empty response normalization
- * const wsfJson = '{}'; // Empty response
- * const data = parseWsdotJson(wsfJson, 'array');
- * // data is now [] instead of {}
  *
  * // With TypeScript typing
  * interface ApiResponse { Time: Date; Name: string; }
- * const data = parseWsdotJson<ApiResponse>(wsdotJson, 'object');
+ * const typed = parseWsdotJson<ApiResponse>(wsdotJson);
  * ```
  */
 export const parseWsdotJson = <T = JsonWithDates>(text: string): T =>
@@ -80,7 +69,6 @@ export const parseWsdotJson = <T = JsonWithDates>(text: string): T =>
  * Handles:
  * - WSF Schedule date formats (FromDate, ThruDate, ModifiedDate)
  * - WSDOT date strings in "/Date(timestamp)/" format
- * - Filters out unreliable VesselWatch fields from VesselLocation objects
  * - Preserves all other data types unchanged
  *
  * @param key - The property key (used to identify specific date fields)
@@ -99,27 +87,20 @@ export const parseWsdotJson = <T = JsonWithDates>(text: string): T =>
  * const data = JSON.parse(wsfJson, wsdotDateReviver);
  * // Both FromDate and ModifiedDate are now Date objects
  *
- * // Undocumented VesselWatch fields are removed from the result
- * ```
  */
 const wsdotDateReviver = (
   key: string,
   value: JsonValue
 ): JsonWithDates | undefined => {
-  // Filter out unreliable VesselWatch fields from VesselLocation objects
-  if (filterVesselWatchFields(key)) {
-    return undefined;
-  }
-
   // Early return for non-string values
   if (typeof value !== "string") {
     return value;
   }
 
   // Handle WSF Schedule field-specific date parsing
-  const wsfParser = WSF_DATE_PARSERS.get(key);
-  if (wsfParser) {
-    return wsfParser(value);
+  const wsfDateParser = WSF_DATE_PARSERS.get(key);
+  if (wsfDateParser) {
+    return wsfDateParser(value);
   }
 
   // Handle WSDOT date strings

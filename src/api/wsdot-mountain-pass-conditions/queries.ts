@@ -2,14 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getMountainPassConditionById, getMountainPassConditions } from "./api";
-import type { MountainPassCondition } from "./types";
+import type { MountainPassCondition } from "./schemas";
 
 /**
  * React Query hook for retrieving all mountain pass conditions

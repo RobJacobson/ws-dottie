@@ -10,7 +10,12 @@ import { configManager } from "@/shared/config";
 import { createApiClient, createFetchFactory } from "@/shared/fetching/api";
 import type { LoggingMode } from "@/shared/logger";
 
-import type { Camera, GetCameraResponse, SearchCamerasParams } from "./types";
+import type { Camera, GetCameraResponse, SearchCamerasParams } from "./schemas";
+import {
+  cameraArraySchema,
+  cameraSchema,
+  searchCamerasParamsSchema,
+} from "./schemas";
 
 // Create a factory function for WSDOT Highway Cameras API
 const createFetch = createFetchFactory(
@@ -32,7 +37,11 @@ const createFetch = createFetchFactory(
  * console.log(cameras[0].Title); // "I-5 @ NE 85th St"
  * ```
  */
-export const getHighwayCameras = createFetch<Camera[]>("/GetCamerasAsJson");
+export const getHighwayCameras = async () => {
+  const fetcher = createFetch("/GetCamerasAsJson");
+  const data = await fetcher();
+  return cameraArraySchema.parse(data) as Camera[];
+};
 
 /**
  * Get a specific highway camera by ID
@@ -51,10 +60,13 @@ export const getHighwayCameras = createFetch<Camera[]>("/GetCamerasAsJson");
  * console.log(camera.Title); // "I-5 @ NE 85th St"
  * ```
  */
-export const getHighwayCamera = createFetch<
-  { cameraID: number },
-  GetCameraResponse
->("/GetCameraAsJson?CameraID={cameraID}");
+export const getHighwayCamera = async (params: { cameraID: number }) => {
+  const fetcher = createFetch<{ cameraID: number }>(
+    "/GetCameraAsJson?CameraID={cameraID}"
+  );
+  const data = await fetcher(params);
+  return cameraSchema.parse(data) as GetCameraResponse;
+};
 
 /**
  * Search for highway cameras with optional filters
@@ -81,29 +93,24 @@ export const searchHighwayCameras = async (
   params: SearchCamerasParams,
   logMode?: LoggingMode
 ): Promise<Camera[]> => {
-  const fetchFn = createApiClient();
+  // Validate params shape
+  searchCamerasParamsSchema.parse(params);
 
-  // Build query parameters manually, only including defined values
+  // Build query string by including only defined values
   const queryParams = new URLSearchParams();
-
-  if (params.StateRoute !== undefined) {
+  if (params.StateRoute !== undefined)
     queryParams.append("StateRoute", String(params.StateRoute));
-  }
-  if (params.Region !== undefined) {
+  if (params.Region !== undefined)
     queryParams.append("Region", String(params.Region));
-  }
-  if (params.StartingMilepost !== undefined) {
+  if (params.StartingMilepost !== undefined)
     queryParams.append("StartingMilepost", String(params.StartingMilepost));
-  }
-  if (params.EndingMilepost !== undefined) {
+  if (params.EndingMilepost !== undefined)
     queryParams.append("EndingMilepost", String(params.EndingMilepost));
-  }
-
-  // Add API key
-  queryParams.append("AccessCode", configManager.getApiKey());
 
   const endpoint = `/SearchCamerasAsJson?${queryParams.toString()}`;
-  const url = `https://wsdot.wa.gov/Traffic/api/HighwayCameras/HighwayCamerasREST.svc${endpoint}`;
+  const url = `${configManager.getBaseUrl()}/Traffic/api/HighwayCameras/HighwayCamerasREST.svc${endpoint}`;
 
-  return fetchFn<Camera[]>(url, logMode);
+  const fetchFn = createApiClient();
+  const data = await fetchFn<unknown>(url, logMode);
+  return cameraArraySchema.parse(data) as Camera[];
 };

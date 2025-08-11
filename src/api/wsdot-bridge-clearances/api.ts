@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { BridgeDataGIS } from "./types";
+import type { BridgeDataGIS } from "./schemas";
+import { bridgeDataGisArraySchema } from "./schemas";
 
 // Create a factory function for WSDOT Bridge Clearances API
 const createFetch = createFetchFactory(
@@ -29,7 +30,10 @@ const createFetch = createFetchFactory(
  * console.log(clearances[0].BridgeName); // "Aurora Bridge"
  * ```
  */
-export const getBridgeClearances = createFetch<
-  { route: string },
-  BridgeDataGIS[]
->("/GetClearancesAsJson?Route={route}");
+export const getBridgeClearances = async (params: { route: string }) => {
+  const fetcher = createFetch<{ route: string }>(
+    "/GetClearancesAsJson?Route={route}"
+  );
+  const data = await fetcher(params);
+  return bridgeDataGisArraySchema.parse(data) as BridgeDataGIS[];
+};

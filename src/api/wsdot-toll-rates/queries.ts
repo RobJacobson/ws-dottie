@@ -9,7 +9,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getTollRates, getTollTripInfo, getTollTripRates } from "./api";
-import type { TollRate, TollTripInfo, TollTripRates } from "./types";
+import type { TollRate, TollTripInfo, TollTripRates } from "./schemas";
 
 /**
  * React Query hook for retrieving all toll rates

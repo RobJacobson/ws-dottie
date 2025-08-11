@@ -17,4 +17,4 @@ export type {
   TravelTimeEndpoint,
   TravelTimeRoute,
   TravelTimesResponse,
-} from "./types";
+} from "./schemas";

@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { WeatherInfo } from "./types";
+import type { WeatherInfo } from "./schemas";
+import { weatherInfoArraySchema, weatherInfoSchema } from "./schemas";
 
 // Create a factory function for WSDOT Weather Information API
 const createFetch = createFetchFactory(
@@ -26,9 +27,11 @@ const createFetch = createFetchFactory(
  * console.log(weatherInfo[0].TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformation = createFetch<WeatherInfo[]>(
-  "/GetCurrentWeatherInformationAsJson"
-);
+export const getWeatherInformation = async () => {
+  const fetcher = createFetch("/GetCurrentWeatherInformationAsJson");
+  const data = await fetcher();
+  return weatherInfoArraySchema.parse(data) as WeatherInfo[];
+};
 
 /**
  * Get weather information for a specific station by ID from WSDOT Weather Information API
@@ -48,10 +51,15 @@ export const getWeatherInformation = createFetch<WeatherInfo[]>(
  * console.log(weatherInfo.TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformationByStationId = createFetch<
-  { stationId: number },
-  WeatherInfo
->("/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}");
+export const getWeatherInformationByStationId = async (params: {
+  stationId: number;
+}) => {
+  const fetcher = createFetch<{ stationId: number }>(
+    "/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}"
+  );
+  const data = await fetcher(params);
+  return weatherInfoSchema.parse(data) as WeatherInfo;
+};
 
 /**
  * Get weather information for multiple stations from WSDOT Weather Information API
@@ -71,7 +79,12 @@ export const getWeatherInformationByStationId = createFetch<
  * console.log(weatherInfo.length); // 3
  * ```
  */
-export const getWeatherInformationForStations = createFetch<
-  { stationIds: string },
-  WeatherInfo[]
->("/GetCurrentWeatherForStationsAsJson?StationList={stationIds}");
+export const getWeatherInformationForStations = async (params: {
+  stationIds: string;
+}) => {
+  const fetcher = createFetch<{ stationIds: string }>(
+    "/GetCurrentWeatherForStationsAsJson?StationList={stationIds}"
+  );
+  const data = await fetcher(params);
+  return weatherInfoArraySchema.parse(data) as WeatherInfo[];
+};

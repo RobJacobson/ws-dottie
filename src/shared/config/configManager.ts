@@ -45,8 +45,10 @@ const getEnvVar = (key: string): string | undefined => {
   }
 
   // Browser environment - try to access via window object if available
-  if (typeof window !== "undefined" && (window as any).__ENV__) {
-    return (window as any).__ENV__[key];
+  if (typeof window !== "undefined") {
+    type EnvWindow = Window & { __ENV__?: Record<string, string> };
+    const env = (window as EnvWindow).__ENV__;
+    if (env) return env[key];
   }
 
   // For bundlers that inject environment variables, we'll rely on the consuming application

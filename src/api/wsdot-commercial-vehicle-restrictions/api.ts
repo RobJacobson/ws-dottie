@@ -7,7 +7,11 @@ import { createFetchFactory } from "@/shared/fetching/api";
 import type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionWithId,
-} from "./types";
+} from "./schemas";
+import {
+  commercialVehicleRestrictionArraySchema,
+  commercialVehicleRestrictionWithIdArraySchema,
+} from "./schemas";
 
 // Create a factory function for WSDOT Commercial Vehicle Restrictions API
 const createFetch = createFetchFactory(
@@ -30,9 +34,13 @@ const createFetch = createFetchFactory(
  * console.log(restrictions[0].RouteName); // "I-5"
  * ```
  */
-export const getCommercialVehicleRestrictions = createFetch<
-  CommercialVehicleRestriction[]
->("/GetCommercialVehicleRestrictionsAsJson");
+export const getCommercialVehicleRestrictions = async () => {
+  const fetcher = createFetch("/GetCommercialVehicleRestrictionsAsJson");
+  const data = await fetcher();
+  return commercialVehicleRestrictionArraySchema.parse(
+    data
+  ) as CommercialVehicleRestriction[];
+};
 
 /**
  * Get commercial vehicle restrictions with unique IDs from WSDOT Commercial Vehicle Restrictions API
@@ -51,6 +59,10 @@ export const getCommercialVehicleRestrictions = createFetch<
  * console.log(restrictions[0].RestrictionID); // 12345
  * ```
  */
-export const getCommercialVehicleRestrictionsWithId = createFetch<
-  CommercialVehicleRestrictionWithId[]
->("/GetCommercialVehicleRestrictionsWithIdAsJson");
+export const getCommercialVehicleRestrictionsWithId = async () => {
+  const fetcher = createFetch("/GetCommercialVehicleRestrictionsWithIdAsJson");
+  const data = await fetcher();
+  return commercialVehicleRestrictionWithIdArraySchema.parse(
+    data
+  ) as CommercialVehicleRestrictionWithId[];
+};

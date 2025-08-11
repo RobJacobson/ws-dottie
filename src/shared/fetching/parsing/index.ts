@@ -5,7 +5,6 @@
  * including:
  * - JSON parsing with automatic date conversion
  * - Date parsing for WSDOT and WSF API formats
- * - VesselWatch field filtering
  */
 
 export { jsDateToYyyyMmDd } from "./dateParsers";
@@ -14,4 +13,3 @@ export {
   type JsonWithDates,
   parseWsdotJson,
 } from "./parseJson";
-export { filterVesselWatchFields } from "./vesselWatchFilter";

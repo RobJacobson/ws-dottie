@@ -2,7 +2,7 @@
 
 > **Your comprehensive guide to Washington State transportation data**
 
-WS-Dottie provides easy access to real-time transportation data from Washington State Department of Transportation (WSDOT) and Washington State Ferries (WSF) APIs. This overview helps you quickly identify which APIs meet your needs and understand their capabilities.
+WS-Dottie provides easy access to real-time transportation data from Washington State Department of Transportation (WSDOT) and Washington State Ferries (WSF) APIs. All API responses are validated at runtime with Zod 4, and types are inferred directly from those schemas. This overview helps you quickly identify which APIs meet your needs and understand their capabilities.
 
 ## Quick Start
 

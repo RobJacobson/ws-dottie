@@ -20,12 +20,12 @@
  * const createFetch = createFetchFactory("/api/endpoint");
  *
  * // Create a simple fetch function
- * const getData = createFetch<MyResponseType>("/endpoint");
- * const data = await getData();
+ * const getData = createFetch("/endpoint");
+ * const data = await getData(); // unknown -> validate with Zod schema
  *
  * // Create a fetch function with parameters
- * const getItem = createFetch<{id: string}, MyResponseType>("/item/{id}");
- * const item = await getItem({ id: "123" });
+ * const getItem = createFetch<{id: string}>("/item/{id}");
+ * const item = await getItem({ id: "123" }); // unknown -> validate with Zod schema
  *
  * // With logging
  * const item = await getItem({ id: "123" }, "debug");
@@ -50,20 +50,18 @@ export const createFetchFactory = (apiPath: string) => {
   const fetchFn = createApiClient();
 
   // Function overloads for cleaner API
-  function createFetch<T = JsonWithDates>(
+  function createFetch(
     endpointTemplate: string
-  ): (logMode?: LoggingMode) => Promise<T>;
-  function createFetch<
-    P extends Record<string, JsonWithDates>,
-    T = JsonWithDates,
-  >(endpointTemplate: string): (params: P, logMode?: LoggingMode) => Promise<T>;
+  ): (logMode?: LoggingMode) => Promise<unknown>;
+  function createFetch<P extends Record<string, JsonWithDates>>(
+    endpointTemplate: string
+  ): (params: P, logMode?: LoggingMode) => Promise<unknown>;
 
   // Implementation
-  function createFetch<
-    P extends Record<string, JsonWithDates> = never,
-    T = JsonWithDates,
-  >(endpointTemplate: string) {
-    return (params?: P, logMode?: LoggingMode): Promise<T> => {
+  function createFetch<P extends Record<string, JsonWithDates> = never>(
+    endpointTemplate: string
+  ) {
+    return (params?: P, logMode?: LoggingMode): Promise<unknown> => {
       // Interpolate parameters into the endpoint template
       const endpoint = interpolateParams(endpointTemplate, params);
 
@@ -71,7 +69,7 @@ export const createFetchFactory = (apiPath: string) => {
       const url = buildUrl(apiPath, endpoint);
 
       // Use the API client to make the request
-      return fetchFn<T>(url, logMode);
+      return fetchFn<unknown>(url, logMode);
     };
   }
 

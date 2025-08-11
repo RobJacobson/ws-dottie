@@ -9,7 +9,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getTravelTimeById, getTravelTimes } from "./api";
-import type { TravelTimeRoute } from "./types";
+import type { TravelTimeRoute } from "./schemas";
 
 /**
  * React Query hook for retrieving all travel times

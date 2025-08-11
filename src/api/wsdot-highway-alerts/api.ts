@@ -4,7 +4,8 @@
 
 import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { HighwayAlert } from "./types";
+import type { HighwayAlert } from "./schemas";
+import { highwayAlertArraySchema, highwayAlertSchema } from "./schemas";
 
 // Create a factory function for WSDOT Highway Alerts API
 const createFetch = createFetchFactory(
@@ -27,7 +28,11 @@ const createFetch = createFetchFactory(
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlerts = createFetch<HighwayAlert[]>("/GetAlertsAsJson");
+export const getHighwayAlerts = async () => {
+  const fetcher = createFetch("/GetAlertsAsJson");
+  const data = await fetcher();
+  return highwayAlertArraySchema.parse(data) as HighwayAlert[];
+};
 
 /**
  * Get a specific highway alert by ID from WSDOT Highway Alerts API
@@ -46,10 +51,13 @@ export const getHighwayAlerts = createFetch<HighwayAlert[]>("/GetAlertsAsJson");
  * console.log(alert.HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertById = createFetch<
-  { alertId: number },
-  HighwayAlert
->("/GetAlertAsJson?AlertID={alertId}");
+export const getHighwayAlertById = async (params: { alertId: number }) => {
+  const fetcher = createFetch<{ alertId: number }>(
+    "/GetAlertAsJson?AlertID={alertId}"
+  );
+  const data = await fetcher(params);
+  return highwayAlertSchema.parse(data) as HighwayAlert;
+};
 
 /**
  * Get highway alerts by map area from WSDOT Highway Alerts API
@@ -68,7 +76,12 @@ export const getHighwayAlertById = createFetch<
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertsByMapArea = createFetch<
-  { mapArea: string },
-  HighwayAlert[]
->("/GetAlertsByMapAreaAsJson?MapArea={mapArea}");
+export const getHighwayAlertsByMapArea = async (params: {
+  mapArea: string;
+}) => {
+  const fetcher = createFetch<{ mapArea: string }>(
+    "/GetAlertsByMapAreaAsJson?MapArea={mapArea}"
+  );
+  const data = await fetcher(params);
+  return highwayAlertArraySchema.parse(data) as HighwayAlert[];
+};

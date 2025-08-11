@@ -9,7 +9,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getWeatherStations } from "./api";
-import type { WeatherStationData } from "./types";
+import type { WeatherStationData } from "./schemas";
 
 /**
  * React Query hook for retrieving WSDOT weather stations

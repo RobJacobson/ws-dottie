@@ -182,14 +182,14 @@ function App() {
 ## 🔄 Data Formats
 
 ### Date/Time Properties
-WS-Dottie automatically converts WSDOT's .NET date strings to JavaScript Date objects:
+WS‑Dottie converts upstream date strings to JavaScript Date objects. Today this happens via a lean parser, and schemas also validate/transform at runtime using Zod 4:
 
 ```javascript
 // WSDOT returns: "/Date(1703123456789)/"
 // WS-Dottie converts to: new Date(1703123456789)
 
 const vessel = await WsfVessels.getVesselLocations();
-console.log(vessel[0].LastUpdate); // JavaScript Date object
+console.log(vessel[0].LastUpdate); // JavaScript Date object (validated with Zod)
 ```
 
 ### Error Handling
