@@ -2,8 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/vessels/rest/help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   VesselAccommodation,
@@ -13,12 +12,24 @@ import type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
-} from "./types";
+} from "./schemas";
+import {
+  vesselAccommodationArraySchema,
+  vesselAccommodationSchema,
+  vesselBasicArraySchema,
+  vesselBasicSchema,
+  vesselHistoryArraySchema,
+  vesselLocationArraySchema,
+  vesselLocationSchema,
+  vesselStatsArraySchema,
+  vesselStatsSchema,
+  vesselsCacheFlushDateSchema,
+  vesselVerboseArraySchema,
+  vesselVerboseSchema,
+} from "./schemas";
 
-// Module-scoped fetch function for WSF vessels API
-const fetchVessels = createApiClient(
-  "https://www.wsdot.wa.gov/ferries/api/vessels/rest"
-);
+// Create a factory function for WSF Vessels API
+const createFetch = createFetchFactory("/ferries/api/vessels/rest");
 
 // ============================================================================
 // VESSEL BASICS API FUNCTIONS
@@ -31,10 +42,20 @@ const fetchVessels = createApiClient(
  * class information, and operational status. This endpoint provides fundamental
  * vessel details for all vessels in the WSF fleet.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselBasic objects containing basic vessel information
+ *
+ * @example
+ * ```typescript
+ * const vessels = await getVesselBasics();
+ * console.log(vessels[0].VesselName); // "M/V Cathlamet"
+ * ```
  */
-export const getVesselBasics = (): Promise<VesselBasic[]> =>
-  fetchVessels<VesselBasic[]>("/vesselbasics");
+export const getVesselBasics = async () => {
+  const fetcher = createFetch("/vesselbasics");
+  const data = await fetcher();
+  return vesselBasicArraySchema.parse(data) as VesselBasic[];
+};
 
 /**
  * API function for fetching vessel basics for a specific vessel from WSF Vessels API
@@ -42,11 +63,22 @@ export const getVesselBasics = (): Promise<VesselBasic[]> =>
  * Retrieves basic vessel information for a specific vessel identified by vessel ID,
  * including vessel name, abbreviation, class information, and operational status.
  *
- * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params - Object containing vesselId and optional logMode
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselBasic object containing basic information for the specified vessel
+ *
+ * @example
+ * ```typescript
+ * const vessel = await getVesselBasicsById({ vesselId: 1 });
+ * console.log(vessel.VesselName); // "M/V Cathlamet"
+ * ```
  */
-export const getVesselBasicsById = (vesselId: number): Promise<VesselBasic> =>
-  fetchVessels<VesselBasic>(`/vesselbasics/${vesselId}`);
+export const getVesselBasicsById = async (params: { vesselId: number }) => {
+  const fetcher = createFetch<{ vesselId: number }>("/vesselbasics/{vesselId}");
+  const data = await fetcher(params);
+  return vesselBasicSchema.parse(data) as VesselBasic;
+};
 
 // ============================================================================
 // VESSEL LOCATIONS API FUNCTIONS
@@ -63,10 +95,20 @@ export const getVesselBasicsById = (vesselId: number): Promise<VesselBasic> =>
  * The data is updated frequently and provides the most current information
  * about vessel locations for tracking and monitoring purposes.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselLocation objects containing real-time vessel position data
+ *
+ * @example
+ * ```typescript
+ * const locations = await getVesselLocations();
+ * console.log(locations[0].VesselName); // "M/V Cathlamet"
+ * ```
  */
-export const getVesselLocations = (): Promise<VesselLocation[]> =>
-  fetchVessels<VesselLocation[]>("/vessellocations");
+export const getVesselLocations = async () => {
+  const fetcher = createFetch("/vessellocations");
+  const data = await fetcher();
+  return vesselLocationArraySchema.parse(data) as VesselLocation[];
+};
 
 /**
  * API function for fetching current vessel location data for a specific vessel from WSF Vessels API
@@ -74,109 +116,240 @@ export const getVesselLocations = (): Promise<VesselLocation[]> =>
  * Retrieves real-time vessel position, speed, heading, and status information
  * for a specific vessel identified by vessel ID. This endpoint returns a single vessel object.
  *
- * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params - Object containing vesselId and optional logMode
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselLocation object containing real-time position data for the specified vessel
  */
-export const getVesselLocationsByVesselId = (
-  vesselId: number
-): Promise<VesselLocation> =>
-  fetchVessels<VesselLocation>(`/vessellocations/${vesselId}`);
+export const getVesselLocationsByVesselId = async (params: {
+  vesselId: number;
+}) => {
+  const fetcher = createFetch<{ vesselId: number }>(
+    "/vessellocations/{vesselId}"
+  );
+  const data = await fetcher(params);
+  return vesselLocationSchema.parse(data) as VesselLocation;
+};
 
 // ============================================================================
 // VESSEL ACCOMMODATIONS API FUNCTIONS
 // ============================================================================
 
 /**
- * API function for fetching vessel accommodations from WSF Vessels API
+ * API function for fetching vessel accommodation data from WSF Vessels API
  *
- * Retrieves accommodation information for all vessels including amenities,
- * facilities, and passenger services. This endpoint provides detailed information
- * about onboard accommodations and services available on each vessel.
+ * Retrieves detailed accommodation information for all vessels in the WSF fleet,
+ * including passenger capacity, vehicle capacity, and other accommodation details.
+ * This endpoint provides comprehensive information about the capacity and
+ * accommodation features of each vessel.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselAccommodation objects containing accommodation information
  */
-export const getVesselAccommodations = (): Promise<VesselAccommodation[]> =>
-  fetchVessels<VesselAccommodation[]>("/vesselaccommodations");
+export const getVesselAccommodations = async () => {
+  const fetcher = createFetch("/vesselaccommodations");
+  const data = await fetcher();
+  return vesselAccommodationArraySchema.parse(data) as VesselAccommodation[];
+};
 
 /**
- * API function for fetching vessel accommodations for a specific vessel from WSF Vessels API
+ * API function for fetching vessel accommodation data for a specific vessel from WSF Vessels API
  *
- * Retrieves accommodation information for a specific vessel identified by vessel ID,
- * including amenities, facilities, and passenger services available on that vessel.
+ * Retrieves detailed accommodation information for a specific vessel identified by vessel ID,
+ * including passenger capacity, vehicle capacity, and other accommodation details.
  *
- * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params - Object containing vesselId and optional logMode
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselAccommodation object containing accommodation information for the specified vessel
  */
-export const getVesselAccommodationsById = (
-  vesselId: number
-): Promise<VesselAccommodation> =>
-  fetchVessels<VesselAccommodation>(`/vesselaccommodations/${vesselId}`);
+export const getVesselAccommodationsById = async (params: {
+  vesselId: number;
+}) => {
+  const fetcher = createFetch<{ vesselId: number }>(
+    "/vesselaccommodations/{vesselId}"
+  );
+  const data = await fetcher(params);
+  return vesselAccommodationSchema.parse(data) as VesselAccommodation;
+};
 
 // ============================================================================
-// VESSEL STATISTICS API FUNCTIONS
+// VESSEL STATS API FUNCTIONS
 // ============================================================================
 
 /**
  * API function for fetching vessel statistics from WSF Vessels API
  *
- * Retrieves statistical information about vessels including operational metrics,
- * performance data, and usage statistics. This endpoint provides comprehensive
- * statistical data for all vessels in the WSF fleet.
+ * Retrieves statistical information for all vessels in the WSF fleet,
+ * including operational statistics, performance metrics, and other relevant data.
+ * This endpoint provides comprehensive statistical information about vessel operations.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselStats objects containing vessel statistics
  */
-export const getVesselStats = (): Promise<VesselStats[]> =>
-  fetchVessels<VesselStats[]>("/vesselstats");
+export const getVesselStats = async () => {
+  const fetcher = createFetch("/vesselstats");
+  const data = await fetcher();
+  return vesselStatsArraySchema.parse(data) as VesselStats[];
+};
 
 /**
  * API function for fetching vessel statistics for a specific vessel from WSF Vessels API
  *
  * Retrieves statistical information for a specific vessel identified by vessel ID,
- * including operational metrics, performance data, and usage statistics.
+ * including operational statistics, performance metrics, and other relevant data.
  *
- * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params - Object containing vesselId and optional logMode
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselStats object containing statistics for the specified vessel
  */
-export const getVesselStatsById = (vesselId: number): Promise<VesselStats> =>
-  fetchVessels<VesselStats>(`/vesselstats/${vesselId}`);
+export const getVesselStatsById = async (params: { vesselId: number }) => {
+  const fetcher = createFetch<{ vesselId: number }>("/vesselstats/{vesselId}");
+  const data = await fetcher(params);
+  return vesselStatsSchema.parse(data) as VesselStats;
+};
 
 // ============================================================================
 // VESSEL HISTORY API FUNCTIONS
 // ============================================================================
 
 /**
- * API function for fetching vessel history from WSF Vessels API
+ * API function for fetching vessel history data for a specific vessel and date range from WSF Vessels API
  *
- * Retrieves historical information about all vessels including past operations,
- * service records, and historical data. This endpoint provides comprehensive
- * historical data for all vessels in the WSF fleet.
+ * Retrieves historical vessel data for a specific vessel within a specified date range,
+ * including past routes, schedules, and operational history for that vessel.
  *
- * @returns Promise resolving to an array of VesselHistory objects containing vessel historical information
+ * @param params - Object containing vesselName, dateStart, dateEnd, and optional logMode
+ * @param params.vesselName - The name of the vessel (e.g., "M/V Cathlamet")
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to an array of VesselHistory objects containing historical data for the specified vessel and date range
  */
-export const getVesselHistory = (): Promise<VesselHistory[]> =>
-  fetchVessels<VesselHistory[]>("/vesselhistory");
+export const getVesselHistoryByVesselAndDateRange = async (params: {
+  vesselName: string;
+  dateStart: Date;
+  dateEnd: Date;
+}) => {
+  const fetcher = createFetch<{
+    vesselName: string;
+    dateStart: Date;
+    dateEnd: Date;
+  }>("/vesselhistory/{vesselName}/{dateStart}/{dateEnd}");
+  const data = await fetcher(params);
+  return vesselHistoryArraySchema.parse(data) as VesselHistory[];
+};
 
 /**
- * API function for fetching vessel history for a specific vessel and date range from WSF Vessels API
+ * Helper function for fetching vessel history data for multiple vessels and date range
  *
- * Retrieves historical information for a specific vessel identified by vessel name
- * within a specified date range, including past operations, service records, and historical data.
+ * This function fetches historical data for multiple vessels by making parallel API calls
+ * to the vessel history endpoint for each vessel. This is useful when you need historical
+ * data for multiple vessels over the same time period.
  *
- * @param vesselName - The name of the vessel (e.g., "Cathlamet")
- * @param dateStart - The start date for the history range (YYYY-MM-DD format)
- * @param dateEnd - The end date for the history range (YYYY-MM-DD format)
- * @returns Promise resolving to an array of VesselHistory objects containing historical information for the specified vessel and date range
+ * @param params - Object containing vesselNames, dateStart, dateEnd, and optional batchSize
+ * @param params.vesselNames - Array of vessel names to fetch history for (e.g., ["Spokane", "Walla Walla"])
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.batchSize - Optional batch size for processing requests (default: 6)
+ * @returns Promise resolving to an array of VesselHistory objects containing historical data for all specified vessels
+ *
+ * @example
+ * ```typescript
+ * const history = await getMultipleVesselHistories({
+ *   vesselNames: ["Spokane", "Walla Walla"],
+ *   dateStart: new Date("2024-01-01"),
+ *   dateEnd: new Date("2024-01-02")
+ * });
+ * console.log(history.length); // Total number of history records for all vessels
+ * ```
  */
-export const getVesselHistoryByVesselAndDateRange = (
-  vesselName: string,
-  dateStart: Date,
-  dateEnd: Date
-): Promise<VesselHistory[]> => {
-  const formattedDateStart = jsDateToYyyyMmDd(dateStart);
-  const formattedDateEnd = jsDateToYyyyMmDd(dateEnd);
-  return fetchVessels<VesselHistory[]>(
-    `/vesselhistory/${vesselName}/${formattedDateStart}/${formattedDateEnd}`
-  );
+export const getMultipleVesselHistories = async (params: {
+  vesselNames: string[];
+  dateStart: Date;
+  dateEnd: Date;
+  batchSize?: number;
+}): Promise<VesselHistory[]> => {
+  const { vesselNames, dateStart, dateEnd, batchSize = 6 } = params;
+  const results: VesselHistory[] = [];
+
+  // Process in batches to avoid overwhelming the server and browser connection limits
+  for (let i = 0; i < vesselNames.length; i += batchSize) {
+    const batch = vesselNames.slice(i, i + batchSize);
+    const batchPromises = batch.map((vesselName) =>
+      getVesselHistoryByVesselAndDateRange({
+        vesselName,
+        dateStart,
+        dateEnd,
+      })
+    );
+
+    const batchResults = await Promise.all(batchPromises);
+    results.push(...batchResults.flat());
+  }
+
+  return results;
+};
+
+/**
+ * Helper function for fetching vessel history data for all vessels in the WSF fleet
+ *
+ * This function fetches historical data for all 21 vessels in the Washington State Ferries fleet
+ * by making batched API calls to the vessel history endpoint. This provides comprehensive
+ * historical data for the entire fleet over a specified time period.
+ *
+ * @param params - Object containing dateStart, dateEnd, and optional batchSize
+ * @param params.dateStart - The start date for the history range
+ * @param params.dateEnd - The end date for the history range
+ * @param params.batchSize - Optional batch size for processing requests (default: 6)
+ * @returns Promise resolving to an array of VesselHistory objects containing historical data for all vessels
+ *
+ * @example
+ * ```typescript
+ * const allHistory = await getAllVesselHistories({
+ *   dateStart: new Date("2024-01-01"),
+ *   dateEnd: new Date("2024-01-02")
+ * });
+ * console.log(allHistory.length); // Total number of history records for all 21 vessels
+ * ```
+ */
+export const getAllVesselHistories = async (params: {
+  dateStart: Date;
+  dateEnd: Date;
+  batchSize?: number;
+}): Promise<VesselHistory[]> => {
+  // All vessels in the WSF fleet (as of 2024)
+  const allVesselNames = [
+    "Cathlamet",
+    "Chelan",
+    "Chetzemoka",
+    "Chimacum",
+    "Issaquah",
+    "Kaleetan",
+    "Kennewick",
+    "Kitsap",
+    "Kittitas",
+    "Puyallup",
+    "Salish",
+    "Samish",
+    "Sealth",
+    "Spokane",
+    "Suquamish",
+    "Tacoma",
+    "Tillikum",
+    "Tokitae",
+    "Walla Walla",
+    "Wenatchee",
+    "Yakima",
+  ];
+
+  return getMultipleVesselHistories({
+    vesselNames: allVesselNames,
+    dateStart: params.dateStart,
+    dateEnd: params.dateEnd,
+    batchSize: params.batchSize,
+  });
 };
 
 // ============================================================================
@@ -184,39 +357,39 @@ export const getVesselHistoryByVesselAndDateRange = (
 // ============================================================================
 
 /**
- * API function for fetching vessel verbose data from WSF Vessels API
+ * API function for fetching verbose vessel data from WSF Vessels API
  *
- * Retrieves comprehensive vessel information including specifications, capacity,
- * amenities, and operational status. This endpoint provides detailed information
- * about all vessels in the WSF fleet, including vessel dimensions, passenger
- * and vehicle capacity, onboard amenities, and current operational status.
+ * Retrieves comprehensive vessel information for all vessels in the WSF fleet,
+ * including detailed specifications, operational data, and extended information.
+ * This endpoint provides the most complete vessel information available.
  *
- * This data is updated infrequently and provides static vessel characteristics
- * that don't change often, such as vessel specifications and capabilities.
- *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselVerbose objects containing comprehensive vessel information
  */
-export const getVesselVerbose = (): Promise<VesselVerbose[]> =>
-  fetchVessels<VesselVerbose[]>("/vesselverbose");
+export const getVesselVerbose = async () => {
+  const fetcher = createFetch("/vesselverbose");
+  const data = await fetcher();
+  return vesselVerboseArraySchema.parse(data) as VesselVerbose[];
+};
 
 /**
- * API function for fetching vessel verbose data for a specific vessel from WSF Vessels API
+ * API function for fetching verbose vessel data for a specific vessel from WSF Vessels API
  *
  * Retrieves comprehensive vessel information for a specific vessel identified by vessel ID,
- * including specifications, capacity, amenities, and operational status. This endpoint
- * returns detailed information about vessel dimensions, passenger and vehicle capacity,
- * onboard amenities, and current operational status.
+ * including detailed specifications, operational data, and extended information.
  *
- * This data is updated infrequently and provides static vessel characteristics
- * that don't change often, such as vessel specifications and capabilities.
- *
- * @param vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params - Object containing vesselId and optional logMode
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselVerbose object containing comprehensive information for the specified vessel
  */
-export const getVesselVerboseById = (
-  vesselId: number
-): Promise<VesselVerbose> =>
-  fetchVessels<VesselVerbose>(`/vesselverbose/${vesselId}`);
+export const getVesselVerboseById = async (params: { vesselId: number }) => {
+  const fetcher = createFetch<{ vesselId: number }>(
+    "/vesselverbose/{vesselId}"
+  );
+  const data = await fetcher(params);
+  return vesselVerboseSchema.parse(data) as VesselVerbose;
+};
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS
@@ -225,11 +398,15 @@ export const getVesselVerboseById = (
 /**
  * API function for fetching cache flush date from WSF Vessels API
  *
- * Returns the date when the vessel data cache was last flushed,
- * indicating when the data was last updated.
+ * Retrieves the cache flush date for the vessels API, which indicates when
+ * the cached data was last updated. This information is useful for determining
+ * the freshness of the cached vessel data.
  *
- * @returns Promise resolving to VesselCacheFlushDate object or null
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to a VesselsCacheFlushDate object containing the cache flush date
  */
-export const getCacheFlushDateVessels =
-  (): Promise<VesselsCacheFlushDate | null> =>
-    fetchVessels<VesselsCacheFlushDate>("/cacheflushdate");
+export const getCacheFlushDateVessels = async () => {
+  const fetcher = createFetch("/cacheflushdate");
+  const data = await fetcher();
+  return vesselsCacheFlushDateSchema.parse(data) as VesselsCacheFlushDate;
+};

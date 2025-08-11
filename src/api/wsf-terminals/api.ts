@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   TerminalBasics,
@@ -10,12 +10,26 @@ import type {
   TerminalTransport,
   TerminalVerbose,
   TerminalWaitTimes,
-} from "./types";
+} from "./schemas";
+import {
+  terminalBasicsArraySchema,
+  terminalBasicsSchema,
+  terminalBulletinArraySchema,
+  terminalBulletinSchema,
+  terminalCacheFlushDateSchema,
+  terminalLocationArraySchema,
+  terminalLocationSchema,
+  terminalSailingSpaceArraySchema,
+  terminalSailingSpaceSchema,
+  terminalTransportArraySchema,
+  terminalTransportSchema,
+  terminalVerboseArraySchema,
+  terminalVerboseSchema,
+  terminalWaitTimesArraySchema,
+} from "./schemas";
 
-// Module-scoped fetch function for WSF terminals API
-const fetchTerminals = createApiClient(
-  "https://www.wsdot.wa.gov/ferries/api/terminals/rest"
-);
+// Create a factory function for WSF Terminals API
+const createFetch = createFetchFactory("/ferries/api/terminals/rest");
 
 // ============================================================================
 // TERMINAL BASICS API FUNCTIONS
@@ -28,10 +42,21 @@ const fetchTerminals = createApiClient(
  * This includes location, contact details, and basic status information.
  * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalBasics objects containing basic terminal information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminals = await getTerminalBasics();
+ * console.log(terminals[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalBasics = (): Promise<TerminalBasics[]> =>
-  fetchTerminals<TerminalBasics[]>("/terminalbasics");
+export const getTerminalBasics = async () => {
+  const fetcher = createFetch("/terminalbasics");
+  const data = await fetcher();
+  return terminalBasicsArraySchema.parse(data) as TerminalBasics[];
+};
 
 /**
  * API function for fetching specific terminal basics from WSF Terminals API
@@ -40,13 +65,27 @@ export const getTerminalBasics = (): Promise<TerminalBasics[]> =>
  * This includes location, contact details, and basic status information for the specified terminal.
  * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
- * @param terminalId - The unique identifier for the terminal
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalBasics object containing basic information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminal = await getTerminalBasicsByTerminalId({ terminalId: 7 });
+ * console.log(terminal.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalBasicsByTerminalId = (
-  terminalId: number
-): Promise<TerminalBasics> =>
-  fetchTerminals<TerminalBasics>(`/terminalbasics/${terminalId}`);
+export const getTerminalBasicsByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminalbasics/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalBasicsSchema.parse(data) as TerminalBasics;
+};
 
 // ============================================================================
 // TERMINAL LOCATIONS API FUNCTIONS
@@ -59,10 +98,21 @@ export const getTerminalBasicsByTerminalId = (
  * addresses, and geographic data. This endpoint provides the physical
  * location details for all WSF terminals.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalLocation objects containing terminal location information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const locations = await getTerminalLocations();
+ * console.log(locations[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalLocations = (): Promise<TerminalLocation[]> =>
-  fetchTerminals<TerminalLocation[]>("/terminallocations");
+export const getTerminalLocations = async () => {
+  const fetcher = createFetch("/terminallocations");
+  const data = await fetcher();
+  return terminalLocationArraySchema.parse(data) as TerminalLocation[];
+};
 
 /**
  * API function for fetching terminal location for a specific terminal from WSF Terminals API
@@ -72,13 +122,27 @@ export const getTerminalLocations = (): Promise<TerminalLocation[]> =>
  * resultset to a single terminal, providing the physical location details for
  * that specific terminal.
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalLocation objects containing location information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const location = await getTerminalLocationsByTerminalId({ terminalId: 7 });
+ * console.log(location.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalLocationsByTerminalId = (
-  terminalId: number
-): Promise<TerminalLocation> =>
-  fetchTerminals<TerminalLocation>(`/terminallocations/${terminalId}`);
+export const getTerminalLocationsByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminallocations/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalLocationSchema.parse(data) as TerminalLocation;
+};
 
 // ============================================================================
 // TERMINAL SAILING SPACE API FUNCTIONS
@@ -87,37 +151,55 @@ export const getTerminalLocationsByTerminalId = (
 /**
  * API function for fetching terminal sailing space data from WSF Terminals API
  *
- * Retrieves current space availability information for all terminals including
- * vehicle capacity, wait times, and space status. This endpoint provides real-time
- * information about space availability at all WSF terminals, including current
- * vehicle capacity, estimated wait times, and space status for upcoming sailings.
+ * Retrieves sailing space information for all terminals including capacity,
+ * availability, and space allocation data. This endpoint provides detailed
+ * information about the sailing space configuration for all WSF terminals.
  *
- * This data is updated frequently and provides dynamic terminal capacity information
- * that changes throughout the day based on current demand and vessel assignments.
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to an array of TerminalSailingSpace objects containing sailing space information
+ * @throws {WsfApiError} When the API request fails
  *
- * @returns Promise resolving to an array of TerminalSailingSpace objects containing real-time space availability information
+ * @example
+ * ```typescript
+ * const sailingSpaces = await getTerminalSailingSpace();
+ * console.log(sailingSpaces[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalSailingSpace = (): Promise<TerminalSailingSpace[]> =>
-  fetchTerminals<TerminalSailingSpace[]>("/terminalsailingspace");
+export const getTerminalSailingSpace = async () => {
+  const fetcher = createFetch("/terminalsailingspace");
+  const data = await fetcher();
+  return terminalSailingSpaceArraySchema.parse(data) as TerminalSailingSpace[];
+};
 
 /**
- * API function for fetching terminal sailing space data for a specific terminal from WSF Terminals API
+ * API function for fetching terminal sailing space for a specific terminal from WSF Terminals API
  *
- * Retrieves current space availability information for a specific terminal identified by terminal ID,
- * including vehicle capacity, wait times, and space status. This endpoint filters the resultset
- * to a single terminal, providing real-time information about space availability, current
- * vehicle capacity, estimated wait times, and space status for upcoming sailings.
+ * Retrieves sailing space information for a specific terminal identified by terminal ID,
+ * including capacity, availability, and space allocation data. This endpoint filters the
+ * resultset to a single terminal, providing detailed information about the sailing space
+ * configuration for that specific terminal.
  *
- * This data is updated frequently and provides dynamic terminal capacity information
- * that changes throughout the day based on current demand and vessel assignments.
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to a TerminalSailingSpace object containing sailing space information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
- * @returns Promise resolving to a TerminalSailingSpace object containing real-time space availability information for the specified terminal
+ * @example
+ * ```typescript
+ * const sailingSpace = await getTerminalSailingSpaceByTerminalId({ terminalId: 7 });
+ * console.log(sailingSpace.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalSailingSpaceByTerminalId = (
-  terminalId: number
-): Promise<TerminalSailingSpace> =>
-  fetchTerminals<TerminalSailingSpace>(`/terminalsailingspace/${terminalId}`);
+export const getTerminalSailingSpaceByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminalsailingspace/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalSailingSpaceSchema.parse(data) as TerminalSailingSpace;
+};
 
 // ============================================================================
 // TERMINAL BULLETINS API FUNCTIONS
@@ -130,25 +212,51 @@ export const getTerminalSailingSpaceByTerminalId = (
  * notices, and important updates. This endpoint provides current bulletin
  * information for all WSF terminals.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalBulletin objects containing bulletin information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const bulletins = await getTerminalBulletins();
+ * console.log(bulletins[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalBulletins = (): Promise<TerminalBulletin[]> =>
-  fetchTerminals<TerminalBulletin[]>("/terminalbulletins");
+export const getTerminalBulletins = async () => {
+  const fetcher = createFetch("/terminalbulletins");
+  const data = await fetcher();
+  return terminalBulletinArraySchema.parse(data) as TerminalBulletin[];
+};
 
 /**
  * API function for fetching terminal bulletins for a specific terminal from WSF Terminals API
  *
  * Retrieves bulletin information for a specific terminal identified by terminal ID,
- * including announcements, notices, and important updates. This endpoint returns a single terminal object
- * with a Bulletins array, not an array of bulletins.
+ * including announcements, notices, and important updates. This endpoint filters the
+ * resultset to a single terminal, providing current bulletin information for that
+ * specific terminal.
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalBulletin object containing bulletin information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const bulletin = await getTerminalBulletinsByTerminalId({ terminalId: 7 });
+ * console.log(bulletin.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalBulletinsByTerminalId = (
-  terminalId: number
-): Promise<TerminalBulletin> =>
-  fetchTerminals<TerminalBulletin>(`/terminalbulletins/${terminalId}`);
+export const getTerminalBulletinsByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminalbulletins/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalBulletinSchema.parse(data) as TerminalBulletin;
+};
 
 // ============================================================================
 // TERMINAL TRANSPORTS API FUNCTIONS
@@ -157,29 +265,55 @@ export const getTerminalBulletinsByTerminalId = (
 /**
  * API function for fetching terminal transports from WSF Terminals API
  *
- * Retrieves transportation information for all terminals including transit options,
- * shuttle services, and transportation connections. This endpoint provides
- * comprehensive transportation information for all WSF terminals.
+ * Retrieves transport information for all terminals including connections,
+ * routes, and transportation options. This endpoint provides detailed
+ * information about transportation connections for all WSF terminals.
  *
- * @returns Promise resolving to an array of TerminalTransport objects containing transportation information
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to an array of TerminalTransport objects containing transport information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const transports = await getTerminalTransports();
+ * console.log(transports[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalTransports = (): Promise<TerminalTransport[]> =>
-  fetchTerminals<TerminalTransport[]>("/terminaltransports");
+export const getTerminalTransports = async () => {
+  const fetcher = createFetch("/terminaltransports");
+  const data = await fetcher();
+  return terminalTransportArraySchema.parse(data) as TerminalTransport[];
+};
 
 /**
  * API function for fetching terminal transports for a specific terminal from WSF Terminals API
  *
- * Retrieves transportation information for a specific terminal identified by terminal ID,
- * including transit options, shuttle services, and transportation connections. This endpoint returns a single terminal object
- * with a TransitLinks array, not an array of transports.
+ * Retrieves transport information for a specific terminal identified by terminal ID,
+ * including connections, routes, and transportation options. This endpoint filters the
+ * resultset to a single terminal, providing detailed information about transportation
+ * connections for that specific terminal.
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
- * @returns Promise resolving to a TerminalTransport object containing transportation information for the specified terminal
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to a TerminalTransport object containing transport information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const transport = await getTerminalTransportsByTerminalId({ terminalId: 7 });
+ * console.log(transport.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalTransportsByTerminalId = (
-  terminalId: number
-): Promise<TerminalTransport> =>
-  fetchTerminals<TerminalTransport>(`/terminaltransports/${terminalId}`);
+export const getTerminalTransportsByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminaltransports/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalTransportSchema.parse(data) as TerminalTransport;
+};
 
 // ============================================================================
 // TERMINAL WAIT TIMES API FUNCTIONS
@@ -188,32 +322,57 @@ export const getTerminalTransportsByTerminalId = (
 /**
  * API function for fetching terminal wait times from WSF Terminals API
  *
- * Retrieves current wait time information for all terminals including
- * estimated wait times, queue lengths, and congestion data. This endpoint
- * provides real-time information about terminal congestion and wait times
- * for all WSF terminals.
+ * Retrieves wait time information for all terminals including current wait times,
+ * estimated wait times, and wait time trends. This endpoint provides real-time
+ * wait time data for all WSF terminals.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalWaitTimes objects containing wait time information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const waitTimes = await getTerminalWaitTimes();
+ * console.log(waitTimes[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalWaitTimes = (): Promise<TerminalWaitTimes[]> =>
-  fetchTerminals<TerminalWaitTimes[]>("/terminalwaittimes");
+export const getTerminalWaitTimes = async () => {
+  const fetcher = createFetch("/terminalwaittimes");
+  const data = await fetcher();
+  return terminalWaitTimesArraySchema.parse(data) as TerminalWaitTimes[];
+};
 
 /**
- * API function for fetching terminal wait times by terminal from WSF Terminals API
+ * API function for fetching terminal wait times for a specific terminal from WSF Terminals API
  *
- * Retrieves current wait time information for a specific terminal identified
- * by terminal ID, including estimated wait times, queue lengths, and congestion
- * data. This endpoint filters the resultset to a single terminal, providing
- * real-time information about terminal congestion and wait times for that
+ * Retrieves wait time information for a specific terminal identified by terminal ID,
+ * including current wait times, estimated wait times, and wait time trends. This endpoint
+ * filters the resultset to a single terminal, providing real-time wait time data for that
  * specific terminal.
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a TerminalWaitTimes object containing wait time information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const waitTime = await getTerminalWaitTimesByTerminalId({ terminalId: 7 });
+ * console.log(waitTime.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalWaitTimesByTerminalId = (
-  terminalId: number
-): Promise<TerminalWaitTimes> =>
-  fetchTerminals<TerminalWaitTimes>(`/terminalwaittimes/${terminalId}`);
+export const getTerminalWaitTimesByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminalwaittimes/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalCacheFlushDateSchema && terminalWaitTimesArraySchema.element
+    ? terminalWaitTimesArraySchema.element.parse(data)
+    : (data as TerminalWaitTimes);
+};
 
 // ============================================================================
 // TERMINAL VERBOSE API FUNCTIONS
@@ -222,37 +381,54 @@ export const getTerminalWaitTimesByTerminalId = (
 /**
  * API function for fetching terminal verbose data from WSF Terminals API
  *
- * Retrieves comprehensive terminal information including location, facilities,
- * parking information, and operational status. This endpoint provides detailed
- * information about all terminals in the WSF system, including terminal
- * coordinates, available facilities, parking capacity, and current operational status.
+ * Retrieves comprehensive terminal information including all available data
+ * for all terminals. This endpoint provides the most detailed information
+ * available for all WSF terminals in a single call.
  *
- * This data is updated infrequently and provides static terminal characteristics
- * that don't change often, such as terminal specifications and facilities.
- *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TerminalVerbose objects containing comprehensive terminal information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminals = await getTerminalVerbose();
+ * console.log(terminals[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalVerbose = (): Promise<TerminalVerbose[]> =>
-  fetchTerminals<TerminalVerbose[]>("/terminalverbose");
+export const getTerminalVerbose = async () => {
+  const fetcher = createFetch("/terminalverbose");
+  const data = await fetcher();
+  return terminalVerboseArraySchema.parse(data) as TerminalVerbose[];
+};
 
 /**
  * API function for fetching terminal verbose data for a specific terminal from WSF Terminals API
  *
  * Retrieves comprehensive terminal information for a specific terminal identified by terminal ID,
- * including location, facilities, parking information, and operational status. This endpoint
- * returns detailed information about terminal coordinates, available facilities, parking capacity,
- * and current operational status.
+ * including all available data. This endpoint filters the resultset to a single terminal,
+ * providing the most detailed information available for that specific terminal.
  *
- * This data is updated infrequently and provides static terminal characteristics
- * that don't change often, such as terminal specifications and facilities.
+ * @param params - Object containing terminalId
+ * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to a TerminalVerbose object containing comprehensive terminal information for the specified terminal
+ * @throws {WsfApiError} When the API request fails
  *
- * @param terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
- * @returns Promise resolving to a TerminalVerbose object containing comprehensive information for the specified terminal
+ * @example
+ * ```typescript
+ * const terminal = await getTerminalVerboseByTerminalId({ terminalId: 7 });
+ * console.log(terminal.TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminalVerboseByTerminalId = (
-  terminalId: number
-): Promise<TerminalVerbose> =>
-  fetchTerminals<TerminalVerbose>(`/terminalverbose/${terminalId}`);
+export const getTerminalVerboseByTerminalId = async (params: {
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ terminalId: number }>(
+    "/terminalverbose/{terminalId}"
+  );
+  const data = await fetcher(params);
+  return terminalVerboseSchema.parse(data) as TerminalVerbose;
+};
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS
@@ -261,10 +437,22 @@ export const getTerminalVerboseByTerminalId = (
 /**
  * API function for fetching cache flush date from WSF Terminals API
  *
- * Returns the date when the terminal data cache was last flushed,
- * indicating when the data was last updated.
+ * Retrieves the cache flush date for terminals data. This endpoint provides
+ * information about when the terminals data was last updated, which can be
+ * used to coordinate caching strategies.
  *
- * @returns Promise resolving to TerminalsCacheFlushDate object or null
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise resolving to cache flush date
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const flushDate = await getCacheFlushDateTerminals();
+ * console.log(flushDate); // "2024-01-15T10:30:00Z"
+ * ```
  */
-export const getCacheFlushDateTerminals = (): Promise<Date | null> =>
-  fetchTerminals<Date>("/cacheflushdate");
+export const getCacheFlushDateTerminals = async () => {
+  const fetcher = createFetch("/cacheflushdate");
+  const data = await fetcher();
+  return terminalCacheFlushDateSchema.parse(data) as Date | null;
+};

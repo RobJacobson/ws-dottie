@@ -5,8 +5,8 @@
 export { getBorderCrossings } from "./api";
 // React Query hooks
 export { useBorderCrossings } from "./queries";
-// TypeScript types
+// Types inferred from Zod schemas
 export type {
   BorderCrossingData,
   BorderCrossingLocation,
-} from "./types";
+} from "./schemas";

@@ -2,19 +2,23 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___travel_times.html
 // API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { TravelTimeRoute } from "./types";
+import type { TravelTimeRoute } from "./schemas";
+import { travelTimeRouteSchema, travelTimesArraySchema } from "./schemas";
 
-// Module-scoped fetch function for travel times API
-const fetchTravelTimes = createApiClient(
-  "https://wsdot.wa.gov/Traffic/api/TravelTimes/TravelTimesREST.svc"
+// Create a factory function for WSDOT Travel Times API
+const createFetch = createFetchFactory(
+  "/Traffic/api/TravelTimes/TravelTimesREST.svc"
 );
 
 /**
- * Retrieves all travel times from WSDOT API
+ * Get all travel times from WSDOT Travel Times API
  *
- * @returns Promise resolving to an array of travel time routes
+ * Retrieves current travel time data for all monitored routes.
+ *
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing all travel time data
  * @throws {WsdotApiError} When the API request fails
  *
  * @example
@@ -23,14 +27,22 @@ const fetchTravelTimes = createApiClient(
  * console.log(travelTimes[0].CurrentTime); // 30
  * ```
  */
-export const getTravelTimes = (): Promise<TravelTimeRoute[]> =>
-  fetchTravelTimes<TravelTimeRoute[]>("/GetTravelTimesAsJson");
+export const getTravelTimes = async () => {
+  const fetcher = createFetch("/GetTravelTimesAsJson");
+  const data = await fetcher();
+  return travelTimesArraySchema.parse(data) as TravelTimeRoute[];
+};
 
 /**
- * Retrieves a specific travel time route by ID from WSDOT API
+ * Get specific travel time by ID from WSDOT Travel Times API
  *
- * @param travelTimeId - The ID of the specific travel time route
- * @returns Promise resolving to a travel time route
+ * Returns detailed information about a specific travel time route
+ * identified by its ID.
+ *
+ * @param params - Object containing travelTimeId and optional logMode
+ * @param params.travelTimeId - The ID of the specific travel time route
+ * @param params.logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing the specific travel time data
  * @throws {WsdotApiError} When the API request fails
  *
  * @example
@@ -39,9 +51,10 @@ export const getTravelTimes = (): Promise<TravelTimeRoute[]> =>
  * console.log(travelTime.CurrentTime); // 30
  * ```
  */
-export const getTravelTimeById = (
-  travelTimeId: number
-): Promise<TravelTimeRoute> =>
-  fetchTravelTimes<TravelTimeRoute>(
-    `/GetTravelTimeAsJson?TravelTimeID=${travelTimeId}`
+export const getTravelTimeById = async (params: { travelTimeId: number }) => {
+  const fetcher = createFetch<{ travelTimeId: number }>(
+    "/GetTravelTimeAsJson?TravelTimeID={travelTimeId}"
   );
+  const data = await fetcher(params);
+  return travelTimeRouteSchema.parse(data) as TravelTimeRoute;
+};

@@ -16,4 +16,4 @@ export {
 export type {
   MountainPassCondition,
   TravelRestriction,
-} from "./types";
+} from "./schemas";

@@ -2,49 +2,56 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { MountainPassCondition } from "./types";
+import type { MountainPassCondition } from "./schemas";
+import {
+  mountainPassConditionArraySchema,
+  mountainPassConditionSchema,
+} from "./schemas";
 
-// Module-scoped fetch function for mountain pass conditions API
-const fetchMountainPassConditions = createApiClient(
-  "https://wsdot.wa.gov/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
+// Create a factory function for WSDOT Mountain Pass Conditions API
+const createFetch = createFetchFactory(
+  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
 );
 
 /**
  * Retrieves all mountain pass conditions from WSDOT API
  *
- * @returns Promise resolving to an array of mountain pass conditions
- * @throws {WsdotApiError} When the API request fails
+ * Returns current mountain pass conditions across Washington State, including
+ * road conditions, restrictions, and travel advisories.
  *
- * @example
- * ```typescript
- * const conditions = await getMountainPassConditions();
- * console.log(conditions[0].MountainPassName); // "Blewett Pass US 97"
- * ```
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing all mountain pass condition data
+ * @throws {WsdotApiError} When the API request fails
  */
-export const getMountainPassConditions = (): Promise<MountainPassCondition[]> =>
-  fetchMountainPassConditions<MountainPassCondition[]>(
-    "/GetMountainPassConditionsAsJson"
-  );
+export const getMountainPassConditions = async () => {
+  const fetcher = createFetch("/GetMountainPassConditionsAsJson");
+  const data = await fetcher();
+  return mountainPassConditionArraySchema.parse(
+    data
+  ) as MountainPassCondition[];
+};
 
 /**
  * Retrieves a specific mountain pass condition by ID
  * Note: This endpoint may not work as expected based on testing
  *
- * @param passConditionId - The ID of the specific mountain pass condition
- * @returns Promise resolving to a mountain pass condition
- * @throws {WsdotApiError} When the API request fails
+ * Returns detailed information about a specific mountain pass condition
+ * identified by its ID.
  *
- * @example
- * ```typescript
- * const condition = await getMountainPassConditionById(1);
- * console.log(condition.MountainPassName); // "Blewett Pass US 97"
- * ```
+ * @param params - Object containing passConditionId and optional logMode
+ * @param params.passConditionId - The ID of the specific mountain pass condition
+ * @param params.logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing the specific mountain pass condition data
+ * @throws {WsdotApiError} When the API request fails
  */
-export const getMountainPassConditionById = (
-  passConditionId: number
-): Promise<MountainPassCondition> =>
-  fetchMountainPassConditions<MountainPassCondition>(
-    `/GetMountainPassConditionAsJson?PassConditionID=${passConditionId}`
+export const getMountainPassConditionById = async (params: {
+  passConditionId: number;
+}) => {
+  const fetcher = createFetch<{ passConditionId: number }>(
+    "/GetMountainPassConditionAsJson?PassConditionID={passConditionId}"
   );
+  const data = await fetcher(params);
+  return mountainPassConditionSchema.parse(data) as MountainPassCondition;
+};

@@ -2,19 +2,28 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { TollRate, TollTripInfo, TollTripRatesResponse } from "./types";
+import type { TollRate, TollTripInfo, TollTripRates } from "./schemas";
+import {
+  tollRateArraySchema,
+  tollTripInfoArraySchema,
+  tollTripRatesSchema,
+} from "./schemas";
 
-// Module-scoped fetch function for toll rates API
-const fetchTollRates = createApiClient(
-  "https://wsdot.wa.gov/Traffic/api/TollRates/TollRatesREST.svc"
+// Create a factory function for WSDOT Toll Rates API
+const createFetch = createFetchFactory(
+  "/Traffic/api/TollRates/TollRatesREST.svc"
 );
 
 /**
  * Retrieves all current toll rates from WSDOT API
  *
- * @returns Promise resolving to an array of toll rates
+ * Returns current toll rates for all WSDOT toll facilities, including
+ * pricing information and facility details.
+ *
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing all toll rate data
  * @throws {WsdotApiError} When the API request fails
  *
  * @example
@@ -23,13 +32,20 @@ const fetchTollRates = createApiClient(
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const getTollRates = (): Promise<TollRate[]> =>
-  fetchTollRates<TollRate[]>("/GetTollRatesAsJson");
+export const getTollRates = async () => {
+  const fetcher = createFetch("/GetTollRatesAsJson");
+  const data = await fetcher();
+  return tollRateArraySchema.parse(data) as TollRate[];
+};
 
 /**
  * Retrieves toll trip information with geometry data from WSDOT API
  *
- * @returns Promise resolving to an array of toll trip information
+ * Returns detailed trip information including geometry data for toll
+ * facilities and routes.
+ *
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing all toll trip information data
  * @throws {WsdotApiError} When the API request fails
  *
  * @example
@@ -38,13 +54,20 @@ export const getTollRates = (): Promise<TollRate[]> =>
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = (): Promise<TollTripInfo[]> =>
-  fetchTollRates<TollTripInfo[]>("/GetTollTripInfoAsJson");
+export const getTollTripInfo = async () => {
+  const fetcher = createFetch("/GetTollTripInfoAsJson");
+  const data = await fetcher();
+  return tollTripInfoArraySchema.parse(data) as TollTripInfo[];
+};
 
 /**
  * Retrieves toll trip rates with messages and update times from WSDOT API
  *
- * @returns Promise resolving to toll trip rates with last updated time
+ * Returns current toll trip rates along with system messages and
+ * last updated timestamps.
+ *
+ * @param logMode - Optional logging mode for debugging API calls
+ * @returns Promise containing toll trip rates with last updated time
  * @throws {WsdotApiError} When the API request fails
  *
  * @example
@@ -54,5 +77,8 @@ export const getTollTripInfo = (): Promise<TollTripInfo[]> =>
  * console.log(tripRates.Trips[0].Toll); // 0
  * ```
  */
-export const getTollTripRates = (): Promise<TollTripRatesResponse> =>
-  fetchTollRates<TollTripRatesResponse>("/GetTollTripRatesAsJson");
+export const getTollTripRates = async () => {
+  const fetcher = createFetch("/GetTollTripRatesAsJson");
+  const data = await fetcher();
+  return tollTripRatesSchema.parse(data) as TollTripRates;
+};

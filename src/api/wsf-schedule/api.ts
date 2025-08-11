@@ -2,9 +2,25 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/schedule/rest/help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/dateUtils";
+import { createFetchFactory } from "@/shared/fetching/api";
 
+import {
+  activeSeasonsArraySchema,
+  alertsArraySchema,
+  alternativeFormatsArraySchema,
+  routesArraySchema,
+  routesArrayLooseSchema,
+  routeDetailsSchema,
+  routeDetailsLooseSchema,
+  sailingsArraySchema,
+  scheduledRoutesArraySchema,
+  scheduleCacheFlushDateSchema,
+  scheduleResponseSchema,
+  scheduleTerminalCombosArraySchema,
+  scheduleTerminalsArraySchema,
+  timeAdjustmentsArraySchema,
+  validDateRangeSchema,
+} from "./schemas";
 import type {
   ActiveSeason,
   Alert,
@@ -18,12 +34,10 @@ import type {
   ScheduleTerminalCombo,
   TimeAdjustment,
   ValidDateRange,
-} from "./types";
+} from "./schemas";
 
-// Module-scoped fetch function for WSF schedule API
-const fetchSchedule = createApiClient(
-  "https://www.wsdot.wa.gov/ferries/api/schedule/rest"
-);
+// Create a factory function for WSF Schedule API
+const createFetch = createFetchFactory("/ferries/api/schedule/rest");
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS
@@ -37,10 +51,21 @@ const fetchSchedule = createApiClient(
  * from this operation is modified, drop your application cache and retrieve
  * fresh data from the service.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to Date object containing cache flush information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const flushDate = await getCacheFlushDateSchedule();
+ * console.log(flushDate); // "2024-01-15T10:30:00Z"
+ * ```
  */
-export const getCacheFlushDateSchedule = (): Promise<Date | null> =>
-  fetchSchedule<Date>("/cacheflushdate");
+export const getCacheFlushDateSchedule = async () => {
+  const fetcher = createFetch("/cacheflushdate");
+  const data = await fetcher();
+  return scheduleCacheFlushDateSchema.parse(data) as Date;
+};
 
 // ============================================================================
 // VALID DATE RANGE API FUNCTIONS
@@ -53,10 +78,21 @@ export const getCacheFlushDateSchedule = (): Promise<Date | null> =>
  * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
  * Please consider using cacheflushdate to coordinate the caching of this data in your application.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to ValidDateRange object containing valid date range information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const dateRange = await getValidDateRange();
+ * console.log(dateRange.StartDate); // "2024-01-01T00:00:00Z"
+ * ```
  */
-export const getValidDateRange = (): Promise<ValidDateRange | null> =>
-  fetchSchedule<ValidDateRange>("/validdaterange");
+export const getValidDateRange = async () => {
+  const fetcher = createFetch("/validdaterange");
+  const data = await fetcher();
+  return validDateRangeSchema.parse(data) as ValidDateRange;
+};
 
 // ============================================================================
 // TERMINALS API FUNCTIONS
@@ -66,68 +102,93 @@ export const getValidDateRange = (): Promise<ValidDateRange | null> =>
  * API function for fetching terminals from WSF Schedule API
  *
  * Retrieves valid departing terminals for a given trip date. A valid trip date
- * may be determined using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * may be determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const terminals = await getTerminals({ tripDate: new Date('2024-01-15') });
+ * console.log(terminals[0].TerminalName); // "Anacortes"
+ * ```
  */
-export const getTerminals = (tripDate: Date): Promise<ScheduleTerminal[]> =>
-  fetchSchedule<ScheduleTerminal[]>(`/terminals/${jsDateToYyyyMmDd(tripDate)}`);
+export const getTerminals = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(`/terminals/{tripDate}`);
+  const data = await fetcher(params);
+  return scheduleTerminalsArraySchema.parse(data) as ScheduleTerminal[];
+};
 
 /**
  * API function for fetching terminals and mates from WSF Schedule API
  *
  * Retrieves all valid departing and arriving terminal combinations for a given trip date.
- * A valid trip date may be determined using validDateRange. Please format the trip date
- * input as 'YYYY-MM-DD'.
+ * A valid trip date may be determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations
+ * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalsAndMates = (
-  tripDate: Date
-): Promise<ScheduleTerminalCombo[]> =>
-  fetchSchedule<ScheduleTerminalCombo[]>(
-    `/terminalsandmates/${jsDateToYyyyMmDd(tripDate)}`
-  );
+export const getTerminalsAndMates = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(`/terminalsandmates/{tripDate}`);
+  const data = await fetcher(params);
+  return scheduleTerminalCombosArraySchema.parse(data) as ScheduleTerminalCombo[];
+};
 
 /**
  * API function for fetching terminals and mates by route from WSF Schedule API
  *
  * Provides valid departing and arriving terminal combinations for a given trip date and route.
  * Valid routes may be found by using routes. Similarly, a valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param routeId - The unique identifier for the route
+ * @param params - Object containing tripDate, routeId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations for the route
+ * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalsAndMatesByRoute = (
-  tripDate: Date,
-  routeId: number
-): Promise<ScheduleTerminalCombo[]> =>
-  fetchSchedule<ScheduleTerminalCombo[]>(
-    `/terminalsandmatesbyroute/${jsDateToYyyyMmDd(tripDate)}/${routeId}`
+export const getTerminalsAndMatesByRoute = async (params: {
+  tripDate: Date;
+  routeId: number;
+}) => {
+  const fetcher = createFetch<{ tripDate: Date; routeId: number }>(
+    `/terminalsandmatesbyroute/{tripDate}/{routeId}`
   );
+  const data = await fetcher(params);
+  return scheduleTerminalCombosArraySchema.parse(data) as ScheduleTerminalCombo[];
+};
 
 /**
  * API function for fetching terminal mates from WSF Schedule API
  *
  * Provides arriving terminals for a given departing terminal and trip date. A valid departing
  * terminal may be found by using terminals. Similarly, a valid trip date may be determined
- * using validDateRange. Please format the trip date input as 'YYYY-MM-DD'.
+ * using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param terminalId - The unique identifier for the departing terminal
+ * @param params - Object containing tripDate, terminalId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.terminalId - The unique identifier for the departing terminal
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduleTerminal objects containing arriving terminals
+ * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalMates = (
-  tripDate: Date,
-  terminalId: number
-): Promise<ScheduleTerminal[]> =>
-  fetchSchedule<ScheduleTerminal[]>(
-    `/terminalmates/${jsDateToYyyyMmDd(tripDate)}/${terminalId}`
+export const getTerminalMates = async (params: {
+  tripDate: Date;
+  terminalId: number;
+}) => {
+  const fetcher = createFetch<{ tripDate: Date; terminalId: number }>(
+    `/terminalmates/{tripDate}/{terminalId}`
   );
+  const data = await fetcher(params);
+  return scheduleTerminalsArraySchema.parse(data) as ScheduleTerminal[];
+};
 
 // ============================================================================
 // ROUTES API FUNCTIONS
@@ -140,11 +201,27 @@ export const getTerminalMates = (
  * If only a trip date is included, all routes available for that date of travel are returned.
  * Valid trip dates may be determined using the validDateRange endpoint.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects containing basic route information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const routes = await getRoutes({ tripDate: new Date('2024-01-15') });
+ * console.log(routes[0].RouteAbbrev); // "ANA-SID"
+ * ```
  */
-export const getRoutes = (tripDate: Date): Promise<Route[]> =>
-  fetchSchedule<Route[]>(`/routes/${jsDateToYyyyMmDd(tripDate)}`);
+export const getRoutes = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(`/routes/{tripDate}`);
+  const data = await fetcher(params);
+  try {
+    return routesArraySchema.parse(data) as Route[];
+  } catch {
+    return routesArrayLooseSchema.parse(data) as unknown as Route[];
+  }
+};
 
 /**
  * API function for fetching routes between specific terminals from WSF Schedule API
@@ -154,19 +231,27 @@ export const getRoutes = (tripDate: Date): Promise<Route[]> =>
  * to match the specified terminal combination. Valid departing and arriving terminals
  * may be found using the terminalsAndMates endpoint.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param departingTerminalId - The unique identifier for the departing terminal
- * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects filtered by terminal combination
+ * @throws {WsfApiError} When the API request fails
  */
-export const getRoutesByTerminals = (
-  tripDate: Date,
-  departingTerminalId: number,
-  arrivingTerminalId: number
-): Promise<Route[]> =>
-  fetchSchedule<Route[]>(
-    `/routes/${jsDateToYyyyMmDd(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
-  );
+export const getRoutesByTerminals = async (params: {
+  tripDate: Date;
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+}) => {
+  const fetcher = createFetch<{
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  }>(`/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
+  const data = await fetcher(params);
+  return routesArraySchema.parse(data) as Route[];
+};
 
 /**
  * API function for fetching routes with service disruptions from WSF Schedule API
@@ -175,13 +260,19 @@ export const getRoutesByTerminals = (
  * service disruptions for a given trip date. This endpoint helps identify routes
  * that may have delays, cancellations, or other service issues.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects that have service disruptions
+ * @throws {WsfApiError} When the API request fails
  */
-export const getRoutesWithDisruptions = (tripDate: Date): Promise<Route[]> =>
-  fetchSchedule<Route[]>(
-    `/routeshavingservicedisruptions/${jsDateToYyyyMmDd(tripDate)}`
+export const getRoutesWithDisruptions = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(
+    `/routeshavingservicedisruptions/{tripDate}`
   );
+  const data = await fetcher(params);
+  return routesArraySchema.parse(data) as Route[];
+};
 
 /**
  * API function for fetching detailed route information from WSF Schedule API
@@ -191,11 +282,17 @@ export const getRoutesWithDisruptions = (tripDate: Date): Promise<Route[]> =>
  * This endpoint provides comprehensive route details including sailing times, vessel assignments,
  * and operational information.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
+ * @param params - Object containing tripDate and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects containing detailed route information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getRouteDetails = (tripDate: Date): Promise<Route[]> =>
-  fetchSchedule<Route[]>(`/routedetails/${jsDateToYyyyMmDd(tripDate)}`);
+export const getRouteDetails = async (params: { tripDate: Date }) => {
+  const fetcher = createFetch<{ tripDate: Date }>(`/routedetails/{tripDate}`);
+  const data = await fetcher(params);
+  return routesArraySchema.parse(data) as Route[];
+};
 
 /**
  * API function for fetching detailed route information between specific terminals from WSF Schedule API
@@ -205,19 +302,27 @@ export const getRouteDetails = (tripDate: Date): Promise<Route[]> =>
  * the specified terminal combination. Valid departing and arriving terminals may be found
  * using the terminalsAndMates endpoint.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param departingTerminalId - The unique identifier for the departing terminal
- * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Route objects with detailed information filtered by terminal combination
+ * @throws {WsfApiError} When the API request fails
  */
-export const getRouteDetailsByTerminals = (
-  tripDate: Date,
-  departingTerminalId: number,
-  arrivingTerminalId: number
-): Promise<Route[]> =>
-  fetchSchedule<Route[]>(
-    `/routedetails/${jsDateToYyyyMmDd(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
-  );
+export const getRouteDetailsByTerminals = async (params: {
+  tripDate: Date;
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+}) => {
+  const fetcher = createFetch<{
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  }>(`/routedetails/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
+  const data = await fetcher(params);
+  return routesArraySchema.parse(data) as Route[];
+};
 
 /**
  * API function for fetching detailed route information by route ID from WSF Schedule API
@@ -226,17 +331,27 @@ export const getRouteDetailsByTerminals = (
  * for a given trip date. This endpoint filters the resultset to a single route,
  * providing comprehensive details for that specific route.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param routeId - The unique identifier for the route
+ * @param params - Object containing tripDate, routeId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a RouteDetails object containing detailed information for the specified route
+ * @throws {WsfApiError} When the API request fails
  */
-export const getRouteDetailsByRoute = (
-  tripDate: Date,
-  routeId: number
-): Promise<RouteDetails | null> =>
-  fetchSchedule<RouteDetails>(
-    `/routedetails/${jsDateToYyyyMmDd(tripDate)}/${routeId}`
+export const getRouteDetailsByRoute = async (params: {
+  tripDate: Date;
+  routeId: number;
+}) => {
+  const fetcher = createFetch<{ tripDate: Date; routeId: number }>(
+    `/routedetails/{tripDate}/{routeId}`
   );
+  const data = await fetcher(params);
+  try {
+    return routeDetailsSchema.parse(data) as RouteDetails;
+  } catch {
+    return routeDetailsLooseSchema.parse(data) as unknown as RouteDetails;
+  }
+};
 
 // ============================================================================
 // ACTIVE SEASONS API FUNCTIONS
@@ -249,10 +364,15 @@ export const getRouteDetailsByRoute = (
  * current and upcoming ferry service seasons, which can be used to determine
  * valid schedule IDs for other endpoints.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ActiveSeason objects containing active season information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getActiveSeasons = (): Promise<ActiveSeason[]> =>
-  fetchSchedule<ActiveSeason[]>("/activeseasons");
+export const getActiveSeasons = async () => {
+  const fetcher = createFetch(`/activeseasons`);
+  const data = await fetcher();
+  return activeSeasonsArraySchema.parse(data) as ActiveSeason[];
+};
 
 // ============================================================================
 // SCHEDULED ROUTES API FUNCTIONS
@@ -266,10 +386,15 @@ export const getActiveSeasons = (): Promise<ActiveSeason[]> =>
  * may be a valid route, but if it's not scheduled to run during a specific season,
  * it won't be returned as part of that season's scheduled routes resultset.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduledRoute objects representing all scheduled routes
+ * @throws {WsfApiError} When the API request fails
  */
-export const getScheduledRoutes = (): Promise<ScheduledRoute[]> =>
-  fetchSchedule<ScheduledRoute[]>("/schedroutes");
+export const getScheduledRoutes = async () => {
+  const fetcher = createFetch(`/schedroutes`);
+  const data = await fetcher();
+  return scheduledRoutesArraySchema.parse(data) as ScheduledRoute[];
+};
 
 /**
  * API function for fetching scheduled routes by season from WSF Schedule API
@@ -278,13 +403,19 @@ export const getScheduledRoutes = (): Promise<ScheduledRoute[]> =>
  * Results are filtered to only include scheduled routes for the specified season.
  * Seasons may be determined using the activeSeasons endpoint.
  *
- * @param scheduleId - The unique identifier for the season (schedule ID)
+ * @param params - Object containing scheduleId and optional logMode
+ * @param params.scheduleId - The unique identifier for the season (schedule ID)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of ScheduledRoute objects representing scheduled routes for the specified season
+ * @throws {WsfApiError} When the API request fails
  */
-export const getScheduledRoutesBySeason = (
-  scheduleId: number
-): Promise<ScheduledRoute[]> =>
-  fetchSchedule<ScheduledRoute[]>(`/schedroutes/${scheduleId}`);
+export const getScheduledRoutesBySeason = async (params: {
+  scheduleId: number;
+}) => {
+  const fetcher = createFetch<{ scheduleId: number }>(`/schedroutes/{scheduleId}`);
+  const data = await fetcher(params);
+  return scheduledRoutesArraySchema.parse(data) as ScheduledRoute[];
+};
 
 // ============================================================================
 // SAILINGS API FUNCTIONS
@@ -299,11 +430,17 @@ export const getScheduledRoutesBySeason = (
  * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
  * Scheduled routes may be determined using schedRoutes.
  *
- * @param schedRouteId - The unique identifier for the scheduled route
+ * @param params - Object containing schedRouteId and optional logMode
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Sailing objects containing sailing information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getSailings = (schedRouteId: number): Promise<Sailing[]> =>
-  fetchSchedule<Sailing[]>(`/sailings/${schedRouteId}`);
+export const getSailings = async (params: { schedRouteId: number }) => {
+  const fetcher = createFetch<{ schedRouteId: number }>(`/sailings/{schedRouteId}`);
+  const data = await fetcher(params);
+  return sailingsArraySchema.parse(data) as Sailing[];
+};
 
 /**
  * API function for fetching all sailings from WSF Schedule API
@@ -314,11 +451,17 @@ export const getSailings = (schedRouteId: number): Promise<Sailing[]> =>
  * Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule.
  * Scheduled routes may be determined using schedRoutes.
  *
- * @param schedRouteId - The unique identifier for the scheduled route
+ * @param params - Object containing schedRouteId and optional logMode
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Sailing objects containing all sailing information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getAllSailings = (schedRouteId: number): Promise<Sailing[]> =>
-  fetchSchedule<Sailing[]>(`/allsailings/${schedRouteId}`);
+export const getAllSailings = async (params: { schedRouteId: number }) => {
+  const fetcher = createFetch<{ schedRouteId: number }>(`/allsailings/{schedRouteId}`);
+  const data = await fetcher(params);
+  return sailingsArraySchema.parse(data) as Sailing[];
+};
 
 // ============================================================================
 // TIME ADJUSTMENTS API FUNCTIONS
@@ -331,10 +474,15 @@ export const getAllSailings = (schedRouteId: number): Promise<Sailing[]> =>
  * from the scheduled times found in the sailings resultset (eg. tidal cancellations
  * affecting Port Townsend departures on 9/9/2014).
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getTimeAdjustments = (): Promise<TimeAdjustment[]> =>
-  fetchSchedule<TimeAdjustment[]>("/timeadj");
+export const getTimeAdjustments = async () => {
+  const fetcher = createFetch(`/timeadj`);
+  const data = await fetcher();
+  return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
+};
 
 /**
  * API function for fetching time adjustments by route from WSF Schedule API
@@ -344,13 +492,17 @@ export const getTimeAdjustments = (): Promise<TimeAdjustment[]> =>
  * cancellations affecting Port Townsend departures on 9/9/2014). A valid route may
  * be determined using routes.
  *
- * @param routeId - The unique identifier for the route
+ * @param params - Object containing routeId and optional logMode
+ * @param params.routeId - The unique identifier for the route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the route
+ * @throws {WsfApiError} When the API request fails
  */
-export const getTimeAdjustmentsByRoute = (
-  routeId: number
-): Promise<TimeAdjustment[]> =>
-  fetchSchedule<TimeAdjustment[]>(`/timeadjbyroute/${routeId}`);
+export const getTimeAdjustmentsByRoute = async (params: { routeId: number }) => {
+  const fetcher = createFetch<{ routeId: number }>(`/timeadjbyroute/{routeId}`);
+  const data = await fetcher(params);
+  return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
+};
 
 /**
  * API function for fetching time adjustments by scheduled route from WSF Schedule API
@@ -360,13 +512,21 @@ export const getTimeAdjustmentsByRoute = (
  * (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid
  * scheduled route may be determined using schedRoutes.
  *
- * @param schedRouteId - The unique identifier for the scheduled route
+ * @param params - Object containing schedRouteId and optional logMode
+ * @param params.schedRouteId - The unique identifier for the scheduled route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the scheduled route
+ * @throws {WsfApiError} When the API request fails
  */
-export const getTimeAdjustmentsBySchedRoute = (
-  schedRouteId: number
-): Promise<TimeAdjustment[]> =>
-  fetchSchedule<TimeAdjustment[]>(`/timeadjbyschedroute/${schedRouteId}`);
+export const getTimeAdjustmentsBySchedRoute = async (params: {
+  schedRouteId: number;
+}) => {
+  const fetcher = createFetch<{ schedRouteId: number }>(
+    `/timeadjbyschedroute/{schedRouteId}`
+  );
+  const data = await fetcher(params);
+  return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
+};
 
 // ============================================================================
 // SCHEDULE API FUNCTIONS
@@ -378,19 +538,24 @@ export const getTimeAdjustmentsBySchedRoute = (
  * Provides departure times for a trip date and route. The resultset accounts for all
  * contingencies, sailing date ranges and time adjustments. Valid routes may be found
  * using routes. Similarly, a valid trip date may be determined using validDateRange.
- * Please format the trip date input as 'YYYY-MM-DD'.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param routeId - The unique identifier for the route
+ * @param params - Object containing tripDate, routeId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
-export const getScheduleByRoute = (
-  tripDate: Date,
-  routeId: number
-): Promise<ScheduleResponse | null> =>
-  fetchSchedule<ScheduleResponse>(
-    `/schedule/${jsDateToYyyyMmDd(tripDate)}/${routeId}`
+export const getScheduleByRoute = async (params: {
+  tripDate: Date;
+  routeId: number;
+}) => {
+  const fetcher = createFetch<{ tripDate: Date; routeId: number }>(
+    `/schedule/{tripDate}/{routeId}`
   );
+  const data = await fetcher(params);
+  return scheduleResponseSchema.parse(data) as ScheduleResponse;
+};
 
 /**
  * API function for fetching schedule by terminals from WSF Schedule API
@@ -398,22 +563,29 @@ export const getScheduleByRoute = (
  * Provides departure times for a trip date and terminal combination. The resultset
  * accounts for all contingencies, sailing date ranges and time adjustments. Valid
  * departing and arriving terminals may be found using terminalsAndMates. Similarly,
- * a valid trip date may be determined using validDateRange. Please format the trip
- * date input as 'YYYY-MM-DD'.
+ * a valid trip date may be determined using validDateRange.
  *
- * @param tripDate - The trip date in YYYY-MM-DD format (e.g., '2024-04-01' for April 1, 2024)
- * @param departingTerminalId - The unique identifier for the departing terminal
- * @param arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params - Object containing tripDate, departingTerminalId, arrivingTerminalId and optional logMode
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
-export const getScheduleByTerminals = (
-  tripDate: Date,
-  departingTerminalId: number,
-  arrivingTerminalId: number
-): Promise<ScheduleResponse | null> =>
-  fetchSchedule<ScheduleResponse>(
-    `/schedule/${jsDateToYyyyMmDd(tripDate)}/${departingTerminalId}/${arrivingTerminalId}`
-  );
+export const getScheduleByTerminals = async (params: {
+  tripDate: Date;
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+}) => {
+  const fetcher = createFetch<{
+    tripDate: Date;
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+  }>(`/schedule/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
+  const data = await fetcher(params);
+  return scheduleResponseSchema.parse(data) as ScheduleResponse;
+};
 
 /**
  * API function for fetching today's schedule by route from WSF Schedule API
@@ -423,17 +595,24 @@ export const getScheduleByTerminals = (
  * to now should not be included in the resultset and 'false' if they should be included
  * in the resultset.
  *
- * @param routeId - The unique identifier for the route
- * @param onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
+ * @param params - Object containing routeId, onlyRemainingTimes and optional logMode
+ * @param params.routeId - The unique identifier for the route
+ * @param params.onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing today's schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
-export const getScheduleTodayByRoute = (
-  routeId: number,
-  onlyRemainingTimes: boolean = false
-): Promise<ScheduleResponse | null> =>
-  fetchSchedule<ScheduleResponse>(
-    `/scheduletoday/${routeId}/${onlyRemainingTimes}`
-  );
+export const getScheduleTodayByRoute = async (params: {
+  routeId: number;
+  onlyRemainingTimes?: boolean;
+}) => {
+  const fetcher = createFetch<{
+    routeId: number;
+    onlyRemainingTimes?: boolean;
+  }>(`/scheduletoday/{routeId}/{onlyRemainingTimes}`);
+  const data = await fetcher(params);
+  return scheduleResponseSchema.parse(data) as ScheduleResponse;
+};
 
 /**
  * API function for fetching today's schedule by terminals from WSF Schedule API
@@ -443,19 +622,29 @@ export const getScheduleTodayByRoute = (
  * value, please indicate 'true' if departure times prior to now should not be included
  * in the resultset and 'false' if they should be included in the resultset.
  *
- * @param departingTerminalId - The unique identifier for the departing terminal
- * @param arrivingTerminalId - The unique identifier for the arriving terminal
- * @param onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
+ * @param params - Object containing departingTerminalId, arrivingTerminalId, onlyRemainingTimes and optional logMode
+ * @param params.departingTerminalId - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalId - The unique identifier for the arriving terminal
+ * @param params.onlyRemainingTimes - Whether to include only remaining departure times (defaults to false)
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a ScheduleResponse object containing today's schedule information, or null if no schedule found
+ * @throws {WsfApiError} When the API request fails
  */
-export const getScheduleTodayByTerminals = (
-  departingTerminalId: number,
-  arrivingTerminalId: number,
-  onlyRemainingTimes: boolean = false
-): Promise<ScheduleResponse | null> =>
-  fetchSchedule<ScheduleResponse>(
-    `/scheduletoday/${departingTerminalId}/${arrivingTerminalId}/${onlyRemainingTimes}`
+export const getScheduleTodayByTerminals = async (params: {
+  departingTerminalId: number;
+  arrivingTerminalId: number;
+  onlyRemainingTimes?: boolean;
+}) => {
+  const fetcher = createFetch<{
+    departingTerminalId: number;
+    arrivingTerminalId: number;
+    onlyRemainingTimes?: boolean;
+  }>(
+    `/scheduletoday/{departingTerminalId}/{arrivingTerminalId}/{onlyRemainingTimes}`
   );
+  const data = await fetcher(params);
+  return scheduleResponseSchema.parse(data) as ScheduleResponse;
+};
 
 // ============================================================================
 // ALERTS API FUNCTIONS
@@ -468,10 +657,15 @@ export const getScheduleTodayByTerminals = (
  * This endpoint returns important notifications and updates that may affect ferry service,
  * including weather-related delays, maintenance notices, and other operational alerts.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of Alert objects containing alert information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getAlerts = (): Promise<Alert[]> =>
-  fetchSchedule<Alert[]>("/alerts");
+export const getAlerts = async () => {
+  const fetcher = createFetch(`/alerts`);
+  const data = await fetcher();
+  return alertsArraySchema.parse(data) as Alert[];
+};
 
 // ============================================================================
 // ALTERNATIVE FORMATS API FUNCTIONS
@@ -484,10 +678,16 @@ export const getAlerts = (): Promise<Alert[]> =>
  * provides access to different data formats and representations that may be
  * useful for various applications and use cases.
  *
- * @param subjectName - The subject name for which to retrieve alternative formats
+ * @param params - Object containing subjectName and optional logMode
+ * @param params.subjectName - The subject name for which to retrieve alternative formats
+ * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of AlternativeFormat objects containing format information
+ * @throws {WsfApiError} When the API request fails
  */
-export const getAlternativeFormats = (
-  subjectName: string
-): Promise<AlternativeFormat[]> =>
-  fetchSchedule<AlternativeFormat[]>(`/alternativeformats/${subjectName}`);
+export const getAlternativeFormats = async (params: { subjectName: string }) => {
+  const fetcher = createFetch<{ subjectName: string }>(
+    `/alternativeformats/{subjectName}`
+  );
+  const data = await fetcher(params);
+  return alternativeFormatsArraySchema.parse(data) as AlternativeFormat[];
+};

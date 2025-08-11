@@ -2,6 +2,16 @@
 // Main entry point for the WSDOT API client library
 
 // ============================================================================
+// Configuration
+// ============================================================================
+
+export {
+  configManager,
+  type WsdotConfig,
+} from "./shared/config";
+export type { LoggingMode } from "./shared/logger";
+
+// ============================================================================
 // API Modules (Namespace Exports)
 // ============================================================================
 
@@ -32,59 +42,59 @@ export * as WsfVessels from "./api/wsf-vessels";
 export type {
   BorderCrossingData,
   BorderCrossingLocation,
-} from "./api/wsdot-border-crossings/types";
+} from "./api/wsdot-border-crossings/schemas";
 // WSDOT Bridge Clearances Types
-export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/types";
+export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/schemas";
 // WSDOT Commercial Vehicle Restrictions Types
 export type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionWithId,
   RoadwayLocation as CVRoadwayLocation,
-} from "./api/wsdot-commercial-vehicle-restrictions/types";
+} from "./api/wsdot-commercial-vehicle-restrictions/schemas";
 // WSDOT Highway Alerts Types
 export type {
   HighwayAlert,
   RoadwayLocation,
-} from "./api/wsdot-highway-alerts/types";
+} from "./api/wsdot-highway-alerts/schemas";
 // WSDOT Highway Cameras Types
 export type {
   Camera,
   CameraLocation,
   GetCameraResponse,
   SearchCamerasParams,
-} from "./api/wsdot-highway-cameras/types";
+} from "./api/wsdot-highway-cameras/schemas";
 // WSDOT Mountain Pass Conditions Types
 export type {
   MountainPassCondition,
   TravelRestriction,
-} from "./api/wsdot-mountain-pass-conditions/types";
+} from "./api/wsdot-mountain-pass-conditions/schemas";
 // WSDOT Toll Rates Types
 export type {
   TollRate,
   TollTripInfo,
   TollTripRate,
-  TollTripRatesResponse,
-} from "./api/wsdot-toll-rates/types";
+  TollTripRates,
+} from "./api/wsdot-toll-rates/schemas";
 // WSDOT Traffic Flow Types
 export type {
   FlowStationLocation,
   TrafficFlow,
-} from "./api/wsdot-traffic-flow/types";
+} from "./api/wsdot-traffic-flow/schemas";
 // WSDOT Travel Times Types
 export type {
   TravelTimeEndpoint,
   TravelTimeRoute,
-} from "./api/wsdot-travel-times/types";
+} from "./api/wsdot-travel-times/schemas";
 // WSDOT Weather Information Types
-export type { WeatherInfo } from "./api/wsdot-weather-information/types";
+export type { WeatherInfo } from "./api/wsdot-weather-information/schemas";
 // WSDOT Weather Information Extended Types
 export type {
   SubSurfaceMeasurement,
   SurfaceMeasurement,
   WeatherReading,
-} from "./api/wsdot-weather-information-extended/types";
+} from "./api/wsdot-weather-information-extended/schemas";
 // WSDOT Weather Stations Types
-export type { WeatherStationData } from "./api/wsdot-weather-stations/types";
+export type { WeatherStationData } from "./api/wsdot-weather-stations/schemas";
 // WSF Fares Types
 export type {
   FareLineItem,
@@ -97,26 +107,22 @@ export type {
   TerminalCombo,
   TerminalComboVerbose,
   TerminalMate,
-} from "./api/wsf-fares/types";
+} from "./api/wsf-fares/schemas";
 // WSF Schedule Types
 export type {
   ActiveSeason,
-  ActiveSeasonParams,
   Alert,
-  AlertParams,
   AlternativeFormat,
   Annotation,
   ContingencyAdjustment,
   Journey,
   Route,
   RouteDetails,
-  RouteParams,
   Sailing,
   Schedule,
   ScheduleCacheFlushDate,
   ScheduleDeparture,
   ScheduledRoute,
-  ScheduleParams,
   ScheduleResponse,
   ScheduleResponseTerminalCombo,
   ScheduleTerminal,
@@ -125,9 +131,8 @@ export type {
   ServiceDisruption,
   TerminalTime,
   TimeAdjustment,
-  TimeAdjustmentParams,
   ValidDateRange,
-} from "./api/wsf-schedule/types";
+} from "./api/wsf-schedule/schemas";
 // WSF Terminals Types
 export type {
   TerminalArrivalSpace,
@@ -142,7 +147,7 @@ export type {
   TerminalVerbose,
   TerminalWaitTime,
   TerminalWaitTimes,
-} from "./api/wsf-terminals/types";
+} from "./api/wsf-terminals/schemas";
 // WSF Vessels Types
 export type {
   VesselAccommodation,
@@ -153,7 +158,7 @@ export type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
-} from "./api/wsf-vessels/types";
+} from "./api/wsf-vessels/schemas";
 
 // ============================================================================
 // TanStack Query Configuration

@@ -10,27 +10,25 @@ beforeAll(() => {
   process.env.NODE_ENV = "test";
 
   // Configure API key for testing
-  const apiKey =
-    process.env.WSDOT_ACCESS_TOKEN ||
-    process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN;
+  const apiKey = process.env.WSDOT_ACCESS_TOKEN;
   if (!apiKey) {
     console.warn("WSDOT_ACCESS_TOKEN not set - integration tests may fail");
   }
 
   // Set up global test configuration
-  global.testConfig = {
+  (global as any).testConfig = {
     apiKey: apiKey,
     baseUrl: "https://www.wsdot.wa.gov/ferries/api",
     timeout: 10000,
     retries: 3,
-    rateLimitDelay: 1000, // No delay between calls
+    rateLimitDelay: 500, // 500ms delay between calls
   };
 });
 
 afterAll(() => {
   // Cleanup global test state
-  if (global.testConfig) {
-    delete global.testConfig;
+  if ((global as any).testConfig) {
+    delete (global as any).testConfig;
   }
 });
 

@@ -26,4 +26,4 @@ export type {
   CameraLocation,
   GetCameraResponse,
   SearchCamerasParams,
-} from "./types";
+} from "./schemas";

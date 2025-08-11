@@ -14,7 +14,7 @@ export {
   getTerminalCombo,
   getTerminalComboVerbose,
 } from "./api";
-// Types
+// Types (inferred from Zod schemas)
 export type {
   FareLineItem,
   FareLineItemBasic,
@@ -26,4 +26,4 @@ export type {
   TerminalCombo,
   TerminalComboVerbose,
   TerminalMate,
-} from "./types";
+} from "./schemas";

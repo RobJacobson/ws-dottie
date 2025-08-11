@@ -2,47 +2,41 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getMountainPassConditionById, getMountainPassConditions } from "./api";
-import type { MountainPassCondition } from "./types";
+import type { MountainPassCondition } from "./schemas";
 
 /**
  * React Query hook for retrieving all mountain pass conditions
  *
+ * Returns current mountain pass conditions across Washington State, including
+ * road conditions, restrictions, and travel advisories.
+ *
+ * @param options - Optional query options
  * @returns React Query result containing mountain pass conditions data
  *
  * @example
  * ```typescript
- * const { data: conditions, isLoading, error } = useMountainPassConditions();
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     {conditions?.map(condition => (
- *       <div key={condition.MountainPassId}>
- *         {condition.MountainPassName}: {condition.RoadCondition}
- *       </div>
- *     ))}
- *   </div>
- * );
+ * const { data: conditions } = useMountainPassConditions();
+ * console.log(conditions[0].MountainPassName); // "Blewett Pass US 97"
  * ```
  */
 export const useMountainPassConditions = (
-  options?: Parameters<typeof useQuery<MountainPassCondition[]>>[0]
-) => {
+  options?: QueryOptionsWithoutKey<MountainPassCondition[]>
+): UseQueryResult<MountainPassCondition[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
       "mountain-pass-conditions",
       "getMountainPassConditions",
     ],
-    queryFn: getMountainPassConditions,
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
+    queryFn: () => getMountainPassConditions(),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
@@ -51,35 +45,34 @@ export const useMountainPassConditions = (
  * React Query hook for retrieving a specific mountain pass condition by ID
  * Note: This endpoint may not work as expected based on testing
  *
- * @param passConditionId - The ID of the specific mountain pass condition
+ * Returns detailed information about a specific mountain pass condition
+ * identified by its ID.
+ *
+ * @param params - Object containing passConditionId
+ * @param params.passConditionId - The ID of the specific mountain pass condition
+ * @param options - Optional query options
  * @returns React Query result containing mountain pass condition data
  *
  * @example
  * ```typescript
- * const { data: condition, isLoading, error } = useMountainPassConditionById(1);
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     <h2>{condition?.MountainPassName}</h2>
- *     <p>Temperature: {condition?.TemperatureInFahrenheit}°F</p>
- *     <p>Road Condition: {condition?.RoadCondition}</p>
- *   </div>
- * );
+ * const { data: condition } = useMountainPassConditionById({ passConditionId: 1 });
+ * console.log(condition.MountainPassName); // "Blewett Pass US 97"
  * ```
  */
-export const useMountainPassConditionById = (passConditionId: number) => {
+export const useMountainPassConditionById = (
+  params: { passConditionId: number },
+  options?: QueryOptionsWithoutKey<MountainPassCondition>
+): UseQueryResult<MountainPassCondition, Error> => {
   return useQuery<MountainPassCondition>({
     queryKey: [
       "wsdot",
       "mountain-pass-conditions",
       "getMountainPassConditionById",
-      passConditionId,
+      params.passConditionId,
     ],
-    queryFn: () => getMountainPassConditionById(passConditionId),
-    ...tanstackQueryOptions.WEEKLY_UPDATES,
-    enabled: passConditionId > 0,
+    queryFn: () =>
+      getMountainPassConditionById({ passConditionId: params.passConditionId }),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
   });
 };

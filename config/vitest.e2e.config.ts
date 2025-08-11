@@ -35,4 +35,8 @@ export default defineConfig({
   esbuild: {
     target: "es2022",
   },
+  // Add optimizeDeps to help with module resolution
+  optimizeDeps: {
+    include: ["src/**/*"],
+  },
 });

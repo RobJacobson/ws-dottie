@@ -7,8 +7,8 @@
 // Both strategies return raw JSON strings that are processed by parseWsdotJson for
 // date transformation and data cleanup.
 
-export { fetchJsonp } from "./jsonp";
-export { fetchNative } from "./native";
+export { fetchJsonp } from "./fetchJsonp";
+export { fetchNative } from "./fetchNative";
 export type {
   ApiErrorResponse,
   FetchStrategy,

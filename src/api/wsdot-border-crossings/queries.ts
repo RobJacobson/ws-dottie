@@ -2,12 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getBorderCrossings } from "./api";
-import type { BorderCrossingData } from "./types";
+import type { BorderCrossingData } from "./schemas";
 
 /**
  * Hook for getting border crossing wait times from WSDOT Border Crossings API
@@ -17,13 +19,19 @@ import type { BorderCrossingData } from "./types";
  *
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with border crossing data
+ *
+ * @example
+ * ```typescript
+ * const { data: crossings } = useBorderCrossings();
+ * console.log(crossings?.[0]?.CrossingName); // "Peace Arch"
+ * ```
  */
 export const useBorderCrossings = (
-  options?: Parameters<typeof useQuery<BorderCrossingData[]>>[0]
-) => {
+  options?: QueryOptionsWithoutKey<BorderCrossingData[]>
+): UseQueryResult<BorderCrossingData[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],
-    queryFn: getBorderCrossings,
+    queryFn: () => getBorderCrossings(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

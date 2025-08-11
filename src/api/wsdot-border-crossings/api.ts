@@ -2,13 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
-import { createApiClient } from "@/shared/fetching/apiClient";
+import { createFetchFactory } from "@/shared/fetching/api";
 
-import type { BorderCrossingData } from "./types";
+import type { BorderCrossingData } from "./schemas";
+import { borderCrossingDataArraySchema } from "./schemas";
 
-// Module-scoped fetch function for border crossings API
-const fetchBorderCrossings = createApiClient(
-  "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
+// Create a factory function for WSDOT Border Crossings API
+const createFetch = createFetchFactory(
+  "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
 );
 
 /**
@@ -17,7 +18,19 @@ const fetchBorderCrossings = createApiClient(
  * Returns estimated wait times for all border crossings between Washington State and Canada.
  * Data includes location information, crossing names, timestamps, and current wait times.
  *
+ * @param logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to array of border crossing data
+ * @throws {WsdotApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const crossings = await getBorderCrossings();
+ * console.log(crossings[0].CrossingName); // "Peace Arch"
+ * ```
  */
-export const getBorderCrossings = async (): Promise<BorderCrossingData[]> =>
-  fetchBorderCrossings<BorderCrossingData[]>("/GetBorderCrossingsAsJson");
+export const getBorderCrossings = async () => {
+  const fetcher = createFetch("/GetBorderCrossingsAsJson");
+  const data = await fetcher();
+  // Validate strictly but with passthrough on objects
+  return borderCrossingDataArraySchema.parse(data) as BorderCrossingData[];
+};

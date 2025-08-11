@@ -173,7 +173,7 @@ import {
 } from 'ws-dottie';
 
 function WeatherDisplay() {
-  const { data: weather } = useWeatherInformation([1, 2, 3]); // Station IDs
+  const { data: weather } = useWeatherInformation({ stationIds: [1, 2, 3] });
   const { data: stations } = useWeatherStations();
   const { data: passConditions } = useMountainPassConditions();
 
@@ -205,6 +205,75 @@ function WeatherDisplay() {
 
 ## 🔧 Advanced Patterns
 
+### Configuration Management
+
+```javascript
+import { configManager, WsfVessels } from 'ws-dottie';
+
+// Runtime configuration for different environments
+function initializeApp(environment) {
+  switch (environment) {
+    case 'development':
+      configManager.setConfig({
+        WSDOT_ACCESS_TOKEN: process.env.DEV_WSDOT_ACCESS_TOKEN,
+        WSDOT_BASE_URL: 'https://dev-proxy.example.com'
+      });
+      break;
+    case 'production':
+      configManager.setConfig({
+        WSDOT_ACCESS_TOKEN: process.env.PROD_WSDOT_ACCESS_TOKEN,
+        WSDOT_BASE_URL: 'https://prod-proxy.example.com'
+      });
+      break;
+  }
+}
+
+// Use in your application
+initializeApp(process.env.NODE_ENV);
+const vessels = await WsfVessels.getVesselLocations();
+```
+
+### Parameter Objects and Logging
+
+```javascript
+import { 
+  WsdotHighwayCameras, 
+  WsfFares,
+  WsdotApiError 
+} from 'ws-dottie';
+
+async function getDetailedData() {
+  try {
+    // Get specific camera with logging
+    const camera = await WsdotHighwayCameras.getCamera(
+      { cameraID: 1001 }, 
+      'debug'
+    );
+
+    // Get fare information with parameters
+    const fares = await WsfFares.getFareLineItems({
+      tripDate: new Date('2024-01-15'),
+      departingTerminalID: 7,
+      arrivingTerminalID: 8,
+      roundTrip: false
+    }, 'info');
+
+    // Search cameras with filters
+    const cameras = await WsdotHighwayCameras.searchCameras({
+      StateRoute: "5",
+      Region: "Northwest"
+    });
+
+    return { camera, fares, cameras };
+  } catch (error) {
+    if (error instanceof WsdotApiError) {
+      console.error('Error:', error.getUserMessage());
+    }
+    throw error;
+  }
+}
+```
+
 ### Error Boundary Integration
 
 ```javascript
@@ -228,7 +297,7 @@ class WSdotErrorBoundary extends React.Component {
       return (
         <div className="error-boundary">
           <h2>Transportation Data Error</h2>
-          <p>{this.state.error.message}</p>
+          <p>{this.state.error.getUserMessage()}</p>
           <button onClick={() => this.setState({ hasError: false })}>
             Try Again
           </button>
@@ -264,7 +333,7 @@ function VesselList() {
   }
 
   if (error) {
-    return <div className="error">Error loading vessels: {error.message}</div>;
+    return <div className="error">Error loading vessels: {error.getUserMessage()}</div>;
   }
 
   return (
@@ -310,6 +379,44 @@ function CustomVesselTracker() {
 }
 ```
 
+### Advanced Caching Customization
+
+WS-Dottie's caching strategies can be customized using spread operators with TanStack Query options:
+
+```javascript
+import { useVesselLocations, tanstackQueryOptions } from 'ws-dottie';
+
+function AdvancedVesselTracker() {
+  // Custom 5-minute update strategy with different parameters
+  const { data: vessels } = useVesselLocations({
+    ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
+    refetchInterval: 5 * 60 * 1000, // 5 minutes
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    gcTime: 60 * 60 * 1000, // 1 hour
+    retry: 3, // 3 retries
+    retryDelay: 5 * 1000, // 5 second delay between retries
+  });
+
+  return (
+    <div>
+      <h2>Vessels (5-minute updates)</h2>
+      {vessels?.map(vessel => (
+        <div key={vessel.VesselID}>
+          <strong>{vessel.VesselName}</strong>
+          <div>Last Update: {vessel.LastUpdate.toLocaleTimeString()}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+This approach allows you to:
+- **Extend base strategies** - Start with a predefined strategy and customize specific options
+- **Mix and match** - Combine different aspects of various strategies
+- **Fine-tune performance** - Optimize caching for your specific use case
+- **Maintain consistency** - Keep the base strategy's proven defaults while customizing only what you need
+
 ### Multiple API Integration
 
 ```javascript
@@ -350,6 +457,139 @@ function ComprehensiveDashboard() {
 }
 ```
 
+## 🎯 Real-World Project Examples
+
+### Ferry Commuter App
+
+```javascript
+import { 
+  useVesselLocations, 
+  useTerminalWaitTimes,
+  useSchedules 
+} from 'ws-dottie';
+
+function FerryCommuterApp() {
+  const { data: vessels } = useVesselLocations();
+  const { data: waitTimes } = useTerminalWaitTimes();
+  const { data: schedules } = useSchedules({ routeId: 1 });
+
+  const myTerminal = waitTimes?.find(t => t.TerminalName === 'Seattle');
+  const nextFerry = schedules?.find(s => s.DepartureTime > new Date());
+
+  return (
+    <div className="commuter-app">
+      <h1>Ferry Commuter</h1>
+      
+      {myTerminal && (
+        <div className="wait-time">
+          <h2>Seattle Terminal</h2>
+          <div className="wait">Wait Time: {myTerminal.WaitTime} minutes</div>
+        </div>
+      )}
+
+      {nextFerry && (
+        <div className="next-ferry">
+          <h2>Next Ferry</h2>
+          <div>Departure: {nextFerry.DepartureTime.toLocaleTimeString()}</div>
+        </div>
+      )}
+
+      <div className="vessel-map">
+        <h2>Active Vessels ({vessels?.length || 0})</h2>
+        {/* Render vessel locations on a map */}
+      </div>
+    </div>
+  );
+}
+```
+
+### Traffic Camera Viewer
+
+```javascript
+import { 
+  useCameras, 
+  useSearchCameras 
+} from 'ws-dottie';
+
+function TrafficCameraViewer() {
+  const [selectedRoute, setSelectedRoute] = useState('5');
+  const { data: allCameras } = useCameras();
+  const { data: routeCameras } = useSearchCameras({ StateRoute: selectedRoute });
+
+  return (
+    <div className="camera-viewer">
+      <h1>Traffic Cameras</h1>
+      
+      <div className="filters">
+        <select value={selectedRoute} onChange={e => setSelectedRoute(e.target.value)}>
+          <option value="5">I-5</option>
+          <option value="405">I-405</option>
+          <option value="90">I-90</option>
+        </select>
+      </div>
+
+      <div className="camera-grid">
+        {routeCameras?.map(camera => (
+          <div key={camera.CameraID} className="camera">
+            <h3>{camera.Title}</h3>
+            <img src={camera.ImageURL} alt={camera.Title} />
+            <div>Location: {camera.RoadName}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+### Weather Dashboard
+
+```javascript
+import { 
+  useWeatherStations,
+  useMountainPassConditions,
+  useWeatherInformationForStations 
+} from 'ws-dottie';
+
+function WeatherDashboard() {
+  const { data: stations } = useWeatherStations();
+  const { data: passes } = useMountainPassConditions();
+  const { data: weather } = useWeatherInformationForStations({ 
+    stationIds: [1, 2, 3, 4, 5] 
+  });
+
+  const seattleStation = stations?.find(s => s.StationName.includes('Seattle'));
+  const snoqualmiePass = passes?.find(p => p.MountainPassName.includes('Snoqualmie'));
+
+  return (
+    <div className="weather-dashboard">
+      <h1>Washington Weather</h1>
+      
+      {seattleStation && (
+        <div className="current-weather">
+          <h2>Seattle</h2>
+          <div>Temperature: {seattleStation.Temperature}°F</div>
+          <div>Conditions: {seattleStation.RoadCondition}</div>
+        </div>
+      )}
+
+      {snoqualmiePass && (
+        <div className="pass-conditions">
+          <h2>Snoqualmie Pass</h2>
+          <div>Status: {snoqualmiePass.RestrictionOne}</div>
+          <div>Conditions: {snoqualmiePass.RoadCondition}</div>
+        </div>
+      )}
+
+      <div className="weather-stations">
+        <h2>Weather Stations ({stations?.length || 0})</h2>
+        {/* Render weather station data */}
+      </div>
+    </div>
+  );
+}
+```
+
 ## 🚨 Troubleshooting
 
 ### Common Issues
@@ -358,55 +598,7 @@ function ComprehensiveDashboard() {
 ```javascript
 // Check your environment variables
 console.log('WSDOT_ACCESS_TOKEN:', process.env.WSDOT_ACCESS_TOKEN);
-console.log('EXPO_PUBLIC_WSDOT_ACCESS_TOKEN:', process.env.EXPO_PUBLIC_WSDOT_ACCESS_TOKEN);
 ```
 
 **"QueryClient not found" error**
-```javascript
-// Make sure TanStack Query is installed and configured
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <YourApp />
-    </QueryClientProvider>
-  );
-}
 ```
-
-**Network errors in browser**
-```javascript
-// WS-Dottie automatically uses JSONP for browsers
-// Check your browser's network tab for CORS errors
-// Ensure your API key is valid
-```
-
-### Performance Optimization
-
-```javascript
-// Use selective imports to reduce bundle size
-import { useVesselLocations } from 'ws-dottie';
-
-// Instead of importing everything
-// import * as WSdot from 'ws-dottie';
-```
-
-### Debug Mode
-
-```javascript
-// Enable debug logging
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-```
-
----
-
-**For more examples, check out the source code or open an issue on GitHub!** 

@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.ts"],
-  format: ["cjs", "esm"],
+  format: ["esm", "cjs"], // Build both ESM and CJS formats
   dts: true,
   splitting: false,
   sourcemap: true,
@@ -17,7 +17,7 @@ export default defineConfig({
   outDir: "dist",
   outExtension({ format }) {
     return {
-      js: format === "cjs" ? ".js" : ".mjs",
+      js: format === "esm" ? ".mjs" : ".js", // Use .mjs for ESM, .js for CJS
     };
   },
   treeshake: true,

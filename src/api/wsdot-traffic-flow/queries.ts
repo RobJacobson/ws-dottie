@@ -2,78 +2,70 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
 // API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
 
+import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import type { QueryOptionsWithoutKey } from "@/shared/types";
 
 import { getTrafficFlowById, getTrafficFlows } from "./api";
-import type { TrafficFlow } from "./types";
+import type { TrafficFlow } from "./schemas";
 
 /**
  * React Query hook for retrieving all traffic flow data
  *
+ * Retrieves current traffic flow readings from all flow stations.
+ *
+ * @param options - Optional query options
  * @returns React Query result containing traffic flow data
  *
  * @example
  * ```typescript
- * const { data: trafficFlows, isLoading, error } = useTrafficFlows();
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     {trafficFlows?.map(flow => (
- *       <div key={flow.FlowDataID}>
- *         <h3>{flow.FlowStationLocation.Description}</h3>
- *         <p>Flow Value: {flow.FlowReadingValue}</p>
- *         <p>Direction: {flow.FlowStationLocation.Direction}</p>
- *       </div>
- *     ))}
- *   </div>
- * );
+ * const { data: trafficFlows } = useTrafficFlows();
+ * console.log(trafficFlows[0].FlowReadingValue); // 45
  * ```
  */
-export const useTrafficFlows = () => {
+export const useTrafficFlows = (
+  options?: QueryOptionsWithoutKey<TrafficFlow[]>
+): UseQueryResult<TrafficFlow[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "traffic-flow", "getTrafficFlows"],
-    queryFn: getTrafficFlows,
+    queryFn: () => getTrafficFlows(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
+    ...options,
   });
 };
 
 /**
  * React Query hook for retrieving a specific traffic flow by ID
  *
- * @param flowDataId - The ID of the specific traffic flow station
+ * Returns detailed information about a specific traffic flow station
+ * identified by its ID.
+ *
+ * @param params - Object containing flowDataID
+ * @param params.flowDataID - The ID of the specific traffic flow station
+ * @param options - Optional query options
  * @returns React Query result containing traffic flow data
  *
  * @example
  * ```typescript
- * const { data: trafficFlow, isLoading, error } = useTrafficFlowById(2482);
- *
- * if (isLoading) return <div>Loading...</div>;
- * if (error) return <div>Error: {error.message}</div>;
- *
- * return (
- *   <div>
- *     <h2>{trafficFlow?.FlowStationLocation.Description}</h2>
- *     <p>Flow Value: {trafficFlow?.FlowReadingValue}</p>
- *     <p>Direction: {trafficFlow?.FlowStationLocation.Direction}</p>
- *     <p>Region: {trafficFlow?.Region}</p>
- *   </div>
- * );
+ * const { data: trafficFlow } = useTrafficFlowById({ flowDataID: 2482 });
+ * console.log(trafficFlow.FlowReadingValue); // 45
  * ```
  */
 export const useTrafficFlowById = (
-  flowDataId: number,
-  options?: Parameters<typeof useQuery<TrafficFlow>>[0]
-) => {
+  params: { flowDataID: number },
+  options?: QueryOptionsWithoutKey<TrafficFlow>
+): UseQueryResult<TrafficFlow, Error> => {
   return useQuery({
-    queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById", flowDataId],
-    queryFn: () => getTrafficFlowById(flowDataId),
+    queryKey: [
+      "wsdot",
+      "traffic-flow",
+      "getTrafficFlowById",
+      params.flowDataID,
+    ],
+    queryFn: () => getTrafficFlowById({ flowDataID: params.flowDataID }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
-    enabled: flowDataId > 0,
     ...options,
   });
 };

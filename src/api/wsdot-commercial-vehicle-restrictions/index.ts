@@ -11,9 +11,9 @@ export {
   useCommercialVehicleRestrictions,
   useCommercialVehicleRestrictionsWithId,
 } from "./queries";
-// TypeScript types
+// Types inferred from Zod schemas
 export type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionWithId,
   RoadwayLocation,
-} from "./types";
+} from "./schemas";

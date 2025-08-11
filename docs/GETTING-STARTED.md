@@ -2,7 +2,15 @@
 
 Welcome to WS-Dottie! This guide will help you get up and running with Washington State's transportation APIs.
 
-## 📦 Installation
+## 🚀 Quick Setup
+
+### 1. Get Your Free API Key
+
+WS-Dottie requires a WSDOT API key to access the transportation data. The good news? **It's completely free!** 
+
+Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required, no usage limits, no hidden fees.
+
+### 2. Install WS-Dottie
 
 Install WS-Dottie using your preferred package manager:
 
@@ -14,48 +22,80 @@ yarn add ws-dottie
 pnpm add ws-dottie
 ```
 
-## 🔑 API Key Setup
+### 3. Configure Your API Key
 
-WS-Dottie requires a WSDOT API key to access the transportation data. Get your free API key from the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access).
+WS-Dottie offers flexible configuration options to fit your deployment needs:
 
-### Environment Configuration
+#### Option A: Environment Variables (Recommended)
 
-#### Node.js Applications
-Set your API key as an environment variable:
-
+**Node.js Applications**
 ```bash
 export WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
-#### React/Expo Applications
-For React applications, use the Expo public environment variable:
-
-```bash
-export EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
-```
-
-#### .env File
-You can also create a `.env` file in your project root:
-
+**Using a .env file**
 ```env
 WSDOT_ACCESS_TOKEN=your_api_key_here
-EXPO_PUBLIC_WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
-## 🚀 Basic Usage
+#### Option B: Runtime Configuration
+
+For dynamic environments or when you need to configure at runtime:
+
+```javascript
+import { configManager } from 'ws-dottie';
+
+// Set API key only (recommended for web clients)
+configManager.setApiKey('your_api_key_here');
+
+// Set base URL only (optional: route through proxy)
+configManager.setBaseUrl('https://your-proxy-server.com');
+```
+
+This approach is useful for:
+- Web applications that need to pass environment variables from server to client
+- Applications that load configuration from external sources
+- Multi-tenant applications with different API keys
+- Development environments with different configurations
+- Routing requests through proxy servers for security or monitoring
+
+## 📦 Module Format Support
+
+WS-Dottie supports both CommonJS and ES Module formats, automatically providing the appropriate format based on your environment:
+
+### ES Modules (Recommended)
+
+```javascript
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { configManager } from 'ws-dottie';
+```
+
+### CommonJS
+
+```javascript
+const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
+const { configManager } = require('ws-dottie');
+```
+
+Modern bundlers and Node.js will automatically choose the optimal format. The library provides:
+- **ES Module build** (`.mjs`) for modern environments
+- **CommonJS build** (`.js`) for legacy environments
+- **TypeScript definitions** for both formats
+
+## 🎯 Basic Usage
 
 ### Node.js Applications
 
-WS-Dottie provides direct API functions for Node.js applications:
+WS-Dottie provides direct API functions for Node.js applications with strong typing:
 
 ```javascript
 import { WsfVessels, WsdotHighwayAlerts, WsdotApiError } from 'ws-dottie';
 
-// Get vessel locations
+// Get real-time ferry locations
 const vessels = await WsfVessels.getVesselLocations();
-console.log(`Found ${vessels.length} vessels`);
+console.log(`Found ${vessels.length} active vessels`);
 
-// Get highway alerts
+// Get current highway alerts
 const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 console.log(`Found ${alerts.length} active alerts`);
 
@@ -80,7 +120,7 @@ import {
   WsdotApiError 
 } from 'ws-dottie';
 
-function FerryApp() {
+function TransportationDashboard() {
   const { data: vessels, isLoading, error } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
 
@@ -90,8 +130,9 @@ function FerryApp() {
 
   return (
     <div>
-      {isLoading ? 'Loading vessels...' : `Found ${vessels?.length} vessels`}
-      <div>Active alerts: {alerts?.length || 0}</div>
+      <h2>Active Ferries: {vessels?.length || 0}</h2>
+      <h2>Highway Alerts: {alerts?.length || 0}</h2>
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 }
@@ -110,85 +151,45 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <FerryApp />
+      <TransportationDashboard />
       <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
 ```
 
-## 📊 Caching Configuration
-
-WS-Dottie includes optimized caching strategies for different data types:
-
-```javascript
-import { tanstackQueryOptions } from 'ws-dottie';
-
-// Real-time data (5-second updates)
-const realtimeConfig = tanstackQueryOptions.REALTIME_UPDATES;
-
-// Minute updates (1-minute intervals)
-const minuteConfig = tanstackQueryOptions.MINUTE_UPDATES;
-
-// Hourly updates (1-hour intervals)
-const hourlyConfig = tanstackQueryOptions.HOURLY_UPDATES;
-
-// Daily updates (24-hour intervals)
-const dailyConfig = tanstackQueryOptions.DAILY_UPDATES;
-
-// Weekly updates (manual refresh only)
-const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
-```
-
-### Custom Caching
-
-You can override the default caching behavior:
-
-```javascript
-import { useVesselLocations } from 'ws-dottie';
-
-function CustomVesselApp() {
-  const { data: vessels } = useVesselLocations({
-    staleTime: 30 * 1000, // 30 seconds
-    refetchInterval: 10 * 1000, // 10 seconds
-  });
-
-  return <div>Vessels: {vessels?.length}</div>;
-}
-```
-
-## 🎯 Available APIs
+## 🎯 Available Data Sources
 
 ### WSDOT APIs
-- **Highway Alerts** - Real-time traffic alerts and incidents
-- **Traffic Flow** - Current traffic conditions and speeds
+- **Highway Alerts** - Real-time traffic incidents and construction updates
+- **Traffic Flow** - Current traffic speeds and congestion data
 - **Travel Times** - Estimated travel times between locations
-- **Toll Rates** - Current toll pricing information
+- **Toll Rates** - Real-time toll pricing for managed lanes
 - **Weather Information** - Road weather conditions and forecasts
-- **Highway Cameras** - Live traffic camera feeds
-- **Bridge Clearances** - Bridge height restrictions
-- **Mountain Pass Conditions** - Pass status and restrictions
+- **Highway Cameras** - Live traffic camera feeds across the state
+- **Bridge Clearances** - Height restrictions for commercial vehicles
+- **Mountain Pass Conditions** - Pass status and travel restrictions
 - **Commercial Vehicle Restrictions** - Truck and commercial vehicle limits
-- **Border Crossings** - Border wait times and conditions
-- **Weather Stations** - Weather station data and readings
+- **Border Crossings** - Wait times and conditions at border crossings
+- **Weather Stations** - Weather station data and road conditions
 
 ### WSF APIs
 - **Vessels** - Real-time vessel locations and status
-- **Terminals** - Terminal wait times and conditions
+- **Terminals** - Terminal wait times and sailing space
 - **Schedules** - Ferry schedules and sailing times
 - **Fares** - Fare information and pricing
 
 ## 🔄 Data Formats
 
 ### Date/Time Properties
-WS-Dottie automatically converts WSDOT's .NET date strings to JavaScript Date objects:
+WS‑Dottie converts upstream date strings to JavaScript Date objects. Today this happens via a lean parser, and schemas also validate/transform at runtime using Zod 4:
 
 ```javascript
 // WSDOT returns: "/Date(1703123456789)/"
 // WS-Dottie converts to: new Date(1703123456789)
 
 const vessel = await WsfVessels.getVesselLocations();
-console.log(vessel[0].LastUpdate); // JavaScript Date object
+console.log(vessel[0].LastUpdate); // JavaScript Date object (validated with Zod)
 ```
 
 ### Error Handling
@@ -208,10 +209,40 @@ try {
 }
 ```
 
+## 🧩 Consistent Parameter Object Pattern
+
+All WS-Dottie fetch functions and React hooks use a **single, optional, strongly-typed options parameter**. This pattern ensures consistency, type safety, and extensibility across the entire library.
+
+**Example:**
+
+```typescript
+// Fetch function
+const camera = await WsdotHighwayCameras.getCamera({ cameraID: 1001 });
+
+// React hook
+const { data: camera } = useCamera({ cameraID: 1001 });
+```
+
+- If no parameters are required, you may call the function with no arguments or with an empty object: `getBorderCrossings()` or `getBorderCrossings({})`.
+- All parameters are passed as named properties of the options object.
+- All options are fully type-checked with TypeScript.
+
+## 🔧 Advanced Configuration
+
+For advanced configuration options including:
+- **Debugging and Logging** - Troubleshoot API calls with detailed logging
+- **Advanced Caching** - Customize caching strategies and performance optimization
+- **Strong Typing** - TypeScript features and type safety
+- **Parameter Object Patterns** - Consistent API parameter structures
+
+See the [API Reference](./API-REFERENCE.md) documentation for comprehensive configuration details.
+
 ## 🚀 Next Steps
 
-- Check out the [API Reference](./API-REFERENCE.md) for detailed documentation
-- Explore [Examples](./EXAMPLES.md) for common use cases
+- Browse the [Documentation Index](./INDEX.md) for complete navigation
+- Check out the [API Reference](./API-REFERENCE.md) for detailed documentation and advanced configuration
+- Explore [Examples](./EXAMPLES.md) for common use cases and patterns
+- Browse the [API Overview](./API-OVERVIEW.md) for quick comparison and use case mapping
 - Join our community for support and updates
 
 ---
