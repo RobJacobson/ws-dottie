@@ -6,7 +6,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import {
   getCommercialVehicleRestrictions,
@@ -33,7 +33,7 @@ import type {
  * ```
  */
 export const useCommercialVehicleRestrictions = (
-  options?: QueryOptionsWithoutKey<CommercialVehicleRestriction[]>
+  options?: TanStackOptions<CommercialVehicleRestriction[]>
 ): UseQueryResult<CommercialVehicleRestriction[], Error> => {
   return useQuery({
     queryKey: [
@@ -64,7 +64,7 @@ export const useCommercialVehicleRestrictions = (
  * ```
  */
 export const useCommercialVehicleRestrictionsWithId = (
-  options?: QueryOptionsWithoutKey<CommercialVehicleRestrictionWithId[]>
+  options?: TanStackOptions<CommercialVehicleRestrictionWithId[]>
 ): UseQueryResult<CommercialVehicleRestriction[], Error> => {
   return useQuery({
     queryKey: [

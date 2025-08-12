@@ -44,6 +44,10 @@ const weatherReadings = await getWeatherInformationExtended();
 
 **Returns:** `Promise<WeatherReading[]>`
 
+### Returns
+
+See Data Types below. Returns arrays of `WeatherReading` with nested `SurfaceMeasurement[]` and `SubSurfaceMeasurement[]` when present.
+
 ## React Integration
 
 For React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
@@ -51,7 +55,7 @@ For React Query hooks, TanStack Query setup, error handling, and caching strateg
 ### React Hook Usage
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function WeatherComponent() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -149,6 +153,10 @@ type WeatherInformationExtendedResponse = WeatherReading[];
 | **Background Refetch** | Enabled | Automatically refetches in background |
 | **Error Retry** | 3 attempts | Retries failed requests up to 3 times |
 
+## Update Frequency
+
+Extended readings are frequently updated; follow the same minute‑level guidance as the basic weather API for freshness expectations.
+
 ## Common Patterns
 
 For information about error handling, caching strategies, and other common patterns, see the [API Reference](../API-REFERENCE.md) documentation.
@@ -158,7 +166,7 @@ For information about error handling, caching strategies, and other common patte
 ### Weather Station Dashboard
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function WeatherStationDashboard() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -243,7 +251,7 @@ function WeatherStationDashboard() {
 ### Road Condition Monitoring
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function RoadConditionMonitor() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -328,7 +336,7 @@ function RoadConditionMonitor() {
 ### Snow Monitoring
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function SnowMonitor() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -419,7 +427,7 @@ function SnowMonitor() {
 ### Precipitation Analysis
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function PrecipitationAnalysis() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -521,7 +529,7 @@ function PrecipitationAnalysis() {
 ### Elevation-Based Weather Analysis
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function ElevationWeatherAnalysis() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();

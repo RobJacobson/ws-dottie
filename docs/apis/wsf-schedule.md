@@ -59,49 +59,53 @@ https://www.wsdot.wa.gov/ferries/api/schedule
 ### Basic Usage
 
 ```typescript
-import { wsfSchedule } from 'ws-dottie/wsf-schedule';
+import { WsfSchedule } from 'ws-dottie';
 
 // Get all routes for a date
-const routes = await wsfSchedule.getRoutes({ tripDate: "2024-04-01" });
+const routes = await WsfSchedule.getRoutes({ tripDate: new Date("2024-04-01") });
 
 // Get routes between terminals
-const terminalRoutes = await wsfSchedule.getRoutesByTerminals({ 
-  tripDate: "2024-04-01", 
+const terminalRoutes = await WsfSchedule.getRoutesByTerminals({ 
+  tripDate: new Date("2024-04-01"), 
   departingTerminalId: 7, 
   arrivingTerminalId: 8 
 });
 
 // Get schedule for specific route
-const schedule = await wsfSchedule.getSchedule({ 
-  tripDate: "2024-04-01", 
+const schedule = await WsfSchedule.getScheduleByRoute({ 
+  tripDate: new Date("2024-04-01"), 
   routeId: 1 
 });
 
 // Get service alerts
-const alerts = await wsfSchedule.getAlerts();
+const alerts = await WsfSchedule.getAlerts();
 ```
 
 ### Parameter Examples
 
 | Function | Parameters | Example | Description |
 |----------|------------|---------|-------------|
-| `getRoutes` | `{ tripDate: string }` | `getRoutes({ tripDate: "2024-04-01" })` | Get all routes for a date |
-| `getRoutesByTerminals` | `{ tripDate: string, departingTerminalId: number, arrivingTerminalId: number }` | `getRoutesByTerminals({ tripDate: "2024-04-01", departingTerminalId: 7, arrivingTerminalId: 8 })` | Get routes between terminals |
-| `getSchedule` | `{ tripDate: string, routeId: number }` | `getSchedule({ tripDate: "2024-04-01", routeId: 1 })` | Get schedule for specific route |
+| `getRoutes` | `{ tripDate: Date }` | `getRoutes({ tripDate: new Date("2024-04-01") })` | Get all routes for a date |
+| `getRoutesByTerminals` | `{ tripDate: Date, departingTerminalId: number, arrivingTerminalId: number }` | `getRoutesByTerminals({ tripDate: new Date("2024-04-01"), departingTerminalId: 7, arrivingTerminalId: 8 })` | Get routes between terminals |
+| `getScheduleByRoute` | `{ tripDate: Date, routeId: number }` | `getScheduleByRoute({ tripDate: new Date("2024-04-01"), routeId: 1 })` | Get schedule for specific route |
 | `getAlerts` | None | `getAlerts()` | Get service alerts and disruptions |
+
+### Returns
+
+See Data Types below. Routes, route details, schedules, and alerts return typed arrays or objects depending on the query (e.g., `Route[]`, `RouteDetails[]`, `Schedule`, `Alert[]`).
 
 ### Common Use Cases
 
 ```typescript
 // Example 1: Get all routes for a date
-const routes = await wsfSchedule.getRoutes({ tripDate: "2024-04-01" });
+const routes = await WsfSchedule.getRoutes({ tripDate: new Date("2024-04-01") });
 routes.forEach(route => {
   console.log(`${route.Description}: ${route.ScheduleID}`);
 });
 
 // Example 2: Get schedule for specific route
-const schedule = await wsfSchedule.getSchedule({ 
-  tripDate: "2024-04-01", 
+const schedule = await WsfSchedule.getScheduleByRoute({ 
+  tripDate: new Date("2024-04-01"), 
   routeId: 1 
 });
 // Display sailing times and vessel information
@@ -115,15 +119,15 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 
 | Hook | Parameters | Description | Caching Strategy |
 |------|------------|-------------|------------------|
-| `useRoutes` | `{ tripDate: string }` | Get all routes for a date | `MINUTE_UPDATES` |
-| `useRoutesByTerminals` | `{ tripDate: string, departingTerminalId: number, arrivingTerminalId: number }` | Get routes between terminals | `MINUTE_UPDATES` |
-| `useSchedule` | `{ tripDate: string, routeId: number }` | Get schedule for specific route | `MINUTE_UPDATES` |
+| `useRoutes` | `{ tripDate: Date }` | Get all routes for a date | `MINUTE_UPDATES` |
+| `useRoutesByTerminals` | `{ tripDate: Date, departingTerminalId: number, arrivingTerminalId: number }` | Get routes between terminals | `MINUTE_UPDATES` |
+| `useScheduleByRoute` | `{ tripDate: Date, routeId: number }` | Get schedule for specific route | `MINUTE_UPDATES` |
 | `useAlerts` | None | Get service alerts and disruptions | `MINUTE_UPDATES` |
 
 ### Basic Hook Usage
 
 ```typescript
-import { useRoutes } from 'ws-dottie/react/wsf-schedule';
+import { useRoutes } from 'ws-dottie';
 
 function RoutesList() {
   const { data, isLoading, error } = useRoutes({ tripDate: "2024-04-01" });
@@ -204,7 +208,7 @@ type Alert = {
 
 ```typescript
 // Implementation example
-const routes = await wsfSchedule.getRoutes({ tripDate: "2024-04-01" });
+const routes = await WsfSchedule.getRoutes({ tripDate: new Date("2024-04-01") });
 // Display available routes for trip planning
 ```
 
@@ -214,7 +218,7 @@ const routes = await wsfSchedule.getRoutes({ tripDate: "2024-04-01" });
 
 ```typescript
 // Implementation example
-const alerts = await wsfSchedule.getAlerts();
+const alerts = await WsfSchedule.getAlerts();
 // Display current service alerts and disruptions
 ```
 
@@ -228,6 +232,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for schedules/alerts; weekly for static route info).
 
 ## Common Patterns
 

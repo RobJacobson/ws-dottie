@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import {
   getActiveSeasons,
@@ -70,9 +70,7 @@ import type {
  * console.log(flushDate); // "2024-01-15T10:30:00Z"
  * ```
  */
-export const useCacheFlushDateSchedule = (
-  options?: QueryOptionsWithoutKey<Date>
-) =>
+export const useCacheFlushDateSchedule = (options?: TanStackOptions<Date>) =>
   useQuery({
     queryKey: ["wsf", "schedule", "cacheFlushDate"],
     queryFn: () => getCacheFlushDateSchedule(),
@@ -100,9 +98,7 @@ export const useCacheFlushDateSchedule = (
  * console.log(dateRange?.StartDate); // "2024-01-01T00:00:00Z"
  * ```
  */
-export const useValidDateRange = (
-  options?: QueryOptionsWithoutKey<ValidDateRange>
-) =>
+export const useValidDateRange = (options?: TanStackOptions<ValidDateRange>) =>
   useQuery({
     queryKey: ["wsf", "schedule", "validDateRange"],
     queryFn: () => getValidDateRange(),
@@ -133,7 +129,7 @@ export const useValidDateRange = (
  */
 export const useTerminals = (
   params: { tripDate: Date },
-  options?: QueryOptionsWithoutKey<ScheduleTerminal[]>
+  options?: TanStackOptions<ScheduleTerminal[]>
 ) =>
   useQuery({
     queryKey: [
@@ -160,7 +156,7 @@ export const useTerminals = (
  */
 export const useTerminalsAndMates = (
   params: { tripDate: Date },
-  options?: QueryOptionsWithoutKey<ScheduleTerminalCombo[]>
+  options?: TanStackOptions<ScheduleTerminalCombo[]>
 ) =>
   useQuery({
     queryKey: [
@@ -189,7 +185,7 @@ export const useTerminalsAndMates = (
  */
 export const useTerminalsAndMatesByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: QueryOptionsWithoutKey<ScheduleTerminalCombo[]>
+  options?: TanStackOptions<ScheduleTerminalCombo[]>
 ) =>
   useQuery({
     queryKey: [
@@ -223,7 +219,7 @@ export const useTerminalsAndMatesByRoute = (
  */
 export const useTerminalMates = (
   params: { tripDate: Date; terminalId: number },
-  options?: QueryOptionsWithoutKey<ScheduleTerminal[]>
+  options?: TanStackOptions<ScheduleTerminal[]>
 ) =>
   useQuery({
     queryKey: [
@@ -266,7 +262,7 @@ export const useTerminalMates = (
  */
 export const useRoutes = (
   params: { tripDate: Date },
-  options?: QueryOptionsWithoutKey<Route[]>
+  options?: TanStackOptions<Route[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "routes", jsDateToYyyyMmDd(params.tripDate)],
@@ -296,7 +292,7 @@ export const useRoutesByTerminals = (
     departingTerminalId: number;
     arrivingTerminalId: number;
   },
-  options?: QueryOptionsWithoutKey<Route[]>
+  options?: TanStackOptions<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -331,7 +327,7 @@ export const useRoutesByTerminals = (
  */
 export const useRoutesWithDisruptions = (
   params: { tripDate: Date },
-  options?: QueryOptionsWithoutKey<Route[]>
+  options?: TanStackOptions<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -364,7 +360,7 @@ export const useRoutesWithDisruptions = (
  */
 export const useRouteDetails = (
   params: { tripDate: Date },
-  options?: QueryOptionsWithoutKey<Route[]>
+  options?: TanStackOptions<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -399,7 +395,7 @@ export const useRouteDetailsByTerminals = (
     departingTerminalId: number;
     arrivingTerminalId: number;
   },
-  options?: QueryOptionsWithoutKey<Route[]>
+  options?: TanStackOptions<Route[]>
 ) =>
   useQuery({
     queryKey: [
@@ -435,7 +431,7 @@ export const useRouteDetailsByTerminals = (
  */
 export const useRouteDetailsByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: QueryOptionsWithoutKey<RouteDetails | null>
+  options?: TanStackOptions<RouteDetails | null>
 ) =>
   useQuery({
     queryKey: [
@@ -468,9 +464,7 @@ export const useRouteDetailsByRoute = (
  * @param options - Optional React Query options
  * @returns React Query result object containing active seasons
  */
-export const useActiveSeasons = (
-  options?: QueryOptionsWithoutKey<ActiveSeason[]>
-) =>
+export const useActiveSeasons = (options?: TanStackOptions<ActiveSeason[]>) =>
   useQuery({
     queryKey: ["wsf", "schedule", "activeSeasons"],
     queryFn: () => getActiveSeasons(),
@@ -494,7 +488,7 @@ export const useActiveSeasons = (
  * @returns React Query result object containing scheduled routes
  */
 export const useScheduledRoutes = (
-  options?: QueryOptionsWithoutKey<ScheduledRoute[]>
+  options?: TanStackOptions<ScheduledRoute[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "scheduledRoutes"],
@@ -517,7 +511,7 @@ export const useScheduledRoutes = (
  */
 export const useScheduledRoutesBySeason = (
   params: { scheduleId: number },
-  options?: QueryOptionsWithoutKey<ScheduledRoute[]>
+  options?: TanStackOptions<ScheduledRoute[]>
 ) =>
   useQuery({
     queryKey: [
@@ -553,7 +547,7 @@ export const useScheduledRoutesBySeason = (
  */
 export const useSailings = (
   params: { schedRouteId: number },
-  options?: QueryOptionsWithoutKey<Sailing[]>
+  options?: TanStackOptions<Sailing[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "sailings", params.schedRouteId],
@@ -578,7 +572,7 @@ export const useSailings = (
  */
 export const useAllSailings = (
   params: { schedRouteId: number },
-  options?: QueryOptionsWithoutKey<Sailing[]>
+  options?: TanStackOptions<Sailing[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "allSailings", params.schedRouteId],
@@ -602,7 +596,7 @@ export const useAllSailings = (
  * @returns React Query result object containing time adjustments
  */
 export const useTimeAdjustments = (
-  options?: QueryOptionsWithoutKey<TimeAdjustment[]>
+  options?: TanStackOptions<TimeAdjustment[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments"],
@@ -626,7 +620,7 @@ export const useTimeAdjustments = (
  */
 export const useTimeAdjustmentsByRoute = (
   params: { routeId: number },
-  options?: QueryOptionsWithoutKey<TimeAdjustment[]>
+  options?: TanStackOptions<TimeAdjustment[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "timeAdjustments", "byRoute", params.routeId],
@@ -650,7 +644,7 @@ export const useTimeAdjustmentsByRoute = (
  */
 export const useTimeAdjustmentsBySchedRoute = (
   params: { schedRouteId: number },
-  options?: QueryOptionsWithoutKey<TimeAdjustment[]>
+  options?: TanStackOptions<TimeAdjustment[]>
 ) =>
   useQuery({
     queryKey: [
@@ -685,7 +679,7 @@ export const useTimeAdjustmentsBySchedRoute = (
  */
 export const useScheduleByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
+  options?: TanStackOptions<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -725,7 +719,7 @@ export const useScheduleByTerminals = (
     departingTerminalId: number;
     arrivingTerminalId: number;
   },
-  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
+  options?: TanStackOptions<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -762,7 +756,7 @@ export const useScheduleByTerminals = (
  */
 export const useScheduleTodayByRoute = (
   params: { routeId: number; onlyRemainingTimes?: boolean },
-  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
+  options?: TanStackOptions<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -802,7 +796,7 @@ export const useScheduleTodayByTerminals = (
     arrivingTerminalId: number;
     onlyRemainingTimes?: boolean;
   },
-  options?: QueryOptionsWithoutKey<ScheduleResponse | null>
+  options?: TanStackOptions<ScheduleResponse | null>
 ) =>
   useQuery({
     queryKey: [
@@ -837,7 +831,7 @@ export const useScheduleTodayByTerminals = (
  * @param options - Optional React Query options
  * @returns React Query result object containing alerts
  */
-export const useAlerts = (options?: QueryOptionsWithoutKey<Alert[]>) =>
+export const useAlerts = (options?: TanStackOptions<Alert[]>) =>
   useQuery({
     queryKey: ["wsf", "schedule", "alerts"],
     queryFn: () => getAlerts(),
@@ -863,7 +857,7 @@ export const useAlerts = (options?: QueryOptionsWithoutKey<Alert[]>) =>
  */
 export const useAlternativeFormats = (
   params: { subjectName: string },
-  options?: QueryOptionsWithoutKey<AlternativeFormat[]>
+  options?: TanStackOptions<AlternativeFormat[]>
 ) =>
   useQuery({
     queryKey: ["wsf", "schedule", "alternativeFormats", params.subjectName],

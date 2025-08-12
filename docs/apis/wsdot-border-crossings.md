@@ -49,10 +49,10 @@ https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
+import { WsdotBorderCrossings } from 'ws-dottie';
 
 // Get all border crossing wait times
-const crossings = await wsdotBorderCrossings.getBorderCrossings();
+const crossings = await WsdotBorderCrossings.getBorderCrossings();
 
 // Get specific border crossing by ID
 const crossing = await wsdotBorderCrossings.getBorderCrossing({ borderCrossingId: 123 });
@@ -64,6 +64,10 @@ const crossing = await wsdotBorderCrossings.getBorderCrossing({ borderCrossingId
 |----------|------------|---------|-------------|
 | `getBorderCrossings` | None | `getBorderCrossings()` | Get all border crossing wait times |
 | `getBorderCrossing` | `{ borderCrossingId: number }` | `getBorderCrossing({ borderCrossingId: 123 })` | Get specific border crossing by ID |
+
+### Returns
+
+See Data Types below. Functions return arrays of `BorderCrossingData` or a single `BorderCrossingData` when querying by ID.
 
 ### Common Use Cases
 
@@ -93,7 +97,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useBorderCrossings } from 'ws-dottie/react/wsdot-border-crossings';
+import { useBorderCrossings } from 'ws-dottie';
 
 function BorderCrossingsList() {
   const { data, isLoading, error } = useBorderCrossings();
@@ -172,10 +176,14 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 5 minutes | Data considered fresh for 5 minutes |
-| **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
-| **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 minute | Data considered fresh for 1 minute |
+| **Refetch Interval** | 1 minute | Automatically refetch data every 1 minute |
+| **GC Time** | 1 hour | Keep unused data in cache for 1 hour |
+| **Retry** | None | No retries |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (5–15 minute updates typical; weekly for static metadata).
 
 ## Common Patterns
 

@@ -8,8 +8,8 @@ describe("WSDOT Weather Stations API - Zod Validation", () => {
     const weatherStations = await getWeatherStations();
     const validatedData = validators.weatherStationsArray.validateSafe(weatherStations);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Weather stations validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
+      console.error("Validation failed:", validatedData.error.issues);
+      throw new Error(`Weather stations validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`);
     }
     expect(validatedData.data).toBeDefined();
     expect(Array.isArray(validatedData.data)).toBe(true);
@@ -23,8 +23,8 @@ describe("WSDOT Weather Stations API - Zod Validation", () => {
       const firstStation = weatherStations[0];
       const validatedStation = validators.weatherStationData.validateSafe(firstStation);
       if (!validatedStation.success) {
-        console.error("Individual validation failed:", validatedStation.error.errors);
-        throw new Error(`Individual station validation failed: ${JSON.stringify(validatedStation.error.errors, null, 2)}`);
+        console.error("Individual validation failed:", validatedStation.error.issues);
+        throw new Error(`Individual station validation failed: ${JSON.stringify(validatedStation.error.issues, null, 2)}`);
       }
       expect(validatedStation.data.StationCode).toBeDefined();
       expect(typeof validatedStation.data.StationCode).toBe("number");
@@ -47,11 +47,11 @@ describe("WSDOT Weather Stations API - Zod Validation", () => {
     const result = validators.weatherStationsArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
       console.log("Validation Error Details:", {
         context: "malformed weather stations",
-        errors: result.error.errors,
+        errors: result.error.issues,
         received: malformedData,
       });
     }

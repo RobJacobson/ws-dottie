@@ -49,13 +49,13 @@ https://wsdot.wa.gov/Traffic/api/MountainPassConditions/MountainPassConditionsRE
 ### Basic Usage
 
 ```typescript
-import { wsdotMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions';
+import { WsdotMountainPassConditions } from 'ws-dottie';
 
 // Get all mountain pass conditions
-const conditions = await wsdotMountainPassConditions.getMountainPassConditions();
+const conditions = await WsdotMountainPassConditions.getMountainPassConditions();
 
 // Get specific mountain pass by ID
-const pass = await wsdotMountainPassConditions.getMountainPassCondition({ passConditionId: 1 });
+const pass = await WsdotMountainPassConditions.getMountainPassConditionById({ passConditionId: 1 });
 ```
 
 ### Parameter Examples
@@ -65,17 +65,21 @@ const pass = await wsdotMountainPassConditions.getMountainPassCondition({ passCo
 | `getMountainPassConditions` | None | `getMountainPassConditions()` | Get all mountain pass conditions |
 | `getMountainPassCondition` | `{ passConditionId: number }` | `getMountainPassCondition({ passConditionId: 1 })` | Get specific mountain pass by ID |
 
+### Returns
+
+See Data Types below. Functions return arrays of `MountainPassCondition` or a single `MountainPassCondition` when querying by ID.
+
 ### Common Use Cases
 
 ```typescript
 // Example 1: Display all mountain pass conditions
-const conditions = await wsdotMountainPassConditions.getMountainPassConditions();
+const conditions = await WsdotMountainPassConditions.getMountainPassConditions();
 conditions.forEach(pass => {
   console.log(`${pass.RoadName}: ${pass.RestrictionOne}`);
 });
 
 // Example 2: Get specific pass information
-const pass = await wsdotMountainPassConditions.getMountainPassCondition({ passConditionId: 1 });
+const pass = await WsdotMountainPassConditions.getMountainPassConditionById({ passConditionId: 1 });
 // Display detailed pass information
 ```
 
@@ -93,7 +97,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useMountainPassConditions } from 'ws-dottie/react/wsdot-mountain-pass-conditions';
+import { useMountainPassConditions } from 'ws-dottie';
 
 function MountainPassConditionsList() {
   const { data, isLoading, error } = useMountainPassConditions();
@@ -150,7 +154,7 @@ type MountainPassCondition = {
 
 ```typescript
 // Implementation example
-const conditions = await wsdotMountainPassConditions.getMountainPassConditions();
+const conditions = await WsdotMountainPassConditions.getMountainPassConditions();
 // Check conditions before planning winter travel routes
 ```
 
@@ -160,7 +164,7 @@ const conditions = await wsdotMountainPassConditions.getMountainPassConditions()
 
 ```typescript
 // Implementation example
-const pass = await wsdotMountainPassConditions.getMountainPassCondition({ passConditionId: 1 });
+const pass = await WsdotMountainPassConditions.getMountainPassConditionById({ passConditionId: 1 });
 // Monitor specific pass conditions for travel planning
 ```
 
@@ -174,6 +178,10 @@ This API uses the **HOURLY_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 1 hour | Automatically refetch data every hour |
 | **GC Time** | 2 hours | Keep unused data in cache for 2 hours |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (hourly during the active season; minute‑level for advisories).
 
 ## Common Patterns
 

@@ -90,17 +90,13 @@ WS-Dottie supports both CommonJS and ES Module formats:
 ### ES Modules (Recommended)
 
 ```javascript
-import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
-import { configManager } from 'ws-dottie';
-import { tanstackQueryOptions } from 'ws-dottie';
+import { useVesselLocations, useHighwayAlerts, configManager, tanstackQueryOptions } from 'ws-dottie';
 ```
 
 ### CommonJS
 
 ```javascript
-const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
-const { configManager } = require('ws-dottie');
-const { tanstackQueryOptions } = require('ws-dottie');
+const { useVesselLocations, useHighwayAlerts, configManager, tanstackQueryOptions } = require('ws-dottie');
 ```
 
 The library automatically provides the appropriate format based on your environment. Modern bundlers and Node.js will choose the optimal format automatically.
@@ -120,7 +116,7 @@ const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 ```
 
 Logging modes:
-- `'debug'` - Detailed request/response information
+- `'debug'` - Detailed request/response information (console.debug in development)
 - `'info'` - Basic request information
 - `'none'` - No logging (default)
 
@@ -151,11 +147,11 @@ const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
 
 | Strategy | Stale Time | GC Time | Refetch Interval | Retry |
 |----------|------------|---------|------------------|-------|
-| REALTIME_UPDATES | 30s | 2m | 5s | 1 |
-| MINUTE_UPDATES | 5m | 10m | 1m | false |
-| HOURLY_UPDATES | 2h | 4h | 1h | 5 |
-| DAILY_UPDATES | 1d | 2d | 1d | 5 |
-| WEEKLY_UPDATES | 1w | 2w | false | 5 |
+| REALTIME_UPDATES | 5s | 1h | 5s | 1 (2s delay) |
+| MINUTE_UPDATES | 1m | 1h | 1m | false |
+| HOURLY_UPDATES | 1h | 4h | 1h | 5 (30s..2m backoff) |
+| DAILY_UPDATES | 1d | 2d | 1d | 5 (1m..10m backoff) |
+| WEEKLY_UPDATES | 1w | 2w | false | 5 (1m..10m backoff) |
 
 ### Custom Caching
 
@@ -176,30 +172,35 @@ function CustomVesselApp() {
 
 ### Advanced Caching Customization
 
-WS-Dottie's caching strategies can be customized using spread operators with TanStack Query options:
+WS‑Dottie's caching strategies can be customized using spread operators with TanStack Query options. These are plain TanStack Query options (not WS‑Dottie specific):
 
-```javascript
+```typescript
 import { useVesselLocations, tanstackQueryOptions } from 'ws-dottie';
 
 function AdvancedVesselTracker() {
-  // Custom 5-minute update strategy with different parameters
   const { data: vessels } = useVesselLocations({
-    ...tanstackQueryOptions.REALTIME_UPDATES, // Start with real-time base
-    refetchInterval: 5 * 60 * 1000, // 5 minutes
-    staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 60 * 60 * 1000, // 1 hour
-    retry: 3, // 3 retries
-    retryDelay: 5 * 1000, // 5 second delay between retries
+    // Start with a WS‑Dottie preset
+    ...tanstackQueryOptions.REALTIME_UPDATES,
+    // Override with regular TanStack Query options:
+    refetchInterval: 30_000,       // poll every 30s
+    refetchOnWindowFocus: false,   // don't refetch on focus
+    staleTime: 15_000,             // data fresh for 15s
+    gcTime: 2 * 60 * 60 * 1000,    // keep 2h in cache
+    retry: 2,                      // two retries
+    retryDelay: attempt => Math.min(2000 * 2 ** attempt, 15000),
+    // Useful real-world toggles:
+    refetchOnReconnect: 'always',  // refetch after reconnect
+    refetchOnMount: false,         // skip refetch on mount if data fresh
+    placeholderData: previous => previous, // show previous data during refetch
+    // Per-query selection with type inference
+    select: data => data?.slice(0, 20),
   });
 
   return (
     <div>
-      <h2>Vessels (5-minute updates)</h2>
-      {vessels?.map(vessel => (
-        <div key={vessel.VesselID}>
-          <strong>{vessel.VesselName}</strong>
-          <div>Last Update: {vessel.LastUpdate.toLocaleTimeString()}</div>
-        </div>
+      <h2>Vessels (customized)</h2>
+      {vessels?.map(v => (
+        <div key={v.VesselID}>{v.VesselName}</div>
       ))}
     </div>
   );
@@ -261,7 +262,7 @@ All WS-Dottie fetch functions and React hooks use a **single, optional, strongly
 const camera = await WsdotHighwayCameras.getCamera({ cameraID: 1001 });
 
 // React hook
-const { data: camera } = useCamera({ cameraID: 1001 });
+const { data: camera } = useHighwayCamera({ cameraID: 1001 });
 ```
 
 - If no parameters are required, you may call the function with no arguments or with an empty object: `getBorderCrossings()` or `getBorderCrossings({})`.
@@ -617,8 +618,8 @@ import {
   useWeatherInformation,
   useWeatherInformationExtended,
   useWeatherStations,
-  useCameras,
-  useCamera,
+  useHighwayCameras,
+  useHighwayCamera,
   useSearchCameras,
   useBridgeClearances,
   useMountainPassConditions,
@@ -743,13 +744,21 @@ function VesselList() {
 
 ### Overriding Default Options
 
-All hooks use default caching options with `enabled: true`. You can override `enabled` or any other React Query option:
+All hooks use WS‑Dottie’s `tanstackQueryOptions` presets as sensible defaults. You can override any TanStack Query option per‑hook. These are the same options from TanStack Query (`@tanstack/react-query`), not custom WS‑Dottie fields:
 
 ```typescript
 const { data } = useVesselLocations(undefined, { enabled: false }); // disables the query
+### Options typing
+
+Hooks accept options typed as `TanStackOptions<TData, TError>`. These map directly to TanStack Query’s `UseQueryOptions`, but without `queryKey` and `queryFn` (already provided by the hooks).
+
+Note on extra fields: API examples show the core fields for readability. Since WS‑Dottie uses Zod 4 schemas with pass‑through (`.catchall(z.unknown())`), additional upstream properties may appear and are preserved.
+
 ```
 
 ## 🔧 Performance & Caching
+
+WS‑Dottie provides named TanStack Query presets via `tanstackQueryOptions` (REALTIME_UPDATES, MINUTE_UPDATES, etc.) to give you sensible defaults tuned to each data source. These presets are merged into each hook’s options, and you can supply your own TanStack Query options to override any default at call time. See `tanstackQueryOptions` above for values.
 
 ### Caching Strategies by API Type
 
@@ -757,9 +766,9 @@ WS-Dottie provides optimized caching strategies for different data types:
 
 | API Category | Strategy | Stale Time | Refetch Interval | Retries | Use Case |
 |--------------|----------|------------|------------------|---------|----------|
-| Real-time (Vessels, Alerts) | REALTIME_UPDATES | 30s | 60s | None | Live tracking |
-| Frequent (Wait Times, Traffic) | MINUTE_UPDATES | 5m | 1m | None | Regular updates |
-| Static (Terminals, Cameras) | HOURLY_UPDATES | 2h | 1h | 5 | Infrequent changes |
+| Real-time (Vessels, Alerts) | REALTIME_UPDATES | 5s | 5s | 1 | Live tracking |
+| Frequent (Wait Times, Traffic) | MINUTE_UPDATES | 1m | 1m | 0 | Regular updates |
+| Static (Terminals, Cameras) | HOURLY_UPDATES | 1h | 1h | 5 | Infrequent changes |
 | Historical (Schedules, Fares) | DAILY_UPDATES | 1d | 1d | 5 | Daily updates |
 | Static Data (Basics, Verbose) | WEEKLY_UPDATES | 1w | false | 5 | Manual refresh only |
 
@@ -788,11 +797,11 @@ const weeklyConfig = tanstackQueryOptions.WEEKLY_UPDATES;
 
 | Strategy | Stale Time | GC Time | Refetch Interval | Retry |
 |----------|------------|---------|------------------|-------|
-| REALTIME_UPDATES | 30s | 2m | 5s | 1 |
-| MINUTE_UPDATES | 5m | 10m | 1m | false |
-| HOURLY_UPDATES | 2h | 4h | 1h | 5 |
-| DAILY_UPDATES | 1d | 2d | 1d | 5 |
-| WEEKLY_UPDATES | 1w | 2w | false | 5 |
+| REALTIME_UPDATES | 5s | 1h | 5s | 1 (2s delay) |
+| MINUTE_UPDATES | 1m | 1h | 1m | false |
+| HOURLY_UPDATES | 1h | 4h | 1h | 5 (30s..2m backoff) |
+| DAILY_UPDATES | 1d | 2d | 1d | 5 (1m..10m backoff) |
+| WEEKLY_UPDATES | 1w | 2w | false | 5 (1m..10m backoff) |
 
 ### Performance Optimization
 
@@ -915,7 +924,7 @@ console.log(error.getUserMessage());
 
 ## 📅 Data Transformation
 
-WS-Dottie automatically transforms WSDOT date formats to JavaScript Date objects:
+WS-Dottie automatically transforms WSDOT/WSF date formats to JavaScript Date objects:
 
 - **`/Date(timestamp)/`** → `Date` object
 - **`YYYY-MM-DD`** → `Date` object
@@ -927,8 +936,8 @@ All PascalCase keys are preserved as-is for consistency with WSDOT API.
 WS-Dottie automatically converts WSDOT's .NET date strings to JavaScript Date objects:
 
 ```javascript
-// WSDOT returns: "/Date(1703123456789)/"
-// WS-Dottie converts to: new Date(1703123456789)
+// WSDOT returns: "/Date(1703123456789)/" → Date
+// WSF Schedule returns: "12/25/2024" or "12/25/2024 02:30:45 PM" → Date
 
 const vessel = await WsfVessels.getVesselLocations();
 console.log(vessel[0].LastUpdate); // JavaScript Date object
@@ -936,14 +945,7 @@ console.log(vessel[0].LastUpdate); // JavaScript Date object
 
 ### Field Filtering
 
-The API automatically filters out unreliable and undocumented fields to improve data quality and reduce memory usage:
-
-- **VesselWatch Fields**: The following fields are automatically removed from VesselLocation responses as they are unreliable and undocumented:
-  - `VesselWatchShutID`
-  - `VesselWatchShutMsg`
-  - `VesselWatchShutFlag`
-  - `VesselWatchStatus`
-  - `VesselWatchMsg`
+Responses are pass-through except for date conversion. No fields are stripped; unknown fields are allowed in Zod schemas via `.catchall(z.unknown())`.
 
 ### Response Types
 All API functions return properly typed data:
@@ -973,19 +975,9 @@ function App() {
 }
 ```
 
-## 🧪 Testing Status
+## 🧪 Testing
 
-### ✅ **E2E Tests - COMPLETED**
-- **API Functions**: 100% passing
-- **React Query Hooks**: 100% passing
-- **Data Validation**: Comprehensive validation of response structure
-- **Performance Testing**: All tests meet 2-second LTE target
-
-### ✅ **Real API Validation**
-- All endpoints validated with actual WSDOT API responses
-- Data structures verified against real API data
-- Error handling tested with actual API scenarios
-- Performance benchmarks established
+E2E validation and hook tests are provided. See Testing Guide for how to run in Node and simulated browser (JSONP) environments.
 
 ## ✅ API Compliance
 
@@ -1008,12 +1000,7 @@ Based on actual API responses, the implementation correctly handles:
 
 ## 📊 Bundle Size
 
-The complete WS-Dottie package is approximately **36KB** (CJS) or **34KB** (ESM), including:
-- All API functions
-- All React hooks
-- All TypeScript types
-- Caching configuration
-- Error handling utilities
+The package is tree-shakeable. Actual bundle impact depends on your imports. Use named imports from `ws-dottie`.
 
 ---
 
