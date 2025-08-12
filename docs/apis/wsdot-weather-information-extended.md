@@ -55,7 +55,7 @@ For React Query hooks, TanStack Query setup, error handling, and caching strateg
 ### React Hook Usage
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function WeatherComponent() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -166,7 +166,7 @@ For information about error handling, caching strategies, and other common patte
 ### Weather Station Dashboard
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function WeatherStationDashboard() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -251,7 +251,7 @@ function WeatherStationDashboard() {
 ### Road Condition Monitoring
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function RoadConditionMonitor() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -336,7 +336,7 @@ function RoadConditionMonitor() {
 ### Snow Monitoring
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function SnowMonitor() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -427,7 +427,7 @@ function SnowMonitor() {
 ### Precipitation Analysis
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function PrecipitationAnalysis() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();
@@ -529,7 +529,7 @@ function PrecipitationAnalysis() {
 ### Elevation-Based Weather Analysis
 
 ```typescript
-import { useWeatherInformationExtended } from 'ws-dottie/react/wsdot-weather-information-extended';
+import { useWeatherInformationExtended } from 'ws-dottie';
 
 function ElevationWeatherAnalysis() {
   const { data: weatherReadings, isLoading, error } = useWeatherInformationExtended();

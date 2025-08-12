@@ -51,25 +51,25 @@ https://wsdot.wa.gov/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotHighwayAlerts } from 'ws-dottie/wsdot-highway-alerts';
+import { WsdotHighwayAlerts } from 'ws-dottie';
 
 // Get all current traffic alerts
-const alerts = await wsdotHighwayAlerts.getAlerts();
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 
 // Get specific alert by ID
-const alert = await wsdotHighwayAlerts.getAlert({ alertId: 655238 });
+const alert = await WsdotHighwayAlerts.getHighwayAlertById({ alertId: 655238 });
 
 // Get alerts for specific geographic area
-const areaAlerts = await wsdotHighwayAlerts.getAlertsByMapArea({ mapArea: "Seattle" });
+const areaAlerts = await WsdotHighwayAlerts.getHighwayAlertsByMapArea({ mapArea: "Seattle" });
 ```
 
 ### Parameter Examples
 
 | Function | Parameters | Example | Description |
 |----------|------------|---------|-------------|
-| `getAlerts` | None | `getAlerts()` | Get all current traffic alerts |
-| `getAlert` | `{ alertId: number }` | `getAlert({ alertId: 655238 })` | Get specific alert by ID |
-| `getAlertsByMapArea` | `{ mapArea: string }` | `getAlertsByMapArea({ mapArea: "Seattle" })` | Get alerts for specific area |
+| `getHighwayAlerts` | None | `getHighwayAlerts()` | Get all current traffic alerts |
+| `getHighwayAlertById` | `{ alertId: number }` | `getHighwayAlertById({ alertId: 655238 })` | Get specific alert by ID |
+| `getHighwayAlertsByMapArea` | `{ mapArea: string }` | `getHighwayAlertsByMapArea({ mapArea: "Seattle" })` | Get alerts for specific area |
 
 ### Returns
 
@@ -79,13 +79,13 @@ See Data Types below. Functions return arrays of `HighwayAlert` or a single `Hig
 
 ```typescript
 // Example 1: Display all current traffic alerts
-const alerts = await wsdotHighwayAlerts.getAlerts();
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 alerts.forEach(alert => {
   console.log(`${alert.HeadlineDescription}: ${alert.EventCategory}`);
 });
 
 // Example 2: Get alerts for specific area
-const areaAlerts = await wsdotHighwayAlerts.getAlertsByMapArea({ mapArea: "Seattle" });
+const areaAlerts = await WsdotHighwayAlerts.getHighwayAlertsByMapArea({ mapArea: "Seattle" });
 // Display Seattle area traffic alerts
 ```
 
@@ -97,17 +97,17 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 
 | Hook | Parameters | Description | Caching Strategy |
 |------|------------|-------------|------------------|
-| `useAlerts` | None | Get all current traffic alerts | `MINUTE_UPDATES` |
-| `useAlert` | `{ alertId: number }` | Get specific alert by ID | `MINUTE_UPDATES` |
-| `useAlertsByMapArea` | `{ mapArea: string }` | Get alerts for specific area | `MINUTE_UPDATES` |
+| `useHighwayAlerts` | None | Get all current traffic alerts | `MINUTE_UPDATES` |
+| `useHighwayAlertById` | `{ alertId: number }` | Get specific alert by ID | `MINUTE_UPDATES` |
+| `useHighwayAlertsByMapArea` | `{ mapArea: string }` | Get alerts for specific area | `MINUTE_UPDATES` |
 
 ### Basic Hook Usage
 
 ```typescript
-import { useAlerts } from 'ws-dottie/react/wsdot-highway-alerts';
+import { useHighwayAlerts } from 'ws-dottie';
 
 function HighwayAlertsList() {
-  const { data, isLoading, error } = useAlerts();
+  const { data, isLoading, error } = useHighwayAlerts();
 
   if (isLoading) return <div>Loading alerts...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -167,7 +167,7 @@ type HighwayAlert = {
 
 ```typescript
 // Implementation example
-const alerts = await wsdotHighwayAlerts.getAlerts();
+const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
 // Display in real-time dashboard with auto-refresh
 ```
 
@@ -177,7 +177,7 @@ const alerts = await wsdotHighwayAlerts.getAlerts();
 
 ```typescript
 // Implementation example
-const areaAlerts = await wsdotHighwayAlerts.getAlertsByMapArea({ mapArea: "Seattle" });
+const areaAlerts = await WsdotHighwayAlerts.getHighwayAlertsByMapArea({ mapArea: "Seattle" });
 // Monitor Seattle area traffic alerts for local commuters
 ```
 
@@ -187,10 +187,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 5 minutes | Data considered fresh for 5 minutes |
-| **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
-| **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 minute | Data considered fresh for 1 minute |
+| **Refetch Interval** | 1 minute | Automatically refetch data every 1 minute |
+| **GC Time** | 1 hour | Keep unused data in cache for 1 hour |
+| **Retry** | None | No retries |
 
 ## Update Frequency
 

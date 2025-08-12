@@ -52,16 +52,16 @@ https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotTollRates } from 'ws-dottie/wsdot-toll-rates';
+import { WsdotTollRates } from 'ws-dottie';
 
 // Get current toll rates for all facilities
-const rates = await wsdotTollRates.getTollRates();
+const rates = await WsdotTollRates.getTollRates();
 
 // Get detailed trip information
-const tripInfo = await wsdotTollRates.getTollTripInfo();
+const tripInfo = await WsdotTollRates.getTollTripInfo();
 
 // Get historical toll rates by date range
-const historicalRates = await wsdotTollRates.getTripRatesByDate({ 
+const historicalRates = await WsdotTollRates.getTripRatesByDate({ 
   fromDate: "2024-01-01", 
   toDate: "2024-01-31" 
 });
@@ -83,13 +83,13 @@ See Data Types below. Current rates and historical queries return arrays of `Tol
 
 ```typescript
 // Example 1: Display current toll rates
-const rates = await wsdotTollRates.getTollRates();
+const rates = await WsdotTollRates.getTollRates();
 rates.forEach(rate => {
   console.log(`${rate.TripName}: $${rate.TollAmount}`);
 });
 
 // Example 2: Get historical rates for analysis
-const historicalRates = await wsdotTollRates.getTripRatesByDate({ 
+const historicalRates = await WsdotTollRates.getTripRatesByDate({ 
   fromDate: "2024-01-01", 
   toDate: "2024-01-31" 
 });
@@ -111,7 +111,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useTollRates } from 'ws-dottie/react/wsdot-toll-rates';
+import { useTollRates } from 'ws-dottie';
 
 function TollRatesList() {
   const { data, isLoading, error } = useTollRates();
@@ -187,7 +187,7 @@ type TollTripRatesResponse = {
 
 ```typescript
 // Implementation example
-const rates = await wsdotTollRates.getTollRates();
+const rates = await WsdotTollRates.getTollRates();
 // Display current toll rates in a real-time dashboard
 ```
 
@@ -197,7 +197,7 @@ const rates = await wsdotTollRates.getTollRates();
 
 ```typescript
 // Implementation example
-const historicalRates = await wsdotTollRates.getTripRatesByDate({ 
+const historicalRates = await WsdotTollRates.getTripRatesByDate({ 
   fromDate: "2024-01-01", 
   toDate: "2024-01-31" 
 });
@@ -210,10 +210,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 5 minutes | Data considered fresh for 5 minutes |
-| **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
-| **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 minute | Data considered fresh for 1 minute |
+| **Refetch Interval** | 1 minute | Automatically refetch data every 1 minute |
+| **GC Time** | 1 hour | Keep unused data in cache for 1 hour |
+| **Retry** | None | No retries |
 
 ## Update Frequency
 

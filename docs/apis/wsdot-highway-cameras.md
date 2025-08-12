@@ -50,16 +50,16 @@ https://wsdot.wa.gov/Traffic/api/HighwayCameras/HighwayCamerasREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotHighwayCameras } from 'ws-dottie/wsdot-highway-cameras';
+import { WsdotHighwayCameras } from 'ws-dottie';
 
 // Get all available traffic cameras
-const cameras = await wsdotHighwayCameras.getCameras();
+const cameras = await WsdotHighwayCameras.getHighwayCameras();
 
 // Get specific camera by ID
-const camera = await wsdotHighwayCameras.getCamera({ cameraId: 9818 });
+const camera = await WsdotHighwayCameras.getCamera({ cameraID: 9818 });
 
 // Search cameras by route
-const routeCameras = await wsdotHighwayCameras.searchCameras({ stateRoute: "005" });
+const routeCameras = await WsdotHighwayCameras.searchCameras({ StateRoute: "005" });
 ```
 
 ### Parameter Examples
@@ -78,13 +78,13 @@ See Data Types below. Functions return arrays of `Camera` or a single `Camera` w
 
 ```typescript
 // Example 1: Display all cameras
-const cameras = await wsdotHighwayCameras.getCameras();
+const cameras = await WsdotHighwayCameras.getHighwayCameras();
 cameras.forEach(camera => {
   console.log(`${camera.Title}: ${camera.ImageURL}`);
 });
 
 // Example 2: Search cameras for specific route
-const routeCameras = await wsdotHighwayCameras.searchCameras({ stateRoute: "005" });
+const routeCameras = await WsdotHighwayCameras.searchCameras({ StateRoute: "005" });
 // Display I-5 cameras
 ```
 
@@ -96,17 +96,17 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 
 | Hook | Parameters | Description | Caching Strategy |
 |------|------------|-------------|------------------|
-| `useCameras` | None | Get all available traffic cameras | `MINUTE_UPDATES` |
-| `useCamera` | `{ cameraId: number }` | Get specific camera by ID | `MINUTE_UPDATES` |
-| `useSearchCameras` | `{ stateRoute?: string, region?: string, startingMilepost?: number, endingMilepost?: number }` | Search cameras by filters | `MINUTE_UPDATES` |
+| `useHighwayCameras` | None | Get all available traffic cameras | `MINUTE_UPDATES` |
+| `useHighwayCamera` | `{ cameraID: number }` | Get specific camera by ID | `MINUTE_UPDATES` |
+| `useSearchHighwayCameras` | `{ StateRoute?: string, Region?: string, StartingMilepost?: number, EndingMilepost?: number }` | Search cameras by filters | `MINUTE_UPDATES` |
 
 ### Basic Hook Usage
 
 ```typescript
-import { useCameras } from 'ws-dottie/react/wsdot-highway-cameras';
+import { useHighwayCameras } from 'ws-dottie';
 
 function HighwayCamerasList() {
-  const { data, isLoading, error } = useCameras();
+  const { data, isLoading, error } = useHighwayCameras();
 
   if (isLoading) return <div>Loading cameras...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -181,10 +181,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 5 minutes | Data considered fresh for 5 minutes |
-| **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
-| **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 day | Data considered fresh for 1 day |
+| **Refetch Interval** | 1 day | Automatically refetch data every 1 day |
+| **GC Time** | 2 days | Keep unused data in cache for 2 days |
+| **Retry** | 5 attempts | Retry failed requests up to 5 times |
 
 ## Update Frequency
 

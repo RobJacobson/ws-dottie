@@ -53,7 +53,7 @@ For React Query hooks, TanStack Query setup, error handling, and caching strateg
 ### React Hook Usage
 
 ```typescript
-import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
+import { useWeatherStations } from 'ws-dottie';
 
 function WeatherComponent() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
@@ -120,7 +120,7 @@ For information about error handling, caching strategies, and other common patte
 ### Weather Station Map
 
 ```typescript
-import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
+import { useWeatherStations } from 'ws-dottie';
 
 function WeatherStationMap() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
@@ -160,7 +160,7 @@ function WeatherStationMap() {
 ### Station Search and Filter
 
 ```typescript
-import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
+import { useWeatherStations } from 'ws-dottie';
 import { useState, useMemo } from 'react';
 
 function WeatherStationSearch() {
@@ -236,7 +236,7 @@ function WeatherStationSearch() {
 ### Station Statistics Dashboard
 
 ```typescript
-import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
+import { useWeatherStations } from 'ws-dottie';
 
 function WeatherStationStats() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();
@@ -336,7 +336,7 @@ function WeatherStationStats() {
 ### Station Proximity Finder
 
 ```typescript
-import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
+import { useWeatherStations } from 'ws-dottie';
 import { useState, useMemo } from 'react';
 
 function StationProximityFinder() {
@@ -423,7 +423,7 @@ function StationProximityFinder() {
 ### Station Export Utility
 
 ```typescript
-import { useWeatherStations } from 'ws-dottie/react/wsdot-weather-stations';
+import { useWeatherStations } from 'ws-dottie';
 
 function StationExport() {
   const { data: weatherStations, isLoading, error } = useWeatherStations();

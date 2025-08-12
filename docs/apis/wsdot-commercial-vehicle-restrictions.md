@@ -49,13 +49,13 @@ https://wsdot.wa.gov/Traffic/api/CVRestrictions/CVRestrictionsREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions';
+import { WsdotCommercialVehicleRestrictions } from 'ws-dottie';
 
 // Get all commercial vehicle restrictions
-const restrictions = await wsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
+const restrictions = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
 
 // Get restrictions with unique IDs
-const restrictionsWithIds = await wsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictionsWithId();
+const restrictionsWithIds = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictionsWithId();
 ```
 
 ### Parameter Examples
@@ -73,13 +73,13 @@ See Data Types below. Functions return arrays of `CommercialVehicleRestriction` 
 
 ```typescript
 // Example 1: Display all commercial vehicle restrictions
-const restrictions = await wsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
+const restrictions = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
 restrictions.forEach(restriction => {
   console.log(`${restriction.RestrictionType}: ${restriction.Description}`);
 });
 
 // Example 2: Get restrictions with tracking IDs
-const restrictionsWithIds = await wsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictionsWithId();
+const restrictionsWithIds = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictionsWithId();
 // Process restrictions with unique identifiers for tracking
 ```
 
@@ -97,7 +97,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useCommercialVehicleRestrictions } from 'ws-dottie/react/wsdot-commercial-vehicle-restrictions';
+import { useCommercialVehicleRestrictions } from 'ws-dottie';
 
 function CommercialVehicleRestrictionsList() {
   const { data, isLoading, error } = useCommercialVehicleRestrictions();
@@ -166,7 +166,7 @@ type CommercialVehicleRestrictionWithId = {
 
 ```typescript
 // Implementation example
-const restrictions = await wsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
+const restrictions = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictions();
 // Filter restrictions by route and vehicle type for route planning
 ```
 
@@ -176,7 +176,7 @@ const restrictions = await wsdotCommercialVehicleRestrictions.getCommercialVehic
 
 ```typescript
 // Implementation example
-const restrictionsWithIds = await wsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictionsWithId();
+const restrictionsWithIds = await WsdotCommercialVehicleRestrictions.getCommercialVehicleRestrictionsWithId();
 // Track restrictions by unique ID for monitoring and management
 ```
 

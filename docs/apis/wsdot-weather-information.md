@@ -49,25 +49,25 @@ https://wsdot.wa.gov/Traffic/api/WeatherInformation/WeatherInformationREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotWeatherInformation } from 'ws-dottie/wsdot-weather-information';
+import { WsdotWeatherInformation } from 'ws-dottie';
 
 // Get weather data for all stations
-const weatherData = await wsdotWeatherInformation.getCurrentWeatherInformation();
+const weatherData = await WsdotWeatherInformation.getWeatherInformation();
 
 // Get weather data for specific station
-const stationWeather = await wsdotWeatherInformation.getCurrentWeatherInformationByStationId({ stationId: 1909 });
+const stationWeather = await WsdotWeatherInformation.getWeatherInformationByStationId({ stationId: 1909 });
 
 // Get weather data for multiple stations
-const multipleStations = await wsdotWeatherInformation.getCurrentWeatherForStations({ stationList: "1909,1910,1911" });
+const multipleStations = await WsdotWeatherInformation.getWeatherInformationForStations({ stationIds: "1909,1910,1911" });
 ```
 
 ### Parameter Examples
 
 | Function | Parameters | Example | Description |
 |----------|------------|---------|-------------|
-| `getCurrentWeatherInformation` | None | `getCurrentWeatherInformation()` | Get weather data for all stations |
-| `getCurrentWeatherInformationByStationId` | `{ stationId: number }` | `getCurrentWeatherInformationByStationId({ stationId: 1909 })` | Get weather data for specific station |
-| `getCurrentWeatherForStations` | `{ stationList: string }` | `getCurrentWeatherForStations({ stationList: "1909,1910,1911" })` | Get weather data for multiple stations |
+| `getWeatherInformation` | None | `getWeatherInformation()` | Get weather data for all stations |
+| `getWeatherInformationByStationId` | `{ stationId: number }` | `getWeatherInformationByStationId({ stationId: 1909 })` | Get weather data for specific station |
+| `getWeatherInformationForStations` | `{ stationIds: string }` | `getWeatherInformationForStations({ stationIds: "1909,1910,1911" })` | Get weather data for multiple stations |
 
 ### Returns
 
@@ -77,13 +77,13 @@ See Data Types below. Functions return arrays of `WeatherInfo` or a single `Weat
 
 ```typescript
 // Example 1: Display all weather station data
-const weatherData = await wsdotWeatherInformation.getCurrentWeatherInformation();
+const weatherData = await WsdotWeatherInformation.getWeatherInformation();
 weatherData.forEach(station => {
   console.log(`${station.StationName}: ${station.TemperatureInFahrenheit}°F`);
 });
 
 // Example 2: Get specific station weather
-const stationWeather = await wsdotWeatherInformation.getCurrentWeatherInformationByStationId({ stationId: 1909 });
+const stationWeather = await WsdotWeatherInformation.getWeatherInformationByStationId({ stationId: 1909 });
 // Display detailed weather information for specific station
 ```
 
@@ -102,10 +102,10 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useCurrentWeatherInformation } from 'ws-dottie/react/wsdot-weather-information';
+import { useWeatherInformation } from 'ws-dottie';
 
 function WeatherInformationList() {
-  const { data, isLoading, error } = useCurrentWeatherInformation();
+  const { data, isLoading, error } = useWeatherInformation();
 
   if (isLoading) return <div>Loading weather data...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -165,7 +165,7 @@ type WeatherInfo = {
 
 ```typescript
 // Implementation example
-const weatherData = await wsdotWeatherInformation.getCurrentWeatherInformation();
+const weatherData = await WsdotWeatherInformation.getWeatherInformation();
 // Display weather data in a real-time monitoring dashboard
 ```
 
@@ -175,7 +175,7 @@ const weatherData = await wsdotWeatherInformation.getCurrentWeatherInformation()
 
 ```typescript
 // Implementation example
-const stationWeather = await wsdotWeatherInformation.getCurrentWeatherInformationByStationId({ stationId: 1909 });
+const stationWeather = await WsdotWeatherInformation.getWeatherInformationByStationId({ stationId: 1909 });
 // Analyze specific station weather data for local conditions
 ```
 
@@ -185,10 +185,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 5 minutes | Data considered fresh for 5 minutes |
-| **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
-| **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 minute | Data considered fresh for 1 minute |
+| **Refetch Interval** | 1 minute | Automatically refetch data every 1 minute |
+| **GC Time** | 1 hour | Keep unused data in cache for 1 hour |
+| **Retry** | None | No retries |
 
 ## Update Frequency
 

@@ -56,22 +56,22 @@ https://www.wsdot.wa.gov/ferries/api/fares
 ### Basic Usage
 
 ```typescript
-import { wsfFares } from 'ws-dottie/wsf-fares';
+import { WsfFares } from 'ws-dottie';
 
 // Get cache flush date
-const cacheFlushDate = await wsfFares.getCacheFlushDate();
+const cacheFlushDate = await WsfFares.getCacheFlushDate();
 
 // Get valid date range
-const validDateRange = await wsfFares.getValidDateRange();
+const validDateRange = await WsfFares.getValidDateRange();
 
 // Get terminals for a trip date
-const terminals = await wsfFares.getTerminals({ tripDate: "2024-04-01" });
+const terminals = await WsfFares.getTerminals({ tripDate: new Date("2024-04-01") });
 
 // Get fare line items for a route
-const fareLineItems = await wsfFares.getFareLineItems({ 
-  tripDate: "2024-04-01", 
-  departingTerminalId: 7, 
-  arrivingTerminalId: 8, 
+const fareLineItems = await WsfFares.getFareLineItems({ 
+  tripDate: new Date("2024-04-01"), 
+  departingTerminalID: 7, 
+  arrivingTerminalID: 8, 
   roundTrip: false 
 });
 ```
@@ -82,8 +82,8 @@ const fareLineItems = await wsfFares.getFareLineItems({
 |----------|------------|---------|-------------|
 | `getCacheFlushDate` | None | `getCacheFlushDate()` | Get API cache flush date |
 | `getValidDateRange` | None | `getValidDateRange()` | Get valid date range for fare queries |
-| `getTerminals` | `{ tripDate: string }` | `getTerminals({ tripDate: "2024-04-01" })` | Get all terminals for a trip date |
-| `getFareLineItems` | `{ tripDate: string, departingTerminalId: number, arrivingTerminalId: number, roundTrip: boolean }` | `getFareLineItems({ tripDate: "2024-04-01", departingTerminalId: 7, arrivingTerminalId: 8, roundTrip: false })` | Get all fares for a route |
+| `getTerminals` | `{ tripDate: Date }` | `getTerminals({ tripDate: new Date("2024-04-01") })` | Get all terminals for a trip date |
+| `getFareLineItems` | `{ tripDate: Date, departingTerminalID: number, arrivingTerminalID: number, roundTrip: boolean }` | `getFareLineItems({ tripDate: new Date("2024-04-01"), departingTerminalID: 7, arrivingTerminalID: 8, roundTrip: false })` | Get all fares for a route |
 
 ### Returns
 
@@ -93,7 +93,7 @@ See Data Types below. Fare and terminal lookups return typed arrays; totals retu
 
 ```typescript
 // Example 1: Get fare information for a route
-const fareLineItems = await wsfFares.getFareLineItems({ 
+const fareLineItems = await WsfFares.getFareLineItems({ 
   tripDate: "2024-04-01", 
   departingTerminalId: 7, 
   arrivingTerminalId: 8, 
@@ -104,7 +104,7 @@ fareLineItems.forEach(fare => {
 });
 
 // Example 2: Calculate fare total
-const fareTotal = await wsfFares.getFareTotal({ 
+const fareTotal = await WsfFares.getFareTotal({ 
   tripDate: "2024-04-01", 
   departingTerminalId: 7, 
   arrivingTerminalId: 8, 
@@ -131,7 +131,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useFareLineItems } from 'ws-dottie/react/wsf-fares';
+import { useFareLineItems } from 'ws-dottie';
 
 function FareLineItemsList() {
   const { data, isLoading, error } = useFareLineItems({ 
@@ -206,7 +206,7 @@ type FareTotal = {
 
 ```typescript
 // Implementation example
-const fareLineItems = await wsfFares.getFareLineItems({ 
+const fareLineItems = await WsfFares.getFareLineItems({ 
   tripDate: "2024-04-01", 
   departingTerminalId: 7, 
   arrivingTerminalId: 8, 
@@ -221,7 +221,7 @@ const fareLineItems = await wsfFares.getFareLineItems({
 
 ```typescript
 // Implementation example
-const terminals = await wsfFares.getTerminals({ tripDate: "2024-04-01" });
+const terminals = await WsfFares.getTerminals({ tripDate: new Date("2024-04-01") });
 // Display available terminals for trip planning
 ```
 
@@ -231,10 +231,10 @@ This API uses the **WEEKLY_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 7 days | Data considered fresh for 7 days |
-| **Refetch Interval** | 7 days | Automatically refetch data every 7 days |
-| **GC Time** | 14 days | Keep unused data in cache for 14 days |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 day | Data considered fresh for 1 day |
+| **Refetch Interval** | 1 day | Automatically refetch data every 1 day |
+| **GC Time** | 2 days | Keep unused data in cache for 2 days |
+| **Retry** | 5 attempts | Retry failed requests up to 5 times |
 
 ## Update Frequency
 

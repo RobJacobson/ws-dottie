@@ -67,39 +67,39 @@ https://www.wsdot.wa.gov/ferries/api/vessels
 ### Basic Usage
 
 ```typescript
-import { wsfVessels } from 'ws-dottie/wsf-vessels';
+import { WsfVessels } from 'ws-dottie';
 
 // Get all vessel basics
-const vessels = await wsfVessels.getVesselBasics();
+const vessels = await WsfVessels.getVesselBasics();
 
 // Get specific vessel basics
-const vessel = await wsfVessels.getVesselBasicsByVesselId({ vesselId: 1 });
+const vessel = await WsfVessels.getVesselBasicsById({ vesselId: 1 });
 
 // Get all vessel locations
-const locations = await wsfVessels.getVesselLocations();
+const locations = await WsfVessels.getVesselLocations();
 
 // Get vessel accommodations
-const accommodations = await wsfVessels.getVesselAccommodations();
+const accommodations = await WsfVessels.getVesselAccommodations();
 
 // Get vessel statistics
-const stats = await wsfVessels.getVesselStats();
+const stats = await WsfVessels.getVesselStats();
 
 // Get vessel history for a specific vessel and date range
-const history = await wsfVessels.getVesselHistoryByVesselAndDateRange({
+const history = await WsfVessels.getVesselHistoryByVesselAndDateRange({
   vesselName: "Spokane",
   dateStart: new Date("2024-01-01"),
   dateEnd: new Date("2024-01-02")
 });
 
 // Get vessel history for multiple vessels
-const multiVesselHistory = await wsfVessels.getMultipleVesselHistories({
+const multiVesselHistory = await WsfVessels.getMultipleVesselHistories({
   vesselNames: ["Spokane", "Walla Walla"],
   dateStart: new Date("2024-01-01"),
   dateEnd: new Date("2024-01-02")
 });
 
 // Get vessel history for all vessels in the fleet
-const allVesselHistory = await wsfVessels.getAllVesselHistories({
+const allVesselHistory = await WsfVessels.getAllVesselHistories({
   dateStart: new Date("2024-01-01"),
   dateEnd: new Date("2024-01-02")
 });
@@ -109,7 +109,7 @@ const allVesselHistory = await wsfVessels.getAllVesselHistories({
 | Function | Parameters | Example | Description |
 |----------|------------|---------|-------------|
 | `getVesselBasics` | None | `getVesselBasics()` | Get all vessel basics |
-| `getVesselBasicsByVesselId` | `{ vesselId: number }` | `getVesselBasicsByVesselId({ vesselId: 1 })` | Get specific vessel basics |
+| `getVesselBasicsById` | `{ vesselId: number }` | `getVesselBasicsById({ vesselId: 1 })` | Get specific vessel basics |
 | `getVesselLocations` | None | `getVesselLocations()` | Get all vessel locations |
 | `getVesselAccommodations` | None | `getVesselAccommodations()` | Get all vessel accommodations |
 | `getVesselHistoryByVesselAndDateRange` | `{ vesselName: string, dateStart: Date, dateEnd: Date }` | `getVesselHistoryByVesselAndDateRange({ vesselName: "Spokane", dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for specific vessel and date range |
@@ -124,13 +124,13 @@ See Data Types below. Each function returns strongly typed data validated at run
 
 ```typescript
 // Example 1: Display all vessels
-const vessels = await wsfVessels.getVesselBasics();
+const vessels = await WsfVessels.getVesselBasics();
 vessels.forEach(vessel => {
   console.log(`${vessel.VesselName}: ${vessel.VesselAbbrev}`);
 });
 
 // Example 2: Get vessel locations
-const locations = await wsfVessels.getVesselLocations();
+const locations = await WsfVessels.getVesselLocations();
 // Display real-time vessel positions
 ```
 
@@ -150,7 +150,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useVesselBasics } from 'ws-dottie/react/wsf-vessels';
+import { useVesselBasics } from 'ws-dottie';
 
 function VesselsList() {
   const { data, isLoading, error } = useVesselBasics();
@@ -164,7 +164,7 @@ function VesselsList() {
         <div key={vessel.VesselID}>
           <h3>{vessel.VesselName}</h3>
           <p>Abbreviation: {vessel.VesselAbbrev}</p>
-          <p>Status: {vessel.VesselStatus}</p>
+          {/* Status not provided in current schema; available fields include Class, Status (numeric), etc. */}
         </div>
       ))}
     </div>
@@ -252,8 +252,8 @@ const locations = await wsfVessels.getVesselLocations();
 
 ```typescript
 // Implementation example
-const vessel = await wsfVessels.getVesselBasicsByVesselId({ vesselId: 1 });
-const accommodations = await wsfVessels.getVesselAccommodations();
+const vessel = await WsfVessels.getVesselBasicsById({ vesselId: 1 });
+const accommodations = await WsfVessels.getVesselAccommodations();
 // Display detailed vessel information for travelers
 ```
 
@@ -263,7 +263,7 @@ const accommodations = await wsfVessels.getVesselAccommodations();
 
 ```typescript
 // Implementation example - Single vessel analysis
-const history = await wsfVessels.getVesselHistoryByVesselAndDateRange({
+const history = await WsfVessels.getVesselHistoryByVesselAndDateRange({
   vesselName: "Spokane",
   dateStart: new Date("2024-01-01"),
   dateEnd: new Date("2024-01-31")
@@ -278,7 +278,7 @@ const onTimeTrips = history.filter(trip =>
 console.log(`Spokane on-time performance: ${(onTimeTrips.length / history.length * 100).toFixed(1)}%`);
 
 // Implementation example - Fleet-wide analysis
-const allVesselHistory = await wsfVessels.getAllVesselHistories({
+const allVesselHistory = await WsfVessels.getAllVesselHistories({
   dateStart: new Date("2024-01-01"),
   dateEnd: new Date("2024-01-31")
 });

@@ -48,13 +48,13 @@ https://wsdot.wa.gov/Traffic/api/TravelTimes/TravelTimesREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotTravelTimes } from 'ws-dottie/wsdot-travel-times';
+import { WsdotTravelTimes } from 'ws-dottie';
 
 // Get all travel time routes
-const routes = await wsdotTravelTimes.getTravelTimes();
+const routes = await WsdotTravelTimes.getTravelTimes();
 
 // Get specific travel time route by ID
-const route = await wsdotTravelTimes.getTravelTime({ travelTimeId: 2 });
+const route = await WsdotTravelTimes.getTravelTimeById({ travelTimeId: 2 });
 ```
 
 ### Parameter Examples
@@ -96,7 +96,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useTravelTimes } from 'ws-dottie/react/wsdot-travel-times';
+import { useTravelTimes } from 'ws-dottie';
 
 function TravelTimesList() {
   const { data, isLoading, error } = useTravelTimes();
