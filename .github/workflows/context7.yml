@@ -14,7 +14,7 @@ jobs:
       # First-time registration (manual run only). Safe to keep; does nothing unless manually dispatched.
       - name: Add to Context7 (first run only)
         if: github.event_name == 'workflow_dispatch'
-        uses: rennf93/upsert-context7@v1
+        uses: rennf93/upsert-context7@main
         with:
           operation: add
           library-name: "/ferryjoy/ws-dottie"
@@ -23,7 +23,7 @@ jobs:
       - name: Refresh Context7 docs on release
         if: github.event_name == 'release'
         id: context7
-        uses: rennf93/upsert-context7@v1
+        uses: rennf93/upsert-context7@main
         with:
           operation: refresh
           library-name: "/ferryjoy/ws-dottie"
