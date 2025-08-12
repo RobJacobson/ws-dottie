@@ -6,7 +6,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import {
   getHighwayAlertById,
@@ -25,7 +25,7 @@ import type { HighwayAlert } from "./schemas";
  * @returns React Query result with highway alert data
  */
 export const useHighwayAlerts = (
-  options?: QueryOptionsWithoutKey<HighwayAlert[]>
+  options?: TanStackOptions<HighwayAlert[]>
 ): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "highway-alerts", "getHighwayAlerts"],
@@ -47,7 +47,7 @@ export const useHighwayAlerts = (
  */
 export const useHighwayAlertById = (
   params: { alertId: number },
-  options?: QueryOptionsWithoutKey<HighwayAlert>
+  options?: TanStackOptions<HighwayAlert>
 ): UseQueryResult<HighwayAlert, Error> => {
   return useQuery({
     queryKey: [
@@ -74,7 +74,7 @@ export const useHighwayAlertById = (
  */
 export const useHighwayAlertsByMapArea = (
   params: { mapArea: string },
-  options?: QueryOptionsWithoutKey<HighwayAlert[]>
+  options?: TanStackOptions<HighwayAlert[]>
 ): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
     queryKey: [

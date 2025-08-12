@@ -6,7 +6,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import { getBridgeClearances } from "./api";
 import type { BridgeDataGIS } from "./schemas";
@@ -30,7 +30,7 @@ import type { BridgeDataGIS } from "./schemas";
  */
 export const useBridgeClearances = (
   params: { route: string },
-  options?: QueryOptionsWithoutKey<BridgeDataGIS[]>
+  options?: TanStackOptions<BridgeDataGIS[]>
 ): UseQueryResult<BridgeDataGIS[], Error> => {
   return useQuery({
     queryKey: [
