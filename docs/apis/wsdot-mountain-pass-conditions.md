@@ -65,6 +65,10 @@ const pass = await wsdotMountainPassConditions.getMountainPassCondition({ passCo
 | `getMountainPassConditions` | None | `getMountainPassConditions()` | Get all mountain pass conditions |
 | `getMountainPassCondition` | `{ passConditionId: number }` | `getMountainPassCondition({ passConditionId: 1 })` | Get specific mountain pass by ID |
 
+### Returns
+
+See Data Types below. Functions return arrays of `MountainPassCondition` or a single `MountainPassCondition` when querying by ID.
+
 ### Common Use Cases
 
 ```typescript
@@ -174,6 +178,10 @@ This API uses the **HOURLY_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 1 hour | Automatically refetch data every hour |
 | **GC Time** | 2 hours | Keep unused data in cache for 2 hours |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (hourly during the active season; minute‑level for advisories).
 
 ## Common Patterns
 

@@ -85,6 +85,10 @@ const fareLineItems = await wsfFares.getFareLineItems({
 | `getTerminals` | `{ tripDate: string }` | `getTerminals({ tripDate: "2024-04-01" })` | Get all terminals for a trip date |
 | `getFareLineItems` | `{ tripDate: string, departingTerminalId: number, arrivingTerminalId: number, roundTrip: boolean }` | `getFareLineItems({ tripDate: "2024-04-01", departingTerminalId: 7, arrivingTerminalId: 8, roundTrip: false })` | Get all fares for a route |
 
+### Returns
+
+See Data Types below. Fare and terminal lookups return typed arrays; totals return a `FareTotal` with a breakdown. Date range functions return `ValidDateRange`.
+
 ### Common Use Cases
 
 ```typescript
@@ -231,6 +235,10 @@ This API uses the **WEEKLY_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 7 days | Automatically refetch data every 7 days |
 | **GC Time** | 14 days | Keep unused data in cache for 14 days |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (weekly for fare tables and terminals; minute‑level only for cache timestamps).
 
 ## Common Patterns
 

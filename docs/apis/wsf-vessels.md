@@ -116,6 +116,10 @@ const allVesselHistory = await wsfVessels.getAllVesselHistories({
 | `getMultipleVesselHistories` | `{ vesselNames: string[], dateStart: Date, dateEnd: Date, batchSize?: number }` | `getMultipleVesselHistories({ vesselNames: ["Spokane", "Walla Walla"], dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for multiple vessels |
 | `getAllVesselHistories` | `{ dateStart: Date, dateEnd: Date, batchSize?: number }` | `getAllVesselHistories({ dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for all 21 vessels in the fleet |
 
+### Returns
+
+See Data Types below. Each function returns strongly typed data validated at runtime. Historical endpoints return arrays of `VesselHistory`; basics, stats, accommodations, and verbose endpoints return their respective typed arrays or single items.
+
 ### Common Use Cases
 
 ```typescript
@@ -298,6 +302,10 @@ This API uses the **WEEKLY_UPDATES** caching strategy for static data, **MINUTE_
 | **Refetch Interval** | 7 days (static), 1 minute (real-time/historical), 1 day (statistics) | Automatically refetch data every 7 days (static), 1 minute (real-time/historical), or 1 day (statistics) |
 | **GC Time** | 14 days (static), 1 hour (real-time/historical), 2 days (statistics) | Keep unused data in cache for 14 days (static), 1 hour (real-time/historical), or 2 days (statistics) |
 | **Retry** | 5 attempts (static), 0 attempts (real-time/historical), 5 attempts (statistics) | Retry failed requests up to 5 times (static/statistics) or no retries (real-time/historical) |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (real‑time locations, daily stats, weekly static data).
 
 ## Common Patterns
 

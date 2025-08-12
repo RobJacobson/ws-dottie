@@ -73,13 +73,6 @@ configManager.setApiKey('your_api_key_here');
 configManager.setBaseUrl('https://your-proxy-server.com');
 ```
 
-This approach is useful for:
-- Web applications that need to pass environment variables from server to client
-- Applications that load configuration from external sources
-- Multi-tenant applications with different API keys
-- Development environments with different configurations
-- Routing requests through proxy servers for security or monitoring
-
 ### 4. Module Format Support
 
 WS-Dottie supports both CommonJS and ES Module formats:
@@ -169,6 +162,9 @@ function TransportationDashboard() {
 - **[API Reference](./docs/API-REFERENCE.md)** - Complete API documentation
 - **[Examples](./docs/EXAMPLES.md)** - Common use cases and patterns
 
+### Doc Map
+- Start here: **[Documentation Index](./docs/INDEX.md)** — canonical entry point with links to all API docs and guides
+
 ## 🎯 Example Projects
 
 Here are some projects you could build with WS-Dottie:
@@ -197,7 +193,6 @@ WS-Dottie includes comprehensive testing with support for both Node.js and brows
 
 ```bash
 # Quick test commands
-npm run test:unit                    # Unit tests
 npm run test:e2e:validation         # E2E tests (Node.js)
 npm run test:e2e:validation:jsonp   # E2E tests (Browser/JSONP)
 npm run test:e2e:hook               # React hook tests

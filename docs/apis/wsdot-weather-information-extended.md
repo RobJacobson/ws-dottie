@@ -44,6 +44,10 @@ const weatherReadings = await getWeatherInformationExtended();
 
 **Returns:** `Promise<WeatherReading[]>`
 
+### Returns
+
+See Data Types below. Returns arrays of `WeatherReading` with nested `SurfaceMeasurement[]` and `SubSurfaceMeasurement[]` when present.
+
 ## React Integration
 
 For React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
@@ -148,6 +152,10 @@ type WeatherInformationExtendedResponse = WeatherReading[];
 | **Stale Time** | 2 minutes | Data considered fresh for 2 minutes |
 | **Background Refetch** | Enabled | Automatically refetches in background |
 | **Error Retry** | 3 attempts | Retries failed requests up to 3 times |
+
+## Update Frequency
+
+Extended readings are frequently updated; follow the same minute‑level guidance as the basic weather API for freshness expectations.
 
 ## Common Patterns
 

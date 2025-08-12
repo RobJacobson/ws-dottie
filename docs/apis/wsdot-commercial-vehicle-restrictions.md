@@ -65,6 +65,10 @@ const restrictionsWithIds = await wsdotCommercialVehicleRestrictions.getCommerci
 | `getCommercialVehicleRestrictions` | None | `getCommercialVehicleRestrictions()` | Get all commercial vehicle restrictions |
 | `getCommercialVehicleRestrictionsWithId` | None | `getCommercialVehicleRestrictionsWithId()` | Get restrictions with unique IDs |
 
+### Returns
+
+See Data Types below. Functions return arrays of `CommercialVehicleRestriction` or `CommercialVehicleRestrictionWithId`.
+
 ### Common Use Cases
 
 ```typescript
@@ -186,6 +190,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Restrictions can change as conditions evolve; minute‑level for active changes and hourly for construction/bridge work are typically sufficient.
 
 ## Common Patterns
 

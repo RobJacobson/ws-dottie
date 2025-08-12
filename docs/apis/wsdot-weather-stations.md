@@ -42,6 +42,10 @@ const weatherStations = await getWeatherStations();
 
 **Returns:** `Promise<WeatherStationData[]>`
 
+### Returns
+
+See Data Types below. The stations endpoint returns an array of `WeatherStationData`.
+
 ## React Integration
 
 For React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
@@ -102,6 +106,10 @@ type WeatherStationsResponse = WeatherStationData[];
 | **Stale Time** | 12 hours | Data considered fresh for 12 hours |
 | **Background Refetch** | Disabled | No background refetch for static data |
 | **Error Retry** | 3 attempts | Retries failed requests up to 3 times |
+
+## Update Frequency
+
+Station metadata is relatively static; daily to weekly refresh is sufficient.
 
 ## Common Patterns
 

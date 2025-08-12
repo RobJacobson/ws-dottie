@@ -85,6 +85,10 @@ const verboseTerminals = await wsfTerminals.getTerminalVerbose();
 | `getTerminalSailingSpace` | None | `getTerminalSailingSpace()` | Get sailing space availability for all terminals |
 | `getTerminalWaitTimes` | None | `getTerminalWaitTimes()` | Get wait times for all terminals |
 
+### Returns
+
+See Data Types below. Basics, locations, sailing space, wait times, and verbose endpoints return typed arrays; single‑terminal basics return a single `TerminalBasics` item.
+
 ### Common Use Cases
 
 ```typescript
@@ -215,6 +219,10 @@ This API uses the **WEEKLY_UPDATES** caching strategy for static data and **MINU
 | **Refetch Interval** | 7 days (static), 5 minutes (real-time) | Automatically refetch data every 7 days (static) or 5 minutes (real-time) |
 | **GC Time** | 14 days (static), 10 minutes (real-time) | Keep unused data in cache for 14 days (static) or 10 minutes (real-time) |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (real‑time for space/wait times; weekly for static terminal data).
 
 ## Common Patterns
 

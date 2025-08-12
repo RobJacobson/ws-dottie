@@ -69,6 +69,10 @@ const multipleStations = await wsdotWeatherInformation.getCurrentWeatherForStati
 | `getCurrentWeatherInformationByStationId` | `{ stationId: number }` | `getCurrentWeatherInformationByStationId({ stationId: 1909 })` | Get weather data for specific station |
 | `getCurrentWeatherForStations` | `{ stationList: string }` | `getCurrentWeatherForStations({ stationList: "1909,1910,1911" })` | Get weather data for multiple stations |
 
+### Returns
+
+See Data Types below. Functions return arrays of `WeatherInfo` or a single `WeatherInfo` when querying by a single station.
+
 ### Common Use Cases
 
 ```typescript
@@ -185,6 +189,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for readings; weekly for station metadata).
 
 ## Common Patterns
 

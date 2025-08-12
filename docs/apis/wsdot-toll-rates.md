@@ -75,6 +75,10 @@ const historicalRates = await wsdotTollRates.getTripRatesByDate({
 | `getTollTripInfo` | None | `getTollTripInfo()` | Get detailed trip information with geometry |
 | `getTripRatesByDate` | `{ fromDate: string, toDate: string }` | `getTripRatesByDate({ fromDate: "2024-01-01", toDate: "2024-01-31" })` | Get historical toll rates by date range |
 
+### Returns
+
+See Data Types below. Current rates and historical queries return arrays of `TollRate`; trip info returns `TollTripInfo[]`; message+rates responses return `TollTripRatesResponse`.
+
 ### Common Use Cases
 
 ```typescript
@@ -210,6 +214,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (5‑minute updates for current rates; daily for history).
 
 ## Common Patterns
 

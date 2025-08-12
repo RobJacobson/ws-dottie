@@ -63,6 +63,10 @@ const routeClearances = await wsdotBridgeClearances.getBridgeClearances({ route:
 | `getBridgeClearances` | None | `getBridgeClearances()` | Get all bridge clearances |
 | `getBridgeClearances` | `{ route: string }` | `getBridgeClearances({ route: "005" })` | Get clearances for specific route |
 
+### Returns
+
+See Data Types below. Functions return arrays of `BridgeDataGIS`.
+
 ### Common Use Cases
 
 ```typescript
@@ -171,6 +175,10 @@ This API uses the **WEEKLY_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 7 days | Automatically refetch data every 7 days |
 | **GC Time** | 14 days | Keep unused data in cache for 14 days |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Bridge clearance and metadata are largely static; weekly refresh is sufficient.
 
 ## Common Patterns
 

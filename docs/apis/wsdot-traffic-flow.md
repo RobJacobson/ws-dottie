@@ -64,6 +64,10 @@ const flow = await wsdotTrafficFlow.getTrafficFlow({ flowDataId: 2482 });
 | `getTrafficFlows` | None | `getTrafficFlows()` | Get all traffic flow data |
 | `getTrafficFlow` | `{ flowDataId: number }` | `getTrafficFlow({ flowDataId: 2482 })` | Get specific traffic flow by ID |
 
+### Returns
+
+See Data Types below. Functions return arrays of `TrafficFlow` or a single `TrafficFlow` when querying by ID.
+
 ### Common Use Cases
 
 ```typescript
@@ -173,6 +177,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for flow readings; weekly for station metadata).
 
 ## Common Patterns
 

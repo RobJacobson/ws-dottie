@@ -90,6 +90,10 @@ const alerts = await wsfSchedule.getAlerts();
 | `getSchedule` | `{ tripDate: string, routeId: number }` | `getSchedule({ tripDate: "2024-04-01", routeId: 1 })` | Get schedule for specific route |
 | `getAlerts` | None | `getAlerts()` | Get service alerts and disruptions |
 
+### Returns
+
+See Data Types below. Routes, route details, schedules, and alerts return typed arrays or objects depending on the query (e.g., `Route[]`, `RouteDetails[]`, `Schedule`, `Alert[]`).
+
 ### Common Use Cases
 
 ```typescript
@@ -228,6 +232,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for schedules/alerts; weekly for static route info).
 
 ## Common Patterns
 

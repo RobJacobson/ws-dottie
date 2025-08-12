@@ -71,6 +71,10 @@ const areaAlerts = await wsdotHighwayAlerts.getAlertsByMapArea({ mapArea: "Seatt
 | `getAlert` | `{ alertId: number }` | `getAlert({ alertId: 655238 })` | Get specific alert by ID |
 | `getAlertsByMapArea` | `{ mapArea: string }` | `getAlertsByMapArea({ mapArea: "Seattle" })` | Get alerts for specific area |
 
+### Returns
+
+See Data Types below. Functions return arrays of `HighwayAlert` or a single `HighwayAlert` when querying by ID.
+
 ### Common Use Cases
 
 ```typescript
@@ -187,6 +191,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level real‑time updates for alerts).
 
 ## Common Patterns
 

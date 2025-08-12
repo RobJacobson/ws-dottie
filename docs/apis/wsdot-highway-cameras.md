@@ -70,6 +70,10 @@ const routeCameras = await wsdotHighwayCameras.searchCameras({ stateRoute: "005"
 | `getCamera` | `{ cameraId: number }` | `getCamera({ cameraId: 9818 })` | Get specific camera by ID |
 | `searchCameras` | `{ stateRoute?: string, region?: string, startingMilepost?: number, endingMilepost?: number }` | `searchCameras({ stateRoute: "005" })` | Search cameras by filters |
 
+### Returns
+
+See Data Types below. Functions return arrays of `Camera` or a single `Camera` when querying by ID.
+
 ### Common Use Cases
 
 ```typescript
@@ -181,6 +185,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for images; weekly for camera metadata).
 
 ## Common Patterns
 
