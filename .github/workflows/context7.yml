@@ -22,14 +22,12 @@ jobs:
       # Refresh docs on every release tag
       - name: Refresh Context7 docs on release
         if: github.event_name == 'release'
-        id: context7
-        uses: rennf93/upsert-context7@main
+        uses: rennf93/upsert-context7@1.0
         with:
           operation: refresh
           library-name: "/ferryjoy/ws-dottie"
 
       - name: Show result
-        if: steps.context7.outputs.success != ''
         run: |
           echo "Success: ${{ steps.context7.outputs.success }}"
           echo "Status: ${{ steps.context7.outputs['status-code'] }}"
