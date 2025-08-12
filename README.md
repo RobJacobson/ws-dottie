@@ -10,11 +10,16 @@
 [![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)
 
 
-Meet Dottie - she's not just another API wrapper, she's your cheerful guide through the Washington State Department of Transportation's data jungle. Whether you're tracking ferries across Puget Sound or monitoring traffic on I-5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real-time access to every traffic camera, weather station, and ferry terminal in the state. 
+Meet Dottie — not just another API wrapper, but your cheerful, unauthorized guide to real-time Washington State transportation data published by the Department of Transportation and Washington State Ferries. Whether you're tracking ferries across Puget Sound or monitoring traffic on I‑5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real‑time access to every traffic camera, weather station, and ferry terminal in the state.
 
-This friendly TypeScript client library provides type-safe data fetching from sixteen different Washington State transportation APIs - from real-time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a hobby project to track your daily commute or developing enterprise applications for transportation planning, WS-Dottie gives you a safe, reliable way to tap into this data firehose with smart caching, strict typing, automatic JSONP data fetching in browser environments to avoid CORS concerns, and seamless React Query integration.
+This friendly TypeScript client library provides type‑safe data fetching from 16 Washington State transportation APIs, spanning 89 documented endpoints — from real‑time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a weekend project, a classroom demo, or a production app, WS‑Dottie helps you tame the data firehose with smart caching, strict typing, automatic JSONP in browsers (to dodge CORS roadblocks), and seamless TanStack Query integration — all free and easy to use.
 
-### Zod-powered validation (Zod 4)
+Why folks love WS‑Dottie:
+- Fun, friendly DX with strong TypeScript types
+- Works great for education, hobbyist builds, and commercial apps
+- Sensible defaults you can override with standard TanStack Query options
+
+### Zod‑powered validation (Zod 4)
 
 WS‑Dottie uses Zod 4 schemas for runtime validation and type inference across all APIs. That means:
 - Strong, generated TypeScript types from a single source of truth
@@ -38,7 +43,7 @@ Practically, API functions fetch raw data, validate and transform it with Zod, a
 
 ### 1. Get Your Free API Key
 
-Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required - the API is completely free.
+Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required — the API is completely free.
 
 ### 2. Install WS-Dottie
 
@@ -75,19 +80,19 @@ configManager.setBaseUrl('https://your-proxy-server.com');
 
 ### 4. Module Format Support
 
-WS-Dottie supports both CommonJS and ES Module formats:
+WS‑Dottie supports both CommonJS and ES Module formats:
 
 **ES Modules (Recommended)**
 ```javascript
-import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { useVesselLocations, useHighwayAlerts, configManager } from 'ws-dottie';
 ```
 
 **CommonJS**
 ```javascript
-const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
+const { useVesselLocations, useHighwayAlerts, configManager } = require('ws-dottie');
 ```
 
-The library automatically provides the appropriate format based on your environment. Modern bundlers and Node.js will choose the optimal format automatically.
+Modern bundlers and Node.js will choose the optimal format automatically. Deep subpath imports are not currently exposed; prefer named imports.
 
 ### 5. Start Building
 
@@ -122,7 +127,7 @@ function TransportationDashboard() {
 }
 ```
 
-## 📊 Available Data Sources
+## 📊 Available Data Sources (16 APIs, 89 endpoints)
 
 ### WSDOT APIs
 - **Highway Alerts** - Real-time traffic incidents and construction updates
@@ -145,16 +150,16 @@ function TransportationDashboard() {
 
 ## 🔧 Features
 
-- **🔄 Smart Caching** - Built-in TanStack Query integration with optimized caching strategies for different data types
+- **🔄 Smart Caching** - Built‑in TanStack Query integration with optimized caching strategies for different data types
 - **🌐 Cross-Platform** - Works in browsers (JSONP) and Node.js (fetch)
 - **📱 React Ready** - Hooks for all APIs with automatic cache management
- - **🎯 Strong Typing** - Zod‑inferred TypeScript types for all APIs, parameters, and responses
-- **📦 Parameter Objects** - Consistent single-parameter object pattern for all API calls
-- **⚙️ Flexible Configuration** - Environment variables or runtime configuration with type-safe interface
+- **🎯 Strong Typing** - Zod‑inferred TypeScript types for all APIs, parameters, and responses
+- **📦 Parameter Objects** - Consistent single‑parameter object pattern for all API calls
+- **⚙️ Flexible Configuration** - Environment variables or runtime configuration with type‑safe interface
 - **🔍 Debugging** - Optional logging for troubleshooting API calls
-- **⚡ Tree-Shaking** - Only import what you need to keep bundles small
-- **🛡️ Error Handling** - Consistent error types with user-friendly messages
- - **📅 Date Conversion** - Automatic conversion of upstream date strings to JavaScript Date objects (via a lean parser today; moving toward Zod‑only transforms)
+- **⚡ Tree‑Shaking** - Only import what you need to keep bundles small
+- **🛡️ Error Handling** - Consistent error types with user‑friendly messages
+- **📅 Date Conversion** - Automatic conversion of upstream date strings to JavaScript Date objects (lean parser) with Zod 4 runtime validation
 
 ## 📚 Documentation
 
@@ -205,6 +210,10 @@ npm run test:e2e:validation:jsonp:watch
 **JSONP Testing**: Use `--jsonp` flag or `JSONP=true` environment variable to test browser environment compatibility.
 
 📖 **For detailed testing information, see [Testing Guide](./docs/TESTING.md)**
+
+## 🏛️ Governance
+
+Maintained by the Ferryjoy npm org. Issues and contributions welcome.
 
 ## 🤝 Contributing
 
