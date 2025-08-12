@@ -28,7 +28,7 @@ export const validateWithZod = <T>(
     // Log detailed error information for debugging
     console.error("Validation Error Details:", {
       context,
-      errors: result.error.errors,
+      issues: result.error.issues,
       received: data,
     });
 
@@ -59,7 +59,7 @@ export const validateArrayWithZod = <T>(
 
     console.error("Array Validation Error Details:", {
       context,
-      errors: result.error.errors,
+      issues: result.error.issues,
       received: data,
     });
 
@@ -166,7 +166,7 @@ export const validateWithDetails = <T>(
         : `Validation failed: ${result.error.message}`,
       details: {
         context,
-        errors: result.error.errors,
+        issues: result.error.issues,
         received: data,
       },
     };

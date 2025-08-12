@@ -8,8 +8,8 @@ describe("WSDOT Traffic Flow API - Zod Validation", () => {
     const flows = await getTrafficFlows();
     const validatedData = validators.trafficFlowsArray.validateSafe(flows);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Traffic flow validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
+      console.error("Validation failed:", validatedData.error.issues);
+      throw new Error(`Traffic flow validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`);
     }
     expect(validatedData.data).toBeDefined();
     expect(Array.isArray(validatedData.data)).toBe(true);
@@ -23,8 +23,8 @@ describe("WSDOT Traffic Flow API - Zod Validation", () => {
       const firstFlow = flows[0];
       const validatedFlow = validators.trafficFlow.validateSafe(firstFlow);
       if (!validatedFlow.success) {
-        console.error("Individual validation failed:", validatedFlow.error.errors);
-        throw new Error(`Individual flow validation failed: ${JSON.stringify(validatedFlow.error.errors, null, 2)}`);
+        console.error("Individual validation failed:", validatedFlow.error.issues);
+        throw new Error(`Individual flow validation failed: ${JSON.stringify(validatedFlow.error.issues, null, 2)}`);
       }
       expect(validatedFlow.data.FlowDataID).toBeDefined();
       expect(typeof validatedFlow.data.FlowDataID).toBe("number");
@@ -65,11 +65,11 @@ describe("WSDOT Traffic Flow API - Zod Validation", () => {
     const result = validators.trafficFlowsArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
       console.log("Validation Error Details:", {
         context: "malformed traffic flows",
-        errors: result.error.errors,
+        errors: result.error.issues,
         received: malformedData,
       });
     }

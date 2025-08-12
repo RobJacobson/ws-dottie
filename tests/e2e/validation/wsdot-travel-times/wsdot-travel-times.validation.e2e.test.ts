@@ -8,8 +8,8 @@ describe("WSDOT Travel Times API - Zod Validation", () => {
     const travelTimes = await getTravelTimes();
     const validatedData = validators.travelTimesArray.validateSafe(travelTimes);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Travel times validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
+      console.error("Validation failed:", validatedData.error.issues);
+      throw new Error(`Travel times validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`);
     }
     expect(validatedData.data).toBeDefined();
     expect(Array.isArray(validatedData.data)).toBe(true);
@@ -23,8 +23,8 @@ describe("WSDOT Travel Times API - Zod Validation", () => {
       const firstRoute = travelTimes[0];
       const validatedRoute = validators.travelTimeRoute.validateSafe(firstRoute);
       if (!validatedRoute.success) {
-        console.error("Individual validation failed:", validatedRoute.error.errors);
-        throw new Error(`Individual route validation failed: ${JSON.stringify(validatedRoute.error.errors, null, 2)}`);
+        console.error("Individual validation failed:", validatedRoute.error.issues);
+        throw new Error(`Individual route validation failed: ${JSON.stringify(validatedRoute.error.issues, null, 2)}`);
       }
       expect(validatedRoute.data.TravelTimeID).toBeDefined();
       expect(typeof validatedRoute.data.TravelTimeID).toBe("number");
@@ -79,11 +79,11 @@ describe("WSDOT Travel Times API - Zod Validation", () => {
     const result = validators.travelTimesArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
       console.log("Validation Error Details:", {
         context: "malformed travel times",
-        errors: result.error.errors,
+        errors: result.error.issues,
         received: malformedData,
       });
     }

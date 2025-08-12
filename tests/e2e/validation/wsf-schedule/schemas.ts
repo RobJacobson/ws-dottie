@@ -8,7 +8,7 @@ const nullableNumberSchema = z.number().nullable();
 const nullableBooleanSchema = z.boolean().nullable();
 
 // ServiceDisruption schema (currently appears to be empty arrays)
-export const serviceDisruptionSchema = z.record(z.unknown());
+export const serviceDisruptionSchema = z.record(z.string(), z.unknown());
 
 // Annotation schema
 export const annotationSchema = z.object({

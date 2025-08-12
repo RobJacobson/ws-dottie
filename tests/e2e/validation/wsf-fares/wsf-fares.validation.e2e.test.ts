@@ -16,9 +16,9 @@ describe("WSF Fares API - Zod Validation", () => {
     const validatedData =
       validators.faresCacheFlushDate.validateSafe(cacheFlushDate);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
+      console.error("Validation failed:", validatedData.error.issues);
       throw new Error(
-        `Cache flush date validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Cache flush date validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
     expect(validatedData.data).toBeInstanceOf(Date);
@@ -30,9 +30,9 @@ describe("WSF Fares API - Zod Validation", () => {
     const validatedData =
       validators.faresValidDateRange.validateSafe(dateRange);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
+      console.error("Validation failed:", validatedData.error.issues);
       throw new Error(
-        `Valid date range validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Valid date range validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
     expect(validatedData.data.DateFrom).toBeInstanceOf(Date);
@@ -46,9 +46,9 @@ describe("WSF Fares API - Zod Validation", () => {
     const validatedData =
       validators.faresTerminalsArray.validateSafe(terminals);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
+      console.error("Validation failed:", validatedData.error.issues);
       throw new Error(
-        `Terminals validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Terminals validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
     expect(validatedData.data).toBeDefined();
@@ -69,10 +69,10 @@ describe("WSF Fares API - Zod Validation", () => {
       if (!validatedTerminal.success) {
         console.error(
           "Individual validation failed:",
-          validatedTerminal.error.errors
+          validatedTerminal.error.issues
         );
         throw new Error(
-          `Individual terminal validation failed: ${JSON.stringify(validatedTerminal.error.errors, null, 2)}`
+          `Individual terminal validation failed: ${JSON.stringify(validatedTerminal.error.issues, null, 2)}`
         );
       }
       expect(validatedTerminal.data.TerminalID).toBeDefined();
@@ -94,9 +94,9 @@ describe("WSF Fares API - Zod Validation", () => {
     const validatedData =
       validators.fareLineItemsBasicArray.validateSafe(fareLineItems);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
+      console.error("Validation failed:", validatedData.error.issues);
       throw new Error(
-        `Fare line items basic validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Fare line items basic validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
     expect(validatedData.data).toBeDefined();
@@ -122,10 +122,10 @@ describe("WSF Fares API - Zod Validation", () => {
       if (!validatedFareLineItem.success) {
         console.error(
           "Individual validation failed:",
-          validatedFareLineItem.error.errors
+          validatedFareLineItem.error.issues
         );
         throw new Error(
-          `Individual fare line item validation failed: ${JSON.stringify(validatedFareLineItem.error.errors, null, 2)}`
+          `Individual fare line item validation failed: ${JSON.stringify(validatedFareLineItem.error.issues, null, 2)}`
         );
       }
       expect(validatedFareLineItem.data.FareLineItemID).toBeDefined();
@@ -151,11 +151,11 @@ describe("WSF Fares API - Zod Validation", () => {
     const result = validators.faresTerminalsArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
       console.log("Validation Error Details:", {
         context: "malformed WSF fares",
-        errors: result.error.errors,
+        issues: result.error.issues,
         received: malformedData,
       });
     }

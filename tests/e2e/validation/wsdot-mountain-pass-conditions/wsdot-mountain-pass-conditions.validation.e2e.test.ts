@@ -128,9 +128,9 @@ describe("WSDOT Mountain Pass Conditions API - Zod Validation", () => {
     expect(result.success).toBe(false);
 
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(Array.isArray(result.error.errors)).toBe(true);
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(Array.isArray(result.error.issues)).toBe(true);
+      expect(result.error.issues.length).toBeGreaterThan(0);
     }
   });
 
