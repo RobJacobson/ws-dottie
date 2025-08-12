@@ -8,8 +8,8 @@ describe("WSDOT Weather Information Extended API - Zod Validation", () => {
     const weatherReadings = await getWeatherInformationExtended();
     const validatedData = validators.weatherReadingsArray.validateSafe(weatherReadings);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Weather information extended validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
+      console.error("Validation failed:", validatedData.error.issues);
+      throw new Error(`Weather information extended validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`);
     }
     expect(validatedData.data).toBeDefined();
     expect(Array.isArray(validatedData.data)).toBe(true);
@@ -23,8 +23,8 @@ describe("WSDOT Weather Information Extended API - Zod Validation", () => {
       const firstReading = weatherReadings[0];
       const validatedReading = validators.weatherReading.validateSafe(firstReading);
       if (!validatedReading.success) {
-        console.error("Individual validation failed:", validatedReading.error.errors);
-        throw new Error(`Individual reading validation failed: ${JSON.stringify(validatedReading.error.errors, null, 2)}`);
+        console.error("Individual validation failed:", validatedReading.error.issues);
+        throw new Error(`Individual reading validation failed: ${JSON.stringify(validatedReading.error.issues, null, 2)}`);
       }
       expect(validatedReading.data.StationId).toBeDefined();
       expect(typeof validatedReading.data.StationId).toBe("string");
@@ -44,8 +44,8 @@ describe("WSDOT Weather Information Extended API - Zod Validation", () => {
     for (const reading of weatherReadings) {
       const validatedReading = validators.weatherReading.validateSafe(reading);
       if (!validatedReading.success) {
-        console.error("Nullable validation failed:", validatedReading.error.errors);
-        throw new Error(`Nullable field validation failed: ${JSON.stringify(validatedReading.error.errors, null, 2)}`);
+        console.error("Nullable validation failed:", validatedReading.error.issues);
+        throw new Error(`Nullable field validation failed: ${JSON.stringify(validatedReading.error.issues, null, 2)}`);
       }
       if (validatedReading.data.ReadingTime !== null) {
         expect(validatedReading.data.ReadingTime).toBeInstanceOf(Date);
@@ -148,11 +148,11 @@ describe("WSDOT Weather Information Extended API - Zod Validation", () => {
     const result = validators.weatherReadingsArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
       console.log("Validation Error Details:", {
         context: "malformed weather information extended",
-        errors: result.error.errors,
+        errors: result.error.issues,
         received: malformedData,
       });
     }

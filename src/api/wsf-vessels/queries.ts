@@ -4,7 +4,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import {
   getAllVesselHistories,
@@ -61,7 +61,7 @@ import type {
  * ```
  */
 export const useVesselBasics = (
-  options?: QueryOptionsWithoutKey<VesselBasic[]>
+  options?: TanStackOptions<VesselBasic[]>
 ): UseQueryResult<VesselBasic[], Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "basics"],
@@ -90,7 +90,7 @@ export const useVesselBasics = (
  */
 export const useVesselBasicsById = (
   params: { vesselId: number },
-  options?: QueryOptionsWithoutKey<VesselBasic>
+  options?: TanStackOptions<VesselBasic>
 ): UseQueryResult<VesselBasic, Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "basics", "byId", params.vesselId],
@@ -122,7 +122,7 @@ export const useVesselBasicsById = (
  * ```
  */
 export const useVesselAccommodations = (
-  options?: QueryOptionsWithoutKey<VesselAccommodation[]>
+  options?: TanStackOptions<VesselAccommodation[]>
 ): UseQueryResult<VesselAccommodation[], Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations"],
@@ -145,7 +145,7 @@ export const useVesselAccommodations = (
  */
 export const useVesselAccommodationsById = (
   params: { vesselId: number },
-  options?: QueryOptionsWithoutKey<VesselAccommodation>
+  options?: TanStackOptions<VesselAccommodation>
 ): UseQueryResult<VesselAccommodation, Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "accommodations", "byId", params.vesselId],
@@ -181,7 +181,7 @@ export const useVesselAccommodationsById = (
  * ```
  */
 export const useVesselLocations = (
-  options?: QueryOptionsWithoutKey<VesselLocation[]>
+  options?: TanStackOptions<VesselLocation[]>
 ): UseQueryResult<VesselLocation[], Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "locations"],
@@ -211,7 +211,7 @@ export const useVesselLocations = (
  */
 export const useVesselLocationsByVesselId = (
   params: { vesselId: number },
-  options?: QueryOptionsWithoutKey<VesselLocation>
+  options?: TanStackOptions<VesselLocation>
 ): UseQueryResult<VesselLocation, Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "locations", "byVesselId", params.vesselId],
@@ -236,7 +236,7 @@ export const useVesselLocationsByVesselId = (
  * @returns React Query result containing an array of VesselStats objects with statistical information for all vessels
  */
 export const useVesselStats = (
-  options?: QueryOptionsWithoutKey<VesselStats[]>
+  options?: TanStackOptions<VesselStats[]>
 ): UseQueryResult<VesselStats[], Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "stats"],
@@ -259,7 +259,7 @@ export const useVesselStats = (
  */
 export const useVesselStatsById = (
   params: { vesselId: number },
-  options?: QueryOptionsWithoutKey<VesselStats>
+  options?: TanStackOptions<VesselStats>
 ): UseQueryResult<VesselStats, Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "stats", "byId", params.vesselId],
@@ -288,7 +288,7 @@ export const useVesselStatsById = (
  */
 export const useVesselHistoryByVesselAndDateRange = (
   params: { vesselName: string; dateStart: Date; dateEnd: Date },
-  options?: QueryOptionsWithoutKey<VesselHistory[]>
+  options?: TanStackOptions<VesselHistory[]>
 ): UseQueryResult<VesselHistory[], Error> => {
   return useQuery({
     queryKey: [
@@ -342,7 +342,7 @@ export const useMultipleVesselHistories = (
     dateEnd: Date;
     batchSize?: number;
   },
-  options?: QueryOptionsWithoutKey<VesselHistory[]>
+  options?: TanStackOptions<VesselHistory[]>
 ): UseQueryResult<VesselHistory[], Error> => {
   return useQuery({
     queryKey: [
@@ -391,7 +391,7 @@ export const useMultipleVesselHistories = (
  */
 export const useAllVesselHistories = (
   params: { dateStart: Date; dateEnd: Date; batchSize?: number },
-  options?: QueryOptionsWithoutKey<VesselHistory[]>
+  options?: TanStackOptions<VesselHistory[]>
 ): UseQueryResult<VesselHistory[], Error> => {
   return useQuery({
     queryKey: [
@@ -429,7 +429,7 @@ export const useAllVesselHistories = (
  * @returns React Query result containing an array of VesselVerbose objects with comprehensive information for all vessels
  */
 export const useVesselVerbose = (
-  options?: QueryOptionsWithoutKey<VesselVerbose[]>
+  options?: TanStackOptions<VesselVerbose[]>
 ): UseQueryResult<VesselVerbose[], Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose"],
@@ -452,7 +452,7 @@ export const useVesselVerbose = (
  */
 export const useVesselVerboseById = (
   params: { vesselId: number },
-  options?: QueryOptionsWithoutKey<VesselVerbose>
+  options?: TanStackOptions<VesselVerbose>
 ): UseQueryResult<VesselVerbose, Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "verbose", "byId", params.vesselId],
@@ -477,7 +477,7 @@ export const useVesselVerboseById = (
  * @returns React Query result containing the cache flush date for vessels data
  */
 export const useCacheFlushDateVessels = (
-  options?: QueryOptionsWithoutKey<VesselsCacheFlushDate>
+  options?: TanStackOptions<VesselsCacheFlushDate>
 ): UseQueryResult<VesselsCacheFlushDate, Error> => {
   return useQuery({
     queryKey: ["wsf", "vessels", "cacheFlushDate"],

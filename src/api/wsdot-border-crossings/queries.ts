@@ -6,7 +6,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import { getBorderCrossings } from "./api";
 import type { BorderCrossingData } from "./schemas";
@@ -27,7 +27,7 @@ import type { BorderCrossingData } from "./schemas";
  * ```
  */
 export const useBorderCrossings = (
-  options?: QueryOptionsWithoutKey<BorderCrossingData[]>
+  options?: TanStackOptions<BorderCrossingData[]>
 ): UseQueryResult<BorderCrossingData[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],

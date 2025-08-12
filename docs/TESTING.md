@@ -108,7 +108,7 @@ These failures are normal and don't indicate problems with the library.
 
 ### Environment Coverage
 - ✅ **Node.js**: Native fetch environment
-- ✅ **Browser**: JSONP environment (Happy-DOM)
+- ✅ **Browser**: JSONP environment (Happy‑DOM)
 - ✅ **React**: JSDOM with React Testing Library
 
 ### Validation Coverage

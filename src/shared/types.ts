@@ -1,10 +1,10 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 
 /**
- * Utility type for React Query options that excludes the queryKey
- * since hooks handle the queryKey internally
+ * Options for WS‑Dottie hooks that map to TanStack Query's UseQueryOptions,
+ * excluding 'queryKey' and 'queryFn' which are provided by the hooks.
  */
-export type QueryOptionsWithoutKey<TData, TError = Error> = Omit<
+export type TanStackOptions<TData, TError = Error> = Omit<
   UseQueryOptions<TData, TError>,
-  "queryKey"
+  "queryKey" | "queryFn"
 >;

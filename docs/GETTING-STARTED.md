@@ -66,15 +66,13 @@ WS-Dottie supports both CommonJS and ES Module formats, automatically providing 
 ### ES Modules (Recommended)
 
 ```javascript
-import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
-import { configManager } from 'ws-dottie';
+import { useVesselLocations, useHighwayAlerts, configManager } from 'ws-dottie';
 ```
 
 ### CommonJS
 
 ```javascript
-const { useVesselLocations, useHighwayAlerts } = require('ws-dottie');
-const { configManager } = require('ws-dottie');
+const { useVesselLocations, useHighwayAlerts, configManager } = require('ws-dottie');
 ```
 
 Modern bundlers and Node.js will automatically choose the optimal format. The library provides:
@@ -182,14 +180,14 @@ function App() {
 ## 🔄 Data Formats
 
 ### Date/Time Properties
-WS‑Dottie converts upstream date strings to JavaScript Date objects. Today this happens via a lean parser, and schemas also validate/transform at runtime using Zod 4:
+WS‑Dottie converts upstream date strings to JavaScript Date objects via a lean parser; Zod 4 schemas validate structures at runtime:
 
 ```javascript
 // WSDOT returns: "/Date(1703123456789)/"
 // WS-Dottie converts to: new Date(1703123456789)
 
-const vessel = await WsfVessels.getVesselLocations();
-console.log(vessel[0].LastUpdate); // JavaScript Date object (validated with Zod)
+const vessels = await WsfVessels.getVesselLocations();
+console.log(vessels[0].TimeStamp); // JavaScript Date object (validated with Zod)
 ```
 
 ### Error Handling
@@ -220,7 +218,7 @@ All WS-Dottie fetch functions and React hooks use a **single, optional, strongly
 const camera = await WsdotHighwayCameras.getCamera({ cameraID: 1001 });
 
 // React hook
-const { data: camera } = useCamera({ cameraID: 1001 });
+const { data: camera } = useHighwayCamera({ cameraID: 1001 });
 ```
 
 - If no parameters are required, you may call the function with no arguments or with an empty object: `getBorderCrossings()` or `getBorderCrossings({})`.

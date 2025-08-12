@@ -48,13 +48,13 @@ https://wsdot.wa.gov/Traffic/api/TravelTimes/TravelTimesREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotTravelTimes } from 'ws-dottie/wsdot-travel-times';
+import { WsdotTravelTimes } from 'ws-dottie';
 
 // Get all travel time routes
-const routes = await wsdotTravelTimes.getTravelTimes();
+const routes = await WsdotTravelTimes.getTravelTimes();
 
 // Get specific travel time route by ID
-const route = await wsdotTravelTimes.getTravelTime({ travelTimeId: 2 });
+const route = await WsdotTravelTimes.getTravelTimeById({ travelTimeId: 2 });
 ```
 
 ### Parameter Examples
@@ -63,6 +63,10 @@ const route = await wsdotTravelTimes.getTravelTime({ travelTimeId: 2 });
 |----------|------------|---------|-------------|
 | `getTravelTimes` | None | `getTravelTimes()` | Get all travel time routes |
 | `getTravelTime` | `{ travelTimeId: number }` | `getTravelTime({ travelTimeId: 2 })` | Get specific travel time route by ID |
+
+### Returns
+
+See Data Types below. Functions return arrays of `TravelTimeRoute` or a single `TravelTimeRoute` when querying by ID.
 
 ### Common Use Cases
 
@@ -92,7 +96,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useTravelTimes } from 'ws-dottie/react/wsdot-travel-times';
+import { useTravelTimes } from 'ws-dottie';
 
 function TravelTimesList() {
   const { data, isLoading, error } = useTravelTimes();
@@ -177,6 +181,10 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
 | **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for travel times; weekly for route metadata).
 
 ## Common Patterns
 

@@ -58,22 +58,22 @@ https://www.wsdot.wa.gov/ferries/api/terminals
 ### Basic Usage
 
 ```typescript
-import { wsfTerminals } from 'ws-dottie/wsf-terminals';
+import { WsfTerminals } from 'ws-dottie';
 
 // Get all terminal basics
-const terminals = await wsfTerminals.getTerminalBasics();
+const terminals = await WsfTerminals.getTerminalBasics();
 
 // Get specific terminal basics
-const terminal = await wsfTerminals.getTerminalBasicsByTerminalId({ terminalId: 7 });
+const terminal = await WsfTerminals.getTerminalBasicsByTerminalId({ terminalId: 7 });
 
 // Get terminal sailing space
-const spaceData = await wsfTerminals.getTerminalSailingSpace();
+const spaceData = await WsfTerminals.getTerminalSailingSpace();
 
 // Get terminal wait times
-const waitTimes = await wsfTerminals.getTerminalWaitTimes();
+const waitTimes = await WsfTerminals.getTerminalWaitTimes();
 
 // Get detailed terminal information
-const verboseTerminals = await wsfTerminals.getTerminalVerbose();
+const verboseTerminals = await WsfTerminals.getTerminalVerbose();
 ```
 
 ### Parameter Examples
@@ -85,17 +85,21 @@ const verboseTerminals = await wsfTerminals.getTerminalVerbose();
 | `getTerminalSailingSpace` | None | `getTerminalSailingSpace()` | Get sailing space availability for all terminals |
 | `getTerminalWaitTimes` | None | `getTerminalWaitTimes()` | Get wait times for all terminals |
 
+### Returns
+
+See Data Types below. Basics, locations, sailing space, wait times, and verbose endpoints return typed arrays; single‑terminal basics return a single `TerminalBasics` item.
+
 ### Common Use Cases
 
 ```typescript
 // Example 1: Display all terminal information
-const terminals = await wsfTerminals.getTerminalBasics();
+const terminals = await WsfTerminals.getTerminalBasics();
 terminals.forEach(terminal => {
   console.log(`${terminal.TerminalName}: ${terminal.TerminalAbbrev}`);
 });
 
 // Example 2: Get specific terminal details
-const terminal = await wsfTerminals.getTerminalBasicsByTerminalId({ terminalId: 7 });
+const terminal = await WsfTerminals.getTerminalBasicsByTerminalId({ terminalId: 7 });
 // Display detailed terminal information
 ```
 
@@ -115,7 +119,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useTerminalBasics } from 'ws-dottie/react/wsf-terminals';
+import { useTerminalBasics } from 'ws-dottie';
 
 function TerminalsList() {
   const { data, isLoading, error } = useTerminalBasics();
@@ -190,7 +194,7 @@ type TerminalWaitTimes = {
 
 ```typescript
 // Implementation example
-const terminals = await wsfTerminals.getTerminalBasics();
+const terminals = await WsfTerminals.getTerminalBasics();
 // Display terminal information for travelers
 ```
 
@@ -200,8 +204,8 @@ const terminals = await wsfTerminals.getTerminalBasics();
 
 ```typescript
 // Implementation example
-const spaceData = await wsfTerminals.getTerminalSailingSpace();
-const waitTimes = await wsfTerminals.getTerminalWaitTimes();
+const spaceData = await WsfTerminals.getTerminalSailingSpace();
+const waitTimes = await WsfTerminals.getTerminalWaitTimes();
 // Display real-time space availability and wait times
 ```
 
@@ -211,10 +215,14 @@ This API uses the **WEEKLY_UPDATES** caching strategy for static data and **MINU
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 7 days (static), 5 minutes (real-time) | Data considered fresh for 7 days (static) or 5 minutes (real-time) |
-| **Refetch Interval** | 7 days (static), 5 minutes (real-time) | Automatically refetch data every 7 days (static) or 5 minutes (real-time) |
-| **GC Time** | 14 days (static), 10 minutes (real-time) | Keep unused data in cache for 14 days (static) or 10 minutes (real-time) |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 7 days (static), 1 minute (real-time) | Data considered fresh for 7 days (static) or 1 minute (real-time) |
+| **Refetch Interval** | 7 days (static), 1 minute (real-time) | Automatically refetch data every 7 days (static) or 1 minute (real-time) |
+| **GC Time** | 14 days (static), 1 hour (real-time) | Keep unused data in cache for 14 days (static) or 1 hour (real-time) |
+| **Retry** | 5 attempts (static), 0 attempts (real-time) | Retry failed requests up to 5 times (static) or no retries (real-time) |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (real‑time for space/wait times; weekly for static terminal data).
 
 ## Common Patterns
 

@@ -507,14 +507,14 @@ function FerryCommuterApp() {
 
 ```javascript
 import { 
-  useCameras, 
-  useSearchCameras 
+  useHighwayCameras, 
+  useSearchHighwayCameras 
 } from 'ws-dottie';
 
 function TrafficCameraViewer() {
   const [selectedRoute, setSelectedRoute] = useState('5');
-  const { data: allCameras } = useCameras();
-  const { data: routeCameras } = useSearchCameras({ StateRoute: selectedRoute });
+  const { data: allCameras } = useHighwayCameras();
+  const { data: routeCameras } = useSearchHighwayCameras({ StateRoute: selectedRoute });
 
   return (
     <div className="camera-viewer">

@@ -34,9 +34,9 @@ describe("WSF Schedule API - Zod Validation", () => {
       validators.scheduledRoutesArray.validateSafe(scheduledRoutes);
 
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
+      console.error("Validation failed:", validatedData.error.issues);
       throw new Error(
-        `Scheduled routes validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Scheduled routes validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
 
@@ -62,10 +62,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedRoute.success) {
         console.error(
           "Individual validation failed:",
-          validatedRoute.error.errors
+          validatedRoute.error.issues
         );
         throw new Error(
-          `Individual scheduled route validation failed: ${JSON.stringify(validatedRoute.error.errors, null, 2)}`
+          `Individual scheduled route validation failed: ${JSON.stringify(validatedRoute.error.issues, null, 2)}`
         );
       }
 
@@ -95,9 +95,9 @@ describe("WSF Schedule API - Zod Validation", () => {
         validators.scheduledRoutesArray.validateSafe(scheduledRoutes);
 
       if (!validatedData.success) {
-        console.error("Validation failed:", validatedData.error.errors);
+        console.error("Validation failed:", validatedData.error.issues);
         throw new Error(
-          `Scheduled routes by season validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+          `Scheduled routes by season validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
         );
       }
 
@@ -142,10 +142,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedRoute.success) {
         console.error(
           "Individual route validation failed:",
-          validatedRoute.error.errors
+          validatedRoute.error.issues
         );
         throw new Error(
-          `Individual route validation failed: ${JSON.stringify(validatedRoute.error.errors, null, 2)}`
+          `Individual route validation failed: ${JSON.stringify(validatedRoute.error.issues, null, 2)}`
         );
       }
 
@@ -169,10 +169,10 @@ describe("WSF Schedule API - Zod Validation", () => {
     if (!validatedData.success) {
       console.error(
         "Route details validation failed:",
-        validatedData.error.errors
+        validatedData.error.issues
       );
       throw new Error(
-        `Route details validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Route details validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
 
@@ -202,10 +202,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedDetails.success) {
         console.error(
           "Individual route details validation failed:",
-          validatedDetails.error.errors
+          validatedDetails.error.issues
         );
         throw new Error(
-          `Individual route details validation failed: ${JSON.stringify(validatedDetails.error.errors, null, 2)}`
+          `Individual route details validation failed: ${JSON.stringify(validatedDetails.error.issues, null, 2)}`
         );
       }
 
@@ -269,10 +269,10 @@ describe("WSF Schedule API - Zod Validation", () => {
         if (!validatedSailing.success) {
           console.error(
             "Individual sailing validation failed:",
-            validatedSailing.error.errors
+            validatedSailing.error.issues
           );
           throw new Error(
-            `Individual sailing validation failed: ${JSON.stringify(validatedSailing.error.errors, null, 2)}`
+            `Individual sailing validation failed: ${JSON.stringify(validatedSailing.error.issues, null, 2)}`
           );
         }
 
@@ -335,10 +335,10 @@ describe("WSF Schedule API - Zod Validation", () => {
         if (!validatedJourney.success) {
           console.error(
             "Journey validation failed:",
-            validatedJourney.error.errors
+            validatedJourney.error.issues
           );
           throw new Error(
-            `Journey validation failed: ${JSON.stringify(validatedJourney.error.errors, null, 2)}`
+            `Journey validation failed: ${JSON.stringify(validatedJourney.error.issues, null, 2)}`
           );
         }
 
@@ -378,10 +378,10 @@ describe("WSF Schedule API - Zod Validation", () => {
         if (!validatedTerminalTime.success) {
           console.error(
             "Terminal time validation failed:",
-            validatedTerminalTime.error.errors
+            validatedTerminalTime.error.issues
           );
           throw new Error(
-            `Terminal time validation failed: ${JSON.stringify(validatedTerminalTime.error.errors, null, 2)}`
+            `Terminal time validation failed: ${JSON.stringify(validatedTerminalTime.error.issues, null, 2)}`
           );
         }
 
@@ -435,10 +435,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedTerminal.success) {
         console.error(
           "Individual terminal validation failed:",
-          validatedTerminal.error.errors
+          validatedTerminal.error.issues
         );
         throw new Error(
-          `Individual terminal validation failed: ${JSON.stringify(validatedTerminal.error.errors, null, 2)}`
+          `Individual terminal validation failed: ${JSON.stringify(validatedTerminal.error.issues, null, 2)}`
         );
       }
 
@@ -487,10 +487,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedCombo.success) {
         console.error(
           "Individual terminal combo validation failed:",
-          validatedCombo.error.errors
+          validatedCombo.error.issues
         );
         throw new Error(
-          `Individual terminal combo validation failed: ${JSON.stringify(validatedCombo.error.errors, null, 2)}`
+          `Individual terminal combo validation failed: ${JSON.stringify(validatedCombo.error.issues, null, 2)}`
         );
       }
 
@@ -528,10 +528,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedAlert.success) {
         console.error(
           "Individual alert validation failed:",
-          validatedAlert.error.errors
+          validatedAlert.error.issues
         );
         throw new Error(
-          `Individual alert validation failed: ${JSON.stringify(validatedAlert.error.errors, null, 2)}`
+          `Individual alert validation failed: ${JSON.stringify(validatedAlert.error.issues, null, 2)}`
         );
       }
 
@@ -582,10 +582,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedAdjustment.success) {
         console.error(
           "Individual time adjustment validation failed:",
-          validatedAdjustment.error.errors
+          validatedAdjustment.error.issues
         );
         throw new Error(
-          `Individual time adjustment validation failed: ${JSON.stringify(validatedAdjustment.error.errors, null, 2)}`
+          `Individual time adjustment validation failed: ${JSON.stringify(validatedAdjustment.error.issues, null, 2)}`
         );
       }
 
@@ -706,10 +706,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedSeason.success) {
         console.error(
           "Individual active season validation failed:",
-          validatedSeason.error.errors
+          validatedSeason.error.issues
         );
         throw new Error(
-          `Individual active season validation failed: ${JSON.stringify(validatedSeason.error.errors, null, 2)}`
+          `Individual active season validation failed: ${JSON.stringify(validatedSeason.error.issues, null, 2)}`
         );
       }
 
@@ -758,10 +758,10 @@ describe("WSF Schedule API - Zod Validation", () => {
       if (!validatedFormat.success) {
         console.error(
           "Individual alternative format validation failed:",
-          validatedFormat.error.errors
+          validatedFormat.error.issues
         );
         throw new Error(
-          `Individual alternative format validation failed: ${JSON.stringify(validatedFormat.error.errors, null, 2)}`
+          `Individual alternative format validation failed: ${JSON.stringify(validatedFormat.error.issues, null, 2)}`
         );
       }
 
@@ -789,10 +789,10 @@ describe("WSF Schedule API - Zod Validation", () => {
     if (!validatedData.success) {
       console.error(
         "Valid date range validation failed:",
-        validatedData.error.errors
+        validatedData.error.issues
       );
       throw new Error(
-        `Valid date range validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Valid date range validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
 
@@ -816,10 +816,10 @@ describe("WSF Schedule API - Zod Validation", () => {
     if (!validatedData.success) {
       console.error(
         "Cache flush date validation failed:",
-        validatedData.error.errors
+        validatedData.error.issues
       );
       throw new Error(
-        `Cache flush date validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`
+        `Cache flush date validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`
       );
     }
 
@@ -849,12 +849,12 @@ describe("WSF Schedule API - Zod Validation", () => {
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
 
       console.log("Validation Error Details:", {
         context: "malformed scheduled routes",
-        errors: result.error.errors,
+        errors: result.error.issues,
         received: malformedData,
       });
     }

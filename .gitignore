@@ -248,4 +248,5 @@ test-e2e.sh
 # Exclude example app from the public repo for now
 example/
 
+# Exclude our working directory
 working/

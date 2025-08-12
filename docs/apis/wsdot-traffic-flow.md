@@ -48,13 +48,13 @@ https://wsdot.wa.gov/Traffic/api/TrafficFlow/TrafficFlowREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotTrafficFlow } from 'ws-dottie/wsdot-traffic-flow';
+import { WsdotTrafficFlow } from 'ws-dottie';
 
 // Get all traffic flow data
-const flows = await wsdotTrafficFlow.getTrafficFlows();
+const flows = await WsdotTrafficFlow.getTrafficFlows();
 
 // Get specific traffic flow by ID
-const flow = await wsdotTrafficFlow.getTrafficFlow({ flowDataId: 2482 });
+const flow = await WsdotTrafficFlow.getTrafficFlowById({ flowDataID: 2482 });
 ```
 
 ### Parameter Examples
@@ -64,17 +64,21 @@ const flow = await wsdotTrafficFlow.getTrafficFlow({ flowDataId: 2482 });
 | `getTrafficFlows` | None | `getTrafficFlows()` | Get all traffic flow data |
 | `getTrafficFlow` | `{ flowDataId: number }` | `getTrafficFlow({ flowDataId: 2482 })` | Get specific traffic flow by ID |
 
+### Returns
+
+See Data Types below. Functions return arrays of `TrafficFlow` or a single `TrafficFlow` when querying by ID.
+
 ### Common Use Cases
 
 ```typescript
 // Example 1: Display all traffic flow data
-const flows = await wsdotTrafficFlow.getTrafficFlows();
+const flows = await WsdotTrafficFlow.getTrafficFlows();
 flows.forEach(flow => {
   console.log(`${flow.StationName}: ${flow.FlowReading} vehicles/hour`);
 });
 
 // Example 2: Get specific flow information
-const flow = await wsdotTrafficFlow.getTrafficFlow({ flowDataId: 2482 });
+const flow = await WsdotTrafficFlow.getTrafficFlowById({ flowDataID: 2482 });
 // Display detailed flow information
 ```
 
@@ -92,7 +96,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useTrafficFlows } from 'ws-dottie/react/wsdot-traffic-flow';
+import { useTrafficFlows } from 'ws-dottie';
 
 function TrafficFlowList() {
   const { data, isLoading, error } = useTrafficFlows();
@@ -169,10 +173,14 @@ This API uses the **MINUTE_UPDATES** caching strategy. For detailed information 
 
 | Caching Aspect | Configuration | Description |
 |----------------|---------------|-------------|
-| **Stale Time** | 5 minutes | Data considered fresh for 5 minutes |
-| **Refetch Interval** | 5 minutes | Automatically refetch data every 5 minutes |
-| **GC Time** | 10 minutes | Keep unused data in cache for 10 minutes |
-| **Retry** | 3 attempts | Retry failed requests up to 3 times |
+| **Stale Time** | 1 minute | Data considered fresh for 1 minute |
+| **Refetch Interval** | 1 minute | Automatically refetch data every 1 minute |
+| **GC Time** | 1 hour | Keep unused data in cache for 1 hour |
+| **Retry** | None | No retries |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (minute‑level for flow readings; weekly for station metadata).
 
 ## Common Patterns
 

@@ -8,8 +8,8 @@ describe("WSDOT Highway Alerts API - Zod Validation", () => {
     const alerts = await getHighwayAlerts();
     const validatedData = validators.highwayAlertsArray.validateSafe(alerts);
     if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.errors);
-      throw new Error(`Highway alerts validation failed: ${JSON.stringify(validatedData.error.errors, null, 2)}`);
+      console.error("Validation failed:", validatedData.error.issues);
+      throw new Error(`Highway alerts validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`);
     }
     expect(validatedData.data).toBeDefined();
     expect(Array.isArray(validatedData.data)).toBe(true);
@@ -23,8 +23,8 @@ describe("WSDOT Highway Alerts API - Zod Validation", () => {
       const firstAlert = alerts[0];
       const validatedAlert = validators.highwayAlert.validateSafe(firstAlert);
       if (!validatedAlert.success) {
-        console.error("Individual validation failed:", validatedAlert.error.errors);
-        throw new Error(`Individual alert validation failed: ${JSON.stringify(validatedAlert.error.errors, null, 2)}`);
+        console.error("Individual validation failed:", validatedAlert.error.issues);
+        throw new Error(`Individual alert validation failed: ${JSON.stringify(validatedAlert.error.issues, null, 2)}`);
       }
       expect(validatedAlert.data.AlertID).toBeDefined();
       expect(typeof validatedAlert.data.AlertID).toBe("number");
@@ -63,8 +63,8 @@ describe("WSDOT Highway Alerts API - Zod Validation", () => {
     for (const alert of alerts) {
       const validatedAlert = validators.highwayAlert.validateSafe(alert);
       if (!validatedAlert.success) {
-        console.error("Nullable validation failed:", validatedAlert.error.errors);
-        throw new Error(`Nullable field validation failed: ${JSON.stringify(validatedAlert.error.errors, null, 2)}`);
+        console.error("Nullable validation failed:", validatedAlert.error.issues);
+        throw new Error(`Nullable field validation failed: ${JSON.stringify(validatedAlert.error.issues, null, 2)}`);
       }
       if (validatedAlert.data.County !== null) {
         expect(typeof validatedAlert.data.County).toBe("string");
@@ -96,11 +96,11 @@ describe("WSDOT Highway Alerts API - Zod Validation", () => {
     const result = validators.highwayAlertsArray.validateSafe(malformedData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.errors).toBeDefined();
-      expect(result.error.errors.length).toBeGreaterThan(0);
+      expect(result.error.issues).toBeDefined();
+      expect(result.error.issues.length).toBeGreaterThan(0);
       console.log("Validation Error Details:", {
         context: "malformed highway alerts",
-        errors: result.error.errors,
+        errors: result.error.issues,
         received: malformedData,
       });
     }

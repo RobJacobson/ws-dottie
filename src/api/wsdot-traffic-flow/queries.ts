@@ -6,7 +6,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
-import type { QueryOptionsWithoutKey } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/types";
 
 import { getTrafficFlowById, getTrafficFlows } from "./api";
 import type { TrafficFlow } from "./schemas";
@@ -26,7 +26,7 @@ import type { TrafficFlow } from "./schemas";
  * ```
  */
 export const useTrafficFlows = (
-  options?: QueryOptionsWithoutKey<TrafficFlow[]>
+  options?: TanStackOptions<TrafficFlow[]>
 ): UseQueryResult<TrafficFlow[], Error> => {
   return useQuery({
     queryKey: ["wsdot", "traffic-flow", "getTrafficFlows"],
@@ -55,7 +55,7 @@ export const useTrafficFlows = (
  */
 export const useTrafficFlowById = (
   params: { flowDataID: number },
-  options?: QueryOptionsWithoutKey<TrafficFlow>
+  options?: TanStackOptions<TrafficFlow>
 ): UseQueryResult<TrafficFlow, Error> => {
   return useQuery({
     queryKey: [

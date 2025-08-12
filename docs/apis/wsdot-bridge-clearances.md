@@ -47,13 +47,13 @@ https://wsdot.wa.gov/Traffic/api/Bridges/ClearanceREST.svc
 ### Basic Usage
 
 ```typescript
-import { wsdotBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
+import { WsdotBridgeClearances } from 'ws-dottie';
 
 // Get all bridge clearances
-const clearances = await wsdotBridgeClearances.getBridgeClearances();
+const clearances = await WsdotBridgeClearances.getBridgeClearances({ route: "" });
 
 // Get bridge clearances for specific route
-const routeClearances = await wsdotBridgeClearances.getBridgeClearances({ route: "005" });
+const routeClearances = await WsdotBridgeClearances.getBridgeClearances({ route: "005" });
 ```
 
 ### Parameter Examples
@@ -63,17 +63,21 @@ const routeClearances = await wsdotBridgeClearances.getBridgeClearances({ route:
 | `getBridgeClearances` | None | `getBridgeClearances()` | Get all bridge clearances |
 | `getBridgeClearances` | `{ route: string }` | `getBridgeClearances({ route: "005" })` | Get clearances for specific route |
 
+### Returns
+
+See Data Types below. Functions return arrays of `BridgeDataGIS`.
+
 ### Common Use Cases
 
 ```typescript
 // Example 1: Display all bridge clearances
-const clearances = await wsdotBridgeClearances.getBridgeClearances();
+const clearances = await WsdotBridgeClearances.getBridgeClearances({ route: "" });
 clearances.forEach(bridge => {
   console.log(`${bridge.BridgeNumber}: ${bridge.VerticalClearanceMaximumFeetInch} clearance`);
 });
 
 // Example 2: Filter bridges by route
-const routeClearances = await wsdotBridgeClearances.getBridgeClearances({ route: "005" });
+const routeClearances = await WsdotBridgeClearances.getBridgeClearances({ route: "005" });
 // Display I-5 bridge clearances
 ```
 
@@ -91,7 +95,7 @@ For comprehensive React Query hooks, TanStack Query setup, error handling, and c
 ### Basic Hook Usage
 
 ```typescript
-import { useBridgeClearances } from 'ws-dottie/react/wsdot-bridge-clearances';
+import { useBridgeClearances } from 'ws-dottie';
 
 function BridgeClearancesList() {
   const { data, isLoading, error } = useBridgeClearances();
@@ -147,7 +151,7 @@ type BridgeDataGIS = {
 
 ```typescript
 // Implementation example
-const clearances = await wsdotBridgeClearances.getBridgeClearances();
+const clearances = await WsdotBridgeClearances.getBridgeClearances({ route: "" });
 // Store in database for transportation planning applications
 ```
 
@@ -157,7 +161,7 @@ const clearances = await wsdotBridgeClearances.getBridgeClearances();
 
 ```typescript
 // Implementation example
-const routeClearances = await wsdotBridgeClearances.getBridgeClearances({ route: "005" });
+const routeClearances = await WsdotBridgeClearances.getBridgeClearances({ route: "005" });
 // Analyze I-5 bridge clearances for transportation planning
 ```
 
@@ -171,6 +175,10 @@ This API uses the **WEEKLY_UPDATES** caching strategy. For detailed information 
 | **Refetch Interval** | 7 days | Automatically refetch data every 7 days |
 | **GC Time** | 14 days | Keep unused data in cache for 14 days |
 | **Retry** | 3 attempts | Retry failed requests up to 3 times |
+
+## Update Frequency
+
+Bridge clearance and metadata are largely static; weekly refresh is sufficient.
 
 ## Common Patterns
 

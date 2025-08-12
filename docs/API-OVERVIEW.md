@@ -4,14 +4,15 @@
 
 WS-Dottie provides easy access to real-time transportation data from Washington State Department of Transportation (WSDOT) and Washington State Ferries (WSF) APIs. All API responses are validated at runtime with Zod 4, and types are inferred directly from those schemas. This overview helps you quickly identify which APIs meet your needs and understand their capabilities.
 
+Note on extra fields: Examples list core properties for clarity. Additional upstream properties may appear and are passed through unchanged (schemas use Zod 4 with `.catchall(z.unknown())`).
+
 ## Quick Start
 
 ```typescript
-import { WsdotHighwayAlerts, WsfVessels } from 'ws-dottie';
-import { config } from 'ws-dottie/shared/config';
+import { WsdotHighwayAlerts, WsfVessels, configManager } from 'ws-dottie';
 
-// Set your WSDOT API key (can also be set in .env file)
-config.setApiKey('your-wsdot-access-code');
+// Set your WSDOT API key (can also be set in .env file via WSDOT_ACCESS_TOKEN)
+configManager.setApiKey('your-wsdot-api-key');
 
 // Get real-time highway alerts
 const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
@@ -71,7 +72,7 @@ const vessels = await WsfVessels.getVesselLocations();
 
 | Frequency | APIs | Use Cases |
 |-----------|------|-----------|
-| **Real-time (5-15 sec)** | WSF Vessels | Live tracking, real-time apps |
+| **Real-time (5 sec)** | WSF Vessels | Live tracking, real-time apps |
 | **Frequent (1-5 min)** | Highway Alerts, Traffic Flow, WSF Terminals | Navigation, traffic apps |
 | **Regular (15-60 min)** | Weather, Travel Times, Mountain Passes | Planning, monitoring |
 | **Daily** | Vessel Basics, Terminals, Schedule | Reference data, configuration |
@@ -274,14 +275,11 @@ console.log(`Tracking ${passes.length} mountain passes`);
 - **Static APIs** (daily/weekly updates): Use `DAILY_UPDATES` or `WEEKLY_UPDATES`
 
 ### Bundle Size Optimization
+Tree-shaking is supported. Prefer named imports from `ws-dottie` and let your bundler remove unused exports:
 ```typescript
-// Import only what you need
-import { WsdotHighwayAlerts } from 'ws-dottie/wsdot-highway-alerts';
-import { WsfVessels } from 'ws-dottie/wsf-vessels';
-
-// Instead of importing everything
-// import * as WSdot from 'ws-dottie';
+import { WsdotHighwayAlerts, WsfVessels } from 'ws-dottie';
 ```
+Deep subpath imports like `ws-dottie/wsdot-highway-alerts` are not currently exported.
 
 ## Next Steps
 
