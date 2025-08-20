@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/vessels/rest/help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory as createFetchFactory } from "@/shared/fetching/api";
 
 import type {
   VesselAccommodation,
@@ -12,6 +12,14 @@ import type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
+  GetVesselBasicsByIdParams,
+  GetVesselLocationsByVesselIdParams,
+  GetVesselAccommodationsByIdParams,
+  GetVesselStatsByIdParams,
+  GetVesselVerboseByIdParams,
+  GetVesselHistoryByVesselAndDateRangeParams,
+  GetMultipleVesselHistoriesParams,
+  GetAllVesselHistoriesParams,
 } from "./schemas";
 import {
   vesselAccommodationArraySchema,
@@ -26,6 +34,14 @@ import {
   vesselsCacheFlushDateSchema,
   vesselVerboseArraySchema,
   vesselVerboseSchema,
+  getVesselBasicsByIdParamsSchema,
+  getVesselLocationsByVesselIdParamsSchema,
+  getVesselAccommodationsByIdParamsSchema,
+  getVesselStatsByIdParamsSchema,
+  getVesselVerboseByIdParamsSchema,
+  getVesselHistoryByVesselAndDateRangeParamsSchema,
+  getMultipleVesselHistoriesParamsSchema,
+  getAllVesselHistoriesParamsSchema,
 } from "./schemas";
 
 // Create a factory function for WSF Vessels API
@@ -52,9 +68,10 @@ const createFetch = createFetchFactory("/ferries/api/vessels/rest");
  * ```
  */
 export const getVesselBasics = async () => {
-  const fetcher = createFetch("/vesselbasics");
-  const data = await fetcher();
-  return vesselBasicArraySchema.parse(data) as VesselBasic[];
+  const fetcher = createFetch("/vesselbasics", {
+    output: vesselBasicArraySchema,
+  });
+  return fetcher() as Promise<VesselBasic[]>;
 };
 
 /**
@@ -74,10 +91,17 @@ export const getVesselBasics = async () => {
  * console.log(vessel.VesselName); // "M/V Cathlamet"
  * ```
  */
-export const getVesselBasicsById = async (params: { vesselId: number }) => {
-  const fetcher = createFetch<{ vesselId: number }>("/vesselbasics/{vesselId}");
-  const data = await fetcher(params);
-  return vesselBasicSchema.parse(data) as VesselBasic;
+export const getVesselBasicsById = async (
+  params: GetVesselBasicsByIdParams
+) => {
+  const fetcher = createFetch<GetVesselBasicsByIdParams>(
+    "/vesselbasics/{vesselId}",
+    {
+      input: getVesselBasicsByIdParamsSchema,
+      output: vesselBasicSchema,
+    }
+  );
+  return fetcher(params) as Promise<VesselBasic>;
 };
 
 // ============================================================================
@@ -105,9 +129,10 @@ export const getVesselBasicsById = async (params: { vesselId: number }) => {
  * ```
  */
 export const getVesselLocations = async () => {
-  const fetcher = createFetch("/vessellocations");
-  const data = await fetcher();
-  return vesselLocationArraySchema.parse(data) as VesselLocation[];
+  const fetcher = createFetch("/vessellocations", {
+    output: vesselLocationArraySchema,
+  });
+  return fetcher() as Promise<VesselLocation[]>;
 };
 
 /**
@@ -121,14 +146,17 @@ export const getVesselLocations = async () => {
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselLocation object containing real-time position data for the specified vessel
  */
-export const getVesselLocationsByVesselId = async (params: {
-  vesselId: number;
-}) => {
-  const fetcher = createFetch<{ vesselId: number }>(
-    "/vessellocations/{vesselId}"
+export const getVesselLocationsByVesselId = async (
+  params: GetVesselLocationsByVesselIdParams
+) => {
+  const fetcher = createFetch<GetVesselLocationsByVesselIdParams>(
+    "/vessellocations/{vesselId}",
+    {
+      input: getVesselLocationsByVesselIdParamsSchema,
+      output: vesselLocationSchema,
+    }
   );
-  const data = await fetcher(params);
-  return vesselLocationSchema.parse(data) as VesselLocation;
+  return fetcher(params) as Promise<VesselLocation>;
 };
 
 // ============================================================================
@@ -147,9 +175,10 @@ export const getVesselLocationsByVesselId = async (params: {
  * @returns Promise resolving to an array of VesselAccommodation objects containing accommodation information
  */
 export const getVesselAccommodations = async () => {
-  const fetcher = createFetch("/vesselaccommodations");
-  const data = await fetcher();
-  return vesselAccommodationArraySchema.parse(data) as VesselAccommodation[];
+  const fetcher = createFetch("/vesselaccommodations", {
+    output: vesselAccommodationArraySchema,
+  });
+  return fetcher() as Promise<VesselAccommodation[]>;
 };
 
 /**
@@ -163,14 +192,17 @@ export const getVesselAccommodations = async () => {
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselAccommodation object containing accommodation information for the specified vessel
  */
-export const getVesselAccommodationsById = async (params: {
-  vesselId: number;
-}) => {
-  const fetcher = createFetch<{ vesselId: number }>(
-    "/vesselaccommodations/{vesselId}"
+export const getVesselAccommodationsById = async (
+  params: GetVesselAccommodationsByIdParams
+) => {
+  const fetcher = createFetch<GetVesselAccommodationsByIdParams>(
+    "/vesselaccommodations/{vesselId}",
+    {
+      input: getVesselAccommodationsByIdParamsSchema,
+      output: vesselAccommodationSchema,
+    }
   );
-  const data = await fetcher(params);
-  return vesselAccommodationSchema.parse(data) as VesselAccommodation;
+  return fetcher(params) as Promise<VesselAccommodation>;
 };
 
 // ============================================================================
@@ -188,9 +220,10 @@ export const getVesselAccommodationsById = async (params: {
  * @returns Promise resolving to an array of VesselStats objects containing vessel statistics
  */
 export const getVesselStats = async () => {
-  const fetcher = createFetch("/vesselstats");
-  const data = await fetcher();
-  return vesselStatsArraySchema.parse(data) as VesselStats[];
+  const fetcher = createFetch("/vesselstats", {
+    output: vesselStatsArraySchema,
+  });
+  return fetcher() as Promise<VesselStats[]>;
 };
 
 /**
@@ -204,10 +237,15 @@ export const getVesselStats = async () => {
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselStats object containing statistics for the specified vessel
  */
-export const getVesselStatsById = async (params: { vesselId: number }) => {
-  const fetcher = createFetch<{ vesselId: number }>("/vesselstats/{vesselId}");
-  const data = await fetcher(params);
-  return vesselStatsSchema.parse(data) as VesselStats;
+export const getVesselStatsById = async (params: GetVesselStatsByIdParams) => {
+  const fetcher = createFetch<GetVesselStatsByIdParams>(
+    "/vesselstats/{vesselId}",
+    {
+      input: getVesselStatsByIdParamsSchema,
+      output: vesselStatsSchema,
+    }
+  );
+  return fetcher(params) as Promise<VesselStats>;
 };
 
 // ============================================================================
@@ -227,18 +265,17 @@ export const getVesselStatsById = async (params: { vesselId: number }) => {
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to an array of VesselHistory objects containing historical data for the specified vessel and date range
  */
-export const getVesselHistoryByVesselAndDateRange = async (params: {
-  vesselName: string;
-  dateStart: Date;
-  dateEnd: Date;
-}) => {
-  const fetcher = createFetch<{
-    vesselName: string;
-    dateStart: Date;
-    dateEnd: Date;
-  }>("/vesselhistory/{vesselName}/{dateStart}/{dateEnd}");
-  const data = await fetcher(params);
-  return vesselHistoryArraySchema.parse(data) as VesselHistory[];
+export const getVesselHistoryByVesselAndDateRange = async (
+  params: GetVesselHistoryByVesselAndDateRangeParams
+) => {
+  const fetcher = createFetch<GetVesselHistoryByVesselAndDateRangeParams>(
+    "/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
+    {
+      input: getVesselHistoryByVesselAndDateRangeParamsSchema,
+      output: vesselHistoryArraySchema,
+    }
+  );
+  return fetcher(params) as Promise<VesselHistory[]>;
 };
 
 /**
@@ -265,12 +302,9 @@ export const getVesselHistoryByVesselAndDateRange = async (params: {
  * console.log(history.length); // Total number of history records for all vessels
  * ```
  */
-export const getMultipleVesselHistories = async (params: {
-  vesselNames: string[];
-  dateStart: Date;
-  dateEnd: Date;
-  batchSize?: number;
-}): Promise<VesselHistory[]> => {
+export const getMultipleVesselHistories = async (
+  params: GetMultipleVesselHistoriesParams
+): Promise<VesselHistory[]> => {
   const { vesselNames, dateStart, dateEnd, batchSize = 6 } = params;
   const results: VesselHistory[] = [];
 
@@ -314,11 +348,9 @@ export const getMultipleVesselHistories = async (params: {
  * console.log(allHistory.length); // Total number of history records for all 21 vessels
  * ```
  */
-export const getAllVesselHistories = async (params: {
-  dateStart: Date;
-  dateEnd: Date;
-  batchSize?: number;
-}): Promise<VesselHistory[]> => {
+export const getAllVesselHistories = async (
+  params: GetAllVesselHistoriesParams
+): Promise<VesselHistory[]> => {
   // All vessels in the WSF fleet (as of 2024)
   const allVesselNames = [
     "Cathlamet",
@@ -367,9 +399,10 @@ export const getAllVesselHistories = async (params: {
  * @returns Promise resolving to an array of VesselVerbose objects containing comprehensive vessel information
  */
 export const getVesselVerbose = async () => {
-  const fetcher = createFetch("/vesselverbose");
-  const data = await fetcher();
-  return vesselVerboseArraySchema.parse(data) as VesselVerbose[];
+  const fetcher = createFetch("/vesselverbose", {
+    output: vesselVerboseArraySchema,
+  });
+  return fetcher() as Promise<VesselVerbose[]>;
 };
 
 /**
@@ -383,12 +416,17 @@ export const getVesselVerbose = async () => {
  * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise resolving to a VesselVerbose object containing comprehensive information for the specified vessel
  */
-export const getVesselVerboseById = async (params: { vesselId: number }) => {
-  const fetcher = createFetch<{ vesselId: number }>(
-    "/vesselverbose/{vesselId}"
+export const getVesselVerboseById = async (
+  params: GetVesselVerboseByIdParams
+) => {
+  const fetcher = createFetch<GetVesselVerboseByIdParams>(
+    "/vesselverbose/{vesselId}",
+    {
+      input: getVesselVerboseByIdParamsSchema,
+      output: vesselVerboseSchema,
+    }
   );
-  const data = await fetcher(params);
-  return vesselVerboseSchema.parse(data) as VesselVerbose;
+  return fetcher(params) as Promise<VesselVerbose>;
 };
 
 // ============================================================================
@@ -406,7 +444,8 @@ export const getVesselVerboseById = async (params: { vesselId: number }) => {
  * @returns Promise resolving to a VesselsCacheFlushDate object containing the cache flush date
  */
 export const getCacheFlushDateVessels = async () => {
-  const fetcher = createFetch("/cacheflushdate");
-  const data = await fetcher();
-  return vesselsCacheFlushDateSchema.parse(data) as VesselsCacheFlushDate;
+  const fetcher = createFetch("/cacheflushdate", {
+    output: vesselsCacheFlushDateSchema,
+  });
+  return fetcher() as Promise<VesselsCacheFlushDate>;
 };

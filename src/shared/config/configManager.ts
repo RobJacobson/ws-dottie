@@ -35,6 +35,7 @@ const DEFAULT_BASE_URL = "https://www.wsdot.wa.gov";
 export interface WsdotConfig {
   WSDOT_ACCESS_TOKEN: string;
   WSDOT_BASE_URL?: string;
+  WS_DOTTIE_VALIDATION_MODE?: "strict" | "disabled" | "auto";
 }
 
 // Helper function to safely access environment variables
@@ -60,10 +61,16 @@ const getEnvVar = (key: string): string | undefined => {
 const initializeFromEnv = (): WsdotConfig => {
   const apiKey = getEnvVar("WSDOT_ACCESS_TOKEN") || "";
   const baseUrl = getEnvVar("WSDOT_BASE_URL") || DEFAULT_BASE_URL;
+  const validationMode =
+    (getEnvVar("WS_DOTTIE_VALIDATION_MODE") as
+      | "strict"
+      | "disabled"
+      | "auto") || "auto";
 
   return {
     WSDOT_ACCESS_TOKEN: apiKey,
     WSDOT_BASE_URL: baseUrl,
+    WS_DOTTIE_VALIDATION_MODE: validationMode,
   };
 };
 
@@ -100,6 +107,24 @@ const setBaseUrl = (baseUrl: string): void => {
   globalConfig.WSDOT_BASE_URL = baseUrl.trim();
 };
 
+const setValidationMode = (mode: "strict" | "disabled" | "auto"): void => {
+  globalConfig.WS_DOTTIE_VALIDATION_MODE = mode;
+};
+
+const getValidationMode = (): "strict" | "disabled" | "auto" => {
+  return globalConfig.WS_DOTTIE_VALIDATION_MODE || "auto";
+};
+
+const shouldValidateInputs = (): boolean => {
+  const mode = getValidationMode();
+  if (mode === "strict") return true;
+  if (mode === "disabled") return false;
+
+  // 'auto' mode: validate in production, skip in development
+  const nodeEnv = getEnvVar("NODE_ENV");
+  return nodeEnv === "production";
+};
+
 const clearConfig = (): void => {
   globalConfig = initializeFromEnv();
 };
@@ -110,5 +135,8 @@ export const configManager = {
   getBaseUrl,
   setApiKey,
   setBaseUrl,
+  setValidationMode,
+  getValidationMode,
+  shouldValidateInputs,
   clearConfig,
 };

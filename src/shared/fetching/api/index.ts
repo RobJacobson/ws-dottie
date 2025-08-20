@@ -9,3 +9,4 @@
 
 export { createApiClient } from "./createApiClient";
 export { createFetchFactory } from "./createFetchFactory";
+export { createZodFetchFactory } from "./createZodFetchFactory";

@@ -32,6 +32,7 @@
  * ```
  */
 
+import { z } from "zod";
 import { configManager } from "@/shared/config";
 import type { LoggingMode } from "@/shared/logger";
 
@@ -48,28 +49,65 @@ import { createApiClient } from "./createApiClient";
  */
 export const createFetchFactory = (apiPath: string) => {
   const fetchFn = createApiClient();
+  const shouldValidateInputs = configManager.shouldValidateInputs();
 
-  // Function overloads for cleaner API
+  // Function overloads for cleaner API with optional schema support
   function createFetch(
-    endpointTemplate: string
+    endpointTemplate: string,
+    schemas?: { input?: z.ZodSchema; output?: z.ZodSchema }
   ): (logMode?: LoggingMode) => Promise<unknown>;
   function createFetch<P extends Record<string, JsonWithDates>>(
-    endpointTemplate: string
+    endpointTemplate: string,
+    schemas?: { input?: z.ZodSchema; output?: z.ZodSchema }
   ): (params: P, logMode?: LoggingMode) => Promise<unknown>;
 
-  // Implementation
+  // Implementation with integrated validation
   function createFetch<P extends Record<string, JsonWithDates> = never>(
-    endpointTemplate: string
+    endpointTemplate: string,
+    schemas?: { input?: z.ZodSchema; output?: z.ZodSchema }
   ) {
-    return (params?: P, logMode?: LoggingMode): Promise<unknown> => {
+    return async (params?: P, logMode?: LoggingMode): Promise<unknown> => {
+      // Optional input validation based on global config
+      let validatedParams = params;
+      if (shouldValidateInputs && schemas?.input && params) {
+        try {
+          validatedParams = schemas.input.parse(params) as P;
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            const fieldErrors = error.issues
+              .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+              .join(", ");
+            throw new Error(`Parameter validation failed: ${fieldErrors}`);
+          }
+          throw error;
+        }
+      }
+
       // Interpolate parameters into the endpoint template
-      const endpoint = interpolateParams(endpointTemplate, params);
+      const endpoint = interpolateParams(endpointTemplate, validatedParams);
 
       // Build the complete URL with API key parameter
       const url = buildUrl(apiPath, endpoint);
 
       // Use the API client to make the request
-      return fetchFn<unknown>(url, logMode);
+      const data = await fetchFn<unknown>(url, logMode);
+
+      // Always validate outputs if schema provided
+      if (schemas?.output) {
+        try {
+          return schemas.output.parse(data);
+        } catch (error) {
+          if (error instanceof z.ZodError) {
+            const fieldErrors = error.issues
+              .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+              .join(", ");
+            throw new Error(`Response validation failed: ${fieldErrors}`);
+          }
+          throw error;
+        }
+      }
+
+      return data;
     };
   }
 
