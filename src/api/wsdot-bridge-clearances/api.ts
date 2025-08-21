@@ -2,13 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { BridgeDataGIS } from "./schemas";
-import { bridgeDataGisArraySchema } from "./schemas";
+import { getBridgeClearancesParamsSchema } from "./inputs";
+import type { BridgeDataGIS } from "./outputs";
+import { bridgeDataGisArraySchema } from "./outputs";
 
 // Create a factory function for WSDOT Bridge Clearances API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/Bridges/ClearanceREST.svc"
 );
 
@@ -18,22 +19,24 @@ const createFetch = createFetchFactory(
  * Returns bridge clearance data for a specific route. The Route parameter is required
  * and should be a valid WSDOT route identifier (e.g., "005" for I-5).
  *
- * @param params - Object containing route and optional logMode
+ * @param params - Object containing route parameter
  * @param params.route - The WSDOT route identifier (e.g., "005" for I-5)
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing bridge clearance data for the specified route
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
  * const clearances = await getBridgeClearances({ route: "005" });
- * console.log(clearances[0].BridgeName); // "Aurora Bridge"
+ * console.log(clearances[0].CrossingDescription); // "Over I-5"
  * ```
  */
 export const getBridgeClearances = async (params: { route: string }) => {
   const fetcher = createFetch<{ route: string }>(
-    "/GetClearancesAsJson?Route={route}"
+    "/GetClearancesAsJson?Route={route}",
+    {
+      input: getBridgeClearancesParamsSchema,
+      output: bridgeDataGisArraySchema,
+    }
   );
-  const data = await fetcher(params);
-  return bridgeDataGisArraySchema.parse(data) as BridgeDataGIS[];
+  return fetcher(params) as Promise<BridgeDataGIS[]>;
 };

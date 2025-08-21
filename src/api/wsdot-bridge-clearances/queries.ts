@@ -9,7 +9,8 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { TanStackOptions } from "@/shared/types";
 
 import { getBridgeClearances } from "./api";
-import type { BridgeDataGIS } from "./schemas";
+import type { GetBridgeClearancesParams } from "./inputs";
+import type { BridgeDataGIS } from "./outputs";
 
 /**
  * Hook for getting bridge clearances from WSDOT Bridge Clearances API
@@ -17,7 +18,7 @@ import type { BridgeDataGIS } from "./schemas";
  * Returns bridge clearance data for a specific route. The Route parameter is required
  * and should be a valid WSDOT route identifier (e.g., "005" for I-5).
  *
- * @param params - Object containing route
+ * @param params - Object containing route parameter
  * @param params.route - The WSDOT route identifier (e.g., "005" for I-5)
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with bridge clearance data
@@ -25,21 +26,16 @@ import type { BridgeDataGIS } from "./schemas";
  * @example
  * ```typescript
  * const { data: clearances } = useBridgeClearances({ route: "005" });
- * console.log(clearances?.[0]?.BridgeName); // "Aurora Bridge"
+ * console.log(clearances?.[0]?.CrossingDescription); // "Over I-5"
  * ```
  */
 export const useBridgeClearances = (
-  params: { route: string },
+  params: GetBridgeClearancesParams,
   options?: TanStackOptions<BridgeDataGIS[]>
 ): UseQueryResult<BridgeDataGIS[], Error> => {
   return useQuery({
-    queryKey: [
-      "wsdot",
-      "bridge-clearances",
-      "getBridgeClearances",
-      params.route,
-    ],
-    queryFn: () => getBridgeClearances({ route: params.route }),
+    queryKey: ["wsdot", "bridge-clearances", "getBridgeClearances", params],
+    queryFn: () => getBridgeClearances(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });

@@ -1,0 +1,145 @@
+import { z } from "zod";
+
+import {
+  zLatitude,
+  zLongitude,
+  zNullableString,
+  zWsdotDate,
+} from "@/shared/validation";
+
+/**
+ * WSDOT Bridge Clearances API Response Schemas
+ *
+ * This file contains all response/output schemas for the Washington State Department
+ * of Transportation Bridge Clearances API. These schemas validate and transform the
+ * data returned by the API endpoints, ensuring type safety and consistent data structures.
+ */
+
+// ============================================================================
+// BRIDGE DATA GIS SCHEMA
+// ============================================================================
+
+export const bridgeDataGisSchema = z
+  .object({
+    APILastUpdate: zWsdotDate().describe(
+      "Timestamp indicating when this bridge clearance data was last updated in the WSDOT system. This field shows the currency of the clearance information and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone."
+    ),
+
+    BridgeNumber: z
+      .string()
+      .describe(
+        "Unique identifier assigned to the bridge by WSDOT. This number is used internally by the department for bridge management, maintenance scheduling, and record keeping. It serves as the primary key for bridge identification in WSDOT systems."
+      ),
+
+    ControlEntityGuid: z
+      .string()
+      .describe(
+        "Globally unique identifier (GUID) for the controlling entity responsible for this bridge. This typically refers to the organization or department that maintains jurisdiction over the bridge structure and its clearance specifications."
+      ),
+
+    CrossingDescription: z
+      .string()
+      .describe(
+        "Human-readable description of what the bridge crosses over or under. Examples include 'Over I-5', 'Over Ship Canal', 'Under SR 520'. This field provides context about the bridge's location and purpose within the transportation network."
+      ),
+
+    CrossingLocationId: z
+      .number()
+      .describe(
+        "Numeric identifier for the specific crossing location where the bridge is situated. This ID is used to correlate bridge data with other WSDOT location-based systems and databases."
+      ),
+
+    CrossingRecordGuid: z
+      .string()
+      .describe(
+        "Globally unique identifier (GUID) for the crossing record in the WSDOT database. This serves as a permanent, unique reference for this specific bridge crossing record across all WSDOT systems."
+      ),
+
+    InventoryDirection: zNullableString().describe(
+      "Direction indicator for bridge inventory purposes, typically showing the direction of travel or the orientation of the bridge structure. May be null if direction information is not applicable or not available for this bridge."
+    ),
+
+    Latitude: zLatitude().describe(
+      "Latitude coordinate of the bridge location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the bridge structure. Essential for GPS navigation and geographic information systems."
+    ),
+
+    LocationGuid: z
+      .string()
+      .describe(
+        "Globally unique identifier (GUID) for the geographic location of the bridge. This GUID can be used to correlate bridge location data with other WSDOT geographic information systems and mapping applications."
+      ),
+
+    Longitude: zLongitude().describe(
+      "Longitude coordinate of the bridge location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the bridge structure. Essential for GPS navigation and geographic information systems."
+    ),
+
+    RouteDate: zWsdotDate().describe(
+      "Date when the route information for this bridge was established or last verified. This timestamp indicates when the bridge's association with its current route designation was confirmed or updated in the WSDOT system."
+    ),
+
+    SRMP: z
+      .number()
+      .describe(
+        "State Route Milepost (SRMP) indicating the precise location of the bridge along the state route. This is a decimal number representing the distance in miles from the route's origin point. Used for precise location identification and maintenance planning."
+      ),
+
+    SRMPAheadBackIndicator: zNullableString().describe(
+      "Indicator showing whether the milepost measurement is ahead or back from the standard reference point. This helps clarify the exact positioning when bridges are located between standard milepost markers. May be null if not applicable."
+    ),
+
+    StateRouteID: z
+      .string()
+      .describe(
+        "Official Washington State route identifier where the bridge is located. Examples include '005' for I-5, '090' for I-90, '101' for US-101. This is the primary route designation used by WSDOT for traffic management and navigation."
+      ),
+
+    StateStructureId: z
+      .string()
+      .describe(
+        "Official state structure identifier assigned to the bridge by WSDOT. This ID is used for structural engineering records, inspection schedules, and maintenance planning. It serves as the primary reference for all bridge-related documentation."
+      ),
+
+    VerticalClearanceMaximumFeetInch: z
+      .string()
+      .describe(
+        "Maximum vertical clearance under the bridge expressed in feet and inches format (e.g., '16-06' for 16 feet 6 inches). This represents the highest point where vehicles can safely pass under the bridge structure. Critical for commercial vehicle route planning."
+      ),
+
+    VerticalClearanceMaximumInches: z
+      .number()
+      .describe(
+        "Maximum vertical clearance under the bridge expressed in total inches. This is the same measurement as VerticalClearanceMaximumFeetInch but converted to a single numeric value for easier computational use and comparison."
+      ),
+
+    VerticalClearanceMinimumFeetInch: z
+      .string()
+      .describe(
+        "Minimum vertical clearance under the bridge expressed in feet and inches format (e.g., '15-08' for 15 feet 8 inches). This represents the lowest point where vehicles can pass under the bridge structure. This is the critical measurement for determining vehicle compatibility."
+      ),
+
+    VerticalClearanceMinimumInches: z
+      .number()
+      .describe(
+        "Minimum vertical clearance under the bridge expressed in total inches. This is the same measurement as VerticalClearanceMinimumFeetInch but converted to a single numeric value. This is the key measurement used for route planning and vehicle restriction enforcement."
+      ),
+  })
+  .catchall(z.unknown())
+  .describe(
+    "Complete bridge clearance information including location, identification, and clearance measurements. This schema represents comprehensive bridge data from the WSDOT Bridge Clearances API, providing essential information for commercial vehicle route planning, bridge management, and transportation safety. The clearance measurements are critical for preventing bridge strikes and ensuring safe passage of oversized vehicles."
+  );
+
+// ============================================================================
+// ARRAY SCHEMAS
+// ============================================================================
+
+export const bridgeDataGisArraySchema = z
+  .array(bridgeDataGisSchema)
+  .describe(
+    "Array of bridge clearance data for all bridges along a specified route. This collection provides comprehensive clearance information that enables route planning for commercial vehicles and helps prevent bridge strikes by providing accurate clearance measurements."
+  );
+
+// ============================================================================
+// TYPE EXPORTS
+// ============================================================================
+
+export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
