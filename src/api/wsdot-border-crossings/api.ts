@@ -4,6 +4,7 @@
 
 import { createZodFetchFactory } from "@/shared/fetching/api";
 
+import type { GetBorderCrossingsParams } from "./inputs";
 import { getBorderCrossingsParamsSchema } from "./inputs";
 import type { BorderCrossingData } from "./outputs";
 import { borderCrossingDataArraySchema } from "./outputs";
@@ -29,10 +30,15 @@ const createFetch = createZodFetchFactory(
  * console.log(crossings[0].CrossingName); // "Peace Arch"
  * ```
  */
-export const getBorderCrossings = async (params: {} = {}) => {
-  const fetcher = createFetch<{}>("/GetBorderCrossingsAsJson", {
-    input: getBorderCrossingsParamsSchema,
-    output: borderCrossingDataArraySchema,
-  });
+export const getBorderCrossings = async (
+  params: GetBorderCrossingsParams = {}
+) => {
+  const fetcher = createFetch<GetBorderCrossingsParams>(
+    "/GetBorderCrossingsAsJson",
+    {
+      input: getBorderCrossingsParamsSchema,
+      output: borderCrossingDataArraySchema,
+    }
+  );
   return fetcher(params) as Promise<BorderCrossingData[]>;
 };
