@@ -6,14 +6,19 @@ export {
   getCommercialVehicleRestrictions,
   getCommercialVehicleRestrictionsWithId,
 } from "./api";
-// React Query hooks
-export {
-  useCommercialVehicleRestrictions,
-  useCommercialVehicleRestrictionsWithId,
-} from "./queries";
+// Input parameter types
+export type {
+  GetCommercialVehicleRestrictionsParams,
+  GetCommercialVehicleRestrictionsWithIdParams,
+} from "./inputs";
 // Types inferred from Zod schemas
 export type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionWithId,
   RoadwayLocation,
-} from "./schemas";
+} from "./outputs";
+// React Query hooks
+export {
+  useCommercialVehicleRestrictions,
+  useCommercialVehicleRestrictionsWithId,
+} from "./queries";

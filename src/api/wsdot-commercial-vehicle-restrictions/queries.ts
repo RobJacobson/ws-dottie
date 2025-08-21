@@ -13,9 +13,13 @@ import {
   getCommercialVehicleRestrictionsWithId,
 } from "./api";
 import type {
+  GetCommercialVehicleRestrictionsParams,
+  GetCommercialVehicleRestrictionsWithIdParams,
+} from "./inputs";
+import type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionWithId,
-} from "./schemas";
+} from "./outputs";
 
 /**
  * Hook for getting commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
@@ -23,16 +27,18 @@ import type {
  * Returns commercial vehicle restriction data including weight limits, bridge restrictions,
  * and other commercial vehicle limitations across Washington State highways.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with commercial vehicle restriction data
  *
  * @example
  * ```typescript
- * const { data: restrictions } = useCommercialVehicleRestrictions();
- * console.log(restrictions?.[0]?.RouteName); // "I-5"
+ * const { data: restrictions } = useCommercialVehicleRestrictions({});
+ * console.log(restrictions?.[0]?.BridgeName); // "Aurora Bridge"
  * ```
  */
 export const useCommercialVehicleRestrictions = (
+  params: GetCommercialVehicleRestrictionsParams = {},
   options?: TanStackOptions<CommercialVehicleRestriction[]>
 ): UseQueryResult<CommercialVehicleRestriction[], Error> => {
   return useQuery({
@@ -40,8 +46,9 @@ export const useCommercialVehicleRestrictions = (
       "wsdot",
       "commercial-vehicle-restrictions",
       "getCommercialVehicleRestrictions",
+      params,
     ],
-    queryFn: () => getCommercialVehicleRestrictions(),
+    queryFn: () => getCommercialVehicleRestrictions(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -54,25 +61,28 @@ export const useCommercialVehicleRestrictions = (
  * and other commercial vehicle limitations across Washington State highways. This endpoint
  * includes unique identifiers for each restriction.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with commercial vehicle restriction data with unique IDs
  *
  * @example
  * ```typescript
- * const { data: restrictions } = useCommercialVehicleRestrictionsWithId();
- * console.log(restrictions?.[0]?.RestrictionID); // 12345
+ * const { data: restrictions } = useCommercialVehicleRestrictionsWithId({});
+ * console.log(restrictions?.[0]?.UniqueID); // "12345"
  * ```
  */
 export const useCommercialVehicleRestrictionsWithId = (
+  params: GetCommercialVehicleRestrictionsWithIdParams = {},
   options?: TanStackOptions<CommercialVehicleRestrictionWithId[]>
-): UseQueryResult<CommercialVehicleRestriction[], Error> => {
+): UseQueryResult<CommercialVehicleRestrictionWithId[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",
       "commercial-vehicle-restrictions",
       "getCommercialVehicleRestrictionsWithId",
+      params,
     ],
-    queryFn: () => getCommercialVehicleRestrictionsWithId(),
+    queryFn: () => getCommercialVehicleRestrictionsWithId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
