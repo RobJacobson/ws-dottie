@@ -2,5 +2,6 @@
 
 export * from "./api";
 export * from "./cache";
+export * from "./inputs";
+export * from "./outputs";
 export * from "./queries";
-export * from "./schemas";

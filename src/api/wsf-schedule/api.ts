@@ -2,25 +2,54 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/schedule/rest/help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { z } from "zod";
 
+import { createZodFetchFactory } from "@/shared/fetching/api";
+
+import type {
+  GetAllSailingsParams,
+  GetAlternativeFormatsParams,
+  GetRouteDetailsByRouteParams,
+  GetRouteDetailsByTerminalsParams,
+  GetRouteDetailsParams,
+  GetRoutesByTerminalsParams,
+  GetRoutesParams,
+  GetRoutesWithDisruptionsParams,
+  GetSailingsParams,
+  GetScheduleByRouteParams,
+  GetScheduleByTerminalsParams,
+  GetScheduledRoutesBySeasonParams,
+  GetScheduleTodayByRouteParams,
+  GetScheduleTodayByTerminalsParams,
+  GetTerminalMatesParams,
+  GetTerminalsAndMatesByRouteParams,
+  GetTerminalsAndMatesParams,
+  GetTerminalsParams,
+  GetTimeAdjustmentsByRouteParams,
+  GetTimeAdjustmentsBySchedRouteParams,
+} from "./inputs";
 import {
-  activeSeasonsArraySchema,
-  alertsArraySchema,
-  alternativeFormatsArraySchema,
-  routesArraySchema,
-  routesArrayLooseSchema,
-  routeDetailsSchema,
-  routeDetailsLooseSchema,
-  sailingsArraySchema,
-  scheduledRoutesArraySchema,
-  scheduleCacheFlushDateSchema,
-  scheduleResponseSchema,
-  scheduleTerminalCombosArraySchema,
-  scheduleTerminalsArraySchema,
-  timeAdjustmentsArraySchema,
-  validDateRangeSchema,
-} from "./schemas";
+  getAllSailingsParamsSchema,
+  getAlternativeFormatsParamsSchema,
+  getRouteDetailsByRouteParamsSchema,
+  getRouteDetailsByTerminalsParamsSchema,
+  getRouteDetailsParamsSchema,
+  getRoutesByTerminalsParamsSchema,
+  getRoutesParamsSchema,
+  getRoutesWithDisruptionsParamsSchema,
+  getSailingsParamsSchema,
+  getScheduleByRouteParamsSchema,
+  getScheduleByTerminalsParamsSchema,
+  getScheduledRoutesBySeasonParamsSchema,
+  getScheduleTodayByRouteParamsSchema,
+  getScheduleTodayByTerminalsParamsSchema,
+  getTerminalMatesParamsSchema,
+  getTerminalsAndMatesByRouteParamsSchema,
+  getTerminalsAndMatesParamsSchema,
+  getTerminalsParamsSchema,
+  getTimeAdjustmentsByRouteParamsSchema,
+  getTimeAdjustmentsBySchedRouteParamsSchema,
+} from "./inputs";
 import type {
   ActiveSeason,
   Alert,
@@ -30,14 +59,29 @@ import type {
   Sailing,
   ScheduledRoute,
   ScheduleResponse,
-  ScheduleTerminal,
-  ScheduleTerminalCombo,
   TimeAdjustment,
-  ValidDateRange,
-} from "./schemas";
+} from "./outputs";
+import {
+  activeSeasonsArraySchema,
+  alertsArraySchema,
+  alternativeFormatsArraySchema,
+  routeDetailsLooseSchema,
+  routeDetailsSchema,
+  routesArrayLooseSchema,
+  routesArraySchema,
+  sailingsArraySchema,
+  scheduleCacheFlushDateSchema,
+  scheduledRoutesArraySchema,
+  scheduleResponseSchema,
+  scheduleSchema,
+  scheduleTerminalCombosArraySchema,
+  scheduleTerminalsArraySchema,
+  timeAdjustmentsArraySchema,
+  validDateRangeSchema,
+} from "./outputs";
 
 // Create a factory function for WSF Schedule API
-const createFetch = createFetchFactory("/ferries/api/schedule/rest");
+const createFetch = createZodFetchFactory("/ferries/api/schedule/rest");
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS
@@ -62,9 +106,10 @@ const createFetch = createFetchFactory("/ferries/api/schedule/rest");
  * ```
  */
 export const getCacheFlushDateSchedule = async () => {
-  const fetcher = createFetch("/cacheflushdate");
-  const data = await fetcher();
-  return scheduleCacheFlushDateSchema.parse(data) as Date;
+  const fetcher = createFetch("/cacheflushdate", {
+    output: scheduleCacheFlushDateSchema,
+  });
+  return await fetcher();
 };
 
 // ============================================================================
@@ -89,9 +134,10 @@ export const getCacheFlushDateSchedule = async () => {
  * ```
  */
 export const getValidDateRange = async () => {
-  const fetcher = createFetch("/validdaterange");
-  const data = await fetcher();
-  return validDateRangeSchema.parse(data) as ValidDateRange;
+  const fetcher = createFetch("/validdaterange", {
+    output: validDateRangeSchema,
+  });
+  return await fetcher();
 };
 
 // ============================================================================
@@ -116,10 +162,12 @@ export const getValidDateRange = async () => {
  * console.log(terminals[0].TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminals = async (params: { tripDate: Date }) => {
-  const fetcher = createFetch<{ tripDate: Date }>(`/terminals/{tripDate}`);
-  const data = await fetcher(params);
-  return scheduleTerminalsArraySchema.parse(data) as ScheduleTerminal[];
+export const getTerminals = async (params: GetTerminalsParams) => {
+  const fetcher = createFetch("/terminals/{tripDate}", {
+    input: getTerminalsParamsSchema,
+    output: scheduleTerminalsArraySchema,
+  });
+  return await fetcher(params);
 };
 
 /**
@@ -134,10 +182,14 @@ export const getTerminals = async (params: { tripDate: Date }) => {
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalsAndMates = async (params: { tripDate: Date }) => {
-  const fetcher = createFetch<{ tripDate: Date }>(`/terminalsandmates/{tripDate}`);
-  const data = await fetcher(params);
-  return scheduleTerminalCombosArraySchema.parse(data) as ScheduleTerminalCombo[];
+export const getTerminalsAndMates = async (
+  params: GetTerminalsAndMatesParams
+) => {
+  const fetcher = createFetch("/terminalsandmates/{tripDate}", {
+    input: getTerminalsAndMatesParamsSchema,
+    output: scheduleTerminalCombosArraySchema,
+  });
+  return await fetcher(params);
 };
 
 /**
@@ -154,15 +206,17 @@ export const getTerminalsAndMates = async (params: { tripDate: Date }) => {
  * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations for the route
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalsAndMatesByRoute = async (params: {
-  tripDate: Date;
-  routeId: number;
-}) => {
-  const fetcher = createFetch<{ tripDate: Date; routeId: number }>(
-    `/terminalsandmatesbyroute/{tripDate}/{routeId}`
+export const getTerminalsAndMatesByRoute = async (
+  params: GetTerminalsAndMatesByRouteParams
+) => {
+  const fetcher = createFetch(
+    "/terminalsandmatesbyroute/{tripDate}/{routeId}",
+    {
+      input: getTerminalsAndMatesByRouteParamsSchema,
+      output: scheduleTerminalCombosArraySchema,
+    }
   );
-  const data = await fetcher(params);
-  return scheduleTerminalCombosArraySchema.parse(data) as ScheduleTerminalCombo[];
+  return await fetcher(params);
 };
 
 /**
@@ -179,15 +233,12 @@ export const getTerminalsAndMatesByRoute = async (params: {
  * @returns Promise resolving to an array of ScheduleTerminal objects containing arriving terminals
  * @throws {WsfApiError} When the API request fails
  */
-export const getTerminalMates = async (params: {
-  tripDate: Date;
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ tripDate: Date; terminalId: number }>(
-    `/terminalmates/{tripDate}/{terminalId}`
-  );
-  const data = await fetcher(params);
-  return scheduleTerminalsArraySchema.parse(data) as ScheduleTerminal[];
+export const getTerminalMates = async (params: GetTerminalMatesParams) => {
+  const fetcher = createFetch("/terminalmates/{tripDate}/{terminalId}", {
+    input: getTerminalMatesParamsSchema,
+    output: scheduleTerminalsArraySchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -213,14 +264,12 @@ export const getTerminalMates = async (params: {
  * console.log(routes[0].RouteAbbrev); // "ANA-SID"
  * ```
  */
-export const getRoutes = async (params: { tripDate: Date }) => {
-  const fetcher = createFetch<{ tripDate: Date }>(`/routes/{tripDate}`);
-  const data = await fetcher(params);
-  try {
-    return routesArraySchema.parse(data) as Route[];
-  } catch {
-    return routesArrayLooseSchema.parse(data) as unknown as Route[];
-  }
+export const getRoutes = async (params: GetRoutesParams) => {
+  const fetcher = createFetch("/routes/{tripDate}", {
+    input: getRoutesParamsSchema,
+    output: routesArraySchema,
+  });
+  return await fetcher(params);
 };
 
 /**
@@ -239,18 +288,17 @@ export const getRoutes = async (params: { tripDate: Date }) => {
  * @returns Promise resolving to an array of Route objects filtered by terminal combination
  * @throws {WsfApiError} When the API request fails
  */
-export const getRoutesByTerminals = async (params: {
-  tripDate: Date;
-  departingTerminalId: number;
-  arrivingTerminalId: number;
-}) => {
-  const fetcher = createFetch<{
-    tripDate: Date;
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-  }>(`/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
-  const data = await fetcher(params);
-  return routesArraySchema.parse(data) as Route[];
+export const getRoutesByTerminals = async (
+  params: GetRoutesByTerminalsParams
+) => {
+  const fetcher = createFetch(
+    "/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
+    {
+      input: getRoutesByTerminalsParamsSchema,
+      output: routesArraySchema,
+    }
+  );
+  return await fetcher(params);
 };
 
 /**
@@ -266,12 +314,14 @@ export const getRoutesByTerminals = async (params: {
  * @returns Promise resolving to an array of Route objects that have service disruptions
  * @throws {WsfApiError} When the API request fails
  */
-export const getRoutesWithDisruptions = async (params: { tripDate: Date }) => {
-  const fetcher = createFetch<{ tripDate: Date }>(
-    `/routeshavingservicedisruptions/{tripDate}`
-  );
-  const data = await fetcher(params);
-  return routesArraySchema.parse(data) as Route[];
+export const getRoutesWithDisruptions = async (
+  params: GetRoutesWithDisruptionsParams
+) => {
+  const fetcher = createFetch("/routeshavingservicedisruptions/{tripDate}", {
+    input: getRoutesWithDisruptionsParamsSchema,
+    output: routesArraySchema,
+  });
+  return await fetcher(params);
 };
 
 /**
@@ -288,10 +338,12 @@ export const getRoutesWithDisruptions = async (params: { tripDate: Date }) => {
  * @returns Promise resolving to an array of Route objects containing detailed route information
  * @throws {WsfApiError} When the API request fails
  */
-export const getRouteDetails = async (params: { tripDate: Date }) => {
-  const fetcher = createFetch<{ tripDate: Date }>(`/routedetails/{tripDate}`);
-  const data = await fetcher(params);
-  return routesArraySchema.parse(data) as Route[];
+export const getRouteDetails = async (params: GetRouteDetailsParams) => {
+  const fetcher = createFetch("/routedetails/{tripDate}", {
+    input: getRouteDetailsParamsSchema,
+    output: routesArraySchema,
+  });
+  return await fetcher(params);
 };
 
 /**
@@ -321,7 +373,7 @@ export const getRouteDetailsByTerminals = async (params: {
     arrivingTerminalId: number;
   }>(`/routedetails/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
   const data = await fetcher(params);
-  return routesArraySchema.parse(data) as Route[];
+  return routesArraySchema.parse(data) as z.infer<typeof routesArraySchema>;
 };
 
 /**
@@ -338,19 +390,14 @@ export const getRouteDetailsByTerminals = async (params: {
  * @returns Promise resolving to a RouteDetails object containing detailed information for the specified route
  * @throws {WsfApiError} When the API request fails
  */
-export const getRouteDetailsByRoute = async (params: {
-  tripDate: Date;
-  routeId: number;
-}) => {
-  const fetcher = createFetch<{ tripDate: Date; routeId: number }>(
-    `/routedetails/{tripDate}/{routeId}`
-  );
-  const data = await fetcher(params);
-  try {
-    return routeDetailsSchema.parse(data) as RouteDetails;
-  } catch {
-    return routeDetailsLooseSchema.parse(data) as unknown as RouteDetails;
-  }
+export const getRouteDetailsByRoute = async (
+  params: GetRouteDetailsByRouteParams
+) => {
+  const fetcher = createFetch("/routedetails/{tripDate}/{routeId}", {
+    input: getRouteDetailsByRouteParamsSchema,
+    output: routeDetailsSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -391,9 +438,10 @@ export const getActiveSeasons = async () => {
  * @throws {WsfApiError} When the API request fails
  */
 export const getScheduledRoutes = async () => {
-  const fetcher = createFetch(`/schedroutes`);
-  const data = await fetcher();
-  return scheduledRoutesArraySchema.parse(data) as ScheduledRoute[];
+  const fetcher = createFetch("/schedroutes", {
+    output: scheduledRoutesArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -412,7 +460,9 @@ export const getScheduledRoutes = async () => {
 export const getScheduledRoutesBySeason = async (params: {
   scheduleId: number;
 }) => {
-  const fetcher = createFetch<{ scheduleId: number }>(`/schedroutes/{scheduleId}`);
+  const fetcher = createFetch<{ scheduleId: number }>(
+    `/schedroutes/{scheduleId}`
+  );
   const data = await fetcher(params);
   return scheduledRoutesArraySchema.parse(data) as ScheduledRoute[];
 };
@@ -437,7 +487,9 @@ export const getScheduledRoutesBySeason = async (params: {
  * @throws {WsfApiError} When the API request fails
  */
 export const getSailings = async (params: { schedRouteId: number }) => {
-  const fetcher = createFetch<{ schedRouteId: number }>(`/sailings/{schedRouteId}`);
+  const fetcher = createFetch<{ schedRouteId: number }>(
+    `/sailings/{schedRouteId}`
+  );
   const data = await fetcher(params);
   return sailingsArraySchema.parse(data) as Sailing[];
 };
@@ -458,7 +510,9 @@ export const getSailings = async (params: { schedRouteId: number }) => {
  * @throws {WsfApiError} When the API request fails
  */
 export const getAllSailings = async (params: { schedRouteId: number }) => {
-  const fetcher = createFetch<{ schedRouteId: number }>(`/allsailings/{schedRouteId}`);
+  const fetcher = createFetch<{ schedRouteId: number }>(
+    `/allsailings/{schedRouteId}`
+  );
   const data = await fetcher(params);
   return sailingsArraySchema.parse(data) as Sailing[];
 };
@@ -498,7 +552,9 @@ export const getTimeAdjustments = async () => {
  * @returns Promise resolving to an array of TimeAdjustment objects containing time adjustment information for the route
  * @throws {WsfApiError} When the API request fails
  */
-export const getTimeAdjustmentsByRoute = async (params: { routeId: number }) => {
+export const getTimeAdjustmentsByRoute = async (params: {
+  routeId: number;
+}) => {
   const fetcher = createFetch<{ routeId: number }>(`/timeadjbyroute/{routeId}`);
   const data = await fetcher(params);
   return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
@@ -684,7 +740,9 @@ export const getAlerts = async () => {
  * @returns Promise resolving to an array of AlternativeFormat objects containing format information
  * @throws {WsfApiError} When the API request fails
  */
-export const getAlternativeFormats = async (params: { subjectName: string }) => {
+export const getAlternativeFormats = async (params: {
+  subjectName: string;
+}) => {
   const fetcher = createFetch<{ subjectName: string }>(
     `/alternativeformats/{subjectName}`
   );
