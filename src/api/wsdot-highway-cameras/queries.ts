@@ -17,28 +17,35 @@ import {
   getHighwayCameras,
   searchHighwayCameras,
 } from "./api";
-import type { Camera, GetCameraResponse, SearchCamerasParams } from "./schemas";
+import type {
+  GetHighwayCameraParams,
+  GetHighwayCamerasParams,
+  SearchHighwayCamerasParams,
+} from "./inputs";
+import type { Camera, GetCameraResponse } from "./outputs";
 
 /**
  * React Query hook for getting all highway cameras
  *
  * Returns all available highway cameras from the WSDOT Highway Cameras API.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional query options
  * @returns React Query result containing all camera data
  *
  * @example
  * ```typescript
- * const { data: cameras } = useHighwayCameras();
+ * const { data: cameras } = useHighwayCameras({});
  * console.log(cameras?.[0]?.Title); // "I-5 @ NE 85th St"
  * ```
  */
 export const useHighwayCameras = (
+  params: GetHighwayCamerasParams = {},
   options?: TanStackOptions<Camera[]>
 ): UseQueryResult<Camera[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
-    queryFn: () => getHighwayCameras(),
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCameras", params],
+    queryFn: () => getHighwayCameras(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -49,7 +56,7 @@ export const useHighwayCameras = (
  *
  * Returns detailed information about a specific highway camera identified by its ID.
  *
- * @param params - Object containing cameraID
+ * @param params - Object containing cameraID parameter
  * @param params.cameraID - The unique identifier of the highway camera
  * @param options - Optional query options
  * @returns React Query result containing the camera data
@@ -61,12 +68,12 @@ export const useHighwayCameras = (
  * ```
  */
 export const useHighwayCamera = (
-  params: { cameraID: number },
+  params: GetHighwayCameraParams,
   options?: TanStackOptions<GetCameraResponse>
 ): UseQueryResult<GetCameraResponse, Error> => {
   return useQuery<GetCameraResponse>({
-    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params.cameraID],
-    queryFn: () => getHighwayCamera({ cameraID: params.cameraID }),
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params],
+    queryFn: () => getHighwayCamera(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -93,7 +100,7 @@ export const useHighwayCamera = (
  * ```
  */
 export const useSearchHighwayCameras = (
-  params: SearchCamerasParams,
+  params: SearchHighwayCamerasParams,
   options?: TanStackOptions<Camera[]>
 ): UseQueryResult<Camera[], Error> => {
   return useQuery<Camera[]>({

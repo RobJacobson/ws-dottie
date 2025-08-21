@@ -14,16 +14,21 @@ export {
   getHighwayCameras,
   searchHighwayCameras,
 } from "./api";
+// Input parameter types
+export type {
+  GetHighwayCameraParams,
+  GetHighwayCamerasParams,
+  SearchHighwayCamerasParams,
+} from "./inputs";
+// Export types
+export type {
+  Camera,
+  CameraLocation,
+  GetCameraResponse,
+} from "./outputs";
 // Export React hooks
 export {
   useHighwayCamera,
   useHighwayCameras,
   useSearchHighwayCameras,
 } from "./queries";
-// Export types
-export type {
-  Camera,
-  CameraLocation,
-  GetCameraResponse,
-  SearchCamerasParams,
-} from "./schemas";

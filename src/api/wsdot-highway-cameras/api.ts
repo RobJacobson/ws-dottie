@@ -6,19 +6,22 @@
  * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 
-import { configManager } from "@/shared/config";
-import { createApiClient, createFetchFactory } from "@/shared/fetching/api";
-import type { LoggingMode } from "@/shared/logger";
+import type { z } from "zod";
 
-import type { Camera, GetCameraResponse, SearchCamerasParams } from "./schemas";
+import { createZodFetchFactory } from "@/shared/fetching/api";
+
 import {
-  cameraArraySchema,
-  cameraSchema,
-  searchCamerasParamsSchema,
-} from "./schemas";
+  type GetHighwayCameraParams,
+  type GetHighwayCamerasParams,
+  getHighwayCameraParamsSchema,
+  getHighwayCamerasParamsSchema,
+  searchHighwayCamerasParamsSchema,
+} from "./inputs";
+import type { Camera, GetCameraResponse } from "./outputs";
+import { cameraArraySchema, cameraSchema } from "./outputs";
 
 // Create a factory function for WSDOT Highway Cameras API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
 );
 
@@ -27,20 +30,24 @@ const createFetch = createFetchFactory(
  *
  * Returns all available highway cameras from the WSDOT Highway Cameras API.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all camera data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const cameras = await getHighwayCameras();
+ * const cameras = await getHighwayCameras({});
  * console.log(cameras[0].Title); // "I-5 @ NE 85th St"
  * ```
  */
-export const getHighwayCameras = async () => {
-  const fetcher = createFetch("/GetCamerasAsJson");
-  const data = await fetcher();
-  return cameraArraySchema.parse(data) as Camera[];
+export const getHighwayCameras = async (
+  params: GetHighwayCamerasParams = {}
+) => {
+  const fetcher = createFetch<GetHighwayCamerasParams>("/GetCamerasAsJson", {
+    input: getHighwayCamerasParamsSchema,
+    output: cameraArraySchema,
+  });
+  return fetcher(params) as Promise<Camera[]>;
 };
 
 /**
@@ -48,11 +55,10 @@ export const getHighwayCameras = async () => {
  *
  * Returns detailed information about a specific highway camera identified by its ID.
  *
- * @param params - Object containing cameraID and optional logMode
+ * @param params - Object containing cameraID parameter
  * @param params.cameraID - The unique identifier of the highway camera
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific camera data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
@@ -60,12 +66,15 @@ export const getHighwayCameras = async () => {
  * console.log(camera.Title); // "I-5 @ NE 85th St"
  * ```
  */
-export const getHighwayCamera = async (params: { cameraID: number }) => {
-  const fetcher = createFetch<{ cameraID: number }>(
-    "/GetCameraAsJson?CameraID={cameraID}"
+export const getHighwayCamera = async (params: GetHighwayCameraParams) => {
+  const fetcher = createFetch<GetHighwayCameraParams>(
+    "/GetCameraAsJson?CameraID={cameraID}",
+    {
+      input: getHighwayCameraParamsSchema,
+      output: cameraSchema,
+    }
   );
-  const data = await fetcher(params);
-  return cameraSchema.parse(data) as GetCameraResponse;
+  return fetcher(params) as Promise<GetCameraResponse>;
 };
 
 /**
@@ -74,14 +83,13 @@ export const getHighwayCamera = async (params: { cameraID: number }) => {
  * Returns filtered highway camera data based on search criteria such as region,
  * state route, or milepost range.
  *
- * @param params - Object containing search parameters and optional logMode
+ * @param params - Object containing search parameters
  * @param params.StateRoute - Optional state route number (e.g., "9", "405")
  * @param params.Region - Optional region code (NW, NC, SC, SW, ER, OL, OS, WA)
  * @param params.StartingMilepost - Optional starting milepost for search range
  * @param params.EndingMilepost - Optional ending milepost for search range
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing filtered camera data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
@@ -90,12 +98,8 @@ export const getHighwayCamera = async (params: { cameraID: number }) => {
  * ```
  */
 export const searchHighwayCameras = async (
-  params: SearchCamerasParams,
-  logMode?: LoggingMode
+  params: z.infer<typeof searchHighwayCamerasParamsSchema>
 ): Promise<Camera[]> => {
-  // Validate params shape
-  searchCamerasParamsSchema.parse(params);
-
   // Build query string by including only defined values
   const queryParams = new URLSearchParams();
   if (params.StateRoute !== undefined)
@@ -108,9 +112,13 @@ export const searchHighwayCameras = async (
     queryParams.append("EndingMilepost", String(params.EndingMilepost));
 
   const endpoint = `/SearchCamerasAsJson?${queryParams.toString()}`;
-  const url = `${configManager.getBaseUrl()}/Traffic/api/HighwayCameras/HighwayCamerasREST.svc${endpoint}`;
 
-  const fetchFn = createApiClient();
-  const data = await fetchFn<unknown>(url, logMode);
-  return cameraArraySchema.parse(data) as Camera[];
+  const fetcher = createFetch<z.infer<typeof searchHighwayCamerasParamsSchema>>(
+    endpoint,
+    {
+      input: searchHighwayCamerasParamsSchema,
+      output: cameraArraySchema,
+    }
+  );
+  return fetcher(params) as Promise<Camera[]>;
 };
