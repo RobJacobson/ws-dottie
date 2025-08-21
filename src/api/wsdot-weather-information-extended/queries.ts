@@ -9,7 +9,8 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { TanStackOptions } from "@/shared/types";
 
 import { getWeatherInformationExtended } from "./api";
-import type { WeatherReading } from "./schemas";
+import type { GetWeatherInformationExtendedParams } from "./inputs";
+import type { WeatherReading } from "./outputs";
 
 /**
  * React Query hook for retrieving extended weather information
@@ -17,16 +18,18 @@ import type { WeatherReading } from "./schemas";
  * Retrieves additional weather readings including surface and subsurface
  * measurements from WSDOT weather stations.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional query options
  * @returns React Query result containing extended weather information data
  *
  * @example
  * ```typescript
- * const { data: weatherReadings } = useWeatherInformationExtended();
+ * const { data: weatherReadings } = useWeatherInformationExtended({});
  * console.log(weatherReadings[0].AirTemperature); // 14.7
  * ```
  */
 export const useWeatherInformationExtended = (
+  params: GetWeatherInformationExtendedParams = {},
   options?: TanStackOptions<WeatherReading[]>
 ): UseQueryResult<WeatherReading[], Error> => {
   return useQuery({
@@ -34,8 +37,9 @@ export const useWeatherInformationExtended = (
       "wsdot",
       "weather-information-extended",
       "getWeatherInformationExtended",
+      params,
     ],
-    queryFn: () => getWeatherInformationExtended(),
+    queryFn: () => getWeatherInformationExtended(params),
     ...tanstackQueryOptions.HOURLY_UPDATES,
     ...options,
   });
