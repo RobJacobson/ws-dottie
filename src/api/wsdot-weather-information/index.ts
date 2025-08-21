@@ -8,11 +8,20 @@ export {
   getWeatherInformationByStationId,
   getWeatherInformationForStations,
 } from "./api";
+// Input parameter types
+export type {
+  GetWeatherInformationByStationIdParams,
+  GetWeatherInformationForStationsParams,
+  GetWeatherInformationParams,
+} from "./inputs";
+// Export types
+export type {
+  WeatherInfo,
+  WeatherInformationResponse,
+} from "./outputs";
 // React Query hooks
 export {
   useWeatherInformation,
   useWeatherInformationByStationId,
   useWeatherInformationForStations,
 } from "./queries";
-// TypeScript types
-export type { WeatherInfo } from "./schemas";

@@ -2,13 +2,21 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { WeatherInfo } from "./schemas";
-import { weatherInfoArraySchema, weatherInfoSchema } from "./schemas";
+import {
+  type GetWeatherInformationByStationIdParams,
+  type GetWeatherInformationForStationsParams,
+  type GetWeatherInformationParams,
+  getWeatherInformationByStationIdParamsSchema,
+  getWeatherInformationForStationsParamsSchema,
+  getWeatherInformationParamsSchema,
+} from "./inputs";
+import type { WeatherInfo } from "./outputs";
+import { weatherInfoArraySchema, weatherInfoSchema } from "./outputs";
 
 // Create a factory function for WSDOT Weather Information API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
 );
 
@@ -17,20 +25,27 @@ const createFetch = createFetchFactory(
  *
  * Retrieves current weather data for all monitored weather stations.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all weather information data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const weatherInfo = await getWeatherInformation();
+ * const weatherInfo = await getWeatherInformation({});
  * console.log(weatherInfo[0].TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformation = async () => {
-  const fetcher = createFetch("/GetCurrentWeatherInformationAsJson");
-  const data = await fetcher();
-  return weatherInfoArraySchema.parse(data) as WeatherInfo[];
+export const getWeatherInformation = async (
+  params: GetWeatherInformationParams = {}
+) => {
+  const fetcher = createFetch<GetWeatherInformationParams>(
+    "/GetCurrentWeatherInformationAsJson",
+    {
+      input: getWeatherInformationParamsSchema,
+      output: weatherInfoArraySchema,
+    }
+  );
+  return fetcher(params) as Promise<WeatherInfo[]>;
 };
 
 /**
@@ -39,26 +54,28 @@ export const getWeatherInformation = async () => {
  * Returns detailed weather information for a specific weather station
  * identified by its ID.
  *
- * @param params - Object containing stationId and optional logMode
+ * @param params - Object containing stationId parameter
  * @param params.stationId - The ID of the specific weather station
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific weather station data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const weatherInfo = await getWeatherInformationByStationId(1909);
+ * const weatherInfo = await getWeatherInformationByStationId({ stationId: 1909 });
  * console.log(weatherInfo.TemperatureInFahrenheit); // 66.38
  * ```
  */
-export const getWeatherInformationByStationId = async (params: {
-  stationId: number;
-}) => {
-  const fetcher = createFetch<{ stationId: number }>(
-    "/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}"
+export const getWeatherInformationByStationId = async (
+  params: GetWeatherInformationByStationIdParams
+) => {
+  const fetcher = createFetch<GetWeatherInformationByStationIdParams>(
+    "/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
+    {
+      input: getWeatherInformationByStationIdParamsSchema,
+      output: weatherInfoSchema,
+    }
   );
-  const data = await fetcher(params);
-  return weatherInfoSchema.parse(data) as WeatherInfo;
+  return fetcher(params) as Promise<WeatherInfo>;
 };
 
 /**
@@ -67,24 +84,26 @@ export const getWeatherInformationByStationId = async (params: {
  * Returns weather information for multiple weather stations specified
  * by their IDs.
  *
- * @param params - Object containing stationIds and optional logMode
+ * @param params - Object containing stationIds parameter
  * @param params.stationIds - Comma-separated list of station IDs
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing weather data for the specified stations
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const weatherInfo = await getWeatherInformationForStations("1909,1910,1928");
+ * const weatherInfo = await getWeatherInformationForStations({ stationIds: "1909,1910,1928" });
  * console.log(weatherInfo.length); // 3
  * ```
  */
-export const getWeatherInformationForStations = async (params: {
-  stationIds: string;
-}) => {
-  const fetcher = createFetch<{ stationIds: string }>(
-    "/GetCurrentWeatherForStationsAsJson?StationList={stationIds}"
+export const getWeatherInformationForStations = async (
+  params: GetWeatherInformationForStationsParams
+) => {
+  const fetcher = createFetch<GetWeatherInformationForStationsParams>(
+    "/GetCurrentWeatherForStationsAsJson?StationList={stationIds}",
+    {
+      input: getWeatherInformationForStationsParamsSchema,
+      output: weatherInfoArraySchema,
+    }
   );
-  const data = await fetcher(params);
-  return weatherInfoArraySchema.parse(data) as WeatherInfo[];
+  return fetcher(params) as Promise<WeatherInfo[]>;
 };
