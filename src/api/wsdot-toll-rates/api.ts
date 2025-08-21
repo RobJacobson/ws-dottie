@@ -2,17 +2,25 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { TollRate, TollTripInfo, TollTripRates } from "./schemas";
+import {
+  type GetTollRatesParams,
+  type GetTollTripInfoParams,
+  type GetTollTripRatesParams,
+  getTollRatesParamsSchema,
+  getTollTripInfoParamsSchema,
+  getTollTripRatesParamsSchema,
+} from "./inputs";
+import type { TollRate, TollTripInfo, TollTripRates } from "./outputs";
 import {
   tollRateArraySchema,
   tollTripInfoArraySchema,
   tollTripRatesSchema,
-} from "./schemas";
+} from "./outputs";
 
 // Create a factory function for WSDOT Toll Rates API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/TollRates/TollRatesREST.svc"
 );
 
@@ -22,20 +30,22 @@ const createFetch = createFetchFactory(
  * Returns current toll rates for all WSDOT toll facilities, including
  * pricing information and facility details.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all toll rate data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const tollRates = await getTollRates();
+ * const tollRates = await getTollRates({});
  * console.log(tollRates[0].CurrentToll); // 125
  * ```
  */
-export const getTollRates = async () => {
-  const fetcher = createFetch("/GetTollRatesAsJson");
-  const data = await fetcher();
-  return tollRateArraySchema.parse(data) as TollRate[];
+export const getTollRates = async (params: GetTollRatesParams = {}) => {
+  const fetcher = createFetch<GetTollRatesParams>("/GetTollRatesAsJson", {
+    input: getTollRatesParamsSchema,
+    output: tollRateArraySchema,
+  });
+  return fetcher(params) as Promise<TollRate[]>;
 };
 
 /**
@@ -44,20 +54,22 @@ export const getTollRates = async () => {
  * Returns detailed trip information including geometry data for toll
  * facilities and routes.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all toll trip information data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const tripInfo = await getTollTripInfo();
+ * const tripInfo = await getTollTripInfo({});
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = async () => {
-  const fetcher = createFetch("/GetTollTripInfoAsJson");
-  const data = await fetcher();
-  return tollTripInfoArraySchema.parse(data) as TollTripInfo[];
+export const getTollTripInfo = async (params: GetTollTripInfoParams = {}) => {
+  const fetcher = createFetch<GetTollTripInfoParams>("/GetTollTripInfoAsJson", {
+    input: getTollTripInfoParamsSchema,
+    output: tollTripInfoArraySchema,
+  });
+  return fetcher(params) as Promise<TollTripInfo[]>;
 };
 
 /**
@@ -66,19 +78,24 @@ export const getTollTripInfo = async () => {
  * Returns current toll trip rates along with system messages and
  * last updated timestamps.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing toll trip rates with last updated time
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const tripRates = await getTollTripRates();
+ * const tripRates = await getTollTripRates({});
  * console.log(tripRates.LastUpdated); // Date object
  * console.log(tripRates.Trips[0].Toll); // 0
  * ```
  */
-export const getTollTripRates = async () => {
-  const fetcher = createFetch("/GetTollTripRatesAsJson");
-  const data = await fetcher();
-  return tollTripRatesSchema.parse(data) as TollTripRates;
+export const getTollTripRates = async (params: GetTollTripRatesParams = {}) => {
+  const fetcher = createFetch<GetTollTripRatesParams>(
+    "/GetTollTripRatesAsJson",
+    {
+      input: getTollTripRatesParamsSchema,
+      output: tollTripRatesSchema,
+    }
+  );
+  return fetcher(params) as Promise<TollTripRates>;
 };

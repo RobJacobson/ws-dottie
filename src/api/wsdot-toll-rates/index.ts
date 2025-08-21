@@ -8,16 +8,22 @@ export {
   getTollTripInfo,
   getTollTripRates,
 } from "./api";
+// Input parameter types
+export type {
+  GetTollRatesParams,
+  GetTollTripInfoParams,
+  GetTollTripRatesParams,
+} from "./inputs";
+// Export types
+export type {
+  TollRate,
+  TollTripInfo,
+  TollTripRate,
+  TollTripRates,
+} from "./outputs";
 // React Query hooks
 export {
   useTollRates,
   useTollTripInfo,
   useTollTripRates,
 } from "./queries";
-// TypeScript types
-export type {
-  TollRate,
-  TollTripInfo,
-  TollTripRate,
-  TollTripRates,
-} from "./schemas";
