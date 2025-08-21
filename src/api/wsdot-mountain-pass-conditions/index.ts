@@ -7,13 +7,18 @@ export {
   getMountainPassConditionById,
   getMountainPassConditions,
 } from "./api";
+// Input parameter types
+export type {
+  GetMountainPassConditionByIdParams,
+  GetMountainPassConditionsParams,
+} from "./inputs";
+// Export types
+export type {
+  MountainPassCondition,
+  TravelRestriction,
+} from "./outputs";
 // React Query hooks
 export {
   useMountainPassConditionById,
   useMountainPassConditions,
 } from "./queries";
-// TypeScript types
-export type {
-  MountainPassCondition,
-  TravelRestriction,
-} from "./schemas";

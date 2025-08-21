@@ -2,16 +2,22 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { MountainPassCondition } from "./schemas";
+import {
+  type GetMountainPassConditionByIdParams,
+  type GetMountainPassConditionsParams,
+  getMountainPassConditionByIdParamsSchema,
+  getMountainPassConditionsParamsSchema,
+} from "./inputs";
+import type { MountainPassCondition } from "./outputs";
 import {
   mountainPassConditionArraySchema,
   mountainPassConditionSchema,
-} from "./schemas";
+} from "./outputs";
 
 // Create a factory function for WSDOT Mountain Pass Conditions API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
 );
 
@@ -21,16 +27,21 @@ const createFetch = createFetchFactory(
  * Returns current mountain pass conditions across Washington State, including
  * road conditions, restrictions, and travel advisories.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all mountain pass condition data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  */
-export const getMountainPassConditions = async () => {
-  const fetcher = createFetch("/GetMountainPassConditionsAsJson");
-  const data = await fetcher();
-  return mountainPassConditionArraySchema.parse(
-    data
-  ) as MountainPassCondition[];
+export const getMountainPassConditions = async (
+  params: GetMountainPassConditionsParams = {}
+) => {
+  const fetcher = createFetch<GetMountainPassConditionsParams>(
+    "/GetMountainPassConditionsAsJson",
+    {
+      input: getMountainPassConditionsParamsSchema,
+      output: mountainPassConditionArraySchema,
+    }
+  );
+  return fetcher(params) as Promise<MountainPassCondition[]>;
 };
 
 /**
@@ -40,18 +51,20 @@ export const getMountainPassConditions = async () => {
  * Returns detailed information about a specific mountain pass condition
  * identified by its ID.
  *
- * @param params - Object containing passConditionId and optional logMode
+ * @param params - Object containing passConditionId parameter
  * @param params.passConditionId - The ID of the specific mountain pass condition
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific mountain pass condition data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  */
-export const getMountainPassConditionById = async (params: {
-  passConditionId: number;
-}) => {
-  const fetcher = createFetch<{ passConditionId: number }>(
-    "/GetMountainPassConditionAsJson?PassConditionID={passConditionId}"
+export const getMountainPassConditionById = async (
+  params: GetMountainPassConditionByIdParams
+) => {
+  const fetcher = createFetch<GetMountainPassConditionByIdParams>(
+    "/GetMountainPassConditionAsJson?PassConditionID={passConditionId}",
+    {
+      input: getMountainPassConditionByIdParamsSchema,
+      output: mountainPassConditionSchema,
+    }
   );
-  const data = await fetcher(params);
-  return mountainPassConditionSchema.parse(data) as MountainPassCondition;
+  return fetcher(params) as Promise<MountainPassCondition>;
 };
