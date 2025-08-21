@@ -2,13 +2,14 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { BorderCrossingData } from "./schemas";
-import { borderCrossingDataArraySchema } from "./schemas";
+import { getBorderCrossingsParamsSchema } from "./inputs";
+import type { BorderCrossingData } from "./outputs";
+import { borderCrossingDataArraySchema } from "./outputs";
 
 // Create a factory function for WSDOT Border Crossings API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
 );
 
@@ -18,19 +19,20 @@ const createFetch = createFetchFactory(
  * Returns estimated wait times for all border crossings between Washington State and Canada.
  * Data includes location information, crossing names, timestamps, and current wait times.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise resolving to array of border crossing data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const crossings = await getBorderCrossings();
+ * const crossings = await getBorderCrossings({});
  * console.log(crossings[0].CrossingName); // "Peace Arch"
  * ```
  */
-export const getBorderCrossings = async () => {
-  const fetcher = createFetch("/GetBorderCrossingsAsJson");
-  const data = await fetcher();
-  // Validate strictly but with passthrough on objects
-  return borderCrossingDataArraySchema.parse(data) as BorderCrossingData[];
+export const getBorderCrossings = async (params: {} = {}) => {
+  const fetcher = createFetch<{}>("/GetBorderCrossingsAsJson", {
+    input: getBorderCrossingsParamsSchema,
+    output: borderCrossingDataArraySchema,
+  });
+  return fetcher(params) as Promise<BorderCrossingData[]>;
 };

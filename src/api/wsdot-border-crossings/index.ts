@@ -3,10 +3,12 @@
 
 // API functions
 export { getBorderCrossings } from "./api";
-// React Query hooks
-export { useBorderCrossings } from "./queries";
+// Input parameter types
+export type { GetBorderCrossingsParams } from "./inputs";
 // Types inferred from Zod schemas
 export type {
   BorderCrossingData,
   BorderCrossingLocation,
-} from "./schemas";
+} from "./outputs";
+// React Query hooks
+export { useBorderCrossings } from "./queries";
