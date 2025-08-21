@@ -14,16 +14,31 @@ export {
   getTerminalCombo,
   getTerminalComboVerbose,
 } from "./api";
-// Types (inferred from Zod schemas)
+// Input parameter types
+export type {
+  GetFareLineItemsBasicParams,
+  GetFareLineItemsParams,
+  GetFareLineItemsVerboseParams,
+  GetFaresCacheFlushDateParams,
+  GetFaresTerminalMatesParams,
+  GetFaresTerminalsParams,
+  GetFaresValidDateRangeParams,
+  GetFareTotalsParams,
+  GetTerminalComboParams,
+  GetTerminalComboVerboseParams,
+} from "./inputs";
+// Export types
 export type {
   FareLineItem,
   FareLineItemBasic,
+  FareLineItemsVerboseResponse,
   FareLineItemVerbose,
   FaresCacheFlushDate,
   FaresTerminal,
   FaresValidDateRange,
   FareTotal,
+  LineItemLookup,
   TerminalCombo,
   TerminalComboVerbose,
   TerminalMate,
-} from "./schemas";
+} from "./outputs";

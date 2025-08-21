@@ -21,12 +21,24 @@ import {
   getTerminalComboVerbose,
 } from "./api";
 import type {
+  GetFareLineItemsBasicParams,
+  GetFareLineItemsParams,
+  GetFareLineItemsVerboseParams,
+  GetFaresCacheFlushDateParams,
+  GetFaresTerminalMatesParams,
+  GetFaresTerminalsParams,
+  GetFaresValidDateRangeParams,
+  GetFareTotalsParams,
+  GetTerminalComboParams,
+  GetTerminalComboVerboseParams,
+} from "./inputs";
+import type {
   FareLineItem,
   FareLineItemsVerboseResponse,
   FaresValidDateRange,
   FareTotal,
   TerminalComboVerbose,
-} from "./schemas";
+} from "./outputs";
 
 /**
  * Hook for getting cache flush date from WSF Fares API
@@ -35,24 +47,26 @@ import type {
  * Use this operation to poll for changes. When the date returned is modified,
  * drop your application cache and retrieve fresh data.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options
  * @returns React Query result containing cache flush date
  *
  * @example
  * ```typescript
- * const { data: flushDate } = useFaresCacheFlushDate();
+ * const { data: flushDate } = useFaresCacheFlushDate({});
  * console.log(flushDate); // "2024-01-15T10:30:00Z"
  * ```
  */
 export const useFaresCacheFlushDate = (
+  params: GetFaresCacheFlushDateParams = {},
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFaresCacheFlushDate>>>,
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<Date, Error> => {
   return useQuery({
-    queryKey: ["wsf", "fares", "cacheFlushDate"],
-    queryFn: () => getFaresCacheFlushDate(),
+    queryKey: ["wsf", "fares", "cacheFlushDate", params],
+    queryFn: () => getFaresCacheFlushDate(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -63,24 +77,26 @@ export const useFaresCacheFlushDate = (
  *
  * Retrieves a date range for which fares data is currently published & available.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options
  * @returns React Query result containing valid date range information
  *
  * @example
  * ```typescript
- * const { data: dateRange } = useFaresValidDateRange();
- * console.log(dateRange?.StartDate); // "2024-01-01T00:00:00Z"
+ * const { data: dateRange } = useFaresValidDateRange({});
+ * console.log(dateRange?.DateFrom); // "2024-01-01T00:00:00Z"
  * ```
  */
 export const useFaresValidDateRange = (
+  params: GetFaresValidDateRangeParams = {},
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFaresValidDateRange>>>,
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<FaresValidDateRange, Error> => {
   return useQuery({
-    queryKey: ["wsf", "fares", "validDateRange"],
-    queryFn: () => getFaresValidDateRange(),
+    queryKey: ["wsf", "fares", "validDateRange", params],
+    queryFn: () => getFaresValidDateRange(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
