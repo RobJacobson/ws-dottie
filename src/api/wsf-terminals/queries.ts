@@ -39,7 +39,7 @@ import type {
   TerminalTransport,
   TerminalVerbose,
   TerminalWaitTimes,
-} from "./schemas";
+} from "./outputs";
 
 // ============================================================================
 // TERMINAL BASICS HOOKS
@@ -95,9 +95,8 @@ export const useTerminalBasicsByTerminalId = (
   options?: TanStackOptions<TerminalBasics>
 ): UseQueryResult<TerminalBasics, Error> => {
   return useQuery({
-    queryKey: ["wsf", "terminals", "basics", "byTerminalId", params.terminalId],
-    queryFn: () =>
-      getTerminalBasicsByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "basics", "byTerminalId", params],
+    queryFn: () => getTerminalBasicsByTerminalId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -158,15 +157,8 @@ export const useTerminalBulletinsByTerminalId = (
   options?: TanStackOptions<TerminalBulletin>
 ): UseQueryResult<TerminalBulletin, Error> => {
   return useQuery({
-    queryKey: [
-      "wsf",
-      "terminals",
-      "bulletins",
-      "byTerminalId",
-      params.terminalId,
-    ],
-    queryFn: () =>
-      getTerminalBulletinsByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "bulletins", "byTerminalId", params],
+    queryFn: () => getTerminalBulletinsByTerminalId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -227,15 +219,8 @@ export const useTerminalLocationsByTerminalId = (
   options?: TanStackOptions<TerminalLocation>
 ): UseQueryResult<TerminalLocation, Error> => {
   return useQuery({
-    queryKey: [
-      "wsf",
-      "terminals",
-      "locations",
-      "byTerminalId",
-      params.terminalId,
-    ],
-    queryFn: () =>
-      getTerminalLocationsByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "locations", "byTerminalId", params],
+    queryFn: () => getTerminalLocationsByTerminalId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -297,15 +282,8 @@ export const useTerminalSailingSpaceByTerminalId = (
   options?: TanStackOptions<TerminalSailingSpace>
 ): UseQueryResult<TerminalSailingSpace, Error> => {
   return useQuery({
-    queryKey: [
-      "wsf",
-      "terminals",
-      "sailingSpace",
-      "byTerminalId",
-      params.terminalId,
-    ],
-    queryFn: () =>
-      getTerminalSailingSpaceByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "sailingSpace", "byTerminalId", params],
+    queryFn: () => getTerminalSailingSpaceByTerminalId(params),
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
@@ -366,15 +344,8 @@ export const useTerminalTransportsByTerminalId = (
   options?: TanStackOptions<TerminalTransport>
 ): UseQueryResult<TerminalTransport, Error> => {
   return useQuery({
-    queryKey: [
-      "wsf",
-      "terminals",
-      "transports",
-      "byTerminalId",
-      params.terminalId,
-    ],
-    queryFn: () =>
-      getTerminalTransportsByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "transports", "byTerminalId", params],
+    queryFn: () => getTerminalTransportsByTerminalId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
@@ -435,15 +406,8 @@ export const useTerminalWaitTimesByTerminalId = (
   options?: TanStackOptions<TerminalWaitTimes>
 ): UseQueryResult<TerminalWaitTimes, Error> => {
   return useQuery({
-    queryKey: [
-      "wsf",
-      "terminals",
-      "wait-times",
-      "byTerminalId",
-      params.terminalId,
-    ],
-    queryFn: () =>
-      getTerminalWaitTimesByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "wait-times", "byTerminalId", params],
+    queryFn: () => getTerminalWaitTimesByTerminalId(params),
     ...tanstackQueryOptions.REALTIME_UPDATES,
     ...options,
   });
@@ -503,15 +467,8 @@ export const useTerminalVerboseByTerminalId = (
   options?: TanStackOptions<TerminalVerbose>
 ): UseQueryResult<TerminalVerbose, Error> => {
   return useQuery({
-    queryKey: [
-      "wsf",
-      "terminals",
-      "verbose",
-      "byTerminalId",
-      params.terminalId,
-    ],
-    queryFn: () =>
-      getTerminalVerboseByTerminalId({ terminalId: params.terminalId }),
+    queryKey: ["wsf", "terminals", "verbose", "byTerminalId", params],
+    queryFn: () => getTerminalVerboseByTerminalId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });

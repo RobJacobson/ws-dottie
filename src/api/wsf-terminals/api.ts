@@ -1,7 +1,17 @@
 // WSF Terminals API functions
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory as createFetchFactory } from "@/shared/fetching/api";
 
+import type {
+  GetTerminalBasicsByTerminalIdParams,
+  GetTerminalBulletinByTerminalIdParams,
+  GetTerminalLocationByTerminalIdParams,
+  GetTerminalSailingSpaceByTerminalIdParams,
+  GetTerminalTransportByTerminalIdParams,
+  GetTerminalVerboseByTerminalIdParams,
+  GetTerminalWaitTimesByTerminalIdParams,
+} from "./inputs";
+import { terminalIdParamsSchema } from "./inputs";
 import type {
   TerminalBasics,
   TerminalBulletin,
@@ -10,7 +20,7 @@ import type {
   TerminalTransport,
   TerminalVerbose,
   TerminalWaitTimes,
-} from "./schemas";
+} from "./outputs";
 import {
   terminalBasicsArraySchema,
   terminalBasicsSchema,
@@ -26,7 +36,8 @@ import {
   terminalVerboseArraySchema,
   terminalVerboseSchema,
   terminalWaitTimesArraySchema,
-} from "./schemas";
+  terminalWaitTimesSchema,
+} from "./outputs";
 
 // Create a factory function for WSF Terminals API
 const createFetch = createFetchFactory("/ferries/api/terminals/rest");
@@ -53,9 +64,10 @@ const createFetch = createFetchFactory("/ferries/api/terminals/rest");
  * ```
  */
 export const getTerminalBasics = async () => {
-  const fetcher = createFetch("/terminalbasics");
-  const data = await fetcher();
-  return terminalBasicsArraySchema.parse(data) as TerminalBasics[];
+  const fetcher = createFetch("/terminalbasics", {
+    output: terminalBasicsArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -77,14 +89,14 @@ export const getTerminalBasics = async () => {
  * console.log(terminal.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalBasicsByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminalbasics/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalBasicsSchema.parse(data) as TerminalBasics;
+export const getTerminalBasicsByTerminalId = async (
+  params: GetTerminalBasicsByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminalbasics/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalBasicsSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -109,9 +121,10 @@ export const getTerminalBasicsByTerminalId = async (params: {
  * ```
  */
 export const getTerminalLocations = async () => {
-  const fetcher = createFetch("/terminallocations");
-  const data = await fetcher();
-  return terminalLocationArraySchema.parse(data) as TerminalLocation[];
+  const fetcher = createFetch("/terminallocations", {
+    output: terminalLocationArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -134,14 +147,14 @@ export const getTerminalLocations = async () => {
  * console.log(location.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalLocationsByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminallocations/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalLocationSchema.parse(data) as TerminalLocation;
+export const getTerminalLocationsByTerminalId = async (
+  params: GetTerminalLocationByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminallocations/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalLocationSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -166,9 +179,10 @@ export const getTerminalLocationsByTerminalId = async (params: {
  * ```
  */
 export const getTerminalSailingSpace = async () => {
-  const fetcher = createFetch("/terminalsailingspace");
-  const data = await fetcher();
-  return terminalSailingSpaceArraySchema.parse(data) as TerminalSailingSpace[];
+  const fetcher = createFetch("/terminalsailingspace", {
+    output: terminalSailingSpaceArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -191,14 +205,14 @@ export const getTerminalSailingSpace = async () => {
  * console.log(sailingSpace.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalSailingSpaceByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminalsailingspace/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalSailingSpaceSchema.parse(data) as TerminalSailingSpace;
+export const getTerminalSailingSpaceByTerminalId = async (
+  params: GetTerminalSailingSpaceByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminalsailingspace/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalSailingSpaceSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -223,9 +237,10 @@ export const getTerminalSailingSpaceByTerminalId = async (params: {
  * ```
  */
 export const getTerminalBulletins = async () => {
-  const fetcher = createFetch("/terminalbulletins");
-  const data = await fetcher();
-  return terminalBulletinArraySchema.parse(data) as TerminalBulletin[];
+  const fetcher = createFetch("/terminalbulletins", {
+    output: terminalBulletinArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -248,14 +263,14 @@ export const getTerminalBulletins = async () => {
  * console.log(bulletin.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalBulletinsByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminalbulletins/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalBulletinSchema.parse(data) as TerminalBulletin;
+export const getTerminalBulletinsByTerminalId = async (
+  params: GetTerminalBulletinByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminalbulletins/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalBulletinSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -280,9 +295,10 @@ export const getTerminalBulletinsByTerminalId = async (params: {
  * ```
  */
 export const getTerminalTransports = async () => {
-  const fetcher = createFetch("/terminaltransports");
-  const data = await fetcher();
-  return terminalTransportArraySchema.parse(data) as TerminalTransport[];
+  const fetcher = createFetch("/terminaltransports", {
+    output: terminalTransportArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -305,14 +321,14 @@ export const getTerminalTransports = async () => {
  * console.log(transport.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalTransportsByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminaltransports/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalTransportSchema.parse(data) as TerminalTransport;
+export const getTerminalTransportsByTerminalId = async (
+  params: GetTerminalTransportByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminaltransports/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalTransportSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -337,9 +353,10 @@ export const getTerminalTransportsByTerminalId = async (params: {
  * ```
  */
 export const getTerminalWaitTimes = async () => {
-  const fetcher = createFetch("/terminalwaittimes");
-  const data = await fetcher();
-  return terminalWaitTimesArraySchema.parse(data) as TerminalWaitTimes[];
+  const fetcher = createFetch("/terminalwaittimes", {
+    output: terminalWaitTimesArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -362,16 +379,14 @@ export const getTerminalWaitTimes = async () => {
  * console.log(waitTime.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalWaitTimesByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminalwaittimes/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalCacheFlushDateSchema && terminalWaitTimesArraySchema.element
-    ? terminalWaitTimesArraySchema.element.parse(data)
-    : (data as TerminalWaitTimes);
+export const getTerminalWaitTimesByTerminalId = async (
+  params: GetTerminalWaitTimesByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminalwaittimes/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalWaitTimesSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -396,9 +411,10 @@ export const getTerminalWaitTimesByTerminalId = async (params: {
  * ```
  */
 export const getTerminalVerbose = async () => {
-  const fetcher = createFetch("/terminalverbose");
-  const data = await fetcher();
-  return terminalVerboseArraySchema.parse(data) as TerminalVerbose[];
+  const fetcher = createFetch("/terminalverbose", {
+    output: terminalVerboseArraySchema,
+  });
+  return await fetcher();
 };
 
 /**
@@ -420,14 +436,14 @@ export const getTerminalVerbose = async () => {
  * console.log(terminal.TerminalName); // "Anacortes"
  * ```
  */
-export const getTerminalVerboseByTerminalId = async (params: {
-  terminalId: number;
-}) => {
-  const fetcher = createFetch<{ terminalId: number }>(
-    "/terminalverbose/{terminalId}"
-  );
-  const data = await fetcher(params);
-  return terminalVerboseSchema.parse(data) as TerminalVerbose;
+export const getTerminalVerboseByTerminalId = async (
+  params: GetTerminalVerboseByTerminalIdParams
+) => {
+  const fetcher = createFetch("/terminalverbose/{terminalId}", {
+    input: terminalIdParamsSchema,
+    output: terminalVerboseSchema,
+  });
+  return await fetcher(params);
 };
 
 // ============================================================================
@@ -452,7 +468,8 @@ export const getTerminalVerboseByTerminalId = async (params: {
  * ```
  */
 export const getCacheFlushDateTerminals = async () => {
-  const fetcher = createFetch("/cacheflushdate");
-  const data = await fetcher();
-  return terminalCacheFlushDateSchema.parse(data) as Date | null;
+  const fetcher = createFetch("/cacheflushdate", {
+    output: terminalCacheFlushDateSchema,
+  });
+  return await fetcher();
 };
