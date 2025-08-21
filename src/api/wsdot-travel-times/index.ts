@@ -7,14 +7,19 @@ export {
   getTravelTimeById,
   getTravelTimes,
 } from "./api";
+// Input parameter types
+export type {
+  GetTravelTimeByIdParams,
+  GetTravelTimesParams,
+} from "./inputs";
+// Export types
+export type {
+  TravelTimeEndpoint,
+  TravelTimeRoute,
+  TravelTimesResponse,
+} from "./outputs";
 // React Query hooks
 export {
   useTravelTimeById,
   useTravelTimes,
 } from "./queries";
-// TypeScript types
-export type {
-  TravelTimeEndpoint,
-  TravelTimeRoute,
-  TravelTimesResponse,
-} from "./schemas";
