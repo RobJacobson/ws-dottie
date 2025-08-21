@@ -34,7 +34,7 @@ import log from "@/shared/logger";
 
 import { createApiError } from "../errors";
 import type { JsonWithDates } from "../parsing";
-import { jsDateToYyyyMmDd } from "../parsing";
+import { jsDateToMmDdYyyy, jsDateToYyyyMmDd } from "../parsing";
 import { getEnvironmentType, selectFetchStrategy } from "../utils";
 
 /**
@@ -88,6 +88,7 @@ export const createZodFetchFactory = (apiPath: string) => {
         // Interpolate parameters into the endpoint template
         interpolatedEndpoint = interpolateParams(
           endpointTemplate,
+          apiPath,
           validatedParams
         );
 
@@ -175,6 +176,7 @@ const getApiKeyParam = (apiPath: string): string => {
  */
 const interpolateParams = (
   endpointTemplate: string,
+  apiPath: string,
   params?: Record<string, JsonWithDates>
 ): string => {
   if (!params || Object.keys(params).length === 0) {
@@ -182,7 +184,7 @@ const interpolateParams = (
   }
 
   return Object.entries(params).reduce(
-    (endpoint, entry) => substituteParam(endpoint, entry),
+    (endpoint, entry) => substituteParam(endpoint, entry, apiPath),
     endpointTemplate
   );
 };
@@ -199,7 +201,8 @@ const buildUrl = (apiPath: string, endpoint: string): string => {
 
 const substituteParam = (
   endpoint: string,
-  [key, value]: [string, JsonWithDates]
+  [key, value]: [string, JsonWithDates],
+  apiPath: string
 ): string => {
   const placeholder = `{${key}}`;
   if (!endpoint.includes(placeholder)) {
@@ -209,9 +212,14 @@ const substituteParam = (
         `Available placeholders: ${endpoint.match(/\{[^}]+\}/g)?.join(", ") || "none"}`
     );
   }
-  // Automatically format dates as YYYY-MM-DD, convert others to string
+  // Automatically format dates based on API type
+  // WSF APIs expect MM/DD/YYYY format, WSDOT APIs expect YYYY-MM-DD format
   const stringValue =
-    value instanceof Date ? jsDateToYyyyMmDd(value) : String(value);
+    value instanceof Date
+      ? apiPath.includes("/ferries/")
+        ? jsDateToMmDdYyyy(value)
+        : jsDateToYyyyMmDd(value)
+      : String(value);
   return endpoint.replace(placeholder, stringValue);
 };
 

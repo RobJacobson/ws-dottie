@@ -43,6 +43,20 @@ export const jsDateToYyyyMmDd = (date: Date): string => {
   return date.toISOString().split("T")[0];
 };
 
+/**
+ * Converts a JavaScript Date to WSF API date format (MM/DD/YYYY)
+ *
+ * @example
+ * Input: new Date('2024-12-25')
+ * Output: "12/25/2024"
+ */
+export const jsDateToMmDdYyyy = (date: Date): string => {
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  const year = date.getFullYear().toString();
+  return `${month}/${day}/${year}`;
+};
+
 // Regex patterns for date parsing
 const MM_DD_YYYY_REGEX = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
 const MM_DD_YYYY_DATETIME_REGEX =
@@ -139,28 +153,33 @@ export const convert12To24Hour = (hour: number, ampm: string): number => {
 
 /**
  * Check if a string is a valid WSDOT date string
+ * Handles both regular "/Date(timestamp)/" and escaped "\/Date(timestamp)\/" formats
  */
 export const isWsdotDateString = (value: string): boolean =>
-  value.length >= 19 && value.startsWith("/Date(") && value.endsWith(")/");
+  value.length >= 19 &&
+  (value.startsWith("/Date(") || value.startsWith("\\/Date(")) &&
+  (value.endsWith(")/") || value.endsWith(")\\/"));
 
 /**
  * Convert WSDOT date string format to JavaScript Date
  *
  * WSDOT APIs return dates in "/Date(timestamp)/" format where timestamp
  * is milliseconds since Unix epoch, optionally with timezone offset.
+ * WSF APIs may return escaped versions like "\/Date(timestamp)\/".
  *
- * @param dateString - Date string in "/Date(timestamp)/" format
+ * @param dateString - Date string in "/Date(timestamp)/" or "\/Date(timestamp)\/" format
  * @returns JavaScript Date object or null if invalid
  *
  * @example
- * ```typescript
  * wsdotDateTimestampToJsDate("/Date(1753121700000-0700)/") // Returns Date object
+ * wsdotDateTimestampToJsDate("\\/Date(1753121700000-0700)\\/") // Returns Date object
  * wsdotDateTimestampToJsDate("/Date(1753121700000)/") // Returns Date object
  * wsdotDateTimestampToJsDate("not a date") // Returns null
- * ```
  */
 export const wsdotDateTimestampToJsDate = (dateString: string): Date | null => {
-  const timestamp = parseInt(dateString.slice(6, 19), 10);
+  // Remove escaped forward slashes if present
+  const cleanDateString = dateString.replace(/\\\//g, "/");
+  const timestamp = parseInt(cleanDateString.slice(6, 19), 10);
 
   // Validate timestamp is a valid positive number
   if (Number.isNaN(timestamp) || timestamp < 0) {

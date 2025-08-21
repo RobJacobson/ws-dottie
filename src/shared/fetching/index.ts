@@ -14,3 +14,4 @@ export * from "./errors";
 export * from "./parsing";
 export * from "./strategies";
 export * from "./utils";
+export { zodFetch } from "./zodFetch";
