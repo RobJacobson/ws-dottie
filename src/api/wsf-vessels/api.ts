@@ -4,6 +4,26 @@
 
 import { createZodFetchFactory as createFetchFactory } from "@/shared/fetching/api";
 
+// Input parameter types and schemas
+import type {
+  GetAllVesselHistoriesParams,
+  GetMultipleVesselHistoriesParams,
+  GetVesselAccommodationsByIdParams,
+  GetVesselBasicsByIdParams,
+  GetVesselHistoryByVesselAndDateRangeParams,
+  GetVesselLocationsByVesselIdParams,
+  GetVesselStatsByIdParams,
+  GetVesselVerboseByIdParams,
+} from "./inputs";
+import {
+  getVesselAccommodationsByIdParamsSchema,
+  getVesselBasicsByIdParamsSchema,
+  getVesselHistoryByVesselAndDateRangeParamsSchema,
+  getVesselLocationsByVesselIdParamsSchema,
+  getVesselStatsByIdParamsSchema,
+  getVesselVerboseByIdParamsSchema,
+} from "./inputs";
+// Response types and schemas
 import type {
   VesselAccommodation,
   VesselBasic,
@@ -12,15 +32,7 @@ import type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
-  GetVesselBasicsByIdParams,
-  GetVesselLocationsByVesselIdParams,
-  GetVesselAccommodationsByIdParams,
-  GetVesselStatsByIdParams,
-  GetVesselVerboseByIdParams,
-  GetVesselHistoryByVesselAndDateRangeParams,
-  GetMultipleVesselHistoriesParams,
-  GetAllVesselHistoriesParams,
-} from "./schemas";
+} from "./outputs";
 import {
   vesselAccommodationArraySchema,
   vesselAccommodationSchema,
@@ -34,15 +46,11 @@ import {
   vesselsCacheFlushDateSchema,
   vesselVerboseArraySchema,
   vesselVerboseSchema,
-  getVesselBasicsByIdParamsSchema,
-  getVesselLocationsByVesselIdParamsSchema,
-  getVesselAccommodationsByIdParamsSchema,
-  getVesselStatsByIdParamsSchema,
-  getVesselVerboseByIdParamsSchema,
-  getVesselHistoryByVesselAndDateRangeParamsSchema,
-  getMultipleVesselHistoriesParamsSchema,
-  getAllVesselHistoriesParamsSchema,
-} from "./schemas";
+} from "./outputs";
+
+// ============================================================================
+// SHARED CONFIGURATION
+// ============================================================================
 
 // Create a factory function for WSF Vessels API
 const createFetch = createFetchFactory("/ferries/api/vessels/rest");
@@ -106,6 +114,7 @@ export const getVesselBasicsById = async (
 
 // ============================================================================
 // VESSEL LOCATIONS API FUNCTIONS
+// Real-time GPS tracking and vessel positioning
 // ============================================================================
 
 /**
@@ -161,6 +170,7 @@ export const getVesselLocationsByVesselId = async (
 
 // ============================================================================
 // VESSEL ACCOMMODATIONS API FUNCTIONS
+// Passenger amenities, accessibility, and facility information
 // ============================================================================
 
 /**
@@ -206,7 +216,8 @@ export const getVesselAccommodationsById = async (
 };
 
 // ============================================================================
-// VESSEL STATS API FUNCTIONS
+// VESSEL STATISTICS API FUNCTIONS
+// Technical specifications, capacity, and performance data
 // ============================================================================
 
 /**
@@ -250,6 +261,7 @@ export const getVesselStatsById = async (params: GetVesselStatsByIdParams) => {
 
 // ============================================================================
 // VESSEL HISTORY API FUNCTIONS
+// Historical operational data and route information
 // ============================================================================
 
 /**
@@ -386,6 +398,7 @@ export const getAllVesselHistories = async (
 
 // ============================================================================
 // VESSEL VERBOSE API FUNCTIONS
+// Comprehensive vessel information (combines all data types)
 // ============================================================================
 
 /**
@@ -430,7 +443,8 @@ export const getVesselVerboseById = async (
 };
 
 // ============================================================================
-// CACHE FLUSH DATE API FUNCTIONS
+// CACHE MANAGEMENT API FUNCTIONS
+// Data freshness and cache invalidation utilities
 // ============================================================================
 
 /**

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { TanStackOptions } from "@/shared/types";
 
+// API functions
 import {
   getAllVesselHistories,
   // Cache Flush Date API functions
@@ -30,6 +31,7 @@ import {
   getVesselVerbose,
   getVesselVerboseById,
 } from "./api";
+// Response types
 import type {
   VesselAccommodation,
   VesselBasic,
@@ -38,10 +40,11 @@ import type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
-} from "./schemas";
+} from "./outputs";
 
 // ============================================================================
 // VESSEL BASICS HOOKS
+// Basic vessel information and identification
 // ============================================================================
 
 /**
@@ -102,6 +105,7 @@ export const useVesselBasicsById = (
 
 // ============================================================================
 // VESSEL ACCOMMODATIONS HOOKS
+// Passenger amenities, accessibility, and facility information
 // ============================================================================
 
 /**
@@ -157,6 +161,7 @@ export const useVesselAccommodationsById = (
 
 // ============================================================================
 // VESSEL LOCATIONS HOOKS
+// Real-time GPS tracking and vessel positioning
 // ============================================================================
 
 /**
@@ -222,7 +227,8 @@ export const useVesselLocationsByVesselId = (
 };
 
 // ============================================================================
-// VESSEL STATS HOOKS
+// VESSEL STATISTICS HOOKS
+// Technical specifications, capacity, and performance data
 // ============================================================================
 
 /**
@@ -271,6 +277,7 @@ export const useVesselStatsById = (
 
 // ============================================================================
 // VESSEL HISTORY HOOKS
+// Historical operational data and route information
 // ============================================================================
 
 /**
@@ -360,7 +367,7 @@ export const useMultipleVesselHistories = (
         vesselNames: params.vesselNames,
         dateStart: params.dateStart,
         dateEnd: params.dateEnd,
-        batchSize: params.batchSize,
+        batchSize: params.batchSize ?? 6,
       }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
@@ -407,7 +414,7 @@ export const useAllVesselHistories = (
       getAllVesselHistories({
         dateStart: params.dateStart,
         dateEnd: params.dateEnd,
-        batchSize: params.batchSize,
+        batchSize: params.batchSize ?? 6,
       }),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
@@ -416,6 +423,7 @@ export const useAllVesselHistories = (
 
 // ============================================================================
 // VESSEL VERBOSE HOOKS
+// Comprehensive vessel information (combines all data types)
 // ============================================================================
 
 /**
@@ -463,7 +471,8 @@ export const useVesselVerboseById = (
 };
 
 // ============================================================================
-// CACHE FLUSH DATE HOOKS
+// CACHE MANAGEMENT HOOKS
+// Data freshness and cache invalidation utilities
 // ============================================================================
 
 /**
