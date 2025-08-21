@@ -7,13 +7,18 @@ export {
   getTrafficFlowById,
   getTrafficFlows,
 } from "./api";
+// Input parameter types
+export type {
+  GetTrafficFlowByIdParams,
+  GetTrafficFlowsParams,
+} from "./inputs";
+// Export types
+export type {
+  FlowStationLocation,
+  TrafficFlow,
+} from "./outputs";
 // React Query hooks
 export {
   useTrafficFlowById,
   useTrafficFlows,
 } from "./queries";
-// TypeScript types
-export type {
-  FlowStationLocation,
-  TrafficFlow,
-} from "./schemas";

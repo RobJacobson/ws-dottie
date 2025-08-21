@@ -9,28 +9,31 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { TanStackOptions } from "@/shared/types";
 
 import { getTrafficFlowById, getTrafficFlows } from "./api";
-import type { TrafficFlow } from "./schemas";
+import type { GetTrafficFlowByIdParams, GetTrafficFlowsParams } from "./inputs";
+import type { TrafficFlow } from "./outputs";
 
 /**
  * React Query hook for retrieving all traffic flow data
  *
  * Retrieves current traffic flow readings from all flow stations.
  *
+ * @param params - No parameters required (empty object for consistency)
  * @param options - Optional query options
  * @returns React Query result containing traffic flow data
  *
  * @example
  * ```typescript
- * const { data: trafficFlows } = useTrafficFlows();
+ * const { data: trafficFlows } = useTrafficFlows({});
  * console.log(trafficFlows[0].FlowReadingValue); // 45
  * ```
  */
 export const useTrafficFlows = (
+  params: GetTrafficFlowsParams = {},
   options?: TanStackOptions<TrafficFlow[]>
 ): UseQueryResult<TrafficFlow[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "traffic-flow", "getTrafficFlows"],
-    queryFn: () => getTrafficFlows(),
+    queryKey: ["wsdot", "traffic-flow", "getTrafficFlows", params],
+    queryFn: () => getTrafficFlows(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
@@ -42,7 +45,7 @@ export const useTrafficFlows = (
  * Returns detailed information about a specific traffic flow station
  * identified by its ID.
  *
- * @param params - Object containing flowDataID
+ * @param params - Object containing flowDataID parameter
  * @param params.flowDataID - The ID of the specific traffic flow station
  * @param options - Optional query options
  * @returns React Query result containing traffic flow data
@@ -54,17 +57,12 @@ export const useTrafficFlows = (
  * ```
  */
 export const useTrafficFlowById = (
-  params: { flowDataID: number },
+  params: GetTrafficFlowByIdParams,
   options?: TanStackOptions<TrafficFlow>
 ): UseQueryResult<TrafficFlow, Error> => {
   return useQuery({
-    queryKey: [
-      "wsdot",
-      "traffic-flow",
-      "getTrafficFlowById",
-      params.flowDataID,
-    ],
-    queryFn: () => getTrafficFlowById({ flowDataID: params.flowDataID }),
+    queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById", params],
+    queryFn: () => getTrafficFlowById(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });
