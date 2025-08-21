@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___travel_times.html
 // API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetTravelTimeByIdParams,
@@ -10,13 +10,10 @@ import {
   getTravelTimeByIdParamsSchema,
   getTravelTimesParamsSchema,
 } from "./inputs";
-import type { TravelTimeRoute } from "./outputs";
 import { travelTimeRouteSchema, travelTimesArraySchema } from "./outputs";
 
-// Create a factory function for WSDOT Travel Times API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/TravelTimes/TravelTimesREST.svc"
-);
+// Base URL path for WSDOT Travel Times API
+const WSDOT_TRAVEL_TIMES_BASE = "/Traffic/api/TravelTimes/TravelTimesREST.svc";
 
 /**
  * Get all travel times from WSDOT Travel Times API
@@ -34,11 +31,14 @@ const createFetch = createZodFetchFactory(
  * ```
  */
 export const getTravelTimes = async (params: GetTravelTimesParams = {}) => {
-  const fetcher = createFetch<GetTravelTimesParams>("/GetTravelTimesAsJson", {
-    input: getTravelTimesParamsSchema,
-    output: travelTimesArraySchema,
-  });
-  return fetcher(params) as Promise<TravelTimeRoute[]>;
+  return zodFetch(
+    `${WSDOT_TRAVEL_TIMES_BASE}/GetTravelTimesAsJson`,
+    {
+      input: getTravelTimesParamsSchema,
+      output: travelTimesArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -59,12 +59,12 @@ export const getTravelTimes = async (params: GetTravelTimesParams = {}) => {
  * ```
  */
 export const getTravelTimeById = async (params: GetTravelTimeByIdParams) => {
-  const fetcher = createFetch<GetTravelTimeByIdParams>(
-    "/GetTravelTimeAsJson?TravelTimeID={travelTimeId}",
+  return zodFetch(
+    `${WSDOT_TRAVEL_TIMES_BASE}/GetTravelTimeAsJson?TravelTimeID={travelTimeId}`,
     {
       input: getTravelTimeByIdParamsSchema,
       output: travelTimeRouteSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<TravelTimeRoute>;
 };

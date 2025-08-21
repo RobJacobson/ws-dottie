@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { zWsdotDate, zWsfDate } from "@/shared/validation";
+import { zWsdotDate } from "@/shared/validation";
 
 /**
  * WSF Schedule API Output Schemas
@@ -62,10 +62,10 @@ export const annotationSchema = z
 
 export const contingencyAdjustmentSchema = z
   .object({
-    DateFrom: zWsfDate().describe(
+    DateFrom: zWsdotDate().describe(
       "Start date for the contingency adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
     ),
-    DateThru: zWsfDate().describe(
+    DateThru: zWsdotDate().describe(
       "End date for the contingency adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
     ),
     EventID: z
@@ -317,34 +317,14 @@ export const scheduleTerminalSchema = z
       .describe(
         "Unique identifier for the terminal. Primary key for terminal identification and used consistently across all WSF systems and APIs."
       ),
-    TerminalName: z
+    Description: z
       .string()
       .describe(
-        "Name of the terminal. Human-readable identifier for the terminal location (e.g., 'Seattle', 'Bainbridge Island', 'Anacortes')."
-      ),
-    TerminalDescription: z
-      .string()
-      .describe(
-        "Full description of the terminal. Provides detailed information about the terminal's location, facilities, and operational characteristics."
-      ),
-    TerminalBriefDescription: z
-      .string()
-      .describe(
-        "Brief description of the terminal. Short identifier used in displays, schedules, and references for passenger convenience."
-      ),
-    RegionID: z
-      .number()
-      .describe(
-        "Geographic region identifier for the terminal. Groups terminals by geographic area and helps organize ferry operations by service region."
-      ),
-    SortSeq: z
-      .number()
-      .describe(
-        "Sorting sequence number for display ordering. Ensures terminals are displayed in the correct order across different systems and interfaces."
+        "Description of the terminal. Human-readable identifier for the terminal location (e.g., 'Seattle', 'Bainbridge Island', 'Anacortes')."
       ),
   })
   .describe(
-    "Schedule terminal information including identification, description, geographic region, and display ordering. This schema provides the fundamental terminal data used for schedule displays and passenger information."
+    "Schedule terminal information including identification and description. This schema provides the fundamental terminal data used for schedule displays and passenger information."
   );
 
 export const scheduleTerminalComboSchema = z
@@ -432,100 +412,178 @@ export const sailingSchema = z
     SailingID: z
       .number()
       .describe(
-        "Unique identifier for the sailing. Primary key for sailing identification and represents a specific ferry departure and arrival."
+        "Unique identifier for the sailing. Primary key for sailing identification and represents a specific sailing group."
+      ),
+    SailingDescription: z
+      .string()
+      .describe(
+        "Description of the sailing. Human-readable identifier for the sailing (e.g., 'Leave Anacortes - Summer')."
+      ),
+    SailingDir: z
+      .number()
+      .describe(
+        "Direction of the sailing. Numeric identifier indicating the direction of travel (e.g., 1 for eastbound, 2 for westbound)."
+      ),
+    RouteID: z
+      .number()
+      .describe(
+        "Unique identifier for the route. Links to the route information and identifies which ferry corridor this sailing operates on."
       ),
     SchedRouteID: z
       .number()
       .describe(
-        "Unique identifier for the scheduled route. Links to the route configuration and schedule information for this sailing."
+        "Unique identifier for the scheduled route. Links to the specific route schedule that contains this sailing."
       ),
-    DepartureTime: zWsdotDate().describe(
-      "Scheduled departure time for this sailing. When the ferry leaves the departing terminal. All times are in Pacific Time Zone (PT/PDT)."
-    ),
-    ArrivalTime: zWsdotDate().describe(
-      "Scheduled arrival time for this sailing. When the ferry arrives at the destination terminal. All times are in Pacific Time Zone (PT/PDT)."
-    ),
-    VesselID: z
+    ScheduleID: z
       .number()
       .describe(
-        "Unique identifier for the vessel assigned to this sailing. Links to vessel information and identifies which ferry will operate this trip."
+        "Unique identifier for the schedule. Links to the schedule information and identifies which schedule period this sailing belongs to."
       ),
-    VesselName: z
+    ActiveDateRanges: z
+      .array(
+        z.object({
+          DateFrom: zWsdotDate().describe(
+            "Start date for the active date range. Indicates when this sailing becomes active and begins operating."
+          ),
+          DateThru: zWsdotDate().describe(
+            "End date for the active date range. Indicates when this sailing expires and stops operating."
+          ),
+          EventID: z
+            .number()
+            .nullable()
+            .describe(
+              "Unique identifier for any associated event. Null when no event is associated with this date range."
+            ),
+          EventDescription: z
+            .string()
+            .nullable()
+            .describe(
+              "Description of any associated event. Null when no event is associated with this date range."
+            ),
+        })
+      )
+      .describe(
+        "Array of active date ranges for this sailing. Contains the date ranges when this sailing is active and operating."
+      ),
+    DayOpDescription: z
       .string()
       .describe(
-        "Name of the vessel assigned to this sailing. Human-readable identifier for the ferry that passengers will board (e.g., 'M/V Cathlamet')."
+        "Description of the day operation. Human-readable description of when this sailing operates (e.g., 'Daily', 'Weekdays only')."
       ),
-    DepartingTerminalID: z
-      .number()
-      .describe(
-        "Unique identifier for the departing terminal. Links to the terminal where the journey begins and passengers board the ferry."
-      ),
-    DepartingTerminalName: z
-      .string()
-      .describe(
-        "Name of the departing terminal. Human-readable identifier for the departure location (e.g., 'Seattle', 'Bainbridge Island')."
-      ),
-    ArrivingTerminalID: z
-      .number()
-      .describe(
-        "Unique identifier for the arriving terminal. Links to the terminal where the journey ends and passengers disembark."
-      ),
-    ArrivingTerminalName: z
-      .string()
-      .describe(
-        "Name of the arriving terminal. Human-readable identifier for the destination location (e.g., 'Bainbridge Island', 'Seattle')."
-      ),
-    IsCancelled: z
+    DayOpUseForHoliday: z
       .boolean()
       .describe(
-        "Indicates whether this sailing has been cancelled. True when the sailing is not operating, false when the sailing is proceeding as scheduled."
+        "Indicates whether this sailing operates on holidays. True when the sailing runs on holidays, false when it doesn't."
       ),
-    Notes: z
-      .string()
-      .optional()
+    DisplayColNum: z
+      .number()
       .describe(
-        "Optional notes about this sailing. Contains additional information, special conditions, or important notices affecting this specific sailing."
+        "Display column number. Numeric identifier for display ordering in schedule tables and interfaces."
       ),
-    LastUpdated: zWsdotDate().describe(
-      "Timestamp when this sailing information was last updated. Indicates the freshness of the data and helps determine when information was last modified."
-    ),
+    SailingNotes: z
+      .string()
+      .nullable()
+      .describe(
+        "Notes about the sailing. Contains additional information or special instructions for this sailing."
+      ),
+    Journs: z
+      .array(journeySchema)
+      .describe(
+        "Array of journeys for this sailing. Contains all the individual journeys that make up this sailing group."
+      ),
   })
   .describe(
-    "Sailing information including timing, vessel assignment, terminal details, and operational status. This schema represents a complete ferry sailing with all associated details for passenger information and operational management."
+    "Sailing information including identification, description, route details, and associated journeys. This schema provides the fundamental sailing data used for schedule displays and passenger information."
   );
 
 // Alert and time adjustment schemas
 export const alertSchema = z
   .object({
-    AlertID: z
+    BulletinID: z
       .number()
       .describe(
-        "Unique identifier for the alert. Primary key for alert identification and used to reference specific alert details across systems."
+        "Unique identifier for the bulletin. Primary key for bulletin identification and used to reference specific bulletin details across systems."
       ),
-    AlertText: z
+    BulletinFlag: z
+      .boolean()
+      .describe(
+        "Flag indicating whether this bulletin is active. True when the bulletin is currently in effect, false when it's inactive."
+      ),
+    BulletinText: z
       .string()
       .describe(
-        "Text content of the alert. Contains the alert message and important information that passengers need to know about service changes."
+        "Text content of the bulletin. Contains the bulletin message and important information that passengers need to know about service changes."
       ),
-    AlertIVRText: z
+    CommunicationFlag: z
+      .boolean()
+      .describe(
+        "Flag indicating whether this is a communication bulletin. True when the bulletin is for communication purposes, false otherwise."
+      ),
+    CommunicationText: z
+      .string()
+      .nullable()
+      .describe(
+        "Text content for communication purposes. Contains additional communication information when CommunicationFlag is true."
+      ),
+    RouteAlertFlag: z
+      .boolean()
+      .describe(
+        "Flag indicating whether this is a route-specific alert. True when the alert affects specific routes, false when it's general."
+      ),
+    RouteAlertText: z
       .string()
       .describe(
-        "Text version of the alert optimized for Interactive Voice Response systems. Used for phone-based inquiries and automated announcements."
+        "Text content of the route alert. Contains route-specific alert information when RouteAlertFlag is true."
       ),
-    AlertImg: z
+    HomepageAlertText: z
       .string()
       .describe(
-        "URL or identifier for an image associated with the alert. May contain visual information about the alert, such as route maps or service notices."
+        "Text content for homepage display. Contains alert information formatted for display on the WSF homepage."
       ),
-    TypeDescription: z
+    PublishDate: zWsdotDate().describe(
+      "Date when the bulletin was published. Indicates when the bulletin became available and when it was last updated."
+    ),
+    DisruptionDescription: z
       .string()
+      .nullable()
       .describe(
-        "Human-readable description of the alert type. Categorizes the nature of the alert (e.g., 'Delay', 'Cancellation', 'Special Service', 'Maintenance')."
+        "Description of any service disruption. Contains details about delays, cancellations, or other operational issues."
+      ),
+    AllRoutesFlag: z
+      .boolean()
+      .describe(
+        "Flag indicating whether this alert affects all routes. True when the alert applies to all ferry routes, false when it's route-specific."
       ),
     SortSeq: z
       .number()
       .describe(
         "Sorting sequence number for display ordering. Ensures alerts are displayed in the correct order across different systems and interfaces."
+      ),
+    AlertTypeID: z
+      .number()
+      .describe(
+        "Unique identifier for the alert type. Categorizes the nature of the alert (e.g., 1=General, 2=Route-specific, 3=Service disruption)."
+      ),
+    AlertType: z
+      .string()
+      .describe(
+        "Human-readable description of the alert type. Categorizes the nature of the alert (e.g., 'All Alerts', 'Route Alerts', 'Service Disruptions')."
+      ),
+    AlertFullTitle: z
+      .string()
+      .describe(
+        "Full title of the alert. Provides a complete, descriptive title for the alert that can be used in displays and notifications."
+      ),
+    AffectedRouteIDs: z
+      .array(z.number())
+      .describe(
+        "Array of route IDs affected by this alert. Contains the unique identifiers for routes that are impacted by the alert."
+      ),
+    IVRText: z
+      .string()
+      .nullable()
+      .describe(
+        "Text version of the alert optimized for Interactive Voice Response systems. Used for phone-based inquiries and automated announcements."
       ),
   })
   .describe(
@@ -534,46 +592,156 @@ export const alertSchema = z
 
 export const timeAdjustmentSchema = z
   .object({
-    TimeAdjustmentID: z
+    ScheduleID: z
       .number()
       .describe(
-        "Unique identifier for the time adjustment. Primary key for adjustment identification and used to track specific schedule modifications."
+        "Unique identifier for the schedule. Primary key for schedule identification and represents a complete schedule period."
+      ),
+    SchedRouteID: z
+      .number()
+      .describe(
+        "Unique identifier for the scheduled route. Links to the specific route schedule that contains this time adjustment."
       ),
     RouteID: z
       .number()
       .describe(
-        "Unique identifier for the route affected by this adjustment. Links to the route information and identifies which ferry corridor is modified."
+        "Unique identifier for the route. Links to the route information and identifies which ferry corridor is modified."
       ),
-    SchedRouteID: z
+    RouteDescription: z
+      .string()
+      .describe(
+        "Description of the route. Human-readable identifier for the ferry corridor (e.g., 'Port Townsend / Coupeville')."
+      ),
+    RouteSortSeq: z
+      .number()
+      .describe(
+        "Sorting sequence number for route display ordering. Ensures routes are displayed in the correct order."
+      ),
+    SailingID: z
+      .number()
+      .describe(
+        "Unique identifier for the sailing. Links to the specific sailing that contains this time adjustment."
+      ),
+    SailingDescription: z
+      .string()
+      .describe(
+        "Description of the sailing. Human-readable identifier for the sailing (e.g., 'Leave Port Townsend - Summer')."
+      ),
+    ActiveSailingDateRange: z
+      .object({
+        DateFrom: zWsdotDate().describe(
+          "Start date for the active sailing period. Indicates when this sailing becomes effective."
+        ),
+        DateThru: zWsdotDate().describe(
+          "End date for the active sailing period. Indicates when this sailing expires."
+        ),
+        EventID: z
+          .number()
+          .nullable()
+          .describe(
+            "Unique identifier for any associated event. Null when no event is associated with this sailing period."
+          ),
+        EventDescription: z
+          .string()
+          .nullable()
+          .describe(
+            "Description of any associated event. Null when no event is associated with this sailing period."
+          ),
+      })
+      .describe(
+        "Date range for when this sailing is active. Defines the period during which this sailing operates."
+      ),
+    SailingDir: z
+      .number()
+      .describe(
+        "Direction of the sailing. Numeric identifier indicating the direction of travel (e.g., 1 for eastbound, 2 for westbound)."
+      ),
+    JourneyID: z
+      .number()
+      .describe(
+        "Unique identifier for the journey. Links to the specific journey that contains this time adjustment."
+      ),
+    VesselID: z
+      .number()
+      .describe(
+        "Unique identifier for the vessel. Links to the vessel information and identifies which ferry will operate this trip."
+      ),
+    VesselName: z
+      .string()
+      .describe(
+        "Name of the vessel. Human-readable identifier for the ferry that passengers will board (e.g., 'Salish')."
+      ),
+    VesselHandicapAccessible: z
+      .boolean()
+      .describe(
+        "Indicates whether the vessel is handicap accessible. True when the ferry can accommodate passengers with disabilities, false otherwise."
+      ),
+    VesselPositionNum: z
+      .number()
+      .describe(
+        "Position number for the vessel. Indicates the order of vessels in multi-vessel operations."
+      ),
+    JourneyTerminalID: z
+      .number()
+      .describe(
+        "Unique identifier for the journey terminal. Links to the terminal information for this specific journey."
+      ),
+    TerminalID: z
+      .number()
+      .describe(
+        "Unique identifier for the terminal. Links to the terminal information and identifies the terminal location."
+      ),
+    TerminalDescription: z
+      .string()
+      .describe(
+        "Description of the terminal. Human-readable identifier for the terminal location (e.g., 'Port Townsend')."
+      ),
+    TerminalBriefDescription: z
+      .string()
+      .describe(
+        "Brief description of the terminal. Short identifier used in displays and references (e.g., 'P. Townsend')."
+      ),
+    TimeToAdj: zWsdotDate().describe(
+      "Time to adjustment. Indicates when the time adjustment becomes effective."
+    ),
+    AdjDateFrom: zWsdotDate().describe(
+      "Start date for the adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
+    ),
+    AdjDateThru: zWsdotDate().describe(
+      "End date for the adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
+    ),
+    TidalAdj: z
+      .boolean()
+      .describe(
+        "Indicates whether this is a tidal adjustment. True when the adjustment is due to tidal conditions, false otherwise."
+      ),
+    EventID: z
       .number()
       .nullable()
       .describe(
-        "Unique identifier for the scheduled route affected by this adjustment. Null when adjustment applies to all routes, specific ID when only one route is modified."
+        "Unique identifier for any associated event. Null when no event is associated with this adjustment."
       ),
-    DateFrom: zWsfDate().describe(
-      "Start date for the time adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
-    ),
-    DateThru: zWsfDate().describe(
-      "End date for the time adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
-    ),
-    DepartureTimeAdjustment: z
-      .number()
-      .describe(
-        "Adjustment to departure time in minutes. Positive values indicate delays, negative values indicate early departures. Zero means no departure time change."
-      ),
-    ArrivalTimeAdjustment: z
-      .number()
-      .describe(
-        "Adjustment to arrival time in minutes. Positive values indicate delays, negative values indicate early arrivals. Zero means no arrival time change."
-      ),
-    Reason: z
+    EventDescription: z
       .string()
+      .nullable()
       .describe(
-        "Reason for the time adjustment. Explains why the schedule change is necessary (e.g., 'Maintenance', 'Weather', 'Special Event', 'Operational')."
+        "Description of any associated event. Null when no event is associated with this adjustment."
       ),
-    LastUpdated: zWsfDate().describe(
-      "Timestamp when this adjustment information was last updated. Indicates the freshness of the data and helps determine when information was last modified."
-    ),
+    DepArrIndicator: z
+      .number()
+      .describe(
+        "Departure/Arrival indicator. Numeric identifier indicating whether this adjustment affects departure or arrival times."
+      ),
+    AdjType: z
+      .number()
+      .describe(
+        "Adjustment type. Numeric identifier indicating the type of adjustment (e.g., 1 for addition, 2 for cancellation)."
+      ),
+    Annotations: z
+      .array(z.any())
+      .describe(
+        "Array of annotations. Contains additional information or notes about this time adjustment."
+      ),
   })
   .describe(
     "Time adjustment information for schedule modifications due to operational requirements, weather conditions, maintenance, or other factors. These adjustments modify normal ferry schedules to accommodate exceptional circumstances."

@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
 // API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetTollRatesParams,
@@ -12,17 +12,14 @@ import {
   getTollTripInfoParamsSchema,
   getTollTripRatesParamsSchema,
 } from "./inputs";
-import type { TollRate, TollTripInfo, TollTripRates } from "./outputs";
 import {
   tollRateArraySchema,
   tollTripInfoArraySchema,
   tollTripRatesSchema,
 } from "./outputs";
 
-// Create a factory function for WSDOT Toll Rates API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/TollRates/TollRatesREST.svc"
-);
+// Base URL path for WSDOT Toll Rates API
+const WSDOT_TOLL_RATES_BASE = "/Traffic/api/TollRates/TollRatesREST.svc";
 
 /**
  * Retrieves all current toll rates from WSDOT API
@@ -41,11 +38,14 @@ const createFetch = createZodFetchFactory(
  * ```
  */
 export const getTollRates = async (params: GetTollRatesParams = {}) => {
-  const fetcher = createFetch<GetTollRatesParams>("/GetTollRatesAsJson", {
-    input: getTollRatesParamsSchema,
-    output: tollRateArraySchema,
-  });
-  return fetcher(params) as Promise<TollRate[]>;
+  return zodFetch(
+    `${WSDOT_TOLL_RATES_BASE}/GetTollRatesAsJson`,
+    {
+      input: getTollRatesParamsSchema,
+      output: tollRateArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -65,11 +65,14 @@ export const getTollRates = async (params: GetTollRatesParams = {}) => {
  * ```
  */
 export const getTollTripInfo = async (params: GetTollTripInfoParams = {}) => {
-  const fetcher = createFetch<GetTollTripInfoParams>("/GetTollTripInfoAsJson", {
-    input: getTollTripInfoParamsSchema,
-    output: tollTripInfoArraySchema,
-  });
-  return fetcher(params) as Promise<TollTripInfo[]>;
+  return zodFetch(
+    `${WSDOT_TOLL_RATES_BASE}/GetTollTripInfoAsJson`,
+    {
+      input: getTollTripInfoParamsSchema,
+      output: tollTripInfoArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -90,12 +93,12 @@ export const getTollTripInfo = async (params: GetTollTripInfoParams = {}) => {
  * ```
  */
 export const getTollTripRates = async (params: GetTollTripRatesParams = {}) => {
-  const fetcher = createFetch<GetTollTripRatesParams>(
-    "/GetTollTripRatesAsJson",
+  return zodFetch(
+    `${WSDOT_TOLL_RATES_BASE}/GetTollTripRatesAsJson`,
     {
       input: getTollTripRatesParamsSchema,
       output: tollTripRatesSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<TollTripRates>;
 };

@@ -2,20 +2,21 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
+  type GetHighwayAlertByIdParams,
+  type GetHighwayAlertsByMapAreaParams,
+  type GetHighwayAlertsParams,
   getHighwayAlertByIdParamsSchema,
   getHighwayAlertsByMapAreaParamsSchema,
   getHighwayAlertsParamsSchema,
 } from "./inputs";
-import type { HighwayAlert } from "./outputs";
 import { highwayAlertArraySchema, highwayAlertSchema } from "./outputs";
 
-// Create a factory function for WSDOT Highway Alerts API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
-);
+// Base URL path for WSDOT Highway Alerts API
+const WSDOT_HIGHWAY_ALERTS_BASE =
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc";
 
 /**
  * Get all highway alerts from WSDOT Highway Alerts API
@@ -34,11 +35,14 @@ const createFetch = createZodFetchFactory(
  * ```
  */
 export const getHighwayAlerts = async (params: GetHighwayAlertsParams = {}) => {
-  const fetcher = createFetch<GetHighwayAlertsParams>("/GetAlertsAsJson", {
-    input: getHighwayAlertsParamsSchema,
-    output: highwayAlertArraySchema,
-  });
-  return fetcher(params) as Promise<HighwayAlert[]>;
+  return zodFetch(
+    `${WSDOT_HIGHWAY_ALERTS_BASE}/GetAlertsAsJson`,
+    {
+      input: getHighwayAlertsParamsSchema,
+      output: highwayAlertArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -60,14 +64,14 @@ export const getHighwayAlerts = async (params: GetHighwayAlertsParams = {}) => {
 export const getHighwayAlertById = async (
   params: GetHighwayAlertByIdParams
 ) => {
-  const fetcher = createFetch<GetHighwayAlertByIdParams>(
-    "/GetAlertAsJson?AlertID={alertId}",
+  return zodFetch(
+    `${WSDOT_HIGHWAY_ALERTS_BASE}/GetAlertAsJson?AlertID={alertId}`,
     {
       input: getHighwayAlertByIdParamsSchema,
       output: highwayAlertSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<HighwayAlert>;
 };
 
 /**
@@ -89,12 +93,12 @@ export const getHighwayAlertById = async (
 export const getHighwayAlertsByMapArea = async (
   params: GetHighwayAlertsByMapAreaParams
 ) => {
-  const fetcher = createFetch<GetHighwayAlertsByMapAreaParams>(
-    "/GetAlertsByMapAreaAsJson?MapArea={mapArea}",
+  return zodFetch(
+    `${WSDOT_HIGHWAY_ALERTS_BASE}/GetAlertsByMapAreaAsJson?MapArea={mapArea}`,
     {
       input: getHighwayAlertsByMapAreaParamsSchema,
       output: highwayAlertArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<HighwayAlert[]>;
 };

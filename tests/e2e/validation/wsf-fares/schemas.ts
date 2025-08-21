@@ -1,27 +1,11 @@
 import { z } from "zod";
 
-// Base schemas for common patterns
-export const dateSchema = z.union([
-  z.date(),
-  z.string().transform((val) => new Date(val)),
-  z.number().transform((val) => new Date(val)),
-]);
+import { zWsdotDate } from "@/shared/validation";
 
-export const nullableDateSchema = z
-  .date()
-  .nullable()
-  .or(
-    z
-      .string()
-      .nullable()
-      .transform((val) => (val ? new Date(val) : null))
-  )
-  .or(
-    z
-      .number()
-      .nullable()
-      .transform((val) => (val ? new Date(val) : null))
-  );
+// Base schemas for common patterns
+export const dateSchema = zWsdotDate();
+
+export const nullableDateSchema = zWsdotDate().nullable();
 
 // WSF Fares schemas
 export const faresCacheFlushDateSchema = dateSchema;

@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetMountainPassConditionByIdParams,
@@ -10,16 +10,14 @@ import {
   getMountainPassConditionByIdParamsSchema,
   getMountainPassConditionsParamsSchema,
 } from "./inputs";
-import type { MountainPassCondition } from "./outputs";
 import {
   mountainPassConditionArraySchema,
   mountainPassConditionSchema,
 } from "./outputs";
 
-// Create a factory function for WSDOT Mountain Pass Conditions API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc"
-);
+// Base URL path for WSDOT Mountain Pass Conditions API
+const WSDOT_MOUNTAIN_PASS_CONDITIONS_BASE =
+  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc";
 
 /**
  * Retrieves all mountain pass conditions from WSDOT API
@@ -34,14 +32,14 @@ const createFetch = createZodFetchFactory(
 export const getMountainPassConditions = async (
   params: GetMountainPassConditionsParams = {}
 ) => {
-  const fetcher = createFetch<GetMountainPassConditionsParams>(
-    "/GetMountainPassConditionsAsJson",
+  return zodFetch(
+    `${WSDOT_MOUNTAIN_PASS_CONDITIONS_BASE}/GetMountainPassConditionsAsJson`,
     {
       input: getMountainPassConditionsParamsSchema,
       output: mountainPassConditionArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<MountainPassCondition[]>;
 };
 
 /**
@@ -59,12 +57,12 @@ export const getMountainPassConditions = async (
 export const getMountainPassConditionById = async (
   params: GetMountainPassConditionByIdParams
 ) => {
-  const fetcher = createFetch<GetMountainPassConditionByIdParams>(
-    "/GetMountainPassConditionAsJson?PassConditionID={passConditionId}",
+  return zodFetch(
+    `${WSDOT_MOUNTAIN_PASS_CONDITIONS_BASE}/GetMountainPassConditionAsJson?PassConditionID={passConditionId}`,
     {
       input: getMountainPassConditionByIdParamsSchema,
       output: mountainPassConditionSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<MountainPassCondition>;
 };

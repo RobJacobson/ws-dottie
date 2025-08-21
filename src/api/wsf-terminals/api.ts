@@ -1,6 +1,6 @@
 // WSF Terminals API functions
 
-import { createZodFetchFactory as createFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import type {
   GetTerminalBasicsByTerminalIdParams,
@@ -12,15 +12,6 @@ import type {
   GetTerminalWaitTimesByTerminalIdParams,
 } from "./inputs";
 import { terminalIdParamsSchema } from "./inputs";
-import type {
-  TerminalBasics,
-  TerminalBulletin,
-  TerminalLocation,
-  TerminalSailingSpace,
-  TerminalTransport,
-  TerminalVerbose,
-  TerminalWaitTimes,
-} from "./outputs";
 import {
   terminalBasicsArraySchema,
   terminalBasicsSchema,
@@ -39,8 +30,8 @@ import {
   terminalWaitTimesSchema,
 } from "./outputs";
 
-// Create a factory function for WSF Terminals API
-const createFetch = createFetchFactory("/ferries/api/terminals/rest");
+// Base URL for WSF Terminals API
+const WSF_TERMINALS_BASE = "/ferries/api/terminals/rest";
 
 // ============================================================================
 // TERMINAL BASICS API FUNCTIONS
@@ -64,10 +55,9 @@ const createFetch = createFetchFactory("/ferries/api/terminals/rest");
  * ```
  */
 export const getTerminalBasics = async () => {
-  const fetcher = createFetch("/terminalbasics", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminalbasics`, {
     output: terminalBasicsArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -92,11 +82,14 @@ export const getTerminalBasics = async () => {
 export const getTerminalBasicsByTerminalId = async (
   params: GetTerminalBasicsByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminalbasics/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalBasicsSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminalbasics/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalBasicsSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -121,10 +114,9 @@ export const getTerminalBasicsByTerminalId = async (
  * ```
  */
 export const getTerminalLocations = async () => {
-  const fetcher = createFetch("/terminallocations", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminallocations`, {
     output: terminalLocationArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -150,11 +142,14 @@ export const getTerminalLocations = async () => {
 export const getTerminalLocationsByTerminalId = async (
   params: GetTerminalLocationByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminallocations/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalLocationSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminallocations/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalLocationSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -179,10 +174,9 @@ export const getTerminalLocationsByTerminalId = async (
  * ```
  */
 export const getTerminalSailingSpace = async () => {
-  const fetcher = createFetch("/terminalsailingspace", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminalsailingspace`, {
     output: terminalSailingSpaceArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -208,11 +202,14 @@ export const getTerminalSailingSpace = async () => {
 export const getTerminalSailingSpaceByTerminalId = async (
   params: GetTerminalSailingSpaceByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminalsailingspace/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalSailingSpaceSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminalsailingspace/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalSailingSpaceSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -237,10 +234,9 @@ export const getTerminalSailingSpaceByTerminalId = async (
  * ```
  */
 export const getTerminalBulletins = async () => {
-  const fetcher = createFetch("/terminalbulletins", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminalbulletins`, {
     output: terminalBulletinArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -266,11 +262,14 @@ export const getTerminalBulletins = async () => {
 export const getTerminalBulletinsByTerminalId = async (
   params: GetTerminalBulletinByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminalbulletins/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalBulletinSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminalbulletins/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalBulletinSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -295,10 +294,9 @@ export const getTerminalBulletinsByTerminalId = async (
  * ```
  */
 export const getTerminalTransports = async () => {
-  const fetcher = createFetch("/terminaltransports", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminaltransports`, {
     output: terminalTransportArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -324,11 +322,14 @@ export const getTerminalTransports = async () => {
 export const getTerminalTransportsByTerminalId = async (
   params: GetTerminalTransportByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminaltransports/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalTransportSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminaltransports/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalTransportSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -353,10 +354,9 @@ export const getTerminalTransportsByTerminalId = async (
  * ```
  */
 export const getTerminalWaitTimes = async () => {
-  const fetcher = createFetch("/terminalwaittimes", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminalwaittimes`, {
     output: terminalWaitTimesArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -382,11 +382,14 @@ export const getTerminalWaitTimes = async () => {
 export const getTerminalWaitTimesByTerminalId = async (
   params: GetTerminalWaitTimesByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminalwaittimes/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalWaitTimesSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminalwaittimes/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalWaitTimesSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -411,10 +414,9 @@ export const getTerminalWaitTimesByTerminalId = async (
  * ```
  */
 export const getTerminalVerbose = async () => {
-  const fetcher = createFetch("/terminalverbose", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/terminalverbose`, {
     output: terminalVerboseArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -439,11 +441,14 @@ export const getTerminalVerbose = async () => {
 export const getTerminalVerboseByTerminalId = async (
   params: GetTerminalVerboseByTerminalIdParams
 ) => {
-  const fetcher = createFetch("/terminalverbose/{terminalId}", {
-    input: terminalIdParamsSchema,
-    output: terminalVerboseSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_TERMINALS_BASE}/terminalverbose/{terminalId}`,
+    {
+      input: terminalIdParamsSchema,
+      output: terminalVerboseSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -468,8 +473,7 @@ export const getTerminalVerboseByTerminalId = async (
  * ```
  */
 export const getCacheFlushDateTerminals = async () => {
-  const fetcher = createFetch("/cacheflushdate", {
+  return zodFetch(`${WSF_TERMINALS_BASE}/cacheflushdate`, {
     output: terminalCacheFlushDateSchema,
   });
-  return await fetcher();
 };

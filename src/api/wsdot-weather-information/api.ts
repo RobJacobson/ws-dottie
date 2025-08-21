@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetWeatherInformationByStationIdParams,
@@ -12,13 +12,11 @@ import {
   getWeatherInformationForStationsParamsSchema,
   getWeatherInformationParamsSchema,
 } from "./inputs";
-import type { WeatherInfo } from "./outputs";
 import { weatherInfoArraySchema, weatherInfoSchema } from "./outputs";
 
-// Create a factory function for WSDOT Weather Information API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc"
-);
+// Base URL path for WSDOT Weather Information API
+const WSDOT_WEATHER_INFORMATION_BASE =
+  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc";
 
 /**
  * Get all weather information from WSDOT Weather Information API
@@ -38,14 +36,14 @@ const createFetch = createZodFetchFactory(
 export const getWeatherInformation = async (
   params: GetWeatherInformationParams = {}
 ) => {
-  const fetcher = createFetch<GetWeatherInformationParams>(
-    "/GetCurrentWeatherInformationAsJson",
+  return zodFetch(
+    `${WSDOT_WEATHER_INFORMATION_BASE}/GetCurrentWeatherInformationAsJson`,
     {
       input: getWeatherInformationParamsSchema,
       output: weatherInfoArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<WeatherInfo[]>;
 };
 
 /**
@@ -68,14 +66,14 @@ export const getWeatherInformation = async (
 export const getWeatherInformationByStationId = async (
   params: GetWeatherInformationByStationIdParams
 ) => {
-  const fetcher = createFetch<GetWeatherInformationByStationIdParams>(
-    "/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
+  return zodFetch(
+    `${WSDOT_WEATHER_INFORMATION_BASE}/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}`,
     {
       input: getWeatherInformationByStationIdParamsSchema,
       output: weatherInfoSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<WeatherInfo>;
 };
 
 /**
@@ -98,12 +96,12 @@ export const getWeatherInformationByStationId = async (
 export const getWeatherInformationForStations = async (
   params: GetWeatherInformationForStationsParams
 ) => {
-  const fetcher = createFetch<GetWeatherInformationForStationsParams>(
-    "/GetCurrentWeatherForStationsAsJson?StationList={stationIds}",
+  return zodFetch(
+    `${WSDOT_WEATHER_INFORMATION_BASE}/GetCurrentWeatherForStationsAsJson?StationList={stationIds}`,
     {
       input: getWeatherInformationForStationsParamsSchema,
       output: weatherInfoArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<WeatherInfo[]>;
 };

@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/fares/rest/help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetFareLineItemsBasicParams,
@@ -26,18 +26,6 @@ import {
   getTerminalComboParamsSchema,
   getTerminalComboVerboseParamsSchema,
 } from "./inputs";
-import type {
-  FareLineItem,
-  FareLineItemBasic,
-  FareLineItemsVerboseResponse,
-  FaresCacheFlushDate,
-  FaresTerminal,
-  FaresValidDateRange,
-  FareTotal,
-  TerminalCombo,
-  TerminalComboVerbose,
-  TerminalMate,
-} from "./outputs";
 import {
   fareLineItemsArraySchema,
   fareLineItemsBasicArraySchema,
@@ -51,8 +39,8 @@ import {
   terminalMatesArraySchema,
 } from "./outputs";
 
-// Create a factory function for WSF Fares API
-const createFetch = createZodFetchFactory("/ferries/api/fares/rest");
+// Base URL path for WSF Fares API
+const WSF_FARES_BASE = "/ferries/api/fares/rest";
 
 /**
  * Get cache flush date from WSF Fares API
@@ -74,11 +62,14 @@ const createFetch = createZodFetchFactory("/ferries/api/fares/rest");
 export const getFaresCacheFlushDate = async (
   params: GetFaresCacheFlushDateParams = {}
 ) => {
-  const fetcher = createFetch<GetFaresCacheFlushDateParams>("/cacheflushdate", {
-    input: getFaresCacheFlushDateParamsSchema,
-    output: faresCacheFlushDateSchema,
-  });
-  return fetcher(params) as Promise<FaresCacheFlushDate>;
+  return zodFetch(
+    `${WSF_FARES_BASE}/cacheflushdate`,
+    {
+      input: getFaresCacheFlushDateParamsSchema,
+      output: faresCacheFlushDateSchema,
+    },
+    params
+  );
 };
 
 /**
@@ -99,11 +90,14 @@ export const getFaresCacheFlushDate = async (
 export const getFaresValidDateRange = async (
   params: GetFaresValidDateRangeParams = {}
 ) => {
-  const fetcher = createFetch<GetFaresValidDateRangeParams>("/validdaterange", {
-    input: getFaresValidDateRangeParamsSchema,
-    output: faresValidDateRangeSchema,
-  });
-  return fetcher(params) as Promise<FaresValidDateRange>;
+  return zodFetch(
+    `${WSF_FARES_BASE}/validdaterange`,
+    {
+      input: getFaresValidDateRangeParamsSchema,
+      output: faresValidDateRangeSchema,
+    },
+    params
+  );
 };
 
 /**
@@ -124,14 +118,14 @@ export const getFaresValidDateRange = async (
  * ```
  */
 export const getFaresTerminals = async (params: GetFaresTerminalsParams) => {
-  const fetcher = createFetch<GetFaresTerminalsParams>(
-    "/terminals/{tripDate}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/terminals/{tripDate}`,
     {
       input: getFaresTerminalsParamsSchema,
       output: faresTerminalsArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<FaresTerminal[]>;
 };
 
 /**
@@ -150,14 +144,14 @@ export const getFaresTerminals = async (params: GetFaresTerminalsParams) => {
 export const getFaresTerminalMates = async (
   params: GetFaresTerminalMatesParams
 ) => {
-  const fetcher = createFetch<GetFaresTerminalMatesParams>(
-    "/terminalmates/{tripDate}/{terminalID}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/terminalmates/{tripDate}/{terminalID}`,
     {
       input: getFaresTerminalMatesParamsSchema,
       output: terminalMatesArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<TerminalMate[]>;
 };
 
 /**
@@ -184,14 +178,14 @@ export const getFaresTerminalMates = async (
  * ```
  */
 export const getTerminalCombo = async (params: GetTerminalComboParams) => {
-  const fetcher = createFetch<GetTerminalComboParams>(
-    "/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}`,
     {
       input: getTerminalComboParamsSchema,
       output: terminalComboSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<TerminalCombo>;
 };
 
 /**
@@ -214,14 +208,14 @@ export const getTerminalCombo = async (params: GetTerminalComboParams) => {
 export const getTerminalComboVerbose = async (
   params: GetTerminalComboVerboseParams
 ) => {
-  const fetcher = createFetch<GetTerminalComboVerboseParams>(
-    "/terminalcomboverbose/{tripDate}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/terminalcomboverbose/{tripDate}`,
     {
       input: getTerminalComboVerboseParamsSchema,
       output: terminalComboVerboseArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<TerminalComboVerbose[]>;
 };
 
 /**
@@ -252,14 +246,14 @@ export const getTerminalComboVerbose = async (
 export const getFareLineItemsBasic = async (
   params: GetFareLineItemsBasicParams
 ) => {
-  const fetcher = createFetch<GetFareLineItemsBasicParams>(
-    "/farelineitemsbasic/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/farelineitemsbasic/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}`,
     {
       input: getFareLineItemsBasicParamsSchema,
       output: fareLineItemsBasicArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<FareLineItemBasic[]>;
 };
 
 /**
@@ -289,14 +283,14 @@ export const getFareLineItemsBasic = async (
  * ```
  */
 export const getFareLineItems = async (params: GetFareLineItemsParams) => {
-  const fetcher = createFetch<GetFareLineItemsParams>(
-    "/farelineitems/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/farelineitems/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}`,
     {
       input: getFareLineItemsParamsSchema,
       output: fareLineItemsArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<FareLineItem[]>;
 };
 
 /**
@@ -320,14 +314,14 @@ export const getFareLineItems = async (params: GetFareLineItemsParams) => {
 export const getFareLineItemsVerbose = async (
   params: GetFareLineItemsVerboseParams
 ) => {
-  const fetcher = createFetch<GetFareLineItemsVerboseParams>(
-    "/farelineitemsverbose/{tripDate}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/farelineitemsverbose/{tripDate}`,
     {
       input: getFareLineItemsVerboseParamsSchema,
       output: fareLineItemsVerboseResponseSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<FareLineItemsVerboseResponse>;
 };
 
 /**
@@ -360,12 +354,12 @@ export const getFareLineItemsVerbose = async (
  * ```
  */
 export const getFareTotals = async (params: GetFareTotalsParams) => {
-  const fetcher = createFetch<GetFareTotalsParams>(
-    "/faretotals/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}/{fareLineItemIDs}/{quantities}",
+  return zodFetch(
+    `${WSF_FARES_BASE}/faretotals/{tripDate}/{departingTerminalID}/{arrivingTerminalID}/{roundTrip}/{fareLineItemIDs}/{quantities}`,
     {
       input: getFareTotalsParamsSchema,
       output: fareTotalsArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<FareTotal[]>;
 };

@@ -2,16 +2,13 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
 // API Help: https://wsdot.wa.gov/traffic/api/Bridges/ClearanceREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import { getBridgeClearancesParamsSchema } from "./inputs";
-import type { BridgeDataGIS } from "./outputs";
 import { bridgeDataGisArraySchema } from "./outputs";
 
-// Create a factory function for WSDOT Bridge Clearances API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/Bridges/ClearanceREST.svc"
-);
+// Base URL path for WSDOT Bridge Clearances API
+const WSDOT_BRIDGE_CLEARANCES_BASE = "/Traffic/api/Bridges/ClearanceREST.svc";
 
 /**
  * Get bridge clearances from WSDOT Bridge Clearances API
@@ -31,12 +28,12 @@ const createFetch = createZodFetchFactory(
  * ```
  */
 export const getBridgeClearances = async (params: { route: string }) => {
-  const fetcher = createFetch<{ route: string }>(
-    "/GetClearancesAsJson?Route={route}",
+  return zodFetch(
+    `${WSDOT_BRIDGE_CLEARANCES_BASE}/GetClearancesAsJson?Route={route}`,
     {
       input: getBridgeClearancesParamsSchema,
       output: bridgeDataGisArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<BridgeDataGIS[]>;
 };

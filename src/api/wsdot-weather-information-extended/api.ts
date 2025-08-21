@@ -2,17 +2,16 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_traveler_a_p_i_1_1_controller_1_1_scanweb_controller.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/api/Scanweb
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetWeatherInformationExtendedParams,
   getWeatherInformationExtendedParamsSchema,
 } from "./inputs";
-import type { WeatherReading } from "./outputs";
 import { weatherReadingArraySchema } from "./outputs";
 
-// Create a factory function for WSDOT Weather Information Extended API
-const createFetch = createZodFetchFactory("/traffic/api/api/Scanweb");
+// Base URL path for WSDOT Weather Information Extended API
+const WSDOT_WEATHER_INFORMATION_EXTENDED_BASE = "/traffic/api/api/Scanweb";
 
 /**
  * Get extended weather information from WSDOT Weather Information Extended API
@@ -33,9 +32,12 @@ const createFetch = createZodFetchFactory("/traffic/api/api/Scanweb");
 export const getWeatherInformationExtended = async (
   params: GetWeatherInformationExtendedParams = {}
 ) => {
-  const fetcher = createFetch<GetWeatherInformationExtendedParams>("", {
-    input: getWeatherInformationExtendedParamsSchema,
-    output: weatherReadingArraySchema,
-  });
-  return fetcher(params) as Promise<WeatherReading[]>;
+  return zodFetch(
+    `${WSDOT_WEATHER_INFORMATION_EXTENDED_BASE}`,
+    {
+      input: getWeatherInformationExtendedParamsSchema,
+      output: weatherReadingArraySchema,
+    },
+    params
+  );
 };

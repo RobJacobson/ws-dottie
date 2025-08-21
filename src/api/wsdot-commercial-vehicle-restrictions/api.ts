@@ -2,25 +2,22 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
 // API Help: https://wsdot.wa.gov/traffic/api/CVRestrictions/CVRestrictionsREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
+  type GetCommercialVehicleRestrictionsParams,
+  type GetCommercialVehicleRestrictionsWithIdParams,
   getCommercialVehicleRestrictionsParamsSchema,
   getCommercialVehicleRestrictionsWithIdParamsSchema,
 } from "./inputs";
-import type {
-  CommercialVehicleRestriction,
-  CommercialVehicleRestrictionWithId,
-} from "./outputs";
 import {
   commercialVehicleRestrictionArraySchema,
   commercialVehicleRestrictionWithIdArraySchema,
 } from "./outputs";
 
-// Create a factory function for WSDOT Commercial Vehicle Restrictions API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc"
-);
+// Base URL path for WSDOT Commercial Vehicle Restrictions API
+const WSDOT_COMMERCIAL_VEHICLE_RESTRICTIONS_BASE =
+  "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc";
 
 /**
  * Get commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
@@ -41,14 +38,14 @@ const createFetch = createZodFetchFactory(
 export const getCommercialVehicleRestrictions = async (
   params: GetCommercialVehicleRestrictionsParams = {}
 ) => {
-  const fetcher = createFetch<GetCommercialVehicleRestrictionsParams>(
-    "/GetCommercialVehicleRestrictionsAsJson",
+  return zodFetch(
+    `${WSDOT_COMMERCIAL_VEHICLE_RESTRICTIONS_BASE}/GetCommercialVehicleRestrictionsAsJson`,
     {
       input: getCommercialVehicleRestrictionsParamsSchema,
       output: commercialVehicleRestrictionArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<CommercialVehicleRestriction[]>;
 };
 
 /**
@@ -71,12 +68,12 @@ export const getCommercialVehicleRestrictions = async (
 export const getCommercialVehicleRestrictionsWithId = async (
   params: GetCommercialVehicleRestrictionsWithIdParams = {}
 ) => {
-  const fetcher = createFetch<GetCommercialVehicleRestrictionsWithIdParams>(
-    "/GetCommercialVehicleRestrictionsWithIdAsJson",
+  return zodFetch(
+    `${WSDOT_COMMERCIAL_VEHICLE_RESTRICTIONS_BASE}/GetCommercialVehicleRestrictionsWithIdAsJson`,
     {
       input: getCommercialVehicleRestrictionsWithIdParamsSchema,
       output: commercialVehicleRestrictionWithIdArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<CommercialVehicleRestrictionWithId[]>;
 };

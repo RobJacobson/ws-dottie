@@ -181,8 +181,8 @@ export const wsdotDateTimestampToJsDate = (dateString: string): Date | null => {
   const cleanDateString = dateString.replace(/\\\//g, "/");
   const timestamp = parseInt(cleanDateString.slice(6, 19), 10);
 
-  // Validate timestamp is a valid positive number
-  if (Number.isNaN(timestamp) || timestamp < 0) {
+  // Validate timestamp is a valid number (allow negative timestamps for WSF Schedule API)
+  if (Number.isNaN(timestamp)) {
     return null;
   }
 

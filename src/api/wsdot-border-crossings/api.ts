@@ -2,17 +2,15 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
 // API Help: https://wsdot.wa.gov/traffic/api/BorderCrossings/BorderCrossingsREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import type { GetBorderCrossingsParams } from "./inputs";
 import { getBorderCrossingsParamsSchema } from "./inputs";
-import type { BorderCrossingData } from "./outputs";
 import { borderCrossingDataArraySchema } from "./outputs";
 
-// Create a factory function for WSDOT Border Crossings API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc"
-);
+// Base URL path for WSDOT Border Crossings API
+const WSDOT_BORDER_CROSSINGS_BASE =
+  "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc";
 
 /**
  * Get border crossing wait times from WSDOT Border Crossings API
@@ -33,12 +31,12 @@ const createFetch = createZodFetchFactory(
 export const getBorderCrossings = async (
   params: GetBorderCrossingsParams = {}
 ) => {
-  const fetcher = createFetch<GetBorderCrossingsParams>(
-    "/GetBorderCrossingsAsJson",
+  return zodFetch(
+    `${WSDOT_BORDER_CROSSINGS_BASE}/GetBorderCrossingsAsJson`,
     {
       input: getBorderCrossingsParamsSchema,
       output: borderCrossingDataArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<BorderCrossingData[]>;
 };

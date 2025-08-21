@@ -8,7 +8,7 @@
 
 import type { z } from "zod";
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetHighwayCameraParams,
@@ -17,13 +17,11 @@ import {
   getHighwayCamerasParamsSchema,
   searchHighwayCamerasParamsSchema,
 } from "./inputs";
-import type { Camera, GetCameraResponse } from "./outputs";
 import { cameraArraySchema, cameraSchema } from "./outputs";
 
-// Create a factory function for WSDOT Highway Cameras API
-const createFetch = createZodFetchFactory(
-  "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc"
-);
+// Base URL path for WSDOT Highway Cameras API
+const WSDOT_HIGHWAY_CAMERAS_BASE =
+  "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc";
 
 /**
  * Get all highway cameras
@@ -43,11 +41,14 @@ const createFetch = createZodFetchFactory(
 export const getHighwayCameras = async (
   params: GetHighwayCamerasParams = {}
 ) => {
-  const fetcher = createFetch<GetHighwayCamerasParams>("/GetCamerasAsJson", {
-    input: getHighwayCamerasParamsSchema,
-    output: cameraArraySchema,
-  });
-  return fetcher(params) as Promise<Camera[]>;
+  return zodFetch(
+    `${WSDOT_HIGHWAY_CAMERAS_BASE}/GetCamerasAsJson`,
+    {
+      input: getHighwayCamerasParamsSchema,
+      output: cameraArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -67,14 +68,14 @@ export const getHighwayCameras = async (
  * ```
  */
 export const getHighwayCamera = async (params: GetHighwayCameraParams) => {
-  const fetcher = createFetch<GetHighwayCameraParams>(
-    "/GetCameraAsJson?CameraID={cameraID}",
+  return zodFetch(
+    `${WSDOT_HIGHWAY_CAMERAS_BASE}/GetCameraAsJson?CameraID={cameraID}`,
     {
       input: getHighwayCameraParamsSchema,
       output: cameraSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<GetCameraResponse>;
 };
 
 /**
@@ -99,7 +100,7 @@ export const getHighwayCamera = async (params: GetHighwayCameraParams) => {
  */
 export const searchHighwayCameras = async (
   params: z.infer<typeof searchHighwayCamerasParamsSchema>
-): Promise<Camera[]> => {
+): Promise<z.infer<typeof cameraArraySchema>> => {
   // Build query string by including only defined values
   const queryParams = new URLSearchParams();
   if (params.StateRoute !== undefined)
@@ -111,14 +112,14 @@ export const searchHighwayCameras = async (
   if (params.EndingMilepost !== undefined)
     queryParams.append("EndingMilepost", String(params.EndingMilepost));
 
-  const endpoint = `/SearchCamerasAsJson?${queryParams.toString()}`;
+  const endpoint = `${WSDOT_HIGHWAY_CAMERAS_BASE}/SearchCamerasAsJson?${queryParams.toString()}`;
 
-  const fetcher = createFetch<z.infer<typeof searchHighwayCamerasParamsSchema>>(
+  return zodFetch(
     endpoint,
     {
       input: searchHighwayCamerasParamsSchema,
       output: cameraArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<Camera[]>;
 };

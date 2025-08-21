@@ -4,7 +4,7 @@
 
 import { z } from "zod";
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import type {
   GetAllSailingsParams,
@@ -50,17 +50,6 @@ import {
   getTimeAdjustmentsByRouteParamsSchema,
   getTimeAdjustmentsBySchedRouteParamsSchema,
 } from "./inputs";
-import type {
-  ActiveSeason,
-  Alert,
-  AlternativeFormat,
-  Route,
-  RouteDetails,
-  Sailing,
-  ScheduledRoute,
-  ScheduleResponse,
-  TimeAdjustment,
-} from "./outputs";
 import {
   activeSeasonsArraySchema,
   alertsArraySchema,
@@ -80,8 +69,8 @@ import {
   validDateRangeSchema,
 } from "./outputs";
 
-// Create a factory function for WSF Schedule API
-const createFetch = createZodFetchFactory("/ferries/api/schedule/rest");
+// Base URL path for WSF Schedule API
+const WSF_SCHEDULE_BASE = "/ferries/api/schedule/rest";
 
 // ============================================================================
 // CACHE FLUSH DATE API FUNCTIONS
@@ -106,10 +95,9 @@ const createFetch = createZodFetchFactory("/ferries/api/schedule/rest");
  * ```
  */
 export const getCacheFlushDateSchedule = async () => {
-  const fetcher = createFetch("/cacheflushdate", {
+  return zodFetch(`${WSF_SCHEDULE_BASE}/cacheflushdate`, {
     output: scheduleCacheFlushDateSchema,
   });
-  return await fetcher();
 };
 
 // ============================================================================
@@ -134,10 +122,9 @@ export const getCacheFlushDateSchedule = async () => {
  * ```
  */
 export const getValidDateRange = async () => {
-  const fetcher = createFetch("/validdaterange", {
+  return zodFetch(`${WSF_SCHEDULE_BASE}/validdaterange`, {
     output: validDateRangeSchema,
   });
-  return await fetcher();
 };
 
 // ============================================================================
@@ -163,11 +150,14 @@ export const getValidDateRange = async () => {
  * ```
  */
 export const getTerminals = async (params: GetTerminalsParams) => {
-  const fetcher = createFetch("/terminals/{tripDate}", {
-    input: getTerminalsParamsSchema,
-    output: scheduleTerminalsArraySchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/terminals/{tripDate}`,
+    {
+      input: getTerminalsParamsSchema,
+      output: scheduleTerminalsArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -185,11 +175,14 @@ export const getTerminals = async (params: GetTerminalsParams) => {
 export const getTerminalsAndMates = async (
   params: GetTerminalsAndMatesParams
 ) => {
-  const fetcher = createFetch("/terminalsandmates/{tripDate}", {
-    input: getTerminalsAndMatesParamsSchema,
-    output: scheduleTerminalCombosArraySchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/terminalsandmates/{tripDate}`,
+    {
+      input: getTerminalsAndMatesParamsSchema,
+      output: scheduleTerminalCombosArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -209,14 +202,14 @@ export const getTerminalsAndMates = async (
 export const getTerminalsAndMatesByRoute = async (
   params: GetTerminalsAndMatesByRouteParams
 ) => {
-  const fetcher = createFetch(
-    "/terminalsandmatesbyroute/{tripDate}/{routeId}",
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/terminalsandmatesbyroute/{tripDate}/{routeId}`,
     {
       input: getTerminalsAndMatesByRouteParamsSchema,
       output: scheduleTerminalCombosArraySchema,
-    }
+    },
+    params
   );
-  return await fetcher(params);
 };
 
 /**
@@ -234,11 +227,14 @@ export const getTerminalsAndMatesByRoute = async (
  * @throws {WsfApiError} When the API request fails
  */
 export const getTerminalMates = async (params: GetTerminalMatesParams) => {
-  const fetcher = createFetch("/terminalmates/{tripDate}/{terminalId}", {
-    input: getTerminalMatesParamsSchema,
-    output: scheduleTerminalsArraySchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/terminalmates/{tripDate}/{terminalId}`,
+    {
+      input: getTerminalMatesParamsSchema,
+      output: scheduleTerminalsArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -265,11 +261,14 @@ export const getTerminalMates = async (params: GetTerminalMatesParams) => {
  * ```
  */
 export const getRoutes = async (params: GetRoutesParams) => {
-  const fetcher = createFetch("/routes/{tripDate}", {
-    input: getRoutesParamsSchema,
-    output: routesArraySchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/routes/{tripDate}`,
+    {
+      input: getRoutesParamsSchema,
+      output: routesArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -291,14 +290,14 @@ export const getRoutes = async (params: GetRoutesParams) => {
 export const getRoutesByTerminals = async (
   params: GetRoutesByTerminalsParams
 ) => {
-  const fetcher = createFetch(
-    "/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`,
     {
       input: getRoutesByTerminalsParamsSchema,
       output: routesArraySchema,
-    }
+    },
+    params
   );
-  return await fetcher(params);
 };
 
 /**
@@ -317,11 +316,14 @@ export const getRoutesByTerminals = async (
 export const getRoutesWithDisruptions = async (
   params: GetRoutesWithDisruptionsParams
 ) => {
-  const fetcher = createFetch("/routeshavingservicedisruptions/{tripDate}", {
-    input: getRoutesWithDisruptionsParamsSchema,
-    output: routesArraySchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/routeshavingservicedisruptions/{tripDate}`,
+    {
+      input: getRoutesWithDisruptionsParamsSchema,
+      output: routesArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -339,11 +341,14 @@ export const getRoutesWithDisruptions = async (
  * @throws {WsfApiError} When the API request fails
  */
 export const getRouteDetails = async (params: GetRouteDetailsParams) => {
-  const fetcher = createFetch("/routedetails/{tripDate}", {
-    input: getRouteDetailsParamsSchema,
-    output: routesArraySchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/routedetails/{tripDate}`,
+    {
+      input: getRouteDetailsParamsSchema,
+      output: routesArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -367,13 +372,14 @@ export const getRouteDetailsByTerminals = async (params: {
   departingTerminalId: number;
   arrivingTerminalId: number;
 }) => {
-  const fetcher = createFetch<{
-    tripDate: Date;
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-  }>(`/routedetails/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
-  const data = await fetcher(params);
-  return routesArraySchema.parse(data) as z.infer<typeof routesArraySchema>;
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/routedetails/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`,
+    {
+      input: getRouteDetailsByTerminalsParamsSchema,
+      output: routesArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -393,11 +399,14 @@ export const getRouteDetailsByTerminals = async (params: {
 export const getRouteDetailsByRoute = async (
   params: GetRouteDetailsByRouteParams
 ) => {
-  const fetcher = createFetch("/routedetails/{tripDate}/{routeId}", {
-    input: getRouteDetailsByRouteParamsSchema,
-    output: routeDetailsSchema,
-  });
-  return await fetcher(params);
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/routedetails/{tripDate}/{routeId}`,
+    {
+      input: getRouteDetailsByRouteParamsSchema,
+      output: routeDetailsSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -416,9 +425,9 @@ export const getRouteDetailsByRoute = async (
  * @throws {WsfApiError} When the API request fails
  */
 export const getActiveSeasons = async () => {
-  const fetcher = createFetch(`/activeseasons`);
-  const data = await fetcher();
-  return activeSeasonsArraySchema.parse(data) as ActiveSeason[];
+  return zodFetch(`${WSF_SCHEDULE_BASE}/activeseasons`, {
+    output: activeSeasonsArraySchema,
+  });
 };
 
 // ============================================================================
@@ -438,10 +447,9 @@ export const getActiveSeasons = async () => {
  * @throws {WsfApiError} When the API request fails
  */
 export const getScheduledRoutes = async () => {
-  const fetcher = createFetch("/schedroutes", {
+  return zodFetch(`${WSF_SCHEDULE_BASE}/schedroutes`, {
     output: scheduledRoutesArraySchema,
   });
-  return await fetcher();
 };
 
 /**
@@ -460,11 +468,14 @@ export const getScheduledRoutes = async () => {
 export const getScheduledRoutesBySeason = async (params: {
   scheduleId: number;
 }) => {
-  const fetcher = createFetch<{ scheduleId: number }>(
-    `/schedroutes/{scheduleId}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/schedroutes/{scheduleId}`,
+    {
+      input: getScheduledRoutesBySeasonParamsSchema,
+      output: scheduledRoutesArraySchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return scheduledRoutesArraySchema.parse(data) as ScheduledRoute[];
 };
 
 // ============================================================================
@@ -487,11 +498,14 @@ export const getScheduledRoutesBySeason = async (params: {
  * @throws {WsfApiError} When the API request fails
  */
 export const getSailings = async (params: { schedRouteId: number }) => {
-  const fetcher = createFetch<{ schedRouteId: number }>(
-    `/sailings/{schedRouteId}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/sailings/{schedRouteId}`,
+    {
+      input: getSailingsParamsSchema,
+      output: sailingsArraySchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return sailingsArraySchema.parse(data) as Sailing[];
 };
 
 /**
@@ -510,11 +524,14 @@ export const getSailings = async (params: { schedRouteId: number }) => {
  * @throws {WsfApiError} When the API request fails
  */
 export const getAllSailings = async (params: { schedRouteId: number }) => {
-  const fetcher = createFetch<{ schedRouteId: number }>(
-    `/allsailings/{schedRouteId}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/allsailings/{schedRouteId}`,
+    {
+      input: getAllSailingsParamsSchema,
+      output: sailingsArraySchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return sailingsArraySchema.parse(data) as Sailing[];
 };
 
 // ============================================================================
@@ -533,9 +550,9 @@ export const getAllSailings = async (params: { schedRouteId: number }) => {
  * @throws {WsfApiError} When the API request fails
  */
 export const getTimeAdjustments = async () => {
-  const fetcher = createFetch(`/timeadj`);
-  const data = await fetcher();
-  return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
+  return zodFetch(`${WSF_SCHEDULE_BASE}/timeadj`, {
+    output: timeAdjustmentsArraySchema,
+  });
 };
 
 /**
@@ -555,9 +572,14 @@ export const getTimeAdjustments = async () => {
 export const getTimeAdjustmentsByRoute = async (params: {
   routeId: number;
 }) => {
-  const fetcher = createFetch<{ routeId: number }>(`/timeadjbyroute/{routeId}`);
-  const data = await fetcher(params);
-  return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/timeadjbyroute/{routeId}`,
+    {
+      input: getTimeAdjustmentsByRouteParamsSchema,
+      output: timeAdjustmentsArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -577,11 +599,14 @@ export const getTimeAdjustmentsByRoute = async (params: {
 export const getTimeAdjustmentsBySchedRoute = async (params: {
   schedRouteId: number;
 }) => {
-  const fetcher = createFetch<{ schedRouteId: number }>(
-    `/timeadjbyschedroute/{schedRouteId}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/timeadjbyschedroute/{schedRouteId}`,
+    {
+      input: getTimeAdjustmentsBySchedRouteParamsSchema,
+      output: timeAdjustmentsArraySchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return timeAdjustmentsArraySchema.parse(data) as TimeAdjustment[];
 };
 
 // ============================================================================
@@ -606,11 +631,14 @@ export const getScheduleByRoute = async (params: {
   tripDate: Date;
   routeId: number;
 }) => {
-  const fetcher = createFetch<{ tripDate: Date; routeId: number }>(
-    `/schedule/{tripDate}/{routeId}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/schedule/{tripDate}/{routeId}`,
+    {
+      input: getScheduleByRouteParamsSchema,
+      output: scheduleResponseSchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return scheduleResponseSchema.parse(data) as ScheduleResponse;
 };
 
 /**
@@ -634,13 +662,14 @@ export const getScheduleByTerminals = async (params: {
   departingTerminalId: number;
   arrivingTerminalId: number;
 }) => {
-  const fetcher = createFetch<{
-    tripDate: Date;
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-  }>(`/schedule/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`);
-  const data = await fetcher(params);
-  return scheduleResponseSchema.parse(data) as ScheduleResponse;
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/schedule/{tripDate}/{departingTerminalId}/{arrivingTerminalId}`,
+    {
+      input: getScheduleByTerminalsParamsSchema,
+      output: scheduleResponseSchema,
+    },
+    params
+  );
 };
 
 /**
@@ -662,12 +691,14 @@ export const getScheduleTodayByRoute = async (params: {
   routeId: number;
   onlyRemainingTimes?: boolean;
 }) => {
-  const fetcher = createFetch<{
-    routeId: number;
-    onlyRemainingTimes?: boolean;
-  }>(`/scheduletoday/{routeId}/{onlyRemainingTimes}`);
-  const data = await fetcher(params);
-  return scheduleResponseSchema.parse(data) as ScheduleResponse;
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/scheduletoday/{routeId}/{onlyRemainingTimes}`,
+    {
+      input: getScheduleTodayByRouteParamsSchema,
+      output: scheduleResponseSchema,
+    },
+    params
+  );
 };
 
 /**
@@ -691,15 +722,14 @@ export const getScheduleTodayByTerminals = async (params: {
   arrivingTerminalId: number;
   onlyRemainingTimes?: boolean;
 }) => {
-  const fetcher = createFetch<{
-    departingTerminalId: number;
-    arrivingTerminalId: number;
-    onlyRemainingTimes?: boolean;
-  }>(
-    `/scheduletoday/{departingTerminalId}/{arrivingTerminalId}/{onlyRemainingTimes}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/scheduletoday/{departingTerminalId}/{arrivingTerminalId}/{onlyRemainingTimes}`,
+    {
+      input: getScheduleTodayByTerminalsParamsSchema,
+      output: scheduleResponseSchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return scheduleResponseSchema.parse(data) as ScheduleResponse;
 };
 
 // ============================================================================
@@ -718,9 +748,9 @@ export const getScheduleTodayByTerminals = async (params: {
  * @throws {WsfApiError} When the API request fails
  */
 export const getAlerts = async () => {
-  const fetcher = createFetch(`/alerts`);
-  const data = await fetcher();
-  return alertsArraySchema.parse(data) as Alert[];
+  return zodFetch(`${WSF_SCHEDULE_BASE}/alerts`, {
+    output: alertsArraySchema,
+  });
 };
 
 // ============================================================================
@@ -743,9 +773,12 @@ export const getAlerts = async () => {
 export const getAlternativeFormats = async (params: {
   subjectName: string;
 }) => {
-  const fetcher = createFetch<{ subjectName: string }>(
-    `/alternativeformats/{subjectName}`
+  return zodFetch(
+    `${WSF_SCHEDULE_BASE}/alternativeformats/{subjectName}`,
+    {
+      input: getAlternativeFormatsParamsSchema,
+      output: alternativeFormatsArraySchema,
+    },
+    params
   );
-  const data = await fetcher(params);
-  return alternativeFormatsArraySchema.parse(data) as AlternativeFormat[];
 };

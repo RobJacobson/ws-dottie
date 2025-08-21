@@ -2,7 +2,7 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
 // API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
 
-import { createZodFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 import {
   type GetTrafficFlowByIdParams,
@@ -10,13 +10,10 @@ import {
   getTrafficFlowByIdParamsSchema,
   getTrafficFlowsParamsSchema,
 } from "./inputs";
-import type { TrafficFlow } from "./outputs";
 import { trafficFlowArraySchema, trafficFlowSchema } from "./outputs";
 
-// Create a factory function for WSDOT Traffic Flow API
-const createFetch = createZodFetchFactory(
-  "/traffic/api/TrafficFlow/TrafficFlowREST.svc"
-);
+// Base URL path for WSDOT Traffic Flow API
+const WSDOT_TRAFFIC_FLOW_BASE = "/traffic/api/TrafficFlow/TrafficFlowREST.svc";
 
 /**
  * Get all traffic flow data from WSDOT Traffic Flow API
@@ -28,11 +25,14 @@ const createFetch = createZodFetchFactory(
  * @throws {Error} When the API request fails or validation fails
  */
 export const getTrafficFlows = async (params: GetTrafficFlowsParams = {}) => {
-  const fetcher = createFetch<GetTrafficFlowsParams>("/GetTrafficFlowsAsJson", {
-    input: getTrafficFlowsParamsSchema,
-    output: trafficFlowArraySchema,
-  });
-  return fetcher(params) as Promise<TrafficFlow[]>;
+  return zodFetch(
+    `${WSDOT_TRAFFIC_FLOW_BASE}/GetTrafficFlowsAsJson`,
+    {
+      input: getTrafficFlowsParamsSchema,
+      output: trafficFlowArraySchema,
+    },
+    params
+  );
 };
 
 /**
@@ -47,12 +47,12 @@ export const getTrafficFlows = async (params: GetTrafficFlowsParams = {}) => {
  * @throws {Error} When the API request fails or validation fails
  */
 export const getTrafficFlowById = async (params: GetTrafficFlowByIdParams) => {
-  const fetcher = createFetch<GetTrafficFlowByIdParams>(
-    "/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
+  return zodFetch(
+    `${WSDOT_TRAFFIC_FLOW_BASE}/GetTrafficFlowAsJson?FlowDataID={flowDataID}`,
     {
       input: getTrafficFlowByIdParamsSchema,
       output: trafficFlowSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<TrafficFlow>;
 };

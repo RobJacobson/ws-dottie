@@ -1,10 +1,17 @@
 import { z } from "zod";
+
 import { schemas } from "./schemas";
 
-export const validateData = <T>(schema: z.ZodSchema<T>, data: unknown): T => schema.parse(data);
-export const validateDataSafe = <T>(schema: z.ZodSchema<T>, data: unknown) => schema.safeParse(data);
-export const validateArray = <T>(schema: z.ZodSchema<T>, data: unknown[]): T[] => z.array(schema).parse(data);
-export const validateArraySafe = <T>(schema: z.ZodSchema<T>, data: unknown[]) => z.array(schema).safeParse(data);
+export const validateData = <T>(schema: z.ZodSchema<T>, data: unknown): T =>
+  schema.parse(data);
+export const validateDataSafe = <T>(schema: z.ZodSchema<T>, data: unknown) =>
+  schema.safeParse(data);
+export const validateArray = <T>(
+  schema: z.ZodSchema<T>,
+  data: unknown[]
+): T[] => z.array(schema).parse(data);
+export const validateArraySafe = <T>(schema: z.ZodSchema<T>, data: unknown[]) =>
+  z.array(schema).safeParse(data);
 export const createValidator = <T>(schema: z.ZodSchema<T>) => ({
   validate: (data: unknown): T => validateData(schema, data),
   validateSafe: (data: unknown) => validateDataSafe(schema, data),
@@ -26,12 +33,18 @@ export const validators = {
   fareLineItemBasic: createValidator(schemas.fareLineItemBasic),
   fareLineItemVerbose: createValidator(schemas.fareLineItemVerbose),
   lineItemLookup: createValidator(schemas.lineItemLookup),
-  fareLineItemsVerboseResponse: createValidator(schemas.fareLineItemsVerboseResponse),
+  fareLineItemsVerboseResponse: createValidator(
+    schemas.fareLineItemsVerboseResponse
+  ),
   fareTotal: createValidator(schemas.fareTotal),
   faresTerminalsArray: createArrayValidator(schemas.faresTerminalsArray),
   terminalMatesArray: createArrayValidator(schemas.terminalMatesArray),
-  terminalComboVerboseArray: createArrayValidator(schemas.terminalComboVerboseArray),
+  terminalComboVerboseArray: createArrayValidator(
+    schemas.terminalComboVerboseArray
+  ),
   fareLineItemsArray: createArrayValidator(schemas.fareLineItemsArray),
-  fareLineItemsBasicArray: createArrayValidator(schemas.fareLineItemsBasicArray),
+  fareLineItemsBasicArray: createArrayValidator(
+    schemas.fareLineItemsBasicArray
+  ),
   fareTotalsArray: createArrayValidator(schemas.fareTotalsArray),
-} as const; 
+} as const;

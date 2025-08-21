@@ -2,7 +2,7 @@
 // Documentation: https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
 // API Help: https://www.wsdot.wa.gov/ferries/api/vessels/rest/help
 
-import { createZodFetchFactory as createFetchFactory } from "@/shared/fetching/api";
+import { zodFetch } from "@/shared/fetching";
 
 // Input parameter types and schemas
 import type {
@@ -23,16 +23,8 @@ import {
   getVesselStatsByIdParamsSchema,
   getVesselVerboseByIdParamsSchema,
 } from "./inputs";
-// Response types and schemas
-import type {
-  VesselAccommodation,
-  VesselBasic,
-  VesselHistory,
-  VesselLocation,
-  VesselStats,
-  VesselsCacheFlushDate,
-  VesselVerbose,
-} from "./outputs";
+// Response schemas (types are inferred from Zod schemas)
+import type { VesselHistory } from "./outputs";
 import {
   vesselAccommodationArraySchema,
   vesselAccommodationSchema,
@@ -52,8 +44,8 @@ import {
 // SHARED CONFIGURATION
 // ============================================================================
 
-// Create a factory function for WSF Vessels API
-const createFetch = createFetchFactory("/ferries/api/vessels/rest");
+// Base URL path for WSF Vessels API
+const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
 
 // ============================================================================
 // VESSEL BASICS API FUNCTIONS
@@ -76,10 +68,9 @@ const createFetch = createFetchFactory("/ferries/api/vessels/rest");
  * ```
  */
 export const getVesselBasics = async () => {
-  const fetcher = createFetch("/vesselbasics", {
+  return zodFetch(`${WSF_VESSELS_BASE}/vesselbasics`, {
     output: vesselBasicArraySchema,
   });
-  return fetcher() as Promise<VesselBasic[]>;
 };
 
 /**
@@ -102,14 +93,14 @@ export const getVesselBasics = async () => {
 export const getVesselBasicsById = async (
   params: GetVesselBasicsByIdParams
 ) => {
-  const fetcher = createFetch<GetVesselBasicsByIdParams>(
-    "/vesselbasics/{vesselId}",
+  return zodFetch(
+    `${WSF_VESSELS_BASE}/vesselbasics/{vesselId}`,
     {
       input: getVesselBasicsByIdParamsSchema,
       output: vesselBasicSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<VesselBasic>;
 };
 
 // ============================================================================
@@ -138,10 +129,9 @@ export const getVesselBasicsById = async (
  * ```
  */
 export const getVesselLocations = async () => {
-  const fetcher = createFetch("/vessellocations", {
+  return zodFetch(`${WSF_VESSELS_BASE}/vessellocations`, {
     output: vesselLocationArraySchema,
   });
-  return fetcher() as Promise<VesselLocation[]>;
 };
 
 /**
@@ -158,14 +148,14 @@ export const getVesselLocations = async () => {
 export const getVesselLocationsByVesselId = async (
   params: GetVesselLocationsByVesselIdParams
 ) => {
-  const fetcher = createFetch<GetVesselLocationsByVesselIdParams>(
-    "/vessellocations/{vesselId}",
+  return zodFetch(
+    `${WSF_VESSELS_BASE}/vessellocations/{vesselId}`,
     {
       input: getVesselLocationsByVesselIdParamsSchema,
       output: vesselLocationSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<VesselLocation>;
 };
 
 // ============================================================================
@@ -185,10 +175,9 @@ export const getVesselLocationsByVesselId = async (
  * @returns Promise resolving to an array of VesselAccommodation objects containing accommodation information
  */
 export const getVesselAccommodations = async () => {
-  const fetcher = createFetch("/vesselaccommodations", {
+  return zodFetch(`${WSF_VESSELS_BASE}/vesselaccommodations`, {
     output: vesselAccommodationArraySchema,
   });
-  return fetcher() as Promise<VesselAccommodation[]>;
 };
 
 /**
@@ -205,14 +194,14 @@ export const getVesselAccommodations = async () => {
 export const getVesselAccommodationsById = async (
   params: GetVesselAccommodationsByIdParams
 ) => {
-  const fetcher = createFetch<GetVesselAccommodationsByIdParams>(
-    "/vesselaccommodations/{vesselId}",
+  return zodFetch(
+    `${WSF_VESSELS_BASE}/vesselaccommodations/{vesselId}`,
     {
       input: getVesselAccommodationsByIdParamsSchema,
       output: vesselAccommodationSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<VesselAccommodation>;
 };
 
 // ============================================================================
@@ -231,10 +220,9 @@ export const getVesselAccommodationsById = async (
  * @returns Promise resolving to an array of VesselStats objects containing vessel statistics
  */
 export const getVesselStats = async () => {
-  const fetcher = createFetch("/vesselstats", {
+  return zodFetch(`${WSF_VESSELS_BASE}/vesselstats`, {
     output: vesselStatsArraySchema,
   });
-  return fetcher() as Promise<VesselStats[]>;
 };
 
 /**
@@ -249,14 +237,14 @@ export const getVesselStats = async () => {
  * @returns Promise resolving to a VesselStats object containing statistics for the specified vessel
  */
 export const getVesselStatsById = async (params: GetVesselStatsByIdParams) => {
-  const fetcher = createFetch<GetVesselStatsByIdParams>(
-    "/vesselstats/{vesselId}",
+  return zodFetch(
+    `${WSF_VESSELS_BASE}/vesselstats/{vesselId}`,
     {
       input: getVesselStatsByIdParamsSchema,
       output: vesselStatsSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<VesselStats>;
 };
 
 // ============================================================================
@@ -280,14 +268,14 @@ export const getVesselStatsById = async (params: GetVesselStatsByIdParams) => {
 export const getVesselHistoryByVesselAndDateRange = async (
   params: GetVesselHistoryByVesselAndDateRangeParams
 ) => {
-  const fetcher = createFetch<GetVesselHistoryByVesselAndDateRangeParams>(
-    "/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
+  return zodFetch(
+    `${WSF_VESSELS_BASE}/vesselhistory/{vesselName}/{dateStart}/{dateEnd}`,
     {
       input: getVesselHistoryByVesselAndDateRangeParamsSchema,
       output: vesselHistoryArraySchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<VesselHistory[]>;
 };
 
 /**
@@ -412,10 +400,9 @@ export const getAllVesselHistories = async (
  * @returns Promise resolving to an array of VesselVerbose objects containing comprehensive vessel information
  */
 export const getVesselVerbose = async () => {
-  const fetcher = createFetch("/vesselverbose", {
+  return zodFetch(`${WSF_VESSELS_BASE}/vesselverbose`, {
     output: vesselVerboseArraySchema,
   });
-  return fetcher() as Promise<VesselVerbose[]>;
 };
 
 /**
@@ -432,14 +419,14 @@ export const getVesselVerbose = async () => {
 export const getVesselVerboseById = async (
   params: GetVesselVerboseByIdParams
 ) => {
-  const fetcher = createFetch<GetVesselVerboseByIdParams>(
-    "/vesselverbose/{vesselId}",
+  return zodFetch(
+    `${WSF_VESSELS_BASE}/vesselverbose/{vesselId}`,
     {
       input: getVesselVerboseByIdParamsSchema,
       output: vesselVerboseSchema,
-    }
+    },
+    params
   );
-  return fetcher(params) as Promise<VesselVerbose>;
 };
 
 // ============================================================================
@@ -458,8 +445,7 @@ export const getVesselVerboseById = async (
  * @returns Promise resolving to a VesselsCacheFlushDate object containing the cache flush date
  */
 export const getCacheFlushDateVessels = async () => {
-  const fetcher = createFetch("/cacheflushdate", {
+  return zodFetch(`${WSF_VESSELS_BASE}/cacheflushdate`, {
     output: vesselsCacheFlushDateSchema,
   });
-  return fetcher() as Promise<VesselsCacheFlushDate>;
 };

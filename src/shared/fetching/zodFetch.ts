@@ -92,7 +92,10 @@ export const zodFetch = async <TInput = never, TOutput = unknown>(
     }
 
     // URL composition and parameter interpolation
-    interpolatedUrl = interpolateUrlParams(fullUrlTemplate, validatedParams);
+    interpolatedUrl = interpolateUrlParams(
+      fullUrlTemplate,
+      validatedParams as Record<string, JsonWithDates>
+    );
     const completeUrl = buildCompleteUrl(interpolatedUrl);
 
     // Debug logging
@@ -171,12 +174,10 @@ const interpolateUrlParams = (
     }
 
     // Format dates based on API type
-    // WSF APIs expect MM/DD/YYYY, WSDOT APIs expect YYYY-MM-DD
+    // WSF APIs (both Fares and Schedule) expect YYYY-MM-DD, WSDOT APIs expect YYYY-MM-DD
     const stringValue =
       value instanceof Date
-        ? url.includes("/ferries/")
-          ? jsDateToMmDdYyyy(value)
-          : jsDateToYyyyMmDd(value)
+        ? jsDateToYyyyMmDd(value) // All APIs use YYYY-MM-DD format
         : String(value);
 
     return url.replace(placeholder, stringValue);
