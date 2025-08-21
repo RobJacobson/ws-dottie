@@ -39,8 +39,8 @@ import log from "@/shared/logger";
 
 import { createApiError } from "./errors";
 import type { JsonWithDates } from "./parsing";
-import { jsDateToMmDdYyyy, jsDateToYyyyMmDd } from "./parsing";
-import { getEnvironmentType, selectFetchStrategy } from "./utils";
+import { jsDateToYyyyMmDd } from "./parsing";
+import { getEnvironmentType, selectFetchStrategy } from "./strategies";
 
 /**
  * Direct Zod-validated API fetch function

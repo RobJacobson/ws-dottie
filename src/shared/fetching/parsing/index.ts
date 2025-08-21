@@ -3,7 +3,6 @@
  *
  * This module provides utilities for parsing and transforming API responses,
  * including:
- * - JSON parsing with automatic date conversion
  * - Date parsing for WSDOT and WSF API formats
  */
 
@@ -13,11 +12,24 @@ export {
   jsDateToYyyyMmDd,
   parseMmDdYyyyDate,
   parseMmDdYyyyDateTime,
-  WSF_DATE_PARSERS,
   wsdotDateTimestampToJsDate,
 } from "./dateParsers";
-export {
-  type JsonValue,
-  type JsonWithDates,
-  parseWsdotJson,
-} from "./parseJson";
+
+// JSON types for API parameters
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | Date
+  | JsonValue[]
+  | { [key: string]: JsonValue };
+
+export type JsonWithDates =
+  | string
+  | number
+  | boolean
+  | null
+  | Date
+  | JsonWithDates[]
+  | { [key: string]: JsonWithDates };

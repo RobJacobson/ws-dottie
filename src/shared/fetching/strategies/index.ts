@@ -4,8 +4,8 @@
 // - fetchJsonp: Uses JSONP (script tag injection) to bypass CORS restrictions in browsers
 // - fetchNative: Uses native fetch API for server-side and test environments
 //
-// Both strategies return raw JSON strings that are processed by parseWsdotJson for
-// date transformation and data cleanup.
+// Both strategies return raw JSON strings. Runtime validation and transformation
+// are handled by Zod in zodFetch and API schemas.
 
 export { fetchJsonp } from "./fetchJsonp";
 export { fetchNative } from "./fetchNative";
@@ -15,4 +15,9 @@ export type {
   JSONPCallback,
   JSONPWindow,
 } from "./types";
-export { hasApiError, processApiResponse } from "./utils";
+export {
+  getEnvironmentType,
+  hasApiError,
+  processApiResponse,
+  selectFetchStrategy,
+} from "./utils";

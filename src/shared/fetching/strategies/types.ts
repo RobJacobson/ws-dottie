@@ -1,6 +1,6 @@
 /**
  * Strong type for isomorphic fetch functions
- * Both JSONP and native fetch return raw JSON strings for processing by parseWsdotJson
+ * Both JSONP and native fetch return raw JSON strings for processing by Zod schemas
  */
 export type FetchStrategy = (
   url: string,

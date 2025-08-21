@@ -189,18 +189,3 @@ export const wsdotDateTimestampToJsDate = (dateString: string): Date | null => {
   const date = new Date(timestamp);
   return Number.isNaN(date.getTime()) ? null : date;
 };
-
-// Field-specific date parsers for WSF APIs
-export const WSF_DATE_PARSERS = new Map<string, (value: string) => Date | null>(
-  [
-    // WSF Schedule API fields
-    ["FromDate", parseMmDdYyyyDate],
-    ["ThruDate", parseMmDdYyyyDate],
-    ["ModifiedDate", parseMmDdYyyyDateTime],
-    // WSF Vessels API fields (WSDOT date format)
-    ["ScheduledDeparture", wsdotDateTimestampToJsDate],
-    ["TimeStamp", wsdotDateTimestampToJsDate],
-    ["LeftDock", wsdotDateTimestampToJsDate],
-    ["Eta", wsdotDateTimestampToJsDate],
-  ]
-);

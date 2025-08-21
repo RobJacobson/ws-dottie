@@ -1,17 +1,32 @@
 /**
- * Fetching utilities for WSDOT and WSF APIs
+ * Shared fetching utilities for WSDOT and WSF APIs
  *
- * This module provides a unified interface for all fetching-related functionality:
- * - API client creation and configuration
- * - JSON parsing and data transformation
- * - Error handling and utilities
- * - Fetch strategies for different environments
+ * This module provides the core fetching infrastructure used by all API modules.
+ * It includes platform-specific fetch strategies, error handling, and the main
+ * zodFetch utility for validated API requests.
  */
 
-export * from "../config";
-export * from "./api";
-export * from "./errors";
-export * from "./parsing";
-export * from "./strategies";
-export * from "./utils";
+// Error handling
+export { createApiError, WsdotApiError } from "./errors";
+// Date parsing utilities
+export {
+  isWsdotDateString,
+  type JsonValue,
+  type JsonWithDates,
+  jsDateToMmDdYyyy,
+  jsDateToYyyyMmDd,
+  parseMmDdYyyyDate,
+  parseMmDdYyyyDateTime,
+  wsdotDateTimestampToJsDate,
+} from "./parsing";
+// Fetch strategies for different platforms
+export {
+  type ApiErrorResponse,
+  type FetchStrategy,
+  fetchJsonp,
+  fetchNative,
+  getEnvironmentType,
+  selectFetchStrategy,
+} from "./strategies";
+// Main fetch utility
 export { zodFetch } from "./zodFetch";
