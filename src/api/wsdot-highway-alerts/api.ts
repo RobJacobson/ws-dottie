@@ -2,13 +2,18 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { HighwayAlert } from "./schemas";
-import { highwayAlertArraySchema, highwayAlertSchema } from "./schemas";
+import {
+  getHighwayAlertByIdParamsSchema,
+  getHighwayAlertsByMapAreaParamsSchema,
+  getHighwayAlertsParamsSchema,
+} from "./inputs";
+import type { HighwayAlert } from "./outputs";
+import { highwayAlertArraySchema, highwayAlertSchema } from "./outputs";
 
 // Create a factory function for WSDOT Highway Alerts API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc"
 );
 
@@ -18,20 +23,22 @@ const createFetch = createFetchFactory(
  * Returns current traffic alerts in JSON format. This endpoint provides
  * all active highway alerts across Washington State.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all highway alert data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const alerts = await getHighwayAlerts();
+ * const alerts = await getHighwayAlerts({});
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlerts = async () => {
-  const fetcher = createFetch("/GetAlertsAsJson");
-  const data = await fetcher();
-  return highwayAlertArraySchema.parse(data) as HighwayAlert[];
+export const getHighwayAlerts = async (params: GetHighwayAlertsParams = {}) => {
+  const fetcher = createFetch<GetHighwayAlertsParams>("/GetAlertsAsJson", {
+    input: getHighwayAlertsParamsSchema,
+    output: highwayAlertArraySchema,
+  });
+  return fetcher(params) as Promise<HighwayAlert[]>;
 };
 
 /**
@@ -39,11 +46,10 @@ export const getHighwayAlerts = async () => {
  *
  * Returns detailed information about a specific highway alert identified by its ID.
  *
- * @param params - Object containing alertId and optional logMode
+ * @param params - Object containing alertId parameter
  * @param params.alertId - The unique identifier of the highway alert
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing the specific highway alert data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
@@ -51,12 +57,17 @@ export const getHighwayAlerts = async () => {
  * console.log(alert.HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertById = async (params: { alertId: number }) => {
-  const fetcher = createFetch<{ alertId: number }>(
-    "/GetAlertAsJson?AlertID={alertId}"
+export const getHighwayAlertById = async (
+  params: GetHighwayAlertByIdParams
+) => {
+  const fetcher = createFetch<GetHighwayAlertByIdParams>(
+    "/GetAlertAsJson?AlertID={alertId}",
+    {
+      input: getHighwayAlertByIdParamsSchema,
+      output: highwayAlertSchema,
+    }
   );
-  const data = await fetcher(params);
-  return highwayAlertSchema.parse(data) as HighwayAlert;
+  return fetcher(params) as Promise<HighwayAlert>;
 };
 
 /**
@@ -64,11 +75,10 @@ export const getHighwayAlertById = async (params: { alertId: number }) => {
  *
  * Returns highway alerts filtered by a specific map area or region.
  *
- * @param params - Object containing mapArea and optional logMode
+ * @param params - Object containing mapArea parameter
  * @param params.mapArea - The map area or region to filter alerts by
- * @param params.logMode - Optional logging mode for debugging API calls
  * @returns Promise containing filtered highway alert data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
@@ -76,12 +86,15 @@ export const getHighwayAlertById = async (params: { alertId: number }) => {
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertsByMapArea = async (params: {
-  mapArea: string;
-}) => {
-  const fetcher = createFetch<{ mapArea: string }>(
-    "/GetAlertsByMapAreaAsJson?MapArea={mapArea}"
+export const getHighwayAlertsByMapArea = async (
+  params: GetHighwayAlertsByMapAreaParams
+) => {
+  const fetcher = createFetch<GetHighwayAlertsByMapAreaParams>(
+    "/GetAlertsByMapAreaAsJson?MapArea={mapArea}",
+    {
+      input: getHighwayAlertsByMapAreaParamsSchema,
+      output: highwayAlertArraySchema,
+    }
   );
-  const data = await fetcher(params);
-  return highwayAlertArraySchema.parse(data) as HighwayAlert[];
+  return fetcher(params) as Promise<HighwayAlert[]>;
 };
