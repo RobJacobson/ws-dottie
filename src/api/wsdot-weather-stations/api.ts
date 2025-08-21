@@ -2,13 +2,17 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
 
-import { createFetchFactory } from "@/shared/fetching/api";
+import { createZodFetchFactory } from "@/shared/fetching/api";
 
-import type { WeatherStationData } from "./schemas";
-import { weatherStationDataArraySchema } from "./schemas";
+import {
+  type GetWeatherStationsParams,
+  getWeatherStationsParamsSchema,
+} from "./inputs";
+import type { WeatherStationData } from "./outputs";
+import { weatherStationDataArraySchema } from "./outputs";
 
 // Create a factory function for WSDOT Weather Stations API
-const createFetch = createFetchFactory(
+const createFetch = createZodFetchFactory(
   "/Traffic/api/WeatherStations/WeatherStationsREST.svc"
 );
 
@@ -17,12 +21,19 @@ const createFetch = createFetchFactory(
  *
  * Retrieves information about all weather stations maintained by WSDOT.
  *
- * @param logMode - Optional logging mode for debugging API calls
+ * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing weather stations data
- * @throws {WsdotApiError} When the API request fails
+ * @throws {Error} When the API request fails or validation fails
  */
-export const getWeatherStations = async () => {
-  const fetcher = createFetch("/GetCurrentStationsAsJson");
-  const data = await fetcher();
-  return weatherStationDataArraySchema.parse(data) as WeatherStationData[];
+export const getWeatherStations = async (
+  params: GetWeatherStationsParams = {}
+) => {
+  const fetcher = createFetch<GetWeatherStationsParams>(
+    "/GetCurrentStationsAsJson",
+    {
+      input: getWeatherStationsParamsSchema,
+      output: weatherStationDataArraySchema,
+    }
+  );
+  return fetcher(params) as Promise<WeatherStationData[]>;
 };
