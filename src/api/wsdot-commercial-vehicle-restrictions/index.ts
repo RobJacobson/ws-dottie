@@ -18,6 +18,7 @@ export * from "./getCommercialVehicleRestrictionsWithId";
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
+// Export types directly from their source files to avoid re-export chains
 export type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionRoadwayLocation,
