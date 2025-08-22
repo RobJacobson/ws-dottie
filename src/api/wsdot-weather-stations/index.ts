@@ -2,11 +2,23 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html
 // API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
 
-// API functions
-export { getWeatherStations } from "./api";
-// Input parameter types
-export type { GetWeatherStationsParams } from "./inputs";
-// Export types
-export type { WeatherStationData } from "./outputs";
-// React Query hooks
-export { useWeatherStations } from "./queries";
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getWeatherStations";
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type {
+  GetWeatherStationsParams,
+  WeatherStationData,
+} from "./getWeatherStations";
