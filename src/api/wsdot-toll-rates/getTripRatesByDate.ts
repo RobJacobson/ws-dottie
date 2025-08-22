@@ -83,7 +83,7 @@ export type GetTripRatesByDateParams = z.infer<
 // ============================================================================
 
 // Reuse the existing toll rate schemas for consistency
-export const tollRateSchema = z
+export const tripRateTollRateSchema = z
   .object({
     CurrentMessage: zNullableString().describe(
       "Current system message or notification related to the toll facility. May be null if no message is currently active. Examples include 'System maintenance', 'Holiday rates in effect', or 'Electronic tolling only'."
@@ -148,7 +148,7 @@ export const tollRateSchema = z
     TravelDirection: z
       .string()
       .describe(
-        "Direction of travel for which the historical toll rate applies. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'. This field indicates which direction of travel the historical toll rate applied to."
+        "Direction of travel for which the historical toll rate applies. Examples include 'S' (Southbound), 'N' (Northbound), 'E' (Eastbound), 'W' (Westbound), or 'Both Directions'. This field indicates which direction of travel the historical toll rate applied to."
       ),
 
     TripName: z
@@ -162,13 +162,13 @@ export const tollRateSchema = z
     "Historical toll rate information including pricing, location details, and facility information for a specific date range. This schema represents historical toll data from the WSDOT Toll Rates API, providing essential information for toll rate trend analysis, historical pricing research, and transportation cost analysis over time."
   );
 
-export const tollRateArraySchema = z
-  .array(tollRateSchema)
+export const tripRateTollRateArraySchema = z
+  .array(tripRateTollRateSchema)
   .describe(
     "Array of historical toll rate data for toll facilities across Washington State during the specified date range. This collection provides comprehensive historical pricing information that enables toll rate trend analysis, historical research, and transportation cost analysis over time."
   );
 
-export type TollRate = z.infer<typeof tollRateSchema>;
+export type TripRateTollRate = z.infer<typeof tripRateTollRateSchema>;
 
 // ============================================================================
 // QUERY

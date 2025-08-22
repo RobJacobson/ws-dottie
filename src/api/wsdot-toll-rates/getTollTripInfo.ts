@@ -111,7 +111,7 @@ export const tollTripInfoSchema = z
     TravelDirection: z
       .string()
       .describe(
-        "Direction of travel for which the toll trip applies. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'. This field indicates which direction of travel the trip information applies to."
+        "Direction of travel for which the toll trip applies. Examples include 'S' (Southbound), 'N' (Northbound), 'E' (Eastbound), 'W' (Westbound), or 'Both Directions'. This field indicates which direction of travel the trip information applies to."
       ),
 
     TripName: z

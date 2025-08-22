@@ -97,6 +97,12 @@ export const tollTripRatesSchema = z
       .describe(
         "Array of individual toll trip rate information for all active toll routes. This collection provides comprehensive pricing data that enables real-time toll monitoring, cost planning, and transportation management."
       ),
+
+    Version: z
+      .number()
+      .describe(
+        "Current API version number for the WSDOT toll trip rates system. This field indicates the version of the API specification and data format currently in use. Higher version numbers indicate more recent API updates."
+      ),
   })
   .catchall(z.unknown())
   .describe(
