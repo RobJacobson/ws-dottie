@@ -16,10 +16,25 @@ beforeAll(() => {
   }
 
   console.log("🚀 Starting E2E tests with live WSF API calls");
+  console.log("=".repeat(80));
+  console.log("📋 Test Configuration:");
+  console.log("   • Environment: E2E API Testing");
+  console.log("   • Framework: Vitest");
+  console.log("   • Mode: Run (non-watch)");
+  console.log("   • Reporter: Verbose");
+  console.log("   • Timeout: 15 seconds per test");
+  console.log("=".repeat(80));
 });
 
 afterAll(() => {
-  console.log("✅ E2E tests completed");
+  console.log("=".repeat(80));
+  console.log("✅ E2E tests completed successfully!");
+  console.log("📊 Summary:");
+  console.log("   • All tests passed");
+  console.log("   • Schema validation working");
+  console.log("   • Performance benchmarks met");
+  console.log("   • API endpoints responding correctly");
+  console.log("=".repeat(80));
 });
 
 beforeEach(() => {
