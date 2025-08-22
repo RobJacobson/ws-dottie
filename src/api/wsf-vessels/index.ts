@@ -9,30 +9,27 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
+export * from "./getAllVesselHistories";
+// Cache management
+export * from "./getCacheFlushDateVessels";
+export * from "./getMultipleVesselHistories";
 // Vessel accommodations
 export * from "./getVesselAccommodations";
 export * from "./getVesselAccommodationsById";
 // Basic vessel information
 export * from "./getVesselBasics";
 export * from "./getVesselBasicsById";
+// Vessel history
+export * from "./getVesselHistoryByVesselAndDateRange";
 // Real-time vessel locations
 export * from "./getVesselLocations";
 export * from "./getVesselLocationsByVesselId";
 // Vessel statistics
 export * from "./getVesselStats";
 export * from "./getVesselStatsById";
-
-// Vessel history
-export * from "./getVesselHistoryByVesselAndDateRange";
-export * from "./getMultipleVesselHistories";
-export * from "./getAllVesselHistories";
-
 // Verbose vessel information
 export * from "./getVesselVerbose";
 export * from "./getVesselVerboseById";
-
-// Cache management
-export * from "./getCacheFlushDateVessels";
 
 // ============================================================================
 // SHARED UTILITIES
@@ -41,24 +38,33 @@ export * from "./getCacheFlushDateVessels";
 export * from "./cache";
 
 // ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
+// TYPE EXPORTS FROM SOURCE FILES
 // ============================================================================
 
-export type { VesselAccommodation } from "./getVesselAccommodations";
-export type { GetVesselAccommodationsByIdParams } from "./getVesselAccommodationsById";
+export type { GetAllVesselHistoriesParams } from "./getAllVesselHistories";
+export type { VesselsCacheFlushDate } from "./getCacheFlushDateVessels";
+export type { GetMultipleVesselHistoriesParams } from "./getMultipleVesselHistories";
+// Export types directly from their source files to avoid re-export chains
 export type {
+  GetVesselAccommodationsByIdParams,
+  VesselAccommodation,
+} from "./getVesselAccommodationsById";
+export type {
+  GetVesselBasicsByIdParams,
   VesselBasic,
   VesselClass,
-} from "./getVesselBasics";
-export type { GetVesselBasicsByIdParams } from "./getVesselBasicsById";
-export type { VesselLocation } from "./getVesselLocations";
-export type { GetVesselLocationsByVesselIdParams } from "./getVesselLocationsByVesselId";
-export type { VesselStats } from "./getVesselStats";
-export type { GetVesselStatsByIdParams } from "./getVesselStatsById";
-export type { VesselHistory } from "./getVesselHistoryByVesselAndDateRange";
-export type { GetVesselHistoryByVesselAndDateRangeParams } from "./getVesselHistoryByVesselAndDateRange";
-export type { GetMultipleVesselHistoriesParams } from "./getMultipleVesselHistories";
-export type { GetAllVesselHistoriesParams } from "./getAllVesselHistories";
+} from "./getVesselBasicsById";
+export type {
+  GetVesselHistoryByVesselAndDateRangeParams,
+  VesselHistory,
+} from "./getVesselHistoryByVesselAndDateRange";
+export type {
+  GetVesselLocationsByVesselIdParams,
+  VesselLocation,
+} from "./getVesselLocationsByVesselId";
+export type {
+  GetVesselStatsByIdParams,
+  VesselStats,
+} from "./getVesselStatsById";
 export type { VesselVerbose } from "./getVesselVerbose";
 export type { GetVesselVerboseByIdParams } from "./getVesselVerboseById";
-export type { VesselsCacheFlushDate } from "./getCacheFlushDateVessels";

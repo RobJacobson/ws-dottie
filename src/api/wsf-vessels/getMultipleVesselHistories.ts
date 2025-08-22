@@ -5,10 +5,10 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import type { TanStackOptions } from "@/shared/types";
 import {
-  createVesselNamesParam,
+  createBatchSizeParam,
   createDateRangeParams,
   createDateRangeRefinement,
-  createBatchSizeParam,
+  createVesselNamesParam,
 } from "@/shared/validation/templates";
 
 import type { VesselHistory } from "./getVesselHistoryByVesselAndDateRange";
@@ -94,9 +94,6 @@ export type GetMultipleVesselHistoriesParams = z.infer<
 // ============================================================================
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
-
-// Re-export the VesselHistory type from the individual endpoint
-export type { VesselHistory } from "./getVesselHistoryByVesselAndDateRange";
 
 // ============================================================================
 // QUERY HOOK

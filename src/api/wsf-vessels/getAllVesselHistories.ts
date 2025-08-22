@@ -103,9 +103,6 @@ export type GetAllVesselHistoriesParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Re-export the VesselHistory type from the individual endpoint
-export type { VesselHistory } from "./getVesselHistoryByVesselAndDateRange";
-
 // ============================================================================
 // QUERY HOOK
 // ============================================================================
