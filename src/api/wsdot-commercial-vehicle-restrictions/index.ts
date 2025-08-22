@@ -1,24 +1,29 @@
 // WSDOT Commercial Vehicle Restrictions API exports
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
 
-// API functions
-export {
-  getCommercialVehicleRestrictions,
-  getCommercialVehicleRestrictionsWithId,
-} from "./api";
-// Input parameter types
-export type {
-  GetCommercialVehicleRestrictionsParams,
-  GetCommercialVehicleRestrictionsWithIdParams,
-} from "./inputs";
-// Types inferred from Zod schemas
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getCommercialVehicleRestrictions";
+export * from "./getCommercialVehicleRestrictionsWithId";
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
   CommercialVehicleRestriction,
+  CommercialVehicleRestrictionRoadwayLocation,
+  GetCommercialVehicleRestrictionsParams,
+} from "./getCommercialVehicleRestrictions";
+export type {
   CommercialVehicleRestrictionWithId,
-  RoadwayLocation,
-} from "./outputs";
-// React Query hooks
-export {
-  useCommercialVehicleRestrictions,
-  useCommercialVehicleRestrictionsWithId,
-} from "./queries";
+  GetCommercialVehicleRestrictionsWithIdParams,
+} from "./getCommercialVehicleRestrictionsWithId";

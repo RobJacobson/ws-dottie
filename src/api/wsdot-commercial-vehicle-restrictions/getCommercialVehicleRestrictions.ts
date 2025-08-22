@@ -1,26 +1,77 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import {
+  zLatitude,
+  zLongitude,
   zNullableNumber,
   zNullableString,
   zWsdotDate,
-  zLatitude,
-  zLongitude,
 } from "@/shared/validation";
 
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson";
+
+// ============================================================================
+// FETCH FUNCTION
+// ============================================================================
+
 /**
- * WSDOT Commercial Vehicle Restrictions API Response Schemas
+ * Get commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
  *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Commercial Vehicle Restrictions API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
+ * Returns commercial vehicle restriction data including weight limits, bridge restrictions,
+ * and other commercial vehicle limitations across Washington State highways.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise resolving to array of commercial vehicle restriction data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const restrictions = await getCommercialVehicleRestrictions({});
+ * console.log(restrictions[0].BridgeName); // "Aurora Bridge"
+ * ```
  */
+export const getCommercialVehicleRestrictions = async (
+  params: GetCommercialVehicleRestrictionsParams = {}
+): Promise<CommercialVehicleRestriction[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getCommercialVehicleRestrictionsParamsSchema,
+      output: commercialVehicleRestrictionArraySchema,
+    },
+    params
+  );
+};
 
 // ============================================================================
-// ROADWAY LOCATION SCHEMA
+// INPUT SCHEMA & TYPES
 // ============================================================================
 
-export const roadwayLocationSchema = z
+export const getCommercialVehicleRestrictionsParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting commercial vehicle restriction data. The API returns all available restriction information across Washington State highways."
+  );
+
+export type GetCommercialVehicleRestrictionsParams = z.infer<
+  typeof getCommercialVehicleRestrictionsParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
+// ============================================================================
+
+export const commercialVehicleRestrictionRoadwayLocationSchema = z
   .object({
     Description: zNullableString().describe(
       "Human-readable description of the roadway location where the restriction applies. May be null if no descriptive information is available. Examples include 'Northbound lanes', 'Bridge approach', or 'Tunnel entrance'."
@@ -54,10 +105,6 @@ export const roadwayLocationSchema = z
   .describe(
     "Geographic and descriptive information about a roadway location where commercial vehicle restrictions apply. Contains coordinates, road information, and descriptive details that help identify and locate the specific restriction point."
   );
-
-// ============================================================================
-// COMMERCIAL VEHICLE RESTRICTION SCHEMA
-// ============================================================================
 
 export const commercialVehicleRestrictionSchema = z
   .object({
@@ -93,9 +140,10 @@ export const commercialVehicleRestrictionSchema = z
       "Date when the commercial vehicle restriction was posted or published in the WSDOT system. This timestamp indicates when the restriction information was made available to the public and commercial vehicle operators. All times are in Pacific Time Zone."
     ),
 
-    EndRoadwayLocation: roadwayLocationSchema.describe(
-      "Geographic endpoint of the restriction zone along the roadway. This object provides the ending location coordinates and descriptive information for the restriction area."
-    ),
+    EndRoadwayLocation:
+      commercialVehicleRestrictionRoadwayLocationSchema.describe(
+        "Geographic endpoint of the restriction zone along the roadway. This object provides the ending location coordinates and descriptive information for the restriction area."
+      ),
 
     IsDetourAvailable: z
       .boolean()
@@ -177,9 +225,10 @@ export const commercialVehicleRestrictionSchema = z
       "Maximum axle weight limit in pounds for single-axle configurations. May be null if this restriction type does not apply to single-axle vehicles or if the limit is not specified."
     ),
 
-    StartRoadwayLocation: roadwayLocationSchema.describe(
-      "Geographic starting point of the restriction zone along the roadway. This object provides the beginning location coordinates and descriptive information for the restriction area."
-    ),
+    StartRoadwayLocation:
+      commercialVehicleRestrictionRoadwayLocationSchema.describe(
+        "Geographic starting point of the restriction zone along the roadway. This object provides the beginning location coordinates and descriptive information for the restriction area."
+      ),
 
     State: z
       .string()
@@ -208,43 +257,52 @@ export const commercialVehicleRestrictionSchema = z
     "Complete commercial vehicle restriction information including location, weight limits, bridge restrictions, and other limitations. This schema represents comprehensive restriction data from the WSDOT Commercial Vehicle Restrictions API, providing essential information for commercial vehicle route planning, compliance monitoring, and transportation safety. The restriction details are critical for preventing bridge strikes, ensuring road safety, and maintaining infrastructure integrity."
   );
 
-// ============================================================================
-// COMMERCIAL VEHICLE RESTRICTION WITH ID SCHEMA
-// ============================================================================
-
-export const commercialVehicleRestrictionWithIdSchema = commercialVehicleRestrictionSchema
-  .extend({
-    UniqueID: z
-      .string()
-      .describe(
-        "Unique identifier assigned to this commercial vehicle restriction by the WSDOT system. This ID serves as a permanent, unique reference for the restriction across all WSDOT systems and can be used for tracking, reporting, and data correlation purposes."
-      ),
-  })
-  .catchall(z.unknown())
-  .describe(
-    "Commercial vehicle restriction information including all standard restriction details plus a unique identifier. This extended schema provides the same comprehensive restriction data as the base schema but includes a UniqueID field for system integration and data management purposes."
-  );
-
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const commercialVehicleRestrictionArraySchema = z
   .array(commercialVehicleRestrictionSchema)
   .describe(
     "Array of commercial vehicle restriction data for all restrictions across Washington State highways. This collection provides comprehensive restriction information that enables commercial vehicle route planning, compliance monitoring, and transportation safety management."
   );
 
-export const commercialVehicleRestrictionWithIdArraySchema = z
-  .array(commercialVehicleRestrictionWithIdSchema)
-  .describe(
-    "Array of commercial vehicle restriction data with unique identifiers for all restrictions across Washington State highways. This collection provides comprehensive restriction information including unique IDs for system integration and data management purposes."
-  );
+export type CommercialVehicleRestrictionRoadwayLocation = z.infer<
+  typeof commercialVehicleRestrictionRoadwayLocationSchema
+>;
+export type CommercialVehicleRestriction = z.infer<
+  typeof commercialVehicleRestrictionSchema
+>;
 
 // ============================================================================
-// TYPE EXPORTS
+// QUERY
 // ============================================================================
 
-export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
-export type CommercialVehicleRestriction = z.infer<typeof commercialVehicleRestrictionSchema>;
-export type CommercialVehicleRestrictionWithId = z.infer<typeof commercialVehicleRestrictionWithIdSchema>;
+/**
+ * Hook for getting commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
+ *
+ * Returns commercial vehicle restriction data including weight limits, bridge restrictions,
+ * and other commercial vehicle limitations across Washington State highways.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with commercial vehicle restriction data
+ *
+ * @example
+ * ```typescript
+ * const { data: restrictions } = useCommercialVehicleRestrictions({});
+ * console.log(restrictions?.[0]?.BridgeName); // "Aurora Bridge"
+ * ```
+ */
+export const useCommercialVehicleRestrictions = (
+  params: GetCommercialVehicleRestrictionsParams = {},
+  options?: TanStackOptions<CommercialVehicleRestriction[]>
+): UseQueryResult<CommercialVehicleRestriction[], Error> => {
+  return useQuery({
+    queryKey: [
+      "wsdot",
+      "commercial-vehicle-restrictions",
+      "getCommercialVehicleRestrictions",
+      params,
+    ],
+    queryFn: () => getCommercialVehicleRestrictions(params),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
+  });
+};
