@@ -1,5 +1,10 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import {
   zLatitude,
   zLongitude,
@@ -7,19 +12,63 @@ import {
   zWsdotDate,
 } from "@/shared/validation";
 
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson";
+
+// ============================================================================
+// API FUNCTION
+// ============================================================================
+
 /**
- * WSDOT Highway Alerts API Response Schemas
+ * Get all highway alerts from WSDOT Highway Alerts API
  *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Highway Alerts API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
+ * Returns current traffic alerts in JSON format. This endpoint provides
+ * all active highway alerts across Washington State.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise containing all highway alert data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const alerts = await getHighwayAlerts({});
+ * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
+ * ```
  */
+export const getHighwayAlerts = async (params: GetHighwayAlertsParams = {}) => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getHighwayAlertsParamsSchema,
+      output: highwayAlertArraySchema,
+    },
+    params
+  );
+};
 
 // ============================================================================
-// ROADWAY LOCATION SCHEMA
+// INPUT SCHEMA & TYPES
 // ============================================================================
 
-export const roadwayLocationSchema = z
+export const getHighwayAlertsParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting all highway alerts. The API returns all active highway alerts across Washington State."
+  );
+
+export type GetHighwayAlertsParams = z.infer<
+  typeof getHighwayAlertsParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
+// ============================================================================
+
+export const highwayAlertRoadwayLocationSchema = z
   .object({
     Description: zNullableString().describe(
       "Human-readable description of the roadway location where the highway alert applies. May be null if no descriptive information is available. Examples include 'Northbound lanes', 'Bridge approach', 'Tunnel entrance', or 'Interchange with SR 520'."
@@ -54,10 +103,6 @@ export const roadwayLocationSchema = z
     "Geographic and descriptive information about a roadway location where a highway alert applies. Contains coordinates, road information, and descriptive details that help identify and locate the specific alert point."
   );
 
-// ============================================================================
-// HIGHWAY ALERT SCHEMA
-// ============================================================================
-
 export const highwayAlertSchema = z
   .object({
     AlertID: z
@@ -72,7 +117,7 @@ export const highwayAlertSchema = z
       "Name of the county where the highway alert is located. May be null if county information is not available or not applicable. Examples include 'King County', 'Pierce County', 'Spokane County', or 'Whatcom County'."
     ),
 
-    EndRoadwayLocation: roadwayLocationSchema.describe(
+    EndRoadwayLocation: highwayAlertRoadwayLocationSchema.describe(
       "Geographic endpoint of the alert zone along the roadway. This object provides the ending location coordinates and descriptive information for the alert area, helping define the full scope of the affected roadway section."
     ),
 
@@ -122,7 +167,7 @@ export const highwayAlertSchema = z
         "Geographic region of Washington State where the highway alert is located. Examples include 'Northwest', 'Northeast', 'Southwest', 'Southeast', 'Central', 'Olympic Peninsula', or 'Puget Sound'. This field helps users understand the general area affected by the alert."
       ),
 
-    StartRoadwayLocation: roadwayLocationSchema.describe(
+    StartRoadwayLocation: highwayAlertRoadwayLocationSchema.describe(
       "Geographic starting point of the alert zone along the roadway. This object provides the beginning location coordinates and descriptive information for the alert area, helping define the full scope of the affected roadway section."
     ),
 
@@ -135,19 +180,39 @@ export const highwayAlertSchema = z
     "Complete highway alert information including location details, event classification, timing, and descriptive text. This schema represents comprehensive alert data from the WSDOT Highway Alerts API, providing essential information for traffic management, driver awareness, and transportation safety. The alert details are critical for real-time traffic monitoring, route planning, and emergency response coordination."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const highwayAlertArraySchema = z
   .array(highwayAlertSchema)
   .describe(
     "Array of highway alert data for all active alerts across Washington State highways. This collection provides comprehensive alert information that enables traffic monitoring, route planning, and transportation safety management."
   );
 
+export type HighwayAlertRoadwayLocation = z.infer<
+  typeof highwayAlertRoadwayLocationSchema
+>;
+export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
+
 // ============================================================================
-// TYPE EXPORTS
+// QUERY
 // ============================================================================
 
-export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
-export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
+/**
+ * Hook for getting all highway alerts from WSDOT Highway Alerts API
+ *
+ * Returns current traffic alerts in JSON format. This endpoint provides
+ * all active highway alerts across Washington State.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with highway alert data
+ */
+export const useHighwayAlerts = (
+  params: GetHighwayAlertsParams = {},
+  options?: TanStackOptions<HighwayAlert[]>
+): UseQueryResult<HighwayAlert[], Error> => {
+  return useQuery({
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlerts", params],
+    queryFn: () => getHighwayAlerts(params),
+    ...tanstackQueryOptions.MINUTE_UPDATES,
+    ...options,
+  });
+};

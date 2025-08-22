@@ -2,26 +2,36 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
 // API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
 
-// Export API functions
-export {
-  getHighwayAlertById,
-  getHighwayAlerts,
-  getHighwayAlertsByMapArea,
-} from "./api";
-// Input parameter types
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getHighwayAlertById";
+export * from "./getHighwayAlerts";
+export * from "./getHighwayAlertsByMapArea";
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type { GetHighwayAlertByIdParams } from "./getHighwayAlertById";
 export type {
-  GetHighwayAlertByIdParams,
-  GetHighwayAlertsByMapAreaParams,
   GetHighwayAlertsParams,
-} from "./inputs";
-// Export types
-export type {
   HighwayAlert,
-  RoadwayLocation,
-} from "./outputs";
-// Export React Query hooks
-export {
-  useHighwayAlertById,
-  useHighwayAlerts,
-  useHighwayAlertsByMapArea,
-} from "./queries";
+  HighwayAlertRoadwayLocation,
+} from "./getHighwayAlerts";
+export type { GetHighwayAlertsByMapAreaParams } from "./getHighwayAlertsByMapArea";
+
+// ============================================================================
+// QUERY HOOKS
+// ============================================================================
+
+export { useHighwayAlertById } from "./getHighwayAlertById";
+export { useHighwayAlerts } from "./getHighwayAlerts";
+export { useHighwayAlertsByMapArea } from "./getHighwayAlertsByMapArea";
