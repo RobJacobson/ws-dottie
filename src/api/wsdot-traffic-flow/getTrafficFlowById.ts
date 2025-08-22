@@ -5,7 +5,7 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { zLatitude, zLongitude, zWsdotDate } from "@/shared/validation";
+import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
 // CONSTANTS
@@ -23,6 +23,12 @@ const ENDPOINT =
  *
  * Returns detailed information about a specific traffic flow station
  * identified by its ID.
+ *
+ * IMPORTANT: API Response Discrepancy
+ * The actual WSDOT API returns FlowReadingValue as numeric values (0, 1, 2, 3, 4),
+ * but the official WSDOT documentation shows string enum values:
+ *     0=Unknown/NoData, 1=WideOpen, 2=Moderate, 3=Heavy, 4=StopAndGo
+ * This schema uses the actual numeric values returned by the API.
  *
  * @param params - Object containing flowDataID parameter
  * @param params.flowDataID - The ID of the specific traffic flow station
@@ -66,11 +72,18 @@ export type GetTrafficFlowByIdParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// WSDOT Traffic Flow Reading enum based on official API specification
+// WSDOT Traffic Flow Reading schema based on ACTUAL API response
+//
+// NOTE: See the comment above concerning the discrepancy between the official WSDOT API
+// documentation and actual API behavior. This schema returns the actual numeric values
+// returned by the API.
 export const flowStationReadingSchema = z
-  .enum(["Unknown", "WideOpen", "Moderate", "Heavy", "StopAndGo", "NoData"])
+  .number()
+  .int()
+  .min(0)
+  .max(4)
   .describe(
-    "Traffic flow reading value indicating the current traffic condition at the monitoring station. Values represent traffic flow levels from free-flowing (WideOpen) to congested (StopAndGo)."
+    "Traffic flow reading value indicating the current traffic condition at the monitoring station. Numeric values represent traffic flow levels: 0=Unknown/NoData, 1=WideOpen (free-flowing), 2=Moderate, 3=Heavy, 4=StopAndGo (congested). NOTE: This differs from official WSDOT documentation which shows string enum values."
   );
 
 export const flowStationLocationSchema = z
@@ -134,7 +147,7 @@ export const trafficFlowSchema = z
     FlowReadingValue: flowStationReadingSchema
       .nullable()
       .describe(
-        "Current traffic flow reading value from the station. This field represents the traffic condition level, not a numeric measurement. Values include 'WideOpen' (free-flowing), 'Moderate', 'Heavy', 'StopAndGo' (congested), 'Unknown', or 'NoData'."
+        "Current traffic flow reading value from the station. This field represents the traffic condition level as numeric values: 0=Unknown/NoData, 1=WideOpen (free-flowing), 2=Moderate, 3=Heavy, 4=StopAndGo (congested). NOTE: This differs from official WSDOT documentation which shows string enum values."
       ),
 
     FlowStationLocation: flowStationLocationSchema
