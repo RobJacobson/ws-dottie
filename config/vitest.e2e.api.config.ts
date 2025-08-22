@@ -35,6 +35,11 @@ export default defineConfig({
       },
     },
     reporters: ["verbose", "json"],
+    // Force more verbose output to encourage larger terminal windows
+    // Add progress indicators and detailed output
+    logLevel: "info",
+    // Use verbose reporter with more detailed output
+    reporter: "verbose",
     outputFile: "test-results/e2e-api.json",
   },
   resolve: {
