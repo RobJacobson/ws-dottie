@@ -19,9 +19,10 @@ export * from "./getMountainPassConditions";
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { GetMountainPassConditionByIdParams } from "./getMountainPassConditionById";
+// Export types directly from where they are defined (single-item endpoint)
 export type {
-  GetMountainPassConditionsParams,
+  GetMountainPassConditionByIdParams,
   MountainPassCondition,
   TravelRestriction,
-} from "./getMountainPassConditions";
+} from "./getMountainPassConditionById";
+export type { GetMountainPassConditionsParams } from "./getMountainPassConditions";
