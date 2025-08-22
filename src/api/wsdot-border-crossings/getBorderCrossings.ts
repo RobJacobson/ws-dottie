@@ -13,15 +13,13 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getBorderCrossings
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get border crossing wait times from WSDOT Border Crossings API
@@ -53,7 +51,10 @@ export const getBorderCrossings = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getBorderCrossingsParamsSchema
+// GetBorderCrossingsParams
 // ============================================================================
 
 export const getBorderCrossingsParamsSchema = z
@@ -67,7 +68,10 @@ export type GetBorderCrossingsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// borderCrossingDataSchema
+// BorderCrossingData
 // ============================================================================
 
 export const borderCrossingLocationSchema = z
@@ -147,7 +151,9 @@ export type BorderCrossingLocation = z.infer<
 >;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useBorderCrossings
 // ============================================================================
 
 /**
