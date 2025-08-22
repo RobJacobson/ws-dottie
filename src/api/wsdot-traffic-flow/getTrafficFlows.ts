@@ -1,21 +1,59 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import {
-  zWsdotDate,
-  zLatitude,
-  zLongitude,
-} from "@/shared/validation";
-
-/**
- * WSDOT Traffic Flow API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Traffic Flow API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
+import { zLatitude, zLongitude, zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// FLOW STATION LOCATION SCHEMA
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson";
+
+// ============================================================================
+// API FUNCTION
+// ============================================================================
+
+/**
+ * Get all traffic flow data from WSDOT Traffic Flow API
+ *
+ * Retrieves current traffic flow readings from all flow stations.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise containing all traffic flow data
+ * @throws {Error} When the API request fails or validation fails
+ */
+export const getTrafficFlows = async (
+  params: GetTrafficFlowsParams = {}
+): Promise<TrafficFlow[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getTrafficFlowsParamsSchema,
+      output: trafficFlowArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getTrafficFlowsParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting all traffic flow data. The API returns current traffic flow readings from all flow stations across Washington State."
+  );
+
+export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const flowStationLocationSchema = z
@@ -56,10 +94,6 @@ export const flowStationLocationSchema = z
   .describe(
     "Geographic and descriptive information about a traffic flow station location where traffic volume monitoring occurs. Contains coordinates, road information, and descriptive details that help identify and locate the specific monitoring point."
   );
-
-// ============================================================================
-// TRAFFIC FLOW SCHEMA
-// ============================================================================
 
 export const trafficFlowSchema = z
   .object({
@@ -102,20 +136,42 @@ export const trafficFlowSchema = z
     "Complete traffic flow information including flow readings, station location, and monitoring details. This schema represents comprehensive flow data from the WSDOT Traffic Flow API, providing essential information for traffic monitoring, congestion analysis, and transportation planning. The flow details are critical for real-time traffic monitoring, route planning, and transportation management systems."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const trafficFlowArraySchema = z
   .array(trafficFlowSchema)
   .describe(
     "Array of traffic flow data for all active monitoring stations across Washington State highways. This collection provides comprehensive flow information that enables traffic monitoring, congestion analysis, and transportation planning."
   );
 
-// ============================================================================
-// TYPE EXPORTS
-// ============================================================================
-
 export type FlowStationLocation = z.infer<typeof flowStationLocationSchema>;
 export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
 
+// ============================================================================
+// REACT QUERY HOOK
+// ============================================================================
+
+/**
+ * React Query hook for retrieving all traffic flow data
+ *
+ * Retrieves current traffic flow readings from all flow stations.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional query options
+ * @returns React Query result containing traffic flow data
+ *
+ * @example
+ * ```typescript
+ * const { data: trafficFlows } = useTrafficFlows({});
+ * console.log(trafficFlows[0].FlowReadingValue); // 45
+ * ```
+ */
+export const useTrafficFlows = (
+  params: GetTrafficFlowsParams = {},
+  options?: TanStackOptions<TrafficFlow[]>
+): UseQueryResult<TrafficFlow[], Error> => {
+  return useQuery({
+    queryKey: ["wsdot", "traffic-flow", "getTrafficFlows", params],
+    queryFn: () => getTrafficFlows(params),
+    ...tanstackQueryOptions.MINUTE_UPDATES,
+    ...options,
+  });
+};

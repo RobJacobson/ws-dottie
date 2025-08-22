@@ -1,24 +1,29 @@
-// WSDOT Traffic Flow API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
-// API Help: https://wsdot.wa.gov/traffic/api/TrafficFlow/TrafficFlowREST.svc/Help
+/**
+ * WSDOT Traffic Flow API - File-per-Endpoint Structure
+ *
+ * This module provides access to Washington State Department of Transportation
+ * traffic flow data including real-time flow readings and station information.
+ */
 
-// API functions
-export {
-  getTrafficFlowById,
-  getTrafficFlows,
-} from "./api";
-// Input parameter types
-export type {
-  GetTrafficFlowByIdParams,
-  GetTrafficFlowsParams,
-} from "./inputs";
-// Export types
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getTrafficFlowById";
+export * from "./getTrafficFlows";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type { GetTrafficFlowByIdParams } from "./getTrafficFlowById";
 export type {
   FlowStationLocation,
+  GetTrafficFlowsParams,
   TrafficFlow,
-} from "./outputs";
-// React Query hooks
+} from "./getTrafficFlows";
+// Re-export shared schemas from one source to avoid ambiguity
 export {
-  useTrafficFlowById,
-  useTrafficFlows,
-} from "./queries";
+  flowStationLocationSchema,
+  trafficFlowSchema,
+} from "./getTrafficFlows";
