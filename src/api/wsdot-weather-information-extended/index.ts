@@ -12,12 +12,8 @@
 export * from "./getWeatherInformationExtended";
 
 // ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
+// NO TYPE RE-EXPORTS - CONSUMERS SHOULD IMPORT TYPES DIRECTLY FROM SOURCE
 // ============================================================================
 
-export type {
-  GetWeatherInformationExtendedParams,
-  SubSurfaceMeasurement,
-  SurfaceMeasurement,
-  WeatherReading,
-} from "./getWeatherInformationExtended";
+// Types are exported directly from getWeatherInformationExtended.ts
+// Import them directly from the source file to avoid re-export chains
