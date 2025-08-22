@@ -13,14 +13,12 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getBridgeClearances
 // ============================================================================
 
 const ENDPOINT = "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get bridge clearances from WSDOT Bridge Clearances API
@@ -53,7 +51,10 @@ export const getBridgeClearances = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getBridgeClearancesParamsSchema
+// GetBridgeClearancesParams
 // ============================================================================
 
 export const getBridgeClearancesParamsSchema = z
@@ -74,7 +75,10 @@ export type GetBridgeClearancesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// bridgeDataGisSchema
+// BridgeDataGIS
 // ============================================================================
 
 export const bridgeDataGisSchema = z
@@ -195,7 +199,9 @@ export const bridgeDataGisArraySchema = z
 export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useBridgeClearances
 // ============================================================================
 
 /**
