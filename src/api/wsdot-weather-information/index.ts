@@ -2,26 +2,34 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
 // API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
 
-// API functions
-export {
-  getWeatherInformation,
-  getWeatherInformationByStationId,
-  getWeatherInformationForStations,
-} from "./api";
-// Input parameter types
-export type {
-  GetWeatherInformationByStationIdParams,
-  GetWeatherInformationForStationsParams,
-  GetWeatherInformationParams,
-} from "./inputs";
-// Export types
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getWeatherInformation";
+export * from "./getWeatherInformationByStationId";
+export * from "./getWeatherInformationForStations";
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+// All caching is handled through React Query hooks
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
   WeatherInfo,
-  WeatherInformationResponse,
-} from "./outputs";
-// React Query hooks
-export {
-  useWeatherInformation,
-  useWeatherInformationByStationId,
-  useWeatherInformationForStations,
-} from "./queries";
+  GetWeatherInformationParams,
+} from "./getWeatherInformation";
+
+export type {
+  GetWeatherInformationByStationIdParams,
+} from "./getWeatherInformationByStationId";
+
+export type {
+  GetWeatherInformationForStationsParams,
+} from "./getWeatherInformationForStations";

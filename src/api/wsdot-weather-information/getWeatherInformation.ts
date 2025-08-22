@@ -1,5 +1,10 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import {
   zLatitude,
   zLongitude,
@@ -8,16 +13,61 @@ import {
   zWsdotDate,
 } from "@/shared/validation";
 
-/**
- * WSDOT Weather Information API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Weather Information API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson";
 
 // ============================================================================
-// WEATHER INFORMATION SCHEMA
+// API FUNCTION
+// ============================================================================
+
+/**
+ * Get all weather information from WSDOT Weather Information API
+ *
+ * Retrieves current weather data for all monitored weather stations.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise containing all weather information data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const weatherInfo = await getWeatherInformation({});
+ * console.log(weatherInfo[0].TemperatureInFahrenheit); // 66.38
+ * ```
+ */
+export const getWeatherInformation = async (
+  params: GetWeatherInformationParams = {}
+) => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getWeatherInformationParamsSchema,
+      output: weatherInfoArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getWeatherInformationParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting all weather information. The API returns current weather data for all monitored weather stations across Washington State."
+  );
+
+export type GetWeatherInformationParams = z.infer<
+  typeof getWeatherInformationParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const weatherInfoSchema = z
@@ -93,19 +143,35 @@ export const weatherInfoSchema = z
     "Complete weather information including temperature, humidity, wind, precipitation, and visibility data from a WSDOT weather station. This schema represents comprehensive weather data from the WSDOT Weather Information API, providing essential information for road condition monitoring, weather forecasting, and transportation safety. The weather details are critical for winter weather alerts, visibility warnings, and general weather monitoring across Washington State."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const weatherInfoArraySchema = z
   .array(weatherInfoSchema)
   .describe(
     "Array of weather information data for all active weather stations across Washington State. This collection provides comprehensive weather information that enables road condition monitoring, weather forecasting, and transportation safety management."
   );
 
+export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
+
 // ============================================================================
-// TYPE EXPORTS
+// QUERY
 // ============================================================================
 
-export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
-export type WeatherInformationResponse = z.infer<typeof weatherInfoArraySchema>;
+/**
+ * Hook for getting all weather information from WSDOT Weather Information API
+ *
+ * Retrieves current weather data for all monitored weather stations.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with all weather information data
+ */
+export const useWeatherInformation = (
+  params: GetWeatherInformationParams = {},
+  options?: TanStackOptions<WeatherInfo[]>
+): UseQueryResult<WeatherInfo[], Error> => {
+  return useQuery({
+    queryKey: ["wsdot", "weather-information", "getWeatherInformation", params],
+    queryFn: () => getWeatherInformation(params),
+    ...tanstackQueryOptions.MINUTE_UPDATES,
+    ...options,
+  });
+};
