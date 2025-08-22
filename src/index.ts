@@ -42,97 +42,84 @@ export * as WsfVessels from "./api/wsf-vessels";
 export type {
   BorderCrossingData,
   BorderCrossingLocation,
-} from "./api/wsdot-border-crossings/schemas";
+} from "./api/wsdot-border-crossings";
 // WSDOT Bridge Clearances Types
-export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/schemas";
+export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances";
 // WSDOT Commercial Vehicle Restrictions Types
 export type {
   CommercialVehicleRestriction,
+  CommercialVehicleRestrictionRoadwayLocation,
   CommercialVehicleRestrictionWithId,
-  RoadwayLocation as CVRoadwayLocation,
-} from "./api/wsdot-commercial-vehicle-restrictions/schemas";
+} from "./api/wsdot-commercial-vehicle-restrictions";
 // WSDOT Highway Alerts Types
 export type {
   HighwayAlert,
-  RoadwayLocation,
-} from "./api/wsdot-highway-alerts/schemas";
+  HighwayAlertRoadwayLocation,
+} from "./api/wsdot-highway-alerts";
 // WSDOT Highway Cameras Types
 export type {
   Camera,
   CameraLocation,
-  GetCameraResponse,
-  SearchCamerasParams,
-} from "./api/wsdot-highway-cameras/schemas";
+  GetHighwayCameraParams,
+  GetHighwayCamerasParams,
+  SearchHighwayCamerasParams,
+} from "./api/wsdot-highway-cameras";
 // WSDOT Mountain Pass Conditions Types
 export type {
   MountainPassCondition,
   TravelRestriction,
-} from "./api/wsdot-mountain-pass-conditions/schemas";
+} from "./api/wsdot-mountain-pass-conditions";
 // WSDOT Toll Rates Types
 export type {
   TollRate,
   TollTripInfo,
   TollTripRate,
   TollTripRates,
-} from "./api/wsdot-toll-rates/schemas";
+} from "./api/wsdot-toll-rates";
 // WSDOT Traffic Flow Types
 export type {
   FlowStationLocation,
   TrafficFlow,
-} from "./api/wsdot-traffic-flow/schemas";
+} from "./api/wsdot-traffic-flow";
 // WSDOT Travel Times Types
 export type {
   TravelTimeEndpoint,
   TravelTimeRoute,
-} from "./api/wsdot-travel-times/schemas";
+} from "./api/wsdot-travel-times";
 // WSDOT Weather Information Types
-export type { WeatherInfo } from "./api/wsdot-weather-information/schemas";
+export type { WeatherInfo } from "./api/wsdot-weather-information";
 // WSDOT Weather Information Extended Types
 export type {
   SubSurfaceMeasurement,
   SurfaceMeasurement,
   WeatherReading,
-} from "./api/wsdot-weather-information-extended/schemas";
+} from "./api/wsdot-weather-information-extended";
 // WSDOT Weather Stations Types
-export type { WeatherStationData } from "./api/wsdot-weather-stations/schemas";
+export type { WeatherStationData } from "./api/wsdot-weather-stations";
 // WSF Fares Types
 export type {
   FareLineItem,
-  FareLineItemBasic,
-  FareLineItemVerbose,
-  FaresCacheFlushDate,
   FaresTerminal,
   FaresValidDateRange,
   FareTotal,
   TerminalCombo,
   TerminalComboVerbose,
   TerminalMate,
-} from "./api/wsf-fares/schemas";
+} from "./api/wsf-fares";
 // WSF Schedule Types
 export type {
   ActiveSeason,
   Alert,
   AlternativeFormat,
-  Annotation,
-  ContingencyAdjustment,
-  Journey,
   Route,
   RouteDetails,
   Sailing,
-  Schedule,
-  ScheduleCacheFlushDate,
-  ScheduleDeparture,
   ScheduledRoute,
-  ScheduleResponse,
-  ScheduleResponseTerminalCombo,
   ScheduleTerminal,
   ScheduleTerminalCombo,
-  ScheduleTime,
-  ServiceDisruption,
-  TerminalTime,
   TimeAdjustment,
   ValidDateRange,
-} from "./api/wsf-schedule/schemas";
+} from "./api/wsf-schedule";
 // WSF Terminals Types
 export type {
   TerminalArrivalSpace,
@@ -147,7 +134,7 @@ export type {
   TerminalVerbose,
   TerminalWaitTime,
   TerminalWaitTimes,
-} from "./api/wsf-terminals/schemas";
+} from "./api/wsf-terminals";
 // WSF Vessels Types
 export type {
   VesselAccommodation,
@@ -158,7 +145,7 @@ export type {
   VesselStats,
   VesselsCacheFlushDate,
   VesselVerbose,
-} from "./api/wsf-vessels/schemas";
+} from "./api/wsf-vessels";
 
 // ============================================================================
 // TanStack Query Configuration
@@ -171,23 +158,23 @@ export { tanstackQueryOptions } from "./shared/caching/config";
 // ============================================================================
 
 // WSDOT Hooks
-export * from "@/api/wsdot-border-crossings/queries";
-export * from "@/api/wsdot-bridge-clearances/queries";
-export * from "@/api/wsdot-commercial-vehicle-restrictions/queries";
-export * from "@/api/wsdot-highway-alerts/queries";
-export * from "@/api/wsdot-highway-cameras/queries";
-export * from "@/api/wsdot-mountain-pass-conditions/queries";
-export * from "@/api/wsdot-toll-rates/queries";
-export * from "@/api/wsdot-traffic-flow/queries";
-export * from "@/api/wsdot-travel-times/queries";
-export * from "@/api/wsdot-weather-information/queries";
-export * from "@/api/wsdot-weather-information-extended/queries";
-export * from "@/api/wsdot-weather-stations/queries";
+export * from "@/api/wsdot-border-crossings";
+export * from "@/api/wsdot-bridge-clearances";
+export * from "@/api/wsdot-commercial-vehicle-restrictions";
+export * from "@/api/wsdot-highway-alerts";
+export * from "@/api/wsdot-highway-cameras";
+export * from "@/api/wsdot-mountain-pass-conditions";
+export * from "@/api/wsdot-toll-rates";
+export * from "@/api/wsdot-traffic-flow";
+export * from "@/api/wsdot-travel-times";
+export * from "@/api/wsdot-weather-information";
+export * from "@/api/wsdot-weather-information-extended";
+export * from "@/api/wsdot-weather-stations";
 // WSF Hooks
-export * from "@/api/wsf-fares/queries";
-export * from "@/api/wsf-schedule/queries";
-export * from "@/api/wsf-terminals/queries";
-export * from "@/api/wsf-vessels/queries";
+export * from "@/api/wsf-fares";
+export * from "@/api/wsf-schedule";
+export * from "@/api/wsf-terminals";
+export * from "@/api/wsf-vessels";
 
 // ============================================================================
 // Shared Utilities
