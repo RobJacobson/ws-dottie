@@ -6,7 +6,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import { type WeatherInfo, weatherInfoArraySchema } from "./getWeatherInformation";
+import { weatherInfoArraySchema } from "./getWeatherInformation";
 
 // ============================================================================
 // CONSTANTS
@@ -74,8 +74,8 @@ export type GetWeatherInformationForStationsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Re-export the schema and type from the main file
-export { type WeatherInfo, weatherInfoArraySchema } from "./getWeatherInformation";
+// Import the schema from the main file (no type re-export to avoid chains)
+export { weatherInfoArraySchema } from "./getWeatherInformation";
 
 // ============================================================================
 // QUERY
@@ -94,8 +94,8 @@ export { type WeatherInfo, weatherInfoArraySchema } from "./getWeatherInformatio
  */
 export const useWeatherInformationForStations = (
   params: GetWeatherInformationForStationsParams,
-  options?: TanStackOptions<WeatherInfo[]>
-): UseQueryResult<WeatherInfo[], Error> => {
+  options?: TanStackOptions<import("./getWeatherInformation").WeatherInfo[]>
+): UseQueryResult<import("./getWeatherInformation").WeatherInfo[], Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

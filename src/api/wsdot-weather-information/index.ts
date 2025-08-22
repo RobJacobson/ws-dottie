@@ -19,13 +19,8 @@ export * from "./getWeatherInformationForStations";
 // All caching is handled through React Query hooks
 
 // ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
+// TYPE EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { GetSearchWeatherInformationParams } from "./getSearchWeatherInformation";
-export type {
-  GetWeatherInformationParams,
-  WeatherInfo,
-} from "./getWeatherInformation";
-export type { GetWeatherInformationByStationIdParams } from "./getWeatherInformationByStationId";
-export type { GetWeatherInformationForStationsParams } from "./getWeatherInformationForStations";
+// Types are exported directly from their source files to avoid re-export chains
+// Consumers should import types directly from the endpoint files where they are defined
