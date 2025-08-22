@@ -8,27 +8,33 @@
  * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 
-// Export API functions
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+// Export from getHighwayCamera (includes shared schemas)
 export {
+  type Camera,
+  type CameraLocation,
+  cameraLocationSchema,
+  cameraSchema,
+  type GetHighwayCameraParams,
   getHighwayCamera,
-  getHighwayCameras,
-  searchHighwayCameras,
-} from "./api";
-// Input parameter types
-export type {
-  GetHighwayCameraParams,
-  GetHighwayCamerasParams,
-  SearchHighwayCamerasParams,
-} from "./inputs";
-// Export types
-export type {
-  Camera,
-  CameraLocation,
-  GetCameraResponse,
-} from "./outputs";
-// Export React hooks
-export {
+  getHighwayCameraParamsSchema,
   useHighwayCamera,
+} from "./getHighwayCamera";
+// Export from getHighwayCameras (only unique exports)
+export {
+  cameraArraySchema,
+  type GetHighwayCamerasParams,
+  getHighwayCameras,
+  getHighwayCamerasParamsSchema,
   useHighwayCameras,
+} from "./getHighwayCameras";
+// Export from searchHighwayCameras (only unique exports)
+export {
+  type SearchHighwayCamerasParams,
+  searchHighwayCameras,
+  searchHighwayCamerasParamsSchema,
   useSearchHighwayCameras,
-} from "./queries";
+} from "./searchHighwayCameras";
