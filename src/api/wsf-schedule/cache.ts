@@ -3,7 +3,7 @@
 
 import { CacheProvider } from "@/shared/caching/CacheProvider";
 
-import { useCacheFlushDateSchedule } from "./queries";
+import { useCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 /**
  * Schedule Cache Provider Component
