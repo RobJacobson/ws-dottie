@@ -95,8 +95,7 @@ export type GetFareLineItemsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Reuse the fareLineItemSchema from getFareLineItemsBasic
-export const fareLineItemFullSchema = z
+export const fareLineItemSchema = z
   .object({
     FareLineItemID: z
       .number()
@@ -132,12 +131,12 @@ export const fareLineItemFullSchema = z
   );
 
 export const fareLineItemsArraySchema = z
-  .array(fareLineItemFullSchema)
+  .array(fareLineItemSchema)
   .describe(
     "Array of all available fare line items for a specific route and trip type. This collection provides comprehensive fare information for fare calculations."
   );
 
-export type FareLineItem = z.infer<typeof fareLineItemFullSchema>;
+export type FareLineItem = z.infer<typeof fareLineItemSchema>;
 
 // ============================================================================
 // QUERY

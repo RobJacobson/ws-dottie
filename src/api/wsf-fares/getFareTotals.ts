@@ -6,6 +6,8 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
+import { fareLineItemSchema } from "./getFareLineItems";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -112,50 +114,13 @@ export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Reuse the fareLineItemSchema from getFareLineItems
-export const fareTotalItemSchema = z
-  .object({
-    FareLineItemID: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "Unique identifier assigned to this fare line item by the WSF system. This ID serves as a permanent, unique reference for the fare across all WSF systems and can be used for tracking, reporting, and data correlation purposes."
-      ),
-    FareLineItem: z
-      .string()
-      .describe(
-        "Human-readable description of the fare line item. Examples include 'Adult', 'Child (6-18)', 'Senior (65+)', 'Disabled', 'Vehicle under 20 feet', 'Vehicle 20-30 feet', 'Motorcycle', or 'Bicycle'. This field is the primary display name used in applications."
-      ),
-    Category: z
-      .string()
-      .describe(
-        "Category classification for the fare line item. Examples include 'Passenger', 'Vehicle', 'Special', or 'Discount'. This field helps group similar fare types together for display and calculation purposes."
-      ),
-    DirectionIndependent: z
-      .boolean()
-      .describe(
-        "Whether this fare is independent of travel direction. When true, the same fare applies regardless of whether the passenger is traveling from terminal A to B or B to A. When false, different fares may apply for each direction."
-      ),
-    Amount: z
-      .number()
-      .describe(
-        "Fare amount in US dollars. This field shows the cost for this specific fare line item and is used for fare calculations and total cost computations."
-      ),
-  })
-  .catchall(z.unknown())
-  .describe(
-    "Basic fare line item information including fare details, category, direction independence, and amount. This schema represents individual fare components that can be combined to calculate total trip costs."
-  );
-
 export const fareTotalsArraySchema = z
-  .array(fareTotalItemSchema)
+  .array(fareLineItemSchema)
   .describe(
     "Array of fare total calculations for a specific combination of fare line items and quantities. This collection provides the calculated total costs for fare combinations."
   );
 
-export type FareLineItem = z.infer<typeof fareTotalItemSchema>;
-export type FareTotal = z.infer<typeof fareTotalItemSchema>; // Reusing fareTotalItemSchema for fare totals
+export type FareTotal = z.infer<typeof fareLineItemSchema>; // Reusing fareLineItemSchema for fare totals
 
 // ============================================================================
 // QUERY

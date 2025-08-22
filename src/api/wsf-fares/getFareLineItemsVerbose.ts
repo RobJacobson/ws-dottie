@@ -6,6 +6,9 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
+import { fareLineItemSchema } from "./getFareLineItems";
+import { terminalComboVerboseSchema } from "./getTerminalComboVerbose";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -67,79 +70,10 @@ export type GetFareLineItemsVerboseParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Reuse the terminalComboVerboseSchema from getTerminalComboVerbose
-export const terminalComboVerboseExtendedSchema = z
-  .object({
-    DepartingTerminalID: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "Unique identifier for the departing ferry terminal. This ID can be used to reference the terminal in other API calls and for data correlation purposes."
-      ),
-    DepartingDescription: z
-      .string()
-      .describe(
-        "Human-readable name for the departing ferry terminal. This field shows the starting point of the ferry route and helps users identify the departure location."
-      ),
-    ArrivingTerminalID: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "Unique identifier for the arriving ferry terminal. This ID can be used to reference the terminal in other API calls and for data correlation purposes."
-      ),
-    ArrivingDescription: z
-      .string()
-      .describe(
-        "Human-readable name for the arriving ferry terminal. This field shows the destination point of the ferry route and helps users identify the arrival location."
-      ),
-    CollectionDescription: z
-      .string()
-      .describe(
-        "Description of how fares are collected for this terminal combination. This field provides information about the fare collection method, such as 'One-way', 'Round-trip', or specific collection instructions."
-      ),
-  })
-  .catchall(z.unknown())
-  .describe(
-    "Detailed terminal combination information including terminal IDs, descriptions, and fare collection details. This schema provides comprehensive route information for fare calculations and route planning."
-  );
+// Import the terminal combo verbose schema
+export const terminalComboVerboseExtendedSchema = terminalComboVerboseSchema;
 
-// Reuse the fareLineItemSchema from getFareLineItems
-export const fareLineItemVerboseSchema = z
-  .object({
-    FareLineItemID: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "Unique identifier assigned to this fare line item by the WSF system. This ID serves as a permanent, unique reference for the fare across all WSF systems and can be used for tracking, reporting, and data correlation purposes."
-      ),
-    FareLineItem: z
-      .string()
-      .describe(
-        "Human-readable description of the fare line item. Examples include 'Adult', 'Child (6-18)', 'Senior (65+)', 'Disabled', 'Vehicle under 20 feet', 'Vehicle 20-30 feet', 'Motorcycle', or 'Bicycle'. This field is the primary display name used in applications."
-      ),
-    Category: z
-      .string()
-      .describe(
-        "Category classification for the fare line item. Examples include 'Passenger', 'Vehicle', 'Special', or 'Discount'. This field helps group similar fare types together for display and calculation purposes."
-      ),
-    DirectionIndependent: z
-      .boolean()
-      .describe(
-        "Whether this fare is independent of travel direction. When true, the same fare applies regardless of whether the passenger is traveling from terminal A to B or B to A. When false, different fares may apply for each direction."
-      ),
-    Amount: z
-      .number()
-      .describe(
-        "Fare amount in US dollars. This field shows the cost for this specific fare line item and is used for fare calculations and total cost computations."
-      ),
-  })
-  .catchall(z.unknown())
-  .describe(
-    "Basic fare line item information including fare details, category, direction independence, and amount. This schema represents individual fare components that can be combined to calculate total trip costs."
-  );
+// Import the fare line item schema from getFareLineItems
 
 export const lineItemLookupSchema = z
   .object({
@@ -183,12 +117,12 @@ export const fareLineItemsVerboseResponseSchema = z
         "Array of line item lookup information that maps terminal combinations to their corresponding fare arrays. This collection enables efficient fare lookup and calculation."
       ),
     LineItems: z
-      .array(z.array(fareLineItemVerboseSchema))
+      .array(z.array(fareLineItemSchema))
       .describe(
         "Two-dimensional array of fare line items for one-way travel. Each inner array contains the fare line items for a specific terminal combination, indexed by the LineItemIndex from the lookup."
       ),
     RoundTripLineItems: z
-      .array(z.array(fareLineItemVerboseSchema))
+      .array(z.array(fareLineItemSchema))
       .describe(
         "Two-dimensional array of fare line items for round trip travel. Each inner array contains the fare line items for a specific terminal combination, indexed by the RoundTripLineItemIndex from the lookup."
       ),
@@ -201,7 +135,7 @@ export const fareLineItemsVerboseResponseSchema = z
 export type TerminalComboVerbose = z.infer<
   typeof terminalComboVerboseExtendedSchema
 >;
-export type FareLineItem = z.infer<typeof fareLineItemVerboseSchema>;
+
 export type LineItemLookup = z.infer<typeof lineItemLookupSchema>;
 export type FareLineItemsVerboseResponse = z.infer<
   typeof fareLineItemsVerboseResponseSchema
