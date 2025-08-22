@@ -3,7 +3,7 @@
 
 import { CacheProvider } from "@/shared/caching/CacheProvider";
 
-import { useCacheFlushDateTerminals } from "./queries";
+import { useCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 
 /**
  * Terminal Cache Provider Component
