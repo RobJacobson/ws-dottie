@@ -6,7 +6,8 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import { type HighwayAlert, highwayAlertArraySchema } from "./getHighwayAlerts";
+import type { HighwayAlert } from "./getHighwayAlertById";
+import { highwayAlertArraySchema } from "./getHighwayAlerts";
 
 // ============================================================================
 // CONSTANTS
@@ -114,8 +115,8 @@ export type SearchHighwayAlertsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Re-export the schema and type from the main file
-export { type HighwayAlert, highwayAlertArraySchema } from "./getHighwayAlerts";
+// Import array schema from the array endpoint
+export { highwayAlertArraySchema } from "./getHighwayAlerts";
 
 // ============================================================================
 // QUERY

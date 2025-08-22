@@ -24,16 +24,26 @@ export * from "./searchHighwayAlerts";
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
   EventCategories,
   GetEventCategoriesParams,
 } from "./getEventCategories";
-export type { GetHighwayAlertByIdParams } from "./getHighwayAlertById";
 export type {
-  GetHighwayAlertsParams,
+  GetHighwayAlertByIdParams,
   HighwayAlert,
   HighwayAlertRoadwayLocation,
-} from "./getHighwayAlerts";
+} from "./getHighwayAlertById";
+export type { GetHighwayAlertsParams } from "./getHighwayAlerts";
 export type { GetHighwayAlertsByMapAreaParams } from "./getHighwayAlertsByMapArea";
 export type { GetHighwayAlertsByRegionIdParams } from "./getHighwayAlertsByRegionId";
 export type { GetMapAreasParams, MapArea } from "./getMapAreas";
