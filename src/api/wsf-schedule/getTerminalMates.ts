@@ -5,6 +5,9 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import type { ScheduleTerminal } from "./getScheduleTerminalById";
+import { scheduleTerminalSchema } from "./getScheduleTerminalById";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -73,26 +76,7 @@ export type GetTerminalMatesParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const scheduleTerminalSchema = z
-  .object({
-    TerminalID: z
-      .number()
-      .describe(
-        "Unique identifier for the terminal. Primary key for terminal identification and used consistently across all WSF systems and APIs."
-      ),
-    Description: z
-      .string()
-      .describe(
-        "Description of the terminal. Human-readable identifier for the terminal location (e.g., 'Seattle', 'Bainbridge Island', 'Anacortes')."
-      ),
-  })
-  .describe(
-    "Schedule terminal information including identification and description. This schema provides the fundamental terminal data used for schedule displays and passenger information."
-  );
-
 export const scheduleTerminalsArraySchema = z.array(scheduleTerminalSchema);
-
-export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;
 
 // ============================================================================
 // QUERY HOOK

@@ -5,6 +5,9 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import type { Route } from "./getRoutes";
+import { routeSchema } from "./getRoutes";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -80,48 +83,7 @@ export type GetRoutesByTerminalsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const serviceDisruptionSchema = z
-  .record(z.string(), z.unknown())
-  .describe(
-    "Service disruption information stored as key-value pairs. Contains dynamic disruption data that varies by route and time, including alerts, delays, cancellations, and other operational issues affecting ferry service."
-  );
-
-export const routeSchema = z
-  .object({
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for the ferry route. Primary key for route identification and used consistently across all WSF systems and APIs."
-      ),
-    RouteAbbrev: z
-      .string()
-      .describe(
-        "Abbreviated name for the route. Short identifier used in displays, schedules, and references (e.g., 'SEA-BI' for Seattle to Bainbridge Island, 'ANA-SID' for Anacortes to Sidney BC)."
-      ),
-    Description: z
-      .string()
-      .describe(
-        "Full description of the route. Provides detailed information about the route's purpose, terminals served, and operational characteristics for passenger information."
-      ),
-    RegionID: z
-      .number()
-      .describe(
-        "Geographic region identifier for the route. Groups routes by geographic area and helps organize ferry operations by service region within the WSF system."
-      ),
-    ServiceDisruptions: z
-      .array(serviceDisruptionSchema)
-      .optional()
-      .describe(
-        "Optional array of service disruption information for this route. Contains current disruption status, delays, cancellations, or other operational issues affecting this specific route."
-      ),
-  })
-  .describe(
-    "Basic route information including identification, description, geographic region, and optional alert status. This schema provides the fundamental route data used across the WSF system for passenger information and operational management."
-  );
-
 export const routesArraySchema = z.array(routeSchema);
-
-export type Route = z.infer<typeof routeSchema>;
 
 // ============================================================================
 // QUERY HOOK

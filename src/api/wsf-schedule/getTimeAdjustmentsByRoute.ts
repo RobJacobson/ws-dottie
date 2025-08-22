@@ -37,7 +37,7 @@ export const getTimeAdjustmentsByRoute = async (
     ENDPOINT,
     {
       input: getTimeAdjustmentsByRouteParamsSchema,
-      output: timeAdjustmentsArraySchema,
+      output: timeAdjustmentsByRouteArraySchema,
     },
     params
   );
@@ -98,7 +98,7 @@ export const timeAdjustmentSchema = z
     "Time adjustment information including identification, schedule association, adjustment amount, date range, and reason. This schema provides information about schedule modifications and time changes."
   );
 
-export const timeAdjustmentsArraySchema = z.array(timeAdjustmentSchema);
+export const timeAdjustmentsByRouteArraySchema = z.array(timeAdjustmentSchema);
 
 export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 

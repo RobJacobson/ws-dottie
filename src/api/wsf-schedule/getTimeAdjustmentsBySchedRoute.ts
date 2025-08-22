@@ -5,7 +5,39 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import { dateSchema } from "./shared-schemas";
+import {
+  type TimeAdjustment,
+  timeAdjustmentSchema,
+} from "./getTimeAdjustmentsByRoute";
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getTimeAdjustmentsBySchedRouteParamsSchema = z
+  .object({
+    schedRouteId: z
+      .number()
+      .int()
+      .positive()
+      .describe(
+        "Unique identifier for the scheduled route to get time adjustments for."
+      ),
+  })
+  .describe(
+    "Parameters for retrieving time adjustments for a specific scheduled route."
+  );
+
+export type GetTimeAdjustmentsBySchedRouteParams = z.infer<
+  typeof getTimeAdjustmentsBySchedRouteParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
+// ============================================================================
+
+export const timeAdjustmentsBySchedRouteArraySchema =
+  z.array(timeAdjustmentSchema);
 
 // ============================================================================
 // API FUNCTION
@@ -38,74 +70,11 @@ export const getTimeAdjustmentsBySchedRoute = async (
     ENDPOINT,
     {
       input: getTimeAdjustmentsBySchedRouteParamsSchema,
-      output: timeAdjustmentsArraySchema,
+      output: timeAdjustmentsBySchedRouteArraySchema,
     },
     params
   );
 };
-
-// ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
-export const getTimeAdjustmentsBySchedRouteParamsSchema = z
-  .object({
-    schedRouteId: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "Unique identifier for the scheduled route to get time adjustments for."
-      ),
-  })
-  .describe(
-    "Parameters for retrieving time adjustments for a specific scheduled route."
-  );
-
-export type GetTimeAdjustmentsBySchedRouteParams = z.infer<
-  typeof getTimeAdjustmentsBySchedRouteParamsSchema
->;
-
-// ============================================================================
-// OUTPUT SCHEMA & TYPES
-// ============================================================================
-
-export const timeAdjustmentSchema = z
-  .object({
-    AdjustmentID: z
-      .number()
-      .describe(
-        "Unique identifier for the time adjustment. Primary key for adjustment identification and used consistently across all WSF systems and APIs."
-      ),
-    SchedRouteID: z
-      .number()
-      .describe(
-        "Unique identifier for the scheduled route. Links the adjustment to a specific route schedule."
-      ),
-    AdjustmentMinutes: z
-      .number()
-      .describe(
-        "Time adjustment in minutes. Positive values indicate delays, negative values indicate early departures."
-      ),
-    StartDate: dateSchema.describe(
-      "Start date for the time adjustment period. Indicates when the adjustment becomes effective."
-    ),
-    EndDate: dateSchema.describe(
-      "End date for the time adjustment period. Indicates when the adjustment expires."
-    ),
-    Reason: z
-      .string()
-      .describe(
-        "Reason for the time adjustment. Provides context about why the schedule modification is necessary."
-      ),
-  })
-  .describe(
-    "Time adjustment information including identification, schedule association, adjustment amount, date range, and reason. This schema provides information about schedule modifications and time changes."
-  );
-
-export const timeAdjustmentsArraySchema = z.array(timeAdjustmentSchema);
-
-export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 
 // ============================================================================
 // QUERY HOOK

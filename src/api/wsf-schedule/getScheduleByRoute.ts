@@ -5,46 +5,7 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-// ============================================================================
-// API FUNCTION
-// ============================================================================
-
-const ENDPOINT =
-  "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}";
-
-/**
- * API function for fetching schedule by route from WSF Schedule API
- *
- * Retrieves schedule information for a specific route and trip date.
- * A valid trip date may be determined using validDateRange.
- *
- * @param params - Object containing tripDate and routeId
- * @param params.tripDate - The trip date as a Date object
- * @param params.routeId - The unique identifier for the route
- * @returns Promise resolving to an array of ScheduleResponse objects containing schedule information
- * @throws {WsfApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const schedule = await getScheduleByRoute({
- *   tripDate: new Date('2024-01-15'),
- *   routeId: 1
- * });
- * console.log(schedule[0].RouteAbbrev); // "SEA-BI"
- * ```
- */
-export const getScheduleByRoute = async (
-  params: GetScheduleByRouteParams
-): Promise<ScheduleResponse[]> => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getScheduleByRouteParamsSchema,
-      output: scheduleResponseArraySchema,
-    },
-    params
-  );
-};
+import { annotationSchema } from "./getRouteDetails";
 
 // ============================================================================
 // INPUT SCHEMA & TYPES
@@ -72,13 +33,6 @@ export type GetScheduleByRouteParams = z.infer<
 // ============================================================================
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
-
-export const annotationSchema = z
-  .object({
-    // Add annotation fields as needed based on actual API response
-  })
-  .passthrough()
-  .describe("Schedule annotation information");
 
 export const sailingTimeSchema = z
   .object({
@@ -168,7 +122,47 @@ export type SailingTime = z.infer<typeof sailingTimeSchema>;
 export type ScheduleRouteTerminalCombo = z.infer<
   typeof scheduleRouteTerminalComboSchema
 >;
-export type Annotation = z.infer<typeof annotationSchema>;
+
+// ============================================================================
+// API FUNCTION
+// ============================================================================
+
+const ENDPOINT =
+  "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}";
+
+/**
+ * API function for fetching schedule by route from WSF Schedule API
+ *
+ * Retrieves schedule information for a specific route and trip date.
+ * A valid trip date may be determined using validDateRange.
+ *
+ * @param params - Object containing tripDate and routeId
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
+ * @returns Promise resolving to an array of ScheduleResponse objects containing schedule information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const schedule = await getScheduleByRoute({
+ *   tripDate: new Date('2024-01-15'),
+ *   routeId: 1
+ * });
+ * console.log(schedule[0].RouteAbbrev); // "SEA-BI"
+ * ```
+ */
+export const getScheduleByRoute = async (
+  params: GetScheduleByRouteParams
+): Promise<ScheduleResponse[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getScheduleByRouteParamsSchema,
+      output: scheduleResponseArraySchema,
+    },
+    params
+  );
+};
 
 // ============================================================================
 // QUERY HOOK

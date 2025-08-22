@@ -78,14 +78,6 @@ export type GetScheduleTodayByRouteParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
-// ============================================================================
-
-// Re-export the schema for consistency
-export { scheduleResponseArraySchema };
-export type { ScheduleResponse };
-
-// ============================================================================
 // QUERY HOOK
 // ============================================================================
 

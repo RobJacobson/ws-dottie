@@ -214,6 +214,7 @@ export type Sailing = z.infer<typeof sailingSchema>;
 // API RESPONSE SCHEMAS (based on real API responses)
 // ============================================================================
 
+// TODO:Add descriptions to schema for all fields
 export const sailingResponseSchema = z
   .object({
     ScheduleID: z.number(),

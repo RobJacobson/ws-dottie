@@ -8,46 +8,6 @@ import type { TanStackOptions } from "@/shared/types";
 import { dateSchema } from "./shared-schemas";
 
 // ============================================================================
-// API FUNCTION
-// ============================================================================
-
-const ENDPOINT = "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}";
-
-/**
- * API function for fetching route details by route from WSF Schedule API
- *
- * Retrieves detailed route information for a specific route and trip date.
- * A valid trip date may be determined using validDateRange.
- *
- * @param params - Object containing tripDate and routeId
- * @param params.tripDate - The trip date as a Date object
- * @param params.routeId - The unique identifier for the route
- * @returns Promise resolving to a RouteDetailsResponse object containing detailed route information
- * @throws {WsfApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const routeDetails = await getRouteDetailsByRoute({
- *   tripDate: new Date('2024-01-15'),
- *   routeId: 1
- * });
- * console.log(routeDetails.RouteAbbrev); // "SEA-BI"
- * ```
- */
-export const getRouteDetailsByRoute = async (
-  params: GetRouteDetailsByRouteParams
-): Promise<RouteDetailsResponse> => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getRouteDetailsByRouteParamsSchema,
-      output: actualRouteDetailsResponseSchema,
-    },
-    params
-  );
-};
-
-// ============================================================================
 // INPUT SCHEMA & TYPES
 // ============================================================================
 
@@ -74,7 +34,8 @@ export type GetRouteDetailsByRouteParams = z.infer<
 // OUTPUT SCHEMA & TYPES (based on actual API response)
 // ============================================================================
 
-export const serviceDisruptionSchema = z
+// Service disruption schema specific to this endpoint (different structure than base)
+export const routeDetailsByRouteServiceDisruptionSchema = z
   .object({
     BulletinID: z.number(),
     BulletinFlag: z.boolean(),
@@ -91,7 +52,7 @@ export const serviceDisruptionSchema = z
   );
 
 // Actual API response schema (based on real API responses)
-export const actualRouteDetailsResponseSchema = z.object({
+export const routeDetailsByRouteResponseSchema = z.object({
   RouteID: z.number(),
   RouteAbbrev: z.string(),
   Description: z.string(),
@@ -104,12 +65,52 @@ export const actualRouteDetailsResponseSchema = z.object({
   AdaNotes: z.string().nullable(),
   GeneralRouteNotes: z.string(),
   SeasonalRouteNotes: z.string(),
-  ServiceDisruptions: z.array(serviceDisruptionSchema),
+  ServiceDisruptions: z.array(routeDetailsByRouteServiceDisruptionSchema),
 });
 
-export type RouteDetailsResponse = z.infer<
-  typeof actualRouteDetailsResponseSchema
+export type RouteDetailsByRouteResponse = z.infer<
+  typeof routeDetailsByRouteResponseSchema
 >;
+
+// ============================================================================
+// API FUNCTION
+// ============================================================================
+
+const ENDPOINT = "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}";
+
+/**
+ * API function for fetching route details by route from WSF Schedule API
+ *
+ * Retrieves detailed route information for a specific route and trip date.
+ * A valid trip date may be determined using validDateRange.
+ *
+ * @param params - Object containing tripDate and routeId
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
+ * @returns Promise resolving to a RouteDetailsByRouteResponse object containing detailed route information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const routeDetails = await getRouteDetailsByRoute({
+ *   tripDate: new Date('2024-01-15'),
+ *   routeId: 1
+ * });
+ * console.log(routeDetails.RouteAbbrev); // "SEA-BI"
+ * ```
+ */
+export const getRouteDetailsByRoute = async (
+  params: GetRouteDetailsByRouteParams
+): Promise<RouteDetailsByRouteResponse> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getRouteDetailsByRouteParamsSchema,
+      output: routeDetailsByRouteResponseSchema,
+    },
+    params
+  );
+};
 
 // ============================================================================
 // QUERY HOOK
@@ -138,7 +139,7 @@ export type RouteDetailsResponse = z.infer<
  */
 export const useRouteDetailsByRoute = (
   params: GetRouteDetailsByRouteParams,
-  options?: TanStackOptions<RouteDetailsResponse>
+  options?: TanStackOptions<RouteDetailsByRouteResponse>
 ) =>
   useQuery({
     queryKey: [

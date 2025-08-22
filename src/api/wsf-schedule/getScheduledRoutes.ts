@@ -5,6 +5,8 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { serviceDisruptionSchema } from "./getRouteDetails";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -35,12 +37,6 @@ export const getScheduledRoutes = async (): Promise<ScheduledRoute[]> => {
 // ============================================================================
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
-
-export const serviceDisruptionSchema = z
-  .record(z.string(), z.unknown())
-  .describe(
-    "Service disruption information stored as key-value pairs. Contains dynamic disruption data that varies by route and time, including alerts, delays, cancellations, and other operational issues affecting ferry service."
-  );
 
 export const contingencyAdjustmentSchema = z
   .object({

@@ -5,7 +5,8 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import { dateSchema } from "./shared-schemas";
+import type { ScheduledRoute } from "./getScheduledRoutes";
+import { scheduledRouteSchema } from "./getScheduledRoutes";
 
 // ============================================================================
 // API FUNCTION
@@ -70,108 +71,7 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const serviceDisruptionSchema = z
-  .record(z.string(), z.unknown())
-  .describe(
-    "Service disruption information stored as key-value pairs. Contains dynamic disruption data that varies by route and time, including alerts, delays, cancellations, and other operational issues affecting ferry service."
-  );
-
-export const contingencyAdjustmentSchema = z
-  .object({
-    DateFrom: dateSchema.describe(
-      "Start date for the contingency adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
-    ),
-    DateThru: dateSchema.describe(
-      "End date for the contingency adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
-    ),
-    EventID: z
-      .number()
-      .nullable()
-      .describe(
-        "Unique identifier for the event causing the contingency adjustment. Null when no specific event is associated with the adjustment."
-      ),
-    EventDescription: z
-      .string()
-      .nullable()
-      .describe(
-        "Human-readable description of the event causing the contingency adjustment. Provides context about why the schedule modification is necessary (e.g., 'Maintenance', 'Weather', 'Special Event')."
-      ),
-    AdjType: z
-      .number()
-      .describe(
-        "Type of adjustment being applied. Numeric code indicating the nature of the contingency change (e.g., 1=Delay, 2=Cancellation, 3=Route Change)."
-      ),
-    ReplacedBySchedRouteID: z
-      .number()
-      .nullable()
-      .describe(
-        "ID of the scheduled route that replaces the affected route during the contingency period. Null when no replacement route is provided or when the adjustment doesn't involve route substitution."
-      ),
-  })
-  .describe(
-    "Contingency adjustment information for schedule changes due to special events, maintenance, weather conditions, or other operational requirements. These adjustments modify normal ferry schedules to accommodate exceptional circumstances."
-  );
-
-export const scheduledRouteSchema = z
-  .object({
-    ScheduleID: z
-      .number()
-      .describe(
-        "Unique identifier for the schedule season. Links the route to a specific schedule period and determines when the route is active."
-      ),
-    SchedRouteID: z
-      .number()
-      .describe(
-        "Unique identifier for the scheduled route instance. Represents a specific route configuration within a schedule, allowing for multiple variations of the same route."
-      ),
-    ContingencyOnly: z
-      .boolean()
-      .describe(
-        "Indicates whether this route is only available during contingency situations. True when the route is a backup option that operates when normal routes are disrupted."
-      ),
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for the ferry route. Links to the base route definition and identifies the specific ferry corridor this schedule applies to."
-      ),
-    RouteAbbrev: z
-      .string()
-      .describe(
-        "Abbreviated name for the route. Short identifier used in displays, schedules, and references (e.g., 'SEA-BI' for Seattle to Bainbridge Island)."
-      ),
-    Description: z
-      .string()
-      .describe(
-        "Full description of the route. Provides detailed information about the route's purpose, terminals served, and operational characteristics."
-      ),
-    SeasonalRouteNotes: z
-      .string()
-      .describe(
-        "Seasonal notes about the route. Contains information about route availability during different seasons, including summer schedules, winter modifications, and holiday operations."
-      ),
-    RegionID: z
-      .number()
-      .describe(
-        "Geographic region identifier for the route. Groups routes by geographic area and helps organize ferry operations by service region."
-      ),
-    ServiceDisruptions: z
-      .array(serviceDisruptionSchema)
-      .describe(
-        "Array of service disruption information for this route. Contains current disruption status, alerts, and operational issues affecting this specific route."
-      ),
-    ContingencyAdj: z
-      .array(contingencyAdjustmentSchema)
-      .describe(
-        "Array of contingency adjustments for this route. Contains schedule modifications and special conditions that affect this route's normal operation."
-      ),
-  })
-  .describe(
-    "Scheduled route information including route details, schedule associations, operational status, and contingency information. This schema represents a complete view of how a route operates within a specific schedule period."
-  );
-
 export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
-
-export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 
 // ============================================================================
 // QUERY HOOK

@@ -5,6 +5,9 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import type { ScheduleTerminalCombo } from "./getScheduleTerminalComboById";
+import { scheduleTerminalComboSchema } from "./getScheduleTerminalComboById";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -74,38 +77,9 @@ export type GetTerminalsAndMatesByRouteParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const scheduleTerminalComboSchema = z
-  .object({
-    DepartingTerminalID: z
-      .number()
-      .describe(
-        "Unique identifier for the departing terminal. Links to the terminal where the journey begins and passengers board the ferry."
-      ),
-    DepartingDescription: z
-      .string()
-      .describe(
-        "Description of the departing terminal. Provides context about the departure location and helps passengers identify where to board."
-      ),
-    ArrivingTerminalID: z
-      .number()
-      .describe(
-        "Unique identifier for the arriving terminal. Links to the terminal where the journey ends and passengers disembark."
-      ),
-    ArrivingDescription: z
-      .string()
-      .describe(
-        "Description of the arriving terminal. Provides context about the destination location and helps passengers identify where they will arrive."
-      ),
-  })
-  .describe(
-    "Terminal combination information representing a journey from one terminal to another. This schema defines the origin and destination for ferry routes and helps passengers understand their travel path."
-  );
-
 export const scheduleTerminalCombosArraySchema = z.array(
   scheduleTerminalComboSchema
 );
-
-export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
 
 // ============================================================================
 // QUERY HOOK

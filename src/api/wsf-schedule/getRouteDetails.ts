@@ -8,61 +8,7 @@ import type { TanStackOptions } from "@/shared/types";
 import { dateSchema } from "./shared-schemas";
 
 // ============================================================================
-// API FUNCTION
-// ============================================================================
-
-const ENDPOINT = "/ferries/api/schedule/rest/routedetails/{tripDate}";
-
-/**
- * API function for fetching route details from WSF Schedule API
- *
- * Retrieves detailed route information for a given trip date.
- * A valid trip date may be determined using validDateRange.
- *
- * @param params - Object containing tripDate
- * @param params.tripDate - The trip date as a Date object
- * @returns Promise resolving to an array of RouteDetails objects containing detailed route information
- * @throws {WsfApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const routeDetails = await getRouteDetails({ tripDate: new Date('2024-01-15') });
- * console.log(routeDetails[0].RouteAbbrev); // "SEA-BI"
- * ```
- */
-export const getRouteDetails = async (
-  params: GetRouteDetailsParams
-): Promise<RouteDetails[]> => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getRouteDetailsParamsSchema,
-      output: routeDetailsArraySchema,
-    },
-    params
-  );
-};
-
-// ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
-export const getRouteDetailsParamsSchema = z
-  .object({
-    tripDate: z
-      .date()
-      .describe(
-        "The trip date for which to retrieve schedule information. This date determines which schedule data is returned."
-      ),
-  })
-  .describe(
-    "Parameters for retrieving detailed route information for a given trip date."
-  );
-
-export type GetRouteDetailsParams = z.infer<typeof getRouteDetailsParamsSchema>;
-
-// ============================================================================
-// OUTPUT SCHEMA & TYPES
+// OUTPUT SCHEMA & TYPES (Base schemas for route details)
 // ============================================================================
 
 export const serviceDisruptionSchema = z
@@ -228,6 +174,60 @@ export const routeDetailsSchema = z
 export const routeDetailsArraySchema = z.array(routeDetailsSchema);
 
 export type RouteDetails = z.infer<typeof routeDetailsSchema>;
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getRouteDetailsParamsSchema = z
+  .object({
+    tripDate: z
+      .date()
+      .describe(
+        "The trip date for which to retrieve schedule information. This date determines which schedule data is returned."
+      ),
+  })
+  .describe(
+    "Parameters for retrieving detailed route information for a given trip date."
+  );
+
+export type GetRouteDetailsParams = z.infer<typeof getRouteDetailsParamsSchema>;
+
+// ============================================================================
+// API FUNCTION
+// ============================================================================
+
+const ENDPOINT = "/ferries/api/schedule/rest/routedetails/{tripDate}";
+
+/**
+ * API function for fetching route details from WSF Schedule API
+ *
+ * Retrieves detailed route information for a given trip date.
+ * A valid trip date may be determined using validDateRange.
+ *
+ * @param params - Object containing tripDate
+ * @param params.tripDate - The trip date as a Date object
+ * @returns Promise resolving to an array of RouteDetails objects containing detailed route information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const routeDetails = await getRouteDetails({ tripDate: new Date('2024-01-15') });
+ * console.log(routeDetails[0].RouteAbbrev); // "SEA-BI"
+ * ```
+ */
+export const getRouteDetails = async (
+  params: GetRouteDetailsParams
+): Promise<RouteDetails[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getRouteDetailsParamsSchema,
+      output: routeDetailsArraySchema,
+    },
+    params
+  );
+};
 
 // ============================================================================
 // QUERY HOOK

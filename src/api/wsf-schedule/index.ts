@@ -33,19 +33,8 @@ export * from "./getValidDateRange";
 // TYPE RE-EXPORTS FOR CONVENIENCE (with explicit re-exports to resolve conflicts)
 // ============================================================================
 
-// ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE (with explicit re-exports to resolve conflicts)
-// ============================================================================
-
-export type { ActiveSeason } from "./getActiveSeasons";
+export type { ActiveSeasonResponse } from "./getActiveSeasons";
 export type { Alert } from "./getAlerts";
-export type {
-  journeySchema,
-  Sailing,
-  sailingSchema,
-  sailingsArraySchema,
-  terminalTimeSchema,
-} from "./getAllSailings";
 export type { AlternativeFormat } from "./getAlternativeFormats";
 export type {
   annotationSchema,
@@ -55,39 +44,42 @@ export type {
   routeDetailsSchema,
   serviceDisruptionSchema,
 } from "./getRouteDetails";
+export type { RouteDetailsByRouteResponse } from "./getRouteDetailsByRoute";
 export type {
   Route,
   routeSchema,
   routesArraySchema,
 } from "./getRoutes";
 export type {
-  Annotation,
+  journeySchema,
+  SailingResponse,
+  sailingResponseSchema,
+  sailingsArraySchema,
+  terminalTimeSchema,
+} from "./getSailings";
+export type {
   SailingTime,
   ScheduleResponse,
+  ScheduleRouteTerminalCombo,
   scheduleResponseArraySchema,
   scheduleResponseSchema,
-  TerminalCombo,
 } from "./getScheduleByRoute";
 export type {
   ScheduledRoute,
   scheduledRouteSchema,
   scheduledRoutesArraySchema,
 } from "./getScheduledRoutes";
+export type { scheduleTerminalsArraySchema } from "./getTerminals";
+export type { scheduleTerminalCombosArraySchema } from "./getTerminalsAndMates";
 export type {
-  ScheduleTerminal,
-  scheduleTerminalSchema,
-  scheduleTerminalsArraySchema,
-} from "./getTerminalMates";
-export type {
-  ScheduleTerminalCombo,
-  scheduleTerminalComboSchema,
-  scheduleTerminalCombosArraySchema,
-} from "./getTerminalsAndMates";
+  TimeAdjustmentResponse,
+  timeAdjustmentResponseSchema,
+  timeAdjustmentsArraySchema,
+} from "./getTimeAdjustments";
 export type {
   TimeAdjustment,
   timeAdjustmentSchema,
-  timeAdjustmentsArraySchema,
-} from "./getTimeAdjustments";
+} from "./getTimeAdjustmentsByRoute";
 export type { ValidDateRange } from "./getValidDateRange";
 
 // ============================================================================

@@ -83,16 +83,6 @@ export type GetScheduleByTerminalsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
-// ============================================================================
-
-// Re-export the schema for consistency
-export type { scheduleResponseArraySchema };
-export type { ScheduleResponse };
-
-// Schema and types are now imported from getScheduleByRoute
-
-// ============================================================================
 // QUERY HOOK
 // ============================================================================
 

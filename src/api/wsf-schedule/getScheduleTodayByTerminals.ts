@@ -8,7 +8,6 @@ import type { TanStackOptions } from "@/shared/types";
 // Import the complete schema from getScheduleByRoute
 import {
   type ScheduleResponse,
-  type scheduleResponseArraySchema,
   scheduleResponseSchema,
 } from "./getScheduleByRoute";
 
@@ -81,14 +80,6 @@ export type GetScheduleTodayByTerminalsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
-// ============================================================================
-
-// Re-export the schema for consistency
-export type { scheduleResponseArraySchema };
-export type { ScheduleResponse };
-
-// ============================================================================
 // QUERY HOOK
 // ============================================================================
 
@@ -118,7 +109,13 @@ export const useScheduleTodayByTerminals = (
   options?: TanStackOptions<ScheduleResponse>
 ) =>
   useQuery({
-    queryKey: ["wsf", "schedule", "scheduleTodayByTerminals", params],
+    queryKey: [
+      "wsf",
+      "schedule",
+      "scheduleTodayByTerminals",
+      params.departingTerminalId,
+      params.arrivingTerminalId,
+    ],
     queryFn: () => getScheduleTodayByTerminals(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
