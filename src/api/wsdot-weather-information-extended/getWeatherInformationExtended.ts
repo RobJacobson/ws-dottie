@@ -37,6 +37,12 @@ const ENDPOINT = "/traffic/api/api/Scanweb";
  * const weatherReadings = await getWeatherInformationExtended({});
  * console.log(weatherReadings[0].AirTemperature); // 15.5
  * ```
+ *
+ * @note ENDPOINT DISCREPANCY: Official WSDOT documentation shows endpoint as
+ * `/api/Scanweb`, but the actual working endpoint is `/traffic/api/api/Scanweb`.
+ * The documented endpoint returns HTML (not functional), while the current
+ * endpoint works correctly and returns the expected JSON data. This appears
+ * to be a documentation issue rather than an implementation issue.
  */
 export const getWeatherInformationExtended = async (
   params: GetWeatherInformationExtendedParams = {}
