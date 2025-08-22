@@ -16,13 +16,9 @@ export * from "./getTravelTimes";
 // Note: No cache.ts file exists for this API
 
 // ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
+// TYPE EXPORTS - Direct from source only
 // ============================================================================
 
-export type { GetTravelTimeByIdParams } from "./getTravelTimeById";
-export type {
-  GetTravelTimesParams,
-  TravelTimeEndpoint,
-  TravelTimeRoute,
-  TravelTimesResponse,
-} from "./getTravelTimes";
+// Types are exported directly from their source files:
+// - getTravelTimeById.ts: GetTravelTimeByIdParams, TravelTimeEndpoint, TravelTimeRoute
+// - getTravelTimes.ts: GetTravelTimesParams, TravelTimesResponse
