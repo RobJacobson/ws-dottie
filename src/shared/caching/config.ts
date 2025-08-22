@@ -55,8 +55,35 @@ export const tanstackQueryOptions = {
   },
 
   /**
-   * Hourly updates (every hour to few hours)
+   * Moderate frequency data (every 6 hours to daily)
+   * Examples: Schedules, fares, weather forecasts, traffic patterns
+   *
+   * Hybrid approach: 6-hour refetch + cache flush monitoring
+   * - 6-hour refetch interval as backup for cache flush monitoring
+   * - Cache flush monitoring provides immediate invalidation when data changes
+   * - Balanced approach for data that changes occasionally
+   * - Optimized for moderate-frequency data with automatic change detection
+   */
+  MODERATE_FREQUENCY: {
+    // Data is considered stale after 6 hours
+    staleTime: 6 * HOUR,
+    // Keep in cache for 1 day
+    gcTime: 1 * DAY,
+    // 6-hour refetch interval as backup to cache flush monitoring
+    refetchInterval: 6 * HOUR,
+    // Refetch when window regains focus
+    refetchOnWindowFocus: true,
+    // Retry up to 3 times with exponential backoff
+    retry: 3,
+    retryDelay: (attemptIndex: number) =>
+      Math.min(30 * SECOND * 2 ** attemptIndex, 2 * MINUTE),
+  },
+
+  /**
+   * Hourly updates (every hour to few hours) - DEPRECATED
    * Examples: Weather forecasts, traffic patterns, moderate frequency data
+   *
+   * @deprecated Use MODERATE_FREQUENCY instead for better cache flush integration
    *
    * Optimized for ferry operations:
    * - 1-hour refetch interval for moderately changing data
@@ -103,8 +130,35 @@ export const tanstackQueryOptions = {
   },
 
   /**
-   * Weekly updates (daily to weekly)
+   * Static data (weekly to monthly updates)
    * Examples: Terminal info, vessel specs, routes, schedules, fares
+   *
+   * Hybrid approach: 24-hour refetch + cache flush monitoring
+   * - 24-hour refetch interval as backup for cache flush monitoring
+   * - Cache flush monitoring provides immediate invalidation when data changes
+   * - Conservative retry strategy for static data
+   * - Optimized for rarely-changing data with automatic change detection
+   */
+  STATIC_DATA: {
+    // Data is considered stale after 24 hours
+    staleTime: 24 * HOUR,
+    // Keep in cache for 2 weeks
+    gcTime: 2 * WEEK,
+    // 24-hour refetch interval as backup to cache flush monitoring
+    refetchInterval: 24 * HOUR,
+    // Refetch when window regains focus (but only if stale)
+    refetchOnWindowFocus: true,
+    // Retry up to 3 times with exponential backoff
+    retry: 3,
+    retryDelay: (attemptIndex: number) =>
+      Math.min(1 * MINUTE * 2 ** attemptIndex, 5 * MINUTE),
+  },
+
+  /**
+   * Weekly updates (daily to weekly) - DEPRECATED
+   * Examples: Terminal info, vessel specs, routes, schedules, fares
+   *
+   * @deprecated Use STATIC_DATA instead for better cache flush integration
    *
    * Optimized for ferry operations:
    * - No automatic refetch interval - rely on cache flush invalidation

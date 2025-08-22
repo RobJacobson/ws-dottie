@@ -13,7 +13,7 @@ import { zFlexibleDate, zPositiveInteger } from "./index";
 export const createVesselIdParam = (purpose: string) =>
   z.object({
     vesselId: zPositiveInteger("vessel").describe(
-      `The unique identifier for the vessel ${purpose}. Each vessel has a permanent ID number used across all API endpoints. For example, vessel ID 1 corresponds to M/V Cathlamet. This ID can be found from the getVesselBasics() endpoint.`
+      `The unique identifier for the vessel ${purpose}. Each vessel has a permanent ID number used across all API endpoints. For example, vessel ID 1 corresponds to Cathlamet. This ID can be found from the getVesselBasics() endpoint.`
     ),
   });
 
@@ -21,7 +21,7 @@ export const createVesselIdParam = (purpose: string) =>
  * Creates vessel ID parameter description for inline use
  */
 export const createVesselIdDescription = (purpose: string) =>
-  `The unique identifier for the vessel ${purpose}. Each vessel has a permanent ID number used across all API endpoints. For example, vessel ID 1 corresponds to M/V Cathlamet. This ID can be found from the getVesselBasics() endpoint.`;
+  `The unique identifier for the vessel ${purpose}. Each vessel has a permanent ID number used across all API endpoints. For example, vessel ID 1 corresponds to Cathlamet. This ID can be found from the getVesselBasics() endpoint.`;
 
 /**
  * Creates date range parameter schemas with validation
@@ -50,7 +50,7 @@ export const createDateRangeRefinement = () => ({
   },
   errorConfig: {
     message: "dateStart must be before or equal to dateEnd",
-    path: ["dateEnd"] as const,
+    path: ["dateEnd"],
   },
 });
 
