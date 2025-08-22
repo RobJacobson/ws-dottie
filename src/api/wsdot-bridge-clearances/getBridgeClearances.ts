@@ -1,5 +1,10 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import {
   zLatitude,
   zLongitude,
@@ -7,16 +12,69 @@ import {
   zWsdotDate,
 } from "@/shared/validation";
 
-/**
- * WSDOT Bridge Clearances API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Bridge Clearances API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT = "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson";
 
 // ============================================================================
-// BRIDGE DATA GIS SCHEMA
+// API FUNCTION
+// ============================================================================
+
+/**
+ * Get bridge clearances from WSDOT Bridge Clearances API
+ *
+ * Returns bridge clearance data for a specific route. The Route parameter is required
+ * and should be a valid WSDOT route identifier (e.g., "005" for I-5).
+ *
+ * @param params - Object containing route parameter
+ * @param params.route - The WSDOT route identifier (e.g., "005" for I-5)
+ * @returns Promise containing bridge clearance data for the specified route
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const clearances = await getBridgeClearances({ route: "005" });
+ * console.log(clearances[0].CrossingDescription); // "Over I-5"
+ * ```
+ */
+export const getBridgeClearances = async (
+  params: GetBridgeClearancesParams
+): Promise<BridgeDataGIS[]> => {
+  return zodFetch(
+    `${ENDPOINT}?Route={route}`,
+    {
+      input: getBridgeClearancesParamsSchema,
+      output: bridgeDataGisArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getBridgeClearancesParamsSchema = z
+  .object({
+    route: z
+      .string()
+      .min(1, "Route cannot be empty")
+      .describe(
+        "WSDOT route identifier for which to retrieve bridge clearance data. Examples include '005' for I-5, '090' for I-90, '405' for I-405. The route should be specified as a zero-padded 3-digit string for interstates (e.g., '005' not '5') or as the full route number for state routes (e.g., '20', '101')."
+      ),
+  })
+  .describe(
+    "Parameters for retrieving bridge clearance data for a specific WSDOT route"
+  );
+
+export type GetBridgeClearancesParams = z.infer<
+  typeof getBridgeClearancesParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const bridgeDataGisSchema = z
@@ -128,18 +186,43 @@ export const bridgeDataGisSchema = z
     "Complete bridge clearance information including location, identification, and clearance measurements. This schema represents comprehensive bridge data from the WSDOT Bridge Clearances API, providing essential information for commercial vehicle route planning, bridge management, and transportation safety. The clearance measurements are critical for preventing bridge strikes and ensuring safe passage of oversized vehicles."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const bridgeDataGisArraySchema = z
   .array(bridgeDataGisSchema)
   .describe(
     "Array of bridge clearance data for all bridges along a specified route. This collection provides comprehensive clearance information that enables route planning for commercial vehicles and helps prevent bridge strikes by providing accurate clearance measurements."
   );
 
+export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
+
 // ============================================================================
-// TYPE EXPORTS
+// QUERY HOOK
 // ============================================================================
 
-export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
+/**
+ * Hook for getting bridge clearances from WSDOT Bridge Clearances API
+ *
+ * Returns bridge clearance data for a specific route. The Route parameter is required
+ * and should be a valid WSDOT route identifier (e.g., "005" for I-5).
+ *
+ * @param params - Object containing route parameter
+ * @param params.route - The WSDOT route identifier (e.g., "005" for I-5)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with bridge clearance data
+ *
+ * @example
+ * ```typescript
+ * const { data: clearances } = useBridgeClearances({ route: "005" });
+ * console.log(clearances?.[0]?.CrossingDescription); // "Over I-5"
+ * ```
+ */
+export const useBridgeClearances = (
+  params: GetBridgeClearancesParams,
+  options?: TanStackOptions<BridgeDataGIS[]>
+): UseQueryResult<BridgeDataGIS[], Error> => {
+  return useQuery({
+    queryKey: ["wsdot", "bridge-clearances", "getBridgeClearances", params],
+    queryFn: () => getBridgeClearances(params),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
+  });
+};
