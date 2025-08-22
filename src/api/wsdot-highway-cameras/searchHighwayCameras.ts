@@ -5,7 +5,7 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { zLatitude, zLongitude, zNullableString } from "@/shared/validation";
+import { zNullableString } from "@/shared/validation";
 
 // ============================================================================
 // CONSTANTS
