@@ -1,17 +1,67 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import { zLatitude, zLongitude, zNullableNumber } from "@/shared/validation";
 
-/**
- * WSDOT Weather Information Extended API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Weather Information Extended API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT = "/traffic/api/api/Scanweb";
 
 // ============================================================================
-// SURFACE MEASUREMENT SCHEMA
+// API FUNCTION
+// ============================================================================
+
+/**
+ * Get extended weather information from WSDOT Weather Information Extended API
+ *
+ * Retrieves additional weather readings including surface and subsurface
+ * measurements from WSDOT weather stations.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise containing extended weather readings data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const weatherReadings = await getWeatherInformationExtended({});
+ * console.log(weatherReadings[0].AirTemperature); // 14.7
+ * ```
+ */
+export const getWeatherInformationExtended = async (
+  params: GetWeatherInformationExtendedParams = {}
+): Promise<WeatherReading[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getWeatherInformationExtendedParamsSchema,
+      output: weatherReadingArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getWeatherInformationExtendedParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting extended weather information. The API returns additional weather readings including surface and subsurface measurements from WSDOT weather stations across Washington State."
+  );
+
+export type GetWeatherInformationExtendedParams = z.infer<
+  typeof getWeatherInformationExtendedParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const surfaceMeasurementSchema = z
@@ -39,10 +89,6 @@ export const surfaceMeasurementSchema = z
     "Surface measurement data including road surface temperature, freezing temperature, and surface condition information. This schema represents critical road condition data that is essential for winter weather monitoring and transportation safety."
   );
 
-// ============================================================================
-// SUBSURFACE MEASUREMENT SCHEMA
-// ============================================================================
-
 export const subSurfaceMeasurementSchema = z
   .object({
     SensorId: z
@@ -59,10 +105,6 @@ export const subSurfaceMeasurementSchema = z
   .describe(
     "Subsurface measurement data including temperature readings below the road surface. This schema represents important ground condition data that helps predict road surface changes and freezing conditions."
   );
-
-// ============================================================================
-// WEATHER READING SCHEMA
-// ============================================================================
 
 // ReadingTime from this API is ISO string or null; normalize to Date | null
 const zIsoDateNullable = () =>
@@ -190,20 +232,49 @@ export const weatherReadingSchema = z
     "Complete extended weather information including comprehensive environmental readings, precipitation data, and surface/subsurface measurements from a WSDOT weather station. This schema represents detailed weather data from the WSDOT Weather Information Extended API, providing essential information for road condition monitoring, winter weather alerts, precipitation tracking, and transportation safety. The extended weather details are critical for comprehensive weather monitoring, road safety management, and environmental condition assessment across Washington State."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const weatherReadingArraySchema = z
   .array(weatherReadingSchema)
   .describe(
     "Array of extended weather reading data for all active weather stations across Washington State. This collection provides comprehensive weather information that enables detailed road condition monitoring, winter weather alerts, precipitation tracking, and transportation safety management."
   );
 
-// ============================================================================
-// TYPE EXPORTS
-// ============================================================================
-
 export type SurfaceMeasurement = z.infer<typeof surfaceMeasurementSchema>;
 export type SubSurfaceMeasurement = z.infer<typeof subSurfaceMeasurementSchema>;
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
+
+// ============================================================================
+// REACT QUERY HOOK
+// ============================================================================
+
+/**
+ * React Query hook for retrieving extended weather information
+ *
+ * Retrieves additional weather readings including surface and subsurface
+ * measurements from WSDOT weather stations.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional query options
+ * @returns React Query result containing extended weather information data
+ *
+ * @example
+ * ```typescript
+ * const { data: weatherReadings } = useWeatherInformationExtended({});
+ * console.log(weatherReadings[0].AirTemperature); // 14.7
+ * ```
+ */
+export const useWeatherInformationExtended = (
+  params: GetWeatherInformationExtendedParams = {},
+  options?: TanStackOptions<WeatherReading[]>
+): UseQueryResult<WeatherReading[], Error> => {
+  return useQuery({
+    queryKey: [
+      "wsdot",
+      "weather-information-extended",
+      "getWeatherInformationExtended",
+      params,
+    ],
+    queryFn: () => getWeatherInformationExtended(params),
+    ...tanstackQueryOptions.HOURLY_UPDATES,
+    ...options,
+  });
+};

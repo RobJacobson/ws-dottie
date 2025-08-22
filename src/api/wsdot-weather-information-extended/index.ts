@@ -1,16 +1,23 @@
-// WSDOT Weather Information Extended API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_traveler_a_p_i_1_1_controller_1_1_scanweb_controller.html
-// API Endpoint: https://wsdot.wa.gov/traffic/api/api/Scanweb
+/**
+ * WSDOT Weather Information Extended API - File-per-Endpoint Structure
+ *
+ * This module provides access to Washington State Department of Transportation
+ * extended weather information including surface and subsurface measurements.
+ */
 
-// API functions
-export { getWeatherInformationExtended } from "./api";
-// Input parameter types
-export type { GetWeatherInformationExtendedParams } from "./inputs";
-// Export types
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getWeatherInformationExtended";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
+  GetWeatherInformationExtendedParams,
   SubSurfaceMeasurement,
   SurfaceMeasurement,
   WeatherReading,
-} from "./outputs";
-// React Query hooks
-export { useWeatherInformationExtended } from "./queries";
+} from "./getWeatherInformationExtended";
