@@ -3,7 +3,7 @@
 
 import { CacheProvider } from "@/shared/caching/CacheProvider";
 
-import { useCacheFlushDateVessels } from "./queries";
+import { useCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 
 /**
  * Vessel Cache Provider Component
