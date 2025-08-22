@@ -68,26 +68,22 @@ export * from "./cache";
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
-// ============================================================================
-
-export type { TerminalBasics } from "./getTerminalBasics";
+export type { TerminalBasics } from "./getTerminalBasicsByTerminalId";
 export type {
   TerminalBulletin,
   TerminalBulletinItem,
-} from "./getTerminalBulletins";
-export type { TerminalLocation } from "./getTerminalLocations";
+} from "./getTerminalBulletinsByTerminalId";
+export type { TerminalLocation } from "./getTerminalLocationsByTerminalId";
 export type {
   TerminalDepartingSpace,
   TerminalSailingSpace,
-} from "./getTerminalSailingSpace";
+} from "./getTerminalSailingSpaceByTerminalId";
 export type {
   TerminalTransitLink,
   TerminalTransport,
-} from "./getTerminalTransports";
-export type { TerminalVerbose } from "./getTerminalVerbose";
+} from "./getTerminalTransportsByTerminalId";
+export type { TerminalVerbose } from "./getTerminalVerboseByTerminalId";
 export type {
   TerminalWaitTime,
   TerminalWaitTimes,
-} from "./getTerminalWaitTimes";
+} from "./getTerminalWaitTimesByTerminalId";

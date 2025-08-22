@@ -68,9 +68,6 @@ export type GetTerminalBasicsParams = z.infer<
 // Create array schema from the imported single-item schema
 export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
 
-// Re-export types from the single-item endpoint for consistency
-export type { TerminalBasics };
-
 // ============================================================================
 // REACT QUERY HOOK
 // ============================================================================

@@ -4,7 +4,6 @@ import { zodFetch } from "@/shared/fetching";
 
 // Import schemas from the single-item endpoint
 import {
-  type TerminalWaitTime,
   type TerminalWaitTimes,
   terminalWaitTimesSchema,
 } from "./getTerminalWaitTimesByTerminalId";
@@ -63,6 +62,3 @@ export type GetTerminalWaitTimesParams = z.infer<
 
 // Create array schema from the imported single-item schema
 export const terminalWaitTimesArraySchema = z.array(terminalWaitTimesSchema);
-
-// Re-export types from the single-item endpoint for consistency
-export type { TerminalWaitTimes, TerminalWaitTime };

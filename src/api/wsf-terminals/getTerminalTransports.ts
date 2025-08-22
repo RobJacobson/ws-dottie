@@ -8,7 +8,6 @@ import type { TanStackOptions } from "@/shared/types";
 
 // Import schemas from the single-item endpoint
 import {
-  type TerminalTransitLink,
   type TerminalTransport,
   terminalTransportSchema,
 } from "./getTerminalTransportsByTerminalId";
@@ -67,9 +66,6 @@ export type GetTerminalTransportsParams = z.infer<
 
 // Create array schema from the imported single-item schema
 export const terminalTransportArraySchema = z.array(terminalTransportSchema);
-
-// Re-export types from the single-item endpoint for consistency
-export type { TerminalTransport, TerminalTransitLink };
 
 // ============================================================================
 // REACT QUERY HOOK

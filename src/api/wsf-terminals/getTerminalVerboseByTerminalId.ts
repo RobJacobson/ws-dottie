@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/validation";
 
-import { terminalBulletinItemSchema } from "./getTerminalBulletins";
+import { terminalBulletinItemSchema } from "./getTerminalBulletinsByTerminalId";
 
 // ============================================================================
 // FETCH FUNCTION
@@ -67,7 +67,7 @@ export type GetTerminalVerboseByTerminalIdParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// terminalBulletinItemSchema imported from ./getTerminalBulletins
+// terminalBulletinItemSchema imported from ./getTerminalBulletinsByTerminalId
 
 export const terminalTransitLinkSchema = z
   .object({

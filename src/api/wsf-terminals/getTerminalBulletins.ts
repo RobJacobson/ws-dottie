@@ -5,7 +5,6 @@ import { zodFetch } from "@/shared/fetching";
 // Import schemas from the single-item endpoint
 import {
   type TerminalBulletin,
-  type TerminalBulletinItem,
   terminalBulletinSchema,
 } from "./getTerminalBulletinsByTerminalId";
 
@@ -63,6 +62,3 @@ export type GetTerminalBulletinsParams = z.infer<
 
 // Create array schema from the imported single-item schema
 export const terminalBulletinArraySchema = z.array(terminalBulletinSchema);
-
-// Re-export types from the single-item endpoint for consistency
-export type { TerminalBulletin, TerminalBulletinItem };

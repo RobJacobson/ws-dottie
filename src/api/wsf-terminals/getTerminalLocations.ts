@@ -67,9 +67,6 @@ export type GetTerminalLocationsParams = z.infer<
 // Create array schema from the imported single-item schema
 export const terminalLocationArraySchema = z.array(terminalLocationSchema);
 
-// Re-export types from the single-item endpoint for consistency
-export type { TerminalLocation };
-
 // ============================================================================
 // REACT QUERY HOOK
 // ============================================================================

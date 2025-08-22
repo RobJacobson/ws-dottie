@@ -63,8 +63,6 @@ export type GetTerminalVerboseParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// terminalBulletinItemSchema imported from ./getTerminalBulletins
-
 export const terminalTransitLinkSchema = z
   .object({
     LinkName: z
