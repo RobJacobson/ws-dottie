@@ -30,18 +30,24 @@ export { getTrafficFlows, useTrafficFlows } from "./getTrafficFlows";
 // SCHEMAS & TYPES
 // ============================================================================
 
-export type { GetTrafficFlowByIdParams } from "./getTrafficFlowById";
+// ============================================================================
+// SCHEMAS & TYPES
+// ============================================================================
+
+// Export types directly from their source files (no re-export chains)
 export type {
   FlowStationLocation,
-  GetTrafficFlowsParams,
+  GetTrafficFlowByIdParams,
   TrafficFlow,
-} from "./getTrafficFlows";
+} from "./getTrafficFlowById";
+// Export schemas from their source files
 export {
   flowStationLocationSchema,
   flowStationReadingSchema,
-  trafficFlowArraySchema,
   trafficFlowSchema,
-} from "./getTrafficFlows";
+} from "./getTrafficFlowById";
+export type { GetTrafficFlowsParams } from "./getTrafficFlows";
+export { trafficFlowArraySchema } from "./getTrafficFlows";
 
 // ============================================================================
 // CONSTANTS
