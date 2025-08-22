@@ -3,7 +3,6 @@ import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 import type { TanStackOptions } from "@/shared/types";
 
 // ============================================================================

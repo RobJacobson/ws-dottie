@@ -5,6 +5,13 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+// Import the complete schema from getScheduleByRoute
+import {
+  type ScheduleResponse,
+  type scheduleResponseArraySchema,
+  scheduleResponseSchema,
+} from "./getScheduleByRoute";
+
 // ============================================================================
 // API FUNCTION
 // ============================================================================
@@ -77,14 +84,8 @@ export type GetScheduleTodayByTerminalsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Import the complete schema from getScheduleByRoute
-import type {
-  ScheduleResponse,
-  scheduleResponseArraySchema,
-} from "./getScheduleByRoute";
-
 // Re-export the schema for consistency
-export { scheduleResponseArraySchema };
+export type { scheduleResponseArraySchema };
 export type { ScheduleResponse };
 
 // ============================================================================

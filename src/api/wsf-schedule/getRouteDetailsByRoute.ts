@@ -4,7 +4,6 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { zWsdotDate } from "@/shared/validation";
 
 import { dateSchema } from "./shared-schemas";
 

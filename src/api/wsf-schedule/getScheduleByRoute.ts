@@ -3,7 +3,6 @@ import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 import type { TanStackOptions } from "@/shared/types";
 
 // ============================================================================
@@ -83,8 +82,9 @@ export const annotationSchema = z
 
 export const sailingTimeSchema = z
   .object({
-    DepartingTime: dateSchema.describe("Departure time for this sailing"),
-    ArrivingTime: dateSchema
+    DepartingTime: z.date().describe("Departure time for this sailing"),
+    ArrivingTime: z
+      .date()
       .nullable()
       .describe("Arrival time for this sailing (may be null)"),
     LoadingRule: z
@@ -113,7 +113,7 @@ export const sailingTimeSchema = z
   })
   .describe("Individual sailing time information");
 
-export const terminalComboSchema = z
+export const scheduleRouteTerminalComboSchema = z
   .object({
     DepartingTerminalID: z
       .number()
@@ -148,13 +148,13 @@ export const scheduleResponseSchema = z
       .describe("Name of the schedule (e.g., 'Summer 2025')"),
     ScheduleSeason: z.number().describe("Season identifier for the schedule"),
     SchedulePDFUrl: z.string().describe("URL to PDF version of the schedule"),
-    ScheduleStart: dateSchema.describe("Start date of the schedule"),
-    ScheduleEnd: dateSchema.describe("End date of the schedule"),
+    ScheduleStart: z.date().describe("Start date of the schedule"),
+    ScheduleEnd: z.date().describe("End date of the schedule"),
     AllRoutes: z
       .array(z.number())
       .describe("Array of all route IDs covered by this schedule"),
     TerminalCombos: z
-      .array(terminalComboSchema)
+      .array(scheduleRouteTerminalComboSchema)
       .describe("Array of terminal combinations with sailing times"),
   })
   .describe(
@@ -165,7 +165,9 @@ export const scheduleResponseArraySchema = z.array(scheduleResponseSchema);
 
 export type ScheduleResponse = z.infer<typeof scheduleResponseSchema>;
 export type SailingTime = z.infer<typeof sailingTimeSchema>;
-export type TerminalCombo = z.infer<typeof terminalComboSchema>;
+export type ScheduleRouteTerminalCombo = z.infer<
+  typeof scheduleRouteTerminalComboSchema
+>;
 export type Annotation = z.infer<typeof annotationSchema>;
 
 // ============================================================================
