@@ -1,5 +1,10 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import {
   zLatitude,
   zLongitude,
@@ -7,16 +12,62 @@ import {
   zWsdotDate,
 } from "@/shared/validation";
 
-/**
- * WSDOT Border Crossings API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Border Crossings API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson";
 
 // ============================================================================
-// BORDER CROSSING LOCATION SCHEMA
+// API FUNCTION
+// ============================================================================
+
+/**
+ * Get border crossing wait times from WSDOT Border Crossings API
+ *
+ * Returns estimated wait times for all border crossings between Washington State and Canada.
+ * Data includes location information, crossing names, timestamps, and current wait times.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise resolving to array of border crossing data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const crossings = await getBorderCrossings({});
+ * console.log(crossings[0].CrossingName); // "Peace Arch"
+ * ```
+ */
+export const getBorderCrossings = async (
+  params: GetBorderCrossingsParams = {}
+): Promise<BorderCrossingData[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getBorderCrossingsParamsSchema,
+      output: borderCrossingDataArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getBorderCrossingsParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting border crossing data. The API returns all available border crossing information."
+  );
+
+export type GetBorderCrossingsParams = z.infer<
+  typeof getBorderCrossingsParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const borderCrossingLocationSchema = z
@@ -57,10 +108,6 @@ export const borderCrossingLocationSchema = z
     "Geographic and descriptive information about a border crossing location. Contains coordinates, road information, and descriptive details that help identify and locate the specific border crossing point. May be null if location information is not available for a particular crossing."
   );
 
-// ============================================================================
-// BORDER CROSSING DATA SCHEMA
-// ============================================================================
-
 export const borderCrossingDataSchema = z
   .object({
     BorderCrossingLocation: borderCrossingLocationSchema.describe(
@@ -88,21 +135,45 @@ export const borderCrossingDataSchema = z
     "Complete border crossing information including location details, crossing name, current wait time, and timestamp. This schema represents the core data structure returned by the WSDOT Border Crossings API, providing real-time information that travelers use to plan their border crossing timing and route selection."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const borderCrossingDataArraySchema = z
   .array(borderCrossingDataSchema)
   .describe(
     "Array of border crossing data for all monitored border crossings between Washington State and Canada. This collection provides comprehensive wait time and location information for travelers planning border crossings, enabling route planning and timing optimization."
   );
 
-// ============================================================================
-// TYPE EXPORTS
-// ============================================================================
-
 export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
 export type BorderCrossingLocation = z.infer<
   typeof borderCrossingLocationSchema
 >;
+
+// ============================================================================
+// REACT QUERY HOOK
+// ============================================================================
+
+/**
+ * Hook for getting border crossing wait times from WSDOT Border Crossings API
+ *
+ * Returns estimated wait times for all border crossings between Washington State and Canada.
+ * Uses frequent update options since border crossing data changes frequently.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with border crossing data
+ *
+ * @example
+ * ```typescript
+ * const { data: crossings } = useBorderCrossings({});
+ * console.log(crossings?.[0]?.CrossingName); // "Peace Arch"
+ * ```
+ */
+export const useBorderCrossings = (
+  params: GetBorderCrossingsParams = {},
+  options?: TanStackOptions<BorderCrossingData[]>
+): UseQueryResult<BorderCrossingData[], Error> => {
+  return useQuery({
+    queryKey: ["wsdot", "border-crossings", "getBorderCrossings", params],
+    queryFn: () => getBorderCrossings(params),
+    ...tanstackQueryOptions.MINUTE_UPDATES,
+    ...options,
+  });
+};
