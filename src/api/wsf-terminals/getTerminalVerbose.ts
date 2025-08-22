@@ -7,7 +7,7 @@ import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
-import { terminalBulletinItemSchema } from "./getTerminalBulletins";
+import { terminalBulletinItemSchema } from "./getTerminalBulletinsByTerminalId";
 
 // ============================================================================
 // FETCH FUNCTION

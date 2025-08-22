@@ -65,23 +65,40 @@ export type GetTerminalWaitTimesByTerminalIdParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const terminalWaitTimeSchema = z.object({
-  RouteID: z.number().nullable(),
-  RouteName: z.string().nullable(),
-  WaitTimeIVRNotes: z.string().nullable(),
-  WaitTimeLastUpdated: zWsdotDate(),
-  WaitTimeNotes: z.string().nullable(),
-});
+export const terminalWaitTimeSchema = z
+  .object({
+    RouteID: z.number().nullable().describe("Unique identifier for the route"),
+    RouteName: z.string().nullable().describe("Name of the route"),
+    WaitTimeIVRNotes: z
+      .string()
+      .nullable()
+      .describe("Interactive voice response notes for wait times"),
+    WaitTimeLastUpdated: zWsdotDate().describe(
+      "Last update timestamp for wait time information"
+    ),
+    WaitTimeNotes: z.string().nullable().describe("Notes about wait times"),
+  })
+  .describe("Wait time information for a specific route at a terminal");
 
-export const terminalWaitTimesSchema = z.object({
-  TerminalID: z.number(),
-  TerminalSubjectID: z.number(),
-  RegionID: z.number(),
-  TerminalName: z.string(),
-  TerminalAbbrev: z.string(),
-  SortSeq: z.number(),
-  WaitTimes: z.array(terminalWaitTimeSchema),
-});
+export const terminalWaitTimesSchema = z
+  .object({
+    TerminalID: z.number().describe("Unique identifier for the terminal"),
+    TerminalSubjectID: z
+      .number()
+      .describe("Subject identifier for the terminal"),
+    RegionID: z
+      .number()
+      .describe("Region identifier where the terminal is located"),
+    TerminalName: z.string().describe("Full name of the terminal"),
+    TerminalAbbrev: z
+      .string()
+      .describe("Abbreviated name/code for the terminal"),
+    SortSeq: z.number().describe("Sorting sequence for display order"),
+    WaitTimes: z
+      .array(terminalWaitTimeSchema)
+      .describe("Wait time information for this terminal"),
+  })
+  .describe("Wait time information for a single terminal");
 
 export type TerminalWaitTimes = z.infer<typeof terminalWaitTimesSchema>;
 export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;

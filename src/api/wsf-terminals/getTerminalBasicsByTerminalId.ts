@@ -6,8 +6,6 @@ import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import { type TerminalBasics, terminalBasicsSchema } from "./getTerminalBasics";
-
 // ============================================================================
 // FETCH FUNCTION
 // ============================================================================
@@ -70,7 +68,39 @@ export type GetTerminalBasicsByTerminalIdParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-// Schemas are imported from the base file to avoid duplication
+export const terminalBasicsSchema = z
+  .object({
+    TerminalID: z.number().describe("Unique identifier for the terminal"),
+    TerminalSubjectID: z
+      .number()
+      .describe("Subject identifier for the terminal"),
+    RegionID: z
+      .number()
+      .describe("Region identifier where the terminal is located"),
+    TerminalName: z.string().describe("Full name of the terminal"),
+    TerminalAbbrev: z
+      .string()
+      .describe("Abbreviated name/code for the terminal"),
+    SortSeq: z.number().describe("Sorting sequence for display order"),
+    OverheadPassengerLoading: z
+      .boolean()
+      .describe(
+        "Whether the terminal has overhead passenger loading capability"
+      ),
+    Elevator: z.boolean().describe("Whether the terminal has elevator access"),
+    WaitingRoom: z
+      .boolean()
+      .describe("Whether the terminal has a waiting room"),
+    FoodService: z
+      .boolean()
+      .describe("Whether the terminal has food service available"),
+    Restroom: z
+      .boolean()
+      .describe("Whether the terminal has restroom facilities"),
+  })
+  .describe("Basic information for a single terminal");
+
+export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
 
 // ============================================================================
 // REACT QUERY HOOK

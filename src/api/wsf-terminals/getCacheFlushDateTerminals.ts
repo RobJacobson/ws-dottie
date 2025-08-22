@@ -5,7 +5,6 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
 // FETCH FUNCTION
@@ -21,23 +20,23 @@ const ENDPOINT = "/ferries/api/terminals/rest/cacheflushdate";
  * to coordinate caching strategies and ensure data freshness.
  *
  * @param params - No parameters required (empty object for consistency)
- * @returns Promise resolving to a Date object representing the cache flush date
+ * @returns Promise resolving to a string representing the cache flush date
  * @throws {WsfApiError} When the API request fails
  *
  * @example
  * ```typescript
  * const cacheFlushDate = await getCacheFlushDateTerminals({});
- * console.log(cacheFlushDate); // Date object
+ * console.log(cacheFlushDate); // string
  * ```
  */
 export const getCacheFlushDateTerminals = async (
   params: GetCacheFlushDateTerminalsParams = {}
-): Promise<Date | null> => {
+): Promise<string> => {
   return zodFetch(
     ENDPOINT,
     {
       input: getCacheFlushDateTerminalsParamsSchema,
-      output: terminalCacheFlushDateSchema,
+      output: getCacheFlushDateTerminalsResponseSchema,
     },
     params
   );
@@ -59,11 +58,7 @@ export type GetCacheFlushDateTerminalsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const terminalCacheFlushDateSchema = zWsdotDate()
-  .nullable()
-  .describe(
-    "Cache flush date for terminals data. Indicates when the terminals data was last updated and can be used to coordinate caching strategies."
-  );
+export const getCacheFlushDateTerminalsResponseSchema = z.string();
 
 // ============================================================================
 // REACT QUERY HOOK
@@ -78,8 +73,8 @@ export const terminalCacheFlushDateSchema = zWsdotDate()
  * @returns Query result containing the cache flush date
  */
 export const useCacheFlushDateTerminals = (
-  options?: TanStackOptions<Date | null>
-): UseQueryResult<Date | null, Error> => {
+  options?: TanStackOptions<string>
+): UseQueryResult<string, Error> => {
   return useQuery({
     queryKey: ["wsf", "terminals", "cacheFlushDate"],
     queryFn: () => getCacheFlushDateTerminals(),
