@@ -1,17 +1,65 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import { zLatitude, zLongitude, zWsdotDate } from "@/shared/validation";
 
-/**
- * WSDOT Travel Times API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Travel Times API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimesAsJson";
 
 // ============================================================================
-// TRAVEL TIME ENDPOINT SCHEMA
+// FETCH FUNCTION
+// ============================================================================
+
+/**
+ * Get all travel times from WSDOT Travel Times API
+ *
+ * Retrieves current travel time data for all monitored routes.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise containing all travel time data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const travelTimes = await getTravelTimes({});
+ * console.log(travelTimes[0].CurrentTime); // 30
+ * ```
+ */
+export const getTravelTimes = async (
+  params: GetTravelTimesParams = {}
+): Promise<TravelTimeRoute[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getTravelTimesParamsSchema,
+      output: travelTimesArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getTravelTimesParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting all travel times. The API returns current travel time data for all monitored routes across Washington State."
+  );
+
+export type GetTravelTimesParams = z.infer<typeof getTravelTimesParamsSchema>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const travelTimeEndpointSchema = z
@@ -52,10 +100,6 @@ export const travelTimeEndpointSchema = z
   .describe(
     "Geographic and descriptive information about a travel time endpoint location where travel time monitoring begins or ends. Contains coordinates, road information, and descriptive details that help identify and locate the specific endpoint point."
   );
-
-// ============================================================================
-// TRAVEL TIME ROUTE SCHEMA
-// ============================================================================
 
 export const travelTimeRouteSchema = z
   .object({
@@ -113,20 +157,43 @@ export const travelTimeRouteSchema = z
     "Complete travel time route information including current and average travel times, route details, and endpoint information. This schema represents comprehensive travel time data from the WSDOT Travel Times API, providing essential information for route planning, congestion monitoring, and travel time estimation. The travel time details are critical for real-time navigation, traffic management, and transportation planning systems."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const travelTimesArraySchema = z
   .array(travelTimeRouteSchema)
   .describe(
     "Array of travel time route data for all monitored routes across Washington State. This collection provides comprehensive travel time information that enables route planning, congestion monitoring, and travel time estimation."
   );
 
-// ============================================================================
-// TYPE EXPORTS
-// ============================================================================
-
 export type TravelTimeEndpoint = z.infer<typeof travelTimeEndpointSchema>;
 export type TravelTimeRoute = z.infer<typeof travelTimeRouteSchema>;
 export type TravelTimesResponse = z.infer<typeof travelTimesArraySchema>;
+
+// ============================================================================
+// QUERY
+// ============================================================================
+
+/**
+ * Hook for getting all travel times from WSDOT Travel Times API
+ *
+ * Retrieves current travel time data for all monitored routes.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with travel time data
+ *
+ * @example
+ * ```typescript
+ * const { data: travelTimes } = useTravelTimes({});
+ * console.log(travelTimes?.[0]?.CurrentTime); // 30
+ * ```
+ */
+export const useTravelTimes = (
+  params: GetTravelTimesParams = {},
+  options?: TanStackOptions<TravelTimeRoute[]>
+): UseQueryResult<TravelTimeRoute[], Error> => {
+  return useQuery({
+    queryKey: ["wsdot", "travel-times", "getTravelTimes", params],
+    queryFn: () => getTravelTimes(params),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
+  });
+};

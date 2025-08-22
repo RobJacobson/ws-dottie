@@ -2,24 +2,27 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___travel_times.html
 // API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
 
-// API functions
-export {
-  getTravelTimeById,
-  getTravelTimes,
-} from "./api";
-// Input parameter types
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getTravelTimeById";
+export * from "./getTravelTimes";
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type { GetTravelTimeByIdParams } from "./getTravelTimeById";
 export type {
-  GetTravelTimeByIdParams,
   GetTravelTimesParams,
-} from "./inputs";
-// Export types
-export type {
   TravelTimeEndpoint,
   TravelTimeRoute,
   TravelTimesResponse,
-} from "./outputs";
-// React Query hooks
-export {
-  useTravelTimeById,
-  useTravelTimes,
-} from "./queries";
+} from "./getTravelTimes";
