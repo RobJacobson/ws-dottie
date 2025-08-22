@@ -24,26 +24,21 @@ const ENDPOINT =
  * Returns current toll trip rates along with system messages and
  * last updated timestamps.
  *
- * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing toll trip rates with last updated time
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const tripRates = await getTollTripRates({});
+ * const tripRates = await getTollTripRates();
  * console.log(tripRates.LastUpdated); // Date object
  * console.log(tripRates.Trips[0].Toll); // 0
  * ```
  */
-export const getTollTripRates = async (params: GetTollTripRatesParams = {}) => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getTollTripRatesParamsSchema,
-      output: tollTripRatesSchema,
-    },
-    params
-  );
+export const getTollTripRates = async (): Promise<TollTripRates> => {
+  return zodFetch(ENDPOINT, {
+    input: getTollTripRatesParamsSchema,
+    output: tollTripRatesSchema,
+  });
 };
 
 // ============================================================================
@@ -52,9 +47,7 @@ export const getTollTripRates = async (params: GetTollTripRatesParams = {}) => {
 
 export const getTollTripRatesParamsSchema = z
   .object({})
-  .describe(
-    "No parameters required for getting toll trip rates. The API returns current toll trip rates along with system messages and last updated timestamps."
-  );
+  .describe("No parameters required.");
 
 export type GetTollTripRatesParams = z.infer<
   typeof getTollTripRatesParamsSchema
@@ -123,17 +116,15 @@ export type TollTripRates = z.infer<typeof tollTripRatesSchema>;
  * Returns current toll trip rates along with system messages and
  * last updated timestamps.
  *
- * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with toll trip rates and last updated time
  */
 export const useTollTripRates = (
-  params: GetTollTripRatesParams = {},
   options?: TanStackOptions<TollTripRates>
 ): UseQueryResult<TollTripRates, Error> => {
   return useQuery({
-    queryKey: ["wsdot", "toll-rates", "getTollTripRates", params],
-    queryFn: () => getTollTripRates(params),
+    queryKey: ["wsdot", "toll-rates", "getTollTripRates"],
+    queryFn: () => getTollTripRates(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

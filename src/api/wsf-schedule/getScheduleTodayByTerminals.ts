@@ -77,36 +77,15 @@ export type GetScheduleTodayByTerminalsParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
-export const scheduleResponseSchema = z
-  .object({
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for the route. Links the schedule to a specific ferry route."
-      ),
-    RouteAbbrev: z
-      .string()
-      .describe(
-        "Abbreviated name for the route. Short identifier used in displays and references."
-      ),
-    Description: z
-      .string()
-      .describe(
-        "Full description of the route. Provides detailed information about the route's purpose and characteristics."
-      ),
-    Schedules: z
-      .array(z.unknown())
-      .describe(
-        "Array of schedule information for this route. Contains detailed scheduling data."
-      ),
-  })
-  .describe(
-    "Schedule response information including route details and schedule data. This schema provides comprehensive schedule information for a specific route."
-  );
+// Import the complete schema from getScheduleByRoute
+import type {
+  ScheduleResponse,
+  scheduleResponseArraySchema,
+} from "./getScheduleByRoute";
 
-export const scheduleResponseArraySchema = z.array(scheduleResponseSchema);
-
-export type ScheduleResponse = z.infer<typeof scheduleResponseSchema>;
+// Re-export the schema for consistency
+export { scheduleResponseArraySchema };
+export type { ScheduleResponse };
 
 // ============================================================================
 // QUERY HOOK

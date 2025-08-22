@@ -6,6 +6,7 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
+export * from "./getSearchWeatherInformation";
 export * from "./getWeatherInformation";
 export * from "./getWeatherInformationByStationId";
 export * from "./getWeatherInformationForStations";
@@ -21,15 +22,10 @@ export * from "./getWeatherInformationForStations";
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
+export type { GetSearchWeatherInformationParams } from "./getSearchWeatherInformation";
 export type {
-  WeatherInfo,
   GetWeatherInformationParams,
+  WeatherInfo,
 } from "./getWeatherInformation";
-
-export type {
-  GetWeatherInformationByStationIdParams,
-} from "./getWeatherInformationByStationId";
-
-export type {
-  GetWeatherInformationForStationsParams,
-} from "./getWeatherInformationForStations";
+export type { GetWeatherInformationByStationIdParams } from "./getWeatherInformationByStationId";
+export type { GetWeatherInformationForStationsParams } from "./getWeatherInformationForStations";

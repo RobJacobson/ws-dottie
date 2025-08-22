@@ -50,14 +50,12 @@ export const getTrafficFlowByIdParamsSchema = z
   .object({
     flowDataID: z
       .number()
-      .int()
-      .positive()
       .describe(
         "Unique identifier for the specific traffic flow station to retrieve. This ID is assigned by the WSDOT system and can be obtained from the getTrafficFlows endpoint or other traffic flow listings."
       ),
   })
   .describe(
-    "Parameters for retrieving a specific traffic flow station by its unique identifier"
+    "Parameters for retrieving a specific traffic flow station by its unique identifier."
   );
 
 export type GetTrafficFlowByIdParams = z.infer<
@@ -68,36 +66,53 @@ export type GetTrafficFlowByIdParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
+// WSDOT Traffic Flow Reading enum based on official API specification
+export const flowStationReadingSchema = z
+  .enum(["Unknown", "WideOpen", "Moderate", "Heavy", "StopAndGo", "NoData"])
+  .describe(
+    "Traffic flow reading value indicating the current traffic condition at the monitoring station. Values represent traffic flow levels from free-flowing (WideOpen) to congested (StopAndGo)."
+  );
+
 export const flowStationLocationSchema = z
   .object({
     Description: z
       .string()
+      .nullable()
       .describe(
         "Human-readable description of the traffic flow station location. Examples include 'Northbound lanes', 'Bridge approach', 'Tunnel entrance', 'Interchange with SR 520', or 'Mountain pass overlook'. This field provides context about where the station is positioned."
       ),
 
     Direction: z
       .string()
+      .nullable()
       .describe(
         "Direction of travel indicator for the traffic flow station. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', 'All Lanes', or 'Eastbound and Westbound'. This field indicates which direction of travel the station monitors."
       ),
 
-    Latitude: zLatitude().describe(
-      "Latitude coordinate of the traffic flow station location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
-    ),
+    Latitude: z
+      .number()
+      .nullable()
+      .describe(
+        "Latitude coordinate of the traffic flow station location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
+      ),
 
-    Longitude: zLongitude().describe(
-      "Longitude coordinate of the traffic flow station location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
-    ),
+    Longitude: z
+      .number()
+      .nullable()
+      .describe(
+        "Longitude coordinate of the traffic flow station location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
+      ),
 
     MilePost: z
       .number()
+      .nullable()
       .describe(
         "Milepost marker indicating the distance along the highway where the traffic flow station is located. This is a standard highway reference point used by transportation departments for location identification and maintenance purposes."
       ),
 
     RoadName: z
       .string()
+      .nullable()
       .describe(
         "Name of the highway or road where the traffic flow station is located. Examples include 'I-5', 'SR 520', 'US-2', 'I-90', or 'SR 9'. This field helps users identify which roadway the station monitors."
       ),
@@ -111,37 +126,42 @@ export const trafficFlowSchema = z
   .object({
     FlowDataID: z
       .number()
-      .int()
-      .positive()
+      .nullable()
       .describe(
         "Unique identifier assigned to this traffic flow reading by the WSDOT system. This ID serves as a permanent, unique reference for the flow data across all WSDOT systems and can be used for tracking, reporting, and data correlation purposes."
       ),
 
-    FlowReadingValue: z
-      .number()
+    FlowReadingValue: flowStationReadingSchema
+      .nullable()
       .describe(
-        "Current traffic flow reading value from the station. This field represents the volume of traffic passing through the monitoring point, typically measured in vehicles per hour or similar traffic flow metrics. The specific units depend on the station configuration."
+        "Current traffic flow reading value from the station. This field represents the traffic condition level, not a numeric measurement. Values include 'WideOpen' (free-flowing), 'Moderate', 'Heavy', 'StopAndGo' (congested), 'Unknown', or 'NoData'."
       ),
 
-    FlowStationLocation: flowStationLocationSchema.describe(
-      "Detailed location information for the traffic flow station including coordinates, road details, and descriptive text. This object provides comprehensive geographic context for the station position."
-    ),
+    FlowStationLocation: flowStationLocationSchema
+      .nullable()
+      .describe(
+        "Detailed location information for the traffic flow station including coordinates, road details, and descriptive text. This object provides comprehensive geographic context for the station position."
+      ),
 
     Region: z
       .string()
+      .nullable()
       .describe(
         "Geographic region of Washington State where the traffic flow station is located. Examples include 'Northwest', 'Northeast', 'Southwest', 'Southeast', 'Central', 'Olympic Peninsula', or 'Puget Sound'. This field helps users understand the general area where the station operates."
       ),
 
     StationName: z
       .string()
+      .nullable()
       .describe(
         "Human-readable name for the traffic flow station that provides quick identification. Examples include 'I-5 @ NE 85th St', 'SR 520 Floating Bridge', 'I-90 Snoqualmie Pass', or 'US-2 Stevens Pass'. This field is the primary display name used in applications."
       ),
 
-    Time: zWsdotDate().describe(
-      "Timestamp indicating when this traffic flow reading was taken by the WSDOT system. This field shows the currency of the flow data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone."
-    ),
+    Time: zWsdotDate()
+      .nullable()
+      .describe(
+        "Timestamp indicating when this traffic flow reading was taken by the WSDOT system. This field shows the currency of the flow data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone."
+      ),
   })
   .catchall(z.unknown())
   .describe(
@@ -168,8 +188,10 @@ export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
  *
  * @example
  * ```typescript
- * const { data: trafficFlow } = useTrafficFlowById({ flowDataID: 2482 });
- * console.log(trafficFlow.FlowReadingValue); // 45
+ * const { data: trafficFlow } = useTrafficFlowById({
+ *   flowDataID: 2482
+ * });
+ * console.log(trafficFlow.FlowReadingValue); // "WideOpen"
  * ```
  */
 export const useTrafficFlowById = (

@@ -40,12 +40,32 @@ export const getActiveSeasons = async (): Promise<ActiveSeasonResponse[]> => {
 
 // API response schema for active seasons
 export const activeSeasonResponseSchema = z.object({
-  ScheduleID: z.number(),
-  ScheduleName: z.string(),
-  ScheduleSeason: z.number(),
-  SchedulePDFUrl: z.string(),
-  ScheduleStart: dateSchema,
-  ScheduleEnd: dateSchema,
+  ScheduleID: z
+    .number()
+    .describe(
+      "Unique identifier for the schedule season. Primary key for season identification across WSF systems."
+    ),
+  ScheduleName: z
+    .string()
+    .describe(
+      "Human-readable name for the schedule season (e.g., 'Summer 2025', 'Fall 2025')."
+    ),
+  ScheduleSeason: z
+    .number()
+    .describe(
+      "Season number identifier. Used to categorize and order schedule periods within the WSF system."
+    ),
+  SchedulePDFUrl: z
+    .string()
+    .describe(
+      "URL to PDF version of the complete schedule for this season. Provides downloadable schedule information."
+    ),
+  ScheduleStart: dateSchema.describe(
+    "Start date of the schedule season. Indicates when this schedule period becomes effective."
+  ),
+  ScheduleEnd: dateSchema.describe(
+    "End date of the schedule season. Indicates when this schedule period expires."
+  ),
 });
 
 export const activeSeasonsArraySchema = z.array(activeSeasonResponseSchema);

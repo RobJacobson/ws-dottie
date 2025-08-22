@@ -13,7 +13,7 @@ import { type HighwayAlert, highwayAlertSchema } from "./getHighwayAlerts";
 // ============================================================================
 
 const ENDPOINT =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={alertId}";
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}";
 
 // ============================================================================
 // API FUNCTION
@@ -24,14 +24,14 @@ const ENDPOINT =
  *
  * Returns detailed information about a specific highway alert identified by its ID.
  *
- * @param params - Object containing alertId parameter
- * @param params.alertId - The unique identifier of the highway alert
+ * @param params - Object containing AlertID parameter
+ * @param params.AlertID - The unique identifier of the highway alert
  * @returns Promise containing the specific highway alert data
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const alert = await getHighwayAlertById({ alertId: 12345 });
+ * const alert = await getHighwayAlertById({ AlertID: 12345 });
  * console.log(alert.HeadlineDescription); // "Collision on I-5"
  * ```
  */
@@ -54,7 +54,7 @@ export const getHighwayAlertById = async (
 
 export const getHighwayAlertByIdParamsSchema = z
   .object({
-    alertId: z
+    AlertID: z
       .number()
       .int()
       .positive()
@@ -86,8 +86,8 @@ export { type HighwayAlert, highwayAlertSchema } from "./getHighwayAlerts";
  *
  * Returns detailed information about a specific highway alert identified by its ID.
  *
- * @param params - Object containing alertId parameter
- * @param params.alertId - The unique identifier of the highway alert
+ * @param params - Object containing AlertID parameter
+ * @param params.AlertID - The unique identifier of the highway alert
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with a single highway alert
  */

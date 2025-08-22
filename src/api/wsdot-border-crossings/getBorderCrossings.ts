@@ -127,7 +127,7 @@ export const borderCrossingDataSchema = z
     WaitTime: z
       .number()
       .describe(
-        "Current estimated wait time in minutes for vehicles crossing the border at this location. This is the primary data point that travelers use to plan their border crossing timing. Wait times can vary significantly based on time of day, day of week, and current border traffic conditions."
+        "Current estimated wait time in minutes for vehicles crossing the border at this location. This is the primary data point that travelers use to plan their border crossing timing. Wait times can vary significantly based on time of day, day of week, and current border traffic conditions. Negative values (e.g., -1) may indicate special conditions or unavailable wait time data."
       ),
   })
   .catchall(z.unknown())

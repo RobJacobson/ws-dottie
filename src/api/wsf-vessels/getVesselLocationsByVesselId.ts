@@ -5,10 +5,7 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { 
-  zNullableNumber,
-  zNullableString,zPositiveInteger, 
-  zWsdotNullableDate,} from "@/shared/validation";
+import { zPositiveInteger } from "@/shared/validation";
 import { createVesselIdDescription } from "@/shared/validation/templates";
 
 // ============================================================================
@@ -26,23 +23,27 @@ const ENDPOINT = "/ferries/api/vessels/rest/vessellocations/{vesselId}";
  * vessel movements in real-time.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @returns Promise resolving to a VesselLocation object containing real-time location data for the specified vessel
  *
  * @example
  * ```typescript
  * const location = await getVesselLocationsByVesselId({ vesselId: 1 });
- * console.log(location.VesselName); // "M/V Cathlamet"
- * console.log(location.Latitude); // 47.6026
+ * console.log(location.VesselName); // "Cathlamet"
+ * console.log(location.Latitude); // 47.6029
  * ```
  */
 export const getVesselLocationsByVesselId = async (
   params: GetVesselLocationsByVesselIdParams
 ): Promise<VesselLocation> => {
-  return zodFetch(ENDPOINT, {
-    input: getVesselLocationsByVesselIdParamsSchema,
-    output: vesselLocationSchema,
-  }, params);
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getVesselLocationsByVesselIdParamsSchema,
+      output: vesselLocationSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -61,7 +62,9 @@ export const getVesselLocationsByVesselIdParamsSchema = z
     "Parameters for retrieving real-time location data for a specific vessel"
   );
 
-export type GetVesselLocationsByVesselIdParams = z.infer<typeof getVesselLocationsByVesselIdParamsSchema>;
+export type GetVesselLocationsByVesselIdParams = z.infer<
+  typeof getVesselLocationsByVesselIdParamsSchema
+>;
 
 // ============================================================================
 // OUTPUT SCHEMA & TYPES
@@ -85,14 +88,14 @@ export type VesselLocation = z.infer<typeof vesselLocationSchema>;
  * vessel movements in real-time.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @param options - Optional React Query options
  * @returns React Query result containing a VesselLocation object with real-time location data for the specified vessel
  *
  * @example
  * ```typescript
  * const { data: location } = useVesselLocationsByVesselId({ vesselId: 1 });
- * console.log(location?.VesselName); // "M/V Cathlamet"
+ * console.log(location?.VesselName); // "Cathlamet"
  * ```
  */
 export const useVesselLocationsByVesselId = (

@@ -105,7 +105,7 @@ export const actualRouteDetailsResponseSchema = z.object({
   AdaNotes: z.string().nullable(),
   GeneralRouteNotes: z.string(),
   SeasonalRouteNotes: z.string(),
-  Alerts: z.array(serviceDisruptionSchema),
+  ServiceDisruptions: z.array(serviceDisruptionSchema),
 });
 
 export type RouteDetailsResponse = z.infer<

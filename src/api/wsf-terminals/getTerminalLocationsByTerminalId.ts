@@ -1,10 +1,15 @@
-import { z } from "zod";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
+
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { type TerminalLocation, terminalLocationSchema } from "./getTerminalLocations";
+
+import {
+  type TerminalLocation,
+  terminalLocationSchema,
+} from "./getTerminalLocations";
 
 // ============================================================================
 // FETCH FUNCTION
@@ -53,7 +58,6 @@ export const getTerminalLocationsByTerminalIdParamsSchema = z
     terminalId: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the terminal. This ID is used to identify specific terminals across the WSF system."
       ),

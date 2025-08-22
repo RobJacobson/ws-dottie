@@ -29,7 +29,7 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselaccommodations";
  * @example
  * ```typescript
  * const accommodations = await getVesselAccommodations();
- * console.log(accommodations[0].VesselName); // "M/V Cathlamet"
+ * console.log(accommodations[0].VesselName); // "Cathlamet"
  * console.log(accommodations[0].ADAAccessible); // true
  * ```
  */
@@ -66,7 +66,7 @@ export const vesselAccommodationSchema = z
     VesselName: z
       .string()
       .describe(
-        "Full official vessel name as used by Washington State Ferries, including the 'M/V' prefix. Examples include 'M/V Cathlamet', 'M/V Spokane', 'M/V Walla Walla'. This is the complete name displayed on schedules and used by passengers and crew."
+        "Full official vessel name as used by Washington State Ferries. Examples include 'Cathlamet', 'Spokane', 'Walla Walla'. This is the complete name displayed on schedules and used by passengers and crew."
       ),
     VesselAbbrev: z
       .string()
@@ -151,7 +151,7 @@ export type VesselAccommodation = z.infer<typeof vesselAccommodationSchema>;
  * @example
  * ```typescript
  * const { data: accommodations } = useVesselAccommodations();
- * console.log(accommodations?.[0]?.VesselName); // "M/V Cathlamet"
+ * console.log(accommodations?.[0]?.VesselName); // "Cathlamet"
  * ```
  */
 export const useVesselAccommodations = (

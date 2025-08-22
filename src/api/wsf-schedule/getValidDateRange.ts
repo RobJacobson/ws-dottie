@@ -17,7 +17,6 @@ const ENDPOINT = "/ferries/api/schedule/rest/validdaterange";
  * API function for fetching valid date range from WSF Schedule API
  *
  * Retrieves a date range for which schedule data is currently published & available.
- * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
  * Please consider using cacheflushdate to coordinate the caching of this data in your application.
  *
  * @returns Promise resolving to ValidDateRange object containing valid date range information
@@ -62,7 +61,6 @@ export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
  * React Query hook for fetching valid date range from WSF Schedule API
  *
  * Retrieves a date range for which schedule data is currently published & available.
- * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
  * Please consider using cacheflushdate to coordinate the caching of this data in your application.
  *
  * @param options - Optional React Query options

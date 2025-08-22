@@ -24,25 +24,20 @@ const ENDPOINT =
  * Returns detailed trip information including geometry data for toll
  * facilities and routes.
  *
- * @param params - No parameters required (empty object for consistency)
  * @returns Promise containing all toll trip information data
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const tripInfo = await getTollTripInfo({});
+ * const tripInfo = await getTollTripInfo();
  * console.log(tripInfo[0].TripName); // "405tp01351"
  * ```
  */
-export const getTollTripInfo = async (params: GetTollTripInfoParams = {}) => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getTollTripInfoParamsSchema,
-      output: tollTripInfoArraySchema,
-    },
-    params
-  );
+export const getTollTripInfo = async (): Promise<TollTripInfo[]> => {
+  return zodFetch(ENDPOINT, {
+    input: getTollTripInfoParamsSchema,
+    output: tollTripInfoArraySchema,
+  });
 };
 
 // ============================================================================
@@ -51,9 +46,7 @@ export const getTollTripInfo = async (params: GetTollTripInfoParams = {}) => {
 
 export const getTollTripInfoParamsSchema = z
   .object({})
-  .describe(
-    "No parameters required for getting toll trip information. The API returns detailed trip information including geometry data for toll facilities and routes."
-  );
+  .describe("No parameters required.");
 
 export type GetTollTripInfoParams = z.infer<typeof getTollTripInfoParamsSchema>;
 
@@ -150,17 +143,15 @@ export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
  * Returns detailed trip information including geometry data for toll
  * facilities and routes.
  *
- * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options to override defaults
  * @returns React Query result with all toll trip information data
  */
 export const useTollTripInfo = (
-  params: GetTollTripInfoParams = {},
   options?: TanStackOptions<TollTripInfo[]>
 ): UseQueryResult<TollTripInfo[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "toll-rates", "getTollTripInfo", params],
-    queryFn: () => getTollTripInfo(params),
+    queryKey: ["wsdot", "toll-rates", "getTollTripInfo"],
+    queryFn: () => getTollTripInfo(),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

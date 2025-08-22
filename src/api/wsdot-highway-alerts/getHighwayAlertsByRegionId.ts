@@ -13,35 +13,36 @@ import { type HighwayAlert, highwayAlertArraySchema } from "./getHighwayAlerts";
 // ============================================================================
 
 const ENDPOINT =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}";
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}";
 
 // ============================================================================
 // API FUNCTION
 // ============================================================================
 
 /**
- * Get highway alerts by map area from WSDOT Highway Alerts API
+ * Get highway alerts by region ID from WSDOT Highway Alerts API
  *
- * Returns highway alerts filtered by a specific map area or region.
+ * Returns highway alerts filtered by a specific WSDOT region ID. This endpoint
+ * provides alerts for a particular geographic region within Washington State.
  *
- * @param params - Object containing MapArea parameter
- * @param params.MapArea - The map area or region to filter alerts by
+ * @param params - Object containing RegionId parameter
+ * @param params.RegionId - The WSDOT region ID to filter alerts by
  * @returns Promise containing filtered highway alert data
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const alerts = await getHighwayAlertsByMapArea({ MapArea: "Seattle" });
+ * const alerts = await getHighwayAlertsByRegionId({ RegionId: 1 });
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
  */
-export const getHighwayAlertsByMapArea = async (
-  params: GetHighwayAlertsByMapAreaParams
+export const getHighwayAlertsByRegionId = async (
+  params: GetHighwayAlertsByRegionIdParams
 ): Promise<HighwayAlert[]> => {
   return zodFetch(
     ENDPOINT,
     {
-      input: getHighwayAlertsByMapAreaParamsSchema,
+      input: getHighwayAlertsByRegionIdParamsSchema,
       output: highwayAlertArraySchema,
     },
     params
@@ -52,21 +53,22 @@ export const getHighwayAlertsByMapArea = async (
 // INPUT SCHEMA & TYPES
 // ============================================================================
 
-export const getHighwayAlertsByMapAreaParamsSchema = z
+export const getHighwayAlertsByRegionIdParamsSchema = z
   .object({
-    MapArea: z
-      .string()
-      .min(1, "Map area cannot be empty")
+    RegionId: z
+      .number()
+      .int()
+      .positive()
       .describe(
-        "The map area or region to filter highway alerts by. Examples include 'Seattle', 'Tacoma', 'Spokane', 'Eastern Washington', or 'Western Washington'. This parameter filters alerts to show only those relevant to the specified geographic area."
+        "The WSDOT region ID to filter highway alerts by. This ID represents a specific geographic region within Washington State where alerts should be retrieved. Examples include region IDs for Northwest, Northeast, Southwest, Southeast, Central, Olympic Peninsula, or Puget Sound areas."
       ),
   })
   .describe(
-    "Parameters for retrieving highway alerts filtered by a specific map area or region"
+    "Parameters for retrieving highway alerts filtered by a specific WSDOT region ID"
   );
 
-export type GetHighwayAlertsByMapAreaParams = z.infer<
-  typeof getHighwayAlertsByMapAreaParamsSchema
+export type GetHighwayAlertsByRegionIdParams = z.infer<
+  typeof getHighwayAlertsByRegionIdParamsSchema
 >;
 
 // ============================================================================
@@ -81,22 +83,23 @@ export { type HighwayAlert, highwayAlertArraySchema } from "./getHighwayAlerts";
 // ============================================================================
 
 /**
- * Hook for getting highway alerts by map area from WSDOT Highway Alerts API
+ * Hook for getting highway alerts by region ID from WSDOT Highway Alerts API
  *
- * Returns highway alerts filtered by a specific map area or region.
+ * Returns highway alerts filtered by a specific WSDOT region ID. This endpoint
+ * provides alerts for a particular geographic region within Washington State.
  *
- * @param params - Object containing MapArea parameter
- * @param params.MapArea - The map area or region to filter alerts by
+ * @param params - Object containing RegionId parameter
+ * @param params.RegionId - The WSDOT region ID to filter alerts by
  * @param options - Optional React Query options to override defaults
- * @returns React Query result with highway alert data for the specified area
+ * @returns React Query result with highway alert data for the specified region
  */
-export const useHighwayAlertsByMapArea = (
-  params: GetHighwayAlertsByMapAreaParams,
+export const useHighwayAlertsByRegionId = (
+  params: GetHighwayAlertsByRegionIdParams,
   options?: TanStackOptions<HighwayAlert[]>
 ): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea", params],
-    queryFn: () => getHighwayAlertsByMapArea(params),
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByRegionId", params],
+    queryFn: () => getHighwayAlertsByRegionId(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

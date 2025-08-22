@@ -59,7 +59,6 @@ export const terminalBulletinItemSchema = z
   .object({
     BulletinTitle: z
       .string()
-      .min(1)
       .describe(
         "Title of the bulletin or announcement. Provides a brief, descriptive heading for the bulletin content."
       ),
@@ -95,33 +94,28 @@ export const terminalBulletinSchema = z
     TerminalID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the terminal. This ID is used to identify specific terminals across the WSF system."
       ),
     TerminalSubjectID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Subject identifier for the terminal. Used for grouping related terminal information and maintaining data relationships."
       ),
     RegionID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Identifier for the geographic region where the terminal is located. Used for organizing terminals by area."
       ),
     TerminalName: z
       .string()
-      .min(1)
       .describe(
         "Full name of the terminal. Provides the complete, human-readable name for the ferry terminal."
       ),
     TerminalAbbrev: z
       .string()
-      .min(1)
       .describe(
         "Abbreviated name for the terminal. Used for display in space-constrained interfaces and quick identification."
       ),

@@ -3,17 +3,18 @@
  *
  * This module provides access to Washington State Department of Transportation
  * traffic flow data including real-time flow readings and station information.
+ *
  */
 
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getTrafficFlowById";
-export * from "./getTrafficFlows";
+export { getTrafficFlowById, useTrafficFlowById } from "./getTrafficFlowById";
+export { getTrafficFlows, useTrafficFlows } from "./getTrafficFlows";
 
 // ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
+// SCHEMAS & TYPES
 // ============================================================================
 
 export type { GetTrafficFlowByIdParams } from "./getTrafficFlowById";
@@ -22,8 +23,45 @@ export type {
   GetTrafficFlowsParams,
   TrafficFlow,
 } from "./getTrafficFlows";
-// Re-export shared schemas from one source to avoid ambiguity
 export {
   flowStationLocationSchema,
+  flowStationReadingSchema,
+  trafficFlowArraySchema,
   trafficFlowSchema,
 } from "./getTrafficFlows";
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+export const WSDOT_TRAFFIC_FLOW_ENDPOINTS = {
+  GET_ALL_FLOWS:
+    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
+  GET_FLOW_BY_ID:
+    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson",
+} as const;
+
+// ============================================================================
+// USAGE EXAMPLES
+// ============================================================================
+
+/**
+ * Basic usage examples for the WSDOT Traffic Flow API
+ *
+ * @example
+ * ```typescript
+ * // Get all traffic flows
+ * const flows = await getTrafficFlows({});
+ *
+ * // Get specific traffic flow by ID
+ * const flow = await getTrafficFlowById({
+ *   flowDataID: 2482
+ * });
+ *
+ * // React Query usage
+ * const { data: flows } = useTrafficFlows({});
+ * const { data: flow } = useTrafficFlowById({
+ *   flowDataID: 2482
+ * });
+ * ```
+ */

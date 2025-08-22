@@ -54,7 +54,6 @@ export const getTerminalBasicsByTerminalIdParamsSchema = z
     terminalId: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the terminal. This ID is used to identify specific terminals across the WSF system."
       ),

@@ -16,31 +16,39 @@ import {
 // CONSTANTS
 // ============================================================================
 
-const ENDPOINT = "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson";
+const ENDPOINT =
+  "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson";
 
 // ============================================================================
 // API FUNCTION
 // ============================================================================
 
 /**
- * Retrieves all current toll rates from WSDOT API
+ * Retrieves historical toll rates by date range from WSDOT API
  *
- * Returns current toll rates for all WSDOT toll facilities, including
- * pricing information and facility details.
+ * Returns historical toll rate data for a specified date range,
+ * enabling analysis of toll rate trends over time.
  *
- * @returns Promise containing all toll rate data
+ * @param params - Date range parameters for historical data retrieval
+ * @returns Promise containing historical toll rate data
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const tollRates = await getTollRates();
- * console.log(tollRates[0].CurrentToll); // 125
+ * const historicalRates = await getTripRatesByDate({
+ *   fromDate: "2024-01-01",
+ *   toDate: "2024-01-31"
+ * });
+ * console.log(historicalRates[0].CurrentToll); // Historical toll amount
  * ```
  */
-export const getTollRates = async (): Promise<TollRate[]> => {
+export const getTripRatesByDate = async (
+  params: GetTripRatesByDateParams
+): Promise<TollRate[]> => {
   return zodFetch(ENDPOINT, {
-    input: getTollRatesParamsSchema,
+    input: getTripRatesByDateParamsSchema,
     output: tollRateArraySchema,
+    params,
   });
 };
 
@@ -48,16 +56,33 @@ export const getTollRates = async (): Promise<TollRate[]> => {
 // INPUT SCHEMA & TYPES
 // ============================================================================
 
-export const getTollRatesParamsSchema = z
-  .object({})
-  .describe("No parameters required.");
+export const getTripRatesByDateParamsSchema = z
+  .object({
+    fromDate: z
+      .string()
+      .describe(
+        "Start date for historical data retrieval in YYYY-MM-DD format. This field specifies the beginning of the date range for historical toll rate analysis."
+      ),
 
-export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
+    toDate: z
+      .string()
+      .describe(
+        "End date for historical data retrieval in YYYY-MM-DD format. This field specifies the end of the date range for historical toll rate analysis."
+      ),
+  })
+  .describe(
+    "Date range parameters for retrieving historical toll rate data. Both dates must be in YYYY-MM-DD format and represent a valid date range for historical analysis."
+  );
+
+export type GetTripRatesByDateParams = z.infer<
+  typeof getTripRatesByDateParamsSchema
+>;
 
 // ============================================================================
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
+// Reuse the existing toll rate schemas for consistency
 export const tollRateSchema = z
   .object({
     CurrentMessage: zNullableString().describe(
@@ -67,7 +92,7 @@ export const tollRateSchema = z
     CurrentToll: z
       .number()
       .describe(
-        "Current toll amount in cents for the facility. This field shows the active pricing for the toll route. Examples include 125 (for $1.25), 250 (for $2.50), or 0 (for free travel)."
+        "Historical toll amount in cents for the facility during the specified date range. This field shows the pricing that was active for the toll route during the historical period. Examples include 125 (for $1.25), 250 (for $2.50), or 0 (for free travel)."
       ),
 
     EndLatitude: zLatitude().describe(
@@ -117,30 +142,30 @@ export const tollRateSchema = z
       ),
 
     TimeUpdated: zWsdotDate().describe(
-      "Timestamp indicating when this toll rate information was last updated in the WSDOT system. This field shows the currency of the pricing data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone."
+      "Timestamp indicating when this historical toll rate information was recorded in the WSDOT system. This field shows when the historical pricing data was captured and helps users understand the temporal context of the data. All times are in Pacific Time Zone."
     ),
 
     TravelDirection: z
       .string()
       .describe(
-        "Direction of travel for which the toll rate applies. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'. This field indicates which direction of travel is subject to the toll."
+        "Direction of travel for which the historical toll rate applies. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'. This field indicates which direction of travel the historical toll rate applied to."
       ),
 
     TripName: z
       .string()
       .describe(
-        "Unique identifier for the toll trip or route. Examples include '405tp01351', '520tp00123', or '167tp00456'. This field serves as a reference for the specific toll route and can be used for tracking and correlation purposes."
+        "Unique identifier for the toll trip or route. Examples include '405tp01351', '520tp00123', or '167tp00456'. This field serves as a reference for the specific toll route and can be used for tracking and correlation purposes across historical data."
       ),
   })
   .catchall(z.unknown())
   .describe(
-    "Complete toll rate information including pricing, location details, and facility information. This schema represents comprehensive toll data from the WSDOT Toll Rates API, providing essential information for toll facility management, pricing transparency, and travel planning. The toll details are critical for real-time pricing updates, route planning, and transportation cost management."
+    "Historical toll rate information including pricing, location details, and facility information for a specific date range. This schema represents historical toll data from the WSDOT Toll Rates API, providing essential information for toll rate trend analysis, historical pricing research, and transportation cost analysis over time."
   );
 
 export const tollRateArraySchema = z
   .array(tollRateSchema)
   .describe(
-    "Array of toll rate data for all active toll facilities across Washington State. This collection provides comprehensive pricing information that enables toll facility management, pricing transparency, and travel planning."
+    "Array of historical toll rate data for toll facilities across Washington State during the specified date range. This collection provides comprehensive historical pricing information that enables toll rate trend analysis, historical research, and transportation cost analysis over time."
   );
 
 export type TollRate = z.infer<typeof tollRateSchema>;
@@ -150,21 +175,23 @@ export type TollRate = z.infer<typeof tollRateSchema>;
 // ============================================================================
 
 /**
- * Hook for retrieving all current toll rates from WSDOT API
+ * Hook for retrieving historical toll rates by date range from WSDOT API
  *
- * Returns current toll rates for all WSDOT toll facilities, including
- * pricing information and facility details.
+ * Returns historical toll rate data for a specified date range,
+ * enabling analysis of toll rate trends over time.
  *
+ * @param params - Date range parameters for historical data retrieval
  * @param options - Optional React Query options to override defaults
- * @returns React Query result with all toll rate data
+ * @returns React Query result with historical toll rate data
  */
-export const useTollRates = (
+export const useTripRatesByDate = (
+  params: GetTripRatesByDateParams,
   options?: TanStackOptions<TollRate[]>
 ): UseQueryResult<TollRate[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "toll-rates", "getTollRates"],
-    queryFn: () => getTollRates(),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
+    queryKey: ["wsdot", "toll-rates", "getTripRatesByDate", params],
+    queryFn: () => getTripRatesByDate(params),
+    ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };

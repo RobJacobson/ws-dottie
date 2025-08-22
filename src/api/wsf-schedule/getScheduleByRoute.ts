@@ -74,36 +74,99 @@ export type GetScheduleByRouteParams = z.infer<
 // OUTPUT SCHEMA & TYPES
 // ============================================================================
 
+export const annotationSchema = z
+  .object({
+    // Add annotation fields as needed based on actual API response
+  })
+  .passthrough()
+  .describe("Schedule annotation information");
+
+export const sailingTimeSchema = z
+  .object({
+    DepartingTime: dateSchema.describe("Departure time for this sailing"),
+    ArrivingTime: dateSchema
+      .nullable()
+      .describe("Arrival time for this sailing (may be null)"),
+    LoadingRule: z
+      .number()
+      .describe("Loading rule identifier for this sailing"),
+    VesselID: z
+      .number()
+      .describe("Unique identifier for the vessel assigned to this sailing"),
+    VesselName: z
+      .string()
+      .describe("Name of the vessel assigned to this sailing"),
+    VesselHandicapAccessible: z
+      .boolean()
+      .describe(
+        "Whether the vessel is accessible for passengers with disabilities"
+      ),
+    VesselPositionNum: z
+      .number()
+      .describe("Position number of the vessel in the sailing sequence"),
+    Routes: z
+      .array(z.number())
+      .describe("Array of route IDs associated with this sailing"),
+    AnnotationIndexes: z
+      .array(z.number())
+      .describe("Indexes to annotation information for this sailing"),
+  })
+  .describe("Individual sailing time information");
+
+export const terminalComboSchema = z
+  .object({
+    DepartingTerminalID: z
+      .number()
+      .describe("Unique identifier for the departing terminal"),
+    DepartingTerminalName: z
+      .string()
+      .describe("Name of the departing terminal"),
+    ArrivingTerminalID: z
+      .number()
+      .describe("Unique identifier for the arriving terminal"),
+    ArrivingTerminalName: z.string().describe("Name of the arriving terminal"),
+    SailingNotes: z
+      .string()
+      .describe("Additional notes about this terminal combination"),
+    Annotations: z
+      .array(annotationSchema)
+      .describe("Array of annotations for this terminal combination"),
+    Times: z
+      .array(sailingTimeSchema)
+      .describe("Array of sailing times for this terminal combination"),
+    AnnotationsIVR: z
+      .array(z.unknown())
+      .describe("IVR-specific annotations for this terminal combination"),
+  })
+  .describe("Terminal combination with associated sailing times");
+
 export const scheduleResponseSchema = z
   .object({
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for the route. Links the schedule to a specific ferry route."
-      ),
-    RouteAbbrev: z
+    ScheduleID: z.number().describe("Unique identifier for the schedule"),
+    ScheduleName: z
       .string()
-      .describe(
-        "Abbreviated name for the route. Short identifier used in displays and references."
-      ),
-    Description: z
-      .string()
-      .describe(
-        "Full description of the route. Provides detailed information about the route's purpose and characteristics."
-      ),
-    Schedules: z
-      .array(z.unknown())
-      .describe(
-        "Array of schedule information for this route. Contains detailed scheduling data."
-      ),
+      .describe("Name of the schedule (e.g., 'Summer 2025')"),
+    ScheduleSeason: z.number().describe("Season identifier for the schedule"),
+    SchedulePDFUrl: z.string().describe("URL to PDF version of the schedule"),
+    ScheduleStart: dateSchema.describe("Start date of the schedule"),
+    ScheduleEnd: dateSchema.describe("End date of the schedule"),
+    AllRoutes: z
+      .array(z.number())
+      .describe("Array of all route IDs covered by this schedule"),
+    TerminalCombos: z
+      .array(terminalComboSchema)
+      .describe("Array of terminal combinations with sailing times"),
   })
   .describe(
-    "Schedule response information including route details and schedule data. This schema provides comprehensive schedule information for a specific route."
+    "Complete schedule response including schedule metadata and terminal combinations with sailing times. This schema provides comprehensive schedule information for a specific route and date."
   );
 
 export const scheduleResponseArraySchema = z.array(scheduleResponseSchema);
 
 export type ScheduleResponse = z.infer<typeof scheduleResponseSchema>;
+export type SailingTime = z.infer<typeof sailingTimeSchema>;
+export type TerminalCombo = z.infer<typeof terminalComboSchema>;
+export type Annotation = z.infer<typeof annotationSchema>;
 
 // ============================================================================
 // QUERY HOOK

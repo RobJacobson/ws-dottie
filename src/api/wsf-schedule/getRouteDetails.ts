@@ -215,10 +215,10 @@ export const routeDetailsSchema = z
       .describe(
         "Americans with Disabilities Act notes for this route. Contains accessibility information, requirements, and accommodations available for passengers with disabilities."
       ),
-    Alerts: z
+    ServiceDisruptions: z
       .array(serviceDisruptionSchema)
       .describe(
-        "Array of service disruption alerts for this route. Contains current disruption status, delays, cancellations, or other operational issues affecting this specific route."
+        "Array of service disruption information for this route. Contains current disruption status, delays, cancellations, or other operational issues affecting this specific route."
       ),
   })
   .describe(

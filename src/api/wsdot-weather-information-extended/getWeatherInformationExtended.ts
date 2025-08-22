@@ -5,7 +5,12 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import { zLatitude, zLongitude, zNullableNumber } from "@/shared/validation";
+import {
+  zLatitude,
+  zLongitude,
+  zNullableNumber,
+  zWsdotDate,
+} from "@/shared/validation";
 
 // ============================================================================
 // CONSTANTS
@@ -30,7 +35,7 @@ const ENDPOINT = "/traffic/api/api/Scanweb";
  * @example
  * ```typescript
  * const weatherReadings = await getWeatherInformationExtended({});
- * console.log(weatherReadings[0].AirTemperature); // 14.7
+ * console.log(weatherReadings[0].AirTemperature); // 15.5
  * ```
  */
 export const getWeatherInformationExtended = async (
@@ -73,11 +78,11 @@ export const surfaceMeasurementSchema = z
       ),
 
     SurfaceTemperature: zNullableNumber().describe(
-      "Current surface temperature reading from the sensor in degrees Fahrenheit. This field shows the temperature of the road surface, which is critical for determining road conditions, frost formation, and winter weather alerts. May be null if the sensor is not functioning or the reading is unavailable."
+      "Current surface temperature reading from the sensor in degrees Celsius. This field shows the temperature of the road surface, which is critical for determining road conditions, frost formation, and winter weather alerts. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     RoadFreezingTemperature: zNullableNumber().describe(
-      "Road freezing temperature reading from the sensor in degrees Fahrenheit. This field indicates the temperature at which the road surface will freeze, which is essential for winter weather warnings and road safety alerts. May be null if the sensor is not functioning or the reading is unavailable."
+      "Road freezing temperature reading from the sensor in degrees Celsius. This field indicates the temperature at which the road surface will freeze, which is essential for winter weather warnings and road safety alerts. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     RoadSurfaceCondition: zNullableNumber().describe(
@@ -98,24 +103,13 @@ export const subSurfaceMeasurementSchema = z
       ),
 
     SubSurfaceTemperature: zNullableNumber().describe(
-      "Current subsurface temperature reading from the sensor in degrees Fahrenheit. This field shows the temperature below the road surface, which is important for understanding ground freezing conditions and predicting road surface changes. May be null if the sensor is not functioning or the reading is unavailable."
+      "Current subsurface temperature reading from the sensor in degrees Celsius. This field shows the temperature below the road surface, which is important for understanding ground freezing conditions and predicting road surface changes. May be null if the sensor is not functioning or the reading is unavailable."
     ),
   })
   .catchall(z.unknown())
   .describe(
     "Subsurface measurement data including temperature readings below the road surface. This schema represents important ground condition data that helps predict road surface changes and freezing conditions."
   );
-
-// ReadingTime from this API is ISO string or null; normalize to Date | null
-const zIsoDateNullable = () =>
-  z
-    .string()
-    .transform((val) => new Date(val))
-    .refine((d) => !Number.isNaN(d.getTime()), {
-      message: "Invalid ISO date",
-    })
-    .nullable()
-    .or(z.date().nullable());
 
 export const weatherReadingSchema = z
   .object({
@@ -128,7 +122,7 @@ export const weatherReadingSchema = z
     StationName: z
       .string()
       .describe(
-        "Human-readable name for the weather station that provides quick identification. Examples include 'Snoqualmie Pass', 'Stevens Pass', 'White Pass', 'Crystal Mountain', or 'Mount Baker'. This field is the primary display name used in applications."
+        "Human-readable name for the weather station that provides quick identification. Examples include 'Alpental', 'Stevens Pass', 'White Pass', 'Crystal Mountain', or 'Mount Baker'. This field is the primary display name used in applications."
       ),
 
     Latitude: zLatitude().describe(
@@ -145,16 +139,16 @@ export const weatherReadingSchema = z
         "Elevation of the weather station above sea level in feet. This field provides important context about the station's location and helps users understand the environmental conditions at different altitudes."
       ),
 
-    ReadingTime: zIsoDateNullable().describe(
-      "Timestamp indicating when this weather reading was taken by the WSDOT system. This field shows the currency of the weather data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone."
+    ReadingTime: zWsdotDate().describe(
+      "Timestamp indicating when this weather reading was taken by the WSDOT system. This field shows the currency of the weather data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone. Format: ISO 8601 string (e.g., '2025-08-22T03:08:33')."
     ),
 
     AirTemperature: zNullableNumber().describe(
-      "Current air temperature reading from the weather station in degrees Fahrenheit. This field shows the actual temperature at the station location, which is critical for road condition monitoring, winter weather alerts, and general weather information. May be null if the sensor is not functioning or the reading is unavailable."
+      "Current air temperature reading from the weather station in degrees Celsius. This field shows the actual temperature at the station location, which is critical for road condition monitoring, winter weather alerts, and general weather information. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     RelativeHumidty: zNullableNumber().describe(
-      "Relative humidity reading from the weather station as a percentage (0-100). This field indicates the amount of water vapor present in the air relative to the maximum amount possible at the current temperature. May be null if the sensor is not functioning or the reading is unavailable."
+      "Relative humidity reading from the weather station as a percentage (0-100). This field indicates the amount of water vapor present in the air relative to the maximum amount possible at the current temperature. Note: API contains typo 'RelativeHumidty' instead of 'RelativeHumidity'. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     AverageWindSpeed: zNullableNumber().describe(
@@ -170,11 +164,11 @@ export const weatherReadingSchema = z
     ),
 
     Visibility: zNullableNumber().describe(
-      "Current visibility reading from the weather station in miles. This field indicates how far ahead drivers can see clearly, which is crucial for road safety during fog, rain, snow, or other low-visibility conditions. May be null if the sensor is not functioning or the reading is unavailable."
+      "Current visibility reading from the weather station in meters. This field indicates how far ahead drivers can see clearly, which is crucial for road safety during fog, rain, snow, or other low-visibility conditions. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationIntensity: zNullableNumber().describe(
-      "Current precipitation intensity reading from the weather station, typically measured in inches per hour. This field shows how hard it is currently raining or snowing, which is important for road safety and weather alerts. May be null if the sensor is not functioning or the reading is unavailable."
+      "Current precipitation intensity reading from the weather station, typically measured in millimeters per hour. This field shows how hard it is currently raining or snowing, which is important for road safety and weather alerts. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationType: zNullableNumber().describe(
@@ -182,35 +176,35 @@ export const weatherReadingSchema = z
     ),
 
     PrecipitationPast1Hour: zNullableNumber().describe(
-      "Total precipitation amount measured at the weather station over the past 1 hour in inches. This field shows recent precipitation activity and helps users understand current weather conditions. May be null if the sensor is not functioning or the reading is unavailable."
+      "Total precipitation amount measured at the weather station over the past 1 hour in millimeters. This field shows recent precipitation activity and helps users understand current weather conditions. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationPast3Hours: zNullableNumber().describe(
-      "Total precipitation amount measured at the weather station over the past 3 hours in inches. This field shows short-term precipitation patterns and helps users understand recent weather activity. May be null if the sensor is not functioning or the reading is unavailable."
+      "Total precipitation amount measured at the weather station over the past 3 hours in millimeters. This field shows short-term precipitation patterns and helps users understand recent weather activity. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationPast6Hours: zNullableNumber().describe(
-      "Total precipitation amount measured at the weather station over the past 6 hours in inches. This field shows medium-term precipitation patterns and helps users understand weather trends. May be null if the sensor is not functioning or the reading is unavailable."
+      "Total precipitation amount measured at the weather station over the past 6 hours in millimeters. This field shows medium-term precipitation patterns and helps users understand weather trends. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationPast12Hours: zNullableNumber().describe(
-      "Total precipitation amount measured at the weather station over the past 12 hours in inches. This field shows longer-term precipitation patterns and helps users understand weather trends over half-day periods. May be null if the sensor is not functioning or the reading is unavailable."
+      "Total precipitation amount measured at the weather station over the past 12 hours in millimeters. This field shows longer-term precipitation patterns and helps users understand weather trends over half-day periods. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationPast24Hours: zNullableNumber().describe(
-      "Total precipitation amount measured at the weather station over the past 24 hours in inches. This field shows daily precipitation totals and helps users understand weather patterns over full-day periods. May be null if the sensor is not functioning or the reading is unavailable."
+      "Total precipitation amount measured at the weather station over the past 24 hours in millimeters. This field shows daily precipitation totals and helps users understand weather patterns over full-day periods. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     PrecipitationAccumulation: zNullableNumber().describe(
-      "Total precipitation accumulation at the weather station, typically measured in inches. This field shows the cumulative precipitation over a longer period and helps users understand overall precipitation patterns. May be null if the sensor is not functioning or the reading is unavailable."
+      "Total precipitation accumulation at the weather station, typically measured in millimeters. This field shows the cumulative precipitation over a longer period and helps users understand overall precipitation patterns. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     BarometricPressure: zNullableNumber().describe(
-      "Atmospheric pressure reading from the weather station in inches of mercury (inHg). This field indicates the current barometric pressure which is important for weather forecasting and aviation. May be null if the sensor is not functioning or the reading is unavailable."
+      "Atmospheric pressure reading from the weather station in hectopascals (hPa). This field indicates the current barometric pressure which is important for weather forecasting and aviation. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     SnowDepth: zNullableNumber().describe(
-      "Current snow depth reading from the weather station in inches. This field shows the total depth of snow on the ground, which is critical for winter weather monitoring, road condition assessment, and avalanche warnings. May be null if the sensor is not functioning or the reading is unavailable."
+      "Current snow depth reading from the weather station in centimeters. This field shows the total depth of snow on the ground, which is critical for winter weather monitoring, road condition assessment, and avalanche warnings. May be null if the sensor is not functioning or the reading is unavailable."
     ),
 
     SurfaceMeasurements: z
@@ -259,7 +253,7 @@ export type WeatherReading = z.infer<typeof weatherReadingSchema>;
  * @example
  * ```typescript
  * const { data: weatherReadings } = useWeatherInformationExtended({});
- * console.log(weatherReadings[0].AirTemperature); // 14.7
+ * console.log(weatherReadings[0].AirTemperature); // 15.5
  * ```
  */
 export const useWeatherInformationExtended = (

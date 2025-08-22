@@ -5,15 +5,8 @@ import { z } from "zod";
 import { tanstackQueryOptions } from "@/shared/caching/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import {
-  zNullableNumber,
-  zNullableString,
-  zPositiveInteger,
-} from "@/shared/validation";
+import { zPositiveInteger } from "@/shared/validation";
 import { createVesselIdDescription } from "@/shared/validation/templates";
-
-// Import vessel class schema from getVesselBasics
-import { vesselClassSchema } from "./getVesselBasics";
 
 // ============================================================================
 // FETCH FUNCTION
@@ -28,13 +21,13 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselstats/{vesselId}";
  * including operational statistics, performance metrics, and other relevant data.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns Promise resolving to a VesselStats object containing statistics for the specified vessel
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
+ * @returns Promise resolving to a VesselStats object containing vessel statistics
  *
  * @example
  * ```typescript
  * const stats = await getVesselStatsById({ vesselId: 1 });
- * console.log(stats.VesselName); // "M/V Cathlamet"
+ * console.log(stats.VesselName); // "Cathlamet"
  * console.log(stats.MaxPassengerCount); // 2000
  * ```
  */
@@ -91,7 +84,7 @@ export type VesselStats = z.infer<typeof vesselStatsSchema>;
  * including operational statistics, performance metrics, and other relevant data.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @param options - Optional React Query options
  * @returns React Query result containing a VesselStats object with statistics for the specified vessel
  */

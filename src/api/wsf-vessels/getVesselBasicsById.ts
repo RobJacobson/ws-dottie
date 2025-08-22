@@ -45,13 +45,13 @@ const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
  * including vessel name, abbreviation, class information, and operational status.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns Promise resolving to a VesselBasic object containing basic information for the specified vessel
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
+ * @returns Promise resolving to a VesselBasic object containing basic vessel information
  *
  * @example
  * ```typescript
  * const vessel = await getVesselBasicsById({ vesselId: 1 });
- * console.log(vessel.VesselName); // "M/V Cathlamet"
+ * console.log(vessel.VesselName); // "Cathlamet"
  * ```
  */
 export const getVesselBasicsById = async (

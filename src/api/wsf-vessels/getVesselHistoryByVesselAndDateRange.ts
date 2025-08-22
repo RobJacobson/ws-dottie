@@ -1,24 +1,23 @@
-import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { useQuery } from "@tanstack/react-query";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
+
 import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zNullableString, zWsdotNullableDate } from "@/shared/validation";
 import {
-  zNullableString,
-  zWsdotNullableDate,
-} from "@/shared/validation";
-import {
-  createVesselNameParam,
   createDateRangeParams,
   createDateRangeRefinement,
+  createVesselNameParam,
 } from "@/shared/validation/templates";
 
 // ============================================================================
 // FETCH FUNCTION
 // ============================================================================
 
-const ENDPOINT = "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}";
+const ENDPOINT =
+  "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}";
 
 /**
  * API function for fetching vessel history data for a specific vessel and date range from WSF Vessels API
@@ -27,7 +26,7 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStar
  * including past routes, schedules, and operational history for that vessel.
  *
  * @param params - Object containing vesselName, dateStart, dateEnd
- * @param params.vesselName - The name of the vessel (e.g., "M/V Cathlamet")
+ * @param params.vesselName - The name of the vessel (e.g., "Cathlamet")
  * @param params.dateStart - The start date for the history range
  * @param params.dateEnd - The end date for the history range
  * @returns Promise resolving to an array of VesselHistory objects containing historical data for the specified vessel and date range
@@ -35,7 +34,7 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStar
  * @example
  * ```typescript
  * const history = await getVesselHistoryByVesselAndDateRange({
- *   vesselName: "M/V Cathlamet",
+ *   vesselName: "Cathlamet",
  *   dateStart: new Date("2024-01-01"),
  *   dateEnd: new Date("2024-01-02")
  * });
@@ -45,10 +44,14 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStar
 export const getVesselHistoryByVesselAndDateRange = async (
   params: GetVesselHistoryByVesselAndDateRangeParams
 ): Promise<VesselHistory[]> => {
-  return zodFetch(ENDPOINT, {
-    input: getVesselHistoryByVesselAndDateRangeParamsSchema,
-    output: vesselHistoryArraySchema,
-  }, params);
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getVesselHistoryByVesselAndDateRangeParamsSchema,
+      output: vesselHistoryArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -68,7 +71,9 @@ export const getVesselHistoryByVesselAndDateRangeParamsSchema = z
     "Parameters for fetching historical operational data for a specific vessel within a date range. Useful for analyzing vessel routes, schedules, and operational patterns over time."
   );
 
-export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<typeof getVesselHistoryByVesselAndDateRangeParamsSchema>;
+export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<
+  typeof getVesselHistoryByVesselAndDateRangeParamsSchema
+>;
 
 // ============================================================================
 // OUTPUT SCHEMA & TYPES
@@ -77,7 +82,7 @@ export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<typeof getVesse
 export const vesselHistorySchema = z
   .object({
     VesselId: z.number().describe("Unique vessel identifier in the WSF system"),
-    Vessel: z.string().describe("Vessel name without 'M/V' prefix"),
+    Vessel: z.string().describe("Vessel name as returned by the API"),
     Departing: zNullableString().describe(
       "Name of departing terminal, if available"
     ),
@@ -119,7 +124,7 @@ export type VesselHistory = z.infer<typeof vesselHistorySchema>;
  * including past routes, schedules, and operational history for that vessel.
  *
  * @param params - Object containing vesselName, dateStart, dateEnd
- * @param params.vesselName - The name of the vessel (e.g., "M/V Cathlamet")
+ * @param params.vesselName - The name of the vessel (e.g., "Cathlamet")
  * @param params.dateStart - The start date for the history range
  * @param params.dateEnd - The end date for the history range
  * @param options - Optional React Query options
@@ -139,13 +144,13 @@ export const useVesselHistoryByVesselAndDateRange = (
       params.dateStart.toISOString(),
       params.dateEnd.toISOString(),
     ],
-    queryFn: () => getVesselHistoryByVesselAndDateRange({
-      vesselName: params.vesselName,
-      dateStart: params.dateStart,
-      dateEnd: params.dateEnd,
-    }),
+    queryFn: () =>
+      getVesselHistoryByVesselAndDateRange({
+        vesselName: params.vesselName,
+        dateStart: params.dateStart,
+        dateEnd: params.dateEnd,
+      }),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });
 };
-

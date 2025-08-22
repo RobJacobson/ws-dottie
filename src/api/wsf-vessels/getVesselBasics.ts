@@ -120,7 +120,7 @@ const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
  * @example
  * ```typescript
  * const vessels = await getVesselBasics();
- * console.log(vessels[0].VesselName); // "M/V Cathlamet"
+ * console.log(vessels[0].VesselName); // "Cathlamet"
  * ```
  */
 export const getVesselBasics = async (): Promise<VesselBasic[]> => {

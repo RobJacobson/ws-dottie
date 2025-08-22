@@ -29,7 +29,7 @@ const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
  * @example
  * ```typescript
  * const locations = await getVesselLocations();
- * console.log(locations[0].VesselName); // "M/V Cathlamet"
+ * console.log(locations[0].VesselName); // "Cathlamet"
  * ```
  */
 export const getVesselLocations = async (): Promise<VesselLocation[]> => {
@@ -51,7 +51,7 @@ export const vesselLocationSchema = z
       .int()
       .positive()
       .describe(
-        "Unique vessel identifier assigned by Washington State Ferries. Each vessel in the WSF fleet has a permanent ID number used consistently across all API endpoints. For example, vessel ID 1 always corresponds to M/V Cathlamet. This ID can be used to correlate vessel data across different API calls like schedules, accommodations, and statistics."
+        "Unique vessel identifier assigned by Washington State Ferries. Each vessel in the WSF fleet has a permanent ID number used consistently across all API endpoints. For example, vessel ID 1 always corresponds to Cathlamet. This ID can be used to correlate vessel data across different API calls like schedules, accommodations, and statistics."
       ),
     VesselName: z
       .string()
@@ -246,7 +246,7 @@ export type VesselLocation = z.infer<typeof vesselLocationSchema>;
  * @example
  * ```typescript
  * const { data: locations } = useVesselLocations();
- * console.log(locations?.[0]?.VesselName); // "M/V Cathlamet"
+ * console.log(locations?.[0]?.VesselName); // "Cathlamet"
  * ```
  */
 export const useVesselLocations = (

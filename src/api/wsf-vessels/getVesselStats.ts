@@ -28,7 +28,7 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselstats";
  * @example
  * ```typescript
  * const stats = await getVesselStats();
- * console.log(stats[0].VesselName); // "M/V Cathlamet"
+ * console.log(stats[0].VesselName); // "Cathlamet"
  * console.log(stats[0].MaxPassengerCount); // 2000
  * ```
  */
@@ -63,7 +63,7 @@ export const vesselStatsSchema = z
     VesselName: z
       .string()
       .describe(
-        "Full official vessel name as used by Washington State Ferries, including the 'M/V' prefix. Examples include 'M/V Cathlamet', 'M/V Spokane', 'M/V Walla Walla'. This is the complete name displayed on schedules and used by passengers and crew."
+        "Full official vessel name as used by Washington State Ferries. Examples include 'Cathlamet', 'Spokane', 'Walla Walla'. This is the complete name displayed on schedules and used by passengers and crew."
       ),
     VesselAbbrev: z
       .string()

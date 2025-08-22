@@ -17,15 +17,14 @@ const ENDPOINT = "/ferries/api/vessels/rest/vesselverbose/{vesselId}";
  * including detailed specifications, operational data, and extended information.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
- * @returns Promise resolving to a VesselVerbose object containing comprehensive information for the specified vessel
- * @throws {Error} When the API request fails or validation fails
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
+ * @returns Promise resolving to a VesselVerbose object containing comprehensive vessel information
  *
  * @example
  * ```typescript
  * const vessel = await getVesselVerboseById({ vesselId: 1 });
- * console.log(vessel.VesselName); // "M/V Cathlamet"
- * console.log(vessel.MaxPassengerCount); // 1000
+ * console.log(vessel.VesselName); // "Cathlamet"
+ * console.log(vessel.MaxPassengerCount); // 2000
  * ```
  */
 export const getVesselVerboseById = async (
@@ -76,7 +75,7 @@ export type GetVesselVerboseByIdParams = z.infer<
  * including detailed specifications, operational data, and extended information.
  *
  * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for M/V Cathlamet)
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @param options - Optional React Query options
  * @returns React Query result containing a VesselVerbose object with comprehensive information for the specified vessel
  */

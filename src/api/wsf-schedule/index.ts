@@ -61,9 +61,12 @@ export type {
   routesArraySchema,
 } from "./getRoutes";
 export type {
+  Annotation,
+  SailingTime,
   ScheduleResponse,
   scheduleResponseArraySchema,
   scheduleResponseSchema,
+  TerminalCombo,
 } from "./getScheduleByRoute";
 export type {
   ScheduledRoute,

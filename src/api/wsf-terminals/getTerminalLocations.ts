@@ -63,33 +63,28 @@ export const terminalLocationSchema = z
     TerminalID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the terminal. This ID is used to identify specific terminals across the WSF system."
       ),
     TerminalSubjectID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Subject identifier for the terminal. Used for grouping related terminal information and maintaining data relationships."
       ),
     RegionID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Identifier for the geographic region where the terminal is located. Used for organizing terminals by area."
       ),
     TerminalName: z
       .string()
-      .min(1)
       .describe(
         "Full name of the terminal. Provides the complete, human-readable name for the ferry terminal."
       ),
     TerminalAbbrev: z
       .string()
-      .min(1)
       .describe(
         "Abbreviated name for the terminal. Used for display in space-constrained interfaces and quick identification."
       ),
@@ -101,7 +96,6 @@ export const terminalLocationSchema = z
       ),
     AddressLineOne: z
       .string()
-      .min(1)
       .describe(
         "Primary address line for the terminal. Contains the street address and building information."
       ),
@@ -113,25 +107,21 @@ export const terminalLocationSchema = z
       ),
     City: z
       .string()
-      .min(1)
       .describe(
         "City where the terminal is located. Provides the municipality or city name for the terminal address."
       ),
     State: z
       .string()
-      .min(1)
       .describe(
         "State where the terminal is located. Provides the state or province name for the terminal address."
       ),
     ZipCode: z
       .string()
-      .min(1)
       .describe(
         "ZIP or postal code for the terminal address. Used for mail delivery and geographic identification."
       ),
     Country: z
       .string()
-      .min(1)
       .describe(
         "Country where the terminal is located. Provides the country name for the terminal address."
       ),

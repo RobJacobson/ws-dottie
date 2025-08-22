@@ -108,11 +108,11 @@ export const routeSchema = z
       .describe(
         "Geographic region identifier for the route. Groups routes by geographic area and helps organize ferry operations by service region within the WSF system."
       ),
-    Alerts: z
+    ServiceDisruptions: z
       .array(serviceDisruptionSchema)
       .optional()
       .describe(
-        "Optional array of service disruption alerts for this route. Contains current disruption status, delays, cancellations, or other operational issues affecting this specific route."
+        "Optional array of service disruption information for this route. Contains current disruption status, delays, cancellations, or other operational issues affecting this specific route."
       ),
   })
   .describe(

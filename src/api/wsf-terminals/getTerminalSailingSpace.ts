@@ -64,26 +64,22 @@ export const terminalArrivalSpaceSchema = z
     TerminalID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the terminal. This ID is used to identify specific terminals across the WSF system."
       ),
     TerminalName: z
       .string()
-      .min(1)
       .describe(
         "Full name of the terminal. Provides the complete, human-readable name for the ferry terminal."
       ),
     VesselID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the vessel. Used to identify specific ferries in the WSF fleet."
       ),
     VesselName: z
       .string()
-      .min(1)
       .describe(
         "Name of the vessel. Provides the human-readable name for the ferry."
       ),
@@ -125,12 +121,11 @@ export const terminalArrivalSpaceSchema = z
     MaxSpaceCount: z
       .number()
       .int()
-      .positive()
       .describe(
         "Maximum number of vehicle spaces on the vessel. Indicates the total capacity for vehicles on this sailing."
       ),
     ArrivalTerminalIDs: z
-      .array(z.number().int().positive())
+      .array(z.number().int())
       .describe(
         "Array of terminal IDs where this vessel will arrive. Used to track the vessel's route and destinations."
       ),
@@ -152,20 +147,17 @@ export const terminalDepartingSpaceSchema = z
     VesselID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the vessel. Used to identify specific ferries in the WSF fleet."
       ),
     VesselName: z
       .string()
-      .min(1)
       .describe(
         "Name of the vessel. Provides the human-readable name for the ferry."
       ),
     MaxSpaceCount: z
       .number()
       .int()
-      .positive()
       .describe(
         "Maximum number of vehicle spaces on the vessel. Indicates the total capacity for vehicles on this sailing."
       ),
@@ -184,33 +176,28 @@ export const terminalSailingSpaceSchema = z
     TerminalID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Unique identifier for the terminal. This ID is used to identify specific terminals across the WSF system."
       ),
     TerminalSubjectID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Subject identifier for the terminal. Used for grouping related terminal information and maintaining data relationships."
       ),
     RegionID: z
       .number()
       .int()
-      .positive()
       .describe(
         "Identifier for the geographic region where the terminal is located. Used for organizing terminals by area."
       ),
     TerminalName: z
       .string()
-      .min(1)
       .describe(
         "Full name of the terminal. Provides the complete, human-readable name for the ferry terminal."
       ),
     TerminalAbbrev: z
       .string()
-      .min(1)
       .describe(
         "Abbreviated name for the terminal. Used for display in space-constrained interfaces and quick identification."
       ),
