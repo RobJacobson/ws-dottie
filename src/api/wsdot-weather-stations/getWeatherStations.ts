@@ -66,24 +66,32 @@ export type GetWeatherStationsParams = z.infer<
 
 export const weatherStationDataSchema = z
   .object({
-    Latitude: zLatitude().describe(
-      "Latitude coordinate of the weather station location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
-    ),
+    Latitude: z
+      .number()
+      .optional()
+      .describe(
+        "Latitude coordinate of the weather station location in decimal degrees. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
+      ),
 
-    Longitude: zLongitude().describe(
-      "Longitude coordinate of the weather station location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
-    ),
+    Longitude: z
+      .number()
+      .optional()
+      .describe(
+        "Longitude coordinate of the weather station location in decimal degrees. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
+      ),
 
     StationCode: z
       .number()
       .int()
-      .positive()
+      .optional()
       .describe(
         "Unique numeric identifier assigned to this weather station by the WSDOT system. This code serves as a permanent, unique reference for the station across all WSDOT systems and can be used for tracking, reporting, and data correlation purposes."
       ),
 
     StationName: z
       .string()
+      .nullable()
+      .optional()
       .describe(
         "Human-readable name for the weather station that provides quick identification. Examples include 'Snoqualmie Pass', 'Stevens Pass', 'White Pass', 'Crystal Mountain', 'Mount Baker', or 'Alpental'. This field is the primary display name used in applications."
       ),
