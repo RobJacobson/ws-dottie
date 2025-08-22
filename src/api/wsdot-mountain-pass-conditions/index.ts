@@ -2,23 +2,26 @@
 // Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
 // API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
 
-// API functions
-export {
-  getMountainPassConditionById,
-  getMountainPassConditions,
-} from "./api";
-// Input parameter types
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getMountainPassConditionById";
+export * from "./getMountainPassConditions";
+
+// ============================================================================
+// SHARED UTILITIES
+// ============================================================================
+
+// Note: No cache.ts file exists for this API
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type { GetMountainPassConditionByIdParams } from "./getMountainPassConditionById";
 export type {
-  GetMountainPassConditionByIdParams,
   GetMountainPassConditionsParams,
-} from "./inputs";
-// Export types
-export type {
   MountainPassCondition,
   TravelRestriction,
-} from "./outputs";
-// React Query hooks
-export {
-  useMountainPassConditionById,
-  useMountainPassConditions,
-} from "./queries";
+} from "./getMountainPassConditions";

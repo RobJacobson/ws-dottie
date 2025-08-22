@@ -1,5 +1,10 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { tanstackQueryOptions } from "@/shared/caching/config";
+import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import {
   zLatitude,
   zLongitude,
@@ -7,16 +12,62 @@ import {
   zWsdotDate,
 } from "@/shared/validation";
 
-/**
- * WSDOT Mountain Pass Conditions API Response Schemas
- *
- * This file contains all response/output schemas for the Washington State Department
- * of Transportation Mountain Pass Conditions API. These schemas validate and transform the
- * data returned by the API endpoints, ensuring type safety and consistent data structures.
- */
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const ENDPOINT =
+  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson";
 
 // ============================================================================
-// TRAVEL RESTRICTION SCHEMA
+// FETCH FUNCTION
+// ============================================================================
+
+/**
+ * Retrieves all mountain pass conditions from WSDOT API
+ *
+ * Returns current mountain pass conditions across Washington State, including
+ * road conditions, restrictions, and travel advisories.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @returns Promise containing all mountain pass condition data
+ * @throws {Error} When the API request fails or validation fails
+ *
+ * @example
+ * ```typescript
+ * const conditions = await getMountainPassConditions({});
+ * console.log(conditions[0].MountainPassName); // "Snoqualmie Pass"
+ * ```
+ */
+export const getMountainPassConditions = async (
+  params: GetMountainPassConditionsParams = {}
+): Promise<MountainPassCondition[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getMountainPassConditionsParamsSchema,
+      output: mountainPassConditionArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// INPUT SCHEMA & TYPES
+// ============================================================================
+
+export const getMountainPassConditionsParamsSchema = z
+  .object({})
+  .describe(
+    "No parameters required for getting all mountain pass conditions. The API returns current mountain pass conditions across Washington State, including road conditions, restrictions, and travel advisories."
+  );
+
+export type GetMountainPassConditionsParams = z.infer<
+  typeof getMountainPassConditionsParamsSchema
+>;
+
+// ============================================================================
+// OUTPUT SCHEMA & TYPES
 // ============================================================================
 
 export const travelRestrictionSchema = z
@@ -37,10 +88,6 @@ export const travelRestrictionSchema = z
   .describe(
     "Travel restriction information for a specific direction on a mountain pass. Contains details about what vehicles or travel conditions are allowed or restricted on the pass."
   );
-
-// ============================================================================
-// MOUNTAIN PASS CONDITION SCHEMA
-// ============================================================================
 
 export const mountainPassConditionSchema = z
   .object({
@@ -111,19 +158,48 @@ export const mountainPassConditionSchema = z
     "Complete mountain pass condition information including location, weather, road conditions, and travel restrictions. This schema represents comprehensive condition data from the WSDOT Mountain Pass Conditions API, providing essential information for safe mountain travel planning, winter driving preparation, and transportation safety. The condition details are critical for real-time travel monitoring, route planning, and emergency response coordination in mountainous areas."
   );
 
-// ============================================================================
-// ARRAY SCHEMAS
-// ============================================================================
-
 export const mountainPassConditionArraySchema = z
   .array(mountainPassConditionSchema)
   .describe(
     "Array of mountain pass condition data for all active passes across Washington State. This collection provides comprehensive condition information that enables safe mountain travel planning, winter driving preparation, and transportation safety management."
   );
 
-// ============================================================================
-// TYPE EXPORTS
-// ============================================================================
-
 export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 export type MountainPassCondition = z.infer<typeof mountainPassConditionSchema>;
+
+// ============================================================================
+// QUERY
+// ============================================================================
+
+/**
+ * Hook for getting all mountain pass conditions from WSDOT Mountain Pass Conditions API
+ *
+ * Returns current mountain pass conditions across Washington State, including
+ * road conditions, restrictions, and travel advisories.
+ *
+ * @param params - No parameters required (empty object for consistency)
+ * @param options - Optional React Query options to override defaults
+ * @returns React Query result with mountain pass condition data
+ *
+ * @example
+ * ```typescript
+ * const { data: conditions } = useMountainPassConditions({});
+ * console.log(conditions?.[0]?.MountainPassName); // "Snoqualmie Pass"
+ * ```
+ */
+export const useMountainPassConditions = (
+  params: GetMountainPassConditionsParams = {},
+  options?: TanStackOptions<MountainPassCondition[]>
+): UseQueryResult<MountainPassCondition[], Error> => {
+  return useQuery({
+    queryKey: [
+      "wsdot",
+      "mountain-pass-conditions",
+      "getMountainPassConditions",
+      params,
+    ],
+    queryFn: () => getMountainPassConditions(params),
+    ...tanstackQueryOptions.DAILY_UPDATES,
+    ...options,
+  });
+};
