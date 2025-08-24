@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
@@ -10,15 +10,16 @@ import type { HighwayAlert } from "./getHighwayAlertById";
 import { highwayAlertArraySchema } from "./getHighwayAlerts";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// searchHighwayAlerts
 // ============================================================================
 
-const ENDPOINT =
+const SEARCH_ENDPOINT =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}";
 
-// ============================================================================
-// API FUNCTION
-// ============================================================================
+const SIMPLE_ENDPOINT =
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson";
 
 /**
  * Search highway alerts from WSDOT Highway Alerts API
@@ -36,8 +37,8 @@ const ENDPOINT =
  * const alerts = await searchHighwayAlerts({
  *   StateRoute: "I-5",
  *   Region: "Seattle",
- *   SearchTimeStart: "2024-01-01",
- *   SearchTimeEnd: "2024-01-31"
+ *   SearchTimeStart: new Date("2024-01-01"),
+ *   SearchTimeEnd: new Date("2024-01-31")
  * });
  * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
  * ```
@@ -45,8 +46,21 @@ const ENDPOINT =
 export const searchHighwayAlerts = async (
   params: SearchHighwayAlertsParams
 ): Promise<HighwayAlert[]> => {
+  // If no parameters are provided, use the simple endpoint
+  if (Object.keys(params).length === 0) {
+    return zodFetch(
+      SIMPLE_ENDPOINT,
+      {
+        input: searchHighwayAlertsParamsSchema,
+        output: highwayAlertArraySchema,
+      },
+      {}
+    );
+  }
+
+  // Otherwise, use the search endpoint with parameters
   return zodFetch(
-    ENDPOINT,
+    SEARCH_ENDPOINT,
     {
       input: searchHighwayAlertsParamsSchema,
       output: highwayAlertArraySchema,
@@ -56,7 +70,10 @@ export const searchHighwayAlerts = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// searchHighwayAlertsParamsSchema
+// SearchHighwayAlertsParams
 // ============================================================================
 
 export const searchHighwayAlertsParamsSchema = z
@@ -76,17 +93,17 @@ export const searchHighwayAlertsParamsSchema = z
       ),
 
     SearchTimeStart: z
-      .string()
+      .date()
       .optional()
       .describe(
-        "Optional start time for the search period in ISO date format (YYYY-MM-DD). When provided, only alerts that started on or after this date are returned. Used to limit results to recent or specific time periods."
+        "Optional start date for the search period. When provided, only alerts that started on or after this date are returned. Used to limit results to recent or specific time periods."
       ),
 
     SearchTimeEnd: z
-      .string()
+      .date()
       .optional()
       .describe(
-        "Optional end time for the search period in ISO date format (YYYY-MM-DD). When provided, only alerts that started on or before this date are returned. Used in combination with SearchTimeStart to define a specific time range."
+        "Optional end date for the search period. When provided, only alerts that started on or before this date are returned. Used in combination with SearchTimeStart to define a specific time range."
       ),
 
     StartingMilepost: z
@@ -112,14 +129,15 @@ export type SearchHighwayAlertsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// highwayAlertArraySchema (imported from ./getHighwayAlerts)
 // ============================================================================
 
-// Import array schema from the array endpoint
-export { highwayAlertArraySchema } from "./getHighwayAlerts";
-
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useSearchHighwayAlerts
 // ============================================================================
 
 /**
@@ -138,7 +156,12 @@ export const useSearchHighwayAlerts = (
   options?: TanStackOptions<HighwayAlert[]>
 ): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-alerts", "searchHighwayAlerts", params],
+    queryKey: [
+      "wsdot",
+      "highway-alerts",
+      "searchHighwayAlerts",
+      JSON.stringify(params),
+    ],
     queryFn: () => searchHighwayAlerts(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

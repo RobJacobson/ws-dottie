@@ -2,31 +2,27 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-import {
-  zLatitude,
-  zLongitude,
-  zNullableString,
-  zWsdotDate,
-} from "@/shared/validation";
+import { zNullableString, zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getHighwayAlertById
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}";
 
-// ============================================================================
-// API FUNCTION
-// ============================================================================
-
 /**
  * Get a specific highway alert by ID from WSDOT Highway Alerts API
  *
  * Returns detailed information about a specific highway alert identified by its ID.
+ *
+ * IMPORTANT: This schema has been updated to match actual API behavior, which differs from the published specification.
+ * The API returns null values and 0 coordinates in some cases, which we accommodate for test stability.
  *
  * @param params - Object containing AlertID parameter
  * @param params.AlertID - The unique identifier of the highway alert
@@ -53,7 +49,10 @@ export const getHighwayAlertById = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getHighwayAlertByIdParamsSchema
+// GetHighwayAlertByIdParams
 // ============================================================================
 
 export const getHighwayAlertByIdParamsSchema = z
@@ -75,7 +74,10 @@ export type GetHighwayAlertByIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// highwayAlertSchema
+// HighwayAlert
 // ============================================================================
 
 export const highwayAlertRoadwayLocationSchema = z
@@ -84,26 +86,40 @@ export const highwayAlertRoadwayLocationSchema = z
       "Human-readable description of the roadway location where the highway alert applies. May be null if no descriptive information is available. Examples include 'Northbound lanes', 'Bridge approach', 'Tunnel entrance', or 'Interchange with SR 520'."
     ),
 
-    Direction: zNullableString().describe(
-      "Direction of travel indicator for the roadway location. May be null if direction information is not applicable or not available. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'."
-    ),
+    Direction: z
+      .string()
+      .nullable()
+      .describe(
+        "Direction of travel indicator for the roadway location. May be null if direction information is not applicable or not available. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'."
+      ),
 
-    Latitude: zLatitude().describe(
-      "Latitude coordinate of the roadway location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the alert location. Essential for GPS navigation and geographic information systems."
-    ),
+    // NOTE: API returns 0 for coordinates when not available, despite published spec suggesting WGS84 coordinates
+    // This is a known API behavior that we must accommodate for test stability
+    Latitude: z
+      .number()
+      .describe(
+        "Latitude coordinate of the roadway location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the alert location. Essential for GPS navigation and geographic information systems. May be 0 if coordinates are not available."
+      ),
 
-    Longitude: zLongitude().describe(
-      "Longitude coordinate of the roadway location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the alert location. Essential for GPS navigation and geographic information systems."
-    ),
+    // NOTE: API returns 0 for coordinates when not available, despite published spec suggesting WGS84 coordinates
+    // This is a known API behavior that we must accommodate for test stability
+    Longitude: z
+      .number()
+      .describe(
+        "Longitude coordinate of the roadway location in decimal degrees using WGS84 coordinate system. Used for mapping applications and geographic positioning of the alert location. Essential for GPS navigation and geographic information systems. May be 0 if coordinates are not available."
+      ),
 
+    // NOTE: API returns 0 for MilePost in some cases, despite published spec suggesting this field is always populated
+    // This is a known API behavior that we must accommodate for test stability
     MilePost: z
       .number()
       .describe(
-        "Milepost marker indicating the distance along the highway or road where the alert is located. This is a standard highway reference point used by transportation departments for location identification and maintenance purposes."
+        "Milepost marker indicating the distance along the highway or road where the alert is located. This is a standard highway reference point used by transportation departments for location identification and maintenance purposes. May be 0 if milepost information is not available."
       ),
 
     RoadName: z
       .string()
+      .nullable()
       .describe(
         "Name of the highway or road where the alert is located. Examples include 'I-5', 'SR 520', 'US-2', or 'I-90'. This field helps users identify which roadway the alert applies to."
       ),
@@ -149,10 +165,13 @@ export const highwayAlertSchema = z
         "Current status of the highway alert or traffic event. Examples include 'Active', 'Cleared', 'Scheduled', 'In Progress', 'Resolved', or 'Cancelled'. This field indicates whether the alert is currently affecting traffic or has been resolved."
       ),
 
+    // NOTE: API returns null for ExtendedDescription in some cases, despite published spec suggesting this field is always populated
+    // This is a known API behavior that we must accommodate for test stability
     ExtendedDescription: z
       .string()
+      .nullable()
       .describe(
-        "Detailed description of the highway alert providing comprehensive information about the traffic condition, incident details, or road closure. This field contains the full narrative description that explains what is happening, why it's happening, and what drivers should expect."
+        "Detailed description of the highway alert providing comprehensive information about the traffic condition, incident details, or road closure. This field contains the full narrative description that explains what is happening, why it's happening, and what drivers should expect. May be null if no detailed description is available."
       ),
 
     HeadlineDescription: z
@@ -196,7 +215,9 @@ export type HighwayAlertRoadwayLocation = z.infer<
 export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useHighwayAlertById
 // ============================================================================
 
 /**
@@ -214,7 +235,12 @@ export const useHighwayAlertById = (
   options?: TanStackOptions<HighwayAlert>
 ): UseQueryResult<HighwayAlert, Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertById", params],
+    queryKey: [
+      "wsdot",
+      "highway-alerts",
+      "getHighwayAlertById",
+      JSON.stringify(params),
+    ],
     queryFn: () => getHighwayAlertById(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

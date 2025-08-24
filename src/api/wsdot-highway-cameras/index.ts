@@ -1,7 +1,8 @@
 /**
- * WSDOT Highway Cameras API
+ * WSDOT Highway Cameras API - Complete Export Module
  *
- * Exports all types, functions, and React hooks for the WSDOT Highway Cameras API.
+ * This module provides access to Washington State Department of Transportation
+ * highway camera data including real-time traffic camera feeds and locations.
  *
  * Based on cURL validation of:
  * - https://wsdot.wa.gov/traffic/api/HighwayCameras/HighwayCamerasREST.svc/Help
@@ -12,29 +13,36 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-// Export from getHighwayCamera (includes shared schemas)
+export * from "./getHighwayCamera";
+export * from "./getHighwayCameras";
+export * from "./searchHighwayCameras";
+
+// ============================================================================
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+// Core camera schemas (from single-item endpoint)
 export {
-  type Camera,
-  type CameraLocation,
   cameraLocationSchema,
   cameraSchema,
-  type GetHighwayCameraParams,
-  getHighwayCamera,
   getHighwayCameraParamsSchema,
-  useHighwayCamera,
 } from "./getHighwayCamera";
-// Export from getHighwayCameras (only unique exports)
+// Array schemas
 export {
   cameraArraySchema,
-  type GetHighwayCamerasParams,
-  getHighwayCameras,
   getHighwayCamerasParamsSchema,
-  useHighwayCameras,
 } from "./getHighwayCameras";
-// Export from searchHighwayCameras (only unique exports)
-export {
-  type SearchHighwayCamerasParams,
-  searchHighwayCameras,
-  searchHighwayCamerasParamsSchema,
-  useSearchHighwayCameras,
-} from "./searchHighwayCameras";
+// Search schemas
+export { searchHighwayCamerasParamsSchema } from "./searchHighwayCameras";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type {
+  Camera,
+  CameraLocation,
+  GetHighwayCameraParams,
+} from "./getHighwayCamera";
+export type { GetHighwayCamerasParams } from "./getHighwayCameras";
+export type { SearchHighwayCamerasParams } from "./searchHighwayCameras";

@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -13,19 +13,16 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getMountainPassConditionById
 // ============================================================================
 
 const ENDPOINT =
-  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJson?PassConditionID={passConditionId}";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
+  "/Traffic/api/MountainPasses/MountainPassesREST.svc/GetMountainPassConditionAsJon?PassName={passName}";
 
 /**
  * Retrieves a specific mountain pass condition by ID
- * Note: This endpoint may not work as expected based on testing
  *
  * Returns detailed information about a specific mountain pass condition
  * identified by its ID.
@@ -55,7 +52,10 @@ export const getMountainPassConditionById = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getMountainPassConditionByIdParamsSchema
+// GetMountainPassConditionByIdParams
 // ============================================================================
 
 export const getMountainPassConditionByIdParamsSchema = z
@@ -77,19 +77,24 @@ export type GetMountainPassConditionByIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// mountainPassConditionSchema
+// MountainPassCondition
 // ============================================================================
 
 export const travelRestrictionSchema = z
   .object({
     TravelDirection: z
       .string()
+      .nullable()
       .describe(
         "Direction of travel for which the restriction applies. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', or 'All Lanes'. This field indicates which direction of travel is affected by the restriction."
       ),
 
     RestrictionText: z
       .string()
+      .nullable()
       .describe(
         "Detailed description of the travel restriction or requirement. This field contains the specific text explaining what restrictions are in place, such as 'Chains required', '4WD/AWD only', 'No trailers', or 'Passenger vehicles only'."
       ),
@@ -129,20 +134,26 @@ export const mountainPassConditionSchema = z
 
     MountainPassName: z
       .string()
+      .nullable()
       .describe(
         "Official name of the mountain pass. Examples include 'Snoqualmie Pass', 'Stevens Pass', 'White Pass', 'Chinook Pass', or 'Cayuse Pass'. This field provides the recognizable name used by travelers and transportation officials."
       ),
 
-    RestrictionOne: travelRestrictionSchema.describe(
-      "Primary travel restriction information for the mountain pass. This object contains the main restriction details including direction and specific requirements that travelers need to be aware of."
-    ),
+    RestrictionOne: travelRestrictionSchema
+      .nullable()
+      .describe(
+        "Primary travel restriction information for the mountain pass. This object contains the main restriction details including direction and specific requirements that travelers need to be aware of."
+      ),
 
-    RestrictionTwo: travelRestrictionSchema.describe(
-      "Secondary travel restriction information for the mountain pass. This object contains additional restriction details that may apply to different directions or vehicle types on the pass."
-    ),
+    RestrictionTwo: travelRestrictionSchema
+      .nullable()
+      .describe(
+        "Secondary travel restriction information for the mountain pass. This object contains additional restriction details that may apply to different directions or vehicle types on the pass."
+      ),
 
     RoadCondition: z
       .string()
+      .nullable()
       .describe(
         "Current condition of the roadway surface on the mountain pass. Examples include 'Bare and wet', 'Compact snow and ice', 'Bare and dry', 'Loose snow', or 'Ice'. This field is critical for safe travel planning and vehicle preparation."
       ),
@@ -159,6 +170,7 @@ export const mountainPassConditionSchema = z
 
     WeatherCondition: z
       .string()
+      .nullable()
       .describe(
         "Current weather conditions at the mountain pass. Examples include 'Snowing', 'Raining', 'Clear', 'Foggy', 'Windy', or 'Mixed precipitation'. This field provides essential information for understanding the current weather situation affecting travel."
       ),
@@ -172,7 +184,9 @@ export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 export type MountainPassCondition = z.infer<typeof mountainPassConditionSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useMountainPassConditionById
 // ============================================================================
 
 /**
@@ -202,7 +216,7 @@ export const useMountainPassConditionById = (
       "wsdot",
       "mountain-pass-conditions",
       "getMountainPassConditionById",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getMountainPassConditionById(params),
     ...tanstackQueryOptions.DAILY_UPDATES,

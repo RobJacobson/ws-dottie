@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -13,14 +13,12 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTollRates
 // ============================================================================
 
 const ENDPOINT = "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Retrieves all current toll rates from WSDOT API
@@ -45,7 +43,10 @@ export const getTollRates = async (): Promise<TollRate[]> => {
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTollRatesParamsSchema
+// GetTollRatesParams
 // ============================================================================
 
 export const getTollRatesParamsSchema = z
@@ -55,7 +56,10 @@ export const getTollRatesParamsSchema = z
 export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// tollRateSchema
+// TollRate
 // ============================================================================
 
 export const tollRateSchema = z
@@ -76,6 +80,7 @@ export const tollRateSchema = z
 
     EndLocationName: z
       .string()
+      .nullable()
       .describe(
         "Name of the location where the toll facility ends. Examples include 'Bellevue', 'Seattle', 'Tacoma', or 'Everett'. This field helps users identify the destination point of the toll route."
       ),
@@ -96,6 +101,7 @@ export const tollRateSchema = z
 
     StartLocationName: z
       .string()
+      .nullable()
       .describe(
         "Name of the location where the toll facility begins. Examples include 'Bellevue', 'Seattle', 'Tacoma', or 'Everett'. This field helps users identify the starting point of the toll route."
       ),
@@ -112,6 +118,7 @@ export const tollRateSchema = z
 
     StateRoute: z
       .string()
+      .nullable()
       .describe(
         "State route identifier for the toll facility. Examples include '405', '520', '167', or '509'. This field helps users identify which highway the toll facility operates on."
       ),
@@ -122,12 +129,14 @@ export const tollRateSchema = z
 
     TravelDirection: z
       .string()
+      .nullable()
       .describe(
         "Direction of travel for which the toll rate applies. Examples include 'S' (Southbound), 'N' (Northbound), 'E' (Eastbound), 'W' (Westbound), or 'Both Directions'. This field indicates which direction of travel is subject to the toll."
       ),
 
     TripName: z
       .string()
+      .nullable()
       .describe(
         "Unique identifier for the toll trip or route. Examples include '405tp01351', '520tp00123', or '167tp00456'. This field serves as a reference for the specific toll route and can be used for tracking and correlation purposes."
       ),
@@ -146,7 +155,9 @@ export const tollRateArraySchema = z
 export type TollRate = z.infer<typeof tollRateSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTollRates
 // ============================================================================
 
 /**

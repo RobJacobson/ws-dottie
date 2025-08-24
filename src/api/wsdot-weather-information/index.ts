@@ -1,6 +1,12 @@
-// WSDOT Weather Information API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
-// API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
+/**
+ * WSDOT Weather Information API - Complete Export Module
+ *
+ * This module provides access to Washington State Department of Transportation
+ * weather information including station data, conditions, and forecasts.
+ *
+ * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
+ * API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
+ */
 
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
@@ -12,15 +18,26 @@ export * from "./getWeatherInformationByStationId";
 export * from "./getWeatherInformationForStations";
 
 // ============================================================================
-// SHARED UTILITIES
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Note: No cache.ts file exists for this API
-// All caching is handled through React Query hooks
+// Search schemas
+export { getSearchWeatherInformationParamsSchema } from "./getSearchWeatherInformation";
+// Array schemas
+export {
+  getWeatherInformationParamsSchema,
+  weatherInfoArraySchema,
+} from "./getWeatherInformation";
+// Core schemas (from single-item endpoint for consistency)
+export { getWeatherInformationByStationIdParamsSchema } from "./getWeatherInformationByStationId";
+// Station list schemas
+export { getWeatherInformationForStationsParamsSchema } from "./getWeatherInformationForStations";
 
 // ============================================================================
-// TYPE EXPORTS FOR CONVENIENCE
+// TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Types are exported directly from their source files to avoid re-export chains
-// Consumers should import types directly from the endpoint files where they are defined
+export type { GetSearchWeatherInformationParams } from "./getSearchWeatherInformation";
+export type { GetWeatherInformationParams } from "./getWeatherInformation";
+export type { GetWeatherInformationByStationIdParams } from "./getWeatherInformationByStationId";
+export type { GetWeatherInformationForStationsParams } from "./getWeatherInformationForStations";

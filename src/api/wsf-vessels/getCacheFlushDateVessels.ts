@@ -2,9 +2,16 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import type { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
+
+// ============================================================================
+// API Function
+//
+// getCacheFlushDateVessels
+// ============================================================================
 
 const ENDPOINT = "/ferries/api/vessels/rest/cacheflushdate";
 
@@ -32,13 +39,19 @@ export const getCacheFlushDateVessels =
   };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getCacheFlushDateVesselsParamsSchema
+// GetCacheFlushDateVesselsParams
 // ============================================================================
 
 // No input parameters for this endpoint
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// vesselsCacheFlushDateSchema
+// VesselsCacheFlushDate
 // ============================================================================
 
 export const vesselsCacheFlushDateSchema = zWsdotDate().describe(
@@ -48,7 +61,9 @@ export const vesselsCacheFlushDateSchema = zWsdotDate().describe(
 export type VesselsCacheFlushDate = z.infer<typeof vesselsCacheFlushDateSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useCacheFlushDateVessels
 // ============================================================================
 
 /**
@@ -62,11 +77,11 @@ export type VesselsCacheFlushDate = z.infer<typeof vesselsCacheFlushDateSchema>;
  * @returns React Query result containing the cache flush date for vessels data
  */
 export const useCacheFlushDateVessels = (
-  options?: Parameters<typeof useQuery<VesselsCacheFlushDate, Error>>[1]
+  options?: TanStackOptions<VesselsCacheFlushDate>
 ): UseQueryResult<VesselsCacheFlushDate, Error> => {
   return useQuery({
-    queryKey: ["wsf", "vessels", "cacheFlushDate"],
-    queryFn: () => getCacheFlushDateVessels(),
+    queryKey: ["wsf", "vessels", "cacheflushdate"],
+    queryFn: getCacheFlushDateVessels,
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
   });

@@ -2,22 +2,20 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
 import { commercialVehicleRestrictionSchema } from "./getCommercialVehicleRestrictions";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getCommercialVehicleRestrictionsWithId
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
 
 /**
  * Get commercial vehicle restrictions with unique IDs from WSDOT Commercial Vehicle Restrictions API
@@ -50,7 +48,10 @@ export const getCommercialVehicleRestrictionsWithId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getCommercialVehicleRestrictionsWithIdParamsSchema
+// GetCommercialVehicleRestrictionsWithIdParams
 // ============================================================================
 
 export const getCommercialVehicleRestrictionsWithIdParamsSchema = z
@@ -64,7 +65,10 @@ export type GetCommercialVehicleRestrictionsWithIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// commercialVehicleRestrictionWithIdSchema
+// CommercialVehicleRestrictionWithId
 // ============================================================================
 
 export const commercialVehicleRestrictionWithIdSchema =
@@ -92,7 +96,9 @@ export type CommercialVehicleRestrictionWithId = z.infer<
 >;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useCommercialVehicleRestrictionsWithId
 // ============================================================================
 
 /**
@@ -121,7 +127,7 @@ export const useCommercialVehicleRestrictionsWithId = (
       "wsdot",
       "commercial-vehicle-restrictions",
       "getCommercialVehicleRestrictionsWithId",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getCommercialVehicleRestrictionsWithId(params),
     ...tanstackQueryOptions.DAILY_UPDATES,

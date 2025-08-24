@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getActiveSeasons
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/activeseasons";
@@ -35,7 +38,17 @@ export const getActiveSeasons = async (): Promise<ActiveSeasonResponse[]> => {
 };
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES (based on actual API response)
+// Input Schema & Types
+//
+// No input parameters required for this endpoint
+// ============================================================================
+
+// ============================================================================
+// Output Schema & Types (based on actual API response)
+//
+// activeSeasonResponseSchema
+// activeSeasonsArraySchema
+// ActiveSeasonResponse
 // ============================================================================
 
 // API response schema for active seasons
@@ -60,10 +73,10 @@ export const activeSeasonResponseSchema = z.object({
     .describe(
       "URL to PDF version of the complete schedule for this season. Provides downloadable schedule information."
     ),
-  ScheduleStart: dateSchema.describe(
+  ScheduleStart: zWsdotDate().describe(
     "Start date of the schedule season. Indicates when this schedule period becomes effective."
   ),
-  ScheduleEnd: dateSchema.describe(
+  ScheduleEnd: zWsdotDate().describe(
     "End date of the schedule season. Indicates when this schedule period expires."
   ),
 });
@@ -73,7 +86,9 @@ export const activeSeasonsArraySchema = z.array(activeSeasonResponseSchema);
 export type ActiveSeasonResponse = z.infer<typeof activeSeasonResponseSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useActiveSeasons
 // ============================================================================
 
 /**
@@ -94,9 +109,10 @@ export type ActiveSeasonResponse = z.infer<typeof activeSeasonResponseSchema>;
 export const useActiveSeasons = (
   options?: TanStackOptions<ActiveSeasonResponse[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "activeSeasons"],
     queryFn: () => getActiveSeasons(),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
   });

@@ -1,14 +1,62 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import { annotationSchema } from "./getRouteDetails";
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// API Function
+//
+// getScheduleByRoute
+// ============================================================================
+
+const ENDPOINT =
+  "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}";
+
+/**
+ * API function for fetching schedule by route from WSF Schedule API
+ *
+ * Retrieves schedule information for a specific route and trip date.
+ * A valid trip date may be determined using validDateRange.
+ *
+ * @param params - Object containing tripDate and routeId
+ * @param params.tripDate - The trip date as a Date object
+ * @param params.routeId - The unique identifier for the route
+ * @returns Promise resolving to an array of ScheduleResponse objects containing schedule information
+ * @throws {WsfApiError} When the API request fails
+ *
+ * @example
+ * ```typescript
+ * const schedule = await getScheduleByRoute({
+ *   tripDate: new Date('2024-01-15'),
+ *   routeId: 1
+ * });
+ * console.log(schedule[0].RouteAbbrev); // "SEA-BI"
+ * ```
+ */
+export const getScheduleByRoute = async (
+  params: GetScheduleByRouteParams
+): Promise<ScheduleResponse[]> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getScheduleByRouteParamsSchema,
+      output: scheduleResponseArraySchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// Input Schema & Types
+//
+// getScheduleByRouteParamsSchema
+// GetScheduleByRouteParams
 // ============================================================================
 
 export const getScheduleByRouteParamsSchema = z
@@ -31,14 +79,21 @@ export type GetScheduleByRouteParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// sailingTimeSchema
+// scheduleRouteTerminalComboSchema
+// scheduleResponseSchema
+// scheduleResponseArraySchema
+// ScheduleResponse
+// SailingTime
+// ScheduleRouteTerminalCombo
 // ============================================================================
 
 export const sailingTimeSchema = z
   .object({
-    DepartingTime: z.date().describe("Departure time for this sailing"),
-    ArrivingTime: z
-      .date()
+    DepartingTime: zWsdotDate().describe("Departure time for this sailing"),
+    ArrivingTime: zWsdotDate()
       .nullable()
       .describe("Arrival time for this sailing (may be null)"),
     LoadingRule: z
@@ -89,7 +144,7 @@ export const scheduleRouteTerminalComboSchema = z
       .array(sailingTimeSchema)
       .describe("Array of sailing times for this terminal combination"),
     AnnotationsIVR: z
-      .array(z.unknown())
+      .array(z.string())
       .describe("IVR-specific annotations for this terminal combination"),
   })
   .describe("Terminal combination with associated sailing times");
@@ -102,8 +157,8 @@ export const scheduleResponseSchema = z
       .describe("Name of the schedule (e.g., 'Summer 2025')"),
     ScheduleSeason: z.number().describe("Season identifier for the schedule"),
     SchedulePDFUrl: z.string().describe("URL to PDF version of the schedule"),
-    ScheduleStart: z.date().describe("Start date of the schedule"),
-    ScheduleEnd: z.date().describe("End date of the schedule"),
+    ScheduleStart: zWsdotDate().describe("Start date of the schedule"),
+    ScheduleEnd: zWsdotDate().describe("End date of the schedule"),
     AllRoutes: z
       .array(z.number())
       .describe("Array of all route IDs covered by this schedule"),
@@ -124,48 +179,9 @@ export type ScheduleRouteTerminalCombo = z.infer<
 >;
 
 // ============================================================================
-// API FUNCTION
-// ============================================================================
-
-const ENDPOINT =
-  "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}";
-
-/**
- * API function for fetching schedule by route from WSF Schedule API
- *
- * Retrieves schedule information for a specific route and trip date.
- * A valid trip date may be determined using validDateRange.
- *
- * @param params - Object containing tripDate and routeId
- * @param params.tripDate - The trip date as a Date object
- * @param params.routeId - The unique identifier for the route
- * @returns Promise resolving to an array of ScheduleResponse objects containing schedule information
- * @throws {WsfApiError} When the API request fails
- *
- * @example
- * ```typescript
- * const schedule = await getScheduleByRoute({
- *   tripDate: new Date('2024-01-15'),
- *   routeId: 1
- * });
- * console.log(schedule[0].RouteAbbrev); // "SEA-BI"
- * ```
- */
-export const getScheduleByRoute = async (
-  params: GetScheduleByRouteParams
-): Promise<ScheduleResponse[]> => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getScheduleByRouteParamsSchema,
-      output: scheduleResponseArraySchema,
-    },
-    params
-  );
-};
-
-// ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useScheduleByRoute
 // ============================================================================
 
 /**
@@ -193,15 +209,11 @@ export const useScheduleByRoute = (
   params: GetScheduleByRouteParams,
   options?: TanStackOptions<ScheduleResponse[]>
 ) =>
-  useQuery({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "scheduleByRoute",
-      params.tripDate,
-      params.routeId,
-    ],
+  useQueryWithAutoUpdate({
+    queryKey: ["wsf", "schedule", "scheduleByRoute", JSON.stringify(params)],
     queryFn: () => getScheduleByRoute(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

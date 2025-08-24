@@ -2,21 +2,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTollTripVersion
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Retrieves API version and timestamp information from WSDOT API
@@ -42,7 +40,10 @@ export const getTollTripVersion = async (): Promise<TollTripVersion> => {
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTollTripVersionParamsSchema
+// GetTollTripVersionParams
 // ============================================================================
 
 export const getTollTripVersionParamsSchema = z
@@ -54,7 +55,10 @@ export type GetTollTripVersionParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// tollTripVersionSchema
+// TollTripVersion
 // ============================================================================
 
 export const tollTripVersionSchema = z
@@ -77,7 +81,9 @@ export const tollTripVersionSchema = z
 export type TollTripVersion = z.infer<typeof tollTripVersionSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTollTripVersion
 // ============================================================================
 
 /**

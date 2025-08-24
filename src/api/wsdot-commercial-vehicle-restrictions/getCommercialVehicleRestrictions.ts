@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -14,15 +14,13 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getCommercialVehicleRestrictions
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
 
 /**
  * Get commercial vehicle restrictions from WSDOT Commercial Vehicle Restrictions API
@@ -54,7 +52,10 @@ export const getCommercialVehicleRestrictions = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getCommercialVehicleRestrictionsParamsSchema
+// GetCommercialVehicleRestrictionsParams
 // ============================================================================
 
 export const getCommercialVehicleRestrictionsParamsSchema = z
@@ -68,7 +69,10 @@ export type GetCommercialVehicleRestrictionsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// commercialVehicleRestrictionSchema
+// CommercialVehicleRestriction
 // ============================================================================
 
 export const commercialVehicleRestrictionRoadwayLocationSchema = z
@@ -148,7 +152,7 @@ export const commercialVehicleRestrictionSchema = z
     IsDetourAvailable: z
       .boolean()
       .describe(
-        "Indicates whether an official detour route is available for commercial vehicles to bypass the restriction. True means a detour is provided, False means vehicles must find their own alternative route or wait for the restriction to end."
+        "Indicates whether an official detour route is available for commercial vehicles to bypass the restriction. True means a detour is provided, False means vehicles must find their own alternative route or wait for the restriction to end. Official documentation: Indicates if a detour is available."
       ),
 
     IsExceptionsAllowed: z
@@ -160,7 +164,7 @@ export const commercialVehicleRestrictionSchema = z
     IsPermanentRestriction: z
       .boolean()
       .describe(
-        "Indicates whether the restriction is permanent or temporary. True means the restriction is a permanent limitation that will not expire, False means the restriction is temporary and will end on the DateExpires."
+        "Indicates whether the restriction is permanent or temporary. True means the restriction is a permanent limitation that will not expire, False means the restriction is temporary and will end on the DateExpires. Official documentation: Indicates whether the restriction is permanent."
       ),
 
     IsWarning: z
@@ -210,7 +214,7 @@ export const commercialVehicleRestrictionSchema = z
     RestrictionType: z
       .number()
       .describe(
-        "Numeric code indicating the type of commercial vehicle restriction. This field categorizes the restriction for system processing and reporting purposes. Different restriction types may have different enforcement procedures and penalties."
+        "Numeric code indicating the type of commercial vehicle restriction. This field categorizes the restriction for system processing and reporting purposes. Different restriction types may have different enforcement procedures and penalties. Enumeration values: 0 = BridgeRestriction, 1 = RoadRestriction."
       ),
 
     RestrictionWeightInPounds: zNullableNumber().describe(
@@ -249,7 +253,7 @@ export const commercialVehicleRestrictionSchema = z
     VehicleType: z
       .string()
       .describe(
-        "Type of commercial vehicle that the restriction applies to. This field specifies which vehicle categories are subject to the restriction. Examples include 'All Commercial Vehicles', 'Trucks Only', 'Oversized Loads', or 'Hazmat Vehicles'."
+        "Type of commercial vehicle that the restriction applies to. This field specifies which vehicle categories are subject to the restriction. Examples include 'All Commercial Vehicles', 'Trucks Only', 'Oversized Loads', or 'Hazmat Vehicles'. Note: This field accepts free-form text values and does not have predefined enumeration values."
       ),
   })
   .catchall(z.unknown())
@@ -271,7 +275,9 @@ export type CommercialVehicleRestriction = z.infer<
 >;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useCommercialVehicleRestrictions
 // ============================================================================
 
 /**
@@ -299,7 +305,7 @@ export const useCommercialVehicleRestrictions = (
       "wsdot",
       "commercial-vehicle-restrictions",
       "getCommercialVehicleRestrictions",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getCommercialVehicleRestrictions(params),
     ...tanstackQueryOptions.DAILY_UPDATES,

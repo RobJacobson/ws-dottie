@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
@@ -10,15 +10,14 @@ import { zWsdotDate } from "@/shared/validation";
 import { weatherInfoArraySchema } from "./getWeatherInformation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getSearchWeatherInformation
 // ============================================================================
 
+// SHOULD BE:
 const ENDPOINT =
-  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/SearchWeatherInformationAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
+  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/SearchWeatherInformationAsJson?StationID={stationId}&SearchStartTime={searchStartTime}&SearchEndTime={searchEndTime}";
 
 /**
  * Search weather information for a specific station over a time range from WSDOT Weather Information API
@@ -59,7 +58,10 @@ export const getSearchWeatherInformation = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getSearchWeatherInformationParamsSchema
+// GetSearchWeatherInformationParams
 // ============================================================================
 
 export const getSearchWeatherInformationParamsSchema = z
@@ -87,14 +89,15 @@ export type GetSearchWeatherInformationParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// weatherInfoArraySchema (imported from ./getWeatherInformation)
 // ============================================================================
 
-// Import the schema from the main file (no type re-export to avoid chains)
-export { weatherInfoArraySchema } from "./getWeatherInformation";
-
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useSearchWeatherInformation
 // ============================================================================
 
 /**
@@ -119,7 +122,7 @@ export const useSearchWeatherInformation = (
       "wsdot",
       "weather-information",
       "getSearchWeatherInformation",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getSearchWeatherInformation(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,

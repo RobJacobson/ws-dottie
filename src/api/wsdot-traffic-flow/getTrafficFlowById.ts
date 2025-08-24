@@ -2,21 +2,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTrafficFlowById
 // ============================================================================
 
-const ENDPOINT =
-  "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
+const ENDPOINT_BASE =
+  "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson";
 
 /**
  * Get specific traffic flow by ID from WSDOT Traffic Flow API
@@ -38,18 +36,27 @@ const ENDPOINT =
 export const getTrafficFlowById = async (
   params: GetTrafficFlowByIdParams
 ): Promise<TrafficFlow> => {
+  // Build query string with flowDataID parameter
+  const queryParams = new URLSearchParams();
+  queryParams.append("FlowDataID", String(params.flowDataID));
+
+  const endpoint = `${ENDPOINT_BASE}?${queryParams.toString()}`;
+
   return zodFetch(
-    ENDPOINT,
+    endpoint,
     {
       input: getTrafficFlowByIdParamsSchema,
       output: trafficFlowSchema,
     },
-    params
+    undefined // No URL template interpolation needed since we build the URL ourselves
   );
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTrafficFlowByIdParamsSchema
+// GetTrafficFlowByIdParams
 // ============================================================================
 
 export const getTrafficFlowByIdParamsSchema = z
@@ -69,21 +76,31 @@ export type GetTrafficFlowByIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// trafficFlowSchema
+// TrafficFlow
 // ============================================================================
 
-// WSDOT Traffic Flow Reading schema based on ACTUAL API response
+// WSDOT Traffic Flow Reading schema based on ACTUAL API RESPONSE
 //
-// NOTE: See the comment above concerning the discrepancy between the official WSDOT API
-// documentation and actual API behavior. This schema returns the actual numeric values
-// returned by the API.
+// IMPORTANT: The actual WSDOT API returns FlowReadingValue as numeric values (0, 1, 2, 3, 4),
+// not string enum values as shown in the official documentation. This schema uses the actual
+// numeric values returned by the API.
+//
+// Numeric Value Mapping:
+// - 0: Unknown/NoData
+// - 1: WideOpen (free-flowing traffic)
+// - 2: Moderate traffic
+// - 3: Heavy traffic
+// - 4: StopAndGo (congested traffic)
 export const flowStationReadingSchema = z
   .number()
   .int()
   .min(0)
   .max(4)
   .describe(
-    "Traffic flow reading value indicating the current traffic condition at the monitoring station. Numeric values represent traffic flow levels: 0=Unknown/NoData, 1=WideOpen (free-flowing), 2=Moderate, 3=Heavy, 4=StopAndGo (congested). NOTE: This differs from official WSDOT documentation which shows string enum values."
+    "Traffic flow reading value indicating the current traffic condition at the monitoring station. Numeric values represent traffic flow levels: 0=Unknown/NoData, 1=WideOpen (free-flowing), 2=Moderate, 3=Heavy, 4=StopAndGo (congested)."
   );
 
 export const flowStationLocationSchema = z
@@ -147,7 +164,7 @@ export const trafficFlowSchema = z
     FlowReadingValue: flowStationReadingSchema
       .nullable()
       .describe(
-        "Current traffic flow reading value from the station. This field represents the traffic condition level as numeric values: 0=Unknown/NoData, 1=WideOpen (free-flowing), 2=Moderate, 3=Heavy, 4=StopAndGo (congested). NOTE: This differs from official WSDOT documentation which shows string enum values."
+        "Current traffic flow reading value from the station. This field represents the traffic condition level as numeric values: 0=Unknown/NoData, 1=WideOpen (free-flowing), 2=Moderate, 3=Heavy, 4=StopAndGo (congested)."
       ),
 
     FlowStationLocation: flowStationLocationSchema
@@ -185,7 +202,9 @@ export type FlowStationLocation = z.infer<typeof flowStationLocationSchema>;
 export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTrafficFlowById
 // ============================================================================
 
 /**
@@ -204,7 +223,7 @@ export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
  * const { data: trafficFlow } = useTrafficFlowById({
  *   flowDataID: 2482
  * });
- * console.log(trafficFlow.FlowReadingValue); // "WideOpen"
+ * console.log(trafficFlow.FlowReadingValue); // 1 (WideOpen)
  * ```
  */
 export const useTrafficFlowById = (
@@ -212,7 +231,12 @@ export const useTrafficFlowById = (
   options?: TanStackOptions<TrafficFlow>
 ): UseQueryResult<TrafficFlow, Error> => {
   return useQuery({
-    queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById", params],
+    queryKey: [
+      "wsdot",
+      "traffic-flow",
+      "getTrafficFlowById",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTrafficFlowById(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

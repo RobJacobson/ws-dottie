@@ -2,20 +2,18 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getMapAreas
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetMapAreasAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get map areas from WSDOT Highway Alerts API
@@ -48,7 +46,10 @@ export const getMapAreas = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getMapAreasParamsSchema
+// GetMapAreasParams
 // ============================================================================
 
 export const getMapAreasParamsSchema = z
@@ -60,7 +61,10 @@ export const getMapAreasParamsSchema = z
 export type GetMapAreasParams = z.infer<typeof getMapAreasParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// mapAreaSchema
+// MapArea
 // ============================================================================
 
 export const mapAreaSchema = z
@@ -91,7 +95,9 @@ export const mapAreasArraySchema = z
 export type MapArea = z.infer<typeof mapAreaSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useMapAreas
 // ============================================================================
 
 /**
@@ -109,7 +115,12 @@ export const useMapAreas = (
   options?: TanStackOptions<MapArea[]>
 ): UseQueryResult<MapArea[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-alerts", "getMapAreas", params],
+    queryKey: [
+      "wsdot",
+      "highway-alerts",
+      "getMapAreas",
+      JSON.stringify(params),
+    ],
     queryFn: () => getMapAreas(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

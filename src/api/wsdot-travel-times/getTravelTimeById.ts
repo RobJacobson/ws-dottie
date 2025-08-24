@@ -2,21 +2,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zLatitude, zLongitude, zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTravelTimeById
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={travelTimeId}";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
 
 /**
  * Get specific travel time by ID from WSDOT Travel Times API
@@ -49,7 +47,10 @@ export const getTravelTimeById = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTravelTimeByIdParamsSchema
+// GetTravelTimeByIdParams
 // ============================================================================
 
 export const getTravelTimeByIdParamsSchema = z
@@ -71,19 +72,24 @@ export type GetTravelTimeByIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// travelTimeRouteSchema
+// TravelTimeRoute
 // ============================================================================
 
 export const travelTimeEndpointSchema = z
   .object({
     Description: z
       .string()
+      .nullable()
       .describe(
         "Human-readable description of the travel time endpoint location. Examples include 'Northbound lanes', 'Bridge approach', 'Tunnel entrance', 'Interchange with SR 520', or 'Mountain pass overlook'. This field provides context about where the endpoint is positioned."
       ),
 
     Direction: z
       .string()
+      .nullable()
       .describe(
         "Direction of travel indicator for the travel time endpoint. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', 'All Lanes', or 'Eastbound and Westbound'. This field indicates which direction of travel the endpoint represents."
       ),
@@ -104,6 +110,7 @@ export const travelTimeEndpointSchema = z
 
     RoadName: z
       .string()
+      .nullable()
       .describe(
         "Name of the highway or road where the travel time endpoint is located. Examples include 'I-5', 'SR 520', 'US-2', 'I-90', or 'SR 9'. This field helps users identify which roadway the endpoint represents."
       ),
@@ -129,6 +136,7 @@ export const travelTimeRouteSchema = z
 
     Description: z
       .string()
+      .nullable()
       .describe(
         "Human-readable description of the travel time route. Examples include 'I-5 from Seattle to Tacoma', 'SR 520 from Bellevue to Seattle', or 'I-90 from Seattle to Issaquah'. This field provides context about what the route represents."
       ),
@@ -139,18 +147,23 @@ export const travelTimeRouteSchema = z
         "Distance of the travel time route in miles. This field shows the total length of the monitored route segment, providing context for understanding the travel time data and calculating average speeds."
       ),
 
-    EndPoint: travelTimeEndpointSchema.describe(
-      "Destination endpoint information for the travel time route. This object contains the ending location coordinates and descriptive details for the route."
-    ),
+    EndPoint: travelTimeEndpointSchema
+      .nullable()
+      .describe(
+        "Destination endpoint information for the travel time route. This object contains the ending location coordinates and descriptive details for the route."
+      ),
 
     Name: z
       .string()
+      .nullable()
       .describe(
-        "Human-readable name for the travel time route that provides quick identification. Examples include 'I-5 Seattle to Tacoma', 'SR 520 Bellevue to Seattle', or 'I-90 Seattle to Issaquah'. This field is the primary display name used in applications."
+        "Human-readable name for the travel time route that provides quick identification. Examples include 'I-5 Seattle to Tacoma', 'SR 520 from Bellevue to Seattle', or 'I-90 from Seattle to Issaquah'. This field is the primary display name used in applications."
       ),
-    StartPoint: travelTimeEndpointSchema.describe(
-      "Starting endpoint information for the travel time route. This object contains the beginning location coordinates and descriptive details for the route."
-    ),
+    StartPoint: travelTimeEndpointSchema
+      .nullable()
+      .describe(
+        "Starting endpoint information for the travel time route. This object contains the beginning location coordinates and descriptive details for the route."
+      ),
 
     TimeUpdated: zWsdotDate().describe(
       "Timestamp indicating when this travel time information was last updated in the WSDOT system. This field shows the currency of the travel time data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone."
@@ -173,7 +186,9 @@ export type TravelTimeEndpoint = z.infer<typeof travelTimeEndpointSchema>;
 export type TravelTimeRoute = z.infer<typeof travelTimeRouteSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTravelTimeById
 // ============================================================================
 
 /**
@@ -198,7 +213,12 @@ export const useTravelTimeById = (
   options?: TanStackOptions<TravelTimeRoute>
 ): UseQueryResult<TravelTimeRoute, Error> => {
   return useQuery({
-    queryKey: ["wsdot", "travel-times", "getTravelTimeById", params],
+    queryKey: [
+      "wsdot",
+      "travel-times",
+      "getTravelTimeById",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTravelTimeById(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

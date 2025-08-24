@@ -1,14 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import { serviceDisruptionSchema } from "./getRouteDetails";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getScheduledRoutes
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/schedroutes";
@@ -35,21 +39,28 @@ export const getScheduledRoutes = async (): Promise<ScheduledRoute[]> => {
 };
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// No input parameters required for this endpoint
+// ============================================================================
+
+// ============================================================================
+// Output Schema & Types
+//
+// contingencyAdjustmentSchema
+// scheduledRouteSchema
+// scheduledRoutesArraySchema
+// ScheduledRoute
 // ============================================================================
 
 export const contingencyAdjustmentSchema = z
   .object({
-    DateFrom: z
-      .string()
-      .describe(
-        "Start date for the contingency adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
-      ),
-    DateThru: z
-      .string()
-      .describe(
-        "End date for the contingency adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
-      ),
+    DateFrom: zWsdotDate().describe(
+      "Start date for the contingency adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
+    ),
+    DateThru: zWsdotDate().describe(
+      "End date for the contingency adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
+    ),
     EventID: z
       .number()
       .nullable()
@@ -140,7 +151,9 @@ export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useScheduledRoutes
 // ============================================================================
 
 /**
@@ -161,9 +174,10 @@ export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 export const useScheduledRoutes = (
   options?: TanStackOptions<ScheduledRoute[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "scheduledRoutes"],
     queryFn: () => getScheduledRoutes(),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
   });

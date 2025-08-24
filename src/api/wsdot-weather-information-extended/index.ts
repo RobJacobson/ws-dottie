@@ -1,5 +1,5 @@
 /**
- * WSDOT Weather Information Extended API - File-per-Endpoint Structure
+ * WSDOT Weather Information Extended API - Complete Export Module
  *
  * This module provides access to Washington State Department of Transportation
  * extended weather information including surface and subsurface measurements.
@@ -12,8 +12,20 @@
 export * from "./getWeatherInformationExtended";
 
 // ============================================================================
-// NO TYPE RE-EXPORTS - CONSUMERS SHOULD IMPORT TYPES DIRECTLY FROM SOURCE
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Types are exported directly from getWeatherInformationExtended.ts
-// Import them directly from the source file to avoid re-export chains
+export {
+  getWeatherInformationExtendedParamsSchema,
+  weatherReadingArraySchema,
+  weatherReadingSchema,
+} from "./getWeatherInformationExtended";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type {
+  GetWeatherInformationExtendedParams,
+  WeatherReading,
+} from "./getWeatherInformationExtended";

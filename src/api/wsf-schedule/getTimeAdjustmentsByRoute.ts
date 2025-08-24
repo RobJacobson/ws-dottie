@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTimeAdjustmentsByRoute
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/timeadjbyroute/{routeId}";
@@ -44,7 +47,10 @@ export const getTimeAdjustmentsByRoute = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTimeAdjustmentsByRouteParamsSchema
+// GetTimeAdjustmentsByRouteParams
 // ============================================================================
 
 export const getTimeAdjustmentsByRouteParamsSchema = z
@@ -62,7 +68,11 @@ export type GetTimeAdjustmentsByRouteParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// timeAdjustmentSchema
+// timeAdjustmentsByRouteArraySchema
+// TimeAdjustment
 // ============================================================================
 
 export const timeAdjustmentSchema = z
@@ -82,10 +92,10 @@ export const timeAdjustmentSchema = z
       .describe(
         "Time adjustment in minutes. Positive values indicate delays, negative values indicate early departures."
       ),
-    StartDate: dateSchema.describe(
+    StartDate: zWsdotDate().describe(
       "Start date for the time adjustment period. Indicates when the adjustment becomes effective."
     ),
-    EndDate: dateSchema.describe(
+    EndDate: zWsdotDate().describe(
       "End date for the time adjustment period. Indicates when the adjustment expires."
     ),
     Reason: z
@@ -103,7 +113,9 @@ export const timeAdjustmentsByRouteArraySchema = z.array(timeAdjustmentSchema);
 export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useTimeAdjustmentsByRoute
 // ============================================================================
 
 /**
@@ -127,9 +139,16 @@ export const useTimeAdjustmentsByRoute = (
   params: GetTimeAdjustmentsByRouteParams,
   options?: TanStackOptions<TimeAdjustment[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "timeAdjustmentsByRoute", params.routeId],
+  useQueryWithAutoUpdate({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "timeAdjustmentsByRoute",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTimeAdjustmentsByRoute(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

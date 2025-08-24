@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 // Import the complete schema from getScheduleByRoute
 import {
   type ScheduleResponse,
@@ -12,7 +13,9 @@ import {
 } from "./getScheduleByRoute";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getScheduleTodayByRoute
 // ============================================================================
 
 const ENDPOINT =
@@ -53,7 +56,10 @@ export const getScheduleTodayByRoute = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getScheduleTodayByRouteParamsSchema
+// GetScheduleTodayByRouteParams
 // ============================================================================
 
 export const getScheduleTodayByRouteParamsSchema = z
@@ -78,7 +84,16 @@ export type GetScheduleTodayByRouteParams = z.infer<
 >;
 
 // ============================================================================
-// QUERY HOOK
+// Output Schema & Types
+//
+// ScheduleResponse (imported from ./getScheduleByRoute)
+// scheduleResponseArraySchema (imported from ./getScheduleByRoute)
+// ============================================================================
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useScheduleTodayByRoute
 // ============================================================================
 
 /**
@@ -106,15 +121,16 @@ export const useScheduleTodayByRoute = (
   params: GetScheduleTodayByRouteParams,
   options?: TanStackOptions<ScheduleResponse[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
       "schedule",
       "scheduleTodayByRoute",
-      params.tripDate,
-      params.routeId,
+      JSON.stringify(params),
     ],
     queryFn: () => getScheduleTodayByRoute(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

@@ -1,14 +1,18 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
+
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalBulletinsByTerminalId
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminalbulletins/{terminalId}";
@@ -44,7 +48,10 @@ export const getTerminalBulletinsByTerminalId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalBulletinsByTerminalIdParamsSchema
+// GetTerminalBulletinsByTerminalIdParams
 // ============================================================================
 
 export const getTerminalBulletinsByTerminalIdParamsSchema = z
@@ -65,7 +72,12 @@ export type GetTerminalBulletinsByTerminalIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalBulletinItemSchema
+// terminalBulletinSchema
+// TerminalBulletin
+// TerminalBulletinItem
 // ============================================================================
 
 export const terminalBulletinItemSchema = z
@@ -152,28 +164,29 @@ export type TerminalBulletin = z.infer<typeof terminalBulletinSchema>;
 export type TerminalBulletinItem = z.infer<typeof terminalBulletinItemSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalBulletinsByTerminalId
 // ============================================================================
 
 /**
- * React Query hook for fetching specific terminal bulletins by terminal ID
+ * React Query hook for fetching terminal bulletins by terminal ID
  *
- * Retrieves bulletin information for a specific terminal identified by terminal ID.
- * This includes important announcements, alerts, and notices for passengers.
+ * Retrieves terminal bulletins for a specific terminal from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - Object containing terminalId
- * @param params.terminalId - The unique identifier for the terminal
  * @param options - Optional React Query options
- * @returns Query result containing TerminalBulletin object for the specified terminal
+ * @returns Query result containing TerminalBulletin object
  */
 export const useTerminalBulletinsByTerminalId = (
-  params: { terminalId: number },
+  params: GetTerminalBulletinsByTerminalIdParams,
   options?: TanStackOptions<TerminalBulletin>
 ): UseQueryResult<TerminalBulletin, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "terminals", "bulletins", "byTerminalId", params],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "terminals", "bulletins", params.terminalId],
     queryFn: () => getTerminalBulletinsByTerminalId(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

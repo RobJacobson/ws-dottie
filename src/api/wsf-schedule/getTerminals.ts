@@ -1,15 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 import type { TanStackOptions } from "@/shared/types";
 
-import type { ScheduleTerminal } from "./getScheduleTerminalById";
-import { scheduleTerminalSchema } from "./getScheduleTerminalById";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTerminals
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/terminals/{tripDate}";
@@ -45,7 +47,10 @@ export const getTerminals = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalsParamsSchema
+// GetTerminalsParams
 // ============================================================================
 
 export const getTerminalsParamsSchema = z
@@ -63,13 +68,32 @@ export const getTerminalsParamsSchema = z
 export type GetTerminalsParams = z.infer<typeof getTerminalsParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// scheduleTerminalSchema
+// scheduleTerminalsArraySchema
+// ScheduleTerminal
 // ============================================================================
+
+export const scheduleTerminalSchema = z
+  .object({
+    TerminalID: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the terminal"),
+    Description: z.string().describe("Human-readable name for the terminal"),
+  })
+  .describe("Schedule terminal information including ID and description");
 
 export const scheduleTerminalsArraySchema = z.array(scheduleTerminalSchema);
 
+export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;
+
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminals
 // ============================================================================
 
 /**
@@ -90,12 +114,14 @@ export const scheduleTerminalsArraySchema = z.array(scheduleTerminalSchema);
  * ```
  */
 export const useTerminals = (
-  params: GetTerminalsParams,
+  params: { tripDate: Date },
   options?: TanStackOptions<ScheduleTerminal[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "terminals", params.tripDate],
+  useQueryWithAutoUpdate({
+    queryKey: ["wsf", "schedule", "terminals", JSON.stringify(params)],
     queryFn: () => getTerminals(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

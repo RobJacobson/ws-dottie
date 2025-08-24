@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
 // OUTPUT SCHEMA & TYPES (Base schemas for route details)
@@ -62,10 +63,10 @@ export const annotationSchema = z
 
 export const contingencyAdjustmentSchema = z
   .object({
-    DateFrom: dateSchema.describe(
+    DateFrom: zWsdotDate().describe(
       "Start date for the contingency adjustment period. Indicates when the adjustment becomes effective and begins affecting ferry schedules."
     ),
-    DateThru: dateSchema.describe(
+    DateThru: zWsdotDate().describe(
       "End date for the contingency adjustment period. Indicates when the adjustment expires and normal scheduling resumes."
     ),
     EventID: z
@@ -254,9 +255,11 @@ export const useRouteDetails = (
   params: GetRouteDetailsParams,
   options?: TanStackOptions<RouteDetails[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "routeDetails", params.tripDate],
+  useQueryWithAutoUpdate({
+    queryKey: ["wsf", "schedule", "routeDetails", JSON.stringify(params)],
     queryFn: () => getRouteDetails(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

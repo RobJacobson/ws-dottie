@@ -1,13 +1,17 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
+
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalLocationsByTerminalId
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminallocations/{terminalId}";
@@ -45,7 +49,10 @@ export const getTerminalLocationsByTerminalId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalLocationsByTerminalIdParamsSchema
+// GetTerminalLocationsByTerminalIdParams
 // ============================================================================
 
 export const getTerminalLocationsByTerminalIdParamsSchema = z
@@ -66,7 +73,10 @@ export type GetTerminalLocationsByTerminalIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalLocationSchema
+// TerminalLocation
 // ============================================================================
 
 export const terminalLocationSchema = z
@@ -195,36 +205,29 @@ export const terminalLocationSchema = z
 export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalLocationsByTerminalId
 // ============================================================================
 
 /**
- * React Query hook for fetching terminal location for a specific terminal by terminal ID
+ * React Query hook for fetching terminal locations by terminal ID
  *
- * Retrieves location information for a specific terminal identified by terminal ID,
- * including coordinates, address, and geographic data. This endpoint filters the
- * resultset to a single terminal, providing the physical location details for
- * that specific terminal.
+ * Retrieves terminal locations for a specific terminal from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - Object containing terminalId
- * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
- * @returns Query result containing TerminalLocation object for the specified terminal
- *
- * @example
- * ```typescript
- * const { data: location } = useTerminalLocationsByTerminalId({ terminalId: 7 });
- * console.log(location?.TerminalName); // "Anacortes"
- * ```
+ * @returns Query result containing TerminalLocation object
  */
 export const useTerminalLocationsByTerminalId = (
-  params: { terminalId: number },
+  params: GetTerminalLocationsByTerminalIdParams,
   options?: TanStackOptions<TerminalLocation>
 ): UseQueryResult<TerminalLocation, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "terminals", "locations", "byTerminalId", params],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "terminals", "locations", params.terminalId],
     queryFn: () => getTerminalLocationsByTerminalId(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

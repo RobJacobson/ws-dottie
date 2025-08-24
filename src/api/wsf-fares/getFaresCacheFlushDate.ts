@@ -2,12 +2,14 @@ import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFaresCacheFlushDate
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/fares/rest/cacheflushdate";
@@ -43,7 +45,10 @@ export const getFaresCacheFlushDate = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFaresCacheFlushDateParamsSchema
+// GetFaresCacheFlushDateParams
 // ============================================================================
 
 export const getFaresCacheFlushDateParamsSchema = z
@@ -57,7 +62,9 @@ export type GetFaresCacheFlushDateParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// faresCacheFlushDateSchema
 // ============================================================================
 
 export const faresCacheFlushDateSchema = zWsdotDate().describe(
@@ -65,7 +72,9 @@ export const faresCacheFlushDateSchema = zWsdotDate().describe(
 );
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFaresCacheFlushDate
 // ============================================================================
 
 /**

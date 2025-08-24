@@ -1,13 +1,17 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
+
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalBasicsByTerminalId
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminalbasics/{terminalId}";
@@ -44,7 +48,10 @@ export const getTerminalBasicsByTerminalId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalBasicsByTerminalIdParamsSchema
+// GetTerminalBasicsByTerminalIdParams
 // ============================================================================
 
 export const getTerminalBasicsByTerminalIdParamsSchema = z
@@ -65,7 +72,10 @@ export type GetTerminalBasicsByTerminalIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalBasicsSchema
+// TerminalBasics
 // ============================================================================
 
 export const terminalBasicsSchema = z
@@ -103,35 +113,30 @@ export const terminalBasicsSchema = z
 export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalBasicsByTerminalId
 // ============================================================================
 
 /**
- * React Query hook for fetching specific terminal basics by terminal ID
+ * React Query hook for fetching terminal basics by terminal ID
  *
- * Retrieves the most basic/brief information for a specific terminal identified by terminal ID.
- * This includes location, contact details, and basic status information for the specified terminal.
+ * Retrieves terminal basics for a specific terminal from the WSF Terminals API.
  * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - Object containing terminalId
- * @param params.terminalId - The unique identifier for the terminal (e.g., 7 for Anacortes, 8 for Friday Harbor)
  * @param options - Optional React Query options
- * @returns Query result containing TerminalBasics object for the specified terminal
- *
- * @example
- * ```typescript
- * const { data: terminal } = useTerminalBasicsByTerminalId({ terminalId: 7 });
- * console.log(terminal?.TerminalName); // "Anacortes"
- * ```
+ * @returns Query result containing TerminalBasics object
  */
 export const useTerminalBasicsByTerminalId = (
-  params: { terminalId: number },
+  params: GetTerminalBasicsByTerminalIdParams,
   options?: TanStackOptions<TerminalBasics>
 ): UseQueryResult<TerminalBasics, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "terminals", "basics", "byTerminalId", params],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "terminals", "basics", JSON.stringify(params)],
     queryFn: () => getTerminalBasicsByTerminalId(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

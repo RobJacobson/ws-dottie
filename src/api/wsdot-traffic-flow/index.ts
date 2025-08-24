@@ -1,5 +1,5 @@
 /**
- * WSDOT Traffic Flow API - File-per-Endpoint Structure
+ * WSDOT Traffic Flow API - Complete Export Module
  *
  * This module provides access to Washington State Department of Transportation
  * traffic flow data including real-time flow readings and station information.
@@ -17,37 +17,44 @@
  * - 3: Heavy traffic
  * - 4: StopAndGo (congested traffic)
  *
+ * Following PRD guidance: when official documentation and actual API behavior differ,
+ * the actual API response is authoritative for field types.
  */
 
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export { getTrafficFlowById, useTrafficFlowById } from "./getTrafficFlowById";
-export { getTrafficFlows, useTrafficFlows } from "./getTrafficFlows";
+export * from "./getTrafficFlowById";
+export * from "./getTrafficFlows";
 
 // ============================================================================
-// SCHEMAS & TYPES
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
+// Core schemas (from single-item endpoint for consistency)
+export {
+  flowStationLocationSchema,
+  flowStationReadingSchema,
+  getTrafficFlowByIdParamsSchema,
+  trafficFlowSchema,
+} from "./getTrafficFlowById";
+// Array schemas
+export {
+  getTrafficFlowsParamsSchema,
+  trafficFlowArraySchema,
+} from "./getTrafficFlows";
+
 // ============================================================================
-// SCHEMAS & TYPES
+// TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Export types directly from their source files (no re-export chains)
 export type {
   FlowStationLocation,
   GetTrafficFlowByIdParams,
   TrafficFlow,
 } from "./getTrafficFlowById";
-// Export schemas from their source files
-export {
-  flowStationLocationSchema,
-  flowStationReadingSchema,
-  trafficFlowSchema,
-} from "./getTrafficFlowById";
 export type { GetTrafficFlowsParams } from "./getTrafficFlows";
-export { trafficFlowArraySchema } from "./getTrafficFlows";
 
 // ============================================================================
 // CONSTANTS
@@ -59,28 +66,3 @@ export const WSDOT_TRAFFIC_FLOW_ENDPOINTS = {
   GET_FLOW_BY_ID:
     "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson",
 } as const;
-
-// ============================================================================
-// USAGE EXAMPLES
-// ============================================================================
-
-/**
- * Basic usage examples for the WSDOT Traffic Flow API
- *
- * @example
- * ```typescript
- * // Get all traffic flows
- * const flows = await getTrafficFlows({});
- *
- * // Get specific traffic flow by ID
- * const flow = await getTrafficFlowById({
- *   flowDataID: 2482
- * });
- *
- * // React Query usage
- * const { data: flows } = useTrafficFlows({});
- * const { data: flow } = useTrafficFlowById({
- *   flowDataID: 2482
- * });
- * ```
- */

@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -114,12 +114,15 @@ export const borderCrossingLocationSchema = z
 
 export const borderCrossingDataSchema = z
   .object({
-    BorderCrossingLocation: borderCrossingLocationSchema.describe(
-      "Detailed location information for the border crossing including coordinates, road details, and descriptive text. This object provides comprehensive geographic context for the crossing location."
-    ),
+    BorderCrossingLocation: borderCrossingLocationSchema
+      .nullable()
+      .describe(
+        "Detailed location information for the border crossing including coordinates, road details, and descriptive text. This object provides comprehensive geographic context for the crossing location."
+      ),
 
     CrossingName: z
       .string()
+      .nullable()
       .describe(
         "Official name of the border crossing as designated by border authorities. Examples include 'Peace Arch', 'Pacific Highway', 'Lynden', and 'Sumas'. This is the primary identifier used by travelers and border officials to reference specific crossing points."
       ),
@@ -177,7 +180,7 @@ export const useBorderCrossings = (
   options?: TanStackOptions<BorderCrossingData[]>
 ): UseQueryResult<BorderCrossingData[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "border-crossings", "getBorderCrossings", params],
+    queryKey: ["api", "wsdot", "border-crossings", JSON.stringify(params)],
     queryFn: () => getBorderCrossings(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

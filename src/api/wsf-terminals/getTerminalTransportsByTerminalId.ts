@@ -1,9 +1,17 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
+
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalTransportsByTerminalId
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminaltransports/{terminalId}";
@@ -40,7 +48,10 @@ export const getTerminalTransportsByTerminalId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalTransportsByTerminalIdParamsSchema
+// GetTerminalTransportsByTerminalIdParams
 // ============================================================================
 
 export const getTerminalTransportsByTerminalIdParamsSchema = z
@@ -61,7 +72,12 @@ export type GetTerminalTransportsByTerminalIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalTransitLinkSchema
+// terminalTransportSchema
+// TerminalTransport
+// TerminalTransitLink
 // ============================================================================
 
 export const terminalTransitLinkSchema = z
@@ -134,3 +150,31 @@ export const terminalTransportSchema = z
 
 export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
 export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useTerminalTransportsByTerminalId
+// ============================================================================
+
+/**
+ * React Query hook for fetching terminal transports by terminal ID
+ *
+ * Retrieves terminal transports for a specific terminal from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
+ *
+ * @param params - Object containing terminalId
+ * @param options - Optional React Query options
+ * @returns Query result containing TerminalTransport object
+ */
+export const useTerminalTransportsByTerminalId = (
+  params: GetTerminalTransportsByTerminalIdParams,
+  options?: TanStackOptions<TerminalTransport>
+): UseQueryResult<TerminalTransport, Error> => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "terminals", "transports", params.terminalId],
+    queryFn: () => getTerminalTransportsByTerminalId(params),
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+  });
+};

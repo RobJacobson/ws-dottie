@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -14,15 +14,13 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getWeatherInformation
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get all weather information from WSDOT Weather Information API
@@ -53,7 +51,10 @@ export const getWeatherInformation = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getWeatherInformationParamsSchema
+// GetWeatherInformationParams
 // ============================================================================
 
 export const getWeatherInformationParamsSchema = z
@@ -67,7 +68,10 @@ export type GetWeatherInformationParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// weatherInfoSchema
+// WeatherInfo
 // ============================================================================
 
 export const weatherInfoSchema = z
@@ -152,7 +156,9 @@ export const weatherInfoArraySchema = z
 export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useWeatherInformation
 // ============================================================================
 
 /**
@@ -169,7 +175,12 @@ export const useWeatherInformation = (
   options?: TanStackOptions<WeatherInfo[]>
 ): UseQueryResult<WeatherInfo[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "weather-information", "getWeatherInformation", params],
+    queryKey: [
+      "wsdot",
+      "weather-information",
+      "getWeatherInformation",
+      JSON.stringify(params),
+    ],
     queryFn: () => getWeatherInformation(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

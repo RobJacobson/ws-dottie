@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { nullableDateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTimeAdjustments
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/timeadj";
@@ -37,13 +40,17 @@ export const getTimeAdjustments = async (): Promise<
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
+// Input Schema & Types
+//
 // No input parameters for this endpoint
+// ============================================================================
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES (based on actual API response)
+// Output Schema & Types (based on actual API response)
+//
+// timeAdjustmentResponseSchema
+// timeAdjustmentsArraySchema
+// TimeAdjustmentResponse
 // ============================================================================
 
 // API response schema for time adjustments
@@ -56,8 +63,8 @@ export const timeAdjustmentResponseSchema = z.object({
   SailingID: z.number(),
   SailingDescription: z.string(),
   ActiveSailingDateRange: z.object({
-    DateFrom: nullableDateSchema,
-    DateThru: nullableDateSchema,
+    DateFrom: zWsdotDate().nullable(),
+    DateThru: zWsdotDate().nullable(),
     EventID: z.number().nullable(),
     EventDescription: z.string().nullable(),
   }),
@@ -72,12 +79,12 @@ export const timeAdjustmentResponseSchema = z.object({
   TerminalBriefDescription: z.string(),
   JourneyTerminalID: z.number(),
   DepArrIndicator: z.number(),
-  AdjDateFrom: nullableDateSchema,
-  AdjDateThru: nullableDateSchema,
+  AdjDateFrom: zWsdotDate().nullable(),
+  AdjDateThru: zWsdotDate().nullable(),
   AdjType: z.number(),
-  TidalAdj: z.union([z.number(), z.boolean()]).nullable(),
-  TimeToAdj: z.union([z.number(), z.string()]).nullable(),
-  Annotations: z.union([z.string(), z.array(z.unknown())]).nullable(),
+  TidalAdj: z.number().nullable(),
+  TimeToAdj: z.number().nullable(),
+  Annotations: z.array(z.string()).nullable(),
   EventID: z.number().nullable(),
   EventDescription: z.string().nullable(),
 });
@@ -89,7 +96,9 @@ export type TimeAdjustmentResponse = z.infer<
 >;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useTimeAdjustments
 // ============================================================================
 
 /**
@@ -110,9 +119,10 @@ export type TimeAdjustmentResponse = z.infer<
 export const useTimeAdjustments = (
   options?: TanStackOptions<TimeAdjustmentResponse[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "timeAdjustments"],
     queryFn: () => getTimeAdjustments(),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
   });

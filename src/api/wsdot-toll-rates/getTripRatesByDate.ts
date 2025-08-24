@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
@@ -10,15 +10,13 @@ import type { TanStackOptions } from "@/shared/types";
 import { type TollRate, tollRateArraySchema } from "./getTollRates";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTripRatesByDate
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Retrieves historical toll rates by date range from WSDOT API
@@ -33,8 +31,8 @@ const ENDPOINT =
  * @example
  * ```typescript
  * const historicalRates = await getTripRatesByDate({
- *   fromDate: "2024-01-01",
- *   toDate: "2024-01-31"
+ *   fromDate: new Date('2024-01-01'),
+ *   toDate: new Date('2024-01-31')
  * });
  * console.log(historicalRates[0].CurrentToll); // Historical toll amount
  * ```
@@ -42,36 +40,46 @@ const ENDPOINT =
 export const getTripRatesByDate = async (
   params: GetTripRatesByDateParams
 ): Promise<TollRate[]> => {
+  // Build query string with date parameters
+  const queryParams = new URLSearchParams();
+  queryParams.append("fromDate", params.fromDate.toISOString().split("T")[0]);
+  queryParams.append("toDate", params.toDate.toISOString().split("T")[0]);
+
+  const endpoint = `${ENDPOINT}?${queryParams.toString()}`;
+
   return zodFetch(
-    ENDPOINT,
+    endpoint,
     {
       input: getTripRatesByDateParamsSchema,
       output: tollRateArraySchema,
     },
-    params
+    undefined // No URL template interpolation needed since we build the URL ourselves
   );
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTripRatesByDateParamsSchema
+// GetTripRatesByDateParams
 // ============================================================================
 
 export const getTripRatesByDateParamsSchema = z
   .object({
     fromDate: z
-      .string()
+      .date()
       .describe(
-        "Start date for historical data retrieval in YYYY-MM-DD format. This field specifies the beginning of the date range for historical toll rate analysis."
+        "Start date for historical data retrieval. This field specifies the beginning of the date range for historical toll rate analysis."
       ),
 
     toDate: z
-      .string()
+      .date()
       .describe(
-        "End date for historical data retrieval in YYYY-MM-DD format. This field specifies the end of the date range for historical toll rate analysis."
+        "End date for historical data retrieval. This field specifies the end of the date range for historical toll rate analysis."
       ),
   })
   .describe(
-    "Date range parameters for retrieving historical toll rate data. Both dates must be in YYYY-MM-DD format and represent a valid date range for historical analysis."
+    "Date range parameters for retrieving historical toll rate data. Both dates represent a valid date range for historical analysis."
   );
 
 export type GetTripRatesByDateParams = z.infer<
@@ -79,7 +87,15 @@ export type GetTripRatesByDateParams = z.infer<
 >;
 
 // ============================================================================
-// QUERY
+// Output Schema & Types
+//
+// tollRateArraySchema (imported from ./getTollRates)
+// ============================================================================
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useTripRatesByDate
 // ============================================================================
 
 /**
@@ -95,8 +111,8 @@ export type GetTripRatesByDateParams = z.infer<
  * @example
  * ```typescript
  * const { data: historicalRates, isLoading } = useTripRatesByDate({
- *   fromDate: "2024-01-01",
- *   toDate: "2024-01-31"
+ *   fromDate: new Date('2024-01-01'),
+ *   toDate: new Date('2024-01-31')
  * });
  * ```
  */
@@ -105,7 +121,12 @@ export const useTripRatesByDate = (
   options?: TanStackOptions<TollRate[]>
 ): UseQueryResult<TollRate[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "toll-rates", "getTripRatesByDate", params],
+    queryKey: [
+      "wsdot",
+      "toll-rates",
+      "getTripRatesByDate",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTripRatesByDate(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

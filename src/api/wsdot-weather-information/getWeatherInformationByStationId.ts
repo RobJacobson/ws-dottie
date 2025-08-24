@@ -2,22 +2,20 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
 import { weatherInfoSchema } from "./getWeatherInformation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getWeatherInformationByStationId
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get weather information for a specific station by ID from WSDOT Weather Information API
@@ -50,7 +48,10 @@ export const getWeatherInformationByStationId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getWeatherInformationByStationIdParamsSchema
+// GetWeatherInformationByStationIdParams
 // ============================================================================
 
 export const getWeatherInformationByStationIdParamsSchema = z
@@ -72,14 +73,15 @@ export type GetWeatherInformationByStationIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// weatherInfoSchema (imported from ./getWeatherInformation)
 // ============================================================================
 
-// Import the schema from the main file (no type re-export to avoid chains)
-export { weatherInfoSchema } from "./getWeatherInformation";
-
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useWeatherInformationByStationId
 // ============================================================================
 
 /**
@@ -102,7 +104,7 @@ export const useWeatherInformationByStationId = (
       "wsdot",
       "weather-information",
       "getWeatherInformationByStationId",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getWeatherInformationByStationId(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,

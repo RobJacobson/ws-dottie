@@ -1,11 +1,12 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 // Import schemas and types from the single-item endpoint
 import {
   type VesselLocation,
@@ -13,20 +14,12 @@ import {
 } from "./getVesselLocationsByVesselId";
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// API Function
+//
+// getVesselLocations
 // ============================================================================
 
-export const vesselLocationArraySchema = z
-  .array(vesselLocationSchema)
-  .describe(
-    "Array of real-time vessel locations for all active vessels in the Washington State Ferries fleet. Each entry contains current position, speed, heading, and operational status data updated approximately every 30 seconds to 2 minutes."
-  );
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
-
-const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
+const ENDPOINT = "/ferries/api/vessels/rest/vessellocations";
 
 /**
  * API function for fetching current vessel location data from WSF Vessels API
@@ -48,14 +41,37 @@ const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
  * ```
  */
 export const getVesselLocations = async (): Promise<VesselLocation[]> => {
-  return zodFetch(`${WSF_VESSELS_BASE}/vessellocations`, {
+  return zodFetch(ENDPOINT, {
     output: vesselLocationArraySchema,
   });
 };
 
 // ============================================================================
-// VESSEL LOCATIONS HOOKS
-// Real-time GPS tracking and vessel positioning
+// Input Schema & Types
+//
+// getVesselLocationsParamsSchema
+// GetVesselLocationsParams
+// ============================================================================
+
+// No input parameters for this endpoint
+
+// ============================================================================
+// Output Schema & Types
+//
+// vesselLocationArraySchema
+// VesselLocation
+// ============================================================================
+
+export const vesselLocationArraySchema = z
+  .array(vesselLocationSchema)
+  .describe(
+    "Array of real-time vessel locations for all active vessels in the Washington State Ferries fleet. Each entry contains current position, speed, heading, and operational status data updated approximately every 10 seconds."
+  );
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useVesselLocations
 // ============================================================================
 
 /**
@@ -82,10 +98,10 @@ export const getVesselLocations = async (): Promise<VesselLocation[]> => {
 export const useVesselLocations = (
   options?: TanStackOptions<VesselLocation[]>
 ): UseQueryResult<VesselLocation[], Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "locations"],
-    queryFn: () => getVesselLocations(),
-    ...tanstackQueryOptions.REALTIME_UPDATES,
-    ...options,
+    queryFn: getVesselLocations,
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.REALTIME_UPDATES, ...options },
   });
 };

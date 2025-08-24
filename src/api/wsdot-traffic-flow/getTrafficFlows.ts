@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
@@ -10,15 +10,13 @@ import type { TanStackOptions } from "@/shared/types";
 import { trafficFlowSchema } from "./getTrafficFlowById";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTrafficFlows
 // ============================================================================
 
 const ENDPOINT =
   "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get all traffic flow data from WSDOT Traffic Flow API
@@ -49,7 +47,10 @@ export const getTrafficFlows = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTrafficFlowsParamsSchema
+// GetTrafficFlowsParams
 // ============================================================================
 
 export const getTrafficFlowsParamsSchema = z
@@ -61,7 +62,9 @@ export const getTrafficFlowsParamsSchema = z
 export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// trafficFlowArraySchema
 // ============================================================================
 
 export const trafficFlowArraySchema = z
@@ -74,7 +77,9 @@ export const trafficFlowArraySchema = z
 import type { TrafficFlow } from "./getTrafficFlowById";
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTrafficFlows
 // ============================================================================
 
 /**
@@ -89,7 +94,7 @@ import type { TrafficFlow } from "./getTrafficFlowById";
  * @example
  * ```typescript
  * const { data: trafficFlows } = useTrafficFlows({});
- * console.log(trafficFlows[0].FlowReadingValue); // "WideOpen"
+ * console.log(trafficFlows[0].FlowReadingValue); // 1 (WideOpen)
  * ```
  */
 export const useTrafficFlows = (
@@ -97,7 +102,12 @@ export const useTrafficFlows = (
   options?: TanStackOptions<TrafficFlow[]>
 ): UseQueryResult<TrafficFlow[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "traffic-flow", "getTrafficFlows", params],
+    queryKey: [
+      "wsdot",
+      "traffic-flow",
+      "getTrafficFlows",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTrafficFlows(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

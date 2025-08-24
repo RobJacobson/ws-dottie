@@ -1,8 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import type { TanStackOptions } from "@/shared/types";
 import {
   createBatchSizeParam,
@@ -10,12 +9,14 @@ import {
   createDateRangeRefinement,
 } from "@/shared/validation/templates";
 
-// Import the multiple vessel histories function
-import { getMultipleVesselHistories } from "./getMultipleVesselHistories";
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 import type { VesselHistory } from "./getVesselHistoryByVesselAndDateRange";
+import { getVesselHistoryByVesselAndDateRange } from "./getVesselHistoryByVesselAndDateRange";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getAllVesselHistories
 // ============================================================================
 
 /**
@@ -68,16 +69,25 @@ export const getAllVesselHistories = async (
     "Zumwalt",
   ];
 
-  return getMultipleVesselHistories({
-    vesselNames: allVesselNames,
-    dateStart: params.dateStart,
-    dateEnd: params.dateEnd,
-    batchSize: params.batchSize,
-  });
+  // Fetch history for all vessels in parallel
+  const historyPromises = allVesselNames.map((vesselName) =>
+    getVesselHistoryByVesselAndDateRange({
+      vesselName,
+      dateStart: params.dateStart,
+      dateEnd: params.dateEnd,
+    })
+  );
+
+  // Wait for all requests to complete and flatten the results
+  const allHistories = await Promise.all(historyPromises);
+  return allHistories.flat();
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getAllVesselHistoriesParamsSchema
+// GetAllVesselHistoriesParams
 // ============================================================================
 
 export const getAllVesselHistoriesParamsSchema = z
@@ -100,47 +110,46 @@ export type GetAllVesselHistoriesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// VesselHistory (imported from ./getVesselHistoryByVesselAndDateRange)
 // ============================================================================
 
+// Schema and type imported from getVesselHistoryByVesselAndDateRange.ts to avoid duplication
+
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useAllVesselHistories
 // ============================================================================
 
 /**
- * Hook for fetching vessel history data for all vessels in the WSF fleet from WSF Vessels API
+ * Hook for fetching all vessel histories from WSF Vessels API
  *
- * Retrieves historical vessel data for all vessels in the Washington State Ferries fleet
- * within a specified date range, including past routes, schedules, and operational history.
+ * Retrieves historical information for all vessels in the WSF fleet,
+ * including construction details, service history, and notable events.
  *
- * @param params - Object containing dateStart, dateEnd, and optional batchSize
- * @param params.dateStart - The start date for the history range
- * @param params.dateEnd - The end date for the history range
- * @param params.batchSize - Optional batch size for processing requests (default: 6)
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselHistory objects with historical data for all vessels
+ * @returns React Query result containing an array of VesselHistory objects with historical information for all vessels
+ *
+ * @example
+ * ```typescript
+ * const { data: histories } = useAllVesselHistories();
+ * console.log(histories?.[0]?.VesselName); // "Cathlamet"
+ * ```
  */
 export const useAllVesselHistories = (
-  params: { dateStart: Date; dateEnd: Date; batchSize?: number },
   options?: TanStackOptions<VesselHistory[]>
-): UseQueryResult<VesselHistory[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "vessels",
-      "history",
-      "all",
-      params.dateStart.toISOString(),
-      params.dateEnd.toISOString(),
-      params.batchSize,
-    ],
-    queryFn: () =>
+) => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "history"],
+    queryFn: (params: { dateStart: Date; dateEnd: Date; batchSize?: number }) =>
       getAllVesselHistories({
         dateStart: params.dateStart,
         dateEnd: params.dateEnd,
         batchSize: params.batchSize ?? 6,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

@@ -1,15 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import type { ScheduledRoute } from "./getScheduledRoutes";
 import { scheduledRouteSchema } from "./getScheduledRoutes";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getScheduledRoutesBySeason
 // ============================================================================
 
 const ENDPOINT =
@@ -46,7 +49,10 @@ export const getScheduledRoutesBySeason = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getScheduledRoutesBySeasonParamsSchema
+// GetScheduledRoutesBySeasonParams
 // ============================================================================
 
 export const getScheduledRoutesBySeasonParamsSchema = z
@@ -68,13 +74,18 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// scheduledRoutesArraySchema
+// ScheduledRoute (imported from ./getScheduledRoutes)
 // ============================================================================
 
 export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useScheduledRoutesBySeason
 // ============================================================================
 
 /**
@@ -98,9 +109,16 @@ export const useScheduledRoutesBySeason = (
   params: GetScheduledRoutesBySeasonParams,
   options?: TanStackOptions<ScheduledRoute[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "scheduledRoutesBySeason", params.seasonId],
+  useQueryWithAutoUpdate({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "scheduledRoutesBySeason",
+      JSON.stringify(params),
+    ],
     queryFn: () => getScheduledRoutesBySeason(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

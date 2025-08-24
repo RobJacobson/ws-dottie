@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getValidDateRange
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/validdaterange";
@@ -35,15 +38,24 @@ export const getValidDateRange = async (): Promise<ValidDateRange> => {
 };
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// No input parameters required for this endpoint
+// ============================================================================
+
+// ============================================================================
+// Output Schema & Types
+//
+// validDateRangeSchema
+// ValidDateRange
 // ============================================================================
 
 export const validDateRangeSchema = z
   .object({
-    DateFrom: dateSchema.describe(
+    DateFrom: zWsdotDate().describe(
       "Start date for the valid date range. Indicates the earliest date for which schedule data is available."
     ),
-    DateThru: dateSchema.describe(
+    DateThru: zWsdotDate().describe(
       "End date for the valid date range. Indicates the latest date for which schedule data is available."
     ),
   })
@@ -54,7 +66,9 @@ export const validDateRangeSchema = z
 export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useValidDateRange
 // ============================================================================
 
 /**
@@ -73,9 +87,10 @@ export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
  * ```
  */
 export const useValidDateRange = (options?: TanStackOptions<ValidDateRange>) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "validDateRange"],
     queryFn: () => getValidDateRange(),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
   });

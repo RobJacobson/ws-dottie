@@ -1,11 +1,12 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 // Import schemas from the single-item endpoint
 import {
   type TerminalTransport,
@@ -13,7 +14,9 @@ import {
 } from "./getTerminalTransportsByTerminalId";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalTransports
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminaltransports";
@@ -42,14 +45,17 @@ export const getTerminalTransports = async (
     ENDPOINT,
     {
       input: getTerminalTransportsParamsSchema,
-      output: terminalTransportArraySchema,
+      output: terminalTransportsArraySchema,
     },
     params
   );
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalTransportsParamsSchema
+// GetTerminalTransportsParams
 // ============================================================================
 
 export const getTerminalTransportsParamsSchema = z
@@ -61,32 +67,36 @@ export type GetTerminalTransportsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalTransportArraySchema
 // ============================================================================
 
 // Create array schema from the imported single-item schema
-export const terminalTransportArraySchema = z.array(terminalTransportSchema);
+export const terminalTransportsArraySchema = z.array(terminalTransportSchema);
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalTransports
 // ============================================================================
 
 /**
  * React Query hook for fetching all terminal transports
  *
- * Retrieves transportation information for all terminals including parking,
- * shuttle services, and transit connections.
+ * Retrieves all terminal transports from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param options - Optional React Query options
- * @returns Query result containing array of TerminalTransport objects
+ * @returns Query result containing array of TerminalTransports objects
  */
 export const useTerminalTransports = (
   options?: TanStackOptions<TerminalTransport[]>
 ): UseQueryResult<TerminalTransport[], Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "transports"],
-    queryFn: () => getTerminalTransports(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: getTerminalTransports,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

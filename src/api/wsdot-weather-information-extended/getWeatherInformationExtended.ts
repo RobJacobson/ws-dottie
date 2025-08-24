@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -13,14 +13,12 @@ import {
 } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getWeatherInformationExtended
 // ============================================================================
 
 const ENDPOINT = "/traffic/api/api/Scanweb";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get extended weather information from WSDOT Weather Information Extended API
@@ -58,7 +56,10 @@ export const getWeatherInformationExtended = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getWeatherInformationExtendedParamsSchema
+// GetWeatherInformationExtendedParams
 // ============================================================================
 
 export const getWeatherInformationExtendedParamsSchema = z
@@ -72,7 +73,10 @@ export type GetWeatherInformationExtendedParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// weatherReadingSchema
+// WeatherReading
 // ============================================================================
 
 export const surfaceMeasurementSchema = z
@@ -145,9 +149,11 @@ export const weatherReadingSchema = z
         "Elevation of the weather station above sea level in feet. This field provides important context about the station's location and helps users understand the environmental conditions at different altitudes."
       ),
 
-    ReadingTime: zWsdotDate().describe(
-      "Timestamp indicating when this weather reading was taken by the WSDOT system. This field shows the currency of the weather data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone. Format: ISO 8601 string (e.g., '2025-08-22T03:08:33')."
-    ),
+    ReadingTime: zWsdotDate()
+      .nullable()
+      .describe(
+        "Timestamp indicating when this weather reading was taken by the WSDOT system. This field shows the currency of the weather data and helps users determine if they should check for more recent updates. All times are in Pacific Time Zone. Format: ISO 8601 string (e.g., '2025-08-22T03:08:33'). May be null if the timestamp is not available."
+      ),
 
     AirTemperature: zNullableNumber().describe(
       "Current air temperature reading from the weather station in degrees Celsius. This field shows the actual temperature at the station location, which is critical for road condition monitoring, winter weather alerts, and general weather information. May be null if the sensor is not functioning or the reading is unavailable."
@@ -243,7 +249,9 @@ export type SubSurfaceMeasurement = z.infer<typeof subSurfaceMeasurementSchema>;
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useWeatherInformationExtended
 // ============================================================================
 
 /**
@@ -271,7 +279,7 @@ export const useWeatherInformationExtended = (
       "wsdot",
       "weather-information-extended",
       "getWeatherInformationExtended",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getWeatherInformationExtended(params),
     ...tanstackQueryOptions.HOURLY_UPDATES,

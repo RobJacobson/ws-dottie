@@ -1,8 +1,8 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zNullableString, zWsdotNullableDate } from "@/shared/validation";
@@ -12,8 +12,12 @@ import {
   createVesselNameParam,
 } from "@/shared/validation/templates";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
+
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getVesselHistoryByVesselAndDateRange
 // ============================================================================
 
 const ENDPOINT =
@@ -55,7 +59,10 @@ export const getVesselHistoryByVesselAndDateRange = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getVesselHistoryByVesselAndDateRangeParamsSchema
+// GetVesselHistoryByVesselAndDateRangeParams
 // ============================================================================
 
 export const getVesselHistoryByVesselAndDateRangeParamsSchema = z
@@ -76,7 +83,10 @@ export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// vesselHistorySchema
+// VesselHistory
 // ============================================================================
 
 export const vesselHistorySchema = z
@@ -114,43 +124,44 @@ export const vesselHistoryArraySchema = z
 export type VesselHistory = z.infer<typeof vesselHistorySchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useVesselHistoryByVesselAndDateRange
 // ============================================================================
 
 /**
- * Hook for fetching vessel history data for a specific vessel and date range from WSF Vessels API
+ * Hook for fetching vessel history by vessel and date range from WSF Vessels API
  *
- * Retrieves historical vessel data for a specific vessel within a specified date range,
- * including past routes, schedules, and operational history for that vessel.
+ * Retrieves historical information for a specific vessel within a specified date range,
+ * including construction details, service history, and notable events.
+
  *
- * @param params - Object containing vesselName, dateStart, dateEnd
- * @param params.vesselName - The name of the vessel (e.g., "Cathlamet")
+ * @param params - Object containing vesselName, dateStart, and dateEnd
+ * @param params.vesselName - The name of the vessel to fetch history for (e.g., "Spokane")
  * @param params.dateStart - The start date for the history range
  * @param params.dateEnd - The end date for the history range
  * @param options - Optional React Query options
- * @returns React Query result containing an array of VesselHistory objects with historical data for the specified vessel and date range
+ * @returns React Query result containing an array of VesselHistory objects with historical information
+ *
+ * @example
+ * ```typescript
+ * const { data: history } = useVesselHistoryByVesselAndDateRange({
+ *   vesselName: "Spokane",
+ *   dateStart: new Date('2024-01-01'),
+ *   dateEnd: new Date('2024-01-31')
+ * });
+ * console.log(history?.[0]?.VesselName); // "Spokane"
+ * ```
  */
 export const useVesselHistoryByVesselAndDateRange = (
-  params: { vesselName: string; dateStart: Date; dateEnd: Date },
+  params: GetVesselHistoryByVesselAndDateRangeParams,
   options?: TanStackOptions<VesselHistory[]>
 ): UseQueryResult<VesselHistory[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "vessels",
-      "history",
-      "byVesselAndDateRange",
-      params.vesselName,
-      params.dateStart.toISOString(),
-      params.dateEnd.toISOString(),
-    ],
-    queryFn: () =>
-      getVesselHistoryByVesselAndDateRange({
-        vesselName: params.vesselName,
-        dateStart: params.dateStart,
-        dateEnd: params.dateEnd,
-      }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "history", JSON.stringify(params)],
+    queryFn: () => getVesselHistoryByVesselAndDateRange(params),
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

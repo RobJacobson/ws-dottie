@@ -1,14 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import { z } from "zod";
+import type { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
-
-import { dateSchema } from "./shared-schemas";
+import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getCacheFlushDateSchedule
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/cacheflushdate";
@@ -37,10 +38,19 @@ export const getCacheFlushDateSchedule = async (): Promise<Date> => {
 };
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// No input parameters required for this endpoint
 // ============================================================================
 
-export const scheduleCacheFlushDateSchema = dateSchema.describe(
+// ============================================================================
+// Output Schema & Types
+//
+// scheduleCacheFlushDateSchema
+// ScheduleCacheFlushDate
+// ============================================================================
+
+export const scheduleCacheFlushDateSchema = zWsdotDate().describe(
   "Date when the schedule cache was last flushed/updated. Indicates when the schedule data was last refreshed from the source system."
 );
 
@@ -49,7 +59,9 @@ export type ScheduleCacheFlushDate = z.infer<
 >;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useCacheFlushDateSchedule
 // ============================================================================
 
 /**
@@ -70,9 +82,10 @@ export type ScheduleCacheFlushDate = z.infer<
  * ```
  */
 export const useCacheFlushDateSchedule = (options?: TanStackOptions<Date>) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "cacheFlushDate"],
     queryFn: () => getCacheFlushDateSchedule(),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: async () => new Date(),
   });

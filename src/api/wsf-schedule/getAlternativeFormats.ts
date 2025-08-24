@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { nullableDateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getAlternativeFormats
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/alternativeformats/{subjectName}";
@@ -45,7 +48,10 @@ export const getAlternativeFormats = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getAlternativeFormatsParamsSchema
+// GetAlternativeFormatsParams
 // ============================================================================
 
 export const getAlternativeFormatsParamsSchema = z
@@ -65,7 +71,11 @@ export type GetAlternativeFormatsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// alternativeFormatSchema
+// alternativeFormatsArraySchema
+// AlternativeFormat
 // ============================================================================
 
 export const alternativeFormatSchema = z
@@ -115,15 +125,21 @@ export const alternativeFormatSchema = z
       .describe(
         "Sorting sequence number for display ordering. Ensures formats are displayed in the correct order across different systems and interfaces."
       ),
-    FromDate: nullableDateSchema.describe(
-      "Start date for the alternative format availability. Null when always available, specific date when format becomes accessible."
-    ),
-    ThruDate: nullableDateSchema.describe(
-      "End date for the alternative format availability. Null when always available, specific date when format expires or becomes inaccessible."
-    ),
-    ModifiedDate: nullableDateSchema.describe(
-      "Timestamp when this alternative format was last modified. Indicates the freshness of the content and helps determine when information was last updated."
-    ),
+    FromDate: zWsdotDate()
+      .nullable()
+      .describe(
+        "Start date for the alternative format availability. Null when always available, specific date when format becomes accessible."
+      ),
+    ThruDate: zWsdotDate()
+      .nullable()
+      .describe(
+        "End date for the alternative format availability. Null when always available, specific date when format expires or becomes inaccessible."
+      ),
+    ModifiedDate: zWsdotDate()
+      .nullable()
+      .describe(
+        "Timestamp when this alternative format was last modified. Indicates the freshness of the content and helps determine when information was last updated."
+      ),
     ModifiedBy: z
       .string()
       .describe(
@@ -139,7 +155,9 @@ export const alternativeFormatsArraySchema = z.array(alternativeFormatSchema);
 export type AlternativeFormat = z.infer<typeof alternativeFormatSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useAlternativeFormats
 // ============================================================================
 
 /**
@@ -164,9 +182,11 @@ export const useAlternativeFormats = (
   params: GetAlternativeFormatsParams,
   options?: TanStackOptions<AlternativeFormat[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "alternativeFormats", params],
+  useQueryWithAutoUpdate({
+    queryKey: ["wsf", "schedule", "alternativeFormats", JSON.stringify(params)],
     queryFn: () => getAlternativeFormats(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

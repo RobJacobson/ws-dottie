@@ -2,21 +2,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTollTripRates
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Retrieves toll trip rates with messages and update times from WSDOT API
@@ -42,7 +40,10 @@ export const getTollTripRates = async (): Promise<TollTripRates> => {
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTollTripRatesParamsSchema
+// GetTollTripRatesParams
 // ============================================================================
 
 export const getTollTripRatesParamsSchema = z
@@ -54,7 +55,10 @@ export type GetTollTripRatesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// tollTripRatesSchema
+// TollTripRates
 // ============================================================================
 
 export const tollTripRateSchema = z
@@ -113,7 +117,9 @@ export type TollTripRate = z.infer<typeof tollTripRateSchema>;
 export type TollTripRates = z.infer<typeof tollTripRatesSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTollTripRates
 // ============================================================================
 
 /**

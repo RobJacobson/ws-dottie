@@ -1,15 +1,17 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
 import { type FareLineItem, fareLineItemSchema } from "./getFareLineItems";
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFareLineItemsBasic
 // ============================================================================
 
 const ENDPOINT =
@@ -54,7 +56,10 @@ export const getFareLineItemsBasic = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFareLineItemsBasicParamsSchema
+// GetFareLineItemsBasicParams
 // ============================================================================
 
 export const getFareLineItemsBasicParamsSchema = z
@@ -93,7 +98,9 @@ export type GetFareLineItemsBasicParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// fareLineItemsBasicArraySchema
 // ============================================================================
 
 // Import the fare line item schema from getFareLineItems
@@ -105,14 +112,18 @@ export const fareLineItemsBasicArraySchema = z
   );
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFareLineItemsBasic
 // ============================================================================
 
 /**
  * Hook for getting basic fare line items from WSF Fares API
  *
- * Retrieves the most popular fare line items for a specific route. This endpoint provides
- * the commonly used fare options for the specified terminal combination and trip type.
+ * Retrieves basic fare line items for a specific route. This endpoint provides
+ * essential fare information including fare types and amounts for the specified
+ * terminal combination and trip type.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip
  * @param params.tripDate - The trip date as a Date object
@@ -120,7 +131,7 @@ export const fareLineItemsBasicArraySchema = z
  * @param params.arrivingTerminalID - The unique identifier for the arriving terminal
  * @param params.roundTrip - Whether this is a round trip
  * @param options - Optional React Query options
- * @returns React Query result containing array of most popular fare line items
+ * @returns React Query result containing array of basic fare line items
  */
 export const useFareLineItemsBasic = (
   params: {
@@ -134,16 +145,8 @@ export const useFareLineItemsBasic = (
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<FareLineItem[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "fares",
-      "fareLineItemsBasic",
-      jsDateToYyyyMmDd(params.tripDate),
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-      params.roundTrip,
-    ],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "fareLineItemsBasic", JSON.stringify(params)],
     queryFn: () =>
       getFareLineItemsBasic({
         tripDate: params.tripDate,
@@ -151,7 +154,8 @@ export const useFareLineItemsBasic = (
         arrivingTerminalID: params.arrivingTerminalID,
         roundTrip: params.roundTrip,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

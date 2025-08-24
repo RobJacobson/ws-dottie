@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
@@ -12,15 +12,13 @@ import {
 } from "./getMountainPassConditionById";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getMountainPassConditions
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
 
 /**
  * Retrieves all mountain pass conditions from WSDOT API
@@ -52,7 +50,10 @@ export const getMountainPassConditions = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getMountainPassConditionsParamsSchema
+// GetMountainPassConditionsParams
 // ============================================================================
 
 export const getMountainPassConditionsParamsSchema = z
@@ -65,7 +66,9 @@ export type GetMountainPassConditionsParams = z.infer<
   typeof getMountainPassConditionsParamsSchema
 >;
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// mountainPassConditionArraySchema
 // ============================================================================
 
 export const mountainPassConditionArraySchema = z
@@ -75,7 +78,9 @@ export const mountainPassConditionArraySchema = z
   );
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useMountainPassConditions
 // ============================================================================
 
 /**
@@ -103,7 +108,7 @@ export const useMountainPassConditions = (
       "wsdot",
       "mountain-pass-conditions",
       "getMountainPassConditions",
-      params,
+      JSON.stringify(params),
     ],
     queryFn: () => getMountainPassConditions(params),
     ...tanstackQueryOptions.DAILY_UPDATES,

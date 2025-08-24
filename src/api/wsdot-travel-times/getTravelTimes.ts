@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
@@ -12,15 +12,13 @@ import {
 } from "./getTravelTimeById";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTravelTimes
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimesAsJson";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
 
 /**
  * Get all travel times from WSDOT Travel Times API
@@ -51,7 +49,10 @@ export const getTravelTimes = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTravelTimesParamsSchema
+// GetTravelTimesParams
 // ============================================================================
 
 export const getTravelTimesParamsSchema = z
@@ -63,7 +64,9 @@ export const getTravelTimesParamsSchema = z
 export type GetTravelTimesParams = z.infer<typeof getTravelTimesParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// travelTimesArraySchema
 // ============================================================================
 
 export const travelTimesArraySchema = z
@@ -75,7 +78,9 @@ export const travelTimesArraySchema = z
 export type TravelTimesResponse = z.infer<typeof travelTimesArraySchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTravelTimes
 // ============================================================================
 
 /**
@@ -98,7 +103,12 @@ export const useTravelTimes = (
   options?: TanStackOptions<TravelTimeRoute[]>
 ): UseQueryResult<TravelTimeRoute[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "travel-times", "getTravelTimes", params],
+    queryKey: [
+      "wsdot",
+      "travel-times",
+      "getTravelTimes",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTravelTimes(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

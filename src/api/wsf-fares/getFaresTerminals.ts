@@ -1,13 +1,17 @@
-import { z } from "zod";
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
-import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
+
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFaresTerminals
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/fares/rest/terminals/{tripDate}";
@@ -43,7 +47,10 @@ export const getFaresTerminals = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFaresTerminalsParamsSchema
+// GetFaresTerminalsParams
 // ============================================================================
 
 export const getFaresTerminalsParamsSchema = z
@@ -63,7 +70,10 @@ export type GetFaresTerminalsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// faresTerminalSchema
+// FaresTerminal
 // ============================================================================
 
 export const faresTerminalSchema = z
@@ -95,37 +105,33 @@ export const faresTerminalsArraySchema = z
 export type FaresTerminal = z.infer<typeof faresTerminalSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFaresTerminals
 // ============================================================================
 
 /**
- * Hook for getting terminals for a trip date from WSF Fares API
+ * Hook for getting fares terminals from WSF Fares API
  *
- * Retrieves valid departing terminals for a given trip date. A valid trip date
- * may be determined using validDateRange.
+ * Retrieves all terminals available for fare calculations for a specific trip date.
+ * This endpoint provides information about terminals that can be used in fare queries.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
- * @param params - Object containing tripDate
- * @param params.tripDate - The trip date as a Date object
+ * @param params - Object containing tripDate for which to retrieve valid departing terminals
  * @param options - Optional React Query options
- * @returns React Query result containing array of valid departing terminals
- *
- * @example
- * ```typescript
- * const { data: terminals } = useFaresTerminals({ tripDate: new Date('2024-01-15') });
- * console.log(terminals?.[0]?.TerminalName); // "Anacortes"
- * ```
+ * @returns React Query result containing array of fares terminals
  */
 export const useFaresTerminals = (
-  params: { tripDate: Date },
+  params: GetFaresTerminalsParams,
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminals>>>,
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<FaresTerminal[], Error> => {
-  return useQuery({
-    queryKey: ["wsf", "fares", "terminals", jsDateToYyyyMmDd(params.tripDate)],
-    queryFn: () => getFaresTerminals({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "terminals"],
+    queryFn: () => getFaresTerminals(params),
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

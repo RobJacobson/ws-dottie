@@ -2,21 +2,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zLatitude, zLongitude, zWsdotDate } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getTollTripInfo
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Retrieves toll trip information with geometry data from WSDOT API
@@ -41,7 +39,10 @@ export const getTollTripInfo = async (): Promise<TollTripInfo[]> => {
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTollTripInfoParamsSchema
+// GetTollTripInfoParams
 // ============================================================================
 
 export const getTollTripInfoParamsSchema = z
@@ -51,7 +52,10 @@ export const getTollTripInfoParamsSchema = z
 export type GetTollTripInfoParams = z.infer<typeof getTollTripInfoParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// tollTripInfoSchema
+// TollTripInfo
 // ============================================================================
 
 export const tollTripInfoSchema = z
@@ -62,6 +66,7 @@ export const tollTripInfoSchema = z
 
     EndLocationName: z
       .string()
+      .nullable()
       .describe(
         "Name of the location where the toll trip ends. Examples include 'Bellevue', 'Seattle', 'Tacoma', or 'Everett'. This field helps users identify the destination point of the toll trip."
       ),
@@ -94,6 +99,7 @@ export const tollTripInfoSchema = z
 
     StartLocationName: z
       .string()
+      .nullable()
       .describe(
         "Name of the location where the toll trip begins. Examples include 'Bellevue', 'Seattle', 'Tacoma', or 'Everett'. This field helps users identify the starting point of the toll trip."
       ),
@@ -110,12 +116,14 @@ export const tollTripInfoSchema = z
 
     TravelDirection: z
       .string()
+      .nullable()
       .describe(
         "Direction of travel for which the toll trip applies. Examples include 'S' (Southbound), 'N' (Northbound), 'E' (Eastbound), 'W' (Westbound), or 'Both Directions'. This field indicates which direction of travel the trip information applies to."
       ),
 
     TripName: z
       .string()
+      .nullable()
       .describe(
         "Unique identifier for the toll trip or route. Examples include '405tp01351', '520tp00123', or '167tp00456'. This field serves as a reference for the specific toll route and can be used for tracking and correlation purposes."
       ),
@@ -134,7 +142,9 @@ export const tollTripInfoArraySchema = z
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTollTripInfo
 // ============================================================================
 
 /**

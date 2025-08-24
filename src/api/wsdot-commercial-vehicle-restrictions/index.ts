@@ -1,5 +1,11 @@
-// WSDOT Commercial Vehicle Restrictions API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
+/**
+ * WSDOT Commercial Vehicle Restrictions API - Complete Export Module
+ *
+ * This module provides access to Washington State Department of Transportation
+ * commercial vehicle restriction data including route limitations and restrictions.
+ *
+ * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
+ */
 
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
@@ -9,16 +15,23 @@ export * from "./getCommercialVehicleRestrictions";
 export * from "./getCommercialVehicleRestrictionsWithId";
 
 // ============================================================================
-// SHARED UTILITIES
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Note: No cache.ts file exists for this API
+export {
+  commercialVehicleRestrictionArraySchema,
+  commercialVehicleRestrictionSchema,
+  getCommercialVehicleRestrictionsParamsSchema,
+} from "./getCommercialVehicleRestrictions";
+export {
+  commercialVehicleRestrictionWithIdSchema,
+  getCommercialVehicleRestrictionsWithIdParamsSchema,
+} from "./getCommercialVehicleRestrictionsWithId";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Export types directly from their source files to avoid re-export chains
 export type {
   CommercialVehicleRestriction,
   CommercialVehicleRestrictionRoadwayLocation,

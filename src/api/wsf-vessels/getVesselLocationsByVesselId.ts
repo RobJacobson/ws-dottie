@@ -1,15 +1,82 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zPositiveInteger, zWsdotDate } from "@/shared/validation";
 import { createVesselIdDescription } from "@/shared/validation/templates";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
+
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// API Function
+//
+// getVesselLocationsByVesselId
+// ============================================================================
+
+const ENDPOINT = "/ferries/api/vessels/rest/vessellocations/{vesselId}";
+
+/**
+ * API function for fetching vessel location data for a specific vessel from WSF Vessels API
+ *
+ * Retrieves real-time location data for a specific vessel identified by vessel ID,
+ * including GPS coordinates, speed, heading, terminal information, and operational status.
+ * This endpoint provides the most current position and status information for tracking
+ * vessel movements in real-time.
+ *
+ * @param params - Object containing vesselId
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
+ * @returns Promise resolving to a VesselLocation object containing real-time location data for the specified vessel
+ *
+ * @example
+ * ```typescript
+ * const location = await getVesselLocationsByVesselId({ vesselId: 1 });
+ * console.log(location.VesselName); // "Cathlamet"
+ * console.log(location.Latitude); // 47.6029
+ * ```
+ */
+export const getVesselLocationsByVesselId = async (
+  params: GetVesselLocationsByVesselIdParams
+): Promise<VesselLocation> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getVesselLocationsByVesselIdParamsSchema,
+      output: vesselLocationSchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// Input Schema & Types
+//
+// getVesselLocationsByVesselIdParamsSchema
+// GetVesselLocationsByVesselIdParams
+// ============================================================================
+
+export const getVesselLocationsByVesselIdParamsSchema = z
+  .object({
+    vesselId: zPositiveInteger("vessel").describe(
+      createVesselIdDescription(
+        "whose location you want to track. This returns real-time GPS coordinates, speed, heading, and operational status"
+      )
+    ),
+  })
+  .describe(
+    "Parameters for retrieving real-time location data for a specific vessel"
+  );
+
+export type GetVesselLocationsByVesselIdParams = z.infer<
+  typeof getVesselLocationsByVesselIdParamsSchema
+>;
+
+// ============================================================================
+// Output Schema & Types
+//
+// vesselLocationSchema
+// VesselLocation
 // ============================================================================
 
 const zDate = () => zWsdotDate();
@@ -139,6 +206,7 @@ export const vesselLocationSchema = z
       ),
     SortSeq: z
       .number()
+      .nullable()
       .describe(
         "Sort sequence number used to determine the display order of vessels in listings and applications. Lower numbers typically appear first, helping organize vessels in a logical sequence for user interfaces."
       ),
@@ -188,79 +256,23 @@ export const vesselLocationSchema = z
 export type VesselLocation = z.infer<typeof vesselLocationSchema>;
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
-export const getVesselLocationsByVesselIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(
-      createVesselIdDescription(
-        "whose location you want to track. This returns real-time GPS coordinates, speed, heading, and operational status"
-      )
-    ),
-  })
-  .describe(
-    "Parameters for retrieving real-time location data for a specific vessel"
-  );
-
-export type GetVesselLocationsByVesselIdParams = z.infer<
-  typeof getVesselLocationsByVesselIdParamsSchema
->;
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
-
-const ENDPOINT = "/ferries/api/vessels/rest/vessellocations/{vesselId}";
-
-/**
- * API function for fetching vessel location data for a specific vessel from WSF Vessels API
- *
- * Retrieves real-time location data for a specific vessel identified by vessel ID,
- * including GPS coordinates, speed, heading, terminal information, and operational status.
- * This endpoint provides the most current position and status information for tracking
- * vessel movements in real-time.
- *
- * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
- * @returns Promise resolving to a VesselLocation object containing real-time location data for the specified vessel
- *
- * @example
- * ```typescript
- * const location = await getVesselLocationsByVesselId({ vesselId: 1 });
- * console.log(location.VesselName); // "Cathlamet"
- * console.log(location.Latitude); // 47.6029
- * ```
- */
-export const getVesselLocationsByVesselId = async (
-  params: GetVesselLocationsByVesselIdParams
-): Promise<VesselLocation> => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getVesselLocationsByVesselIdParamsSchema,
-      output: vesselLocationSchema,
-    },
-    params
-  );
-};
-
-// ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useVesselLocationsByVesselId
 // ============================================================================
 
 /**
- * Hook for fetching vessel location data for a specific vessel from WSF Vessels API
+ * Hook for fetching vessel location for a specific vessel from WSF Vessels API
  *
- * Retrieves real-time location data for a specific vessel identified by vessel ID,
- * including GPS coordinates, speed, heading, terminal information, and operational status.
- * This endpoint provides the most current position and status information for tracking
- * vessel movements in real-time.
+ * Retrieves location information for a specific vessel identified by vessel ID,
+ * including coordinates, speed, heading, and operational status. This endpoint provides
+ * real-time location data for the specified vessel.
+
  *
  * @param params - Object containing vesselId
  * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @param options - Optional React Query options
- * @returns React Query result containing a VesselLocation object with real-time location data for the specified vessel
+ * @returns React Query result containing a VesselLocation object with real-time location data
  *
  * @example
  * ```typescript
@@ -269,13 +281,14 @@ export const getVesselLocationsByVesselId = async (
  * ```
  */
 export const useVesselLocationsByVesselId = (
-  params: { vesselId: number },
+  params: GetVesselLocationsByVesselIdParams,
   options?: TanStackOptions<VesselLocation>
-): UseQueryResult<VesselLocation, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "vessels", "locations", "byId", params.vesselId],
-    queryFn: () => getVesselLocationsByVesselId({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.REALTIME_UPDATES,
-    ...options,
+) => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "locations", JSON.stringify(params)],
+    queryFn: () => getVesselLocationsByVesselId(params),
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.REALTIME_UPDATES, ...options },
+    params,
   });
 };

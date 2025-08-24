@@ -1,16 +1,21 @@
-import { z } from "zod";
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
-import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
+
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTerminalCombo
 // ============================================================================
 
-const ENDPOINT = "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}";
+const ENDPOINT =
+  "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalID}/{arrivingTerminalID}";
 
 /**
  * Get fare collection description for a terminal combination from WSF Fares API
@@ -49,7 +54,10 @@ export const getTerminalCombo = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalComboParamsSchema
+// GetTerminalComboParams
 // ============================================================================
 
 export const getTerminalComboParamsSchema = z
@@ -83,7 +91,10 @@ export type GetTerminalComboParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalComboSchema
+// TerminalCombo
 // ============================================================================
 
 export const terminalComboSchema = z
@@ -112,21 +123,25 @@ export const terminalComboSchema = z
 export type TerminalCombo = z.infer<typeof terminalComboSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTerminalCombo
 // ============================================================================
 
 /**
  * Hook for getting terminal combo from WSF Fares API
  *
- * Retrieves fare collection description for a specific terminal combination on a given trip date.
- * This endpoint provides information about how fares are collected for the specified route.
+ * Retrieves terminal combination information for a specific route and trip date.
+ * This endpoint provides fare information for a specific terminal pair.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
- * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip
  * @param params.tripDate - The trip date as a Date object
  * @param params.departingTerminalID - The unique identifier for the departing terminal
  * @param params.arrivingTerminalID - The unique identifier for the arriving terminal
+ * @param params.roundTrip - Whether this is a round trip
  * @param options - Optional React Query options
- * @returns React Query result containing terminal combination information
+ * @returns React Query result containing terminal combo information
  */
 export const useTerminalCombo = (
   params: {
@@ -139,22 +154,16 @@ export const useTerminalCombo = (
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<TerminalCombo, Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "fares",
-      "terminalCombo",
-      jsDateToYyyyMmDd(params.tripDate),
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-    ],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "terminalCombo", JSON.stringify(params)],
     queryFn: () =>
       getTerminalCombo({
         tripDate: params.tripDate,
         departingTerminalID: params.departingTerminalID,
         arrivingTerminalID: params.arrivingTerminalID,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

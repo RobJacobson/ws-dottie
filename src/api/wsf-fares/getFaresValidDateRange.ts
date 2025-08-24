@@ -1,13 +1,17 @@
-import { z } from "zod";
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/validation";
-import { tanstackQueryOptions } from "@/shared/caching/config";
+
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFaresValidDateRange
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/fares/rest/validdaterange";
@@ -41,7 +45,10 @@ export const getFaresValidDateRange = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFaresValidDateRangeParamsSchema
+// GetFaresValidDateRangeParams
 // ============================================================================
 
 export const getFaresValidDateRangeParamsSchema = z
@@ -55,7 +62,10 @@ export type GetFaresValidDateRangeParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// faresValidDateRangeSchema
+// FaresValidDateRange
 // ============================================================================
 
 export const faresValidDateRangeSchema = z
@@ -75,23 +85,21 @@ export const faresValidDateRangeSchema = z
 export type FaresValidDateRange = z.infer<typeof faresValidDateRangeSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFaresValidDateRange
 // ============================================================================
 
 /**
  * Hook for getting valid date range from WSF Fares API
  *
- * Retrieves a date range for which fares data is currently published & available.
+ * Retrieves the valid date range for fares data. This endpoint provides
+ * information about when fare data is available and valid.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - No parameters required (empty object for consistency)
  * @param options - Optional React Query options
- * @returns React Query result containing valid date range information
- *
- * @example
- * ```typescript
- * const { data: dateRange } = useFaresValidDateRange({});
- * console.log(dateRange?.DateFrom); // "2024-01-01T00:00:00Z"
- * ```
+ * @returns React Query result containing valid date range
  */
 export const useFaresValidDateRange = (
   params: GetFaresValidDateRangeParams = {},
@@ -100,10 +108,10 @@ export const useFaresValidDateRange = (
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<FaresValidDateRange, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "fares", "validDateRange", params],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "validDateRange"],
     queryFn: () => getFaresValidDateRange(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

@@ -1,16 +1,18 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
 import { fareLineItemSchema } from "./getFareLineItems";
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
 import { terminalComboVerboseSchema } from "./getTerminalComboVerbose";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFareLineItemsVerbose
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}";
@@ -47,7 +49,10 @@ export const getFareLineItemsVerbose = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFareLineItemsVerboseParamsSchema
+// GetFareLineItemsVerboseParams
 // ============================================================================
 
 export const getFareLineItemsVerboseParamsSchema = z
@@ -67,7 +72,10 @@ export type GetFareLineItemsVerboseParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// fareLineItemsVerboseResponseSchema
+// FareLineItemsVerboseResponse
 // ============================================================================
 
 // Import the terminal combo verbose schema
@@ -142,37 +150,49 @@ export type FareLineItemsVerboseResponse = z.infer<
 >;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFareLineItemsVerbose
 // ============================================================================
 
 /**
  * Hook for getting verbose fare line items from WSF Fares API
  *
- * Retrieves all fare line items for all terminal combinations on a given trip date.
- * This endpoint provides comprehensive fare information for all available routes
- * in a single call.
+ * Retrieves verbose fare line items for a specific route. This endpoint provides
+ * comprehensive fare information including detailed descriptions and metadata for the specified
+ * terminal combination and trip type.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
- * @param params - Object containing tripDate
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip
  * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalID - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalID - The unique identifier for the arriving terminal
+ * @param params.roundTrip - Whether this is a round trip
  * @param options - Optional React Query options
- * @returns React Query result containing complex object with all fare line items for all routes
+ * @returns React Query result containing array of verbose fare line items
  */
 export const useFareLineItemsVerbose = (
-  params: { tripDate: Date },
+  params: {
+    tripDate: Date;
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFareLineItemsVerbose>>>,
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<FareLineItemsVerboseResponse, Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
       "fares",
       "fareLineItemsVerbose",
-      jsDateToYyyyMmDd(params.tripDate),
+      JSON.stringify(params),
     ],
-    queryFn: () => getFareLineItemsVerbose({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: () =>
+      getFareLineItemsVerbose({
+        tripDate: params.tripDate,
+      }),
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

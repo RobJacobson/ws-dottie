@@ -2,20 +2,18 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getEventCategories
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get event categories from WSDOT Highway Alerts API
@@ -47,7 +45,10 @@ export const getEventCategories = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getEventCategoriesParamsSchema
+// GetEventCategoriesParams
 // ============================================================================
 
 export const getEventCategoriesParamsSchema = z
@@ -61,7 +62,10 @@ export type GetEventCategoriesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// eventCategoriesArraySchema
+// EventCategories
 // ============================================================================
 
 export const eventCategoriesArraySchema = z
@@ -73,7 +77,9 @@ export const eventCategoriesArraySchema = z
 export type EventCategories = z.infer<typeof eventCategoriesArraySchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useEventCategories
 // ============================================================================
 
 /**
@@ -91,7 +97,12 @@ export const useEventCategories = (
   options?: TanStackOptions<string[]>
 ): UseQueryResult<string[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-alerts", "getEventCategories", params],
+    queryKey: [
+      "wsdot",
+      "highway-alerts",
+      "getEventCategories",
+      JSON.stringify(params),
+    ],
     queryFn: () => getEventCategories(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

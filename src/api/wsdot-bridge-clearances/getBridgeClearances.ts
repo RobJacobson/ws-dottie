@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -18,7 +18,8 @@ import {
 // getBridgeClearances
 // ============================================================================
 
-const ENDPOINT = "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson";
+const ENDPOINT =
+  "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}";
 
 /**
  * Get bridge clearances from WSDOT Bridge Clearances API
@@ -41,7 +42,7 @@ export const getBridgeClearances = async (
   params: GetBridgeClearancesParams
 ): Promise<BridgeDataGIS[]> => {
   return zodFetch(
-    `${ENDPOINT}?Route={route}`,
+    ENDPOINT,
     {
       input: getBridgeClearancesParamsSchema,
       output: bridgeDataGisArraySchema,
@@ -89,6 +90,7 @@ export const bridgeDataGisSchema = z
 
     BridgeNumber: z
       .string()
+      .nullable()
       .describe(
         "Unique identifier assigned to the bridge by WSDOT. This number is used internally by the department for bridge management, maintenance scheduling, and record keeping. It serves as the primary key for bridge identification in WSDOT systems."
       ),
@@ -101,6 +103,7 @@ export const bridgeDataGisSchema = z
 
     CrossingDescription: z
       .string()
+      .nullable()
       .describe(
         "Human-readable description of what the bridge crosses over or under. Examples include 'Over I-5', 'Over Ship Canal', 'Under SR 520'. This field provides context about the bridge's location and purpose within the transportation network."
       ),
@@ -151,18 +154,21 @@ export const bridgeDataGisSchema = z
 
     StateRouteID: z
       .string()
+      .nullable()
       .describe(
         "Official Washington State route identifier where the bridge is located. Examples include '005' for I-5, '090' for I-90, '101' for US-101. This is the primary route designation used by WSDOT for traffic management and navigation."
       ),
 
     StateStructureId: z
       .string()
+      .nullable()
       .describe(
         "Official state structure identifier assigned to the bridge by WSDOT. This ID is used for structural engineering records, inspection schedules, and maintenance planning. It serves as the primary reference for all bridge-related documentation."
       ),
 
     VerticalClearanceMaximumFeetInch: z
       .string()
+      .nullable()
       .describe(
         "Maximum vertical clearance under the bridge expressed in feet and inches format (e.g., '16-06' for 16 feet 6 inches). This represents the highest point where vehicles can safely pass under the bridge structure. Critical for commercial vehicle route planning."
       ),
@@ -175,6 +181,7 @@ export const bridgeDataGisSchema = z
 
     VerticalClearanceMinimumFeetInch: z
       .string()
+      .nullable()
       .describe(
         "Minimum vertical clearance under the bridge expressed in feet and inches format (e.g., '15-08' for 15 feet 8 inches). This represents the lowest point where vehicles can pass under the bridge structure. This is the critical measurement for determining vehicle compatibility."
       ),
@@ -226,7 +233,7 @@ export const useBridgeClearances = (
   options?: TanStackOptions<BridgeDataGIS[]>
 ): UseQueryResult<BridgeDataGIS[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "bridge-clearances", "getBridgeClearances", params],
+    queryKey: ["api", "wsdot", "bridge-clearances", JSON.stringify(params)],
     queryFn: () => getBridgeClearances(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

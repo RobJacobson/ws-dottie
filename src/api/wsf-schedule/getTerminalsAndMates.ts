@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import type { ScheduleTerminalCombo } from "./getScheduleTerminalComboById";
-import { scheduleTerminalComboSchema } from "./getScheduleTerminalComboById";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTerminalsAndMates
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/terminalsandmates/{tripDate}";
@@ -17,18 +18,18 @@ const ENDPOINT = "/ferries/api/schedule/rest/terminalsandmates/{tripDate}";
 /**
  * API function for fetching terminals and mates from WSF Schedule API
  *
- * Retrieves all valid departing and arriving terminal combinations for a given trip date.
+ * Retrieves all valid terminal combinations (departing and arriving pairs) for a given trip date.
  * A valid trip date may be determined using validDateRange.
  *
  * @param params - Object containing tripDate
  * @param params.tripDate - The trip date as a Date object
- * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combinations
+ * @returns Promise resolving to an array of ScheduleTerminalCombo objects containing terminal combination information
  * @throws {WsfApiError} When the API request fails
  *
  * @example
  * ```typescript
- * const combos = await getTerminalsAndMates({ tripDate: new Date('2024-01-15') });
- * console.log(combos[0].DepartingDescription); // "Seattle"
+ * const terminalCombos = await getTerminalsAndMates({ tripDate: new Date('2024-01-15') });
+ * console.log(terminalCombos[0].DepartingDescription); // "Anacortes"
  * ```
  */
 export const getTerminalsAndMates = async (
@@ -45,19 +46,20 @@ export const getTerminalsAndMates = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalsAndMatesParamsSchema
+// GetTerminalsAndMatesParams
 // ============================================================================
 
 export const getTerminalsAndMatesParamsSchema = z
   .object({
     tripDate: z
       .date()
-      .describe(
-        "The trip date for which to retrieve schedule information. This date determines which schedule data is returned."
-      ),
+      .describe("The trip date for which to retrieve terminal combinations."),
   })
   .describe(
-    "Parameters for retrieving all valid departing and arriving terminal combinations for a given trip date."
+    "Parameters for retrieving all valid terminal combinations for a given trip date."
   );
 
 export type GetTerminalsAndMatesParams = z.infer<
@@ -65,41 +67,79 @@ export type GetTerminalsAndMatesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// scheduleTerminalComboSchema
+// scheduleTerminalCombosArraySchema
+// ScheduleTerminalCombo
 // ============================================================================
+
+export const scheduleTerminalComboSchema = z
+  .object({
+    DepartingTerminalID: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the departing terminal"),
+    DepartingDescription: z
+      .string()
+      .describe("Human-readable name for the departing terminal"),
+    ArrivingTerminalID: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the arriving terminal"),
+    ArrivingDescription: z
+      .string()
+      .describe("Human-readable name for the arriving terminal"),
+  })
+  .describe(
+    "Schedule terminal combination information including departing and arriving terminal details"
+  );
 
 export const scheduleTerminalCombosArraySchema = z.array(
   scheduleTerminalComboSchema
 );
 
+export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
+
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalsAndMates
 // ============================================================================
 
 /**
  * React Query hook for fetching terminals and mates from WSF Schedule API
  *
- * Retrieves all valid departing and arriving terminal combinations for a given trip date.
+ * Retrieves all valid terminal combinations (departing and arriving pairs) for a given trip date.
  * A valid trip date may be determined using validDateRange.
  *
  * @param params - Object containing tripDate
  * @param params.tripDate - The trip date as a Date object
  * @param options - Optional React Query options
- * @returns React Query result object containing terminal combinations
+ * @returns React Query result object containing terminal combination information
  *
  * @example
  * ```typescript
- * const { data: combos } = useTerminalsAndMates({ tripDate: new Date('2024-01-15') });
- * console.log(combos?.[0]?.DepartingDescription); // "Seattle"
+ * const { data: terminalCombos } = useTerminalsAndMates({ tripDate: new Date('2024-01-15') });
+ * console.log(terminalCombos?.[0]?.DepartingDescription); // "Anacortes"
  * ```
  */
 export const useTerminalsAndMates = (
-  params: GetTerminalsAndMatesParams,
+  params: { tripDate: Date },
   options?: TanStackOptions<ScheduleTerminalCombo[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "terminalsAndMates", params.tripDate],
+  useQueryWithAutoUpdate({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "terminalsAndMates",
+      JSON.stringify(params),
+    ],
     queryFn: () => getTerminalsAndMates(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getAlerts
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/alerts";
@@ -36,13 +39,17 @@ export const getAlerts = async (): Promise<Alert[]> => {
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
+// Input Schema & Types
+//
 // No input parameters for this endpoint
+// ============================================================================
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// alertSchema
+// alertsArraySchema
+// Alert
 // ============================================================================
 
 export const alertSchema = z
@@ -88,7 +95,7 @@ export const alertSchema = z
       .describe(
         "Text content for homepage display. Contains alert information formatted for display on the WSF homepage."
       ),
-    PublishDate: dateSchema.describe(
+    PublishDate: zWsdotDate().describe(
       "Date when the bulletin was published. Indicates when the bulletin became available and when it was last updated."
     ),
     DisruptionDescription: z
@@ -143,7 +150,9 @@ export const alertsArraySchema = z.array(alertSchema);
 export type Alert = z.infer<typeof alertSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useAlerts
 // ============================================================================
 
 /**
@@ -163,9 +172,10 @@ export type Alert = z.infer<typeof alertSchema>;
  * ```
  */
 export const useAlerts = (options?: TanStackOptions<Alert[]>) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "alerts"],
     queryFn: () => getAlerts(),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
   });

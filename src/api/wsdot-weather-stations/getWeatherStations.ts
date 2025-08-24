@@ -2,20 +2,18 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getWeatherStations
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/WeatherStations/WeatherStationsREST.svc/GetCurrentStationsAsJson";
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
 
 /**
  * Get weather stations from WSDOT Weather Stations API
@@ -46,7 +44,10 @@ export const getWeatherStations = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getWeatherStationsParamsSchema
+// GetWeatherStationsParams
 // ============================================================================
 
 export const getWeatherStationsParamsSchema = z
@@ -60,21 +61,22 @@ export type GetWeatherStationsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// weatherStationDataSchema
+// WeatherStationData
 // ============================================================================
 
 export const weatherStationDataSchema = z
   .object({
     Latitude: z
       .number()
-      .optional()
       .describe(
         "Latitude coordinate of the weather station location in decimal degrees. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
       ),
 
     Longitude: z
       .number()
-      .optional()
       .describe(
         "Longitude coordinate of the weather station location in decimal degrees. Used for mapping applications and geographic positioning of the station. Essential for GPS navigation and geographic information systems."
       ),
@@ -82,7 +84,6 @@ export const weatherStationDataSchema = z
     StationCode: z
       .number()
       .int()
-      .optional()
       .describe(
         "Unique numeric identifier assigned to this weather station by the WSDOT system. This code serves as a permanent, unique reference for the station across all WSDOT systems and can be used for tracking, reporting, and data correlation purposes."
       ),
@@ -90,7 +91,6 @@ export const weatherStationDataSchema = z
     StationName: z
       .string()
       .nullable()
-      .optional()
       .describe(
         "Human-readable name for the weather station that provides quick identification. Examples include 'Snoqualmie Pass', 'Stevens Pass', 'White Pass', 'Crystal Mountain', 'Mount Baker', or 'Alpental'. This field is the primary display name used in applications."
       ),
@@ -109,7 +109,9 @@ export const weatherStationDataArraySchema = z
 export type WeatherStationData = z.infer<typeof weatherStationDataSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useWeatherStations
 // ============================================================================
 
 /**
@@ -132,7 +134,12 @@ export const useWeatherStations = (
   options?: TanStackOptions<WeatherStationData[]>
 ): UseQueryResult<WeatherStationData[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "weather-stations", "getWeatherStations", params],
+    queryKey: [
+      "wsdot",
+      "weather-stations",
+      "getWeatherStations",
+      JSON.stringify(params),
+    ],
     queryFn: () => getWeatherStations(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

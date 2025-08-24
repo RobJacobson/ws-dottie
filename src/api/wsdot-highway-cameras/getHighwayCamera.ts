@@ -2,21 +2,19 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zNullableString } from "@/shared/validation";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getHighwayCamera
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get a specific highway camera by ID
@@ -48,7 +46,10 @@ export const getHighwayCamera = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getHighwayCameraParamsSchema
+// GetHighwayCameraParams
 // ============================================================================
 
 export const getHighwayCameraParamsSchema = z
@@ -69,7 +70,10 @@ export type GetHighwayCameraParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// cameraSchema
+// Camera
 // ============================================================================
 
 export const cameraLocationSchema = z
@@ -196,7 +200,9 @@ export type CameraLocation = z.infer<typeof cameraLocationSchema>;
 export type Camera = z.infer<typeof cameraSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useHighwayCamera
 // ============================================================================
 
 /**
@@ -220,7 +226,12 @@ export const useHighwayCamera = (
   options?: TanStackOptions<Camera>
 ): UseQueryResult<Camera, Error> => {
   return useQuery<Camera>({
-    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params],
+    queryKey: [
+      "wsdot",
+      "highway-cameras",
+      "getHighwayCamera",
+      JSON.stringify(params),
+    ],
     queryFn: () => getHighwayCamera(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,

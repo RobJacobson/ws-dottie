@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema, nullableDateSchema } from "./shared-schemas";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getSailings
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/sailings/{schedRouteId}";
@@ -42,7 +45,10 @@ export const getSailings = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getSailingsParamsSchema
+// GetSailingsParams
 // ============================================================================
 
 export const getSailingsParamsSchema = z
@@ -62,7 +68,16 @@ export const getSailingsParamsSchema = z
 export type GetSailingsParams = z.infer<typeof getSailingsParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalTimeSchema
+// journeySchema
+// sailingSchema
+// sailingsArraySchema
+// Sailing
+// sailingResponseSchema
+// sailingsResponseArraySchema
+// SailingResponse
 // ============================================================================
 
 export const terminalTimeSchema = z
@@ -87,9 +102,11 @@ export const terminalTimeSchema = z
       .describe(
         "Brief description of the terminal. Short identifier used in displays, schedules, and references for passenger convenience."
       ),
-    Time: nullableDateSchema.describe(
-      "Scheduled time for arrival or departure at this terminal. Null when time is not available. All times are in Pacific Time Zone (PT/PDT)."
-    ),
+    Time: zWsdotDate()
+      .nullable()
+      .describe(
+        "Scheduled time for arrival or departure at this terminal. Null when time is not available. All times are in Pacific Time Zone (PT/PDT)."
+      ),
     DepArrIndicator: z
       .number()
       .nullable()
@@ -170,10 +187,10 @@ export const sailingSchema = z
       .describe(
         "Unique identifier for the scheduled route. Links the sailing to a specific route schedule and determines the route configuration."
       ),
-    SailingDate: dateSchema.describe(
+    SailingDate: zWsdotDate().describe(
       "Date of the sailing in ISO format. Indicates when this specific ferry departure occurs."
     ),
-    SailingTime: dateSchema.describe(
+    SailingTime: zWsdotDate().describe(
       "Time of the sailing in ISO format. Indicates the scheduled departure time for this ferry trip."
     ),
     VesselID: z
@@ -229,13 +246,13 @@ export const sailingResponseSchema = z
     DayOpUseForHoliday: z.boolean(),
     ActiveDateRanges: z.array(
       z.object({
-        DateFrom: nullableDateSchema,
-        DateThru: nullableDateSchema,
+        DateFrom: zWsdotDate().nullable(),
+        DateThru: zWsdotDate().nullable(),
         EventID: z.number().nullable(),
         EventDescription: z.string().nullable(),
       })
     ),
-    Journs: z.array(z.any()), // Using any for now to avoid circular dependency
+    Journs: z.array(journeySchema),
   })
   .describe("Sailing response structure from WSF API");
 
@@ -244,7 +261,9 @@ export const sailingsResponseArraySchema = z.array(sailingResponseSchema);
 export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useSailings
 // ============================================================================
 
 /**
@@ -268,9 +287,11 @@ export const useSailings = (
   params: GetSailingsParams,
   options?: TanStackOptions<SailingResponse[]>
 ) =>
-  useQuery({
-    queryKey: ["wsf", "schedule", "sailings", params.schedRouteId],
+  useQueryWithAutoUpdate({
+    queryKey: ["wsf", "schedule", "sailings", JSON.stringify(params)],
     queryFn: () => getSailings(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

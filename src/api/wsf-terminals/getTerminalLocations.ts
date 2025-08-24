@@ -1,11 +1,12 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 // Import schemas from the single-item endpoint
 import {
   type TerminalLocation,
@@ -13,7 +14,9 @@ import {
 } from "./getTerminalLocationsByTerminalId";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalLocations
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminallocations";
@@ -42,14 +45,17 @@ export const getTerminalLocations = async (
     ENDPOINT,
     {
       input: getTerminalLocationsParamsSchema,
-      output: terminalLocationArraySchema,
+      output: terminalLocationsArraySchema,
     },
     params
   );
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalLocationsParamsSchema
+// GetTerminalLocationsParams
 // ============================================================================
 
 export const getTerminalLocationsParamsSchema = z
@@ -61,32 +67,36 @@ export type GetTerminalLocationsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalLocationArraySchema
 // ============================================================================
 
 // Create array schema from the imported single-item schema
-export const terminalLocationArraySchema = z.array(terminalLocationSchema);
+export const terminalLocationsArraySchema = z.array(terminalLocationSchema);
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalLocations
 // ============================================================================
 
 /**
  * React Query hook for fetching all terminal locations
  *
- * Retrieves detailed location information for all terminals including
- * addresses, coordinates, and geographic data.
+ * Retrieves all terminal locations from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param options - Optional React Query options
- * @returns Query result containing array of TerminalLocation objects
+ * @returns Query result containing array of TerminalLocations objects
  */
 export const useTerminalLocations = (
   options?: TanStackOptions<TerminalLocation[]>
 ): UseQueryResult<TerminalLocation[], Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "locations"],
-    queryFn: () => getTerminalLocations(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: getTerminalLocations,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

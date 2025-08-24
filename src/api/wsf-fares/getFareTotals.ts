@@ -1,15 +1,17 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
-import { fareLineItemSchema } from "./getFareLineItems";
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFareTotals
 // ============================================================================
 
 const ENDPOINT =
@@ -58,7 +60,10 @@ export const getFareTotals = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFareTotalsParamsSchema
+// GetFareTotalsParams
 // ============================================================================
 
 export const getFareTotalsParamsSchema = z
@@ -111,19 +116,52 @@ export const getFareTotalsParamsSchema = z
 export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// fareTotalsArraySchema
+// FareTotal
 // ============================================================================
 
+export const fareTotalSchema = z
+  .object({
+    TotalType: z
+      .number()
+      .int()
+      .min(1)
+      .max(4)
+      .describe("Fare total type: 1=Depart, 2=Return, 3=Either, 4=Total"),
+    Description: z
+      .string()
+      .nullable()
+      .describe(
+        "Detailed description of the fare total (e.g., 'Anacortes to Friday Harbor')"
+      ),
+    BriefDescription: z
+      .string()
+      .nullable()
+      .describe(
+        "Brief description of the fare total (e.g., 'Depart', 'Return', 'Total')"
+      ),
+    Amount: z
+      .number()
+      .describe("Fare amount in US dollars for this total type"),
+  })
+  .describe(
+    "Fare total calculation result including total type, descriptions, and amount"
+  );
+
 export const fareTotalsArraySchema = z
-  .array(fareLineItemSchema)
+  .array(fareTotalSchema)
   .describe(
     "Array of fare total calculations for a specific combination of fare line items and quantities. This collection provides the calculated total costs for fare combinations."
   );
 
-export type FareTotal = z.infer<typeof fareLineItemSchema>; // Reusing fareLineItemSchema for fare totals
+export type FareTotal = z.infer<typeof fareTotalSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFareTotals
 // ============================================================================
 
 /**
@@ -131,6 +169,7 @@ export type FareTotal = z.infer<typeof fareLineItemSchema>; // Reusing fareLineI
  *
  * Calculates the total fare cost for a specific combination of fare line items and quantities.
  * This endpoint provides fare calculation functionality for booking and reservation systems.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip, fareLineItemIDs, quantities
  * @param params.tripDate - The trip date as a Date object
@@ -156,21 +195,16 @@ export const useFareTotals = (
     "queryKey" | "queryFn" | "enabled"
   >
 ): UseQueryResult<FareTotal[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "fares",
-      "fareTotals",
-      jsDateToYyyyMmDd(params.tripDate),
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-      params.roundTrip,
-      params.fareLineItemIDs,
-      params.quantities,
-    ],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "fareTotals", JSON.stringify(params)],
     queryFn: () => getFareTotals(params),
-    enabled: params.fareLineItemIDs.length > 0 && params.quantities.length > 0,
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: {
+      ...tanstackQueryOptions.DAILY_UPDATES,
+      enabled:
+        params.fareLineItemIDs.length > 0 && params.quantities.length > 0,
+      ...options,
+    },
+    params,
   });
 };

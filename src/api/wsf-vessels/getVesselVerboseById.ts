@@ -1,12 +1,20 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import { zPositiveInteger } from "@/shared/validation";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 import { type VesselVerbose, vesselVerboseSchema } from "./getVesselVerbose";
+
+// ============================================================================
+// API Function
+//
+// getVesselVerboseById
+// ============================================================================
 
 const ENDPOINT = "/ferries/api/vessels/rest/vesselverbose/{vesselId}";
 
@@ -41,7 +49,10 @@ export const getVesselVerboseById = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getVesselVerboseByIdParamsSchema
+// GetVesselVerboseByIdParams
 // ============================================================================
 
 export const getVesselVerboseByIdParamsSchema = z
@@ -59,13 +70,18 @@ export type GetVesselVerboseByIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// vesselVerboseSchema (imported from ./getVesselVerbose)
+// VesselVerbose
 // ============================================================================
 
 // Schema and type imported from getVesselVerbose.ts to avoid duplication
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useVesselVerboseById
 // ============================================================================
 
 /**
@@ -77,16 +93,23 @@ export type GetVesselVerboseByIdParams = z.infer<
  * @param params - Object containing vesselId
  * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @param options - Optional React Query options
- * @returns React Query result containing a VesselVerbose object with comprehensive information for the specified vessel
+ * @returns React Query result containing a VesselVerbose object with comprehensive information
+ *
+ * @example
+ * ```typescript
+ * const { data: vessel } = useVesselVerboseById({ vesselId: 1 });
+ * console.log(vessel?.VesselName); // "Cathlamet"
+ * ```
  */
 export const useVesselVerboseById = (
   params: { vesselId: number },
-  options?: Parameters<typeof useQuery<VesselVerbose, Error>>[1]
-): UseQueryResult<VesselVerbose, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "vessels", "verbose", "byId", params.vesselId],
-    queryFn: () => getVesselVerboseById({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+  options?: TanStackOptions<VesselVerbose>
+) => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "verbose", JSON.stringify(params)],
+    queryFn: () => getVesselVerboseById(params),
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

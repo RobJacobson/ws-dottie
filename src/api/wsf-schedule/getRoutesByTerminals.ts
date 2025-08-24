@@ -1,15 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import type { Route } from "./getRoutes";
 import { routeSchema } from "./getRoutes";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getRoutesByTerminals
 // ============================================================================
 
 const ENDPOINT =
@@ -52,7 +55,10 @@ export const getRoutesByTerminals = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getRoutesByTerminalsParamsSchema
+// GetRoutesByTerminalsParams
 // ============================================================================
 
 export const getRoutesByTerminalsParamsSchema = z
@@ -80,13 +86,18 @@ export type GetRoutesByTerminalsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// routesArraySchema
+// Route (imported from ./getRoutes)
 // ============================================================================
 
 export const routesArraySchema = z.array(routeSchema);
 
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useRoutesByTerminals
 // ============================================================================
 
 /**
@@ -116,16 +127,16 @@ export const useRoutesByTerminals = (
   params: GetRoutesByTerminalsParams,
   options?: TanStackOptions<Route[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
       "schedule",
       "routesByTerminals",
-      params.tripDate,
-      params.departingTerminalId,
-      params.arrivingTerminalId,
+      JSON.stringify(params),
     ],
     queryFn: () => getRoutesByTerminals(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

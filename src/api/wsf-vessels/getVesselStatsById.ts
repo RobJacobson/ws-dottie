@@ -1,8 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import {
@@ -12,11 +11,76 @@ import {
 } from "@/shared/validation";
 import { createVesselIdDescription } from "@/shared/validation/templates";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 // Import vessel class schema from getVesselBasicsById
 import { vesselClassSchema } from "./getVesselBasicsById";
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// API Function
+//
+// getVesselStatsById
+// ============================================================================
+
+const ENDPOINT = "/ferries/api/vessels/rest/vesselstats/{vesselId}";
+
+/**
+ * API function for fetching vessel statistics for a specific vessel from WSF Vessels API
+ *
+ * Retrieves statistical information for a specific vessel identified by vessel ID,
+ * including operational statistics, performance metrics, and other relevant data.
+ *
+ * @param params - Object containing vesselId
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
+ * @returns Promise resolving to a VesselStats object containing vessel statistics
+ *
+ * @example
+ * ```typescript
+ * const stats = await getVesselStatsById({ vesselId: 1 });
+ * console.log(stats.VesselName); // "Cathlamet"
+ * console.log(stats.MaxPassengerCount); // 2000
+ * ```
+ */
+export const getVesselStatsById = async (
+  params: GetVesselStatsByIdParams
+): Promise<VesselStats> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getVesselStatsByIdParamsSchema,
+      output: vesselStatsSchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// Input Schema & Types
+//
+// getVesselStatsByIdParamsSchema
+// GetVesselStatsByIdParams
+// ============================================================================
+
+export const getVesselStatsByIdParamsSchema = z
+  .object({
+    vesselId: zPositiveInteger("vessel").describe(
+      createVesselIdDescription(
+        "whose technical specifications and statistics you want to retrieve. This returns detailed information about the vessel's physical characteristics, capacity, engine specifications, and operational statistics"
+      )
+    ),
+  })
+  .describe(
+    "Parameters for retrieving comprehensive statistics and specifications for a specific vessel"
+  );
+
+export type GetVesselStatsByIdParams = z.infer<
+  typeof getVesselStatsByIdParamsSchema
+>;
+
+// ============================================================================
+// Output Schema & Types
+//
+// vesselStatsSchema
+// VesselStats
 // ============================================================================
 
 export const vesselStatsSchema = z
@@ -160,63 +224,9 @@ export const vesselStatsSchema = z
 export type VesselStats = z.infer<typeof vesselStatsSchema>;
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
-export const getVesselStatsByIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(
-      createVesselIdDescription(
-        "whose technical specifications and statistics you want to retrieve. This returns detailed information about the vessel's physical characteristics, capacity, engine specifications, and operational statistics"
-      )
-    ),
-  })
-  .describe(
-    "Parameters for retrieving comprehensive statistics and specifications for a specific vessel"
-  );
-
-export type GetVesselStatsByIdParams = z.infer<
-  typeof getVesselStatsByIdParamsSchema
->;
-
-// ============================================================================
-// FETCH FUNCTION
-// ============================================================================
-
-const ENDPOINT = "/ferries/api/vessels/rest/vesselstats/{vesselId}";
-
-/**
- * API function for fetching vessel statistics for a specific vessel from WSF Vessels API
- *
- * Retrieves statistical information for a specific vessel identified by vessel ID,
- * including operational statistics, performance metrics, and other relevant data.
- *
- * @param params - Object containing vesselId
- * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
- * @returns Promise resolving to a VesselStats object containing vessel statistics
- *
- * @example
- * ```typescript
- * const stats = await getVesselStatsById({ vesselId: 1 });
- * console.log(stats.VesselName); // "Cathlamet"
- * console.log(stats.MaxPassengerCount); // 2000
- * ```
- */
-export const getVesselStatsById = async (
-  params: GetVesselStatsByIdParams
-): Promise<VesselStats> => {
-  return zodFetch(
-    ENDPOINT,
-    {
-      input: getVesselStatsByIdParamsSchema,
-      output: vesselStatsSchema,
-    },
-    params
-  );
-};
-
-// ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useVesselStatsById
 // ============================================================================
 
 /**
@@ -228,16 +238,23 @@ export const getVesselStatsById = async (
  * @param params - Object containing vesselId
  * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
  * @param options - Optional React Query options
- * @returns React Query result containing a VesselStats object with statistics for the specified vessel
+ * @returns React Query result containing a VesselStats object with statistical information
+ *
+ * @example
+ * ```typescript
+ * const { data: stats } = useVesselStatsById({ vesselId: 1 });
+ * console.log(stats?.VesselName); // "Cathlamet"
+ * ```
  */
 export const useVesselStatsById = (
-  params: { vesselId: number },
+  params: GetVesselStatsByIdParams,
   options?: TanStackOptions<VesselStats>
-): UseQueryResult<VesselStats, Error> => {
-  return useQuery({
-    queryKey: ["wsf", "vessels", "stats", "byId", params.vesselId],
-    queryFn: () => getVesselStatsById({ vesselId: params.vesselId }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+) => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "stats", JSON.stringify(params)],
+    queryFn: () => getVesselStatsById(params),
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

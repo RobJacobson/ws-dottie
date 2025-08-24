@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
@@ -10,15 +10,13 @@ import type { HighwayAlert } from "./getHighwayAlertById";
 import { highwayAlertArraySchema } from "./getHighwayAlerts";
 
 // ============================================================================
-// CONSTANTS
+// API Function
+//
+// getHighwayAlertsByRegionId
 // ============================================================================
 
 const ENDPOINT =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}";
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
 
 /**
  * Get highway alerts by region ID from WSDOT Highway Alerts API
@@ -51,7 +49,10 @@ export const getHighwayAlertsByRegionId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getHighwayAlertsByRegionIdParamsSchema
+// GetHighwayAlertsByRegionIdParams
 // ============================================================================
 
 export const getHighwayAlertsByRegionIdParamsSchema = z
@@ -73,14 +74,15 @@ export type GetHighwayAlertsByRegionIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// highwayAlertArraySchema (imported from ./getHighwayAlerts)
 // ============================================================================
 
-// Import array schema from the array endpoint
-export { highwayAlertArraySchema } from "./getHighwayAlerts";
-
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useHighwayAlertsByRegionId
 // ============================================================================
 
 /**
@@ -99,7 +101,12 @@ export const useHighwayAlertsByRegionId = (
   options?: TanStackOptions<HighwayAlert[]>
 ): UseQueryResult<HighwayAlert[], Error> => {
   return useQuery({
-    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByRegionId", params],
+    queryKey: [
+      "wsdot",
+      "highway-alerts",
+      "getHighwayAlertsByRegionId",
+      JSON.stringify(params),
+    ],
     queryFn: () => getHighwayAlertsByRegionId(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,

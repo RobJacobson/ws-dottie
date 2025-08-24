@@ -1,42 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import { type RouteDetails, routeDetailsArraySchema } from "./getRouteDetails";
 
-// ======================================================d======================
-// INPUT SCHEMA & TYPES
 // ============================================================================
-
-export const getRouteDetailsByTerminalsParamsSchema = z
-  .object({
-    tripDate: z
-      .date()
-      .describe("The trip date for which to retrieve route details."),
-    departingTerminalId: z
-      .number()
-      .int()
-      .positive()
-      .describe("Unique identifier for the departing terminal."),
-    arrivingTerminalId: z
-      .number()
-      .int()
-      .positive()
-      .describe("Unique identifier for the arriving terminal."),
-  })
-  .describe(
-    "Parameters for retrieving detailed route information between specific terminal pairs on a given trip date."
-  );
-
-export type GetRouteDetailsByTerminalsParams = z.infer<
-  typeof getRouteDetailsByTerminalsParamsSchema
->;
-
-// ============================================================================
-// API FUNCTION
+// API Function
+//
+// getRouteDetailsByTerminals
 // ============================================================================
 
 const ENDPOINT =
@@ -79,7 +54,47 @@ export const getRouteDetailsByTerminals = async (
 };
 
 // ============================================================================
-// QUERY HOOK
+// Input Schema & Types
+//
+// getRouteDetailsByTerminalsParamsSchema
+// GetRouteDetailsByTerminalsParams
+// ============================================================================
+
+export const getRouteDetailsByTerminalsParamsSchema = z
+  .object({
+    tripDate: z
+      .date()
+      .describe("The trip date for which to retrieve route details."),
+    departingTerminalId: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the departing terminal."),
+    arrivingTerminalId: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the arriving terminal."),
+  })
+  .describe(
+    "Parameters for retrieving detailed route information between specific terminal pairs on a given trip date."
+  );
+
+export type GetRouteDetailsByTerminalsParams = z.infer<
+  typeof getRouteDetailsByTerminalsParamsSchema
+>;
+
+// ============================================================================
+// Output Schema & Types
+//
+// RouteDetails (imported from ./getRouteDetails)
+// routeDetailsArraySchema (imported from ./getRouteDetails)
+// ============================================================================
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useRouteDetailsByTerminals
 // ============================================================================
 
 /**
@@ -109,16 +124,16 @@ export const useRouteDetailsByTerminals = (
   params: GetRouteDetailsByTerminalsParams,
   options?: TanStackOptions<RouteDetails[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
       "schedule",
       "routeDetailsByTerminals",
-      params.tripDate,
-      params.departingTerminalId,
-      params.arrivingTerminalId,
+      JSON.stringify(params),
     ],
     queryFn: () => getRouteDetailsByTerminals(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

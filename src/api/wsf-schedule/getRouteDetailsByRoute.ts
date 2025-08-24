@@ -1,79 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
+import { zWsdotDate } from "@/shared/validation";
 
-import { dateSchema } from "./shared-schemas";
-
-// ============================================================================
-// INPUT SCHEMA & TYPES
-// ============================================================================
-
-export const getRouteDetailsByRouteParamsSchema = z
-  .object({
-    tripDate: z
-      .date()
-      .describe("The trip date for which to retrieve route details."),
-    routeId: z
-      .number()
-      .int()
-      .positive()
-      .describe("Unique identifier for the ferry route to get details for."),
-  })
-  .describe(
-    "Parameters for retrieving detailed route information for a specific route and trip date."
-  );
-
-export type GetRouteDetailsByRouteParams = z.infer<
-  typeof getRouteDetailsByRouteParamsSchema
->;
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES (based on actual API response)
-// ============================================================================
-
-// Service disruption schema specific to this endpoint (different structure than base)
-export const routeDetailsByRouteServiceDisruptionSchema = z
-  .object({
-    BulletinID: z.number(),
-    BulletinFlag: z.boolean(),
-    CommunicationFlag: z.boolean(),
-    PublishDate: dateSchema,
-    AlertDescription: z.string(),
-    DisruptionDescription: z.string().nullable(),
-    AlertFullTitle: z.string(),
-    AlertFullText: z.string(),
-    IVRText: z.string().nullable(),
-  })
-  .describe(
-    "Service disruption information including bulletin details, alerts, and operational issues affecting ferry service."
-  );
-
-// Actual API response schema (based on real API responses)
-export const routeDetailsByRouteResponseSchema = z.object({
-  RouteID: z.number(),
-  RouteAbbrev: z.string(),
-  Description: z.string(),
-  RegionID: z.number(),
-  VesselWatchID: z.number(),
-  ReservationFlag: z.boolean(),
-  InternationalFlag: z.boolean(),
-  PassengerOnlyFlag: z.boolean(),
-  CrossingTime: z.number().nullable(),
-  AdaNotes: z.string().nullable(),
-  GeneralRouteNotes: z.string(),
-  SeasonalRouteNotes: z.string(),
-  ServiceDisruptions: z.array(routeDetailsByRouteServiceDisruptionSchema),
-});
-
-export type RouteDetailsByRouteResponse = z.infer<
-  typeof routeDetailsByRouteResponseSchema
->;
-
-// ============================================================================
-// API FUNCTION
+// API Function
+//
+// getRouteDetailsByRoute
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}";
@@ -113,7 +51,81 @@ export const getRouteDetailsByRoute = async (
 };
 
 // ============================================================================
-// QUERY HOOK
+// Input Schema & Types
+//
+// getRouteDetailsByRouteParamsSchema
+// GetRouteDetailsByRouteParams
+// ============================================================================
+
+export const getRouteDetailsByRouteParamsSchema = z
+  .object({
+    tripDate: z
+      .date()
+      .describe("The trip date for which to retrieve route details."),
+    routeId: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the ferry route to get details for."),
+  })
+  .describe(
+    "Parameters for retrieving detailed route information for a specific route and trip date."
+  );
+
+export type GetRouteDetailsByRouteParams = z.infer<
+  typeof getRouteDetailsByRouteParamsSchema
+>;
+
+// ============================================================================
+// Output Schema & Types (based on actual API response)
+//
+// routeDetailsByRouteServiceDisruptionSchema
+// routeDetailsByRouteResponseSchema
+// RouteDetailsByRouteResponse
+// ============================================================================
+
+// Service disruption schema specific to this endpoint (different structure than base)
+export const routeDetailsByRouteServiceDisruptionSchema = z
+  .object({
+    BulletinID: z.number(),
+    BulletinFlag: z.boolean(),
+    CommunicationFlag: z.boolean(),
+    PublishDate: zWsdotDate(),
+    AlertDescription: z.string(),
+    DisruptionDescription: z.string().nullable(),
+    AlertFullTitle: z.string(),
+    AlertFullText: z.string(),
+    IVRText: z.string().nullable(),
+  })
+  .describe(
+    "Service disruption information including bulletin details, alerts, and operational issues affecting ferry service."
+  );
+
+// Actual API response schema (based on real API responses)
+export const routeDetailsByRouteResponseSchema = z.object({
+  RouteID: z.number(),
+  RouteAbbrev: z.string(),
+  Description: z.string(),
+  RegionID: z.number(),
+  VesselWatchID: z.number(),
+  ReservationFlag: z.boolean(),
+  InternationalFlag: z.boolean(),
+  PassengerOnlyFlag: z.boolean(),
+  CrossingTime: z.number().nullable(),
+  AdaNotes: z.string().nullable(),
+  GeneralRouteNotes: z.string(),
+  SeasonalRouteNotes: z.string(),
+  ServiceDisruptions: z.array(routeDetailsByRouteServiceDisruptionSchema),
+});
+
+export type RouteDetailsByRouteResponse = z.infer<
+  typeof routeDetailsByRouteResponseSchema
+>;
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useRouteDetailsByRoute
 // ============================================================================
 
 /**
@@ -141,15 +153,16 @@ export const useRouteDetailsByRoute = (
   params: GetRouteDetailsByRouteParams,
   options?: TanStackOptions<RouteDetailsByRouteResponse>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
       "schedule",
       "routeDetailsByRoute",
-      params.tripDate,
-      params.routeId,
+      JSON.stringify(params),
     ],
     queryFn: () => getRouteDetailsByRoute(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

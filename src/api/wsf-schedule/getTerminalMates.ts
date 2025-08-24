@@ -1,15 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
-import type { ScheduleTerminal } from "./getScheduleTerminalById";
-import { scheduleTerminalSchema } from "./getScheduleTerminalById";
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTerminalMates
 // ============================================================================
 
 const ENDPOINT =
@@ -18,22 +19,22 @@ const ENDPOINT =
 /**
  * API function for fetching terminal mates from WSF Schedule API
  *
- * Retrieves terminal mates (arriving terminals) for a specific departing terminal and trip date.
+ * Retrieves valid arriving terminals (mates) for a given departing terminal and trip date.
  * A valid trip date may be determined using validDateRange.
  *
  * @param params - Object containing tripDate and terminalId
  * @param params.tripDate - The trip date as a Date object
  * @param params.terminalId - The unique identifier for the departing terminal
- * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal mates
+ * @returns Promise resolving to an array of ScheduleTerminal objects containing terminal mates information
  * @throws {WsfApiError} When the API request fails
  *
  * @example
  * ```typescript
- * const mates = await getTerminalMates({
+ * const terminalMates = await getTerminalMates({
  *   tripDate: new Date('2024-01-15'),
  *   terminalId: 1
  * });
- * console.log(mates[0].Description); // "Bainbridge Island"
+ * console.log(terminalMates[0].Description); // "Friday Harbor"
  * ```
  */
 export const getTerminalMates = async (
@@ -50,7 +51,10 @@ export const getTerminalMates = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalMatesParamsSchema
+// GetTerminalMatesParams
 // ============================================================================
 
 export const getTerminalMatesParamsSchema = z
@@ -62,7 +66,7 @@ export const getTerminalMatesParamsSchema = z
       .number()
       .int()
       .positive()
-      .describe("Unique identifier for the departing terminal."),
+      .describe("The unique identifier for the departing terminal."),
   })
   .describe(
     "Parameters for retrieving terminal mates (arriving terminals) for a specific departing terminal and trip date."
@@ -73,49 +77,64 @@ export type GetTerminalMatesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// scheduleTerminalSchema
+// scheduleTerminalsArraySchema
+// ScheduleTerminal
 // ============================================================================
+
+export const scheduleTerminalSchema = z
+  .object({
+    TerminalID: z
+      .number()
+      .int()
+      .positive()
+      .describe("Unique identifier for the terminal"),
+    Description: z.string().describe("Human-readable name for the terminal"),
+  })
+  .describe("Schedule terminal information including ID and description");
 
 export const scheduleTerminalsArraySchema = z.array(scheduleTerminalSchema);
 
+export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;
+
 // ============================================================================
-// QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalMates
 // ============================================================================
 
 /**
  * React Query hook for fetching terminal mates from WSF Schedule API
  *
- * Retrieves terminal mates (arriving terminals) for a specific departing terminal and trip date.
+ * Retrieves valid arriving terminals (mates) for a given departing terminal and trip date.
  * A valid trip date may be determined using validDateRange.
  *
  * @param params - Object containing tripDate and terminalId
  * @param params.tripDate - The trip date as a Date object
  * @param params.terminalId - The unique identifier for the departing terminal
  * @param options - Optional React Query options
- * @returns React Query result object containing terminal mates
+ * @returns React Query result object containing terminal mates information
  *
  * @example
  * ```typescript
- * const { data: mates } = useTerminalMates({
+ * const { data: terminalMates } = useTerminalMates({
  *   tripDate: new Date('2024-01-15'),
  *   terminalId: 1
  * });
- * console.log(mates?.[0]?.Description); // "Bainbridge Island"
+ * console.log(terminalMates?.[0]?.Description); // "Friday Harbor"
  * ```
  */
 export const useTerminalMates = (
-  params: GetTerminalMatesParams,
+  params: { tripDate: Date; terminalId: number },
   options?: TanStackOptions<ScheduleTerminal[]>
 ) =>
-  useQuery({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "terminalMates",
-      params.tripDate,
-      params.terminalId,
-    ],
+  useQueryWithAutoUpdate({
+    queryKey: ["wsf", "schedule", "terminalMates", JSON.stringify(params)],
     queryFn: () => getTerminalMates(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

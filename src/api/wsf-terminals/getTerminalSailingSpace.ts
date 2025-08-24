@@ -1,14 +1,18 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
+
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalSailingSpace
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminalsailingspace";
@@ -44,7 +48,10 @@ export const getTerminalSailingSpace = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalSailingSpaceParamsSchema
+// GetTerminalSailingSpaceParams
 // ============================================================================
 
 export const getTerminalSailingSpaceParamsSchema = z
@@ -56,7 +63,15 @@ export type GetTerminalSailingSpaceParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalArrivalSpaceSchema
+// terminalDepartingSpaceSchema
+// terminalSailingSpaceSchema
+// terminalSailingSpaceArraySchema
+// TerminalSailingSpace
+// TerminalDepartingSpace
+// TerminalArrivalSpace
 // ============================================================================
 
 export const terminalArrivalSpaceSchema = z
@@ -242,14 +257,16 @@ export type TerminalDepartingSpace = z.infer<
 export type TerminalArrivalSpace = z.infer<typeof terminalArrivalSpaceSchema>;
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalSailingSpace
 // ============================================================================
 
 /**
- * React Query hook for fetching all terminal sailing space information
+ * React Query hook for fetching all terminal sailing space
  *
- * Retrieves sailing space availability information for all terminals including
- * departure times, vessel information, and space counts.
+ * Retrieves all terminal sailing space from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
  * @param options - Optional React Query options
  * @returns Query result containing array of TerminalSailingSpace objects
@@ -257,10 +274,10 @@ export type TerminalArrivalSpace = z.infer<typeof terminalArrivalSpaceSchema>;
 export const useTerminalSailingSpace = (
   options?: TanStackOptions<TerminalSailingSpace[]>
 ): UseQueryResult<TerminalSailingSpace[], Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "sailingSpace"],
-    queryFn: () => getTerminalSailingSpace(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: getTerminalSailingSpace,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

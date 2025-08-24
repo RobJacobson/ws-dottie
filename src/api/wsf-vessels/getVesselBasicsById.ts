@@ -1,11 +1,77 @@
 import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import { zPositiveInteger } from "@/shared/validation";
 import { createVesselIdDescription } from "@/shared/validation/templates";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
+
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// API Function
+//
+// getVesselBasicsById
+// ============================================================================
+
+const ENDPOINT = "/ferries/api/vessels/rest/vesselbasics/{vesselId}";
+
+/**
+ * API function for fetching vessel basics for a specific vessel from WSF Vessels API
+ *
+ * Retrieves basic vessel information for a specific vessel identified by vessel ID,
+ * including vessel name, abbreviation, class information, and operational status.
+ *
+ * @param params - Object containing vesselId
+ * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
+ * @returns Promise resolving to a VesselBasic object containing basic vessel information
+ *
+ * @example
+ * ```typescript
+ * const vessel = await getVesselBasicsById({ vesselId: 1 });
+ * console.log(vessel.VesselName); // "Cathlamet"
+ * ```
+ */
+export const getVesselBasicsById = async (
+  params: GetVesselBasicsByIdParams
+): Promise<VesselBasic> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getVesselBasicsByIdParamsSchema,
+      output: vesselBasicSchema,
+    },
+    params
+  );
+};
+
+// ============================================================================
+// Input Schema & Types
+//
+// getVesselBasicsByIdParamsSchema
+// GetVesselBasicsByIdParams
+// ============================================================================
+
+export const getVesselBasicsByIdParamsSchema = z
+  .object({
+    vesselId: zPositiveInteger("vessel").describe(
+      createVesselIdDescription("whose basic information you want to retrieve")
+    ),
+  })
+  .describe(
+    "Parameters for fetching basic information for a specific vessel by ID"
+  );
+
+export type GetVesselBasicsByIdParams = z.infer<
+  typeof getVesselBasicsByIdParamsSchema
+>;
+
+// ============================================================================
+// Output Schema & Types
+//
+// vesselBasicSchema
+// VesselBasic
 // ============================================================================
 
 export const vesselClassSchema = z
@@ -96,54 +162,37 @@ export type VesselBasic = z.infer<typeof vesselBasicSchema>;
 export type VesselClass = z.infer<typeof vesselClassSchema>;
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// TanStack Query Hook
+//
+// useVesselBasicsById
 // ============================================================================
-
-export const getVesselBasicsByIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(
-      createVesselIdDescription("whose basic information you want to retrieve")
-    ),
-  })
-  .describe(
-    "Parameters for fetching basic information for a specific vessel by ID"
-  );
-
-export type GetVesselBasicsByIdParams = z.infer<
-  typeof getVesselBasicsByIdParamsSchema
->;
-
-// ============================================================================
-// API FUNCTION
-// ============================================================================
-
-const WSF_VESSELS_BASE = "/ferries/api/vessels/rest";
 
 /**
- * API function for fetching vessel basics for a specific vessel from WSF Vessels API
+ * Hook for fetching vessel basics for a specific vessel from WSF Vessels API
  *
  * Retrieves basic vessel information for a specific vessel identified by vessel ID,
  * including vessel name, abbreviation, class information, and operational status.
  *
  * @param params - Object containing vesselId
  * @param params.vesselId - The unique identifier for the vessel (e.g., 1 for Cathlamet)
- * @returns Promise resolving to a VesselBasic object containing basic vessel information
+ * @param options - Optional React Query options
+ * @returns React Query result containing a VesselBasic object with basic vessel information
  *
  * @example
  * ```typescript
- * const vessel = await getVesselBasicsById({ vesselId: 1 });
- * console.log(vessel.VesselName); // "Cathlamet"
+ * const { data: vessel } = useVesselBasicsById({ vesselId: 1 });
+ * console.log(vessel?.VesselName); // "Cathlamet"
  * ```
  */
-export const getVesselBasicsById = async (
-  params: GetVesselBasicsByIdParams
-): Promise<VesselBasic> => {
-  return zodFetch(
-    `${WSF_VESSELS_BASE}/vesselbasics/{vesselId}`,
-    {
-      input: getVesselBasicsByIdParamsSchema,
-      output: vesselBasicSchema,
-    },
-    params
-  );
+export const useVesselBasicsById = (
+  params: { vesselId: number },
+  options?: TanStackOptions<VesselBasic>
+) => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "basics", JSON.stringify(params)],
+    queryFn: () => getVesselBasicsById(params),
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
+  });
 };

@@ -1,16 +1,21 @@
-import { z } from "zod";
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
-import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
+
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getFaresTerminalMates
 // ============================================================================
 
-const ENDPOINT = "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalID}";
+const ENDPOINT =
+  "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalID}";
 
 /**
  * Get arriving terminals for a departing terminal and trip date from WSF Fares API
@@ -39,7 +44,10 @@ export const getFaresTerminalMates = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getFaresTerminalMatesParamsSchema
+// GetFaresTerminalMatesParams
 // ============================================================================
 
 export const getFaresTerminalMatesParamsSchema = z
@@ -66,7 +74,10 @@ export type GetFaresTerminalMatesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalMateSchema
+// TerminalMate
 // ============================================================================
 
 export const terminalMateSchema = z
@@ -98,43 +109,43 @@ export const terminalMatesArraySchema = z
 export type TerminalMate = z.infer<typeof terminalMateSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useFaresTerminalMates
 // ============================================================================
 
 /**
- * Hook for getting terminal mates from WSF Fares API
+ * Hook for getting fares terminal mates from WSF Fares API
  *
- * Provides arriving terminals for a given departing terminal and trip date. A valid departing
- * terminal may be found by using terminals. Similarly, a valid trip date may be determined
- * using validDateRange.
+ * Retrieves valid arriving terminals for a given departing terminal and trip date.
+ * This endpoint provides information about which terminals can be reached from a specific departure point.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
- * @param params - Object containing tripDate and terminalID
+ * @param params - Object containing tripDate and departingTerminalID
  * @param params.tripDate - The trip date as a Date object
- * @param params.terminalID - The unique identifier for the departing terminal
+ * @param params.departingTerminalID - The unique identifier for the departing terminal
  * @param options - Optional React Query options
- * @returns React Query result containing array of arriving terminals
+ * @returns React Query result containing array of valid arriving terminals
  */
 export const useFaresTerminalMates = (
-  params: { tripDate: Date; terminalID: number },
+  params: {
+    tripDate: Date;
+    terminalID: number;
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getFaresTerminalMates>>>,
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<TerminalMate[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "fares",
-      "terminalMates",
-      jsDateToYyyyMmDd(params.tripDate),
-      params.terminalID,
-    ],
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "terminalMates", JSON.stringify(params)],
     queryFn: () =>
       getFaresTerminalMates({
         tripDate: params.tripDate,
         terminalID: params.terminalID,
       }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

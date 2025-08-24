@@ -1,11 +1,12 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 // Import schemas from the single-item endpoint
 import {
   type TerminalBasics,
@@ -13,7 +14,9 @@ import {
 } from "./getTerminalBasicsByTerminalId";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalBasics
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminalbasics";
@@ -50,7 +53,10 @@ export const getTerminalBasics = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalBasicsParamsSchema
+// GetTerminalBasicsParams
 // ============================================================================
 
 export const getTerminalBasicsParamsSchema = z
@@ -62,14 +68,18 @@ export type GetTerminalBasicsParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalBasicsArraySchema
 // ============================================================================
 
 // Create array schema from the imported single-item schema
 export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
 
 // ============================================================================
-// REACT QUERY HOOK
+// TanStack Query Hook
+//
+// useTerminalBasics
 // ============================================================================
 
 /**
@@ -85,10 +95,10 @@ export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
 export const useTerminalBasics = (
   options?: TanStackOptions<TerminalBasics[]>
 ): UseQueryResult<TerminalBasics[], Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "basics"],
-    queryFn: () => getTerminalBasics(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: getTerminalBasics,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

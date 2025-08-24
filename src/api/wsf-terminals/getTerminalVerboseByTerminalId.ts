@@ -1,12 +1,19 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 import { zWsdotDate } from "@/shared/validation";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 import { terminalBulletinItemSchema } from "./getTerminalBulletinsByTerminalId";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalVerboseByTerminalId
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminalverbose/{terminalId}";
@@ -43,7 +50,10 @@ export const getTerminalVerboseByTerminalId = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalVerboseByTerminalIdParamsSchema
+// GetTerminalVerboseByTerminalIdParams
 // ============================================================================
 
 export const getTerminalVerboseByTerminalIdParamsSchema = z
@@ -64,7 +74,15 @@ export type GetTerminalVerboseByTerminalIdParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalTransitLinkSchema
+// terminalWaitTimeSchema
+// terminalVerboseSchema
+// TerminalVerbose
+// TerminalBulletinItem (imported from ./getTerminalBulletinsByTerminalId)
+// TerminalTransitLink
+// TerminalWaitTime
 // ============================================================================
 
 // terminalBulletinItemSchema imported from ./getTerminalBulletinsByTerminalId
@@ -461,3 +479,30 @@ export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
 // TerminalBulletinItem type exported from ./getTerminalBulletins
 export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
 export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
+// ============================================================================
+// TanStack Query Hook
+//
+// useTerminalVerboseByTerminalId
+// ============================================================================
+
+/**
+ * React Query hook for fetching terminal verbose by terminal ID
+ *
+ * Retrieves terminal verbose for a specific terminal from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
+ *
+ * @param params - Object containing terminalId
+ * @param options - Optional React Query options
+ * @returns Query result containing TerminalVerbose object
+ */
+export const useTerminalVerboseByTerminalId = (
+  params: GetTerminalVerboseByTerminalIdParams,
+  options?: TanStackOptions<TerminalVerbose>
+): UseQueryResult<TerminalVerbose, Error> => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "terminals", "verbose", params.terminalId],
+    queryFn: () => getTerminalVerboseByTerminalId(params),
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+  });
+};

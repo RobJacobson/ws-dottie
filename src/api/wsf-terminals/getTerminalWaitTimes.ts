@@ -1,7 +1,12 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
+import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
 // Import schemas from the single-item endpoint
 import {
   type TerminalWaitTimes,
@@ -9,7 +14,9 @@ import {
 } from "./getTerminalWaitTimesByTerminalId";
 
 // ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getTerminalWaitTimes
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/terminals/rest/terminalwaittimes";
@@ -45,7 +52,10 @@ export const getTerminalWaitTimes = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalWaitTimesParamsSchema
+// GetTerminalWaitTimesParams
 // ============================================================================
 
 export const getTerminalWaitTimesParamsSchema = z
@@ -57,8 +67,36 @@ export type GetTerminalWaitTimesParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalWaitTimesArraySchema
 // ============================================================================
 
 // Create array schema from the imported single-item schema
 export const terminalWaitTimesArraySchema = z.array(terminalWaitTimesSchema);
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useTerminalWaitTimes
+// ============================================================================
+
+/**
+ * React Query hook for fetching all terminal wait times
+ *
+ * Retrieves all terminal wait times from the WSF Terminals API.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
+ *
+ * @param options - Optional React Query options
+ * @returns Query result containing array of TerminalWaitTimes objects
+ */
+export const useTerminalWaitTimes = (
+  options?: TanStackOptions<TerminalWaitTimes[]>
+): UseQueryResult<TerminalWaitTimes[], Error> => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "terminals", "waitTimes"],
+    queryFn: getTerminalWaitTimes,
+    fetchLastUpdateTime: getCacheFlushDateTerminals,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+  });
+};

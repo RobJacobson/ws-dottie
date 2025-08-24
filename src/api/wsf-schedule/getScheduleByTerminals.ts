@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 // Import the complete schema from getScheduleByRoute
 import {
   type ScheduleResponse,
@@ -12,7 +13,9 @@ import {
 } from "./getScheduleByRoute";
 
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getScheduleByTerminals
 // ============================================================================
 
 const ENDPOINT =
@@ -55,7 +58,10 @@ export const getScheduleByTerminals = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getScheduleByTerminalsParamsSchema
+// GetScheduleByTerminalsParams
 // ============================================================================
 
 export const getScheduleByTerminalsParamsSchema = z
@@ -83,7 +89,16 @@ export type GetScheduleByTerminalsParams = z.infer<
 >;
 
 // ============================================================================
-// QUERY HOOK
+// Output Schema & Types
+//
+// ScheduleResponse (imported from ./getScheduleByRoute)
+// scheduleResponseArraySchema (imported from ./getScheduleByRoute)
+// ============================================================================
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useScheduleByTerminals
 // ============================================================================
 
 /**
@@ -113,16 +128,16 @@ export const useScheduleByTerminals = (
   params: GetScheduleByTerminalsParams,
   options?: TanStackOptions<ScheduleResponse[]>
 ) =>
-  useQuery({
+  useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
       "schedule",
       "scheduleByTerminals",
-      params.tripDate,
-      params.departingTerminalId,
-      params.arrivingTerminalId,
+      JSON.stringify(params),
     ],
     queryFn: () => getScheduleByTerminals(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
+    fetchLastUpdateTime: getCacheFlushDateSchedule,
+    params,
   });

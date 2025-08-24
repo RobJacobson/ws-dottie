@@ -1,13 +1,17 @@
-import { z } from "zod";
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
 
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
-import { tanstackQueryOptions } from "@/shared/caching/config";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/parsing";
 
+import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
+
 // ============================================================================
-// API FUNCTION
+// API Function
+//
+// getTerminalComboVerbose
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}";
@@ -43,7 +47,10 @@ export const getTerminalComboVerbose = async (
 };
 
 // ============================================================================
-// INPUT SCHEMA & TYPES
+// Input Schema & Types
+//
+// getTerminalComboVerboseParamsSchema
+// GetTerminalComboVerboseParams
 // ============================================================================
 
 export const getTerminalComboVerboseParamsSchema = z
@@ -63,7 +70,10 @@ export type GetTerminalComboVerboseParams = z.infer<
 >;
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
+// Output Schema & Types
+//
+// terminalComboVerboseSchema
+// TerminalComboVerbose
 // ============================================================================
 
 export const terminalComboVerboseSchema = z
@@ -112,36 +122,43 @@ export const terminalComboVerboseArraySchema = z
 export type TerminalComboVerbose = z.infer<typeof terminalComboVerboseSchema>;
 
 // ============================================================================
-// QUERY
+// TanStack Query Hook
+//
+// useTerminalComboVerbose
 // ============================================================================
 
 /**
  * Hook for getting terminal combo verbose from WSF Fares API
  *
- * Retrieves all valid terminal combinations for a given trip date. This endpoint provides
- * comprehensive information about all available routes and their fare collection methods.
+ * Retrieves detailed terminal combination information for a specific route and trip date.
+ * This endpoint provides comprehensive fare information for a specific terminal pair.
+ * Please consider using /cacheflushdate to coordinate the caching of this data.
  *
- * @param params - Object containing tripDate
+ * @param params - Object containing tripDate, departingTerminalID, arrivingTerminalID, roundTrip
  * @param params.tripDate - The trip date as a Date object
+ * @param params.departingTerminalID - The unique identifier for the departing terminal
+ * @param params.arrivingTerminalID - The unique identifier for the arriving terminal
+ * @param params.roundTrip - Whether this is a round trip
  * @param options - Optional React Query options
- * @returns React Query result containing array of all terminal combinations
+ * @returns React Query result containing detailed terminal combo information
  */
 export const useTerminalComboVerbose = (
-  params: { tripDate: Date },
+  params: {
+    tripDate: Date;
+  },
   options?: Omit<
     UseQueryOptions<Awaited<ReturnType<typeof getTerminalComboVerbose>>>,
     "queryKey" | "queryFn"
   >
 ): UseQueryResult<TerminalComboVerbose[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsf",
-      "fares",
-      "terminalComboVerbose",
-      jsDateToYyyyMmDd(params.tripDate),
-    ],
-    queryFn: () => getTerminalComboVerbose({ tripDate: params.tripDate }),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "fares", "terminalComboVerbose", JSON.stringify(params)],
+    queryFn: () =>
+      getTerminalComboVerbose({
+        tripDate: params.tripDate,
+      }),
+    fetchLastUpdateTime: getFaresCacheFlushDate,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+    params,
   });
 };

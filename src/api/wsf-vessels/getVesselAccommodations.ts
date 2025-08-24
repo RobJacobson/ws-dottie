@@ -1,11 +1,12 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/caching/config";
+import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/types";
 
+import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 // Import schemas and types from the single-item endpoint
 import {
   type VesselAccommodation,
@@ -13,17 +14,9 @@ import {
 } from "./getVesselAccommodationsById";
 
 // ============================================================================
-// OUTPUT SCHEMA & TYPES
-// ============================================================================
-
-export const vesselAccommodationArraySchema = z
-  .array(vesselAccommodationSchema)
-  .describe(
-    "Array of accommodation information for all vessels in the WSF fleet"
-  );
-
-// ============================================================================
-// FETCH FUNCTION
+// API Function
+//
+// getVesselAccommodations
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/vessels/rest/vesselaccommodations";
@@ -54,7 +47,31 @@ export const getVesselAccommodations = async (): Promise<
 };
 
 // ============================================================================
-// QUERY HOOK
+// Input Schema & Types
+//
+// getVesselAccommodationsParamsSchema
+// GetVesselAccommodationsParams
+// ============================================================================
+
+// No input parameters for this endpoint
+
+// ============================================================================
+// Output Schema & Types
+//
+// vesselAccommodationArraySchema
+// VesselAccommodation
+// ============================================================================
+
+export const vesselAccommodationArraySchema = z
+  .array(vesselAccommodationSchema)
+  .describe(
+    "Array of accommodation information for all vessels in the WSF fleet"
+  );
+
+// ============================================================================
+// TanStack Query Hook
+//
+// useVesselAccommodations
 // ============================================================================
 
 /**
@@ -77,10 +94,10 @@ export const getVesselAccommodations = async (): Promise<
 export const useVesselAccommodations = (
   options?: TanStackOptions<VesselAccommodation[]>
 ): UseQueryResult<VesselAccommodation[], Error> => {
-  return useQuery({
+  return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "accommodations"],
     queryFn: getVesselAccommodations,
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };
