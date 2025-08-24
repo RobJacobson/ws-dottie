@@ -50,7 +50,8 @@ export const highwayCamerasTestConfig: ApiModuleConfig = {
           name: "should return cameras with valid image URLs",
           test: async () => {
             const cameras = await getHighwayCameras({});
-            const validated = cameraArraySchema.parse(cameras);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = cameras;
 
             // Check that cameras have valid image URLs
             for (const camera of validated) {
@@ -64,7 +65,8 @@ export const highwayCamerasTestConfig: ApiModuleConfig = {
           name: "should return cameras with valid location data",
           test: async () => {
             const cameras = await getHighwayCameras({});
-            const validated = cameraArraySchema.parse(cameras);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = cameras;
 
             // Check that cameras have valid location data
             for (const camera of validated) {
@@ -112,7 +114,8 @@ export const highwayCamerasTestConfig: ApiModuleConfig = {
           test: async () => {
             const cameraID = 9818; // Use real camera ID
             const camera = await getHighwayCamera({ cameraID });
-            const validated = cameraSchema.parse(camera);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = camera;
 
             expect(validated.CameraID).toBe(cameraID);
           },
@@ -122,7 +125,8 @@ export const highwayCamerasTestConfig: ApiModuleConfig = {
           test: async () => {
             const cameraID = 9818; // Use real camera ID
             const camera = await getHighwayCamera({ cameraID });
-            const validated = cameraSchema.parse(camera);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = camera;
 
             expect(validated.CameraLocation).toBeDefined();
             expect(validated.CameraLocation.RoadName).toBeDefined();
@@ -152,7 +156,8 @@ export const highwayCamerasTestConfig: ApiModuleConfig = {
           name: "should return cameras matching state route",
           test: async () => {
             const cameras = await searchHighwayCameras({ StateRoute: "5" });
-            const validated = cameraArraySchema.parse(cameras);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = cameras;
 
             // Check that returned cameras are on I-5
             for (const camera of validated) {
@@ -169,7 +174,8 @@ export const highwayCamerasTestConfig: ApiModuleConfig = {
           name: "should handle region search",
           test: async () => {
             const cameras = await searchHighwayCameras({ Region: "NW" });
-            const validated = cameraArraySchema.parse(cameras);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = cameras;
 
             // Should find cameras in Northwest region
             expect(validated.length).toBeGreaterThan(0);

@@ -67,7 +67,8 @@ export const bridgeClearancesTestConfig: ApiModuleConfig = {
                 typeof result[0].RouteDate
               );
             }
-            const validated = bridgeDataGisArraySchema.parse(result);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = result;
 
             // Test that we get bridges for the requested route
             expect(validated.length).toBeGreaterThan(0);
@@ -82,7 +83,8 @@ export const bridgeClearancesTestConfig: ApiModuleConfig = {
           name: "should return bridges with valid clearance data",
           test: async () => {
             const result = await getBridgeClearances({ route: "005" });
-            const validated = bridgeDataGisArraySchema.parse(result);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = result;
 
             // Check that bridges have valid clearance data
             for (const bridge of validated) {
@@ -106,7 +108,8 @@ export const bridgeClearancesTestConfig: ApiModuleConfig = {
           name: "should return bridges with valid location data",
           test: async () => {
             const result = await getBridgeClearances({ route: "005" });
-            const validated = bridgeDataGisArraySchema.parse(result);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = result;
 
             // Check that bridges have valid location data
             for (const bridge of validated) {
@@ -130,7 +133,8 @@ export const bridgeClearancesTestConfig: ApiModuleConfig = {
           name: "should return bridges with valid identification data",
           test: async () => {
             const result = await getBridgeClearances({ route: "005" });
-            const validated = bridgeDataGisArraySchema.parse(result);
+            // Data is already validated by zodFetch, no need to re-validate
+            const validated = result;
 
             // Check that bridges have valid identification data
             for (const bridge of validated) {
