@@ -8,8 +8,8 @@
 export {
   configManager,
   type WsdotConfig,
-} from "./shared/config";
-export type { LoggingMode } from "./shared/logger";
+} from "./shared/configManager";
+export type { LoggingMode } from "./shared/utils";
 
 // ============================================================================
 // API Modules (Namespace Exports)
@@ -35,159 +35,10 @@ export * as WsfTerminals from "./api/wsf-terminals";
 export * as WsfVessels from "./api/wsf-vessels";
 
 // ============================================================================
-// Direct Type Exports (for better compatibility)
-// ============================================================================
-
-// WSDOT Border Crossings Types
-export type {
-  BorderCrossingData,
-  BorderCrossingLocation,
-} from "./api/wsdot-border-crossings/schemas";
-// WSDOT Bridge Clearances Types
-export type { BridgeDataGIS } from "./api/wsdot-bridge-clearances/schemas";
-// WSDOT Commercial Vehicle Restrictions Types
-export type {
-  CommercialVehicleRestriction,
-  CommercialVehicleRestrictionWithId,
-  RoadwayLocation as CVRoadwayLocation,
-} from "./api/wsdot-commercial-vehicle-restrictions/schemas";
-// WSDOT Highway Alerts Types
-export type {
-  HighwayAlert,
-  RoadwayLocation,
-} from "./api/wsdot-highway-alerts/schemas";
-// WSDOT Highway Cameras Types
-export type {
-  Camera,
-  CameraLocation,
-  GetCameraResponse,
-  SearchCamerasParams,
-} from "./api/wsdot-highway-cameras/schemas";
-// WSDOT Mountain Pass Conditions Types
-export type {
-  MountainPassCondition,
-  TravelRestriction,
-} from "./api/wsdot-mountain-pass-conditions/schemas";
-// WSDOT Toll Rates Types
-export type {
-  TollRate,
-  TollTripInfo,
-  TollTripRate,
-  TollTripRates,
-} from "./api/wsdot-toll-rates/schemas";
-// WSDOT Traffic Flow Types
-export type {
-  FlowStationLocation,
-  TrafficFlow,
-} from "./api/wsdot-traffic-flow/schemas";
-// WSDOT Travel Times Types
-export type {
-  TravelTimeEndpoint,
-  TravelTimeRoute,
-} from "./api/wsdot-travel-times/schemas";
-// WSDOT Weather Information Types
-export type { WeatherInfo } from "./api/wsdot-weather-information/schemas";
-// WSDOT Weather Information Extended Types
-export type {
-  SubSurfaceMeasurement,
-  SurfaceMeasurement,
-  WeatherReading,
-} from "./api/wsdot-weather-information-extended/schemas";
-// WSDOT Weather Stations Types
-export type { WeatherStationData } from "./api/wsdot-weather-stations/schemas";
-// WSF Fares Types
-export type {
-  FareLineItem,
-  FareLineItemBasic,
-  FareLineItemVerbose,
-  FaresCacheFlushDate,
-  FaresTerminal,
-  FaresValidDateRange,
-  FareTotal,
-  TerminalCombo,
-  TerminalComboVerbose,
-  TerminalMate,
-} from "./api/wsf-fares/schemas";
-// WSF Schedule Types
-export type {
-  ActiveSeason,
-  Alert,
-  AlternativeFormat,
-  Annotation,
-  ContingencyAdjustment,
-  Journey,
-  Route,
-  RouteDetails,
-  Sailing,
-  Schedule,
-  ScheduleCacheFlushDate,
-  ScheduleDeparture,
-  ScheduledRoute,
-  ScheduleResponse,
-  ScheduleResponseTerminalCombo,
-  ScheduleTerminal,
-  ScheduleTerminalCombo,
-  ScheduleTime,
-  ServiceDisruption,
-  TerminalTime,
-  TimeAdjustment,
-  ValidDateRange,
-} from "./api/wsf-schedule/schemas";
-// WSF Terminals Types
-export type {
-  TerminalArrivalSpace,
-  TerminalBasics,
-  TerminalBulletin,
-  TerminalBulletinItem,
-  TerminalDepartingSpace,
-  TerminalLocation,
-  TerminalSailingSpace,
-  TerminalTransitLink,
-  TerminalTransport,
-  TerminalVerbose,
-  TerminalWaitTime,
-  TerminalWaitTimes,
-} from "./api/wsf-terminals/schemas";
-// WSF Vessels Types
-export type {
-  VesselAccommodation,
-  VesselBasic,
-  VesselClass,
-  VesselHistory,
-  VesselLocation,
-  VesselStats,
-  VesselsCacheFlushDate,
-  VesselVerbose,
-} from "./api/wsf-vessels/schemas";
-
-// ============================================================================
 // TanStack Query Configuration
 // ============================================================================
 
-export { tanstackQueryOptions } from "./shared/caching/config";
-
-// ============================================================================
-// React Hooks (Direct Exports)
-// ============================================================================
-
-// WSDOT Hooks
-export * from "@/api/wsdot-border-crossings/queries";
-export * from "@/api/wsdot-bridge-clearances/queries";
-export * from "@/api/wsdot-commercial-vehicle-restrictions/queries";
-export * from "@/api/wsdot-highway-alerts/queries";
-export * from "@/api/wsdot-highway-cameras/queries";
-export * from "@/api/wsdot-mountain-pass-conditions/queries";
-export * from "@/api/wsdot-toll-rates/queries";
-export * from "@/api/wsdot-traffic-flow/queries";
-export * from "@/api/wsdot-travel-times/queries";
-export * from "@/api/wsdot-weather-information/queries";
-export * from "@/api/wsdot-weather-information-extended/queries";
-export * from "@/api/wsdot-weather-stations/queries";
-// WSF Hooks
-export * from "@/api/wsf-fares/queries";
-export * from "@/api/wsf-schedule/queries";
-export * from "@/api/wsf-terminals/queries";
-export * from "@/api/wsf-vessels/queries";
+export { tanstackQueryOptions } from "./shared/config";
 
 // ============================================================================
 // Shared Utilities

@@ -1,12 +1,31 @@
-// WSDOT Border Crossings API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
+/**
+ * WSDOT Border Crossings API - Complete Export Module
+ *
+ * This module provides access to Washington State Department of Transportation
+ * border crossing data including real-time wait times and location information.
+ */
 
-// API functions
-export { getBorderCrossings } from "./api";
-// React Query hooks
-export { useBorderCrossings } from "./queries";
-// Types inferred from Zod schemas
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getBorderCrossings";
+
+// ============================================================================
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export {
+  borderCrossingDataArraySchema,
+  borderCrossingDataSchema,
+  getBorderCrossingsParamsSchema,
+} from "./getBorderCrossings";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
   BorderCrossingData,
-  BorderCrossingLocation,
-} from "./schemas";
+  GetBorderCrossingsParams,
+} from "./getBorderCrossings";

@@ -1,19 +1,43 @@
-// WSDOT Commercial Vehicle Restrictions API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
+/**
+ * WSDOT Commercial Vehicle Restrictions API - Complete Export Module
+ *
+ * This module provides access to Washington State Department of Transportation
+ * commercial vehicle restriction data including route limitations and restrictions.
+ *
+ * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_c_v_restrictions.html
+ */
 
-// API functions
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getCommercialVehicleRestrictions";
+export * from "./getCommercialVehicleRestrictionsWithId";
+
+// ============================================================================
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export {
-  getCommercialVehicleRestrictions,
-  getCommercialVehicleRestrictionsWithId,
-} from "./api";
-// React Query hooks
+  commercialVehicleRestrictionArraySchema,
+  commercialVehicleRestrictionSchema,
+  getCommercialVehicleRestrictionsParamsSchema,
+} from "./getCommercialVehicleRestrictions";
 export {
-  useCommercialVehicleRestrictions,
-  useCommercialVehicleRestrictionsWithId,
-} from "./queries";
-// Types inferred from Zod schemas
+  commercialVehicleRestrictionWithIdSchema,
+  getCommercialVehicleRestrictionsWithIdParamsSchema,
+} from "./getCommercialVehicleRestrictionsWithId";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
   CommercialVehicleRestriction,
+  CommercialVehicleRestrictionRoadwayLocation,
+  GetCommercialVehicleRestrictionsParams,
+} from "./getCommercialVehicleRestrictions";
+export type {
   CommercialVehicleRestrictionWithId,
-  RoadwayLocation,
-} from "./schemas";
+  GetCommercialVehicleRestrictionsWithIdParams,
+} from "./getCommercialVehicleRestrictionsWithId";

@@ -14,6 +14,11 @@
     },
     "./types": {
       "types": "./dist/index.d.ts"
+    },
+    "./src": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     }
   },
   "files": [
@@ -24,26 +29,11 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "vitest --config config/vitest.config.ts",
-    "test:unit": "vitest --config config/vitest.unit.config.ts",
-    "test:e2e": "vitest --config config/vitest.e2e.config.ts",
-    "test:e2e:api": "vitest --config config/vitest.e2e.api.config.ts",
-    "test:e2e:api:jsonp": "JSONP=true vitest --config config/vitest.e2e.api.config.ts",
-    "test:e2e:validation": "vitest --config config/vitest.e2e.api.config.ts tests/e2e/validation/",
-    "test:e2e:validation:jsonp": "JSONP=true vitest --config config/vitest.e2e.api.config.ts tests/e2e/validation/",
-    "test:e2e:validation:jsonp:flag": "node scripts/test-jsonp.js --config config/vitest.e2e.api.config.ts tests/e2e/validation/ --jsonp",
-    "test:e2e:hook": "vitest --config config/vitest.e2e.hook.config.ts",
-    "test:e2e:watch": "vitest --config config/vitest.e2e.config.ts --watch",
-    "test:e2e:api:watch": "vitest --config config/vitest.e2e.api.config.ts --watch",
-    "test:e2e:api:jsonp:watch": "JSONP=true vitest --config config/vitest.e2e.api.config.ts --watch",
-    "test:e2e:validation:watch": "vitest --config config/vitest.e2e.api.config.ts tests/e2e/validation/ --watch",
-    "test:e2e:validation:jsonp:watch": "JSONP=true vitest --config config/vitest.e2e.api.config.ts tests/e2e/validation/ --watch",
-    "test:e2e:hook:watch": "vitest --config config/vitest.e2e.hook.config.ts --watch",
-    "test:coverage": "vitest --coverage",
-    "test:ui": "vitest --ui",
+    "test": "vitest --config config/vitest.config.ts --run",
     "lint": "biome lint src/ tests/",
     "format": "biome format --write src/ tests/",
     "type-check": "tsc --noEmit",
+    "type-check:test": "tsc --noEmit --project tsconfig.test.json",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -59,14 +49,14 @@
     "@types/node": "^24.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@vitest/ui": "^1.0.0",
+    "@vitest/ui": "^3.2.4",
     "dotenv": "^17.2.0",
     "jsdom": "^26.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0",
-    "vitest": "^1.0.0"
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "zod": "^4.0.0"

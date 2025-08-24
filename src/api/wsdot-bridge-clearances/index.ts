@@ -1,9 +1,33 @@
-// WSDOT Bridge Clearances API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
+/**
+ * WSDOT Bridge Clearances API - Complete Export Module
+ *
+ * This module provides access to Washington State Department of Transportation
+ * bridge clearance data including height restrictions and location information.
+ *
+ * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
+ */
 
-// API functions
-export { getBridgeClearances } from "./api";
-// React Query hooks
-export { useBridgeClearances } from "./queries";
-// Types inferred from Zod schemas
-export type { BridgeDataGIS } from "./schemas";
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getBridgeClearances";
+
+// ============================================================================
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export {
+  bridgeDataGisArraySchema,
+  bridgeDataGisSchema,
+  getBridgeClearancesParamsSchema,
+} from "./getBridgeClearances";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
+export type {
+  BridgeDataGIS,
+  GetBridgeClearancesParams,
+} from "./getBridgeClearances";

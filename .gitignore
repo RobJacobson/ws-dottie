@@ -6,6 +6,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Build artifacts
+dist/
+*.js.map
+*.mjs.map
+
 # Runtime data
 pids
 *.pid
@@ -232,6 +237,8 @@ Thumbs.db
 dist/
 build/
 lib/
+*.js.map
+*.mjs.map
 
 # Test outputs
 test-results/

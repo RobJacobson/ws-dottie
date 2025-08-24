@@ -1,23 +1,63 @@
-// WSDOT Toll Rates API exports
-// Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
-// API Help: https://wsdot.wa.gov/traffic/api/TollRates/TollRatesREST.svc/Help
+/**
+ * WSDOT Toll Rates API - Complete Export Module
+ *
+ * This module provides access to Washington State Department of Transportation
+ * toll rate data including trip rates, toll information, and pricing schedules.
+ */
 
-// API functions
+// ============================================================================
+// API FUNCTIONS & SCHEMAS
+// ============================================================================
+
+export * from "./getTollRates";
+export * from "./getTollTripInfo";
+export * from "./getTollTripRates";
+export * from "./getTollTripVersion";
+export * from "./getTripRatesByDate";
+
+// ============================================================================
+// SCHEMA RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export {
-  getTollRates,
-  getTollTripInfo,
-  getTollTripRates,
-} from "./api";
-// React Query hooks
+  getTollRatesParamsSchema,
+  tollRateArraySchema,
+  tollRateSchema,
+} from "./getTollRates";
 export {
-  useTollRates,
-  useTollTripInfo,
-  useTollTripRates,
-} from "./queries";
-// TypeScript types
+  getTollTripInfoParamsSchema,
+  tollTripInfoArraySchema,
+  tollTripInfoSchema,
+} from "./getTollTripInfo";
+export {
+  getTollTripRatesParamsSchema,
+  tollTripRateSchema,
+  tollTripRatesSchema,
+} from "./getTollTripRates";
+export {
+  getTollTripVersionParamsSchema,
+  tollTripVersionSchema,
+} from "./getTollTripVersion";
+export { getTripRatesByDateParamsSchema } from "./getTripRatesByDate";
+
+// ============================================================================
+// TYPE RE-EXPORTS FOR CONVENIENCE
+// ============================================================================
+
 export type {
+  GetTollRatesParams,
   TollRate,
+} from "./getTollRates";
+export type {
+  GetTollTripInfoParams,
   TollTripInfo,
+} from "./getTollTripInfo";
+export type {
+  GetTollTripRatesParams,
   TollTripRate,
-  TollTripRates,
-} from "./schemas";
+} from "./getTollTripRates";
+export type {
+  GetTollTripVersionParams,
+  TollTripVersion,
+} from "./getTollTripVersion";
+export type { GetTripRatesByDateParams } from "./getTripRatesByDate";

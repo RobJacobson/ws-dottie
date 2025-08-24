@@ -1,100 +1,161 @@
 import { describe, expect, it } from "vitest";
-import { getTrafficFlows } from "@/api/wsdot-traffic-flow";
-import { validators } from "./validator";
+
+import { wsdotTrafficFlowTestConfig } from "../../config/wsdot-traffic-flow.config";
+import { createEndpointTestSuite } from "../../utils/test-generators";
+
+/**
+ * WSDOT Traffic Flow API - End-to-End Validation Tests
+ *
+ * This test suite validates all endpoints in the WSDOT Traffic Flow API module
+ * using the Zod schemas as the single source of truth.
+ *
+ * Endpoints tested:
+ * - getTrafficFlows: Get all current traffic flow readings
+ * - getTrafficFlowById: Get specific traffic flow station by ID
+ */
 
 describe("WSDOT Traffic Flow API - Zod Validation", () => {
-  it("should validate traffic flow data structure using Zod", async () => {
-    console.log("🚀 Testing WSDOT Traffic Flow API validation...");
-    const flows = await getTrafficFlows();
-    const validatedData = validators.trafficFlowsArray.validateSafe(flows);
-    if (!validatedData.success) {
-      console.error("Validation failed:", validatedData.error.issues);
-      throw new Error(`Traffic flow validation failed: ${JSON.stringify(validatedData.error.issues, null, 2)}`);
-    }
-    expect(validatedData.data).toBeDefined();
-    expect(Array.isArray(validatedData.data)).toBe(true);
-    expect(validatedData.data.length).toBeGreaterThan(0);
-    console.log(`✅ Successfully validated ${validatedData.data.length} traffic flows`);
+  // Generate test suites for all endpoints using the configuration
+  wsdotTrafficFlowTestConfig.endpoints.forEach((endpointConfig) => {
+    createEndpointTestSuite(endpointConfig);
   });
 
-  it("should validate individual traffic flow data", async () => {
-    const flows = await getTrafficFlows();
-    if (flows.length > 0) {
-      const firstFlow = flows[0];
-      const validatedFlow = validators.trafficFlow.validateSafe(firstFlow);
-      if (!validatedFlow.success) {
-        console.error("Individual validation failed:", validatedFlow.error.issues);
-        throw new Error(`Individual flow validation failed: ${JSON.stringify(validatedFlow.error.issues, null, 2)}`);
+  // Additional integration tests specific to the traffic flow module
+  describe("Module Integration Tests", () => {
+    it("should have consistent data structure across endpoints", async () => {
+      // This test verifies that data returned from different endpoints
+      // maintains consistency in structure and relationships
+      const { getTrafficFlows, getTrafficFlowById } = await import(
+        "@/api/wsdot-traffic-flow"
+      );
+
+      // Get data from all flows endpoint
+      const allFlows = await getTrafficFlows({});
+
+      // Verify we have data to work with
+      expect(Array.isArray(allFlows)).toBe(true);
+
+      if (allFlows.length > 0) {
+        // Get individual flow data for comparison
+        const firstFlow = allFlows[0];
+        const individualFlow = await getTrafficFlowById({
+          flowDataID: firstFlow.FlowDataID,
+        });
+
+        // Verify consistency between endpoints
+        expect(individualFlow.FlowDataID).toBe(firstFlow.FlowDataID);
+        expect(individualFlow.FlowReadingValue).toBe(
+          firstFlow.FlowReadingValue
+        );
+        expect(individualFlow.Time).toEqual(firstFlow.Time);
+
+        console.log(`📊 All Flows: ${allFlows.length} stations`);
+        console.log(`📊 Sample Flow ID: ${firstFlow.FlowDataID}`);
+        console.log(`📊 Sample Flow Reading: ${firstFlow.FlowReadingValue}`);
       }
-      expect(validatedFlow.data.FlowDataID).toBeDefined();
-      expect(typeof validatedFlow.data.FlowDataID).toBe("number");
-      expect(typeof validatedFlow.data.FlowReadingValue).toBe("number");
-      expect(validatedFlow.data.Time).toBeInstanceOf(Date);
-      expect(typeof validatedFlow.data.Region).toBe("string");
-      expect(typeof validatedFlow.data.StationName).toBe("string");
-    }
-  });
+    });
 
-  it("should validate flow station location data correctly", async () => {
-    const flows = await getTrafficFlows();
-    if (flows.length > 0) {
-      const firstFlow = flows[0];
-      const validatedFlow = validators.trafficFlow.validateSafe(firstFlow);
-      if (validatedFlow.success) {
-        expect(typeof validatedFlow.data.FlowStationLocation.Description).toBe("string");
-        expect(typeof validatedFlow.data.FlowStationLocation.Direction).toBe("string");
-        expect(typeof validatedFlow.data.FlowStationLocation.Latitude).toBe("number");
-        expect(typeof validatedFlow.data.FlowStationLocation.Longitude).toBe("number");
-        expect(typeof validatedFlow.data.FlowStationLocation.MilePost).toBe("number");
-        expect(typeof validatedFlow.data.FlowStationLocation.RoadName).toBe("string");
+    it("should return valid flow reading values", async () => {
+      // This test verifies that all flow readings are within valid numeric range
+      const { getTrafficFlows } = await import("@/api/wsdot-traffic-flow");
+
+      const allFlows = await getTrafficFlows({});
+
+      if (allFlows.length > 0) {
+        // Check that all flow readings are valid numeric values (0-4)
+        const flowReadings = allFlows.map((flow) => flow.FlowReadingValue);
+        const validReadings = flowReadings.filter(
+          (reading) =>
+            typeof reading === "number" && reading >= 0 && reading <= 4
+        );
+
+        expect(validReadings.length).toBe(flowReadings.length);
+
+        // Count distribution of flow readings
+        const distribution = flowReadings.reduce(
+          (acc, reading) => {
+            acc[reading] = (acc[reading] || 0) + 1;
+            return acc;
+          },
+          {} as Record<number, number>
+        );
+
+        console.log("🚦 Flow Reading Distribution:");
+        Object.entries(distribution)
+          .sort(([a], [b]) => Number(a) - Number(b))
+          .forEach(([reading, count]) => {
+            const meanings = {
+              "0": "Unknown/NoData",
+              "1": "WideOpen",
+              "2": "Moderate",
+              "3": "Heavy",
+              "4": "StopAndGo",
+            };
+            console.log(
+              `   • ${reading} (${meanings[reading as keyof typeof meanings]}): ${count} stations`
+            );
+          });
       }
-    }
-  });
+    });
 
-  it("should provide detailed error information when validation fails", () => {
-    const malformedData = [
-      {
-        FlowDataID: "not a number",
-        FlowReadingValue: "not a number",
-        FlowStationLocation: "not an object",
-        Region: 123,
-        StationName: 456,
-        Time: "not a date",
-      },
-    ];
-    const result = validators.trafficFlowsArray.validateSafe(malformedData);
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      expect(result.error.issues).toBeDefined();
-      expect(result.error.issues.length).toBeGreaterThan(0);
-      console.log("Validation Error Details:", {
-        context: "malformed traffic flows",
-        errors: result.error.issues,
-        received: malformedData,
+    it("should handle rate limiting gracefully", async () => {
+      // This test verifies that the API can handle multiple rapid requests
+      // without overwhelming the service
+      const { getTrafficFlows } = await import("@/api/wsdot-traffic-flow");
+
+      const startTime = Date.now();
+
+      // Make multiple requests in quick succession
+      const promises = Array.from({ length: 3 }, () => getTrafficFlows({}));
+      const results = await Promise.all(promises);
+
+      const endTime = Date.now();
+      const totalTime = endTime - startTime;
+
+      // All requests should succeed
+      results.forEach((result) => {
+        expect(Array.isArray(result)).toBe(true);
+        expect(result.length).toBeGreaterThanOrEqual(0);
       });
-    }
-  });
 
-  it("should demonstrate the power of single-line validation", async () => {
-    const flows = await getTrafficFlows();
-    const validatedData = validators.trafficFlowsArray.validateSafe(flows);
-    if (!validatedData.success) {
-      throw new Error("Single-line validation failed");
-    }
-    const firstFlow = validatedData.data[0];
-    expect(firstFlow.FlowDataID).toBeDefined();
-    expect(typeof firstFlow.FlowReadingValue).toBe("number");
-    expect(firstFlow.Time).toBeInstanceOf(Date);
-    expect(typeof firstFlow.Region).toBe("string");
-    expect(typeof firstFlow.StationName).toBe("string");
-    expect(typeof firstFlow.FlowStationLocation.Description).toBe("string");
-    expect(typeof firstFlow.FlowStationLocation.Direction).toBe("string");
-    expect(typeof firstFlow.FlowStationLocation.Latitude).toBe("number");
-    expect(typeof firstFlow.FlowStationLocation.Longitude).toBe("number");
-    expect(typeof firstFlow.FlowStationLocation.MilePost).toBe("number");
-    expect(typeof firstFlow.FlowStationLocation.RoadName).toBe("string");
-    console.log("✅ Single-line validation successful - all data is type-safe!");
-  });
+      // Total time should be reasonable (not too fast to indicate rate limiting)
+      expect(totalTime).toBeGreaterThan(10); // At least 10ms total
 
-  console.log("✅ WSDOT Traffic Flow API validation tests completed");
-}); 
+      console.log(`⏱️  Rate limiting test completed in ${totalTime}ms`);
+    });
+
+    it("should provide consistent traffic flow station locations", async () => {
+      // This test verifies that traffic flow station locations are consistent
+      // and contain valid geographic information
+      const { getTrafficFlows } = await import("@/api/wsdot-traffic-flow");
+
+      const allFlows = await getTrafficFlows({});
+
+      if (allFlows.length > 0) {
+        // Check that stations have location information
+        const stationsWithLocations = allFlows.filter(
+          (flow) =>
+            flow.FlowStationLocation &&
+            typeof flow.FlowStationLocation === "object"
+        );
+
+        expect(stationsWithLocations.length).toBeGreaterThan(0);
+
+        // Sample a few stations for detailed location validation
+        const sampleStations = stationsWithLocations.slice(0, 3);
+
+        sampleStations.forEach((station, index) => {
+          expect(station.FlowStationLocation).toBeDefined();
+          expect(typeof station.FlowStationLocation).toBe("object");
+
+          console.log(`📍 Station ${index + 1} (ID: ${station.FlowDataID}):`);
+          if (station.FlowStationLocation?.Description) {
+            console.log(
+              `   • Description: ${station.FlowStationLocation.Description}`
+            );
+          }
+        });
+      }
+    });
+  });
+});
