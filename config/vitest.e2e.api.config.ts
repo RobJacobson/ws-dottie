@@ -5,6 +5,9 @@ import { defineConfig } from "vitest/config";
 const isJsonpEnabled =
   process.env.FORCE_JSONP === "true" || process.env.JSONP === "true";
 
+// Check if we should force source-only mode for testing
+const isSourceOnly = process.env.VITEST_SOURCE_ONLY === "true";
+
 export default defineConfig({
   test: {
     include: [
@@ -37,19 +40,39 @@ export default defineConfig({
     reporters: ["verbose", "json"],
     // Force more verbose output to encourage larger terminal windows
     // Add progress indicators and detailed output
-    logLevel: "info",
-    // Use verbose reporter with more detailed output
-    reporter: "verbose",
     outputFile: "test-results/e2e-api.json",
   },
   resolve: {
     alias: {
       "@": resolve(__dirname, "../src"),
       "@/test": resolve(__dirname, "../tests"),
+      // Force vitest to use source files instead of compiled dist files
+      ...(isSourceOnly && {
+        "ws-dottie": resolve(__dirname, "../src"),
+        // Override any imports that might resolve to dist
+        "./index": resolve(__dirname, "../src/index.ts"),
+        "./index.js": resolve(__dirname, "../src/index.ts"),
+        "./index.mjs": resolve(__dirname, "../src/index.ts"),
+      }),
     },
+    // Force vitest to use source files instead of compiled dist files
+    conditions: isSourceOnly
+      ? ["development", "test", "source", "import", "default"]
+      : ["development", "test"],
   },
   // Ensure ESM compatibility
   esbuild: {
     target: "es2022",
+  },
+  // Override module resolution to prefer source over dist
+  define: {
+    __DEV__: true,
+    __TEST__: true,
+    __SOURCE__: true,
+  },
+  // Override Node.js module resolution for testing
+  optimizeDeps: {
+    include: ["src/**/*"],
+    exclude: ["dist/**/*"],
   },
 });
