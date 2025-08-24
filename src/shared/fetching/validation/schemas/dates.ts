@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Import proven parsing logic
-import { isWsdotDateString, wsdotDateTimestampToJsDate } from "../fetching";
+import { isWsdotDateString, wsdotDateTimestampToJsDate } from "../../zod";
 
 /**
  * Date validation utilities for WSDOT and WSF APIs

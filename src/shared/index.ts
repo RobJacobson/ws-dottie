@@ -23,29 +23,52 @@
 // ============================================================================
 
 // TanStack Query configuration with pre-optimized strategies
-export { tanstackQueryOptions } from "./config";
+export { tanstackQueryOptions } from "./tanstack";
+// TanStack Query hooks
+export { useQueryWithAutoUpdate } from "./tanstack";
+// TanStack Query types
+export type { TanStackOptions } from "./tanstack";
+
 // Configuration management for API keys and base URLs
-export { configManager, type WsdotConfig } from "./configManager";
+export { configManager, type WsdotConfig } from "./config";
 
 // ============================================================================
 // FETCHING & DATA ACCESS
 // ============================================================================
 
-// Platform-specific fetching strategies and error handling
+// Complete data fetching system with validation
 export * from "./fetching";
 
 // ============================================================================
 // REACT INTEGRATION
 // ============================================================================
 
-// Core utilities including types, logging, and React Query hooks
+// Core utilities including types and logging
 export * from "./utils";
 
 // ============================================================================
 // VALIDATION & SCHEMAS
 // ============================================================================
 
-// Validation utilities and template functions for consistent schemas
-export * from "./validation";
-// Zod-based validation schemas and data transformation utilities
-export * from "./zod";
+// All validation and schema functionality is now under fetching
+// Re-export for backward compatibility
+export {
+  // Schema construction (for API clients)
+  zWsdotDate,
+  zWsdotNullableDate,
+  zNullableString,
+  zNullableNumber,
+  zNullableBoolean,
+  zPositiveInteger,
+  zLatitude,
+  zLongitude,
+  createVesselIdDescription,
+  createDateRangeParams,
+} from "./fetching/validation/schemas";
+
+// Zod utilities (date parsing)
+export {
+  isWsdotDateString,
+  jsDateToYyyyMmDd,
+  wsdotDateTimestampToJsDate,
+} from "./fetching/zod";

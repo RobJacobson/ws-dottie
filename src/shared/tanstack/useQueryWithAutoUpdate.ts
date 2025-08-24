@@ -2,60 +2,6 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
-// ============================================================================
-// TYPES
-// ============================================================================
-
-/**
- * Options for WS‑Dottie hooks that map to TanStack Query's UseQueryOptions,
- * excluding 'queryKey' and 'queryFn' which are provided by the hooks.
- *
- * This allows consumers to customize query behavior while maintaining
- * the required queryKey and queryFn structure.
- */
-export type TanStackOptions<TData, TError = Error> = Omit<
-  UseQueryOptions<TData, TError>,
-  "queryKey" | "queryFn"
->;
-
-// ============================================================================
-// LOGGING
-// ============================================================================
-
-/**
- * Logging modes for individual API calls
- * - "none": No logging output
- * - "info": Basic information logging
- * - "debug": Detailed debugging information
- */
-export type LoggingMode = "none" | "info" | "debug";
-
-// Determine if we're in development mode for conditional logging
-const isDevelopment =
-  typeof process !== "undefined" && process.env.NODE_ENV === "development";
-
-/**
- * Centralized logging utility for WS-Dottie
- * Provides consistent logging interface with environment-aware debug logging
- */
-const log = {
-  debug: isDevelopment
-    ? console.debug.bind(console, "[WS-Dottie Debug]")
-    : () => {}, // No-op in production
-  info: console.info.bind(console, "[WS-Dottie Info]"),
-  warn: console.warn.bind(console, "[WS-Dottie Warn]"),
-  error: console.error.bind(console, "[WS-Dottie Error]"),
-};
-
-export default log;
-
-// ============================================================================
-// REACT QUERY HOOKS
-// ============================================================================
-
-// Polling interval for cache invalidation checks (5 minutes)
-const POLLING_INTERVAL = 5 * 60 * 1000;
-
 /**
  * Hook that combines useQuery with automatic cache invalidation
  *
@@ -107,6 +53,9 @@ export const useQueryWithAutoUpdate = <TData, TParams = void>({
 
   // Reference to the polling interval for cleanup
   const intervalRef = useRef<NodeJS.Timeout>();
+
+  // Polling interval for cache invalidation checks (5 minutes)
+  const POLLING_INTERVAL = 5 * 60 * 1000;
 
   // Main query using React Query
   const queryResult = useQuery({

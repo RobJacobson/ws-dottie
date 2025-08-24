@@ -27,7 +27,6 @@
  */
 
 import type { FetchStrategy } from "./types";
-import { processApiResponse } from "./utils";
 
 /**
  * Native fetch strategy for server-side and test environments

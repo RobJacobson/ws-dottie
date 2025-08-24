@@ -1,13 +1,13 @@
 import {
   getEnvironmentType,
   selectFetchStrategy,
-} from "@/shared/fetching/strategies";
+} from "../pipeline/strategies";
 import type { LoggingMode } from "@/shared/utils";
 
 import { handleFetchError } from "./errorHandler";
 import type { FetchContext, FetchSchemas } from "./types";
 import { prepareRequestUrl } from "./urlBuilder";
-import { validateInputs, validateResponse } from "./validators";
+import { validateInputs, validateResponse } from "../validation/core";
 
 /**
  * Zod-First API Fetch Utility for WSDOT and WSF APIs

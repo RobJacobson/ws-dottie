@@ -1,19 +1,27 @@
-import { createApiError } from "@/shared/fetching";
+import { createApiError } from "../errorHandling";
+import { buildCompleteUrl } from "../request/prepareRequestUrl";
 
-import type { FetchContext } from "./types";
-import { buildCompleteUrl } from "./urlBuilder";
+import type { FetchContext } from "../types";
 
 /**
- * Error handling utilities for Zod fetch operations
+ * Error handling utilities for the data pipeline
  */
 
 /**
  * Handles fetch errors and creates consistent API errors
  */
-export const handleFetchError = (
+export const handlePipelineError = (
   error: unknown,
-  context: FetchContext
+  fullUrlTemplate: string,
+  logMode?: "debug" | "info" | "none"
 ): never => {
+  // Create a minimal context for error handling
+  const context: FetchContext = {
+    endpoint: fullUrlTemplate.split("/").pop() || fullUrlTemplate,
+    logMode,
+    interpolatedUrl: fullUrlTemplate,
+  };
+
   // Log errors for debugging
   if (context.logMode === "debug" || context.logMode === "info") {
     console.error(`[${context.endpoint}] Request failed:`, error);

@@ -1,5 +1,5 @@
-import { configManager } from "@/shared/configManager";
-import type { JsonWithDates } from "@/shared/fetching";
+import { configManager } from "@/shared/config";
+import type { JsonWithDates } from "../pipeline/types";
 
 import { jsDateToYyyyMmDd } from "./dateParsers";
 import type { FetchContext } from "./types";

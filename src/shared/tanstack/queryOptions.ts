@@ -1,12 +1,12 @@
 /**
  * WSF API Caching Configuration
- * 
+ *
  * Defines caching strategies for different types of data based on update frequency.
  * Optimized for ferry operations in Puget Sound with potentially spotty internet connections.
- * 
+ *
  * This module provides pre-configured TanStack Query options for various data update patterns,
  * from real-time updates (every few seconds) to static data (weekly/monthly updates).
- * 
+ *
  * Each strategy is carefully tuned for:
  * - Network reliability in marine environments
  * - WSF API latency characteristics (1000ms+ typical)
@@ -23,7 +23,7 @@ const WEEK = 7 * DAY;
 
 /**
  * Pre-configured TanStack Query options for different data update frequencies
- * 
+ *
  * Each strategy is optimized for specific use cases and network conditions
  * commonly encountered in ferry operations and transportation APIs.
  */
