@@ -1,13 +1,32 @@
-// WSF API Caching Configuration
-// Defines caching strategies for different types of data based on update frequency
-// Optimized for ferry operations in Puget Sound with potentially spotty internet connections
+/**
+ * WSF API Caching Configuration
+ * 
+ * Defines caching strategies for different types of data based on update frequency.
+ * Optimized for ferry operations in Puget Sound with potentially spotty internet connections.
+ * 
+ * This module provides pre-configured TanStack Query options for various data update patterns,
+ * from real-time updates (every few seconds) to static data (weekly/monthly updates).
+ * 
+ * Each strategy is carefully tuned for:
+ * - Network reliability in marine environments
+ * - WSF API latency characteristics (1000ms+ typical)
+ * - Cache invalidation through cache flush monitoring
+ * - Optimal user experience with minimal unnecessary requests
+ */
 
+// Time constants for consistent configuration
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const WEEK = 7 * DAY;
 
+/**
+ * Pre-configured TanStack Query options for different data update frequencies
+ * 
+ * Each strategy is optimized for specific use cases and network conditions
+ * commonly encountered in ferry operations and transportation APIs.
+ */
 export const tanstackQueryOptions = {
   /**
    * Real-time data updates (every few seconds to minutes)
@@ -73,7 +92,7 @@ export const tanstackQueryOptions = {
     refetchInterval: 6 * HOUR,
     // Refetch when window regains focus
     refetchOnWindowFocus: true,
-    // Retry up to 3 times with exponential backoff
+    // Retry up to 3 times with exponential backoff (30s, 1m, 2m)
     retry: 3,
     retryDelay: (attemptIndex: number) =>
       Math.min(30 * SECOND * 2 ** attemptIndex, 2 * MINUTE),
@@ -99,7 +118,7 @@ export const tanstackQueryOptions = {
     refetchInterval: 1 * HOUR,
     // Refetch when window regains focus
     refetchOnWindowFocus: true,
-    // Retry up to 5 times with exponential backoff
+    // Retry up to 5 times with exponential backoff (30s, 1m, 2m, 4m, 8m)
     retry: 5,
     retryDelay: (attemptIndex: number) =>
       Math.min(30 * SECOND * 2 ** attemptIndex, 2 * MINUTE),
@@ -123,7 +142,7 @@ export const tanstackQueryOptions = {
     refetchInterval: 1 * DAY,
     // Refetch when window regains focus
     refetchOnWindowFocus: true,
-    // Retry up to 5 times with exponential backoff
+    // Retry up to 5 times with exponential backoff (1m, 2m, 4m, 8m, 10m)
     retry: 5,
     retryDelay: (attemptIndex: number) =>
       Math.min(1 * MINUTE * 2 ** attemptIndex, 10 * MINUTE),
@@ -148,7 +167,7 @@ export const tanstackQueryOptions = {
     refetchInterval: 24 * HOUR,
     // Refetch when window regains focus (but only if stale)
     refetchOnWindowFocus: true,
-    // Retry up to 3 times with exponential backoff
+    // Retry up to 3 times with exponential backoff (1m, 2m, 5m)
     retry: 3,
     retryDelay: (attemptIndex: number) =>
       Math.min(1 * MINUTE * 2 ** attemptIndex, 5 * MINUTE),
@@ -175,7 +194,7 @@ export const tanstackQueryOptions = {
     refetchInterval: false,
     // Refetch when window regains focus (but only if stale)
     refetchOnWindowFocus: true,
-    // Retry up to 5 times with exponential backoff (reduced for static data)
+    // Retry up to 5 times with exponential backoff (1m, 2m, 4m, 8m, 10m)
     retry: 5,
     retryDelay: (attemptIndex: number) =>
       Math.min(1 * MINUTE * 2 ** attemptIndex, 10 * MINUTE),

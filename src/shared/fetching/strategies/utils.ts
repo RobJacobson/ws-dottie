@@ -37,7 +37,8 @@
  * ```
  */
 
-import { fetchJsonp, fetchNative } from "./index";
+import { fetchJsonp } from "./fetchJsonp";
+import { fetchNative } from "./fetchNative";
 import type { FetchStrategy } from "./types";
 
 /**
