@@ -1,0 +1,37 @@
+# Git Commit Message Guidelines
+
+When generating commit messages, follow these rules:
+
+## Format
+Use conventional commits: `type(scope): description`
+
+## Types
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `refactor`: Code refactoring
+- `test`: Adding or updating tests
+- `chore`: Maintenance tasks
+
+## Scope
+Include relevant scope in parentheses:
+- `(api)`: API-related changes
+- `(validation)`: Validation logic
+- `(config)`: Configuration changes
+- `(shared)`: Shared utilities
+- `(docs)`: Documentation
+
+## Description
+- Keep first line under 50 characters
+- Use imperative mood ("add" not "added")
+- Be specific about what changed
+
+## Body
+For complex changes, add a body with:
+- What was changed
+- Why it was changed
+- Breaking changes (if any)
+- Files affected
+
+## Examples
