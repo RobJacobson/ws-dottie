@@ -29,7 +29,8 @@ import {
   terminalComboSchema,
   terminalComboVerboseArraySchema,
   terminalMatesArraySchema,
-} from "../../../src/api/wsf-fares";
+} from "@/api/wsf-fares";
+
 import { wsfTestData } from "../utils/test-data";
 import { ApiModuleConfig } from "../utils/types";
 

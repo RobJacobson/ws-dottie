@@ -7,7 +7,8 @@ import {
   getMountainPassConditionsParamsSchema,
   mountainPassConditionArraySchema,
   mountainPassConditionSchema,
-} from "../../../src/api/wsdot-mountain-pass-conditions";
+} from "@/api/wsdot-mountain-pass-conditions";
+
 import { wsdotTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";
 

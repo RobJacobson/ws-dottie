@@ -1,6 +1,6 @@
 import { expect } from "vitest";
 
-import { WsdotApiError } from "../../src/shared/fetching/errors";
+import { WsdotApiError } from "@/shared/fetching/errors";
 
 // Rate limiting utility - be respectful to WSF API
 export const delay = (ms: number) =>

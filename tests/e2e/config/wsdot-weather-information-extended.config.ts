@@ -9,7 +9,8 @@ import { expect } from "vitest";
 import {
   getWeatherInformationExtended,
   weatherReadingArraySchema,
-} from "../../../src/api/wsdot-weather-information-extended";
+} from "@/api/wsdot-weather-information-extended";
+
 import type { ApiModuleConfig } from "../utils/types";
 
 export const wsdotWeatherInformationExtendedTestConfig: ApiModuleConfig = {

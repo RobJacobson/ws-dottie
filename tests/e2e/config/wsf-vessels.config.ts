@@ -32,7 +32,8 @@ import {
   vesselsCacheFlushDateSchema,
   vesselVerboseArraySchema,
   vesselVerboseSchema,
-} from "../../../src/api/wsf-vessels";
+} from "@/api/wsf-vessels";
+
 import { ApiModuleConfig } from "../utils/types";
 
 export const wsfVesselsTestConfig: ApiModuleConfig = {

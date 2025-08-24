@@ -6,7 +6,8 @@ import {
   getWeatherInformationForStations,
   weatherInfoArraySchema,
   weatherInfoSchema,
-} from "../../../src/api/wsdot-weather-information";
+} from "@/api/wsdot-weather-information";
+
 import type { ApiModuleConfig } from "../utils/types";
 
 export const wsdotWeatherInformationTestConfig: ApiModuleConfig = {

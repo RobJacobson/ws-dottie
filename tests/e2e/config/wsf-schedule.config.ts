@@ -23,7 +23,8 @@ import {
   scheduleTerminalsArraySchema,
   timeAdjustmentsArraySchema,
   validDateRangeSchema,
-} from "../../../src/api/wsf-schedule";
+} from "@/api/wsf-schedule";
+
 import { ApiModuleConfig } from "../utils/types";
 
 export const wsfScheduleTestConfig: ApiModuleConfig = {

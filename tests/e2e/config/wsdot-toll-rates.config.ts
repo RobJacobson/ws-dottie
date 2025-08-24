@@ -15,7 +15,8 @@ import {
   tollTripInfoArraySchema,
   tollTripRatesSchema,
   tollTripVersionSchema,
-} from "../../../src/api/wsdot-toll-rates";
+} from "@/api/wsdot-toll-rates";
+
 import type { ApiModuleConfig } from "../utils/types";
 
 /**

@@ -4,7 +4,8 @@ import {
   bridgeDataGisArraySchema,
   getBridgeClearances,
   getBridgeClearancesParamsSchema,
-} from "../../../src/api/wsdot-bridge-clearances";
+} from "@/api/wsdot-bridge-clearances";
+
 import { wsdotTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";
 
@@ -48,7 +49,24 @@ export const bridgeClearancesTestConfig: ApiModuleConfig = {
         {
           name: "should return bridges for specific route",
           test: async () => {
+            console.log("🧪 [TEST] About to call getBridgeClearances");
             const result = await getBridgeClearances({ route: "005" });
+            console.log(
+              "🧪 [TEST] getBridgeClearances returned:",
+              typeof result
+            );
+            console.log("🧪 [TEST] Result is array:", Array.isArray(result));
+            if (Array.isArray(result) && result.length > 0) {
+              console.log("🧪 [TEST] First item keys:", Object.keys(result[0]));
+              console.log(
+                "🧪 [TEST] First item APILastUpdate type:",
+                typeof result[0].APILastUpdate
+              );
+              console.log(
+                "🧪 [TEST] First item RouteDate type:",
+                typeof result[0].RouteDate
+              );
+            }
             const validated = bridgeDataGisArraySchema.parse(result);
 
             // Test that we get bridges for the requested route

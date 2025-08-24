@@ -43,7 +43,9 @@ export const createEndpointTestSuite = <TParams, TOutput>({
         console.log(
           `\n📋 Running basic functionality test for ${endpointName}...`
         );
+        console.log(`🧪 [BASIC] About to call ${endpointName}`);
         const result = await apiFunction(validParams);
+        console.log(`🧪 [BASIC] ${endpointName} returned:`, typeof result);
         expect(result).toBeDefined();
 
         // Log basic info for debugging

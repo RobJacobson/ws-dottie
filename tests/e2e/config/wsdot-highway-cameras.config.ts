@@ -9,7 +9,8 @@ import {
   getHighwayCameras,
   searchHighwayCameras,
   searchHighwayCamerasParamsSchema,
-} from "../../../src/api/wsdot-highway-cameras";
+} from "@/api/wsdot-highway-cameras";
+
 import { wsdotTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";
 
