@@ -76,6 +76,8 @@ export const wsdotTestData = {
   bridgeClearances: {
     validBridgeIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     invalidBridgeIds: [-1, 0, 999999],
+    validRouteIds: ["005", "090", "405", "520", "167", "18", "20", "101"], // Valid WSDOT route IDs
+    invalidRouteIds: ["", "invalid", "999", "000", "abc"],
   },
 
   // Mountain Pass Conditions

@@ -1,7 +1,7 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/caching";
+import { useQueryWithAutoUpdate } from "@/shared/utils";
 import { tanstackQueryOptions } from "@/shared/config";
 import { zodFetch } from "@/shared/fetching";
 

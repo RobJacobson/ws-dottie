@@ -34,7 +34,8 @@ export interface EndpointTestConfig<TParams, TOutput> {
     | "parameterized"
     | "date-based"
     | "id-based"
-    | "search";
+    | "search"
+    | "cache-info";
 
   /** Maximum acceptable response time in milliseconds */
   maxResponseTime?: number;
@@ -47,6 +48,9 @@ export interface EndpointTestConfig<TParams, TOutput> {
     name: string;
     test: () => Promise<void>;
   }>;
+
+  /** Whether this endpoint returns a single value instead of an array */
+  isSingleValue?: boolean;
 }
 
 /**
