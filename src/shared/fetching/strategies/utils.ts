@@ -56,21 +56,44 @@ import type { FetchStrategy } from "./types";
  */
 export const selectFetchStrategy = (): FetchStrategy => {
   const environment = getEnvironmentType();
+  console.log("🔍 [selectFetchStrategy] Environment detected:", environment);
 
   // Allow forcing JSONP for testing purposes
   if (typeof process !== "undefined" && process.env.FORCE_JSONP === "true") {
+    console.log(
+      "🔍 [selectFetchStrategy] FORCE_JSONP enabled, returning fetchJsonp"
+    );
     return fetchJsonp;
   }
 
+  let strategy: FetchStrategy;
   switch (environment) {
     case "test":
     case "server":
-      return fetchNative;
+      strategy = fetchNative;
+      console.log(
+        "🔍 [selectFetchStrategy] Returning fetchNative for",
+        environment
+      );
+      break;
     case "web":
-      return fetchJsonp;
+      strategy = fetchJsonp;
+      console.log(
+        "🔍 [selectFetchStrategy] Returning fetchJsonp for",
+        environment
+      );
+      break;
     default:
-      return fetchNative; // Fallback
+      strategy = fetchNative; // Fallback
+      console.log("🔍 [selectFetchStrategy] Returning fetchNative as fallback");
+      break;
   }
+
+  console.log(
+    "🔍 [selectFetchStrategy] Strategy function name:",
+    strategy.name
+  );
+  return strategy;
 };
 
 /**
@@ -121,7 +144,7 @@ const isTestEnvironment = () => {
   return false;
 };
 
-import type { ApiErrorResponse } from "./types";
+// import type { ApiErrorResponse } from "./types";
 
 /**
  * Checks if the API response contains an error message
@@ -129,22 +152,22 @@ import type { ApiErrorResponse } from "./types";
  * WSDOT and WSF APIs return error messages in a "Message" field rather than
  * using HTTP error status codes for some validation errors.
  */
-export const hasApiError = (data: unknown): data is ApiErrorResponse => {
-  if (!data || typeof data !== "object") return false;
+// export const hasApiError = (data: unknown): data is ApiErrorResponse => {
+//   if (!data || typeof data !== "object") return false;
 
-  const errorData = data as ApiErrorResponse;
-  if (!("Message" in errorData) || typeof errorData.Message !== "string")
-    return false;
+//   const errorData = data as ApiErrorResponse;
+//   if (!("Message" in errorData) || typeof errorData.Message !== "string")
+//     return false;
 
-  const message = errorData.Message.toLowerCase();
-  return (
-    message.includes("failed") ||
-    message.includes("invalid") ||
-    message.includes("not valid") ||
-    message.includes("cannot be used") ||
-    message.includes("error")
-  );
-};
+//   const message = errorData.Message.toLowerCase();
+//   return (
+//     message.includes("failed") ||
+//     message.includes("invalid") ||
+//     message.includes("not valid") ||
+//     message.includes("cannot be used") ||
+//     message.includes("error")
+//   );
+// };
 
 /**
  * Processes API response data and handles error checking
@@ -153,10 +176,10 @@ export const hasApiError = (data: unknown): data is ApiErrorResponse => {
  * @returns The JSON string representation of the data
  * @throws Error if the response contains an API error message
  */
-export const processApiResponse = (data: unknown): string => {
-  if (hasApiError(data)) {
-    throw new Error(data.Message);
-  }
+// export const processApiResponse = (data: unknown): string => {
+//   if (hasApiError(data)) {
+//     throw new Error(data.Message);
+//   }
 
-  return JSON.stringify(data);
-};
+//   return JSON.stringify(data);
+// };

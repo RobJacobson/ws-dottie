@@ -44,6 +44,9 @@ export const fetchNative: FetchStrategy = async (
   url: string,
   _expectedType?: "array" | "object"
 ): Promise<string> => {
+  console.log(
+    "🚨 [fetchNative] CURRENT VERSION EXECUTING - returning raw text"
+  );
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -58,7 +61,8 @@ export const fetchNative: FetchStrategy = async (
     throw new Error("API returned HTTP 200 with empty body (invalid response)");
   }
 
-  // Parse as JSON
-  const data = JSON.parse(text);
-  return processApiResponse(data);
+  // Don't parse here - return raw text to avoid double conversion
+  // const data = JSON.parse(text);
+  // return processApiResponse(data);
+  return text;
 };
