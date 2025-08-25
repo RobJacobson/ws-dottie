@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/utils";
-import { tanstackQueryOptions } from "@/shared/config";
-import type { TanStackOptions } from "@/shared/types";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
+import type { TanStackOptions } from "@/shared/tanstack";
 import {
   createBatchSizeParam,
   createDateRangeParams,
   createDateRangeRefinement,
-} from "@/shared/validation/templates";
+} from "@/shared/fetching/validation/schemas";
 
 import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 import type { VesselHistory } from "./getVesselHistoryByVesselAndDateRange";

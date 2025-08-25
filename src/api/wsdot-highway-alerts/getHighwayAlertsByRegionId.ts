@@ -2,9 +2,9 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 import type { HighwayAlert } from "./getHighwayAlertById";
 import { highwayAlertArraySchema } from "./getHighwayAlerts";
@@ -62,11 +62,11 @@ export const getHighwayAlertsByRegionIdParamsSchema = z
       .int()
       .positive()
       .describe(
-        "The WSDOT region ID to filter highway alerts by. This ID represents a specific geographic region within Washington State where alerts should be retrieved. Examples include region IDs for Northwest, Northeast, Southwest, Southeast, Central, Olympic Peninsula, or Puget Sound areas."
+        "The WSDOT region ID to filter highway alerts by. This ID represents a specific geographic region within Washington State where alerts should be retrieved. Each region covers a geographic area with distinct highways and traffic patterns. For example, Region 1 typically covers the Northwest region including Seattle, Tacoma, and surrounding areas, while other regions cover Olympic Peninsula, Eastern Washington, and South Central areas."
       ),
   })
   .describe(
-    "Parameters for retrieving highway alerts filtered by a specific WSDOT region ID"
+    "Parameters for retrieving highway alerts filtered by a specific WSDOT region ID. This allows users to get location-specific traffic alerts for planning routes within a particular geographic region."
   );
 
 export type GetHighwayAlertsByRegionIdParams = z.infer<

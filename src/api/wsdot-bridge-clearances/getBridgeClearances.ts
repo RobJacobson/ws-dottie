@@ -2,15 +2,15 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
   zNullableString,
   zWsdotDate,
-} from "@/shared/validation";
+} from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -64,11 +64,11 @@ export const getBridgeClearancesParamsSchema = z
       .string()
       .min(1, "Route cannot be empty")
       .describe(
-        "WSDOT route identifier for which to retrieve bridge clearance data. Examples include '005' for I-5, '090' for I-90, '405' for I-405. The route should be specified as a zero-padded 3-digit string for interstates (e.g., '005' not '5') or as the full route number for state routes (e.g., '20', '101')."
+        "WSDOT route identifier for which to retrieve bridge clearance data. Examples include '005' for I-5, '090' for I-90, '405' for I-405. The route should be specified as a zero-padded 3-digit string for interstates (e.g., '005' not '5') or as the full route number for state routes (e.g., '20', '101'). This parameter filters the API response to return only bridges located along the specified route."
       ),
   })
   .describe(
-    "Parameters for retrieving bridge clearance data for a specific WSDOT route"
+    "Parameters for retrieving bridge clearance data for a specific WSDOT route. The API returns all bridges along the specified route with their vertical clearance measurements and location details."
   );
 
 export type GetBridgeClearancesParams = z.infer<
@@ -92,7 +92,7 @@ export const bridgeDataGisSchema = z
       .string()
       .nullable()
       .describe(
-        "Unique identifier assigned to the bridge by WSDOT. This number is used internally by the department for bridge management, maintenance scheduling, and record keeping. It serves as the primary key for bridge identification in WSDOT systems."
+        "Unique identifier assigned to the bridge by WSDOT. This number is used internally by the department for bridge management, maintenance scheduling, and record keeping. It serves as the primary key for bridge identification in WSDOT systems. Examples include '5/598P' for I-5 pedestrian bridge, '524/10' for SR 524 crossing, and 'MARY-05' for Marysville structures."
       ),
 
     ControlEntityGuid: z
@@ -105,7 +105,7 @@ export const bridgeDataGisSchema = z
       .string()
       .nullable()
       .describe(
-        "Human-readable description of what the bridge crosses over or under. Examples include 'Over I-5', 'Over Ship Canal', 'Under SR 520'. This field provides context about the bridge's location and purpose within the transportation network."
+        "Human-readable description of what the bridge crosses over or under. This field provides context about the bridge's location and purpose within the transportation network. Examples include 'I-5 UNDER NE 195TH PED BRIDGE' for pedestrian bridge crossings, 'I-5 UNDER 236TH ST SW' for road overpasses, and 'I-5 UNDER SR 524 / 196TH ST SW' for major route crossings."
       ),
 
     CrossingLocationId: z
@@ -121,7 +121,7 @@ export const bridgeDataGisSchema = z
       ),
 
     InventoryDirection: zNullableString().describe(
-      "Direction indicator for bridge inventory purposes, typically showing the direction of travel or the orientation of the bridge structure. May be null if direction information is not applicable or not available for this bridge."
+      "Direction indicator for bridge inventory purposes, typically showing the direction of travel or the orientation of the bridge structure. Values include 'I' for increasing direction (northbound on I-5) and 'D' for decreasing direction (southbound on I-5). This field helps distinguish between directional lanes or approaches of the same bridge structure."
     ),
 
     Latitude: zLatitude().describe(
@@ -145,7 +145,7 @@ export const bridgeDataGisSchema = z
     SRMP: z
       .number()
       .describe(
-        "State Route Milepost (SRMP) indicating the precise location of the bridge along the state route. This is a decimal number representing the distance in miles from the route's origin point. Used for precise location identification and maintenance planning."
+        "State Route Milepost (SRMP) indicating the precise location of the bridge along the state route. This is a decimal number representing the distance in miles from the route's origin point. Used for precise location identification and maintenance planning. For I-5, values range from approximately 176 (near Seattle) to over 275 (near the Canadian border), with examples like 176.72 and 203.74."
       ),
 
     SRMPAheadBackIndicator: zNullableString().describe(
@@ -156,21 +156,21 @@ export const bridgeDataGisSchema = z
       .string()
       .nullable()
       .describe(
-        "Official Washington State route identifier where the bridge is located. Examples include '005' for I-5, '090' for I-90, '101' for US-101. This is the primary route designation used by WSDOT for traffic management and navigation."
+        "Official Washington State route identifier where the bridge is located. Examples include '005' for I-5, '090' for I-90, '101' for US-101. This is the primary route designation used by WSDOT for traffic management and navigation. For queries on a specific route, all returned bridges will have the same StateRouteID."
       ),
 
     StateStructureId: z
       .string()
       .nullable()
       .describe(
-        "Official state structure identifier assigned to the bridge by WSDOT. This ID is used for structural engineering records, inspection schedules, and maintenance planning. It serves as the primary reference for all bridge-related documentation."
+        "Official state structure identifier assigned to the bridge by WSDOT. This ID is used for structural engineering records, inspection schedules, and maintenance planning. It serves as the primary reference for all bridge-related documentation. Examples include '0007299C', '0017649A', and '00200544' for various I-5 bridge structures."
       ),
 
     VerticalClearanceMaximumFeetInch: z
       .string()
       .nullable()
       .describe(
-        "Maximum vertical clearance under the bridge expressed in feet and inches format (e.g., '16-06' for 16 feet 6 inches). This represents the highest point where vehicles can safely pass under the bridge structure. Critical for commercial vehicle route planning."
+        "Maximum vertical clearance under the bridge expressed in feet and inches format (e.g., '21 ft 6 in', '16 ft 3 in'). This represents the highest point where vehicles can safely pass under the bridge structure. Critical for commercial vehicle route planning. Values range from approximately 15 feet for low road overpasses to over 49 feet for high pedestrian bridges."
       ),
 
     VerticalClearanceMaximumInches: z
@@ -183,7 +183,7 @@ export const bridgeDataGisSchema = z
       .string()
       .nullable()
       .describe(
-        "Minimum vertical clearance under the bridge expressed in feet and inches format (e.g., '15-08' for 15 feet 8 inches). This represents the lowest point where vehicles can pass under the bridge structure. This is the critical measurement for determining vehicle compatibility."
+        "Minimum vertical clearance under the bridge expressed in feet and inches format (e.g., '19 ft 11 in', '15 ft 10 in'). This represents the lowest point where vehicles can pass under the bridge structure. This is the critical measurement for determining vehicle compatibility and the primary constraint for oversized vehicle routing."
       ),
 
     VerticalClearanceMinimumInches: z
@@ -194,13 +194,13 @@ export const bridgeDataGisSchema = z
   })
   .catchall(z.unknown())
   .describe(
-    "Complete bridge clearance information including location, identification, and clearance measurements. This schema represents comprehensive bridge data from the WSDOT Bridge Clearances API, providing essential information for commercial vehicle route planning, bridge management, and transportation safety. The clearance measurements are critical for preventing bridge strikes and ensuring safe passage of oversized vehicles."
+    "Complete bridge clearance information for a single bridge structure along a Washington State route. This schema represents comprehensive bridge data from the WSDOT Bridge Clearances API, providing essential information for commercial vehicle route planning, bridge management, and transportation safety. Each object contains detailed measurements, location data, and identification information critical for preventing bridge strikes and ensuring safe passage of oversized vehicles. For I-5, this includes structures like pedestrian bridges, overpasses, and road crossings with varying clearance heights."
   );
 
 export const bridgeDataGisArraySchema = z
   .array(bridgeDataGisSchema)
   .describe(
-    "Array of bridge clearance data for all bridges along a specified route. This collection provides comprehensive clearance information that enables route planning for commercial vehicles and helps prevent bridge strikes by providing accurate clearance measurements."
+    "Array of bridge clearance data for all bridges along a specified route. This collection provides comprehensive clearance information that enables route planning for commercial vehicles and helps prevent bridge strikes by providing accurate clearance measurements. For example, I-5 contains over 100 bridge structures ranging from pedestrian bridges with high clearances (e.g., '49 ft 9 in') to road overpasses with lower clearances (e.g., '15 ft 10 in')."
   );
 
 export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;

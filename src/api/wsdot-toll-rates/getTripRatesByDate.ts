@@ -2,9 +2,9 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 // Import schemas from getTollRates to avoid duplication
 import { type TollRate, tollRateArraySchema } from "./getTollRates";
@@ -19,13 +19,16 @@ const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson";
 
 /**
- * Retrieves historical toll rates by date range from WSDOT API
+ * Retrieves historical toll rates by date range from WSDOT Toll Rates API
  *
- * Returns historical toll rate data for a specified date range,
- * enabling analysis of toll rate trends over time.
+ * Returns historical toll rate data for a specified date range, enabling analysis of toll rate trends over time.
+ * This endpoint provides access to past toll pricing for all Washington State toll facilities including
+ * I-405 Express Toll Lanes, SR 167 High Occupancy Toll (HOT) lanes, SR 520 Bridge, SR 99 Tunnel,
+ * SR 509 Expressway, and Tacoma Narrows Bridge. Historical data is essential for analyzing pricing patterns,
+ * planning budgets, and understanding toll rate changes over time.
  *
  * @param params - Date range parameters for historical data retrieval
- * @returns Promise containing historical toll rate data
+ * @returns Promise containing historical toll rate data array with pricing information for the specified period
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
@@ -34,7 +37,9 @@ const ENDPOINT =
  *   fromDate: new Date('2024-01-01'),
  *   toDate: new Date('2024-01-31')
  * });
- * console.log(historicalRates[0].CurrentToll); // Historical toll amount
+ * console.log(historicalRates[0].CurrentToll); // Historical toll rate in cents
+ * console.log(historicalRates[0].StateRoute); // '520' (SR 520)
+ * console.log(historicalRates[0].TravelDirection); // 'E' (Eastbound)
  * ```
  */
 export const getTripRatesByDate = async (
@@ -99,14 +104,17 @@ export type GetTripRatesByDateParams = z.infer<
 // ============================================================================
 
 /**
- * Hook for retrieving historical toll rates by date range from WSDOT API
+ * Hook for retrieving historical toll rates by date range from WSDOT Toll Rates API
  *
- * Returns historical toll rate data for a specified date range,
- * enabling analysis of toll rate trends over time.
+ * Returns historical toll rate data for a specified date range, enabling analysis of toll rate trends over time.
+ * This hook provides access to past toll pricing for all Washington State toll facilities including
+ * I-405 Express Toll Lanes, SR 167 High Occupancy Toll (HOT) lanes, SR 520 Bridge, SR 99 Tunnel,
+ * SR 509 Expressway, and Tacoma Narrows Bridge. Historical data is essential for analyzing pricing patterns,
+ * planning budgets, and understanding toll rate changes over time.
  *
  * @param params - Date range parameters for historical data retrieval
  * @param options - Optional React Query options to override defaults
- * @returns React Query result with historical toll rate data
+ * @returns React Query result with historical toll rate data array for trend analysis and budget planning
  *
  * @example
  * ```typescript
@@ -114,6 +122,8 @@ export type GetTripRatesByDateParams = z.infer<
  *   fromDate: new Date('2024-01-01'),
  *   toDate: new Date('2024-01-31')
  * });
+ * const sr520Rates = historicalRates?.filter(rate => rate.StateRoute === '520');
+ * console.log(sr520Rates?.[0]?.CurrentToll); // Historical toll rate in cents
  * ```
  */
 export const useTripRatesByDate = (

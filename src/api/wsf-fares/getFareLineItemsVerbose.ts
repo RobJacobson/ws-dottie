@@ -1,8 +1,8 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/utils";
-import { tanstackQueryOptions } from "@/shared/config";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 
 import { fareLineItemSchema } from "./getFareLineItems";
@@ -181,12 +181,7 @@ export const useFareLineItemsVerbose = (
   >
 ): UseQueryResult<FareLineItemsVerboseResponse, Error> => {
   return useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "fares",
-      "fareLineItemsVerbose",
-      JSON.stringify(params),
-    ],
+    queryKey: ["wsf", "fares", "fareLineItemsVerbose", JSON.stringify(params)],
     queryFn: () =>
       getFareLineItemsVerbose({
         tripDate: params.tripDate,

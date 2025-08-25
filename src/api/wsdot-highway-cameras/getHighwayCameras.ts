@@ -2,9 +2,9 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 import type { Camera } from "./getHighwayCamera";
 // Import schemas and types from single-item endpoint
@@ -23,15 +23,18 @@ const ENDPOINT =
  * Get all highway cameras
  *
  * Returns all available highway cameras from the WSDOT Highway Cameras API.
+ * Provides comprehensive camera coverage across Washington State with real-time images,
+ * locations, and metadata for traffic monitoring and navigation applications.
  *
  * @param params - No parameters required (empty object for consistency)
- * @returns Promise containing all camera data
+ * @returns Promise containing all camera data including 1,000+ cameras across all major routes
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
  * const cameras = await getHighwayCameras({});
- * console.log(cameras[0].Title); // "I-5 @ NE 85th St"
+ * console.log(cameras[0].Title); // "SR 9 at MP 13.3: 32nd St SE"
+ * console.log(cameras[0].ImageURL); // "https://images.wsdot.wa.gov/nw/009vc01331.jpg"
  * ```
  */
 export const getHighwayCameras = async (
@@ -75,7 +78,7 @@ export type GetHighwayCamerasParams = z.infer<
 export const cameraArraySchema = z
   .array(cameraSchema)
   .describe(
-    "Array of highway camera data for all available cameras across Washington State highways. This collection provides comprehensive camera information that enables traffic monitoring, navigation applications, and transportation management."
+    "Array of highway camera data for all available cameras across Washington State highways. This collection includes over 1,000 cameras covering all major routes from I-5 and US 101 in the west to US 2 and US 97 in the east. Cameras are organized by region (NW=Northwest, OL=Olympic, SW=Southwest, ER=Eastern, SC=South Central, NC=North Central) and provide real-time traffic monitoring for navigation applications and transportation management."
   );
 
 // ============================================================================

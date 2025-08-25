@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/utils";
-import { tanstackQueryOptions } from "@/shared/config";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/zod/dateParsers";
-import type { TanStackOptions } from "@/shared/types";
+import { jsDateToYyyyMmDd } from "@/shared/fetching/zod/dateParsers";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 

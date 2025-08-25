@@ -2,9 +2,9 @@ import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import { zWsdotDate } from "@/shared/validation";
+import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function

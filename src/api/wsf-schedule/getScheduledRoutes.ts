@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/utils";
-import { tanstackQueryOptions } from "@/shared/config";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { zWsdotDate } from "@/shared/validation";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 
 import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import { serviceDisruptionSchema } from "./getRouteDetails";

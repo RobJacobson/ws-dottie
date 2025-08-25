@@ -2,9 +2,9 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 import { weatherInfoArraySchema } from "./getWeatherInformation";
 
@@ -20,18 +20,22 @@ const ENDPOINT =
 /**
  * Get weather information for multiple stations from WSDOT Weather Information API
  *
- * Returns weather information for multiple weather stations specified
- * by their IDs.
+ * Returns weather information for multiple weather stations specified by their IDs.
+ * This endpoint is perfect for monitoring a specific set of locations like a travel route,
+ * multiple mountain passes, or key transportation corridors. You can request up to several
+ * stations at once to get a comprehensive view of weather conditions across different regions.
  *
  * @param params - Object containing stationIds parameter
- * @param params.stationIds - Comma-separated list of station IDs
- * @returns Promise containing weather data for the specified stations
+ * @param params.stationIds - Comma-separated list of station IDs (e.g., "1909,1928,1966" for I-5 and I-90 stations)
+ * @returns Promise containing weather data array for the specified stations
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
- * const weatherInfo = await getWeatherInformationForStations({ stationIds: "1909,1910,1928" });
- * console.log(weatherInfo.length); // 3
+ * const weatherInfo = await getWeatherInformationForStations({ stationIds: "1909,1928,1966" });
+ * console.log(weatherInfo.length); // 3 (number of stations requested)
+ * console.log(weatherInfo[0].StationName); // "S 144th St on SB I-5 at mp 155.32"
+ * console.log(weatherInfo[1].TemperatureInFahrenheit); // Echo Lake temperature
  * ```
  */
 export const getWeatherInformationForStations = async (
@@ -60,7 +64,7 @@ export const getWeatherInformationForStationsParamsSchema = z
       .string()
       .min(1, "Station IDs cannot be empty")
       .describe(
-        "Comma-separated list of weather station IDs to retrieve weather information for. Multiple station IDs should be separated by commas without spaces (e.g., '1909,1910,1928')."
+        "Comma-separated list of weather station IDs to retrieve weather information for. Multiple station IDs should be separated by commas without spaces (e.g., '1909,1928,1966' for I-5 southbound, I-90 Echo Lake, and I-5 northbound stations). This allows monitoring multiple specific locations like mountain passes, urban corridors, or coastal areas simultaneously."
       ),
   })
   .describe(
@@ -86,13 +90,25 @@ export type GetWeatherInformationForStationsParams = z.infer<
 /**
  * Hook for getting weather information for multiple stations from WSDOT Weather Information API
  *
- * Returns weather information for multiple weather stations specified
- * by their IDs.
+ * Returns weather information for multiple weather stations specified by their IDs.
+ * This hook is excellent for route planning applications where you need weather conditions
+ * along a specific travel path. You can monitor multiple stations simultaneously to get
+ * comprehensive weather coverage for trip planning, safety assessment, and route optimization.
  *
  * @param params - Object containing stationIds parameter
- * @param params.stationIds - Comma-separated list of station IDs
+ * @param params.stationIds - Comma-separated list of station IDs (e.g., "1909,1928,1966")
  * @param options - Optional React Query options to override defaults
- * @returns React Query result with weather data for the specified stations
+ * @returns React Query result with weather data array for the specified stations
+ *
+ * @example
+ * ```typescript
+ * const { data: routeWeather } = useWeatherInformationForStations({
+ *   stationIds: "1909,1928,1966"
+ * });
+ * console.log(routeWeather?.length); // 3 stations along the route
+ * const mountainPass = routeWeather?.find(s => s.StationID === 1928);
+ * console.log(mountainPass?.TemperatureInFahrenheit); // Echo Lake conditions
+ * ```
  */
 export const useWeatherInformationForStations = (
   params: GetWeatherInformationForStationsParams,

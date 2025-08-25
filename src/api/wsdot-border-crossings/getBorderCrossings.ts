@@ -2,15 +2,15 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
   zNullableString,
   zWsdotDate,
-} from "@/shared/validation";
+} from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -60,7 +60,7 @@ export const getBorderCrossings = async (
 export const getBorderCrossingsParamsSchema = z
   .object({})
   .describe(
-    "No parameters required for getting border crossing data. The API returns all available border crossing information."
+    "No parameters required for retrieving border crossing wait time data. This endpoint provides current wait times for all monitored U.S.-Canada border crossings between Washington State and British Columbia, enabling travelers to make informed decisions about border crossing timing and route selection."
   );
 
 export type GetBorderCrossingsParams = z.infer<
@@ -79,11 +79,11 @@ export const borderCrossingLocationSchema = z
     Description: z
       .string()
       .describe(
-        "Human-readable description of the border crossing location. Provides context about the crossing point, such as 'Peace Arch Border Crossing' or 'Pacific Highway Border Crossing'. This field helps users identify the specific location of the border crossing."
+        "Human-readable description of the border crossing location and facility type. Identifies the specific lane or facility being monitored, such as 'I-5 General Purpose' for standard I-5 lanes, 'SR 543 Nexus Lane' for NEXUS expedited processing, or 'SR 543 Trucks' for commercial vehicle lanes. This field helps users identify which specific facility the wait time data applies to."
       ),
 
     Direction: zNullableString().describe(
-      "Direction of travel for the border crossing, indicating whether it's for northbound (entering Canada) or southbound (entering US) traffic. May be null if direction information is not available or not applicable to the crossing."
+      "Direction of travel for the border crossing, indicating whether it's for northbound (entering Canada) or southbound (entering US) traffic."
     ),
 
     Latitude: zLatitude().describe(
@@ -103,13 +103,13 @@ export const borderCrossingLocationSchema = z
     RoadName: z
       .string()
       .describe(
-        "Name of the highway or road where the border crossing is located. Examples include 'I-5', 'SR 543', or 'Peace Arch Drive'. This field helps users understand which roadway leads to the border crossing."
+        "Name of the highway or road where the border crossing is located, using the numeric route identifier. Examples include '005' for I-5, '539' for SR 539, '543' for SR 543, and '009' for SR 9. These numeric identifiers correspond to the Washington State highway system designations and help users understand which roadway leads to the border crossing."
       ),
   })
   .catchall(z.unknown())
   .nullable()
   .describe(
-    "Geographic and descriptive information about a border crossing location. Contains coordinates, road information, and descriptive details that help identify and locate the specific border crossing point. May be null if location information is not available for a particular crossing."
+    "Geographic and descriptive information about a border crossing location. Contains coordinates, road information, and descriptive details that help identify and locate the specific border crossing point. When present, includes facility type descriptions like 'I-5 General Purpose', 'SR 543 Nexus Lane', or 'SR 543 Trucks' to identify the specific lane or facility being monitored."
   );
 
 export const borderCrossingDataSchema = z
@@ -124,7 +124,7 @@ export const borderCrossingDataSchema = z
       .string()
       .nullable()
       .describe(
-        "Official name of the border crossing as designated by border authorities. Examples include 'Peace Arch', 'Pacific Highway', 'Lynden', and 'Sumas'. This is the primary identifier used by travelers and border officials to reference specific crossing points."
+        "Unique identifier for the border crossing lane or facility type. Combines the route identifier with facility type, such as 'I5' for I-5 general purpose lanes, 'I5Nexus' for I-5 NEXUS lanes, 'SR543Trucks' for SR 543 commercial vehicle lanes, or 'SR543TrucksFast' for SR 543 FAST lanes. This identifier is used internally by the WSDOT system and may not always match the commonly known crossing names."
       ),
 
     Time: zWsdotDate().describe(
@@ -134,18 +134,18 @@ export const borderCrossingDataSchema = z
     WaitTime: z
       .number()
       .describe(
-        "Current estimated wait time in minutes for vehicles crossing the border at this location. This is the primary data point that travelers use to plan their border crossing timing. Wait times can vary significantly based on time of day, day of week, and current border traffic conditions. Negative values (e.g., -1) may indicate special conditions or unavailable wait time data."
+        "Current estimated wait time in minutes for vehicles crossing the border at this specific lane or facility. This is the primary data point that travelers use to plan their border crossing timing. Values of -1 indicate that wait time data is not available or the facility is not currently monitored. Positive values represent actual wait times observed at the crossing, which can vary significantly based on time of day, day of week, seasonal traffic patterns, and current border processing conditions."
       ),
   })
   .catchall(z.unknown())
   .describe(
-    "Complete border crossing information including location details, crossing name, current wait time, and timestamp. This schema represents the core data structure returned by the WSDOT Border Crossings API, providing real-time information that travelers use to plan their border crossing timing and route selection."
+    "Complete border crossing information for a specific lane or facility at a U.S.-Canada border crossing. Each object represents one monitored facility (such as general purpose lanes, NEXUS lanes, or commercial vehicle lanes) and includes real-time wait time data, location coordinates when available, and update timestamp. This schema represents the core data structure returned by the WSDOT Border Crossings API, enabling travelers to make informed decisions about border crossing timing and facility selection based on current wait conditions."
   );
 
 export const borderCrossingDataArraySchema = z
   .array(borderCrossingDataSchema)
   .describe(
-    "Array of border crossing data for all monitored border crossings between Washington State and Canada. This collection provides comprehensive wait time and location information for travelers planning border crossings, enabling route planning and timing optimization."
+    "Array of border crossing data for all monitored U.S.-Canada border crossings between Washington State and British Columbia. Each entry represents a specific border crossing lane or facility type, providing real-time wait times and location information to help travelers make informed decisions about when and where to cross the border. The array typically includes 10-15 entries covering major crossings like Peace Arch (I-5), Pacific Highway (SR 543), Lynden (SR 539), and Sumas (SR 9)."
   );
 
 export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;

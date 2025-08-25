@@ -2,9 +2,9 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 import type { HighwayAlert } from "./getHighwayAlertById";
 import { highwayAlertArraySchema } from "./getHighwayAlerts";
@@ -82,14 +82,14 @@ export const searchHighwayAlertsParamsSchema = z
       .string()
       .optional()
       .describe(
-        "Optional state route identifier to filter alerts by specific highway or road. Examples include 'I-5', 'SR 520', 'US-2', or 'I-90'. When provided, only alerts for the specified route are returned."
+        "Optional state route identifier to filter alerts by specific highway or road. Examples include 'I-5' for Interstate 5, 'SR 520' for State Route 520, 'US-2' for U.S. Route 2, 'I-90' for Interstate 90, or 'SR 99' for State Route 99. When provided, only alerts for the specified route are returned. For example, searching for 'I-5' would return alerts like construction on I-5 near Seattle or maintenance work on I-5 through Central Washington."
       ),
 
     Region: z
       .string()
       .optional()
       .describe(
-        "Optional region name to filter alerts by geographic area. Examples include 'Seattle', 'Tacoma', 'Spokane', 'Eastern Washington', or 'Western Washington'. When provided, only alerts for the specified region are returned."
+        "Optional region name to filter alerts by geographic area. Examples include 'Northwest' for Seattle/Tacoma area, 'North Central' for Wenatchee/Leavenworth area, 'Eastern' for Spokane area, 'Olympic' for Olympic Peninsula, 'South Central' for Yakima area, or 'Southwest' for Vancouver, WA area. When provided, only alerts for the specified region are returned. For example, searching for 'Northwest' would return alerts from Seattle-area highways like I-5, I-405, and SR 520."
       ),
 
     SearchTimeStart: z
@@ -110,14 +110,14 @@ export const searchHighwayAlertsParamsSchema = z
       .number()
       .optional()
       .describe(
-        "Optional starting milepost value to filter alerts by location along a highway. When provided, only alerts that start at or after this milepost are returned. Used to focus on specific highway segments."
+        "Optional starting milepost value to filter alerts by location along a highway. When provided, only alerts that start at or after this milepost are returned. Used to focus on specific highway segments. For example, on I-5, milepost 100 is near Centralia, milepost 150 is near Olympia, and milepost 180 is near Seattle. Values can range from 0 to over 275 depending on the route."
       ),
 
     EndingMilepost: z
       .number()
       .optional()
       .describe(
-        "Optional ending milepost value to filter alerts by location along a highway. When provided, only alerts that start at or before this milepost are returned. Used in combination with StartingMilepost to define a specific highway segment."
+        "Optional ending milepost value to filter alerts by location along a highway. When provided, only alerts that start at or before this milepost are returned. Used in combination with StartingMilepost to define a specific highway segment. For example, to search I-5 between Olympia and Seattle, you might use StartingMilepost: 150 and EndingMilepost: 180."
       ),
   })
   .describe(

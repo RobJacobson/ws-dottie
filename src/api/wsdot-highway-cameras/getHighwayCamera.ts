@@ -2,10 +2,10 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { zNullableString } from "@/shared/validation";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { zNullableString } from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -83,7 +83,7 @@ export const cameraLocationSchema = z
     ),
 
     Direction: zNullableString().describe(
-      "Direction of travel indicator for the camera location. May be null if direction information is not applicable or not available. Examples include 'Northbound', 'Southbound', 'Eastbound', 'Westbound', 'Both Directions', 'All Lanes', or 'Eastbound and Westbound'."
+      "Direction of travel indicator for the camera location. Uses single-letter codes for programmatic use. Values include 'N' (Northbound), 'S' (Southbound), 'E' (Eastbound), 'W' (Westbound), and 'B' (Both directions). May be null if direction information is not applicable or not available. Examples include 'N' for northbound lanes, 'S' for southbound lanes, 'B' for cameras that monitor both directions, and 'E' for eastbound traffic."
     ),
 
     Latitude: z
@@ -105,7 +105,7 @@ export const cameraLocationSchema = z
       ),
 
     RoadName: zNullableString().describe(
-      "Name of the highway or road where the camera is located. Examples include 'I-5', 'SR 520', 'US-2', 'I-90', or 'SR 9'. This field helps users identify which roadway the camera monitors."
+      "Name of the highway or road where the camera is located. Uses the standard Washington State highway designation. Examples include 'SR 9' (State Route 9), 'SR 900' (State Route 900), 'US 101' (U.S. Route 101), 'I-5' (Interstate 5), and 'US 2' (U.S. Route 2). This field helps users identify which roadway the camera monitors."
     ),
   })
   .catchall(z.unknown())
@@ -119,7 +119,7 @@ export const cameraSchema = z
       .number()
       .int()
       .describe(
-        "Unique identifier assigned to this highway camera by the WSDOT system. This ID serves as a permanent, unique reference for the camera across all WSDOT systems and can be used for tracking, reporting, and data correlation purposes."
+        "Unique identifier assigned to this highway camera by the WSDOT system. This ID serves as a permanent, unique reference for the camera across all WSDOT systems and can be used for tracking, reporting, and data correlation purposes. Examples include 10075 (SR 9 at MP 13.3), 9987 (SR 9 at MP 13.8), and 9310 (SR 9 at MP 15.4)."
       ),
 
     CameraLocation: cameraLocationSchema.describe(
@@ -156,7 +156,7 @@ export const cameraSchema = z
     ImageURL: z
       .string()
       .describe(
-        "URL endpoint for accessing the live or recent traffic camera image. This field provides the direct link to the camera feed that can be used by applications to display real-time traffic conditions."
+        "URL endpoint for accessing the live or recent traffic camera image. This field provides the direct link to the camera feed that can be used by applications to display real-time traffic conditions. URLs follow the pattern 'https://images.wsdot.wa.gov/{region}/{route}vc{milepost}.jpg' where region codes include 'nw' (Northwest), 'sw' (Southwest), 'sc' (South Central), 'nc' (North Central), 'er' (Eastern), and 'orflow' (Oregon flow images)."
       ),
 
     ImageWidth: z
@@ -177,7 +177,7 @@ export const cameraSchema = z
     ),
 
     Region: zNullableString().describe(
-      "Geographic region of Washington State where the camera is located. Examples include 'Northwest', 'North Central', 'South Central', 'Southwest', 'Eastern', 'Olympic', 'Olympic South', or 'Washington'. This field helps users understand the general area where the camera operates."
+      "Geographic region of Washington State where the camera is located. Uses abbreviated region codes for programmatic use. Values include 'NW' (Northwest region including Seattle and surrounding areas), 'OL' (Olympic Peninsula), 'SW' (Southwest region), 'ER' (Eastern Washington), 'SC' (South Central), and 'NC' (North Central). This field helps users understand the general area where the camera operates and organize cameras by region."
     ),
 
     SortOrder: z
@@ -188,7 +188,7 @@ export const cameraSchema = z
       ),
 
     Title: zNullableString().describe(
-      "Human-readable name for the highway camera that provides quick identification. Examples include 'I-5 @ NE 85th St', 'SR 520 Floating Bridge', 'I-90 Snoqualmie Pass', or 'US-2 Stevens Pass'. This field is the primary display name used in applications."
+      "Human-readable name for the highway camera that provides quick identification. This field combines the route identifier, milepost, and nearest landmark or road for easy identification. Examples include 'SR 9 at MP 13.3: 32nd St SE', 'SR 9 at MP 13.8: S Lake Stevens Rd', 'SR 9 at MP 15.4: Market Pl', 'US 101 at MP 0.5: Astoria-Megler Bridge', and 'I-5 @ NE 85th St'. This field is the primary display name used in applications."
     ),
   })
   .catchall(z.unknown())

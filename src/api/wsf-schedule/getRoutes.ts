@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { useQueryWithAutoUpdate } from "@/shared/utils";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "./getCacheFlushDateSchedule";
 import { serviceDisruptionSchema } from "./getRouteDetails";

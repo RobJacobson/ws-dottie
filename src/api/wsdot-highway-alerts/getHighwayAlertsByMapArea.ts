@@ -2,9 +2,9 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 
 import type { HighwayAlert } from "./getHighwayAlertById";
 import { highwayAlertArraySchema } from "./getHighwayAlerts";
@@ -60,11 +60,11 @@ export const getHighwayAlertsByMapAreaParamsSchema = z
       .string()
       .min(1, "Map area cannot be empty")
       .describe(
-        "The map area or region to filter highway alerts by. Examples include 'Seattle', 'Tacoma', 'Spokane', 'Eastern Washington', or 'Western Washington'. This parameter filters alerts to show only those relevant to the specified geographic area."
+        "The map area or region to filter highway alerts by. Examples include 'Seattle', 'Tacoma', 'Spokane', 'Eastern Washington', or 'Western Washington'. This parameter filters alerts to show only those relevant to the specified geographic area. For example, using 'Seattle' returns alerts for SR 520, I-5, I-90, SR 523, and other Seattle-area highways."
       ),
   })
   .describe(
-    "Parameters for retrieving highway alerts filtered by a specific map area or region"
+    "Parameters for retrieving highway alerts filtered by a specific map area or region. This allows users to get location-specific traffic alerts for planning routes in particular areas."
   );
 
 export type GetHighwayAlertsByMapAreaParams = z.infer<

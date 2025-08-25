@@ -1,11 +1,14 @@
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/utils";
-import { tanstackQueryOptions } from "@/shared/config";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { zPositiveInteger, zWsdotDate } from "@/shared/validation";
-import { createVesselIdDescription } from "@/shared/validation/templates";
+import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  zPositiveInteger,
+  zWsdotDate,
+} from "@/shared/fetching/validation/schemas";
+import { createVesselIdDescription } from "@/shared/fetching/validation/schemas";
 
 import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 

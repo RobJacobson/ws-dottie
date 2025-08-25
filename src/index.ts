@@ -8,8 +8,9 @@
 export {
   configManager,
   type WsdotConfig,
-} from "./shared/configManager";
+} from "./shared/config";
 export type { LoggingMode } from "./shared/utils";
+export type { ValidationMode } from "./shared/fetching/validation/types";
 
 // ============================================================================
 // API Modules (Namespace Exports)
@@ -38,7 +39,7 @@ export * as WsfVessels from "./api/wsf-vessels";
 // TanStack Query Configuration
 // ============================================================================
 
-export { tanstackQueryOptions } from "./shared/config";
+export { tanstackQueryOptions } from "./shared/tanstack";
 
 // ============================================================================
 // Shared Utilities

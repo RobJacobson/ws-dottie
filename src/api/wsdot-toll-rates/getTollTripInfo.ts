@@ -2,10 +2,14 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { zLatitude, zLongitude, zWsdotDate } from "@/shared/validation";
+import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  zLatitude,
+  zLongitude,
+  zWsdotDate,
+} from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -47,7 +51,7 @@ export const getTollTripInfo = async (): Promise<TollTripInfo[]> => {
 
 export const getTollTripInfoParamsSchema = z
   .object({})
-  .describe("No parameters required.");
+  .describe("No parameters required for getting toll trip information with geometry. The API returns comprehensive route data for all active toll facilities in Washington State, including I-405 Express Toll Lanes, SR 167 High Occupancy Toll (HOT) lanes, SR 520 Bridge, SR 99 Tunnel, and others. Each trip includes geometry data for mapping applications and spatial analysis.");
 
 export type GetTollTripInfoParams = z.infer<typeof getTollTripInfoParamsSchema>;
 
@@ -68,7 +72,7 @@ export const tollTripInfoSchema = z
       .string()
       .nullable()
       .describe(
-        "Name of the location where the toll trip ends. Examples include 'Bellevue', 'Seattle', 'Tacoma', or 'Everett'. This field helps users identify the destination point of the toll trip."
+        "Name of the location where the toll trip ends. Examples include 'NB S Portal' (SR 99 northbound), 'SB S Portal' (SR 99 southbound), 'NE 128th' (I-405 exit), 'Ellingson Rd' (SR 167 exit), 'EB 78th Ave' (SR 520 eastbound), or 'WB 78th Ave' (SR 520 westbound). This field helps users identify the destination point of the toll trip for navigation and trip planning."
       ),
 
     EndLongitude: zLongitude().describe(
@@ -101,7 +105,7 @@ export const tollTripInfoSchema = z
       .string()
       .nullable()
       .describe(
-        "Name of the location where the toll trip begins. Examples include 'Bellevue', 'Seattle', 'Tacoma', or 'Everett'. This field helps users identify the starting point of the toll trip."
+        "Name of the location where the toll trip begins. Examples include 'SB S Portal' (SR 99 southbound), 'NB S Portal' (SR 99 northbound), 'SR 524' (I-405 entrance), 'S 23rd St' (SR 167 entrance), 'WB 78th Ave' (SR 520 westbound), or 'EB 78th Ave' (SR 520 eastbound). This field helps users identify the starting point of the toll trip for navigation and trip planning."
       ),
 
     StartLongitude: zLongitude().describe(
@@ -118,19 +122,19 @@ export const tollTripInfoSchema = z
       .string()
       .nullable()
       .describe(
-        "Direction of travel for which the toll trip applies. Examples include 'S' (Southbound), 'N' (Northbound), 'E' (Eastbound), 'W' (Westbound), or 'Both Directions'. This field indicates which direction of travel the trip information applies to."
+        "Direction of travel for which the toll trip applies. Examples include 'S' (Southbound on SR 99, SR 167, or I-405), 'N' (Northbound on SR 99, SR 167, or I-405), 'E' (Eastbound on SR 520), 'W' (Westbound on SR 520), or 'Both Directions' (for facilities that charge in both directions). This field indicates which direction of travel the trip information applies to and is crucial for understanding which way traffic is moving."
       ),
 
     TripName: z
       .string()
       .nullable()
       .describe(
-        "Unique identifier for the toll trip or route. Examples include '405tp01351', '520tp00123', or '167tp00456'. This field serves as a reference for the specific toll route and can be used for tracking and correlation purposes."
+        "Unique identifier for the toll trip or route. Examples include '099tp03268' (SR 99 southbound), '405tp02896' (I-405 from SR 524 to Bellevue), '167tp02564' (SR 167 from S 23rd St to Ellingson Rd), '520tp00422' (SR 520 eastbound from WB 78th Ave to EB 78th Ave), or '520tp00421' (SR 520 westbound from EB 78th Ave to WB 78th Ave). The format is typically '[route]tp[identifier]' and serves as a reference for the specific toll route segment."
       ),
   })
   .catchall(z.unknown())
   .describe(
-    "Detailed toll trip information including location details, geometry data, and route information. This schema represents comprehensive trip data from the WSDOT Toll Rates API, providing essential information for toll route mapping, navigation applications, and facility management. The trip details are critical for spatial analysis, route visualization, and transportation planning."
+    "Detailed toll trip information including location details, geometry data, and route information. This schema represents comprehensive trip data from the WSDOT Toll Rates API, providing essential information for toll route mapping, navigation applications, and facility management. The data includes geographic coordinates, route segments, and spatial geometry for all toll facilities including I-405 Express Toll Lanes, SR 167 High Occupancy Toll (HOT) lanes, SR 520 Bridge, SR 99 Tunnel, and others. The trip details are critical for spatial analysis, route visualization, and transportation planning."
   );
 
 export const tollTripInfoArraySchema = z

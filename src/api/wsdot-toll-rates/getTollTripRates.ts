@@ -2,10 +2,10 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { zWsdotDate } from "@/shared/validation";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -17,19 +17,22 @@ const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson";
 
 /**
- * Retrieves toll trip rates with messages and update times from WSDOT API
+ * Retrieves toll trip rates with messages and update times from WSDOT Toll Rates API
  *
- * Returns current toll trip rates along with system messages and
- * last updated timestamps.
+ * Returns comprehensive current toll trip rates for all Washington State toll facilities
+ * including I-405 Express Toll Lanes, SR 167 High Occupancy Toll (HOT) lanes, SR 520 Bridge,
+ * SR 99 Tunnel, SR 509 Expressway, and Tacoma Narrows Bridge. Includes system messages,
+ * current pricing in cents, and last updated timestamps for real-time toll management.
  *
- * @returns Promise containing toll trip rates with last updated time
+ * @returns Promise containing toll trip rates with last updated time and system notifications
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
  * ```typescript
  * const tripRates = await getTollTripRates();
  * console.log(tripRates.LastUpdated); // Date object
- * console.log(tripRates.Trips[0].Toll); // 0
+ * console.log(tripRates.Trips[0].Toll); // 125 (for $1.25 on SR 99)
+ * console.log(tripRates.Message); // Any system message or notification
  * ```
  */
 export const getTollTripRates = async (): Promise<TollTripRates> => {
@@ -48,7 +51,9 @@ export const getTollTripRates = async (): Promise<TollTripRates> => {
 
 export const getTollTripRatesParamsSchema = z
   .object({})
-  .describe("No parameters required.");
+  .describe(
+    "No parameters required for getting toll trip rates with system messages and update times. The API returns comprehensive toll rate data for all active Washington State toll facilities, including current pricing, system notifications, and update timestamps essential for real-time toll management and payment processing."
+  );
 
 export type GetTollTripRatesParams = z.infer<
   typeof getTollTripRatesParamsSchema
@@ -123,13 +128,23 @@ export type TollTripRates = z.infer<typeof tollTripRatesSchema>;
 // ============================================================================
 
 /**
- * Hook for retrieving toll trip rates with messages and update times from WSDOT API
+ * Hook for retrieving toll trip rates with messages and update times from WSDOT Toll Rates API
  *
- * Returns current toll trip rates along with system messages and
- * last updated timestamps.
+ * Returns comprehensive current toll trip rates for all Washington State toll facilities
+ * including I-405 Express Toll Lanes, SR 167 High Occupancy Toll (HOT) lanes, SR 520 Bridge,
+ * SR 99 Tunnel, SR 509 Expressway, and Tacoma Narrows Bridge. Includes system messages,
+ * current pricing in cents, and last updated timestamps for real-time toll management.
+ * Data updates frequently to reflect changing toll rates based on time of day and traffic conditions.
  *
  * @param options - Optional React Query options to override defaults
- * @returns React Query result with toll trip rates and last updated time
+ * @returns React Query result with toll trip rates data for payment processing and toll management
+ *
+ * @example
+ * ```typescript
+ * const { data: tripRates } = useTollTripRates();
+ * const sr520Rate = tripRates?.Trips?.find(trip => trip.TripName === '520tp00422');
+ * console.log(sr520Rate?.Toll); // Current toll in cents for SR 520 eastbound
+ * ```
  */
 export const useTollTripRates = (
   options?: TanStackOptions<TollTripRates>

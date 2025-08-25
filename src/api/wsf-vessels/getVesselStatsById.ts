@@ -1,15 +1,15 @@
 import { z } from "zod";
 
-import { useQueryWithAutoUpdate } from "@/shared/utils";
-import { tanstackQueryOptions } from "@/shared/config";
+import { useQueryWithAutoUpdate } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
+import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zNullableNumber,
   zNullableString,
   zPositiveInteger,
-} from "@/shared/validation";
-import { createVesselIdDescription } from "@/shared/validation/templates";
+} from "@/shared/fetching/validation/schemas";
+import { createVesselIdDescription } from "@/shared/fetching/validation/schemas";
 
 import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
 // Import vessel class schema from getVesselBasicsById

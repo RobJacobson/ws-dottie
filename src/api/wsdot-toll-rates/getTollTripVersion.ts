@@ -2,10 +2,10 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
-import { tanstackQueryOptions } from "@/shared/config";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/types";
-import { zWsdotDate } from "@/shared/validation";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -17,12 +17,14 @@ const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson";
 
 /**
- * Retrieves API version and timestamp information from WSDOT API
+ * Retrieves API version and timestamp information from WSDOT Toll Rates API
  *
- * Returns current API version number and last update timestamp for
- * the toll rates system.
+ * Returns current API version number and last update timestamp for the WSDOT Toll Rates system.
+ * This endpoint provides metadata about the toll rates API including version information and
+ * last update times, which is useful for tracking API changes, ensuring data freshness, and
+ * monitoring system status for all toll facilities in Washington State.
  *
- * @returns Promise containing API version and timestamp information
+ * @returns Promise containing API version and timestamp information for toll rates system
  * @throws {Error} When the API request fails or validation fails
  *
  * @example
@@ -48,7 +50,9 @@ export const getTollTripVersion = async (): Promise<TollTripVersion> => {
 
 export const getTollTripVersionParamsSchema = z
   .object({})
-  .describe("No parameters required.");
+  .describe(
+    "No parameters required for getting toll rates API version and timestamp information. The API returns current version number and last update timestamp for the WSDOT Toll Rates system, which is essential for tracking API changes and ensuring data freshness."
+  );
 
 export type GetTollTripVersionParams = z.infer<
   typeof getTollTripVersionParamsSchema
@@ -87,13 +91,22 @@ export type TollTripVersion = z.infer<typeof tollTripVersionSchema>;
 // ============================================================================
 
 /**
- * Hook for retrieving API version and timestamp information from WSDOT API
+ * Hook for retrieving API version and timestamp information from WSDOT Toll Rates API
  *
- * Returns current API version number and last update timestamp for
- * the toll rates system.
+ * Returns current API version number and last update timestamp for the WSDOT Toll Rates system.
+ * This hook provides metadata about the toll rates API including version information and
+ * last update times, which is useful for tracking API changes, ensuring data freshness, and
+ * monitoring system status for all toll facilities in Washington State.
  *
  * @param options - Optional React Query options to override defaults
- * @returns React Query result with API version and timestamp information
+ * @returns React Query result with API version and timestamp information for toll rates system
+ *
+ * @example
+ * ```typescript
+ * const { data: versionInfo } = useTollTripVersion();
+ * console.log(versionInfo?.Version); // Current API version number
+ * console.log(versionInfo?.TimeStamp); // Last update timestamp
+ * ```
  */
 export const useTollTripVersion = (
   options?: TanStackOptions<TollTripVersion>
