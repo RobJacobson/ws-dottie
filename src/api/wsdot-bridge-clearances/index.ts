@@ -11,7 +11,7 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getBridgeClearances";
+export * from "./bridgeClearances";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -21,7 +21,7 @@ export {
   bridgeDataGisArraySchema,
   bridgeDataGisSchema,
   getBridgeClearancesParamsSchema,
-} from "./getBridgeClearances";
+} from "./bridgeClearances";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -30,4 +30,4 @@ export {
 export type {
   BridgeDataGIS,
   GetBridgeClearancesParams,
-} from "./getBridgeClearances";
+} from "./bridgeClearances";

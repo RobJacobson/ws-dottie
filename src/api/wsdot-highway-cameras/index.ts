@@ -13,25 +13,21 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getHighwayCamera";
-export * from "./getHighwayCameras";
+export * from "./highwayCameras";
 export * from "./searchHighwayCameras";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Core camera schemas (from single-item endpoint)
+// Core camera schemas (from co-located file)
 export {
   cameraLocationSchema,
   cameraSchema,
-  getHighwayCameraParamsSchema,
-} from "./getHighwayCamera";
-// Array schemas
-export {
   cameraArraySchema,
+  getHighwayCameraParamsSchema,
   getHighwayCamerasParamsSchema,
-} from "./getHighwayCameras";
+} from "./highwayCameras";
 // Search schemas
 export { searchHighwayCamerasParamsSchema } from "./searchHighwayCameras";
 
@@ -43,6 +39,6 @@ export type {
   Camera,
   CameraLocation,
   GetHighwayCameraParams,
-} from "./getHighwayCamera";
-export type { GetHighwayCamerasParams } from "./getHighwayCameras";
+  GetHighwayCamerasParams,
+} from "./highwayCameras";
 export type { SearchHighwayCamerasParams } from "./searchHighwayCameras";

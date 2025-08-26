@@ -52,9 +52,7 @@ export const getCacheFlushDateTerminals = async (
 // GetCacheFlushDateTerminalsParams
 // ============================================================================
 
-export const getCacheFlushDateTerminalsParamsSchema = z
-  .object({})
-  .describe("No parameters required for getting cache flush date.");
+export const getCacheFlushDateTerminalsParamsSchema = z.object({}).describe("");
 
 export type GetCacheFlushDateTerminalsParams = z.infer<
   typeof getCacheFlushDateTerminalsParamsSchema
@@ -66,9 +64,8 @@ export type GetCacheFlushDateTerminalsParams = z.infer<
 // getCacheFlushDateTerminalsResponseSchema
 // ============================================================================
 
-export const getCacheFlushDateTerminalsResponseSchema = zWsdotDate().describe(
-  "Cache flush date indicating when the terminal data was last updated on the server. Used to determine data freshness and trigger cache invalidation when necessary."
-);
+export const getCacheFlushDateTerminalsResponseSchema =
+  zWsdotDate().describe("");
 
 export type GetCacheFlushDateTerminalsResponse = z.infer<
   typeof getCacheFlushDateTerminalsResponseSchema

@@ -1,3 +1,56 @@
+/**
+ * Search Highway Alerts API
+ *
+ * Advanced search functionality for highway alerts with multiple filter criteria including state route,
+ * region, time range, and milepost range. This API provides comprehensive filtering capabilities for
+ * targeted alert retrieval, allowing applications to find specific types of traffic events.
+ *
+ * The API supports both simple retrieval (no parameters) and advanced search with multiple filters.
+ * When no search parameters are provided, it falls back to the basic alerts endpoint for simplicity.
+ *
+ * API Functions:
+ * - searchHighwayAlerts: Returns an array of HighwayAlert objects matching search criteria
+ *
+ * Input/Output Overview:
+ * - searchHighwayAlerts: Input: SearchHighwayAlertsParams (all optional), Output: HighwayAlert[]
+ *
+ * Base Type: SearchHighwayAlertsParams
+ *
+ * interface SearchHighwayAlertsParams {
+ *   StateRoute?: string;           // Optional state route filter (e.g., "I-5", "US-2")
+ *   Region?: string;               // Optional region filter (e.g., "Seattle", "Spokane")
+ *   SearchTimeStart?: Date;        // Optional start time for search range
+ *   SearchTimeEnd?: Date;          // Optional end time for search range
+ *   StartingMilepost?: number;     // Optional starting milepost for route segment
+ *   EndingMilepost?: number;       // Optional ending milepost for route segment
+ * }
+ *
+ * Example Usage:
+ *
+ * curl -s "https://wsdot.wa.gov/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?AccessCode=$WSDOT_ACCESS_TOKEN&StateRoute=I-5&Region=Seattle"
+ *
+ * Here is example output from this curl command:
+ *
+ * ```json
+ * [
+ *   {
+ *     "AlertID": 468632,
+ *     "EndTime": "/Date(1756851229000-0700)/",
+ *     "EventCategory": "Construction",
+ *     "EventStatus": "Active",
+ *     "ExtendedDescription": "Construction work on I-5 causing delays",
+ *     "HeadlineDescription": "Construction on I-5 in Seattle",
+ *     "Priority": "High",
+ *     "Region": "Seattle"
+ *   }
+ * ]
+ * ```
+ *
+ * Note: The API requires a valid WSDOT access token. All search parameters are optional - when
+ * no parameters are provided, the API returns all current alerts. The search endpoint provides
+ * flexible filtering for applications that need to find specific types of traffic events.
+ */
+
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
@@ -6,8 +59,8 @@ import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
 
-import type { HighwayAlert } from "./getHighwayAlertById";
-import { highwayAlertArraySchema } from "./getHighwayAlerts";
+import type { HighwayAlert } from "./highwayAlerts";
+import { highwayAlertArraySchema } from "./highwayAlerts";
 
 // ============================================================================
 // API Function
@@ -22,26 +75,26 @@ const SIMPLE_ENDPOINT =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson";
 
 /**
- * Search highway alerts from WSDOT Highway Alerts API
+ * Advanced search for highway alerts with multiple filter criteria.
  *
- * Advanced search for highway alerts with multiple filter criteria including
- * state route, region, time range, and milepost range. This endpoint provides
- * comprehensive filtering capabilities for targeted alert retrieval.
- *
- * @param params - Object containing search criteria parameters
- * @returns Promise containing filtered highway alert data
- * @throws {Error} When the API request fails or validation fails
+ * @param params - Object containing optional search criteria parameters
+ * @param params.StateRoute - Optional state route filter (e.g., "I-5", "US-2")
+ * @param params.Region - Optional region filter (e.g., "Seattle", "Spokane")
+ * @param params.SearchTimeStart - Optional start time for search range
+ * @param params.SearchTimeEnd - Optional end time for search range
+ * @param params.StartingMilepost - Optional starting milepost for route segment
+ * @param params.EndingMilepost - Optional ending milepost for route segment
+ * @returns Promise<HighwayAlert[]> - Array of highway alerts matching search criteria
  *
  * @example
- * ```typescript
  * const alerts = await searchHighwayAlerts({
  *   StateRoute: "I-5",
- *   Region: "Seattle",
- *   SearchTimeStart: new Date("2024-01-01"),
- *   SearchTimeEnd: new Date("2024-01-31")
+ *   Region: "Seattle"
  * });
- * console.log(alerts[0].HeadlineDescription); // "Collision on I-5"
- * ```
+ * console.log(alerts.length);  // 5
+ * console.log(alerts[0].HeadlineDescription);  // "Construction on I-5 in Seattle"
+ *
+ * @throws {Error} When the API request fails or validation fails
  */
 export const searchHighwayAlerts = async (
   params: SearchHighwayAlertsParams
@@ -76,53 +129,24 @@ export const searchHighwayAlerts = async (
 // SearchHighwayAlertsParams
 // ============================================================================
 
+/**
+ * Parameters for advanced highway alert search with multiple optional filters
+ */
 export const searchHighwayAlertsParamsSchema = z
   .object({
-    StateRoute: z
-      .string()
-      .optional()
-      .describe(
-        "Optional state route identifier to filter alerts by specific highway or road. Examples include 'I-5' for Interstate 5, 'SR 520' for State Route 520, 'US-2' for U.S. Route 2, 'I-90' for Interstate 90, or 'SR 99' for State Route 99. When provided, only alerts for the specified route are returned. For example, searching for 'I-5' would return alerts like construction on I-5 near Seattle or maintenance work on I-5 through Central Washington."
-      ),
+    StateRoute: z.string().optional().describe(""),
 
-    Region: z
-      .string()
-      .optional()
-      .describe(
-        "Optional region name to filter alerts by geographic area. Examples include 'Northwest' for Seattle/Tacoma area, 'North Central' for Wenatchee/Leavenworth area, 'Eastern' for Spokane area, 'Olympic' for Olympic Peninsula, 'South Central' for Yakima area, or 'Southwest' for Vancouver, WA area. When provided, only alerts for the specified region are returned. For example, searching for 'Northwest' would return alerts from Seattle-area highways like I-5, I-405, and SR 520."
-      ),
+    Region: z.string().optional().describe(""),
 
-    SearchTimeStart: z
-      .date()
-      .optional()
-      .describe(
-        "Optional start date for the search period. When provided, only alerts that started on or after this date are returned. Used to limit results to recent or specific time periods."
-      ),
+    SearchTimeStart: z.date().optional().describe(""),
 
-    SearchTimeEnd: z
-      .date()
-      .optional()
-      .describe(
-        "Optional end date for the search period. When provided, only alerts that started on or before this date are returned. Used in combination with SearchTimeStart to define a specific time range."
-      ),
+    SearchTimeEnd: z.date().optional().describe(""),
 
-    StartingMilepost: z
-      .number()
-      .optional()
-      .describe(
-        "Optional starting milepost value to filter alerts by location along a highway. When provided, only alerts that start at or after this milepost are returned. Used to focus on specific highway segments. For example, on I-5, milepost 100 is near Centralia, milepost 150 is near Olympia, and milepost 180 is near Seattle. Values can range from 0 to over 275 depending on the route."
-      ),
+    StartingMilepost: z.number().optional().describe(""),
 
-    EndingMilepost: z
-      .number()
-      .optional()
-      .describe(
-        "Optional ending milepost value to filter alerts by location along a highway. When provided, only alerts that start at or before this milepost are returned. Used in combination with StartingMilepost to define a specific highway segment. For example, to search I-5 between Olympia and Seattle, you might use StartingMilepost: 150 and EndingMilepost: 180."
-      ),
+    EndingMilepost: z.number().optional().describe(""),
   })
-  .describe(
-    "Search parameters for filtering highway alerts by multiple criteria including route, region, time range, and milepost range. All parameters are optional, allowing flexible search combinations."
-  );
+  .describe("");
 
 export type SearchHighwayAlertsParams = z.infer<
   typeof searchHighwayAlertsParamsSchema
@@ -141,15 +165,26 @@ export type SearchHighwayAlertsParams = z.infer<
 // ============================================================================
 
 /**
- * Hook for searching highway alerts from WSDOT Highway Alerts API
+ * TanStack Query hook for advanced highway alert search with automatic updates.
  *
- * Advanced search for highway alerts with multiple filter criteria including
- * state route, region, time range, and milepost range. This endpoint provides
- * comprehensive filtering capabilities for targeted alert retrieval.
+ * @param params - Object containing optional search criteria parameters
+ * @param params.StateRoute - Optional state route filter (e.g., "I-5", "US-2")
+ * @param params.Region - Optional region filter (e.g., "Seattle", "Spokane")
+ * @param params.SearchTimeStart - Optional start time for search range
+ * @param params.SearchTimeEnd - Optional end time for search range
+ * @param params.StartingMilepost - Optional starting milepost for route segment
+ * @param params.EndingMilepost - Optional ending milepost for route segment
+ * @param options - Optional TanStack Query options for caching and refetch behavior
+ * @returns UseQueryResult<HighwayAlert[], Error> - Query result with filtered highway alert data
  *
- * @param params - Object containing search criteria parameters
- * @param options - Optional React Query options to override defaults
- * @returns React Query result with filtered highway alert data
+ * @example
+ * const { data: alerts, isLoading } = useSearchHighwayAlerts({
+ *   StateRoute: "I-5",
+ *   Region: "Seattle"
+ * });
+ * if (alerts) {
+ *   console.log(alerts.length);  // 5
+ * }
  */
 export const useSearchHighwayAlerts = (
   params: SearchHighwayAlertsParams,

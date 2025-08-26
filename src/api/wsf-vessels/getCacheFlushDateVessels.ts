@@ -54,9 +54,7 @@ export const getCacheFlushDateVessels =
 // VesselsCacheFlushDate
 // ============================================================================
 
-export const vesselsCacheFlushDateSchema = zWsdotDate().describe(
-  "Cache flush date indicating when the vessel data was last updated on the server. Used to determine data freshness and trigger cache invalidation when necessary."
-);
+export const vesselsCacheFlushDateSchema = zWsdotDate().describe("");
 
 export type VesselsCacheFlushDate = z.infer<typeof vesselsCacheFlushDateSchema>;
 

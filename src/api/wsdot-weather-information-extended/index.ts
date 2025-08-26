@@ -9,7 +9,7 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getWeatherInformationExtended";
+export * from "./weatherInformationExtended";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -19,7 +19,7 @@ export {
   getWeatherInformationExtendedParamsSchema,
   weatherReadingArraySchema,
   weatherReadingSchema,
-} from "./getWeatherInformationExtended";
+} from "./weatherInformationExtended";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -28,4 +28,4 @@ export {
 export type {
   GetWeatherInformationExtendedParams,
   WeatherReading,
-} from "./getWeatherInformationExtended";
+} from "./weatherInformationExtended";

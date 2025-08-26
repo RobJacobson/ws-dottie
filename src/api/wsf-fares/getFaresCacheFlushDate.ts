@@ -51,11 +51,7 @@ export const getFaresCacheFlushDate = async (
 // GetFaresCacheFlushDateParams
 // ============================================================================
 
-export const getFaresCacheFlushDateParamsSchema = z
-  .object({})
-  .describe(
-    "No parameters required for getting cache flush date. The API returns the date when fares data was last updated, which can be used to determine if cached data should be refreshed."
-  );
+export const getFaresCacheFlushDateParamsSchema = z.object({}).describe("");
 
 export type GetFaresCacheFlushDateParams = z.infer<
   typeof getFaresCacheFlushDateParamsSchema
@@ -67,9 +63,7 @@ export type GetFaresCacheFlushDateParams = z.infer<
 // faresCacheFlushDateSchema
 // ============================================================================
 
-export const faresCacheFlushDateSchema = zWsdotDate().describe(
-  "Timestamp indicating when the fares data was last updated in the WSF system. This field can be used to determine if cached fare data should be refreshed. When this date changes, applications should drop their cache and retrieve fresh data."
-);
+export const faresCacheFlushDateSchema = zWsdotDate().describe("");
 
 // ============================================================================
 // TanStack Query Hook

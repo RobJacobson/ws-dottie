@@ -12,32 +12,30 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getSearchWeatherInformation";
-export * from "./getWeatherInformation";
-export * from "./getWeatherInformationByStationId";
-export * from "./getWeatherInformationForStations";
+export * from "./weatherInformation";
+export * from "./weatherInformationSearch";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
 // Search schemas
-export { getSearchWeatherInformationParamsSchema } from "./getSearchWeatherInformation";
+export { getSearchWeatherInformationParamsSchema } from "./weatherInformationSearch";
 // Array schemas
 export {
   getWeatherInformationParamsSchema,
   weatherInfoArraySchema,
-} from "./getWeatherInformation";
+} from "./weatherInformation";
 // Core schemas (from single-item endpoint for consistency)
-export { getWeatherInformationByStationIdParamsSchema } from "./getWeatherInformationByStationId";
+export { getWeatherInformationByStationIdParamsSchema } from "./weatherInformation";
 // Station list schemas
-export { getWeatherInformationForStationsParamsSchema } from "./getWeatherInformationForStations";
+export { getWeatherInformationForStationsParamsSchema } from "./weatherInformationSearch";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { GetSearchWeatherInformationParams } from "./getSearchWeatherInformation";
-export type { GetWeatherInformationParams } from "./getWeatherInformation";
-export type { GetWeatherInformationByStationIdParams } from "./getWeatherInformationByStationId";
-export type { GetWeatherInformationForStationsParams } from "./getWeatherInformationForStations";
+export type { GetSearchWeatherInformationParams } from "./weatherInformationSearch";
+export type { GetWeatherInformationParams } from "./weatherInformation";
+export type { GetWeatherInformationByStationIdParams } from "./weatherInformation";
+export type { GetWeatherInformationForStationsParams } from "./weatherInformationSearch";

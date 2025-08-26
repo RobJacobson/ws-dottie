@@ -68,50 +68,24 @@ export const getFareTotals = async (
 
 export const getFareTotalsParamsSchema = z
   .object({
-    tripDate: z
-      .date()
-      .describe(
-        "The trip date for which to calculate fare totals. This date must be within the valid date range returned by getFaresValidDateRange."
-      ),
-    departingTerminalID: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "The unique identifier for the departing terminal. This ID can be obtained from the getFaresTerminals endpoint."
-      ),
-    arrivingTerminalID: z
-      .number()
-      .int()
-      .positive()
-      .describe(
-        "The unique identifier for the arriving terminal. This ID can be obtained from the getFaresTerminalMates endpoint."
-      ),
-    roundTrip: z
-      .boolean()
-      .describe(
-        "Whether this is a round trip. Set to true for round trip fares, false for one-way fares."
-      ),
+    tripDate: z.date().describe(""),
+    departingTerminalID: z.number().int().positive().describe(""),
+    arrivingTerminalID: z.number().int().positive().describe(""),
+    roundTrip: z.boolean().describe(""),
     fareLineItemIDs: z
       .array(z.number().int().positive())
       .min(1, "At least one fare line item ID must be provided")
-      .describe(
-        "Array of fare line item IDs to include in the fare calculation. These IDs can be obtained from the getFareLineItems endpoint."
-      ),
+      .describe(""),
     quantities: z
       .array(z.number().int().min(1))
       .min(1, "At least one quantity must be provided")
-      .describe(
-        "Array of quantities corresponding to the fare line item IDs. The length must match the fareLineItemIDs array."
-      ),
+      .describe(""),
   })
   .refine((data) => data.fareLineItemIDs.length === data.quantities.length, {
     message: "fareLineItemIDs and quantities arrays must have the same length",
     path: ["quantities"],
   })
-  .describe(
-    "Parameters for calculating fare totals for a specific combination of fare line items and quantities"
-  );
+  .describe("");
 
 export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
@@ -124,37 +98,14 @@ export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
 export const fareTotalSchema = z
   .object({
-    TotalType: z
-      .number()
-      .int()
-      .min(1)
-      .max(4)
-      .describe("Fare total type: 1=Depart, 2=Return, 3=Either, 4=Total"),
-    Description: z
-      .string()
-      .nullable()
-      .describe(
-        "Detailed description of the fare total (e.g., 'Anacortes to Friday Harbor')"
-      ),
-    BriefDescription: z
-      .string()
-      .nullable()
-      .describe(
-        "Brief description of the fare total (e.g., 'Depart', 'Return', 'Total')"
-      ),
-    Amount: z
-      .number()
-      .describe("Fare amount in US dollars for this total type"),
+    TotalType: z.number().int().min(1).max(4).describe(""),
+    Description: z.string().nullable().describe(""),
+    BriefDescription: z.string().nullable().describe(""),
+    Amount: z.number().describe(""),
   })
-  .describe(
-    "Fare total calculation result including total type, descriptions, and amount"
-  );
+  .describe("");
 
-export const fareTotalsArraySchema = z
-  .array(fareTotalSchema)
-  .describe(
-    "Array of fare total calculations for a specific combination of fare line items and quantities. This collection provides the calculated total costs for fare combinations."
-  );
+export const fareTotalsArraySchema = z.array(fareTotalSchema).describe("");
 
 export type FareTotal = z.infer<typeof fareTotalSchema>;
 

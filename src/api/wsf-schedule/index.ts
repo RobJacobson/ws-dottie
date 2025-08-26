@@ -10,70 +10,32 @@
 // ============================================================================
 
 // Export specific functions to avoid schema conflicts
-export { getActiveSeasons, useActiveSeasons } from "./getActiveSeasons";
-export { getAlerts, useAlerts } from "./getAlerts";
-export { getAllSailings, useAllSailings } from "./getAllSailings";
+export { getActiveSeasons, useActiveSeasons } from "./activeSeasons";
+export { getAlerts, useAlerts } from "./alerts";
+export { getAllSailings, useAllSailings } from "./allSailings";
 export {
   getAlternativeFormats,
   useAlternativeFormats,
-} from "./getAlternativeFormats";
+} from "./alternativeFormats";
 export {
   getCacheFlushDateSchedule,
   useCacheFlushDateSchedule,
-} from "./getCacheFlushDateSchedule";
-export { getRouteDetails, useRouteDetails } from "./getRouteDetails";
-export {
-  getRouteDetailsByRoute,
-  useRouteDetailsByRoute,
-} from "./getRouteDetailsByRoute";
-export {
-  getRouteDetailsByTerminals,
-  useRouteDetailsByTerminals,
-} from "./getRouteDetailsByTerminals";
-export { getRoutes, useRoutes } from "./getRoutes";
-export {
-  getRoutesByTerminals,
-  useRoutesByTerminals,
-} from "./getRoutesByTerminals";
+} from "./cacheFlushDateSchedule";
+export * from "./routeDetails";
+export * from "./routes";
 export {
   getRoutesWithDisruptions,
   useRoutesWithDisruptions,
-} from "./getRoutesWithDisruptions";
-export { getSailings, useSailings } from "./getSailings";
-export { getScheduleByRoute, useScheduleByRoute } from "./getScheduleByRoute";
-export {
-  getScheduleByTerminals,
-  useScheduleByTerminals,
-} from "./getScheduleByTerminals";
-export { getScheduledRoutes, useScheduledRoutes } from "./getScheduledRoutes";
-export {
-  getScheduledRoutesBySeason,
-  useScheduledRoutesBySeason,
-} from "./getScheduledRoutesBySeason";
-export {
-  getScheduleTodayByRoute,
-  useScheduleTodayByRoute,
-} from "./getScheduleTodayByRoute";
-export {
-  getScheduleTodayByTerminals,
-  useScheduleTodayByTerminals,
-} from "./getScheduleTodayByTerminals";
-export { getTerminalMates, useTerminalMates } from "./getTerminalMates";
-export { getTerminals, useTerminals } from "./getTerminals";
-export {
-  getTerminalsAndMates,
-  useTerminalsAndMates,
-} from "./getTerminalsAndMates";
-export {
-  getTerminalsAndMatesByRoute,
-  useTerminalsAndMatesByRoute,
-} from "./getTerminalsAndMatesByRoute";
-export { getTimeAdjustments, useTimeAdjustments } from "./getTimeAdjustments";
-export {
-  getTimeAdjustmentsByRoute,
-  useTimeAdjustmentsByRoute,
-} from "./getTimeAdjustmentsByRoute";
-export { getValidDateRange, useValidDateRange } from "./getValidDateRange";
+} from "./routesWithDisruptions";
+export { getSailings, useSailings } from "./sailings";
+export * from "./schedule";
+export * from "./scheduledRoutes";
+export * from "./scheduleToday";
+export { getTerminalMates, useTerminalMates } from "./terminalMates";
+export { getTerminals, useTerminals } from "./terminals";
+export * from "./terminalsAndMates";
+export * from "./timeAdjustments";
+export { getValidDateRange, useValidDateRange } from "./validDateRange";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -83,38 +45,42 @@ export { getValidDateRange, useValidDateRange } from "./getValidDateRange";
 export {
   activeSeasonResponseSchema,
   activeSeasonsArraySchema,
-} from "./getActiveSeasons";
+} from "./activeSeasons";
 // Alerts
 export {
   alertSchema,
   alertsArraySchema,
-} from "./getAlerts";
+} from "./alerts";
 // Alternative Formats
 export {
   alternativeFormatSchema,
   alternativeFormatsArraySchema,
   getAlternativeFormatsParamsSchema,
-} from "./getAlternativeFormats";
+} from "./alternativeFormats";
 // Cache Flush Date
-export { scheduleCacheFlushDateSchema } from "./getCacheFlushDateSchedule";
+export { scheduleCacheFlushDateSchema } from "./cacheFlushDateSchedule";
 // Route Details
 export {
-  getRouteDetailsParamsSchema,
+  getRouteDetailsByTerminalsParamsSchema,
+  getRouteDetailsByRouteParamsSchema,
   routeDetailsArraySchema,
   routeDetailsSchema,
-} from "./getRouteDetails";
+  routeDetailsByRouteResponseSchema,
+} from "./routeDetails";
+export { getRouteDetailsParamsSchema } from "./routeDetailsStandalone";
 // Routes
 export {
   getRoutesParamsSchema,
+  getRoutesByTerminalsParamsSchema,
   routeSchema,
   routesArraySchema,
-} from "./getRoutes";
+} from "./routes";
 // Routes with Disruptions
 export {
   getRoutesWithDisruptionsParamsSchema,
   routesWithDisruptionsArraySchema,
   routeWithDisruptionsSchema,
-} from "./getRoutesWithDisruptions";
+} from "./routesWithDisruptions";
 // Sailings - Export from getSailings to avoid conflicts with getAllSailings
 export {
   getSailingsParamsSchema,
@@ -122,90 +88,97 @@ export {
   sailingSchema,
   sailingsArraySchema,
   sailingsResponseArraySchema,
-} from "./getSailings";
-// Schedule by Route
+} from "./sailings";
+// Schedule
 export {
   getScheduleByRouteParamsSchema,
+  getScheduleByTerminalsParamsSchema,
   sailingTimeSchema,
   scheduleResponseArraySchema,
   scheduleResponseSchema,
   scheduleRouteTerminalComboSchema,
-} from "./getScheduleByRoute";
-// Scheduled Routes - Export from getScheduledRoutes to avoid conflicts with getRouteDetails
+} from "./schedule";
+// Scheduled Routes
 export {
   scheduledRouteSchema,
   scheduledRoutesArraySchema,
-} from "./getScheduledRoutes";
+} from "./scheduledRoutes";
 // Terminal Mates (from getTerminalMates)
-export { getTerminalMatesParamsSchema } from "./getTerminalMates";
-// Terminals (from getTerminals)
+export { getTerminalMatesParamsSchema } from "./terminalMates";
+// Terminals (from terminals)
 export {
   getTerminalsParamsSchema,
   scheduleTerminalSchema,
   scheduleTerminalsArraySchema,
-} from "./getTerminals";
-// Terminals and Mates (from getTerminalsAndMates)
+} from "./terminals";
+// Terminals and Mates
 export {
   getTerminalsAndMatesParamsSchema,
   scheduleTerminalComboSchema,
   scheduleTerminalCombosArraySchema,
-} from "./getTerminalsAndMates";
-// Terminals and Mates by Route (from getTerminalsAndMatesByRoute)
-export { getTerminalsAndMatesByRouteParamsSchema } from "./getTerminalsAndMatesByRoute";
+  getTerminalsAndMatesByRouteParamsSchema,
+} from "./terminalsAndMates";
 // Time Adjustments
 export {
   timeAdjustmentResponseSchema,
   timeAdjustmentsArraySchema,
-} from "./getTimeAdjustments";
+  timeAdjustmentSchema,
+  timeAdjustmentsByRouteArraySchema,
+} from "./timeAdjustments";
 // Valid Date Range
-export { validDateRangeSchema } from "./getValidDateRange";
+export { validDateRangeSchema } from "./validDateRange";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { ActiveSeasonResponse } from "./getActiveSeasons";
-export type { Alert } from "./getAlerts";
+export type { ActiveSeasonResponse } from "./activeSeasons";
+export type { Alert } from "./alerts";
 export type {
   AlternativeFormat,
   GetAlternativeFormatsParams,
-} from "./getAlternativeFormats";
+} from "./alternativeFormats";
 export type {
-  GetRouteDetailsParams,
+  GetRouteDetailsByTerminalsParams,
+  GetRouteDetailsByRouteParams,
   RouteDetails,
-} from "./getRouteDetails";
+  RouteDetailsByRouteResponse,
+} from "./routeDetails";
+export type { GetRouteDetailsParams } from "./routeDetailsStandalone";
 export type {
   GetRoutesParams,
+  GetRoutesByTerminalsParams,
   Route,
-} from "./getRoutes";
+} from "./routes";
 export type {
   GetRoutesWithDisruptionsParams,
   RouteWithDisruptions,
-} from "./getRoutesWithDisruptions";
+} from "./routesWithDisruptions";
 export type {
   GetSailingsParams,
   Sailing,
   SailingResponse,
-} from "./getSailings";
+} from "./sailings";
 export type {
   GetScheduleByRouteParams,
+  GetScheduleByTerminalsParams,
   SailingTime,
   ScheduleResponse,
   ScheduleRouteTerminalCombo,
-} from "./getScheduleByRoute";
-export type { ScheduledRoute } from "./getScheduledRoutes";
-export type { GetTerminalMatesParams } from "./getTerminalMates";
+} from "./schedule";
+export type { ScheduledRoute } from "./scheduledRoutes";
+export type { GetTerminalMatesParams } from "./terminalMates";
 export type {
   GetTerminalsParams,
   ScheduleTerminal,
-} from "./getTerminals";
+} from "./terminals";
 export type {
   GetTerminalsAndMatesParams,
+  GetTerminalsAndMatesByRouteParams,
   ScheduleTerminalCombo,
-} from "./getTerminalsAndMates";
-export type { GetTerminalsAndMatesByRouteParams } from "./getTerminalsAndMatesByRoute";
-export type { TimeAdjustmentResponse } from "./getTimeAdjustments";
-export type { ValidDateRange } from "./getValidDateRange";
+} from "./terminalsAndMates";
+export type { TimeAdjustmentResponse, TimeAdjustment } from "./timeAdjustments";
+export type { ValidDateRange } from "./validDateRange";
 
 // ============================================================================
 // SHARED UTILITIES

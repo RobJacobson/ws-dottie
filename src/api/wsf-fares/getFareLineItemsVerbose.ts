@@ -5,9 +5,9 @@ import { useQueryWithAutoUpdate } from "@/shared/tanstack";
 import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 
-import { fareLineItemSchema } from "./getFareLineItems";
+import { fareLineItemSchema } from "./fareLineItems";
 import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
-import { terminalComboVerboseSchema } from "./getTerminalComboVerbose";
+import { terminalComboVerboseSchema } from "./terminalCombo";
 
 // ============================================================================
 // API Function
@@ -57,15 +57,9 @@ export const getFareLineItemsVerbose = async (
 
 export const getFareLineItemsVerboseParamsSchema = z
   .object({
-    tripDate: z
-      .date()
-      .describe(
-        "The trip date for which to retrieve all fare line items. This date must be within the valid date range returned by getFaresValidDateRange."
-      ),
+    tripDate: z.date().describe(""),
   })
-  .describe(
-    "Parameters for retrieving all fare line items for all terminal combinations on a specific trip date"
-  );
+  .describe("");
 
 export type GetFareLineItemsVerboseParams = z.infer<
   typeof getFareLineItemsVerboseParamsSchema
@@ -85,60 +79,24 @@ export const terminalComboVerboseExtendedSchema = terminalComboVerboseSchema;
 
 export const lineItemLookupSchema = z
   .object({
-    TerminalComboIndex: z
-      .number()
-      .int()
-      .min(0)
-      .describe(
-        "Index into the TerminalComboVerbose array that identifies the specific terminal combination for this fare lookup. This field provides the reference to the route information."
-      ),
-    LineItemIndex: z
-      .number()
-      .int()
-      .min(0)
-      .describe(
-        "Index into the LineItems array that identifies the specific fare line items for this lookup. This field provides the reference to the one-way fare information."
-      ),
-    RoundTripLineItemIndex: z
-      .number()
-      .int()
-      .min(0)
-      .describe(
-        "Index into the RoundTripLineItems array that identifies the specific round trip fare line items for this lookup. This field provides the reference to the round trip fare information."
-      ),
+    TerminalComboIndex: z.number().int().min(0).describe(""),
+    LineItemIndex: z.number().int().min(0).describe(""),
+    RoundTripLineItemIndex: z.number().int().min(0).describe(""),
   })
   .catchall(z.unknown())
-  .describe(
-    "Line item lookup information that provides indices into the fare arrays for specific terminal combinations. This schema enables efficient fare lookup and calculation for complex fare structures."
-  );
+  .describe("");
 
 export const fareLineItemsVerboseResponseSchema = z
   .object({
     TerminalComboVerbose: z
       .array(terminalComboVerboseExtendedSchema)
-      .describe(
-        "Array of all valid terminal combinations for the specified trip date. This collection provides comprehensive route information for all available ferry routes."
-      ),
-    LineItemLookup: z
-      .array(lineItemLookupSchema)
-      .describe(
-        "Array of line item lookup information that maps terminal combinations to their corresponding fare arrays. This collection enables efficient fare lookup and calculation."
-      ),
-    LineItems: z
-      .array(z.array(fareLineItemSchema))
-      .describe(
-        "Two-dimensional array of fare line items for one-way travel. Each inner array contains the fare line items for a specific terminal combination, indexed by the LineItemIndex from the lookup."
-      ),
-    RoundTripLineItems: z
-      .array(z.array(fareLineItemSchema))
-      .describe(
-        "Two-dimensional array of fare line items for round trip travel. Each inner array contains the fare line items for a specific terminal combination, indexed by the RoundTripLineItemIndex from the lookup."
-      ),
+      .describe(""),
+    LineItemLookup: z.array(lineItemLookupSchema).describe(""),
+    LineItems: z.array(z.array(fareLineItemSchema)).describe(""),
+    RoundTripLineItems: z.array(z.array(fareLineItemSchema)).describe(""),
   })
   .catchall(z.unknown())
-  .describe(
-    "Comprehensive fare information response including all terminal combinations, fare line items, and lookup indices. This schema provides complete fare data for all routes on a specific trip date, enabling comprehensive fare calculations and route planning."
-  );
+  .describe("");
 
 export type TerminalComboVerbose = z.infer<
   typeof terminalComboVerboseExtendedSchema

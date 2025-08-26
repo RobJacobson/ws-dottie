@@ -1,18 +1,8 @@
-/**
- * WSDOT Weather Stations API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * weather station data including station locations and operational information.
- *
- * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_stations.html
- * API Endpoint: https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getWeatherStations";
+export * from "./weatherStations";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -20,9 +10,9 @@ export * from "./getWeatherStations";
 
 export {
   getWeatherStationsParamsSchema,
-  weatherStationDataArraySchema,
-  weatherStationDataSchema,
-} from "./getWeatherStations";
+  weatherStationArraySchema,
+  weatherStationSchema,
+} from "./weatherStations";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -30,5 +20,5 @@ export {
 
 export type {
   GetWeatherStationsParams,
-  WeatherStationData,
-} from "./getWeatherStations";
+  WeatherStation,
+} from "./weatherStations";

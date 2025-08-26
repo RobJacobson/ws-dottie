@@ -12,12 +12,9 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getEventCategories";
-export * from "./getHighwayAlertById";
-export * from "./getHighwayAlerts";
-export * from "./getHighwayAlertsByMapArea";
-export * from "./getHighwayAlertsByRegionId";
-export * from "./getMapAreas";
+export * from "./eventCategories";
+export * from "./highwayAlerts";
+export * from "./mapAreas";
 export * from "./searchHighwayAlerts";
 
 // ============================================================================
@@ -27,22 +24,20 @@ export * from "./searchHighwayAlerts";
 export {
   eventCategoriesArraySchema,
   getEventCategoriesParamsSchema,
-} from "./getEventCategories";
+} from "./eventCategories";
 export {
   getHighwayAlertByIdParamsSchema,
-  highwayAlertSchema,
-} from "./getHighwayAlertById";
-export {
   getHighwayAlertsParamsSchema,
+  getHighwayAlertsByMapAreaParamsSchema,
+  getHighwayAlertsByRegionIdParamsSchema,
   highwayAlertArraySchema,
-} from "./getHighwayAlerts";
-export { getHighwayAlertsByMapAreaParamsSchema } from "./getHighwayAlertsByMapArea";
-export { getHighwayAlertsByRegionIdParamsSchema } from "./getHighwayAlertsByRegionId";
+  highwayAlertSchema,
+} from "./highwayAlerts";
 export {
   getMapAreasParamsSchema,
   mapAreaSchema,
   mapAreasArraySchema,
-} from "./getMapAreas";
+} from "./mapAreas";
 export { searchHighwayAlertsParamsSchema } from "./searchHighwayAlerts";
 
 // ============================================================================
@@ -52,14 +47,14 @@ export { searchHighwayAlertsParamsSchema } from "./searchHighwayAlerts";
 export type {
   EventCategories,
   GetEventCategoriesParams,
-} from "./getEventCategories";
+} from "./eventCategories";
 export type {
   GetHighwayAlertByIdParams,
+  GetHighwayAlertsParams,
+  GetHighwayAlertsByMapAreaParams,
+  GetHighwayAlertsByRegionIdParams,
   HighwayAlert,
   HighwayAlertRoadwayLocation,
-} from "./getHighwayAlertById";
-export type { GetHighwayAlertsParams } from "./getHighwayAlerts";
-export type { GetHighwayAlertsByMapAreaParams } from "./getHighwayAlertsByMapArea";
-export type { GetHighwayAlertsByRegionIdParams } from "./getHighwayAlertsByRegionId";
-export type { GetMapAreasParams, MapArea } from "./getMapAreas";
+} from "./highwayAlerts";
+export type { GetMapAreasParams, MapArea } from "./mapAreas";
 export type { SearchHighwayAlertsParams } from "./searchHighwayAlerts";

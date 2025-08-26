@@ -1,31 +1,12 @@
-/**
- * WSDOT Border Crossings API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * border crossing data including real-time wait times and location information.
- */
-
-// ============================================================================
-// API FUNCTIONS & SCHEMAS
-// ============================================================================
-
-export * from "./getBorderCrossings";
-
-// ============================================================================
-// SCHEMA RE-EXPORTS FOR CONVENIENCE
-// ============================================================================
+export * from "./borderCrossings";
 
 export {
   borderCrossingDataArraySchema,
   borderCrossingDataSchema,
   getBorderCrossingsParamsSchema,
-} from "./getBorderCrossings";
-
-// ============================================================================
-// TYPE RE-EXPORTS FOR CONVENIENCE
-// ============================================================================
+} from "./borderCrossings";
 
 export type {
   BorderCrossingData,
   GetBorderCrossingsParams,
-} from "./getBorderCrossings";
+} from "./borderCrossings";

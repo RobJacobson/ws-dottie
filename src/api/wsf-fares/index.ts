@@ -9,16 +9,13 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getFareLineItems";
-export * from "./getFareLineItemsBasic";
+export * from "./fareLineItems";
 export * from "./getFareLineItemsVerbose";
 export * from "./getFaresCacheFlushDate";
-export * from "./getFaresTerminalMates";
-export * from "./getFaresTerminals";
+export * from "./faresTerminals";
 export * from "./getFaresValidDateRange";
 export * from "./getFareTotals";
-export * from "./getTerminalCombo";
-export * from "./getTerminalComboVerbose";
+export * from "./terminalCombo";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -27,12 +24,10 @@ export * from "./getTerminalComboVerbose";
 export {
   fareLineItemSchema,
   fareLineItemsArraySchema,
-  getFareLineItemsParamsSchema,
-} from "./getFareLineItems";
-export {
   fareLineItemsBasicArraySchema,
+  getFareLineItemsParamsSchema,
   getFareLineItemsBasicParamsSchema,
-} from "./getFareLineItemsBasic";
+} from "./fareLineItems";
 export {
   fareLineItemsVerboseResponseSchema,
   getFareLineItemsVerboseParamsSchema,
@@ -42,12 +37,10 @@ export {
   getFaresTerminalMatesParamsSchema,
   terminalMateSchema,
   terminalMatesArraySchema,
-} from "./getFaresTerminalMates";
-export {
   faresTerminalSchema,
   faresTerminalsArraySchema,
   getFaresTerminalsParamsSchema,
-} from "./getFaresTerminals";
+} from "./faresTerminals";
 export { getFaresValidDateRangeParamsSchema } from "./getFaresValidDateRange";
 export {
   fareTotalSchema,
@@ -56,13 +49,11 @@ export {
 } from "./getFareTotals";
 export {
   getTerminalComboParamsSchema,
-  terminalComboSchema,
-} from "./getTerminalCombo";
-export {
   getTerminalComboVerboseParamsSchema,
+  terminalComboSchema,
   terminalComboVerboseArraySchema,
   terminalComboVerboseSchema,
-} from "./getTerminalComboVerbose";
+} from "./terminalCombo";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -71,28 +62,24 @@ export {
 export type {
   FareLineItem,
   GetFareLineItemsParams,
-} from "./getFareLineItems";
-export type { GetFareLineItemsBasicParams } from "./getFareLineItemsBasic";
+  GetFareLineItemsBasicParams,
+} from "./fareLineItems";
 export type { GetFareLineItemsVerboseParams } from "./getFareLineItemsVerbose";
 export type { GetFaresCacheFlushDateParams } from "./getFaresCacheFlushDate";
 export type {
   GetFaresTerminalMatesParams,
   TerminalMate,
-} from "./getFaresTerminalMates";
-export type {
   FaresTerminal,
   GetFaresTerminalsParams,
-} from "./getFaresTerminals";
+} from "./faresTerminals";
 export type { GetFaresValidDateRangeParams } from "./getFaresValidDateRange";
 export type { GetFareTotalsParams } from "./getFareTotals";
 export type {
   GetTerminalComboParams,
-  TerminalCombo,
-} from "./getTerminalCombo";
-export type {
   GetTerminalComboVerboseParams,
+  TerminalCombo,
   TerminalComboVerbose,
-} from "./getTerminalComboVerbose";
+} from "./terminalCombo";
 
 // ============================================================================
 // SHARED UTILITIES

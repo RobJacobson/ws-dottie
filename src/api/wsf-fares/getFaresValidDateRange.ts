@@ -51,11 +51,7 @@ export const getFaresValidDateRange = async (
 // GetFaresValidDateRangeParams
 // ============================================================================
 
-export const getFaresValidDateRangeParamsSchema = z
-  .object({})
-  .describe(
-    "No parameters required for getting valid date range. The API returns the date range for which fares data is currently published and available."
-  );
+export const getFaresValidDateRangeParamsSchema = z.object({}).describe("");
 
 export type GetFaresValidDateRangeParams = z.infer<
   typeof getFaresValidDateRangeParamsSchema
@@ -70,17 +66,11 @@ export type GetFaresValidDateRangeParams = z.infer<
 
 export const faresValidDateRangeSchema = z
   .object({
-    DateFrom: zWsdotDate().describe(
-      "Start date of the valid date range for which fares data is currently published and available. This field indicates the earliest date for which fare information can be retrieved."
-    ),
-    DateThru: zWsdotDate().describe(
-      "End date of the valid date range for which fares data is currently published and available. This field indicates the latest date for which fare information can be retrieved."
-    ),
+    DateFrom: zWsdotDate().describe(""),
+    DateThru: zWsdotDate().describe(""),
   })
   .catchall(z.unknown())
-  .describe(
-    "Date range information indicating when fares data is available. This schema provides the valid date boundaries for fare queries, ensuring that applications only request data for supported dates."
-  );
+  .describe("");
 
 export type FaresValidDateRange = z.infer<typeof faresValidDateRangeSchema>;
 

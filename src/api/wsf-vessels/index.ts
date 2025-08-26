@@ -9,53 +9,50 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getAllVesselHistories";
 // Cache management
 export * from "./getCacheFlushDateVessels";
 // Vessel accommodations
-export * from "./getVesselAccommodations";
-export * from "./getVesselAccommodationsById";
+export * from "./vesselAccommodations";
 // Basic vessel information
-export * from "./getVesselBasics";
-export * from "./getVesselBasicsById";
-export * from "./getVesselHistoryByVesselAndDateRange";
+export * from "./vesselBasics";
+// Vessel history
+export * from "./vesselHistory";
 // Real-time vessel locations
-export * from "./getVesselLocations";
-export * from "./getVesselLocationsByVesselId";
+export * from "./vesselLocations";
 // Vessel statistics
-export * from "./getVesselStats";
-export * from "./getVesselStatsById";
+export * from "./vesselStats";
 // Verbose vessel information
-export * from "./getVesselVerbose";
-export * from "./getVesselVerboseById";
+export * from "./vesselVerbose";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export { getAllVesselHistoriesParamsSchema } from "./getAllVesselHistories";
 export { vesselsCacheFlushDateSchema } from "./getCacheFlushDateVessels";
-export { vesselAccommodationArraySchema } from "./getVesselAccommodations";
-export { vesselAccommodationSchema } from "./getVesselAccommodationsById";
-// Array schemas (from array endpoints)
-export { vesselBasicArraySchema } from "./getVesselBasics";
-// Core vessel schemas (from single-item endpoints for consistency)
 export {
+  vesselAccommodationArraySchema,
+  vesselAccommodationSchema,
+} from "./vesselAccommodations";
+// Array schemas (from array endpoints)
+export {
+  vesselBasicArraySchema,
   vesselBasicSchema,
   vesselClassSchema,
-} from "./getVesselBasicsById";
+} from "./vesselBasics";
 export {
   vesselHistoryArraySchema,
   vesselHistorySchema,
-} from "./getVesselHistoryByVesselAndDateRange";
-export { vesselLocationArraySchema } from "./getVesselLocations";
-export { vesselLocationSchema } from "./getVesselLocationsByVesselId";
-export { vesselStatsArraySchema } from "./getVesselStats";
-export { vesselStatsSchema } from "./getVesselStatsById";
+  getAllVesselHistoriesParamsSchema,
+} from "./vesselHistory";
+export {
+  vesselLocationArraySchema,
+  vesselLocationSchema,
+} from "./vesselLocations";
+export { vesselStatsArraySchema, vesselStatsSchema } from "./vesselStats";
 export {
   vesselVerboseArraySchema,
   vesselVerboseSchema,
-} from "./getVesselVerbose";
+} from "./vesselVerbose";
 
 // ============================================================================
 // SHARED UTILITIES
@@ -68,29 +65,31 @@ export {
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { GetAllVesselHistoriesParams } from "./getAllVesselHistories";
 export type { VesselsCacheFlushDate } from "./getCacheFlushDateVessels";
 // Export types directly from their source files to avoid re-export chains
 export type {
   GetVesselAccommodationsByIdParams,
   VesselAccommodation,
-} from "./getVesselAccommodationsById";
+} from "./vesselAccommodations";
 export type {
   GetVesselBasicsByIdParams,
   VesselBasic,
   VesselClass,
-} from "./getVesselBasicsById";
+} from "./vesselBasics";
 export type {
   GetVesselHistoryByVesselAndDateRangeParams,
+  GetAllVesselHistoriesParams,
   VesselHistory,
-} from "./getVesselHistoryByVesselAndDateRange";
+} from "./vesselHistory";
 export type {
   GetVesselLocationsByVesselIdParams,
   VesselLocation,
-} from "./getVesselLocationsByVesselId";
+} from "./vesselLocations";
 export type {
   GetVesselStatsByIdParams,
   VesselStats,
-} from "./getVesselStatsById";
-export type { VesselVerbose } from "./getVesselVerbose";
-export type { GetVesselVerboseByIdParams } from "./getVesselVerboseById";
+} from "./vesselStats";
+export type {
+  VesselVerbose,
+  GetVesselVerboseByIdParams,
+} from "./vesselVerbose";

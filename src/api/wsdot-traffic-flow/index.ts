@@ -25,8 +25,7 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getTrafficFlowById";
-export * from "./getTrafficFlows";
+export * from "./trafficFlow";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -38,12 +37,12 @@ export {
   flowStationReadingSchema,
   getTrafficFlowByIdParamsSchema,
   trafficFlowSchema,
-} from "./getTrafficFlowById";
+} from "./trafficFlow";
 // Array schemas
 export {
   getTrafficFlowsParamsSchema,
   trafficFlowArraySchema,
-} from "./getTrafficFlows";
+} from "./trafficFlow";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -53,8 +52,8 @@ export type {
   FlowStationLocation,
   GetTrafficFlowByIdParams,
   TrafficFlow,
-} from "./getTrafficFlowById";
-export type { GetTrafficFlowsParams } from "./getTrafficFlows";
+} from "./trafficFlow";
+export type { GetTrafficFlowsParams } from "./trafficFlow";
 
 // ============================================================================
 // CONSTANTS

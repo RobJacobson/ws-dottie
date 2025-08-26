@@ -12,8 +12,7 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getTravelTimeById";
-export * from "./getTravelTimes";
+export * from "./travelTimes";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
@@ -24,12 +23,12 @@ export {
   getTravelTimeByIdParamsSchema,
   travelTimeEndpointSchema,
   travelTimeRouteSchema,
-} from "./getTravelTimeById";
+} from "./travelTimes";
 // Array schemas
 export {
   getTravelTimesParamsSchema,
   travelTimesArraySchema,
-} from "./getTravelTimes";
+} from "./travelTimes";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -39,8 +38,8 @@ export type {
   GetTravelTimeByIdParams,
   TravelTimeEndpoint,
   TravelTimeRoute,
-} from "./getTravelTimeById";
+} from "./travelTimes";
 export type {
   GetTravelTimesParams,
   TravelTimesResponse,
-} from "./getTravelTimes";
+} from "./travelTimes";

@@ -12,24 +12,20 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./getMountainPassConditionById";
-export * from "./getMountainPassConditions";
+export * from "./mountainPassConditions";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-// Core schemas (from single-item endpoint for consistency)
+// Core schemas (from co-located file)
 export {
   getMountainPassConditionByIdParamsSchema,
-  mountainPassConditionSchema,
-  travelRestrictionSchema,
-} from "./getMountainPassConditionById";
-// Array schemas
-export {
   getMountainPassConditionsParamsSchema,
+  mountainPassConditionSchema,
   mountainPassConditionArraySchema,
-} from "./getMountainPassConditions";
+  travelRestrictionSchema,
+} from "./mountainPassConditions";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE
@@ -37,7 +33,7 @@ export {
 
 export type {
   GetMountainPassConditionByIdParams,
+  GetMountainPassConditionsParams,
   MountainPassCondition,
   TravelRestriction,
-} from "./getMountainPassConditionById";
-export type { GetMountainPassConditionsParams } from "./getMountainPassConditions";
+} from "./mountainPassConditions";
