@@ -1,10 +1,3 @@
-/**
- * WSF Schedule API - Complete Export Module
- *
- * This module provides access to Washington State Ferries schedule data including
- * routes, sailings, terminals, and time adjustments.
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
@@ -35,11 +28,13 @@ export { getValidDateRange, useValidDateRange } from "./validDateRange";
 export {
   activeSeasonSchema,
   activeSeasonsArraySchema,
+  getActiveSeasonsParamsSchema,
 } from "./activeSeasons";
 // Alerts
 export {
   alertSchema,
   alertsArraySchema,
+  getAlertsParamsSchema,
 } from "./alerts";
 
 // Cache Flush Date
@@ -84,11 +79,6 @@ export {
   scheduleResponseSchema,
   scheduleRouteTerminalComboSchema,
 } from "./schedule";
-// Scheduled Routes
-export {
-  scheduledRouteSchema,
-  scheduledRoutesArraySchema,
-} from "./scheduledRoutes";
 // Terminals (consolidated - includes terminals, terminalMates, and terminalsAndMates)
 export {
   getTerminalsParamsSchema,
@@ -106,7 +96,16 @@ export {
   timeAdjustmentsArraySchema,
   timeAdjustmentSchema,
   timeAdjustmentsByRouteArraySchema,
+  getTimeAdjustmentsParamsSchema,
+  getTimeAdjustmentsByRouteParamsSchema,
 } from "./timeAdjustments";
+// Scheduled Routes
+export {
+  scheduledRouteSchema,
+  scheduledRoutesArraySchema,
+  getScheduledRoutesParamsSchema,
+  getScheduledRoutesBySeasonParamsSchema,
+} from "./scheduledRoutes";
 // Valid Date Range
 export { validDateRangeSchema } from "./validDateRange";
 

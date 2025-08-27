@@ -1,13 +1,3 @@
-/**
- * WSDOT Weather Information API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * weather information including station data, conditions, and forecasts.
- *
- * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/class_weather_information.html
- * API Help: https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc/Help
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================

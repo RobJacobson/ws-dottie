@@ -20,39 +20,12 @@ const ENDPOINT_ALL = "/ferries/api/schedule/rest/schedroutes";
 const ENDPOINT_BY_SEASON =
   "/ferries/api/schedule/rest/scheduledroutesbyseason/{seasonId}";
 
-/**
- * Retrieves all scheduled routes in the WSF system.
- *
- * @param params - Parameters object (no parameters required, defaults to empty object)
- * @returns Promise<ScheduledRoute[]> - Array of all scheduled route information
- *
- * @example
- * const scheduledRoutes = await getScheduledRoutes();
- * console.log(scheduledRoutes.length);  // 20
- * console.log(scheduledRoutes[0].Description);  // "Anacortes / San Juan Islands"
- *
- * @throws {Error} When API is unavailable
- */
 export const getScheduledRoutes = async (): Promise<ScheduledRoute[]> => {
   return zodFetch(ENDPOINT_ALL, {
     output: scheduledRoutesArraySchema,
   });
 };
 
-/**
- * Retrieves scheduled routes for a specific season.
- *
- * @param params - Parameters object for season-specific route query
- * @param params.seasonId - Unique season identifier (positive integer)
- * @returns Promise<ScheduledRoute[]> - Array of scheduled routes for the specified season
- *
- * @example
- * const summerRoutes = await getScheduledRoutesBySeason({ seasonId: 192 });
- * console.log(summerRoutes.length);  // 15
- * console.log(summerRoutes[0].Description);  // "Anacortes / San Juan Islands"
- *
- * @throws {Error} When season ID is invalid or API is unavailable
- */
 export const getScheduledRoutesBySeason = async (
   params: GetScheduledRoutesBySeasonParams
 ): Promise<ScheduledRoute[]> => {
@@ -69,13 +42,18 @@ export const getScheduledRoutesBySeason = async (
 // ============================================================================
 // Input Schemas & Types
 //
+// getScheduledRoutesParamsSchema
+// GetScheduledRoutesParams
 // getScheduledRoutesBySeasonParamsSchema
 // GetScheduledRoutesBySeasonParams
 // ============================================================================
 
-/**
- * Parameters for retrieving scheduled routes for a specific season
- */
+export const getScheduledRoutesParamsSchema = z.object({}).describe("");
+
+export type GetScheduledRoutesParams = z.infer<
+  typeof getScheduledRoutesParamsSchema
+>;
+
 export const getScheduledRoutesBySeasonParamsSchema = z
   .object({
     seasonId: z.number().int().positive().describe(""),
@@ -95,9 +73,6 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
 // ScheduledRoute
 // ============================================================================
 
-/**
- * Contingency adjustment information - represents schedule changes for specific date ranges
- */
 export const contingencyAdjustmentSchema = z
   .object({
     DateFrom: zWsdotDate().describe(""),
@@ -109,9 +84,6 @@ export const contingencyAdjustmentSchema = z
   })
   .describe("");
 
-/**
- * Scheduled route information schema - includes route details, seasonal notes, and operational status
- */
 export const scheduledRouteSchema = z
   .object({
     ScheduleID: z.number().describe(""),
@@ -127,14 +99,8 @@ export const scheduledRouteSchema = z
   })
   .describe("");
 
-/**
- * Array of scheduled route objects - wrapper around scheduledRouteSchema
- */
 export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
 
-/**
- * ScheduledRoute type - represents a scheduled ferry route with operational details
- */
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 
 // ============================================================================
@@ -144,20 +110,6 @@ export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 // useScheduledRoutesBySeason
 // ============================================================================
 
-/**
- * TanStack Query hook for all scheduled routes with automatic updates.
- *
- * @param params - Parameters object (no parameters required, defaults to empty object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<ScheduledRoute[], Error> - Query result with all scheduled route data
- *
- * @example
- * const { data: scheduledRoutes, isLoading } = useScheduledRoutes();
- * if (scheduledRoutes) {
- *   console.log(scheduledRoutes.length);  // 20
- *   console.log(scheduledRoutes[0].Description);  // "Anacortes / San Juan Islands"
- * }
- */
 export const useScheduledRoutes = (
   options?: TanStackOptions<ScheduledRoute[]>
 ) =>
@@ -169,21 +121,6 @@ export const useScheduledRoutes = (
     fetchLastUpdateTime: getCacheFlushDateSchedule,
   });
 
-/**
- * TanStack Query hook for season-specific scheduled routes with automatic updates.
- *
- * @param params - Parameters object for season-specific route query
- * @param params.seasonId - Unique season identifier (positive integer)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<ScheduledRoute[], Error> - Query result with season-specific route data
- *
- * @example
- * const { data: summerRoutes, isLoading } = useScheduledRoutesBySeason({ seasonId: 192 });
- * if (summerRoutes) {
- *   console.log(summerRoutes.length);  // 15
- *   console.log(summerRoutes[0].Description);  // "Anacortes / San Juan Islands"
- * }
- */
 export const useScheduledRoutesBySeason = (
   params: GetScheduledRoutesBySeasonParams,
   options?: TanStackOptions<ScheduledRoute[]>

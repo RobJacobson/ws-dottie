@@ -1,26 +1,3 @@
-/**
- * WSDOT Traffic Flow API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * traffic flow data including real-time flow readings and station information.
- *
- * IMPORTANT: API Response Discrepancy
- *
- * The actual WSDOT API returns FlowReadingValue as numeric values (0, 1, 2, 3, 4),
- * but the official WSDOT documentation shows string enum values. This schema uses
- * the actual numeric values returned by the API.
- *
- * Numeric Value Mapping:
- * - 0: Unknown/NoData
- * - 1: WideOpen (free-flowing traffic)
- * - 2: Moderate traffic
- * - 3: Heavy traffic
- * - 4: StopAndGo (congested traffic)
- *
- * Following PRD guidance: when official documentation and actual API behavior differ,
- * the actual API response is authoritative for field types.
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================

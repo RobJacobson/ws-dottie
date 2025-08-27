@@ -1,92 +1,3 @@
-/**
- * Vessel Locations API
- *
- * Real-time vessel location, speed, heading, and operational status from the Washington State Ferries vessel tracking system.
- *
- * This API provides GPS coordinates, speed, heading, and operational status for all active vessels in the WSF fleet.
- * Data is updated approximately every 30 seconds to 2 minutes and includes departure/arrival terminal information,
- * estimated arrival times, and vessel watch status. Essential for real-time ferry tracking applications, passenger
- * information systems, and logistics planning. The API supports both individual vessel queries by ID and bulk
- * retrieval of all vessel locations.
- *
- * API Functions:
- * - getVesselLocationsByVesselId: Returns one VesselLocation object for the specified VesselID
- * - getVesselLocations: Returns an array of VesselLocation objects for all vessels
- *
- * Input/Output Overview:
- * - getVesselLocationsByVesselId: Input: { vesselId: number }, Output: VesselLocation
- * - getVesselLocations: Input: {} (no parameters), Output: VesselLocation[]
- *
- * Base Type: VesselLocation
- *
- * interface VesselLocation {
- *   VesselID: number;
- *   VesselName: string;
- *   Mmsi: number;
- *   DepartingTerminalID: number;
- *   DepartingTerminalName: string;
- *   DepartingTerminalAbbrev: string;
- *   ArrivingTerminalID: number | null;
- *   ArrivingTerminalName: string | null;
- *   ArrivingTerminalAbbrev: string | null;
- *   Latitude: number;
- *   Longitude: number;
- *   Speed: number;
- *   Heading: number;
- *   InService: boolean;
- *   AtDock: boolean;
- *   LeftDock: Date | null;
- *   Eta: Date | null;
- *   EtaBasis: string | null;
- *   ScheduledDeparture: Date | null;
- *   ManagedBy: number | null;
- *   OpRouteAbbrev: string[] | null;
- *   SortSeq: number | null;
- *   TimeStamp: Date;
- *   VesselPositionNum: number | null;
- * }
- *
- * Example Usage:
- *
- * curl -s "https://www.wsdot.wa.gov/ferries/api/vessels/rest/vessellocations/1?apiaccesscode=$WSDOT_ACCESS_TOKEN"
- *
- * Here is example output from this curl command:
- *
- * ```json
- * {
- *   "VesselID": 1,
- *   "VesselName": "Cathlamet",
- *   "Mmsi": 366773070,
- *   "DepartingTerminalID": 122,
- *   "DepartingTerminalName": "Eagle Harbor",
- *   "DepartingTerminalAbbrev": "EAH",
- *   "ArrivingTerminalID": null,
- *   "ArrivingTerminalName": null,
- *   "ArrivingTerminalAbbrev": null,
- *   "Latitude": 47.620547,
- *   "Longitude": -122.51509,
- *   "Speed": 0,
- *   "Heading": 20,
- *   "InService": false,
- *   "AtDock": true,
- *   "LeftDock": null,
- *   "Eta": null,
- *   "EtaBasis": null,
- *   "ScheduledDeparture": null,
- *   "OpRouteAbbrev": [],
- *   "VesselPositionNum": null,
- *   "SortSeq": 9999,
- *   "ManagedBy": 1,
- *   "TimeStamp": "/Date(1756256066000-0700)/",
- *   "VesselWatchShutID": 22,
- *   "VesselWatchShutMsg": "",
- *   "VesselWatchShutFlag": "0",
- *   "VesselWatchStatus": "0",
- *   "VesselWatchMsg": "WSF's VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. "
- * }
- * ```
- */
-
 import { z } from "zod";
 
 import { useQueryWithAutoUpdate } from "@/shared/tanstack";
@@ -110,21 +21,6 @@ import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 const ENDPOINT_BY_ID = "/ferries/api/vessels/rest/vessellocations/{vesselId}";
 const ENDPOINT_ALL = "/ferries/api/vessels/rest/vessellocations";
 
-/**
- * Retrieves real-time location data for a specific vessel by its ID.
- *
- * @param params - Parameters object containing vesselId: number
- * @returns Promise<VesselLocation> - Real-time vessel location and status data
- *
- * @example
- * const vesselLocation = await getVesselLocationsByVesselId({ vesselId: 1 });
- * console.log(vesselLocation.VesselName);  // "Cathlamet"
- * console.log(vesselLocation.Speed);  // 0.1
- * console.log(vesselLocation.Latitude);  // 47.511142
- * console.log(vesselLocation.Longitude);  // -122.463895
- *
- * @throws {Error} When vessel ID is invalid or API is unavailable
- */
 export const getVesselLocationsByVesselId = async (
   params: GetVesselLocationsByVesselIdParams
 ): Promise<VesselLocation> => {
@@ -138,18 +34,6 @@ export const getVesselLocationsByVesselId = async (
   );
 };
 
-/**
- * Retrieves real-time location data for all active vessels.
- *
- * @param params - Parameters object (no parameters required, defaults to empty object)
- * @returns Promise<VesselLocation[]> - Array of real-time vessel location data
- *
- * @example
- * const vesselLocations = await getVesselLocations();
- * console.log(vesselLocations.length);  // 20
- *
- * @throws {Error} When API is unavailable
- */
 export const getVesselLocations = async (
   params: GetVesselLocationsParams = {}
 ): Promise<VesselLocation[]> => {
@@ -166,30 +50,18 @@ export const getVesselLocations = async (
 // GetVesselLocationsByVesselIdParams
 // ============================================================================
 
-/**
- * Input Schema for getVesselLocationsByVesselId (single item by id):
- */
 export const getVesselLocationsByVesselIdParamsSchema = z
   .object({
     vesselId: zPositiveInteger("vessel").describe(""),
   })
   .describe("");
 
-/**
- * Type for getVesselLocationsByVesselId (single item by id):
- */
 export type GetVesselLocationsByVesselIdParams = z.infer<
   typeof getVesselLocationsByVesselIdParamsSchema
 >;
 
-/**
- * Input Schema for getVesselLocations (all items - no parameters required)
- */
 export const getVesselLocationsParamsSchema = z.object({}).describe("");
 
-/**
- * Type for getVesselLocations (all items - no parameters required)
- */
 export type GetVesselLocationsParams = z.infer<
   typeof getVesselLocationsParamsSchema
 >;
@@ -242,9 +114,7 @@ export const vesselLocationSchema = z
   .describe("");
 
 export type VesselLocation = z.infer<typeof vesselLocationSchema>;
-/**
- * Array of vessel location objects - wrapper around vesselLocationSchema
- */
+
 export const vesselLocationArraySchema = z
   .array(vesselLocationSchema)
   .describe("");
@@ -256,20 +126,6 @@ export const vesselLocationArraySchema = z
 // useVesselLocations (array)
 // ============================================================================
 
-/**
- * TanStack Query hook for vessel location data with automatic updates (single item).
- *
- * @param params - Parameters object containing vesselId: number
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<VesselLocation, Error> - Query result with real-time vessel data
- *
- * @example
- * const { data: vesselLocation, isLoading } = useVesselLocationsByVesselId({ vesselId: 1 });
- * if (vesselLocation) {
- *   console.log(vesselLocation.VesselName);  // "Cathlamet"
- *   console.log(vesselLocation.Speed);  // 0.1
- * }
- */
 export const useVesselLocationsByVesselId = (
   params: GetVesselLocationsByVesselIdParams,
   options?: TanStackOptions<VesselLocation>
@@ -283,19 +139,6 @@ export const useVesselLocationsByVesselId = (
   });
 };
 
-/**
- * TanStack Query hook for all vessel locations with automatic updates (array).
- *
- * @param params - Parameters object (no parameters required, defaults to empty object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<VesselLocation[], Error> - Query result with array of real-time vessel data
- *
- * @example
- * const { data: vesselLocations, isLoading } = useVesselLocations();
- * if (vesselLocations) {
- *   console.log(vesselLocations.length);  // 20
- * }
- */
 export const useVesselLocations = (
   params: GetVesselLocationsParams = {},
   options?: TanStackOptions<VesselLocation[]>

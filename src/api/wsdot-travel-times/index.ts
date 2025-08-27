@@ -1,13 +1,3 @@
-/**
- * WSDOT Travel Times API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * travel time data including route timing information and traffic estimates.
- *
- * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___travel_times.html
- * API Help: https://wsdot.wa.gov/traffic/api/TravelTimes/TravelTimesREST.svc/Help
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================

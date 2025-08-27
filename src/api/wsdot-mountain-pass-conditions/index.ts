@@ -1,13 +1,3 @@
-/**
- * WSDOT Mountain Pass Conditions API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * mountain pass condition data including weather, road conditions, and travel restrictions.
- *
- * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
- * API Help: https://wsdot.wa.gov/traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/Help
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================

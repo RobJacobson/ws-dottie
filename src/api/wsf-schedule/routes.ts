@@ -1,36 +1,3 @@
-/**
- * WSF Schedule API - Routes
- *
- * Provides access to Washington State Ferry route information including:
- * - All routes for a specific date
- * - Routes between specific terminal pairs
- * - Routes with current service disruptions
- * - Route IDs, abbreviations, descriptions, and region information
- *
- * @see {@link https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html WSF Schedule API Documentation}
- * @see {@link https://www.wsdot.wa.gov/ferries/schedule/ WSF Schedules}
- *
- * @example
- * ```typescript
- * import { getRoutes, getRoutesByTerminals, getRoutesWithDisruptions } from '@ferryjoy/ws-dottie';
- *
- * // Get all routes for a date
- * const allRoutes = await getRoutes({ tripDate: new Date('2025-08-27') });
- *
- * // Get routes between specific terminals
- * const terminalRoutes = await getRoutesByTerminals({
- *   tripDate: new Date('2025-08-27'),
- *   departingTerminalId: 1,
- *   arrivingTerminalId: 2
- * });
- *
- * // Get routes with service disruptions
- * const disruptedRoutes = await getRoutesWithDisruptions({ tripDate: new Date('2025-08-27') });
- * ```
- *
- * @module wsf-schedule/routes
- */
-
 import { z } from "zod";
 
 import { useQueryWithAutoUpdate } from "@/shared/tanstack";
@@ -78,20 +45,6 @@ export const getRoutes = async (params: GetRoutesParams): Promise<Route[]> => {
   );
 };
 
-/**
- * Retrieves routes that currently have service disruptions for a given trip date.
- *
- * @param params - Parameters object for routes with disruptions query
- * @param params.tripDate - Date for the trip (JavaScript Date object)
- * @returns Promise<RouteWithDisruptions[]> - Array of routes with service disruptions
- *
- * @example
- * const routesWithDisruptions = await getRoutesWithDisruptions({ tripDate: new Date('2025-01-27') });
- * console.log(routesWithDisruptions[0].RouteAbbrev);  // "SEA-BI"
- * console.log(routesWithDisruptions[0].ServiceDisruptions.length);  // 1 (number of disruptions)
- *
- * @throws {Error} When date is invalid or API is unavailable
- */
 export const getRoutesWithDisruptions = async (
   params: GetRoutesWithDisruptionsParams
 ): Promise<RouteWithDisruptions[]> => {
@@ -134,9 +87,6 @@ export const getRoutesParamsSchema = z
 
 export type GetRoutesParams = z.infer<typeof getRoutesParamsSchema>;
 
-/**
- * Parameters for retrieving routes with service disruptions for a specific date
- */
 export const getRoutesWithDisruptionsParamsSchema = z
   .object({
     tripDate: z.date().describe(""),
@@ -172,9 +122,6 @@ export const routesArraySchema = z.array(routeSchema);
 
 export type Route = z.infer<typeof routeSchema>;
 
-/**
- * Route with disruptions schema - includes route information with required service disruptions
- */
 export const routeWithDisruptionsSchema = z
   .object({
     RouteID: z.number().describe(""),
@@ -185,16 +132,10 @@ export const routeWithDisruptionsSchema = z
   })
   .describe("");
 
-/**
- * Array of route with disruptions objects - wrapper around routeWithDisruptionsSchema
- */
 export const routesWithDisruptionsArraySchema = z.array(
   routeWithDisruptionsSchema
 );
 
-/**
- * RouteWithDisruptions type - represents a route with service disruptions
- */
 export type RouteWithDisruptions = z.infer<typeof routeWithDisruptionsSchema>;
 
 // ============================================================================
@@ -230,21 +171,6 @@ export const useRoutes = (
     params,
   });
 
-/**
- * TanStack Query hook for routes with service disruptions with automatic updates.
- *
- * @param params - Parameters object for routes with disruptions query
- * @param params.tripDate - Date for the trip (JavaScript Date object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<RouteWithDisruptions[], Error> - Query result with routes with disruptions data
- *
- * @example
- * const { data: routesWithDisruptions, isLoading } = useRoutesWithDisruptions({ tripDate: new Date('2025-01-27') });
- * if (routesWithDisruptions) {
- *   console.log(routesWithDisruptions[0].RouteAbbrev);  // "SEA-BI"
- *   console.log(routesWithDisruptions[0].ServiceDisruptions.length);  // 1 (number of disruptions)
- * }
- */
 export const useRoutesWithDisruptions = (
   params: GetRoutesWithDisruptionsParams,
   options?: TanStackOptions<RouteWithDisruptions[]>

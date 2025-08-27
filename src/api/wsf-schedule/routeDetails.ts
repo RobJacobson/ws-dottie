@@ -1,35 +1,3 @@
-/**
- * WSF Schedule API - Route Details
- *
- * Provides detailed information about Washington State Ferry routes including:
- * - Route descriptions and abbreviations
- * - Crossing times and vessel information
- * - Current alerts and service updates
- * - General and seasonal route notes
- * - ADA accessibility information
- * - Reservation and international route flags
- *
- * @see {@link https://www.wsdot.wa.gov/ferries/api/schedule/documentation/rest.html WSF Schedule API Documentation}
- * @see {@link https://www.wsdot.wa.gov/ferries/schedule/ WSF Schedules}
- *
- * @example
- * ```typescript
- * import { getRouteDetails } from '@ferryjoy/ws-dottie';
- *
- * // Get route details for a specific date
- * const routeDetails = await getRouteDetails('2025-08-27');
- *
- * // Access route information
- * routeDetails.forEach(route => {
- *   console.log(`Route: ${route.Description} (${route.RouteAbbrev})`);
- *   console.log(`Crossing time: ${route.CrossingTime} minutes`);
- *   console.log(`Alerts: ${route.Alerts.length}`);
- * });
- * ```
- *
- * @module wsf-schedule/routeDetails
- */
-
 import { z } from "zod";
 
 import { useQueryWithAutoUpdate } from "@/shared/tanstack";
@@ -80,20 +48,6 @@ export const getRouteDetailsByRoute = async (
   );
 };
 
-/**
- * Retrieves detailed route information for a given trip date.
- *
- * @param params - Parameters object for route details query
- * @param params.tripDate - Date for the trip (JavaScript Date object)
- * @returns Promise<RouteDetails[]> - Array of detailed route information
- *
- * @example
- * const routeDetails = await getRouteDetails({ tripDate: new Date('2025-01-27') });
- * console.log(routeDetails[0].RouteAbbrev);  // "SEA-BI"
- * console.log(routeDetails[0].Description);  // "Seattle - Bainbridge Island"
- *
- * @throws {Error} When date is invalid or API is unavailable
- */
 export const getRouteDetails = async (
   params: GetRouteDetailsParams
 ): Promise<RouteDetails[]> => {
@@ -139,9 +93,6 @@ export type GetRouteDetailsByRouteParams = z.infer<
   typeof getRouteDetailsByRouteParamsSchema
 >;
 
-/**
- * Parameters for retrieving detailed route information for a specific date
- */
 export const getRouteDetailsParamsSchema = z
   .object({
     tripDate: z.date().describe(""),
@@ -284,21 +235,6 @@ export const useRouteDetailsByRoute = (
     params,
   });
 
-/**
- * TanStack Query hook for route details with automatic updates.
- *
- * @param params - Parameters object for route details query
- * @param params.tripDate - Date for the trip (JavaScript Date object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<RouteDetails[], Error> - Query result with route details data
- *
- * @example
- * const { data: routeDetails, isLoading } = useRouteDetails({ tripDate: new Date('2025-01-27') });
- * if (routeDetails) {
- *   console.log(routeDetails[0].RouteAbbrev);  // "SEA-BI"
- *   console.log(routeDetails[0].Description);  // "Seattle - Bainbridge Island"
- * }
- */
 export const useRouteDetails = (
   params: GetRouteDetailsParams,
   options?: TanStackOptions<RouteDetails[]>

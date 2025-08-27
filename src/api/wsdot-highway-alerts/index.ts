@@ -1,13 +1,3 @@
-/**
- * WSDOT Highway Alerts API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * highway alert data including traffic incidents, road closures, and construction alerts.
- *
- * Documentation: https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
- * API Help: https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/Help
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================

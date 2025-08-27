@@ -1,14 +1,3 @@
-/**
- * WSDOT Highway Cameras API - Complete Export Module
- *
- * This module provides access to Washington State Department of Transportation
- * highway camera data including real-time traffic camera feeds and locations.
- *
- * Based on cURL validation of:
- * - https://wsdot.wa.gov/traffic/api/HighwayCameras/HighwayCamerasREST.svc/Help
- * - https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================

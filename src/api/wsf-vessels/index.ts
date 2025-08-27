@@ -1,10 +1,3 @@
-/**
- * WSF Vessels API - Complete Export Module
- *
- * This module provides access to Washington State Ferries vessel data including
- * real-time locations, basic information, accommodations, statistics, and history.
- */
-
 // ============================================================================
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
@@ -31,30 +24,48 @@ export * from "./vesselVerbose";
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export { wsfCacheFlushDateSchema as vesselsCacheFlushDateSchema } from "../wsf/cacheFlushDate";
+export {
+  wsfCacheFlushDateSchema as vesselsCacheFlushDateSchema,
+  wsfCacheFlushDateParamsSchema as getCacheFlushDateParamsSchema,
+} from "../wsf/cacheFlushDate";
 export {
   vesselAccommodationArraySchema,
   vesselAccommodationSchema,
+  getVesselAccommodationsParamsSchema,
+  getVesselAccommodationsByIdParamsSchema,
 } from "./vesselAccommodations";
 // Array schemas (from array endpoints)
 export {
   vesselBasicArraySchema,
   vesselBasicSchema,
   vesselClassSchema,
+  getVesselBasicsParamsSchema,
+  getVesselBasicsByIdParamsSchema,
 } from "./vesselBasics";
 export {
   vesselHistoryArraySchema,
   vesselHistorySchema,
+  getVesselHistoryParamsSchema,
+  getVesselHistoryByVesselAndDateRangeParamsSchema,
   getAllVesselHistoriesParamsSchema,
 } from "./vesselHistory";
 export {
   vesselLocationArraySchema,
   vesselLocationSchema,
+  getVesselLocationsParamsSchema,
+  getVesselLocationsByVesselIdParamsSchema,
 } from "./vesselLocations";
-export { vesselStatsArraySchema, vesselStatsSchema } from "./vesselStats";
+export {
+  vesselStatsArraySchema,
+  vesselStatsSchema,
+  getVesselStatsParamsSchema,
+  getVesselStatsByIdParamsSchema,
+} from "./vesselStats";
 export {
   vesselVerboseArraySchema,
   vesselVerboseSchema,
+  getVesselVerboseParamsSchema,
+  getVesselVerboseByIdParamsSchema,
 } from "./vesselVerbose";
 
 // ============================================================================
