@@ -1,4 +1,5 @@
 import type { LoggingMode } from "@/shared/utils";
+import { logApiCall, logApiResults } from "@/shared/utils/logger";
 
 import { validateInputs, validateResponse } from "../validation/core";
 import { prepareRequestUrl } from "./request";
@@ -54,8 +55,15 @@ export const fetchWithValidation = async <TInput = never, TOutput = unknown>(
   params?: TInput,
   logMode?: LoggingMode
 ): Promise<TOutput> => {
+  const startTime = Date.now();
+  
   try {
     const context = createFetchContext(fullUrlTemplate, logMode);
+
+    // Log the API call
+    if (logMode !== "none") {
+      logApiCall(context.endpoint, params);
+    }
 
     // Stage 1: Request Preparation
     const validatedParams = validateInputs(schemas.input, params, context);
@@ -69,7 +77,17 @@ export const fetchWithValidation = async <TInput = never, TOutput = unknown>(
     const responseData = await executeRequest(completeUrl, context);
 
     // Stage 3: Response Processing
-    return validateResponse(responseData, schemas.output, context);
+    const result = validateResponse(responseData, schemas.output, context);
+
+    // Log the results
+    if (logMode !== "none") {
+      const duration = Date.now() - startTime;
+      const responseSize = JSON.stringify(responseData).length;
+      const objectCount = Array.isArray(result) ? result.length : 1;
+      logApiResults(objectCount, duration, responseSize);
+    }
+
+    return result;
   } catch (error: unknown) {
     // If context creation failed, we can't use it for error handling
     if (

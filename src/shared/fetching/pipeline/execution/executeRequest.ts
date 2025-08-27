@@ -15,29 +15,7 @@ export const executeRequest = async (
   const fetchStrategy = selectFetchStrategy();
   const responseString = await fetchStrategy(completeUrl);
 
-  // Debug: Log the raw response string before parsing
-  console.log(
-    `[DEBUG] Response string before JSON.parse:`,
-    responseString.substring(0, 200) + "..."
-  );
-
   const rawData = JSON.parse(responseString);
-
-  // Debug: Log the parsed data and check for Date objects
-  console.log(`[DEBUG] Raw data after JSON.parse:`, typeof rawData);
-  if (Array.isArray(rawData) && rawData.length > 0) {
-    const firstItem = rawData[0];
-    console.log(
-      `[DEBUG] First item APILastUpdate:`,
-      typeof firstItem.APILastUpdate,
-      firstItem.APILastUpdate
-    );
-    console.log(
-      `[DEBUG] First item RouteDate:`,
-      typeof firstItem.RouteDate,
-      firstItem.RouteDate
-    );
-  }
 
   // Debug logging
   if (context.logMode === "debug") {

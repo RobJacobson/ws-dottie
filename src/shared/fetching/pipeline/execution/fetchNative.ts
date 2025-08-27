@@ -43,9 +43,6 @@ export const fetchNative: FetchStrategy = async (
   url: string,
   _expectedType?: "array" | "object"
 ): Promise<string> => {
-  console.log(
-    "🚨 [fetchNative] CURRENT VERSION EXECUTING - returning raw text"
-  );
   const response = await fetch(url);
 
   if (!response.ok) {

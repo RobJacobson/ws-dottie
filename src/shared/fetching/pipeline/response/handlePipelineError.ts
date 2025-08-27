@@ -1,5 +1,6 @@
 import { createApiError } from "../errorHandling";
 import { buildCompleteUrl } from "../request/prepareRequestUrl";
+import log from "@/shared/utils/logger";
 
 import type { FetchContext } from "../types";
 
@@ -24,7 +25,7 @@ export const handlePipelineError = (
 
   // Log errors for debugging
   if (context.logMode === "debug" || context.logMode === "info") {
-    console.error(`[${context.endpoint}] Request failed:`, error);
+    log.error(`[${context.endpoint}] Request failed:`, error);
   }
 
   // Extract HTTP status if available

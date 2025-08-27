@@ -29,7 +29,7 @@
  * const fetchStrategy = selectFetchStrategy();
  * const data = await fetchStrategy("https://api.example.com/data");
  *
- * // Check current environment type
+ * // Get current environment type
  * const envType = getEnvironmentType(); // "web", "server", or "test"
  *
  * // Force JSONP for testing (set FORCE_JSONP=true)
@@ -56,13 +56,9 @@ import type { ApiErrorResponse, FetchStrategy } from "./types";
  */
 export const selectFetchStrategy = (): FetchStrategy => {
   const environment = getEnvironmentType();
-  console.log("🔍 [selectFetchStrategy] Environment detected:", environment);
 
   // Allow forcing JSONP for testing purposes
   if (typeof process !== "undefined" && process.env.FORCE_JSONP === "true") {
-    console.log(
-      "🔍 [selectFetchStrategy] FORCE_JSONP enabled, returning fetchJsonp"
-    );
     return fetchJsonp;
   }
 
@@ -71,28 +67,15 @@ export const selectFetchStrategy = (): FetchStrategy => {
     case "test":
     case "server":
       strategy = fetchNative;
-      console.log(
-        "🔍 [selectFetchStrategy] Returning fetchNative for",
-        environment
-      );
       break;
     case "web":
       strategy = fetchJsonp;
-      console.log(
-        "🔍 [selectFetchStrategy] Returning fetchJsonp for",
-        environment
-      );
       break;
     default:
       strategy = fetchNative; // Fallback
-      console.log("🔍 [selectFetchStrategy] Returning fetchNative as fallback");
       break;
   }
 
-  console.log(
-    "🔍 [selectFetchStrategy] Strategy function name:",
-    strategy.name
-  );
   return strategy;
 };
 
