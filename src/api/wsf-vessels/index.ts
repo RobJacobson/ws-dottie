@@ -10,7 +10,10 @@
 // ============================================================================
 
 // Cache management
-export * from "./getCacheFlushDateVessels";
+export {
+  getCacheFlushDateVessels,
+  useCacheFlushDateVessels,
+} from "../wsf/cacheFlushDate";
 // Vessel accommodations
 export * from "./vesselAccommodations";
 // Basic vessel information
@@ -28,7 +31,7 @@ export * from "./vesselVerbose";
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export { vesselsCacheFlushDateSchema } from "./getCacheFlushDateVessels";
+export { wsfCacheFlushDateSchema as vesselsCacheFlushDateSchema } from "../wsf/cacheFlushDate";
 export {
   vesselAccommodationArraySchema,
   vesselAccommodationSchema,
@@ -65,7 +68,7 @@ export {
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { VesselsCacheFlushDate } from "./getCacheFlushDateVessels";
+export type { WsfCacheFlushDate as VesselsCacheFlushDate } from "../wsf/cacheFlushDate";
 // Export types directly from their source files to avoid re-export chains
 export type {
   GetVesselAccommodationsByIdParams,

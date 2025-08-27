@@ -77,13 +77,12 @@
  * routes with height restrictions.
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
@@ -201,7 +200,7 @@ export const bridgeDataGisSchema = z
 
     VerticalClearanceMinimumInches: z.number().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -241,9 +240,9 @@ export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
  * }
  */
 export const useBridgeClearances = (
-  params: GetBridgeClearancesParams,
-  options?: TanStackOptions<BridgeDataGIS[]>
-): UseQueryResult<BridgeDataGIS[], Error> => {
+  params: GetBridgeClearancesParams = {},
+  options?: UseQueryOptions<BridgeDataGIS[], Error>
+) => {
   return useQuery({
     queryKey: ["api", "wsdot", "bridge-clearances", JSON.stringify(params)],
     queryFn: () => getBridgeClearances(params),

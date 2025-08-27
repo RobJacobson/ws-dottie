@@ -53,7 +53,7 @@
  * with the getHighwayAlertsByMapArea endpoint to get filtered alerts.
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -127,7 +127,7 @@ export const mapAreaSchema = z
 
     MapAreaDescription: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -158,8 +158,8 @@ export type MapArea = z.infer<typeof mapAreaSchema>;
  */
 export const useMapAreas = (
   params: GetMapAreasParams = {},
-  options?: TanStackOptions<MapArea[]>
-): UseQueryResult<MapArea[], Error> => {
+  options?: UseQueryOptions<MapArea[], Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

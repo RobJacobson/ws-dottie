@@ -80,13 +80,12 @@
  * ```
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 
 import type { Camera } from "./highwayCameras";
 // Import schemas and types from co-located file
@@ -208,8 +207,8 @@ export const cameraArraySchema = z.array(cameraSchema).describe("");
  */
 export const useSearchHighwayCameras = (
   params: SearchHighwayCamerasParams,
-  options?: TanStackOptions<Camera[]>
-): UseQueryResult<Camera[], Error> => {
+  options?: UseQueryOptions<Camera[], Error>
+) => {
   return useQuery<Camera[]>({
     queryKey: [
       "wsdot",

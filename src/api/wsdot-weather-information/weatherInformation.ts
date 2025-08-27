@@ -66,13 +66,12 @@
  * ```
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
@@ -227,7 +226,7 @@ export const weatherInfoSchema = z
 
     WindSpeedInMPH: zNullableNumber().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -262,8 +261,8 @@ export const weatherInfoArraySchema = z.array(weatherInfoSchema).describe("");
  */
 export const useWeatherInformation = (
   params: GetWeatherInformationParams = {},
-  options?: TanStackOptions<WeatherInfo[]>
-): UseQueryResult<WeatherInfo[], Error> => {
+  options?: UseQueryOptions<WeatherInfo[], Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -294,8 +293,8 @@ export const useWeatherInformation = (
  */
 export const useWeatherInformationByStationId = (
   params: GetWeatherInformationByStationIdParams,
-  options?: TanStackOptions<WeatherInfo>
-): UseQueryResult<WeatherInfo, Error> => {
+  options?: UseQueryOptions<WeatherInfo, Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

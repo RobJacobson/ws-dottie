@@ -51,7 +51,7 @@
  * flexible filtering for applications that need to find specific types of traffic events.
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -187,9 +187,9 @@ export type SearchHighwayAlertsParams = z.infer<
  * }
  */
 export const useSearchHighwayAlerts = (
-  params: SearchHighwayAlertsParams,
-  options?: TanStackOptions<HighwayAlert[]>
-): UseQueryResult<HighwayAlert[], Error> => {
+  params: SearchHighwayAlertsParams = {},
+  options?: UseQueryOptions<HighwayAlert[], Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

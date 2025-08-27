@@ -185,7 +185,7 @@ export const surfaceMeasurementSchema = z
 
     RoadSurfaceCondition: zNullableNumber().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -197,7 +197,7 @@ export const subSurfaceMeasurementSchema = z
 
     SubSurfaceTemperature: zNullableNumber().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -259,7 +259,7 @@ export const weatherReadingSchema = z
       .nullable()
       .describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -306,9 +306,9 @@ export type WeatherReading = z.infer<typeof weatherReadingSchema>;
  * }
  */
 export const useWeatherInformationExtended = (
-  params: GetWeatherInformationExtendedParams = {},
+  params: GetWeatherInformationExtendedParams,
   options?: TanStackOptions<WeatherReading[]>
-): UseQueryResult<WeatherReading[], Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

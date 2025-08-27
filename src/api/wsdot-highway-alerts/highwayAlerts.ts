@@ -303,7 +303,7 @@ export const highwayAlertRoadwayLocationSchema = z
 
     RoadName: z.string().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -339,7 +339,7 @@ export const highwayAlertSchema = z
 
     StartTime: zWsdotDate().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -379,7 +379,7 @@ export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
 export const useHighwayAlertById = (
   params: GetHighwayAlertByIdParams,
   options?: TanStackOptions<HighwayAlert>
-): UseQueryResult<HighwayAlert, Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -409,7 +409,7 @@ export const useHighwayAlertById = (
 export const useHighwayAlerts = (
   params: GetHighwayAlertsParams = {},
   options?: TanStackOptions<HighwayAlert[]>
-): UseQueryResult<HighwayAlert[], Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -440,7 +440,7 @@ export const useHighwayAlerts = (
 export const useHighwayAlertsByMapArea = (
   params: GetHighwayAlertsByMapAreaParams,
   options?: TanStackOptions<HighwayAlert[]>
-): UseQueryResult<HighwayAlert[], Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -471,7 +471,7 @@ export const useHighwayAlertsByMapArea = (
 export const useHighwayAlertsByRegionId = (
   params: GetHighwayAlertsByRegionIdParams,
   options?: TanStackOptions<HighwayAlert[]>
-): UseQueryResult<HighwayAlert[], Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

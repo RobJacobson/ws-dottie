@@ -1,12 +1,70 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+/**
+ * WSF Fares API - Terminal Combinations
+ *
+ * Provides access to Washington State Ferries terminal combination information,
+ * including route details and fare availability for specific terminal pairs.
+ * This API enables applications to discover valid route combinations and
+ * understand the structure of fare data across different terminal connections.
+ *
+ * The terminal combo endpoints return information about valid terminal
+ * combinations for fare queries, including route descriptions and fare
+ * availability. This information is essential for building route selection
+ * interfaces and understanding the fare structure across the WSF network.
+ *
+ * API Functions:
+ * - getTerminalCombo: Returns terminal combination information for specific route and date
+ * - getTerminalComboVerbose: Returns detailed terminal combination data for all routes on a date
+ *
+ * Input/Output Overview:
+ * - getTerminalCombo: Input: { tripDate: Date, departingTerminalID: number, arrivingTerminalID: number }, Output: TerminalCombo
+ * - getTerminalComboVerbose: Input: { tripDate: Date }, Output: TerminalComboVerbose[]
+ *
+ * Base Types: TerminalCombo, TerminalComboVerbose
+ *
+ * interface TerminalCombo {
+ *   DepartingDescription: string;
+ *   ArrivingDescription: string;
+ *   CollectionDescription: string;
+ * }
+ *
+ * interface TerminalComboVerbose {
+ *   DepartingTerminalID: number;
+ *   DepartingDescription: string;
+ *   ArrivingTerminalID: number;
+ *   ArrivingDescription: string;
+ *   CollectionDescription: string;
+ * }
+ *
+ * Example Usage:
+ *
+ * # Get terminal combo for specific route
+ * curl -s "https://www.wsdot.wa.gov/ferries/api/fares/rest/terminalcombo/2025-08-26/7/3?apiaccesscode=$WSDOT_ACCESS_TOKEN"
+ *
+ * # Get all terminal combos for a date
+ * curl -s "https://www.wsdot.wa.gov/ferries/api/fares/rest/terminalcomboverbose/2025-08-26?apiaccesscode=$WSDOT_ACCESS_TOKEN"
+ *
+ * Here is example output from the terminal combo endpoint:
+ *
+ * ```json
+ * {
+ *   "DepartingDescription": "Seattle",
+ *   "ArrivingDescription": "Bainbridge Island",
+ *   "CollectionDescription": "Passenger and vehicle/driver fares are collected at Seattle, while vehicle/driver only fares are collected at Bainbridge Island."
+ * }
+ * ```
+ *
+ * Note: The terminal combo endpoints provide route information that complements
+ * the fare line items endpoints, allowing applications to understand both the
+ * available routes and their associated pricing structures.
+ */
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { useQueryWithAutoUpdate } from "@/shared/tanstack";
 import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/zod/dateParsers";
 
-import { getFaresCacheFlushDate } from "./getFaresCacheFlushDate";
+import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
 // ============================================================================
 // API Functions
@@ -93,7 +151,7 @@ export const terminalComboSchema = z
     ArrivingDescription: z.string().describe(""),
     CollectionDescription: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 export const terminalComboVerboseSchema = z
@@ -104,7 +162,7 @@ export const terminalComboVerboseSchema = z
     ArrivingDescription: z.string().describe(""),
     CollectionDescription: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 export const terminalComboVerboseArraySchema = z
@@ -127,11 +185,8 @@ export const useTerminalCombo = (
     departingTerminalID: number;
     arrivingTerminalID: number;
   },
-  options?: Omit<
-    UseQueryOptions<Awaited<ReturnType<typeof getTerminalCombo>>>,
-    "queryKey" | "queryFn"
-  >
-): UseQueryResult<TerminalCombo, Error> => {
+  options?: Omit<UseQueryOptions<TerminalCombo, Error>, "queryKey" | "queryFn">
+) => {
   return useQueryWithAutoUpdate({
     queryKey: [
       "wsf",
@@ -157,10 +212,10 @@ export const useTerminalComboVerbose = (
     tripDate: Date;
   },
   options?: Omit<
-    UseQueryOptions<Awaited<ReturnType<typeof getTerminalComboVerbose>>>,
+    UseQueryOptions<TerminalComboVerbose[], Error>,
     "queryKey" | "queryFn"
   >
-): UseQueryResult<TerminalComboVerbose[], Error> => {
+) => {
   return useQueryWithAutoUpdate({
     queryKey: [
       "wsf",

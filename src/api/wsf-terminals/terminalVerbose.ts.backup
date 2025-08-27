@@ -1,26 +1,26 @@
 /**
  * @fileoverview WSF Terminal Verbose API
- *
+ * 
  * This module provides access to comprehensive, detailed information for Washington State Ferries terminals.
  * It combines data from multiple terminal APIs into a single endpoint, including basic terminal information,
  * detailed addresses and directions, facility amenities, transportation options, bulletins and alerts,
  * wait time recommendations, and transit links. This is the most complete terminal information endpoint.
- *
+ * 
  * @api WSF Terminal Verbose
  * @see {@link https://www.wsdot.wa.gov/ferries/api/terminals/rest/terminalverbose WSDOT Terminal Verbose API}
- *
+ * 
  * @functions
  * - getTerminalVerboseByTerminalId - Retrieve comprehensive terminal info for a specific terminal
  * - getTerminalVerbose - Retrieve comprehensive terminal info for all terminals
- *
+ * 
  * @input
  * - Terminal ID (for specific terminal queries)
  * - No parameters required for all terminals query
- *
+ * 
  * @output
  * - TerminalVerbose object with comprehensive terminal details
  * - Array of TerminalVerbose objects for all terminals
- *
+ * 
  * @baseType
  * TerminalVerbose interface containing:
  * - Basic terminal identification (ID, name, abbreviation, region)
@@ -32,12 +32,12 @@
  * - Bulletins and alerts
  * - Transit links and chamber of commerce information
  * - Wait time recommendations
- *
+ * 
  * @curl
  * ```bash
  * curl "https://www.wsdot.wa.gov/ferries/api/terminals/rest/terminalverbose?apiaccesscode=YOUR_TOKEN"
  * ```
- *
+ * 
  * @exampleResponse
  * ```json
  * {
@@ -154,15 +154,15 @@ const ENDPOINT_ALL = "/ferries/api/terminals/rest/terminalverbose";
 
 /**
  * Retrieves comprehensive terminal information for a specific WSF terminal.
- *
+ * 
  * This function fetches complete terminal details including basic information, addresses,
  * facilities, transportation options, bulletins, wait times, and all related data for
  * a single terminal. This is the most comprehensive terminal information endpoint.
- *
+ * 
  * @param params - Parameters object containing the terminal ID
  * @param params.terminalId - The unique identifier for the terminal
  * @returns Promise resolving to a TerminalVerbose object with complete terminal details
- *
+ * 
  * @example
  * ```typescript
  * const terminalVerbose = await getTerminalVerboseByTerminalId({ terminalId: 20 });
@@ -170,7 +170,7 @@ const ENDPOINT_ALL = "/ferries/api/terminals/rest/terminalverbose";
  * console.log(terminalVerbose.AddressLineOne); // "11700 SE SEDGWICK RD"
  * console.log(terminalVerbose.WaitTimes.length); // Number of wait time entries
  * ```
- *
+ * 
  * @throws {Error} When the API request fails or returns invalid data
  * @see {@link TerminalVerbose} for the complete response structure
  */
@@ -189,14 +189,14 @@ export const getTerminalVerboseByTerminalId = async (
 
 /**
  * Retrieves comprehensive terminal information for all WSF terminals.
- *
+ * 
  * This function fetches complete terminal details for all terminals in the WSF system,
  * providing comprehensive information including addresses, facilities, transportation,
  * bulletins, wait times, and all related data across the entire ferry network.
- *
+ * 
  * @param params - Optional parameters object (currently unused, provided for future extensibility)
  * @returns Promise resolving to an array of TerminalVerbose objects
- *
+ * 
  * @example
  * ```typescript
  * const allTerminalVerbose = await getTerminalVerbose();
@@ -204,7 +204,7 @@ export const getTerminalVerboseByTerminalId = async (
  * console.log(southworth?.AddressLineOne); // "11700 SE SEDGWICK RD"
  * console.log(southworth?.WaitTimes.length); // Number of wait time entries
  * ```
- *
+ * 
  * @throws {Error} When the API request fails or returns invalid data
  * @see {@link TerminalVerbose} for the complete response structure
  */
@@ -232,7 +232,7 @@ export const getTerminalVerbose = async (
 
 /**
  * Input schema for retrieving comprehensive terminal information for a specific terminal.
- *
+ * 
  * @description
  * Schema for the getTerminalVerboseByTerminalId function parameters.
  * Requires a terminal ID to identify which terminal's comprehensive information to retrieve.
@@ -245,7 +245,7 @@ export const getTerminalVerboseByTerminalIdParamsSchema = z
 
 /**
  * Input schema for retrieving comprehensive terminal information for all terminals.
- *
+ * 
  * @description
  * Schema for the getTerminalVerbose function parameters.
  * Currently accepts no parameters but provided for future extensibility.
@@ -275,11 +275,11 @@ export type GetTerminalVerboseParams = z.infer<
 
 /**
  * Schema for transit link information associated with terminals.
- *
+ * 
  * @description
  * Defines the structure for transit system links and connections available
  * at terminals, including URLs and display names for transit agencies.
- *
+ * 
  * @fields
  * - LinkName: Display name for the transit system
  * - LinkURL: URL to the transit system's website or information page
@@ -295,12 +295,12 @@ export const terminalTransitLinkSchema = z
 
 /**
  * Schema for comprehensive terminal information combining all terminal data.
- *
+ * 
  * @description
  * Defines the structure for complete terminal information including basic details,
  * addresses, facilities, transportation options, bulletins, wait times, and more.
  * This schema validates the comprehensive terminal data returned by the WSF Terminal Verbose API.
- *
+ * 
  * @fields
  * - TerminalID: Unique identifier for the terminal
  * - TerminalSubjectID: Subject identifier for the terminal
@@ -426,7 +426,7 @@ export const terminalVerboseSchema = z
 
 /**
  * Schema for an array of comprehensive terminal information objects.
- *
+ * 
  * @description
  * Validates an array of TerminalVerbose objects, typically returned when
  * querying comprehensive terminal information for all terminals.
@@ -447,25 +447,25 @@ export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
 
 /**
  * TanStack Query hook for retrieving comprehensive terminal information for a specific terminal.
- *
+ * 
  * This hook automatically manages the data fetching lifecycle for comprehensive terminal
  * information, including caching, background updates, and error handling. It's optimized
  * for daily updates to ensure terminal information remains current.
- *
+ * 
  * @param params - Parameters object containing the terminal ID
  * @param params.terminalId - The unique identifier for the terminal
  * @param options - Optional TanStack Query options to override defaults
  * @returns TanStack Query result object with comprehensive terminal data
- *
+ * 
  * @example
  * ```typescript
  * const { data: terminalVerbose, isLoading, error } = useTerminalVerboseByTerminalId(
  *   { terminalId: 20 }
  * );
- *
+ * 
  * if (isLoading) return <div>Loading comprehensive terminal info...</div>;
  * if (error) return <div>Error: {error.message}</div>;
- *
+ * 
  * return (
  *   <div>
  *     <h2>{terminalVerbose.TerminalName} Terminal</h2>
@@ -481,7 +481,7 @@ export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
  *   </div>
  * );
  * ```
- *
+ * 
  * @see {@link getTerminalVerboseByTerminalId} for the underlying API function
  * @see {@link TerminalVerbose} for the complete data structure
  */
@@ -499,21 +499,21 @@ export const useTerminalVerboseByTerminalId = (
 
 /**
  * TanStack Query hook for retrieving comprehensive terminal information for all terminals.
- *
+ * 
  * This hook automatically manages the data fetching lifecycle for all comprehensive terminal
  * information, including caching, background updates, and error handling. It's optimized
  * for daily updates to ensure terminal information remains current across all terminals.
- *
+ * 
  * @param options - Optional TanStack Query options to override defaults
  * @returns TanStack Query result object with array of comprehensive terminal data
- *
+ * 
  * @example
  * ```typescript
  * const { data: allTerminalVerbose, isLoading, error } = useTerminalVerbose();
- *
+ * 
  * if (isLoading) return <div>Loading all comprehensive terminal info...</div>;
  * if (error) return <div>Error: {error.message}</div>;
- *
+ * 
  * return (
  *   <div>
  *     {allTerminalVerbose.map(terminal => (
@@ -533,7 +533,7 @@ export const useTerminalVerboseByTerminalId = (
  *   </div>
  * );
  * ```
- *
+ * 
  * @see {@link getTerminalVerbose} for the underlying API function
  * @see {@link TerminalVerbose} for the complete data structure
  */

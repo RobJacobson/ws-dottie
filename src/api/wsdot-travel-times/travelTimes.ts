@@ -196,7 +196,7 @@ export const travelTimeEndpointSchema = z
     MilePost: z.number().describe(""),
     RoadName: z.string().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -213,7 +213,7 @@ export const travelTimeRouteSchema = z
     StartPoint: travelTimeEndpointSchema.nullable().describe(""),
     TravelTimeID: z.number().int().positive().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**

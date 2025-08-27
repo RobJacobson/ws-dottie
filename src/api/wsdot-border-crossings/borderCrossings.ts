@@ -162,7 +162,7 @@ export const borderCrossingLocationSchema = z
 
     RoadName: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .nullable()
   .describe("");
 
@@ -185,7 +185,7 @@ export const borderCrossingDataSchema = z
 
     WaitTime: z.number().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -223,7 +223,7 @@ export const borderCrossingDataArraySchema = z
 export const useBorderCrossings = (
   params: GetBorderCrossingsParams = {},
   options?: TanStackOptions<BorderCrossingData[]>
-): UseQueryResult<BorderCrossingData[], Error> => {
+) => {
   return useQuery({
     queryKey: ["api", "wsdot", "border-crossings", JSON.stringify(params)],
     queryFn: () => getBorderCrossings(params),

@@ -10,6 +10,15 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
+// Cache management
+export {
+  getCacheFlushDateTerminals,
+  useCacheFlushDateTerminals,
+  wsfCacheFlushDateParamsSchema as getCacheFlushDateTerminalsParamsSchema,
+  type WsfCacheFlushDateParams as GetCacheFlushDateTerminalsParams,
+  type WsfCacheFlushDate as GetCacheFlushDateTerminalsResponse,
+} from "../wsf/cacheFlushDate";
+
 // Terminal basics
 export * from "./terminalBasics";
 // Terminal bulletins

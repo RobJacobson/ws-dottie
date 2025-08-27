@@ -61,7 +61,7 @@
  * ```
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -134,7 +134,7 @@ export const tollRateSchema = z
     TravelDirection: z.string().nullable().describe(""),
     TripName: z.string().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -168,8 +168,9 @@ export type TollRate = z.infer<typeof tollRateSchema>;
  * }
  */
 export const useTollRates = (
-  options?: TanStackOptions<TollRate[]>
-): UseQueryResult<TollRate[], Error> => {
+  params: GetTollRatesParams = {},
+  options?: UseQueryOptions<TollRate[], Error>
+) => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollRates"],
     queryFn: () => getTollRates(),

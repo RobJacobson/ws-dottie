@@ -74,7 +74,7 @@
  * - 4: StopAndGo (congested traffic)
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -222,7 +222,7 @@ export const flowStationLocationSchema = z
     MilePost: z.number().nullable().describe(""),
     RoadName: z.string().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -237,7 +237,7 @@ export const trafficFlowSchema = z
     StationName: z.string().nullable().describe(""),
     Time: zWsdotDate().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -272,8 +272,8 @@ export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
  */
 export const useTrafficFlowById = (
   params: GetTrafficFlowByIdParams,
-  options?: TanStackOptions<TrafficFlow>
-): UseQueryResult<TrafficFlow, Error> => {
+  options?: UseQueryOptions<TrafficFlow, Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -301,9 +301,9 @@ export const useTrafficFlowById = (
  * }
  */
 export const useTrafficFlows = (
-  params: GetTrafficFlowsParams,
-  options?: TanStackOptions<TrafficFlow[]>
-): UseQueryResult<TrafficFlow[], Error> => {
+  params: GetTrafficFlowsParams = {},
+  options?: UseQueryOptions<TrafficFlow[], Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

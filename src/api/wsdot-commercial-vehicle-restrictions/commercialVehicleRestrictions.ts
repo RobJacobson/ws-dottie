@@ -228,7 +228,7 @@ export const commercialVehicleRestrictionRoadwayLocationSchema = z
 
     RoadName: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -275,7 +275,7 @@ export const commercialVehicleRestrictionSchema = z
 
     VehicleType: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -286,7 +286,7 @@ export const commercialVehicleRestrictionWithIdSchema =
     .extend({
       UniqueID: z.string().describe(""),
     })
-    .catchall(z.unknown())
+    
     .describe("");
 
 /**
@@ -345,9 +345,9 @@ export type CommercialVehicleRestrictionWithId = z.infer<
  * }
  */
 export const useCommercialVehicleRestrictionsWithId = (
-  params: GetCommercialVehicleRestrictionsWithIdParams = {},
+  params: GetCommercialVehicleRestrictionsWithIdParams,
   options?: TanStackOptions<CommercialVehicleRestrictionWithId[]>
-): UseQueryResult<CommercialVehicleRestrictionWithId[], Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",
@@ -380,7 +380,7 @@ export const useCommercialVehicleRestrictionsWithId = (
 export const useCommercialVehicleRestrictions = (
   params: GetCommercialVehicleRestrictionsParams = {},
   options?: TanStackOptions<CommercialVehicleRestriction[]>
-): UseQueryResult<CommercialVehicleRestriction[], Error> => {
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

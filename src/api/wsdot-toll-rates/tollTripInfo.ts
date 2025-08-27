@@ -38,16 +38,14 @@
  * Note: This endpoint may require valid authentication and may return error responses with demo tokens.
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
-import {
-  zWsdotDate,
-} from "@/shared/fetching/validation/schemas";
+import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 
 // ============================================================================
 // API Function
@@ -115,7 +113,7 @@ export const tollTripInfoSchema = z
     TravelDirection: z.string().nullable().describe(""),
     TripName: z.string().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
@@ -149,8 +147,9 @@ export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
  * }
  */
 export const useTollTripInfo = (
-  options?: TanStackOptions<TollTripInfo[]>
-): UseQueryResult<TollTripInfo[], Error> => {
+  params: GetTollTripInfoParams,
+  options?: UseQueryOptions<TollTripInfo[], Error>
+) => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripInfo"],
     queryFn: () => getTollTripInfo(),

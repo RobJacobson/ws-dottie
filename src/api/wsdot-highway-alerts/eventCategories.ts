@@ -41,7 +41,11 @@
  * users understand the nature of traffic events and can be used for filtering and display purposes.
  */
 
-import { type UseQueryResult, useQuery } from "@tanstack/react-query";
+import {
+  type UseQueryResult,
+  useQuery,
+  type UseQueryOptions,
+} from "@tanstack/react-query";
 import { z } from "zod";
 
 import { tanstackQueryOptions } from "@/shared/tanstack";
@@ -135,8 +139,8 @@ export type EventCategories = z.infer<typeof eventCategoriesArraySchema>;
  */
 export const useEventCategories = (
   params: GetEventCategoriesParams = {},
-  options?: TanStackOptions<string[]>
-): UseQueryResult<string[], Error> => {
+  options?: UseQueryOptions<EventCategories, Error>
+) => {
   return useQuery({
     queryKey: [
       "wsdot",

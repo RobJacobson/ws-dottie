@@ -129,7 +129,7 @@ export const weatherStationSchema = z
 
     StationName: z.string().nullable().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**

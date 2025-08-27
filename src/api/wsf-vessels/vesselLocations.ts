@@ -57,37 +57,36 @@
  *   "VesselID": 1,
  *   "VesselName": "Cathlamet",
  *   "Mmsi": 366773070,
- *   "DepartingTerminalID": 22,
- *   "DepartingTerminalName": "Vashon Island",
- *   "DepartingTerminalAbbrev": "VAI",
+ *   "DepartingTerminalID": 122,
+ *   "DepartingTerminalName": "Eagle Harbor",
+ *   "DepartingTerminalAbbrev": "EAH",
  *   "ArrivingTerminalID": null,
  *   "ArrivingTerminalName": null,
  *   "ArrivingTerminalAbbrev": null,
- *   "Latitude": 47.511142,
- *   "Longitude": -122.463895,
- *   "Speed": 0.1,
- *   "Heading": 169,
- *   "InService": true,
+ *   "Latitude": 47.620547,
+ *   "Longitude": -122.51509,
+ *   "Speed": 0,
+ *   "Heading": 20,
+ *   "InService": false,
  *   "AtDock": true,
  *   "LeftDock": null,
  *   "Eta": null,
  *   "EtaBasis": null,
  *   "ScheduledDeparture": null,
+ *   "OpRouteAbbrev": [],
+ *   "VesselPositionNum": null,
+ *   "SortSeq": 9999,
  *   "ManagedBy": 1,
- *   "OpRouteAbbrev": ["f-v-s"],
- *   "SortSeq": 90,
- *   "TimeStamp": "/Date(1756176829000-0700)/",
- *   "VesselPositionNum":
- *   "VesselWatchMsg": "WSF's VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. ", // Undocumented field
+ *   "TimeStamp": "/Date(1756256066000-0700)/",
+ *   "VesselWatchShutID": 22,
+ *   "VesselWatchShutMsg": "",
  *   "VesselWatchShutFlag": "0",
- *   "VesselWatchShutID": 22, // Undocumented field
- *   "VesselWatchShutMsg": "", // Undocumented field
- *   "VesselWatchStatus": "0" // Undocumented field
+ *   "VesselWatchStatus": "0",
+ *   "VesselWatchMsg": "WSF's VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. "
  * }
  * ```
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { useQueryWithAutoUpdate } from "@/shared/tanstack";
@@ -98,9 +97,8 @@ import {
   zPositiveInteger,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { createVesselIdDescription } from "@/shared/fetching/validation/schemas";
 
-import { getCacheFlushDateVessels } from "./getCacheFlushDateVessels";
+import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
 // ============================================================================
 // API Functions
@@ -240,7 +238,7 @@ export const vesselLocationSchema = z
     VesselWatchShutMsg: z.string().nullable().describe(""),
     VesselWatchStatus: z.string().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 export type VesselLocation = z.infer<typeof vesselLocationSchema>;
@@ -301,7 +299,7 @@ export const useVesselLocationsByVesselId = (
 export const useVesselLocations = (
   params: GetVesselLocationsParams = {},
   options?: TanStackOptions<VesselLocation[]>
-): UseQueryResult<VesselLocation[], Error> => {
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "locations", JSON.stringify(params)],
     queryFn: () => getVesselLocations(params),

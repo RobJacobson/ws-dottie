@@ -1,4 +1,3 @@
-import type { UseQueryResult } from "@tanstack/react-query";
 import { z } from "zod";
 
 import { useQueryWithAutoUpdate } from "@/shared/tanstack";
@@ -6,8 +5,7 @@ import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-
-import { getCacheFlushDateTerminals } from "./getCacheFlushDateTerminals";
+import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
 // ============================================================================
 // API Functions
@@ -145,7 +143,7 @@ export type TerminalArrivalSpace = z.infer<typeof terminalArrivalSpaceSchema>;
 export const useTerminalSailingSpaceByTerminalId = (
   params: GetTerminalSailingSpaceByTerminalIdParams,
   options?: TanStackOptions<TerminalSailingSpace>
-): UseQueryResult<TerminalSailingSpace, Error> => {
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "sailingSpace", params.terminalId],
     queryFn: () => getTerminalSailingSpaceByTerminalId(params),
@@ -156,7 +154,7 @@ export const useTerminalSailingSpaceByTerminalId = (
 
 export const useTerminalSailingSpace = (
   options?: TanStackOptions<TerminalSailingSpace[]>
-): UseQueryResult<TerminalSailingSpace[], Error> => {
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "sailingSpace"],
     queryFn: getTerminalSailingSpace,

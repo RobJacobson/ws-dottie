@@ -98,7 +98,7 @@ export const tollTripVersionSchema = z
   .object({
     Version: z.number().describe(""),
   })
-  .catchall(z.unknown())
+  
   .describe("");
 
 /**
