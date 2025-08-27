@@ -2,6 +2,13 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
+import { tanstackQueryOptions } from "./queryOptions";
+import type {
+  TanStackOptions,
+  CreateQueryHookParams,
+  InferApiData,
+} from "./types";
+
 /**
  * Hook that combines useQuery with automatic cache invalidation
  *
@@ -115,3 +122,54 @@ export const useQueryWithAutoUpdate = <TData, TParams = void>({
 
   return queryResult;
 };
+
+// ============================================================================
+// HOOK FACTORY FUNCTION
+// ============================================================================
+
+/**
+ * Factory function that creates a properly typed React Query hook with auto-update functionality
+ * This eliminates the need to write boilerplate hook code for each API endpoint
+ *
+ * @param config - Configuration object defining the hook behavior
+ * @returns A properly typed React Query hook function
+ *
+ * @example
+ * ```typescript
+ * export const useFareTotals = createApiHook({
+ *   apiFn: getFareTotals,
+ *   queryKeyPrefix: ["wsf", "fares", "fareTotals"],
+ *   getCacheFlushDate: getFaresCacheFlushDate,
+ *   getQueryKey: (params) => ["wsf", "fares", "fareTotals", JSON.stringify(params)],
+ *   getEnabled: (params) => params.fareLineItemIDs.length > 0 && params.quantities.length > 0,
+ * });
+ * ```
+ */
+export function createApiHook<
+  TApiFn extends (...args: any[]) => Promise<any>,
+  TParams = Parameters<TApiFn>[0],
+>({
+  apiFn,
+  queryKeyPrefix,
+  getCacheFlushDate,
+  getQueryKey,
+  getEnabled,
+}: CreateQueryHookParams<TApiFn, TParams>) {
+  return (params: TParams, options?: TanStackOptions<InferApiData<TApiFn>>) => {
+    const queryKey = getQueryKey ? getQueryKey(params) : queryKeyPrefix;
+
+    const enabled = getEnabled ? getEnabled(params) : true;
+
+    return useQueryWithAutoUpdate({
+      queryKey,
+      queryFn: () => apiFn(params),
+      fetchLastUpdateTime: getCacheFlushDate,
+      options: {
+        ...tanstackQueryOptions.DAILY_UPDATES,
+        enabled,
+        ...options,
+      },
+      params,
+    });
+  };
+}

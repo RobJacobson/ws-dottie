@@ -7,7 +7,15 @@
 export { tanstackQueryOptions } from "./queryOptions";
 
 // Export the auto-update hook
-export { useQueryWithAutoUpdate } from "./useQueryWithAutoUpdate";
+export {
+  useQueryWithAutoUpdate,
+  createApiHook,
+} from "./useQueryWithAutoUpdate";
 
 // Export TanStack-related types
-export type { TanStackOptions } from "./types";
+export type {
+  TanStackOptions,
+  InferApiData,
+  ApiQueryOptions,
+  ApiQueryResult,
+} from "./types";
