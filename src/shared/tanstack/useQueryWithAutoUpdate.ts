@@ -102,7 +102,7 @@ export const useQueryWithAutoUpdate = <TData, TParams = void>({
         previousLastUpdateTime.current = currentLastUpdateTime;
       } catch (error) {
         // Silently fail - cache invalidation is not critical for functionality
-        console.warn("Failed to check last update time:", error);
+        // Log error for debugging but don't throw
       }
     };
 
