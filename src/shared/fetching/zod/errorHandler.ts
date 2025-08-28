@@ -1,5 +1,6 @@
-import { createApiError } from "../pipeline/errorHandling";
 import log from "@/shared/utils/logger";
+import { isTestEnvironment } from "@/shared/utils/testEnvironment";
+import { createApiError } from "../pipeline/errorHandling";
 
 import type { FetchContext } from "./types";
 import { buildCompleteUrl } from "./urlBuilder";
@@ -15,8 +16,11 @@ export const handleFetchError = (
   error: unknown,
   context: FetchContext
 ): never => {
-  // Log errors for debugging
-  if (context.logMode === "debug" || context.logMode === "info") {
+  // Log errors for debugging (only if not in test environment)
+  if (
+    (context.logMode === "debug" || context.logMode === "info") &&
+    !isTestEnvironment()
+  ) {
     log.error(`[${context.endpoint}] Request failed:`, error);
   }
 

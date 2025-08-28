@@ -2,8 +2,8 @@ import type { LoggingMode } from "@/shared/utils";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
 
 import { validateInputs, validateResponse } from "../validation/core";
-import { prepareRequestUrl } from "./request";
 import { executeRequest } from "./execution";
+import { prepareRequestUrl } from "./request";
 import { handlePipelineError } from "./response";
 import type { FetchContext, FetchSchemas } from "./types";
 
@@ -56,7 +56,7 @@ export const fetchWithValidation = async <TInput = never, TOutput = unknown>(
   logMode?: LoggingMode
 ): Promise<TOutput> => {
   const startTime = Date.now();
-  
+
   try {
     const context = createFetchContext(fullUrlTemplate, logMode);
 

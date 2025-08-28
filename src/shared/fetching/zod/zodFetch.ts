@@ -1,13 +1,13 @@
+import type { LoggingMode } from "@/shared/utils";
+import { isTestEnvironment } from "@/shared/utils/testEnvironment";
 import {
   getEnvironmentType,
   selectFetchStrategy,
 } from "../pipeline/strategies";
-import type { LoggingMode } from "@/shared/utils";
-
+import { validateInputs, validateResponse } from "../validation/core";
 import { handleFetchError } from "./errorHandler";
 import type { FetchContext, FetchSchemas } from "./types";
 import { prepareRequestUrl } from "./urlBuilder";
-import { validateInputs, validateResponse } from "../validation/core";
 
 /**
  * Zod-First API Fetch Utility for WSDOT and WSF APIs
@@ -24,6 +24,7 @@ import { validateInputs, validateResponse } from "../validation/core";
  * - Parameter interpolation with date formatting
  * - Comprehensive error handling
  * - TypeScript inference from Zod schemas
+ * - Automatic logging suppression in test environments
  *
  * Usage:
  * ```typescript
@@ -52,7 +53,14 @@ const createFetchContext = (
   // Simple endpoint extraction with fallback
   const endpoint = fullUrlTemplate.split("/").pop() || fullUrlTemplate;
 
-  return { endpoint, logMode, interpolatedUrl: fullUrlTemplate };
+  // Automatically disable logging in test environments
+  const effectiveLogMode = isTestEnvironment() ? undefined : logMode;
+
+  return {
+    endpoint,
+    logMode: effectiveLogMode,
+    interpolatedUrl: fullUrlTemplate,
+  };
 };
 
 /**
@@ -67,8 +75,8 @@ const executeRequest = async (
 
   const rawData = JSON.parse(responseString);
 
-  // Debug logging
-  if (context.logMode === "debug") {
+  // Debug logging (only if not in test environment and logMode is debug)
+  if (context.logMode === "debug" && !isTestEnvironment()) {
     console.debug(`[${context.endpoint}] Raw response parsed:`, rawData);
     console.debug(
       `[${context.endpoint}] Using ${getEnvironmentType()} fetch strategy`
@@ -89,11 +97,12 @@ const executeRequest = async (
  * - Platform-appropriate fetch strategy (JSONP vs fetch)
  * - Response validation and transformation
  * - Comprehensive error handling
+ * - Automatic logging suppression in test environments
  *
  * @param fullUrlTemplate - Complete URL template (e.g., "/ferries/api/vessels/rest/vesselbasics/{vesselId}")
  * @param schemas - Zod schemas for input and output validation
  * @param params - Parameters to interpolate into the URL template
- * @param logMode - Optional logging mode for debugging
+ * @param logMode - Optional logging mode for debugging (automatically disabled in test environments)
  * @returns Promise resolving to validated response data
  */
 export const zodFetch = async <TInput = never, TOutput = unknown>(
@@ -130,7 +139,7 @@ export const zodFetch = async <TInput = never, TOutput = unknown>(
     // For other errors, try to create a minimal context for error handling
     const fallbackContext: FetchContext = {
       endpoint: "unknown",
-      logMode,
+      logMode: isTestEnvironment() ? undefined : logMode,
       interpolatedUrl: fullUrlTemplate,
     };
 

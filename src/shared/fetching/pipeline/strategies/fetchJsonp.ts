@@ -68,8 +68,8 @@
  * where CORS restrictions would prevent direct API access.
  */
 
-import type { FetchStrategy, JSONPWindow } from "./types";
 import { processApiResponse } from "../execution/utils";
+import type { FetchStrategy, JSONPWindow } from "./types";
 
 // Constants for JSONP request configuration
 const JSONP_TIMEOUT_MS = 30_000; // 30 seconds

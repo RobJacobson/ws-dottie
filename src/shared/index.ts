@@ -22,15 +22,13 @@
 // CONFIGURATION & CACHING
 // ============================================================================
 
-// TanStack Query configuration with pre-optimized strategies
-export { tanstackQueryOptions } from "./tanstack";
-// TanStack Query hooks
-export { useQueryWithAutoUpdate } from "./tanstack";
-// TanStack Query types
-export type { TanStackOptions } from "./tanstack";
-
 // Configuration management for API keys and base URLs
 export { configManager, type WsdotConfig } from "./config";
+// TanStack Query types
+export type { TanStackOptions } from "./tanstack";
+// TanStack Query configuration with pre-optimized strategies
+// TanStack Query hooks
+export { tanstackQueryOptions, useQueryWithAutoUpdate } from "./tanstack";
 
 // ============================================================================
 // FETCHING & DATA ACCESS
@@ -53,17 +51,17 @@ export * from "./utils";
 // All validation and schema functionality is now under fetching
 // Re-export for backward compatibility
 export {
+  createDateRangeParams,
+  createVesselIdDescription,
+  zLatitude,
+  zLongitude,
+  zNullableBoolean,
+  zNullableNumber,
+  zNullableString,
+  zPositiveInteger,
   // Schema construction (for API clients)
   zWsdotDate,
   zWsdotNullableDate,
-  zNullableString,
-  zNullableNumber,
-  zNullableBoolean,
-  zPositiveInteger,
-  zLatitude,
-  zLongitude,
-  createVesselIdDescription,
-  createDateRangeParams,
 } from "./fetching/validation/schemas";
 
 // Zod utilities (date parsing)

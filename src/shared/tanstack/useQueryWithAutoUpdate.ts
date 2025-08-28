@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 
 import { tanstackQueryOptions } from "./queryOptions";
 import type {
-  TanStackOptions,
   CreateQueryHookParams,
   InferApiData,
+  TanStackOptions,
 } from "./types";
 
 /**

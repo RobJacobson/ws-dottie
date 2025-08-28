@@ -1,5 +1,6 @@
-import { getEnvironmentType, selectFetchStrategy } from "./fetchOrchestrator";
+import { isTestEnvironment } from "@/shared/utils/testEnvironment";
 import type { FetchContext } from "../types";
+import { getEnvironmentType, selectFetchStrategy } from "./fetchOrchestrator";
 
 /**
  * Request execution utilities for the data pipeline
@@ -17,8 +18,8 @@ export const executeRequest = async (
 
   const rawData = JSON.parse(responseString);
 
-  // Debug logging
-  if (context.logMode === "debug") {
+  // Debug logging (only if not in test environment and logMode is debug)
+  if (context.logMode === "debug" && !isTestEnvironment()) {
     console.debug(`[${context.endpoint}] Raw response parsed:`, rawData);
     console.debug(
       `[${context.endpoint}] Using ${getEnvironmentType()} fetch strategy`

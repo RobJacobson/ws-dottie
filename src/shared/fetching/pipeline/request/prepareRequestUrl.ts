@@ -1,8 +1,6 @@
 import { configManager } from "@/shared/config";
-import type { JsonWithDates } from "../types";
-
 import { jsDateToYyyyMmDd } from "../../zod";
-import type { FetchContext } from "../types";
+import type { FetchContext, JsonWithDates } from "../types";
 
 /**
  * URL building utilities for request preparation

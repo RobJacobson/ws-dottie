@@ -10,11 +10,11 @@
 export { executeRequest } from "./executeRequest";
 export { fetchJsonp } from "./fetchJsonp";
 export { fetchNative } from "./fetchNative";
-export { selectFetchStrategy, getEnvironmentType } from "./fetchOrchestrator";
+export { getEnvironmentType, selectFetchStrategy } from "./fetchOrchestrator";
 export type {
+  ApiErrorResponse,
   FetchStrategy,
   JSONPCallback,
   JSONPWindow,
-  ApiErrorResponse,
 } from "./types";
 export { processApiResponse } from "./utils";

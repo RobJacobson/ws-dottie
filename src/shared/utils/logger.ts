@@ -45,7 +45,9 @@ const log = {
  */
 export const logApiCall = (endpoint: string, params?: unknown): void => {
   const paramsStr = params ? JSON.stringify(params) : "none";
-  const message = chalk.blue(`Calling ${endpoint} with parameters ${paramsStr}...`);
+  const message = chalk.blue(
+    `Calling ${endpoint} with parameters ${paramsStr}...`
+  );
   process.stdout.write(message);
 };
 

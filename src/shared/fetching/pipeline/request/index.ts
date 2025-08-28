@@ -7,7 +7,7 @@
  */
 
 export {
-  prepareRequestUrl,
-  interpolateUrlParams,
   buildCompleteUrl,
+  interpolateUrlParams,
+  prepareRequestUrl,
 } from "./prepareRequestUrl";

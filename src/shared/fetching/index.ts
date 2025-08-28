@@ -44,6 +44,15 @@ export { fetchWithValidation as zodFetch };
 
 // Core data pipeline components
 export * from "./pipeline/errorHandling";
+export type { ApiErrorResponse, FetchStrategy } from "./pipeline/execution";
+// Execution components (avoiding conflicts with strategies)
+// Strategy components
+export {
+  executeRequest,
+  fetchJsonp,
+  fetchNative,
+  getEnvironmentType,
+} from "./pipeline/execution";
 export * from "./pipeline/request";
 export * from "./pipeline/response";
 export type {
@@ -51,14 +60,6 @@ export type {
   FetchSchemas,
   JsonWithDates,
 } from "./pipeline/types";
-
-// Execution components (avoiding conflicts with strategies)
-export { executeRequest } from "./pipeline/execution";
-export { getEnvironmentType } from "./pipeline/execution";
-
-// Strategy components
-export { fetchJsonp, fetchNative } from "./pipeline/execution";
-export type { FetchStrategy, ApiErrorResponse } from "./pipeline/execution";
 
 // ============================================================================
 // VALIDATION SYSTEM
