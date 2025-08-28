@@ -48,17 +48,15 @@ export const getScheduledRoutesBySeason = async (
 // GetScheduledRoutesBySeasonParams
 // ============================================================================
 
-export const getScheduledRoutesParamsSchema = z.object({}).describe("");
+export const getScheduledRoutesParamsSchema = z.object({});
 
 export type GetScheduledRoutesParams = z.infer<
   typeof getScheduledRoutesParamsSchema
 >;
 
-export const getScheduledRoutesBySeasonParamsSchema = z
-  .object({
-    seasonId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getScheduledRoutesBySeasonParamsSchema = z.object({
+  seasonId: z.number().int().positive(),
+});
 
 export type GetScheduledRoutesBySeasonParams = z.infer<
   typeof getScheduledRoutesBySeasonParamsSchema
@@ -73,31 +71,27 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
 // ScheduledRoute
 // ============================================================================
 
-export const contingencyAdjustmentSchema = z
-  .object({
-    DateFrom: zWsdotDate().describe(""),
-    DateThru: zWsdotDate().describe(""),
-    EventID: z.number().nullable().describe(""),
-    EventDescription: z.string().nullable().describe(""),
-    AdjType: z.number().describe(""),
-    ReplacedBySchedRouteID: z.number().nullable().describe(""),
-  })
-  .describe("");
+export const contingencyAdjustmentSchema = z.object({
+  DateFrom: zWsdotDate(),
+  DateThru: zWsdotDate(),
+  EventID: z.number().nullable(),
+  EventDescription: z.string().nullable(),
+  AdjType: z.number(),
+  ReplacedBySchedRouteID: z.number().nullable(),
+});
 
-export const scheduledRouteSchema = z
-  .object({
-    ScheduleID: z.number().describe(""),
-    SchedRouteID: z.number().describe(""),
-    ContingencyOnly: z.boolean().describe(""),
-    RouteID: z.number().describe(""),
-    RouteAbbrev: z.string().describe(""),
-    Description: z.string().describe(""),
-    SeasonalRouteNotes: z.string().describe(""),
-    RegionID: z.number().describe(""),
-    ServiceDisruptions: z.array(serviceDisruptionSchema).describe(""),
-    ContingencyAdj: z.array(contingencyAdjustmentSchema).describe(""),
-  })
-  .describe("");
+export const scheduledRouteSchema = z.object({
+  ScheduleID: z.number(),
+  SchedRouteID: z.number(),
+  ContingencyOnly: z.boolean(),
+  RouteID: z.number(),
+  RouteAbbrev: z.string(),
+  Description: z.string(),
+  SeasonalRouteNotes: z.string(),
+  RegionID: z.number(),
+  ServiceDisruptions: z.array(serviceDisruptionSchema),
+  ContingencyAdj: z.array(contingencyAdjustmentSchema),
+});
 
 export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
 

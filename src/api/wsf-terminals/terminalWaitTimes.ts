@@ -54,13 +54,11 @@ export const getTerminalWaitTimes = async (
 // GetTerminalWaitTimesParams
 // ============================================================================
 
-export const getTerminalWaitTimesByTerminalIdParamsSchema = z
-  .object({
-    terminalId: z.number().int().describe(""),
-  })
-  .describe("");
+export const getTerminalWaitTimesByTerminalIdParamsSchema = z.object({
+  terminalId: z.number().int(),
+});
 
-export const getTerminalWaitTimesParamsSchema = z.object({}).describe("");
+export const getTerminalWaitTimesParamsSchema = z.object({});
 
 export type GetTerminalWaitTimesByTerminalIdParams = z.infer<
   typeof getTerminalWaitTimesByTerminalIdParamsSchema
@@ -80,27 +78,23 @@ export type GetTerminalWaitTimesParams = z.infer<
 // TerminalWaitTime
 // ============================================================================
 
-export const terminalWaitTimeSchema = z
-  .object({
-    RouteID: z.number().nullable().describe(""),
-    RouteName: z.string().nullable().describe(""),
-    WaitTimeIVRNotes: z.string().nullable().describe(""),
-    WaitTimeLastUpdated: zWsdotDate().describe(""),
-    WaitTimeNotes: z.string().nullable().describe(""),
-  })
-  .describe("");
+export const terminalWaitTimeSchema = z.object({
+  RouteID: z.number().nullable(),
+  RouteName: z.string().nullable(),
+  WaitTimeIVRNotes: z.string().nullable(),
+  WaitTimeLastUpdated: zWsdotDate(),
+  WaitTimeNotes: z.string().nullable(),
+});
 
-export const terminalWaitTimesSchema = z
-  .object({
-    TerminalID: z.number().describe(""),
-    TerminalSubjectID: z.number().describe(""),
-    RegionID: z.number().describe(""),
-    TerminalName: z.string().describe(""),
-    TerminalAbbrev: z.string().describe(""),
-    SortSeq: z.number().describe(""),
-    WaitTimes: z.array(terminalWaitTimeSchema).describe(""),
-  })
-  .describe("");
+export const terminalWaitTimesSchema = z.object({
+  TerminalID: z.number(),
+  TerminalSubjectID: z.number(),
+  RegionID: z.number(),
+  TerminalName: z.string(),
+  TerminalAbbrev: z.string(),
+  SortSeq: z.number(),
+  WaitTimes: z.array(terminalWaitTimeSchema),
+});
 
 export const terminalWaitTimesArraySchema = z.array(terminalWaitTimesSchema);
 

@@ -20,9 +20,9 @@ export type WsfCacheFlushDateParams = Record<string, never>;
 // Schema
 // ============================================================================
 
-export const wsfCacheFlushDateParamsSchema = z.object({}).describe("");
+export const wsfCacheFlushDateParamsSchema = z.object({});
 
-export const wsfCacheFlushDateSchema = zWsdotDate().describe("");
+export const wsfCacheFlushDateSchema = zWsdotDate();
 
 // ============================================================================
 // Factory Function

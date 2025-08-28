@@ -54,23 +54,19 @@ export const getFareLineItemsBasic = async (
 // GetFareLineItemsBasicParams
 // ============================================================================
 
-export const getFareLineItemsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    departingTerminalID: z.number().int().positive().describe(""),
-    arrivingTerminalID: z.number().int().positive().describe(""),
-    roundTrip: z.boolean().describe(""),
-  })
-  .describe("");
+export const getFareLineItemsParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalID: z.number().int().positive(),
+  arrivingTerminalID: z.number().int().positive(),
+  roundTrip: z.boolean(),
+});
 
-export const getFareLineItemsBasicParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    departingTerminalID: z.number().int().positive().describe(""),
-    arrivingTerminalID: z.number().int().positive().describe(""),
-    roundTrip: z.boolean().describe(""),
-  })
-  .describe("");
+export const getFareLineItemsBasicParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalID: z.number().int().positive(),
+  arrivingTerminalID: z.number().int().positive(),
+  roundTrip: z.boolean(),
+});
 
 export type GetFareLineItemsParams = z.infer<
   typeof getFareLineItemsParamsSchema
@@ -89,15 +85,13 @@ export type GetFareLineItemsBasicParams = z.infer<
 // FareLineItem
 // ============================================================================
 
-export const fareLineItemSchema = z
-  .object({
-    FareLineItemID: z.number().int().positive().describe(""),
-    FareLineItem: z.string().describe(""),
-    Category: z.string().describe(""),
-    DirectionIndependent: z.boolean().describe(""),
-    Amount: z.number().positive().describe(""),
-  })
-  .describe("");
+export const fareLineItemSchema = z.object({
+  FareLineItemID: z.number().int().positive(),
+  FareLineItem: z.string(),
+  Category: z.string(),
+  DirectionIndependent: z.boolean(),
+  Amount: z.number().positive(),
+});
 
 export const fareLineItemsArraySchema = z.array(fareLineItemSchema);
 

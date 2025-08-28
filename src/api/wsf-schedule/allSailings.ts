@@ -36,11 +36,9 @@ export const getAllSailings = async (
 // GetAllSailingsParams
 // ============================================================================
 
-export const getAllSailingsParamsSchema = z
-  .object({
-    schedRouteId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getAllSailingsParamsSchema = z.object({
+  schedRouteId: z.number().int().positive(),
+});
 
 export type GetAllSailingsParams = z.infer<typeof getAllSailingsParamsSchema>;
 
@@ -56,70 +54,60 @@ export type GetAllSailingsParams = z.infer<typeof getAllSailingsParamsSchema>;
 // SailingResponse
 // ============================================================================
 
-export const annotationSchema = z
-  .object({
-    AnnotationID: z.number().int().positive().describe(""),
-    AnnotationText: z.string().describe(""),
-    AnnotationIVRText: z.string().describe(""),
-    AdjustedCrossingTime: zWsdotDate().nullable().describe(""),
-    AnnotationImg: z.string().url().describe(""),
-    TypeDescription: z.string().describe(""),
-    SortSeq: z.number().int().min(0).describe(""),
-  })
-  .describe("");
+export const annotationSchema = z.object({
+  AnnotationID: z.number().int().positive(),
+  AnnotationText: z.string(),
+  AnnotationIVRText: z.string(),
+  AdjustedCrossingTime: zWsdotDate().nullable(),
+  AnnotationImg: z.string().url(),
+  TypeDescription: z.string(),
+  SortSeq: z.number().int().min(0),
+});
 
-export const terminalTimeSchema = z
-  .object({
-    JourneyTerminalID: z.number().int().positive().describe(""),
-    TerminalID: z.number().int().positive().describe(""),
-    TerminalDescription: z.string().describe(""),
-    TerminalBriefDescription: z.string().describe(""),
-    Time: zWsdotDate().nullable().describe(""),
-    DepArrIndicator: z.number().int().nullable().describe(""),
-    IsNA: z.boolean().describe(""),
-    Annotations: z.array(annotationSchema).describe(""),
-  })
-  .describe("");
+export const terminalTimeSchema = z.object({
+  JourneyTerminalID: z.number().int().positive(),
+  TerminalID: z.number().int().positive(),
+  TerminalDescription: z.string(),
+  TerminalBriefDescription: z.string(),
+  Time: zWsdotDate().nullable(),
+  DepArrIndicator: z.number().int().nullable(),
+  IsNA: z.boolean(),
+  Annotations: z.array(annotationSchema),
+});
 
-export const journeySchema = z
-  .object({
-    JourneyID: z.number().int().positive().describe(""),
-    ReservationInd: z.boolean().describe(""),
-    InternationalInd: z.boolean().describe(""),
-    InterislandInd: z.boolean().describe(""),
-    VesselID: z.number().int().positive().describe(""),
-    VesselName: z.string().describe(""),
-    VesselHandicapAccessible: z.boolean().describe(""),
-    VesselPositionNum: z.number().int().positive().describe(""),
-    TerminalTimes: z.array(terminalTimeSchema).describe(""),
-  })
-  .describe("");
+export const journeySchema = z.object({
+  JourneyID: z.number().int().positive(),
+  ReservationInd: z.boolean(),
+  InternationalInd: z.boolean(),
+  InterislandInd: z.boolean(),
+  VesselID: z.number().int().positive(),
+  VesselName: z.string(),
+  VesselHandicapAccessible: z.boolean(),
+  VesselPositionNum: z.number().int().positive(),
+  TerminalTimes: z.array(terminalTimeSchema),
+});
 
-export const activeDateRangeSchema = z
-  .object({
-    DateFrom: zWsdotDate().nullable().describe(""),
-    DateThru: zWsdotDate().nullable().describe(""),
-    EventID: z.number().int().positive().nullable().describe(""),
-    EventDescription: z.string().nullable().describe(""),
-  })
-  .describe("");
+export const activeDateRangeSchema = z.object({
+  DateFrom: zWsdotDate().nullable(),
+  DateThru: zWsdotDate().nullable(),
+  EventID: z.number().int().positive().nullable(),
+  EventDescription: z.string().nullable(),
+});
 
-export const sailingResponseSchema = z
-  .object({
-    ScheduleID: z.number().int().positive().describe(""),
-    SchedRouteID: z.number().int().positive().describe(""),
-    RouteID: z.number().int().positive().describe(""),
-    SailingID: z.number().int().positive().describe(""),
-    SailingDescription: z.string().describe(""),
-    SailingNotes: z.string().describe(""),
-    DisplayColNum: z.number().int().min(0).describe(""),
-    SailingDir: z.number().int().min(1).max(2).describe(""),
-    DayOpDescription: z.string().describe(""),
-    DayOpUseForHoliday: z.boolean().describe(""),
-    ActiveDateRanges: z.array(activeDateRangeSchema).describe(""),
-    Journs: z.array(journeySchema).describe(""),
-  })
-  .describe("");
+export const sailingResponseSchema = z.object({
+  ScheduleID: z.number().int().positive(),
+  SchedRouteID: z.number().int().positive(),
+  RouteID: z.number().int().positive(),
+  SailingID: z.number().int().positive(),
+  SailingDescription: z.string(),
+  SailingNotes: z.string(),
+  DisplayColNum: z.number().int().min(0),
+  SailingDir: z.number().int().min(1).max(2),
+  DayOpDescription: z.string(),
+  DayOpUseForHoliday: z.boolean(),
+  ActiveDateRanges: z.array(activeDateRangeSchema),
+  Journs: z.array(journeySchema),
+});
 
 export const sailingsArraySchema = z.array(sailingResponseSchema);
 

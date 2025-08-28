@@ -51,47 +51,6 @@ export const getVesselHistory = async (): Promise<VesselHistory[]> => {
   });
 };
 
-export const getAllVesselHistories = async (
-  params: GetAllVesselHistoriesParams
-): Promise<VesselHistory[]> => {
-  // All vessels in the WSF fleet (as of 2024)
-  const allVesselNames = [
-    "Cathlamet",
-    "Chelan",
-    "Chetzemoka",
-    "Chimacum",
-    "Issaquah",
-    "Kaleetan",
-    "Kennewick",
-    "Kitsap",
-    "Kittitas",
-    "Puyallup",
-    "Salish",
-    "Samish",
-    "Sealth",
-    "Spokane",
-    "Tacoma",
-    "Tillikum",
-    "Tokitae",
-    "Walla Walla",
-    "Wenatchee",
-    "Yakima",
-    "Zumwalt",
-  ];
-
-  // Fetch history for all vessels in parallel
-  const historyPromises = allVesselNames.map((vesselName) =>
-    getVesselHistoryByVesselAndDateRange({
-      vesselName,
-      dateStart: params.dateStart,
-      dateEnd: params.dateEnd,
-    })
-  );
-
-  // Wait for all requests to complete and flatten the results
-  const allHistories = await Promise.all(historyPromises);
-  return allHistories.flat();
-};
 
 // ============================================================================
 // Input Schema & Types
@@ -101,10 +60,9 @@ export const getAllVesselHistories = async (
 // getAllVesselHistoriesParamsSchema
 // GetVesselHistoryParams
 // GetVesselHistoryByVesselAndDateRangeParams
-// GetAllVesselHistoriesParams
 // ============================================================================
 
-export const getVesselHistoryParamsSchema = z.object({}).describe("");
+export const getVesselHistoryParamsSchema = z.object({});
 
 export type GetVesselHistoryParams = z.infer<
   typeof getVesselHistoryParamsSchema
@@ -118,27 +76,10 @@ export const getVesselHistoryByVesselAndDateRangeParamsSchema = z
   .refine(
     createDateRangeRefinement().refine,
     createDateRangeRefinement().errorConfig
-  )
-  .describe("");
-
-export const getAllVesselHistoriesParamsSchema = z
-  .object({
-    ...createDateRangeParams(
-      "the historical data range for all vessels in the WSF fleet"
-    ),
-    batchSize: createBatchSizeParam("all vessel histories", 6, 10),
-  })
-  .refine(
-    createDateRangeRefinement().refine,
-    createDateRangeRefinement().errorConfig
-  )
-  .describe("");
+  );
 
 export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<
   typeof getVesselHistoryByVesselAndDateRangeParamsSchema
->;
-export type GetAllVesselHistoriesParams = z.infer<
-  typeof getAllVesselHistoriesParamsSchema
 >;
 
 // ============================================================================
@@ -149,58 +90,48 @@ export type GetAllVesselHistoriesParams = z.infer<
 // VesselHistory
 // ============================================================================
 
-export const vesselHistorySchema = z
-  .object({
-    VesselId: z.number().describe(""),
-    Vessel: z.string().describe(""),
-    Departing: zNullableString().describe(""),
-    Arriving: zNullableString().describe(""),
-    ScheduledDepart: zWsdotNullableDate().describe(""),
-    ActualDepart: zWsdotNullableDate().describe(""),
-    EstArrival: zWsdotNullableDate().describe(""),
-    Date: zWsdotNullableDate().describe(""),
-  })
-
-  .describe("");
+export const vesselHistorySchema = z.object({
+  VesselId: z.number(),
+  Vessel: z.string(),
+  Departing: zNullableString(),
+  Arriving: zNullableString(),
+  ScheduledDepart: zWsdotNullableDate(),
+  ActualDepart: zWsdotNullableDate(),
+  EstArrival: zWsdotNullableDate(),
+  Date: zWsdotNullableDate(),
+});
 
 export type VesselHistory = z.infer<typeof vesselHistorySchema>;
 
-export const vesselHistoryArraySchema = z
-  .array(vesselHistorySchema)
-  .describe("");
+export const vesselHistoryArraySchema = z.array(vesselHistorySchema);
 
 // ============================================================================
 // TanStack Query Hooks
 //
-// useVesselHistoryByVesselAndDateRange (singular item)
-// useAllVesselHistories (array)
+// useVesselHistory (all vessel history)
+// useVesselHistoryByVesselAndDateRange (filtered by vessel and date range)
 // ============================================================================
+
+export const useVesselHistory = (
+  options?: TanStackOptions<VesselHistory[]>
+): UseQueryResult<VesselHistory[], Error> => {
+  return useQueryWithAutoUpdate({
+    queryKey: ["wsf", "vessels", "history"],
+    queryFn: () => getVesselHistory(),
+    fetchLastUpdateTime: getCacheFlushDateVessels,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
+  });
+};
 
 export const useVesselHistoryByVesselAndDateRange = (
   params: GetVesselHistoryByVesselAndDateRangeParams,
   options?: TanStackOptions<VesselHistory[]>
 ): UseQueryResult<VesselHistory[], Error> => {
   return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "history", JSON.stringify(params)],
+    queryKey: ["wsf", "vessels", "history", "filtered", JSON.stringify(params)],
     queryFn: () => getVesselHistoryByVesselAndDateRange(params),
     fetchLastUpdateTime: getCacheFlushDateVessels,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
     params,
-  });
-};
-
-export const useAllVesselHistories = (
-  options?: TanStackOptions<VesselHistory[]>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "history"],
-    queryFn: (params: { dateStart: Date; dateEnd: Date; batchSize?: number }) =>
-      getAllVesselHistories({
-        dateStart: params.dateStart,
-        dateEnd: params.dateEnd,
-        batchSize: params.batchSize ?? 6,
-      }),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
 };

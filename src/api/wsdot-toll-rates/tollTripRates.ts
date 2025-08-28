@@ -29,7 +29,7 @@ export const getTollTripRates = async (): Promise<TollTripRates> => {
 // GetTollTripRatesParams
 // ============================================================================
 
-export const getTollTripRatesParamsSchema = z.object({}).describe("");
+export const getTollTripRatesParamsSchema = z.object({});
 
 export type GetTollTripRatesParams = z.infer<
   typeof getTollTripRatesParamsSchema
@@ -42,22 +42,16 @@ export type GetTollTripRatesParams = z.infer<
 // TollTripRates
 // ============================================================================
 
-export const tollTripRateSchema = z
-  .object({
-    Message: z.string().describe(""),
-    Toll: z.number().describe(""),
-    TripName: z.string().describe(""),
-  })
-  
-  .describe("");
+export const tollTripRateSchema = z.object({
+  Message: z.string(),
+  Toll: z.number(),
+  TripName: z.string(),
+});
 
-export const tollTripRatesSchema = z
-  .object({
-    Trips: z.array(tollTripRateSchema).describe(""),
-    Version: z.number().describe(""),
-  })
-  
-  .describe("");
+export const tollTripRatesSchema = z.object({
+  Trips: z.array(tollTripRateSchema),
+  Version: z.number(),
+});
 
 export type TollTripRate = z.infer<typeof tollTripRateSchema>;
 

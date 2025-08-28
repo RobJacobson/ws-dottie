@@ -35,7 +35,7 @@ export const getMapAreas = async (
 // GetMapAreasParams
 // ============================================================================
 
-export const getMapAreasParamsSchema = z.object({}).describe("");
+export const getMapAreasParamsSchema = z.object({});
 
 export type GetMapAreasParams = z.infer<typeof getMapAreasParamsSchema>;
 
@@ -46,16 +46,13 @@ export type GetMapAreasParams = z.infer<typeof getMapAreasParamsSchema>;
 // MapArea
 // ============================================================================
 
-export const mapAreaSchema = z
-  .object({
-    MapArea: z.string().describe(""),
+export const mapAreaSchema = z.object({
+  MapArea: z.string(),
 
-    MapAreaDescription: z.string().describe(""),
-  })
-  
-  .describe("");
+  MapAreaDescription: z.string(),
+});
 
-export const mapAreasArraySchema = z.array(mapAreaSchema).describe("");
+export const mapAreasArraySchema = z.array(mapAreaSchema);
 
 export type MapArea = z.infer<typeof mapAreaSchema>;
 

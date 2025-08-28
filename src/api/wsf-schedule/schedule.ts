@@ -86,46 +86,38 @@ export const getScheduleTodayByRoute = async (
 // GetScheduleByRouteParams
 // ============================================================================
 
-export const getScheduleByTerminalsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    departingTerminalId: z.number().int().positive().describe(""),
-    arrivingTerminalId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getScheduleByTerminalsParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalId: z.number().int().positive(),
+  arrivingTerminalId: z.number().int().positive(),
+});
 
 export type GetScheduleByTerminalsParams = z.infer<
   typeof getScheduleByTerminalsParamsSchema
 >;
 
-export const getScheduleByRouteParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    routeId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getScheduleByRouteParamsSchema = z.object({
+  tripDate: z.date(),
+  routeId: z.number().int().positive(),
+});
 
 export type GetScheduleByRouteParams = z.infer<
   typeof getScheduleByRouteParamsSchema
 >;
 
-export const getScheduleTodayByTerminalsParamsSchema = z
-  .object({
-    departingTerminalId: z.number().int().positive().describe(""),
-    arrivingTerminalId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getScheduleTodayByTerminalsParamsSchema = z.object({
+  departingTerminalId: z.number().int().positive(),
+  arrivingTerminalId: z.number().int().positive(),
+});
 
 export type GetScheduleTodayByTerminalsParams = z.infer<
   typeof getScheduleTodayByTerminalsParamsSchema
 >;
 
-export const getScheduleTodayByRouteParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    routeId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getScheduleTodayByRouteParamsSchema = z.object({
+  tripDate: z.date(),
+  routeId: z.number().int().positive(),
+});
 
 export type GetScheduleTodayByRouteParams = z.infer<
   typeof getScheduleTodayByRouteParamsSchema
@@ -143,45 +135,39 @@ export type GetScheduleTodayByRouteParams = z.infer<
 // ScheduleRouteTerminalCombo
 // ============================================================================
 
-export const sailingTimeSchema = z
-  .object({
-    DepartingTime: zWsdotDate().describe(""),
-    ArrivingTime: zWsdotDate().nullable().describe(""),
-    LoadingRule: z.number().describe(""),
-    VesselID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselHandicapAccessible: z.boolean().describe(""),
-    VesselPositionNum: z.number().describe(""),
-    Routes: z.array(z.number()).describe(""),
-    AnnotationIndexes: z.array(z.number()).describe(""),
-  })
-  .describe("");
+export const sailingTimeSchema = z.object({
+  DepartingTime: zWsdotDate(),
+  ArrivingTime: zWsdotDate().nullable(),
+  LoadingRule: z.number(),
+  VesselID: z.number(),
+  VesselName: z.string(),
+  VesselHandicapAccessible: z.boolean(),
+  VesselPositionNum: z.number(),
+  Routes: z.array(z.number()),
+  AnnotationIndexes: z.array(z.number()),
+});
 
-export const scheduleRouteTerminalComboSchema = z
-  .object({
-    DepartingTerminalID: z.number().describe(""),
-    DepartingTerminalName: z.string().describe(""),
-    ArrivingTerminalID: z.number().describe(""),
-    ArrivingTerminalName: z.string().describe(""),
-    SailingNotes: z.string().describe(""),
-    Annotations: z.array(annotationSchema).describe(""),
-    Times: z.array(sailingTimeSchema).describe(""),
-    AnnotationsIVR: z.array(z.string()).describe(""),
-  })
-  .describe("");
+export const scheduleRouteTerminalComboSchema = z.object({
+  DepartingTerminalID: z.number(),
+  DepartingTerminalName: z.string(),
+  ArrivingTerminalID: z.number(),
+  ArrivingTerminalName: z.string(),
+  SailingNotes: z.string(),
+  Annotations: z.array(annotationSchema),
+  Times: z.array(sailingTimeSchema),
+  AnnotationsIVR: z.array(z.string()),
+});
 
-export const scheduleResponseSchema = z
-  .object({
-    ScheduleID: z.number().describe(""),
-    ScheduleName: z.string().describe(""),
-    ScheduleSeason: z.number().describe(""),
-    SchedulePDFUrl: z.string().describe(""),
-    ScheduleStart: zWsdotDate().describe(""),
-    ScheduleEnd: zWsdotDate().describe(""),
-    AllRoutes: z.array(z.number()).describe(""),
-    TerminalCombos: z.array(scheduleRouteTerminalComboSchema).describe(""),
-  })
-  .describe("");
+export const scheduleResponseSchema = z.object({
+  ScheduleID: z.number(),
+  ScheduleName: z.string(),
+  ScheduleSeason: z.number(),
+  SchedulePDFUrl: z.string(),
+  ScheduleStart: zWsdotDate(),
+  ScheduleEnd: zWsdotDate(),
+  AllRoutes: z.array(z.number()),
+  TerminalCombos: z.array(scheduleRouteTerminalComboSchema),
+});
 
 export const scheduleResponseArraySchema = z.array(scheduleResponseSchema);
 

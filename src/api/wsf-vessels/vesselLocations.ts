@@ -50,17 +50,15 @@ export const getVesselLocations = async (
 // GetVesselLocationsByVesselIdParams
 // ============================================================================
 
-export const getVesselLocationsByVesselIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(""),
-  })
-  .describe("");
+export const getVesselLocationsByVesselIdParamsSchema = z.object({
+  vesselId: zPositiveInteger("vessel"),
+});
 
 export type GetVesselLocationsByVesselIdParams = z.infer<
   typeof getVesselLocationsByVesselIdParamsSchema
 >;
 
-export const getVesselLocationsParamsSchema = z.object({}).describe("");
+export const getVesselLocationsParamsSchema = z.object({});
 
 export type GetVesselLocationsParams = z.infer<
   typeof getVesselLocationsParamsSchema
@@ -78,46 +76,41 @@ const zDate = () => zWsdotDate();
 
 // Output Schema & Type for getVesselLocationsByVesselId (single item by id):
 
-export const vesselLocationSchema = z
-  .object({
-    VesselID: z.number().int().positive().describe(""),
-    VesselName: z.string().min(1).describe(""),
-    Mmsi: z.number().describe(""),
-    DepartingTerminalID: z.number().describe(""),
-    DepartingTerminalName: z.string().describe(""),
-    DepartingTerminalAbbrev: z.string().describe(""),
-    ArrivingTerminalID: z.number().nullable().describe(""),
-    ArrivingTerminalName: z.string().nullable().describe(""),
-    ArrivingTerminalAbbrev: z.string().nullable().describe(""),
-    Latitude: z.number().min(-90).max(90).describe(""),
-    Longitude: z.number().min(-180).max(180).describe(""),
-    Speed: z.number().min(0).describe(""),
-    Heading: z.number().min(0).max(359).describe(""),
-    InService: z.boolean().describe(""),
-    AtDock: z.boolean().describe(""),
-    LeftDock: zDate().nullable().describe(""),
-    Eta: zDate().nullable().describe(""),
-    EtaBasis: z.string().nullable().describe(""),
-    ScheduledDeparture: zDate().nullable().describe(""),
-    ManagedBy: z.number().nullable().describe(""),
-    OpRouteAbbrev: z.array(z.string()).nullable().describe(""),
-    SortSeq: z.number().nullable().describe(""),
-    TimeStamp: zDate().describe(""),
-    VesselPositionNum: z.number().nullable().describe(""),
-    VesselWatchMsg: z.string().nullable().describe(""),
-    VesselWatchShutFlag: z.string().describe(""),
-    VesselWatchShutID: z.number().nullable().describe(""),
-    VesselWatchShutMsg: z.string().nullable().describe(""),
-    VesselWatchStatus: z.string().describe(""),
-  })
-  
-  .describe("");
+export const vesselLocationSchema = z.object({
+  VesselID: z.number().int().positive(),
+  VesselName: z.string().min(1),
+  Mmsi: z.number(),
+  DepartingTerminalID: z.number(),
+  DepartingTerminalName: z.string(),
+  DepartingTerminalAbbrev: z.string(),
+  ArrivingTerminalID: z.number().nullable(),
+  ArrivingTerminalName: z.string().nullable(),
+  ArrivingTerminalAbbrev: z.string().nullable(),
+  Latitude: z.number().min(-90).max(90),
+  Longitude: z.number().min(-180).max(180),
+  Speed: z.number().min(0),
+  Heading: z.number().min(0).max(359),
+  InService: z.boolean(),
+  AtDock: z.boolean(),
+  LeftDock: zDate().nullable(),
+  Eta: zDate().nullable(),
+  EtaBasis: z.string().nullable(),
+  ScheduledDeparture: zDate().nullable(),
+  ManagedBy: z.number().nullable(),
+  OpRouteAbbrev: z.array(z.string()).nullable(),
+  SortSeq: z.number().nullable(),
+  TimeStamp: zDate(),
+  VesselPositionNum: z.number().nullable(),
+  VesselWatchMsg: z.string().nullable(),
+  VesselWatchShutFlag: z.string(),
+  VesselWatchShutID: z.number().nullable(),
+  VesselWatchShutMsg: z.string().nullable(),
+  VesselWatchStatus: z.string(),
+});
 
 export type VesselLocation = z.infer<typeof vesselLocationSchema>;
 
-export const vesselLocationArraySchema = z
-  .array(vesselLocationSchema)
-  .describe("");
+export const vesselLocationArraySchema = z.array(vesselLocationSchema);
 
 // ============================================================================
 // TanStack Query Hooks

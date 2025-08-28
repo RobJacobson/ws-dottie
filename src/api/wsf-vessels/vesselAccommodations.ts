@@ -53,17 +53,15 @@ export const getVesselAccommodations = async (): Promise<
 // GetVesselAccommodationsByIdParams
 // ============================================================================
 
-export const getVesselAccommodationsParamsSchema = z.object({}).describe("");
+export const getVesselAccommodationsParamsSchema = z.object({});
 
 export type GetVesselAccommodationsParams = z.infer<
   typeof getVesselAccommodationsParamsSchema
 >;
 
-export const getVesselAccommodationsByIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(""),
-  })
-  .describe("");
+export const getVesselAccommodationsByIdParamsSchema = z.object({
+  vesselId: zPositiveInteger("vessel"),
+});
 
 export type GetVesselAccommodationsByIdParams = z.infer<
   typeof getVesselAccommodationsByIdParamsSchema
@@ -77,31 +75,28 @@ export type GetVesselAccommodationsByIdParams = z.infer<
 // VesselAccommodation
 // ============================================================================
 
-export const vesselAccommodationSchema = z
-  .object({
-    VesselID: z.number().describe(""),
-    VesselSubjectID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselAbbrev: z.string().describe(""),
-    Class: vesselClassSchema.describe(""),
-    CarDeckRestroom: z.boolean().describe(""),
-    CarDeckShelter: z.boolean().describe(""),
-    Elevator: z.boolean().describe(""),
-    ADAAccessible: z.boolean().describe(""),
-    MainCabinGalley: z.boolean().describe(""),
-    MainCabinRestroom: z.boolean().describe(""),
-    PublicWifi: z.boolean().describe(""),
-    ADAInfo: z.string().describe(""),
-    AdditionalInfo: zNullableString().describe(""),
-  })
-
-  .describe("");
+export const vesselAccommodationSchema = z.object({
+  VesselID: z.number(),
+  VesselSubjectID: z.number(),
+  VesselName: z.string(),
+  VesselAbbrev: z.string(),
+  Class: vesselClassSchema,
+  CarDeckRestroom: z.boolean(),
+  CarDeckShelter: z.boolean(),
+  Elevator: z.boolean(),
+  ADAAccessible: z.boolean(),
+  MainCabinGalley: z.boolean(),
+  MainCabinRestroom: z.boolean(),
+  PublicWifi: z.boolean(),
+  ADAInfo: z.string(),
+  AdditionalInfo: zNullableString(),
+});
 
 export type VesselAccommodation = z.infer<typeof vesselAccommodationSchema>;
 
-export const vesselAccommodationArraySchema = z
-  .array(vesselAccommodationSchema)
-  .describe("");
+export const vesselAccommodationArraySchema = z.array(
+  vesselAccommodationSchema
+);
 
 // ============================================================================
 // TanStack Query Hooks

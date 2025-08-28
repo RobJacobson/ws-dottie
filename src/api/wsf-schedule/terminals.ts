@@ -89,41 +89,33 @@ export const getTerminalsAndMatesByRoute = async (
 // GetTerminalsAndMatesByRouteParams
 // ============================================================================
 
-export const getTerminalsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getTerminalsParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetTerminalsParams = z.infer<typeof getTerminalsParamsSchema>;
 
-export const getTerminalMatesParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    terminalId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getTerminalMatesParamsSchema = z.object({
+  tripDate: z.date(),
+  terminalId: z.number().int().positive(),
+});
 
 export type GetTerminalMatesParams = z.infer<
   typeof getTerminalMatesParamsSchema
 >;
 
-export const getTerminalsAndMatesParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getTerminalsAndMatesParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetTerminalsAndMatesParams = z.infer<
   typeof getTerminalsAndMatesParamsSchema
 >;
 
-export const getTerminalsAndMatesByRouteParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    routeId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getTerminalsAndMatesByRouteParamsSchema = z.object({
+  tripDate: z.date(),
+  routeId: z.number().int().positive(),
+});
 
 export type GetTerminalsAndMatesByRouteParams = z.infer<
   typeof getTerminalsAndMatesByRouteParamsSchema
@@ -140,25 +132,21 @@ export type GetTerminalsAndMatesByRouteParams = z.infer<
 // ScheduleTerminalCombo
 // ============================================================================
 
-export const scheduleTerminalSchema = z
-  .object({
-    TerminalID: z.number().int().positive().describe(""),
-    Description: z.string().describe(""),
-  })
-  .describe("");
+export const scheduleTerminalSchema = z.object({
+  TerminalID: z.number().int().positive(),
+  Description: z.string(),
+});
 
 export const scheduleTerminalsArraySchema = z.array(scheduleTerminalSchema);
 
 export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;
 
-export const scheduleTerminalComboSchema = z
-  .object({
-    DepartingTerminalID: z.number().int().positive().describe(""),
-    DepartingDescription: z.string().describe(""),
-    ArrivingTerminalID: z.number().int().positive().describe(""),
-    ArrivingDescription: z.string().describe(""),
-  })
-  .describe("");
+export const scheduleTerminalComboSchema = z.object({
+  DepartingTerminalID: z.number().int().positive(),
+  DepartingDescription: z.string(),
+  ArrivingTerminalID: z.number().int().positive(),
+  ArrivingDescription: z.string(),
+});
 
 export const scheduleTerminalCombosArraySchema = z.array(
   scheduleTerminalComboSchema

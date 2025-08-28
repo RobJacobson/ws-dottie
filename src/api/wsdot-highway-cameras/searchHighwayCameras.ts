@@ -53,16 +53,15 @@ export const searchHighwayCameras = async (
 
 export const searchHighwayCamerasParamsSchema = z
   .object({
-    StateRoute: z.string().optional().describe(""),
+    StateRoute: z.string().optional(),
 
-    Region: z.string().optional().describe(""),
+    Region: z.string().optional(),
 
-    StartingMilepost: z.number().optional().describe(""),
+    StartingMilepost: z.number().optional(),
 
-    EndingMilepost: z.number().optional().describe(""),
+    EndingMilepost: z.number().optional(),
   })
-  .strict()
-  .describe("");
+  .strict();
 
 export type SearchHighwayCamerasParams = z.infer<
   typeof searchHighwayCamerasParamsSchema
@@ -74,7 +73,7 @@ export type SearchHighwayCamerasParams = z.infer<
 // cameraArraySchema
 // ============================================================================
 
-export const cameraArraySchema = z.array(cameraSchema).describe("");
+export const cameraArraySchema = z.array(cameraSchema);
 
 // ============================================================================
 // TanStack Query Hook

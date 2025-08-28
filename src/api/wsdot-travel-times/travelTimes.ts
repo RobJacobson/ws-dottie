@@ -51,17 +51,15 @@ export const getTravelTimes = async (
 // getTravelTimes (array)
 // ============================================================================
 
-export const getTravelTimeByIdParamsSchema = z
-  .object({
-    travelTimeId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getTravelTimeByIdParamsSchema = z.object({
+  travelTimeId: z.number().int().positive(),
+});
 
 export type GetTravelTimeByIdParams = z.infer<
   typeof getTravelTimeByIdParamsSchema
 >;
 
-export const getTravelTimesParamsSchema = z.object({}).describe("");
+export const getTravelTimesParamsSchema = z.object({});
 
 export type GetTravelTimesParams = z.infer<typeof getTravelTimesParamsSchema>;
 
@@ -72,33 +70,25 @@ export type GetTravelTimesParams = z.infer<typeof getTravelTimesParamsSchema>;
 // travelTimesArray (array wrapper)
 // ============================================================================
 
-export const travelTimeEndpointSchema = z
-  .object({
-    Description: z.string().nullable().describe(""),
-    Direction: z.string().nullable().describe(""),
-    MilePost: z.number().describe(""),
-    RoadName: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+export const travelTimeEndpointSchema = z.object({
+  Description: z.string().nullable(),
+  Direction: z.string().nullable(),
+  MilePost: z.number(),
+  RoadName: z.string().nullable(),
+});
 
-export const travelTimeRouteSchema = z
-  .object({
-    AverageTime: z.number().describe(""),
-    CurrentTime: z.number().describe(""),
-    Description: z.string().nullable().describe(""),
-    Distance: z.number().describe(""),
-    EndPoint: travelTimeEndpointSchema.nullable().describe(""),
-    Name: z.string().nullable().describe(""),
-    StartPoint: travelTimeEndpointSchema.nullable().describe(""),
-    TravelTimeID: z.number().int().positive().describe(""),
-  })
-  
-  .describe("");
+export const travelTimeRouteSchema = z.object({
+  AverageTime: z.number(),
+  CurrentTime: z.number(),
+  Description: z.string().nullable(),
+  Distance: z.number(),
+  EndPoint: travelTimeEndpointSchema.nullable(),
+  Name: z.string().nullable(),
+  StartPoint: travelTimeEndpointSchema.nullable(),
+  TravelTimeID: z.number().int().positive(),
+});
 
-export const travelTimesArraySchema = z
-  .array(travelTimeRouteSchema)
-  .describe("");
+export const travelTimesArraySchema = z.array(travelTimeRouteSchema);
 
 export type TravelTimeEndpoint = z.infer<typeof travelTimeEndpointSchema>;
 

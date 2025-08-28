@@ -36,7 +36,7 @@ export const getActiveSeasons = async (
 // GetActiveSeasonsParams
 // ============================================================================
 
-export const getActiveSeasonsParamsSchema = z.object({}).describe("");
+export const getActiveSeasonsParamsSchema = z.object({});
 
 export type GetActiveSeasonsParams = z.infer<
   typeof getActiveSeasonsParamsSchema
@@ -50,16 +50,14 @@ export type GetActiveSeasonsParams = z.infer<
 // ActiveSeason
 // ============================================================================
 
-export const activeSeasonSchema = z
-  .object({
-    ScheduleID: z.number().int().positive().describe(""),
-    ScheduleName: z.string().describe(""),
-    ScheduleSeason: z.number().int().positive().describe(""),
-    SchedulePDFUrl: z.string().url().describe(""),
-    ScheduleStart: zWsdotDate().describe(""),
-    ScheduleEnd: zWsdotDate().describe(""),
-  })
-  .describe("");
+export const activeSeasonSchema = z.object({
+  ScheduleID: z.number().int().positive(),
+  ScheduleName: z.string(),
+  ScheduleSeason: z.number().int().positive(),
+  SchedulePDFUrl: z.string().url(),
+  ScheduleStart: zWsdotDate(),
+  ScheduleEnd: zWsdotDate(),
+});
 
 export const activeSeasonsArraySchema = z.array(activeSeasonSchema);
 

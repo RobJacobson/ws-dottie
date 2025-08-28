@@ -53,13 +53,11 @@ export const getTerminalLocations = async (
 // GetTerminalLocationsParams
 // ============================================================================
 
-export const getTerminalLocationsByTerminalIdParamsSchema = z
-  .object({
-    terminalId: z.number().int().describe(""),
-  })
-  .describe("");
+export const getTerminalLocationsByTerminalIdParamsSchema = z.object({
+  terminalId: z.number().int(),
+});
 
-export const getTerminalLocationsParamsSchema = z.object({}).describe("");
+export const getTerminalLocationsParamsSchema = z.object({});
 
 export type GetTerminalLocationsByTerminalIdParams = z.infer<
   typeof getTerminalLocationsByTerminalIdParamsSchema
@@ -76,37 +74,31 @@ export type GetTerminalLocationsParams = z.infer<
 // TerminalLocation
 // ============================================================================
 
-export const terminalLocationSchema = z
-  .object({
-    TerminalID: z.number().int().describe(""),
-    TerminalSubjectID: z.number().int().describe(""),
-    RegionID: z.number().int().describe(""),
-    TerminalName: z.string().describe(""),
-    TerminalAbbrev: z.string().describe(""),
-    SortSeq: z.number().int().describe(""),
-    AddressLineOne: z.string().describe(""),
-    AddressLineTwo: z.string().nullable().describe(""),
-    City: z.string().describe(""),
-    State: z.string().describe(""),
-    ZipCode: z.string().describe(""),
-    Country: z.string().describe(""),
-    Latitude: z.number().describe(""),
-    Longitude: z.number().describe(""),
-    Directions: z.string().nullable().describe(""),
-    DispGISZoomLoc: z
-      .array(
-        z
-          .object({
-            Latitude: z.number().describe(""),
-            Longitude: z.number().describe(""),
-            ZoomLevel: z.number().int().min(0).describe(""),
-          })
-          .describe("")
-      )
-      .describe(""),
-    MapLink: z.string().nullable().describe(""),
-  })
-  .describe("");
+export const terminalLocationSchema = z.object({
+  TerminalID: z.number().int(),
+  TerminalSubjectID: z.number().int(),
+  RegionID: z.number().int(),
+  TerminalName: z.string(),
+  TerminalAbbrev: z.string(),
+  SortSeq: z.number().int(),
+  AddressLineOne: z.string(),
+  AddressLineTwo: z.string().nullable(),
+  City: z.string(),
+  State: z.string(),
+  ZipCode: z.string(),
+  Country: z.string(),
+  Latitude: z.number(),
+  Longitude: z.number(),
+  Directions: z.string().nullable(),
+  DispGISZoomLoc: z.array(
+    z.object({
+      Latitude: z.number(),
+      Longitude: z.number(),
+      ZoomLevel: z.number().int().min(0),
+    })
+  ),
+  MapLink: z.string().nullable(),
+});
 
 export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
 

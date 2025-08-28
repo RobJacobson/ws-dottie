@@ -70,34 +70,28 @@ export const getRouteDetails = async (
 // GetRouteDetailsByRouteParams
 // ============================================================================
 
-export const getRouteDetailsByTerminalsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    departingTerminalId: z.number().int().positive().describe(""),
-    arrivingTerminalId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getRouteDetailsByTerminalsParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalId: z.number().int().positive(),
+  arrivingTerminalId: z.number().int().positive(),
+});
 
 export type GetRouteDetailsByTerminalsParams = z.infer<
   typeof getRouteDetailsByTerminalsParamsSchema
 >;
 
-export const getRouteDetailsByRouteParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    routeId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getRouteDetailsByRouteParamsSchema = z.object({
+  tripDate: z.date(),
+  routeId: z.number().int().positive(),
+});
 
 export type GetRouteDetailsByRouteParams = z.infer<
   typeof getRouteDetailsByRouteParamsSchema
 >;
 
-export const getRouteDetailsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getRouteDetailsParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetRouteDetailsParams = z.infer<typeof getRouteDetailsParamsSchema>;
 
@@ -114,63 +108,55 @@ export type GetRouteDetailsParams = z.infer<typeof getRouteDetailsParamsSchema>;
 // RouteDetailsByRouteResponse
 // ============================================================================
 
-export const serviceDisruptionSchema = z
-  .object({
-    BulletinID: z.number(),
-    BulletinFlag: z.boolean(),
-    CommunicationFlag: z.boolean(),
-    PublishDate: zWsdotDate(),
-    AlertDescription: z.string(),
-    DisruptionDescription: z.string().nullable(),
-    AlertFullTitle: z.string(),
-    AlertFullText: z.string(),
-    IVRText: z.string().nullable(),
-  })
-  .describe("");
+export const serviceDisruptionSchema = z.object({
+  BulletinID: z.number(),
+  BulletinFlag: z.boolean(),
+  CommunicationFlag: z.boolean(),
+  PublishDate: zWsdotDate(),
+  AlertDescription: z.string(),
+  DisruptionDescription: z.string().nullable(),
+  AlertFullTitle: z.string(),
+  AlertFullText: z.string(),
+  IVRText: z.string().nullable(),
+});
 
-export const annotationSchema = z
-  .object({
-    AnnotationID: z.number(),
-    AnnotationText: z.string(),
-    AnnotationType: z.string(),
-  })
-  .describe("");
+export const annotationSchema = z.object({
+  AnnotationID: z.number(),
+  AnnotationText: z.string(),
+  AnnotationType: z.string(),
+});
 
-export const routeDetailsSchema = z
-  .object({
-    RouteID: z.number(),
-    RouteAbbrev: z.string(),
-    Description: z.string(),
-    RegionID: z.number(),
-    VesselWatchID: z.number(),
-    ReservationFlag: z.boolean(),
-    InternationalFlag: z.boolean(),
-    PassengerOnlyFlag: z.boolean(),
-    CrossingTime: z.number().nullable(),
-    AdaNotes: z.string().nullable(),
-    GeneralRouteNotes: z.string(),
-    SeasonalRouteNotes: z.string(),
-    ServiceDisruptions: z.array(serviceDisruptionSchema),
-  })
-  .describe("");
+export const routeDetailsSchema = z.object({
+  RouteID: z.number(),
+  RouteAbbrev: z.string(),
+  Description: z.string(),
+  RegionID: z.number(),
+  VesselWatchID: z.number(),
+  ReservationFlag: z.boolean(),
+  InternationalFlag: z.boolean(),
+  PassengerOnlyFlag: z.boolean(),
+  CrossingTime: z.number().nullable(),
+  AdaNotes: z.string().nullable(),
+  GeneralRouteNotes: z.string(),
+  SeasonalRouteNotes: z.string(),
+  ServiceDisruptions: z.array(serviceDisruptionSchema),
+});
 
 export const routeDetailsArraySchema = z.array(routeDetailsSchema);
 
 export type RouteDetails = z.infer<typeof routeDetailsSchema>;
 
-export const routeDetailsByRouteServiceDisruptionSchema = z
-  .object({
-    BulletinID: z.number(),
-    BulletinFlag: z.boolean(),
-    CommunicationFlag: z.boolean(),
-    PublishDate: zWsdotDate(),
-    AlertDescription: z.string(),
-    DisruptionDescription: z.string().nullable(),
-    AlertFullTitle: z.string(),
-    AlertFullText: z.string(),
-    IVRText: z.string().nullable(),
-  })
-  .describe("");
+export const routeDetailsByRouteServiceDisruptionSchema = z.object({
+  BulletinID: z.number(),
+  BulletinFlag: z.boolean(),
+  CommunicationFlag: z.boolean(),
+  PublishDate: zWsdotDate(),
+  AlertDescription: z.string(),
+  DisruptionDescription: z.string().nullable(),
+  AlertFullTitle: z.string(),
+  AlertFullText: z.string(),
+  IVRText: z.string().nullable(),
+});
 
 export const routeDetailsByRouteResponseSchema = z.object({
   RouteID: z.number(),

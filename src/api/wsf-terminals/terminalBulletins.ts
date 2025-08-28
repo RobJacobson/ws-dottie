@@ -54,13 +54,11 @@ export const getTerminalBulletins = async (
 // GetTerminalBulletinsParams
 // ============================================================================
 
-export const getTerminalBulletinsByTerminalIdParamsSchema = z
-  .object({
-    terminalId: z.number().int().describe(""),
-  })
-  .describe("");
+export const getTerminalBulletinsByTerminalIdParamsSchema = z.object({
+  terminalId: z.number().int(),
+});
 
-export const getTerminalBulletinsParamsSchema = z.object({}).describe("");
+export const getTerminalBulletinsParamsSchema = z.object({});
 
 export type GetTerminalBulletinsByTerminalIdParams = z.infer<
   typeof getTerminalBulletinsByTerminalIdParamsSchema
@@ -79,27 +77,23 @@ export type GetTerminalBulletinsParams = z.infer<
 // TerminalBulletinItem
 // ============================================================================
 
-export const terminalBulletinItemSchema = z
-  .object({
-    BulletinTitle: z.string().describe(""),
-    BulletinText: z.string().describe(""),
-    BulletinSortSeq: z.number().int().describe(""),
-    BulletinLastUpdated: zWsdotDate().optional().describe(""),
-    BulletinLastUpdatedSortable: z.string().optional().describe(""),
-  })
-  .describe("");
+export const terminalBulletinItemSchema = z.object({
+  BulletinTitle: z.string(),
+  BulletinText: z.string(),
+  BulletinSortSeq: z.number().int(),
+  BulletinLastUpdated: zWsdotDate().optional(),
+  BulletinLastUpdatedSortable: z.string().optional(),
+});
 
-export const terminalBulletinSchema = z
-  .object({
-    TerminalID: z.number().int().describe(""),
-    TerminalSubjectID: z.number().int().describe(""),
-    RegionID: z.number().int().describe(""),
-    TerminalName: z.string().describe(""),
-    TerminalAbbrev: z.string().describe(""),
-    SortSeq: z.number().int().describe(""),
-    Bulletins: z.array(terminalBulletinItemSchema).describe(""),
-  })
-  .describe("");
+export const terminalBulletinSchema = z.object({
+  TerminalID: z.number().int(),
+  TerminalSubjectID: z.number().int(),
+  RegionID: z.number().int(),
+  TerminalName: z.string(),
+  TerminalAbbrev: z.string(),
+  SortSeq: z.number().int(),
+  Bulletins: z.array(terminalBulletinItemSchema),
+});
 
 export type TerminalBulletin = z.infer<typeof terminalBulletinSchema>;
 

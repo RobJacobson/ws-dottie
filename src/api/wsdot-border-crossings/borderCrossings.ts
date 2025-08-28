@@ -132,7 +132,7 @@ export const getBorderCrossings = async (
 /**
  * Parameters for retrieving border crossing data (no parameters required)
  */
-export const getBorderCrossingsParamsSchema = z.object({}).describe("");
+export const getBorderCrossingsParamsSchema = z.object({});
 
 export type GetBorderCrossingsParams = z.infer<
   typeof getBorderCrossingsParamsSchema
@@ -150,21 +150,20 @@ export type GetBorderCrossingsParams = z.infer<
  */
 export const borderCrossingLocationSchema = z
   .object({
-    Description: z.string().describe(""),
+    Description: z.string(),
 
-    Direction: zNullableString().describe(""),
+    Direction: zNullableString(),
 
-    Latitude: zLatitude().describe(""),
+    Latitude: zLatitude(),
 
-    Longitude: zLongitude().describe(""),
+    Longitude: zLongitude(),
 
-    MilePost: z.number().describe(""),
+    MilePost: z.number(),
 
-    RoadName: z.string().describe(""),
+    RoadName: z.string(),
   })
-  
-  .nullable()
-  .describe("");
+
+  .nullable();
 
 /**
  * BorderCrossingLocation type - represents geographic location and road information for a border crossing
@@ -173,20 +172,15 @@ export type BorderCrossingLocation = z.infer<
   typeof borderCrossingLocationSchema
 >;
 
-export const borderCrossingDataSchema = z
-  .object({
-    BorderCrossingLocation: borderCrossingLocationSchema
-      .nullable()
-      .describe(""),
+export const borderCrossingDataSchema = z.object({
+  BorderCrossingLocation: borderCrossingLocationSchema.nullable(),
 
-    CrossingName: z.string().nullable().describe(""),
+  CrossingName: z.string().nullable(),
 
-    Time: zWsdotDate().describe(""),
+  Time: zWsdotDate(),
 
-    WaitTime: z.number().describe(""),
-  })
-  
-  .describe("");
+  WaitTime: z.number(),
+});
 
 /**
  * BorderCrossingData type - represents real-time wait time and location data for a border crossing
@@ -196,9 +190,7 @@ export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
 /**
  * Array of border crossing data objects - wrapper around borderCrossingDataSchema
  */
-export const borderCrossingDataArraySchema = z
-  .array(borderCrossingDataSchema)
-  .describe("");
+export const borderCrossingDataArraySchema = z.array(borderCrossingDataSchema);
 
 // ============================================================================
 // TanStack Query Hook

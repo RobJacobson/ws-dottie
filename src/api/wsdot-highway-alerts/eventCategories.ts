@@ -38,7 +38,7 @@ export const getEventCategories = async (
 // GetEventCategoriesParams
 // ============================================================================
 
-export const getEventCategoriesParamsSchema = z.object({}).describe("");
+export const getEventCategoriesParamsSchema = z.object({});
 
 export type GetEventCategoriesParams = z.infer<
   typeof getEventCategoriesParamsSchema
@@ -51,7 +51,7 @@ export type GetEventCategoriesParams = z.infer<
 // EventCategories
 // ============================================================================
 
-export const eventCategoriesArraySchema = z.array(z.string()).describe("");
+export const eventCategoriesArraySchema = z.array(z.string());
 
 export type EventCategories = z.infer<typeof eventCategoriesArraySchema>;
 

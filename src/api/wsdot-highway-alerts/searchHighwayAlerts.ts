@@ -54,21 +54,19 @@ export const searchHighwayAlerts = async (
 // SearchHighwayAlertsParams
 // ============================================================================
 
-export const searchHighwayAlertsParamsSchema = z
-  .object({
-    StateRoute: z.string().optional().describe(""),
+export const searchHighwayAlertsParamsSchema = z.object({
+  StateRoute: z.string().optional(),
 
-    Region: z.string().optional().describe(""),
+  Region: z.string().optional(),
 
-    SearchTimeStart: z.date().optional().describe(""),
+  SearchTimeStart: z.date().optional(),
 
-    SearchTimeEnd: z.date().optional().describe(""),
+  SearchTimeEnd: z.date().optional(),
 
-    StartingMilepost: z.number().optional().describe(""),
+  StartingMilepost: z.number().optional(),
 
-    EndingMilepost: z.number().optional().describe(""),
-  })
-  .describe("");
+  EndingMilepost: z.number().optional(),
+});
 
 export type SearchHighwayAlertsParams = z.infer<
   typeof searchHighwayAlertsParamsSchema

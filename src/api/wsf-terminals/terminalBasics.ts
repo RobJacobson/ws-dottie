@@ -53,13 +53,11 @@ export const getTerminalBasics = async (
 // GetTerminalBasicsParams
 // ============================================================================
 
-export const getTerminalBasicsByTerminalIdParamsSchema = z
-  .object({
-    terminalId: z.number().int().describe(""),
-  })
-  .describe("");
+export const getTerminalBasicsByTerminalIdParamsSchema = z.object({
+  terminalId: z.number().int(),
+});
 
-export const getTerminalBasicsParamsSchema = z.object({}).describe("");
+export const getTerminalBasicsParamsSchema = z.object({});
 
 export type GetTerminalBasicsByTerminalIdParams = z.infer<
   typeof getTerminalBasicsByTerminalIdParamsSchema
@@ -76,21 +74,19 @@ export type GetTerminalBasicsParams = z.infer<
 // TerminalBasics
 // ============================================================================
 
-export const terminalBasicsSchema = z
-  .object({
-    TerminalID: z.number().describe(""),
-    TerminalSubjectID: z.number().describe(""),
-    RegionID: z.number().describe(""),
-    TerminalName: z.string().describe(""),
-    TerminalAbbrev: z.string().describe(""),
-    SortSeq: z.number().describe(""),
-    OverheadPassengerLoading: z.boolean().describe(""),
-    Elevator: z.boolean().describe(""),
-    WaitingRoom: z.boolean().describe(""),
-    FoodService: z.boolean().describe(""),
-    Restroom: z.boolean().describe(""),
-  })
-  .describe("");
+export const terminalBasicsSchema = z.object({
+  TerminalID: z.number(),
+  TerminalSubjectID: z.number(),
+  RegionID: z.number(),
+  TerminalName: z.string(),
+  TerminalAbbrev: z.string(),
+  SortSeq: z.number(),
+  OverheadPassengerLoading: z.boolean(),
+  Elevator: z.boolean(),
+  WaitingRoom: z.boolean(),
+  FoodService: z.boolean(),
+  Restroom: z.boolean(),
+});
 
 export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
 

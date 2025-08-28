@@ -58,17 +58,15 @@ export const getMountainPassConditions = async (
 // Input Schemas & Types (singular first, then array)
 // ============================================================================
 
-export const getMountainPassConditionByIdParamsSchema = z
-  .object({
-    passConditionId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getMountainPassConditionByIdParamsSchema = z.object({
+  passConditionId: z.number().int().positive(),
+});
 
 export type GetMountainPassConditionByIdParams = z.infer<
   typeof getMountainPassConditionByIdParamsSchema
 >;
 
-export const getMountainPassConditionsParamsSchema = z.object({}).describe("");
+export const getMountainPassConditionsParamsSchema = z.object({});
 
 export type GetMountainPassConditionsParams = z.infer<
   typeof getMountainPassConditionsParamsSchema
@@ -78,47 +76,41 @@ export type GetMountainPassConditionsParams = z.infer<
 // Output Schemas & Types (shared schemas first, then array wrappers)
 // ============================================================================
 
-export const travelRestrictionSchema = z
-  .object({
-    TravelDirection: z.string().nullable().describe(""),
+export const travelRestrictionSchema = z.object({
+  TravelDirection: z.string().nullable(),
 
-    RestrictionText: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+  RestrictionText: z.string().nullable(),
+});
 
-export const mountainPassConditionSchema = z
-  .object({
-    DateUpdated: zWsdotDate().describe(""),
+export const mountainPassConditionSchema = z.object({
+  DateUpdated: zWsdotDate(),
 
-    ElevationInFeet: z.number().describe(""),
+  ElevationInFeet: z.number(),
 
-    Latitude: zLatitude().describe(""),
+  Latitude: zLatitude(),
 
-    Longitude: zLongitude().describe(""),
+  Longitude: zLongitude(),
 
-    MountainPassId: z.number().int().positive().describe(""),
+  MountainPassId: z.number().int().positive(),
 
-    MountainPassName: z.string().nullable().describe(""),
+  MountainPassName: z.string().nullable(),
 
-    RestrictionOne: travelRestrictionSchema.nullable().describe(""),
+  RestrictionOne: travelRestrictionSchema.nullable(),
 
-    RestrictionTwo: travelRestrictionSchema.nullable().describe(""),
+  RestrictionTwo: travelRestrictionSchema.nullable(),
 
-    RoadCondition: z.string().nullable().describe(""),
+  RoadCondition: z.string().nullable(),
 
-    TemperatureInFahrenheit: zNullableNumber().describe(""),
+  TemperatureInFahrenheit: zNullableNumber(),
 
-    TravelAdvisoryActive: z.boolean().describe(""),
+  TravelAdvisoryActive: z.boolean(),
 
-    WeatherCondition: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+  WeatherCondition: z.string().nullable(),
+});
 
-export const mountainPassConditionArraySchema = z
-  .array(mountainPassConditionSchema)
-  .describe("");
+export const mountainPassConditionArraySchema = z.array(
+  mountainPassConditionSchema
+);
 
 export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 

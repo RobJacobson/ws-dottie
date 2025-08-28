@@ -35,7 +35,7 @@ export const getWeatherStations = async (
 // GetWeatherStationsParams
 // ============================================================================
 
-export const getWeatherStationsParamsSchema = z.object({}).describe("");
+export const getWeatherStationsParamsSchema = z.object({});
 
 export type GetWeatherStationsParams = z.infer<
   typeof getWeatherStationsParamsSchema
@@ -48,22 +48,17 @@ export type GetWeatherStationsParams = z.infer<
 // WeatherStationData
 // ============================================================================
 
-export const weatherStationSchema = z
-  .object({
-    Latitude: z.number().describe(""),
+export const weatherStationSchema = z.object({
+  Latitude: z.number(),
 
-    Longitude: z.number().describe(""),
+  Longitude: z.number(),
 
-    StationCode: z.number().int().describe(""),
+  StationCode: z.number().int(),
 
-    StationName: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+  StationName: z.string().nullable(),
+});
 
-export const weatherStationArraySchema = z
-  .array(weatherStationSchema)
-  .describe("");
+export const weatherStationArraySchema = z.array(weatherStationSchema);
 
 export type WeatherStation = z.infer<typeof weatherStationSchema>;
 

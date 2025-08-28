@@ -188,9 +188,7 @@ export const getCommercialVehicleRestrictions = async (
 /**
  * Parameters for retrieving commercial vehicle restrictions with unique identifiers (no parameters required)
  */
-export const getCommercialVehicleRestrictionsWithIdParamsSchema = z
-  .object({})
-  .describe("");
+export const getCommercialVehicleRestrictionsWithIdParamsSchema = z.object({});
 
 export type GetCommercialVehicleRestrictionsWithIdParams = z.infer<
   typeof getCommercialVehicleRestrictionsWithIdParamsSchema
@@ -199,9 +197,7 @@ export type GetCommercialVehicleRestrictionsWithIdParams = z.infer<
 /**
  * Parameters for retrieving commercial vehicle restrictions (no parameters required)
  */
-export const getCommercialVehicleRestrictionsParamsSchema = z
-  .object({})
-  .describe("");
+export const getCommercialVehicleRestrictionsParamsSchema = z.object({});
 
 export type GetCommercialVehicleRestrictionsParams = z.infer<
   typeof getCommercialVehicleRestrictionsParamsSchema
@@ -214,94 +210,84 @@ export type GetCommercialVehicleRestrictionsParams = z.infer<
 /**
  * Roadway location schema for commercial vehicle restrictions - includes GPS coordinates and milepost information
  */
-export const commercialVehicleRestrictionRoadwayLocationSchema = z
-  .object({
-    Description: zNullableString().describe(""),
+export const commercialVehicleRestrictionRoadwayLocationSchema = z.object({
+  Description: zNullableString(),
 
-    Direction: zNullableString().describe(""),
+  Direction: zNullableString(),
 
-    Latitude: zLatitude().describe(""),
+  Latitude: zLatitude(),
 
-    Longitude: zLongitude().describe(""),
+  Longitude: zLongitude(),
 
-    MilePost: z.number().describe(""),
+  MilePost: z.number(),
 
-    RoadName: z.string().describe(""),
-  })
-  
-  .describe("");
+  RoadName: z.string(),
+});
 
 /**
  * Commercial vehicle restriction schema - includes weight limits, bridge information, and location details
  */
-export const commercialVehicleRestrictionSchema = z
-  .object({
-    BLMaxAxle: zNullableNumber().describe(""),
+export const commercialVehicleRestrictionSchema = z.object({
+  BLMaxAxle: zNullableNumber(),
 
-    BridgeName: z.string().describe(""),
+  BridgeName: z.string(),
 
-    BridgeNumber: z.string().describe(""),
+  BridgeNumber: z.string(),
 
-    CL8MaxAxle: zNullableNumber().describe(""),
+  CL8MaxAxle: zNullableNumber(),
 
-    DateEffective: zWsdotDate().describe(""),
+  DateEffective: zWsdotDate(),
 
-    DateExpires: zWsdotDate().describe(""),
+  DateExpires: zWsdotDate(),
 
-    DatePosted: zWsdotDate().describe(""),
+  DatePosted: zWsdotDate(),
 
-    EndRoadwayLocation:
-      commercialVehicleRestrictionRoadwayLocationSchema.describe(""),
+  EndRoadwayLocation: commercialVehicleRestrictionRoadwayLocationSchema,
 
-    IsDetourAvailable: z.boolean().describe(""),
+  IsDetourAvailable: z.boolean(),
 
-    IsExceptionsAllowed: z.boolean().describe(""),
+  IsExceptionsAllowed: z.boolean(),
 
-    IsPermanentRestriction: z.boolean().describe(""),
+  IsPermanentRestriction: z.boolean(),
 
-    IsWarning: z.boolean().describe(""),
+  IsWarning: z.boolean(),
 
-    LocationDescription: z.string().describe(""),
+  LocationDescription: z.string(),
 
-    LocationName: z.string().describe(""),
+  LocationName: z.string(),
 
-    RestrictionComment: z.string().describe(""),
+  RestrictionComment: z.string(),
 
-    RestrictionType: z.number().describe(""),
+  RestrictionType: z.number(),
 
-    State: z.string().describe(""),
+  State: z.string(),
 
-    StateRouteID: z.string().describe(""),
+  StateRouteID: z.string(),
 
-    VehicleType: z.string().describe(""),
-  })
-  
-  .describe("");
+  VehicleType: z.string(),
+});
 
 /**
  * Commercial vehicle restriction schema with unique identifier - extends base restriction schema
  */
 export const commercialVehicleRestrictionWithIdSchema =
-  commercialVehicleRestrictionSchema
-    .extend({
-      UniqueID: z.string().describe(""),
-    })
-    
-    .describe("");
+  commercialVehicleRestrictionSchema.extend({
+    UniqueID: z.string(),
+  });
 
 /**
  * Array of commercial vehicle restriction objects - wrapper around commercialVehicleRestrictionSchema
  */
-export const commercialVehicleRestrictionArraySchema = z
-  .array(commercialVehicleRestrictionSchema)
-  .describe("");
+export const commercialVehicleRestrictionArraySchema = z.array(
+  commercialVehicleRestrictionSchema
+);
 
 /**
  * Array of commercial vehicle restriction objects with unique IDs - wrapper around commercialVehicleRestrictionWithIdSchema
  */
-export const commercialVehicleRestrictionWithIdArraySchema = z
-  .array(commercialVehicleRestrictionWithIdSchema)
-  .describe("");
+export const commercialVehicleRestrictionWithIdArraySchema = z.array(
+  commercialVehicleRestrictionWithIdSchema
+);
 
 /**
  * CommercialVehicleRestrictionRoadwayLocation type - represents roadway location data for restrictions

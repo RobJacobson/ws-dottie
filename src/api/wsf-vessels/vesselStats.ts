@@ -53,15 +53,13 @@ export const getVesselStats = async (): Promise<VesselStats[]> => {
 // GetVesselStatsByIdParams
 // ============================================================================
 
-export const getVesselStatsParamsSchema = z.object({}).describe("");
+export const getVesselStatsParamsSchema = z.object({});
 
 export type GetVesselStatsParams = z.infer<typeof getVesselStatsParamsSchema>;
 
-export const getVesselStatsByIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(""),
-  })
-  .describe("");
+export const getVesselStatsByIdParamsSchema = z.object({
+  vesselId: zPositiveInteger("vessel"),
+});
 
 export type GetVesselStatsByIdParams = z.infer<
   typeof getVesselStatsByIdParamsSchema
@@ -75,43 +73,40 @@ export type GetVesselStatsByIdParams = z.infer<
 // VesselStats
 // ============================================================================
 
-export const vesselStatsSchema = z
-  .object({
-    VesselID: z.number().describe(""),
-    VesselSubjectID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselAbbrev: z.string().describe(""),
-    Class: vesselClassSchema.describe(""),
-    VesselNameDesc: z.string().describe(""),
-    VesselHistory: zNullableString().describe(""),
-    Beam: z.string().describe(""),
-    CityBuilt: z.string().describe(""),
-    SpeedInKnots: z.number().describe(""),
-    Draft: z.string().describe(""),
-    EngineCount: z.number().describe(""),
-    Horsepower: z.number().describe(""),
-    Length: z.string().describe(""),
-    MaxPassengerCount: z.number().describe(""),
-    PassengerOnly: z.boolean().describe(""),
-    FastFerry: z.boolean().describe(""),
-    PropulsionInfo: z.string().describe(""),
-    TallDeckClearance: z.number().describe(""),
-    RegDeckSpace: z.number().describe(""),
-    TallDeckSpace: z.number().describe(""),
-    Tonnage: z.number().describe(""),
-    Displacement: z.number().describe(""),
-    YearBuilt: z.number().describe(""),
-    YearRebuilt: zNullableNumber().describe(""),
-    VesselDrawingImg: zNullableString().describe(""),
-    SolasCertified: z.boolean().describe(""),
-    MaxPassengerCountForInternational: zNullableNumber().describe(""),
-  })
-
-  .describe("");
+export const vesselStatsSchema = z.object({
+  VesselID: z.number(),
+  VesselSubjectID: z.number(),
+  VesselName: z.string(),
+  VesselAbbrev: z.string(),
+  Class: vesselClassSchema,
+  VesselNameDesc: z.string(),
+  VesselHistory: zNullableString(),
+  Beam: z.string(),
+  CityBuilt: z.string(),
+  SpeedInKnots: z.number(),
+  Draft: z.string(),
+  EngineCount: z.number(),
+  Horsepower: z.number(),
+  Length: z.string(),
+  MaxPassengerCount: z.number(),
+  PassengerOnly: z.boolean(),
+  FastFerry: z.boolean(),
+  PropulsionInfo: z.string(),
+  TallDeckClearance: z.number(),
+  RegDeckSpace: z.number(),
+  TallDeckSpace: z.number(),
+  Tonnage: z.number(),
+  Displacement: z.number(),
+  YearBuilt: z.number(),
+  YearRebuilt: zNullableNumber(),
+  VesselDrawingImg: zNullableString(),
+  SolasCertified: z.boolean(),
+  MaxPassengerCountForInternational: zNullableNumber(),
+});
 
 export type VesselStats = z.infer<typeof vesselStatsSchema>;
 
-export const vesselStatsArraySchema = z.array(vesselStatsSchema).describe("");
+export const vesselStatsArraySchema = z.array(vesselStatsSchema);
 
 // ============================================================================
 // TanStack Query Hooks

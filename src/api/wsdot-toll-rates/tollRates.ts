@@ -28,7 +28,7 @@ export const getTollRates = async (): Promise<TollRate[]> => {
 // GetTollRatesParams
 // ============================================================================
 
-export const getTollRatesParamsSchema = z.object({}).describe("");
+export const getTollRatesParamsSchema = z.object({});
 
 export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
 
@@ -39,21 +39,18 @@ export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
 // TollRate
 // ============================================================================
 
-export const tollRateSchema = z
-  .object({
-    CurrentToll: z.number().describe(""),
-    EndLocationName: z.string().nullable().describe(""),
-    EndMilepost: z.number().describe(""),
-    StartLocationName: z.string().nullable().describe(""),
-    StartMilepost: z.number().describe(""),
-    StateRoute: z.string().nullable().describe(""),
-    TravelDirection: z.string().nullable().describe(""),
-    TripName: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+export const tollRateSchema = z.object({
+  CurrentToll: z.number(),
+  EndLocationName: z.string().nullable(),
+  EndMilepost: z.number(),
+  StartLocationName: z.string().nullable(),
+  StartMilepost: z.number(),
+  StateRoute: z.string().nullable(),
+  TravelDirection: z.string().nullable(),
+  TripName: z.string().nullable(),
+});
 
-export const tollRateArraySchema = z.array(tollRateSchema).describe("");
+export const tollRateArraySchema = z.array(tollRateSchema);
 
 export type TollRate = z.infer<typeof tollRateSchema>;
 

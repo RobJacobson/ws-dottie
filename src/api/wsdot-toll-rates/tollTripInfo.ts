@@ -30,7 +30,7 @@ export const getTollTripInfo = async (): Promise<TollTripInfo[]> => {
 // GetTollTripInfoParams
 // ============================================================================
 
-export const getTollTripInfoParamsSchema = z.object({}).describe("");
+export const getTollTripInfoParamsSchema = z.object({});
 
 export type GetTollTripInfoParams = z.infer<typeof getTollTripInfoParamsSchema>;
 
@@ -41,21 +41,18 @@ export type GetTollTripInfoParams = z.infer<typeof getTollTripInfoParamsSchema>;
 // TollTripInfo
 // ============================================================================
 
-export const tollTripInfoSchema = z
-  .object({
-    EndLocationName: z.string().nullable().describe(""),
-    EndMilepost: z.number().describe(""),
-    Geometry: z.string().describe(""),
-    ModifiedDate: zWsdotDate().nullable().describe(""),
-    StartLocationName: z.string().nullable().describe(""),
-    StartMilepost: z.number().describe(""),
-    TravelDirection: z.string().nullable().describe(""),
-    TripName: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+export const tollTripInfoSchema = z.object({
+  EndLocationName: z.string().nullable(),
+  EndMilepost: z.number(),
+  Geometry: z.string(),
+  ModifiedDate: zWsdotDate().nullable(),
+  StartLocationName: z.string().nullable(),
+  StartMilepost: z.number(),
+  TravelDirection: z.string().nullable(),
+  TripName: z.string().nullable(),
+});
 
-export const tollTripInfoArraySchema = z.array(tollTripInfoSchema).describe("");
+export const tollTripInfoArraySchema = z.array(tollTripInfoSchema);
 
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 

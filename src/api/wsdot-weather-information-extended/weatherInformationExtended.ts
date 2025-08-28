@@ -40,9 +40,7 @@ export const getWeatherInformationExtended = async (
 // GetWeatherInformationExtendedParams
 // ============================================================================
 
-export const getWeatherInformationExtendedParamsSchema = z
-  .object({})
-  .describe("");
+export const getWeatherInformationExtendedParamsSchema = z.object({});
 
 export type GetWeatherInformationExtendedParams = z.infer<
   typeof getWeatherInformationExtendedParamsSchema
@@ -55,90 +53,73 @@ export type GetWeatherInformationExtendedParams = z.infer<
 // WeatherReading
 // ============================================================================
 
-export const surfaceMeasurementSchema = z
-  .object({
-    SensorId: z.number().describe(""),
+export const surfaceMeasurementSchema = z.object({
+  SensorId: z.number(),
 
-    SurfaceTemperature: zNullableNumber().describe(""),
+  SurfaceTemperature: zNullableNumber(),
 
-    RoadFreezingTemperature: zNullableNumber().describe(""),
+  RoadFreezingTemperature: zNullableNumber(),
 
-    RoadSurfaceCondition: zNullableNumber().describe(""),
-  })
-  
-  .describe("");
+  RoadSurfaceCondition: zNullableNumber(),
+});
 
-export const subSurfaceMeasurementSchema = z
-  .object({
-    SensorId: z.number().describe(""),
+export const subSurfaceMeasurementSchema = z.object({
+  SensorId: z.number(),
 
-    SubSurfaceTemperature: zNullableNumber().describe(""),
-  })
-  
-  .describe("");
+  SubSurfaceTemperature: zNullableNumber(),
+});
 
-export const weatherReadingSchema = z
-  .object({
-    StationId: z.string().describe(""),
+export const weatherReadingSchema = z.object({
+  StationId: z.string(),
 
-    StationName: z.string().describe(""),
+  StationName: z.string(),
 
-    Latitude: zLatitude().describe(""),
+  Latitude: zLatitude(),
 
-    Longitude: zLongitude().describe(""),
+  Longitude: zLongitude(),
 
-    Elevation: z.number().describe(""),
+  Elevation: z.number(),
 
-    ReadingTime: zWsdotDate().nullable().describe(""),
+  ReadingTime: zWsdotDate().nullable(),
 
-    AirTemperature: zNullableNumber().describe(""),
+  AirTemperature: zNullableNumber(),
 
-    RelativeHumidty: zNullableNumber().describe(""),
+  RelativeHumidty: zNullableNumber(),
 
-    AverageWindSpeed: zNullableNumber().describe(""),
+  AverageWindSpeed: zNullableNumber(),
 
-    AverageWindDirection: zNullableNumber().describe(""),
+  AverageWindDirection: zNullableNumber(),
 
-    WindGust: zNullableNumber().describe(""),
+  WindGust: zNullableNumber(),
 
-    Visibility: zNullableNumber().describe(""),
+  Visibility: zNullableNumber(),
 
-    PrecipitationIntensity: zNullableNumber().describe(""),
+  PrecipitationIntensity: zNullableNumber(),
 
-    PrecipitationType: zNullableNumber().describe(""),
+  PrecipitationType: zNullableNumber(),
 
-    PrecipitationPast1Hour: zNullableNumber().describe(""),
+  PrecipitationPast1Hour: zNullableNumber(),
 
-    PrecipitationPast3Hours: zNullableNumber().describe(""),
+  PrecipitationPast3Hours: zNullableNumber(),
 
-    PrecipitationPast6Hours: zNullableNumber().describe(""),
+  PrecipitationPast6Hours: zNullableNumber(),
 
-    PrecipitationPast12Hours: zNullableNumber().describe(""),
+  PrecipitationPast12Hours: zNullableNumber(),
 
-    PrecipitationPast24Hours: zNullableNumber().describe(""),
+  PrecipitationPast24Hours: zNullableNumber(),
 
-    PrecipitationAccumulation: zNullableNumber().describe(""),
+  PrecipitationAccumulation: zNullableNumber(),
 
-    BarometricPressure: zNullableNumber().describe(""),
+  BarometricPressure: zNullableNumber(),
 
-    SnowDepth: zNullableNumber().describe(""),
+  SnowDepth: zNullableNumber(),
 
-    SurfaceMeasurements: z
-      .array(surfaceMeasurementSchema)
-      .nullable()
-      .describe(""),
+  SurfaceMeasurements: z.array(surfaceMeasurementSchema).nullable(),
 
-    SubSurfaceMeasurements: z
-      .array(subSurfaceMeasurementSchema)
-      .nullable()
-      .describe(""),
-  })
-  
-  .describe("");
+  SubSurfaceMeasurements: z.array(subSurfaceMeasurementSchema).nullable(),
+});
 
-export const weatherReadingArraySchema = z
-  .array(weatherReadingSchema)
-  .describe("");
+export const weatherReadingArraySchema = z.array(weatherReadingSchema);
 
 export type SurfaceMeasurement = z.infer<typeof surfaceMeasurementSchema>;
 

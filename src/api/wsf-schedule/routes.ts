@@ -67,31 +67,25 @@ export const getRoutesWithDisruptions = async (
 // GetRoutesParams
 // ============================================================================
 
-export const getRoutesByTerminalsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    departingTerminalId: z.number().int().positive().describe(""),
-    arrivingTerminalId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getRoutesByTerminalsParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalId: z.number().int().positive(),
+  arrivingTerminalId: z.number().int().positive(),
+});
 
 export type GetRoutesByTerminalsParams = z.infer<
   typeof getRoutesByTerminalsParamsSchema
 >;
 
-export const getRoutesParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getRoutesParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetRoutesParams = z.infer<typeof getRoutesParamsSchema>;
 
-export const getRoutesWithDisruptionsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getRoutesWithDisruptionsParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetRoutesWithDisruptionsParams = z.infer<
   typeof getRoutesWithDisruptionsParamsSchema
@@ -105,32 +99,25 @@ export type GetRoutesWithDisruptionsParams = z.infer<
 // Route
 // ============================================================================
 
-export const routeSchema = z
-  .object({
-    RouteID: z.number().describe(""),
-    RouteAbbrev: z.string().describe(""),
-    Description: z.string().describe(""),
-    RegionID: z.number().describe(""),
-    ServiceDisruptions: z
-      .array(serviceDisruptionSchema)
-      .optional()
-      .describe(""),
-  })
-  .describe("");
+export const routeSchema = z.object({
+  RouteID: z.number(),
+  RouteAbbrev: z.string(),
+  Description: z.string(),
+  RegionID: z.number(),
+  ServiceDisruptions: z.array(serviceDisruptionSchema).optional(),
+});
 
 export const routesArraySchema = z.array(routeSchema);
 
 export type Route = z.infer<typeof routeSchema>;
 
-export const routeWithDisruptionsSchema = z
-  .object({
-    RouteID: z.number().describe(""),
-    RouteAbbrev: z.string().describe(""),
-    Description: z.string().describe(""),
-    RegionID: z.number().describe(""),
-    ServiceDisruptions: z.array(serviceDisruptionSchema).describe(""),
-  })
-  .describe("");
+export const routeWithDisruptionsSchema = z.object({
+  RouteID: z.number(),
+  RouteAbbrev: z.string(),
+  Description: z.string(),
+  RegionID: z.number(),
+  ServiceDisruptions: z.array(serviceDisruptionSchema),
+});
 
 export const routesWithDisruptionsArraySchema = z.array(
   routeWithDisruptionsSchema

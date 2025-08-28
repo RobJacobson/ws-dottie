@@ -57,7 +57,7 @@ export const getWeatherInformationByStationId = async (
 // GetWeatherInformationParams
 // ============================================================================
 
-export const getWeatherInformationParamsSchema = z.object({}).describe("");
+export const getWeatherInformationParamsSchema = z.object({});
 
 export type GetWeatherInformationParams = z.infer<
   typeof getWeatherInformationParamsSchema
@@ -88,44 +88,41 @@ export type GetWeatherInformationByStationIdParams = z.infer<
 // WeatherInfo
 // ============================================================================
 
-export const weatherInfoSchema = z
-  .object({
-    BarometricPressure: zNullableNumber().describe(""),
+export const weatherInfoSchema = z.object({
+  BarometricPressure: zNullableNumber(),
 
-    Latitude: zLatitude().describe(""),
+  Latitude: zLatitude(),
 
-    Longitude: zLongitude().describe(""),
+  Longitude: zLongitude(),
 
-    PrecipitationInInches: zNullableNumber().describe(""),
+  PrecipitationInInches: zNullableNumber(),
 
-    ReadingTime: zWsdotDate().describe(""),
+  ReadingTime: zWsdotDate(),
 
-    RelativeHumidity: zNullableNumber().describe(""),
+  RelativeHumidity: zNullableNumber(),
 
-    SkyCoverage: zNullableString().describe(""),
+  SkyCoverage: zNullableString(),
 
-    StationID: z.number().int().positive().describe(""),
+  StationID: z.number().int().positive(),
 
-    StationName: z.string().describe(""),
+  StationName: z.string(),
 
-    TemperatureInFahrenheit: zNullableNumber().describe(""),
+  TemperatureInFahrenheit: zNullableNumber(),
 
-    Visibility: zNullableNumber().describe(""),
+  Visibility: zNullableNumber(),
 
-    WindDirection: zNullableNumber().describe(""),
+  WindDirection: zNullableNumber(),
 
-    WindDirectionCardinal: zNullableString().describe(""),
+  WindDirectionCardinal: zNullableString(),
 
-    WindGustSpeedInMPH: zNullableNumber().describe(""),
+  WindGustSpeedInMPH: zNullableNumber(),
 
-    WindSpeedInMPH: zNullableNumber().describe(""),
-  })
-  
-  .describe("");
+  WindSpeedInMPH: zNullableNumber(),
+});
 
 export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
 
-export const weatherInfoArraySchema = z.array(weatherInfoSchema).describe("");
+export const weatherInfoArraySchema = z.array(weatherInfoSchema);
 
 // ============================================================================
 // TanStack Query Hook

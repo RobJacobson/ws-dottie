@@ -58,17 +58,15 @@ export const getTrafficFlows = async (
 // getTrafficFlows (array)
 // ============================================================================
 
-export const getTrafficFlowByIdParamsSchema = z
-  .object({
-    flowDataID: z.number().describe(""),
-  })
-  .describe("");
+export const getTrafficFlowByIdParamsSchema = z.object({
+  flowDataID: z.number(),
+});
 
 export type GetTrafficFlowByIdParams = z.infer<
   typeof getTrafficFlowByIdParamsSchema
 >;
 
-export const getTrafficFlowsParamsSchema = z.object({}).describe("");
+export const getTrafficFlowsParamsSchema = z.object({});
 
 export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
 
@@ -92,38 +90,27 @@ export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
 // - 3: Heavy traffic
 // - 4: StopAndGo (congested traffic)
 
-export const flowStationReadingSchema = z
-  .number()
-  .int()
-  .min(0)
-  .max(4)
-  .describe("");
+export const flowStationReadingSchema = z.number().int().min(0).max(4);
 
-export const flowStationLocationSchema = z
-  .object({
-    Description: z.string().nullable().describe(""),
-    Direction: z.string().nullable().describe(""),
-    Latitude: z.number().nullable().describe(""),
-    Longitude: z.number().nullable().describe(""),
-    MilePost: z.number().nullable().describe(""),
-    RoadName: z.string().nullable().describe(""),
-  })
-  
-  .describe("");
+export const flowStationLocationSchema = z.object({
+  Description: z.string().nullable(),
+  Direction: z.string().nullable(),
+  Latitude: z.number().nullable(),
+  Longitude: z.number().nullable(),
+  MilePost: z.number().nullable(),
+  RoadName: z.string().nullable(),
+});
 
-export const trafficFlowSchema = z
-  .object({
-    FlowDataID: z.number().nullable().describe(""),
-    FlowReadingValue: flowStationReadingSchema.nullable().describe(""),
-    FlowStationLocation: flowStationLocationSchema.nullable().describe(""),
-    Region: z.string().nullable().describe(""),
-    StationName: z.string().nullable().describe(""),
-    Time: zWsdotDate().nullable().describe(""),
-  })
-  
-  .describe("");
+export const trafficFlowSchema = z.object({
+  FlowDataID: z.number().nullable(),
+  FlowReadingValue: flowStationReadingSchema.nullable(),
+  FlowStationLocation: flowStationLocationSchema.nullable(),
+  Region: z.string().nullable(),
+  StationName: z.string().nullable(),
+  Time: zWsdotDate().nullable(),
+});
 
-export const trafficFlowArraySchema = z.array(trafficFlowSchema).describe("");
+export const trafficFlowArraySchema = z.array(trafficFlowSchema);
 
 export type FlowStationLocation = z.infer<typeof flowStationLocationSchema>;
 export type TrafficFlow = z.infer<typeof trafficFlowSchema>;

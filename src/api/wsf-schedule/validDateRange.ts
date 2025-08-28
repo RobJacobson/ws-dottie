@@ -35,12 +35,10 @@ export const getValidDateRange = async (): Promise<ValidDateRange> => {
 // ValidDateRange
 // ============================================================================
 
-export const validDateRangeSchema = z
-  .object({
-    DateFrom: zWsdotDate().describe(""),
-    DateThru: zWsdotDate().describe(""),
-  })
-  .describe("");
+export const validDateRangeSchema = z.object({
+  DateFrom: zWsdotDate(),
+  DateThru: zWsdotDate(),
+});
 
 export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
 

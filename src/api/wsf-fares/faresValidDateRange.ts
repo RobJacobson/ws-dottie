@@ -36,7 +36,7 @@ export const getFaresValidDateRange = async (
 // GetFaresValidDateRangeParams
 // ============================================================================
 
-export const getFaresValidDateRangeParamsSchema = z.object({}).describe("");
+export const getFaresValidDateRangeParamsSchema = z.object({});
 
 export type GetFaresValidDateRangeParams = z.infer<
   typeof getFaresValidDateRangeParamsSchema
@@ -49,13 +49,10 @@ export type GetFaresValidDateRangeParams = z.infer<
 // FaresValidDateRange
 // ============================================================================
 
-export const faresValidDateRangeSchema = z
-  .object({
-    DateFrom: zWsdotDate().describe(""),
-    DateThru: zWsdotDate().describe(""),
-  })
-  
-  .describe("");
+export const faresValidDateRangeSchema = z.object({
+  DateFrom: zWsdotDate(),
+  DateThru: zWsdotDate(),
+});
 
 export type FaresValidDateRange = z.infer<typeof faresValidDateRangeSchema>;
 

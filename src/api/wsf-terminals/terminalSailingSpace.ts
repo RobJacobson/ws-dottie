@@ -53,13 +53,11 @@ export const getTerminalSailingSpace = async (
 // GetTerminalSailingSpaceParams
 // ============================================================================
 
-export const getTerminalSailingSpaceByTerminalIdParamsSchema = z
-  .object({
-    terminalId: z.number().int().describe(""),
-  })
-  .describe("");
+export const getTerminalSailingSpaceByTerminalIdParamsSchema = z.object({
+  terminalId: z.number().int(),
+});
 
-export const getTerminalSailingSpaceParamsSchema = z.object({}).describe("");
+export const getTerminalSailingSpaceParamsSchema = z.object({});
 
 export type GetTerminalSailingSpaceByTerminalIdParams = z.infer<
   typeof getTerminalSailingSpaceByTerminalIdParamsSchema
@@ -81,51 +79,45 @@ export type GetTerminalSailingSpaceParams = z.infer<
 // TerminalArrivalSpace
 // ============================================================================
 
-export const terminalArrivalSpaceSchema = z
-  .object({
-    TerminalID: z.number().int().describe(""),
-    TerminalName: z.string().describe(""),
-    VesselID: z.number().int().describe(""),
-    VesselName: z.string().describe(""),
-    DisplayReservableSpace: z.boolean().describe(""),
-    ReservableSpaceCount: z.number().int().min(0).nullable().describe(""),
-    ReservableSpaceHexColor: z.string().nullable().describe(""),
-    DisplayDriveUpSpace: z.boolean().describe(""),
-    DriveUpSpaceCount: z.number().int().describe(""),
-    DriveUpSpaceHexColor: z.string().describe(""),
-    MaxSpaceCount: z.number().int().describe(""),
-    ArrivalTerminalIDs: z.array(z.number().int()).describe(""),
-  })
-  .describe("");
+export const terminalArrivalSpaceSchema = z.object({
+  TerminalID: z.number().int(),
+  TerminalName: z.string(),
+  VesselID: z.number().int(),
+  VesselName: z.string(),
+  DisplayReservableSpace: z.boolean(),
+  ReservableSpaceCount: z.number().int().min(0).nullable(),
+  ReservableSpaceHexColor: z.string().nullable(),
+  DisplayDriveUpSpace: z.boolean(),
+  DriveUpSpaceCount: z.number().int(),
+  DriveUpSpaceHexColor: z.string(),
+  MaxSpaceCount: z.number().int(),
+  ArrivalTerminalIDs: z.array(z.number().int()),
+});
 
-export const terminalDepartingSpaceSchema = z
-  .object({
-    Departure: zWsdotDate().describe(""),
-    IsCancelled: z.boolean().describe(""),
-    VesselID: z.number().int().describe(""),
-    VesselName: z.string().describe(""),
-    MaxSpaceCount: z.number().int().describe(""),
-    SpaceForArrivalTerminals: z.array(terminalArrivalSpaceSchema).describe(""),
-  })
-  .describe("");
+export const terminalDepartingSpaceSchema = z.object({
+  Departure: zWsdotDate(),
+  IsCancelled: z.boolean(),
+  VesselID: z.number().int(),
+  VesselName: z.string(),
+  MaxSpaceCount: z.number().int(),
+  SpaceForArrivalTerminals: z.array(terminalArrivalSpaceSchema),
+});
 
-export const terminalSailingSpaceSchema = z
-  .object({
-    TerminalID: z.number().int().describe(""),
-    TerminalSubjectID: z.number().int().describe(""),
-    RegionID: z.number().int().describe(""),
-    TerminalName: z.string().describe(""),
-    TerminalAbbrev: z.string().describe(""),
-    SortSeq: z.number().int().describe(""),
-    DepartingSpaces: z.array(terminalDepartingSpaceSchema).describe(""),
-    IsNoFareCollected: z.boolean().nullable().describe(""),
-    NoFareCollectedMsg: z.string().nullable().describe(""),
-  })
-  .describe("");
+export const terminalSailingSpaceSchema = z.object({
+  TerminalID: z.number().int(),
+  TerminalSubjectID: z.number().int(),
+  RegionID: z.number().int(),
+  TerminalName: z.string(),
+  TerminalAbbrev: z.string(),
+  SortSeq: z.number().int(),
+  DepartingSpaces: z.array(terminalDepartingSpaceSchema),
+  IsNoFareCollected: z.boolean().nullable(),
+  NoFareCollectedMsg: z.string().nullable(),
+});
 
-export const terminalSailingSpaceArraySchema = z
-  .array(terminalSailingSpaceSchema)
-  .describe("");
+export const terminalSailingSpaceArraySchema = z.array(
+  terminalSailingSpaceSchema
+);
 
 export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
 export type TerminalDepartingSpace = z.infer<

@@ -37,11 +37,9 @@ export const getFareLineItemsVerbose = async (
 // GetFareLineItemsVerboseParams
 // ============================================================================
 
-export const getFareLineItemsVerboseParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getFareLineItemsVerboseParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetFareLineItemsVerboseParams = z.infer<
   typeof getFareLineItemsVerboseParamsSchema
@@ -59,26 +57,18 @@ export const terminalComboVerboseExtendedSchema = terminalComboVerboseSchema;
 
 // Import the fare line item schema from getFareLineItems
 
-export const lineItemLookupSchema = z
-  .object({
-    TerminalComboIndex: z.number().int().min(0).describe(""),
-    LineItemIndex: z.number().int().min(0).describe(""),
-    RoundTripLineItemIndex: z.number().int().min(0).describe(""),
-  })
-  
-  .describe("");
+export const lineItemLookupSchema = z.object({
+  TerminalComboIndex: z.number().int().min(0),
+  LineItemIndex: z.number().int().min(0),
+  RoundTripLineItemIndex: z.number().int().min(0),
+});
 
-export const fareLineItemsVerboseResponseSchema = z
-  .object({
-    TerminalComboVerbose: z
-      .array(terminalComboVerboseExtendedSchema)
-      .describe(""),
-    LineItemLookup: z.array(lineItemLookupSchema).describe(""),
-    LineItems: z.array(z.array(fareLineItemSchema)).describe(""),
-    RoundTripLineItems: z.array(z.array(fareLineItemSchema)).describe(""),
-  })
-  
-  .describe("");
+export const fareLineItemsVerboseResponseSchema = z.object({
+  TerminalComboVerbose: z.array(terminalComboVerboseExtendedSchema),
+  LineItemLookup: z.array(lineItemLookupSchema),
+  LineItems: z.array(z.array(fareLineItemSchema)),
+  RoundTripLineItems: z.array(z.array(fareLineItemSchema)),
+});
 
 export type TerminalComboVerbose = z.infer<
   typeof terminalComboVerboseExtendedSchema

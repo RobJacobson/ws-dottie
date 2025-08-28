@@ -46,15 +46,13 @@ export const getVesselBasics = async (): Promise<VesselBasic[]> => {
 // GetVesselBasicsByIdParams
 // ============================================================================
 
-export const getVesselBasicsParamsSchema = z.object({}).describe("");
+export const getVesselBasicsParamsSchema = z.object({});
 
 export type GetVesselBasicsParams = z.infer<typeof getVesselBasicsParamsSchema>;
 
-export const getVesselBasicsByIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(""),
-  })
-  .describe("");
+export const getVesselBasicsByIdParamsSchema = z.object({
+  vesselId: zPositiveInteger("vessel"),
+});
 
 export type GetVesselBasicsByIdParams = z.infer<
   typeof getVesselBasicsByIdParamsSchema
@@ -69,37 +67,31 @@ export type GetVesselBasicsByIdParams = z.infer<
 // VesselClass
 // ============================================================================
 
-export const vesselClassSchema = z
-  .object({
-    ClassID: z.number().describe(""),
-    ClassSubjectID: z.number().describe(""),
-    ClassName: z.string().describe(""),
-    SortSeq: z.number().describe(""),
-    DrawingImg: z.string().describe(""),
-    SilhouetteImg: z.string().describe(""),
-    PublicDisplayName: z.string().describe(""),
-  })
+export const vesselClassSchema = z.object({
+  ClassID: z.number(),
+  ClassSubjectID: z.number(),
+  ClassName: z.string(),
+  SortSeq: z.number(),
+  DrawingImg: z.string(),
+  SilhouetteImg: z.string(),
+  PublicDisplayName: z.string(),
+});
 
-  .describe("");
-
-export const vesselBasicSchema = z
-  .object({
-    VesselID: z.number().describe(""),
-    VesselSubjectID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselAbbrev: z.string().describe(""),
-    Class: vesselClassSchema.describe(""),
-    Status: z.number().describe(""),
-    OwnedByWSF: z.boolean().describe(""),
-  })
-
-  .describe("");
+export const vesselBasicSchema = z.object({
+  VesselID: z.number(),
+  VesselSubjectID: z.number(),
+  VesselName: z.string(),
+  VesselAbbrev: z.string(),
+  Class: vesselClassSchema,
+  Status: z.number(),
+  OwnedByWSF: z.boolean(),
+});
 
 export type VesselBasic = z.infer<typeof vesselBasicSchema>;
 
 export type VesselClass = z.infer<typeof vesselClassSchema>;
 
-export const vesselBasicArraySchema = z.array(vesselBasicSchema).describe("");
+export const vesselBasicArraySchema = z.array(vesselBasicSchema);
 
 // ============================================================================
 // TanStack Query Hooks

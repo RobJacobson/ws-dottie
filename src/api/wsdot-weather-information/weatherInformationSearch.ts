@@ -54,11 +54,9 @@ export const getSearchWeatherInformation = async (
 // GetWeatherInformationForStationsParams
 // ============================================================================
 
-export const getWeatherInformationForStationsParamsSchema = z
-  .object({
-    stationIds: z.string().min(1, "Station IDs cannot be empty").describe(""),
-  })
-  .describe("");
+export const getWeatherInformationForStationsParamsSchema = z.object({
+  stationIds: z.string().min(1, "Station IDs cannot be empty"),
+});
 
 export type GetWeatherInformationForStationsParams = z.infer<
   typeof getWeatherInformationForStationsParamsSchema

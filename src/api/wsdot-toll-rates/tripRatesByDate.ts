@@ -45,12 +45,10 @@ export const getTripRatesByDate = async (
 // GetTripRatesByDateParams
 // ============================================================================
 
-export const getTripRatesByDateParamsSchema = z
-  .object({
-    fromDate: z.date().describe(""),
-    toDate: z.date().describe(""),
-  })
-  .describe("");
+export const getTripRatesByDateParamsSchema = z.object({
+  fromDate: z.date(),
+  toDate: z.date(),
+});
 
 export type GetTripRatesByDateParams = z.infer<
   typeof getTripRatesByDateParamsSchema

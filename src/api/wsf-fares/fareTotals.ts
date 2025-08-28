@@ -38,24 +38,21 @@ export const getFareTotals = async (
 
 export const getFareTotalsParamsSchema = z
   .object({
-    tripDate: z.date().describe(""),
-    departingTerminalID: z.number().int().positive().describe(""),
-    arrivingTerminalID: z.number().int().positive().describe(""),
-    roundTrip: z.boolean().describe(""),
+    tripDate: z.date(),
+    departingTerminalID: z.number().int().positive(),
+    arrivingTerminalID: z.number().int().positive(),
+    roundTrip: z.boolean(),
     fareLineItemIDs: z
       .array(z.number().int().positive())
-      .min(1, "At least one fare line item ID must be provided")
-      .describe(""),
+      .min(1, "At least one fare line item ID must be provided"),
     quantities: z
       .array(z.number().int().min(1))
-      .min(1, "At least one quantity must be provided")
-      .describe(""),
+      .min(1, "At least one quantity must be provided"),
   })
   .refine((data) => data.fareLineItemIDs.length === data.quantities.length, {
     message: "fareLineItemIDs and quantities arrays must have the same length",
     path: ["quantities"],
-  })
-  .describe("");
+  });
 
 export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
@@ -66,16 +63,14 @@ export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 // FareTotal
 // ============================================================================
 
-export const fareTotalSchema = z
-  .object({
-    TotalType: z.number().int().min(1).max(4).describe(""),
-    Description: z.string().nullable().describe(""),
-    BriefDescription: z.string().nullable().describe(""),
-    Amount: z.number().describe(""),
-  })
-  .describe("");
+export const fareTotalSchema = z.object({
+  TotalType: z.number().int().min(1).max(4),
+  Description: z.string().nullable(),
+  BriefDescription: z.string().nullable(),
+  Amount: z.number(),
+});
 
-export const fareTotalsArraySchema = z.array(fareTotalSchema).describe("");
+export const fareTotalsArraySchema = z.array(fareTotalSchema);
 
 export type FareTotal = z.infer<typeof fareTotalSchema>;
 

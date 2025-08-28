@@ -46,17 +46,15 @@ export const getVesselVerbose = async (): Promise<VesselVerbose[]> => {
 // GetVesselVerboseByIdParams
 // ============================================================================
 
-export const getVesselVerboseParamsSchema = z.object({}).describe("");
+export const getVesselVerboseParamsSchema = z.object({});
 
 export type GetVesselVerboseParams = z.infer<
   typeof getVesselVerboseParamsSchema
 >;
 
-export const getVesselVerboseByIdParamsSchema = z
-  .object({
-    vesselId: zPositiveInteger("vessel").describe(""),
-  })
-  .describe("");
+export const getVesselVerboseByIdParamsSchema = z.object({
+  vesselId: zPositiveInteger("vessel"),
+});
 
 export type GetVesselVerboseByIdParams = z.infer<
   typeof getVesselVerboseByIdParamsSchema
@@ -70,60 +68,53 @@ export type GetVesselVerboseByIdParams = z.infer<
 // VesselVerbose
 // ============================================================================
 
-export const vesselVerboseSchema = z
-  .object({
-    VesselID: z.number().describe(""),
-    VesselSubjectID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselAbbrev: z.string().describe(""),
-    Class: z
-      .object({
-        ClassID: z.number().describe(""),
-        ClassSubjectID: z.number().describe(""),
-        ClassName: z.string().describe(""),
-        SortSeq: z.number().describe(""),
-        DrawingImg: z.string().describe(""),
-        SilhouetteImg: z.string().describe(""),
-        PublicDisplayName: z.string().describe(""),
-      })
-      .describe(""),
-    Status: z.number().describe(""),
-    OwnedByWSF: z.boolean().describe(""),
-    YearBuilt: z.number().describe(""),
-    Displacement: z.number().describe(""),
-    Length: z.string().describe(""),
-    Beam: z.string().describe(""),
-    Draft: z.string().describe(""),
-    SpeedInKnots: z.number().describe(""),
-    EngineCount: z.number().describe(""),
-    Horsepower: z.number().describe(""),
-    MaxPassengerCount: z.number().describe(""),
-    RegDeckSpace: z.number().describe(""),
-    TallDeckSpace: z.number().describe(""),
-    Tonnage: z.number().describe(""),
-    PropulsionInfo: z.string().describe(""),
-    ADAAccessible: z.boolean().describe(""),
-    Elevator: z.boolean().describe(""),
-    CarDeckRestroom: z.boolean().describe(""),
-    MainCabinGalley: z.boolean().describe(""),
-    MainCabinRestroom: z.boolean().describe(""),
-    PublicWifi: z.boolean().describe(""),
-    ADAInfo: z.string().describe(""),
-    VesselNameDesc: z.string().describe(""),
-    VesselHistory: z.string().nullable().describe(""),
-    CityBuilt: z.string().describe(""),
-    YearRebuilt: z.number().nullable().describe(""),
-    CarDeckShelter: z.boolean().describe(""),
-    AdditionalInfo: z.string().nullable().describe(""),
-  })
-
-  .describe("");
+export const vesselVerboseSchema = z.object({
+  VesselID: z.number(),
+  VesselSubjectID: z.number(),
+  VesselName: z.string(),
+  VesselAbbrev: z.string(),
+  Class: z.object({
+    ClassID: z.number(),
+    ClassSubjectID: z.number(),
+    ClassName: z.string(),
+    SortSeq: z.number(),
+    DrawingImg: z.string(),
+    SilhouetteImg: z.string(),
+    PublicDisplayName: z.string(),
+  }),
+  Status: z.number(),
+  OwnedByWSF: z.boolean(),
+  YearBuilt: z.number(),
+  Displacement: z.number(),
+  Length: z.string(),
+  Beam: z.string(),
+  Draft: z.string(),
+  SpeedInKnots: z.number(),
+  EngineCount: z.number(),
+  Horsepower: z.number(),
+  MaxPassengerCount: z.number(),
+  RegDeckSpace: z.number(),
+  TallDeckSpace: z.number(),
+  Tonnage: z.number(),
+  PropulsionInfo: z.string(),
+  ADAAccessible: z.boolean(),
+  Elevator: z.boolean(),
+  CarDeckRestroom: z.boolean(),
+  MainCabinGalley: z.boolean(),
+  MainCabinRestroom: z.boolean(),
+  PublicWifi: z.boolean(),
+  ADAInfo: z.string(),
+  VesselNameDesc: z.string(),
+  VesselHistory: z.string().nullable(),
+  CityBuilt: z.string(),
+  YearRebuilt: z.number().nullable(),
+  CarDeckShelter: z.boolean(),
+  AdditionalInfo: z.string().nullable(),
+});
 
 export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
 
-export const vesselVerboseArraySchema = z
-  .array(vesselVerboseSchema)
-  .describe("");
+export const vesselVerboseArraySchema = z.array(vesselVerboseSchema);
 
 // ============================================================================
 // TanStack Query Hooks

@@ -54,19 +54,15 @@ export const getTerminalComboVerbose = async (
 // GetTerminalComboVerboseParams
 // ============================================================================
 
-export const getTerminalComboParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    departingTerminalID: z.number().int().positive().describe(""),
-    arrivingTerminalID: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getTerminalComboParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalID: z.number().int().positive(),
+  arrivingTerminalID: z.number().int().positive(),
+});
 
-export const getTerminalComboVerboseParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getTerminalComboVerboseParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetTerminalComboParams = z.infer<
   typeof getTerminalComboParamsSchema
@@ -86,29 +82,23 @@ export type GetTerminalComboVerboseParams = z.infer<
 // TerminalComboVerbose
 // ============================================================================
 
-export const terminalComboSchema = z
-  .object({
-    DepartingDescription: z.string().describe(""),
-    ArrivingDescription: z.string().describe(""),
-    CollectionDescription: z.string().describe(""),
-  })
-  
-  .describe("");
+export const terminalComboSchema = z.object({
+  DepartingDescription: z.string(),
+  ArrivingDescription: z.string(),
+  CollectionDescription: z.string(),
+});
 
-export const terminalComboVerboseSchema = z
-  .object({
-    DepartingTerminalID: z.number().int().positive().describe(""),
-    DepartingDescription: z.string().describe(""),
-    ArrivingTerminalID: z.number().int().positive().describe(""),
-    ArrivingDescription: z.string().describe(""),
-    CollectionDescription: z.string().describe(""),
-  })
-  
-  .describe("");
+export const terminalComboVerboseSchema = z.object({
+  DepartingTerminalID: z.number().int().positive(),
+  DepartingDescription: z.string(),
+  ArrivingTerminalID: z.number().int().positive(),
+  ArrivingDescription: z.string(),
+  CollectionDescription: z.string(),
+});
 
-export const terminalComboVerboseArraySchema = z
-  .array(terminalComboVerboseSchema)
-  .describe("");
+export const terminalComboVerboseArraySchema = z.array(
+  terminalComboVerboseSchema
+);
 
 export type TerminalCombo = z.infer<typeof terminalComboSchema>;
 export type TerminalComboVerbose = z.infer<typeof terminalComboVerboseSchema>;

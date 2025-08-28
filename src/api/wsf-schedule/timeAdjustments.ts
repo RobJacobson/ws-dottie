@@ -48,17 +48,15 @@ export const getTimeAdjustmentsByRoute = async (
 // GetTimeAdjustmentsByRouteParams
 // ============================================================================
 
-export const getTimeAdjustmentsParamsSchema = z.object({}).describe("");
+export const getTimeAdjustmentsParamsSchema = z.object({});
 
 export type GetTimeAdjustmentsParams = z.infer<
   typeof getTimeAdjustmentsParamsSchema
 >;
 
-export const getTimeAdjustmentsByRouteParamsSchema = z
-  .object({
-    routeId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getTimeAdjustmentsByRouteParamsSchema = z.object({
+  routeId: z.number().int().positive(),
+});
 
 export type GetTimeAdjustmentsByRouteParams = z.infer<
   typeof getTimeAdjustmentsByRouteParamsSchema
@@ -116,16 +114,14 @@ export type TimeAdjustmentResponse = z.infer<
   typeof timeAdjustmentResponseSchema
 >;
 
-export const timeAdjustmentSchema = z
-  .object({
-    AdjustmentID: z.number().describe(""),
-    SchedRouteID: z.number().describe(""),
-    AdjustmentMinutes: z.number().describe(""),
-    StartDate: zWsdotDate().describe(""),
-    EndDate: zWsdotDate().describe(""),
-    Reason: z.string().describe(""),
-  })
-  .describe("");
+export const timeAdjustmentSchema = z.object({
+  AdjustmentID: z.number(),
+  SchedRouteID: z.number(),
+  AdjustmentMinutes: z.number(),
+  StartDate: zWsdotDate(),
+  EndDate: zWsdotDate(),
+  Reason: z.string(),
+});
 
 export const timeAdjustmentsByRouteArraySchema = z.array(timeAdjustmentSchema);
 

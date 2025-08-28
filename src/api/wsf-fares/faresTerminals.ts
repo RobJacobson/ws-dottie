@@ -54,22 +54,18 @@ export const getFaresTerminalMates = async (
 // GetFaresTerminalMatesParams
 // ============================================================================
 
-export const getFaresTerminalsParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-  })
-  .describe("");
+export const getFaresTerminalsParamsSchema = z.object({
+  tripDate: z.date(),
+});
 
 export type GetFaresTerminalsParams = z.infer<
   typeof getFaresTerminalsParamsSchema
 >;
 
-export const getFaresTerminalMatesParamsSchema = z
-  .object({
-    tripDate: z.date().describe(""),
-    terminalID: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getFaresTerminalMatesParamsSchema = z.object({
+  tripDate: z.date(),
+  terminalID: z.number().int().positive(),
+});
 
 export type GetFaresTerminalMatesParams = z.infer<
   typeof getFaresTerminalMatesParamsSchema
@@ -84,31 +80,21 @@ export type GetFaresTerminalMatesParams = z.infer<
 // TerminalMate
 // ============================================================================
 
-export const faresTerminalSchema = z
-  .object({
-    TerminalID: z.number().int().positive().describe(""),
-    Description: z.string().describe(""),
-  })
-  
-  .describe("");
+export const faresTerminalSchema = z.object({
+  TerminalID: z.number().int().positive(),
+  Description: z.string(),
+});
 
-export const faresTerminalsArraySchema = z
-  .array(faresTerminalSchema)
-  .describe("");
+export const faresTerminalsArraySchema = z.array(faresTerminalSchema);
 
 export type FaresTerminal = z.infer<typeof faresTerminalSchema>;
 
-export const terminalMateSchema = z
-  .object({
-    TerminalID: z.number().int().positive().describe(""),
-    Description: z.string().describe(""),
-  })
-  
-  .describe("");
+export const terminalMateSchema = z.object({
+  TerminalID: z.number().int().positive(),
+  Description: z.string(),
+});
 
-export const terminalMatesArraySchema = z
-  .array(terminalMateSchema)
-  .describe("");
+export const terminalMatesArraySchema = z.array(terminalMateSchema);
 
 export type TerminalMate = z.infer<typeof terminalMateSchema>;
 

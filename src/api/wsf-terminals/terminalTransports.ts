@@ -54,13 +54,11 @@ export const getTerminalTransports = async (
 // GetTerminalTransportsParams
 // ============================================================================
 
-export const getTerminalTransportsByTerminalIdParamsSchema = z
-  .object({
-    terminalId: z.number().int().describe(""),
-  })
-  .describe("");
+export const getTerminalTransportsByTerminalIdParamsSchema = z.object({
+  terminalId: z.number().int(),
+});
 
-export const getTerminalTransportsParamsSchema = z.object({}).describe("");
+export const getTerminalTransportsParamsSchema = z.object({});
 
 export type GetTerminalTransportsByTerminalIdParams = z.infer<
   typeof getTerminalTransportsByTerminalIdParamsSchema
@@ -80,27 +78,25 @@ export type GetTerminalTransportsParams = z.infer<
 // TerminalTransitLink
 // ============================================================================
 
-export const terminalTransportSchema = z
-  .object({
-    TerminalID: z.number().describe(""),
-    TerminalSubjectID: z.number().describe(""),
-    RegionID: z.number().describe(""),
-    TerminalName: z.string().describe(""),
-    TerminalAbbrev: z.string().describe(""),
-    SortSeq: z.number().describe(""),
-    ParkingInfo: z.string().nullable().describe(""),
-    ParkingShuttleInfo: z.string().nullable().describe(""),
-    AirportInfo: z.string().nullable().describe(""),
-    AirportShuttleInfo: z.string().nullable().describe(""),
-    MotorcycleInfo: z.string().nullable().describe(""),
-    TruckInfo: z.string().nullable().describe(""),
-    BikeInfo: z.string().nullable().describe(""),
-    TrainInfo: z.string().nullable().describe(""),
-    TaxiInfo: z.string().nullable().describe(""),
-    HovInfo: z.string().nullable().describe(""),
-    TransitLinks: z.array(terminalTransitLinkSchema).describe(""),
-  })
-  .describe("");
+export const terminalTransportSchema = z.object({
+  TerminalID: z.number(),
+  TerminalSubjectID: z.number(),
+  RegionID: z.number(),
+  TerminalName: z.string(),
+  TerminalAbbrev: z.string(),
+  SortSeq: z.number(),
+  ParkingInfo: z.string().nullable(),
+  ParkingShuttleInfo: z.string().nullable(),
+  AirportInfo: z.string().nullable(),
+  AirportShuttleInfo: z.string().nullable(),
+  MotorcycleInfo: z.string().nullable(),
+  TruckInfo: z.string().nullable(),
+  BikeInfo: z.string().nullable(),
+  TrainInfo: z.string().nullable(),
+  TaxiInfo: z.string().nullable(),
+  HovInfo: z.string().nullable(),
+  TransitLinks: z.array(terminalTransitLinkSchema),
+});
 
 export const terminalTransportsArraySchema = z.array(terminalTransportSchema);
 

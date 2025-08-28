@@ -52,17 +52,15 @@ export const getHighwayCameras = async (
 // Input Schemas & Types (singular first, then array)
 // ============================================================================
 
-export const getHighwayCameraParamsSchema = z
-  .object({
-    cameraID: z.number().int().describe(""),
-  })
-  .describe("");
+export const getHighwayCameraParamsSchema = z.object({
+  cameraID: z.number().int(),
+});
 
 export type GetHighwayCameraParams = z.infer<
   typeof getHighwayCameraParamsSchema
 >;
 
-export const getHighwayCamerasParamsSchema = z.object({}).describe("");
+export const getHighwayCamerasParamsSchema = z.object({});
 
 export type GetHighwayCamerasParams = z.infer<
   typeof getHighwayCamerasParamsSchema
@@ -72,57 +70,51 @@ export type GetHighwayCamerasParams = z.infer<
 // Output Schemas & Types (shared schemas first, then array wrappers)
 // ============================================================================
 
-export const cameraLocationSchema = z
-  .object({
-    Description: zNullableString().describe(""),
+export const cameraLocationSchema = z.object({
+  Description: zNullableString(),
 
-    Direction: zNullableString().describe(""),
+  Direction: zNullableString(),
 
-    Latitude: z.number().describe(""),
+  Latitude: z.number(),
 
-    Longitude: z.number().describe(""),
+  Longitude: z.number(),
 
-    MilePost: z.number().describe(""),
+  MilePost: z.number(),
 
-    RoadName: zNullableString().describe(""),
-  })
-  
-  .describe("");
+  RoadName: zNullableString(),
+});
 
-export const cameraSchema = z
-  .object({
-    CameraID: z.number().int().describe(""),
+export const cameraSchema = z.object({
+  CameraID: z.number().int(),
 
-    CameraLocation: cameraLocationSchema.describe(""),
+  CameraLocation: cameraLocationSchema,
 
-    CameraOwner: zNullableString().describe(""),
+  CameraOwner: zNullableString(),
 
-    Description: zNullableString().describe(""),
+  Description: zNullableString(),
 
-    DisplayLatitude: z.number().describe(""),
+  DisplayLatitude: z.number(),
 
-    DisplayLongitude: z.number().describe(""),
+  DisplayLongitude: z.number(),
 
-    ImageHeight: z.number().int().describe(""),
+  ImageHeight: z.number().int(),
 
-    ImageURL: z.string().describe(""),
+  ImageURL: z.string(),
 
-    ImageWidth: z.number().int().describe(""),
+  ImageWidth: z.number().int(),
 
-    IsActive: z.boolean().describe(""),
+  IsActive: z.boolean(),
 
-    OwnerURL: zNullableString().describe(""),
+  OwnerURL: zNullableString(),
 
-    Region: zNullableString().describe(""),
+  Region: zNullableString(),
 
-    SortOrder: z.number().int().describe(""),
+  SortOrder: z.number().int(),
 
-    Title: zNullableString().describe(""),
-  })
-  
-  .describe("");
+  Title: zNullableString(),
+});
 
-export const cameraArraySchema = z.array(cameraSchema).describe("");
+export const cameraArraySchema = z.array(cameraSchema);
 
 export type CameraLocation = z.infer<typeof cameraLocationSchema>;
 

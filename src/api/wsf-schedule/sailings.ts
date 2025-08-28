@@ -36,11 +36,9 @@ export const getSailings = async (
 // GetSailingsParams
 // ============================================================================
 
-export const getSailingsParamsSchema = z
-  .object({
-    schedRouteId: z.number().int().positive().describe(""),
-  })
-  .describe("");
+export const getSailingsParamsSchema = z.object({
+  schedRouteId: z.number().int().positive(),
+});
 
 export type GetSailingsParams = z.infer<typeof getSailingsParamsSchema>;
 
@@ -57,45 +55,39 @@ export type GetSailingsParams = z.infer<typeof getSailingsParamsSchema>;
 // SailingResponse
 // ============================================================================
 
-export const terminalTimeSchema = z
-  .object({
-    JourneyTerminalID: z.number().describe(""),
-    TerminalID: z.number().describe(""),
-    TerminalDescription: z.string().describe(""),
-    TerminalBriefDescription: z.string().describe(""),
-    Time: zWsdotDate().nullable().describe(""),
-    DepArrIndicator: z.number().nullable().describe(""),
-    IsNA: z.boolean().describe(""),
-  })
-  .describe("");
+export const terminalTimeSchema = z.object({
+  JourneyTerminalID: z.number(),
+  TerminalID: z.number(),
+  TerminalDescription: z.string(),
+  TerminalBriefDescription: z.string(),
+  Time: zWsdotDate().nullable(),
+  DepArrIndicator: z.number().nullable(),
+  IsNA: z.boolean(),
+});
 
-export const journeySchema = z
-  .object({
-    JourneyID: z.number().describe(""),
-    ReservationInd: z.boolean().describe(""),
-    InternationalInd: z.boolean().describe(""),
-    InterislandInd: z.boolean().describe(""),
-    VesselID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselHandicapAccessible: z.boolean().describe(""),
-    VesselPositionNum: z.number().describe(""),
-    TerminalTimes: z.array(terminalTimeSchema).describe(""),
-  })
-  .describe("");
+export const journeySchema = z.object({
+  JourneyID: z.number(),
+  ReservationInd: z.boolean(),
+  InternationalInd: z.boolean(),
+  InterislandInd: z.boolean(),
+  VesselID: z.number(),
+  VesselName: z.string(),
+  VesselHandicapAccessible: z.boolean(),
+  VesselPositionNum: z.number(),
+  TerminalTimes: z.array(terminalTimeSchema),
+});
 
-export const sailingSchema = z
-  .object({
-    SailingID: z.number().describe(""),
-    SchedRouteID: z.number().describe(""),
-    SailingDate: zWsdotDate().describe(""),
-    SailingTime: zWsdotDate().describe(""),
-    VesselID: z.number().describe(""),
-    VesselName: z.string().describe(""),
-    VesselHandicapAccessible: z.boolean().describe(""),
-    VesselPositionNum: z.number().describe(""),
-    Journeys: z.array(journeySchema).describe(""),
-  })
-  .describe("");
+export const sailingSchema = z.object({
+  SailingID: z.number(),
+  SchedRouteID: z.number(),
+  SailingDate: zWsdotDate(),
+  SailingTime: zWsdotDate(),
+  VesselID: z.number(),
+  VesselName: z.string(),
+  VesselHandicapAccessible: z.boolean(),
+  VesselPositionNum: z.number(),
+  Journeys: z.array(journeySchema),
+});
 
 export const sailingsArraySchema = z.array(sailingSchema);
 
@@ -105,29 +97,27 @@ export type Sailing = z.infer<typeof sailingSchema>;
 // API RESPONSE SCHEMAS (based on real API responses)
 // ============================================================================
 
-export const sailingResponseSchema = z
-  .object({
-    ScheduleID: z.number(),
-    SchedRouteID: z.number(),
-    RouteID: z.number(),
-    SailingID: z.number(),
-    SailingDescription: z.string(),
-    SailingNotes: z.string(),
-    DisplayColNum: z.number(),
-    SailingDir: z.number(),
-    DayOpDescription: z.string(),
-    DayOpUseForHoliday: z.boolean(),
-    ActiveDateRanges: z.array(
-      z.object({
-        DateFrom: zWsdotDate().nullable(),
-        DateThru: zWsdotDate().nullable(),
-        EventID: z.number().nullable(),
-        EventDescription: z.string().nullable(),
-      })
-    ),
-    Journs: z.array(journeySchema),
-  })
-  .describe("");
+export const sailingResponseSchema = z.object({
+  ScheduleID: z.number(),
+  SchedRouteID: z.number(),
+  RouteID: z.number(),
+  SailingID: z.number(),
+  SailingDescription: z.string(),
+  SailingNotes: z.string(),
+  DisplayColNum: z.number(),
+  SailingDir: z.number(),
+  DayOpDescription: z.string(),
+  DayOpUseForHoliday: z.boolean(),
+  ActiveDateRanges: z.array(
+    z.object({
+      DateFrom: zWsdotDate().nullable(),
+      DateThru: zWsdotDate().nullable(),
+      EventID: z.number().nullable(),
+      EventDescription: z.string().nullable(),
+    })
+  ),
+  Journs: z.array(journeySchema),
+});
 
 export const sailingsResponseArraySchema = z.array(sailingResponseSchema);
 

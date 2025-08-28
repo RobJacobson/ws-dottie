@@ -142,11 +142,9 @@ export const getBridgeClearances = async (
 /**
  * Parameters for retrieving bridge clearance data for a specific state route
  */
-export const getBridgeClearancesParamsSchema = z
-  .object({
-    route: z.string().min(1, "Route cannot be empty").describe(""),
-  })
-  .describe("");
+export const getBridgeClearancesParamsSchema = z.object({
+  route: z.string().min(1, "Route cannot be empty"),
+});
 
 /**
  * GetBridgeClearancesParams type - represents parameters for bridge clearance queries
@@ -162,48 +160,45 @@ export type GetBridgeClearancesParams = z.infer<
 /**
  * Bridge clearance data schema - comprehensive bridge information including vertical clearance measurements
  */
-export const bridgeDataGisSchema = z
-  .object({
-    APILastUpdate: zWsdotDate().describe(""),
+export const bridgeDataGisSchema = z.object({
+  APILastUpdate: zWsdotDate(),
 
-    BridgeNumber: z.string().nullable().describe(""),
+  BridgeNumber: z.string().nullable(),
 
-    ControlEntityGuid: z.string().describe(""),
+  ControlEntityGuid: z.string(),
 
-    CrossingDescription: z.string().nullable().describe(""),
+  CrossingDescription: z.string().nullable(),
 
-    CrossingLocationId: z.number().describe(""),
+  CrossingLocationId: z.number(),
 
-    CrossingRecordGuid: z.string().describe(""),
+  CrossingRecordGuid: z.string(),
 
-    InventoryDirection: zNullableString().describe(""),
+  InventoryDirection: zNullableString(),
 
-    Latitude: zLatitude().describe(""),
+  Latitude: zLatitude(),
 
-    LocationGuid: z.string().describe(""),
+  LocationGuid: z.string(),
 
-    Longitude: zLongitude().describe(""),
+  Longitude: zLongitude(),
 
-    RouteDate: zWsdotDate().describe(""),
+  RouteDate: zWsdotDate(),
 
-    SRMP: z.number().describe(""),
+  SRMP: z.number(),
 
-    SRMPAheadBackIndicator: zNullableString().describe(""),
+  SRMPAheadBackIndicator: zNullableString(),
 
-    StateRouteID: z.string().nullable().describe(""),
+  StateRouteID: z.string().nullable(),
 
-    StateStructureId: z.string().nullable().describe(""),
+  StateStructureId: z.string().nullable(),
 
-    VerticalClearanceMaximumFeetInch: z.string().nullable().describe(""),
+  VerticalClearanceMaximumFeetInch: z.string().nullable(),
 
-    VerticalClearanceMaximumInches: z.number().describe(""),
+  VerticalClearanceMaximumInches: z.number(),
 
-    VerticalClearanceMinimumFeetInch: z.string().nullable().describe(""),
+  VerticalClearanceMinimumFeetInch: z.string().nullable(),
 
-    VerticalClearanceMinimumInches: z.number().describe(""),
-  })
-
-  .describe("");
+  VerticalClearanceMinimumInches: z.number(),
+});
 
 /**
  * BridgeDataGIS type - represents comprehensive bridge clearance data with geographic and structural information
@@ -213,9 +208,7 @@ export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
 /**
  * Array of bridge clearance data objects - wrapper around bridgeDataGisSchema
  */
-export const bridgeDataGisArraySchema = z
-  .array(bridgeDataGisSchema)
-  .describe("");
+export const bridgeDataGisArraySchema = z.array(bridgeDataGisSchema);
 
 // ============================================================================
 // TanStack Query Hooks

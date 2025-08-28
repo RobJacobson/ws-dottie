@@ -36,7 +36,7 @@ export const getAlerts = async (
 // GetAlertsParams
 // ============================================================================
 
-export const getAlertsParamsSchema = z.object({}).describe("");
+export const getAlertsParamsSchema = z.object({});
 
 export type GetAlertsParams = z.infer<typeof getAlertsParamsSchema>;
 
@@ -48,27 +48,25 @@ export type GetAlertsParams = z.infer<typeof getAlertsParamsSchema>;
 // Alert
 // ============================================================================
 
-export const alertSchema = z
-  .object({
-    BulletinID: z.number().int().positive().describe(""),
-    BulletinFlag: z.boolean().describe(""),
-    BulletinText: z.string().describe(""),
-    CommunicationFlag: z.boolean().describe(""),
-    CommunicationText: z.string().nullable().describe(""),
-    RouteAlertFlag: z.boolean().describe(""),
-    RouteAlertText: z.string().describe(""),
-    HomepageAlertText: z.string().describe(""),
-    PublishDate: zWsdotDate().describe(""),
-    DisruptionDescription: z.string().nullable().describe(""),
-    AllRoutesFlag: z.boolean().describe(""),
-    SortSeq: z.number().int().min(0).describe(""),
-    AlertTypeID: z.number().int().positive().describe(""),
-    AlertType: z.string().describe(""),
-    AlertFullTitle: z.string().describe(""),
-    AffectedRouteIDs: z.array(z.number().int().positive()).describe(""),
-    IVRText: z.string().nullable().describe(""),
-  })
-  .describe("");
+export const alertSchema = z.object({
+  BulletinID: z.number().int().positive(),
+  BulletinFlag: z.boolean(),
+  BulletinText: z.string(),
+  CommunicationFlag: z.boolean(),
+  CommunicationText: z.string().nullable(),
+  RouteAlertFlag: z.boolean(),
+  RouteAlertText: z.string(),
+  HomepageAlertText: z.string(),
+  PublishDate: zWsdotDate(),
+  DisruptionDescription: z.string().nullable(),
+  AllRoutesFlag: z.boolean(),
+  SortSeq: z.number().int().min(0),
+  AlertTypeID: z.number().int().positive(),
+  AlertType: z.string(),
+  AlertFullTitle: z.string(),
+  AffectedRouteIDs: z.array(z.number().int().positive()),
+  IVRText: z.string().nullable(),
+});
 
 export const alertsArraySchema = z.array(alertSchema);
 

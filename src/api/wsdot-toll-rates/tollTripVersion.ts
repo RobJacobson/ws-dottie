@@ -30,7 +30,7 @@ export const getTollTripVersion = async (): Promise<TollTripVersion> => {
 // GetTollTripVersionParams
 // ============================================================================
 
-export const getTollTripVersionParamsSchema = z.object({}).describe("");
+export const getTollTripVersionParamsSchema = z.object({});
 
 export type GetTollTripVersionParams = z.infer<
   typeof getTollTripVersionParamsSchema
@@ -43,12 +43,9 @@ export type GetTollTripVersionParams = z.infer<
 // TollTripVersion
 // ============================================================================
 
-export const tollTripVersionSchema = z
-  .object({
-    Version: z.number().describe(""),
-  })
-  
-  .describe("");
+export const tollTripVersionSchema = z.object({
+  Version: z.number(),
+});
 
 export type TollTripVersion = z.infer<typeof tollTripVersionSchema>;
 
