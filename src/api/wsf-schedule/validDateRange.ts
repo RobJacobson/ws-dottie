@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -62,13 +58,9 @@ export const getValidDateRange = async (
   );
 };
 
-export const useValidDateRange = (
-  params: GetValidDateRangeParams = {},
-  options?: UseQueryOptions
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "validDateRange"],
-    queryFn: () => getValidDateRange(params),
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-  });
+export const useValidDateRange = createUseQueryWsf({
+  queryFn: getValidDateRange,
+  queryKeyPrefix: ["wsf", "schedule", "validDateRange", "getValidDateRange"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

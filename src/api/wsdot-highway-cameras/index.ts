@@ -26,8 +26,8 @@ export { searchHighwayCamerasParamsSchema } from "./searchHighwayCameras";
 
 export type {
   Camera,
-  Cameras,
   CameraLocation,
+  Cameras,
   GetHighwayCameraParams,
   GetHighwayCamerasParams,
 } from "./highwayCameras";

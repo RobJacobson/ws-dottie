@@ -1,19 +1,45 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
-  createDateRangeParams,
-  createDateRangeRefinement,
-  createVesselNameParam,
   zNullableString,
   zWsdotNullableDate,
 } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
+
+// ============================================================================
+// INLINE TEMPLATE FUNCTIONS
+//
+// These functions were previously in shared templates but are now inlined
+// here since they are only used in this module.
+// ============================================================================
+
+/**
+ * Date range parameter schemas for vessel history
+ */
+const dateRangeParams = {
+  dateStart: z.date(),
+  dateEnd: z.date(),
+};
+
+/**
+ * Date range validation refinement for vessel history
+ */
+const dateRangeRefinement = {
+  refine: (data: { dateStart: Date; dateEnd: Date }) => {
+    return data.dateStart <= data.dateEnd;
+  },
+  errorConfig: {
+    message: "dateStart must be before or equal to dateEnd",
+    path: ["dateEnd"],
+  },
+};
+
+/**
+ * Vessel name parameter with validation for vessel history
+ */
+const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");
 
 // ============================================================================
 // API Functions
@@ -69,13 +95,10 @@ export type GetVesselHistoryParams = z.infer<
 
 export const getVesselHistoryByVesselAndDateRangeParamsSchema = z
   .object({
-    vesselName: createVesselNameParam("for historical data retrieval"),
-    ...createDateRangeParams("the historical data range"),
+    vesselName: vesselNameParam,
+    ...dateRangeParams,
   })
-  .refine(
-    createDateRangeRefinement().refine,
-    createDateRangeRefinement().errorConfig
-  );
+  .refine(dateRangeRefinement.refine, dateRangeRefinement.errorConfig);
 
 export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<
   typeof getVesselHistoryByVesselAndDateRangeParamsSchema
@@ -116,27 +139,21 @@ export type VesselHistories = z.infer<typeof vesselHistoryArraySchema>;
 // useVesselHistoryByVesselAndDateRange (filtered by vessel and date range)
 // ============================================================================
 
-export const useVesselHistory = (
-  params: GetVesselHistoryParams = {},
-  options?: UseQueryOptions<VesselHistories>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "history"],
-    queryFn: () => getVesselHistory(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useVesselHistory = createUseQueryWsf({
+  queryFn: getVesselHistory,
+  queryKeyPrefix: ["wsf", "vessels", "history", "getVesselHistory"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});
 
-export const useVesselHistoryByVesselAndDateRange = (
-  params: GetVesselHistoryByVesselAndDateRangeParams,
-  options?: UseQueryOptions<VesselHistories>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "history", "filtered", JSON.stringify(params)],
-    queryFn: () => getVesselHistoryByVesselAndDateRange(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselHistoryByVesselAndDateRange = createUseQueryWsf({
+  queryFn: getVesselHistoryByVesselAndDateRange,
+  queryKeyPrefix: [
+    "wsf",
+    "vessels",
+    "history",
+    "getVesselHistoryByVesselAndDateRange",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});

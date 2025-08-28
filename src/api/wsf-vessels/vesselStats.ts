@@ -1,16 +1,11 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
-  createVesselIdDescription,
   zNullableNumber,
   zNullableString,
   zPositiveInteger,
 } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 import { vesselClassSchema } from "./vesselBasics";
@@ -126,27 +121,16 @@ export type VesselStatsArray = z.infer<typeof vesselStatsArraySchema>;
 // useVesselStats (array)
 // ============================================================================
 
-export const useVesselStatsById = (
-  params: GetVesselStatsByIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "stats", JSON.stringify(params)],
-    queryFn: () => getVesselStatsById(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselStatsById = createUseQueryWsf({
+  queryFn: getVesselStatsById,
+  queryKeyPrefix: ["wsf", "vessels", "stats", "getVesselStatsById"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});
 
-export const useVesselStats = (
-  params: GetVesselStatsParams = {},
-  options?: UseQueryOptions<VesselStatsArray>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "stats"],
-    queryFn: () => getVesselStats(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useVesselStats = createUseQueryWsf({
+  queryFn: getVesselStats,
+  queryKeyPrefix: ["wsf", "vessels", "stats", "getVesselStats"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});

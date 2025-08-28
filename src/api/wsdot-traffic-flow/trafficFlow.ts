@@ -1,10 +1,7 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -126,36 +123,14 @@ export type TrafficFlows = z.infer<typeof trafficFlowArraySchema>;
 // useTrafficFlows (array)
 // ============================================================================
 
-export const useTrafficFlowById = (
-  params: GetTrafficFlowByIdParams,
-  options?: UseQueryOptions<TrafficFlow, Error>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "traffic-flow",
-      "getTrafficFlowById",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTrafficFlowById(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useTrafficFlowById = createUseQueryWsdot({
+  queryFn: getTrafficFlowById,
+  queryKeyPrefix: ["wsdot", "traffic-flow", "getTrafficFlowById"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});
 
-export const useTrafficFlows = (
-  params: GetTrafficFlowsParams = {},
-  options?: UseQueryOptions<TrafficFlows, Error>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "traffic-flow",
-      "getTrafficFlows",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTrafficFlows(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useTrafficFlows = createUseQueryWsdot({
+  queryFn: getTrafficFlows,
+  queryKeyPrefix: ["wsdot", "traffic-flow", "getTrafficFlows"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

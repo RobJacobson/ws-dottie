@@ -100,8 +100,6 @@
  * for route planning and compliance checking.
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
@@ -111,8 +109,7 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -327,68 +324,22 @@ export type CommercialVehicleRestrictionsWithId = z.infer<
 // TanStack Query Hooks
 // ============================================================================
 
-/**
- * TanStack Query hook for commercial vehicle restrictions with unique identifiers with automatic updates (array).
- *
- * @param params - Parameters object (no parameters required, defaults to empty object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<CommercialVehicleRestrictionWithId[], Error> - Query result with commercial vehicle restrictions
- *
- * @example
- * const { data: restrictions, isLoading } = useCommercialVehicleRestrictionsWithId();
- * if (restrictions) {
- *   console.log(restrictions.length);  // 45
- *   console.log(restrictions[0].BridgeName);  // "I-5 Bridge over Columbia River"
- *   console.log(restrictions[0].RestrictionType);  // 1
- *   console.log(restrictions[0].IsDetourAvailable);  // true
- * }
- */
-export const useCommercialVehicleRestrictionsWithId = (
-  params: GetCommercialVehicleRestrictionsWithIdParams,
-  options?: TanStackOptions<CommercialVehicleRestrictionsWithId>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "commercial-vehicle-restrictions",
-      "getCommercialVehicleRestrictionsWithId",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getCommercialVehicleRestrictionsWithId(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useCommercialVehicleRestrictionsWithId = createUseQueryWsdot({
+  queryFn: getCommercialVehicleRestrictionsWithId,
+  queryKeyPrefix: [
+    "wsdot",
+    "commercial-vehicle-restrictions",
+    "getCommercialVehicleRestrictionsWithId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});
 
-/**
- * TanStack Query hook for commercial vehicle restrictions with automatic updates (array).
- *
- * @param params - Parameters object (no parameters required, defaults to empty object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<CommercialVehicleRestriction[], Error> - Query result with commercial vehicle restrictions
- *
- * @example
- * const { data: restrictions, isLoading } = useCommercialVehicleRestrictions();
- * if (restrictions) {
- *   console.log(restrictions.length);  // 45
- *   console.log(restrictions[0].BridgeName);  // "I-5 Bridge over Columbia River"
- *   console.log(restrictions[0].RestrictionType);  // 1
- *   console.log(restrictions[0].IsDetourAvailable);  // true
- * }
- */
-export const useCommercialVehicleRestrictions = (
-  params: GetCommercialVehicleRestrictionsParams = {},
-  options?: TanStackOptions<CommercialVehicleRestrictions>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "commercial-vehicle-restrictions",
-      "getCommercialVehicleRestrictions",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getCommercialVehicleRestrictions(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useCommercialVehicleRestrictions = createUseQueryWsdot({
+  queryFn: getCommercialVehicleRestrictions,
+  queryKeyPrefix: [
+    "wsdot",
+    "commercial-vehicle-restrictions",
+    "getCommercialVehicleRestrictions",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});

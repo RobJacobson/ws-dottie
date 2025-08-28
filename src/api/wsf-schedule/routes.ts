@@ -1,10 +1,6 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  type TanStackOptions,
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 import { serviceDisruptionSchema } from "./routeDetails";
@@ -145,46 +141,23 @@ export type RoutesWithDisruptions = z.infer<
 // useRoutes
 // ============================================================================
 
-export const useRoutesByTerminals = (
-  params: GetRoutesByTerminalsParams,
-  options?: TanStackOptions<Routes>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "routesByTerminals", JSON.stringify(params)],
-    queryFn: () => getRoutesByTerminals(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useRoutesByTerminals = createUseQueryWsf({
+  queryFn: getRoutesByTerminals,
+  queryKeyPrefix: ["wsf", "schedule", "routes", "getRoutesByTerminals"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useRoutes = (
-  params: GetRoutesParams,
-  options?: TanStackOptions<Routes>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "routes", JSON.stringify(params)],
-    queryFn: () => getRoutes(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useRoutes = createUseQueryWsf({
+  queryFn: getRoutes,
+  queryKeyPrefix: ["wsf", "schedule", "routes", "getRoutes"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useRoutesWithDisruptions = (
-  params: GetRoutesWithDisruptionsParams,
-  options?: TanStackOptions<RoutesWithDisruptions>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "routesWithDisruptions",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getRoutesWithDisruptions(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useRoutesWithDisruptions = createUseQueryWsf({
+  queryFn: getRoutesWithDisruptions,
+  queryKeyPrefix: ["wsf", "schedule", "routes", "getRoutesWithDisruptions"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

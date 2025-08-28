@@ -1,11 +1,7 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  type TanStackOptions,
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -151,32 +147,21 @@ export type TimeAdjustmentsByRoute = z.infer<
 // useTimeAdjustmentsByRoute
 // ============================================================================
 
-export const useTimeAdjustments = (
-  params: GetTimeAdjustmentsParams = {},
-  options?: TanStackOptions<TimeAdjustments>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "timeAdjustments"],
-    queryFn: () => getTimeAdjustments(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-  });
+export const useTimeAdjustments = createUseQueryWsf({
+  queryFn: getTimeAdjustments,
+  queryKeyPrefix: ["wsf", "schedule", "timeAdjustments", "getTimeAdjustments"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useTimeAdjustmentsByRoute = (
-  params: GetTimeAdjustmentsByRouteParams,
-  options?: TanStackOptions<TimeAdjustmentsByRoute>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "timeAdjustmentsByRoute",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTimeAdjustmentsByRoute(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useTimeAdjustmentsByRoute = createUseQueryWsf({
+  queryFn: getTimeAdjustmentsByRoute,
+  queryKeyPrefix: [
+    "wsf",
+    "schedule",
+    "timeAdjustments",
+    "getTimeAdjustmentsByRoute",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

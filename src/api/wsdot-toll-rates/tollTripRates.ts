@@ -1,9 +1,6 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -68,14 +65,8 @@ export type TollTripRates = z.infer<typeof tollTripRatesSchema>;
 // useTollTripRates
 // ============================================================================
 
-export const useTollTripRates = (
-  params: GetTollTripRatesParams = {},
-  options?: UseQueryOptions<TollTripRates, Error>
-) => {
-  return useQuery({
-    queryKey: ["wsdot", "toll-rates", "getTollTripRates"],
-    queryFn: () => getTollTripRates(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useTollTripRates = createUseQueryWsdot({
+  queryFn: getTollTripRates,
+  queryKeyPrefix: ["wsdot", "toll-rates", "getTollTripRates"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

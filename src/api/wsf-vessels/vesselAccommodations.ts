@@ -1,14 +1,10 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
   zNullableString,
   zPositiveInteger,
 } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 import { vesselClassSchema } from "./vesselBasics";
@@ -117,27 +113,26 @@ export type VesselAccommodations = z.infer<
 // useVesselAccommodations (array)
 // ============================================================================
 
-export const useVesselAccommodationsById = (
-  params: GetVesselAccommodationsByIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "accommodations", JSON.stringify(params)],
-    queryFn: () => getVesselAccommodationsById(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselAccommodationsById = createUseQueryWsf({
+  queryFn: getVesselAccommodationsById,
+  queryKeyPrefix: [
+    "wsf",
+    "vessels",
+    "accommodations",
+    "getVesselAccommodationsById",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});
 
-export const useVesselAccommodations = (
-  params: GetVesselAccommodationsParams = {},
-  options?: UseQueryOptions<VesselAccommodations>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "accommodations"],
-    queryFn: () => getVesselAccommodations(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useVesselAccommodations = createUseQueryWsf({
+  queryFn: getVesselAccommodations,
+  queryKeyPrefix: [
+    "wsf",
+    "vessels",
+    "accommodations",
+    "getVesselAccommodations",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});

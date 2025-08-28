@@ -1,10 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { weatherInfoArraySchema } from "./weatherInformation";
 
@@ -97,36 +94,22 @@ export type GetSearchWeatherInformationParams = z.infer<
 // useWeatherInformationForStations
 // ============================================================================
 
-export const useWeatherInformationForStations = (
-  params: GetWeatherInformationForStationsParams,
-  options?: TanStackOptions<import("./weatherInformation").WeatherInfo[]>
-): UseQueryResult<import("./weatherInformation").WeatherInfo[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "weather-information",
-      "getWeatherInformationForStations",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getWeatherInformationForStations(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useWeatherInformationForStations = createUseQueryWsdot({
+  queryFn: getWeatherInformationForStations,
+  queryKeyPrefix: [
+    "wsdot",
+    "weather-information",
+    "getWeatherInformationForStations",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});
 
-export const useSearchWeatherInformation = (
-  params: GetSearchWeatherInformationParams,
-  options?: TanStackOptions<import("./weatherInformation").WeatherInfo[]>
-): UseQueryResult<import("./weatherInformation").WeatherInfo[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "weather-information",
-      "getSearchWeatherInformation",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getSearchWeatherInformation(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useSearchWeatherInformation = createUseQueryWsdot({
+  queryFn: getSearchWeatherInformation,
+  queryKeyPrefix: [
+    "wsdot",
+    "weather-information",
+    "getSearchWeatherInformation",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

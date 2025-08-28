@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -117,42 +113,16 @@ export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicArraySchema>;
 // useFareLineItemsBasic (most popular fare line items)
 // ============================================================================
 
-export const useFareLineItems = (
-  params: GetFareLineItemsParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "fares",
-      "lineItems",
-      params.tripDate.toISOString(),
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-      params.roundTrip,
-    ],
-    queryFn: () => getFareLineItems(params),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useFareLineItems = createUseQueryWsf({
+  queryFn: getFareLineItems,
+  queryKeyPrefix: ["wsf", "fares", "fareLineItems", "getFareLineItems"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});
 
-export const useFareLineItemsBasic = (
-  params: GetFareLineItemsBasicParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "fares",
-      "lineItemsBasic",
-      params.tripDate.toISOString(),
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-      params.roundTrip,
-    ],
-    queryFn: () => getFareLineItemsBasic(params),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useFareLineItemsBasic = createUseQueryWsf({
+  queryFn: getFareLineItemsBasic,
+  queryKeyPrefix: ["wsf", "fares", "fareLineItems", "getFareLineItemsBasic"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});

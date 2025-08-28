@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 import { fareLineItemSchema } from "./fareLineItems";
 import { terminalComboVerboseSchema } from "./terminalCombo";
@@ -85,20 +81,9 @@ export type FareLineItemsVerboseResponse = z.infer<
 // useFareLineItemsVerbose
 // ============================================================================
 
-export const useFareLineItemsVerbose = (
-  params: {
-    tripDate: Date;
-  },
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "fares", "fareLineItemsVerbose", JSON.stringify(params)],
-    queryFn: () =>
-      getFareLineItemsVerbose({
-        tripDate: params.tripDate,
-      }),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useFareLineItemsVerbose = createUseQueryWsf({
+  queryFn: getFareLineItemsVerbose,
+  queryKeyPrefix: ["wsf", "fares", "fareLineItems", "getFareLineItemsVerbose"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});

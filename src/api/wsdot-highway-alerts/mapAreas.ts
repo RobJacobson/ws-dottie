@@ -1,9 +1,6 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -66,19 +63,8 @@ export type MapAreas = z.infer<typeof mapAreasArraySchema>;
 // useMapAreas
 // ============================================================================
 
-export const useMapAreas = (
-  params: GetMapAreasParams = {},
-  options?: UseQueryOptions<MapAreas, Error>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "highway-alerts",
-      "getMapAreas",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getMapAreas(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useMapAreas = createUseQueryWsdot({
+  queryFn: getMapAreas,
+  queryKeyPrefix: ["wsdot", "highway-alerts", "getMapAreas"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

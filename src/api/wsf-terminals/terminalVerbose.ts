@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 import { terminalBulletinItemSchema } from "./terminalBulletins";
@@ -168,26 +164,21 @@ export type TerminalVerboses = z.infer<typeof terminalVerboseArraySchema>;
 // useTerminalVerbose (array)
 // ============================================================================
 
-export const useTerminalVerboseByTerminalId = (
-  params: GetTerminalVerboseByTerminalIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "verbose", params.terminalId],
-    queryFn: () => getTerminalVerboseByTerminalId(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalVerboseByTerminalId = createUseQueryWsf({
+  queryFn: getTerminalVerboseByTerminalId,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "verbose",
+    "getTerminalVerboseByTerminalId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});
 
-export const useTerminalVerbose = (
-  params: GetTerminalVerboseParams = {},
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "verbose"],
-    queryFn: () => getTerminalVerbose(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalVerbose = createUseQueryWsf({
+  queryFn: getTerminalVerbose,
+  queryKeyPrefix: ["wsf", "terminals", "verbose", "getTerminalVerbose"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});

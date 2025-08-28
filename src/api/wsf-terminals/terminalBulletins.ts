@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -114,26 +110,21 @@ export type TerminalBulletins = z.infer<typeof terminalBulletinsArraySchema>;
 // useTerminalBulletins (array)
 // ============================================================================
 
-export const useTerminalBulletinsByTerminalId = (
-  params: GetTerminalBulletinsByTerminalIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "bulletins", params.terminalId],
-    queryFn: () => getTerminalBulletinsByTerminalId(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalBulletinsByTerminalId = createUseQueryWsf({
+  queryFn: getTerminalBulletinsByTerminalId,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "bulletins",
+    "getTerminalBulletinsByTerminalId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});
 
-export const useTerminalBulletins = (
-  params: GetTerminalBulletinsParams = {},
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "bulletins"],
-    queryFn: () => getTerminalBulletins(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalBulletins = createUseQueryWsf({
+  queryFn: getTerminalBulletins,
+  queryKeyPrefix: ["wsf", "terminals", "bulletins", "getTerminalBulletins"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});

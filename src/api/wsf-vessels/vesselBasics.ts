@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zPositiveInteger } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
@@ -112,27 +108,16 @@ export type VesselBasics = z.infer<typeof vesselBasicArraySchema>;
 // useVesselBasics (array)
 // ============================================================================
 
-export const useVesselBasicsById = (
-  params: { vesselId: number },
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "basics", JSON.stringify(params)],
-    queryFn: () => getVesselBasicsById(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselBasicsById = createUseQueryWsf({
+  queryFn: getVesselBasicsById,
+  queryKeyPrefix: ["wsf", "vessels", "basics", "getVesselBasicsById"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});
 
-export const useVesselBasics = (
-  params: GetVesselBasicsParams = {},
-  options?: UseQueryOptions<VesselBasics>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "basics"],
-    queryFn: () => getVesselBasics(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useVesselBasics = createUseQueryWsf({
+  queryFn: getVesselBasics,
+  queryKeyPrefix: ["wsf", "vessels", "basics", "getVesselBasics"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});

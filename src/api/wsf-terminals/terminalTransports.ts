@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 import { terminalTransitLinkSchema } from "./terminalVerbose";
@@ -115,26 +111,21 @@ export type TerminalTransports = z.infer<typeof terminalTransportsArraySchema>;
 // useTerminalTransports (array)
 // ============================================================================
 
-export const useTerminalTransportsByTerminalId = (
-  params: GetTerminalTransportsByTerminalIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "transports", params.terminalId],
-    queryFn: () => getTerminalTransportsByTerminalId(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalTransportsByTerminalId = createUseQueryWsf({
+  queryFn: getTerminalTransportsByTerminalId,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "transports",
+    "getTerminalTransportsByTerminalId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});
 
-export const useTerminalTransports = (
-  params: GetTerminalTransportsParams = {},
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "transports"],
-    queryFn: () => getTerminalTransports(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalTransports = createUseQueryWsf({
+  queryFn: getTerminalTransports,
+  queryKeyPrefix: ["wsf", "terminals", "transports", "getTerminalTransports"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});

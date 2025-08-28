@@ -1,9 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // Import schemas from tollRates to avoid duplication
 import { type TollRate, tollRateArraySchema } from "./tollRates";
@@ -65,19 +62,8 @@ export type GetTripRatesByDateParams = z.infer<
 // useTripRatesByDate
 // ============================================================================
 
-export const useTripRatesByDate = (
-  params: GetTripRatesByDateParams,
-  options?: TanStackOptions<TollRate[]>
-): UseQueryResult<TollRate[], Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "toll-rates",
-      "getTripRatesByDate",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTripRatesByDate(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useTripRatesByDate = createUseQueryWsdot({
+  queryFn: getTripRatesByDate,
+  queryKeyPrefix: ["wsdot", "toll-rates", "getTripRatesByDate"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});

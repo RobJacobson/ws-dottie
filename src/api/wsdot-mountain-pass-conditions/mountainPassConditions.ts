@@ -1,5 +1,3 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
@@ -8,8 +6,7 @@ import {
   zNullableNumber,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -126,36 +123,22 @@ export type MountainPassConditions = z.infer<
 // TanStack Query Hooks (singular first, then array)
 // ============================================================================
 
-export const useMountainPassConditionById = (
-  params: GetMountainPassConditionByIdParams,
-  options?: TanStackOptions<MountainPassCondition>
-): UseQueryResult<MountainPassCondition, Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "mountain-pass-conditions",
-      "getMountainPassConditionById",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getMountainPassConditionById(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useMountainPassConditionById = createUseQueryWsdot({
+  queryFn: getMountainPassConditionById,
+  queryKeyPrefix: [
+    "wsdot",
+    "mountain-pass-conditions",
+    "getMountainPassConditionById",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});
 
-export const useMountainPassConditions = (
-  params: GetMountainPassConditionsParams = {},
-  options?: TanStackOptions<MountainPassConditions>
-): UseQueryResult<MountainPassConditions, Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "mountain-pass-conditions",
-      "getMountainPassConditions",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getMountainPassConditions(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useMountainPassConditions = createUseQueryWsdot({
+  queryFn: getMountainPassConditions,
+  queryKeyPrefix: [
+    "wsdot",
+    "mountain-pass-conditions",
+    "getMountainPassConditions",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});

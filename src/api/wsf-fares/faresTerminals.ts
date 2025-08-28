@@ -1,11 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { jsDateToYyyyMmDd } from "@/shared/fetching/zod/dateParsers";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -116,31 +111,16 @@ export type TerminalMates = z.infer<typeof terminalMatesArraySchema>;
 // useFaresTerminalMates
 // ============================================================================
 
-export const useFaresTerminals = (
-  params: GetFaresTerminalsParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf-fares", "terminals", jsDateToYyyyMmDd(params.tripDate)],
-    queryFn: () => getFaresTerminals(params),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.MODERATE_FREQUENCY, ...options },
-  });
-};
+export const useFaresTerminals = createUseQueryWsf({
+  queryFn: getFaresTerminals,
+  queryKeyPrefix: ["wsf", "fares", "terminals", "getFaresTerminals"],
+  defaultOptions: tanstackQueryOptions.ONE_HOUR_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});
 
-export const useFaresTerminalMates = (
-  params: GetFaresTerminalMatesParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf-fares",
-      "terminal-mates",
-      jsDateToYyyyMmDd(params.tripDate),
-      params.terminalID,
-    ],
-    queryFn: () => getFaresTerminalMates(params),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.MODERATE_FREQUENCY, ...options },
-  });
-};
+export const useFaresTerminalMates = createUseQueryWsf({
+  queryFn: getFaresTerminalMates,
+  queryKeyPrefix: ["wsf", "fares", "terminals", "getFaresTerminalMates"],
+  defaultOptions: tanstackQueryOptions.ONE_HOUR_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});

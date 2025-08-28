@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -86,27 +82,9 @@ export type FareTotals = z.infer<typeof fareTotalsArraySchema>;
 // useFareTotals
 // ============================================================================
 
-export const useFareTotals = (
-  params: {
-    tripDate: Date;
-    departingTerminalID: number;
-    arrivingTerminalID: number;
-    roundTrip: boolean;
-    fareLineItemIDs: number[];
-    quantities: number[];
-  },
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "fares", "fareTotals", JSON.stringify(params)],
-    queryFn: () => getFareTotals(params),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: {
-      ...tanstackQueryOptions.DAILY_UPDATES,
-      enabled:
-        params.fareLineItemIDs.length > 0 && params.quantities.length > 0,
-      ...options,
-    },
-    params,
-  });
-};
+export const useFareTotals = createUseQueryWsf({
+  queryFn: getFareTotals,
+  queryKeyPrefix: ["wsf", "fares", "fareTotals", "getFareTotals"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});

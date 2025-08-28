@@ -1,9 +1,6 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 import type { HighwayAlert } from "./highwayAlerts";
 import { highwayAlertArraySchema } from "./highwayAlerts";
@@ -83,19 +80,8 @@ export type SearchHighwayAlertsParams = z.infer<
 // useSearchHighwayAlerts
 // ============================================================================
 
-export const useSearchHighwayAlerts = (
-  params: SearchHighwayAlertsParams = {},
-  options?: UseQueryOptions<HighwayAlert[], Error>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "highway-alerts",
-      "searchHighwayAlerts",
-      JSON.stringify(params),
-    ],
-    queryFn: () => searchHighwayAlerts(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useSearchHighwayAlerts = createUseQueryWsdot({
+  queryFn: searchHighwayAlerts,
+  queryKeyPrefix: ["wsdot", "highway-alerts", "searchHighwayAlerts"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

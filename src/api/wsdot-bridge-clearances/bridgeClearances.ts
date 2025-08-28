@@ -1,5 +1,3 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
@@ -8,7 +6,7 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 /**
  * WSDOT Bridge Clearances API
@@ -215,32 +213,13 @@ export const bridgeDataGisArraySchema = z.array(bridgeDataGisSchema);
 export type BridgeDataGISArray = z.infer<typeof bridgeDataGisArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
+// TanStack Query Hook
+//
+// useBridgeClearances
 // ============================================================================
 
-/**
- * TanStack Query hook for bridge clearance data with automatic daily updates.
- *
- * @param params - Parameters object for bridge clearance query
- * @param params.route - State route identifier (e.g., "005" for I-5, "099" for SR 99)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<BridgeDataGIS[], Error> - Query result with bridge clearance data array
- *
- * @example
- * const { data: clearances, isLoading } = useBridgeClearances({ route: "005" });
- * if (clearances) {
- *   console.log(clearances.length);  // 150
- *   console.log(clearances[0].VerticalClearanceMinimumInches);  // 169
- * }
- */
-export const useBridgeClearances = (
-  params: GetBridgeClearancesParams,
-  options?: UseQueryOptions<BridgeDataGISArray, Error>
-) => {
-  return useQuery({
-    queryKey: ["api", "wsdot", "bridge-clearances", JSON.stringify(params)],
-    queryFn: () => getBridgeClearances(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useBridgeClearances = createUseQueryWsdot({
+  queryFn: getBridgeClearances,
+  queryKeyPrefix: ["wsdot", "bridge-clearances", "getBridgeClearances"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});

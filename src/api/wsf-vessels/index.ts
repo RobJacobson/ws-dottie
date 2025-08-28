@@ -71,7 +71,7 @@ export {
 // SHARED UTILITIES
 // ============================================================================
 
-// Note: Cache management is now handled automatically via useQueryWithAutoUpdate
+// Note: Cache management is handled automatically via TanStack Query hooks
 // No manual cache provider needed
 
 // ============================================================================

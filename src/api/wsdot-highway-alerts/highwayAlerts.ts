@@ -1,13 +1,7 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  zNullableString,
-  zWsdotDate,
-} from "@/shared/fetching/validation/schemas";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -200,70 +194,26 @@ export type HighwayAlerts = z.infer<typeof highwayAlertArraySchema>;
 // useHighwayAlertsByRegionId (array filtered by region ID)
 // ============================================================================
 
-export const useHighwayAlertById = (
-  params: GetHighwayAlertByIdParams,
-  options?: TanStackOptions<HighwayAlert>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "highway-alerts",
-      "getHighwayAlertById",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getHighwayAlertById(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useHighwayAlertById = createUseQueryWsdot({
+  queryFn: getHighwayAlertById,
+  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlertById"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});
 
-export const useHighwayAlerts = (
-  params: GetHighwayAlertsParams = {},
-  options?: TanStackOptions<HighwayAlerts>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "highway-alerts",
-      "getHighwayAlerts",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getHighwayAlerts(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useHighwayAlerts = createUseQueryWsdot({
+  queryFn: getHighwayAlerts,
+  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlerts"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});
 
-export const useHighwayAlertsByMapArea = (
-  params: GetHighwayAlertsByMapAreaParams,
-  options?: TanStackOptions<HighwayAlerts>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "highway-alerts",
-      "getHighwayAlertsByMapArea",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getHighwayAlertsByMapArea(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useHighwayAlertsByMapArea = createUseQueryWsdot({
+  queryFn: getHighwayAlertsByMapArea,
+  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});
 
-export const useHighwayAlertsByRegionId = (
-  params: GetHighwayAlertsByRegionIdParams,
-  options?: TanStackOptions<HighwayAlerts>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "highway-alerts",
-      "getHighwayAlertsByRegionId",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getHighwayAlertsByRegionId(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useHighwayAlertsByRegionId = createUseQueryWsdot({
+  queryFn: getHighwayAlertsByRegionId,
+  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlertsByRegionId"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

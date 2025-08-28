@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
 // ============================================================================
@@ -140,26 +136,26 @@ export type TerminalSailingSpaces = z.infer<
 // useTerminalSailingSpace (array)
 // ============================================================================
 
-export const useTerminalSailingSpaceByTerminalId = (
-  params: GetTerminalSailingSpaceByTerminalIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "sailingSpace", params.terminalId],
-    queryFn: () => getTerminalSailingSpaceByTerminalId(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalSailingSpaceByTerminalId = createUseQueryWsf({
+  queryFn: getTerminalSailingSpaceByTerminalId,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "sailingSpace",
+    "getTerminalSailingSpaceByTerminalId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});
 
-export const useTerminalSailingSpace = (
-  params: GetTerminalSailingSpaceParams = {},
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "sailingSpace"],
-    queryFn: () => getTerminalSailingSpace(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalSailingSpace = createUseQueryWsf({
+  queryFn: getTerminalSailingSpace,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "sailingSpace",
+    "getTerminalSailingSpace",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});

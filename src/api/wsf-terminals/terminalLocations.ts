@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -117,26 +113,21 @@ export type TerminalLocations = z.infer<typeof terminalLocationsArraySchema>;
 // useTerminalLocations (array)
 // ============================================================================
 
-export const useTerminalLocationsByTerminalId = (
-  params: GetTerminalLocationsByTerminalIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "locations", params.terminalId],
-    queryFn: () => getTerminalLocationsByTerminalId(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalLocationsByTerminalId = createUseQueryWsf({
+  queryFn: getTerminalLocationsByTerminalId,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "locations",
+    "getTerminalLocationsByTerminalId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});
 
-export const useTerminalLocations = (
-  params: GetTerminalLocationsParams = {},
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "locations"],
-    queryFn: () => getTerminalLocations(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalLocations = createUseQueryWsf({
+  queryFn: getTerminalLocations,
+  queryKeyPrefix: ["wsf", "terminals", "locations", "getTerminalLocations"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});

@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -105,27 +101,21 @@ export type TerminalBasicsArray = z.infer<typeof terminalBasicsArraySchema>;
 // useTerminalBasics (array)
 // ============================================================================
 
-export const useTerminalBasicsByTerminalId = (
-  params: GetTerminalBasicsByTerminalIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "basics", JSON.stringify(params)],
-    queryFn: () => getTerminalBasicsByTerminalId(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useTerminalBasicsByTerminalId = createUseQueryWsf({
+  queryFn: getTerminalBasicsByTerminalId,
+  queryKeyPrefix: [
+    "wsf",
+    "terminals",
+    "basics",
+    "getTerminalBasicsByTerminalId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});
 
-export const useTerminalBasics = (
-  params: GetTerminalBasicsParams = {},
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "terminals", "basics"],
-    queryFn: () => getTerminalBasics(params),
-    fetchLastUpdateTime: getCacheFlushDateTerminals,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalBasics = createUseQueryWsf({
+  queryFn: getTerminalBasics,
+  queryKeyPrefix: ["wsf", "terminals", "basics", "getTerminalBasics"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateTerminals,
+});

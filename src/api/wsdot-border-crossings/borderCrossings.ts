@@ -72,8 +72,6 @@
  * ```
  */
 
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
@@ -82,8 +80,7 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -202,28 +199,8 @@ export type BorderCrossings = z.infer<typeof borderCrossingDataArraySchema>;
 // useBorderCrossings
 // ============================================================================
 
-/**
- * TanStack Query hook for border crossing data with automatic updates (array).
- *
- * @param params - No parameters required (empty object)
- * @param options - Optional TanStack Query options for caching and refetch behavior
- * @returns UseQueryResult<BorderCrossingData[], Error> - Query result with array of real-time border crossing data
- *
- * @example
- * const { data: borderCrossings, isLoading } = useBorderCrossings();
- * if (borderCrossings) {
- *   console.log(borderCrossings.length);  // 12
- *   console.log(borderCrossings[0].CrossingName);  // "I5"
- * }
- */
-export const useBorderCrossings = (
-  params: GetBorderCrossingsParams = {},
-  options?: TanStackOptions<BorderCrossings>
-) => {
-  return useQuery({
-    queryKey: ["api", "wsdot", "border-crossings", JSON.stringify(params)],
-    queryFn: () => getBorderCrossings(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useBorderCrossings = createUseQueryWsdot({
+  queryFn: getBorderCrossings,
+  queryKeyPrefix: ["wsdot", "border-crossings", "getBorderCrossings"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

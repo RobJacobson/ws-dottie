@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zPositiveInteger } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
@@ -135,27 +131,16 @@ export type VesselVerboses = z.infer<typeof vesselVerboseArraySchema>;
 // useVesselVerbose (array)
 // ============================================================================
 
-export const useVesselVerboseById = (
-  params: GetVesselVerboseByIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "verbose", JSON.stringify(params)],
-    queryFn: () => getVesselVerboseById(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselVerboseById = createUseQueryWsf({
+  queryFn: getVesselVerboseById,
+  queryKeyPrefix: ["wsf", "vessels", "verbose", "getVesselVerboseById"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});
 
-export const useVesselVerbose = (
-  params: GetVesselVerboseParams = {},
-  options?: UseQueryOptions<VesselVerboses>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "verbose"],
-    queryFn: () => getVesselVerbose(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useVesselVerbose = createUseQueryWsf({
+  queryFn: getVesselVerbose,
+  queryKeyPrefix: ["wsf", "vessels", "verbose", "getVesselVerbose"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});

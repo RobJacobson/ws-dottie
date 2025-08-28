@@ -1,11 +1,7 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  type TanStackOptions,
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -191,51 +187,28 @@ export type RouteDetailsByRouteResponse = z.infer<
 // useRouteDetailsByRoute
 // ============================================================================
 
-export const useRouteDetailsByTerminals = (
-  params: GetRouteDetailsByTerminalsParams,
-  options?: TanStackOptions<RouteDetailsArray>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "routeDetailsByTerminals",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getRouteDetailsByTerminals(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useRouteDetailsByTerminals = createUseQueryWsf({
+  queryFn: getRouteDetailsByTerminals,
+  queryKeyPrefix: [
+    "wsf",
+    "schedule",
+    "routeDetails",
+    "getRouteDetailsByTerminals",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useRouteDetailsByRoute = (
-  params: GetRouteDetailsByRouteParams,
-  options?: TanStackOptions<RouteDetailsByRouteResponse>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "routeDetailsByRoute",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getRouteDetailsByRoute(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useRouteDetailsByRoute = createUseQueryWsf({
+  queryFn: getRouteDetailsByRoute,
+  queryKeyPrefix: ["wsf", "schedule", "routeDetails", "getRouteDetailsByRoute"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useRouteDetails = (
-  params: GetRouteDetailsParams,
-  options?: TanStackOptions<RouteDetailsArray>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "routeDetails", JSON.stringify(params)],
-    queryFn: () => getRouteDetails(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useRouteDetails = createUseQueryWsf({
+  queryFn: getRouteDetails,
+  queryKeyPrefix: ["wsf", "schedule", "routeDetails", "getRouteDetails"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

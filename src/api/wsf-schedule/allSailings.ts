@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -125,14 +121,9 @@ export type Sailings = z.infer<typeof sailingsArraySchema>;
 // useAllSailings
 // ============================================================================
 
-export const useAllSailings = (
-  params: GetAllSailingsParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "allSailings", params.schedRouteId],
-    queryFn: () => getAllSailings(params),
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useAllSailings = createUseQueryWsf({
+  queryFn: getAllSailings,
+  queryKeyPrefix: ["wsf", "schedule", "allSailings", "getAllSailings"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

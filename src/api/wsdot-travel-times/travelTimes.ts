@@ -1,9 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -107,36 +104,14 @@ export type TravelTimes = z.infer<typeof travelTimesArraySchema>;
 // useTravelTimes (array)
 // ============================================================================
 
-export const useTravelTimeById = (
-  params: GetTravelTimeByIdParams,
-  options?: TanStackOptions<TravelTimeRoute>
-): UseQueryResult<TravelTimeRoute, Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "travel-times",
-      "getTravelTimeById",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTravelTimeById(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useTravelTimeById = createUseQueryWsdot({
+  queryFn: getTravelTimeById,
+  queryKeyPrefix: ["wsdot", "travel-times", "getTravelTimeById"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});
 
-export const useTravelTimes = (
-  params: GetTravelTimesParams = {},
-  options?: TanStackOptions<TravelTimes>
-): UseQueryResult<TravelTimes, Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "travel-times",
-      "getTravelTimes",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTravelTimes(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useTravelTimes = createUseQueryWsdot({
+  queryFn: getTravelTimes,
+  queryKeyPrefix: ["wsdot", "travel-times", "getTravelTimes"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});

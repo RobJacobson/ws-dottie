@@ -1,5 +1,3 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
@@ -9,7 +7,7 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -134,36 +132,18 @@ export type WeatherInfos = z.infer<typeof weatherInfoArraySchema>;
 // useWeatherInformation
 // ============================================================================
 
-export const useWeatherInformation = (
-  params: GetWeatherInformationParams = {},
-  options?: UseQueryOptions<WeatherInfos, Error>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "weather-information",
-      "getWeatherInformation",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getWeatherInformation(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useWeatherInformation = createUseQueryWsdot({
+  queryFn: getWeatherInformation,
+  queryKeyPrefix: ["wsdot", "weather-information", "getWeatherInformation"],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});
 
-export const useWeatherInformationByStationId = (
-  params: GetWeatherInformationByStationIdParams,
-  options?: UseQueryOptions<WeatherInfo, Error>
-) => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "weather-information",
-      "getWeatherInformationByStationId",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getWeatherInformationByStationId(params),
-    ...tanstackQueryOptions.MINUTE_UPDATES,
-    ...options,
-  });
-};
+export const useWeatherInformationByStationId = createUseQueryWsdot({
+  queryFn: getWeatherInformationByStationId,
+  queryKeyPrefix: [
+    "wsdot",
+    "weather-information",
+    "getWeatherInformationByStationId",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
+});

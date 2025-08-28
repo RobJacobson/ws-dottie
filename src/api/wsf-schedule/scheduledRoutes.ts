@@ -1,11 +1,7 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 import { serviceDisruptionSchema } from "./routeDetails";
@@ -116,36 +112,21 @@ export type ScheduledRoutes = z.infer<typeof scheduledRoutesArraySchema>;
 // useScheduledRoutesBySeason
 // ============================================================================
 
-export const useScheduledRoutes = (
-  params: GetScheduledRoutesParams = {},
-  options?: UseQueryOptions
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "scheduledRoutes"],
-    queryFn: () => getScheduledRoutes(params),
-    options: {
-      ...tanstackQueryOptions.DAILY_UPDATES,
-      ...options,
-    },
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-  });
+export const useScheduledRoutes = createUseQueryWsf({
+  queryFn: getScheduledRoutes,
+  queryKeyPrefix: ["wsf", "schedule", "scheduledRoutes", "getScheduledRoutes"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useScheduledRoutesBySeason = (
-  params: GetScheduledRoutesBySeasonParams,
-  options?: UseQueryOptions
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "scheduledRoutesBySeason",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getScheduledRoutesBySeason(params),
-    options: {
-      ...tanstackQueryOptions.DAILY_UPDATES,
-      ...options,
-    },
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useScheduledRoutesBySeason = createUseQueryWsf({
+  queryFn: getScheduledRoutesBySeason,
+  queryKeyPrefix: [
+    "wsf",
+    "schedule",
+    "scheduledRoutes",
+    "getScheduledRoutesBySeason",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

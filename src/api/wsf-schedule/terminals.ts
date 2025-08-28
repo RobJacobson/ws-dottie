@@ -1,10 +1,6 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  type TanStackOptions,
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -176,59 +172,35 @@ export type ScheduleTerminalCombos = z.infer<
 // useTerminalsAndMatesByRoute
 // ============================================================================
 
-export const useTerminals = (
-  params: { tripDate: Date },
-  options?: TanStackOptions<ScheduleTerminals>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "terminals", JSON.stringify(params)],
-    queryFn: () => getTerminals(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useTerminals = createUseQueryWsf({
+  queryFn: getTerminals,
+  queryKeyPrefix: ["wsf", "schedule", "terminals", "getTerminals"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useTerminalMates = (
-  params: { tripDate: Date; terminalId: number },
-  options?: TanStackOptions<ScheduleTerminals>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "terminalMates", JSON.stringify(params)],
-    queryFn: () => getTerminalMates(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useTerminalMates = createUseQueryWsf({
+  queryFn: getTerminalMates,
+  queryKeyPrefix: ["wsf", "schedule", "terminals", "getTerminalMates"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useTerminalsAndMates = (
-  params: { tripDate: Date },
-  options?: TanStackOptions<ScheduleTerminalCombos>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: ["wsf", "schedule", "terminalsAndMates", JSON.stringify(params)],
-    queryFn: () => getTerminalsAndMates(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useTerminalsAndMates = createUseQueryWsf({
+  queryFn: getTerminalsAndMates,
+  queryKeyPrefix: ["wsf", "schedule", "terminals", "getTerminalsAndMates"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});
 
-export const useTerminalsAndMatesByRoute = (
-  params: { tripDate: Date; routeId: number },
-  options?: TanStackOptions<ScheduleTerminalCombos>
-) =>
-  useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "schedule",
-      "terminalsAndMatesByRoute",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getTerminalsAndMatesByRoute(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-    fetchLastUpdateTime: getCacheFlushDateSchedule,
-    params,
-  });
+export const useTerminalsAndMatesByRoute = createUseQueryWsf({
+  queryFn: getTerminalsAndMatesByRoute,
+  queryKeyPrefix: [
+    "wsf",
+    "schedule",
+    "terminals",
+    "getTerminalsAndMatesByRoute",
+  ],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getCacheFlushDateSchedule,
+});

@@ -76,10 +76,3 @@ export type {
   TerminalCombo,
   TerminalComboVerbose,
 } from "./terminalCombo";
-
-// ============================================================================
-// SHARED UTILITIES
-// ============================================================================
-
-// Note: Cache management is now handled automatically via useQueryWithAutoUpdate
-// No manual cache provider needed

@@ -59,7 +59,7 @@ export const createWsfCacheFlushDate = (apiType: WsfApiType) => {
     return useQuery({
       queryKey: [...queryKey, params],
       queryFn: () => getCacheFlushDate(params),
-      ...tanstackQueryOptions.DAILY_UPDATES,
+      ...tanstackQueryOptions.ONE_DAY_POLLING,
       ...options,
     });
   };

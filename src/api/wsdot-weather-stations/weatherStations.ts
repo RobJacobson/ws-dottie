@@ -1,9 +1,6 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
+import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -72,19 +69,8 @@ export type WeatherStations = z.infer<typeof weatherStationArraySchema>;
 // useWeatherStations
 // ============================================================================
 
-export const useWeatherStations = (
-  params: GetWeatherStationsParams = {},
-  options?: TanStackOptions<WeatherStations>
-): UseQueryResult<WeatherStations, Error> => {
-  return useQuery({
-    queryKey: [
-      "wsdot",
-      "weather-stations",
-      "getWeatherStations",
-      JSON.stringify(params),
-    ],
-    queryFn: () => getWeatherStations(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
-  });
-};
+export const useWeatherStations = createUseQueryWsdot({
+  queryFn: getWeatherStations,
+  queryKeyPrefix: ["wsdot", "weather-stations", "getWeatherStations"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+});

@@ -1,14 +1,10 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import {
   zPositiveInteger,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
@@ -38,10 +34,14 @@ export const getVesselLocationsByVesselId = async (
 export const getVesselLocations = async (
   params: GetVesselLocationsParams = {}
 ): Promise<VesselLocations> => {
-  return zodFetch(ENDPOINT_ALL, {
-    input: getVesselLocationsParamsSchema,
-    output: vesselLocationArraySchema,
-  });
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      input: getVesselLocationsParamsSchema,
+      output: vesselLocationArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -73,8 +73,6 @@ export type GetVesselLocationsParams = z.infer<
 // VesselLocation
 // ============================================================================
 
-const zDate = () => zWsdotDate();
-
 // Output Schema & Type for getVesselLocationsByVesselId (single item by id):
 
 export const vesselLocationSchema = z.object({
@@ -93,14 +91,14 @@ export const vesselLocationSchema = z.object({
   Heading: z.number().min(0).max(359),
   InService: z.boolean(),
   AtDock: z.boolean(),
-  LeftDock: zDate().nullable(),
-  Eta: zDate().nullable(),
+  LeftDock: zWsdotDate().nullable(),
+  Eta: zWsdotDate().nullable(),
   EtaBasis: z.string().nullable(),
-  ScheduledDeparture: zDate().nullable(),
+  ScheduledDeparture: zWsdotDate().nullable(),
   ManagedBy: z.number().nullable(),
   OpRouteAbbrev: z.array(z.string()).nullable(),
   SortSeq: z.number().nullable(),
-  TimeStamp: zDate(),
+  TimeStamp: zWsdotDate(),
   VesselPositionNum: z.number().nullable(),
   VesselWatchMsg: z.string().nullable(),
   VesselWatchShutFlag: z.string(),
@@ -125,28 +123,21 @@ export type VesselLocations = z.infer<typeof vesselLocationArraySchema>;
 // useVesselLocations (array)
 // ============================================================================
 
-export const useVesselLocationsByVesselId = (
-  params: GetVesselLocationsByVesselIdParams,
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "locations", JSON.stringify(params)],
-    queryFn: () => getVesselLocationsByVesselId(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.REALTIME_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselLocationsByVesselId = createUseQueryWsf({
+  queryFn: getVesselLocationsByVesselId,
+  queryKeyPrefix: [
+    "wsf",
+    "vessels",
+    "locations",
+    "getVesselLocationsByVesselId",
+  ],
+  defaultOptions: tanstackQueryOptions.FIVE_SEC_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});
 
-export const useVesselLocations = (
-  params: GetVesselLocationsParams = {},
-  options?: UseQueryOptions<VesselLocations>
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: ["wsf", "vessels", "locations", JSON.stringify(params)],
-    queryFn: () => getVesselLocations(params),
-    fetchLastUpdateTime: getCacheFlushDateVessels,
-    options: { ...tanstackQueryOptions.REALTIME_UPDATES, ...options },
-    params,
-  });
-};
+export const useVesselLocations = createUseQueryWsf({
+  queryFn: getVesselLocations,
+  queryKeyPrefix: ["wsf", "vessels", "locations", "getVesselLocations"],
+  defaultOptions: tanstackQueryOptions.FIVE_SEC_POLLING,
+  getCacheFlushDate: getCacheFlushDateVessels,
+});

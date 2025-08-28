@@ -1,10 +1,6 @@
-import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import {
-  tanstackQueryOptions,
-  useQueryWithAutoUpdate,
-} from "@/shared/tanstack";
+import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -118,52 +114,16 @@ export type TerminalComboVerboses = z.infer<
 // useTerminalComboVerbose (array)
 // ============================================================================
 
-export const useTerminalCombo = (
-  params: {
-    tripDate: Date;
-    departingTerminalID: number;
-    arrivingTerminalID: number;
-  },
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "fares",
-      "terminalCombo",
-      params.tripDate.toISOString(),
-      params.departingTerminalID,
-      params.arrivingTerminalID,
-    ],
-    queryFn: () =>
-      getTerminalCombo({
-        tripDate: params.tripDate,
-        departingTerminalID: params.departingTerminalID,
-        arrivingTerminalID: params.arrivingTerminalID,
-      }),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalCombo = createUseQueryWsf({
+  queryFn: getTerminalCombo,
+  queryKeyPrefix: ["wsf", "fares", "terminalCombo", "getTerminalCombo"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});
 
-export const useTerminalComboVerbose = (
-  params: {
-    tripDate: Date;
-  },
-  options?: UseQueryOptions
-) => {
-  return useQueryWithAutoUpdate({
-    queryKey: [
-      "wsf",
-      "fares",
-      "terminalComboVerbose",
-      params.tripDate.toISOString(),
-    ],
-    queryFn: () =>
-      getTerminalComboVerbose({
-        tripDate: params.tripDate,
-      }),
-    fetchLastUpdateTime: getFaresCacheFlushDate,
-    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
-  });
-};
+export const useTerminalComboVerbose = createUseQueryWsf({
+  queryFn: getTerminalComboVerbose,
+  queryKeyPrefix: ["wsf", "fares", "terminalCombo", "getTerminalComboVerbose"],
+  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
+  getCacheFlushDate: getFaresCacheFlushDate,
+});
