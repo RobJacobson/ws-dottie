@@ -7,7 +7,6 @@ import {
   getAlerts,
   getAllSailings,
   getCacheFlushDateSchedule,
-  getRouteDetails,
   getRoutes,
   getSailings,
   getScheduledRoutes,
@@ -25,7 +24,7 @@ import {
   validDateRangeSchema,
 } from "@/api/wsf-schedule";
 
-import { ApiModuleConfig } from "../utils/types";
+import type { ApiModuleConfig } from "../utils/types";
 
 export const wsfScheduleTestConfig: ApiModuleConfig = {
   moduleName: "WSF Schedule",
@@ -549,8 +548,8 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
       ],
     },
     {
-      apiFunction: getRouteDetails,
-      outputSchema: routeDetailsArraySchema,
+      apiFunction: getRoutes,
+      outputSchema: routesArraySchema,
       validParams: { tripDate: new Date("2025-08-23") },
       invalidParams: [
         {
@@ -562,19 +561,19 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           expectedError: "Invalid date",
         },
       ],
-      endpointName: "getRouteDetails",
+      endpointName: "getRoutes",
       category: "parameterized",
       maxResponseTime: 4000,
       customTests: [
         {
-          name: "should return route details with valid structure",
+          name: "should return routes with valid structure",
           test: async () => {
-            const result = await getRouteDetails({
+            const result = await getRoutes({
               tripDate: new Date("2025-08-23"),
             });
             expect(result.length).toBeGreaterThan(0);
 
-            // Validate first route detail has required fields
+            // Validate first route has required fields
             const firstRoute = result[0];
             expect(firstRoute.RouteID).toBeGreaterThan(0);
             expect(firstRoute.RouteAbbrev).toBeDefined();
@@ -591,7 +590,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
         {
           name: "should return unique route IDs",
           test: async () => {
-            const result = await getRouteDetails({
+            const result = await getRoutes({
               tripDate: new Date("2025-08-23"),
             });
             const routeIds = result.map((r) => r.RouteID);
@@ -602,7 +601,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
         {
           name: "should return routes with reasonable descriptions",
           test: async () => {
-            const result = await getRouteDetails({
+            const result = await getRoutes({
               tripDate: new Date("2025-08-23"),
             });
 

@@ -428,7 +428,7 @@ export const highwayAlertsTestConfig: ApiModuleConfig = {
       validParams: { MapArea: "Seattle" }, // Use first valid map area from test data
       invalidParams: [], // Map area endpoints return empty arrays for invalid areas
       endpointName: "getHighwayAlertsByMapArea",
-      category: "search",
+      category: "parameterized",
       maxResponseTime: 6000,
 
       customTests: [

@@ -3,7 +3,7 @@ import { expect } from "vitest";
 import {
   borderCrossingDataArraySchema,
   getBorderCrossings,
-} from "@/api/wsdot-border-crossings";
+} from "../../../src/api/wsdot-border-crossings";
 
 import type { ApiModuleConfig } from "../utils/types";
 
@@ -99,7 +99,7 @@ export const wsdotBorderCrossingsTestConfig: ApiModuleConfig = {
             result.forEach((crossing) => {
               // Crossing names should be non-empty strings
               expect(crossing.CrossingName).toBeTruthy();
-              expect(crossing.CrossingName.trim().length).toBeGreaterThan(0);
+              expect(crossing.CrossingName?.trim().length).toBeGreaterThan(0);
 
               // Should not have excessive whitespace
               expect(crossing.CrossingName).not.toMatch(/^\s+$/);

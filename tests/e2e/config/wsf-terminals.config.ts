@@ -36,7 +36,7 @@ import {
 } from "@/api/wsf-terminals/getCacheFlushDateTerminals";
 
 import { wsfTestData } from "../utils/test-data";
-import { ApiModuleConfig } from "../utils/types";
+import type { ApiModuleConfig } from "../utils/types";
 
 export const wsfTerminalsTestConfig: ApiModuleConfig = {
   moduleName: "WSF Terminals",

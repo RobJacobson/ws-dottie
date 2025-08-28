@@ -34,7 +34,7 @@ import {
   vesselVerboseSchema,
 } from "@/api/wsf-vessels";
 
-import { ApiModuleConfig } from "../utils/types";
+import type { ApiModuleConfig } from "../utils/types";
 
 export const wsfVesselsTestConfig: ApiModuleConfig = {
   moduleName: "WSF Vessels",

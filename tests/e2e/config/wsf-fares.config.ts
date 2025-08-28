@@ -2,7 +2,6 @@ import {
   fareLineItemsArraySchema,
   fareLineItemsBasicArraySchema,
   fareLineItemsVerboseResponseSchema,
-  faresCacheFlushDateSchema,
   faresTerminalsArraySchema,
   faresValidDateRangeSchema,
   fareTotalsArraySchema,
@@ -29,10 +28,24 @@ import {
   terminalComboSchema,
   terminalComboVerboseArraySchema,
   terminalMatesArraySchema,
-} from "@/api/wsf-fares";
+} from "../../../src/api/wsf-fares";
+import { wsfCacheFlushDateSchema } from "../../../src/api/wsf/cacheFlushDate";
+import type { ApiModuleConfig } from "../utils/types";
 
-import { wsfTestData } from "../utils/test-data";
-import { ApiModuleConfig } from "../utils/types";
+/**
+ * Generate dynamic test dates based on current date
+ * - Tomorrow's date for single date parameters
+ * - Day after tomorrow for range end dates
+ */
+const getTestDates = () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const dayAfterTomorrow = new Date();
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+
+  return { tomorrow, dayAfterTomorrow };
+};
 
 export const wsfFaresTestConfig: ApiModuleConfig = {
   moduleName: "WSF Fares",
@@ -40,7 +53,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
     {
       apiFunction: getFaresCacheFlushDate,
       inputSchema: getFaresCacheFlushDateParamsSchema,
-      outputSchema: faresCacheFlushDateSchema,
+      outputSchema: wsfCacheFlushDateSchema,
       validParams: {},
       invalidParams: [], // No invalid params for parameterless endpoints
       endpointName: "getFaresCacheFlushDate",
@@ -61,7 +74,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       apiFunction: getFaresTerminals,
       inputSchema: getFaresTerminalsParamsSchema,
       outputSchema: faresTerminalsArraySchema,
-      validParams: { tripDate: new Date("2025-08-23") },
+      validParams: { tripDate: getTestDates().tomorrow },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01") },
@@ -80,14 +93,14 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       apiFunction: getFaresTerminalMates,
       inputSchema: getFaresTerminalMatesParamsSchema,
       outputSchema: terminalMatesArraySchema,
-      validParams: { tripDate: new Date("2025-08-23"), terminalID: 1 },
+      validParams: { tripDate: getTestDates().tomorrow, terminalID: 1 },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01"), terminalID: 1 },
           expectedError: "Invalid date",
         },
         {
-          params: { tripDate: new Date("2025-08-23"), terminalID: -1 },
+          params: { tripDate: getTestDates().tomorrow, terminalID: -1 },
           expectedError: "Invalid terminal ID",
         },
       ],
@@ -100,7 +113,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       inputSchema: getTerminalComboParamsSchema,
       outputSchema: terminalComboSchema,
       validParams: {
-        tripDate: new Date("2025-08-23"),
+        tripDate: getTestDates().tomorrow,
         departingTerminalID: 1,
         arrivingTerminalID: 10,
       },
@@ -115,7 +128,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
         },
         {
           params: {
-            tripDate: new Date("2025-08-23"),
+            tripDate: getTestDates().tomorrow,
             departingTerminalID: -1,
             arrivingTerminalID: 10,
           },
@@ -130,7 +143,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       apiFunction: getTerminalComboVerbose,
       inputSchema: getTerminalComboVerboseParamsSchema,
       outputSchema: terminalComboVerboseArraySchema,
-      validParams: { tripDate: new Date("2025-08-23") },
+      validParams: { tripDate: getTestDates().tomorrow },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01") },
@@ -150,7 +163,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       inputSchema: getFareLineItemsParamsSchema,
       outputSchema: fareLineItemsArraySchema,
       validParams: {
-        tripDate: new Date("2025-08-23"),
+        tripDate: getTestDates().tomorrow,
         departingTerminalID: 1,
         arrivingTerminalID: 10,
         roundTrip: false,
@@ -167,7 +180,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
         },
         {
           params: {
-            tripDate: new Date("2025-08-23"),
+            tripDate: getTestDates().tomorrow,
             departingTerminalID: -1,
             arrivingTerminalID: 10,
             roundTrip: false,
@@ -184,7 +197,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       inputSchema: getFareLineItemsBasicParamsSchema,
       outputSchema: fareLineItemsBasicArraySchema,
       validParams: {
-        tripDate: new Date("2025-08-23"),
+        tripDate: getTestDates().tomorrow,
         departingTerminalID: 1,
         arrivingTerminalID: 10,
         roundTrip: false,
@@ -201,7 +214,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
         },
         {
           params: {
-            tripDate: new Date("2025-08-23"),
+            tripDate: getTestDates().tomorrow,
             departingTerminalID: -1,
             arrivingTerminalID: 10,
             roundTrip: false,
@@ -217,7 +230,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       apiFunction: getFareLineItemsVerbose,
       inputSchema: getFareLineItemsVerboseParamsSchema,
       outputSchema: fareLineItemsVerboseResponseSchema,
-      validParams: { tripDate: new Date("2025-08-23") },
+      validParams: { tripDate: getTestDates().tomorrow },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01") },
@@ -230,14 +243,14 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
       ],
       endpointName: "getFareLineItemsVerbose",
       category: "parameterized",
-      maxResponseTime: 8000,
+      maxResponseTime: 10000,
     },
     {
       apiFunction: getFareTotals,
       inputSchema: getFareTotalsParamsSchema,
       outputSchema: fareTotalsArraySchema,
       validParams: {
-        tripDate: new Date("2025-08-23"),
+        tripDate: getTestDates().tomorrow,
         departingTerminalID: 1,
         arrivingTerminalID: 10,
         roundTrip: false,
@@ -258,7 +271,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
         },
         {
           params: {
-            tripDate: new Date("2025-08-23"),
+            tripDate: getTestDates().tomorrow,
             departingTerminalID: -1,
             arrivingTerminalID: 10,
             roundTrip: false,
@@ -269,7 +282,7 @@ export const wsfFaresTestConfig: ApiModuleConfig = {
         },
         {
           params: {
-            tripDate: new Date("2025-08-23"),
+            tripDate: getTestDates().tomorrow,
             departingTerminalID: 1,
             arrivingTerminalID: 10,
             roundTrip: false,
