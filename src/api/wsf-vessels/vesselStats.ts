@@ -1,16 +1,16 @@
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
+  createVesselIdDescription,
   zNullableNumber,
   zNullableString,
   zPositiveInteger,
 } from "@/shared/fetching/validation/schemas";
-import { createVesselIdDescription } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 import { vesselClassSchema } from "./vesselBasics";
@@ -38,10 +38,16 @@ export const getVesselStatsById = async (
   );
 };
 
-export const getVesselStats = async (): Promise<VesselStats[]> => {
-  return zodFetch(ENDPOINT_ALL, {
-    output: vesselStatsArraySchema,
-  });
+export const getVesselStats = async (
+  params: GetVesselStatsParams = {}
+): Promise<VesselStatsArray> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: vesselStatsArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -108,6 +114,11 @@ export type VesselStats = z.infer<typeof vesselStatsSchema>;
 
 export const vesselStatsArraySchema = z.array(vesselStatsSchema);
 
+/**
+ * VesselStatsArray type - represents an array of vessel stats objects
+ */
+export type VesselStatsArray = z.infer<typeof vesselStatsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -117,7 +128,7 @@ export const vesselStatsArraySchema = z.array(vesselStatsSchema);
 
 export const useVesselStatsById = (
   params: GetVesselStatsByIdParams,
-  options?: TanStackOptions<VesselStats>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "stats", JSON.stringify(params)],
@@ -128,10 +139,13 @@ export const useVesselStatsById = (
   });
 };
 
-export const useVesselStats = (options?: TanStackOptions<VesselStats[]>) => {
+export const useVesselStats = (
+  params: GetVesselStatsParams = {},
+  options?: UseQueryOptions<VesselStatsArray>
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "stats"],
-    queryFn: getVesselStats,
+    queryFn: () => getVesselStats(params),
     fetchLastUpdateTime: getCacheFlushDateVessels,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

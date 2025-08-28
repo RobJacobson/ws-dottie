@@ -1,13 +1,12 @@
 import {
+  type UseQueryOptions,
   type UseQueryResult,
   useQuery,
-  type UseQueryOptions,
 } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function

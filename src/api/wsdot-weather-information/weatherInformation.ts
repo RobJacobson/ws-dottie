@@ -1,8 +1,6 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import {
   zLatitude,
@@ -11,6 +9,7 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -26,7 +25,7 @@ const STATION_BY_ID_ENDPOINT =
 
 export const getWeatherInformation = async (
   params: GetWeatherInformationParams = {}
-) => {
+): Promise<WeatherInfos> => {
   return zodFetch(
     ALL_WEATHER_ENDPOINT,
     {
@@ -124,6 +123,11 @@ export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
 
 export const weatherInfoArraySchema = z.array(weatherInfoSchema);
 
+/**
+ * WeatherInfos type - represents an array of weather info objects
+ */
+export type WeatherInfos = z.infer<typeof weatherInfoArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -132,7 +136,7 @@ export const weatherInfoArraySchema = z.array(weatherInfoSchema);
 
 export const useWeatherInformation = (
   params: GetWeatherInformationParams = {},
-  options?: UseQueryOptions<WeatherInfo[], Error>
+  options?: UseQueryOptions<WeatherInfos, Error>
 ) => {
   return useQuery({
     queryKey: [

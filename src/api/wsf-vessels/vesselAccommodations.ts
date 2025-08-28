@@ -1,13 +1,14 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zNullableString,
   zPositiveInteger,
 } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 import { vesselClassSchema } from "./vesselBasics";
@@ -36,12 +37,16 @@ export const getVesselAccommodationsById = async (
   );
 };
 
-export const getVesselAccommodations = async (): Promise<
-  VesselAccommodation[]
-> => {
-  return zodFetch(ENDPOINT_ALL, {
-    output: vesselAccommodationArraySchema,
-  });
+export const getVesselAccommodations = async (
+  params: GetVesselAccommodationsParams = {}
+): Promise<VesselAccommodations> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: vesselAccommodationArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -98,6 +103,13 @@ export const vesselAccommodationArraySchema = z.array(
   vesselAccommodationSchema
 );
 
+/**
+ * VesselAccommodations type - represents an array of vessel accommodation objects
+ */
+export type VesselAccommodations = z.infer<
+  typeof vesselAccommodationArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -107,7 +119,7 @@ export const vesselAccommodationArraySchema = z.array(
 
 export const useVesselAccommodationsById = (
   params: GetVesselAccommodationsByIdParams,
-  options?: TanStackOptions<VesselAccommodation>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "accommodations", JSON.stringify(params)],
@@ -119,11 +131,12 @@ export const useVesselAccommodationsById = (
 };
 
 export const useVesselAccommodations = (
-  options?: TanStackOptions<VesselAccommodation[]>
+  params: GetVesselAccommodationsParams = {},
+  options?: UseQueryOptions<VesselAccommodations>
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "accommodations"],
-    queryFn: getVesselAccommodations,
+    queryFn: () => getVesselAccommodations(params),
     fetchLastUpdateTime: getCacheFlushDateVessels,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

@@ -1,10 +1,9 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import { zNullableString } from "@/shared/fetching/validation/schemas";
-import type { UseQueryOptions } from "@tanstack/react-query";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -37,7 +36,7 @@ const ALL_CAMERAS_ENDPOINT =
 
 export const getHighwayCameras = async (
   params: GetHighwayCamerasParams = {}
-): Promise<Camera[]> => {
+): Promise<Cameras> => {
   return zodFetch(
     ALL_CAMERAS_ENDPOINT,
     {
@@ -120,6 +119,11 @@ export type CameraLocation = z.infer<typeof cameraLocationSchema>;
 
 export type Camera = z.infer<typeof cameraSchema>;
 
+/**
+ * Cameras type - represents an array of camera objects
+ */
+export type Cameras = z.infer<typeof cameraArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks (singular first, then array)
 // ============================================================================
@@ -143,7 +147,7 @@ export const useHighwayCamera = (
 
 export const useHighwayCameras = (
   params: GetHighwayCamerasParams = {},
-  options?: UseQueryOptions<Camera[], Error>
+  options?: UseQueryOptions<Cameras, Error>
 ) => {
   return useQuery({
     queryKey: [

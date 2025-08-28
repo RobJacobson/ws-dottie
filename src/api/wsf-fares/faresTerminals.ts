@@ -1,10 +1,11 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import { jsDateToYyyyMmDd } from "@/shared/fetching/zod/dateParsers";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -21,7 +22,7 @@ const ENDPOINT_TERMINAL_MATES =
 
 export const getFaresTerminals = async (
   params: GetFaresTerminalsParams
-): Promise<FaresTerminal[]> => {
+): Promise<FaresTerminals> => {
   return zodFetch(
     ENDPOINT_TERMINALS,
     {
@@ -34,7 +35,7 @@ export const getFaresTerminals = async (
 
 export const getFaresTerminalMates = async (
   params: GetFaresTerminalMatesParams
-): Promise<TerminalMate[]> => {
+): Promise<TerminalMates> => {
   return zodFetch(
     ENDPOINT_TERMINAL_MATES,
     {
@@ -98,6 +99,16 @@ export const terminalMatesArraySchema = z.array(terminalMateSchema);
 
 export type TerminalMate = z.infer<typeof terminalMateSchema>;
 
+/**
+ * FaresTerminals type - represents an array of fares terminal objects
+ */
+export type FaresTerminals = z.infer<typeof faresTerminalsArraySchema>;
+
+/**
+ * TerminalMates type - represents an array of terminal mate objects
+ */
+export type TerminalMates = z.infer<typeof terminalMatesArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -107,7 +118,7 @@ export type TerminalMate = z.infer<typeof terminalMateSchema>;
 
 export const useFaresTerminals = (
   params: GetFaresTerminalsParams,
-  options?: UseQueryOptions<FaresTerminal[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf-fares", "terminals", jsDateToYyyyMmDd(params.tripDate)],
@@ -119,7 +130,7 @@ export const useFaresTerminals = (
 
 export const useFaresTerminalMates = (
   params: GetFaresTerminalMatesParams,
-  options?: UseQueryOptions<TerminalMate[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: [

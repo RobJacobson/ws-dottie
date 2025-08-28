@@ -1,9 +1,10 @@
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  type TanStackOptions,
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 import { serviceDisruptionSchema } from "./routeDetails";
@@ -23,7 +24,7 @@ const ENDPOINT_WITH_DISRUPTIONS =
 
 export const getRoutesByTerminals = async (
   params: GetRoutesByTerminalsParams
-): Promise<Route[]> => {
+): Promise<Routes> => {
   return zodFetch(
     ENDPOINT_BY_TERMINALS,
     {
@@ -34,7 +35,7 @@ export const getRoutesByTerminals = async (
   );
 };
 
-export const getRoutes = async (params: GetRoutesParams): Promise<Route[]> => {
+export const getRoutes = async (params: GetRoutesParams): Promise<Routes> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -47,7 +48,7 @@ export const getRoutes = async (params: GetRoutesParams): Promise<Route[]> => {
 
 export const getRoutesWithDisruptions = async (
   params: GetRoutesWithDisruptionsParams
-): Promise<RouteWithDisruptions[]> => {
+): Promise<RoutesWithDisruptions> => {
   return zodFetch(
     ENDPOINT_WITH_DISRUPTIONS,
     {
@@ -125,6 +126,18 @@ export const routesWithDisruptionsArraySchema = z.array(
 
 export type RouteWithDisruptions = z.infer<typeof routeWithDisruptionsSchema>;
 
+/**
+ * Routes type - represents an array of route objects
+ */
+export type Routes = z.infer<typeof routesArraySchema>;
+
+/**
+ * RoutesWithDisruptions type - represents an array of route with disruptions objects
+ */
+export type RoutesWithDisruptions = z.infer<
+  typeof routesWithDisruptionsArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -134,7 +147,7 @@ export type RouteWithDisruptions = z.infer<typeof routeWithDisruptionsSchema>;
 
 export const useRoutesByTerminals = (
   params: GetRoutesByTerminalsParams,
-  options?: TanStackOptions<Route[]>
+  options?: TanStackOptions<Routes>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "routesByTerminals", JSON.stringify(params)],
@@ -147,7 +160,7 @@ export const useRoutesByTerminals = (
 
 export const useRoutes = (
   params: GetRoutesParams,
-  options?: TanStackOptions<Route[]>
+  options?: TanStackOptions<Routes>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "routes", JSON.stringify(params)],
@@ -160,7 +173,7 @@ export const useRoutes = (
 
 export const useRoutesWithDisruptions = (
   params: GetRoutesWithDisruptionsParams,
-  options?: TanStackOptions<RouteWithDisruptions[]>
+  options?: TanStackOptions<RoutesWithDisruptions>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [

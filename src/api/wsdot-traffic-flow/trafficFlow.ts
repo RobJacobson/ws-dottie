@@ -1,11 +1,10 @@
-import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -40,7 +39,7 @@ export const getTrafficFlowById = async (
 
 export const getTrafficFlows = async (
   params: GetTrafficFlowsParams
-): Promise<TrafficFlow[]> => {
+): Promise<TrafficFlows> => {
   return zodFetch(
     ALL_FLOWS_ENDPOINT,
     {
@@ -115,6 +114,11 @@ export const trafficFlowArraySchema = z.array(trafficFlowSchema);
 export type FlowStationLocation = z.infer<typeof flowStationLocationSchema>;
 export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
 
+/**
+ * TrafficFlows type - represents an array of traffic flow objects
+ */
+export type TrafficFlows = z.infer<typeof trafficFlowArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -141,7 +145,7 @@ export const useTrafficFlowById = (
 
 export const useTrafficFlows = (
   params: GetTrafficFlowsParams = {},
-  options?: UseQueryOptions<TrafficFlow[], Error>
+  options?: UseQueryOptions<TrafficFlows, Error>
 ) => {
   return useQuery({
     queryKey: [

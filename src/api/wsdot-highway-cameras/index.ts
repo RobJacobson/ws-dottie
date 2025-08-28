@@ -11,9 +11,9 @@ export * from "./searchHighwayCameras";
 
 // Core camera schemas (from co-located file)
 export {
+  cameraArraySchema,
   cameraLocationSchema,
   cameraSchema,
-  cameraArraySchema,
   getHighwayCameraParamsSchema,
   getHighwayCamerasParamsSchema,
 } from "./highwayCameras";
@@ -26,6 +26,7 @@ export { searchHighwayCamerasParamsSchema } from "./searchHighwayCameras";
 
 export type {
   Camera,
+  Cameras,
   CameraLocation,
   GetHighwayCameraParams,
   GetHighwayCamerasParams,

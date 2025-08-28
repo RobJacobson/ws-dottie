@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -34,7 +35,7 @@ export const getTerminalBulletinsByTerminalId = async (
 
 export const getTerminalBulletins = async (
   params: GetTerminalBulletinsParams = {}
-): Promise<TerminalBulletin[]> => {
+): Promise<TerminalBulletins> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -101,6 +102,11 @@ export type TerminalBulletinItem = z.infer<typeof terminalBulletinItemSchema>;
 
 export const terminalBulletinsArraySchema = z.array(terminalBulletinSchema);
 
+/**
+ * TerminalBulletins type - represents an array of terminal bulletin objects
+ */
+export type TerminalBulletins = z.infer<typeof terminalBulletinsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -110,7 +116,7 @@ export const terminalBulletinsArraySchema = z.array(terminalBulletinSchema);
 
 export const useTerminalBulletinsByTerminalId = (
   params: GetTerminalBulletinsByTerminalIdParams,
-  options?: TanStackOptions<TerminalBulletin>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "bulletins", params.terminalId],
@@ -121,11 +127,12 @@ export const useTerminalBulletinsByTerminalId = (
 };
 
 export const useTerminalBulletins = (
-  options?: TanStackOptions<TerminalBulletin[]>
+  params: GetTerminalBulletinsParams = {},
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "bulletins"],
-    queryFn: getTerminalBulletins,
+    queryFn: () => getTerminalBulletins(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

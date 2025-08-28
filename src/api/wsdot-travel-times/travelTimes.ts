@@ -1,10 +1,9 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -33,7 +32,7 @@ export const getTravelTimeById = async (
 
 export const getTravelTimes = async (
   params: GetTravelTimesParams = {}
-): Promise<TravelTimeRoute[]> => {
+): Promise<TravelTimes> => {
   return zodFetch(
     ALL_TRAVEL_TIMES_ENDPOINT,
     {
@@ -96,6 +95,11 @@ export type TravelTimeRoute = z.infer<typeof travelTimeRouteSchema>;
 
 export type TravelTimesResponse = z.infer<typeof travelTimesArraySchema>;
 
+/**
+ * TravelTimes type - represents an array of travel time route objects
+ */
+export type TravelTimes = z.infer<typeof travelTimesArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -122,8 +126,8 @@ export const useTravelTimeById = (
 
 export const useTravelTimes = (
   params: GetTravelTimesParams = {},
-  options?: TanStackOptions<TravelTimeRoute[]>
-): UseQueryResult<TravelTimeRoute[], Error> => {
+  options?: TanStackOptions<TravelTimes>
+): UseQueryResult<TravelTimes, Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

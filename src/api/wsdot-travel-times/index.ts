@@ -9,14 +9,12 @@ export * from "./travelTimes";
 // ============================================================================
 
 // Core schemas (from single-item endpoint for consistency)
-export {
-  getTravelTimeByIdParamsSchema,
-  travelTimeEndpointSchema,
-  travelTimeRouteSchema,
-} from "./travelTimes";
 // Array schemas
 export {
+  getTravelTimeByIdParamsSchema,
   getTravelTimesParamsSchema,
+  travelTimeEndpointSchema,
+  travelTimeRouteSchema,
   travelTimesArraySchema,
 } from "./travelTimes";
 
@@ -26,10 +24,8 @@ export {
 
 export type {
   GetTravelTimeByIdParams,
+  GetTravelTimesParams,
   TravelTimeEndpoint,
   TravelTimeRoute,
-} from "./travelTimes";
-export type {
-  GetTravelTimesParams,
   TravelTimesResponse,
 } from "./travelTimes";

@@ -1,9 +1,10 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -18,7 +19,7 @@ const ENDPOINT =
 
 export const getFareTotals = async (
   params: GetFareTotalsParams
-): Promise<FareTotal[]> => {
+): Promise<FareTotals> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -74,6 +75,11 @@ export const fareTotalsArraySchema = z.array(fareTotalSchema);
 
 export type FareTotal = z.infer<typeof fareTotalSchema>;
 
+/**
+ * FareTotals type - represents an array of fare total objects
+ */
+export type FareTotals = z.infer<typeof fareTotalsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -89,10 +95,7 @@ export const useFareTotals = (
     fareLineItemIDs: number[];
     quantities: number[];
   },
-  options?: Omit<
-    UseQueryOptions<FareTotal[], Error>,
-    "queryKey" | "queryFn" | "enabled"
-  >
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "fares", "fareTotals", JSON.stringify(params)],

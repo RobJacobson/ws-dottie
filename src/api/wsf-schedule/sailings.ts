@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import type { UseQueryOptions } from "@tanstack/react-query";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -18,7 +19,7 @@ const ENDPOINT = "/ferries/api/schedule/rest/sailings/{schedRouteId}";
 
 export const getSailings = async (
   params: GetSailingsParams
-): Promise<SailingResponse[]> => {
+): Promise<SailingsResponse> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -63,6 +64,7 @@ export const terminalTimeSchema = z.object({
   Time: zWsdotDate().nullable(),
   DepArrIndicator: z.number().nullable(),
   IsNA: z.boolean(),
+  Annotations: z.array(z.any()).optional(),
 });
 
 export const journeySchema = z.object({
@@ -92,6 +94,11 @@ export const sailingSchema = z.object({
 export const sailingsArraySchema = z.array(sailingSchema);
 
 export type Sailing = z.infer<typeof sailingSchema>;
+
+/**
+ * Sailings type - represents an array of sailing objects
+ */
+export type Sailings = z.infer<typeof sailingsArraySchema>;
 
 // ============================================================================
 // API RESPONSE SCHEMAS (based on real API responses)
@@ -123,6 +130,11 @@ export const sailingsResponseArraySchema = z.array(sailingResponseSchema);
 
 export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
+/**
+ * SailingsResponse type - represents an array of sailing response objects
+ */
+export type SailingsResponse = z.infer<typeof sailingsResponseArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -131,7 +143,7 @@ export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
 export const useSailings = (
   params: GetSailingsParams,
-  options?: UseQueryOptions<SailingResponse[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "sailings", JSON.stringify(params)],

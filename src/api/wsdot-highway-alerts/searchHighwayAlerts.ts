@@ -1,10 +1,9 @@
-import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 import type { HighwayAlert } from "./highwayAlerts";
 import { highwayAlertArraySchema } from "./highwayAlerts";

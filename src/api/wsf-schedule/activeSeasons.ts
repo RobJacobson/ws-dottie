@@ -1,10 +1,11 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -18,7 +19,7 @@ const ENDPOINT = "/ferries/api/schedule/rest/activeseasons";
 
 export const getActiveSeasons = async (
   params: GetActiveSeasonsParams = {}
-): Promise<ActiveSeason[]> => {
+): Promise<ActiveSeasons> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -63,6 +64,11 @@ export const activeSeasonsArraySchema = z.array(activeSeasonSchema);
 
 export type ActiveSeason = z.infer<typeof activeSeasonSchema>;
 
+/**
+ * ActiveSeasons type - represents an array of active season objects
+ */
+export type ActiveSeasons = z.infer<typeof activeSeasonsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -71,7 +77,7 @@ export type ActiveSeason = z.infer<typeof activeSeasonSchema>;
 
 export const useActiveSeasons = (
   params: GetActiveSeasonsParams = {},
-  options?: UseQueryOptions<ActiveSeason[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "activeSeasons"],

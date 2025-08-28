@@ -1,8 +1,6 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import {
   zLatitude,
@@ -10,6 +8,7 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 /**
  * WSDOT Bridge Clearances API
@@ -124,7 +123,7 @@ const ENDPOINT =
  */
 export const getBridgeClearances = async (
   params: GetBridgeClearancesParams
-): Promise<BridgeDataGIS[]> => {
+): Promise<BridgeDataGISArray> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -210,6 +209,11 @@ export type BridgeDataGIS = z.infer<typeof bridgeDataGisSchema>;
  */
 export const bridgeDataGisArraySchema = z.array(bridgeDataGisSchema);
 
+/**
+ * BridgeDataGISArray type - represents an array of bridge clearance data objects
+ */
+export type BridgeDataGISArray = z.infer<typeof bridgeDataGisArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 // ============================================================================
@@ -231,7 +235,7 @@ export const bridgeDataGisArraySchema = z.array(bridgeDataGisSchema);
  */
 export const useBridgeClearances = (
   params: GetBridgeClearancesParams,
-  options?: UseQueryOptions<BridgeDataGIS[], Error>
+  options?: UseQueryOptions<BridgeDataGISArray, Error>
 ) => {
   return useQuery({
     queryKey: ["api", "wsdot", "bridge-clearances", JSON.stringify(params)],

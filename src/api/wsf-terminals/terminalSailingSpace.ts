@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
 // ============================================================================
@@ -33,7 +34,7 @@ export const getTerminalSailingSpaceByTerminalId = async (
 
 export const getTerminalSailingSpace = async (
   params: GetTerminalSailingSpaceParams = {}
-): Promise<TerminalSailingSpace[]> => {
+): Promise<TerminalSailingSpaces> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -125,6 +126,13 @@ export type TerminalDepartingSpace = z.infer<
 >;
 export type TerminalArrivalSpace = z.infer<typeof terminalArrivalSpaceSchema>;
 
+/**
+ * TerminalSailingSpaces type - represents an array of terminal sailing space objects
+ */
+export type TerminalSailingSpaces = z.infer<
+  typeof terminalSailingSpaceArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -134,7 +142,7 @@ export type TerminalArrivalSpace = z.infer<typeof terminalArrivalSpaceSchema>;
 
 export const useTerminalSailingSpaceByTerminalId = (
   params: GetTerminalSailingSpaceByTerminalIdParams,
-  options?: TanStackOptions<TerminalSailingSpace>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "sailingSpace", params.terminalId],
@@ -145,11 +153,12 @@ export const useTerminalSailingSpaceByTerminalId = (
 };
 
 export const useTerminalSailingSpace = (
-  options?: TanStackOptions<TerminalSailingSpace[]>
+  params: GetTerminalSailingSpaceParams = {},
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "sailingSpace"],
-    queryFn: getTerminalSailingSpace,
+    queryFn: () => getTerminalSailingSpace(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

@@ -103,10 +103,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
@@ -114,6 +111,8 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -142,7 +141,7 @@ const ENDPOINT_WITH_ID =
  */
 export const getCommercialVehicleRestrictionsWithId = async (
   params: GetCommercialVehicleRestrictionsWithIdParams = {}
-): Promise<CommercialVehicleRestrictionWithId[]> => {
+): Promise<CommercialVehicleRestrictionsWithId> => {
   return zodFetch(
     ENDPOINT_WITH_ID,
     {
@@ -170,7 +169,7 @@ export const getCommercialVehicleRestrictionsWithId = async (
  */
 export const getCommercialVehicleRestrictions = async (
   params: GetCommercialVehicleRestrictionsParams = {}
-): Promise<CommercialVehicleRestriction[]> => {
+): Promise<CommercialVehicleRestrictions> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -310,6 +309,20 @@ export type CommercialVehicleRestrictionWithId = z.infer<
   typeof commercialVehicleRestrictionWithIdSchema
 >;
 
+/**
+ * CommercialVehicleRestrictions type - represents an array of commercial vehicle restriction objects
+ */
+export type CommercialVehicleRestrictions = z.infer<
+  typeof commercialVehicleRestrictionArraySchema
+>;
+
+/**
+ * CommercialVehicleRestrictionsWithId type - represents an array of commercial vehicle restriction objects with unique identifiers
+ */
+export type CommercialVehicleRestrictionsWithId = z.infer<
+  typeof commercialVehicleRestrictionWithIdArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 // ============================================================================
@@ -332,7 +345,7 @@ export type CommercialVehicleRestrictionWithId = z.infer<
  */
 export const useCommercialVehicleRestrictionsWithId = (
   params: GetCommercialVehicleRestrictionsWithIdParams,
-  options?: TanStackOptions<CommercialVehicleRestrictionWithId[]>
+  options?: TanStackOptions<CommercialVehicleRestrictionsWithId>
 ) => {
   return useQuery({
     queryKey: [
@@ -365,7 +378,7 @@ export const useCommercialVehicleRestrictionsWithId = (
  */
 export const useCommercialVehicleRestrictions = (
   params: GetCommercialVehicleRestrictionsParams = {},
-  options?: TanStackOptions<CommercialVehicleRestriction[]>
+  options?: TanStackOptions<CommercialVehicleRestrictions>
 ) => {
   return useQuery({
     queryKey: [

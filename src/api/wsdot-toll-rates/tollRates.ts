@@ -1,10 +1,9 @@
-import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -14,11 +13,17 @@ import type { TanStackOptions } from "@/shared/tanstack";
 
 const ENDPOINT = "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson";
 
-export const getTollRates = async (): Promise<TollRate[]> => {
-  return zodFetch(ENDPOINT, {
-    input: getTollRatesParamsSchema,
-    output: tollRateArraySchema,
-  });
+export const getTollRates = async (
+  params: GetTollRatesParams = {}
+): Promise<TollRates> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getTollRatesParamsSchema,
+      output: tollRateArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -54,6 +59,11 @@ export const tollRateArraySchema = z.array(tollRateSchema);
 
 export type TollRate = z.infer<typeof tollRateSchema>;
 
+/**
+ * TollRates type - represents an array of toll rate objects
+ */
+export type TollRates = z.infer<typeof tollRateArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -62,11 +72,11 @@ export type TollRate = z.infer<typeof tollRateSchema>;
 
 export const useTollRates = (
   params: GetTollRatesParams = {},
-  options?: UseQueryOptions<TollRate[], Error>
+  options?: UseQueryOptions<TollRates, Error>
 ) => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollRates"],
-    queryFn: () => getTollRates(),
+    queryFn: () => getTollRates(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

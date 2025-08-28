@@ -1,9 +1,10 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 import { terminalTransitLinkSchema } from "./terminalVerbose";
@@ -34,7 +35,7 @@ export const getTerminalTransportsByTerminalId = async (
 
 export const getTerminalTransports = async (
   params: GetTerminalTransportsParams = {}
-): Promise<TerminalTransport[]> => {
+): Promise<TerminalTransports> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -102,6 +103,11 @@ export const terminalTransportsArraySchema = z.array(terminalTransportSchema);
 
 export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
 
+/**
+ * TerminalTransports type - represents an array of terminal transport objects
+ */
+export type TerminalTransports = z.infer<typeof terminalTransportsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -111,7 +117,7 @@ export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
 
 export const useTerminalTransportsByTerminalId = (
   params: GetTerminalTransportsByTerminalIdParams,
-  options?: TanStackOptions<TerminalTransport>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "transports", params.terminalId],
@@ -122,11 +128,12 @@ export const useTerminalTransportsByTerminalId = (
 };
 
 export const useTerminalTransports = (
-  options?: TanStackOptions<TerminalTransport[]>
+  params: GetTerminalTransportsParams = {},
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "transports"],
-    queryFn: getTerminalTransports,
+    queryFn: () => getTerminalTransports(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

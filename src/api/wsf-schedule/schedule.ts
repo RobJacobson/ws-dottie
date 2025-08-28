@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 import { annotationSchema } from "./routeDetails";
@@ -188,7 +189,7 @@ export type ScheduleRouteTerminalCombo = z.infer<
 
 export const useScheduleByTerminals = (
   params: GetScheduleByTerminalsParams,
-  options?: TanStackOptions<ScheduleResponse[]>
+  options?: UseQueryOptions
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [
@@ -198,28 +199,26 @@ export const useScheduleByTerminals = (
       JSON.stringify(params),
     ],
     queryFn: () => getScheduleByTerminals(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
     params,
   });
 
 export const useScheduleByRoute = (
   params: GetScheduleByRouteParams,
-  options?: TanStackOptions<ScheduleResponse[]>
+  options?: UseQueryOptions
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "scheduleByRoute", JSON.stringify(params)],
     queryFn: () => getScheduleByRoute(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
     params,
   });
 
 export const useScheduleTodayByTerminals = (
   params: GetScheduleTodayByTerminalsParams,
-  options?: TanStackOptions<ScheduleResponse>
+  options?: UseQueryOptions
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [
@@ -229,15 +228,14 @@ export const useScheduleTodayByTerminals = (
       JSON.stringify(params),
     ],
     queryFn: () => getScheduleTodayByTerminals(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
     params,
   });
 
 export const useScheduleTodayByRoute = (
   params: GetScheduleTodayByRouteParams,
-  options?: TanStackOptions<ScheduleResponse[]>
+  options?: UseQueryOptions
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [
@@ -248,8 +246,7 @@ export const useScheduleTodayByRoute = (
       JSON.stringify(params),
     ],
     queryFn: () => getScheduleTodayByRoute(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
     params,
   });

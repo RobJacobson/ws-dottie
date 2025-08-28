@@ -1,13 +1,14 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zPositiveInteger,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
@@ -36,7 +37,7 @@ export const getVesselLocationsByVesselId = async (
 
 export const getVesselLocations = async (
   params: GetVesselLocationsParams = {}
-): Promise<VesselLocation[]> => {
+): Promise<VesselLocations> => {
   return zodFetch(ENDPOINT_ALL, {
     input: getVesselLocationsParamsSchema,
     output: vesselLocationArraySchema,
@@ -112,6 +113,11 @@ export type VesselLocation = z.infer<typeof vesselLocationSchema>;
 
 export const vesselLocationArraySchema = z.array(vesselLocationSchema);
 
+/**
+ * VesselLocations type - represents an array of vessel location objects
+ */
+export type VesselLocations = z.infer<typeof vesselLocationArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -121,7 +127,7 @@ export const vesselLocationArraySchema = z.array(vesselLocationSchema);
 
 export const useVesselLocationsByVesselId = (
   params: GetVesselLocationsByVesselIdParams,
-  options?: TanStackOptions<VesselLocation>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "locations", JSON.stringify(params)],
@@ -134,7 +140,7 @@ export const useVesselLocationsByVesselId = (
 
 export const useVesselLocations = (
   params: GetVesselLocationsParams = {},
-  options?: TanStackOptions<VesselLocation[]>
+  options?: UseQueryOptions<VesselLocations>
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "locations", JSON.stringify(params)],

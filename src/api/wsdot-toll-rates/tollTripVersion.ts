@@ -1,11 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -16,11 +15,17 @@ import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson";
 
-export const getTollTripVersion = async (): Promise<TollTripVersion> => {
-  return zodFetch(ENDPOINT, {
-    input: getTollTripVersionParamsSchema,
-    output: tollTripVersionSchema,
-  });
+export const getTollTripVersion = async (
+  params: GetTollTripVersionParams = {}
+): Promise<TollTripVersion> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getTollTripVersionParamsSchema,
+      output: tollTripVersionSchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -56,11 +61,12 @@ export type TollTripVersion = z.infer<typeof tollTripVersionSchema>;
 // ============================================================================
 
 export const useTollTripVersion = (
+  params: GetTollTripVersionParams = {},
   options?: TanStackOptions<TollTripVersion>
 ): UseQueryResult<TollTripVersion, Error> => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripVersion"],
-    queryFn: () => getTollTripVersion(),
+    queryFn: () => getTollTripVersion(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

@@ -9,16 +9,14 @@ export * from "./trafficFlow";
 // ============================================================================
 
 // Core schemas (from single-item endpoint for consistency)
+// Array schemas
 export {
   flowStationLocationSchema,
   flowStationReadingSchema,
   getTrafficFlowByIdParamsSchema,
-  trafficFlowSchema,
-} from "./trafficFlow";
-// Array schemas
-export {
   getTrafficFlowsParamsSchema,
   trafficFlowArraySchema,
+  trafficFlowSchema,
 } from "./trafficFlow";
 
 // ============================================================================
@@ -28,9 +26,9 @@ export {
 export type {
   FlowStationLocation,
   GetTrafficFlowByIdParams,
+  GetTrafficFlowsParams,
   TrafficFlow,
 } from "./trafficFlow";
-export type { GetTrafficFlowsParams } from "./trafficFlow";
 
 // ============================================================================
 // CONSTANTS

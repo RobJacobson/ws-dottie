@@ -1,14 +1,13 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -44,7 +43,9 @@ export const getHighwayAlertById = async (
   );
 };
 
-export const getHighwayAlerts = async (params: GetHighwayAlertsParams = {}) => {
+export const getHighwayAlerts = async (
+  params: GetHighwayAlertsParams = {}
+): Promise<HighwayAlerts> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -57,7 +58,7 @@ export const getHighwayAlerts = async (params: GetHighwayAlertsParams = {}) => {
 
 export const getHighwayAlertsByMapArea = async (
   params: GetHighwayAlertsByMapAreaParams
-): Promise<HighwayAlert[]> => {
+): Promise<HighwayAlerts> => {
   return zodFetch(
     ENDPOINT_BY_MAP_AREA,
     {
@@ -70,7 +71,7 @@ export const getHighwayAlertsByMapArea = async (
 
 export const getHighwayAlertsByRegionId = async (
   params: GetHighwayAlertsByRegionIdParams
-): Promise<HighwayAlert[]> => {
+): Promise<HighwayAlerts> => {
   return zodFetch(
     ENDPOINT_BY_REGION_ID,
     {
@@ -185,6 +186,11 @@ export type HighwayAlertRoadwayLocation = z.infer<
 >;
 export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
 
+/**
+ * HighwayAlerts type - represents an array of highway alert objects
+ */
+export type HighwayAlerts = z.infer<typeof highwayAlertArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -213,7 +219,7 @@ export const useHighwayAlertById = (
 
 export const useHighwayAlerts = (
   params: GetHighwayAlertsParams = {},
-  options?: TanStackOptions<HighwayAlert[]>
+  options?: TanStackOptions<HighwayAlerts>
 ) => {
   return useQuery({
     queryKey: [
@@ -230,7 +236,7 @@ export const useHighwayAlerts = (
 
 export const useHighwayAlertsByMapArea = (
   params: GetHighwayAlertsByMapAreaParams,
-  options?: TanStackOptions<HighwayAlert[]>
+  options?: TanStackOptions<HighwayAlerts>
 ) => {
   return useQuery({
     queryKey: [
@@ -247,7 +253,7 @@ export const useHighwayAlertsByMapArea = (
 
 export const useHighwayAlertsByRegionId = (
   params: GetHighwayAlertsByRegionIdParams,
-  options?: TanStackOptions<HighwayAlert[]>
+  options?: TanStackOptions<HighwayAlerts>
 ) => {
   return useQuery({
     queryKey: [

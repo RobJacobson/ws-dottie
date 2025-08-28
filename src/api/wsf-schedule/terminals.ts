@@ -1,9 +1,10 @@
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  type TanStackOptions,
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -26,7 +27,7 @@ const ENDPOINT_COMBOS_BY_ROUTE =
 
 export const getTerminals = async (
   params: GetTerminalsParams
-): Promise<ScheduleTerminal[]> => {
+): Promise<ScheduleTerminals> => {
   return zodFetch(
     ENDPOINT_TERMINALS,
     {
@@ -39,7 +40,7 @@ export const getTerminals = async (
 
 export const getTerminalMates = async (
   params: GetTerminalMatesParams
-): Promise<ScheduleTerminal[]> => {
+): Promise<ScheduleTerminals> => {
   return zodFetch(
     ENDPOINT_TERMINAL_MATES,
     {
@@ -52,7 +53,7 @@ export const getTerminalMates = async (
 
 export const getTerminalsAndMates = async (
   params: GetTerminalsAndMatesParams
-): Promise<ScheduleTerminalCombo[]> => {
+): Promise<ScheduleTerminalCombos> => {
   return zodFetch(
     ENDPOINT_ALL_COMBOS,
     {
@@ -65,7 +66,7 @@ export const getTerminalsAndMates = async (
 
 export const getTerminalsAndMatesByRoute = async (
   params: GetTerminalsAndMatesByRouteParams
-): Promise<ScheduleTerminalCombo[]> => {
+): Promise<ScheduleTerminalCombos> => {
   return zodFetch(
     ENDPOINT_COMBOS_BY_ROUTE,
     {
@@ -154,6 +155,18 @@ export const scheduleTerminalCombosArraySchema = z.array(
 
 export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
 
+/**
+ * ScheduleTerminals type - represents an array of schedule terminal objects
+ */
+export type ScheduleTerminals = z.infer<typeof scheduleTerminalsArraySchema>;
+
+/**
+ * ScheduleTerminalCombos type - represents an array of schedule terminal combo objects
+ */
+export type ScheduleTerminalCombos = z.infer<
+  typeof scheduleTerminalCombosArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -165,7 +178,7 @@ export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
 
 export const useTerminals = (
   params: { tripDate: Date },
-  options?: TanStackOptions<ScheduleTerminal[]>
+  options?: TanStackOptions<ScheduleTerminals>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "terminals", JSON.stringify(params)],
@@ -178,7 +191,7 @@ export const useTerminals = (
 
 export const useTerminalMates = (
   params: { tripDate: Date; terminalId: number },
-  options?: TanStackOptions<ScheduleTerminal[]>
+  options?: TanStackOptions<ScheduleTerminals>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "terminalMates", JSON.stringify(params)],
@@ -191,7 +204,7 @@ export const useTerminalMates = (
 
 export const useTerminalsAndMates = (
   params: { tripDate: Date },
-  options?: TanStackOptions<ScheduleTerminalCombo[]>
+  options?: TanStackOptions<ScheduleTerminalCombos>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "terminalsAndMates", JSON.stringify(params)],
@@ -204,7 +217,7 @@ export const useTerminalsAndMates = (
 
 export const useTerminalsAndMatesByRoute = (
   params: { tripDate: Date; routeId: number },
-  options?: TanStackOptions<ScheduleTerminalCombo[]>
+  options?: TanStackOptions<ScheduleTerminalCombos>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [

@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -34,7 +35,7 @@ export const getTerminalWaitTimesByTerminalId = async (
 
 export const getTerminalWaitTimes = async (
   params: GetTerminalWaitTimesParams = {}
-): Promise<TerminalWaitTimes[]> => {
+): Promise<TerminalWaitTimesArray> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -101,6 +102,13 @@ export const terminalWaitTimesArraySchema = z.array(terminalWaitTimesSchema);
 export type TerminalWaitTimes = z.infer<typeof terminalWaitTimesSchema>;
 export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
 
+/**
+ * TerminalWaitTimesArray type - represents an array of terminal wait times objects
+ */
+export type TerminalWaitTimesArray = z.infer<
+  typeof terminalWaitTimesArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -110,7 +118,7 @@ export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
 
 export const useTerminalWaitTimesByTerminalId = (
   params: GetTerminalWaitTimesByTerminalIdParams,
-  options?: TanStackOptions<TerminalWaitTimes>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "waitTimes", params.terminalId],
@@ -121,11 +129,12 @@ export const useTerminalWaitTimesByTerminalId = (
 };
 
 export const useTerminalWaitTimes = (
-  options?: TanStackOptions<TerminalWaitTimes[]>
+  params: GetTerminalWaitTimesParams = {},
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "waitTimes"],
-    queryFn: getTerminalWaitTimes,
+    queryFn: () => getTerminalWaitTimes(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

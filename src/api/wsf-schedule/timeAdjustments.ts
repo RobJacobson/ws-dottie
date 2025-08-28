@@ -1,10 +1,11 @@
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  type TanStackOptions,
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -18,17 +19,21 @@ import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 const ENDPOINT_ALL = "/ferries/api/schedule/rest/timeadj";
 const ENDPOINT_BY_ROUTE = "/ferries/api/schedule/rest/timeadjbyroute/{routeId}";
 
-export const getTimeAdjustments = async (): Promise<
-  TimeAdjustmentResponse[]
-> => {
-  return zodFetch(ENDPOINT_ALL, {
-    output: timeAdjustmentsArraySchema,
-  });
+export const getTimeAdjustments = async (
+  params: GetTimeAdjustmentsParams = {}
+): Promise<TimeAdjustments> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: timeAdjustmentsArraySchema,
+    },
+    params
+  );
 };
 
 export const getTimeAdjustmentsByRoute = async (
   params: GetTimeAdjustmentsByRouteParams
-): Promise<TimeAdjustment[]> => {
+): Promise<TimeAdjustmentsByRoute> => {
   return zodFetch(
     ENDPOINT_BY_ROUTE,
     {
@@ -101,8 +106,8 @@ export const timeAdjustmentResponseSchema = z.object({
   AdjDateFrom: zWsdotDate().nullable(),
   AdjDateThru: zWsdotDate().nullable(),
   AdjType: z.number(),
-  TidalAdj: z.number().nullable(),
-  TimeToAdj: z.number().nullable(),
+  TidalAdj: z.boolean().nullable(), // Changed from z.number().nullable() to z.boolean().nullable()
+  TimeToAdj: z.string().nullable(), // Changed from z.number().nullable() to z.string().nullable() (WSDOT date format)
   Annotations: z.array(z.string()).nullable(),
   EventID: z.number().nullable(),
   EventDescription: z.string().nullable(),
@@ -127,6 +132,18 @@ export const timeAdjustmentsByRouteArraySchema = z.array(timeAdjustmentSchema);
 
 export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 
+/**
+ * TimeAdjustments type - represents an array of time adjustment response objects
+ */
+export type TimeAdjustments = z.infer<typeof timeAdjustmentsArraySchema>;
+
+/**
+ * TimeAdjustmentsByRoute type - represents an array of time adjustment objects
+ */
+export type TimeAdjustmentsByRoute = z.infer<
+  typeof timeAdjustmentsByRouteArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -135,11 +152,12 @@ export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 // ============================================================================
 
 export const useTimeAdjustments = (
-  options?: TanStackOptions<TimeAdjustmentResponse[]>
+  params: GetTimeAdjustmentsParams = {},
+  options?: TanStackOptions<TimeAdjustments>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "timeAdjustments"],
-    queryFn: () => getTimeAdjustments(),
+    queryFn: () => getTimeAdjustments(params),
     ...tanstackQueryOptions.DAILY_UPDATES,
     ...options,
     fetchLastUpdateTime: getCacheFlushDateSchedule,
@@ -147,7 +165,7 @@ export const useTimeAdjustments = (
 
 export const useTimeAdjustmentsByRoute = (
   params: GetTimeAdjustmentsByRouteParams,
-  options?: TanStackOptions<TimeAdjustment[]>
+  options?: TanStackOptions<TimeAdjustmentsByRoute>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [

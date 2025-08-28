@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zPositiveInteger } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
@@ -31,10 +32,16 @@ export const getVesselBasicsById = async (
   );
 };
 
-export const getVesselBasics = async (): Promise<VesselBasic[]> => {
-  return zodFetch(ENDPOINT_ALL, {
-    output: vesselBasicArraySchema,
-  });
+export const getVesselBasics = async (
+  params: GetVesselBasicsParams = {}
+): Promise<VesselBasics> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: vesselBasicArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -93,6 +100,11 @@ export type VesselClass = z.infer<typeof vesselClassSchema>;
 
 export const vesselBasicArraySchema = z.array(vesselBasicSchema);
 
+/**
+ * VesselBasics type - represents an array of vessel basic objects
+ */
+export type VesselBasics = z.infer<typeof vesselBasicArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -102,7 +114,7 @@ export const vesselBasicArraySchema = z.array(vesselBasicSchema);
 
 export const useVesselBasicsById = (
   params: { vesselId: number },
-  options?: TanStackOptions<VesselBasic>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "basics", JSON.stringify(params)],
@@ -113,10 +125,13 @@ export const useVesselBasicsById = (
   });
 };
 
-export const useVesselBasics = (options?: TanStackOptions<VesselBasic[]>) => {
+export const useVesselBasics = (
+  params: GetVesselBasicsParams = {},
+  options?: UseQueryOptions<VesselBasics>
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "basics"],
-    queryFn: getVesselBasics,
+    queryFn: () => getVesselBasics(params),
     fetchLastUpdateTime: getCacheFlushDateVessels,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

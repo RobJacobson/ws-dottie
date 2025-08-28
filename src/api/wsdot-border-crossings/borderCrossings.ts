@@ -75,16 +75,15 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -111,7 +110,7 @@ const ENDPOINT =
  */
 export const getBorderCrossings = async (
   params: GetBorderCrossingsParams = {}
-): Promise<BorderCrossingData[]> => {
+): Promise<BorderCrossings> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -192,6 +191,11 @@ export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
  */
 export const borderCrossingDataArraySchema = z.array(borderCrossingDataSchema);
 
+/**
+ * BorderCrossings type - represents an array of border crossing data objects
+ */
+export type BorderCrossings = z.infer<typeof borderCrossingDataArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -214,7 +218,7 @@ export const borderCrossingDataArraySchema = z.array(borderCrossingDataSchema);
  */
 export const useBorderCrossings = (
   params: GetBorderCrossingsParams = {},
-  options?: TanStackOptions<BorderCrossingData[]>
+  options?: TanStackOptions<BorderCrossings>
 ) => {
   return useQuery({
     queryKey: ["api", "wsdot", "border-crossings", JSON.stringify(params)],

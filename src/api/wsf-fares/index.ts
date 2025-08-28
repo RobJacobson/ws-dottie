@@ -2,12 +2,12 @@
 // API FUNCTIONS & SCHEMAS
 // ============================================================================
 
-export * from "./fareLineItems";
-export * from "./fareLineItemsVerbose";
 export {
   getFaresCacheFlushDate,
   useFaresCacheFlushDate,
 } from "../wsf/cacheFlushDate";
+export * from "./fareLineItems";
+export * from "./fareLineItemsVerbose";
 export * from "./faresTerminals";
 export * from "./faresValidDateRange";
 export * from "./fareTotals";
@@ -17,25 +17,25 @@ export * from "./terminalCombo";
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
+export { wsfCacheFlushDateParamsSchema as getFaresCacheFlushDateParamsSchema } from "../wsf/cacheFlushDate";
 export {
   fareLineItemSchema,
   fareLineItemsArraySchema,
   fareLineItemsBasicArraySchema,
-  getFareLineItemsParamsSchema,
   getFareLineItemsBasicParamsSchema,
+  getFareLineItemsParamsSchema,
 } from "./fareLineItems";
 export {
   fareLineItemsVerboseResponseSchema,
   getFareLineItemsVerboseParamsSchema,
 } from "./fareLineItemsVerbose";
-export { wsfCacheFlushDateParamsSchema as getFaresCacheFlushDateParamsSchema } from "../wsf/cacheFlushDate";
 export {
-  getFaresTerminalMatesParamsSchema,
-  terminalMateSchema,
-  terminalMatesArraySchema,
   faresTerminalSchema,
   faresTerminalsArraySchema,
+  getFaresTerminalMatesParamsSchema,
   getFaresTerminalsParamsSchema,
+  terminalMateSchema,
+  terminalMatesArraySchema,
 } from "./faresTerminals";
 export { getFaresValidDateRangeParamsSchema } from "./faresValidDateRange";
 export {
@@ -55,18 +55,18 @@ export {
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type {
-  FareLineItem,
-  GetFareLineItemsParams,
-  GetFareLineItemsBasicParams,
-} from "./fareLineItems";
-export type { GetFareLineItemsVerboseParams } from "./fareLineItemsVerbose";
 export type { WsfCacheFlushDateParams as GetFaresCacheFlushDateParams } from "../wsf/cacheFlushDate";
 export type {
-  GetFaresTerminalMatesParams,
-  TerminalMate,
+  FareLineItem,
+  GetFareLineItemsBasicParams,
+  GetFareLineItemsParams,
+} from "./fareLineItems";
+export type { GetFareLineItemsVerboseParams } from "./fareLineItemsVerbose";
+export type {
   FaresTerminal,
+  GetFaresTerminalMatesParams,
   GetFaresTerminalsParams,
+  TerminalMate,
 } from "./faresTerminals";
 export type { GetFaresValidDateRangeParams } from "./faresValidDateRange";
 export type { GetFareTotalsParams } from "./fareTotals";

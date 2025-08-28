@@ -1,10 +1,11 @@
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  type TanStackOptions,
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -24,7 +25,7 @@ const ENDPOINT_STANDALONE =
 
 export const getRouteDetailsByTerminals = async (
   params: GetRouteDetailsByTerminalsParams
-): Promise<RouteDetails[]> => {
+): Promise<RouteDetailsArray> => {
   return zodFetch(
     ENDPOINT_BY_TERMINALS,
     {
@@ -50,7 +51,7 @@ export const getRouteDetailsByRoute = async (
 
 export const getRouteDetails = async (
   params: GetRouteDetailsParams
-): Promise<RouteDetails[]> => {
+): Promise<RouteDetailsArray> => {
   return zodFetch(
     ENDPOINT_STANDALONE,
     {
@@ -146,6 +147,11 @@ export const routeDetailsArraySchema = z.array(routeDetailsSchema);
 
 export type RouteDetails = z.infer<typeof routeDetailsSchema>;
 
+/**
+ * RouteDetailsArray type - represents an array of route details objects
+ */
+export type RouteDetailsArray = z.infer<typeof routeDetailsArraySchema>;
+
 export const routeDetailsByRouteServiceDisruptionSchema = z.object({
   BulletinID: z.number(),
   BulletinFlag: z.boolean(),
@@ -187,7 +193,7 @@ export type RouteDetailsByRouteResponse = z.infer<
 
 export const useRouteDetailsByTerminals = (
   params: GetRouteDetailsByTerminalsParams,
-  options?: TanStackOptions<RouteDetails[]>
+  options?: TanStackOptions<RouteDetailsArray>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [
@@ -223,7 +229,7 @@ export const useRouteDetailsByRoute = (
 
 export const useRouteDetails = (
   params: GetRouteDetailsParams,
-  options?: TanStackOptions<RouteDetails[]>
+  options?: TanStackOptions<RouteDetailsArray>
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "routeDetails", JSON.stringify(params)],

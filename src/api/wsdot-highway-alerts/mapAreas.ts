@@ -1,10 +1,9 @@
-import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -17,7 +16,7 @@ const ENDPOINT =
 
 export const getMapAreas = async (
   params: GetMapAreasParams = {}
-): Promise<MapArea[]> => {
+): Promise<MapAreas> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -56,6 +55,11 @@ export const mapAreasArraySchema = z.array(mapAreaSchema);
 
 export type MapArea = z.infer<typeof mapAreaSchema>;
 
+/**
+ * MapAreas type - represents an array of map area objects
+ */
+export type MapAreas = z.infer<typeof mapAreasArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -64,7 +68,7 @@ export type MapArea = z.infer<typeof mapAreaSchema>;
 
 export const useMapAreas = (
   params: GetMapAreasParams = {},
-  options?: UseQueryOptions<MapArea[], Error>
+  options?: UseQueryOptions<MapAreas, Error>
 ) => {
   return useQuery({
     queryKey: [

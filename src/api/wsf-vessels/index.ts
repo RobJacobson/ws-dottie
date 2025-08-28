@@ -25,47 +25,46 @@ export * from "./vesselVerbose";
 // ============================================================================
 
 export {
-  wsfCacheFlushDateSchema as vesselsCacheFlushDateSchema,
   wsfCacheFlushDateParamsSchema as getCacheFlushDateParamsSchema,
+  wsfCacheFlushDateSchema as vesselsCacheFlushDateSchema,
 } from "../wsf/cacheFlushDate";
 export {
+  getVesselAccommodationsByIdParamsSchema,
+  getVesselAccommodationsParamsSchema,
   vesselAccommodationArraySchema,
   vesselAccommodationSchema,
-  getVesselAccommodationsParamsSchema,
-  getVesselAccommodationsByIdParamsSchema,
 } from "./vesselAccommodations";
 // Array schemas (from array endpoints)
 export {
+  getVesselBasicsByIdParamsSchema,
+  getVesselBasicsParamsSchema,
   vesselBasicArraySchema,
   vesselBasicSchema,
   vesselClassSchema,
-  getVesselBasicsParamsSchema,
-  getVesselBasicsByIdParamsSchema,
 } from "./vesselBasics";
 export {
+  getVesselHistoryByVesselAndDateRangeParamsSchema,
+  getVesselHistoryParamsSchema,
   vesselHistoryArraySchema,
   vesselHistorySchema,
-  getVesselHistoryParamsSchema,
-  getVesselHistoryByVesselAndDateRangeParamsSchema,
-  getAllVesselHistoriesParamsSchema,
 } from "./vesselHistory";
 export {
+  getVesselLocationsByVesselIdParamsSchema,
+  getVesselLocationsParamsSchema,
   vesselLocationArraySchema,
   vesselLocationSchema,
-  getVesselLocationsParamsSchema,
-  getVesselLocationsByVesselIdParamsSchema,
 } from "./vesselLocations";
 export {
+  getVesselStatsByIdParamsSchema,
+  getVesselStatsParamsSchema,
   vesselStatsArraySchema,
   vesselStatsSchema,
-  getVesselStatsParamsSchema,
-  getVesselStatsByIdParamsSchema,
 } from "./vesselStats";
 export {
+  getVesselVerboseByIdParamsSchema,
+  getVesselVerboseParamsSchema,
   vesselVerboseArraySchema,
   vesselVerboseSchema,
-  getVesselVerboseParamsSchema,
-  getVesselVerboseByIdParamsSchema,
 } from "./vesselVerbose";
 
 // ============================================================================
@@ -92,7 +91,6 @@ export type {
 } from "./vesselBasics";
 export type {
   GetVesselHistoryByVesselAndDateRangeParams,
-  GetAllVesselHistoriesParams,
   VesselHistory,
 } from "./vesselHistory";
 export type {
@@ -104,6 +102,6 @@ export type {
   VesselStats,
 } from "./vesselStats";
 export type {
-  VesselVerbose,
   GetVesselVerboseByIdParams,
+  VesselVerbose,
 } from "./vesselVerbose";

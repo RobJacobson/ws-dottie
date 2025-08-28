@@ -17,9 +17,9 @@ export {
 } from "./eventCategories";
 export {
   getHighwayAlertByIdParamsSchema,
-  getHighwayAlertsParamsSchema,
   getHighwayAlertsByMapAreaParamsSchema,
   getHighwayAlertsByRegionIdParamsSchema,
+  getHighwayAlertsParamsSchema,
   highwayAlertArraySchema,
   highwayAlertSchema,
 } from "./highwayAlerts";
@@ -40,9 +40,9 @@ export type {
 } from "./eventCategories";
 export type {
   GetHighwayAlertByIdParams,
-  GetHighwayAlertsParams,
   GetHighwayAlertsByMapAreaParams,
   GetHighwayAlertsByRegionIdParams,
+  GetHighwayAlertsParams,
   HighwayAlert,
   HighwayAlertRoadwayLocation,
 } from "./highwayAlerts";

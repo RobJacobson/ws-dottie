@@ -1,16 +1,15 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
   zNullableNumber,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Functions
@@ -43,7 +42,7 @@ const ALL_PASSES_ENDPOINT =
 
 export const getMountainPassConditions = async (
   params: GetMountainPassConditionsParams = {}
-): Promise<MountainPassCondition[]> => {
+): Promise<MountainPassConditions> => {
   return zodFetch(
     ALL_PASSES_ENDPOINT,
     {
@@ -116,6 +115,13 @@ export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 
 export type MountainPassCondition = z.infer<typeof mountainPassConditionSchema>;
 
+/**
+ * MountainPassConditions type - represents an array of mountain pass condition objects
+ */
+export type MountainPassConditions = z.infer<
+  typeof mountainPassConditionArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks (singular first, then array)
 // ============================================================================
@@ -139,8 +145,8 @@ export const useMountainPassConditionById = (
 
 export const useMountainPassConditions = (
   params: GetMountainPassConditionsParams = {},
-  options?: TanStackOptions<MountainPassCondition[]>
-): UseQueryResult<MountainPassCondition[], Error> => {
+  options?: TanStackOptions<MountainPassConditions>
+): UseQueryResult<MountainPassConditions, Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

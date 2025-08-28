@@ -1,9 +1,10 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -34,7 +35,7 @@ export const getTerminalCombo = async (
 
 export const getTerminalComboVerbose = async (
   params: GetTerminalComboVerboseParams
-): Promise<TerminalComboVerbose[]> => {
+): Promise<TerminalComboVerboses> => {
   return zodFetch(
     ENDPOINT_ARRAY,
     {
@@ -103,6 +104,13 @@ export const terminalComboVerboseArraySchema = z.array(
 export type TerminalCombo = z.infer<typeof terminalComboSchema>;
 export type TerminalComboVerbose = z.infer<typeof terminalComboVerboseSchema>;
 
+/**
+ * TerminalComboVerboses type - represents an array of terminal combo verbose objects
+ */
+export type TerminalComboVerboses = z.infer<
+  typeof terminalComboVerboseArraySchema
+>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -116,7 +124,7 @@ export const useTerminalCombo = (
     departingTerminalID: number;
     arrivingTerminalID: number;
   },
-  options?: Omit<UseQueryOptions<TerminalCombo, Error>, "queryKey" | "queryFn">
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: [
@@ -142,10 +150,7 @@ export const useTerminalComboVerbose = (
   params: {
     tripDate: Date;
   },
-  options?: Omit<
-    UseQueryOptions<TerminalComboVerbose[], Error>,
-    "queryKey" | "queryFn"
-  >
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: [

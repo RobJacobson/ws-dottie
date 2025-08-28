@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 import { serviceDisruptionSchema } from "./routeDetails";
@@ -20,15 +21,21 @@ const ENDPOINT_ALL = "/ferries/api/schedule/rest/schedroutes";
 const ENDPOINT_BY_SEASON =
   "/ferries/api/schedule/rest/scheduledroutesbyseason/{seasonId}";
 
-export const getScheduledRoutes = async (): Promise<ScheduledRoute[]> => {
-  return zodFetch(ENDPOINT_ALL, {
-    output: scheduledRoutesArraySchema,
-  });
+export const getScheduledRoutes = async (
+  params: GetScheduledRoutesParams = {}
+): Promise<ScheduledRoutes> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: scheduledRoutesArraySchema,
+    },
+    params
+  );
 };
 
 export const getScheduledRoutesBySeason = async (
   params: GetScheduledRoutesBySeasonParams
-): Promise<ScheduledRoute[]> => {
+): Promise<ScheduledRoutes> => {
   return zodFetch(
     ENDPOINT_BY_SEASON,
     {
@@ -97,6 +104,11 @@ export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
 
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 
+/**
+ * ScheduledRoutes type - represents an array of scheduled route objects
+ */
+export type ScheduledRoutes = z.infer<typeof scheduledRoutesArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -105,19 +117,22 @@ export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 // ============================================================================
 
 export const useScheduledRoutes = (
-  options?: TanStackOptions<ScheduledRoute[]>
+  params: GetScheduledRoutesParams = {},
+  options?: UseQueryOptions
 ) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "scheduledRoutes"],
-    queryFn: () => getScheduledRoutes(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: () => getScheduledRoutes(params),
+    options: {
+      ...tanstackQueryOptions.DAILY_UPDATES,
+      ...options,
+    },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
   });
 
 export const useScheduledRoutesBySeason = (
   params: GetScheduledRoutesBySeasonParams,
-  options?: TanStackOptions<ScheduledRoute[]>
+  options?: UseQueryOptions
 ) =>
   useQueryWithAutoUpdate({
     queryKey: [
@@ -127,8 +142,10 @@ export const useScheduledRoutesBySeason = (
       JSON.stringify(params),
     ],
     queryFn: () => getScheduledRoutesBySeason(params),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    options: {
+      ...tanstackQueryOptions.DAILY_UPDATES,
+      ...options,
+    },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
     params,
   });

@@ -1,16 +1,15 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
   zLatitude,
   zLongitude,
   zNullableNumber,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
+import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -22,7 +21,7 @@ const ENDPOINT = "/traffic/api/api/Scanweb";
 
 export const getWeatherInformationExtended = async (
   params: GetWeatherInformationExtendedParams = {}
-): Promise<WeatherReading[]> => {
+): Promise<WeatherReadings> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -127,6 +126,11 @@ export type SubSurfaceMeasurement = z.infer<typeof subSurfaceMeasurementSchema>;
 
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 
+/**
+ * WeatherReadings type - represents an array of weather reading objects
+ */
+export type WeatherReadings = z.infer<typeof weatherReadingArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -135,7 +139,7 @@ export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 
 export const useWeatherInformationExtended = (
   params: GetWeatherInformationExtendedParams,
-  options?: TanStackOptions<WeatherReading[]>
+  options?: TanStackOptions<WeatherReadings>
 ) => {
   return useQuery({
     queryKey: [

@@ -13,26 +13,26 @@ export * from "./tripRatesByDate";
 // ============================================================================
 
 export {
+  getTollRatesParamsSchema,
   tollRateArraySchema,
   tollRateSchema,
-  getTollRatesParamsSchema,
 } from "./tollRates";
 
 export {
+  getTollTripInfoParamsSchema,
   tollTripInfoArraySchema,
   tollTripInfoSchema,
-  getTollTripInfoParamsSchema,
 } from "./tollTripInfo";
 
 export {
-  tollTripRatesSchema,
-  tollTripRateSchema,
   getTollTripRatesParamsSchema,
+  tollTripRateSchema,
+  tollTripRatesSchema,
 } from "./tollTripRates";
 
 export {
-  tollTripVersionSchema,
   getTollTripVersionParamsSchema,
+  tollTripVersionSchema,
 } from "./tollTripVersion";
 
 export { getTripRatesByDateParamsSchema } from "./tripRatesByDate";
@@ -42,24 +42,24 @@ export { getTripRatesByDateParamsSchema } from "./tripRatesByDate";
 // ============================================================================
 
 export type {
-  TollRate,
   GetTollRatesParams,
+  TollRate,
 } from "./tollRates";
 
 export type {
-  TollTripInfo,
   GetTollTripInfoParams,
+  TollTripInfo,
 } from "./tollTripInfo";
 
 export type {
-  TollTripRates,
-  TollTripRate,
   GetTollTripRatesParams,
+  TollTripRate,
+  TollTripRates,
 } from "./tollTripRates";
 
 export type {
-  TollTripVersion,
   GetTollTripVersionParams,
+  TollTripVersion,
 } from "./tollTripVersion";
 
 export type { GetTripRatesByDateParams } from "./tripRatesByDate";

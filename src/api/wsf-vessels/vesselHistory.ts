@@ -1,38 +1,48 @@
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import {
+  createDateRangeParams,
+  createDateRangeRefinement,
+  createVesselNameParam,
   zNullableString,
   zWsdotNullableDate,
 } from "@/shared/fetching/validation/schemas";
 import {
-  createBatchSizeParam,
-  createDateRangeParams,
-  createDateRangeRefinement,
-  createVesselNameParam,
-} from "@/shared/fetching/validation/schemas";
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
 // ============================================================================
 // API Functions
 //
-// getVesselHistoryByVesselAndDateRange (singular item)
-// getAllVesselHistories (array)
+// getVesselHistory (all vessels)
+// getVesselHistoryByVesselAndDateRange (specific vessel with date range)
 // ============================================================================
 
-const ENDPOINT =
+const ENDPOINT_ALL = "/ferries/api/vessels/rest/vesselhistory";
+const ENDPOINT_SPECIFIC =
   "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}";
+
+export const getVesselHistory = async (
+  params: GetVesselHistoryParams = {}
+): Promise<VesselHistories> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: vesselHistoryArraySchema,
+    },
+    params
+  );
+};
 
 export const getVesselHistoryByVesselAndDateRange = async (
   params: GetVesselHistoryByVesselAndDateRangeParams
-): Promise<VesselHistory[]> => {
+): Promise<VesselHistories> => {
   return zodFetch(
-    ENDPOINT,
+    ENDPOINT_SPECIFIC,
     {
       input: getVesselHistoryByVesselAndDateRangeParamsSchema,
       output: vesselHistoryArraySchema,
@@ -40,17 +50,6 @@ export const getVesselHistoryByVesselAndDateRange = async (
     params
   );
 };
-
-export const getVesselHistory = async (): Promise<VesselHistory[]> => {
-  // Get history for a default vessel (e.g., the first vessel) with a recent date range
-  // This is a simplified implementation - in practice you might want to aggregate multiple vessels
-  return getVesselHistoryByVesselAndDateRange({
-    vesselName: "Cathlamet", // Default vessel
-    dateStart: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
-    dateEnd: new Date(), // Today
-  });
-};
-
 
 // ============================================================================
 // Input Schema & Types
@@ -105,6 +104,11 @@ export type VesselHistory = z.infer<typeof vesselHistorySchema>;
 
 export const vesselHistoryArraySchema = z.array(vesselHistorySchema);
 
+/**
+ * VesselHistories type - represents an array of vessel history objects
+ */
+export type VesselHistories = z.infer<typeof vesselHistoryArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -113,11 +117,12 @@ export const vesselHistoryArraySchema = z.array(vesselHistorySchema);
 // ============================================================================
 
 export const useVesselHistory = (
-  options?: TanStackOptions<VesselHistory[]>
-): UseQueryResult<VesselHistory[], Error> => {
+  params: GetVesselHistoryParams = {},
+  options?: UseQueryOptions<VesselHistories>
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "history"],
-    queryFn: () => getVesselHistory(),
+    queryFn: () => getVesselHistory(params),
     fetchLastUpdateTime: getCacheFlushDateVessels,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });
@@ -125,8 +130,8 @@ export const useVesselHistory = (
 
 export const useVesselHistoryByVesselAndDateRange = (
   params: GetVesselHistoryByVesselAndDateRangeParams,
-  options?: TanStackOptions<VesselHistory[]>
-): UseQueryResult<VesselHistory[], Error> => {
+  options?: UseQueryOptions<VesselHistories>
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "history", "filtered", JSON.stringify(params)],
     queryFn: () => getVesselHistoryByVesselAndDateRange(params),

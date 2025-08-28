@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zPositiveInteger } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 
@@ -31,10 +32,16 @@ export const getVesselVerboseById = async (
   );
 };
 
-export const getVesselVerbose = async (): Promise<VesselVerbose[]> => {
-  return zodFetch(ENDPOINT_ALL, {
-    output: vesselVerboseArraySchema,
-  });
+export const getVesselVerbose = async (
+  params: GetVesselVerboseParams = {}
+): Promise<VesselVerboses> => {
+  return zodFetch(
+    ENDPOINT_ALL,
+    {
+      output: vesselVerboseArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -116,6 +123,11 @@ export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
 
 export const vesselVerboseArraySchema = z.array(vesselVerboseSchema);
 
+/**
+ * VesselVerboses type - represents an array of vessel verbose objects
+ */
+export type VesselVerboses = z.infer<typeof vesselVerboseArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -125,7 +137,7 @@ export const vesselVerboseArraySchema = z.array(vesselVerboseSchema);
 
 export const useVesselVerboseById = (
   params: GetVesselVerboseByIdParams,
-  options?: TanStackOptions<VesselVerbose>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "verbose", JSON.stringify(params)],
@@ -137,11 +149,12 @@ export const useVesselVerboseById = (
 };
 
 export const useVesselVerbose = (
-  options?: TanStackOptions<VesselVerbose[]>
+  params: GetVesselVerboseParams = {},
+  options?: UseQueryOptions<VesselVerboses>
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "vessels", "verbose"],
-    queryFn: getVesselVerbose,
+    queryFn: () => getVesselVerbose(params),
     fetchLastUpdateTime: getCacheFlushDateVessels,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

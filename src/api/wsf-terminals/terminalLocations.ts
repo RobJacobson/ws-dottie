@@ -1,9 +1,10 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -33,7 +34,7 @@ export const getTerminalLocationsByTerminalId = async (
 
 export const getTerminalLocations = async (
   params: GetTerminalLocationsParams = {}
-): Promise<TerminalLocation[]> => {
+): Promise<TerminalLocations> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -104,6 +105,11 @@ export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
 
 export const terminalLocationsArraySchema = z.array(terminalLocationSchema);
 
+/**
+ * TerminalLocations type - represents an array of terminal location objects
+ */
+export type TerminalLocations = z.infer<typeof terminalLocationsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -113,7 +119,7 @@ export const terminalLocationsArraySchema = z.array(terminalLocationSchema);
 
 export const useTerminalLocationsByTerminalId = (
   params: GetTerminalLocationsByTerminalIdParams,
-  options?: TanStackOptions<TerminalLocation>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "locations", params.terminalId],
@@ -124,11 +130,12 @@ export const useTerminalLocationsByTerminalId = (
 };
 
 export const useTerminalLocations = (
-  options?: TanStackOptions<TerminalLocation[]>
+  params: GetTerminalLocationsParams = {},
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "locations"],
-    queryFn: getTerminalLocations,
+    queryFn: () => getTerminalLocations(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

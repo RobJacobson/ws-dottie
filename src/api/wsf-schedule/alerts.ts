@@ -1,10 +1,11 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -18,7 +19,7 @@ const ENDPOINT = "/ferries/api/schedule/rest/alerts";
 
 export const getAlerts = async (
   params: GetAlertsParams = {}
-): Promise<Alert[]> => {
+): Promise<Alerts> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -72,6 +73,11 @@ export const alertsArraySchema = z.array(alertSchema);
 
 export type Alert = z.infer<typeof alertSchema>;
 
+/**
+ * Alerts type - represents an array of alert objects
+ */
+export type Alerts = z.infer<typeof alertsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -80,7 +86,7 @@ export type Alert = z.infer<typeof alertSchema>;
 
 export const useAlerts = (
   params: GetAlertsParams = {},
-  options?: UseQueryOptions<Alert[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "alerts"],

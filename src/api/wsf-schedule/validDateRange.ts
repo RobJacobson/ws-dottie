@@ -1,10 +1,11 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -16,17 +17,18 @@ import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
 const ENDPOINT = "/ferries/api/schedule/rest/validdaterange";
 
-export const getValidDateRange = async (): Promise<ValidDateRange> => {
-  return zodFetch(ENDPOINT, {
-    output: validDateRangeSchema,
-  });
-};
-
 // ============================================================================
 // Input Schema & Types
 //
-// No input parameters required for this endpoint
+// getValidDateRangeParamsSchema
+// GetValidDateRangeParams
 // ============================================================================
+
+export const getValidDateRangeParamsSchema = z.object({});
+
+export type GetValidDateRangeParams = z.infer<
+  typeof getValidDateRangeParamsSchema
+>;
 
 // ============================================================================
 // Output Schema & Types
@@ -48,11 +50,25 @@ export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
 // useValidDateRange
 // ============================================================================
 
-export const useValidDateRange = (options?: TanStackOptions<ValidDateRange>) =>
+export const getValidDateRange = async (
+  params: GetValidDateRangeParams = {}
+): Promise<ValidDateRange> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      output: validDateRangeSchema,
+    },
+    params
+  );
+};
+
+export const useValidDateRange = (
+  params: GetValidDateRangeParams = {},
+  options?: UseQueryOptions
+) =>
   useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "validDateRange"],
-    queryFn: () => getValidDateRange(),
-    ...tanstackQueryOptions.DAILY_UPDATES,
-    ...options,
+    queryFn: () => getValidDateRange(params),
+    options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
     fetchLastUpdateTime: getCacheFlushDateSchedule,
   });

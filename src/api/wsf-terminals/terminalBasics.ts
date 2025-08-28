@@ -1,9 +1,10 @@
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 
@@ -33,7 +34,7 @@ export const getTerminalBasicsByTerminalId = async (
 
 export const getTerminalBasics = async (
   params: GetTerminalBasicsParams = {}
-): Promise<TerminalBasics[]> => {
+): Promise<TerminalBasicsArray> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -92,6 +93,11 @@ export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
 
 export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
 
+/**
+ * TerminalBasicsArray type - represents an array of terminal basics objects
+ */
+export type TerminalBasicsArray = z.infer<typeof terminalBasicsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -101,7 +107,7 @@ export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
 
 export const useTerminalBasicsByTerminalId = (
   params: GetTerminalBasicsByTerminalIdParams,
-  options?: TanStackOptions<TerminalBasics>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "basics", JSON.stringify(params)],
@@ -113,11 +119,12 @@ export const useTerminalBasicsByTerminalId = (
 };
 
 export const useTerminalBasics = (
-  options?: TanStackOptions<TerminalBasics[]>
+  params: GetTerminalBasicsParams = {},
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "basics"],
-    queryFn: getTerminalBasics,
+    queryFn: () => getTerminalBasics(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

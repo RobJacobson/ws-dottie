@@ -1,12 +1,12 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-
-import { fareLineItemSchema } from "./fareLineItems";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
+import { fareLineItemSchema } from "./fareLineItems";
 import { terminalComboVerboseSchema } from "./terminalCombo";
 
 // ============================================================================
@@ -89,10 +89,7 @@ export const useFareLineItemsVerbose = (
   params: {
     tripDate: Date;
   },
-  options?: Omit<
-    UseQueryOptions<FareLineItemsVerboseResponse, Error>,
-    "queryKey" | "queryFn"
-  >
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "fares", "fareLineItemsVerbose", JSON.stringify(params)],

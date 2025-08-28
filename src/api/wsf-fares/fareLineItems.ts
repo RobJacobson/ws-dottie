@@ -1,9 +1,10 @@
-import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
 
@@ -21,7 +22,7 @@ const ENDPOINT_BASIC =
 
 export const getFareLineItems = async (
   params: GetFareLineItemsParams
-): Promise<FareLineItem[]> => {
+): Promise<FareLineItems> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -34,7 +35,7 @@ export const getFareLineItems = async (
 
 export const getFareLineItemsBasic = async (
   params: GetFareLineItemsBasicParams
-): Promise<FareLineItem[]> => {
+): Promise<FareLineItemsBasic> => {
   return zodFetch(
     ENDPOINT_BASIC,
     {
@@ -90,7 +91,7 @@ export const fareLineItemSchema = z.object({
   FareLineItem: z.string(),
   Category: z.string(),
   DirectionIndependent: z.boolean(),
-  Amount: z.number().positive(),
+  Amount: z.number().min(0),
 });
 
 export const fareLineItemsArraySchema = z.array(fareLineItemSchema);
@@ -98,6 +99,16 @@ export const fareLineItemsArraySchema = z.array(fareLineItemSchema);
 export const fareLineItemsBasicArraySchema = z.array(fareLineItemSchema);
 
 export type FareLineItem = z.infer<typeof fareLineItemSchema>;
+
+/**
+ * FareLineItems type - represents an array of fare line item objects
+ */
+export type FareLineItems = z.infer<typeof fareLineItemsArraySchema>;
+
+/**
+ * FareLineItemsBasic type - represents an array of basic fare line item objects
+ */
+export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicArraySchema>;
 
 // ============================================================================
 // TanStack Query Hooks
@@ -108,7 +119,7 @@ export type FareLineItem = z.infer<typeof fareLineItemSchema>;
 
 export const useFareLineItems = (
   params: GetFareLineItemsParams,
-  options?: UseQueryOptions<FareLineItem[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: [
@@ -128,7 +139,7 @@ export const useFareLineItems = (
 
 export const useFareLineItemsBasic = (
   params: GetFareLineItemsBasicParams,
-  options?: UseQueryOptions<FareLineItem[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: [

@@ -1,10 +1,9 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import type { TanStackOptions } from "@/shared/tanstack";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -17,7 +16,7 @@ const ENDPOINT =
 
 export const getWeatherStations = async (
   params: GetWeatherStationsParams = {}
-): Promise<WeatherStation[]> => {
+): Promise<WeatherStations> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -62,6 +61,11 @@ export const weatherStationArraySchema = z.array(weatherStationSchema);
 
 export type WeatherStation = z.infer<typeof weatherStationSchema>;
 
+/**
+ * WeatherStations type - represents an array of weather station objects
+ */
+export type WeatherStations = z.infer<typeof weatherStationArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -70,8 +74,8 @@ export type WeatherStation = z.infer<typeof weatherStationSchema>;
 
 export const useWeatherStations = (
   params: GetWeatherStationsParams = {},
-  options?: TanStackOptions<WeatherStation[]>
-): UseQueryResult<WeatherStation[], Error> => {
+  options?: TanStackOptions<WeatherStations>
+): UseQueryResult<WeatherStations, Error> => {
   return useQuery({
     queryKey: [
       "wsdot",

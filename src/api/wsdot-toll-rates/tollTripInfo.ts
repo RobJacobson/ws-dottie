@@ -1,11 +1,9 @@
-import type { UseQueryResult, UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import { tanstackQueryOptions } from "@/shared/tanstack";
 
 // ============================================================================
 // API Function
@@ -16,11 +14,17 @@ import { zWsdotDate } from "@/shared/fetching/validation/schemas";
 const ENDPOINT =
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson";
 
-export const getTollTripInfo = async (): Promise<TollTripInfo[]> => {
-  return zodFetch(ENDPOINT, {
-    input: getTollTripInfoParamsSchema,
-    output: tollTripInfoArraySchema,
-  });
+export const getTollTripInfo = async (
+  params: GetTollTripInfoParams = {}
+): Promise<TollTripInfos> => {
+  return zodFetch(
+    ENDPOINT,
+    {
+      input: getTollTripInfoParamsSchema,
+      output: tollTripInfoArraySchema,
+    },
+    params
+  );
 };
 
 // ============================================================================
@@ -56,6 +60,11 @@ export const tollTripInfoArraySchema = z.array(tollTripInfoSchema);
 
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 
+/**
+ * TollTripInfos type - represents an array of toll trip info objects
+ */
+export type TollTripInfos = z.infer<typeof tollTripInfoArraySchema>;
+
 // ============================================================================
 // TanStack Query Hook
 //
@@ -63,12 +72,12 @@ export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 // ============================================================================
 
 export const useTollTripInfo = (
-  params: GetTollTripInfoParams,
-  options?: UseQueryOptions<TollTripInfo[], Error>
+  params: GetTollTripInfoParams = {},
+  options?: UseQueryOptions<TollTripInfos, Error>
 ) => {
   return useQuery({
     queryKey: ["wsdot", "toll-rates", "getTollTripInfo"],
-    queryFn: () => getTollTripInfo(),
+    queryFn: () => getTollTripInfo(params),
     ...tanstackQueryOptions.MINUTE_UPDATES,
     ...options,
   });

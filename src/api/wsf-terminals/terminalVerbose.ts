@@ -1,10 +1,10 @@
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
-import type { TanStackOptions } from "@/shared/tanstack";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
 import { terminalBulletinItemSchema } from "./terminalBulletins";
@@ -36,7 +36,7 @@ export const getTerminalVerboseByTerminalId = async (
 
 export const getTerminalVerbose = async (
   params: GetTerminalVerboseParams = {}
-): Promise<TerminalVerbose[]> => {
+): Promise<TerminalVerboses> => {
   return zodFetch(
     ENDPOINT_ALL,
     {
@@ -156,6 +156,11 @@ export const terminalVerboseArraySchema = z.array(terminalVerboseSchema);
 export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
 export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
 
+/**
+ * TerminalVerboses type - represents an array of terminal verbose objects
+ */
+export type TerminalVerboses = z.infer<typeof terminalVerboseArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -165,7 +170,7 @@ export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
 
 export const useTerminalVerboseByTerminalId = (
   params: GetTerminalVerboseByTerminalIdParams,
-  options?: TanStackOptions<TerminalVerbose>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "verbose", params.terminalId],
@@ -176,11 +181,12 @@ export const useTerminalVerboseByTerminalId = (
 };
 
 export const useTerminalVerbose = (
-  options?: TanStackOptions<TerminalVerbose[]>
-): UseQueryResult<TerminalVerbose[], Error> => {
+  params: GetTerminalVerboseParams = {},
+  options?: UseQueryOptions
+) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "terminals", "verbose"],
-    queryFn: getTerminalVerbose,
+    queryFn: () => getTerminalVerbose(params),
     fetchLastUpdateTime: getCacheFlushDateTerminals,
     options: { ...tanstackQueryOptions.DAILY_UPDATES, ...options },
   });

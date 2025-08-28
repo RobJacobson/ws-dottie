@@ -12,8 +12,8 @@ export * from "./mountainPassConditions";
 export {
   getMountainPassConditionByIdParamsSchema,
   getMountainPassConditionsParamsSchema,
-  mountainPassConditionSchema,
   mountainPassConditionArraySchema,
+  mountainPassConditionSchema,
   travelRestrictionSchema,
 } from "./mountainPassConditions";
 

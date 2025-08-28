@@ -1,10 +1,11 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
-
-import { useQueryWithAutoUpdate } from "@/shared/tanstack";
-import { tanstackQueryOptions } from "@/shared/tanstack";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
+import {
+  tanstackQueryOptions,
+  useQueryWithAutoUpdate,
+} from "@/shared/tanstack";
 
 import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
 
@@ -18,7 +19,7 @@ const ENDPOINT = "/ferries/api/schedule/rest/allsailings/{schedRouteId}";
 
 export const getAllSailings = async (
   params: GetAllSailingsParams
-): Promise<SailingResponse[]> => {
+): Promise<Sailings> => {
   return zodFetch(
     ENDPOINT,
     {
@@ -113,6 +114,11 @@ export const sailingsArraySchema = z.array(sailingResponseSchema);
 
 export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
+/**
+ * Sailings type - represents an array of sailing response objects
+ */
+export type Sailings = z.infer<typeof sailingsArraySchema>;
+
 // ============================================================================
 // TanStack Query Hooks
 //
@@ -121,7 +127,7 @@ export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
 export const useAllSailings = (
   params: GetAllSailingsParams,
-  options?: UseQueryOptions<SailingResponse[], Error>
+  options?: UseQueryOptions
 ) => {
   return useQueryWithAutoUpdate({
     queryKey: ["wsf", "schedule", "allSailings", params.schedRouteId],
