@@ -9,8 +9,8 @@ export {
   configManager,
   type WsdotConfig,
 } from "./shared/config";
-export type { LoggingMode } from "./shared/utils";
 export type { ValidationMode } from "./shared/fetching/validation/types";
+export type { LoggingMode } from "./shared/utils";
 
 // ============================================================================
 // API Modules (Namespace Exports)
