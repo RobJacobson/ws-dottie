@@ -19,6 +19,10 @@
       "types": "./src/index.ts",
       "import": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./cli": {
+      "node": "./dist/cli.mjs",
+      "default": "./dist/cli.mjs"
     }
   },
   "files": [
@@ -26,15 +30,23 @@
     "README.md",
     "docs"
   ],
+  "bin": {
+    "ws-dottie": "./dist/cli.mjs"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest --config config/vitest.config.ts --run",
+    "tests": "node scripts/run-api-tests.js",
     "lint": "biome lint src/ tests/",
-    "format": "biome format --write src/ tests/",
+    "format": "biome check --write src/ tests/",
     "type-check": "tsc --noEmit",
     "type-check:test": "tsc --noEmit --project tsconfig.test.json",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "generate-examples": "node scripts/generate-examples.js",
+    "nuke-comments": "node scripts/nuke-jsdoc-comments.js",
+    "simplify-types": "node scripts/simplify-types.js",
+    "fix-wsf-schedule": "node scripts/fix-wsf-schedule-hooks.js"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
@@ -50,12 +62,14 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitest/ui": "^3.2.4",
+    "chalk": "^5.6.0",
+    "commander": "^14.0.0",
     "dotenv": "^17.2.0",
     "jsdom": "^26.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
   "dependencies": {
