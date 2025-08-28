@@ -1,3 +1,4 @@
+import { wsfCacheFlushDateSchema } from "../../../src/api/wsf/cacheFlushDate";
 import {
   fareLineItemsArraySchema,
   fareLineItemsBasicArraySchema,
@@ -29,23 +30,8 @@ import {
   terminalComboVerboseArraySchema,
   terminalMatesArraySchema,
 } from "../../../src/api/wsf-fares";
-import { wsfCacheFlushDateSchema } from "../../../src/api/wsf/cacheFlushDate";
+import { datePatterns, getTestDates } from "../utils/date-utils";
 import type { ApiModuleConfig } from "../utils/types";
-
-/**
- * Generate dynamic test dates based on current date
- * - Tomorrow's date for single date parameters
- * - Day after tomorrow for range end dates
- */
-const getTestDates = () => {
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const dayAfterTomorrow = new Date();
-  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
-
-  return { tomorrow, dayAfterTomorrow };
-};
 
 export const wsfFaresTestConfig: ApiModuleConfig = {
   moduleName: "WSF Fares",

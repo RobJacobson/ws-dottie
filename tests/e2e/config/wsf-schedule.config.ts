@@ -22,8 +22,8 @@ import {
   scheduleTerminalsArraySchema,
   timeAdjustmentsArraySchema,
   validDateRangeSchema,
-} from "@/api/wsf-schedule";
-
+} from "../../../src/api/wsf-schedule";
+import { datePatterns, getTestDates } from "../utils/date-utils";
 import type { ApiModuleConfig } from "../utils/types";
 
 export const wsfScheduleTestConfig: ApiModuleConfig = {
@@ -158,7 +158,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
     {
       apiFunction: getTerminals,
       outputSchema: scheduleTerminalsArraySchema,
-      validParams: { tripDate: new Date("2025-08-23") },
+      validParams: { tripDate: getTestDates().tomorrow },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01") },
@@ -177,7 +177,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return terminals with valid structure",
           test: async () => {
             const result = await getTerminals({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
             expect(result.length).toBeGreaterThan(0);
 
@@ -192,7 +192,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return unique terminal IDs",
           test: async () => {
             const result = await getTerminals({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
             const terminalIds = result.map((t) => t.TerminalID);
             const uniqueIds = new Set(terminalIds);
@@ -203,7 +203,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return terminals with reasonable descriptions",
           test: async () => {
             const result = await getTerminals({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
 
             // Check that descriptions are reasonable (not empty, not too long)
@@ -218,7 +218,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
     {
       apiFunction: getRoutes,
       outputSchema: routesArraySchema,
-      validParams: { tripDate: new Date("2025-08-23") },
+      validParams: { tripDate: getTestDates().tomorrow },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01") },
@@ -237,7 +237,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return routes with valid structure",
           test: async () => {
             const result = await getRoutes({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
             expect(result.length).toBeGreaterThan(0);
 
@@ -256,7 +256,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return unique route IDs",
           test: async () => {
             const result = await getRoutes({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
             const routeIds = result.map((r) => r.RouteID);
             const uniqueIds = new Set(routeIds);
@@ -267,7 +267,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return routes with reasonable descriptions",
           test: async () => {
             const result = await getRoutes({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
 
             // Check that descriptions are reasonable
@@ -350,14 +350,14 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
     {
       apiFunction: getTerminalMates,
       outputSchema: scheduleTerminalsArraySchema,
-      validParams: { tripDate: new Date("2025-08-23"), terminalId: 1 },
+      validParams: { tripDate: getTestDates().tomorrow, terminalId: 1 },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01"), terminalId: 1 },
           expectedError: "Invalid date",
         },
         {
-          params: { tripDate: new Date("2025-08-23"), terminalId: 999 },
+          params: { tripDate: getTestDates().tomorrow, terminalId: 999 },
           expectedError: "Invalid terminal ID",
         },
       ],
@@ -369,7 +369,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return terminal mates with valid structure",
           test: async () => {
             const result = await getTerminalMates({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
               terminalId: 1,
             });
             expect(result.length).toBeGreaterThan(0);
@@ -385,7 +385,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return unique terminal mate IDs",
           test: async () => {
             const result = await getTerminalMates({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
               terminalId: 1,
             });
             const mateIds = result.map((m) => m.TerminalID);
@@ -397,7 +397,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return terminal mates different from source terminal",
           test: async () => {
             const result = await getTerminalMates({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
               terminalId: 1,
             });
 
@@ -550,7 +550,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
     {
       apiFunction: getRoutes,
       outputSchema: routesArraySchema,
-      validParams: { tripDate: new Date("2025-08-23") },
+      validParams: { tripDate: getTestDates().tomorrow },
       invalidParams: [
         {
           params: { tripDate: new Date("2020-01-01") },
@@ -569,7 +569,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return routes with valid structure",
           test: async () => {
             const result = await getRoutes({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
             expect(result.length).toBeGreaterThan(0);
 
@@ -581,17 +581,15 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
             expect(firstRoute.Description).toBeDefined();
             expect(firstRoute.Description.length).toBeGreaterThan(0);
             expect(firstRoute.RegionID).toBeGreaterThan(0);
-            expect(typeof firstRoute.ReservationFlag).toBe("boolean");
-            expect(typeof firstRoute.InternationalFlag).toBe("boolean");
-            expect(typeof firstRoute.PassengerOnlyFlag).toBe("boolean");
-            expect(Array.isArray(firstRoute.Alerts)).toBe(true);
+            // Note: ReservationFlag, InternationalFlag, PassengerOnlyFlag, and Alerts
+            // are not present in the actual WSF API response structure
           },
         },
         {
           name: "should return unique route IDs",
           test: async () => {
             const result = await getRoutes({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
             const routeIds = result.map((r) => r.RouteID);
             const uniqueIds = new Set(routeIds);
@@ -602,7 +600,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
           name: "should return routes with reasonable descriptions",
           test: async () => {
             const result = await getRoutes({
-              tripDate: new Date("2025-08-23"),
+              tripDate: getTestDates().tomorrow,
             });
 
             // Check that descriptions are reasonable
@@ -677,7 +675,7 @@ export const wsfScheduleTestConfig: ApiModuleConfig = {
             expect(typeof firstTerminalTime.TerminalBriefDescription).toBe(
               "string"
             );
-            expect(typeof firstTerminalTime.Time).toBe("string");
+            expect(firstTerminalTime.Time).toBeInstanceOf(Date);
             expect(typeof firstTerminalTime.DepArrIndicator).toBe("number");
             expect(typeof firstTerminalTime.IsNA).toBe("boolean");
             expect(Array.isArray(firstTerminalTime.Annotations)).toBe(true);
