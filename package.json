@@ -38,15 +38,12 @@
     "dev": "tsup --watch",
     "test": "vitest --config config/vitest.config.ts --run",
     "tests": "node scripts/run-api-tests.js",
-    "lint": "biome lint src/ tests/",
-    "format": "biome check --write src/ tests/",
+    "lint": "biome lint src/",
+    "format": "biome check --write src/",
     "type-check": "tsc --noEmit",
     "type-check:test": "tsc --noEmit --project tsconfig.test.json",
     "prepublishOnly": "npm run build",
-    "generate-examples": "node scripts/generate-examples.js",
-    "nuke-comments": "node scripts/nuke-jsdoc-comments.js",
-    "simplify-types": "node scripts/simplify-types.js",
-    "fix-wsf-schedule": "node scripts/fix-wsf-schedule-hooks.js"
+    "nuke-comments": "node scripts/nuke-jsdoc-comments.js"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",

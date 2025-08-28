@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/cli.ts"],
   format: ["esm", "cjs"], // Build both ESM and CJS formats
   dts: true,
   splitting: false,
@@ -14,6 +14,9 @@ export default defineConfig({
     "react-dom",
     "@tanstack/react-query",
     "@tanstack/query-core",
+    // CLI dependencies - exclude from main bundle
+    "commander",
+    "chalk",
   ],
   outDir: "dist",
   outExtension({ format }) {

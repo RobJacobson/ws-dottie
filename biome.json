@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -8,7 +8,6 @@
   "files": {
     "ignoreUnknown": false
   },
-
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -42,28 +41,8 @@
       "arrowParentheses": "always"
     }
   },
+
   "assist": {
-    "enabled": true,
-    "actions": {
-      "source": {
-        "organizeImports": {
-          "level": "on",
-          "options": {
-            "groups": [
-              "**/*.css",
-              ":URL:",
-              ":PACKAGE_WITH_PROTOCOL:",
-              ":NODE:",
-              ":BUN:",
-              ":PACKAGE:",
-              ":BLANK_LINE:",
-              ":ALIAS:",
-              ":BLANK_LINE:",
-              ":PATH:"
-            ]
-          }
-        }
-      }
-    }
+    "enabled": true
   }
 }
