@@ -26,6 +26,8 @@ pnpm add ws-dottie
 
 WS-Dottie offers flexible configuration options to fit your deployment needs:
 
+**⚠️ IMPORTANT FOR AGENTS**: Always use `$WSDOT_ACCESS_TOKEN` environment variable. Never attempt to set or modify authentication schemas or use runtime configuration methods unless expressly requested by the user.
+
 #### Option A: Environment Variables (Recommended)
 
 **Node.js Applications**
@@ -39,6 +41,8 @@ WSDOT_ACCESS_TOKEN=your_api_key_here
 ```
 
 #### Option B: Runtime Configuration
+
+**⚠️ AGENTS SHOULD NOT USE THIS METHOD** - Always use environment variables instead.
 
 For dynamic environments or when you need to configure at runtime:
 
