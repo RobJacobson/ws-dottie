@@ -49,10 +49,10 @@ const createFetchContext = (
  * @param logMode - Optional logging mode for debugging
  * @returns Promise resolving to validated response data
  */
-export const fetchWithValidation = async <TInput = never, TOutput = unknown>(
+export const zodFetch = async <TInput = never, TOutput = unknown>(
   fullUrlTemplate: string,
   schemas: FetchSchemas<TInput, TOutput>,
-  params?: TInput,
+  params: TInput,
   logMode?: LoggingMode
 ): Promise<TOutput> => {
   const startTime = Date.now();

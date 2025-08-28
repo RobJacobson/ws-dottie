@@ -3,8 +3,13 @@
  * Contains query configuration, custom hooks, and related types
  */
 
+// Export the enhanced hook factory
+export {
+  createUseQueryWsdot,
+  createUseQueryWsf,
+} from "./hookFactory";
 // Export the main query configuration options
-export { tanstackQueryOptions } from "./queryOptions";
+export { tanstackRefetchOptions as tanstackQueryOptions } from "./queryOptions";
 // Export TanStack-related types
 export type {
   ApiQueryOptions,
@@ -12,13 +17,3 @@ export type {
   InferApiData,
   TanStackOptions,
 } from "./types";
-// Export the auto-update hook
-export { useQueryWithAutoUpdate } from "./useQueryWithAutoUpdate";
-// Export the enhanced hook factory
-export {
-  createApiHook,
-  createArrayApiHook,
-  createSingleApiHook,
-  createWsfApiHook,
-  createWsdotApiHook,
-} from "./hookFactory";

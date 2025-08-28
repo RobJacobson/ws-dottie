@@ -9,4 +9,4 @@
 // Export all schema construction utilities
 export * from "./dates";
 export * from "./fields";
-export * from "./templates";
+// Note: templates.ts has been cleaned up and no longer exports anything

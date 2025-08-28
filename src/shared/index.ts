@@ -28,7 +28,11 @@ export { configManager, type WsdotConfig } from "./config";
 export type { TanStackOptions } from "./tanstack";
 // TanStack Query configuration with pre-optimized strategies
 // TanStack Query hooks
-export { tanstackQueryOptions, useQueryWithAutoUpdate } from "./tanstack";
+export {
+  createUseQueryWsdot,
+  createUseQueryWsf,
+  tanstackQueryOptions,
+} from "./tanstack";
 
 // ============================================================================
 // FETCHING & DATA ACCESS
@@ -51,8 +55,6 @@ export * from "./utils";
 // All validation and schema functionality is now under fetching
 // Re-export for backward compatibility
 export {
-  createDateRangeParams,
-  createVesselIdDescription,
   zLatitude,
   zLongitude,
   zNullableBoolean,

@@ -26,7 +26,6 @@
  * and test environments where CORS is not a concern.
  */
 
-import { processApiResponse } from "../execution/utils";
 import type { FetchStrategy } from "./types";
 
 /**

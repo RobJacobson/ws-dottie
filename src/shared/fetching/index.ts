@@ -30,13 +30,10 @@
 // ============================================================================
 
 // Import the main function first
-import { fetchWithValidation } from "./pipeline/fetchWithValidation";
+import { zodFetch } from "./pipeline/zodFetch";
 
 // Main fetching function with validation
-export { fetchWithValidation };
-
-// Alias for backward compatibility
-export { fetchWithValidation as zodFetch };
+export { zodFetch };
 
 // ============================================================================
 // PIPELINE COMPONENTS
