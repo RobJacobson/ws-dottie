@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -125,51 +130,34 @@ export type GetHighwayAlertsByRegionIdParams = z.infer<
 
 export const highwayAlertRoadwayLocationSchema = z.object({
   Description: z.string().nullable(),
-
   Direction: z.string().nullable(),
-
   // NOTE: API returns 0 for coordinates when not available, despite published spec suggesting WGS84 coordinates
   // This is a known API behavior that we must accommodate for test stability
   Latitude: z.number(),
-
   // NOTE: API returns 0 for coordinates when not available, despite published spec suggesting WGS84 coordinates
   // This is a known API behavior that we must accommodate for test stability
   Longitude: z.number(),
-
   // NOTE: API returns 0 for MilePost in some cases, despite published spec suggesting this field is always populated
   // This is a known API behavior that we must accommodate for test stability
   MilePost: z.number(),
-
   RoadName: z.string().nullable(),
 });
 
 export const highwayAlertSchema = z.object({
   AlertID: z.number().int().positive(),
-
   County: z.string().nullable(),
-
   EndRoadwayLocation: highwayAlertRoadwayLocationSchema,
-
   EndTime: zWsdotDate().nullable(),
-
   EventCategory: z.string(),
-
   EventStatus: z.string(),
-
   // NOTE: API returns null for ExtendedDescription in some cases, despite published spec suggesting this field is always populated
   // This is a known API behavior that we must accommodate for test stability
   ExtendedDescription: z.string().nullable(),
-
   HeadlineDescription: z.string(),
-
   LastUpdatedTime: zWsdotDate(),
-
   Priority: z.string(),
-
   Region: z.string(),
-
   StartRoadwayLocation: highwayAlertRoadwayLocationSchema,
-
   StartTime: zWsdotDate(),
 });
 
@@ -186,7 +174,7 @@ export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
 export type HighwayAlerts = z.infer<typeof highwayAlertArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
+// TanStack Query options
 //
 // useHighwayAlertById (singular item)
 // useHighwayAlerts (array)
@@ -194,26 +182,50 @@ export type HighwayAlerts = z.infer<typeof highwayAlertArraySchema>;
 // useHighwayAlertsByRegionId (array filtered by region ID)
 // ============================================================================
 
-export const useHighwayAlertById = createUseQueryWsdot({
-  queryFn: getHighwayAlertById,
-  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlertById"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const highwayAlertByIdOptions = (params: GetHighwayAlertByIdParams) =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertById", params],
+    queryFn: () => getHighwayAlertById(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useHighwayAlerts = createUseQueryWsdot({
-  queryFn: getHighwayAlerts,
-  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlerts"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const highwayAlertsOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlerts"],
+    queryFn: () => getHighwayAlerts({}),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useHighwayAlertsByMapArea = createUseQueryWsdot({
-  queryFn: getHighwayAlertsByMapArea,
-  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const highwayAlertsByMapAreaOptions = (
+  params: GetHighwayAlertsByMapAreaParams
+) =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea", params],
+    queryFn: () => getHighwayAlertsByMapArea(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useHighwayAlertsByRegionId = createUseQueryWsdot({
-  queryFn: getHighwayAlertsByRegionId,
-  queryKeyPrefix: ["wsdot", "highway-alerts", "getHighwayAlertsByRegionId"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const highwayAlertsByRegionIdOptions = (
+  params: GetHighwayAlertsByRegionIdParams
+) =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByRegionId", params],
+    queryFn: () => getHighwayAlertsByRegionId(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

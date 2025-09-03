@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -59,9 +62,15 @@ export type FaresValidDateRange = z.infer<typeof faresValidDateRangeSchema>;
 // useFaresValidDateRange
 // ============================================================================
 
-export const useFaresValidDateRange = createUseQueryWsf({
-  queryFn: getFaresValidDateRange,
-  queryKeyPrefix: ["wsf", "fares", "validDateRange", "getFaresValidDateRange"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const faresValidDateRangeOptions = (
+  params: GetFaresValidDateRangeParams = {}
+) =>
+  queryOptions({
+    queryKey: ["wsf", "fares", "validDateRange", "getFaresValidDateRange"],
+    queryFn: () => getFaresValidDateRange(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

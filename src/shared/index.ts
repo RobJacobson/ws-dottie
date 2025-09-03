@@ -26,13 +26,6 @@
 export { configManager, type WsdotConfig } from "./config";
 // TanStack Query types
 export type { TanStackOptions } from "./tanstack";
-// TanStack Query configuration with pre-optimized strategies
-// TanStack Query hooks
-export {
-  createUseQueryWsdot,
-  createUseQueryWsf,
-  tanstackQueryOptions,
-} from "./tanstack";
 
 // ============================================================================
 // FETCHING & DATA ACCESS

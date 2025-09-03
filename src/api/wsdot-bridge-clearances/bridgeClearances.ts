@@ -1,26 +1,13 @@
-import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import {
-  zLatitude,
-  zLongitude,
-  zNullableString,
-  zWsdotDate,
-} from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
-
 /**
- * WSDOT Bridge Clearances API
- *
- * Bridge clearance data for Washington State highways, providing vertical clearance
- * measurements for bridges and overpasses to help with route planning for vehicles
- * carrying tall loads.
+ * @module WSDOT Bridge Clearances API
+ * @description Bridge clearance data for Washington State highways, providing vertical clearance
+ * measurements for bridges and overpasses to help with route planning for vehicles carrying tall loads.
  *
  * Provides:
- * - Vertical clearance measurements in both feet/inches and total inches
- * - Bridge location information including geographic coordinates and milepost data
+ * - Vertical clearance measurements in feet/inches and total inches
+ * - Bridge location information (GPS coordinates) and milepost data
  * - Route-specific bridge data for planning oversized load transportation
  * - State Route ID and bridge identification information
- * - Enables applications to help drivers avoid bridges with insufficient clearance
  *
  * Data includes:
  * - Bridge identification numbers and descriptions
@@ -30,72 +17,61 @@ import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
  * - Bridge direction and inventory data
  *
  * @functions
- * - getBridgeClearances: Returns an array of BridgeDataGIS objects for bridges on the specified route
+ *   - getBridgeClearances: Returns an array of BridgeDataGIS objects for bridges on the specified route
  *
  * @input
- * - getBridgeClearances: { route: string } - State route identifier (e.g., "005" for I-5)
+ *   - getBridgeClearances: { route: string } - State route identifier (e.g., "005" for I-5)
  *
  * @output
- * - getBridgeClearances: BridgeDataGIS[] - Array of bridge clearance data for the specified route
+ *   - getBridgeClearances: BridgeDataGIS[] - Array of bridge clearance data for the specified route
  *
  * @baseType
- * interface BridgeDataGIS {
- *   APILastUpdate: Date; // Transformed from .NET timestamp to JS Date
- *   BridgeNumber: string | null;
- *   ControlEntityGuid: string;
- *   CrossingDescription: string | null;
- *   CrossingLocationId: number;
- *   CrossingRecordGuid: string;
- *   InventoryDirection: string | null;
- *   Latitude: number;
- *   Longitude: number;
- *   RouteDate: Date; // Transformed from .NET timestamp to JS Date
- *   SRMP: number;
- *   SRMPAheadBackIndicator: string | null;
- *   StateRouteID: string | null;
- *   StateStructureId: string | null;
- *   VerticalClearanceMaximumFeetInch: string | null;
- *   VerticalClearanceMaximumInches: number;
- *   VerticalClearanceMinimumFeetInch: string | null;
- *   VerticalClearanceMinimumInches: number;
- * }
+ *   - BridgeDataGIS: Comprehensive bridge clearance data with geographic and structural information
+ *   - BridgeDataGISArray: Array wrapper for BridgeDataGIS objects
  *
- * @curl
- * curl -s "https://wsdot.wa.gov/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route=005&AccessCode=$WSDOT_ACCESS_TOKEN"
+ * @cli
+ *   - getBridgeClearances: node dist/cli.mjs getBridgeClearances '{"route":"005"}'
  *
  * @exampleResponse
- * Here is example output from ws-dottie (transformed from raw API response):
+ * {
+ *   "APILastUpdate": "2025-08-28T10:30:02.217Z",
+ *   "BridgeNumber": "5/722",
+ *   "ControlEntityGuid": "5816685f-1f00-4344-8888-43cdcacf7153",
+ *   "CrossingDescription": "I-5 UNDER BOW HILL RD",
+ *   "CrossingLocationId": 7224,
+ *   "CrossingRecordGuid": "ba5ac02e-85ea-4e74-b740-7cbd4b595779",
+ *   "InventoryDirection": "D",
+ *   "Latitude": 48.557581,
+ *   "LocationGuid": "c276f68a-fd11-4373-942f-b2d6aa250a1c",
+ *   "Longitude": -122.350011,
+ *   "RouteDate": "2016-12-31T08:00:00.000Z",
+ *   "SRMP": 236.39,
+ *   "SRMPAheadBackIndicator": "A",
+ *   "StateRouteID": "005",
+ *   "StateStructureId": "0007086A",
+ *   "VerticalClearanceMaximumFeetInch": "16 ft 8 in",
+ *   "VerticalClearanceMaximumInches": 200,
+ *   "VerticalClearanceMinimumFeetInch": "16 ft 6 in",
+ *   "VerticalClearanceMinimumInches": 198
+ * }
  *
- * ```json
- * [
- *   {
- *     "APILastUpdate": "2025-08-27T10:30:02.330Z",
- *     "BridgeNumber": "5/629A",
- *     "ControlEntityGuid": "88ba5341-b39c-43c9-95a5-bc9584b2d798",
- *     "CrossingDescription": "I-5 RAMPS UNDER BROADWAY AVE",
- *     "CrossingLocationId": 6192,
- *     "CrossingRecordGuid": "9b764b55-9fc1-4448-8b0b-3f35b83d6f5f",
- *     "InventoryDirection": "I",
- *     "Latitude": 47.961343,
- *     "Longitude": -122.200516,
- *     "RouteDate": "2016-12-31T08:00:00.000Z",
- *     "SRMP": 0,
- *     "SRMPAheadBackIndicator": "A",
- *     "StateRouteID": "005S119195",
- *     "StateStructureId": "0003842B",
- *     "VerticalClearanceMaximumFeetInch": "14 ft 5 in",
- *     "VerticalClearanceMaximumInches": 173,
- *     "VerticalClearanceMinimumFeetInch": "14 ft 1 in",
- *     "VerticalClearanceMinimumInches": 169
- *   }
- * ]
- * ```
- *
- * Note: APILastUpdate and RouteDate fields are transformed from .NET timestamps to ISO 8601 format.
- *
- * @see {@link https://wsdot.wa.gov/Traffic/api/Bridges/ClearanceREST.svc WSDOT Bridge Clearances API}
- * @see {@link https://wsdot.wa.gov/Traffic/api/ WSDOT Traffic APIs}
+ * @see https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
  */
+import { z } from "zod";
+import { zodFetch } from "@/shared/fetching";
+import {
+  zLatitude,
+  zLongitude,
+  zNullableString,
+  zWsdotDate,
+} from "@/shared/fetching/validation/schemas";
+// tanstackQueryOptions no longer used here after hook removal
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -140,7 +116,7 @@ export const getBridgeClearances = async (
  * Parameters for retrieving bridge clearance data for a specific state route
  */
 export const getBridgeClearancesParamsSchema = z.object({
-  route: z.string().min(1, "Route cannot be empty"),
+  route: z.string().nullable().optional(),
 });
 
 /**
@@ -159,41 +135,23 @@ export type GetBridgeClearancesParams = z.infer<
  */
 export const bridgeDataGisSchema = z.object({
   APILastUpdate: zWsdotDate(),
-
   BridgeNumber: z.string().nullable(),
-
   ControlEntityGuid: z.string(),
-
   CrossingDescription: z.string().nullable(),
-
   CrossingLocationId: z.number(),
-
   CrossingRecordGuid: z.string(),
-
   InventoryDirection: zNullableString(),
-
   Latitude: zLatitude(),
-
   LocationGuid: z.string(),
-
   Longitude: zLongitude(),
-
   RouteDate: zWsdotDate(),
-
   SRMP: z.number(),
-
   SRMPAheadBackIndicator: zNullableString(),
-
   StateRouteID: z.string().nullable(),
-
   StateStructureId: z.string().nullable(),
-
   VerticalClearanceMaximumFeetInch: z.string().nullable(),
-
   VerticalClearanceMaximumInches: z.number(),
-
   VerticalClearanceMinimumFeetInch: z.string().nullable(),
-
   VerticalClearanceMinimumInches: z.number(),
 });
 
@@ -212,14 +170,18 @@ export const bridgeDataGisArraySchema = z.array(bridgeDataGisSchema);
  */
 export type BridgeDataGISArray = z.infer<typeof bridgeDataGisArraySchema>;
 
-// ============================================================================
-// TanStack Query Hook
-//
-// useBridgeClearances
-// ============================================================================
+// ==========================================================================
+// TanStack Query Options (new pattern)
+// ==========================================================================
 
-export const useBridgeClearances = createUseQueryWsdot({
-  queryFn: getBridgeClearances,
-  queryKeyPrefix: ["wsdot", "bridge-clearances", "getBridgeClearances"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const bridgeClearancesOptions = (params: GetBridgeClearancesParams) =>
+  queryOptions({
+    queryKey: ["wsdot", "bridge-clearances", "getBridgeClearances", params],
+    queryFn: () => getBridgeClearances(params),
+    // Bridge data updates are infrequent; use one-day cadence
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

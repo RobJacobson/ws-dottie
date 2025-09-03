@@ -5,19 +5,40 @@
 export {
   getFaresCacheFlushDate,
   useFaresCacheFlushDate,
-} from "../wsf/cacheFlushDate";
-export * from "./fareLineItems";
-export * from "./fareLineItemsVerbose";
-export * from "./faresTerminals";
-export * from "./faresValidDateRange";
-export * from "./fareTotals";
-export * from "./terminalCombo";
+} from "../../shared/caching/cacheFlushDate";
+export {
+  getFareLineItems,
+  getFareLineItemsBasic,
+  fareLineItemsOptions,
+  fareLineItemsBasicOptions,
+} from "./fareLineItems";
+export {
+  getFareLineItemsVerbose,
+  fareLineItemsVerboseOptions,
+} from "./fareLineItemsVerbose";
+export {
+  getFaresTerminals,
+  getFaresTerminalMates,
+  faresTerminalsOptions,
+  faresTerminalMatesOptions,
+} from "./faresTerminals";
+export {
+  getFaresValidDateRange,
+  faresValidDateRangeOptions,
+} from "./faresValidDateRange";
+export { getFareTotals, fareTotalsOptions } from "./fareTotals";
+export {
+  getTerminalCombo,
+  getTerminalComboVerbose,
+  terminalComboOptions,
+  terminalComboVerboseOptions,
+} from "./terminalCombo";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export { wsfCacheFlushDateParamsSchema as getFaresCacheFlushDateParamsSchema } from "../wsf/cacheFlushDate";
+export { wsfCacheFlushDateParamsSchema as getFaresCacheFlushDateParamsSchema } from "../../shared/caching/cacheFlushDate";
 export {
   fareLineItemSchema,
   fareLineItemsArraySchema,
@@ -55,7 +76,7 @@ export {
 // TYPE RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
-export type { WsfCacheFlushDateParams as GetFaresCacheFlushDateParams } from "../wsf/cacheFlushDate";
+export type { WsfCacheFlushDateParams as GetFaresCacheFlushDateParams } from "../../shared/caching/cacheFlushDate";
 export type {
   FareLineItem,
   GetFareLineItemsBasicParams,

@@ -1,19 +1,7 @@
 /**
  * TanStack Query related functionality for WS-Dottie
- * Contains query configuration, custom hooks, and related types
+ * Note: hook factories and presets removed in favor of queryOptions pattern.
  */
 
-// Export the enhanced hook factory
-export {
-  createUseQueryWsdot,
-  createUseQueryWsf,
-} from "./hookFactory";
-// Export the main query configuration options
-export { tanstackRefetchOptions as tanstackQueryOptions } from "./queryOptions";
-// Export TanStack-related types
-export type {
-  ApiQueryOptions,
-  ApiQueryResult,
-  InferApiData,
-  TanStackOptions,
-} from "./types";
+// Keep types available if still used internally
+export type { TanStackOptions } from "./types";

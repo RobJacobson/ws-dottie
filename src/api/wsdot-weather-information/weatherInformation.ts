@@ -7,7 +7,12 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -87,33 +92,19 @@ export type GetWeatherInformationByStationIdParams = z.infer<
 
 export const weatherInfoSchema = z.object({
   BarometricPressure: zNullableNumber(),
-
   Latitude: zLatitude(),
-
   Longitude: zLongitude(),
-
   PrecipitationInInches: zNullableNumber(),
-
   ReadingTime: zWsdotDate(),
-
   RelativeHumidity: zNullableNumber(),
-
   SkyCoverage: zNullableString(),
-
   StationID: z.number().int().positive(),
-
   StationName: z.string(),
-
   TemperatureInFahrenheit: zNullableNumber(),
-
   Visibility: zNullableNumber(),
-
   WindDirection: zNullableNumber(),
-
   WindDirectionCardinal: zNullableString(),
-
   WindGustSpeedInMPH: zNullableNumber(),
-
   WindSpeedInMPH: zNullableNumber(),
 });
 
@@ -127,23 +118,34 @@ export const weatherInfoArraySchema = z.array(weatherInfoSchema);
 export type WeatherInfos = z.infer<typeof weatherInfoArraySchema>;
 
 // ============================================================================
-// TanStack Query Hook
-//
-// useWeatherInformation
+// TanStack Query Options
 // ============================================================================
 
-export const useWeatherInformation = createUseQueryWsdot({
-  queryFn: getWeatherInformation,
-  queryKeyPrefix: ["wsdot", "weather-information", "getWeatherInformation"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const weatherInformationOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
+    queryFn: () => getWeatherInformation({}),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useWeatherInformationByStationId = createUseQueryWsdot({
-  queryFn: getWeatherInformationByStationId,
-  queryKeyPrefix: [
-    "wsdot",
-    "weather-information",
-    "getWeatherInformationByStationId",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const weatherInformationByStationIdOptions = (
+  params: GetWeatherInformationByStationIdParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsdot",
+      "weather-information",
+      "getWeatherInformationByStationId",
+      params,
+    ],
+    queryFn: () => getWeatherInformationByStationId(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

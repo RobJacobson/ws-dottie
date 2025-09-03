@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -44,7 +49,6 @@ export type GetMapAreasParams = z.infer<typeof getMapAreasParamsSchema>;
 
 export const mapAreaSchema = z.object({
   MapArea: z.string(),
-
   MapAreaDescription: z.string(),
 });
 
@@ -63,8 +67,13 @@ export type MapAreas = z.infer<typeof mapAreasArraySchema>;
 // useMapAreas
 // ============================================================================
 
-export const useMapAreas = createUseQueryWsdot({
-  queryFn: getMapAreas,
-  queryKeyPrefix: ["wsdot", "highway-alerts", "getMapAreas"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const mapAreasOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-alerts", "getMapAreas"],
+    queryFn: () => getMapAreas({}),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

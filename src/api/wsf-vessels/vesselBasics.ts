@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zPositiveInteger } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -102,22 +105,27 @@ export const vesselBasicArraySchema = z.array(vesselBasicSchema);
 export type VesselBasics = z.infer<typeof vesselBasicArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useVesselBasicsById (singular item)
-// useVesselBasics (array)
+// TanStack Query Options
 // ============================================================================
 
-export const useVesselBasicsById = createUseQueryWsf({
-  queryFn: getVesselBasicsById,
-  queryKeyPrefix: ["wsf", "vessels", "basics", "getVesselBasicsById"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselBasicsByIdOptions = (params: GetVesselBasicsByIdParams) =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "basics", "getVesselBasicsById", params],
+    queryFn: () => getVesselBasicsById(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useVesselBasics = createUseQueryWsf({
-  queryFn: getVesselBasics,
-  queryKeyPrefix: ["wsf", "vessels", "basics", "getVesselBasics"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselBasicsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "basics", "getVesselBasics"],
+    queryFn: () => getVesselBasics({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

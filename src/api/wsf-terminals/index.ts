@@ -9,7 +9,7 @@ export {
   type WsfCacheFlushDate as GetCacheFlushDateTerminalsResponse,
   type WsfCacheFlushDateParams as GetCacheFlushDateTerminalsParams,
   wsfCacheFlushDateParamsSchema as getCacheFlushDateTerminalsParamsSchema,
-} from "../wsf/cacheFlushDate";
+} from "../../shared/caching/cacheFlushDate";
 
 // Terminal basics
 export * from "./terminalBasics";

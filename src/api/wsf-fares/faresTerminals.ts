@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -111,16 +114,50 @@ export type TerminalMates = z.infer<typeof terminalMatesArraySchema>;
 // useFaresTerminalMates
 // ============================================================================
 
-export const useFaresTerminals = createUseQueryWsf({
-  queryFn: getFaresTerminals,
-  queryKeyPrefix: ["wsf", "fares", "terminals", "getFaresTerminals"],
-  defaultOptions: tanstackQueryOptions.ONE_HOUR_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const faresTerminalsOptions = (params: GetFaresTerminalsParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "terminals",
+      "getFaresTerminals",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getFaresTerminals(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useFaresTerminalMates = createUseQueryWsf({
-  queryFn: getFaresTerminalMates,
-  queryKeyPrefix: ["wsf", "fares", "terminals", "getFaresTerminalMates"],
-  defaultOptions: tanstackQueryOptions.ONE_HOUR_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const faresTerminalMatesOptions = (
+  params: GetFaresTerminalMatesParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "terminals",
+      "getFaresTerminalMates",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getFaresTerminalMates(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

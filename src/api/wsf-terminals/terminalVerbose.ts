@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 import { terminalBulletinItemSchema } from "./terminalBulletins";
 import { terminalWaitTimeSchema } from "./terminalWaitTimes";
 
@@ -164,21 +167,32 @@ export type TerminalVerboses = z.infer<typeof terminalVerboseArraySchema>;
 // useTerminalVerbose (array)
 // ============================================================================
 
-export const useTerminalVerboseByTerminalId = createUseQueryWsf({
-  queryFn: getTerminalVerboseByTerminalId,
-  queryKeyPrefix: [
-    "wsf",
-    "terminals",
-    "verbose",
-    "getTerminalVerboseByTerminalId",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateTerminals,
-});
+export const terminalVerboseByTerminalIdOptions = (
+  params: GetTerminalVerboseByTerminalIdParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "terminals",
+      "verbose",
+      "getTerminalVerboseByTerminalId",
+      params,
+    ],
+    queryFn: () => getTerminalVerboseByTerminalId(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTerminalVerbose = createUseQueryWsf({
-  queryFn: getTerminalVerbose,
-  queryKeyPrefix: ["wsf", "terminals", "verbose", "getTerminalVerbose"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateTerminals,
-});
+export const terminalVerboseOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "terminals", "verbose", "getTerminalVerbose"],
+    queryFn: () => getTerminalVerbose({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -114,16 +117,50 @@ export type TerminalComboVerboses = z.infer<
 // useTerminalComboVerbose (array)
 // ============================================================================
 
-export const useTerminalCombo = createUseQueryWsf({
-  queryFn: getTerminalCombo,
-  queryKeyPrefix: ["wsf", "fares", "terminalCombo", "getTerminalCombo"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const terminalComboOptions = (params: GetTerminalComboParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "terminalCombo",
+      "getTerminalCombo",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getTerminalCombo(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTerminalComboVerbose = createUseQueryWsf({
-  queryFn: getTerminalComboVerbose,
-  queryKeyPrefix: ["wsf", "fares", "terminalCombo", "getTerminalComboVerbose"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const terminalComboVerboseOptions = (
+  params: GetTerminalComboVerboseParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "terminalCombo",
+      "getTerminalComboVerbose",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getTerminalComboVerbose(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

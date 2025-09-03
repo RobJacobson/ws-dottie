@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zPositiveInteger } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -125,22 +128,27 @@ export const vesselVerboseArraySchema = z.array(vesselVerboseSchema);
 export type VesselVerboses = z.infer<typeof vesselVerboseArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useVesselVerboseById (singular item)
-// useVesselVerbose (array)
+// TanStack Query Options
 // ============================================================================
 
-export const useVesselVerboseById = createUseQueryWsf({
-  queryFn: getVesselVerboseById,
-  queryKeyPrefix: ["wsf", "vessels", "verbose", "getVesselVerboseById"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselVerboseByIdOptions = (params: GetVesselVerboseByIdParams) =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "verbose", "getVesselVerboseById", params],
+    queryFn: () => getVesselVerboseById(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useVesselVerbose = createUseQueryWsf({
-  queryFn: getVesselVerbose,
-  queryKeyPrefix: ["wsf", "vessels", "verbose", "getVesselVerbose"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselVerboseOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "verbose", "getVesselVerbose"],
+    queryFn: () => getVesselVerbose({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

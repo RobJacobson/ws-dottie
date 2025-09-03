@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zNullableString } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -69,45 +74,27 @@ export type GetHighwayCamerasParams = z.infer<
 
 export const cameraLocationSchema = z.object({
   Description: zNullableString(),
-
   Direction: zNullableString(),
-
   Latitude: z.number(),
-
   Longitude: z.number(),
-
   MilePost: z.number(),
-
   RoadName: zNullableString(),
 });
 
 export const cameraSchema = z.object({
   CameraID: z.number().int(),
-
   CameraLocation: cameraLocationSchema,
-
   CameraOwner: zNullableString(),
-
   Description: zNullableString(),
-
   DisplayLatitude: z.number(),
-
   DisplayLongitude: z.number(),
-
   ImageHeight: z.number().int(),
-
   ImageURL: z.string(),
-
   ImageWidth: z.number().int(),
-
   IsActive: z.boolean(),
-
   OwnerURL: zNullableString(),
-
   Region: zNullableString(),
-
   SortOrder: z.number().int(),
-
   Title: zNullableString(),
 });
 
@@ -123,17 +110,27 @@ export type Camera = z.infer<typeof cameraSchema>;
 export type Cameras = z.infer<typeof cameraArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks (singular first, then array)
+// TanStack Query Options (singular first, then array)
 // ============================================================================
 
-export const useHighwayCamera = createUseQueryWsdot({
-  queryFn: getHighwayCamera,
-  queryKeyPrefix: ["wsdot", "highway-cameras", "getHighwayCamera"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const highwayCameraOptions = (params: GetHighwayCameraParams) =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCamera", params],
+    queryFn: () => getHighwayCamera(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useHighwayCameras = createUseQueryWsdot({
-  queryFn: getHighwayCameras,
-  queryKeyPrefix: ["wsdot", "highway-cameras", "getHighwayCameras"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const highwayCamerasOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
+    queryFn: () => getHighwayCameras({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

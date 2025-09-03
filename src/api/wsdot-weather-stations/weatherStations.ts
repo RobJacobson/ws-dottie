@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -46,11 +51,8 @@ export type GetWeatherStationsParams = z.infer<
 
 export const weatherStationSchema = z.object({
   Latitude: z.number(),
-
   Longitude: z.number(),
-
   StationCode: z.number().int(),
-
   StationName: z.string().nullable(),
 });
 
@@ -64,13 +66,16 @@ export type WeatherStation = z.infer<typeof weatherStationSchema>;
 export type WeatherStations = z.infer<typeof weatherStationArraySchema>;
 
 // ============================================================================
-// TanStack Query Hook
-//
-// useWeatherStations
+// TanStack Query Options
 // ============================================================================
 
-export const useWeatherStations = createUseQueryWsdot({
-  queryFn: getWeatherStations,
-  queryKeyPrefix: ["wsdot", "weather-stations", "getWeatherStations"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const weatherStationsOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "weather-stations", "getWeatherStations"],
+    queryFn: () => getWeatherStations({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

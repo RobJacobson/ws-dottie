@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -71,9 +74,13 @@ export type ActiveSeasons = z.infer<typeof activeSeasonsArraySchema>;
 // useActiveSeasons
 // ============================================================================
 
-export const useActiveSeasons = createUseQueryWsf({
-  queryFn: getActiveSeasons,
-  queryKeyPrefix: ["wsf", "schedule", "activeSeasons", "getActiveSeasons"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const activeSeasonsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "schedule", "activeSeasons", "getActiveSeasons"],
+    queryFn: () => getActiveSeasons({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

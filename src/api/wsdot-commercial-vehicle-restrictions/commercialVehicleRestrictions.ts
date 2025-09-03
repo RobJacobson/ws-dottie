@@ -109,7 +109,14 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+
+// TanStack factory hooks removed in favor of queryOptions
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -208,15 +215,10 @@ export type GetCommercialVehicleRestrictionsParams = z.infer<
  */
 export const commercialVehicleRestrictionRoadwayLocationSchema = z.object({
   Description: zNullableString(),
-
   Direction: zNullableString(),
-
   Latitude: zLatitude(),
-
   Longitude: zLongitude(),
-
   MilePost: z.number(),
-
   RoadName: z.string(),
 });
 
@@ -225,41 +227,23 @@ export const commercialVehicleRestrictionRoadwayLocationSchema = z.object({
  */
 export const commercialVehicleRestrictionSchema = z.object({
   BLMaxAxle: zNullableNumber(),
-
   BridgeName: z.string(),
-
   BridgeNumber: z.string(),
-
   CL8MaxAxle: zNullableNumber(),
-
   DateEffective: zWsdotDate(),
-
   DateExpires: zWsdotDate(),
-
   DatePosted: zWsdotDate(),
-
   EndRoadwayLocation: commercialVehicleRestrictionRoadwayLocationSchema,
-
   IsDetourAvailable: z.boolean(),
-
   IsExceptionsAllowed: z.boolean(),
-
   IsPermanentRestriction: z.boolean(),
-
   IsWarning: z.boolean(),
-
   LocationDescription: z.string(),
-
   LocationName: z.string(),
-
   RestrictionComment: z.string(),
-
   RestrictionType: z.number(),
-
   State: z.string(),
-
   StateRouteID: z.string(),
-
   VehicleType: z.string(),
 });
 
@@ -321,25 +305,35 @@ export type CommercialVehicleRestrictionsWithId = z.infer<
 >;
 
 // ============================================================================
-// TanStack Query Hooks
+// TanStack Query Options (new pattern)
 // ============================================================================
 
-export const useCommercialVehicleRestrictionsWithId = createUseQueryWsdot({
-  queryFn: getCommercialVehicleRestrictionsWithId,
-  queryKeyPrefix: [
-    "wsdot",
-    "commercial-vehicle-restrictions",
-    "getCommercialVehicleRestrictionsWithId",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const commercialVehicleRestrictionsWithIdOptions = () =>
+  queryOptions({
+    queryKey: [
+      "wsdot",
+      "commercial-vehicle-restrictions",
+      "getCommercialVehicleRestrictionsWithId",
+    ],
+    queryFn: () => getCommercialVehicleRestrictionsWithId({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useCommercialVehicleRestrictions = createUseQueryWsdot({
-  queryFn: getCommercialVehicleRestrictions,
-  queryKeyPrefix: [
-    "wsdot",
-    "commercial-vehicle-restrictions",
-    "getCommercialVehicleRestrictions",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const commercialVehicleRestrictionsOptions = () =>
+  queryOptions({
+    queryKey: [
+      "wsdot",
+      "commercial-vehicle-restrictions",
+      "getCommercialVehicleRestrictions",
+    ],
+    queryFn: () => getCommercialVehicleRestrictions({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

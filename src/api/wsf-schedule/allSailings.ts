@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -121,9 +124,13 @@ export type Sailings = z.infer<typeof sailingsArraySchema>;
 // useAllSailings
 // ============================================================================
 
-export const useAllSailings = createUseQueryWsf({
-  queryFn: getAllSailings,
-  queryKeyPrefix: ["wsf", "schedule", "allSailings", "getAllSailings"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const allSailingsOptions = (params: GetAllSailingsParams) =>
+  queryOptions({
+    queryKey: ["wsf", "schedule", "allSailings", "getAllSailings", params],
+    queryFn: () => getAllSailings(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

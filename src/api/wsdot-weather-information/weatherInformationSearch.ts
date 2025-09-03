@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 import { weatherInfoArraySchema } from "./weatherInformation";
 
@@ -89,27 +94,51 @@ export type GetSearchWeatherInformationParams = z.infer<
 // ============================================================================
 
 // ============================================================================
-// TanStack Query Hook
-//
-// useWeatherInformationForStations
+// TanStack Query Options
 // ============================================================================
 
-export const useWeatherInformationForStations = createUseQueryWsdot({
-  queryFn: getWeatherInformationForStations,
-  queryKeyPrefix: [
-    "wsdot",
-    "weather-information",
-    "getWeatherInformationForStations",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const weatherInformationForStationsOptions = (
+  params: GetWeatherInformationForStationsParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsdot",
+      "weather-information",
+      "getWeatherInformationForStations",
+      params,
+    ],
+    queryFn: () => getWeatherInformationForStations(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useSearchWeatherInformation = createUseQueryWsdot({
-  queryFn: getSearchWeatherInformation,
-  queryKeyPrefix: [
-    "wsdot",
-    "weather-information",
-    "getSearchWeatherInformation",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const searchWeatherInformationOptions = (
+  params: GetSearchWeatherInformationParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsdot",
+      "weather-information",
+      "getSearchWeatherInformation",
+      {
+        ...params,
+        searchStartTime:
+          params.searchStartTime instanceof Date
+            ? params.searchStartTime.toISOString()
+            : params.searchStartTime,
+        searchEndTime:
+          params.searchEndTime instanceof Date
+            ? params.searchEndTime.toISOString()
+            : params.searchEndTime,
+      },
+    ],
+    queryFn: () => getSearchWeatherInformation(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

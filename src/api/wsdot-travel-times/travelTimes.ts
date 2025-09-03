@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -98,20 +103,27 @@ export type TravelTimesResponse = z.infer<typeof travelTimesArraySchema>;
 export type TravelTimes = z.infer<typeof travelTimesArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useTravelTimeById (single item)
-// useTravelTimes (array)
+// TanStack Query Options
 // ============================================================================
 
-export const useTravelTimeById = createUseQueryWsdot({
-  queryFn: getTravelTimeById,
-  queryKeyPrefix: ["wsdot", "travel-times", "getTravelTimeById"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const travelTimeByIdOptions = (params: GetTravelTimeByIdParams) =>
+  queryOptions({
+    queryKey: ["wsdot", "travel-times", "getTravelTimeById", params],
+    queryFn: () => getTravelTimeById(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTravelTimes = createUseQueryWsdot({
-  queryFn: getTravelTimes,
-  queryKeyPrefix: ["wsdot", "travel-times", "getTravelTimes"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const travelTimesOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "travel-times", "getTravelTimes"],
+    queryFn: () => getTravelTimes({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

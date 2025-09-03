@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -82,9 +85,25 @@ export type FareTotals = z.infer<typeof fareTotalsArraySchema>;
 // useFareTotals
 // ============================================================================
 
-export const useFareTotals = createUseQueryWsf({
-  queryFn: getFareTotals,
-  queryKeyPrefix: ["wsf", "fares", "fareTotals", "getFareTotals"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const fareTotalsOptions = (params: GetFareTotalsParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "fareTotals",
+      "getFareTotals",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getFareTotals(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

@@ -3,7 +3,11 @@
 // ============================================================================
 
 export * from "./highwayCameras";
-export * from "./searchHighwayCameras";
+export {
+  searchHighwayCameras,
+  searchHighwayCamerasOptions,
+  searchHighwayCamerasParamsSchema,
+} from "./searchHighwayCameras";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE

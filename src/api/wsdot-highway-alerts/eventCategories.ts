@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -54,8 +59,13 @@ export type EventCategories = z.infer<typeof eventCategoriesArraySchema>;
 // useEventCategories
 // ============================================================================
 
-export const useEventCategories = createUseQueryWsdot({
-  queryFn: getEventCategories,
-  queryKeyPrefix: ["wsdot", "highway-alerts", "getEventCategories"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const eventCategoriesOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-alerts", "getEventCategories"],
+    queryFn: () => getEventCategories({}),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

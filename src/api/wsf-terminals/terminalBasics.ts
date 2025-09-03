@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -101,21 +104,32 @@ export type TerminalBasicsArray = z.infer<typeof terminalBasicsArraySchema>;
 // useTerminalBasics (array)
 // ============================================================================
 
-export const useTerminalBasicsByTerminalId = createUseQueryWsf({
-  queryFn: getTerminalBasicsByTerminalId,
-  queryKeyPrefix: [
-    "wsf",
-    "terminals",
-    "basics",
-    "getTerminalBasicsByTerminalId",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateTerminals,
-});
+export const terminalBasicsByTerminalIdOptions = (
+  params: GetTerminalBasicsByTerminalIdParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "terminals",
+      "basics",
+      "getTerminalBasicsByTerminalId",
+      params,
+    ],
+    queryFn: () => getTerminalBasicsByTerminalId(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTerminalBasics = createUseQueryWsf({
-  queryFn: getTerminalBasics,
-  queryKeyPrefix: ["wsf", "terminals", "basics", "getTerminalBasics"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateTerminals,
-});
+export const terminalBasicsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "terminals", "basics", "getTerminalBasics"],
+    queryFn: () => getTerminalBasics({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

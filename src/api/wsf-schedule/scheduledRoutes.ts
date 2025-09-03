@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 import { serviceDisruptionSchema } from "./routeDetails";
 
 // ============================================================================
@@ -112,21 +115,32 @@ export type ScheduledRoutes = z.infer<typeof scheduledRoutesArraySchema>;
 // useScheduledRoutesBySeason
 // ============================================================================
 
-export const useScheduledRoutes = createUseQueryWsf({
-  queryFn: getScheduledRoutes,
-  queryKeyPrefix: ["wsf", "schedule", "scheduledRoutes", "getScheduledRoutes"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const scheduledRoutesOptions = (params: GetScheduledRoutesParams = {}) =>
+  queryOptions({
+    queryKey: ["wsf", "schedule", "scheduledRoutes", "getScheduledRoutes"],
+    queryFn: () => getScheduledRoutes(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useScheduledRoutesBySeason = createUseQueryWsf({
-  queryFn: getScheduledRoutesBySeason,
-  queryKeyPrefix: [
-    "wsf",
-    "schedule",
-    "scheduledRoutes",
-    "getScheduledRoutesBySeason",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const scheduledRoutesBySeasonOptions = (
+  params: GetScheduledRoutesBySeasonParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "scheduledRoutes",
+      "getScheduledRoutesBySeason",
+      { ...params },
+    ],
+    queryFn: () => getScheduledRoutesBySeason(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

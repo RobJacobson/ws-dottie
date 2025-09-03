@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateTerminals } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 import { terminalTransitLinkSchema } from "./terminalVerbose";
 
 // ============================================================================
@@ -111,21 +114,32 @@ export type TerminalTransports = z.infer<typeof terminalTransportsArraySchema>;
 // useTerminalTransports (array)
 // ============================================================================
 
-export const useTerminalTransportsByTerminalId = createUseQueryWsf({
-  queryFn: getTerminalTransportsByTerminalId,
-  queryKeyPrefix: [
-    "wsf",
-    "terminals",
-    "transports",
-    "getTerminalTransportsByTerminalId",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateTerminals,
-});
+export const terminalTransportsByTerminalIdOptions = (
+  params: GetTerminalTransportsByTerminalIdParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "terminals",
+      "transports",
+      "getTerminalTransportsByTerminalId",
+      params,
+    ],
+    queryFn: () => getTerminalTransportsByTerminalId(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTerminalTransports = createUseQueryWsf({
-  queryFn: getTerminalTransports,
-  queryKeyPrefix: ["wsf", "terminals", "transports", "getTerminalTransports"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateTerminals,
-});
+export const terminalTransportsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "terminals", "transports", "getTerminalTransports"],
+    queryFn: () => getTerminalTransports({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

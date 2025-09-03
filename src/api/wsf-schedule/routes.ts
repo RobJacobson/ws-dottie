@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 import { serviceDisruptionSchema } from "./routeDetails";
 
 // ============================================================================
@@ -89,7 +92,7 @@ export type GetRoutesWithDisruptionsParams = z.infer<
 >;
 
 // ============================================================================
-// Output Schema & Types
+// Output Schemas & Types
 //
 // routeSchema
 // routesArraySchema
@@ -135,29 +138,76 @@ export type RoutesWithDisruptions = z.infer<
 >;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useRoutesByTerminals
-// useRoutes
+// TanStack Query Options
 // ============================================================================
 
-export const useRoutesByTerminals = createUseQueryWsf({
-  queryFn: getRoutesByTerminals,
-  queryKeyPrefix: ["wsf", "schedule", "routes", "getRoutesByTerminals"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const routesByTerminalsOptions = (params: GetRoutesByTerminalsParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "routes",
+      "getRoutesByTerminals",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getRoutesByTerminals(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useRoutes = createUseQueryWsf({
-  queryFn: getRoutes,
-  queryKeyPrefix: ["wsf", "schedule", "routes", "getRoutes"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const routesOptions = (params: GetRoutesParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "routes",
+      "getRoutes",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getRoutes(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useRoutesWithDisruptions = createUseQueryWsf({
-  queryFn: getRoutesWithDisruptions,
-  queryKeyPrefix: ["wsf", "schedule", "routes", "getRoutesWithDisruptions"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const routesWithDisruptionsOptions = (
+  params: GetRoutesWithDisruptionsParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "routes",
+      "getRoutesWithDisruptions",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getRoutesWithDisruptions(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

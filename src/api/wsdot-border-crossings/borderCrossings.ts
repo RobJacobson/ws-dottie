@@ -1,75 +1,53 @@
 /**
- * Border Crossings API
+ * @module WSDOT Border Crossings API
+ * @description Real-time wait times and location information for Canadian border crossings in Washington State.
  *
- * Real-time wait times and location information for Canadian border crossings in Washington State.
+ * Provides:
+ * - Real-time wait time data for all border crossing points
+ * - Geographic location information with GPS coordinates
+ * - Road and milepost data for route planning
+ * - Support for general purpose, Nexus, and truck-specific lanes
+ * - Bulk retrieval of all border crossing data without parameters
  *
- * This API provides current wait times and geographic location data for major border crossing points
- * along the Washington-Canada border, including I-5, SR 539, SR 543, and SR 9. Data includes
- * general purpose lanes, Nexus lanes, and truck-specific lanes. Wait times are updated in real-time
- * and are essential for travelers planning border crossings, logistics companies routing commercial
- * vehicles, and transportation planning applications. The API supports bulk retrieval of all border
- * crossing data without requiring specific parameters.
+ * Data includes:
+ * - Border crossing wait times in minutes
+ * - Geographic coordinates (latitude/longitude)
+ * - Road names and milepost information
+ * - Crossing names and lane types
+ * - Real-time timestamp data
  *
- * API Functions:
- * - getBorderCrossings: Returns an array of BorderCrossingData objects for all border crossings
+ * @functions
+ *   - getBorderCrossings: Returns an array of BorderCrossingData objects for all border crossings
  *
- * Input/Output Overview:
- * - getBorderCrossings: Input: none, Output: BorderCrossingData[]
+ * @input
+ *   - getBorderCrossings: {} - No parameters required
  *
- * Base Type: BorderCrossingData
+ * @output
+ *   - getBorderCrossings: BorderCrossingData[] - Array of border crossing data
  *
- * interface BorderCrossingData {
- *   BorderCrossingLocation: BorderCrossingLocation | null;
- *   CrossingName: string | null;
- *   Time: Date;
- *   WaitTime: number;
- * }
+ * @baseType
+ *   - BorderCrossingData: Real-time wait time and location data for a border crossing
+ *   - BorderCrossingLocation: Geographic location and road information for a border crossing
  *
- * interface BorderCrossingLocation {
- *   Description: string;
- *   Direction: string | null;
- *   Latitude: number;
- *   Longitude: number;
- *   MilePost: number;
- *   RoadName: string;
- * }
+ * @cli
+ *   - getBorderCrossings: node dist/cli.mjs getBorderCrossings
  *
- * Example Usage:
- *
- * curl -s "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson?AccessCode=$WSDOT_ACCESS_TOKEN"
- *
- * Here is example output from this curl command:
- *
- * ```json
- * [
- *   {
- *     "BorderCrossingLocation": {
- *       "Description": "I-5 General Purpose",
- *       "Direction": null,
- *       "Latitude": 49.004776,
- *       "Longitude": -122.756964,
- *       "MilePost": 0,
- *       "RoadName": "005"
- *     },
- *     "CrossingName": "I5",
- *     "Time": "/Date(1756182000000-0700)/",
- *     "WaitTime": 5
+ * @exampleResponse
+ * {
+ *   "BorderCrossingLocation": {
+ *     "Description": "I-5 General Purpose",
+ *     "Direction": null,
+ *     "Latitude": 49.004776,
+ *     "Longitude": -122.756964,
+ *     "MilePost": 0,
+ *     "RoadName": "005"
  *   },
- *   {
- *     "BorderCrossingLocation": {
- *       "Description": "I-5 Nexus Lane",
- *       "Direction": null,
- *       "Latitude": 49.004776,
- *       "Longitude": -122.756964,
- *       "MilePost": 0,
- *       "RoadName": "005"
- *     },
- *     "CrossingName": "I5Nexus",
- *     "Time": "/Date(1756182000000-0700)/",
- *     "WaitTime": 5
- *   }
- * ]
- * ```
+ *   "CrossingName": "I5",
+ *   "Time": "2025-08-29T01:20:00.000Z",
+ *   "WaitTime": 5
+ * }
+ *
+ * @see https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
  */
 
 import { z } from "zod";
@@ -80,7 +58,12 @@ import {
   zNullableString,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -94,14 +77,15 @@ const ENDPOINT =
 /**
  * Retrieves real-time wait times and location data for all Canadian border crossings.
  *
- * @param params - No parameters required (empty object)
- * @returns Promise<BorderCrossingData[]> - Array of real-time border crossing data
+ * @param params - `{}` no parameters required
+ * @returns `BorderCrossingData[]` - Array of real-time border crossing data
  *
  * @example
- * const borderCrossings = await getBorderCrossings();
- * console.log(borderCrossings.length);  // 12
- * console.log(borderCrossings[0].CrossingName);  // "I5"
- * console.log(borderCrossings[0].WaitTime);  // 5
+ * ```typescript
+ * const borderCrossings = await getBorderCrossings()
+ * console.log(borderCrossings.length)
+ * console.log(borderCrossings[0].CrossingName)
+ * ```
  *
  * @throws {Error} When API is unavailable or returns invalid response
  */
@@ -126,10 +110,13 @@ export const getBorderCrossings = async (
 // ============================================================================
 
 /**
- * Parameters for retrieving border crossing data (no parameters required)
+ * Input schema for the `getBorderCrossings` request (no parameters)
  */
 export const getBorderCrossingsParamsSchema = z.object({});
 
+/**
+ * GetBorderCrossingsParams type - validated input parameters for `getBorderCrossings`
+ */
 export type GetBorderCrossingsParams = z.infer<
   typeof getBorderCrossingsParamsSchema
 >;
@@ -137,70 +124,73 @@ export type GetBorderCrossingsParams = z.infer<
 // ============================================================================
 // Output Schema & Types
 //
+// borderCrossingLocationSchema
 // borderCrossingDataSchema
+// borderCrossingDataArraySchema
+// BorderCrossingLocation
 // BorderCrossingData
+// BorderCrossings
 // ============================================================================
 
 /**
- * Geographic location and road information for a border crossing
+ * Response schema for the `BorderCrossingLocation` object
  */
 export const borderCrossingLocationSchema = z
   .object({
     Description: z.string(),
-
     Direction: zNullableString(),
-
     Latitude: zLatitude(),
-
     Longitude: zLongitude(),
-
     MilePost: z.number(),
-
     RoadName: z.string(),
   })
-
   .nullable();
 
 /**
- * BorderCrossingLocation type - represents geographic location and road information for a border crossing
+ * BorderCrossingLocation type - geographic location and road information
  */
 export type BorderCrossingLocation = z.infer<
   typeof borderCrossingLocationSchema
 >;
 
+/**
+ * Response schema for a single `BorderCrossingData` object
+ */
 export const borderCrossingDataSchema = z.object({
   BorderCrossingLocation: borderCrossingLocationSchema.nullable(),
-
   CrossingName: z.string().nullable(),
-
   Time: zWsdotDate(),
-
   WaitTime: z.number(),
 });
 
 /**
- * BorderCrossingData type - represents real-time wait time and location data for a border crossing
+ * BorderCrossingData type - real-time wait time and location data
  */
 export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
 
 /**
- * Array of border crossing data objects - wrapper around borderCrossingDataSchema
+ * Response schema for an array of `BorderCrossingData`
  */
 export const borderCrossingDataArraySchema = z.array(borderCrossingDataSchema);
 
 /**
- * BorderCrossings type - represents an array of border crossing data objects
+ * BorderCrossings type - array of `BorderCrossingData`
  */
 export type BorderCrossings = z.infer<typeof borderCrossingDataArraySchema>;
 
-// ============================================================================
-// TanStack Query Hook
+// ==========================================================================
+// TanStack Query Options
 //
-// useBorderCrossings
-// ============================================================================
+// borderCrossingsOptions
+// ==========================================================================
 
-export const useBorderCrossings = createUseQueryWsdot({
-  queryFn: getBorderCrossings,
-  queryKeyPrefix: ["wsdot", "border-crossings", "getBorderCrossings"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const borderCrossingsOptions = () =>
+  queryOptions({
+    queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],
+    queryFn: () => getBorderCrossings({}),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

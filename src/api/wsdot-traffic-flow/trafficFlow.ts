@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_MINUTE,
+  ONE_HOUR,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -117,20 +122,27 @@ export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
 export type TrafficFlows = z.infer<typeof trafficFlowArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useTrafficFlowById (single item)
-// useTrafficFlows (array)
+// TanStack Query Options
 // ============================================================================
 
-export const useTrafficFlowById = createUseQueryWsdot({
-  queryFn: getTrafficFlowById,
-  queryKeyPrefix: ["wsdot", "traffic-flow", "getTrafficFlowById"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const trafficFlowByIdOptions = (params: GetTrafficFlowByIdParams) =>
+  queryOptions({
+    queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById", params],
+    queryFn: () => getTrafficFlowById(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTrafficFlows = createUseQueryWsdot({
-  queryFn: getTrafficFlows,
-  queryKeyPrefix: ["wsdot", "traffic-flow", "getTrafficFlows"],
-  defaultOptions: tanstackQueryOptions.ONE_MIN_POLLING,
-});
+export const trafficFlowsOptions = (params: GetTrafficFlowsParams) =>
+  queryOptions({
+    queryKey: ["wsdot", "traffic-flow", "getTrafficFlows", params],
+    queryFn: () => getTrafficFlows(params),
+    staleTime: ONE_MINUTE,
+    gcTime: ONE_HOUR,
+    refetchInterval: ONE_MINUTE,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

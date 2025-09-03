@@ -1,8 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getFaresCacheFlushDate } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -113,16 +116,50 @@ export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicArraySchema>;
 // useFareLineItemsBasic (most popular fare line items)
 // ============================================================================
 
-export const useFareLineItems = createUseQueryWsf({
-  queryFn: getFareLineItems,
-  queryKeyPrefix: ["wsf", "fares", "fareLineItems", "getFareLineItems"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const fareLineItemsOptions = (params: GetFareLineItemsParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "fareLineItems",
+      "getFareLineItems",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getFareLineItems(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useFareLineItemsBasic = createUseQueryWsf({
-  queryFn: getFareLineItemsBasic,
-  queryKeyPrefix: ["wsf", "fares", "fareLineItems", "getFareLineItemsBasic"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getFaresCacheFlushDate,
-});
+export const fareLineItemsBasicOptions = (
+  params: GetFareLineItemsBasicParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "fares",
+      "fareLineItems",
+      "getFareLineItemsBasic",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getFareLineItemsBasic(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

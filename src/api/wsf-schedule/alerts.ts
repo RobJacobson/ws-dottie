@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -80,9 +83,13 @@ export type Alerts = z.infer<typeof alertsArraySchema>;
 // useAlerts
 // ============================================================================
 
-export const useAlerts = createUseQueryWsf({
-  queryFn: getAlerts,
-  queryKeyPrefix: ["wsf", "schedule", "alerts", "getAlerts"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const alertsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "schedule", "alerts", "getAlerts"],
+    queryFn: () => getAlerts({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

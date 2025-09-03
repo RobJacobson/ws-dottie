@@ -5,9 +5,13 @@ import {
   zNullableString,
   zPositiveInteger,
 } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
-import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 import { vesselClassSchema } from "./vesselBasics";
 
 // ============================================================================
@@ -115,22 +119,27 @@ export const vesselStatsArraySchema = z.array(vesselStatsSchema);
 export type VesselStatsArray = z.infer<typeof vesselStatsArraySchema>;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useVesselStatsById (singular item)
-// useVesselStats (array)
+// TanStack Query Options
 // ============================================================================
 
-export const useVesselStatsById = createUseQueryWsf({
-  queryFn: getVesselStatsById,
-  queryKeyPrefix: ["wsf", "vessels", "stats", "getVesselStatsById"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselStatsByIdOptions = (params: GetVesselStatsByIdParams) =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "stats", "getVesselStatsById", params],
+    queryFn: () => getVesselStatsById(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useVesselStats = createUseQueryWsf({
-  queryFn: getVesselStats,
-  queryKeyPrefix: ["wsf", "vessels", "stats", "getVesselStats"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselStatsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "stats", "getVesselStats"],
+    queryFn: () => getVesselStats({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

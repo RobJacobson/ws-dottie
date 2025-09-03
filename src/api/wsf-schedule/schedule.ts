@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 import { annotationSchema } from "./routeDetails";
 
 // ============================================================================
@@ -183,35 +186,94 @@ export type ScheduleRouteTerminalCombo = z.infer<
 // useScheduleByRoute
 // ============================================================================
 
-export const useScheduleByTerminals = createUseQueryWsf({
-  queryFn: getScheduleByTerminals,
-  queryKeyPrefix: ["wsf", "schedule", "schedule", "getScheduleByTerminals"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const scheduleByTerminalsOptions = (
+  params: GetScheduleByTerminalsParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "schedule",
+      "getScheduleByTerminals",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getScheduleByTerminals(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useScheduleByRoute = createUseQueryWsf({
-  queryFn: getScheduleByRoute,
-  queryKeyPrefix: ["wsf", "schedule", "schedule", "getScheduleByRoute"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const scheduleByRouteOptions = (params: GetScheduleByRouteParams) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "schedule",
+      "getScheduleByRoute",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getScheduleByRoute(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useScheduleTodayByTerminals = createUseQueryWsf({
-  queryFn: getScheduleTodayByTerminals,
-  queryKeyPrefix: [
-    "wsf",
-    "schedule",
-    "schedule",
-    "getScheduleTodayByTerminals",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const scheduleTodayByTerminalsOptions = (
+  params: GetScheduleTodayByTerminalsParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "schedule",
+      "getScheduleTodayByTerminals",
+      { ...params },
+    ],
+    queryFn: () => getScheduleTodayByTerminals(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useScheduleTodayByRoute = createUseQueryWsf({
-  queryFn: getScheduleTodayByRoute,
-  queryKeyPrefix: ["wsf", "schedule", "schedule", "getScheduleTodayByRoute"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const scheduleTodayByRouteOptions = (
+  params: GetScheduleTodayByRouteParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "schedule",
+      "getScheduleTodayByRoute",
+      {
+        ...params,
+        tripDate:
+          params.tripDate instanceof Date
+            ? params.tripDate.toISOString()
+            : params.tripDate,
+      },
+    ],
+    queryFn: () => getScheduleTodayByRoute(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

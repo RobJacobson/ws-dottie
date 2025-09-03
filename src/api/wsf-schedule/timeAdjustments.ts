@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
-
-import { getCacheFlushDateSchedule } from "../wsf/cacheFlushDate";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Functions
@@ -147,21 +150,32 @@ export type TimeAdjustmentsByRoute = z.infer<
 // useTimeAdjustmentsByRoute
 // ============================================================================
 
-export const useTimeAdjustments = createUseQueryWsf({
-  queryFn: getTimeAdjustments,
-  queryKeyPrefix: ["wsf", "schedule", "timeAdjustments", "getTimeAdjustments"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const timeAdjustmentsOptions = (params: GetTimeAdjustmentsParams = {}) =>
+  queryOptions({
+    queryKey: ["wsf", "schedule", "timeAdjustments", "getTimeAdjustments"],
+    queryFn: () => getTimeAdjustments(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useTimeAdjustmentsByRoute = createUseQueryWsf({
-  queryFn: getTimeAdjustmentsByRoute,
-  queryKeyPrefix: [
-    "wsf",
-    "schedule",
-    "timeAdjustments",
-    "getTimeAdjustmentsByRoute",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateSchedule,
-});
+export const timeAdjustmentsByRouteOptions = (
+  params: GetTimeAdjustmentsByRouteParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "schedule",
+      "timeAdjustments",
+      "getTimeAdjustmentsByRoute",
+      { ...params },
+    ],
+    queryFn: () => getTimeAdjustmentsByRoute(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

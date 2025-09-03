@@ -5,26 +5,54 @@
 export {
   getCacheFlushDateSchedule,
   useCacheFlushDateSchedule,
-} from "../wsf/cacheFlushDate";
+} from "../../shared/caching/cacheFlushDate";
 // Export specific functions to avoid schema conflicts
-export { getActiveSeasons, useActiveSeasons } from "./activeSeasons";
-export { getAlerts, useAlerts } from "./alerts";
-export { getAllSailings, useAllSailings } from "./allSailings";
+export { getActiveSeasons, activeSeasonsOptions } from "./activeSeasons";
+export { getAlerts, alertsOptions } from "./alerts";
+export { getAllSailings, allSailingsOptions } from "./allSailings";
 export * from "./routeDetails";
 export * from "./routes";
-export { getSailings, useSailings } from "./sailings";
-export * from "./schedule";
-export * from "./scheduledRoutes";
-export * from "./terminals";
-export * from "./timeAdjustments";
-export { getValidDateRange, useValidDateRange } from "./validDateRange";
+export { getSailings, sailingsOptions } from "./sailings";
+export {
+  getScheduleByRoute,
+  getScheduleByTerminals,
+  getScheduleTodayByRoute,
+  getScheduleTodayByTerminals,
+  scheduleByRouteOptions,
+  scheduleByTerminalsOptions,
+  scheduleTodayByRouteOptions,
+  scheduleTodayByTerminalsOptions,
+} from "./schedule";
+export {
+  getScheduledRoutes,
+  getScheduledRoutesBySeason,
+  scheduledRoutesOptions,
+  scheduledRoutesBySeasonOptions,
+} from "./scheduledRoutes";
+export {
+  getTerminalMates,
+  getTerminals,
+  getTerminalsAndMates,
+  getTerminalsAndMatesByRoute,
+  terminalMatesOptions,
+  terminalsOptions,
+  terminalsAndMatesOptions,
+  terminalsAndMatesByRouteOptions,
+} from "./terminals";
+export {
+  getTimeAdjustments,
+  getTimeAdjustmentsByRoute,
+  timeAdjustmentsOptions,
+  timeAdjustmentsByRouteOptions,
+} from "./timeAdjustments";
+export { getValidDateRange, validDateRangeOptions } from "./validDateRange";
 
 // ============================================================================
 // SCHEMA RE-EXPORTS FOR CONVENIENCE
 // ============================================================================
 
 // Cache Flush Date
-export { wsfCacheFlushDateSchema as scheduleCacheFlushDateSchema } from "../wsf/cacheFlushDate";
+export { wsfCacheFlushDateSchema as scheduleCacheFlushDateSchema } from "../../shared/caching/cacheFlushDate";
 // Active Seasons
 export {
   activeSeasonSchema,

@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // Import schemas and types from co-located file
 import { cameraSchema } from "./highwayCameras";
@@ -82,8 +87,15 @@ export type Cameras = z.infer<typeof cameraArraySchema>;
 // useSearchHighwayCameras
 // ============================================================================
 
-export const useSearchHighwayCameras = createUseQueryWsdot({
-  queryFn: searchHighwayCameras,
-  queryKeyPrefix: ["wsdot", "highway-cameras", "searchHighwayCameras"],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-});
+export const searchHighwayCamerasOptions = (
+  params: SearchHighwayCamerasParams
+) =>
+  queryOptions({
+    queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras", params],
+    queryFn: () => searchHighwayCameras(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

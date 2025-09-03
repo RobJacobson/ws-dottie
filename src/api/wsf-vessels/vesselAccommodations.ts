@@ -4,9 +4,13 @@ import {
   zNullableString,
   zPositiveInteger,
 } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsf, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  ONE_DAY,
+  TWO_DAYS,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
-import { getCacheFlushDateVessels } from "../wsf/cacheFlushDate";
 import { vesselClassSchema } from "./vesselBasics";
 
 // ============================================================================
@@ -107,32 +111,35 @@ export type VesselAccommodations = z.infer<
 >;
 
 // ============================================================================
-// TanStack Query Hooks
-//
-// useVesselAccommodationsById (singular item)
-// useVesselAccommodations (array)
+// TanStack Query Options
 // ============================================================================
 
-export const useVesselAccommodationsById = createUseQueryWsf({
-  queryFn: getVesselAccommodationsById,
-  queryKeyPrefix: [
-    "wsf",
-    "vessels",
-    "accommodations",
-    "getVesselAccommodationsById",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselAccommodationsByIdOptions = (
+  params: GetVesselAccommodationsByIdParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "vessels",
+      "accommodations",
+      "getVesselAccommodationsById",
+      params,
+    ],
+    queryFn: () => getVesselAccommodationsById(params),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
 
-export const useVesselAccommodations = createUseQueryWsf({
-  queryFn: getVesselAccommodations,
-  queryKeyPrefix: [
-    "wsf",
-    "vessels",
-    "accommodations",
-    "getVesselAccommodations",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_DAY_POLLING,
-  getCacheFlushDate: getCacheFlushDateVessels,
-});
+export const vesselAccommodationsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "accommodations", "getVesselAccommodations"],
+    queryFn: () => getVesselAccommodations({}),
+    staleTime: ONE_DAY,
+    gcTime: TWO_DAYS,
+    refetchInterval: ONE_DAY,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

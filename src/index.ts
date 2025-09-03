@@ -39,7 +39,7 @@ export * as WsfVessels from "./api/wsf-vessels";
 // TanStack Query Configuration
 // ============================================================================
 
-export { tanstackQueryOptions } from "./shared/tanstack";
+export { queryOptions } from "@tanstack/react-query";
 
 // ============================================================================
 // Shared Utilities

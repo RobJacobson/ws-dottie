@@ -6,7 +6,12 @@ import {
   zNullableNumber,
   zWsdotDate,
 } from "@/shared/fetching/validation/schemas";
-import { createUseQueryWsdot, tanstackQueryOptions } from "@/shared/tanstack";
+import { queryOptions } from "@tanstack/react-query";
+import {
+  SIX_HOURS,
+  ONE_DAY,
+  FIVE_SECONDS,
+} from "@/shared/constants/queryOptions";
 
 // ============================================================================
 // API Function
@@ -51,67 +56,40 @@ export type GetWeatherInformationExtendedParams = z.infer<
 
 export const surfaceMeasurementSchema = z.object({
   SensorId: z.number(),
-
   SurfaceTemperature: zNullableNumber(),
-
   RoadFreezingTemperature: zNullableNumber(),
-
   RoadSurfaceCondition: zNullableNumber(),
 });
 
 export const subSurfaceMeasurementSchema = z.object({
   SensorId: z.number(),
-
   SubSurfaceTemperature: zNullableNumber(),
 });
 
 export const weatherReadingSchema = z.object({
   StationId: z.string(),
-
   StationName: z.string(),
-
   Latitude: zLatitude(),
-
   Longitude: zLongitude(),
-
   Elevation: z.number(),
-
   ReadingTime: zWsdotDate().nullable(),
-
   AirTemperature: zNullableNumber(),
-
   RelativeHumidty: zNullableNumber(),
-
   AverageWindSpeed: zNullableNumber(),
-
   AverageWindDirection: zNullableNumber(),
-
   WindGust: zNullableNumber(),
-
   Visibility: zNullableNumber(),
-
   PrecipitationIntensity: zNullableNumber(),
-
   PrecipitationType: zNullableNumber(),
-
   PrecipitationPast1Hour: zNullableNumber(),
-
   PrecipitationPast3Hours: zNullableNumber(),
-
   PrecipitationPast6Hours: zNullableNumber(),
-
   PrecipitationPast12Hours: zNullableNumber(),
-
   PrecipitationPast24Hours: zNullableNumber(),
-
   PrecipitationAccumulation: zNullableNumber(),
-
   BarometricPressure: zNullableNumber(),
-
   SnowDepth: zNullableNumber(),
-
   SurfaceMeasurements: z.array(surfaceMeasurementSchema).nullable(),
-
   SubSurfaceMeasurements: z.array(subSurfaceMeasurementSchema).nullable(),
 });
 
@@ -129,17 +107,20 @@ export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 export type WeatherReadings = z.infer<typeof weatherReadingArraySchema>;
 
 // ============================================================================
-// TanStack Query Hook
-//
-// useWeatherInformationExtended
+// TanStack Query Options
 // ============================================================================
 
-export const useWeatherInformationExtended = createUseQueryWsdot({
-  queryFn: getWeatherInformationExtended,
-  queryKeyPrefix: [
-    "wsdot",
-    "weather-information-extended",
-    "getWeatherInformationExtended",
-  ],
-  defaultOptions: tanstackQueryOptions.ONE_HOUR_POLLING,
-});
+export const weatherInformationExtendedOptions = () =>
+  queryOptions({
+    queryKey: [
+      "wsdot",
+      "weather-information-extended",
+      "getWeatherInformationExtended",
+    ],
+    queryFn: () => getWeatherInformationExtended({}),
+    staleTime: SIX_HOURS,
+    gcTime: ONE_DAY,
+    refetchInterval: SIX_HOURS,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
