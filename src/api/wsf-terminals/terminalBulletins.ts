@@ -101,9 +101,6 @@ export type TerminalBulletinItem = z.infer<typeof terminalBulletinItemSchema>;
 
 export const terminalBulletinsArraySchema = z.array(terminalBulletinSchema);
 
-/**
- * TerminalBulletins type - represents an array of terminal bulletin objects
- */
 export type TerminalBulletins = z.infer<typeof terminalBulletinsArraySchema>;
 
 // ============================================================================

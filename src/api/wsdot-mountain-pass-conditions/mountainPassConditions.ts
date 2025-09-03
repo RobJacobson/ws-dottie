@@ -105,9 +105,6 @@ export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 
 export type MountainPassCondition = z.infer<typeof mountainPassConditionSchema>;
 
-/**
- * MountainPassConditions type - represents an array of mountain pass condition objects
- */
 export type MountainPassConditions = z.infer<
   typeof mountainPassConditionArraySchema
 >;

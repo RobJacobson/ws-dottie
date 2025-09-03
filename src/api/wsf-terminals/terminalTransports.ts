@@ -102,9 +102,6 @@ export const terminalTransportsArraySchema = z.array(terminalTransportSchema);
 
 export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
 
-/**
- * TerminalTransports type - represents an array of terminal transport objects
- */
 export type TerminalTransports = z.infer<typeof terminalTransportsArraySchema>;
 
 // ============================================================================

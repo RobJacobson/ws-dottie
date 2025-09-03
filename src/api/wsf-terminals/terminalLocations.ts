@@ -104,9 +104,6 @@ export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
 
 export const terminalLocationsArraySchema = z.array(terminalLocationSchema);
 
-/**
- * TerminalLocations type - represents an array of terminal location objects
- */
 export type TerminalLocations = z.infer<typeof terminalLocationsArraySchema>;
 
 // ============================================================================

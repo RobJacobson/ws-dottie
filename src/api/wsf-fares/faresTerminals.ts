@@ -97,14 +97,8 @@ export const terminalMatesArraySchema = z.array(terminalMateSchema);
 
 export type TerminalMate = z.infer<typeof terminalMateSchema>;
 
-/**
- * FaresTerminals type - represents an array of fares terminal objects
- */
 export type FaresTerminals = z.infer<typeof faresTerminalsArraySchema>;
 
-/**
- * TerminalMates type - represents an array of terminal mate objects
- */
 export type TerminalMates = z.infer<typeof terminalMatesArraySchema>;
 
 // ============================================================================

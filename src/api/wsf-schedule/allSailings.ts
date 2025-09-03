@@ -113,9 +113,6 @@ export const sailingsArraySchema = z.array(sailingResponseSchema);
 
 export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
-/**
- * Sailings type - represents an array of sailing response objects
- */
 export type Sailings = z.infer<typeof sailingsArraySchema>;
 
 // ============================================================================

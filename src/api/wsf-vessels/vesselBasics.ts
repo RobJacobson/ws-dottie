@@ -99,9 +99,6 @@ export type VesselClass = z.infer<typeof vesselClassSchema>;
 
 export const vesselBasicArraySchema = z.array(vesselBasicSchema);
 
-/**
- * VesselBasics type - represents an array of vessel basic objects
- */
 export type VesselBasics = z.infer<typeof vesselBasicArraySchema>;
 
 // ============================================================================

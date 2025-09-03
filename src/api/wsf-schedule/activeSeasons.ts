@@ -63,9 +63,6 @@ export const activeSeasonsArraySchema = z.array(activeSeasonSchema);
 
 export type ActiveSeason = z.infer<typeof activeSeasonSchema>;
 
-/**
- * ActiveSeasons type - represents an array of active season objects
- */
 export type ActiveSeasons = z.infer<typeof activeSeasonsArraySchema>;
 
 // ============================================================================

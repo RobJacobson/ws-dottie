@@ -92,9 +92,6 @@ export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
 
 export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
 
-/**
- * TerminalBasicsArray type - represents an array of terminal basics objects
- */
 export type TerminalBasicsArray = z.infer<typeof terminalBasicsArraySchema>;
 
 // ============================================================================

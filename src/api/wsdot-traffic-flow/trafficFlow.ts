@@ -116,9 +116,6 @@ export const trafficFlowArraySchema = z.array(trafficFlowSchema);
 export type FlowStationLocation = z.infer<typeof flowStationLocationSchema>;
 export type TrafficFlow = z.infer<typeof trafficFlowSchema>;
 
-/**
- * TrafficFlows type - represents an array of traffic flow objects
- */
 export type TrafficFlows = z.infer<typeof trafficFlowArraySchema>;
 
 // ============================================================================

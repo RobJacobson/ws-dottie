@@ -112,9 +112,6 @@ export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
 
 export const weatherInfoArraySchema = z.array(weatherInfoSchema);
 
-/**
- * WeatherInfos type - represents an array of weather info objects
- */
 export type WeatherInfos = z.infer<typeof weatherInfoArraySchema>;
 
 // ============================================================================

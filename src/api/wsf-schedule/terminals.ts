@@ -154,14 +154,8 @@ export const scheduleTerminalCombosArraySchema = z.array(
 
 export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
 
-/**
- * ScheduleTerminals type - represents an array of schedule terminal objects
- */
 export type ScheduleTerminals = z.infer<typeof scheduleTerminalsArraySchema>;
 
-/**
- * ScheduleTerminalCombos type - represents an array of schedule terminal combo objects
- */
 export type ScheduleTerminalCombos = z.infer<
   typeof scheduleTerminalCombosArraySchema
 >;

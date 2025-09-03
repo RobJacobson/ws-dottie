@@ -101,9 +101,6 @@ export const terminalWaitTimesArraySchema = z.array(terminalWaitTimesSchema);
 export type TerminalWaitTimes = z.infer<typeof terminalWaitTimesSchema>;
 export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
 
-/**
- * TerminalWaitTimesArray type - represents an array of terminal wait times objects
- */
 export type TerminalWaitTimesArray = z.infer<
   typeof terminalWaitTimesArraySchema
 >;

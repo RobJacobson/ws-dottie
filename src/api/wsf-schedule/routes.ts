@@ -125,14 +125,8 @@ export const routesWithDisruptionsArraySchema = z.array(
 
 export type RouteWithDisruptions = z.infer<typeof routeWithDisruptionsSchema>;
 
-/**
- * Routes type - represents an array of route objects
- */
 export type Routes = z.infer<typeof routesArraySchema>;
 
-/**
- * RoutesWithDisruptions type - represents an array of route with disruptions objects
- */
 export type RoutesWithDisruptions = z.infer<
   typeof routesWithDisruptionsArraySchema
 >;

@@ -168,9 +168,6 @@ export type HighwayAlertRoadwayLocation = z.infer<
 >;
 export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
 
-/**
- * HighwayAlerts type - represents an array of highway alert objects
- */
 export type HighwayAlerts = z.infer<typeof highwayAlertArraySchema>;
 
 // ============================================================================

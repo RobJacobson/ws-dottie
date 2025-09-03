@@ -131,14 +131,8 @@ export const timeAdjustmentsByRouteArraySchema = z.array(timeAdjustmentSchema);
 
 export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 
-/**
- * TimeAdjustments type - represents an array of time adjustment response objects
- */
 export type TimeAdjustments = z.infer<typeof timeAdjustmentsArraySchema>;
 
-/**
- * TimeAdjustmentsByRoute type - represents an array of time adjustment objects
- */
 export type TimeAdjustmentsByRoute = z.infer<
   typeof timeAdjustmentsByRouteArraySchema
 >;

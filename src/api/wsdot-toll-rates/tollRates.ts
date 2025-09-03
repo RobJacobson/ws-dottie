@@ -61,9 +61,6 @@ export const tollRateArraySchema = z.array(tollRateSchema);
 
 export type TollRate = z.infer<typeof tollRateSchema>;
 
-/**
- * TollRates type - represents an array of toll rate objects
- */
 export type TollRates = z.infer<typeof tollRateArraySchema>;
 
 // ============================================================================

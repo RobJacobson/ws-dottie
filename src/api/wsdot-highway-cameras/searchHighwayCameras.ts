@@ -76,9 +76,6 @@ export type SearchHighwayCamerasParams = z.infer<
 
 export const cameraArraySchema = z.array(cameraSchema);
 
-/**
- * Cameras type - represents an array of camera objects
- */
 export type Cameras = z.infer<typeof cameraArraySchema>;
 
 // ============================================================================

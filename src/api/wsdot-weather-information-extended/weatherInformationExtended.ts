@@ -101,9 +101,6 @@ export type SubSurfaceMeasurement = z.infer<typeof subSurfaceMeasurementSchema>;
 
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 
-/**
- * WeatherReadings type - represents an array of weather reading objects
- */
 export type WeatherReadings = z.infer<typeof weatherReadingArraySchema>;
 
 // ============================================================================

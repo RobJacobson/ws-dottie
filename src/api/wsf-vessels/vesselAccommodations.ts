@@ -103,9 +103,6 @@ export const vesselAccommodationArraySchema = z.array(
   vesselAccommodationSchema
 );
 
-/**
- * VesselAccommodations type - represents an array of vessel accommodation objects
- */
 export type VesselAccommodations = z.infer<
   typeof vesselAccommodationArraySchema
 >;

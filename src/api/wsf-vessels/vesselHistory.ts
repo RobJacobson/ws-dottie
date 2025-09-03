@@ -18,17 +18,11 @@ import {
 // here since they are only used in this module.
 // ============================================================================
 
-/**
- * Date range parameter schemas for vessel history
- */
 const dateRangeParams = {
   dateStart: z.date(),
   dateEnd: z.date(),
 };
 
-/**
- * Date range validation refinement for vessel history
- */
 const dateRangeRefinement = {
   refine: (data: { dateStart: Date; dateEnd: Date }) => {
     return data.dateStart <= data.dateEnd;
@@ -39,9 +33,6 @@ const dateRangeRefinement = {
   },
 };
 
-/**
- * Vessel name parameter with validation for vessel history
- */
 const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");
 
 // ============================================================================
@@ -130,9 +121,6 @@ export type VesselHistory = z.infer<typeof vesselHistorySchema>;
 
 export const vesselHistoryArraySchema = z.array(vesselHistorySchema);
 
-/**
- * VesselHistories type - represents an array of vessel history objects
- */
 export type VesselHistories = z.infer<typeof vesselHistoryArraySchema>;
 
 // ============================================================================

@@ -97,9 +97,6 @@ export type TravelTimeRoute = z.infer<typeof travelTimeRouteSchema>;
 
 export type TravelTimesResponse = z.infer<typeof travelTimesArraySchema>;
 
-/**
- * TravelTimes type - represents an array of travel time route objects
- */
 export type TravelTimes = z.infer<typeof travelTimesArraySchema>;
 
 // ============================================================================

@@ -72,9 +72,6 @@ export const alertsArraySchema = z.array(alertSchema);
 
 export type Alert = z.infer<typeof alertSchema>;
 
-/**
- * Alerts type - represents an array of alert objects
- */
 export type Alerts = z.infer<typeof alertsArraySchema>;
 
 // ============================================================================

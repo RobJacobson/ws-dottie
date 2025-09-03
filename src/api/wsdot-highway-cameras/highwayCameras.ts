@@ -104,9 +104,6 @@ export type CameraLocation = z.infer<typeof cameraLocationSchema>;
 
 export type Camera = z.infer<typeof cameraSchema>;
 
-/**
- * Cameras type - represents an array of camera objects
- */
 export type Cameras = z.infer<typeof cameraArraySchema>;
 
 // ============================================================================

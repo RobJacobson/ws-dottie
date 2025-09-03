@@ -155,9 +155,6 @@ export const terminalVerboseArraySchema = z.array(terminalVerboseSchema);
 export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
 export type TerminalTransitLink = z.infer<typeof terminalTransitLinkSchema>;
 
-/**
- * TerminalVerboses type - represents an array of terminal verbose objects
- */
 export type TerminalVerboses = z.infer<typeof terminalVerboseArraySchema>;
 
 // ============================================================================

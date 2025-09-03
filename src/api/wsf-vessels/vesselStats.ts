@@ -113,9 +113,6 @@ export type VesselStats = z.infer<typeof vesselStatsSchema>;
 
 export const vesselStatsArraySchema = z.array(vesselStatsSchema);
 
-/**
- * VesselStatsArray type - represents an array of vessel stats objects
- */
 export type VesselStatsArray = z.infer<typeof vesselStatsArraySchema>;
 
 // ============================================================================

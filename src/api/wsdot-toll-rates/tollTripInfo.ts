@@ -63,9 +63,6 @@ export const tollTripInfoArraySchema = z.array(tollTripInfoSchema);
 
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 
-/**
- * TollTripInfos type - represents an array of toll trip info objects
- */
 export type TollTripInfos = z.infer<typeof tollTripInfoArraySchema>;
 
 // ============================================================================

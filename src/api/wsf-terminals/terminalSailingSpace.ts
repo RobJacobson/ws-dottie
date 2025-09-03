@@ -126,9 +126,6 @@ export type TerminalDepartingSpace = z.infer<
 >;
 export type TerminalArrivalSpace = z.infer<typeof terminalArrivalSpaceSchema>;
 
-/**
- * TerminalSailingSpaces type - represents an array of terminal sailing space objects
- */
 export type TerminalSailingSpaces = z.infer<
   typeof terminalSailingSpaceArraySchema
 >;

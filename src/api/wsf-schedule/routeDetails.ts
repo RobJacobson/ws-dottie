@@ -146,9 +146,6 @@ export const routeDetailsArraySchema = z.array(routeDetailsSchema);
 
 export type RouteDetails = z.infer<typeof routeDetailsSchema>;
 
-/**
- * RouteDetailsArray type - represents an array of route details objects
- */
 export type RouteDetailsArray = z.infer<typeof routeDetailsArraySchema>;
 
 export const routeDetailsByRouteServiceDisruptionSchema = z.object({

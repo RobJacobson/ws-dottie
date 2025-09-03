@@ -56,9 +56,6 @@ export const mapAreasArraySchema = z.array(mapAreaSchema);
 
 export type MapArea = z.infer<typeof mapAreaSchema>;
 
-/**
- * MapAreas type - represents an array of map area objects
- */
 export type MapAreas = z.infer<typeof mapAreasArraySchema>;
 
 // ============================================================================

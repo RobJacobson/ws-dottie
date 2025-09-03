@@ -74,9 +74,6 @@ export const fareTotalsArraySchema = z.array(fareTotalSchema);
 
 export type FareTotal = z.infer<typeof fareTotalSchema>;
 
-/**
- * FareTotals type - represents an array of fare total objects
- */
 export type FareTotals = z.infer<typeof fareTotalsArraySchema>;
 
 // ============================================================================

@@ -103,9 +103,6 @@ export const terminalComboVerboseArraySchema = z.array(
 export type TerminalCombo = z.infer<typeof terminalComboSchema>;
 export type TerminalComboVerbose = z.infer<typeof terminalComboVerboseSchema>;
 
-/**
- * TerminalComboVerboses type - represents an array of terminal combo verbose objects
- */
 export type TerminalComboVerboses = z.infer<
   typeof terminalComboVerboseArraySchema
 >;

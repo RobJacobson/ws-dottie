@@ -60,9 +60,6 @@ export const weatherStationArraySchema = z.array(weatherStationSchema);
 
 export type WeatherStation = z.infer<typeof weatherStationSchema>;
 
-/**
- * WeatherStations type - represents an array of weather station objects
- */
 export type WeatherStations = z.infer<typeof weatherStationArraySchema>;
 
 // ============================================================================

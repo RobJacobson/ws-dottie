@@ -103,9 +103,6 @@ export const scheduledRoutesArraySchema = z.array(scheduledRouteSchema);
 
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 
-/**
- * ScheduledRoutes type - represents an array of scheduled route objects
- */
 export type ScheduledRoutes = z.infer<typeof scheduledRoutesArraySchema>;
 
 // ============================================================================

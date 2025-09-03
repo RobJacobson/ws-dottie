@@ -122,9 +122,6 @@ export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
 
 export const vesselVerboseArraySchema = z.array(vesselVerboseSchema);
 
-/**
- * VesselVerboses type - represents an array of vessel verbose objects
- */
 export type VesselVerboses = z.infer<typeof vesselVerboseArraySchema>;
 
 // ============================================================================

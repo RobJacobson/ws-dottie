@@ -99,14 +99,8 @@ export const fareLineItemsBasicArraySchema = z.array(fareLineItemSchema);
 
 export type FareLineItem = z.infer<typeof fareLineItemSchema>;
 
-/**
- * FareLineItems type - represents an array of fare line item objects
- */
 export type FareLineItems = z.infer<typeof fareLineItemsArraySchema>;
 
-/**
- * FareLineItemsBasic type - represents an array of basic fare line item objects
- */
 export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicArraySchema>;
 
 // ============================================================================
