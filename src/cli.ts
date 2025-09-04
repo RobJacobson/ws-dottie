@@ -96,6 +96,12 @@ const FUNCTION_REGISTRY = {
     paramsSchema: WsdotHighwayAlerts.getHighwayAlertsByRegionIdParamsSchema,
     description: "Get highway alert data by region ID",
   },
+  searchHighwayAlerts: {
+    module: WsdotHighwayAlerts,
+    function: WsdotHighwayAlerts.searchHighwayAlerts,
+    paramsSchema: WsdotHighwayAlerts.searchHighwayAlertsParamsSchema,
+    description: "Search highway alerts by route/region/time/milepost",
+  },
   getEventCategories: {
     module: WsdotHighwayAlerts,
     function: WsdotHighwayAlerts.getEventCategories,
@@ -119,6 +125,12 @@ const FUNCTION_REGISTRY = {
     function: WsdotHighwayCameras.getHighwayCameras,
     paramsSchema: WsdotHighwayCameras.getHighwayCamerasParamsSchema,
     description: "Get highway camera data for all cameras",
+  },
+  searchHighwayCameras: {
+    module: WsdotHighwayCameras,
+    function: WsdotHighwayCameras.searchHighwayCameras,
+    paramsSchema: WsdotHighwayCameras.searchHighwayCamerasParamsSchema,
+    description: "Search highway cameras by route/region/milepost",
   },
   getMountainPassConditionById: {
     module: WsdotMountainPassConditions,
@@ -685,6 +697,32 @@ program
           }
         }
 
+        // Coerce ISO-like date strings (YYYY-MM-DD, optional time) to JS Date
+        const coerceDateStrings = (value: unknown): unknown => {
+          if (Array.isArray(value)) return value.map(coerceDateStrings);
+          if (value && typeof value === "object") {
+            const out: Record<string, unknown> = {};
+            for (const [k, v] of Object.entries(
+              value as Record<string, unknown>
+            )) {
+              out[k] = coerceDateStrings(v);
+            }
+            return out;
+          }
+          if (typeof value === "string") {
+            const ISOish =
+              /^\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?)?Z?$/i;
+            if (ISOish.test(value)) {
+              // If a time is present without Z, assume UTC; date-only is fine
+              const needsZ = value.length > 10 && !value.endsWith("Z");
+              return new Date(needsZ ? `${value}Z` : value);
+            }
+          }
+          return value;
+        };
+
+        params = coerceDateStrings(params) as Record<string, unknown>;
+
         // Get function metadata
         const functionMeta =
           FUNCTION_REGISTRY[functionName as keyof typeof FUNCTION_REGISTRY];
@@ -699,6 +737,14 @@ program
             console.error(chalk.blue(`🔍 Calling ${functionName}...`));
           }
 
+          // In quiet/agent/silent mode, suppress ANY writes to stdout from internals
+          // to guarantee pure JSON on stdout.
+          const originalStdoutWrite = process.stdout.write;
+          if (isQuiet) {
+            // biome-ignore lint/suspicious/noExplicitAny: Node typings
+            (process.stdout as any).write = (..._args: unknown[]) => true;
+          }
+
           // Call the function with validated parameters
           // biome-ignore lint/suspicious/noExplicitAny: Needed for metadata
           const result = await (functionMeta.function as any)(validatedParams);
@@ -707,6 +753,10 @@ program
           if (isQuiet) {
             console.log = originalConsoleLog;
             console.error = originalConsoleError;
+            // biome-ignore lint/suspicious/noExplicitAny: Node typings
+            (process.stdout as any).write = originalStdoutWrite as unknown as (
+              ...args: unknown[]
+            ) => boolean;
           }
 
           // Output result (always show final result, even in silent mode for now)

@@ -21,8 +21,6 @@ export {
   getHighwayCameraParamsSchema,
   getHighwayCamerasParamsSchema,
 } from "./highwayCameras";
-// Search schemas
-export { searchHighwayCamerasParamsSchema } from "./searchHighwayCameras";
 
 // ============================================================================
 // TYPE RE-EXPORTS FOR CONVENIENCE

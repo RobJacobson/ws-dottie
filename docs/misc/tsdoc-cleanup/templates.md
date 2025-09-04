@@ -20,12 +20,17 @@
  *   - [functionName]: [Brief description]
  *
  * @input
- *   - [functionName]: [param sig / short explanation]
- *   - [functionName]: [param sig / short explanation]
+ *   - [functionName]: [param overview]
+ *   - [functionName]:
+ *     - [paramName]: [one-line description]
+ *     - [paramName]: [one-line description]
  *
  * @output
- *   - [functionName]: [Return type description]
- *   - [functionName]: [Return type description]
+ *   - [functionName]: [Return type]
+ *   - [functionName]: [Return type]
+ *   - [Base/Item fields]:
+ *     - [FieldName]: [one-line description]
+ *     - [FieldName]: [one-line description]
  *
  * @baseType
  *   - [TypeName]: [Purpose]
@@ -64,12 +69,12 @@
  */
 ```
 
-## Hook Factory Comment (TanStack Query wrapper)
+## Query Options Comment (TanStack v5)
 
 ```typescript
 /**
- * Hook factory that returns a TanStack Query hook for [Entity].
- * Returns [single/array] of [Type].
+ * Returns query options for [Entity].
+ * Query key: ["wsdot"|"wsf", ...]; default cadence: [e.g., 60s].
  */
 ```
 
@@ -77,10 +82,13 @@
 
 ```typescript
 /**
- * [Input/Response] schema for the [TypeName]
+ * [Input/Response] schema for [TypeName]
  */
 export const [schemaName] = z.object({
-  // ...
+  /** [one-line description] */
+  [fieldName]: [zodType],
+  /** [one-line description] */
+  [fieldName]: [zodType],
 })
 ```
 

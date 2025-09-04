@@ -158,7 +158,7 @@ ws-dottie getBorderCrossings --raw
 | `getTollTripRates` | Trip-based tolls | None |
 | `getTollTripInfo` | Toll trip information | None |
 | `getTollTripVersion` | Toll system version | None |
-| `getTripRatesByDate` | Toll rates by date | `{"date": "2025-10-01"}` |
+| `getTripRatesByDate` | Toll rates by date | `{"fromDate": "2025-10-01", "toDate": "2025-10-02"}` |
 
 ### WSF APIs (Washington State Ferries)
 

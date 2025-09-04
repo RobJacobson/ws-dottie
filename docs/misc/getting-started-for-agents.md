@@ -69,9 +69,8 @@ node dist/cli.mjs getHighwayAlertsByMapArea '{"mapArea": "Seattle"}'
 
 ### When Documentation and CLI Differ
 - Do not edit schemas or implementation.
-- File a discrepancy report using `docs/misc/tsdoc-cleanup/discrepancies/_template.md` at:
-  - `docs/misc/tsdoc-cleanup/discrepancies/<api>/<endpoint>.md`
-- Include the CLI command used and link(s) to official docs.
+- Inform the user in chat immediately and pause work until resolved.
+- Include the CLI command you ran and link(s) to the official Docs page in your message.
 
 ## Schema and Implementation Policy
 - Do not edit schemas or fetching logic as part of this project.

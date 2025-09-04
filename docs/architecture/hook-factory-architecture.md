@@ -1,10 +1,15 @@
-# Hook Factory Architecture
+# Hook Factory Architecture (Deprecated)
+
+> This document describes the former hook factory approach. It has been replaced by the Query Options pattern using `queryOptions` from TanStack Query v5. For current guidance, see:
+>
+> - docs/misc/query-options-refactoring.md
+> - docs/readme-invalidation.md
 
 This document explains the hook factory pattern used in ws-dottie to eliminate boilerplate and improve type safety for TanStack Query hooks.
 
 ## Overview
 
-The hook factory provides two specialized factory functions that create properly typed React Query hooks with minimal boilerplate. These factories are slim wrappers around TanStack Query's `useQuery` that eliminate repetitive code while maintaining full compatibility with all TanStack Query features and options.
+The hook factory provided two specialized factory functions that created typed React Query hooks. This section is kept for historical context only. New development should export `queryOptions` functions and consume them with `useQuery(options)`.
 
 - `createUseQueryWsdot` - For WSDOT APIs with standard caching
 - `createUseQueryWsf` - For WSF APIs with auto-update functionality

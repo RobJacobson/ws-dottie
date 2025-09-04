@@ -1,6 +1,6 @@
 # Worked Example — WSF Vessels (Vessel Locations)
 
-> Canonical reference in repo: `src/api/wsf-vessels/vesselLocations.ts`
+> Example reference in repo: `src/api/wsf-vessels/vesselLocations.ts`
 
 ```typescript
 /**
@@ -13,19 +13,26 @@
  * 
  * Data includes:
  * - Vessel identifiers, names, route info
- * - Coordinates, speed, heading, last update time
+ * - Coordinates, speed, heading, last update time (JS Date)
  *
  * @functions
- *   - getVesselLocations: Returns an array of VesselLocation objects for all vessels
- *   - getVesselLocationsByVesselId: Returns a single VesselLocation by vesselId
+ *   - getVesselLocations: Returns all active vessel locations
+ *   - getVesselLocationsByVesselId: Returns a single vessel location by ID
  *
  * @input
- *   - getVesselLocations: {} - No parameters required
- *   - getVesselLocationsByVesselId: { vesselId: number } - Unique vessel identifier
+ *   - getVesselLocations: {}
+ *   - getVesselLocationsByVesselId:
+ *     - vesselId: Unique vessel ID
  *
  * @output
- *   - getVesselLocations: VesselLocation[] - Array of all active vessel locations
- *   - getVesselLocationsByVesselId: VesselLocation - Single vessel location
+ *   - getVesselLocations: VesselLocation[]
+ *   - getVesselLocationsByVesselId: VesselLocation
+ *   - VesselLocation fields:
+ *     - VesselID: Unique vessel ID
+ *     - VesselName: Official vessel name
+ *     - Latitude: Latitude in decimal degrees
+ *     - Longitude: Longitude in decimal degrees
+ *     - TimeStamp: Last update time (JS Date)
  *
  * @baseType
  *   - VesselLocation: Vessel metadata and current position information
@@ -39,50 +46,88 @@
  *   "VesselID": 1,
  *   "VesselName": "Example",
  *   "Latitude": 47.60,
- *   "Longitude": -122.33
+ *   "Longitude": -122.33,
+ *   "TimeStamp": "2025-09-01T12:34:56Z"
  * }
  *
  * @see https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html
  */
 
-/** Input schema for the `getVesselLocationsByVesselId` request */
+// Input schemas
+/** Params schema for getVesselLocationsByVesselId */
 export const getVesselLocationsByVesselIdParamsSchema = z.object({
-  vesselId: z.number().int().positive(),
-})
+  /** Unique vessel ID */
+  vesselId: zPositiveInteger("vessel"),
+});
 
-/** Input schema for the `getVesselLocations` request (no parameters) */
-export const getVesselLocationsParamsSchema = z.object({})
+/** Params schema for getVesselLocations (none) */
+export const getVesselLocationsParamsSchema = z.object({});
 
-/** Response schema for a single `VesselLocation` */
+// Output schemas
+/** Vessel location item schema */
 export const vesselLocationSchema = z.object({
+  /** Unique vessel ID */
   VesselID: z.number().int().positive(),
-  VesselName: z.string(),
-  Latitude: z.number(),
-  Longitude: z.number(),
-})
+  /** Official vessel name */
+  VesselName: z.string().min(1),
+  /** Latitude in decimal degrees */
+  Latitude: z.number().min(-90).max(90),
+  /** Longitude in decimal degrees */
+  Longitude: z.number().min(-180).max(180),
+  /** Last update time (JS Date) */
+  TimeStamp: zWsdotDate(),
+});
 
-/** Response schema for an array of `VesselLocation` */
-export const vesselLocationArraySchema = z.array(vesselLocationSchema)
+/** Vessel locations array schema */
+export const vesselLocationArraySchema = z.array(vesselLocationSchema);
 
-/** VesselLocation type - validated vessel location object */
-export type VesselLocation = z.infer<typeof vesselLocationSchema>
+/** VesselLocation type */
+export type VesselLocation = z.infer<typeof vesselLocationSchema>;
 
-/**
- * Fetches a single vessel location by `vesselId`.
- *
- * @param params - `{ vesselId: number }` unique vessel identifier
- * @returns `VesselLocation` - Validated vessel location object
- */
+// API functions
+/** Fetches a single vessel location by ID */
 export const getVesselLocationsByVesselId = async (
   params: GetVesselLocationsByVesselIdParams
 ): Promise<VesselLocation> => {
   // ...
-}
+};
 
-/**
- * Hook factory that returns a TanStack Query hook for an array of `VesselLocation`.
- */
-export const useVesselLocations = createUseQueryWsf({
-  queryFn: getVesselLocations,
-  queryKeyPrefix: ["wsf", "vessels", "locations", "getVesselLocations"],
-})
+/** Fetches all vessel locations */
+export const getVesselLocations = async (
+  params: GetVesselLocationsParams = {}
+): Promise<VesselLocation[]> => {
+  // ...
+};
+
+// Query Options
+/** Returns options for a single vessel location by ID; polls every 5s */
+export const vesselLocationsByVesselIdOptions = (
+  params: GetVesselLocationsByVesselIdParams
+) =>
+  queryOptions({
+    queryKey: [
+      "wsf",
+      "vessels",
+      "locations",
+      "getVesselLocationsByVesselId",
+      params,
+    ],
+    queryFn: () => getVesselLocationsByVesselId(params),
+    staleTime: FIVE_SECONDS,
+    gcTime: ONE_HOUR,
+    refetchInterval: FIVE_SECONDS,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });
+
+/** Returns options for all vessel locations; polls every 5s */
+export const vesselLocationsOptions = () =>
+  queryOptions({
+    queryKey: ["wsf", "vessels", "locations", "getVesselLocations"],
+    queryFn: () => getVesselLocations({}),
+    staleTime: FIVE_SECONDS,
+    gcTime: ONE_HOUR,
+    refetchInterval: FIVE_SECONDS,
+    retry: 3,
+    retryDelay: FIVE_SECONDS,
+  });

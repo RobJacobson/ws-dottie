@@ -1,3 +1,34 @@
+/**
+ * @module WSDOT — Toll Trip Version API
+ * @description Current version number for toll trip data.
+ *
+ * Provides:
+ * - Version value for toll trip datasets
+ *
+ * Data includes:
+ * - Version number
+ *
+ * @functions
+ *   - getTollTripVersion: Returns current toll trip version
+ *
+ * @input
+ *   - getTollTripVersion: {}
+ *
+ * @output
+ *   - getTollTripVersion: TollTripVersion
+ *   - TollTripVersion fields:
+ *     - Version: Version number
+ *
+ * @cli
+ *   - getTollTripVersion: node dist/cli.mjs getTollTripVersion
+ *
+ * @exampleResponse
+ * {
+ *   "Version": 352417
+ * }
+ *
+ * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
+ */
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { queryOptions } from "@tanstack/react-query";
