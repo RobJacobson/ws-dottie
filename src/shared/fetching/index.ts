@@ -66,9 +66,9 @@ export type {
 export {
   validateInputs,
   validateResponse,
-  zWsdotDate,
   zLatitude,
   zLongitude,
+  zWsdotDate,
 } from "./validation";
 
 // ============================================================================

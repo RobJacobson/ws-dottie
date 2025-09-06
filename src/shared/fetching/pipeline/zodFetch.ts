@@ -8,9 +8,9 @@
  * 4. Error handling and return
  */
 
+import type { z } from "zod";
 import type { LoggingMode } from "@/shared/utils";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
-import type { z } from "zod";
 
 import { validateInputs, validateResponse } from "../validation";
 import { executeRequest } from "./execution";

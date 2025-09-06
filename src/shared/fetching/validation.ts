@@ -123,14 +123,6 @@ export const zWsdotDate = () =>
  */
 
 // Geographic coordinate validation with MCP descriptions
-export const zLatitude = () =>
-  z
-    .number()
-    .min(-90)
-    .max(90);
+export const zLatitude = () => z.number().min(-90).max(90);
 
-export const zLongitude = () =>
-  z
-    .number()
-    .min(-180)
-    .max(180);
+export const zLongitude = () => z.number().min(-180).max(180);

@@ -30,15 +30,15 @@
 
 import { queryOptions } from "@tanstack/react-query";
 import {
-  FIVE_SECONDS,
-  THIRTY_SECONDS,
-  ONE_MINUTE,
   FIVE_MINUTES,
-  ONE_HOUR,
-  SIX_HOURS,
+  FIVE_SECONDS,
   ONE_DAY,
-  TWO_DAYS,
+  ONE_HOUR,
+  ONE_MINUTE,
   ONE_WEEK,
+  SIX_HOURS,
+  THIRTY_SECONDS,
+  TWO_DAYS,
 } from "@/shared/constants/queryOptions";
 
 /**
