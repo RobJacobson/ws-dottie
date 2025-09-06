@@ -3,16 +3,16 @@
  * @description Search highway alerts by state route, region, time range, and milepost.
  *
  * Provides:
- * - Filtered alert results using optional parameters (falls back to all alerts when empty)
+ * - Filtered alert results using optional parameters
  *
  * Data includes:
  * - Highway alert records (see HighwayAlert schema)
  *
  * @functions
- *   - searchHighwayAlerts: Returns alerts filtered by provided parameters
+ *   - searchAlerts: Returns alerts filtered by provided parameters
  *
  * @input
- *   - searchHighwayAlerts:
+ *   - searchAlerts:
  *     - StateRoute: State route code (optional)
  *     - Region: Region name (optional)
  *     - SearchTimeStart: Start time (JS Date, optional)
@@ -21,10 +21,10 @@
  *     - EndingMilepost: Ending milepost (optional)
  *
  * @output
- *   - searchHighwayAlerts: HighwayAlert[]
+ *   - searchAlerts: HighwayAlert[]
  *
  * @cli
- *   - searchHighwayAlerts: node dist/cli.mjs searchHighwayAlerts '{"StateRoute":"005"}'
+ *   - searchAlerts: node dist/cli.mjs searchAlerts '{"StateRoute":"005"}'
  *
  * @exampleResponse
  * {
@@ -64,33 +64,8 @@ import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import { zodFetchCustom } from "@/shared/fetching";
 
-/** Searches highway alerts using optional filters (falls back to all alerts) */
-export const searchHighwayAlerts = async (
-  params: SearchHighwayAlertsParams
-): Promise<Alerts> => {
-  if (Object.keys(params).length === 0) {
-    return zodFetchCustom(
-      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
-      {
-        input: searchHighwayAlertsParamsSchema,
-        output: alertsSchema,
-      },
-      {}
-    );
-  }
-
-  return zodFetchCustom(
-    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-    {
-      input: searchHighwayAlertsParamsSchema,
-      output: alertsSchema,
-    },
-    params
-  );
-};
-
-/** Params schema for searchHighwayAlerts */
-export const searchHighwayAlertsParamsSchema = z.object({
+/** Params schema for searchAlerts */
+export const searchAlertsParamsSchema = z.object({
   /** State route code (optional) */
   StateRoute: z.string().optional(),
   /** Region name (optional) */
@@ -105,14 +80,26 @@ export const searchHighwayAlertsParamsSchema = z.object({
   EndingMilepost: z.number().optional(),
 });
 
-/** SearchHighwayAlerts params type */
-export type SearchHighwayAlertsParams = z.infer<
-  typeof searchHighwayAlertsParamsSchema
->;
+/** SearchAlerts params type */
+export type SearchAlertsParams = z.infer<typeof searchAlertsParamsSchema>;
+
+/** Searches highway alerts using optional filters */
+export const searchAlerts = async (
+  params: SearchAlertsParams
+): Promise<Alerts> => {
+  return zodFetchCustom(
+    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
+    {
+      input: searchAlertsParamsSchema,
+      output: alertsSchema,
+    },
+    params
+  );
+};
 
 /** Returns options for searching alerts; polls every 60s */
-export const searchHighwayAlertsOptions = createQueryOptions({
-  apiFunction: searchHighwayAlerts,
-  queryKey: ["wsdot", "highway-alerts", "searchHighwayAlerts"],
+export const searchAlertsOptions = createQueryOptions({
+  apiFunction: searchAlerts,
+  queryKey: ["wsdot", "highway-alerts", "searchAlerts"],
   cacheStrategy: "MINUTE_UPDATES",
 });

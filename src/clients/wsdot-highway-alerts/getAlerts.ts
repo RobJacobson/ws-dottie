@@ -1,22 +1,21 @@
 /**
  * @module WSDOT — Highway Alerts API
- * @description Highway alerts filtered by map area including construction, incidents, and travel impacts.
+ * @description Active highway alerts including construction, incidents, and travel impacts.
  *
  * Provides:
- * - Alerts filtered by map area
+ * - All active alerts
  *
  * Data includes:
  * - Alert identifiers, categories, status, headline/extended descriptions, start/end times (JS Date), roadway locations
  *
  * @functions
- *   - getHighwayAlertsByMapArea: Returns alerts filtered by map area
+ *   - getAlerts: Returns all active alerts
  *
  * @input
- *   - getHighwayAlertsByMapArea:
- *     - MapArea: Map area name
+ *   - getAlerts: {}
  *
  * @output
- *   - getHighwayAlertsByMapArea: HighwayAlerts
+ *   - getAlerts: HighwayAlerts
  *   - HighwayAlert fields:
  *     - AlertID: Alert identifier
  *     - County: County name (nullable)
@@ -44,7 +43,7 @@
  *   - HighwayAlertRoadwayLocation: Roadway location details
  *
  * @cli
- *   - getHighwayAlertsByMapArea: node dist/cli.mjs getHighwayAlertsByMapArea '{"MapArea": "Seattle"}'
+ *   - getAlerts: node dist/cli.mjs getAlerts
  *
  * @exampleResponse
  * {
@@ -84,28 +83,24 @@ import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import { zodFetch } from "@/shared/fetching";
 
-/** Params schema for getHighwayAlertsByMapArea */
-export const getHighwayAlertsByMapAreaParamsSchema = z.object({
-  /** Map area name */
-  MapArea: z.string().min(1, "Map area cannot be empty"),
-});
+/** Params schema for getAlerts (none) */
+export const getAlertsParamsSchema = z.object({});
 
-export type GetHighwayAlertsByMapAreaParams = z.infer<
-  typeof getHighwayAlertsByMapAreaParamsSchema
->;
+export type GetAlertsParams = z.infer<typeof getAlertsParamsSchema>;
 
-const ENDPOINT_BY_MAP_AREA =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}";
+const ENDPOINT =
+  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson";
 
-/** Fetches highway alerts filtered by map area */
-export const getHighwayAlertsByMapArea = zodFetch<
-  GetHighwayAlertsByMapAreaParams,
-  Alerts
->(ENDPOINT_BY_MAP_AREA, getHighwayAlertsByMapAreaParamsSchema, alertsSchema);
+/** Fetches all active highway alerts */
+export const getAlerts = zodFetch<GetAlertsParams, Alerts>(
+  ENDPOINT,
+  getAlertsParamsSchema,
+  alertsSchema
+);
 
-/** Returns options for alerts by map area; polls every 60s */
-export const highwayAlertsByMapAreaOptions = createQueryOptions({
-  apiFunction: getHighwayAlertsByMapArea,
-  queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea"],
+/** Returns options for all alerts; polls every 60s */
+export const getAlertsOptions = createQueryOptions({
+  apiFunction: getAlerts,
+  queryKey: ["wsdot", "highway-alerts", "getAlerts"],
   cacheStrategy: "MINUTE_UPDATES",
 });

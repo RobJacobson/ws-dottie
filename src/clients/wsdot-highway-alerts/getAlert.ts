@@ -9,14 +9,14 @@
  * - Alert identifiers, categories, status, headline/extended descriptions, start/end times (JS Date), roadway locations
  *
  * @functions
- *   - getHighwayAlertById: Returns a single alert by ID
+ *   - getAlert: Returns a single alert by ID
  *
  * @input
- *   - getHighwayAlertById:
+ *   - getAlert:
  *     - AlertID: Alert identifier
  *
  * @output
- *   - getHighwayAlertById: HighwayAlert
+ *   - getAlert: HighwayAlert
  *   - HighwayAlert fields:
  *     - AlertID: Alert identifier
  *     - County: County name (nullable)
@@ -44,7 +44,7 @@
  *   - HighwayAlertRoadwayLocation: Roadway location details
  *
  * @cli
- *   - getHighwayAlertById: node dist/cli.mjs getHighwayAlertById '{"AlertID": 1}'
+ *   - getAlert: node dist/cli.mjs getAlert '{"AlertID": 1}'
  *
  * @exampleResponse
  * {
@@ -84,29 +84,27 @@ import { type Alert, alertSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import { zodFetch } from "@/shared/fetching";
 
-/** Params schema for getHighwayAlertById */
-export const getHighwayAlertByIdParamsSchema = z.object({
+/** Params schema for getAlert */
+export const getAlertParamsSchema = z.object({
   /** Alert identifier */
   AlertID: z.number().int().positive(),
 });
 
-export type GetHighwayAlertByIdParams = z.infer<
-  typeof getHighwayAlertByIdParamsSchema
->;
+export type GetAlertParams = z.infer<typeof getAlertParamsSchema>;
 
 const ENDPOINT_BY_ID =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}";
 
 /** Fetches a single highway alert by ID */
-export const getHighwayAlertById = zodFetch<GetHighwayAlertByIdParams, Alert>(
+export const getAlert = zodFetch<GetAlertParams, Alert>(
   ENDPOINT_BY_ID,
-  getHighwayAlertByIdParamsSchema,
+  getAlertParamsSchema,
   alertSchema
 );
 
 /** Returns options for a single alert by ID; polls every 60s */
-export const highwayAlertByIdOptions = createQueryOptions({
-  apiFunction: getHighwayAlertById,
-  queryKey: ["wsdot", "highway-alerts", "getHighwayAlertById"],
+export const getAlertOptions = createQueryOptions({
+  apiFunction: getAlert,
+  queryKey: ["wsdot", "highway-alerts", "getAlert"],
   cacheStrategy: "MINUTE_UPDATES",
 });
