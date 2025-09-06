@@ -42,12 +42,12 @@ export * from "./terminalVerbose.zod";
 // TRANSPORTS
 // ============================================================================
 
-export * from "./transitLink.zod";
 export * from "./terminalTransports.zod";
+export * from "./transitLink.zod";
 
 // ============================================================================
 // WAIT TIMES
 // ============================================================================
 
-export * from "./waitTime.zod";
 export * from "./terminalWaitTimes.zod";
+export * from "./waitTime.zod";

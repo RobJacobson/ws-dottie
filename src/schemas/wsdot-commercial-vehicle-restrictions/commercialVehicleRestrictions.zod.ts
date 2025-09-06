@@ -1,10 +1,10 @@
 import { z } from "zod";
+import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
 import {
-  zWsdotDate,
   zLatitude,
   zLongitude,
+  zWsdotDate,
 } from "@/shared/fetching/validation";
-import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
 
 /**
  * CVRestriction schema

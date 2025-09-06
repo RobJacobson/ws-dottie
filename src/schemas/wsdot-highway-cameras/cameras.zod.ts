@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { zLatitude, zLongitude } from "@/shared/fetching/validation";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
+import { zLatitude, zLongitude } from "@/shared/fetching/validation";
 
 /**
  * Camera schema

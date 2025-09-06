@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { terminalSchema } from "./terminal.zod";
 import { dispGISZoomLocSchema } from "./dispGISZoomLoc.zod";
+import { terminalSchema } from "./terminal.zod";
 
 /**
  * Terminal location schema for WSF Terminals API

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { vesselBasicsSchema } from "./vesselBasics.zod";
 import { vesselAccommodationsSchema } from "./vesselAccommodations.zod";
+import { vesselBasicsSchema } from "./vesselBasics.zod";
 import { vesselStatsSchema } from "./vesselStats.zod";
 
 /**

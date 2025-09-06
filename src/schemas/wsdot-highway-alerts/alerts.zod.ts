@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
+import { zWsdotDate } from "@/shared/fetching/validation";
 
 /**
  * Alert schema

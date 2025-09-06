@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { terminalSchema } from "./terminal.zod";
 import { bulletinSchema } from "./bulletin.zod";
+import { terminalSchema } from "./terminal.zod";
 
 /**
  * Terminal bulletins schema for WSF Terminals API

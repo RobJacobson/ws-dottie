@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { terminalSchema } from "./terminal.zod";
 import { departingSpaceSchema } from "./departingSpace.zod";
+import { terminalSchema } from "./terminal.zod";
 
 /**
  * Terminal sailing space schema for WSF Terminals API

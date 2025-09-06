@@ -1,8 +1,8 @@
 import { z } from "zod";
 import {
-  zWsdotDate,
   zLatitude,
   zLongitude,
+  zWsdotDate,
 } from "@/shared/fetching/validation";
 
 /**

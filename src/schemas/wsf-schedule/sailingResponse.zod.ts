@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { journeySchema } from "./journey.zod";
 import { activeDateRangeSchema } from "./activeDateRange.zod";
+import { journeySchema } from "./journey.zod";
 
 /**
  * Schema for sailing response from WSF Schedule API.
