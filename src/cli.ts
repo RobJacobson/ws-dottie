@@ -16,22 +16,22 @@ import { Command } from "commander";
 // Import API modules
 // ============================================================================
 
-import * as WsdotBorderCrossings from "./api/wsdot-border-crossings";
-import * as WsdotBridgeClearances from "./api/wsdot-bridge-clearances";
-import * as WsdotCommercialVehicleRestrictions from "./api/wsdot-commercial-vehicle-restrictions";
-import * as WsdotHighwayAlerts from "./api/wsdot-highway-alerts";
-import * as WsdotHighwayCameras from "./api/wsdot-highway-cameras";
-import * as WsdotMountainPassConditions from "./api/wsdot-mountain-pass-conditions";
-import * as WsdotTollRates from "./api/wsdot-toll-rates";
-import * as WsdotTrafficFlow from "./api/wsdot-traffic-flow";
-import * as WsdotTravelTimes from "./api/wsdot-travel-times";
-import * as WsdotWeatherInformation from "./api/wsdot-weather-information";
-import * as WsdotWeatherInformationExtended from "./api/wsdot-weather-information-extended";
-import * as WsdotWeatherStations from "./api/wsdot-weather-stations";
-import * as WsfFares from "./api/wsf-fares";
-import * as WsfSchedule from "./api/wsf-schedule";
-import * as WsfTerminals from "./api/wsf-terminals";
-import * as WsfVessels from "./api/wsf-vessels";
+import * as WsdotBorderCrossings from "./clients/wsdot-border-crossings";
+import * as WsdotBridgeClearances from "./clients/wsdot-bridge-clearances";
+import * as WsdotCommercialVehicleRestrictions from "./clients/wsdot-commercial-vehicle-restrictions";
+import * as WsdotHighwayAlerts from "./clients/wsdot-highway-alerts";
+import * as WsdotHighwayCameras from "./clients/wsdot-highway-cameras";
+import * as WsdotMountainPassConditions from "./clients/wsdot-mountain-pass-conditions";
+import * as WsdotTollRates from "./clients/wsdot-toll-rates";
+import * as WsdotTrafficFlow from "./clients/wsdot-traffic-flow";
+import * as WsdotTravelTimes from "./clients/wsdot-travel-times";
+import * as WsdotWeatherInformation from "./clients/wsdot-weather-information";
+import * as WsdotWeatherInformationExtended from "./clients/wsdot-weather-information-extended";
+import * as WsdotWeatherStations from "./clients/wsdot-weather-stations";
+import * as WsfFares from "./clients/wsf-fares";
+import * as WsfSchedule from "./clients/wsf-schedule";
+import * as WsfTerminals from "./clients/wsf-terminals";
+import * as WsfVessels from "./clients/wsf-vessels";
 
 // ============================================================================
 // Function Registry
