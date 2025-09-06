@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  routeDetailsArraySchema,
   type RouteDetailsArray,
+  routeDetailsArraySchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getRouteDetailsByScheduleTerminalsParamsSchema
-// GetRouteDetailsByScheduleTerminalsParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getRouteDetailsByScheduleTerminalsParamsSchema = z.object({
   tripDate: z.date(),
@@ -22,19 +15,6 @@ export const getRouteDetailsByScheduleTerminalsParamsSchema = z.object({
 export type GetRouteDetailsByScheduleTerminalsParams = z.infer<
   typeof getRouteDetailsByScheduleTerminalsParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// routeDetailsArraySchema (imported from routeDetails.zod)
-// RouteDetailsArray (imported from routeDetails.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getRouteDetailsByScheduleTerminals (route details for terminal pair)
-// ============================================================================
 
 const ENDPOINT_BY_TERMINALS =
   "/ferries/api/schedule/rest/routedetailsbyterminals/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}";
@@ -47,12 +27,6 @@ export const getRouteDetailsByScheduleTerminals = zodFetch<
   getRouteDetailsByScheduleTerminalsParamsSchema,
   routeDetailsArraySchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useRouteDetailsByScheduleTerminals
-// ============================================================================
 
 export const routeDetailsByScheduleTerminalsOptions = createQueryOptions({
   apiFunction: getRouteDetailsByScheduleTerminals,

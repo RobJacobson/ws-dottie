@@ -1,14 +1,7 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { type VesselStats, vesselStatsSchema } from "@/schemas/wsf-vessels";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { vesselStatsSchema, type VesselStats } from "@/schemas/wsf-vessels";
-
-// ============================================================================
-// Input Schema & Types
-//
-// getVesselStatsByIdParamsSchema
-// GetVesselStatsByIdParams
-// ============================================================================
+import { zodFetch } from "@/shared/fetching";
 
 export const getVesselStatsByIdParamsSchema = z.object({
   vesselId: z
@@ -24,29 +17,12 @@ export type GetVesselStatsByIdParams = z.infer<
   typeof getVesselStatsByIdParamsSchema
 >;
 
-// ============================================================================
-// Output Schema & Types
-//
-// vesselStatsSchema (imported from vesselStats.zod)
-// VesselStats (imported from vesselStats.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getVesselStatsById (singular item)
-// ============================================================================
-
 const ENDPOINT_BY_ID = "/ferries/api/vessels/rest/vesselstats/{vesselId}";
 
 export const getVesselStatsById = zodFetch<
   GetVesselStatsByIdParams,
   VesselStats
 >(ENDPOINT_BY_ID, getVesselStatsByIdParamsSchema, vesselStatsSchema);
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 export const vesselStatsByIdOptions = createQueryOptions({
   apiFunction: getVesselStatsById,

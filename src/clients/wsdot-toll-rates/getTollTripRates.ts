@@ -38,15 +38,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
+import {
+  type TollTripRates,
+  tollTripRatesSchema,
+} from "@/schemas/wsdot-toll-rates";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { tollTripRatesSchema, type TollTripRates } from "@/schemas/wsdot-toll-rates";
-
-// ============================================================================
-// API Function
-//
-// getTollTripRates
-// ============================================================================
+import { zodFetchCustom } from "@/shared/fetching";
 
 export const getTollTripRates = async (
   params: GetTollTripRatesParams = {}
@@ -61,28 +58,11 @@ export const getTollTripRates = async (
   );
 };
 
-// ============================================================================
-// Input Schema & Types
-//
-// getTollTripRatesParamsSchema
-// GetTollTripRatesParams
-// ============================================================================
-
 export const getTollTripRatesParamsSchema = z.object({});
 
 export type GetTollTripRatesParams = z.infer<
   typeof getTollTripRatesParamsSchema
 >;
-
-// ============================================================================
-// Output Schema & Types
-//
-// Note: Schemas and types are now imported from ./tollTripRates.zod
-// ============================================================================
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 export const tollTripRatesOptions = createQueryOptions({
   apiFunction: getTollTripRates,

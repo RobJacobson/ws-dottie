@@ -71,16 +71,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  bridgeDataGISListSchema,
   type BridgeDataGISList,
+  bridgeDataGISListSchema,
 } from "@/schemas/wsdot-bridge-clearances";
-
-// ============================================================================
-// Input Schemas & Types
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getBridgeClearances */
 export const getBridgeClearancesParamsSchema = z.object({
@@ -93,10 +89,6 @@ export type GetBridgeClearancesParams = z.infer<
   typeof getBridgeClearancesParamsSchema
 >;
 
-// ============================================================================
-// API Functions
-// ============================================================================
-
 /** Fetches bridge clearance data for a route */
 export const getBridgeClearances = zodFetch<
   GetBridgeClearancesParams,
@@ -106,10 +98,6 @@ export const getBridgeClearances = zodFetch<
   getBridgeClearancesParamsSchema,
   bridgeDataGISListSchema
 );
-
-// ==========================================================================
-// TanStack Query Options (new pattern)
-// ==========================================================================
 
 /** Returns options for bridge clearances by route; polls daily */
 export const bridgeClearancesOptions = createQueryOptions({

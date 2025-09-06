@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalWaitTimesSchema,
   type TerminalWaitTimes,
+  terminalWaitTimesSchema,
 } from "@/schemas/wsf-terminals";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getTerminalWaitTimesByTerminalIdParamsSchema
-// GetTerminalWaitTimesByTerminalIdParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalWaitTimesByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
@@ -20,19 +13,6 @@ export const getTerminalWaitTimesByTerminalIdParamsSchema = z.object({
 export type GetTerminalWaitTimesByTerminalIdParams = z.infer<
   typeof getTerminalWaitTimesByTerminalIdParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// terminalWaitTimesSchema (imported from terminalWaitTimes.zod)
-// TerminalWaitTimes (imported from terminalWaitTimes.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getTerminalWaitTimesByTerminalId (singular item)
-// ============================================================================
 
 const ENDPOINT_BY_ID =
   "/ferries/api/terminals/rest/terminalwaittimes/{terminalId}";
@@ -45,12 +25,6 @@ export const getTerminalWaitTimesByTerminalId = zodFetch<
   getTerminalWaitTimesByTerminalIdParamsSchema,
   terminalWaitTimesSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useFaresTerminalWaitTimesByFaresTerminalId (singular item)
-// ============================================================================
 
 export const terminalWaitTimesByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalWaitTimesByTerminalId,

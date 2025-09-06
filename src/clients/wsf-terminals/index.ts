@@ -1,8 +1,3 @@
-// ============================================================================
-// WSF Terminals API
-// ============================================================================
-
-// API Functions
 export * from "./cacheFlushDate";
 export * from "./terminalBasics";
 export * from "./terminalBasicsById";

@@ -1,8 +1,3 @@
-// ============================================================================
-// WSDOT Highway Alerts API
-// ============================================================================
-
-// API Functions
 export * from "./getEventCategories";
 export * from "./getHighwayAlertById";
 export * from "./getHighwayAlerts";

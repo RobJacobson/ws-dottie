@@ -1,13 +1,6 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getRouteDetailsByRouteParamsSchema
-// GetRouteDetailsByRouteParams
-// ============================================================================
+import { zodFetch } from "@/shared/fetching";
 
 export const getRouteDetailsByRouteParamsSchema = z.object({
   tripDate: z.date(),
@@ -17,14 +10,6 @@ export const getRouteDetailsByRouteParamsSchema = z.object({
 export type GetRouteDetailsByRouteParams = z.infer<
   typeof getRouteDetailsByRouteParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// routeDetailsByRouteServiceDisruptionSchema
-// routeDetailsByRouteResponseSchema
-// RouteDetailsByRouteResponse
-// ============================================================================
 
 export const routeDetailsByRouteServiceDisruptionSchema = z.object({
   BulletinID: z.number(),
@@ -58,12 +43,6 @@ export type RouteDetailsByRouteResponse = z.infer<
   typeof routeDetailsByRouteResponseSchema
 >;
 
-// ============================================================================
-// API Functions
-//
-// getRouteDetailsByRoute (route details for specific route)
-// ============================================================================
-
 const ENDPOINT_BY_ROUTE =
   "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}";
 
@@ -75,12 +54,6 @@ export const getRouteDetailsByRoute = zodFetch<
   getRouteDetailsByRouteParamsSchema,
   routeDetailsByRouteResponseSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useRouteDetailsByRoute
-// ============================================================================
 
 export const routeDetailsByRouteOptions = createQueryOptions({
   apiFunction: getRouteDetailsByRoute,

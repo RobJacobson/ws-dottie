@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalVerboseSchema,
   type TerminalVerbose,
+  terminalVerboseSchema,
 } from "@/schemas/wsf-terminals";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getTerminalVerboseByTerminalIdParamsSchema
-// GetTerminalVerboseByTerminalIdParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalVerboseByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
@@ -20,19 +13,6 @@ export const getTerminalVerboseByTerminalIdParamsSchema = z.object({
 export type GetTerminalVerboseByTerminalIdParams = z.infer<
   typeof getTerminalVerboseByTerminalIdParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// terminalVerboseSchema (imported from terminalVerbose.zod)
-// TerminalVerbose (imported from terminalVerbose.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getTerminalVerboseByTerminalId (singular item)
-// ============================================================================
 
 const ENDPOINT_BY_ID =
   "/ferries/api/terminals/rest/terminalverbose/{terminalId}";
@@ -45,12 +25,6 @@ export const getTerminalVerboseByTerminalId = zodFetch<
   getTerminalVerboseByTerminalIdParamsSchema,
   terminalVerboseSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useFaresTerminalVerboseByFaresTerminalId (singular item)
-// ============================================================================
 
 export const terminalVerboseByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalVerboseByTerminalId,

@@ -56,19 +56,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  borderCrossingsSchema,
   type BorderCrossings,
+  borderCrossingsSchema,
 } from "@/schemas/wsdot-border-crossings";
-
-// ============================================================================
-// Input Schema & Types
-//
-// getBorderCrossingsParamsSchema
-// GetBorderCrossingsParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getBorderCrossings (none) */
 export const getBorderCrossingsParamsSchema = z.object({});
@@ -77,12 +70,6 @@ export const getBorderCrossingsParamsSchema = z.object({});
 export type GetBorderCrossingsParams = z.infer<
   typeof getBorderCrossingsParamsSchema
 >;
-
-// ============================================================================
-// API Function
-//
-// getBorderCrossings
-// ============================================================================
 
 /** Fetches all border crossing reports */
 export const getBorderCrossings = zodFetch<
@@ -93,12 +80,6 @@ export const getBorderCrossings = zodFetch<
   getBorderCrossingsParamsSchema,
   borderCrossingsSchema
 );
-
-// ==========================================================================
-// TanStack Query Options
-//
-// borderCrossingsOptions
-// ==========================================================================
 
 /** Returns options for all border crossings; polls every 60s */
 export const borderCrossingsOptions = createQueryOptions({

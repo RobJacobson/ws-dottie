@@ -1,18 +1,11 @@
 import { z } from "zod";
+import {
+  type WeatherInformation,
+  weatherInformationSchema,
+} from "@/schemas/wsdot-weather-information";
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import { zodFetchCustom } from "@/shared/fetching";
 import { zWsdotDate } from "@/shared/fetching/validation";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import {
-  weatherInformationSchema,
-  type WeatherInformation,
-} from "@/schemas/wsdot-weather-information";
-
-// ============================================================================
-// API Functions
-//
-// getWeatherInformationForStations (multiple stations)
-// getSearchWeatherInformation (time-based search)
-// ============================================================================
 
 export const getWeatherInformationForStations = async (
   params: GetWeatherInformationForStationsParams
@@ -39,13 +32,6 @@ export const getSearchWeatherInformation = async (
     params
   );
 };
-
-// ============================================================================
-// Input Schema & Types
-//
-// getWeatherInformationForStationsParamsSchema
-// GetWeatherInformationForStationsParams
-// ============================================================================
 
 export const getWeatherInformationForStationsParamsSchema = z.object({
   stationIds: z.string().min(1, "Station IDs cannot be empty"),
@@ -78,10 +64,6 @@ export const getSearchWeatherInformationParamsSchema = z
 export type GetSearchWeatherInformationParams = z.infer<
   typeof getSearchWeatherInformationParamsSchema
 >;
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 export const weatherInformationForStationsOptions = createQueryOptions({
   apiFunction: getWeatherInformationForStations,

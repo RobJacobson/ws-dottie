@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  vesselLocationsSchema,
   type VesselLocations,
+  vesselLocationsSchema,
 } from "@/schemas/wsf-vessels";
-
-// ============================================================================
-// Input Schema & Types
-//
-// getVesselLocationsByVesselIdParamsSchema
-// GetVesselLocationsByVesselIdParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getVesselLocationsByVesselIdParamsSchema = z.object({
   vesselId: z
@@ -27,19 +20,6 @@ export type GetVesselLocationsByVesselIdParams = z.infer<
   typeof getVesselLocationsByVesselIdParamsSchema
 >;
 
-// ============================================================================
-// Output Schema & Types
-//
-// vesselLocationsSchema (imported from vesselLocations.zod)
-// VesselLocations (imported from vesselLocations.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getVesselLocationsByVesselId (singular item)
-// ============================================================================
-
 const ENDPOINT_BY_ID = "/ferries/api/vessels/rest/vessellocations/{vesselId}";
 
 export const getVesselLocationsByVesselId = zodFetch<
@@ -50,10 +30,6 @@ export const getVesselLocationsByVesselId = zodFetch<
   getVesselLocationsByVesselIdParamsSchema,
   vesselLocationsSchema
 );
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 export const vesselLocationsByVesselIdOptions = createQueryOptions({
   apiFunction: getVesselLocationsByVesselId,

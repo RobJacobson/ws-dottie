@@ -1,29 +1,16 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  weatherReadingSchema,
   type WeatherReading,
+  weatherReadingSchema,
 } from "@/schemas/wsdot-weather-information-extended";
-
-// ============================================================================
-// Input Schema & Types
-//
-// getWeatherInformationExtendedParamsSchema
-// GetWeatherInformationExtendedParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getWeatherInformationExtendedParamsSchema = z.object({});
 
 export type GetWeatherInformationExtendedParams = z.infer<
   typeof getWeatherInformationExtendedParamsSchema
 >;
-
-// ============================================================================
-// API Function
-//
-// getWeatherInformationExtended
-// ============================================================================
 
 export const getWeatherInformationExtended = zodFetch<
   GetWeatherInformationExtendedParams,
@@ -33,10 +20,6 @@ export const getWeatherInformationExtended = zodFetch<
   getWeatherInformationExtendedParamsSchema,
   z.array(weatherReadingSchema)
 );
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 export const weatherInformationExtendedOptions = createQueryOptions({
   apiFunction: getWeatherInformationExtended,

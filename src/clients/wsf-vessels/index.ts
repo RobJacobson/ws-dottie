@@ -1,8 +1,3 @@
-// ============================================================================
-// WSF Vessels API
-// ============================================================================
-
-// API Functions
 export * from "./cacheFlushDate";
 export * from "./vesselAccommodations";
 export * from "./vesselAccommodationsById";

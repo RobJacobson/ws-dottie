@@ -75,13 +75,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { type Camera, cameraSchema } from "@/schemas/wsdot-highway-cameras";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { cameraSchema, type Camera } from "@/schemas/wsdot-highway-cameras";
-
-// =========================================================================
-// Input Schema & Types
-// =========================================================================
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getHighwayCamera */
 export const getHighwayCameraParamsSchema = z.object({
@@ -94,20 +90,12 @@ export type GetHighwayCameraParams = z.infer<
   typeof getHighwayCameraParamsSchema
 >;
 
-// =========================================================================
-// API Function
-// =========================================================================
-
 /** Fetches a single highway camera by ID */
 export const getHighwayCamera = zodFetch<GetHighwayCameraParams, Camera>(
   "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
   getHighwayCameraParamsSchema,
   cameraSchema
 );
-
-// =========================================================================
-// TanStack Query Options
-// =========================================================================
 
 /** Returns options for a single camera by ID; polls daily */
 export const highwayCameraOptions = createQueryOptions({

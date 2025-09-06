@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  scheduleResponsesArraySchema as scheduleResponseArraySchema,
   type ScheduleResponse,
+  scheduleResponsesArraySchema as scheduleResponseArraySchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getScheduleByRouteParamsSchema
-// GetScheduleByRouteParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getScheduleByRouteParamsSchema = z.object({
   tripDate: z.date(),
@@ -21,19 +14,6 @@ export const getScheduleByRouteParamsSchema = z.object({
 export type GetScheduleByRouteParams = z.infer<
   typeof getScheduleByRouteParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// scheduleResponsesArraySchema (imported from scheduleResponse.zod)
-// ScheduleResponse (imported from scheduleResponse.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getScheduleByRoute (schedule for specific route)
-// ============================================================================
 
 const ENDPOINT_BY_ROUTE =
   "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}";
@@ -46,12 +26,6 @@ export const getScheduleByRoute = zodFetch<
   getScheduleByRouteParamsSchema,
   scheduleResponseArraySchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useScheduleByRoute
-// ============================================================================
 
 export const scheduleByRouteOptions = createQueryOptions({
   apiFunction: getScheduleByRoute,

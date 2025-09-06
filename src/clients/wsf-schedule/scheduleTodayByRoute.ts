@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  scheduleResponsesArraySchema,
   type ScheduleResponse,
+  scheduleResponsesArraySchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getScheduleTodayByRouteParamsSchema
-// GetScheduleTodayByRouteParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getScheduleTodayByRouteParamsSchema = z.object({
   tripDate: z.date(),
@@ -21,19 +14,6 @@ export const getScheduleTodayByRouteParamsSchema = z.object({
 export type GetScheduleTodayByRouteParams = z.infer<
   typeof getScheduleTodayByRouteParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// scheduleResponsesArraySchema (imported from scheduleResponse.zod)
-// ScheduleResponse (imported from scheduleResponse.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getScheduleTodayByRoute (today's schedule for specific route)
-// ============================================================================
 
 const ENDPOINT_TODAY_BY_ROUTE =
   "/ferries/api/schedule/rest/scheduletodaybyroute/{tripDate}/{routeId}";
@@ -46,12 +26,6 @@ export const getScheduleTodayByRoute = zodFetch<
   getScheduleTodayByRouteParamsSchema,
   scheduleResponsesArraySchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useScheduleTodayByRoute
-// ============================================================================
 
 export const scheduleTodayByRouteOptions = createQueryOptions({
   apiFunction: getScheduleTodayByRoute,

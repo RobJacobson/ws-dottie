@@ -1,14 +1,7 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { type FareTotal, fareTotalSchema } from "@/schemas/wsf-fares";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { fareTotalSchema, type FareTotal } from "@/schemas/wsf-fares";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getFareTotalsParamsSchema
-// GetFareTotalsParams
-// ============================================================================
+import { zodFetch } from "@/shared/fetching";
 
 export const getFareTotalsParamsSchema = z.object({
   tripDate: z.date(),
@@ -21,19 +14,6 @@ export const getFareTotalsParamsSchema = z.object({
 
 export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
-// ============================================================================
-// Output Schemas & Types
-//
-// fareTotalSchema (imported from fareTotals.zod)
-// FareTotal (imported from fareTotals.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getFareTotals (fare totals calculation)
-// ============================================================================
-
 const ENDPOINT =
   "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}";
 
@@ -42,12 +22,6 @@ export const getFareTotals = zodFetch<GetFareTotalsParams, FareTotal>(
   getFareTotalsParamsSchema,
   fareTotalSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useFareTotals
-// ============================================================================
 
 export const fareTotalsOptions = createQueryOptions({
   apiFunction: getFareTotals,

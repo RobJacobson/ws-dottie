@@ -80,16 +80,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import {
-  alertsSchema,
-  type Alerts,
-} from "@/schemas/wsdot-highway-alerts";
-
-// ============================================================================
-// Input Schemas & Types
-// ============================================================================
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getHighwayAlertsByMapArea */
 export const getHighwayAlertsByMapAreaParamsSchema = z.object({
@@ -101,25 +94,14 @@ export type GetHighwayAlertsByMapAreaParams = z.infer<
   typeof getHighwayAlertsByMapAreaParamsSchema
 >;
 
-// ============================================================================
-// API Functions
-// ============================================================================
-
 const ENDPOINT_BY_MAP_AREA =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}";
 
 /** Fetches highway alerts filtered by map area */
 export const getHighwayAlertsByMapArea = zodFetch<
-  GetHighwayAlertsByMapAreaParams, Alerts
->(
-  ENDPOINT_BY_MAP_AREA,
-  getHighwayAlertsByMapAreaParamsSchema,
-  alertsSchema
-);
-
-// ============================================================================
-// TanStack Query options
-// ============================================================================
+  GetHighwayAlertsByMapAreaParams,
+  Alerts
+>(ENDPOINT_BY_MAP_AREA, getHighwayAlertsByMapAreaParamsSchema, alertsSchema);
 
 /** Returns options for alerts by map area; polls every 60s */
 export const highwayAlertsByMapAreaOptions = createQueryOptions({

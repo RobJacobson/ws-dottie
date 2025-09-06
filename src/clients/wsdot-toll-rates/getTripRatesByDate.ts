@@ -43,24 +43,17 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  tripRatesByDateItemSchema,
   type TripRatesByDate,
+  tripRatesByDateItemSchema,
 } from "@/schemas/wsdot-toll-rates";
-
-// =========================================================================
-// API Function
-//
-// getTripRatesByDate
-// =========================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetchCustom } from "@/shared/fetching";
 
 /** Fetches trip rates between two dates (YYYY-MM-DD) */
 export const getTripRatesByDate = async (
   params: GetTripRatesByDateParams
 ): Promise<TripRatesByDate> => {
-  // Build query string with date parameters
   const queryParams = new URLSearchParams();
   queryParams.append("fromDate", params.fromDate.toISOString().split("T")[0]);
   queryParams.append("toDate", params.toDate.toISOString().split("T")[0]);
@@ -77,13 +70,6 @@ export const getTripRatesByDate = async (
   );
 };
 
-// =========================================================================
-// Input Schema & Types
-//
-// getTripRatesByDateParamsSchema
-// GetTripRatesByDateParams
-// =========================================================================
-
 /** Params schema for getTripRatesByDate */
 export const getTripRatesByDateParamsSchema = z.object({
   /** Start date (JS Date) */
@@ -95,16 +81,6 @@ export const getTripRatesByDateParamsSchema = z.object({
 export type GetTripRatesByDateParams = z.infer<
   typeof getTripRatesByDateParamsSchema
 >;
-
-// =========================================================================
-// Output Schema & Types
-//
-// Note: Schemas and types are now imported from ./tripRatesByDate.zod
-// =========================================================================
-
-// =========================================================================
-// TanStack Query Options
-// =========================================================================
 
 export const tripRatesByDateOptions = createQueryOptions({
   apiFunction: getTripRatesByDate,

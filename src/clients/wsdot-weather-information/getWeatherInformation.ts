@@ -1,28 +1,19 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  weatherInformationSchema,
   type WeatherInformation,
+  weatherInformationSchema,
 } from "@/schemas/wsdot-weather-information";
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
-// Re-export schemas and types for convenience
 export { weatherInformationSchema };
 export type { WeatherInformation };
-
-// ============================================================================
-// Input Schema & Types
-// ============================================================================
 
 export const getWeatherInformationParamsSchema = z.object({});
 
 export type GetWeatherInformationParams = z.infer<
   typeof getWeatherInformationParamsSchema
 >;
-
-// ============================================================================
-// API Function
-// ============================================================================
 
 export const getWeatherInformation = zodFetch<
   GetWeatherInformationParams,
@@ -32,10 +23,6 @@ export const getWeatherInformation = zodFetch<
   getWeatherInformationParamsSchema,
   weatherInformationSchema
 );
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 export const weatherInformationOptions = createQueryOptions({
   apiFunction: getWeatherInformation,

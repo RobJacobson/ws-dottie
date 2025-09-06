@@ -43,17 +43,11 @@
  *
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { z } from "zod";
-import { tollRatesSchema, type TollRates } from "@/schemas/wsdot-toll-rates";
 
-// ============================================================================
-// Input Schema & Types
-//
-// getTollRatesParamsSchema
-// GetTollRatesParams
-// ============================================================================
+import { z } from "zod";
+import { type TollRates, tollRatesSchema } from "@/schemas/wsdot-toll-rates";
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getTollRates (none) */
 export const getTollRatesParamsSchema = z.object({});
@@ -61,28 +55,12 @@ export const getTollRatesParamsSchema = z.object({});
 /** GetTollRates params type */
 export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
 
-// ============================================================================
-// API Function
-//
-// getTollRates
-// ============================================================================
-
 /** Fetches current toll rates */
 export const getTollRates = zodFetch<GetTollRatesParams, TollRates>(
   "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
   getTollRatesParamsSchema,
   tollRatesSchema
 );
-
-// ============================================================================
-// Output Schema & Types
-//
-// Note: Schemas and types are now imported from ./tollRates.zod
-// ============================================================================
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for current toll rates; polls every 60s */
 export const tollRatesOptions = createQueryOptions({

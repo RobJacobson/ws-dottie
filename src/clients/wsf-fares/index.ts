@@ -1,8 +1,3 @@
-// ============================================================================
-// WSF Fares API
-// ============================================================================
-
-// API Functions
 export * from "./cacheFlushDate";
 export * from "./fareLineItems";
 export * from "./fareLineItemsBasic";

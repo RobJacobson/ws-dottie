@@ -30,13 +30,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import { eventCategoriesSchema } from "@/schemas/wsdot-highway-alerts";
-
-// ============================================================================
-// API Function
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetchCustom } from "@/shared/fetching";
 
 /** Fetches event categories */
 export const getEventCategories = async (
@@ -52,10 +48,6 @@ export const getEventCategories = async (
   );
 };
 
-// ============================================================================
-// Input Schema & Types
-// ============================================================================
-
 /** Params schema for getEventCategories (none) */
 export const getEventCategoriesParamsSchema = z.object({});
 
@@ -63,16 +55,6 @@ export const getEventCategoriesParamsSchema = z.object({});
 export type GetEventCategoriesParams = z.infer<
   typeof getEventCategoriesParamsSchema
 >;
-
-// ============================================================================
-// Output Schema & Types
-//
-// Note: Schemas and types are now imported from ./eventCategories.zod
-// ============================================================================
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for event categories; polls every 60s */
 export const eventCategoriesOptions = createQueryOptions({

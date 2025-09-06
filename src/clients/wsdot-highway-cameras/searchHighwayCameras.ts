@@ -52,15 +52,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
+import {
+  type CameraArray,
+  cameraArraySchema,
+} from "@/schemas/wsdot-highway-cameras";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-
-// Import schemas and types from co-located file
-import { cameraArraySchema, type CameraArray } from "@/schemas/wsdot-highway-cameras";
-
-// ============================================================================
-// API Function
-// ============================================================================
+import { zodFetchCustom } from "@/shared/fetching";
 
 const ENDPOINT_BASE =
   "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson";
@@ -69,7 +66,6 @@ const ENDPOINT_BASE =
 export const searchHighwayCameras = async (
   params: SearchHighwayCamerasParams
 ): Promise<CameraArray> => {
-  // Build query string by including only defined values
   const queryParams = new URLSearchParams();
   if (params.StateRoute !== undefined)
     queryParams.append("StateRoute", String(params.StateRoute));
@@ -92,10 +88,6 @@ export const searchHighwayCameras = async (
   );
 };
 
-// ============================================================================
-// Input Schema & Types
-// ============================================================================
-
 /** Params schema for searchHighwayCameras */
 export const searchHighwayCamerasParamsSchema = z
   .object({
@@ -117,16 +109,6 @@ export const searchHighwayCamerasParamsSchema = z
 export type SearchHighwayCamerasParams = z.infer<
   typeof searchHighwayCamerasParamsSchema
 >;
-
-// ============================================================================
-// Output Schema & Types
-//
-// Note: Schemas and types are now imported from ./cameraArray.zod
-// ============================================================================
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for searching cameras; polls daily */
 export const searchHighwayCamerasOptions = createQueryOptions({

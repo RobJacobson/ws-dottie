@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
   sailingResponseSchema,
   sailingResponsesArraySchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getAllSailingsParamsSchema
-// GetAllSailingsParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getAllSailingsParamsSchema = z.object({
   schedRouteId: z.number().int().positive(),
@@ -19,36 +12,15 @@ export const getAllSailingsParamsSchema = z.object({
 
 export type GetAllSailingsParams = z.infer<typeof getAllSailingsParamsSchema>;
 
-// ============================================================================
-// Output Schemas & Types
-//
-// sailingResponseSchema (imported from sailingResponse.zod)
-// sailingResponsesArraySchema (imported from sailingResponse.zod)
-// SailingResponse (imported from sailingResponse.zod)
-// ============================================================================
-
-// Re-export schemas and types for convenience
 export { sailingResponseSchema, sailingResponsesArraySchema };
 export const sailingsArraySchema = sailingResponsesArraySchema;
 export type AllSailings = z.infer<typeof sailingsArraySchema>;
-
-// ============================================================================
-// API Functions
-//
-// getAllSailings
-// ============================================================================
 
 export const getAllSailings = zodFetch<GetAllSailingsParams, AllSailings>(
   "/ferries/api/schedule/rest/allsailings/{schedRouteId}",
   getAllSailingsParamsSchema,
   sailingsArraySchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useAllSailings
-// ============================================================================
 
 export const allSailingsOptions = createQueryOptions({
   apiFunction: getAllSailings,

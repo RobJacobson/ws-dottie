@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  scheduledRoutesArraySchema,
   type ScheduledRoutesArray,
+  scheduledRoutesArraySchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getScheduledRoutesBySeasonParamsSchema
-// GetScheduledRoutesBySeasonParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getScheduledRoutesBySeasonParamsSchema = z.object({
   seasonId: z.number().int().positive(),
@@ -21,20 +14,7 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
   typeof getScheduledRoutesBySeasonParamsSchema
 >;
 
-// ============================================================================
-// Output Schemas & Types
-//
-// scheduledRoutesArraySchema (imported from scheduledRoute.zod)
-// ScheduledRoutesArray (imported from scheduledRoute.zod)
-// ============================================================================
-
 export type ScheduledRoutes = ScheduledRoutesArray;
-
-// ============================================================================
-// API Functions
-//
-// getScheduledRoutesBySeason (scheduled routes for specific season)
-// ============================================================================
 
 const ENDPOINT_BY_SEASON =
   "/ferries/api/schedule/rest/scheduledroutesbyseason/{seasonId}";
@@ -47,12 +27,6 @@ export const getScheduledRoutesBySeason = zodFetch<
   getScheduledRoutesBySeasonParamsSchema,
   scheduledRoutesArraySchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useScheduledRoutesBySeason
-// ============================================================================
 
 export const scheduledRoutesBySeasonOptions = createQueryOptions({
   apiFunction: getScheduledRoutesBySeason,

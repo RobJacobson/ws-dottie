@@ -65,16 +65,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  mountainPassConditionsSchema,
   type MountainPassConditions,
+  mountainPassConditionsSchema,
 } from "@/schemas/wsdot-mountain-pass-conditions";
-
-// ============================================================================
-// Input Schema & Types
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getMountainPassConditions (none) */
 export const getMountainPassConditionsParamsSchema = z.object({});
@@ -83,10 +79,6 @@ export const getMountainPassConditionsParamsSchema = z.object({});
 export type GetMountainPassConditionsParams = z.infer<
   typeof getMountainPassConditionsParamsSchema
 >;
-
-// ============================================================================
-// API Function
-// ============================================================================
 
 /** Fetches all mountain pass conditions */
 export const getMountainPassConditions = zodFetch<
@@ -97,10 +89,6 @@ export const getMountainPassConditions = zodFetch<
   getMountainPassConditionsParamsSchema,
   mountainPassConditionsSchema
 );
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for all pass conditions; polls daily */
 export const mountainPassConditionsOptions = createQueryOptions({

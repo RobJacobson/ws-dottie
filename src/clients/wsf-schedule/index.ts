@@ -1,8 +1,3 @@
-// ============================================================================
-// WSF Schedule API
-// ============================================================================
-
-// API Functions
 export * from "./activeSeasons";
 export * from "./alerts";
 export * from "./allSailings";

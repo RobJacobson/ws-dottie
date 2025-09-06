@@ -51,22 +51,14 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { type FlowData, flowDataSchema } from "@/schemas/wsdot-traffic-flow";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { flowDataSchema, type FlowData } from "@/schemas/wsdot-traffic-flow";
-
-// ============================================================================
-// Input Schema & Types
-// ============================================================================
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getTrafficFlows (none) */
 export const getTrafficFlowsParamsSchema = z.object({});
 
 export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
-
-// ============================================================================
-// API Function
-// ============================================================================
 
 /** Fetches all current traffic flows */
 export const getTrafficFlows = zodFetch<GetTrafficFlowsParams, FlowData[]>(
@@ -74,10 +66,6 @@ export const getTrafficFlows = zodFetch<GetTrafficFlowsParams, FlowData[]>(
   getTrafficFlowsParamsSchema,
   z.array(flowDataSchema)
 );
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for all traffic flows; polls every 60s */
 export const trafficFlowsOptions = createQueryOptions({

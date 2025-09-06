@@ -88,16 +88,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___commercial_vehicle.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  commercialVehiclesRestrictionsWithIdSchema,
   type CommercialVehiclesRestrictionsWithId,
+  commercialVehiclesRestrictionsWithIdSchema,
 } from "@/schemas/wsdot-commercial-vehicle-restrictions";
-
-// ============================================================================
-// Input Schemas & Types
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getCommercialVehicleRestrictionsWithId (none) */
 export const getCommercialVehicleRestrictionsWithIdParamsSchema = z.object({});
@@ -106,10 +102,6 @@ export const getCommercialVehicleRestrictionsWithIdParamsSchema = z.object({});
 export type GetCommercialVehicleRestrictionsWithIdParams = z.infer<
   typeof getCommercialVehicleRestrictionsWithIdParamsSchema
 >;
-
-// ============================================================================
-// API Functions
-// ============================================================================
 
 const ENDPOINT_WITH_ID =
   "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson";
@@ -123,10 +115,6 @@ export const getCommercialVehicleRestrictionsWithId = zodFetch<
   getCommercialVehicleRestrictionsWithIdParamsSchema,
   commercialVehiclesRestrictionsWithIdSchema
 );
-
-// ============================================================================
-// TanStack Query Options (new pattern)
-// ============================================================================
 
 /** Returns options for restrictions including UniqueID; polls daily */
 export const commercialVehicleRestrictionsWithIdOptions = createQueryOptions({

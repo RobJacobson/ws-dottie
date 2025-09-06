@@ -44,15 +44,12 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
+import {
+  type TollTripInfos,
+  tollTripInfosSchema,
+} from "@/schemas/wsdot-toll-rates";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { tollTripInfosSchema, type TollTripInfos } from "@/schemas/wsdot-toll-rates";
-
-// ============================================================================
-// API Function
-//
-// getTollTripInfo
-// ============================================================================
+import { zodFetchCustom } from "@/shared/fetching";
 
 /** Fetches static information and geometry for toll trips */
 export const getTollTripInfo = async (
@@ -68,27 +65,10 @@ export const getTollTripInfo = async (
   );
 };
 
-// ============================================================================
-// Input Schema & Types
-//
-// getTollTripInfoParamsSchema
-// GetTollTripInfoParams
-// ============================================================================
-
 /** Params schema for getTollTripInfo (none) */
 export const getTollTripInfoParamsSchema = z.object({});
 
 export type GetTollTripInfoParams = z.infer<typeof getTollTripInfoParamsSchema>;
-
-// ============================================================================
-// Output Schema & Types
-//
-// Note: Schemas and types are now imported from ./tollTripInfo.zod
-// ============================================================================
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for toll trip info; polls every 60s */
 export const tollTripInfoOptions = createQueryOptions({

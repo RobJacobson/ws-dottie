@@ -32,13 +32,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
+import { type MapAreas, mapAreasSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { mapAreasSchema, type MapAreas } from "@/schemas/wsdot-highway-alerts";
-
-// ============================================================================
-// API Function
-// ============================================================================
+import { zodFetchCustom } from "@/shared/fetching";
 
 /** Fetches map areas */
 export const getMapAreas = async (
@@ -54,19 +50,11 @@ export const getMapAreas = async (
   );
 };
 
-// ============================================================================
-// Input Schema & Types
-// ============================================================================
-
 /** Params schema for getMapAreas (none) */
 export const getMapAreasParamsSchema = z.object({});
 
 /** GetMapAreas params type */
 export type GetMapAreasParams = z.infer<typeof getMapAreasParamsSchema>;
-
-// ============================================================================
-// TanStack Query Options
-// ============================================================================
 
 /** Returns options for map areas; polls every 60s */
 export const mapAreasOptions = createQueryOptions({

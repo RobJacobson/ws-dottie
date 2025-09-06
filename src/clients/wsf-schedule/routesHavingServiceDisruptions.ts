@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  routesWithServiceDisruptionsSchema,
   type RoutesWithServiceDisruptions,
+  routesWithServiceDisruptionsSchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getRoutesHavingServiceDisruptionsParamsSchema
-// GetRoutesHavingServiceDisruptionsParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getRoutesHavingServiceDisruptionsParamsSchema = z.object({
   tripDate: z.date(),
@@ -20,19 +13,6 @@ export const getRoutesHavingServiceDisruptionsParamsSchema = z.object({
 export type GetRoutesHavingServiceDisruptionsParams = z.infer<
   typeof getRoutesHavingServiceDisruptionsParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// routesWithServiceDisruptionsSchema (imported from routesWithServiceDisruptions.zod)
-// RoutesWithServiceDisruptions (imported from routesWithServiceDisruptions.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getRoutesHavingServiceDisruptions (routes with service disruptions for a date)
-// ============================================================================
 
 const ENDPOINT =
   "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}";
@@ -45,12 +25,6 @@ export const getRoutesHavingServiceDisruptions = zodFetch<
   getRoutesHavingServiceDisruptionsParamsSchema,
   routesWithServiceDisruptionsSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useRoutesHavingServiceDisruptions
-// ============================================================================
 
 export const routesHavingServiceDisruptionsOptions = createQueryOptions({
   apiFunction: getRoutesHavingServiceDisruptions,

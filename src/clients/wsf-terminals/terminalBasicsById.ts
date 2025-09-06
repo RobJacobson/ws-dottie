@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalBasicsSchema,
   type TerminalBasics,
+  terminalBasicsSchema,
 } from "@/schemas/wsf-terminals";
-
-// ============================================================================
-// Input Schema & Types
-//
-// getTerminalBasicsByTerminalIdParamsSchema
-// GetTerminalBasicsByTerminalIdParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalBasicsByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
@@ -20,19 +13,6 @@ export const getTerminalBasicsByTerminalIdParamsSchema = z.object({
 export type GetTerminalBasicsByTerminalIdParams = z.infer<
   typeof getTerminalBasicsByTerminalIdParamsSchema
 >;
-
-// ============================================================================
-// Output Schema & Types
-//
-// terminalBasicsSchema (imported from terminalBasics.zod)
-// TerminalBasics (imported from terminalBasics.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getTerminalBasicsByTerminalId (singular item)
-// ============================================================================
 
 const ENDPOINT_BY_ID =
   "/ferries/api/terminals/rest/terminalbasics/{terminalId}";
@@ -45,12 +25,6 @@ export const getTerminalBasicsByTerminalId = zodFetch<
   getTerminalBasicsByTerminalIdParamsSchema,
   terminalBasicsSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useFaresTerminalBasicsByFaresTerminalId (singular item)
-// ============================================================================
 
 export const terminalBasicsByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalBasicsByTerminalId,

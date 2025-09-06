@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalsAndMatesByRouteSchema,
   type TerminalsAndMatesByRoute,
+  terminalsAndMatesByRouteSchema,
 } from "@/schemas/wsf-schedule";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getTerminalsAndMatesByRouteParamsSchema
-// GetTerminalsAndMatesByRouteParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalsAndMatesByRouteParamsSchema = z.object({
   tripDate: z.date(),
@@ -21,19 +14,6 @@ export const getTerminalsAndMatesByRouteParamsSchema = z.object({
 export type GetTerminalsAndMatesByRouteParams = z.infer<
   typeof getTerminalsAndMatesByRouteParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// terminalsAndMatesByRouteSchema (imported from terminalsAndMatesByRoute.zod)
-// TerminalsAndMatesByRoute (imported from terminalsAndMatesByRoute.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getTerminalsAndMatesByRoute (terminal combinations for specific route and date)
-// ============================================================================
 
 const ENDPOINT =
   "/ferries/api/schedule/rest/terminalsandmatesbyroute/{tripDate}/{routeId}";
@@ -46,12 +26,6 @@ export const getTerminalsAndMatesByRoute = zodFetch<
   getTerminalsAndMatesByRouteParamsSchema,
   terminalsAndMatesByRouteSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useTerminalsAndMatesByRoute
-// ============================================================================
 
 export const terminalsAndMatesByRouteOptions = createQueryOptions({
   apiFunction: getTerminalsAndMatesByRoute,

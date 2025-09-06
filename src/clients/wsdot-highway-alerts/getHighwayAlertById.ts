@@ -80,16 +80,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { type Alert, alertSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import {
-  alertSchema,
-  type Alert,
-} from "@/schemas/wsdot-highway-alerts";
-
-// ============================================================================
-// Input Schemas & Types
-// ============================================================================
+import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getHighwayAlertById */
 export const getHighwayAlertByIdParamsSchema = z.object({
@@ -101,25 +94,15 @@ export type GetHighwayAlertByIdParams = z.infer<
   typeof getHighwayAlertByIdParamsSchema
 >;
 
-// ============================================================================
-// API Functions
-// ============================================================================
-
 const ENDPOINT_BY_ID =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}";
 
 /** Fetches a single highway alert by ID */
-export const getHighwayAlertById = zodFetch<
-  GetHighwayAlertByIdParams, Alert
->(
+export const getHighwayAlertById = zodFetch<GetHighwayAlertByIdParams, Alert>(
   ENDPOINT_BY_ID,
   getHighwayAlertByIdParamsSchema,
   alertSchema
 );
-
-// ============================================================================
-// TanStack Query options
-// ============================================================================
 
 /** Returns options for a single alert by ID; polls every 60s */
 export const highwayAlertByIdOptions = createQueryOptions({

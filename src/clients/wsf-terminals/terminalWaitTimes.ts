@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalWaitTimesArraySchema,
   type TerminalWaitTimesArray,
+  terminalWaitTimesArraySchema,
 } from "@/schemas/wsf-terminals";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getTerminalWaitTimesParamsSchema
-// GetTerminalWaitTimesParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalWaitTimesParamsSchema = z.object({});
 
@@ -19,31 +12,12 @@ export type GetTerminalWaitTimesParams = z.infer<
   typeof getTerminalWaitTimesParamsSchema
 >;
 
-// ============================================================================
-// Output Schemas & Types
-//
-// terminalWaitTimesArraySchema (imported from terminalWaitTimes.zod)
-// TerminalWaitTimesArray (imported from terminalWaitTimes.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getTerminalWaitTimes (array)
-// ============================================================================
-
 const ENDPOINT_ALL = "/ferries/api/terminals/rest/terminalwaittimes";
 
 export const getTerminalWaitTimes = zodFetch<
   GetTerminalWaitTimesParams,
   TerminalWaitTimesArray
 >(ENDPOINT_ALL, getTerminalWaitTimesParamsSchema, terminalWaitTimesArraySchema);
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useFaresTerminalWaitTimes (array)
-// ============================================================================
 
 export const terminalWaitTimesOptions = createQueryOptions({
   apiFunction: getTerminalWaitTimes,

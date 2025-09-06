@@ -60,19 +60,14 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { zodFetchCustom } from "@/shared/fetching";
+import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { alertsSchema, type Alerts } from "@/schemas/wsdot-highway-alerts";
-
-// =========================================================================
-// API Function
-// =========================================================================
+import { zodFetchCustom } from "@/shared/fetching";
 
 /** Searches highway alerts using optional filters (falls back to all alerts) */
 export const searchHighwayAlerts = async (
   params: SearchHighwayAlertsParams
 ): Promise<Alerts> => {
-  // If no parameters are provided, use the simple endpoint
   if (Object.keys(params).length === 0) {
     return zodFetchCustom(
       "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
@@ -84,7 +79,6 @@ export const searchHighwayAlerts = async (
     );
   }
 
-  // Otherwise, use the search endpoint with parameters
   return zodFetchCustom(
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
     {
@@ -94,10 +88,6 @@ export const searchHighwayAlerts = async (
     params
   );
 };
-
-// =========================================================================
-// Input Schema & Types
-// =========================================================================
 
 /** Params schema for searchHighwayAlerts */
 export const searchHighwayAlertsParamsSchema = z.object({
@@ -119,10 +109,6 @@ export const searchHighwayAlertsParamsSchema = z.object({
 export type SearchHighwayAlertsParams = z.infer<
   typeof searchHighwayAlertsParamsSchema
 >;
-
-// =========================================================================
-// TanStack Query options
-// =========================================================================
 
 /** Returns options for searching alerts; polls every 60s */
 export const searchHighwayAlertsOptions = createQueryOptions({

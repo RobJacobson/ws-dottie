@@ -1,17 +1,10 @@
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalSailingSpaceSchema,
   type TerminalSailingSpace,
+  terminalSailingSpaceSchema,
 } from "@/schemas/wsf-terminals";
-
-// ============================================================================
-// Input Schemas & Types
-//
-// getTerminalSailingSpaceByTerminalIdParamsSchema
-// GetTerminalSailingSpaceByTerminalIdParams
-// ============================================================================
+import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalSailingSpaceByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
@@ -20,19 +13,6 @@ export const getTerminalSailingSpaceByTerminalIdParamsSchema = z.object({
 export type GetTerminalSailingSpaceByTerminalIdParams = z.infer<
   typeof getTerminalSailingSpaceByTerminalIdParamsSchema
 >;
-
-// ============================================================================
-// Output Schemas & Types
-//
-// terminalSailingSpaceSchema (imported from terminalSailingSpace.zod)
-// TerminalSailingSpace (imported from terminalSailingSpace.zod)
-// ============================================================================
-
-// ============================================================================
-// API Functions
-//
-// getTerminalSailingSpaceByTerminalId (singular item)
-// ============================================================================
 
 const ENDPOINT_BY_ID =
   "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}";
@@ -45,12 +25,6 @@ export const getTerminalSailingSpaceByTerminalId = zodFetch<
   getTerminalSailingSpaceByTerminalIdParamsSchema,
   terminalSailingSpaceSchema
 );
-
-// ============================================================================
-// TanStack Query Hooks
-//
-// useFaresTerminalSailingSpaceByFaresTerminalId (singular item)
-// ============================================================================
 
 export const terminalSailingSpaceByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalSailingSpaceByTerminalId,
