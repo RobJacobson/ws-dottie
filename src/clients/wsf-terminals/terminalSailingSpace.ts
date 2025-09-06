@@ -2,112 +2,57 @@ import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalSailingSpaceSchema,
   terminalSailingSpaceArraySchema,
-  type TerminalSailingSpace as FaresTerminalSailingSpace,
-  type TerminalSailingSpaceArray as FaresTerminalSailingSpaceArray,
-} from "@/schemas/wsf-terminals";
-import {
-  departingSpaceSchema,
-  type DepartingSpace,
-} from "@/schemas/wsf-terminals";
-import {
-  spaceForArrivalTerminalSchema as spaceForArrivalFaresTerminalSchema,
-  type SpaceForArrivalTerminal as SpaceForArrivalFaresTerminal,
+  type TerminalSailingSpaceArray,
 } from "@/schemas/wsf-terminals";
 
 // ============================================================================
 // Input Schemas & Types
 //
-// getFaresTerminalSailingSpaceByFaresTerminalIdParamsSchema
-// getFaresTerminalSailingSpaceParamsSchema
-// GetFaresTerminalSailingSpaceByFaresTerminalIdParams
-// GetFaresTerminalSailingSpaceParams
+// getTerminalSailingSpaceParamsSchema
+// GetTerminalSailingSpaceParams
 // ============================================================================
 
-export const getFaresTerminalSailingSpaceByFaresTerminalIdParamsSchema =
-  z.object({
-    terminalId: z.number().int(),
-  });
+export const getTerminalSailingSpaceParamsSchema = z.object({});
 
-export const getFaresTerminalSailingSpaceParamsSchema = z.object({});
-
-export type GetFaresTerminalSailingSpaceByFaresTerminalIdParams = z.infer<
-  typeof getFaresTerminalSailingSpaceByFaresTerminalIdParamsSchema
->;
-
-export type GetFaresTerminalSailingSpaceParams = z.infer<
-  typeof getFaresTerminalSailingSpaceParamsSchema
+export type GetTerminalSailingSpaceParams = z.infer<
+  typeof getTerminalSailingSpaceParamsSchema
 >;
 
 // ============================================================================
 // Output Schemas & Types
 //
-// terminalSailingSpaceSchema (imported from terminalSailingSpace.zod)
 // terminalSailingSpaceArraySchema (imported from terminalSailingSpace.zod)
-// departingSpaceSchema (imported from departingSpace.zod)
-// spaceForArrivalFaresTerminalSchema (imported from spaceForArrivalFaresTerminal.zod)
-// FaresTerminalSailingSpace (imported from terminalSailingSpace.zod)
-// DepartingSpace (imported from departingSpace.zod)
-// SpaceForArrivalFaresTerminal (imported from spaceForArrivalFaresTerminal.zod)
+// TerminalSailingSpaceArray (imported from terminalSailingSpace.zod)
 // ============================================================================
 
-export type FaresTerminalSailingSpaces = FaresTerminalSailingSpaceArray;
+export type FaresTerminalSailingSpaces = TerminalSailingSpaceArray;
 
 // ============================================================================
 // API Functions
 //
-// getFaresTerminalSailingSpaceByFaresTerminalId (singular item)
-// getFaresTerminalSailingSpace (array)
+// getTerminalSailingSpace (array)
 // ============================================================================
 
-const ENDPOINT_BY_ID =
-  "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}";
 const ENDPOINT_ALL = "/ferries/api/terminals/rest/terminalsailingspace";
 
-export const getFaresTerminalSailingSpaceByFaresTerminalId = zodFetch<
-  GetFaresTerminalSailingSpaceByFaresTerminalIdParams,
-  FaresTerminalSailingSpace
->(
-  ENDPOINT_BY_ID,
-  getFaresTerminalSailingSpaceByFaresTerminalIdParamsSchema,
-  terminalSailingSpaceSchema
-);
-
-export const getFaresTerminalSailingSpace = zodFetch<
-  GetFaresTerminalSailingSpaceParams,
+export const getTerminalSailingSpace = zodFetch<
+  GetTerminalSailingSpaceParams,
   FaresTerminalSailingSpaces
 >(
   ENDPOINT_ALL,
-  getFaresTerminalSailingSpaceParamsSchema,
+  getTerminalSailingSpaceParamsSchema,
   terminalSailingSpaceArraySchema
 );
 
 // ============================================================================
 // TanStack Query Hooks
 //
-// useFaresTerminalSailingSpaceByFaresTerminalId (singular item)
 // useFaresTerminalSailingSpace (array)
 // ============================================================================
 
-export const terminalSailingSpaceByFaresTerminalIdOptions = createQueryOptions({
-  apiFunction: getFaresTerminalSailingSpaceByFaresTerminalId,
-  queryKey: [
-    "wsf",
-    "terminals",
-    "sailingSpace",
-    "getFaresTerminalSailingSpaceByFaresTerminalId",
-  ],
-  cacheStrategy: "DAILY_STATIC",
-});
-
 export const terminalSailingSpaceOptions = createQueryOptions({
-  apiFunction: getFaresTerminalSailingSpace,
-  queryKey: [
-    "wsf",
-    "terminals",
-    "sailingSpace",
-    "getFaresTerminalSailingSpace",
-  ],
+  apiFunction: getTerminalSailingSpace,
+  queryKey: ["wsf", "terminals", "sailingSpace", "getTerminalSailingSpace"],
   cacheStrategy: "DAILY_STATIC",
 });

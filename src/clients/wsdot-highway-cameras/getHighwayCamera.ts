@@ -4,23 +4,19 @@
  *
  * Provides:
  * - Single camera by ID
- * - All cameras
  *
  * Data includes:
  * - Camera identifiers, location, owner, image URL/size, active status
  *
  * @functions
  *   - getHighwayCamera: Returns a single camera by ID
- *   - getHighwayCameras: Returns all cameras
  *
  * @input
  *   - getHighwayCamera:
  *     - cameraID: Camera identifier
- *   - getHighwayCameras: {}
  *
  * @output
  *   - getHighwayCamera: Camera
- *   - getHighwayCameras: Cameras
  *   - Camera fields:
  *     - CameraID: Camera identifier
  *     - CameraLocation: Camera location details
@@ -50,7 +46,6 @@
  *
  * @cli
  *   - getHighwayCamera: node dist/cli.mjs getHighwayCamera '{"cameraID": 9818}'
- *   - getHighwayCameras: node dist/cli.mjs getHighwayCameras
  *
  * @exampleResponse
  * {
@@ -82,15 +77,10 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import {
-  cameraSchema,
-  camerasSchema,
-  type Camera,
-  type Cameras,
-} from "@/schemas/wsdot-highway-cameras";
+import { cameraSchema, type Camera } from "@/schemas/wsdot-highway-cameras";
 
 // =========================================================================
-// Input Schemas & Types (singular first, then array)
+// Input Schema & Types
 // =========================================================================
 
 /** Params schema for getHighwayCamera */
@@ -104,16 +94,8 @@ export type GetHighwayCameraParams = z.infer<
   typeof getHighwayCameraParamsSchema
 >;
 
-/** Params schema for getHighwayCameras (none) */
-export const getHighwayCamerasParamsSchema = z.object({});
-
-/** GetHighwayCameras params type */
-export type GetHighwayCamerasParams = z.infer<
-  typeof getHighwayCamerasParamsSchema
->;
-
 // =========================================================================
-// API Functions
+// API Function
 // =========================================================================
 
 /** Fetches a single highway camera by ID */
@@ -124,30 +106,12 @@ export const getHighwayCamera = zodFetch<GetHighwayCameraParams, Camera>(
 );
 
 // =========================================================================
-// getHighwayCameras (array second)
-// =========================================================================
-
-/** Fetches all highway cameras */
-export const getHighwayCameras = zodFetch<GetHighwayCamerasParams, Cameras>(
-  "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
-  getHighwayCamerasParamsSchema,
-  camerasSchema
-);
-
-// =========================================================================
-// TanStack Query Options (singular first, then array)
+// TanStack Query Options
 // =========================================================================
 
 /** Returns options for a single camera by ID; polls daily */
 export const highwayCameraOptions = createQueryOptions({
   apiFunction: getHighwayCamera,
   queryKey: ["wsdot", "highway-cameras", "getHighwayCamera"],
-  cacheStrategy: "DAILY_STATIC",
-});
-
-/** Returns options for all cameras; polls daily */
-export const highwayCamerasOptions = createQueryOptions({
-  apiFunction: getHighwayCameras,
-  queryKey: ["wsdot", "highway-cameras", "getHighwayCameras"],
   cacheStrategy: "DAILY_STATIC",
 });

@@ -1,12 +1,8 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Weather Information API
 // ============================================================================
 
-export * from "./weatherInformation";
+// API Functions
+export * from "./getWeatherInformation";
+export * from "./getWeatherInformationByStationId";
 export * from "./weatherInformationSearch";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-weather-information";

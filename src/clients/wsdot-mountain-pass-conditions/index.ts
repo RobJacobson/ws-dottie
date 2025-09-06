@@ -1,11 +1,7 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Mountain Pass Conditions API
 // ============================================================================
 
-export * from "./mountainPassConditions";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-mountain-pass-conditions";
+// API Functions
+export * from "./getMountainPassConditionById";
+export * from "./getMountainPassConditions";

@@ -1,76 +1,56 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import {
-  fareTotalSchema,
-  fareTotalsSchema as fareTotalsArraySchema,
-  type FareTotal,
-  type FareTotals,
-} from "@/schemas/wsf-fares";
+import { fareTotalSchema, type FareTotal } from "@/schemas/wsf-fares";
 
 // ============================================================================
-// Input Schema & Types
+// Input Schemas & Types
 //
 // getFareTotalsParamsSchema
 // GetFareTotalsParams
 // ============================================================================
 
-export const getFareTotalsParamsSchema = z
-  .object({
-    tripDate: z.date(),
-    departingFaresTerminalID: z.number().int().positive(),
-    arrivingFaresTerminalID: z.number().int().positive(),
-    roundTrip: z.boolean(),
-    fareLineItemIDs: z
-      .array(z.number().int().positive())
-      .min(1, "At least one fare line item ID must be provided"),
-    quantities: z
-      .array(z.number().int().min(1))
-      .min(1, "At least one quantity must be provided"),
-  })
-  .refine((data) => data.fareLineItemIDs.length === data.quantities.length, {
-    message: "fareLineItemIDs and quantities arrays must have the same length",
-    path: ["quantities"],
-  });
+export const getFareTotalsParamsSchema = z.object({
+  tripDate: z.date(),
+  departingTerminalId: z.number().int().positive(),
+  arrivingTerminalId: z.number().int().positive(),
+  roundTrip: z.boolean(),
+  fareLineItemId: z.number().int().positive(),
+  quantity: z.number().int().positive(),
+});
 
 export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
 // ============================================================================
-// Output Schema & Types
+// Output Schemas & Types
 //
 // fareTotalSchema (imported from fareTotals.zod)
-// fareTotalsArraySchema (imported from fareTotals.zod)
 // FareTotal (imported from fareTotals.zod)
-// FareTotals (imported from fareTotals.zod)
 // ============================================================================
 
-// Re-export schemas and types for convenience
-export { fareTotalSchema, fareTotalsArraySchema };
-export type { FareTotal, FareTotals };
-
 // ============================================================================
-// API Function
+// API Functions
 //
-// getFareTotals
+// getFareTotals (fare totals calculation)
 // ============================================================================
 
 const ENDPOINT =
-  "/ferries/api/fares/rest/faretotals/{tripDate}/{departingFaresTerminalID}/{arrivingFaresTerminalID}/{roundTrip}/{fareLineItemIDs}/{quantities}";
+  "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}";
 
-export const getFareTotals = zodFetch<GetFareTotalsParams, FareTotals>(
+export const getFareTotals = zodFetch<GetFareTotalsParams, FareTotal>(
   ENDPOINT,
   getFareTotalsParamsSchema,
-  fareTotalsArraySchema
+  fareTotalSchema
 );
 
 // ============================================================================
-// TanStack Query Hook
+// TanStack Query Hooks
 //
 // useFareTotals
 // ============================================================================
 
 export const fareTotalsOptions = createQueryOptions({
   apiFunction: getFareTotals,
-  queryKey: ["wsf", "fares", "fareTotals", "getFareTotals"],
+  queryKey: ["wsf", "fares", "faretotals", "getFareTotals"],
   cacheStrategy: "DAILY_STATIC",
 });

@@ -1,11 +1,13 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { fareLineItemSchema } from "./fareLineItems";
-import { terminalComboVerboseSchema } from "@/schemas/wsf-fares";
+import {
+  fareLineItemsVerboseSchema,
+  type FareLineItemsVerbose,
+} from "@/schemas/wsf-fares";
 
 // ============================================================================
-// Input Schema & Types
+// Input Schemas & Types
 //
 // getFareLineItemsVerboseParamsSchema
 // GetFareLineItemsVerboseParams
@@ -20,59 +22,33 @@ export type GetFareLineItemsVerboseParams = z.infer<
 >;
 
 // ============================================================================
-// Output Schema & Types
+// Output Schemas & Types
 //
-// fareLineItemsVerboseResponseSchema
-// FareLineItemsVerboseResponse
+// fareLineItemsVerboseSchema (imported from fareLineItemsVerbose.zod)
+// FareLineItemsVerbose (imported from fareLineItemsVerbose.zod)
 // ============================================================================
 
-export const lineItemLookupSchema = z.object({
-  FaresTerminalComboIndex: z.number().int().min(0),
-  LineItemIndex: z.number().int().min(0),
-  RoundTripLineItemIndex: z.number().int().min(0),
-});
-
-export const fareLineItemsVerboseResponseSchema = z.object({
-  FaresTerminalComboVerbose: z.array(terminalComboVerboseSchema),
-  LineItemLookup: z.array(lineItemLookupSchema),
-  LineItems: z.array(z.array(fareLineItemSchema)),
-  RoundTripLineItems: z.array(z.array(fareLineItemSchema)),
-});
-
 // ============================================================================
-// API Function
+// API Functions
 //
-// getFareLineItemsVerbose
+// getFareLineItemsVerbose (verbose fare line items)
 // ============================================================================
 
 const ENDPOINT = "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}";
 
 export const getFareLineItemsVerbose = zodFetch<
   GetFareLineItemsVerboseParams,
-  FareLineItemsVerboseResponse
->(
-  ENDPOINT,
-  getFareLineItemsVerboseParamsSchema,
-  fareLineItemsVerboseResponseSchema
-);
-
-export type FaresTerminalComboVerbose = z.infer<
-  typeof terminalComboVerboseSchema
->;
-
-export type LineItemLookup = z.infer<typeof lineItemLookupSchema>;
-export type FareLineItemsVerboseResponse = z.infer<
-  typeof fareLineItemsVerboseResponseSchema
->;
+  FareLineItemsVerbose
+>(ENDPOINT, getFareLineItemsVerboseParamsSchema, fareLineItemsVerboseSchema);
 
 // ============================================================================
-// TanStack Query Hook
+// TanStack Query Hooks
 //
 // useFareLineItemsVerbose
 // ============================================================================
 
 export const fareLineItemsVerboseOptions = createQueryOptions({
   apiFunction: getFareLineItemsVerbose,
-  queryKey: ["wsf", "fares", "fareLineItems", "getFareLineItemsVerbose"],
+  queryKey: ["wsf", "fares", "farelineitemsverbose", "getFareLineItemsVerbose"],
   cacheStrategy: "DAILY_STATIC",
 });

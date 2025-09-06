@@ -1,15 +1,10 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Toll Rates API
 // ============================================================================
 
-export * from "./tollRates";
-export * from "./tollTripInfo";
-export * from "./tollTripRates";
-export * from "./tollTripVersion";
-export * from "./tripRatesByDate";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-toll-rates";
+// API Functions
+export * from "./getTollRates";
+export * from "./getTollTripInfo";
+export * from "./getTollTripRates";
+export * from "./getTollTripVersion";
+export * from "./getTripRatesByDate";

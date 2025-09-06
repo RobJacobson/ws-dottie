@@ -42,7 +42,7 @@ export type { ValidDateRange };
 // useValidDateRange
 // ============================================================================
 
-export const getValidDateRange = zodFetch<
+export const getScheduleValidDateRange = zodFetch<
   GetValidDateRangeParams,
   ValidDateRange
 >(
@@ -51,8 +51,8 @@ export const getValidDateRange = zodFetch<
   validDateRangeSchema
 );
 
-export const validDateRangeOptions = createQueryOptions({
-  apiFunction: getValidDateRange,
+export const scheduleValidDateRangeOptions = createQueryOptions({
+  apiFunction: getScheduleValidDateRange,
   queryKey: ["wsf", "schedule", "validDateRange", "getValidDateRange"],
   cacheStrategy: "DAILY_STATIC",
 });

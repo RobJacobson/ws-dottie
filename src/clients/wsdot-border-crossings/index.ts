@@ -1,4 +1,6 @@
-export * from "./borderCrossings";
+// ============================================================================
+// WSDOT Border Crossings API
+// ============================================================================
 
-// Centralized schema exports
-export * from "@/schemas/wsdot-border-crossings";
+// API Functions
+export * from "./getBorderCrossings";

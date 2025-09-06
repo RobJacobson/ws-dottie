@@ -1,48 +1,16 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSF Fares API
 // ============================================================================
 
-export {
-  getFaresCacheFlushDate,
-  useFaresCacheFlushDate,
-} from "../../shared/caching/cacheFlushDate";
-export {
-  getFareLineItems,
-  getFareLineItemsBasic,
-  fareLineItemsOptions,
-  fareLineItemsBasicOptions,
-} from "./fareLineItems";
-export {
-  getFareLineItemsVerbose,
-  fareLineItemsVerboseOptions,
-} from "./fareLineItemsVerbose";
-export {
-  getFaresFaresTerminals,
-  getFaresFaresTerminalMates,
-  faresFaresTerminalsOptions,
-  faresFaresTerminalMatesOptions,
-} from "./faresTerminals";
-export {
-  getFaresValidDateRange,
-  faresValidDateRangeOptions,
-} from "./faresValidDateRange";
-export { getFareTotals, fareTotalsOptions } from "./fareTotals";
-export {
-  getFaresTerminalCombo,
-  getFaresTerminalComboVerbose,
-  terminalComboOptions,
-  terminalComboVerboseOptions,
-} from "./terminalCombo";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsf-fares";
-export { wsfCacheFlushDateParamsSchema as getFaresCacheFlushDateParamsSchema } from "../../shared/caching/cacheFlushDate";
-
-// ============================================================================
-// TYPES
-// ============================================================================
-
-export type { WsfCacheFlushDateParams as GetFaresCacheFlushDateParams } from "../../shared/caching/cacheFlushDate";
+// API Functions
+export * from "./cacheFlushDate";
+export * from "./fareLineItems";
+export * from "./fareLineItemsBasic";
+export * from "./fareLineItemsVerbose";
+export * from "./faresTerminals";
+export * from "./faresValidDateRange";
+export * from "./fareTotals";
+export * from "./terminalCombo";
+export * from "./terminalComboVerbose";
+export * from "./terminalMates";
+export * from "./validDateRange";

@@ -1,11 +1,7 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Travel Times API
 // ============================================================================
 
-export * from "./travelTimes";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-travel-times";
+// API Functions
+export * from "./getTravelTimeById";
+export * from "./getTravelTimes";

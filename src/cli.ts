@@ -280,8 +280,8 @@ const FUNCTION_REGISTRY = {
   },
   getTerminalCombo: {
     module: WsfFares,
-    function: WsfFares.getTerminalCombo,
-    paramsSchema: WsfFares.getTerminalComboParamsSchema,
+    function: WsfFares.getFaresTerminalCombo,
+    paramsSchema: WsfFares.getFaresTerminalComboParamsSchema,
     description: "Get terminal combo data",
   },
   getTerminalComboVerbose: {
@@ -293,7 +293,7 @@ const FUNCTION_REGISTRY = {
   getFaresValidDateRange: {
     module: WsfFares,
     function: WsfFares.getFaresValidDateRange,
-    paramsSchema: WsfFares.getFaresValidDateRangeParamsSchema,
+    paramsSchema: undefined, // No input parameters required
     description: "Get valid date range for fares",
   },
   getRouteDetails: {
@@ -304,8 +304,8 @@ const FUNCTION_REGISTRY = {
   },
   getRouteDetailsByTerminals: {
     module: WsfSchedule,
-    function: WsfSchedule.getRouteDetailsByTerminals,
-    paramsSchema: WsfSchedule.getRouteDetailsByTerminalsParamsSchema,
+    function: WsfSchedule.getRouteDetailsByScheduleTerminals,
+    paramsSchema: WsfSchedule.getRouteDetailsByScheduleTerminalsParamsSchema,
     description: "Get route details by terminals",
   },
   getRouteDetailsByRoute: {
@@ -322,8 +322,8 @@ const FUNCTION_REGISTRY = {
   },
   getRoutesByTerminals: {
     module: WsfSchedule,
-    function: WsfSchedule.getRoutesByTerminals,
-    paramsSchema: WsfSchedule.getRoutesByTerminalsParamsSchema,
+    function: WsfSchedule.getRoutesByScheduleTerminals,
+    paramsSchema: WsfSchedule.getRoutesByScheduleTerminalsParamsSchema,
     description: "Get routes by terminals",
   },
   getRoutesWithDisruptions: {
@@ -334,8 +334,8 @@ const FUNCTION_REGISTRY = {
   },
   getScheduleByTerminals: {
     module: WsfSchedule,
-    function: WsfSchedule.getScheduleByTerminals,
-    paramsSchema: WsfSchedule.getScheduleByTerminalsParamsSchema,
+    function: WsfSchedule.getScheduleByScheduleTerminals,
+    paramsSchema: WsfSchedule.getScheduleByScheduleTerminalsParamsSchema,
     description: "Get schedule by terminals",
   },
   getScheduleByRoute: {
@@ -346,8 +346,8 @@ const FUNCTION_REGISTRY = {
   },
   getScheduleTodayByTerminals: {
     module: WsfSchedule,
-    function: WsfSchedule.getScheduleTodayByTerminals,
-    paramsSchema: WsfSchedule.getScheduleTodayByTerminalsParamsSchema,
+    function: WsfSchedule.getScheduleTodayByScheduleTerminals,
+    paramsSchema: WsfSchedule.getScheduleTodayByScheduleTerminalsParamsSchema,
     description: "Get today's schedule by terminals",
   },
   getScheduleTodayByRoute: {
@@ -370,8 +370,8 @@ const FUNCTION_REGISTRY = {
   },
   getTerminals: {
     module: WsfSchedule,
-    function: WsfSchedule.getTerminals,
-    paramsSchema: WsfSchedule.getTerminalsParamsSchema,
+    function: WsfSchedule.getScheduleTerminals,
+    paramsSchema: WsfSchedule.getScheduleTerminalsParamsSchema,
     description: "Get terminals data",
   },
   getTerminalMates: {
@@ -595,8 +595,8 @@ const FUNCTION_REGISTRY = {
 
   getCacheFlushDate: {
     module: WsfVessels,
-    function: WsfVessels.getCacheFlushDateVessels,
-    paramsSchema: WsfVessels.getCacheFlushDateParamsSchema,
+    function: WsfVessels.getVesselsCacheFlushDate,
+    paramsSchema: undefined, // No input parameters required
     description: "Get cache flush date for WSF APIs",
   },
 } as const;
@@ -729,6 +729,9 @@ program
 
         // Validate parameters against schema
         try {
+          if (!functionMeta.paramsSchema) {
+            throw new Error("No parameter schema defined for this function");
+          }
           const validatedParams = functionMeta.paramsSchema.parse(
             params
           ) as Record<string, unknown>;

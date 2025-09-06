@@ -2,100 +2,53 @@ import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
-  terminalVerboseSchema,
   terminalVerboseArraySchema,
-  type TerminalVerbose as FaresTerminalVerbose,
-  type TerminalVerboseArray as FaresTerminalVerboseArray,
+  type TerminalVerboseArray,
 } from "@/schemas/wsf-terminals";
-import { transitLinkSchema, type TransitLink } from "@/schemas/wsf-terminals";
-import { waitTimeSchema, type WaitTime } from "@/schemas/wsf-terminals";
 
 // ============================================================================
 // Input Schemas & Types
 //
-// getFaresTerminalVerboseByFaresTerminalIdParamsSchema
-// getFaresTerminalVerboseParamsSchema
-// GetFaresTerminalVerboseByFaresTerminalIdParams
-// GetFaresTerminalVerboseParams
+// getTerminalVerboseParamsSchema
+// GetTerminalVerboseParams
 // ============================================================================
 
-export const getFaresTerminalVerboseByFaresTerminalIdParamsSchema = z.object({
-  terminalId: z.number().int(),
-});
+export const getTerminalVerboseParamsSchema = z.object({});
 
-export const getFaresTerminalVerboseParamsSchema = z.object({});
-
-export type GetFaresTerminalVerboseByFaresTerminalIdParams = z.infer<
-  typeof getFaresTerminalVerboseByFaresTerminalIdParamsSchema
->;
-
-export type GetFaresTerminalVerboseParams = z.infer<
-  typeof getFaresTerminalVerboseParamsSchema
+export type GetTerminalVerboseParams = z.infer<
+  typeof getTerminalVerboseParamsSchema
 >;
 
 // ============================================================================
 // Output Schemas & Types
 //
-// terminalVerboseSchema (imported from terminalVerbose.zod)
 // terminalVerboseArraySchema (imported from terminalVerbose.zod)
-// transitLinkSchema (imported from transitLink.zod)
-// waitTimeSchema (imported from waitTime.zod)
-// FaresTerminalVerbose (imported from terminalVerbose.zod)
-// TransitLink (imported from transitLink.zod)
-// WaitTime (imported from waitTime.zod)
+// TerminalVerboseArray (imported from terminalVerbose.zod)
 // ============================================================================
 
-export type FaresTerminalVerboses = FaresTerminalVerboseArray;
+export type FaresTerminalVerboses = TerminalVerboseArray;
 
 // ============================================================================
 // API Functions
 //
-// getFaresTerminalVerboseByFaresTerminalId (singular item)
-// getFaresTerminalVerbose (array)
+// getTerminalVerbose (array)
 // ============================================================================
 
-const ENDPOINT_BY_ID =
-  "/ferries/api/terminals/rest/terminalverbose/{terminalId}";
 const ENDPOINT_ALL = "/ferries/api/terminals/rest/terminalverbose";
 
-export const getFaresTerminalVerboseByFaresTerminalId = zodFetch<
-  GetFaresTerminalVerboseByFaresTerminalIdParams,
-  FaresTerminalVerbose
->(
-  ENDPOINT_BY_ID,
-  getFaresTerminalVerboseByFaresTerminalIdParamsSchema,
-  terminalVerboseSchema
-);
-
-export const getFaresTerminalVerbose = zodFetch<
-  GetFaresTerminalVerboseParams,
+export const getTerminalVerbose = zodFetch<
+  GetTerminalVerboseParams,
   FaresTerminalVerboses
->(
-  ENDPOINT_ALL,
-  getFaresTerminalVerboseParamsSchema,
-  terminalVerboseArraySchema
-);
+>(ENDPOINT_ALL, getTerminalVerboseParamsSchema, terminalVerboseArraySchema);
 
 // ============================================================================
 // TanStack Query Hooks
 //
-// useFaresTerminalVerboseByFaresTerminalId (singular item)
 // useFaresTerminalVerbose (array)
 // ============================================================================
 
-export const terminalVerboseByFaresTerminalIdOptions = createQueryOptions({
-  apiFunction: getFaresTerminalVerboseByFaresTerminalId,
-  queryKey: [
-    "wsf",
-    "terminals",
-    "verbose",
-    "getFaresTerminalVerboseByFaresTerminalId",
-  ],
-  cacheStrategy: "DAILY_STATIC",
-});
-
 export const terminalVerboseOptions = createQueryOptions({
-  apiFunction: getFaresTerminalVerbose,
-  queryKey: ["wsf", "terminals", "verbose", "getFaresTerminalVerbose"],
+  apiFunction: getTerminalVerbose,
+  queryKey: ["wsf", "terminals", "verbose", "getTerminalVerbose"],
   cacheStrategy: "DAILY_STATIC",
 });

@@ -1,7 +1,7 @@
-export * from "./commercialVehicleRestrictions";
-
 // ============================================================================
-// SCHEMAS
+// WSDOT Commercial Vehicle Restrictions API
 // ============================================================================
 
-export * from "@/schemas/wsdot-commercial-vehicle-restrictions";
+// API Functions
+export * from "./getCommercialVehicleRestrictionsWithId";
+export * from "./getCommercialVehicleRestrictions";

@@ -1,34 +1,20 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSF Terminals API
 // ============================================================================
 
-// Cache management
-export {
-  getCacheFlushDateTerminals,
-  useCacheFlushDateTerminals,
-  type WsfCacheFlushDate as GetCacheFlushDateFaresTerminalsResponse,
-  type WsfCacheFlushDateParams as GetCacheFlushDateFaresTerminalsParams,
-  wsfCacheFlushDateParamsSchema as getCacheFlushDateFaresTerminalsParamsSchema,
-} from "../../shared/caching/cacheFlushDate";
-
-// ============================================================================
-// ZOD SCHEMAS (New Implementation)
-// ============================================================================
-
-// Centralized schema exports
-export * from "@/schemas/wsf-terminals";
-
-// Cache flush date
-export * from "@/schemas/shared/cacheFlushDate.zod";
-
-// ============================================================================
-// API FUNCTIONS
-// ============================================================================
-
+// API Functions
+export * from "./cacheFlushDate";
 export * from "./terminalBasics";
+export * from "./terminalBasicsById";
 export * from "./terminalBulletins";
+export * from "./terminalBulletinsById";
 export * from "./terminalLocations";
+export * from "./terminalLocationsById";
 export * from "./terminalSailingSpace";
+export * from "./terminalSailingSpaceById";
 export * from "./terminalTransports";
+export * from "./terminalTransportsById";
 export * from "./terminalVerbose";
+export * from "./terminalVerboseById";
 export * from "./terminalWaitTimes";
+export * from "./terminalWaitTimesById";

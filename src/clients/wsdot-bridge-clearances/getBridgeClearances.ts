@@ -73,7 +73,10 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { bridgeDataGISSchema, type BridgeDataGIS } from "@/schemas/wsdot-bridge-clearances";
+import {
+  bridgeDataGISListSchema,
+  type BridgeDataGISList,
+} from "@/schemas/wsdot-bridge-clearances";
 
 // ============================================================================
 // Input Schemas & Types
@@ -97,11 +100,11 @@ export type GetBridgeClearancesParams = z.infer<
 /** Fetches bridge clearance data for a route */
 export const getBridgeClearances = zodFetch<
   GetBridgeClearancesParams,
-  BridgeDataGIS[]
+  BridgeDataGISList
 >(
   "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
   getBridgeClearancesParamsSchema,
-  z.array(bridgeDataGISSchema)
+  bridgeDataGISListSchema
 );
 
 // ==========================================================================

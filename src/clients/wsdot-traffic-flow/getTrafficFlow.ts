@@ -3,23 +3,18 @@
  * @description Point-in-time traffic flow readings from WSDOT flow stations.
  *
  * Provides:
- * - Single traffic flow by `FlowDataID`
  * - All current traffic flows
  *
  * Data includes:
  * - Flow station identifier, numeric flow reading (0–4), station location, region, station name, and observation time (JS Date)
  *
  * @functions
- *   - getTrafficFlowById: Returns a single traffic flow by `flowDataID`
  *   - getTrafficFlows: Returns all current traffic flows
  *
  * @input
- *   - getTrafficFlowById:
- *     - flowDataID: Flow data identifier
  *   - getTrafficFlows: {}
  *
  * @output
- *   - getTrafficFlowById: TrafficFlow
  *   - getTrafficFlows: TrafficFlows
  *   - TrafficFlow fields:
  *     - FlowDataID: Flow data identifier (nullable)
@@ -35,7 +30,6 @@
  *
  * @cli
  *   - getTrafficFlows: node dist/cli.mjs getTrafficFlows
- *   - getTrafficFlowById: node dist/cli.mjs getTrafficFlowById '{"flowDataID": 2482}'
  *
  * @exampleResponse
  * {
@@ -62,20 +56,8 @@ import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import { flowDataSchema, type FlowData } from "@/schemas/wsdot-traffic-flow";
 
 // ============================================================================
-// Input Schemas & Types
-//
-// getTrafficFlowById (single item)
-// getTrafficFlows (array)
+// Input Schema & Types
 // ============================================================================
-
-export const getTrafficFlowByIdParamsSchema = z.object({
-  /** Flow data identifier */
-  flowDataID: z.number(),
-});
-
-export type GetTrafficFlowByIdParams = z.infer<
-  typeof getTrafficFlowByIdParamsSchema
->;
 
 /** Params schema for getTrafficFlows (none) */
 export const getTrafficFlowsParamsSchema = z.object({});
@@ -83,20 +65,8 @@ export const getTrafficFlowsParamsSchema = z.object({});
 export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
 
 // ============================================================================
-// API Functions
-//
-// getTrafficFlowById (single item)
-// getTrafficFlows (array)
+// API Function
 // ============================================================================
-
-const ENDPOINT_BASE =
-  "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson";
-
-export const getTrafficFlowById = zodFetch<GetTrafficFlowByIdParams, FlowData>(
-  ENDPOINT_BASE,
-  getTrafficFlowByIdParamsSchema,
-  flowDataSchema
-);
 
 /** Fetches all current traffic flows */
 export const getTrafficFlows = zodFetch<GetTrafficFlowsParams, FlowData[]>(
@@ -108,13 +78,6 @@ export const getTrafficFlows = zodFetch<GetTrafficFlowsParams, FlowData[]>(
 // ============================================================================
 // TanStack Query Options
 // ============================================================================
-
-/** Returns options for a single traffic flow by ID; polls every 60s */
-export const trafficFlowByIdOptions = createQueryOptions({
-  apiFunction: getTrafficFlowById,
-  queryKey: ["wsdot", "traffic-flow", "getTrafficFlowById"],
-  cacheStrategy: "MINUTE_UPDATES",
-});
 
 /** Returns options for all traffic flows; polls every 60s */
 export const trafficFlowsOptions = createQueryOptions({

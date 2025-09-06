@@ -30,7 +30,7 @@ export type GetAllSailingsParams = z.infer<typeof getAllSailingsParamsSchema>;
 // Re-export schemas and types for convenience
 export { sailingResponseSchema, sailingResponsesArraySchema };
 export const sailingsArraySchema = sailingResponsesArraySchema;
-export type Sailings = z.infer<typeof sailingsArraySchema>;
+export type AllSailings = z.infer<typeof sailingsArraySchema>;
 
 // ============================================================================
 // API Functions
@@ -38,7 +38,7 @@ export type Sailings = z.infer<typeof sailingsArraySchema>;
 // getAllSailings
 // ============================================================================
 
-export const getAllSailings = zodFetch<GetAllSailingsParams, Sailings>(
+export const getAllSailings = zodFetch<GetAllSailingsParams, AllSailings>(
   "/ferries/api/schedule/rest/allsailings/{schedRouteId}",
   getAllSailingsParamsSchema,
   sailingsArraySchema

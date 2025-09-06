@@ -1,16 +1,8 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Highway Cameras API
 // ============================================================================
 
-export * from "./highwayCameras";
-export {
-  searchHighwayCameras,
-  searchHighwayCamerasOptions,
-  searchHighwayCamerasParamsSchema,
-} from "./searchHighwayCameras";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-highway-cameras";
+// API Functions
+export * from "./getHighwayCamera";
+export * from "./getHighwayCameras";
+export * from "./searchHighwayCameras";

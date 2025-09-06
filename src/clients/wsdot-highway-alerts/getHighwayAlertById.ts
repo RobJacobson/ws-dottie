@@ -1,35 +1,22 @@
 /**
  * @module WSDOT — Highway Alerts API
- * @description Active and scheduled highway alerts including construction, incidents, and travel impacts.
+ * @description Single highway alert by ID including construction, incidents, and travel impacts.
  *
  * Provides:
- * - All active alerts
  * - Single alert by ID
- * - Alerts filtered by map area or by region ID
  *
  * Data includes:
  * - Alert identifiers, categories, status, headline/extended descriptions, start/end times (JS Date), roadway locations
  *
  * @functions
- *   - getHighwayAlerts: Returns all active alerts
  *   - getHighwayAlertById: Returns a single alert by ID
- *   - getHighwayAlertsByMapArea: Returns alerts filtered by map area
- *   - getHighwayAlertsByRegionId: Returns alerts filtered by region ID
  *
  * @input
- *   - getHighwayAlerts: {}
  *   - getHighwayAlertById:
  *     - AlertID: Alert identifier
- *   - getHighwayAlertsByMapArea:
- *     - MapArea: Map area name
- *   - getHighwayAlertsByRegionId:
- *     - RegionId: Region numeric identifier
  *
  * @output
- *   - getHighwayAlerts: HighwayAlerts
  *   - getHighwayAlertById: HighwayAlert
- *   - getHighwayAlertsByMapArea: HighwayAlerts
- *   - getHighwayAlertsByRegionId: HighwayAlerts
  *   - HighwayAlert fields:
  *     - AlertID: Alert identifier
  *     - County: County name (nullable)
@@ -57,10 +44,7 @@
  *   - HighwayAlertRoadwayLocation: Roadway location details
  *
  * @cli
- *   - getHighwayAlerts: node dist/cli.mjs getHighwayAlerts
  *   - getHighwayAlertById: node dist/cli.mjs getHighwayAlertById '{"AlertID": 1}'
- *   - getHighwayAlertsByMapArea: node dist/cli.mjs getHighwayAlertsByMapArea '{"MapArea": "Seattle"}'
- *   - getHighwayAlertsByRegionId: node dist/cli.mjs getHighwayAlertsByRegionId '{"RegionId": 1}'
  *
  * @exampleResponse
  * {
@@ -100,18 +84,11 @@ import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
   alertSchema,
-  alertsSchema,
   type Alert,
-  type Alerts,
 } from "@/schemas/wsdot-highway-alerts";
 
 // ============================================================================
 // Input Schemas & Types
-//
-// getHighwayAlertByIdParamsSchema
-// getHighwayAlertsParamsSchema
-// getHighwayAlertsByMapAreaParamsSchema
-// getHighwayAlertsByRegionIdParamsSchema
 // ============================================================================
 
 /** Params schema for getHighwayAlertById */
@@ -124,53 +101,12 @@ export type GetHighwayAlertByIdParams = z.infer<
   typeof getHighwayAlertByIdParamsSchema
 >;
 
-/** Params schema for getHighwayAlerts (none) */
-export const getHighwayAlertsParamsSchema = z.object({});
-
-export type GetHighwayAlertsParams = z.infer<
-  typeof getHighwayAlertsParamsSchema
->;
-
-/** Params schema for getHighwayAlertsByMapArea */
-export const getHighwayAlertsByMapAreaParamsSchema = z.object({
-  /** Map area name */
-  MapArea: z.string().min(1, "Map area cannot be empty"),
-});
-
-export type GetHighwayAlertsByMapAreaParams = z.infer<
-  typeof getHighwayAlertsByMapAreaParamsSchema
->;
-
-/** Params schema for getHighwayAlertsByRegionId */
-export const getHighwayAlertsByRegionIdParamsSchema = z.object({
-  /** Region numeric identifier */
-  RegionId: z.number().int().positive(),
-});
-
-export type GetHighwayAlertsByRegionIdParams = z.infer<
-  typeof getHighwayAlertsByRegionIdParamsSchema
->;
-
 // ============================================================================
 // API Functions
-//
-// getHighwayAlertById (singular item)
-// getHighwayAlerts (array)
-// getHighwayAlertsByMapArea (array filtered by map area)
-// getHighwayAlertsByRegionId (array filtered by region ID)
 // ============================================================================
-
-const ENDPOINT =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson";
 
 const ENDPOINT_BY_ID =
   "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}";
-
-const ENDPOINT_BY_MAP_AREA =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}";
-
-const ENDPOINT_BY_REGION_ID =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}";
 
 /** Fetches a single highway alert by ID */
 export const getHighwayAlertById = zodFetch<
@@ -181,64 +117,13 @@ export const getHighwayAlertById = zodFetch<
   alertSchema
 );
 
-/** Fetches all active highway alerts */
-export const getHighwayAlerts = zodFetch<GetHighwayAlertsParams, Alerts>(
-  ENDPOINT,
-  getHighwayAlertsParamsSchema,
-  alertsSchema
-);
-
-/** Fetches highway alerts filtered by map area */
-export const getHighwayAlertsByMapArea = zodFetch<
-  GetHighwayAlertsByMapAreaParams, Alerts
->(
-  ENDPOINT_BY_MAP_AREA,
-  getHighwayAlertsByMapAreaParamsSchema,
-  alertsSchema
-);
-
-/** Fetches highway alerts filtered by region ID */
-export const getHighwayAlertsByRegionId = zodFetch<
-  GetHighwayAlertsByRegionIdParams, Alerts
->(
-  ENDPOINT_BY_REGION_ID,
-  getHighwayAlertsByRegionIdParamsSchema,
-  alertsSchema
-);
-
 // ============================================================================
 // TanStack Query options
-//
-// useHighwayAlertById (singular item)
-// useHighwayAlerts (array)
-// useHighwayAlertsByMapArea (array filtered by map area)
-// useHighwayAlertsByRegionId (array filtered by region ID)
 // ============================================================================
 
 /** Returns options for a single alert by ID; polls every 60s */
 export const highwayAlertByIdOptions = createQueryOptions({
   apiFunction: getHighwayAlertById,
   queryKey: ["wsdot", "highway-alerts", "getHighwayAlertById"],
-  cacheStrategy: "MINUTE_UPDATES",
-});
-
-/** Returns options for all alerts; polls every 60s */
-export const highwayAlertsOptions = createQueryOptions({
-  apiFunction: getHighwayAlerts,
-  queryKey: ["wsdot", "highway-alerts", "getHighwayAlerts"],
-  cacheStrategy: "MINUTE_UPDATES",
-});
-
-/** Returns options for alerts by map area; polls every 60s */
-export const highwayAlertsByMapAreaOptions = createQueryOptions({
-  apiFunction: getHighwayAlertsByMapArea,
-  queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByMapArea"],
-  cacheStrategy: "MINUTE_UPDATES",
-});
-
-/** Returns options for alerts by region ID; polls every 60s */
-export const highwayAlertsByRegionIdOptions = createQueryOptions({
-  apiFunction: getHighwayAlertsByRegionId,
-  queryKey: ["wsdot", "highway-alerts", "getHighwayAlertsByRegionId"],
   cacheStrategy: "MINUTE_UPDATES",
 });

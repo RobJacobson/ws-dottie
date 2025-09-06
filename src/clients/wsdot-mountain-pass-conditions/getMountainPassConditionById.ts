@@ -4,22 +4,18 @@
  *
  * Provides:
  * - Single pass condition by ID
- * - All current pass conditions
  *
  * Data includes:
  * - Pass identifiers, elevation, coordinates, road/weather conditions, dates (JS Date)
  *
  * @functions
- *   - getMountainPassConditions: Returns all pass conditions
  *   - getMountainPassConditionById: Returns a single pass condition by ID
  *
  * @input
- *   - getMountainPassConditions: {}
  *   - getMountainPassConditionById:
  *     - passConditionId: Pass condition identifier
  *
  * @output
- *   - getMountainPassConditions: MountainPassConditions
  *   - getMountainPassConditionById: MountainPassCondition
  *   - MountainPassCondition fields:
  *     - DateUpdated: Last update time (JS Date)
@@ -43,7 +39,6 @@
  *   - TravelRestriction: Travel restriction detail
  *
  * @cli
- *   - getMountainPassConditions: node dist/cli.mjs getMountainPassConditions
  *   - getMountainPassConditionById: node dist/cli.mjs getMountainPassConditionById '{"passConditionId": 1}'
  *
  * @exampleResponse
@@ -73,14 +68,13 @@
 import { z } from "zod";
 import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { passConditionSchema, type PassCondition } from "@/schemas/wsdot-mountain-pass-conditions";
 import {
-  mountainPassConditionsSchema,
-  type MountainPassConditions,
+  passConditionSchema,
+  type PassCondition,
 } from "@/schemas/wsdot-mountain-pass-conditions";
 
 // ============================================================================
-// Input Schemas & Types (singular first, then array)
+// Input Schema & Types
 // ============================================================================
 
 /** Params schema for getMountainPassConditionById */
@@ -94,18 +88,8 @@ export type GetMountainPassConditionByIdParams = z.infer<
   typeof getMountainPassConditionByIdParamsSchema
 >;
 
-/** Params schema for getMountainPassConditions (none) */
-export const getMountainPassConditionsParamsSchema = z.object({});
-
-/** GetMountainPassConditionsParams type */
-export type GetMountainPassConditionsParams = z.infer<
-  typeof getMountainPassConditionsParamsSchema
->;
-
 // ============================================================================
-// API Functions
-//
-// getMountainPassConditionById (singular first)
+// API Function
 // ============================================================================
 
 /** Fetches a single mountain pass condition by ID */
@@ -119,21 +103,7 @@ export const getMountainPassConditionById = zodFetch<
 );
 
 // ============================================================================
-// getMountainPassConditions (array second)
-// ============================================================================
-
-/** Fetches all mountain pass conditions */
-export const getMountainPassConditions = zodFetch<
-  GetMountainPassConditionsParams,
-  MountainPassConditions
->(
-  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
-  getMountainPassConditionsParamsSchema,
-  mountainPassConditionsSchema
-);
-
-// ============================================================================
-// TanStack Query Options (singular first, then array)
+// TanStack Query Options
 // ============================================================================
 
 /** Returns options for a single pass condition by ID; polls daily */
@@ -144,12 +114,5 @@ export const mountainPassConditionByIdOptions = createQueryOptions({
     "mountain-pass-conditions",
     "getMountainPassConditionById",
   ],
-  cacheStrategy: "DAILY_STATIC",
-});
-
-/** Returns options for all pass conditions; polls daily */
-export const mountainPassConditionsOptions = createQueryOptions({
-  apiFunction: getMountainPassConditions,
-  queryKey: ["wsdot", "mountain-pass-conditions", "getMountainPassConditions"],
   cacheStrategy: "DAILY_STATIC",
 });

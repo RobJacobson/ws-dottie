@@ -3,27 +3,16 @@ import { zodFetch } from "@/shared/fetching";
 import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
 import {
   weatherInfoSchema,
-  weatherInformationSchema,
   type WeatherInfo,
-  type WeatherInformation,
 } from "@/schemas/wsdot-weather-information";
 
 // Re-export schemas and types for convenience
-export { weatherInfoSchema, weatherInformationSchema };
-export type { WeatherInfo, WeatherInformation };
+export { weatherInfoSchema };
+export type { WeatherInfo };
 
 // ============================================================================
 // Input Schema & Types
-//
-// getWeatherInformationParamsSchema
-// GetWeatherInformationParams
 // ============================================================================
-
-export const getWeatherInformationParamsSchema = z.object({});
-
-export type GetWeatherInformationParams = z.infer<
-  typeof getWeatherInformationParamsSchema
->;
 
 export const getWeatherInformationByStationIdParamsSchema = z
   .object({
@@ -44,20 +33,8 @@ export type GetWeatherInformationByStationIdParams = z.infer<
 >;
 
 // ============================================================================
-// API Functions
-//
-// getWeatherInformation (array)
-// getWeatherInformationByStationId (single item)
+// API Function
 // ============================================================================
-
-export const getWeatherInformation = zodFetch<
-  GetWeatherInformationParams,
-  WeatherInformation
->(
-  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson",
-  getWeatherInformationParamsSchema,
-  weatherInformationSchema
-);
 
 export const getWeatherInformationByStationId = zodFetch<
   GetWeatherInformationByStationIdParams,
@@ -71,12 +48,6 @@ export const getWeatherInformationByStationId = zodFetch<
 // ============================================================================
 // TanStack Query Options
 // ============================================================================
-
-export const weatherInformationOptions = createQueryOptions({
-  apiFunction: getWeatherInformation,
-  queryKey: ["wsdot", "weather-information", "getWeatherInformation"],
-  cacheStrategy: "MINUTE_UPDATES",
-});
 
 export const weatherInformationByStationIdOptions = createQueryOptions({
   apiFunction: getWeatherInformationByStationId,

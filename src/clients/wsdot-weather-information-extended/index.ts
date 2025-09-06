@@ -1,11 +1,6 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Weather Information Extended API
 // ============================================================================
 
-export * from "./weatherInformationExtended";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-weather-information-extended";
+// API Functions
+export * from "./getWeatherInformationExtended";

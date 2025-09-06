@@ -1,14 +1,12 @@
 // ============================================================================
-// API FUNCTIONS & SCHEMAS
+// WSDOT Highway Alerts API
 // ============================================================================
 
-export * from "./eventCategories";
-export * from "./highwayAlerts";
-export * from "./mapAreas";
+// API Functions
+export * from "./getEventCategories";
+export * from "./getHighwayAlertById";
+export * from "./getHighwayAlerts";
+export * from "./getHighwayAlertsByMapArea";
+export * from "./getHighwayAlertsByRegionId";
+export * from "./getMapAreas";
 export * from "./searchHighwayAlerts";
-
-// ============================================================================
-// SCHEMAS
-// ============================================================================
-
-export * from "@/schemas/wsdot-highway-alerts";
