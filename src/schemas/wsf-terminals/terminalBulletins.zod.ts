@@ -1,0 +1,25 @@
+import { z } from "zod";
+import { terminalSchema } from "./terminal.zod";
+import { bulletinSchema } from "./bulletin.zod";
+
+/**
+ * Terminal bulletins schema for WSF Terminals API
+ *
+ * This operation retrieves alerts and bulletins associated with terminals. Each terminal
+ * may have zero or more bulletins assigned to it. A TerminalID, or unique terminal
+ * identifier, may be optionally passed to retrieve a specific terminal. A valid API
+ * Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+ */
+export const terminalBulletinsSchema = terminalSchema.extend({
+  /** The bulletins / alerts associated with this terminal. */
+  Bulletins: z
+    .array(bulletinSchema)
+    .describe("The bulletins / alerts associated with this terminal."),
+});
+
+export type TerminalBulletins = z.infer<typeof terminalBulletinsSchema>;
+
+export const terminalBulletinsArraySchema = z.array(terminalBulletinsSchema);
+export type TerminalBulletinsArray = z.infer<
+  typeof terminalBulletinsArraySchema
+>;
