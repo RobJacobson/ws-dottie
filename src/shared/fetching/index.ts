@@ -29,11 +29,11 @@
 // MAIN ENTRY POINTS
 // ============================================================================
 
-// Import the main function first
-import { zodFetch } from "./pipeline/zodFetch";
+// Import the main functions first
+import { zodFetch, zodFetchCustom } from "./pipeline/zodFetch";
 
-// Main fetching function with validation
-export { zodFetch };
+// Main fetching functions with validation
+export { zodFetch, zodFetchCustom };
 
 // ============================================================================
 // PIPELINE COMPONENTS
@@ -62,14 +62,14 @@ export type {
 // VALIDATION SYSTEM
 // ============================================================================
 
-// Validation core functions (for pipeline execution)
-export { validateInputs, validateResponse } from "./validation/core";
-
-// Schema construction utilities (for API client use)
-export * from "./validation/schemas";
-
-// Validation types
-export * from "./validation/types";
+// Consolidated validation system (core functions + schema utilities)
+export {
+  validateInputs,
+  validateResponse,
+  zWsdotDate,
+  zLatitude,
+  zLongitude,
+} from "./validation";
 
 // ============================================================================
 // ZOD UTILITIES

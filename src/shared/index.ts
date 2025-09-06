@@ -24,8 +24,6 @@
 
 // Configuration management for API keys and base URLs
 export { configManager, type WsdotConfig } from "./config";
-// TanStack Query types
-export type { TanStackOptions } from "./tanstack";
 
 // ============================================================================
 // FETCHING & DATA ACCESS
@@ -34,34 +32,10 @@ export type { TanStackOptions } from "./tanstack";
 // Complete data fetching system with validation
 export * from "./fetching";
 
+// Factory functions for creating standardized
 // ============================================================================
 // REACT INTEGRATION
 // ============================================================================
 
 // Core utilities including types and logging
 export * from "./utils";
-
-// ============================================================================
-// VALIDATION & SCHEMAS
-// ============================================================================
-
-// All validation and schema functionality is now under fetching
-// Re-export for backward compatibility
-export {
-  zLatitude,
-  zLongitude,
-  zNullableBoolean,
-  zNullableNumber,
-  zNullableString,
-  zPositiveInteger,
-  // Schema construction (for API clients)
-  zWsdotDate,
-  zWsdotNullableDate,
-} from "./fetching/validation/schemas";
-
-// Zod utilities (date parsing)
-export {
-  isWsdotDateString,
-  jsDateToYyyyMmDd,
-  wsdotDateTimestampToJsDate,
-} from "./fetching/zod";
