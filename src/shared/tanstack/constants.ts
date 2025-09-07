@@ -1,5 +1,10 @@
-// Time constants for TanStack Query options
-// Use explicit named durations for clarity and consistency across the codebase
+/**
+ * @fileoverview Time constants for TanStack Query options
+ *
+ * Use explicit named durations for clarity and consistency across the codebase.
+ * These constants are used throughout the TanStack Query configuration to ensure
+ * consistent caching strategies and timing across all API endpoints.
+ */
 
 export const THIRTY_SECONDS = 30 * 1000;
 export const FIVE_SECONDS = 5 * 1000;

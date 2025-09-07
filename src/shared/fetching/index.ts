@@ -1,79 +1,44 @@
 /**
- * Enhanced Data Pipeline for WSDOT and WSF APIs
+ * @fileoverview Data Fetching Pipeline for WSDOT and WSF APIs
  *
- * This module provides a structured data pipeline organized by processing stages:
- * - request/: Request preparation (validation, URL building)
- * - execution/: Request execution (strategy selection, fetch operations)
- * - response/: Response processing (validation, transformation)
+ * This module provides a complete data fetching system with validation,
+ * organized into three main stages:
+ * - Request preparation (validation, URL building)
+ * - Request execution (strategy selection, fetch operations)
+ * - Response processing (validation, transformation)
  *
- * The pipeline provides a clean separation of concerns while maintaining
- * backward compatibility with existing API consumers.
+ * The pipeline automatically selects the appropriate fetch strategy based on
+ * the environment (JSONP for browsers, native fetch for servers) and provides
+ * comprehensive error handling and validation throughout.
  */
 
-// ============================================================================
-// MAIN ENTRY POINT
-// ============================================================================
+// Main API
+export { zodFetch } from "./zodFetch";
 
-/**
- * Data Fetching with Validation
- *
- * This module provides the complete data fetching system with Zod validation,
- * organized by functional responsibility:
- *
- * - pipeline/: Core data pipeline (request → execution → response)
- * - validation/: Zod validation system (core + schemas)
- * - zod/: Zod utilities and date parsing
- */
+// Core pipeline stages
+export * from "./pipeline";
 
-// ============================================================================
-// MAIN ENTRY POINTS
-// ============================================================================
+// Error handling
+export * from "./handleErrors";
 
-// Import the main functions first
-import { zodFetch, zodFetchCustom } from "./pipeline/zodFetch";
-
-// Main fetching functions with validation
-export { zodFetch, zodFetchCustom };
-
-// ============================================================================
-// PIPELINE COMPONENTS
-// ============================================================================
-
-// Core data pipeline components
-export * from "./pipeline/errorHandling";
-export type { ApiErrorResponse, FetchStrategy } from "./pipeline/execution";
-// Execution components (avoiding conflicts with strategies)
-// Strategy components
+// Execution strategies
 export {
   executeRequest,
   fetchJsonp,
   fetchNative,
   getEnvironmentType,
-} from "./pipeline/execution";
-export * from "./pipeline/request";
-export * from "./pipeline/response";
+} from "./execution";
+
+// Types
 export type {
   FetchContext,
   FetchSchemas,
   JsonWithDates,
-} from "./pipeline/types";
+  FetchStrategy,
+  ApiErrorResponse,
+  JSONPCallback,
+  JSONPWindow,
+} from "./types";
 
-// ============================================================================
-// VALIDATION SYSTEM
-// ============================================================================
-
-// Consolidated validation system (core functions + schema utilities)
-export {
-  validateInputs,
-  validateResponse,
-  zLatitude,
-  zLongitude,
-  zWsdotDate,
-} from "./validation";
-
-// ============================================================================
-// ZOD UTILITIES
-// ============================================================================
-
-// Zod-specific utilities
-export * from "./zod";
+// Date utilities
+export { jsDateToYyyyMmDd } from "../utils/dateUtils";

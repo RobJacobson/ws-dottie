@@ -1,13 +1,23 @@
-import { isTestEnvironment } from "@/shared/utils/testEnvironment";
+import { isTestEnvironment } from "@/shared/fetching/testEnvironment";
 import type { FetchContext } from "../types";
 import { getEnvironmentType, selectFetchStrategy } from "./fetchOrchestrator";
 
 /**
- * Request execution utilities for the data pipeline
+ * @fileoverview Request execution utilities for the data pipeline
+ *
+ * This module provides the main request execution function that coordinates
+ * between the fetch strategy selection and response processing.
  */
 
 /**
  * Executes the actual API request using the appropriate fetch strategy
+ *
+ * This function coordinates the request execution by selecting the appropriate
+ * fetch strategy based on the current environment and processing the response.
+ *
+ * @param completeUrl - The complete URL with base URL and API key
+ * @param context - Request context for logging and debugging
+ * @returns Promise resolving to parsed response data
  */
 export const executeRequest = async (
   completeUrl: string,

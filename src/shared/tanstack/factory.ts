@@ -1,5 +1,5 @@
 /**
- * Query Options Factory
+ * @fileoverview Query Options Factory
  *
  * Creates standardized TanStack Query options with appropriate caching strategies.
  * Eliminates boilerplate code across all API endpoints by providing a factory
@@ -39,13 +39,14 @@ import {
   SIX_HOURS,
   THIRTY_SECONDS,
   TWO_DAYS,
-} from "@/shared/constants/queryOptions";
+} from "./constants";
 
 /**
  * Cache strategy configurations for different types of data
  *
  * Each strategy defines appropriate staleTime, gcTime, refetchInterval,
  * retry, and retryDelay values based on the expected data update frequency.
+ * These strategies are optimized for transportation APIs with varying update patterns.
  */
 export const tanstackRefetchOptions = {
   /** Real-time data that updates frequently (5-second intervals) */
@@ -113,7 +114,7 @@ export const tanstackRefetchOptions = {
 } as const;
 
 /**
- * Configuration for creating query options
+ * Configuration interface for creating query options
  *
  * @template TInput - The input parameters type for the API function
  * @template TOutput - The output response type from the API function

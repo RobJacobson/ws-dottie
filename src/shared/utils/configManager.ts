@@ -1,5 +1,5 @@
 /**
- * WSDOT API Configuration Manager
+ * @fileoverview WSDOT API Configuration Manager
  *
  * This module provides centralized configuration management for WSDOT and WSF APIs.
  * It handles API key management, base URL configuration, and environment-based
@@ -29,11 +29,14 @@
  * ```
  */
 
-// Default base URL for WSDOT/WSF requests
+/** Default base URL for WSDOT/WSF requests */
 const DEFAULT_BASE_URL = "https://www.wsdot.wa.gov";
 
 /**
  * Configuration interface for WSDOT API settings
+ *
+ * This interface defines the structure for WSDOT API configuration,
+ * including required API keys and optional base URL overrides.
  */
 export interface WsdotConfig {
   /** Required API access token for WSDOT API authentication */
@@ -44,6 +47,9 @@ export interface WsdotConfig {
 
 /**
  * Safely accesses environment variables across different platforms
+ *
+ * This function provides cross-platform environment variable access that works
+ * in Node.js, browser environments (with custom env objects), and bundler contexts.
  *
  * @param key - Environment variable key to retrieve
  * @returns Environment variable value or undefined if not found
@@ -69,6 +75,9 @@ const getEnvVar = (key: string): string | undefined => {
 /**
  * Initializes configuration from environment variables at module load
  *
+ * This function is called when the module is first loaded to set up the
+ * initial configuration from environment variables or defaults.
+ *
  * @returns Initial configuration object with environment values or defaults
  */
 const initializeFromEnv = (): WsdotConfig => {
@@ -81,7 +90,7 @@ const initializeFromEnv = (): WsdotConfig => {
   };
 };
 
-// Global configuration state - initialized from environment at module load
+/** Global configuration state - initialized from environment at module load */
 let globalConfig: WsdotConfig = initializeFromEnv();
 
 /**
@@ -138,7 +147,9 @@ const setBaseUrl = (baseUrl: string): void => {
 
 /**
  * Resets configuration to initial environment-based values
- * Useful for testing or when configuration needs to be refreshed
+ *
+ * Useful for testing or when configuration needs to be refreshed.
+ * This function reloads configuration from environment variables.
  */
 const clearConfig = (): void => {
   globalConfig = initializeFromEnv();
@@ -147,7 +158,10 @@ const clearConfig = (): void => {
 /**
  * Configuration manager object providing a clean interface for all configuration operations
  *
- * Note: Zod validation is always enabled for all API requests to ensure
+ * This object provides a centralized interface for managing WSDOT API configuration,
+ * including API keys, base URLs, and configuration state management.
+ *
+ * @note Zod validation is always enabled for all API requests to ensure
  * fail-fast error handling and consistent behavior across environments.
  */
 export const configManager = {

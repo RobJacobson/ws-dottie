@@ -1,5 +1,5 @@
 /**
- * JSONP Fetch Strategy for Browser Environments
+ * @fileoverview JSONP Fetch Strategy for Browser Environments
  *
  * This module provides a JSONP (JSON with Padding) implementation for browser
  * environments where CORS restrictions prevent direct fetch requests to external
@@ -64,69 +64,25 @@
  * const data = await fetchStrategy("https://api.example.com/data", "array");
  * ```
  *
- * Note: This strategy is automatically selected for browser environments
+ * @note This strategy is automatically selected for browser environments
  * where CORS restrictions would prevent direct API access.
  */
 
-import type { FetchStrategy, JSONPWindow } from "./types";
+import { shouldReturnArray } from "./config";
+import type { FetchStrategy, JSONPWindow } from "../types";
 import { processApiResponse } from "./utils";
 
-// Constants for JSONP request configuration
+/** Timeout duration for JSONP requests in milliseconds */
 const JSONP_TIMEOUT_MS = 30_000; // 30 seconds
-
-/**
- * Set of endpoints that should return arrays
- * Used to determine how to handle empty responses in JSONP
- *
- * Some APIs return empty objects {} when they should return empty arrays [].
- * This causes Zod validation to fail with "Expected array, received object".
- * The issue only appears with JSONP because native fetch handles empty responses differently.
- */
-const ARRAY_ENDPOINTS = [
-  // WSF Schedule API endpoints
-  "/timeadjbyroute/",
-  "/timeadjbyschedroute/",
-  "/alternativeformats/",
-  "/schedroutes",
-  "/routes",
-  "/sailings",
-  "/allsailings",
-  "/terminals",
-  "/terminalsandmates",
-  "/alerts",
-  "/timeadjustments",
-  "/activeseasons",
-
-  // WSDOT API endpoints
-  "/BorderCrossings",
-  "/BridgeClearances",
-  "/CommercialVehicleRestrictions",
-  "/HighwayAlerts",
-  "/HighwayCameras",
-  "/MountainPasses",
-  "/TollRates",
-  "/TrafficFlow",
-  "/TravelTimes",
-  "/WeatherInformation",
-  "/WeatherInformationExtended",
-  "/WeatherStations",
-];
-
-/**
- * Determines if an endpoint should return an array based on the URL
- *
- * This is a simple O(n) string matching operation on a small, fixed set of endpoints.
- * The performance impact is negligible given the small number of endpoints.
- */
-const shouldReturnArray = (url: string): boolean => {
-  return ARRAY_ENDPOINTS.some((endpoint) => url.includes(endpoint));
-};
 
 /**
  * Generates a unique JSONP callback name to avoid conflicts
  *
  * Uses timestamp and random string to ensure uniqueness across
- * concurrent requests and page reloads.
+ * concurrent requests and page reloads. This prevents callback
+ * name collisions that could cause data corruption.
+ *
+ * @returns Unique callback function name
  */
 const generateCallbackName = (): string =>
   `jsonp_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
@@ -176,7 +132,7 @@ export const fetchJsonp: FetchStrategy = (url: string): Promise<string> => {
     // Step 2: Set up timeout to prevent hanging requests
     const timeoutId = setTimeout(() => {
       cleanup();
-      reject(new Error("JSONP request timeout"));
+      reject(new Error("Request timeout"));
     }, JSONP_TIMEOUT_MS);
 
     // Step 3: Define callback function that server will call
@@ -218,7 +174,7 @@ export const fetchJsonp: FetchStrategy = (url: string): Promise<string> => {
     // Step 4: Handle script loading errors
     script.onerror = () => {
       cleanupWithTimeout();
-      reject(new Error("JSONP script load failed"));
+      reject(new Error("Script load failed"));
     };
 
     // Step 5: Build callback URL and inject script tag

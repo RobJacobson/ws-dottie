@@ -2,36 +2,51 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { z } from "zod";
-import {
-  FIVE_MINUTES,
-  FIVE_SECONDS,
-  ONE_DAY,
-} from "@/shared/constants/queryOptions";
-import { zodFetchCustom } from "@/shared/fetching";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { FIVE_MINUTES, FIVE_SECONDS, ONE_DAY } from "./constants";
+import { zodFetch } from "@/shared/fetching";
+import { zWsdotDate } from "./validation";
+
+/**
+ * @fileoverview WSF Cache Flush Date utilities
+ *
+ * This module provides utilities for managing WSF API cache invalidation based on
+ * cache flush dates. WSF APIs provide cache flush date endpoints that indicate
+ * when data has been updated, allowing for intelligent cache invalidation.
+ */
 
 // ============================================================================
 // Types
 // ============================================================================
 
+/** WSF API types that support cache flush date functionality */
 export type WsfApiType = "fares" | "vessels" | "terminals" | "schedule";
 
+/** Cache flush date returned by WSF APIs */
 export type WsfCacheFlushDate = Date;
 
+/** Parameters for cache flush date requests (currently none required) */
 export type WsfCacheFlushDateParams = Record<string, never>;
 
 // ============================================================================
 // Schema
 // ============================================================================
 
+/** Zod schema for cache flush date request parameters */
 export const wsfCacheFlushDateParamsSchema = z.object({});
 
+/** Zod schema for cache flush date response validation */
 export const wsfCacheFlushDateSchema = zWsdotDate();
 
 // ============================================================================
 // Factory Function
 // ============================================================================
 
+/**
+ * Creates a cache flush date factory for a specific WSF API type
+ *
+ * @param apiType - The WSF API type to create cache flush date utilities for
+ * @returns Object containing API function, React hook, endpoint, and query key
+ */
 export const createWsfCacheFlushDate = (apiType: WsfApiType) => {
   const endpoint = `/ferries/api/${apiType}/rest/cacheflushdate`;
   const queryKey = ["wsf", apiType, "cacheFlushDate"];
@@ -40,23 +55,34 @@ export const createWsfCacheFlushDate = (apiType: WsfApiType) => {
   // API Function
   // ============================================================================
 
+  /**
+   * Fetches the cache flush date for the specified WSF API type
+   *
+   * @param params - Request parameters (currently unused)
+   * @returns Promise resolving to the cache flush date
+   */
   const getCacheFlushDate = async (
     params: WsfCacheFlushDateParams = {}
   ): Promise<WsfCacheFlushDate> => {
-    return zodFetchCustom(
+    return zodFetch({
       endpoint,
-      {
-        input: wsfCacheFlushDateParamsSchema,
-        output: wsfCacheFlushDateSchema,
-      },
-      params
-    );
+      inputSchema: wsfCacheFlushDateParamsSchema,
+      outputSchema: wsfCacheFlushDateSchema,
+      params,
+    });
   };
 
   // ============================================================================
   // TanStack Query Hook
   // ============================================================================
 
+  /**
+   * React hook for fetching cache flush date with TanStack Query
+   *
+   * @param params - Request parameters (currently unused)
+   * @param options - Additional TanStack Query options
+   * @returns TanStack Query result with cache flush date data
+   */
   const useCacheFlushDate = (
     params: WsfCacheFlushDateParams = {},
     options?: Omit<UseQueryOptions, "queryKey" | "queryFn">
@@ -82,47 +108,34 @@ export const createWsfCacheFlushDate = (apiType: WsfApiType) => {
 };
 
 // ============================================================================
-// Pre-configured Instances
+// Factory Function (exported for use by individual client files)
 // ============================================================================
 
-export const {
-  getCacheFlushDate: getFaresCacheFlushDate,
-  useCacheFlushDate: useFaresCacheFlushDate,
-} = createWsfCacheFlushDate("fares");
-
-export const {
-  getCacheFlushDate: getCacheFlushDateVessels,
-  useCacheFlushDate: useCacheFlushDateVessels,
-} = createWsfCacheFlushDate("vessels");
-
-export const {
-  getCacheFlushDate: getCacheFlushDateTerminals,
-  useCacheFlushDate: useCacheFlushDateTerminals,
-} = createWsfCacheFlushDate("terminals");
-
-export const {
-  getCacheFlushDate: getCacheFlushDateSchedule,
-  useCacheFlushDate: useCacheFlushDateSchedule,
-} = createWsfCacheFlushDate("schedule");
+// The createWsfCacheFlushDate factory function is available for individual
+// client files to create their own cache flush date functions
 
 // ==========================================================================
 // Query Options + Auto-Invalidation Helper
 // ==========================================================================
 
+/**
+ * Creates TanStack Query options for cache flush date requests
+ *
+ * @param apiType - The WSF API type to create options for
+ * @returns TanStack Query options object
+ */
 export const wsfCacheFlushDateOptions = (apiType: WsfApiType) => {
   const endpoint = `/ferries/api/${apiType}/rest/cacheflushdate`;
   const key = ["wsf", apiType, "cacheFlushDate"] as const;
   return queryOptions({
     queryKey: key,
     queryFn: () =>
-      zodFetchCustom(
+      zodFetch({
         endpoint,
-        {
-          input: wsfCacheFlushDateParamsSchema,
-          output: wsfCacheFlushDateSchema,
-        },
-        {}
-      ),
+        inputSchema: wsfCacheFlushDateParamsSchema,
+        outputSchema: wsfCacheFlushDateSchema,
+        params: {},
+      }),
     staleTime: FIVE_MINUTES,
     gcTime: ONE_DAY,
     refetchInterval: FIVE_MINUTES,
@@ -132,13 +145,22 @@ export const wsfCacheFlushDateOptions = (apiType: WsfApiType) => {
 };
 
 /**
- * useWsfAutoInvalidateOnUpdate
+ * React hook for automatic WSF query invalidation based on cache flush date changes
+ *
  * Mount this in your app to automatically invalidate WSF queries when the
- * cache flush date changes for a given apiType.
+ * cache flush date changes for a given apiType. This ensures that stale data
+ * is automatically refreshed when the API indicates new data is available.
  *
- * @param apiType - "fares" | "vessels" | "terminals" | "schedule"
+ * @param apiType - The WSF API type to monitor for cache flush date changes
  *
- * Behavior: invalidates all queries whose keys start with ["wsf", apiType]
+ * @example
+ * ```typescript
+ * // In your app component
+ * useWsfAutoInvalidateOnUpdate("schedule");
+ * useWsfAutoInvalidateOnUpdate("fares");
+ * ```
+ *
+ * @note Behavior: invalidates all queries whose keys start with ["wsf", apiType]
  */
 export const useWsfAutoInvalidateOnUpdate = (apiType: WsfApiType) => {
   const queryClient = useQueryClient();
