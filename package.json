@@ -21,8 +21,8 @@
       "default": "./src/index.ts"
     },
     "./cli": {
-      "node": "./dist/cli.mjs",
-      "default": "./dist/cli.mjs"
+      "node": "./dist/cli/index.mjs",
+      "default": "./dist/cli/index.mjs"
     }
   },
   "files": [
@@ -31,7 +31,7 @@
     "docs"
   ],
   "bin": {
-    "ws-dottie": "./dist/cli.mjs"
+    "ws-dottie": "./dist/cli/index.mjs"
   },
   "scripts": {
     "build": "tsup",

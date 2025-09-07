@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/cli.ts"],
+  entry: ["src/index.ts", "src/cli/index.ts"],
   format: ["esm", "cjs"], // Build both ESM and CJS formats
   dts: true,
   splitting: false,
