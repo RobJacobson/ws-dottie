@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  zLatitude,
-  zLongitude,
-  zWsdotDate,
-} from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * WeatherInfo schema
@@ -15,11 +11,11 @@ export const weatherInfoSchema = z
     /** Station ID */
     StationID: z.number().int().describe("Station ID"),
     /** Station name */
-    StationName: z.string().describe("Station name"),
+    StationName: z.string().nullable().describe("Station name"),
     /** Latitude */
-    Latitude: zLatitude().describe("Latitude"),
+    Latitude: z.number().describe("Latitude"),
     /** Longitude */
-    Longitude: zLongitude().describe("Longitude"),
+    Longitude: z.number().describe("Longitude"),
     /** Reading time */
     ReadingTime: zWsdotDate().describe("Reading time"),
     /** Temperature in Fahrenheit */
@@ -42,13 +38,16 @@ export const weatherInfoSchema = z
     /** Visibility */
     Visibility: z.number().int().nullable().describe("Visibility"),
     /** Sky coverage */
-    SkyCoverage: z.string().describe("Sky coverage"),
+    SkyCoverage: z.string().nullable().describe("Sky coverage"),
     /** Barometric pressure */
     BarometricPressure: z.number().nullable().describe("Barometric pressure"),
     /** Relative humidity */
     RelativeHumidity: z.number().nullable().describe("Relative humidity"),
     /** Wind direction cardinal */
-    WindDirectionCardinal: z.string().describe("Wind direction cardinal"),
+    WindDirectionCardinal: z
+      .string()
+      .nullable()
+      .describe("Wind direction cardinal"),
     /** Wind direction */
     WindDirection: z.number().nullable().describe("Wind direction"),
   })

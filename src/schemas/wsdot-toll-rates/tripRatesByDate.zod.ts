@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 import { tripRateSchema } from "./tripRate.zod";
 
 /**
@@ -13,7 +13,7 @@ export const tripRatesByDateItemSchema = z.object({
     "Last updated time for this snapshot (JS Date)"
   ),
   /** Trip entries */
-  Trips: z.array(tripRateSchema).describe("Trip entries"),
+  Trips: z.array(tripRateSchema).nullable().describe("Trip entries"),
   /** Version number */
   Version: z.number().describe("Version number"),
 });

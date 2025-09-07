@@ -21,7 +21,10 @@ export const tollTripRateSchema = z.object({
  */
 export const tollTripRatesSchema = z.object({
   /** Array of trip rate objects */
-  Trips: z.array(tollTripRateSchema).describe("Array of trip rate objects"),
+  Trips: z
+    .array(tollTripRateSchema)
+    .nullable()
+    .describe("Array of trip rate objects"),
   /** Version number for the trip rates data */
   Version: z.number().describe("Version number for the trip rates data"),
 });

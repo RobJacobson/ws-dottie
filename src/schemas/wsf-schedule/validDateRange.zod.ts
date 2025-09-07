@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * Schema for WSF Schedule API valid date range response.

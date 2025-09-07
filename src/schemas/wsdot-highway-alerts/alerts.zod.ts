@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * Alert schema
@@ -16,22 +16,24 @@ export const alertSchema = z
       .positive()
       .describe("Unique Identifier for the alert."),
     /** Start location for the alert on the roadway. */
-    StartRoadwayLocation: roadwayLocationSchema.describe(
-      "Start location for the alert on the roadway."
-    ),
+    StartRoadwayLocation: roadwayLocationSchema
+      .nullable()
+      .describe("Start location for the alert on the roadway."),
     /** End location for the alert on the roadway. */
-    EndRoadwayLocation: roadwayLocationSchema.describe(
-      "End location for the alert on the roadway."
-    ),
+    EndRoadwayLocation: roadwayLocationSchema
+      .nullable()
+      .describe("End location for the alert on the roadway."),
     /** WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest. */
     Region: z
       .enum(["EA", "NC", "NW", "OL", "SC", "SW"])
+      .nullable()
       .describe(
         "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
       ),
     /** Used for countywide alerts, name of the affected county. */
     County: z
       .string()
+      .nullable()
       .describe("Used for countywide alerts, name of the affected county."),
     /** When the impact on traffic began. */
     StartTime: zWsdotDate()
@@ -42,20 +44,24 @@ export const alertSchema = z
     /** Categorization of alert, i.e. Collision, Maintenance, etc. */
     EventCategory: z
       .string()
+      .nullable()
       .describe("Categorization of alert, i.e. Collision, Maintenance, etc."),
     /** Information about what the alert has been issued for. */
     HeadlineDescription: z
       .string()
+      .nullable()
       .describe("Information about what the alert has been issued for."),
     /** Optional - Additional information about the alert, used for relaying useful extra information for an alert. */
     ExtendedDescription: z
       .string()
+      .nullable()
       .describe(
         "Optional - Additional information about the alert, used for relaying useful extra information for an alert."
       ),
     /** Current status of alert, open, closed. */
     EventStatus: z
       .enum(["open", "closed"])
+      .nullable()
       .describe("Current status of alert, open, closed."),
     /** When was alert was last changed. */
     LastUpdatedTime: zWsdotDate()
@@ -64,6 +70,7 @@ export const alertSchema = z
     /** Expected impact on traffic, highest, high, medium, low. */
     Priority: z
       .enum(["highest", "high", "medium", "low"])
+      .nullable()
       .describe("Expected impact on traffic, highest, high, medium, low."),
   })
   .describe("A Highway Alert.");

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 import { travelRestrictionSchema } from "./travelRestriction.zod";
 
 /**
@@ -17,6 +17,7 @@ export const passConditionSchema = z
     /** A friendly name for a mountain pass. */
     MountainPassName: z
       .string()
+      .nullable()
       .describe("A friendly name for a mountain pass."),
     /** The latitude of the mountain pass. */
     Latitude: z.number().describe("The latitude of the mountain pass."),
@@ -42,21 +43,25 @@ export const passConditionSchema = z
     /** The weather conditions at the pass. */
     WeatherCondition: z
       .string()
+      .nullable()
       .describe("The weather conditions at the pass."),
     /** The roadway conditions at the pass. */
-    RoadCondition: z.string().describe("The roadway conditions at the pass."),
+    RoadCondition: z
+      .string()
+      .nullable()
+      .describe("The roadway conditions at the pass."),
     /** Indicates if a travel advisory is active. */
     TravelAdvisoryActive: z
       .boolean()
       .describe("Indicates if a travel advisory is active."),
     /** The travel restriction in the primary direction. */
-    RestrictionOne: travelRestrictionSchema.describe(
-      "The travel restriction in the primary direction."
-    ),
+    RestrictionOne: travelRestrictionSchema
+      .nullable()
+      .describe("The travel restriction in the primary direction."),
     /** The travel restriction in the secondary direction. */
-    RestrictionTwo: travelRestrictionSchema.describe(
-      "The travel restriction in the secondary direction."
-    ),
+    RestrictionTwo: travelRestrictionSchema
+      .nullable()
+      .describe("The travel restriction in the secondary direction."),
   })
   .describe(
     "A data structure that represents the conditions of the mountain pass."

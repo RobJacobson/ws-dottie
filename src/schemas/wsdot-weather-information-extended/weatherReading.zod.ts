@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  zLatitude,
-  zLongitude,
-  zWsdotDate,
-} from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * ScanwebSurfaceMeasurements schema
@@ -59,9 +55,9 @@ export const weatherReadingSchema = z
     /** WSDOT assigned name */
     StationName: z.string().describe("WSDOT assigned name"),
     /** Latitude of station */
-    Latitude: zLatitude().describe("Latitude of station"),
+    Latitude: z.number().describe("Latitude of station"),
     /** Longitude of station */
-    Longitude: zLongitude().describe("Longitude of station"),
+    Longitude: z.number().describe("Longitude of station"),
     /** Elevation from sea level in meters */
     Elevation: z.number().int().describe("Elevation from sea level in meters"),
     /** Date and Time reading was taken */

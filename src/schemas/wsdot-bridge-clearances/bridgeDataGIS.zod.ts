@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  zLatitude,
-  zLongitude,
-  zWsdotDate,
-} from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * BridgeDataGIS schema
@@ -19,24 +15,27 @@ export const bridgeDataGISSchema = z
       .positive()
       .describe("Unique identifier for bridge."),
     /** State structure identifier. */
-    StateStructureId: z.string().describe("State structure identifier."),
+    StateStructureId: z.string().nullable().describe("State structure identifier."),
     /** A 2-part identifier with up to 10 alphanumeric characters. */
     BridgeNumber: z
       .string()
+      .nullable()
       .describe("A 2-part identifier with up to 10 alphanumeric characters."),
     /** Description of the crossing. */
-    CrossingDescription: z.string().describe("Description of the crossing."),
+    CrossingDescription: z.string().nullable().describe("Description of the crossing."),
     /** State Route identifier. */
-    StateRouteID: z.string().describe("State Route identifier."),
+    StateRouteID: z.string().nullable().describe("State Route identifier."),
     /** State Route Mile Post. */
     SRMP: z.number().describe("State Route Mile Post."),
     /** Code representing the direction of the inventory. */
     InventoryDirection: z
       .enum(["I", "D", "B"])
+      .nullable()
       .describe("Code representing the direction of the inventory."),
     /** Indicator for milepost within a back mileage equation area. */
     SRMPAheadBackIndicator: z
       .string()
+      .nullable()
       .describe("Indicator for milepost within a back mileage equation area."),
     /** Date of the route. */
     RouteDate: zWsdotDate().describe("Date of the route."),
@@ -55,15 +54,17 @@ export const bridgeDataGISSchema = z
     /** Minimum vertical clearance in feet and inches. */
     VerticalClearanceMinimumFeetInch: z
       .string()
+      .nullable()
       .describe("Minimum vertical clearance in feet and inches."),
     /** Maximum vertical clearance in feet and inches. */
     VerticalClearanceMaximumFeetInch: z
       .string()
+      .nullable()
       .describe("Maximum vertical clearance in feet and inches."),
     /** Latitude of the bridge. */
-    Latitude: zLatitude().describe("Latitude of the bridge."),
+    Latitude: z.number().describe("Latitude of the bridge."),
     /** Longitude of the bridge. */
-    Longitude: zLongitude().describe("Longitude of the bridge."),
+    Longitude: z.number().describe("Longitude of the bridge."),
     /** Date record was last updated. */
     APILastUpdate: zWsdotDate().describe("Date record was last updated."),
     /** An identifier for the bridge. */

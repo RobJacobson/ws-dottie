@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * BorderCrossing schema
@@ -14,18 +14,19 @@ export const borderCrossingSchema = z
     /** Border crossing name (e.g., 'I5', 'SR 543') or null when not available */
     CrossingName: z
       .string()
+      .nullable()
       .describe(
         "Border crossing name (e.g., 'I5', 'SR 543') or null when not available"
       ),
     /** Where the crossing is located */
-    BorderCrossingLocation: roadwayLocationSchema.describe(
-      "Where the crossing is located"
-    ),
+    BorderCrossingLocation: roadwayLocationSchema
+      .nullable()
+      .describe("Where the crossing is located"),
     /** Estimated wait time in minutes */
     WaitTime: z
       .number()
       .int()
-      .positive()
+      .min(0)
       .describe("Estimated wait time in minutes"),
   })
   .describe("Information about Canadian border crossing wait times.");

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zLatitude, zLongitude } from "@/shared/fetching/validation";
 
 /**
  * WeatherStation schema
@@ -13,9 +12,9 @@ export const weatherStationSchema = z
     /** Common name assigned to weather station */
     StationName: z.string().describe("Common name assigned to weather station"),
     /** Latitude of station */
-    Latitude: zLatitude().describe("Latitude of station"),
+    Latitude: z.number().describe("Latitude of station"),
     /** Longitude of station */
-    Longitude: zLongitude().describe("Longitude of station"),
+    Longitude: z.number().describe("Longitude of station"),
   })
   .describe("Contains information about weather stations.");
 

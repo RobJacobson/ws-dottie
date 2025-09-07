@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import { zLatitude, zLongitude } from "@/shared/fetching/validation";
 
 /**
  * Camera schema
@@ -18,31 +17,41 @@ export const cameraSchema = z
     /** WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest. */
     Region: z
       .enum(["EA", "NC", "NW", "OL", "SC", "SW"])
+      .nullable()
       .describe(
         "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
       ),
     /** Structure identifying where the camera is located */
-    CameraLocation: roadwayLocationSchema.describe(
-      "Structure identifying where the camera is located"
-    ),
+    CameraLocation: roadwayLocationSchema
+      .nullable()
+      .describe("Structure identifying where the camera is located"),
     /** Latitude of where to display the camera on a map */
-    DisplayLatitude: zLatitude().describe(
-      "Latitude of where to display the camera on a map"
-    ),
+    DisplayLatitude: z
+      .number()
+      .describe("Latitude of where to display the camera on a map"),
     /** Longitude of where to display the camera on a map */
-    DisplayLongitude: zLongitude().describe(
-      "Longitude of where to display the camera on a map"
-    ),
+    DisplayLongitude: z
+      .number()
+      .describe("Longitude of where to display the camera on a map"),
     /** Title of the camera */
-    Title: z.string().describe("Title of the camera"),
+    Title: z.string().nullable().describe("Title of the camera"),
     /** Short description for the camera */
-    Description: z.string().describe("Short description for the camera"),
+    Description: z
+      .string()
+      .nullable()
+      .describe("Short description for the camera"),
     /** Stored location of the camera image */
-    ImageURL: z.string().describe("Stored location of the camera image"),
+    ImageURL: z
+      .string()
+      .nullable()
+      .describe("Stored location of the camera image"),
     /** Owner of camera when not WSDOT */
-    CameraOwner: z.string().describe("Owner of camera when not WSDOT"),
+    CameraOwner: z
+      .string()
+      .nullable()
+      .describe("Owner of camera when not WSDOT"),
     /** URL of the camera owner */
-    OwnerURL: z.string().describe("URL of the camera owner"),
+    OwnerURL: z.string().nullable().describe("URL of the camera owner"),
     /** Pixel width of the image */
     ImageWidth: z
       .number()

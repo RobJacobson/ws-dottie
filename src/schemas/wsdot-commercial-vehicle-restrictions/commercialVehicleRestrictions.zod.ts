@@ -1,10 +1,6 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import {
-  zLatitude,
-  zLongitude,
-  zWsdotDate,
-} from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * CVRestriction schema
@@ -14,9 +10,9 @@ import {
 export const commercialVehiclesRestrictionSchema = z
   .object({
     /** State Route identifier */
-    StateRouteID: z.string().describe("State Route identifier"),
+    StateRouteID: z.string().nullable().describe("State Route identifier"),
     /** State abbreviation */
-    State: z.string().describe("State abbreviation"),
+    State: z.string().nullable().describe("State abbreviation"),
     /** Restriction width in inches */
     RestrictionWidthInInches: z
       .number()
@@ -72,17 +68,17 @@ export const commercialVehiclesRestrictionSchema = z
       "Date when the restriction is no longer in force"
     ),
     /** Name of the location */
-    LocationName: z.string().describe("Name of the location"),
+    LocationName: z.string().nullable().describe("Name of the location"),
     /** Description of the location */
-    LocationDescription: z.string().describe("Description of the location"),
+    LocationDescription: z.string().nullable().describe("Description of the location"),
     /** Comment about the restriction */
-    RestrictionComment: z.string().describe("Comment about the restriction"),
+    RestrictionComment: z.string().nullable().describe("Comment about the restriction"),
     /** Latitude of location of bridge */
-    Latitude: zLatitude().describe("Latitude of location of bridge"),
+    Latitude: z.number().describe("Latitude of location of bridge"),
     /** Longitude of location of bridge */
-    Longitude: zLongitude().describe("Longitude of location of bridge"),
+    Longitude: z.number().describe("Longitude of location of bridge"),
     /** WSDOT Identifier for bridge */
-    BridgeNumber: z.string().describe("WSDOT Identifier for bridge"),
+    BridgeNumber: z.string().nullable().describe("WSDOT Identifier for bridge"),
     /** Maximum gross vehicle weight in pounds */
     MaximumGrossVehicleWeightInPounds: z
       .number()
@@ -91,7 +87,7 @@ export const commercialVehiclesRestrictionSchema = z
       .nullable()
       .describe("Maximum gross vehicle weight in pounds"),
     /** Name of the bridge */
-    BridgeName: z.string().describe("Name of the bridge"),
+    BridgeName: z.string().nullable().describe("Name of the bridge"),
     /** BL Max Axle weight */
     BLMaxAxle: z
       .number()
@@ -114,13 +110,17 @@ export const commercialVehiclesRestrictionSchema = z
       .nullable()
       .describe("SA Max Axle weight"),
     /** Start location for the restriction on the roadway */
-    StartRoadwayLocation: roadwayLocationSchema.describe(
-      "Start location for the restriction on the roadway"
-    ),
+    StartRoadwayLocation: roadwayLocationSchema
+      .nullable()
+      .describe(
+        "Start location for the restriction on the roadway"
+      ),
     /** End location for the restriction on the roadway */
-    EndRoadwayLocation: roadwayLocationSchema.describe(
-      "End location for the restriction on the roadway"
-    ),
+    EndRoadwayLocation: roadwayLocationSchema
+      .nullable()
+      .describe(
+        "End location for the restriction on the roadway"
+      ),
   })
   .describe("Represents a Commercial Vehicle Restriction.");
 

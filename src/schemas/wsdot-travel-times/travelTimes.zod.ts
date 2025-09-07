@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * TravelTimeRoute schema
@@ -15,21 +15,21 @@ export const travelTimeRouteSchema = z
       .int()
       .describe("Unique ID that is specific to a route."),
     /** A friendly name for the route. */
-    Name: z.string().describe("A friendly name for the route."),
+    Name: z.string().nullable().describe("A friendly name for the route."),
     /** A description for the route. */
-    Description: z.string().describe("A description for the route."),
+    Description: z.string().nullable().describe("A description for the route."),
     /** The last time that the data for this route was updated. */
     TimeUpdated: zWsdotDate().describe(
       "The last time that the data for this route was updated."
     ),
     /** The location where this route begins. */
-    StartPoint: roadwayLocationSchema.describe(
-      "The location where this route begins."
-    ),
+    StartPoint: roadwayLocationSchema
+      .nullable()
+      .describe("The location where this route begins."),
     /** The location where this route ends. */
-    EndPoint: roadwayLocationSchema.describe(
-      "The location where this route ends."
-    ),
+    EndPoint: roadwayLocationSchema
+      .nullable()
+      .describe("The location where this route ends."),
     /** Total distance of this route in miles. */
     Distance: z.number().describe("Total distance of this route in miles."),
     /** The average time in minutes that it takes to complete this route. */

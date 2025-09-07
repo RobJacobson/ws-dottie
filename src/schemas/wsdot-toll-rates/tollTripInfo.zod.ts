@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * TollTripInfo schema
@@ -15,7 +15,10 @@ export const tollTripInfoSchema = z.object({
   /** End milepost */
   EndMilepost: z.number().describe("End milepost"),
   /** WGS84 LineString geometry (string) */
-  Geometry: z.string().describe("WGS84 LineString geometry (string)"),
+  Geometry: z
+    .string()
+    .nullable()
+    .describe("WGS84 LineString geometry (string)"),
   /** Last modified date (JS Date, nullable) */
   ModifiedDate: zWsdotDate()
     .nullable()
