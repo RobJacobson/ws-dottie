@@ -92,7 +92,7 @@ import {
   type CommercialVehiclesRestrictionsWithId,
   commercialVehiclesRestrictionsWithIdSchema,
 } from "@/schemas/wsdot-commercial-vehicle-restrictions";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getCommercialVehicleRestrictionsWithId (none) */
@@ -103,18 +103,17 @@ export type GetCommercialVehicleRestrictionsWithIdParams = z.infer<
   typeof getCommercialVehicleRestrictionsWithIdParamsSchema
 >;
 
-const ENDPOINT_WITH_ID =
-  "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson";
-
 /** Fetches commercial vehicle restrictions including UniqueID */
-export const getCommercialVehicleRestrictionsWithId = zodFetch<
-  GetCommercialVehicleRestrictionsWithIdParams,
-  CommercialVehiclesRestrictionsWithId
->(
-  ENDPOINT_WITH_ID,
-  getCommercialVehicleRestrictionsWithIdParamsSchema,
-  commercialVehiclesRestrictionsWithIdSchema
-);
+export const getCommercialVehicleRestrictionsWithId = async (
+  params: GetCommercialVehicleRestrictionsWithIdParams
+): Promise<CommercialVehiclesRestrictionsWithId> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson",
+    inputSchema: getCommercialVehicleRestrictionsWithIdParamsSchema,
+    outputSchema: commercialVehiclesRestrictionsWithIdSchema,
+    params,
+  });
 
 /** Returns options for restrictions including UniqueID; polls daily */
 export const commercialVehicleRestrictionsWithIdOptions = createQueryOptions({

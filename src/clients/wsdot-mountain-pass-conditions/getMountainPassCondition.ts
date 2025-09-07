@@ -70,37 +70,35 @@ import {
   type PassCondition,
   passConditionSchema,
 } from "@/schemas/wsdot-mountain-pass-conditions";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
-/** Params schema for getMountainPassConditionById */
-export const getMountainPassConditionByIdParamsSchema = z.object({
+/** Params schema for getMountainPassCondition */
+export const getMountainPassConditionParamsSchema = z.object({
   /** Pass condition identifier */
   passConditionId: z.number().int().positive(),
 });
 
-/** GetMountainPassConditionByIdParams type */
-export type GetMountainPassConditionByIdParams = z.infer<
-  typeof getMountainPassConditionByIdParamsSchema
+/** GetMountainPassConditionParams type */
+export type GetMountainPassConditionParams = z.infer<
+  typeof getMountainPassConditionParamsSchema
 >;
 
 /** Fetches a single mountain pass condition by ID */
-export const getMountainPassConditionById = zodFetch<
-  GetMountainPassConditionByIdParams,
-  PassCondition
->(
-  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
-  getMountainPassConditionByIdParamsSchema,
-  passConditionSchema
-);
+export const getMountainPassCondition = async (
+  params: GetMountainPassConditionParams
+): Promise<PassCondition> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
+    inputSchema: getMountainPassConditionParamsSchema,
+    outputSchema: passConditionSchema,
+    params,
+  });
 
 /** Returns options for a single pass condition by ID; polls daily */
-export const mountainPassConditionByIdOptions = createQueryOptions({
-  apiFunction: getMountainPassConditionById,
-  queryKey: [
-    "wsdot",
-    "mountain-pass-conditions",
-    "getMountainPassConditionById",
-  ],
+export const mountainPassConditionOptions = createQueryOptions({
+  apiFunction: getMountainPassCondition,
+  queryKey: ["wsdot", "mountain-pass-conditions", "getMountainPassCondition"],
   cacheStrategy: "DAILY_STATIC",
 });

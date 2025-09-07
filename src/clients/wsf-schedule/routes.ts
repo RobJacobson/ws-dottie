@@ -9,4 +9,3 @@ import {
 export { routesArraySchema, routesWithServiceDisruptionsArraySchema };
 export type Routes = RoutesArray;
 export type RouteWithDisruptions = RoutesWithServiceDisruptions;
-export type RoutesWithDisruptions = RoutesWithServiceDisruptionsArray;

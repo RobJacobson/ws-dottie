@@ -3,7 +3,7 @@ import {
   type TerminalWaitTimes,
   terminalWaitTimesSchema,
 } from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalWaitTimesByTerminalIdParamsSchema = z.object({
@@ -14,17 +14,15 @@ export type GetTerminalWaitTimesByTerminalIdParams = z.infer<
   typeof getTerminalWaitTimesByTerminalIdParamsSchema
 >;
 
-const ENDPOINT_BY_ID =
-  "/ferries/api/terminals/rest/terminalwaittimes/{terminalId}";
-
-export const getTerminalWaitTimesByTerminalId = zodFetch<
-  GetTerminalWaitTimesByTerminalIdParams,
-  TerminalWaitTimes
->(
-  ENDPOINT_BY_ID,
-  getTerminalWaitTimesByTerminalIdParamsSchema,
-  terminalWaitTimesSchema
-);
+export const getTerminalWaitTimesByTerminalId = async (
+  params: GetTerminalWaitTimesByTerminalIdParams
+): Promise<TerminalWaitTimes> =>
+  zodFetch({
+    endpoint: "/ferries/api/terminals/rest/terminalwaittimes/{terminalId}",
+    inputSchema: getTerminalWaitTimesByTerminalIdParamsSchema,
+    outputSchema: terminalWaitTimesSchema,
+    params,
+  });
 
 export const terminalWaitTimesByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalWaitTimesByTerminalId,

@@ -3,7 +3,7 @@ import {
   type TerminalVerbose,
   terminalVerboseSchema,
 } from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalVerboseByTerminalIdParamsSchema = z.object({
@@ -14,17 +14,15 @@ export type GetTerminalVerboseByTerminalIdParams = z.infer<
   typeof getTerminalVerboseByTerminalIdParamsSchema
 >;
 
-const ENDPOINT_BY_ID =
-  "/ferries/api/terminals/rest/terminalverbose/{terminalId}";
-
-export const getTerminalVerboseByTerminalId = zodFetch<
-  GetTerminalVerboseByTerminalIdParams,
-  TerminalVerbose
->(
-  ENDPOINT_BY_ID,
-  getTerminalVerboseByTerminalIdParamsSchema,
-  terminalVerboseSchema
-);
+export const getTerminalVerboseByTerminalId = async (
+  params: GetTerminalVerboseByTerminalIdParams
+): Promise<TerminalVerbose> =>
+  zodFetch({
+    endpoint: "/ferries/api/terminals/rest/terminalverbose/{terminalId}",
+    inputSchema: getTerminalVerboseByTerminalIdParamsSchema,
+    outputSchema: terminalVerboseSchema,
+    params,
+  });
 
 export const terminalVerboseByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalVerboseByTerminalId,

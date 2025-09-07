@@ -60,7 +60,7 @@ import {
   type BorderCrossings,
   borderCrossingsSchema,
 } from "@/schemas/wsdot-border-crossings";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getBorderCrossings (none) */
@@ -72,14 +72,16 @@ export type GetBorderCrossingsParams = z.infer<
 >;
 
 /** Fetches all border crossing reports */
-export const getBorderCrossings = zodFetch<
-  GetBorderCrossingsParams,
-  BorderCrossings
->(
-  "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
-  getBorderCrossingsParamsSchema,
-  borderCrossingsSchema
-);
+export const getBorderCrossings = async (
+  params: GetBorderCrossingsParams
+): Promise<BorderCrossings> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
+    inputSchema: getBorderCrossingsParamsSchema,
+    outputSchema: borderCrossingsSchema,
+    params,
+  });
 
 /** Returns options for all border crossings; polls every 60s */
 export const borderCrossingsOptions = createQueryOptions({

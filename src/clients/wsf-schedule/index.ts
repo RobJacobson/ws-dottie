@@ -10,11 +10,13 @@ export * from "./routesByTerminals";
 export * from "./routesHavingServiceDisruptions";
 export * from "./routesWithDisruptions";
 export * from "./sailings";
-export * from "./schedule";
 export * from "./scheduleByRoute";
 export * from "./scheduleByTerminals";
 export * from "./scheduledRoutes";
 export * from "./scheduledRoutesBySeason";
+
+// Re-export common types to avoid conflicts
+export type { ScheduledRoutes } from "./scheduledRoutes";
 export * from "./scheduleToday";
 export * from "./scheduleTodayByRoute";
 export * from "./scheduleTodayByTerminals";

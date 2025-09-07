@@ -3,7 +3,7 @@ import {
   type TerminalBasics,
   terminalBasicsSchema,
 } from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalBasicsByTerminalIdParamsSchema = z.object({
@@ -14,17 +14,15 @@ export type GetTerminalBasicsByTerminalIdParams = z.infer<
   typeof getTerminalBasicsByTerminalIdParamsSchema
 >;
 
-const ENDPOINT_BY_ID =
-  "/ferries/api/terminals/rest/terminalbasics/{terminalId}";
-
-export const getTerminalBasicsByTerminalId = zodFetch<
-  GetTerminalBasicsByTerminalIdParams,
-  TerminalBasics
->(
-  ENDPOINT_BY_ID,
-  getTerminalBasicsByTerminalIdParamsSchema,
-  terminalBasicsSchema
-);
+export const getTerminalBasicsByTerminalId = async (
+  params: GetTerminalBasicsByTerminalIdParams
+): Promise<TerminalBasics> =>
+  zodFetch({
+    endpoint: "/ferries/api/terminals/rest/terminalbasics/{terminalId}",
+    inputSchema: getTerminalBasicsByTerminalIdParamsSchema,
+    outputSchema: terminalBasicsSchema,
+    params,
+  });
 
 export const terminalBasicsByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalBasicsByTerminalId,

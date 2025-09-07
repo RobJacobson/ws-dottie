@@ -31,21 +31,20 @@
  */
 import { z } from "zod";
 import { eventCategoriesSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Fetches event categories */
 export const getEventCategories = async (
   params: GetEventCategoriesParams = {}
 ): Promise<string[]> => {
-  return zodFetchCustom(
-    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
-    {
-      input: getEventCategoriesParamsSchema,
-      output: eventCategoriesSchema,
-    },
-    params
-  );
+  return zodFetch({
+    endpoint:
+      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
+    inputSchema: getEventCategoriesParamsSchema,
+    outputSchema: eventCategoriesSchema,
+    params,
+  });
 };
 
 /** Params schema for getEventCategories (none) */

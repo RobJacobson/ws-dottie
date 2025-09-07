@@ -3,7 +3,7 @@ import {
   type RoutesWithServiceDisruptionsArray,
   routesWithServiceDisruptionsArraySchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getRoutesWithDisruptionsParamsSchema = z.object({
@@ -16,17 +16,16 @@ export type GetRoutesWithDisruptionsParams = z.infer<
 
 export type RoutesWithDisruptions = RoutesWithServiceDisruptionsArray;
 
-const ENDPOINT_WITH_DISRUPTIONS =
-  "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}";
-
-export const getRoutesWithDisruptions = zodFetch<
-  GetRoutesWithDisruptionsParams,
-  RoutesWithDisruptions
->(
-  ENDPOINT_WITH_DISRUPTIONS,
-  getRoutesWithDisruptionsParamsSchema,
-  routesWithServiceDisruptionsArraySchema
-);
+export const getRoutesWithDisruptions = async (
+  params: GetRoutesWithDisruptionsParams
+): Promise<RoutesWithDisruptions> =>
+  zodFetch({
+    endpoint:
+      "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}",
+    inputSchema: getRoutesWithDisruptionsParamsSchema,
+    outputSchema: routesWithServiceDisruptionsArraySchema,
+    params,
+  });
 
 export const routesWithDisruptionsOptions = createQueryOptions({
   apiFunction: getRoutesWithDisruptions,

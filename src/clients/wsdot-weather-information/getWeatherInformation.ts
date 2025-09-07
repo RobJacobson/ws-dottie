@@ -3,7 +3,7 @@ import {
   type WeatherInformation,
   weatherInformationSchema,
 } from "@/schemas/wsdot-weather-information";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export { weatherInformationSchema };
@@ -15,14 +15,16 @@ export type GetWeatherInformationParams = z.infer<
   typeof getWeatherInformationParamsSchema
 >;
 
-export const getWeatherInformation = zodFetch<
-  GetWeatherInformationParams,
-  WeatherInformation
->(
-  "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson",
-  getWeatherInformationParamsSchema,
-  weatherInformationSchema
-);
+export const getWeatherInformation = async (
+  params: GetWeatherInformationParams
+): Promise<WeatherInformation> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson",
+    inputSchema: getWeatherInformationParamsSchema,
+    outputSchema: weatherInformationSchema,
+    params,
+  });
 
 export const weatherInformationOptions = createQueryOptions({
   apiFunction: getWeatherInformation,

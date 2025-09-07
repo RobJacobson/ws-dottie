@@ -3,7 +3,7 @@ import {
   type TimeAdjustmentByRoute,
   timeAdjustmentByRouteSchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTimeAdjustmentsByRouteParamsSchema = z.object({
@@ -14,12 +14,15 @@ export type GetTimeAdjustmentsByRouteParams = z.infer<
   typeof getTimeAdjustmentsByRouteParamsSchema
 >;
 
-const ENDPOINT = "/ferries/api/schedule/rest/timeadjbyroute/{routeId}";
-
-export const getTimeAdjustmentsByRoute = zodFetch<
-  GetTimeAdjustmentsByRouteParams,
-  TimeAdjustmentByRoute
->(ENDPOINT, getTimeAdjustmentsByRouteParamsSchema, timeAdjustmentByRouteSchema);
+export const getTimeAdjustmentsByRoute = async (
+  params: GetTimeAdjustmentsByRouteParams
+): Promise<TimeAdjustmentByRoute> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/timeadjbyroute/{routeId}",
+    inputSchema: getTimeAdjustmentsByRouteParamsSchema,
+    outputSchema: timeAdjustmentByRouteSchema,
+    params,
+  });
 
 export const timeAdjustmentsByRouteOptions = createQueryOptions({
   apiFunction: getTimeAdjustmentsByRoute,

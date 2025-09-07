@@ -1,2 +1,2 @@
-export * from "./getMountainPassConditionById";
+export * from "./getMountainPassCondition";
 export * from "./getMountainPassConditions";

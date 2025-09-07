@@ -56,11 +56,8 @@ import {
   type CameraArray,
   cameraArraySchema,
 } from "@/schemas/wsdot-highway-cameras";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
-
-const ENDPOINT_BASE =
-  "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Searches highway cameras using optional filters */
 export const searchHighwayCameras = async (
@@ -76,16 +73,14 @@ export const searchHighwayCameras = async (
   if (params.EndingMilepost !== undefined)
     queryParams.append("EndingMilepost", String(params.EndingMilepost));
 
-  const endpoint = `${ENDPOINT_BASE}?${queryParams.toString()}`;
+  const endpoint = `/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson?${queryParams.toString()}`;
 
-  return zodFetchCustom(
+  return zodFetch({
     endpoint,
-    {
-      input: searchHighwayCamerasParamsSchema,
-      output: cameraArraySchema,
-    },
-    undefined // No URL template interpolation needed since we build the URL ourselves
-  );
+    inputSchema: searchHighwayCamerasParamsSchema,
+    outputSchema: cameraArraySchema,
+    params: undefined, // No URL template interpolation needed since we build the URL ourselves
+  });
 };
 
 /** Params schema for searchHighwayCameras */

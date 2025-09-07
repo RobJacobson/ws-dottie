@@ -46,7 +46,7 @@
 
 import { z } from "zod";
 import { type TollRates, tollRatesSchema } from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getTollRates (none) */
@@ -56,11 +56,15 @@ export const getTollRatesParamsSchema = z.object({});
 export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
 
 /** Fetches current toll rates */
-export const getTollRates = zodFetch<GetTollRatesParams, TollRates>(
-  "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
-  getTollRatesParamsSchema,
-  tollRatesSchema
-);
+export const getTollRates = async (
+  params: GetTollRatesParams
+): Promise<TollRates> =>
+  zodFetch({
+    endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
+    inputSchema: getTollRatesParamsSchema,
+    outputSchema: tollRatesSchema,
+    params,
+  });
 
 /** Returns options for current toll rates; polls every 60s */
 export const tollRatesOptions = createQueryOptions({

@@ -4,7 +4,7 @@ import {
   vesselClassSchema,
   vesselStatsArraySchema,
 } from "@/schemas/wsf-vessels";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getVesselStatsParamsSchema = z.object({});
@@ -14,13 +14,15 @@ export type GetVesselStatsParams = z.infer<typeof getVesselStatsParamsSchema>;
 export { vesselStatsArraySchema, vesselClassSchema };
 export type { VesselStatsArray };
 
-const ENDPOINT_ALL = "/ferries/api/vessels/rest/vesselstats";
-
-export const getVesselStats = zodFetch<GetVesselStatsParams, VesselStatsArray>(
-  ENDPOINT_ALL,
-  getVesselStatsParamsSchema,
-  vesselStatsArraySchema
-);
+export const getVesselStats = async (
+  params: GetVesselStatsParams
+): Promise<VesselStatsArray> =>
+  zodFetch({
+    endpoint: "/ferries/api/vessels/rest/vesselstats",
+    inputSchema: getVesselStatsParamsSchema,
+    outputSchema: vesselStatsArraySchema,
+    params,
+  });
 
 export const vesselStatsOptions = createQueryOptions({
   apiFunction: getVesselStats,

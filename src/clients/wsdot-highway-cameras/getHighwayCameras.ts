@@ -75,7 +75,7 @@
  */
 import { z } from "zod";
 import { type Cameras, camerasSchema } from "@/schemas/wsdot-highway-cameras";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getHighwayCameras (none) */
@@ -87,11 +87,16 @@ export type GetHighwayCamerasParams = z.infer<
 >;
 
 /** Fetches all highway cameras */
-export const getHighwayCameras = zodFetch<GetHighwayCamerasParams, Cameras>(
-  "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
-  getHighwayCamerasParamsSchema,
-  camerasSchema
-);
+export const getHighwayCameras = async (
+  params: GetHighwayCamerasParams
+): Promise<Cameras> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
+    inputSchema: getHighwayCamerasParamsSchema,
+    outputSchema: camerasSchema,
+    params,
+  });
 
 /** Returns options for all cameras; polls daily */
 export const highwayCamerasOptions = createQueryOptions({

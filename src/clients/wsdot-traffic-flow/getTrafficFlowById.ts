@@ -53,7 +53,7 @@
  */
 import { z } from "zod";
 import { type FlowData, flowDataSchema } from "@/schemas/wsdot-traffic-flow";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTrafficFlowByIdParamsSchema = z.object({
@@ -65,14 +65,16 @@ export type GetTrafficFlowByIdParams = z.infer<
   typeof getTrafficFlowByIdParamsSchema
 >;
 
-const ENDPOINT_BASE =
-  "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson";
-
-export const getTrafficFlowById = zodFetch<GetTrafficFlowByIdParams, FlowData>(
-  ENDPOINT_BASE,
-  getTrafficFlowByIdParamsSchema,
-  flowDataSchema
-);
+export const getTrafficFlowById = async (
+  params: GetTrafficFlowByIdParams
+): Promise<FlowData> =>
+  zodFetch({
+    endpoint:
+      "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson",
+    inputSchema: getTrafficFlowByIdParamsSchema,
+    outputSchema: flowDataSchema,
+    params,
+  });
 
 /** Returns options for a single traffic flow by ID; polls every 60s */
 export const trafficFlowByIdOptions = createQueryOptions({

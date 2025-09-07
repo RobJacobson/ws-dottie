@@ -3,7 +3,7 @@ import {
   type ValidDateRange,
   validDateRangeSchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getValidDateRangeParamsSchema = z.object({});
@@ -15,14 +15,15 @@ export type GetValidDateRangeParams = z.infer<
 export { validDateRangeSchema };
 export type { ValidDateRange };
 
-export const getScheduleValidDateRange = zodFetch<
-  GetValidDateRangeParams,
-  ValidDateRange
->(
-  "/ferries/api/schedule/rest/validdaterange",
-  getValidDateRangeParamsSchema,
-  validDateRangeSchema
-);
+export const getScheduleValidDateRange = async (
+  params: GetValidDateRangeParams
+): Promise<ValidDateRange> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/validdaterange",
+    inputSchema: getValidDateRangeParamsSchema,
+    outputSchema: validDateRangeSchema,
+    params,
+  });
 
 export const scheduleValidDateRangeOptions = createQueryOptions({
   apiFunction: getScheduleValidDateRange,

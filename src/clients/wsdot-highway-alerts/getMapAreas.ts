@@ -33,21 +33,20 @@
  */
 import { z } from "zod";
 import { type MapAreas, mapAreasSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Fetches map areas */
 export const getMapAreas = async (
   params: GetMapAreasParams = {}
 ): Promise<MapAreas> => {
-  return zodFetchCustom(
-    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetMapAreasAsJson",
-    {
-      input: getMapAreasParamsSchema,
-      output: mapAreasSchema,
-    },
-    params
-  );
+  return zodFetch({
+    endpoint:
+      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetMapAreasAsJson",
+    inputSchema: getMapAreasParamsSchema,
+    outputSchema: mapAreasSchema,
+    params,
+  });
 };
 
 /** Params schema for getMapAreas (none) */

@@ -5,25 +5,31 @@ import {
   alertSchema,
   alertsArraySchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
-export const getAlertsParamsSchema = z.object({});
+export const getScheduleAlertsParamsSchema = z.object({});
 
-export type GetAlertsParams = z.infer<typeof getAlertsParamsSchema>;
+export type GetScheduleAlertsParams = z.infer<
+  typeof getScheduleAlertsParamsSchema
+>;
 
 export { alertSchema, alertsArraySchema };
 export type ScheduleAlert = Alert;
 export type ScheduleAlerts = AlertsArray;
 
-export const getAlerts = zodFetch<GetAlertsParams, ScheduleAlerts>(
-  "/ferries/api/schedule/rest/alerts",
-  getAlertsParamsSchema,
-  alertsArraySchema
-);
+export const getScheduleAlerts = async (
+  params: GetScheduleAlertsParams
+): Promise<ScheduleAlerts> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/alerts",
+    inputSchema: getScheduleAlertsParamsSchema,
+    outputSchema: alertsArraySchema,
+    params,
+  });
 
-export const alertsOptions = createQueryOptions({
-  apiFunction: getAlerts,
-  queryKey: ["wsf", "schedule", "alerts", "getAlerts"],
+export const scheduleAlertsOptions = createQueryOptions({
+  apiFunction: getScheduleAlerts,
+  queryKey: ["wsf", "schedule", "alerts", "getScheduleAlerts"],
   cacheStrategy: "DAILY_STATIC",
 });

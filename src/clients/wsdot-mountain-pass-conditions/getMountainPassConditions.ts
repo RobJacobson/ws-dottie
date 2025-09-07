@@ -69,7 +69,7 @@ import {
   type MountainPassConditions,
   mountainPassConditionsSchema,
 } from "@/schemas/wsdot-mountain-pass-conditions";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getMountainPassConditions (none) */
@@ -81,14 +81,16 @@ export type GetMountainPassConditionsParams = z.infer<
 >;
 
 /** Fetches all mountain pass conditions */
-export const getMountainPassConditions = zodFetch<
-  GetMountainPassConditionsParams,
-  MountainPassConditions
->(
-  "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
-  getMountainPassConditionsParamsSchema,
-  mountainPassConditionsSchema
-);
+export const getMountainPassConditions = async (
+  params: GetMountainPassConditionsParams
+): Promise<MountainPassConditions> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
+    inputSchema: getMountainPassConditionsParamsSchema,
+    outputSchema: mountainPassConditionsSchema,
+    params,
+  });
 
 /** Returns options for all pass conditions; polls daily */
 export const mountainPassConditionsOptions = createQueryOptions({

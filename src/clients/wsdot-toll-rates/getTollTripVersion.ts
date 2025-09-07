@@ -34,20 +34,19 @@ import {
   type TollTripVersion,
   tollTripVersionSchema,
 } from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
 
 export const getTollTripVersion = async (
   params: GetTollTripVersionParams = {}
 ): Promise<TollTripVersion> => {
-  return zodFetchCustom(
-    "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
-    {
-      input: getTollTripVersionParamsSchema,
-      output: tollTripVersionSchema,
-    },
-    params
-  );
+  return zodFetch({
+    endpoint:
+      "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
+    inputSchema: getTollTripVersionParamsSchema,
+    outputSchema: tollTripVersionSchema,
+    params,
+  });
 };
 
 export const getTollTripVersionParamsSchema = z.object({});

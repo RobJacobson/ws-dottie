@@ -81,7 +81,7 @@
  */
 import { z } from "zod";
 import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getAlertsForMapArea */
@@ -94,15 +94,17 @@ export type GetAlertsForMapAreaParams = z.infer<
   typeof getAlertsForMapAreaParamsSchema
 >;
 
-const ENDPOINT_BY_MAP_AREA =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}";
-
 /** Fetches highway alerts filtered by map area */
-export const getAlertsForMapArea = zodFetch<GetAlertsForMapAreaParams, Alerts>(
-  ENDPOINT_BY_MAP_AREA,
-  getAlertsForMapAreaParamsSchema,
-  alertsSchema
-);
+export const getAlertsForMapArea = async (
+  params: GetAlertsForMapAreaParams
+): Promise<Alerts> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
+    inputSchema: getAlertsForMapAreaParamsSchema,
+    outputSchema: alertsSchema,
+    params,
+  });
 
 /** Returns options for alerts by map area; polls every 60s */
 export const getAlertsForMapAreaOptions = createQueryOptions({

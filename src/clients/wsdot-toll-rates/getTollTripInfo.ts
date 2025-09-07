@@ -48,21 +48,19 @@ import {
   type TollTripInfos,
   tollTripInfosSchema,
 } from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Fetches static information and geometry for toll trips */
 export const getTollTripInfo = async (
   params: GetTollTripInfoParams = {}
 ): Promise<TollTripInfos> => {
-  return zodFetchCustom(
-    "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson",
-    {
-      input: getTollTripInfoParamsSchema,
-      output: tollTripInfosSchema,
-    },
-    params
-  );
+  return zodFetch({
+    endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson",
+    inputSchema: getTollTripInfoParamsSchema,
+    outputSchema: tollTripInfosSchema,
+    params,
+  });
 };
 
 /** Params schema for getTollTripInfo (none) */

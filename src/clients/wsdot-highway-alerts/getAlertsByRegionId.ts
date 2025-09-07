@@ -56,7 +56,7 @@
  */
 import { z } from "zod";
 import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getAlertsByRegionId */
@@ -69,15 +69,18 @@ export type GetAlertsByRegionIdParams = z.infer<
   typeof getAlertsByRegionIdParamsSchema
 >;
 
-const ENDPOINT_BY_REGION_ID =
-  "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}";
-
 /** Fetches highway alerts filtered by region ID */
-export const getAlertsByRegionId = zodFetch<GetAlertsByRegionIdParams, Alerts>(
-  ENDPOINT_BY_REGION_ID,
-  getAlertsByRegionIdParamsSchema,
-  alertsSchema
-);
+export const getAlertsByRegionId = async (
+  params: GetAlertsByRegionIdParams
+): Promise<Alerts> => {
+  return zodFetch({
+    endpoint:
+      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}",
+    inputSchema: getAlertsByRegionIdParamsSchema,
+    outputSchema: alertsSchema,
+    params,
+  });
+};
 
 /** Returns options for alerts by region ID; polls every 60s */
 export const getAlertsByRegionIdOptions = createQueryOptions({

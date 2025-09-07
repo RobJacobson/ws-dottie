@@ -5,7 +5,7 @@ import {
   activeSeasonSchema,
   activeSeasonsArraySchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getActiveSeasonsParamsSchema = z.object({});
@@ -18,11 +18,15 @@ export { activeSeasonSchema, activeSeasonsArraySchema };
 export type { ActiveSeason };
 export type ActiveSeasons = ActiveSeasonsArray;
 
-export const getActiveSeasons = zodFetch<GetActiveSeasonsParams, ActiveSeasons>(
-  "/ferries/api/schedule/rest/activeseasons",
-  getActiveSeasonsParamsSchema,
-  activeSeasonsArraySchema
-);
+export const getActiveSeasons = async (
+  params: GetActiveSeasonsParams
+): Promise<ActiveSeasons> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/activeseasons",
+    inputSchema: getActiveSeasonsParamsSchema,
+    outputSchema: activeSeasonsArraySchema,
+    params,
+  });
 
 export const activeSeasonsOptions = createQueryOptions({
   apiFunction: getActiveSeasons,

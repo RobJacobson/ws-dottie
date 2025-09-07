@@ -3,7 +3,7 @@ import {
   type VesselHistoryArray as VesselHistoryArrayType,
   vesselHistoryArraySchema,
 } from "@/schemas/wsf-vessels";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 const dateRangeParams = {
@@ -13,27 +13,25 @@ const dateRangeParams = {
 
 const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");
 
-export const getVesselHistoryByVesselAndDateRangeParamsSchema = z
-  .object({
-    vesselName: vesselNameParam,
-    ...dateRangeParams,
-  });
+export const getVesselHistoryByVesselAndDateRangeParamsSchema = z.object({
+  vesselName: vesselNameParam,
+  ...dateRangeParams,
+});
 
 export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<
   typeof getVesselHistoryByVesselAndDateRangeParamsSchema
 >;
 
-const ENDPOINT_SPECIFIC =
-  "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}";
-
-export const getVesselHistoryByVesselAndDateRange = zodFetch<
-  GetVesselHistoryByVesselAndDateRangeParams,
-  VesselHistoryArrayType
->(
-  ENDPOINT_SPECIFIC,
-  getVesselHistoryByVesselAndDateRangeParamsSchema,
-  vesselHistoryArraySchema
-);
+export const getVesselHistoryByVesselAndDateRange = async (
+  params: GetVesselHistoryByVesselAndDateRangeParams
+): Promise<VesselHistoryArrayType> =>
+  zodFetch({
+    endpoint:
+      "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
+    inputSchema: getVesselHistoryByVesselAndDateRangeParamsSchema,
+    outputSchema: vesselHistoryArraySchema,
+    params,
+  });
 
 export const vesselHistoryByVesselAndDateRangeOptions = createQueryOptions({
   apiFunction: getVesselHistoryByVesselAndDateRange,

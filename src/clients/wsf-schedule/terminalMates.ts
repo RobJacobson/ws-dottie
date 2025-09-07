@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { scheduleTerminalSchema } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalMatesParamsSchema = z.object({
@@ -17,13 +17,16 @@ export type ScheduleTerminalMates = z.infer<
   typeof scheduleTerminalMatesArraySchema
 >;
 
-const ENDPOINT =
-  "/ferries/api/schedule/rest/terminalmates/{tripDate}/{terminalId}";
-
-export const getTerminalMates = zodFetch<
-  GetTerminalMatesParams,
-  ScheduleTerminalMates
->(ENDPOINT, getTerminalMatesParamsSchema, scheduleTerminalMatesArraySchema);
+export const getTerminalMates = async (
+  params: GetTerminalMatesParams
+): Promise<ScheduleTerminalMates> =>
+  zodFetch({
+    endpoint:
+      "/ferries/api/schedule/rest/terminalmates/{tripDate}/{terminalId}",
+    inputSchema: getTerminalMatesParamsSchema,
+    outputSchema: scheduleTerminalMatesArraySchema,
+    params,
+  });
 
 export const scheduleTerminalMatesOptions = createQueryOptions({
   apiFunction: getTerminalMates,

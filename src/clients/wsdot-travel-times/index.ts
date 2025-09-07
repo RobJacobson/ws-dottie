@@ -1,2 +1,2 @@
-export * from "./getTravelTimeById";
+export * from "./getTravelTime";
 export * from "./getTravelTimes";

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { fareLineItemBasicSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getFareLineItemsBasicParamsSchema = z.object({
@@ -17,13 +17,16 @@ export type GetFareLineItemsBasicParams = z.infer<
 export const fareLineItemsBasicArraySchema = z.array(fareLineItemBasicSchema);
 export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicArraySchema>;
 
-const ENDPOINT =
-  "/ferries/api/fares/rest/farelineitemsbasic/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}";
-
-export const getFareLineItemsBasic = zodFetch<
-  GetFareLineItemsBasicParams,
-  FareLineItemsBasic
->(ENDPOINT, getFareLineItemsBasicParamsSchema, fareLineItemsBasicArraySchema);
+export const getFareLineItemsBasic = async (
+  params: GetFareLineItemsBasicParams
+): Promise<FareLineItemsBasic> =>
+  zodFetch({
+    endpoint:
+      "/ferries/api/fares/rest/farelineitemsbasic/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
+    inputSchema: getFareLineItemsBasicParamsSchema,
+    outputSchema: fareLineItemsBasicArraySchema,
+    params,
+  });
 
 export const fareLineItemsBasicOptions = createQueryOptions({
   apiFunction: getFareLineItemsBasic,

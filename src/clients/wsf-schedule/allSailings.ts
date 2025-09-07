@@ -3,7 +3,7 @@ import {
   sailingResponseSchema,
   sailingResponsesArraySchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getAllSailingsParamsSchema = z.object({
@@ -16,11 +16,15 @@ export { sailingResponseSchema, sailingResponsesArraySchema };
 export const sailingsArraySchema = sailingResponsesArraySchema;
 export type AllSailings = z.infer<typeof sailingsArraySchema>;
 
-export const getAllSailings = zodFetch<GetAllSailingsParams, AllSailings>(
-  "/ferries/api/schedule/rest/allsailings/{schedRouteId}",
-  getAllSailingsParamsSchema,
-  sailingsArraySchema
-);
+export const getAllSailings = async (
+  params: GetAllSailingsParams
+): Promise<AllSailings> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/allsailings/{schedRouteId}",
+    inputSchema: getAllSailingsParamsSchema,
+    outputSchema: sailingsArraySchema,
+    params,
+  });
 
 export const allSailingsOptions = createQueryOptions({
   apiFunction: getAllSailings,

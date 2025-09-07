@@ -75,7 +75,7 @@ import {
   type BridgeDataGISList,
   bridgeDataGISListSchema,
 } from "@/schemas/wsdot-bridge-clearances";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 /** Params schema for getBridgeClearances */
@@ -90,14 +90,16 @@ export type GetBridgeClearancesParams = z.infer<
 >;
 
 /** Fetches bridge clearance data for a route */
-export const getBridgeClearances = zodFetch<
-  GetBridgeClearancesParams,
-  BridgeDataGISList
->(
-  "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
-  getBridgeClearancesParamsSchema,
-  bridgeDataGISListSchema
-);
+export const getBridgeClearances = async (
+  params: GetBridgeClearancesParams
+): Promise<BridgeDataGISList> =>
+  zodFetch({
+    endpoint:
+      "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
+    inputSchema: getBridgeClearancesParamsSchema,
+    outputSchema: bridgeDataGISListSchema,
+    params,
+  });
 
 /** Returns options for bridge clearances by route; polls daily */
 export const bridgeClearancesOptions = createQueryOptions({

@@ -3,34 +3,32 @@ import {
   type WeatherInformation,
   weatherInformationSchema,
 } from "@/schemas/wsdot-weather-information";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
-import { zWsdotDate } from "@/shared/fetching/validation";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 export const getWeatherInformationForStations = async (
   params: GetWeatherInformationForStationsParams
 ): Promise<WeatherInformation> => {
-  return zodFetchCustom(
-    "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherForStationsAsJson?StationList={stationIds}",
-    {
-      input: getWeatherInformationForStationsParamsSchema,
-      output: weatherInformationSchema,
-    },
-    params
-  );
+  return zodFetch({
+    endpoint:
+      "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherForStationsAsJson?StationList={stationIds}",
+    inputSchema: getWeatherInformationForStationsParamsSchema,
+    outputSchema: weatherInformationSchema,
+    params,
+  });
 };
 
 export const getSearchWeatherInformation = async (
   params: GetSearchWeatherInformationParams
 ): Promise<WeatherInformation> => {
-  return zodFetchCustom(
-    "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/SearchWeatherInformationAsJson?StationID={stationId}&SearchStartTime={searchStartTime}&SearchEndTime={searchEndTime}",
-    {
-      input: getSearchWeatherInformationParamsSchema,
-      output: weatherInformationSchema,
-    },
-    params
-  );
+  return zodFetch({
+    endpoint:
+      "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/SearchWeatherInformationAsJson?StationID={stationId}&SearchStartTime={searchStartTime}&SearchEndTime={searchEndTime}",
+    inputSchema: getSearchWeatherInformationParamsSchema,
+    outputSchema: weatherInformationSchema,
+    params,
+  });
 };
 
 export const getWeatherInformationForStationsParamsSchema = z.object({

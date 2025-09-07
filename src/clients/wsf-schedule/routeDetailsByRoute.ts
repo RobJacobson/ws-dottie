@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getRouteDetailsByRouteParamsSchema = z.object({
@@ -43,17 +43,15 @@ export type RouteDetailsByRouteResponse = z.infer<
   typeof routeDetailsByRouteResponseSchema
 >;
 
-const ENDPOINT_BY_ROUTE =
-  "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}";
-
-export const getRouteDetailsByRoute = zodFetch<
-  GetRouteDetailsByRouteParams,
-  RouteDetailsByRouteResponse
->(
-  ENDPOINT_BY_ROUTE,
-  getRouteDetailsByRouteParamsSchema,
-  routeDetailsByRouteResponseSchema
-);
+export const getRouteDetailsByRoute = async (
+  params: GetRouteDetailsByRouteParams
+): Promise<RouteDetailsByRouteResponse> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}",
+    inputSchema: getRouteDetailsByRouteParamsSchema,
+    outputSchema: routeDetailsByRouteResponseSchema,
+    params,
+  });
 
 export const routeDetailsByRouteOptions = createQueryOptions({
   apiFunction: getRouteDetailsByRoute,

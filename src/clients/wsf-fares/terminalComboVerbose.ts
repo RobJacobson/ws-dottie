@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { terminalComboVerboseItemSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalComboVerboseParamsSchema = z.object({
@@ -18,16 +18,15 @@ export type TerminalComboVerbose = z.infer<
   typeof terminalComboVerboseArraySchema
 >;
 
-const ENDPOINT = "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}";
-
-export const getTerminalComboVerbose = zodFetch<
-  GetTerminalComboVerboseParams,
-  TerminalComboVerbose
->(
-  ENDPOINT,
-  getTerminalComboVerboseParamsSchema,
-  terminalComboVerboseArraySchema
-);
+export const getTerminalComboVerbose = async (
+  params: GetTerminalComboVerboseParams
+): Promise<TerminalComboVerbose> =>
+  zodFetch({
+    endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}",
+    inputSchema: getTerminalComboVerboseParamsSchema,
+    outputSchema: terminalComboVerboseArraySchema,
+    params,
+  });
 
 export const terminalComboVerboseOptions = createQueryOptions({
   apiFunction: getTerminalComboVerbose,

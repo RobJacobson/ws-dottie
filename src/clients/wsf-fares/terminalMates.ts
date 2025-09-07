@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { terminalMateSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getFaresTerminalMatesParamsSchema = z.object({
@@ -15,13 +15,15 @@ export type GetFaresTerminalMatesParams = z.infer<
 export const terminalMatesArraySchema = z.array(terminalMateSchema);
 export type TerminalMates = z.infer<typeof terminalMatesArraySchema>;
 
-const ENDPOINT =
-  "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalId}";
-
-export const getFaresTerminalMates = zodFetch<
-  GetFaresTerminalMatesParams,
-  TerminalMates
->(ENDPOINT, getFaresTerminalMatesParamsSchema, terminalMatesArraySchema);
+export const getFaresTerminalMates = async (
+  params: GetFaresTerminalMatesParams
+): Promise<TerminalMates> =>
+  zodFetch({
+    endpoint: "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalId}",
+    inputSchema: getFaresTerminalMatesParamsSchema,
+    outputSchema: terminalMatesArraySchema,
+    params,
+  });
 
 export const terminalMatesOptions = createQueryOptions({
   apiFunction: getFaresTerminalMates,

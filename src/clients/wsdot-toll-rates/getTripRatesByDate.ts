@@ -47,8 +47,8 @@ import {
   type TripRatesByDate,
   tripRatesByDateItemSchema,
 } from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
-import { zodFetchCustom } from "@/shared/fetching";
+import { createQueryOptions } from "@/shared/tanstack/factory";
+import { zodFetch } from "@/shared/fetching";
 
 /** Fetches trip rates between two dates (YYYY-MM-DD) */
 export const getTripRatesByDate = async (
@@ -60,14 +60,12 @@ export const getTripRatesByDate = async (
 
   const endpoint = `/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?${queryParams.toString()}`;
 
-  return zodFetchCustom(
+  return zodFetch({
     endpoint,
-    {
-      input: getTripRatesByDateParamsSchema,
-      output: tripRatesByDateItemSchema,
-    },
-    undefined // No URL template interpolation needed since we build the URL ourselves
-  );
+    inputSchema: getTripRatesByDateParamsSchema,
+    outputSchema: tripRatesByDateItemSchema,
+    params: undefined, // No URL template interpolation needed since we build the URL ourselves
+  });
 };
 
 /** Params schema for getTripRatesByDate */

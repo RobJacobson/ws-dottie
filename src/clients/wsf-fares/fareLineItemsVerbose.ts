@@ -3,7 +3,7 @@ import {
   type FareLineItemsVerbose,
   fareLineItemsVerboseSchema,
 } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getFareLineItemsVerboseParamsSchema = z.object({
@@ -14,12 +14,15 @@ export type GetFareLineItemsVerboseParams = z.infer<
   typeof getFareLineItemsVerboseParamsSchema
 >;
 
-const ENDPOINT = "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}";
-
-export const getFareLineItemsVerbose = zodFetch<
-  GetFareLineItemsVerboseParams,
-  FareLineItemsVerbose
->(ENDPOINT, getFareLineItemsVerboseParamsSchema, fareLineItemsVerboseSchema);
+export const getFareLineItemsVerbose = async (
+  params: GetFareLineItemsVerboseParams
+): Promise<FareLineItemsVerbose> =>
+  zodFetch({
+    endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
+    inputSchema: getFareLineItemsVerboseParamsSchema,
+    outputSchema: fareLineItemsVerboseSchema,
+    params,
+  });
 
 export const fareLineItemsVerboseOptions = createQueryOptions({
   apiFunction: getFareLineItemsVerbose,

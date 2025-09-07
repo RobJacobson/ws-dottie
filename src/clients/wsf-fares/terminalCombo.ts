@@ -3,7 +3,7 @@ import {
   scheduleTerminalComboSchema,
   type TerminalCombo,
 } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getFaresTerminalComboParamsSchema = z.object({
@@ -16,13 +16,16 @@ export type GetFaresTerminalComboParams = z.infer<
   typeof getFaresTerminalComboParamsSchema
 >;
 
-const ENDPOINT =
-  "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalId}/{arrivingTerminalId}";
-
-export const getFaresTerminalCombo = zodFetch<
-  GetFaresTerminalComboParams,
-  TerminalCombo
->(ENDPOINT, getFaresTerminalComboParamsSchema, scheduleTerminalComboSchema);
+export const getFaresTerminalCombo = async (
+  params: GetFaresTerminalComboParams
+): Promise<TerminalCombo> =>
+  zodFetch({
+    endpoint:
+      "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
+    inputSchema: getFaresTerminalComboParamsSchema,
+    outputSchema: scheduleTerminalComboSchema,
+    params,
+  });
 
 export const terminalComboOptions = createQueryOptions({
   apiFunction: getFaresTerminalCombo,

@@ -3,7 +3,7 @@ import {
   type ScheduleResponse,
   scheduleResponseSchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getScheduleTodayByScheduleTerminalsParamsSchema = z.object({
@@ -15,17 +15,16 @@ export type GetScheduleTodayByScheduleTerminalsParams = z.infer<
   typeof getScheduleTodayByScheduleTerminalsParamsSchema
 >;
 
-const ENDPOINT_TODAY_BY_TERMINALS =
-  "/ferries/api/schedule/rest/scheduletoday/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}/{onlyRemainingTimes}";
-
-export const getScheduleTodayByScheduleTerminals = zodFetch<
-  GetScheduleTodayByScheduleTerminalsParams,
-  ScheduleResponse
->(
-  ENDPOINT_TODAY_BY_TERMINALS,
-  getScheduleTodayByScheduleTerminalsParamsSchema,
-  scheduleResponseSchema
-);
+export const getScheduleTodayByScheduleTerminals = async (
+  params: GetScheduleTodayByScheduleTerminalsParams
+): Promise<ScheduleResponse> =>
+  zodFetch({
+    endpoint:
+      "/ferries/api/schedule/rest/scheduletoday/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}/{onlyRemainingTimes}",
+    inputSchema: getScheduleTodayByScheduleTerminalsParamsSchema,
+    outputSchema: scheduleResponseSchema,
+    params,
+  });
 
 export const scheduleTodayByScheduleTerminalsOptions = createQueryOptions({
   apiFunction: getScheduleTodayByScheduleTerminals,

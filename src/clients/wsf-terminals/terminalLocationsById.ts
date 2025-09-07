@@ -3,7 +3,7 @@ import {
   type TerminalLocation,
   terminalLocationSchema,
 } from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getTerminalLocationsByTerminalIdParamsSchema = z.object({
@@ -14,17 +14,15 @@ export type GetTerminalLocationsByTerminalIdParams = z.infer<
   typeof getTerminalLocationsByTerminalIdParamsSchema
 >;
 
-const ENDPOINT_BY_ID =
-  "/ferries/api/terminals/rest/terminallocations/{terminalId}";
-
-export const getTerminalLocationsByTerminalId = zodFetch<
-  GetTerminalLocationsByTerminalIdParams,
-  TerminalLocation
->(
-  ENDPOINT_BY_ID,
-  getTerminalLocationsByTerminalIdParamsSchema,
-  terminalLocationSchema
-);
+export const getTerminalLocationsByTerminalId = async (
+  params: GetTerminalLocationsByTerminalIdParams
+): Promise<TerminalLocation> =>
+  zodFetch({
+    endpoint: "/ferries/api/terminals/rest/terminallocations/{terminalId}",
+    inputSchema: getTerminalLocationsByTerminalIdParamsSchema,
+    outputSchema: terminalLocationSchema,
+    params,
+  });
 
 export const terminalLocationsByFaresTerminalIdOptions = createQueryOptions({
   apiFunction: getTerminalLocationsByTerminalId,

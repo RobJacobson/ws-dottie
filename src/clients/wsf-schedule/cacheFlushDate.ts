@@ -3,15 +3,18 @@ import {
   type WsfScheduleCacheFlushDate,
   wsfScheduleCacheFlushDateSchema,
 } from "@/schemas/shared/cacheFlushDate.zod";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
-const ENDPOINT = "/ferries/api/schedule/rest/cacheflushdate";
-
-export const getScheduleCacheFlushDate = zodFetch<
-  Record<string, never>,
-  WsfScheduleCacheFlushDate
->(ENDPOINT, z.object({}), wsfScheduleCacheFlushDateSchema);
+export const getScheduleCacheFlushDate = async (
+  params: Record<string, never>
+): Promise<WsfScheduleCacheFlushDate> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/cacheflushdate",
+    inputSchema: z.object({}),
+    outputSchema: wsfScheduleCacheFlushDateSchema,
+    params,
+  });
 
 export const scheduleCacheFlushDateOptions = createQueryOptions({
   apiFunction: getScheduleCacheFlushDate,

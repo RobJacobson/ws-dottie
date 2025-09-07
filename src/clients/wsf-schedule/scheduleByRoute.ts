@@ -3,7 +3,7 @@ import {
   type ScheduleResponse,
   scheduleResponsesArraySchema as scheduleResponseArraySchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getScheduleByRouteParamsSchema = z.object({
@@ -15,17 +15,15 @@ export type GetScheduleByRouteParams = z.infer<
   typeof getScheduleByRouteParamsSchema
 >;
 
-const ENDPOINT_BY_ROUTE =
-  "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}";
-
-export const getScheduleByRoute = zodFetch<
-  GetScheduleByRouteParams,
-  ScheduleResponse[]
->(
-  ENDPOINT_BY_ROUTE,
-  getScheduleByRouteParamsSchema,
-  scheduleResponseArraySchema
-);
+export const getScheduleByRoute = async (
+  params: GetScheduleByRouteParams
+): Promise<ScheduleResponse[]> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/schedulebyroute/{tripDate}/{routeId}",
+    inputSchema: getScheduleByRouteParamsSchema,
+    outputSchema: scheduleResponseArraySchema,
+    params,
+  });
 
 export const scheduleByRouteOptions = createQueryOptions({
   apiFunction: getScheduleByRoute,

@@ -3,15 +3,18 @@ import {
   type WsfCacheFlushDate,
   wsfCacheFlushDateSchema,
 } from "@/schemas/shared/cacheFlushDate.zod";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
-const ENDPOINT = "/ferries/api/terminals/rest/cacheflushdate";
-
-export const getTerminalsCacheFlushDate = zodFetch<
-  Record<string, never>,
-  WsfCacheFlushDate
->(ENDPOINT, z.object({}), wsfCacheFlushDateSchema);
+export const getTerminalsCacheFlushDate = async (
+  params: Record<string, never>
+): Promise<WsfCacheFlushDate> =>
+  zodFetch({
+    endpoint: "/ferries/api/terminals/rest/cacheflushdate",
+    inputSchema: z.object({}),
+    outputSchema: wsfCacheFlushDateSchema,
+    params,
+  });
 
 export const terminalsCacheFlushDateOptions = createQueryOptions({
   apiFunction: getTerminalsCacheFlushDate,

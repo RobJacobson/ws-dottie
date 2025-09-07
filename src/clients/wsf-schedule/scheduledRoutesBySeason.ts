@@ -3,7 +3,7 @@ import {
   type ScheduledRoutesArray,
   scheduledRoutesArraySchema,
 } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/factories/queryOptionsFactory";
+import { createQueryOptions } from "@/shared/tanstack/factory";
 import { zodFetch } from "@/shared/fetching";
 
 export const getScheduledRoutesBySeasonParamsSchema = z.object({
@@ -14,19 +14,15 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
   typeof getScheduledRoutesBySeasonParamsSchema
 >;
 
-export type ScheduledRoutes = ScheduledRoutesArray;
-
-const ENDPOINT_BY_SEASON =
-  "/ferries/api/schedule/rest/scheduledroutesbyseason/{seasonId}";
-
-export const getScheduledRoutesBySeason = zodFetch<
-  GetScheduledRoutesBySeasonParams,
-  ScheduledRoutes
->(
-  ENDPOINT_BY_SEASON,
-  getScheduledRoutesBySeasonParamsSchema,
-  scheduledRoutesArraySchema
-);
+export const getScheduledRoutesBySeason = async (
+  params: GetScheduledRoutesBySeasonParams
+): Promise<ScheduledRoutesArray> =>
+  zodFetch({
+    endpoint: "/ferries/api/schedule/rest/scheduledroutesbyseason/{seasonId}",
+    inputSchema: getScheduledRoutesBySeasonParamsSchema,
+    outputSchema: scheduledRoutesArraySchema,
+    params,
+  });
 
 export const scheduledRoutesBySeasonOptions = createQueryOptions({
   apiFunction: getScheduledRoutesBySeason,
