@@ -55,7 +55,7 @@ This guide provides best practices for agents working with WSDOT and WSF API end
 - Provides consistent outputs aligned with our public API surface
 
 ### CLI Commands
-
+c
 ```bash
 # Navigate to project directory
 cd /home/rob/code/ferryjoy/ws-dottie
