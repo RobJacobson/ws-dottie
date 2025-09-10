@@ -30,33 +30,21 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import {
-  type TollTripVersion,
-  tollTripVersionSchema,
-} from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { tollTripVersionSchema } from "@/schemas/wsdot-toll-rates";
+import { defineEndpoint } from "@/shared/endpoints";
 
-export const getTollTripVersion = async (
-  params: GetTollTripVersionParams = {}
-): Promise<TollTripVersion> => {
-  return zodFetch({
-    endpoint:
-      "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
-    inputSchema: getTollTripVersionParamsSchema,
-    outputSchema: tollTripVersionSchema,
-    params,
-  });
-};
-
+/** Params schema for getTollTripVersion */
 export const getTollTripVersionParamsSchema = z.object({});
 
-export type GetTollTripVersionParams = z.infer<
-  typeof getTollTripVersionParamsSchema
->;
-
-export const tollTripVersionOptions = createQueryOptions({
-  apiFunction: getTollTripVersion,
-  queryKey: ["wsdot", "toll-rates", "getTollTripVersion"],
+/** Endpoint definition for getTollTripVersion */
+export const getTollTripVersionDef = defineEndpoint({
+  moduleGroup: "wsdot-toll-rates",
+  functionName: "getTollTripVersion",
+  endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
+  inputSchema: getTollTripVersionParamsSchema,
+  outputSchema: tollTripVersionSchema,
+  sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+/** GetTollTripVersion params type */

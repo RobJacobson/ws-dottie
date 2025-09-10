@@ -1,38 +1,29 @@
 import { z } from "zod";
-import {
-  type ScheduleResponse,
-  scheduleResponseSchema,
-} from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { scheduleResponseSchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getScheduleTodayByScheduleTerminals */
 export const getScheduleTodayByScheduleTerminalsParamsSchema = z.object({
   departingScheduleTerminalId: z.number().int().positive(),
   arrivingScheduleTerminalId: z.number().int().positive(),
 });
 
+/** GetScheduleTodayByScheduleTerminals params type */
 export type GetScheduleTodayByScheduleTerminalsParams = z.infer<
   typeof getScheduleTodayByScheduleTerminalsParamsSchema
 >;
 
-export const getScheduleTodayByScheduleTerminals = async (
-  params: GetScheduleTodayByScheduleTerminalsParams
-): Promise<ScheduleResponse> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/schedule/rest/scheduletoday/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}/{onlyRemainingTimes}",
-    inputSchema: getScheduleTodayByScheduleTerminalsParamsSchema,
-    outputSchema: scheduleResponseSchema,
-    params,
-  });
-
-export const scheduleTodayByScheduleTerminalsOptions = createQueryOptions({
-  apiFunction: getScheduleTodayByScheduleTerminals,
-  queryKey: [
-    "wsf",
-    "schedule",
-    "scheduletoday",
-    "getScheduleTodayByScheduleTerminals",
-  ],
+/** Endpoint definition for getScheduleTodayByScheduleTerminals */
+export const getScheduleTodayByScheduleTerminalsDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getScheduleTodayByScheduleTerminals",
+  endpoint:
+    "/ferries/api/schedule/rest/scheduletoday/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}/{onlyRemainingTimes}",
+  inputSchema: getScheduleTodayByScheduleTerminalsParamsSchema,
+  outputSchema: scheduleResponseSchema,
+  sampleParams: {
+    departingScheduleTerminalId: 1,
+    arrivingScheduleTerminalId: 2,
+  },
   cacheStrategy: "DAILY_STATIC",
 });

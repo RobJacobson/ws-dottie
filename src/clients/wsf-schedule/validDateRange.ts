@@ -1,32 +1,22 @@
 import { z } from "zod";
-import {
-  type ValidDateRange,
-  validDateRangeSchema,
-} from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { validDateRangeSchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
 
-export const getValidDateRangeParamsSchema = z.object({});
+/** Params schema for getScheduleValidDateRange */
+export const getScheduleValidDateRangeParamsSchema = z.object({});
 
-export type GetValidDateRangeParams = z.infer<
-  typeof getValidDateRangeParamsSchema
+/** GetScheduleValidDateRange params type */
+export type GetScheduleValidDateRangeParams = z.infer<
+  typeof getScheduleValidDateRangeParamsSchema
 >;
 
-export { validDateRangeSchema };
-export type { ValidDateRange };
-
-export const getScheduleValidDateRange = async (
-  params: GetValidDateRangeParams
-): Promise<ValidDateRange> =>
-  zodFetch({
-    endpoint: "/ferries/api/schedule/rest/validdaterange",
-    inputSchema: getValidDateRangeParamsSchema,
-    outputSchema: validDateRangeSchema,
-    params,
-  });
-
-export const scheduleValidDateRangeOptions = createQueryOptions({
-  apiFunction: getScheduleValidDateRange,
-  queryKey: ["wsf", "schedule", "validDateRange", "getValidDateRange"],
+/** Endpoint definition for getScheduleValidDateRange */
+export const getScheduleValidDateRangeDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getScheduleValidDateRange",
+  endpoint: "/ferries/api/schedule/rest/validdaterange",
+  inputSchema: getScheduleValidDateRangeParamsSchema,
+  outputSchema: validDateRangeSchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

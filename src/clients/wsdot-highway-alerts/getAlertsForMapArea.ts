@@ -80,9 +80,8 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
+import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getAlertsForMapArea */
 export const getAlertsForMapAreaParamsSchema = z.object({
@@ -90,25 +89,16 @@ export const getAlertsForMapAreaParamsSchema = z.object({
   MapArea: z.string().min(1, "Map area cannot be empty"),
 });
 
-export type GetAlertsForMapAreaParams = z.infer<
-  typeof getAlertsForMapAreaParamsSchema
->;
-
-/** Fetches highway alerts filtered by map area */
-export const getAlertsForMapArea = async (
-  params: GetAlertsForMapAreaParams
-): Promise<Alerts> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
-    inputSchema: getAlertsForMapAreaParamsSchema,
-    outputSchema: alertsSchema,
-    params,
-  });
-
-/** Returns options for alerts by map area; polls every 60s */
-export const getAlertsForMapAreaOptions = createQueryOptions({
-  apiFunction: getAlertsForMapArea,
-  queryKey: ["wsdot", "highway-alerts", "getAlertsForMapArea"],
+/** Endpoint definition for getAlertsForMapArea */
+export const getAlertsForMapAreaDef = defineEndpoint({
+  moduleGroup: "wsdot-highway-alerts",
+  functionName: "getAlertsForMapArea",
+  endpoint:
+    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
+  inputSchema: getAlertsForMapAreaParamsSchema,
+  outputSchema: alertsSchema,
+  sampleParams: { MapArea: "Seattle" },
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+/** GetAlertsForMapArea params type */

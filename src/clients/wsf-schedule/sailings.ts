@@ -1,32 +1,22 @@
 import { z } from "zod";
-import {
-  sailingResponsesArraySchema,
-  type sailingsArraySchema,
-} from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { sailingResponsesArraySchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getSailings */
 export const getSailingsParamsSchema = z.object({
   schedRouteId: z.number().int().positive(),
 });
 
+/** GetSailings params type */
 export type GetSailingsParams = z.infer<typeof getSailingsParamsSchema>;
 
-export type Sailings = z.infer<typeof sailingsArraySchema>;
-export type SailingsResponse = z.infer<typeof sailingResponsesArraySchema>;
-
-export const getSailings = async (
-  params: GetSailingsParams
-): Promise<SailingsResponse> =>
-  zodFetch({
-    endpoint: "/ferries/api/schedule/rest/sailings/{schedRouteId}",
-    inputSchema: getSailingsParamsSchema,
-    outputSchema: sailingResponsesArraySchema,
-    params,
-  });
-
-export const sailingsOptions = createQueryOptions({
-  apiFunction: getSailings,
-  queryKey: ["wsf", "schedule", "sailings", "getSailings"],
+/** Endpoint definition for getSailings */
+export const getSailingsDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getSailings",
+  endpoint: "/ferries/api/schedule/rest/sailings/{schedRouteId}",
+  inputSchema: getSailingsParamsSchema,
+  outputSchema: sailingResponsesArraySchema,
+  sampleParams: { schedRouteId: 2327 },
   cacheStrategy: "DAILY_STATIC",
 });

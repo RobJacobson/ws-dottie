@@ -1,33 +1,22 @@
 import { z } from "zod";
-import {
-  type WeatherReading,
-  weatherReadingSchema,
-} from "@/schemas/wsdot-weather-information-extended";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { weatherReadingsSchema } from "@/schemas/wsdot-weather-information-extended";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getWeatherInformationExtended */
 export const getWeatherInformationExtendedParamsSchema = z.object({});
 
+/** GetWeatherInformationExtended params type */
 export type GetWeatherInformationExtendedParams = z.infer<
   typeof getWeatherInformationExtendedParamsSchema
 >;
 
-export const getWeatherInformationExtended = async (
-  params: GetWeatherInformationExtendedParams
-): Promise<WeatherReading[]> =>
-  zodFetch({
-    endpoint: "/traffic/api/api/Scanweb",
-    inputSchema: getWeatherInformationExtendedParamsSchema,
-    outputSchema: z.array(weatherReadingSchema),
-    params,
-  });
-
-export const weatherInformationExtendedOptions = createQueryOptions({
-  apiFunction: getWeatherInformationExtended,
-  queryKey: [
-    "wsdot",
-    "weather-information-extended",
-    "getWeatherInformationExtended",
-  ],
+/** Endpoint definition for getWeatherInformationExtended */
+export const getWeatherInformationExtendedDef = defineEndpoint({
+  moduleGroup: "wsdot-weather-information-extended",
+  functionName: "getWeatherInformationExtended",
+  endpoint: "/traffic/api/api/Scanweb",
+  inputSchema: getWeatherInformationExtendedParamsSchema,
+  outputSchema: weatherReadingsSchema,
+  sampleParams: {},
   cacheStrategy: "HOURLY_UPDATES",
 });

@@ -13,3 +13,28 @@ export * from "./terminalVerbose";
 export * from "./terminalVerboseById";
 export * from "./terminalWaitTimes";
 export * from "./terminalWaitTimesById";
+
+// Re-export output types from schemas
+export type {
+  TerminalBasics,
+  TerminalBasicsArray,
+  TerminalBulletins,
+  TerminalBulletinsArray,
+  TerminalLocation,
+  TerminalLocationArray,
+  TerminalSailingSpace,
+  TerminalSailingSpaceArray,
+  TerminalTransports,
+  TerminalTransportsArray,
+  TerminalVerbose,
+  TerminalVerboseArray,
+  TerminalWaitTimes,
+  TerminalWaitTimesArray,
+  Bulletin,
+  WaitTime,
+  DepartingSpace,
+  Terminal,
+  TransitLink,
+  SpaceForArrivalTerminal,
+  DispGISZoomLoc,
+} from "@/schemas/wsf-terminals";

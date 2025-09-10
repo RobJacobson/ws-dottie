@@ -66,12 +66,8 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
  */
 import { z } from "zod";
-import {
-  type PassCondition,
-  passConditionSchema,
-} from "@/schemas/wsdot-mountain-pass-conditions";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { passConditionSchema } from "@/schemas/wsdot-mountain-pass-conditions";
+import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getMountainPassCondition */
 export const getMountainPassConditionParamsSchema = z.object({
@@ -79,26 +75,19 @@ export const getMountainPassConditionParamsSchema = z.object({
   passConditionId: z.number().int().positive(),
 });
 
-/** GetMountainPassConditionParams type */
+/** GetMountainPassCondition params type */
 export type GetMountainPassConditionParams = z.infer<
   typeof getMountainPassConditionParamsSchema
 >;
 
-/** Fetches a single mountain pass condition by ID */
-export const getMountainPassCondition = async (
-  params: GetMountainPassConditionParams
-): Promise<PassCondition> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
-    inputSchema: getMountainPassConditionParamsSchema,
-    outputSchema: passConditionSchema,
-    params,
-  });
-
-/** Returns options for a single pass condition by ID; polls daily */
-export const mountainPassConditionOptions = createQueryOptions({
-  apiFunction: getMountainPassCondition,
-  queryKey: ["wsdot", "mountain-pass-conditions", "getMountainPassCondition"],
+/** Endpoint definition for getMountainPassCondition */
+export const getMountainPassConditionDef = defineEndpoint({
+  moduleGroup: "wsdot-mountain-pass-conditions",
+  functionName: "getMountainPassCondition",
+  endpoint:
+    "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
+  inputSchema: getMountainPassConditionParamsSchema,
+  outputSchema: passConditionSchema,
+  sampleParams: { passConditionId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

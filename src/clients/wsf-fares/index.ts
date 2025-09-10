@@ -8,4 +8,25 @@ export * from "./fareTotals";
 export * from "./terminalCombo";
 export * from "./terminalComboVerbose";
 export * from "./terminalMates";
-export * from "./validDateRange";
+
+// Re-export output types from schemas
+export type {
+  FareLineItem,
+  FareLineItems,
+  FareLineItemBasic,
+  FareLineItemsBasic,
+  LineItemXref,
+  LineItem,
+  RoundTripLineItem,
+  FareLineItemsVerbose,
+  FareTotal,
+  FareTotals,
+  FaresTerminal,
+  FaresTerminals,
+  TerminalCombo,
+  TerminalComboVerboseItem,
+  TerminalComboVerbose,
+  TerminalMate,
+  TerminalMates,
+  ValidDateRange,
+} from "@/schemas/wsf-fares";

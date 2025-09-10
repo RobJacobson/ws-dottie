@@ -1,31 +1,24 @@
 import { z } from "zod";
-import {
-  type TerminalBasics,
-  terminalBasicsSchema,
-} from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { terminalBasicsSchema } from "@/schemas/wsf-terminals";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getTerminalBasicsByTerminalId */
 export const getTerminalBasicsByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
 });
 
+/** GetTerminalBasicsByTerminalId params type */
 export type GetTerminalBasicsByTerminalIdParams = z.infer<
   typeof getTerminalBasicsByTerminalIdParamsSchema
 >;
 
-export const getTerminalBasicsByTerminalId = async (
-  params: GetTerminalBasicsByTerminalIdParams
-): Promise<TerminalBasics> =>
-  zodFetch({
-    endpoint: "/ferries/api/terminals/rest/terminalbasics/{terminalId}",
-    inputSchema: getTerminalBasicsByTerminalIdParamsSchema,
-    outputSchema: terminalBasicsSchema,
-    params,
-  });
-
-export const terminalBasicsByFaresTerminalIdOptions = createQueryOptions({
-  apiFunction: getTerminalBasicsByTerminalId,
-  queryKey: ["wsf", "terminals", "basics", "getTerminalBasicsByTerminalId"],
+/** Endpoint definition for getTerminalBasicsByTerminalId */
+export const getTerminalBasicsByTerminalIdDef = defineEndpoint({
+  moduleGroup: "wsf-terminals",
+  functionName: "getTerminalBasicsByTerminalId",
+  endpoint: "/ferries/api/terminals/rest/terminalbasics/{terminalId}",
+  inputSchema: getTerminalBasicsByTerminalIdParamsSchema,
+  outputSchema: terminalBasicsSchema,
+  sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

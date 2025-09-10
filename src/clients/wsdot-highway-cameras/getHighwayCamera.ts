@@ -75,9 +75,8 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { type Camera, cameraSchema } from "@/schemas/wsdot-highway-cameras";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { highwayCameraSchema } from "@/schemas/wsdot-highway-cameras";
+import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getHighwayCamera */
 export const getHighwayCameraParamsSchema = z.object({
@@ -85,26 +84,16 @@ export const getHighwayCameraParamsSchema = z.object({
   cameraID: z.number().int(),
 });
 
-/** GetHighwayCamera params type */
-export type GetHighwayCameraParams = z.infer<
-  typeof getHighwayCameraParamsSchema
->;
-
-/** Fetches a single highway camera by ID */
-export const getHighwayCamera = async (
-  params: GetHighwayCameraParams
-): Promise<Camera> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
-    inputSchema: getHighwayCameraParamsSchema,
-    outputSchema: cameraSchema,
-    params,
-  });
-
-/** Returns options for a single camera by ID; polls daily */
-export const highwayCameraOptions = createQueryOptions({
-  apiFunction: getHighwayCamera,
-  queryKey: ["wsdot", "highway-cameras", "getHighwayCamera"],
+/** Endpoint definition for getHighwayCamera */
+export const getHighwayCameraDef = defineEndpoint({
+  moduleGroup: "wsdot-highway-cameras",
+  functionName: "getHighwayCamera",
+  endpoint:
+    "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
+  inputSchema: getHighwayCameraParamsSchema,
+  outputSchema: highwayCameraSchema,
+  sampleParams: { cameraID: 9818 }, // From E2E test validParams
   cacheStrategy: "DAILY_STATIC",
 });
+
+/** GetHighwayCamera params type */

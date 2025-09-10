@@ -1,29 +1,22 @@
 import { z } from "zod";
-import {
-  type WsfCacheFlushDate,
-  wsfCacheFlushDateSchema,
-} from "@/schemas/shared/cacheFlushDate.zod";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
+import { defineEndpoint } from "@/shared/endpoints";
 
-export const getVesselsCacheFlushDateParamsSchema = z.object({});
+/** Params schema for getCacheFlushDateVessels */
+export const getCacheFlushDateVesselsParamsSchema = z.object({});
 
-export type GetVesselsCacheFlushDateParams = z.infer<
-  typeof getVesselsCacheFlushDateParamsSchema
+/** GetCacheFlushDateVessels params type */
+export type GetCacheFlushDateVesselsParams = z.infer<
+  typeof getCacheFlushDateVesselsParamsSchema
 >;
 
-export const getVesselsCacheFlushDate = async (
-  params: GetVesselsCacheFlushDateParams
-): Promise<WsfCacheFlushDate> =>
-  zodFetch({
-    endpoint: "/ferries/api/vessels/rest/cacheflushdate",
-    inputSchema: getVesselsCacheFlushDateParamsSchema,
-    outputSchema: wsfCacheFlushDateSchema,
-    params,
-  });
-
-export const vesselsCacheFlushDateOptions = createQueryOptions({
-  apiFunction: getVesselsCacheFlushDate,
-  queryKey: ["wsf", "vessels", "cacheflushdate", "getCacheFlushDate"],
+/** Endpoint definition for getCacheFlushDateVessels */
+export const getCacheFlushDateVesselsDef = defineEndpoint({
+  moduleGroup: "wsf-vessels",
+  functionName: "getCacheFlushDateVessels",
+  endpoint: "/ferries/api/vessels/rest/cacheflushdate",
+  inputSchema: getCacheFlushDateVesselsParamsSchema,
+  outputSchema: wsfStandardCacheFlushDateSchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

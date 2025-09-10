@@ -1,29 +1,22 @@
 import { z } from "zod";
-import {
-  type VesselHistoryArray as VesselHistoryArrayType,
-  vesselHistoryArraySchema,
-} from "@/schemas/wsf-vessels";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { vesselHistoryArraySchema } from "@/schemas/wsf-vessels";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getVesselHistory */
 export const getVesselHistoryParamsSchema = z.object({});
 
+/** GetVesselHistory params type */
 export type GetVesselHistoryParams = z.infer<
   typeof getVesselHistoryParamsSchema
 >;
 
-export const getVesselHistory = async (
-  params: GetVesselHistoryParams
-): Promise<VesselHistoryArrayType> =>
-  zodFetch({
-    endpoint: "/ferries/api/vessels/rest/vesselhistory",
-    inputSchema: getVesselHistoryParamsSchema,
-    outputSchema: vesselHistoryArraySchema,
-    params,
-  });
-
-export const vesselHistoryOptions = createQueryOptions({
-  apiFunction: getVesselHistory,
-  queryKey: ["wsf", "vessels", "history", "getVesselHistory"],
+/** Endpoint definition for getVesselHistory */
+export const getVesselHistoryDef = defineEndpoint({
+  moduleGroup: "wsf-vessels",
+  functionName: "getVesselHistory",
+  endpoint: "/ferries/api/vessels/rest/vesselhistory",
+  inputSchema: getVesselHistoryParamsSchema,
+  outputSchema: vesselHistoryArraySchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

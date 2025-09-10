@@ -1,29 +1,22 @@
 import { z } from "zod";
-import {
-  type TerminalLocationArray,
-  terminalLocationArraySchema,
-} from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { terminalLocationArraySchema } from "@/schemas/wsf-terminals";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getTerminalLocations */
 export const getTerminalLocationsParamsSchema = z.object({});
 
+/** GetTerminalLocations params type */
 export type GetTerminalLocationsParams = z.infer<
   typeof getTerminalLocationsParamsSchema
 >;
 
-export const getTerminalLocations = async (
-  params: GetTerminalLocationsParams
-): Promise<TerminalLocationArray> =>
-  zodFetch({
-    endpoint: "/ferries/api/terminals/rest/terminallocations",
-    inputSchema: getTerminalLocationsParamsSchema,
-    outputSchema: terminalLocationArraySchema,
-    params,
-  });
-
-export const terminalLocationsOptions = createQueryOptions({
-  apiFunction: getTerminalLocations,
-  queryKey: ["wsf", "terminals", "locations", "getTerminalLocations"],
+/** Endpoint definition for getTerminalLocations */
+export const getTerminalLocationsDef = defineEndpoint({
+  moduleGroup: "wsf-terminals",
+  functionName: "getTerminalLocations",
+  endpoint: "/ferries/api/terminals/rest/terminallocations",
+  inputSchema: getTerminalLocationsParamsSchema,
+  outputSchema: terminalLocationArraySchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

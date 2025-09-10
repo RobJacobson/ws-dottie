@@ -1,32 +1,22 @@
 import { z } from "zod";
-import {
-  type ValidDateRange as FaresValidDateRange,
-  validDateRangeSchema as faresValidDateRangeSchema,
-} from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { validDateRangeSchema as faresValidDateRangeSchema } from "@/schemas/wsf-fares";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getFaresValidDateRange */
 export const getFaresValidDateRangeParamsSchema = z.object({});
 
+/** GetFaresValidDateRange params type */
 export type GetFaresValidDateRangeParams = z.infer<
   typeof getFaresValidDateRangeParamsSchema
 >;
 
-export { faresValidDateRangeSchema };
-export type { FaresValidDateRange };
-
-export const getFaresValidDateRange = async (
-  params: GetFaresValidDateRangeParams
-): Promise<FaresValidDateRange> =>
-  zodFetch({
-    endpoint: "/ferries/api/fares/rest/validdaterange",
-    inputSchema: getFaresValidDateRangeParamsSchema,
-    outputSchema: faresValidDateRangeSchema,
-    params,
-  });
-
-export const faresValidDateRangeOptions = createQueryOptions({
-  apiFunction: getFaresValidDateRange,
-  queryKey: ["wsf", "fares", "validDateRange", "getFaresValidDateRange"],
+/** Endpoint definition for getFaresValidDateRange */
+export const getFaresValidDateRangeDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getFaresValidDateRange",
+  endpoint: "/ferries/api/fares/rest/validdaterange",
+  inputSchema: getFaresValidDateRangeParamsSchema,
+  outputSchema: faresValidDateRangeSchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

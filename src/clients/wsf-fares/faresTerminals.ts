@@ -1,31 +1,25 @@
 import { z } from "zod";
 import { faresTerminalSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getFaresTerminals */
 export const getFaresTerminalsParamsSchema = z.object({
   tripDate: z.date(),
 });
 
+/** GetFaresTerminals params type */
 export type GetFaresTerminalsParams = z.infer<
   typeof getFaresTerminalsParamsSchema
 >;
 
-export const faresTerminalsArraySchema = z.array(faresTerminalSchema);
-export type FaresTerminals = z.infer<typeof faresTerminalsArraySchema>;
-
-export const getFaresTerminals = async (
-  params: GetFaresTerminalsParams
-): Promise<FaresTerminals> =>
-  zodFetch({
-    endpoint: "/ferries/api/fares/rest/terminals/{tripDate}",
-    inputSchema: getFaresTerminalsParamsSchema,
-    outputSchema: faresTerminalsArraySchema,
-    params,
-  });
-
-export const terminalsOptions = createQueryOptions({
-  apiFunction: getFaresTerminals,
-  queryKey: ["wsf", "fares", "terminals", "getFaresTerminals"],
+/** Endpoint definition for getFaresTerminals */
+export const getFaresTerminalsDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getFaresTerminals",
+  endpoint: "/ferries/api/fares/rest/terminals/{tripDate}",
+  inputSchema: getFaresTerminalsParamsSchema,
+  outputSchema: z.array(faresTerminalSchema),
+  sampleParams: { tripDate: getSampleDates().tomorrow },
   cacheStrategy: "DAILY_STATIC",
 });

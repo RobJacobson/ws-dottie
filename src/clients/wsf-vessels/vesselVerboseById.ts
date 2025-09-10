@@ -1,11 +1,8 @@
 import { z } from "zod";
-import {
-  type VesselVerbose as ImportedVesselVerbose,
-  vesselVerboseSchema as importedVesselVerboseSchema,
-} from "@/schemas/wsf-vessels";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { vesselVerboseSchema } from "@/schemas/wsf-vessels";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getVesselVerboseById */
 export const getVesselVerboseByIdParamsSchema = z.object({
   vesselId: z
     .number()
@@ -16,22 +13,18 @@ export const getVesselVerboseByIdParamsSchema = z.object({
     ),
 });
 
+/** GetVesselVerboseById params type */
 export type GetVesselVerboseByIdParams = z.infer<
   typeof getVesselVerboseByIdParamsSchema
 >;
 
-export const getVesselVerboseById = async (
-  params: GetVesselVerboseByIdParams
-): Promise<ImportedVesselVerbose> =>
-  zodFetch({
-    endpoint: "/ferries/api/vessels/rest/vesselverbose/{vesselId}",
-    inputSchema: getVesselVerboseByIdParamsSchema,
-    outputSchema: importedVesselVerboseSchema,
-    params,
-  });
-
-export const vesselVerboseByIdOptions = createQueryOptions({
-  apiFunction: getVesselVerboseById,
-  queryKey: ["wsf", "vessels", "verbose", "getVesselVerboseById"],
+/** Endpoint definition for getVesselVerboseById */
+export const getVesselVerboseByIdDef = defineEndpoint({
+  moduleGroup: "wsf-vessels",
+  functionName: "getVesselVerboseById",
+  endpoint: "/ferries/api/vessels/rest/vesselverbose/{vesselId}",
+  inputSchema: getVesselVerboseByIdParamsSchema,
+  outputSchema: vesselVerboseSchema,
+  sampleParams: { vesselId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

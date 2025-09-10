@@ -1,36 +1,24 @@
 import { z } from "zod";
-import {
-  type TerminalSailingSpace,
-  terminalSailingSpaceSchema,
-} from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { terminalSailingSpaceSchema } from "@/schemas/wsf-terminals";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getTerminalSailingSpaceByTerminalId */
 export const getTerminalSailingSpaceByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
 });
 
+/** GetTerminalSailingSpaceByTerminalId params type */
 export type GetTerminalSailingSpaceByTerminalIdParams = z.infer<
   typeof getTerminalSailingSpaceByTerminalIdParamsSchema
 >;
 
-export const getTerminalSailingSpaceByTerminalId = async (
-  params: GetTerminalSailingSpaceByTerminalIdParams
-): Promise<TerminalSailingSpace> =>
-  zodFetch({
-    endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}",
-    inputSchema: getTerminalSailingSpaceByTerminalIdParamsSchema,
-    outputSchema: terminalSailingSpaceSchema,
-    params,
-  });
-
-export const terminalSailingSpaceByFaresTerminalIdOptions = createQueryOptions({
-  apiFunction: getTerminalSailingSpaceByTerminalId,
-  queryKey: [
-    "wsf",
-    "terminals",
-    "sailingSpace",
-    "getTerminalSailingSpaceByTerminalId",
-  ],
+/** Endpoint definition for getTerminalSailingSpaceByTerminalId */
+export const getTerminalSailingSpaceByTerminalIdDef = defineEndpoint({
+  moduleGroup: "wsf-terminals",
+  functionName: "getTerminalSailingSpaceByTerminalId",
+  endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}",
+  inputSchema: getTerminalSailingSpaceByTerminalIdParamsSchema,
+  outputSchema: terminalSailingSpaceSchema,
+  sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

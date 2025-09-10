@@ -1,35 +1,22 @@
 import { z } from "zod";
-import {
-  type ActiveSeason,
-  type ActiveSeasonsArray,
-  activeSeasonSchema,
-  activeSeasonsArraySchema,
-} from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { activeSeasonsArraySchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getActiveSeasons */
 export const getActiveSeasonsParamsSchema = z.object({});
 
+/** GetActiveSeasons params type */
 export type GetActiveSeasonsParams = z.infer<
   typeof getActiveSeasonsParamsSchema
 >;
 
-export { activeSeasonSchema, activeSeasonsArraySchema };
-export type { ActiveSeason };
-export type ActiveSeasons = ActiveSeasonsArray;
-
-export const getActiveSeasons = async (
-  params: GetActiveSeasonsParams
-): Promise<ActiveSeasons> =>
-  zodFetch({
-    endpoint: "/ferries/api/schedule/rest/activeseasons",
-    inputSchema: getActiveSeasonsParamsSchema,
-    outputSchema: activeSeasonsArraySchema,
-    params,
-  });
-
-export const activeSeasonsOptions = createQueryOptions({
-  apiFunction: getActiveSeasons,
-  queryKey: ["wsf", "schedule", "activeSeasons", "getActiveSeasons"],
+/** Endpoint definition for getActiveSeasons */
+export const getActiveSeasonsDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getActiveSeasons",
+  endpoint: "/ferries/api/schedule/rest/activeseasons",
+  inputSchema: getActiveSeasonsParamsSchema,
+  outputSchema: activeSeasonsArraySchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

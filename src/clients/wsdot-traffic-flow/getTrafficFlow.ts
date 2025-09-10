@@ -51,30 +51,23 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
  */
 import { z } from "zod";
-import { type FlowData, flowDataSchema } from "@/schemas/wsdot-traffic-flow";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { trafficFlowsSchema } from "@/schemas/wsdot-traffic-flow";
+import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTrafficFlows (none) */
+/** Params schema for getTrafficFlows */
 export const getTrafficFlowsParamsSchema = z.object({});
 
+/** GetTrafficFlows params type */
 export type GetTrafficFlowsParams = z.infer<typeof getTrafficFlowsParamsSchema>;
 
-/** Fetches all current traffic flows */
-export const getTrafficFlows = async (
-  params: GetTrafficFlowsParams
-): Promise<FlowData[]> =>
-  zodFetch({
-    endpoint:
-      "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
-    inputSchema: getTrafficFlowsParamsSchema,
-    outputSchema: z.array(flowDataSchema),
-    params,
-  });
-
-/** Returns options for all traffic flows; polls every 60s */
-export const trafficFlowsOptions = createQueryOptions({
-  apiFunction: getTrafficFlows,
-  queryKey: ["wsdot", "traffic-flow", "getTrafficFlows"],
+/** Endpoint definition for getTrafficFlows */
+export const getTrafficFlowsDef = defineEndpoint({
+  moduleGroup: "wsdot-traffic-flow",
+  functionName: "getTrafficFlows",
+  endpoint:
+    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
+  inputSchema: getTrafficFlowsParamsSchema,
+  outputSchema: trafficFlowsSchema,
+  sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });

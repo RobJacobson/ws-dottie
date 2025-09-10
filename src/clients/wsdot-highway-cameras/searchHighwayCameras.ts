@@ -53,7 +53,7 @@
  */
 import { z } from "zod";
 import {
-  type CameraArray,
+  type HighwayCameras,
   cameraArraySchema,
 } from "@/schemas/wsdot-highway-cameras";
 import { createQueryOptions } from "@/shared/tanstack/factory";
@@ -62,7 +62,7 @@ import { zodFetch } from "@/shared/fetching";
 /** Searches highway cameras using optional filters */
 export const searchHighwayCameras = async (
   params: SearchHighwayCamerasParams
-): Promise<CameraArray> => {
+): Promise<HighwayCameras> => {
   const queryParams = new URLSearchParams();
   if (params.StateRoute !== undefined)
     queryParams.append("StateRoute", String(params.StateRoute));

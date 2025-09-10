@@ -1,14 +1,8 @@
 import { z } from "zod";
-import {
-  type WeatherInfo,
-  weatherInfoSchema,
-} from "@/schemas/wsdot-weather-information";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { weatherInfoSchema } from "@/schemas/wsdot-weather-information";
+import { defineEndpoint } from "@/shared/endpoints";
 
-export { weatherInfoSchema };
-export type { WeatherInfo };
-
+/** Params schema for getWeatherInformationByStationId */
 export const getWeatherInformationByStationIdParamsSchema = z
   .object({
     stationId: z
@@ -23,27 +17,16 @@ export const getWeatherInformationByStationIdParamsSchema = z
     "Parameters for retrieving weather information for a specific weather station by its unique identifier"
   );
 
-export type GetWeatherInformationByStationIdParams = z.infer<
-  typeof getWeatherInformationByStationIdParamsSchema
->;
-
-export const getWeatherInformationByStationId = async (
-  params: GetWeatherInformationByStationIdParams
-): Promise<WeatherInfo> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
-    inputSchema: getWeatherInformationByStationIdParamsSchema,
-    outputSchema: weatherInfoSchema,
-    params,
-  });
-
-export const weatherInformationByStationIdOptions = createQueryOptions({
-  apiFunction: getWeatherInformationByStationId,
-  queryKey: [
-    "wsdot",
-    "weather-information",
-    "getWeatherInformationByStationId",
-  ],
+/** Endpoint definition for getWeatherInformationByStationId */
+export const getWeatherInformationByStationIdDef = defineEndpoint({
+  moduleGroup: "wsdot-weather-information",
+  functionName: "getWeatherInformationByStationId",
+  endpoint:
+    "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
+  inputSchema: getWeatherInformationByStationIdParamsSchema,
+  outputSchema: weatherInfoSchema,
+  sampleParams: { stationId: 1909 },
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+/** GetWeatherInformationByStationId params type */

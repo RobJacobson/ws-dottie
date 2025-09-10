@@ -85,14 +85,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___commercial_vehicle.html
  */
 import { z } from "zod";
-import {
-  type CommercialVehiclesRestrictions,
-  commercialVehiclesRestrictionsSchema,
-} from "@/schemas/wsdot-commercial-vehicle-restrictions";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { commercialVehiclesRestrictionsSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
+import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getCommercialVehicleRestrictions (none) */
+/** Params schema for getCommercialVehicleRestrictions */
 export const getCommercialVehicleRestrictionsParamsSchema = z.object({});
 
 /** GetCommercialVehicleRestrictions params type */
@@ -100,25 +96,14 @@ export type GetCommercialVehicleRestrictionsParams = z.infer<
   typeof getCommercialVehicleRestrictionsParamsSchema
 >;
 
-/** Fetches commercial vehicle restrictions (no IDs) */
-export const getCommercialVehicleRestrictions = async (
-  params: GetCommercialVehicleRestrictionsParams
-): Promise<CommercialVehiclesRestrictions> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson",
-    inputSchema: getCommercialVehicleRestrictionsParamsSchema,
-    outputSchema: commercialVehiclesRestrictionsSchema,
-    params,
-  });
-
-/** Returns options for commercial vehicle restrictions (no IDs); polls daily */
-export const commercialVehicleRestrictionsOptions = createQueryOptions({
-  apiFunction: getCommercialVehicleRestrictions,
-  queryKey: [
-    "wsdot",
-    "commercial-vehicle-restrictions",
-    "getCommercialVehicleRestrictions",
-  ],
+/** Endpoint definition for getCommercialVehicleRestrictions */
+export const getCommercialVehicleRestrictionsDef = defineEndpoint({
+  moduleGroup: "wsdot-commercial-vehicle-restrictions",
+  functionName: "getCommercialVehicleRestrictions",
+  endpoint:
+    "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson",
+  inputSchema: getCommercialVehicleRestrictionsParamsSchema,
+  outputSchema: commercialVehiclesRestrictionsSchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

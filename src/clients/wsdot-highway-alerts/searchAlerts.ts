@@ -60,9 +60,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getCurrentDateRange } from "@/shared/utils/dateUtils";
 
 /** Params schema for searchAlerts */
 export const searchAlertsParamsSchema = z.object({
@@ -80,25 +80,25 @@ export const searchAlertsParamsSchema = z.object({
   EndingMilepost: z.number().optional(),
 });
 
-/** SearchAlerts params type */
+/** Endpoint definition for searchAlerts */
 export type SearchAlertsParams = z.infer<typeof searchAlertsParamsSchema>;
 
-/** Searches highway alerts using optional filters */
-export const searchAlerts = async (
-  params: SearchAlertsParams
-): Promise<Alerts> => {
-  return zodFetch({
-    endpoint:
-      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-    inputSchema: searchAlertsParamsSchema,
-    outputSchema: alertsSchema,
-    params,
-  });
-};
-
-/** Returns options for searching alerts; polls every 60s */
-export const searchAlertsOptions = createQueryOptions({
-  apiFunction: searchAlerts,
-  queryKey: ["wsdot", "highway-alerts", "searchAlerts"],
+export const searchAlertsDef = defineEndpoint({
+  moduleGroup: "wsdot-highway-alerts",
+  functionName: "searchAlerts",
+  endpoint:
+    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
+  inputSchema: searchAlertsParamsSchema,
+  outputSchema: alertsSchema,
+  sampleParams: {
+    StateRoute: "005",
+    Region: "Northwest",
+    SearchTimeStart: getCurrentDateRange().yesterday,
+    SearchTimeEnd: getCurrentDateRange().today,
+    StartingMilepost: 0,
+    EndingMilepost: 200,
+  },
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+/** SearchAlerts params type */

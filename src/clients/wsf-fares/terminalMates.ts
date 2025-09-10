@@ -1,32 +1,26 @@
 import { z } from "zod";
 import { terminalMateSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getFaresTerminalMates */
 export const getFaresTerminalMatesParamsSchema = z.object({
   tripDate: z.date(),
   terminalId: z.number().int().positive(),
 });
 
+/** GetFaresTerminalMates params type */
 export type GetFaresTerminalMatesParams = z.infer<
   typeof getFaresTerminalMatesParamsSchema
 >;
 
-export const terminalMatesArraySchema = z.array(terminalMateSchema);
-export type TerminalMates = z.infer<typeof terminalMatesArraySchema>;
-
-export const getFaresTerminalMates = async (
-  params: GetFaresTerminalMatesParams
-): Promise<TerminalMates> =>
-  zodFetch({
-    endpoint: "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalId}",
-    inputSchema: getFaresTerminalMatesParamsSchema,
-    outputSchema: terminalMatesArraySchema,
-    params,
-  });
-
-export const terminalMatesOptions = createQueryOptions({
-  apiFunction: getFaresTerminalMates,
-  queryKey: ["wsf", "fares", "terminalmates", "getFaresTerminalMates"],
+/** Endpoint definition for getFaresTerminalMates */
+export const getFaresTerminalMatesDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getFaresTerminalMates",
+  endpoint: "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalId}",
+  inputSchema: getFaresTerminalMatesParamsSchema,
+  outputSchema: z.array(terminalMateSchema),
+  sampleParams: { tripDate: getSampleDates().tomorrow, terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

@@ -1,11 +1,8 @@
 import { z } from "zod";
-import {
-  type VesselAccommodations,
-  vesselAccommodationsSchema,
-} from "@/schemas/wsf-vessels";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { vesselAccommodationsSchema } from "@/schemas/wsf-vessels";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getVesselAccommodationsById */
 export const getVesselAccommodationsByIdParamsSchema = z.object({
   vesselId: z
     .number()
@@ -16,22 +13,18 @@ export const getVesselAccommodationsByIdParamsSchema = z.object({
     ),
 });
 
+/** GetVesselAccommodationsById params type */
 export type GetVesselAccommodationsByIdParams = z.infer<
   typeof getVesselAccommodationsByIdParamsSchema
 >;
 
-export const getVesselAccommodationsById = async (
-  params: GetVesselAccommodationsByIdParams
-): Promise<VesselAccommodations> =>
-  zodFetch({
-    endpoint: "/ferries/api/vessels/rest/vesselaccommodations/{vesselId}",
-    inputSchema: getVesselAccommodationsByIdParamsSchema,
-    outputSchema: vesselAccommodationsSchema,
-    params,
-  });
-
-export const vesselAccommodationsByIdOptions = createQueryOptions({
-  apiFunction: getVesselAccommodationsById,
-  queryKey: ["wsf", "vessels", "accommodations", "getVesselAccommodationsById"],
+/** Endpoint definition for getVesselAccommodationsById */
+export const getVesselAccommodationsByIdDef = defineEndpoint({
+  moduleGroup: "wsf-vessels",
+  functionName: "getVesselAccommodationsById",
+  endpoint: "/ferries/api/vessels/rest/vesselaccommodations/{vesselId}",
+  inputSchema: getVesselAccommodationsByIdParamsSchema,
+  outputSchema: vesselAccommodationsSchema,
+  sampleParams: { vesselId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

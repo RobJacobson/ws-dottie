@@ -1,35 +1,25 @@
 import { z } from "zod";
 import { terminalComboVerboseItemSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getTerminalComboVerbose */
 export const getTerminalComboVerboseParamsSchema = z.object({
   tripDate: z.date(),
 });
 
+/** GetTerminalComboVerbose params type */
 export type GetTerminalComboVerboseParams = z.infer<
   typeof getTerminalComboVerboseParamsSchema
 >;
 
-export const terminalComboVerboseArraySchema = z.array(
-  terminalComboVerboseItemSchema
-);
-export type TerminalComboVerbose = z.infer<
-  typeof terminalComboVerboseArraySchema
->;
-
-export const getTerminalComboVerbose = async (
-  params: GetTerminalComboVerboseParams
-): Promise<TerminalComboVerbose> =>
-  zodFetch({
-    endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}",
-    inputSchema: getTerminalComboVerboseParamsSchema,
-    outputSchema: terminalComboVerboseArraySchema,
-    params,
-  });
-
-export const terminalComboVerboseOptions = createQueryOptions({
-  apiFunction: getTerminalComboVerbose,
-  queryKey: ["wsf", "fares", "terminalcomboverbose", "getTerminalComboVerbose"],
+/** Endpoint definition for getTerminalComboVerbose */
+export const getTerminalComboVerboseDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getTerminalComboVerbose",
+  endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}",
+  inputSchema: getTerminalComboVerboseParamsSchema,
+  outputSchema: z.array(terminalComboVerboseItemSchema),
+  sampleParams: { tripDate: getSampleDates().tomorrow },
   cacheStrategy: "DAILY_STATIC",
 });

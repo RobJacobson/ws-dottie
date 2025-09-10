@@ -1,34 +1,32 @@
 import { z } from "zod";
-import {
-  type ScheduleResponse,
-  scheduleResponsesArraySchema as scheduleResponseArraySchema,
-} from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { scheduleResponsesArraySchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getScheduleByScheduleTerminals */
 export const getScheduleByScheduleTerminalsParamsSchema = z.object({
   tripDate: z.date(),
   departingScheduleTerminalId: z.number().int().positive(),
   arrivingScheduleTerminalId: z.number().int().positive(),
 });
 
+/** GetScheduleByScheduleTerminals params type */
 export type GetScheduleByScheduleTerminalsParams = z.infer<
   typeof getScheduleByScheduleTerminalsParamsSchema
 >;
 
-export const getScheduleByScheduleTerminals = async (
-  params: GetScheduleByScheduleTerminalsParams
-): Promise<ScheduleResponse[]> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/schedule/rest/schedulebyterminals/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
-    inputSchema: getScheduleByScheduleTerminalsParamsSchema,
-    outputSchema: scheduleResponseArraySchema,
-    params,
-  });
-
-export const scheduleByScheduleTerminalsOptions = createQueryOptions({
-  apiFunction: getScheduleByScheduleTerminals,
-  queryKey: ["wsf", "schedule", "schedule", "getScheduleByScheduleTerminals"],
+/** Endpoint definition for getScheduleByScheduleTerminals */
+export const getScheduleByScheduleTerminalsDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getScheduleByScheduleTerminals",
+  endpoint:
+    "/ferries/api/schedule/rest/schedulebyterminals/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
+  inputSchema: getScheduleByScheduleTerminalsParamsSchema,
+  outputSchema: scheduleResponsesArraySchema,
+  sampleParams: {
+    tripDate: getSampleDates().tomorrow,
+    departingScheduleTerminalId: 1,
+    arrivingScheduleTerminalId: 2,
+  },
   cacheStrategy: "DAILY_STATIC",
 });

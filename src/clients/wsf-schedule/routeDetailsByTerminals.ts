@@ -1,39 +1,32 @@
 import { z } from "zod";
-import {
-  type RouteDetailsArray,
-  routeDetailsArraySchema,
-} from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { routeDetailsArraySchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getRouteDetailsByScheduleTerminals */
 export const getRouteDetailsByScheduleTerminalsParamsSchema = z.object({
   tripDate: z.date(),
   departingScheduleTerminalId: z.number().int().positive(),
   arrivingScheduleTerminalId: z.number().int().positive(),
 });
 
+/** GetRouteDetailsByScheduleTerminals params type */
 export type GetRouteDetailsByScheduleTerminalsParams = z.infer<
   typeof getRouteDetailsByScheduleTerminalsParamsSchema
 >;
 
-export const getRouteDetailsByScheduleTerminals = async (
-  params: GetRouteDetailsByScheduleTerminalsParams
-): Promise<RouteDetailsArray> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/schedule/rest/routedetailsbyterminals/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
-    inputSchema: getRouteDetailsByScheduleTerminalsParamsSchema,
-    outputSchema: routeDetailsArraySchema,
-    params,
-  });
-
-export const routeDetailsByScheduleTerminalsOptions = createQueryOptions({
-  apiFunction: getRouteDetailsByScheduleTerminals,
-  queryKey: [
-    "wsf",
-    "schedule",
-    "routeDetails",
-    "getRouteDetailsByScheduleTerminals",
-  ],
+/** Endpoint definition for getRouteDetailsByScheduleTerminals */
+export const getRouteDetailsByScheduleTerminalsDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getRouteDetailsByScheduleTerminals",
+  endpoint:
+    "/ferries/api/schedule/rest/routedetailsbyterminals/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
+  inputSchema: getRouteDetailsByScheduleTerminalsParamsSchema,
+  outputSchema: routeDetailsArraySchema,
+  sampleParams: {
+    tripDate: getSampleDates().tomorrow,
+    departingScheduleTerminalId: 1,
+    arrivingScheduleTerminalId: 2,
+  },
   cacheStrategy: "DAILY_STATIC",
 });

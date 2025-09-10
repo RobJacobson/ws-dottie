@@ -1,3 +1,8 @@
 export * from "./getWeatherInformation";
 export * from "./getWeatherInformationByStationId";
-export * from "./weatherInformationSearch";
+
+// Re-export output types from schemas
+export type {
+  WeatherInfo,
+  WeatherInformation,
+} from "@/schemas/wsdot-weather-information";

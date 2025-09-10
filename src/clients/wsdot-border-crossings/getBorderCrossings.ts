@@ -56,36 +56,25 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
  */
 import { z } from "zod";
-import {
-  type BorderCrossings,
-  borderCrossingsSchema,
-} from "@/schemas/wsdot-border-crossings";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { borderCrossingsSchema } from "@/schemas/wsdot-border-crossings";
+import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getBorderCrossings (none) */
+/** Params schema for getBorderCrossings */
 export const getBorderCrossingsParamsSchema = z.object({});
 
-/** GetBorderCrossings params type (no parameters) */
+/** GetBorderCrossings params type */
 export type GetBorderCrossingsParams = z.infer<
   typeof getBorderCrossingsParamsSchema
 >;
 
-/** Fetches all border crossing reports */
-export const getBorderCrossings = async (
-  params: GetBorderCrossingsParams
-): Promise<BorderCrossings> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
-    inputSchema: getBorderCrossingsParamsSchema,
-    outputSchema: borderCrossingsSchema,
-    params,
-  });
-
-/** Returns options for all border crossings; polls every 60s */
-export const borderCrossingsOptions = createQueryOptions({
-  apiFunction: getBorderCrossings,
-  queryKey: ["wsdot", "border-crossings", "getBorderCrossings"],
+/** Endpoint definition for getBorderCrossings */
+export const getBorderCrossingsDef = defineEndpoint({
+  moduleGroup: "wsdot-border-crossings",
+  functionName: "getBorderCrossings",
+  endpoint:
+    "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
+  inputSchema: getBorderCrossingsParamsSchema,
+  outputSchema: borderCrossingsSchema,
+  sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });

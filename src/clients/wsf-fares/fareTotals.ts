@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { type FareTotal, fareTotalSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { fareTotalsSchema } from "@/schemas/wsf-fares";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getFareTotals */
 export const getFareTotalsParamsSchema = z.object({
   tripDate: z.date(),
   departingTerminalId: z.number().int().positive(),
@@ -12,21 +13,25 @@ export const getFareTotalsParamsSchema = z.object({
   quantity: z.number().int().positive(),
 });
 
+/** Endpoint definition for getFareTotals */
 export type GetFareTotalsParams = z.infer<typeof getFareTotalsParamsSchema>;
 
-export const getFareTotals = async (
-  params: GetFareTotalsParams
-): Promise<FareTotal> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}",
-    inputSchema: getFareTotalsParamsSchema,
-    outputSchema: fareTotalSchema,
-    params,
-  });
-
-export const fareTotalsOptions = createQueryOptions({
-  apiFunction: getFareTotals,
-  queryKey: ["wsf", "fares", "faretotals", "getFareTotals"],
+export const getFareTotalsDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getFareTotals",
+  endpoint:
+    "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}",
+  inputSchema: getFareTotalsParamsSchema,
+  outputSchema: fareTotalsSchema,
+  sampleParams: {
+    tripDate: getSampleDates().tomorrow,
+    departingTerminalId: 1,
+    arrivingTerminalId: 10,
+    roundTrip: false,
+    fareLineItemId: 1,
+    quantity: 2,
+  },
   cacheStrategy: "DAILY_STATIC",
 });
+
+/** GetFareTotals params type */

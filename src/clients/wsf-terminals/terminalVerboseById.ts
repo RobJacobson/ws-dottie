@@ -1,31 +1,24 @@
 import { z } from "zod";
-import {
-  type TerminalVerbose,
-  terminalVerboseSchema,
-} from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { terminalVerboseSchema } from "@/schemas/wsf-terminals";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getTerminalVerboseByTerminalId */
 export const getTerminalVerboseByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
 });
 
+/** GetTerminalVerboseByTerminalId params type */
 export type GetTerminalVerboseByTerminalIdParams = z.infer<
   typeof getTerminalVerboseByTerminalIdParamsSchema
 >;
 
-export const getTerminalVerboseByTerminalId = async (
-  params: GetTerminalVerboseByTerminalIdParams
-): Promise<TerminalVerbose> =>
-  zodFetch({
-    endpoint: "/ferries/api/terminals/rest/terminalverbose/{terminalId}",
-    inputSchema: getTerminalVerboseByTerminalIdParamsSchema,
-    outputSchema: terminalVerboseSchema,
-    params,
-  });
-
-export const terminalVerboseByFaresTerminalIdOptions = createQueryOptions({
-  apiFunction: getTerminalVerboseByTerminalId,
-  queryKey: ["wsf", "terminals", "verbose", "getTerminalVerboseByTerminalId"],
+/** Endpoint definition for getTerminalVerboseByTerminalId */
+export const getTerminalVerboseByTerminalIdDef = defineEndpoint({
+  moduleGroup: "wsf-terminals",
+  functionName: "getTerminalVerboseByTerminalId",
+  endpoint: "/ferries/api/terminals/rest/terminalverbose/{terminalId}",
+  inputSchema: getTerminalVerboseByTerminalIdParamsSchema,
+  outputSchema: terminalVerboseSchema,
+  sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });

@@ -1,29 +1,22 @@
 import { z } from "zod";
-import {
-  type TerminalWaitTimesArray,
-  terminalWaitTimesArraySchema,
-} from "@/schemas/wsf-terminals";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { terminalWaitTimesArraySchema } from "@/schemas/wsf-terminals";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getTerminalWaitTimes */
 export const getTerminalWaitTimesParamsSchema = z.object({});
 
+/** GetTerminalWaitTimes params type */
 export type GetTerminalWaitTimesParams = z.infer<
   typeof getTerminalWaitTimesParamsSchema
 >;
 
-export const getTerminalWaitTimes = async (
-  params: GetTerminalWaitTimesParams
-): Promise<TerminalWaitTimesArray> =>
-  zodFetch({
-    endpoint: "/ferries/api/terminals/rest/terminalwaittimes",
-    inputSchema: getTerminalWaitTimesParamsSchema,
-    outputSchema: terminalWaitTimesArraySchema,
-    params,
-  });
-
-export const terminalWaitTimesOptions = createQueryOptions({
-  apiFunction: getTerminalWaitTimes,
-  queryKey: ["wsf", "terminals", "waitTimes", "getTerminalWaitTimes"],
+/** Endpoint definition for getTerminalWaitTimes */
+export const getTerminalWaitTimesDef = defineEndpoint({
+  moduleGroup: "wsf-terminals",
+  functionName: "getTerminalWaitTimes",
+  endpoint: "/ferries/api/terminals/rest/terminalwaittimes",
+  inputSchema: getTerminalWaitTimesParamsSchema,
+  outputSchema: terminalWaitTimesArraySchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

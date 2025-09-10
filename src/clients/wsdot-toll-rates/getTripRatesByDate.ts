@@ -43,30 +43,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import {
-  type TripRatesByDate,
-  tripRatesByDateItemSchema,
-} from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
-
-/** Fetches trip rates between two dates (YYYY-MM-DD) */
-export const getTripRatesByDate = async (
-  params: GetTripRatesByDateParams
-): Promise<TripRatesByDate> => {
-  const queryParams = new URLSearchParams();
-  queryParams.append("fromDate", params.fromDate.toISOString().split("T")[0]);
-  queryParams.append("toDate", params.toDate.toISOString().split("T")[0]);
-
-  const endpoint = `/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?${queryParams.toString()}`;
-
-  return zodFetch({
-    endpoint,
-    inputSchema: getTripRatesByDateParamsSchema,
-    outputSchema: tripRatesByDateItemSchema,
-    params: undefined, // No URL template interpolation needed since we build the URL ourselves
-  });
-};
+import { tripRatesByDateSchema } from "@/schemas/wsdot-toll-rates";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getHistoricalDateRange } from "@/shared/utils/dateUtils";
 
 /** Params schema for getTripRatesByDate */
 export const getTripRatesByDateParamsSchema = z.object({
@@ -76,12 +55,19 @@ export const getTripRatesByDateParamsSchema = z.object({
   toDate: z.date(),
 });
 
-export type GetTripRatesByDateParams = z.infer<
-  typeof getTripRatesByDateParamsSchema
->;
-
-export const tripRatesByDateOptions = createQueryOptions({
-  apiFunction: getTripRatesByDate,
-  queryKey: ["wsdot", "toll-rates", "getTripRatesByDate"],
+/** Endpoint definition for getTripRatesByDate */
+export const getTripRatesByDateDef = defineEndpoint({
+  moduleGroup: "wsdot-toll-rates",
+  functionName: "getTripRatesByDate",
+  endpoint:
+    "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
+  inputSchema: getTripRatesByDateParamsSchema,
+  outputSchema: tripRatesByDateSchema,
+  sampleParams: {
+    fromDate: getHistoricalDateRange().startOfMonth,
+    toDate: getHistoricalDateRange().endOfMonth,
+  },
   cacheStrategy: "DAILY_STATIC",
 });
+
+/** GetTripRatesByDate params type */

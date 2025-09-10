@@ -1,22 +1,23 @@
 /**
  * @module WSDOT — Bridge Clearances API
- * @description Bridge height and clearance information across all WSDOT routes.
+ * @description Bridge height and clearance information by WSDOT route.
  *
  * Provides:
- * - Vertical clearance maximum/minimum by bridge/structure for all routes
+ * - Vertical clearance maximum/minimum by bridge/structure for a specific route
  * - Crossing metadata, structure identifiers, and location
  *
  * Data includes:
  * - Structure IDs, route/location metadata, clearances (feet/inches), update timestamps (JS Date)
  *
  * @functions
- *   - getBridgeClearances: Returns all bridge clearance data
+ *   - getBridgeClearancesByRoute: Returns bridge clearance data for a specific route
  *
  * @input
- *   - getBridgeClearances: {}
+ *   - getBridgeClearancesByRoute:
+ *     - route: WSDOT route string (e.g., "005")
  *
  * @output
- *   - getBridgeClearances: BridgeDataGISArray
+ *   - getBridgeClearancesByRoute: BridgeDataGISArray
  *   - BridgeDataGIS fields:
  *     - APILastUpdate: API last update time (JS Date)
  *     - BridgeNumber: Bridge number (nullable)
@@ -42,7 +43,7 @@
  *   - BridgeDataGIS: Bridge clearance record
  *
  * @cli
- *   - getBridgeClearances: node dist/cli.mjs getBridgeClearances
+ *   - getBridgeClearancesByRoute: node dist/cli.mjs getBridgeClearancesByRoute '{"route": "005"}'
  *
  * @exampleResponse
  * {
@@ -73,21 +74,25 @@ import { z } from "zod";
 import { bridgeDataGISListSchema } from "@/schemas/wsdot-bridge-clearances";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getBridgeClearances */
-export const getBridgeClearancesParamsSchema = z.object({});
+/** Params schema for getBridgeClearancesByRoute */
+export const getBridgeClearancesByRouteParamsSchema = z.object({
+  /** WSDOT route string (e.g., "005") */
+  route: z.string().min(1, "Route parameter is required"),
+});
 
-/** GetBridgeClearances params type */
-export type GetBridgeClearancesParams = z.infer<
-  typeof getBridgeClearancesParamsSchema
+/** GetBridgeClearancesByRoute params type */
+export type GetBridgeClearancesByRouteParams = z.infer<
+  typeof getBridgeClearancesByRouteParamsSchema
 >;
 
-/** Endpoint definition for getBridgeClearances */
-export const getBridgeClearancesDef = defineEndpoint({
+/** Endpoint definition for getBridgeClearancesByRoute */
+export const getBridgeClearancesByRouteDef = defineEndpoint({
   moduleGroup: "wsdot-bridge-clearances",
-  functionName: "getBridgeClearances",
-  endpoint: "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson",
-  inputSchema: getBridgeClearancesParamsSchema,
+  functionName: "getBridgeClearancesByRoute",
+  endpoint:
+    "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
+  inputSchema: getBridgeClearancesByRouteParamsSchema,
   outputSchema: bridgeDataGISListSchema,
-  sampleParams: {},
+  sampleParams: { route: "005" },
   cacheStrategy: "DAILY_STATIC",
 });

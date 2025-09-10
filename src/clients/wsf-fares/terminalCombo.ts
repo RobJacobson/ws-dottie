@@ -1,34 +1,32 @@
 import { z } from "zod";
-import {
-  scheduleTerminalComboSchema,
-  type TerminalCombo,
-} from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { scheduleTerminalComboSchema } from "@/schemas/wsf-fares";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getFaresTerminalCombo */
 export const getFaresTerminalComboParamsSchema = z.object({
   tripDate: z.date(),
   departingTerminalId: z.number().int().positive(),
   arrivingTerminalId: z.number().int().positive(),
 });
 
+/** GetFaresTerminalCombo params type */
 export type GetFaresTerminalComboParams = z.infer<
   typeof getFaresTerminalComboParamsSchema
 >;
 
-export const getFaresTerminalCombo = async (
-  params: GetFaresTerminalComboParams
-): Promise<TerminalCombo> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-    inputSchema: getFaresTerminalComboParamsSchema,
-    outputSchema: scheduleTerminalComboSchema,
-    params,
-  });
-
-export const terminalComboOptions = createQueryOptions({
-  apiFunction: getFaresTerminalCombo,
-  queryKey: ["wsf", "fares", "terminalcombo", "getFaresTerminalCombo"],
+/** Endpoint definition for getFaresTerminalCombo */
+export const getFaresTerminalComboDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getFaresTerminalCombo",
+  endpoint:
+    "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
+  inputSchema: getFaresTerminalComboParamsSchema,
+  outputSchema: scheduleTerminalComboSchema,
+  sampleParams: {
+    tripDate: getSampleDates().tomorrow,
+    departingTerminalId: 1,
+    arrivingTerminalId: 10,
+  },
   cacheStrategy: "DAILY_STATIC",
 });

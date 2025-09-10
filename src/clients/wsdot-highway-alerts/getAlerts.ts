@@ -79,28 +79,22 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { type Alerts, alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
+import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getAlerts (none) */
+/** Params schema for getAlerts */
 export const getAlertsParamsSchema = z.object({});
 
+/** GetAlerts params type */
 export type GetAlertsParams = z.infer<typeof getAlertsParamsSchema>;
 
-/** Fetches all active highway alerts */
-export const getAlerts = async (params: GetAlertsParams): Promise<Alerts> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
-    inputSchema: getAlertsParamsSchema,
-    outputSchema: alertsSchema,
-    params,
-  });
-
-/** Returns options for all alerts; polls every 60s */
-export const getAlertsOptions = createQueryOptions({
-  apiFunction: getAlerts,
-  queryKey: ["wsdot", "highway-alerts", "getAlerts"],
+/** Endpoint definition for getAlerts */
+export const getAlertsDef = defineEndpoint({
+  moduleGroup: "wsdot-highway-alerts",
+  functionName: "getAlerts",
+  endpoint: "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
+  inputSchema: getAlertsParamsSchema,
+  outputSchema: alertsSchema,
+  sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });

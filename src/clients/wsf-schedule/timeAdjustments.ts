@@ -1,26 +1,22 @@
 import { z } from "zod";
-import { timeAdjustmentResponsesArraySchema } from "@/schemas/wsf-schedule";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { timeAdjustmentsSchema } from "@/schemas/wsf-schedule";
+import { defineEndpoint } from "@/shared/endpoints";
 
+/** Params schema for getTimeAdjustments */
 export const getTimeAdjustmentsParamsSchema = z.object({});
 
+/** GetTimeAdjustments params type */
 export type GetTimeAdjustmentsParams = z.infer<
   typeof getTimeAdjustmentsParamsSchema
 >;
 
-export const getTimeAdjustments = async (
-  params: GetTimeAdjustmentsParams
-): Promise<z.infer<typeof timeAdjustmentResponsesArraySchema>> =>
-  zodFetch({
-    endpoint: "/ferries/api/schedule/rest/timeadj",
-    inputSchema: getTimeAdjustmentsParamsSchema,
-    outputSchema: timeAdjustmentResponsesArraySchema,
-    params,
-  });
-
-export const timeAdjustmentsOptions = createQueryOptions({
-  apiFunction: getTimeAdjustments,
-  queryKey: ["wsf", "schedule", "timeadj", "getTimeAdjustments"],
+/** Endpoint definition for getTimeAdjustments */
+export const getTimeAdjustmentsDef = defineEndpoint({
+  moduleGroup: "wsf-schedule",
+  functionName: "getTimeAdjustments",
+  endpoint: "/ferries/api/schedule/rest/timeadj",
+  inputSchema: getTimeAdjustmentsParamsSchema,
+  outputSchema: timeAdjustmentsSchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

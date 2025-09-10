@@ -65,36 +65,25 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
  */
 import { z } from "zod";
-import {
-  type MountainPassConditions,
-  mountainPassConditionsSchema,
-} from "@/schemas/wsdot-mountain-pass-conditions";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { mountainPassConditionsSchema } from "@/schemas/wsdot-mountain-pass-conditions";
+import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getMountainPassConditions (none) */
+/** Params schema for getMountainPassConditions */
 export const getMountainPassConditionsParamsSchema = z.object({});
 
-/** GetMountainPassConditionsParams type */
+/** GetMountainPassConditions params type */
 export type GetMountainPassConditionsParams = z.infer<
   typeof getMountainPassConditionsParamsSchema
 >;
 
-/** Fetches all mountain pass conditions */
-export const getMountainPassConditions = async (
-  params: GetMountainPassConditionsParams
-): Promise<MountainPassConditions> =>
-  zodFetch({
-    endpoint:
-      "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
-    inputSchema: getMountainPassConditionsParamsSchema,
-    outputSchema: mountainPassConditionsSchema,
-    params,
-  });
-
-/** Returns options for all pass conditions; polls daily */
-export const mountainPassConditionsOptions = createQueryOptions({
-  apiFunction: getMountainPassConditions,
-  queryKey: ["wsdot", "mountain-pass-conditions", "getMountainPassConditions"],
+/** Endpoint definition for getMountainPassConditions */
+export const getMountainPassConditionsDef = defineEndpoint({
+  moduleGroup: "wsdot-mountain-pass-conditions",
+  functionName: "getMountainPassConditions",
+  endpoint:
+    "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
+  inputSchema: getMountainPassConditionsParamsSchema,
+  outputSchema: mountainPassConditionsSchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

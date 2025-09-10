@@ -1,8 +1,9 @@
 import { z } from "zod";
 import { fareLineItemBasicSchema } from "@/schemas/wsf-fares";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getSampleDates } from "@/shared/utils/dateUtils";
 
+/** Params schema for getFareLineItemsBasic */
 export const getFareLineItemsBasicParamsSchema = z.object({
   tripDate: z.date(),
   departingTerminalId: z.number().int().positive(),
@@ -10,26 +11,24 @@ export const getFareLineItemsBasicParamsSchema = z.object({
   roundTrip: z.boolean(),
 });
 
+/** GetFareLineItemsBasic params type */
 export type GetFareLineItemsBasicParams = z.infer<
   typeof getFareLineItemsBasicParamsSchema
 >;
 
-export const fareLineItemsBasicArraySchema = z.array(fareLineItemBasicSchema);
-export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicArraySchema>;
-
-export const getFareLineItemsBasic = async (
-  params: GetFareLineItemsBasicParams
-): Promise<FareLineItemsBasic> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/fares/rest/farelineitemsbasic/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
-    inputSchema: getFareLineItemsBasicParamsSchema,
-    outputSchema: fareLineItemsBasicArraySchema,
-    params,
-  });
-
-export const fareLineItemsBasicOptions = createQueryOptions({
-  apiFunction: getFareLineItemsBasic,
-  queryKey: ["wsf", "fares", "farelineitemsbasic", "getFareLineItemsBasic"],
+/** Endpoint definition for getFareLineItemsBasic */
+export const getFareLineItemsBasicDef = defineEndpoint({
+  moduleGroup: "wsf-fares",
+  functionName: "getFareLineItemsBasic",
+  endpoint:
+    "/ferries/api/fares/rest/farelineitemsbasic/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
+  inputSchema: getFareLineItemsBasicParamsSchema,
+  outputSchema: z.array(fareLineItemBasicSchema),
+  sampleParams: {
+    tripDate: getSampleDates().tomorrow,
+    departingTerminalId: 1,
+    arrivingTerminalId: 10,
+    roundTrip: false,
+  },
   cacheStrategy: "DAILY_STATIC",
 });

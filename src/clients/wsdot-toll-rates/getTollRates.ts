@@ -45,30 +45,22 @@
  */
 
 import { z } from "zod";
-import { type TollRates, tollRatesSchema } from "@/schemas/wsdot-toll-rates";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { tollRatesSchema } from "@/schemas/wsdot-toll-rates";
+import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTollRates (none) */
+/** Params schema for getTollRates */
 export const getTollRatesParamsSchema = z.object({});
 
 /** GetTollRates params type */
 export type GetTollRatesParams = z.infer<typeof getTollRatesParamsSchema>;
 
-/** Fetches current toll rates */
-export const getTollRates = async (
-  params: GetTollRatesParams
-): Promise<TollRates> =>
-  zodFetch({
-    endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
-    inputSchema: getTollRatesParamsSchema,
-    outputSchema: tollRatesSchema,
-    params,
-  });
-
-/** Returns options for current toll rates; polls every 60s */
-export const tollRatesOptions = createQueryOptions({
-  apiFunction: getTollRates,
-  queryKey: ["wsdot", "toll-rates", "getTollRates"],
+/** Endpoint definition for getTollRates */
+export const getTollRatesDef = defineEndpoint({
+  moduleGroup: "wsdot-toll-rates",
+  functionName: "getTollRates",
+  endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
+  inputSchema: getTollRatesParamsSchema,
+  outputSchema: tollRatesSchema,
+  sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });

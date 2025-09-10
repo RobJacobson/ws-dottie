@@ -1,10 +1,7 @@
 import { z } from "zod";
-import {
-  type VesselHistoryArray as VesselHistoryArrayType,
-  vesselHistoryArraySchema,
-} from "@/schemas/wsf-vessels";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
+import { vesselHistoryArraySchema } from "@/schemas/wsf-vessels";
+import { defineEndpoint } from "@/shared/endpoints";
+import { getHistoricalDateRange } from "@/shared/utils/dateUtils";
 
 const dateRangeParams = {
   dateStart: z.date(),
@@ -13,33 +10,29 @@ const dateRangeParams = {
 
 const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");
 
+/** Params schema for getVesselHistoryByVesselAndDateRange */
 export const getVesselHistoryByVesselAndDateRangeParamsSchema = z.object({
   vesselName: vesselNameParam,
   ...dateRangeParams,
 });
 
+/** GetVesselHistoryByVesselAndDateRange params type */
 export type GetVesselHistoryByVesselAndDateRangeParams = z.infer<
   typeof getVesselHistoryByVesselAndDateRangeParamsSchema
 >;
 
-export const getVesselHistoryByVesselAndDateRange = async (
-  params: GetVesselHistoryByVesselAndDateRangeParams
-): Promise<VesselHistoryArrayType> =>
-  zodFetch({
-    endpoint:
-      "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
-    inputSchema: getVesselHistoryByVesselAndDateRangeParamsSchema,
-    outputSchema: vesselHistoryArraySchema,
-    params,
-  });
-
-export const vesselHistoryByVesselAndDateRangeOptions = createQueryOptions({
-  apiFunction: getVesselHistoryByVesselAndDateRange,
-  queryKey: [
-    "wsf",
-    "vessels",
-    "history",
-    "getVesselHistoryByVesselAndDateRange",
-  ],
+/** Endpoint definition for getVesselHistoryByVesselAndDateRange */
+export const getVesselHistoryByVesselAndDateRangeDef = defineEndpoint({
+  moduleGroup: "wsf-vessels",
+  functionName: "getVesselHistoryByVesselAndDateRange",
+  endpoint:
+    "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
+  inputSchema: getVesselHistoryByVesselAndDateRangeParamsSchema,
+  outputSchema: vesselHistoryArraySchema,
+  sampleParams: {
+    vesselName: "Cathlamet",
+    dateStart: getHistoricalDateRange().startOfMonth,
+    dateEnd: getHistoricalDateRange().endOfMonth,
+  },
   cacheStrategy: "DAILY_STATIC",
 });
