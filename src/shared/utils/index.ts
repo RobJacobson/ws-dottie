@@ -13,4 +13,9 @@ export { configManager, type WsdotConfig } from "./configManager";
 export { default as log, type LoggingMode } from "./logger";
 
 // Date utilities
-export { jsDateToYyyyMmDd } from "./dateUtils";
+export {
+  jsDateToYyyyMmDd,
+  getSampleDates,
+  getHistoricalDateRange,
+  datePatterns,
+} from "./dateUtils";

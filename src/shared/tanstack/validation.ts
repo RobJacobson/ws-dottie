@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { parseDotNetTimestamp } from "@/shared/utils/dotNetTimestamp";
 
 /**
  * @fileoverview TanStack Query validation utilities
@@ -60,13 +61,7 @@ const isWsdotDateString = (value: string): boolean =>
 const wsdotDateTimestampToJsDate = (dateString: string): Date | null => {
   // Remove escaped forward slashes if present
   const cleanDateString = dateString.replace(/\\\//g, "/");
-  const timestamp = parseInt(cleanDateString.slice(6, 19), 10);
-
-  // Validate timestamp is a valid number (allow negative timestamps for WSF Schedule API)
-  if (Number.isNaN(timestamp)) {
-    return null;
-  }
-
-  const date = new Date(timestamp);
-  return Number.isNaN(date.getTime()) ? null : date;
+  
+  // Use the shared parsing utility
+  return parseDotNetTimestamp(cleanDateString);
 };

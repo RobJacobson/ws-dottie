@@ -30,10 +30,19 @@ const interpolateUrlParams = (
   params?: Record<string, JsonWithDates>
 ): string => {
   if (!params || Object.keys(params).length === 0) {
+    // Check for unreplaced placeholders when no params provided
+    const unreplacedPlaceholders = urlTemplate.match(/\{[^}]+\}/g);
+    if (unreplacedPlaceholders && unreplacedPlaceholders.length > 0) {
+      throw new Error(
+        `URL template contains unreplaced placeholders: ${unreplacedPlaceholders.join(", ")}. ` +
+          `All placeholders must be replaced with actual parameter values.`
+      );
+    }
     return urlTemplate;
   }
 
-  return Object.entries(params).reduce((url, [key, value]) => {
+  // Interpolate parameters into URL template
+  const interpolatedUrl = Object.entries(params).reduce((url, [key, value]) => {
     const placeholder = `{${key}}`;
 
     if (!url.includes(placeholder)) {
@@ -55,6 +64,17 @@ const interpolateUrlParams = (
 
     return url.replace(placeholder, stringValue);
   }, urlTemplate);
+
+  // Check for any remaining unreplaced placeholders after interpolation
+  const unreplacedPlaceholders = interpolatedUrl.match(/\{[^}]+\}/g);
+  if (unreplacedPlaceholders && unreplacedPlaceholders.length > 0) {
+    throw new Error(
+      `URL template contains unreplaced placeholders: ${unreplacedPlaceholders.join(", ")}. ` +
+        `All placeholders must be replaced with actual parameter values.`
+    );
+  }
+
+  return interpolatedUrl;
 };
 
 /**
