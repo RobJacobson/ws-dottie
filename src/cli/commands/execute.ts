@@ -2,7 +2,8 @@
  * Function execution logic for CLI
  */
 
-import type { FunctionMetadata, CliOptions } from "../types";
+import type { CliOptions } from "../types";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { parseParameters, validateParameters } from "../utils/validation";
 import {
   setupConsoleSuppression,
@@ -13,10 +14,10 @@ import {
 /**
  * Execute a CLI function with the given parameters
  */
-export const executeFunction = async (
+export const executeFunction = async <I, O>(
   functionName: string,
   paramsString: string,
-  functionMeta: FunctionMetadata,
+  endpointDef: EndpointDefinition<I, O>,
   options: CliOptions
 ): Promise<void> => {
   const isQuiet = options.agent || options.quiet || options.silent;
@@ -31,7 +32,7 @@ export const executeFunction = async (
     // Validate parameters against schema
     const validatedParams = validateParameters(
       params,
-      functionMeta.paramsSchema,
+      endpointDef.meta.inputSchema,
       functionName
     );
 
@@ -40,8 +41,7 @@ export const executeFunction = async (
     }
 
     // Call the function with validated parameters
-    // biome-ignore lint/suspicious/noExplicitAny: Needed for metadata
-    const result = await (functionMeta.function as any)(validatedParams);
+    const result = await endpointDef.handleFetch(validatedParams as I);
 
     // Restore console functions for final output
     consoleControl.restore();

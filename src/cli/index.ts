@@ -59,17 +59,17 @@ program.addHelpText("after", generateHelpText());
 /**
  * Main entry point
  */
-async function main() {
+const main = async (): Promise<void> => {
   try {
     await program.parseAsync(process.argv);
   } catch (error) {
     console.error(chalk.red("Unexpected error:"), error);
     process.exit(1);
   }
-}
+};
 
 // Run CLI if this file is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (require.main === module) {
   main();
 }
 

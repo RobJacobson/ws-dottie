@@ -4,9 +4,44 @@
 
 import chalk from "chalk";
 import type { CliOptions } from "../types";
-import { FUNCTION_REGISTRY } from "../registry";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { executeFunction } from "./execute";
 import { displayFunctionNotFound } from "../utils/output";
+
+// Import all endpoints to get the type information
+import * as allEndpoints from "../../clients";
+
+/**
+ * Type guard to check if a value is an endpoint definition
+ */
+const isEndpointDefinition = (
+  value: unknown
+): value is EndpointDefinition<unknown, unknown> =>
+  typeof value === "object" &&
+  value !== null &&
+  "meta" in value &&
+  "handleFetch" in value &&
+  "queryOptions" in value;
+
+/**
+ * Get all endpoint definitions from the clients module
+ */
+const getAllEndpointDefinitions = (): Record<
+  string,
+  EndpointDefinition<unknown, unknown>
+> => {
+  const result: Record<string, EndpointDefinition<unknown, unknown>> = {};
+
+  Object.entries(allEndpoints)
+    .filter(([key]) => key.endsWith("Def"))
+    .forEach(([key, value]) => {
+      if (isEndpointDefinition(value)) {
+        result[key] = value;
+      }
+    });
+
+  return result;
+};
 
 /**
  * Handle CLI command execution
@@ -16,30 +51,47 @@ export const handleCommand = async (
   paramsString: string,
   options: CliOptions
 ): Promise<void> => {
-  // Validate function exists
-  if (!(functionName in FUNCTION_REGISTRY)) {
-    const availableFunctions = Object.keys(FUNCTION_REGISTRY);
+  // Get all endpoint definitions
+  const endpointDefs = getAllEndpointDefinitions();
+  const endpointDefKey = `${functionName}Def`;
+  const endpointDef = endpointDefs[endpointDefKey];
+
+  if (!endpointDef) {
+    const availableFunctions = getAvailableFunctions();
     displayFunctionNotFound(
       functionName,
       availableFunctions,
       options.agent || options.quiet || options.silent
     );
+    return;
   }
 
-  // Get function metadata
-  const functionMeta =
-    FUNCTION_REGISTRY[functionName as keyof typeof FUNCTION_REGISTRY];
+  // Execute the function using the endpoint definition
+  await executeFunction(functionName, paramsString, endpointDef, options);
+};
 
-  // Execute the function
-  await executeFunction(functionName, paramsString, functionMeta, options);
+/**
+ * Get list of available function names
+ */
+export const getAvailableFunctions = (): string[] => {
+  const endpointDefs = getAllEndpointDefinitions();
+  return Object.keys(endpointDefs).map((key) => key.replace("Def", ""));
 };
 
 /**
  * Generate help text with available functions
  */
 export const generateHelpText = (): string => {
-  const functionList = Object.entries(FUNCTION_REGISTRY)
-    .map(([name, meta]) => `  ${chalk.cyan(name)} - ${meta.description}`)
+  const endpointDefs = getAllEndpointDefinitions();
+  const functionList = Object.entries(endpointDefs)
+    .map(([key, endpointDef]) => {
+      const functionName = key.replace("Def", "");
+      // Extract description from output schema or use function name
+      const description =
+        endpointDef.meta.outputSchema.description ||
+        `${endpointDef.meta.moduleGroup} - ${endpointDef.meta.functionName}`;
+      return `  ${chalk.cyan(functionName)} - ${description}`;
+    })
     .join("\n");
 
   return `
