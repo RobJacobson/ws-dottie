@@ -10,7 +10,7 @@ export const scheduleTerminalSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
   /** The name of the terminal. */
-  Description: z.string().describe("The name of the terminal."),
+  Description: z.string().nullable().describe("The name of the terminal."),
 });
 
 export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;

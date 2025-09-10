@@ -19,19 +19,17 @@ import { z } from "zod";
  */
 export const fareTotalSchema = z.object({
   /** Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total. */
-  FareTotalType: z
-    .number()
-    .int()
-    .min(1)
-    .max(4)
+  TotalType: z
+    .enum(["Depart", "Return", "Either", "Total"])
     .describe(
       "Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total."
     ),
   /** A description of the amount. */
-  Description: z.string().describe("A description of the amount."),
+  Description: z.string().nullable().describe("A description of the amount."),
   /** A string representation of the FareTotalType. */
   BriefDescription: z
     .string()
+    .nullable()
     .describe("A string representation of the FareTotalType."),
   /** A total of the fares in dollars. */
   Amount: z.number().describe("A total of the fares in dollars."),

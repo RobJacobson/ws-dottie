@@ -17,7 +17,7 @@ export const vesselClassSchema = z.object({
     .describe("Identifies this vessel class as a unique WSF subject."),
 
   /** The name of the vessel class. */
-  ClassName: z.string().describe("The name of the vessel class."),
+  ClassName: z.string().nullable().describe("The name of the vessel class."),
 
   /** A preferred sort order (sort-ascending with respect to other vessel classes). */
   SortSeq: z
@@ -31,16 +31,19 @@ export const vesselClassSchema = z.object({
   /** A URL that points to a detailed drawing of the vessel class. */
   DrawingImg: z
     .string()
+    .nullable()
     .describe("A URL that points to a detailed drawing of the vessel class."),
 
   /** A URL that points to a small drawing of the vessel class. */
   SilhouetteImg: z
     .string()
+    .nullable()
     .describe("A URL that points to a small drawing of the vessel class."),
 
   /** The name of this vessel class, formatted for the public. */
   PublicDisplayName: z
     .string()
+    .nullable()
     .describe("The name of this vessel class, formatted for the public."),
 });
 

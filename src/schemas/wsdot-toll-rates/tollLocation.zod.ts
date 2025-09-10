@@ -1,13 +1,11 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
-import { tollLocationSchema } from "./tollLocation.zod";
 
 /**
- * TollTripInfo schema
+ * TollLocation schema
  *
- * Static information and geometry for toll trips.
+ * Common location fields shared across toll-related schemas.
  */
-export const tollTripInfoSchema = z.object({
+export const tollLocationSchema = z.object({
   /** End latitude */
   EndLatitude: z.number().describe("End latitude"),
   /** End location name (nullable) */
@@ -19,13 +17,6 @@ export const tollTripInfoSchema = z.object({
   EndLongitude: z.number().describe("End longitude"),
   /** End milepost */
   EndMilepost: z.number().describe("End milepost"),
-  /** WGS84 LineString geometry (string) */
-  Geometry: z
-    .string()
-    .nullable()
-    .describe("WGS84 LineString geometry (string)"),
-  /** Last modified date (JS Date) */
-  ModifiedDate: zWsdotDate().describe("Last modified date (JS Date)"),
   /** Start latitude */
   StartLatitude: z.number().describe("Start latitude"),
   /** Start location name (nullable) */
@@ -46,17 +37,5 @@ export const tollTripInfoSchema = z.object({
   TripName: z.string().nullable().describe("Trip identifier (nullable)"),
 });
 
-/**
- * TollTripInfos schema
- *
- * Array of toll trip info records.
- */
-export const tollTripInfosSchema = z
-  .array(tollTripInfoSchema)
-  .describe("Array of toll trip info records.");
-
-/** TollTripInfo type */
-export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
-
-/** TollTripInfos type */
-export type TollTripInfos = z.infer<typeof tollTripInfosSchema>;
+/** TollLocation type */
+export type TollLocation = z.infer<typeof tollLocationSchema>;

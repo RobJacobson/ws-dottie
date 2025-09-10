@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { alertSchema } from "./alert.zod";
+import { routeAlertSchema } from "./routeAlert.zod";
 
 /**
  * Schema for route details response from WSF Schedule API.
@@ -15,9 +15,9 @@ export const routeDetailsSchema = z.object({
   /** Unique identifier for a route. */
   RouteID: z.number().int().describe("Unique identifier for a route."),
   /** The route's abbreviation. */
-  RouteAbbrev: z.string().describe("The route's abbreviation."),
+  RouteAbbrev: z.string().nullable().describe("The route's abbreviation."),
   /** The full name of the route. */
-  Description: z.string().describe("The full name of the route."),
+  Description: z.string().nullable().describe("The full name of the route."),
   /** Unique identifier that identifies the region associated with the route. */
   RegionID: z
     .number()
@@ -69,10 +69,13 @@ export const routeDetailsSchema = z.object({
       "Route notes specific to the season that the trip date is associated with."
     ),
   /** Alerts associated with the route. */
-  Alerts: z.array(alertSchema).describe("Alerts associated with the route."),
+  Alerts: z
+    .array(routeAlertSchema)
+    .nullable()
+    .describe("Alerts associated with the route."),
 });
 
-export type RouteDetails = z.infer<typeof routeDetailsSchema>;
+export type RouteDetailsItem = z.infer<typeof routeDetailsSchema>;
 
 /**
  * Array of route details.
@@ -81,4 +84,4 @@ export const routeDetailsArraySchema = z
   .array(routeDetailsSchema)
   .describe("The detailed route information for the given trip date.");
 
-export type RouteDetailsArray = z.infer<typeof routeDetailsArraySchema>;
+export type RouteDetails = z.infer<typeof routeDetailsArraySchema>;

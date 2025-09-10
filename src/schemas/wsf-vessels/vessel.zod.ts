@@ -17,10 +17,10 @@ export const vesselSchema = z.object({
     .describe("Identifies this vessel as a unique WSF subject."),
 
   /** The name of the vessel. */
-  VesselName: z.string().describe("The name of the vessel."),
+  VesselName: z.string().nullable().describe("The name of the vessel."),
 
   /** The vessel's abbreviation. */
-  VesselAbbrev: z.string().describe("The vessel's abbreviation."),
+  VesselAbbrev: z.string().nullable().describe("The vessel's abbreviation."),
 });
 
 export type Vessel = z.infer<typeof vesselSchema>;

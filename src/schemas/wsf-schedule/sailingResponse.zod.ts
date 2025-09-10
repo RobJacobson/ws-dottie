@@ -31,11 +31,13 @@ export const sailingResponseSchema = z.object({
   /** A title that describes the sailing (eg. Leave Port Townsend). */
   SailingDescription: z
     .string()
+    .nullable()
     .describe("A title that describes the sailing (eg. Leave Port Townsend)."),
 
   /** Informational text that might be associated with the sailing. */
   SailingNotes: z
     .string()
+    .nullable()
     .describe("Informational text that might be associated with the sailing."),
 
   /** A suggested number of columns to use when rendering departures to a desktop webpage. */
@@ -46,17 +48,15 @@ export const sailingResponseSchema = z.object({
       "A suggested number of columns to use when rendering departures to a desktop webpage."
     ),
 
-  /** Indicates the direction of travel. 1 for Westbound, 2 for Eastbound. */
+  /** Indicates the direction of travel. Westbound or Eastbound. */
   SailingDir: z
-    .number()
-    .int()
-    .describe(
-      "Indicates the direction of travel. 1 for Westbound, 2 for Eastbound."
-    ),
+    .enum(["Westbound", "Eastbound"])
+    .describe("Indicates the direction of travel. Westbound or Eastbound."),
 
   /** A days of operation grouping for the sailing (eg. "Daily"). */
   DayOpDescription: z
     .string()
+    .nullable()
     .describe('A days of operation grouping for the sailing (eg. "Daily").'),
 
   /** A flag that indicates whether or not the sailing should apply for holidays. */
@@ -69,6 +69,7 @@ export const sailingResponseSchema = z.object({
   /** A collection of date ranges detailing when this sailing is active. */
   ActiveDateRanges: z
     .array(activeDateRangeSchema)
+    .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
     ),
@@ -76,6 +77,7 @@ export const sailingResponseSchema = z.object({
   /** A single vessel that stops at one or more terminals making a full trip in the direction described by the sailing. */
   Journs: z
     .array(journeySchema)
+    .nullable()
     .describe(
       "A single vessel that stops at one or more terminals making a full trip in the direction described by the sailing."
     ),

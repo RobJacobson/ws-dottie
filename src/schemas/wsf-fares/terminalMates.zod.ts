@@ -17,7 +17,7 @@ export const terminalMateSchema = z.object({
     .positive()
     .describe("Unique identifier for a terminal."),
   /** The name of the terminal. */
-  Description: z.string().describe("The name of the terminal."),
+  Description: z.string().nullable().describe("The name of the terminal."),
 });
 
 /**

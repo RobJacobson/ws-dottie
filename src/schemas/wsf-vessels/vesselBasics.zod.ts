@@ -16,13 +16,12 @@ export const vesselBasicsSchema = vesselSchema.extend({
     "Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel."
   ),
 
-  /** Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. */
+  /** Indicates the operational status of the vessel. InService, Maintenance, or OutOfService. */
   Status: z
-    .number()
-    .int()
+    .enum(["InService", "Maintenance", "OutOfService"])
     .nullable()
     .describe(
-      "Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service."
+      "Indicates the operational status of the vessel. InService, Maintenance, or OutOfService."
     ),
 
   /** Indicates whether or not the vessel is owned by WSF. */

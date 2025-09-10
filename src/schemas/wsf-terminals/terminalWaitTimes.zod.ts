@@ -14,6 +14,7 @@ export const terminalWaitTimesSchema = terminalSchema.extend({
   /** The wait times associated with this terminal. */
   WaitTimes: z
     .array(waitTimeSchema)
+    .nullable()
     .describe("The wait times associated with this terminal."),
 });
 

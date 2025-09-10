@@ -8,10 +8,10 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
  */
 export const bulletinSchema = z.object({
   /** The title of the bulletin. */
-  BulletinTitle: z.string().describe("The title of the bulletin."),
+  BulletinTitle: z.string().nullable().describe("The title of the bulletin."),
 
   /** The content of the bulletin. */
-  BulletinText: z.string().describe("The content of the bulletin."),
+  BulletinText: z.string().nullable().describe("The content of the bulletin."),
 
   /** A preferred sort order (sort-ascending with respect to other bulletins in this array). */
   BulletinSortSeq: z

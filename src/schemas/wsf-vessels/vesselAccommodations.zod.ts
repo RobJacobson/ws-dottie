@@ -12,9 +12,11 @@ import { vesselSchema } from "./vessel.zod";
  */
 export const vesselAccommodationsSchema = vesselSchema.extend({
   /** Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel. */
-  Class: vesselClassSchema.describe(
-    "Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel."
-  ),
+  Class: vesselClassSchema
+    .nullable()
+    .describe(
+      "Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel."
+    ),
 
   /** Indicates whether or not the vessel has an ADA restroom on the car deck. */
   CarDeckRestroom: z

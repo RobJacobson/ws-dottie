@@ -8,9 +8,15 @@ import { z } from "zod";
 export const travelRestrictionSchema = z
   .object({
     /** The text of this restriction. */
-    RestrictionText: z.string().describe("The text of this restriction."),
+    RestrictionText: z
+      .string()
+      .nullable()
+      .describe("The text of this restriction."),
     /** The direction of this restriction. */
-    TravelDirection: z.string().describe("The direction of this restriction."),
+    TravelDirection: z
+      .string()
+      .nullable()
+      .describe("The direction of this restriction."),
   })
   .describe("A travel restriction for mountain passes.");
 

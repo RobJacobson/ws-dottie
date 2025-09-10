@@ -11,7 +11,7 @@ export const commercialVehiclesRestrictionWithIdSchema =
   commercialVehiclesRestrictionSchema
     .extend({
       /** Unique restriction identifier */
-      UniqueID: z.string().describe("Unique restriction identifier"),
+      UniqueID: z.string().nullable().describe("Unique restriction identifier"),
     })
     .describe("Represents a Commercial Vehicle Restriction with UniqueID.");
 

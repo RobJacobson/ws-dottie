@@ -15,10 +15,14 @@ export const terminalTimeSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
   /** The full name of the terminal. */
-  TerminalDescription: z.string().describe("The full name of the terminal."),
+  TerminalDescription: z
+    .string()
+    .nullable()
+    .describe("The full name of the terminal."),
   /** A brief / shortened name for the terminal. */
   TerminalBriefDescription: z
     .string()
+    .nullable()
     .describe("A brief / shortened name for the terminal."),
   /** The time of the departure / arrival. If the journey does not stop at this terminal no value will be present. */
   Time: zWsdotDate()
@@ -26,13 +30,12 @@ export const terminalTimeSchema = z.object({
     .describe(
       "The time of the departure / arrival. If the journey does not stop at this terminal no value will be present."
     ),
-  /** Indicates whether this stop represents a departure or an arrival. 1 for Departure, 2 for Arrival. If the journey does not stop at this terminal no value will be present. */
+  /** Indicates whether this stop represents a departure or an arrival. If the journey does not stop at this terminal no value will be present. */
   DepArrIndicator: z
-    .number()
-    .int()
+    .enum(["Departure", "Arrival"])
     .nullable()
     .describe(
-      "Indicates whether this stop represents a departure or an arrival. 1 for Departure, 2 for Arrival. If the journey does not stop at this terminal no value will be present."
+      "Indicates whether this stop represents a departure or an arrival. If the journey does not stop at this terminal no value will be present."
     ),
   /** If true indicates that the journey does not interact with this terminal. */
   IsNA: z
@@ -43,6 +46,7 @@ export const terminalTimeSchema = z.object({
   /** Informational attributes associated with the terminal time. */
   Annotations: z
     .array(annotationSchema)
+    .nullable()
     .describe("Informational attributes associated with the terminal time."),
 });
 
@@ -92,6 +96,7 @@ export const journeySchema = z.object({
   /** The name of the vessel that's planned to service this journey. */
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel that's planned to service this journey."),
   /** A flag that indicates whether or not the vessel that's planned to service this journey is ADA accessible. */
   VesselHandicapAccessible: z
@@ -109,6 +114,7 @@ export const journeySchema = z.object({
   /** One or more terminal departures or arrivals made by the same vessel. */
   TerminalTimes: z
     .array(terminalTimeSchema)
+    .nullable()
     .describe(
       "One or more terminal departures or arrivals made by the same vessel."
     ),

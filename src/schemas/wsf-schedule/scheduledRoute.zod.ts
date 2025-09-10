@@ -29,9 +29,15 @@ export const scheduledRouteSchema = z.object({
     .int()
     .describe("Unique identifier for the underlying route."),
   /** The underlying route's abbreviation. */
-  RouteAbbrev: z.string().describe("The underlying route's abbreviation."),
+  RouteAbbrev: z
+    .string()
+    .nullable()
+    .describe("The underlying route's abbreviation."),
   /** The full name of the scheduled route. */
-  Description: z.string().describe("The full name of the scheduled route."),
+  Description: z
+    .string()
+    .nullable()
+    .describe("The full name of the scheduled route."),
   /** Notes for this scheduled route. */
   SeasonalRouteNotes: z
     .string()
@@ -47,12 +53,14 @@ export const scheduledRouteSchema = z.object({
   /** Service disruption alerts that are currently affecting the scheduled route. */
   ServiceDisruptions: z
     .array(serviceDisruptionSchema)
+    .nullable()
     .describe(
       "Service disruption alerts that are currently affecting the scheduled route."
     ),
   /** Defines periods of service for contingency routes (scheduled routes marked as ContingencyOnly). For non-contingency routes (scheduled routes where ContingencyOnly is false) it might define date ranges where the scheduled route is not in service. */
   ContingencyAdj: z
     .array(contingencyAdjustmentSchema)
+    .nullable()
     .describe(
       "Defines periods of service for contingency routes (scheduled routes marked as ContingencyOnly). For non-contingency routes (scheduled routes where ContingencyOnly is false) it might define date ranges where the scheduled route is not in service."
     ),

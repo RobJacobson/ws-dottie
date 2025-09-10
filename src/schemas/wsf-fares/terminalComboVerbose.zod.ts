@@ -19,6 +19,7 @@ export const terminalComboVerboseItemSchema = z.object({
   /** The name of the departing terminal. */
   DepartingDescription: z
     .string()
+    .nullable()
     .describe("The name of the departing terminal."),
   /** Unique identifier for the arriving terminal. */
   ArrivingTerminalID: z
@@ -27,12 +28,14 @@ export const terminalComboVerboseItemSchema = z.object({
     .positive()
     .describe("Unique identifier for the arriving terminal."),
   /** The name of the arriving terminal. */
-  ArrivingDescritpion: z
+  ArrivingDescription: z
     .string()
+    .nullable()
     .describe("The name of the arriving terminal."),
   /** Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc). */
   CollectionDescription: z
     .string()
+    .nullable()
     .describe(
       "Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc)."
     ),

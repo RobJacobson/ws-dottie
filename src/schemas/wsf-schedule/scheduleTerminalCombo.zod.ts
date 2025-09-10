@@ -12,12 +12,11 @@ export const scheduleTimeSchema = z.object({
   ArrivingTime: zWsdotDate()
     .nullable()
     .describe("The date and time of the arrival."),
-  /** Indicates which category of travelers are supported by this departure. 1 for Passenger, 2 for Vehicle and 3 for Both. */
+  /** Indicates which category of travelers are supported by this departure. */
   LoadingRule: z
-    .number()
-    .int()
+    .enum(["Passenger", "Vehicle", "Both"])
     .describe(
-      "Indicates which category of travelers are supported by this departure. 1 for Passenger, 2 for Vehicle and 3 for Both."
+      "Indicates which category of travelers are supported by this departure."
     ),
   /** Unique identifier for the vessel that's planned to service this departure. */
   VesselID: z
@@ -29,6 +28,7 @@ export const scheduleTimeSchema = z.object({
   /** The name of the vessel that's planned to service this departure. */
   VesselName: z
     .string()
+    .nullable()
     .describe(
       "The name of the vessel that's planned to service this departure."
     ),
@@ -48,12 +48,14 @@ export const scheduleTimeSchema = z.object({
   /** An array of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes. */
   Routes: z
     .array(z.number().int())
+    .nullable()
     .describe(
       "An array of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes."
     ),
   /** An array of index integers indicating the elements in the Annotations array that apply to this departure. */
   AnnotationIndexes: z
     .array(z.number().int())
+    .nullable()
     .describe(
       "An array of index integers indicating the elements in the Annotations array that apply to this departure."
     ),
@@ -83,6 +85,7 @@ export const scheduleTerminalComboSchema = z.object({
   /** The name of the departing terminal. */
   DepartingTerminalName: z
     .string()
+    .nullable()
     .describe("The name of the departing terminal."),
   /** Unique identifier for the arriving terminal. */
   ArrivingTerminalID: z
@@ -92,26 +95,31 @@ export const scheduleTerminalComboSchema = z.object({
   /** The name of the arriving terminal. */
   ArrivingTerminalName: z
     .string()
+    .nullable()
     .describe("The name of the arriving terminal."),
   /** Informational text that might be associated with the underlying sailing. */
   SailingNotes: z
     .string()
+    .nullable()
     .describe(
       "Informational text that might be associated with the underlying sailing."
     ),
   /** An array of annotation strings assigned to one or more items in the Times array. */
   Annotations: z
     .array(z.string())
+    .nullable()
     .describe(
       "An array of annotation strings assigned to one or more items in the Times array."
     ),
   /** Scheduled departure details, including departure times. */
   Times: z
     .array(scheduleTimeSchema)
+    .nullable()
     .describe("Scheduled departure details, including departure times."),
   /** An array of annotation strings assigned to one or more items in the Times array formatted for IVR. */
   AnnotationsIVR: z
     .array(z.string())
+    .nullable()
     .describe(
       "An array of annotation strings assigned to one or more items in the Times array formatted for IVR."
     ),

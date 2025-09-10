@@ -12,25 +12,29 @@ export const vesselHistorySchema = z.object({
   VesselId: z.number().int().describe("Unique identifier for a vessel."),
 
   /** The name of the vessel. */
-  Vessel: z.string().describe("The name of the vessel."),
+  Vessel: z.string().nullable().describe("The name of the vessel."),
 
   /** The departing terminal name. */
-  Departing: z.string().describe("The departing terminal name."),
+  Departing: z.string().nullable().describe("The departing terminal name."),
 
   /** The arriving terminal name. */
-  Arriving: z.string().describe("The arriving terminal name."),
+  Arriving: z.string().nullable().describe("The arriving terminal name."),
 
   /** The scheduled departure time. */
-  ScheduledDepart: zWsdotDate().describe("The scheduled departure time."),
+  ScheduledDepart: zWsdotDate()
+    .nullable()
+    .describe("The scheduled departure time."),
 
   /** The actual departure time. */
-  ActualDepart: zWsdotDate().describe("The actual departure time."),
+  ActualDepart: zWsdotDate().nullable().describe("The actual departure time."),
 
   /** The estimated arrival time. */
-  EstArrival: zWsdotDate().describe("The estimated arrival time."),
+  EstArrival: zWsdotDate().nullable().describe("The estimated arrival time."),
 
   /** The date of the vessel history record. */
-  Date: zWsdotDate().describe("The date of the vessel history record."),
+  Date: zWsdotDate()
+    .nullable()
+    .describe("The date of the vessel history record."),
 });
 
 export type VesselHistory = z.infer<typeof vesselHistorySchema>;

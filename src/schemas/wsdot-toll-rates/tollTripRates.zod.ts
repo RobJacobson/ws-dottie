@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
  * TollTripRate schema
@@ -7,19 +8,25 @@ import { z } from "zod";
  */
 export const tollTripRateSchema = z.object({
   /** Status/message for the trip rate */
-  Message: z.string().describe("Status/message for the trip rate"),
+  Message: z.string().nullable().describe("Status/message for the trip rate"),
+  /** Message update time */
+  MessageUpdateTime: zWsdotDate().describe("Message update time"),
   /** Toll amount in cents */
   Toll: z.number().describe("Toll amount in cents"),
   /** Trip identifier */
-  TripName: z.string().describe("Trip identifier"),
+  TripName: z.string().nullable().describe("Trip identifier"),
 });
 
 /**
- * TollTripRates schema
+ * TripRates schema
  *
- * Current toll trip rates including versioned trip list.
+ * Trip rates including versioned trip list (used by multiple endpoints).
  */
-export const tollTripRatesSchema = z.object({
+export const tripRatesSchema = z.object({
+  /** Last updated time for this data (JS Date) */
+  LastUpdated: zWsdotDate().describe(
+    "Last updated time for this data (JS Date)"
+  ),
   /** Array of trip rate objects */
   Trips: z
     .array(tollTripRateSchema)
@@ -32,5 +39,5 @@ export const tollTripRatesSchema = z.object({
 /** TollTripRate type */
 export type TollTripRate = z.infer<typeof tollTripRateSchema>;
 
-/** TollTripRates type */
-export type TollTripRates = z.infer<typeof tollTripRatesSchema>;
+/** TripRates type */
+export type TripRates = z.infer<typeof tripRatesSchema>;

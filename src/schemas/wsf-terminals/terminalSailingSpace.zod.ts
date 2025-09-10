@@ -17,6 +17,7 @@ export const terminalSailingSpaceSchema = terminalSchema.extend({
   /** The most recent departures leaving this terminal. */
   DepartingSpaces: z
     .array(departingSpaceSchema)
+    .nullable()
     .describe("The most recent departures leaving this terminal."),
 
   /** True if this terminal isn't capable of collecting fares. */

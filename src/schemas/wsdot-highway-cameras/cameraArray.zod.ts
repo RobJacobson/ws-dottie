@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { cameraSchema } from "./cameras.zod";
+import { highwayCameraSchema } from "./cameras.zod";
 
 /**
  * CameraArray schema
@@ -7,8 +7,8 @@ import { cameraSchema } from "./cameras.zod";
  * Array of cameras returned by search operations.
  */
 export const cameraArraySchema = z
-  .array(cameraSchema)
+  .array(highwayCameraSchema)
   .describe("Array of cameras returned by search operations.");
 
-/** CameraArray type */
-export type CameraArray = z.infer<typeof cameraArraySchema>;
+/** HighwayCameraArray type */
+export type HighwayCameraArray = z.infer<typeof cameraArraySchema>;

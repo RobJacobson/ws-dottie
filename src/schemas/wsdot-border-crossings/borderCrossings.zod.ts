@@ -9,8 +9,10 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
  */
 export const borderCrossingSchema = z
   .object({
-    /** Report time (JS Date) */
-    Time: zWsdotDate().describe("Report time (JS Date)"),
+    /** Where the crossing is located */
+    BorderCrossingLocation: roadwayLocationSchema
+      .nullable()
+      .describe("Where the crossing is located"),
     /** Border crossing name (e.g., 'I5', 'SR 543') or null when not available */
     CrossingName: z
       .string()
@@ -18,16 +20,15 @@ export const borderCrossingSchema = z
       .describe(
         "Border crossing name (e.g., 'I5', 'SR 543') or null when not available"
       ),
-    /** Where the crossing is located */
-    BorderCrossingLocation: roadwayLocationSchema
-      .nullable()
-      .describe("Where the crossing is located"),
-    /** Estimated wait time in minutes */
+    /** Report time (JS Date) */
+    Time: zWsdotDate().describe("Report time (JS Date)"),
+    /** Estimated wait time in minutes (can be negative to indicate no wait or special conditions) */
     WaitTime: z
       .number()
       .int()
-      .min(0)
-      .describe("Estimated wait time in minutes"),
+      .describe(
+        "Estimated wait time in minutes (can be negative to indicate no wait or special conditions)"
+      ),
   })
   .describe("Information about Canadian border crossing wait times.");
 

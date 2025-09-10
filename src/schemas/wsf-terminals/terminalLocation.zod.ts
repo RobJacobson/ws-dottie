@@ -65,6 +65,7 @@ export const terminalLocationSchema = terminalSchema.extend({
   /** Where this terminal should appear on a GIS map (at various zoom levels). */
   DispGISZoomLoc: z
     .array(dispGISZoomLocSchema)
+    .nullable()
     .describe(
       "Where this terminal should appear on a GIS map (at various zoom levels)."
     ),

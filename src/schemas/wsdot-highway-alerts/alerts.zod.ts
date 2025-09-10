@@ -10,35 +10,16 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
 export const alertSchema = z
   .object({
     /** Unique Identifier for the alert. */
-    AlertID: z
-      .number()
-      .int()
-      .positive()
-      .describe("Unique Identifier for the alert."),
-    /** Start location for the alert on the roadway. */
-    StartRoadwayLocation: roadwayLocationSchema
-      .nullable()
-      .describe("Start location for the alert on the roadway."),
-    /** End location for the alert on the roadway. */
-    EndRoadwayLocation: roadwayLocationSchema
-      .nullable()
-      .describe("End location for the alert on the roadway."),
-    /** WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest. */
-    Region: z
-      .enum(["EA", "NC", "NW", "OL", "SC", "SW"])
-      .nullable()
-      .describe(
-        "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
-      ),
+    AlertID: z.number().int().describe("Unique Identifier for the alert."),
     /** Used for countywide alerts, name of the affected county. */
     County: z
       .string()
       .nullable()
       .describe("Used for countywide alerts, name of the affected county."),
-    /** When the impact on traffic began. */
-    StartTime: zWsdotDate()
+    /** End location for the alert on the roadway. */
+    EndRoadwayLocation: roadwayLocationSchema
       .nullable()
-      .describe("When the impact on traffic began."),
+      .describe("End location for the alert on the roadway."),
     /** Estimated end time for alert. */
     EndTime: zWsdotDate().nullable().describe("Estimated end time for alert."),
     /** Categorization of alert, i.e. Collision, Maintenance, etc. */
@@ -46,11 +27,11 @@ export const alertSchema = z
       .string()
       .nullable()
       .describe("Categorization of alert, i.e. Collision, Maintenance, etc."),
-    /** Information about what the alert has been issued for. */
-    HeadlineDescription: z
-      .string()
+    /** Current status of alert, Open, Closed. */
+    EventStatus: z
+      .enum(["Open", "Closed"])
       .nullable()
-      .describe("Information about what the alert has been issued for."),
+      .describe("Current status of alert, Open, Closed."),
     /** Optional - Additional information about the alert, used for relaying useful extra information for an alert. */
     ExtendedDescription: z
       .string()
@@ -58,20 +39,44 @@ export const alertSchema = z
       .describe(
         "Optional - Additional information about the alert, used for relaying useful extra information for an alert."
       ),
-    /** Current status of alert, open, closed. */
-    EventStatus: z
-      .enum(["open", "closed"])
+    /** Information about what the alert has been issued for. */
+    HeadlineDescription: z
+      .string()
       .nullable()
-      .describe("Current status of alert, open, closed."),
+      .describe("Information about what the alert has been issued for."),
     /** When was alert was last changed. */
     LastUpdatedTime: zWsdotDate()
       .nullable()
       .describe("When was alert was last changed."),
-    /** Expected impact on traffic, highest, high, medium, low. */
+    /** Expected impact on traffic, Highest, High, Medium, Low, Lowest. */
     Priority: z
-      .enum(["highest", "high", "medium", "low"])
+      .enum(["Highest", "High", "Medium", "Low", "Lowest"])
       .nullable()
-      .describe("Expected impact on traffic, highest, high, medium, low."),
+      .describe(
+        "Expected impact on traffic, Highest, High, Medium, Low, Lowest."
+      ),
+    /** WSDOT Region which entered the alert, valid values: Eastern, North Central, Northwest, Olympic, South Central, Southwest. */
+    Region: z
+      .enum([
+        "Eastern",
+        "North Central",
+        "Northwest",
+        "Olympic",
+        "South Central",
+        "Southwest",
+      ])
+      .nullable()
+      .describe(
+        "WSDOT Region which entered the alert, valid values: Eastern, North Central, Northwest, Olympic, South Central, Southwest."
+      ),
+    /** Start location for the alert on the roadway. */
+    StartRoadwayLocation: roadwayLocationSchema
+      .nullable()
+      .describe("Start location for the alert on the roadway."),
+    /** When the impact on traffic began. */
+    StartTime: zWsdotDate()
+      .nullable()
+      .describe("When the impact on traffic began."),
   })
   .describe("A Highway Alert.");
 

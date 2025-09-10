@@ -13,7 +13,10 @@ export const spaceForArrivalTerminalSchema = z.object({
     .describe("Unique identifier for the next closest arrival terminal."),
 
   /** The name of the arrival terminal. */
-  TerminalName: z.string().describe("The name of the arrival terminal."),
+  TerminalName: z
+    .string()
+    .nullable()
+    .describe("The name of the arrival terminal."),
 
   /** Unique identifier for the vessel making this departure. */
   VesselID: z
@@ -24,6 +27,7 @@ export const spaceForArrivalTerminalSchema = z.object({
   /** The name of the vessel making this departure. */
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel making this departure."),
 
   /** Indicates whether or not reservable space should be displayed. */
@@ -73,6 +77,7 @@ export const spaceForArrivalTerminalSchema = z.object({
   /** An array of integers representing all arrival terminals associated with this set of counts. */
   ArrivalTerminalIDs: z
     .array(z.number().int())
+    .nullable()
     .describe(
       "An array of integers representing all arrival terminals associated with this set of counts."
     ),

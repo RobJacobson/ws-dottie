@@ -14,6 +14,7 @@ export const terminalBulletinsSchema = terminalSchema.extend({
   /** The bulletins / alerts associated with this terminal. */
   Bulletins: z
     .array(bulletinSchema)
+    .nullable()
     .describe("The bulletins / alerts associated with this terminal."),
 });
 

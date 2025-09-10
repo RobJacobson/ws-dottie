@@ -19,6 +19,7 @@ export const vesselStatsSchema = vesselSchema.extend({
   /** The definition or significance behind the name of the vessel. */
   VesselNameDesc: z
     .string()
+    .nullable()
     .describe("The definition or significance behind the name of the vessel."),
 
   /** The history of the vessel. */
@@ -27,10 +28,14 @@ export const vesselStatsSchema = vesselSchema.extend({
   /** The length of the vessel's beam in feet / inches. */
   Beam: z
     .string()
+    .nullable()
     .describe("The length of the vessel's beam in feet / inches."),
 
   /** The location where the vessel was built. */
-  CityBuilt: z.string().describe("The location where the vessel was built."),
+  CityBuilt: z
+    .string()
+    .nullable()
+    .describe("The location where the vessel was built."),
 
   /** The speed of the vessel. */
   SpeedInKnots: z
@@ -40,7 +45,10 @@ export const vesselStatsSchema = vesselSchema.extend({
     .describe("The speed of the vessel."),
 
   /** The draft of the vessel in feet / inches. */
-  Draft: z.string().describe("The draft of the vessel in feet / inches."),
+  Draft: z
+    .string()
+    .nullable()
+    .describe("The draft of the vessel in feet / inches."),
 
   /** The total count of engines aboard the vessel. */
   EngineCount: z
@@ -57,7 +65,10 @@ export const vesselStatsSchema = vesselSchema.extend({
     .describe("The horsepower of the vessel."),
 
   /** The length of the vessel in feet / inches. */
-  Length: z.string().describe("The length of the vessel in feet / inches."),
+  Length: z
+    .string()
+    .nullable()
+    .describe("The length of the vessel in feet / inches."),
 
   /** The max passenger count aboard the vessel. */
   MaxPassengerCount: z
@@ -83,6 +94,7 @@ export const vesselStatsSchema = vesselSchema.extend({
   /** The type of engine used in this vessel. */
   PropulsionInfo: z
     .string()
+    .nullable()
     .describe("The type of engine used in this vessel."),
 
   /** The auto deck clearance (in inches) aboard the vessel. */

@@ -14,16 +14,16 @@ export const scheduleResponseSchema = z.object({
   /** Unique identifier for a season. */
   ScheduleID: z.number().int().describe("Unique identifier for a season."),
   /** The name of the season. */
-  ScheduleName: z.string().describe("The name of the season."),
-  /** Indicates a quarterly identifier. 0 for Spring, 1 for Summer, 2 for Fall and 3 for Winter. */
+  ScheduleName: z.string().nullable().describe("The name of the season."),
+  /** Indicates the season name. */
   ScheduleSeason: z
-    .number()
-    .int()
-    .describe(
-      "Indicates a quarterly identifier. 0 for Spring, 1 for Summer, 2 for Fall and 3 for Winter."
-    ),
+    .enum(["Spring", "Summer", "Fall", "Winter"])
+    .describe("Indicates the season name."),
   /** A URL to the season in PDF format. */
-  SchedulePDFUrl: z.string().describe("A URL to the season in PDF format."),
+  SchedulePDFUrl: z
+    .string()
+    .nullable()
+    .describe("A URL to the season in PDF format."),
   /** A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am. */
   ScheduleStart: zWsdotDate().describe(
     "A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am."
@@ -35,12 +35,14 @@ export const scheduleResponseSchema = z.object({
   /** An array of RouteID integers representing all the routes accounted for in this resultset. */
   AllRoutes: z
     .array(z.number().int())
+    .nullable()
     .describe(
       "An array of RouteID integers representing all the routes accounted for in this resultset."
     ),
   /** A grouping of departure and arrival terminal pairs. */
   TerminalCombos: z
     .array(scheduleTerminalComboSchema)
+    .nullable()
     .describe("A grouping of departure and arrival terminal pairs."),
 });
 

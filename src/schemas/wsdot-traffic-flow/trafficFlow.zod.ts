@@ -13,26 +13,43 @@ export const flowDataSchema = z
     FlowDataID: z
       .number()
       .int()
-      .positive()
       .describe("A unique ID that identifies a specific station."),
+    /** The current traffic condition at the flow station. Possible values: Unknown, WideOpen, Moderate, Heavy, StopAndGo, NoData */
+    FlowReadingValue: z
+      .enum(["Unknown", "WideOpen", "Moderate", "Heavy", "StopAndGo", "NoData"])
+      .describe(
+        "The current traffic condition at the flow station. Possible values: Unknown, WideOpen, Moderate, Heavy, StopAndGo, NoData"
+      ),
+    /** The location of the flow station. */
+    FlowStationLocation: roadwayLocationSchema
+      .nullable()
+      .describe("The location of the flow station."),
+    /** The region that maintains the flow station. */
+    Region: z
+      .string()
+      .nullable()
+      .describe("The region that maintains the flow station."),
+    /** The name of the flow station. */
+    StationName: z
+      .string()
+      .nullable()
+      .describe("The name of the flow station."),
     /** The time of the station reading. */
     Time: zWsdotDate().describe("The time of the station reading."),
-    /** The name of the flow station. */
-    StationName: z.string().describe("The name of the flow station."),
-    /** The region that maintains the flow station. */
-    Region: z.string().describe("The region that maintains the flow station."),
-    /** The location of the flow station. */
-    FlowStationLocation: roadwayLocationSchema.describe(
-      "The location of the flow station."
-    ),
-    /** The current traffic condition at the flow station. Possible values: 0 = Unknown 1 = WideOpen 2 = Moderate 3 = Heavy 4 = StopAndGo 5 = NoData */
-    FlowReadingValue: z
-      .enum(["0", "1", "2", "3", "4", "5"])
-      .describe(
-        "The current traffic condition at the flow station. Possible values: 0 = Unknown 1 = WideOpen 2 = Moderate 3 = Heavy 4 = StopAndGo 5 = NoData"
-      ),
   })
   .describe("A data structure that represents a Flow Station.");
 
+/**
+ * TrafficFlows schema
+ *
+ * Array of traffic flow data from WSDOT flow stations.
+ */
+export const trafficFlowsSchema = z
+  .array(flowDataSchema)
+  .describe("Array of traffic flow data from WSDOT flow stations.");
+
 /** FlowData type */
 export type FlowData = z.infer<typeof flowDataSchema>;
+
+/** TrafficFlows type */
+export type TrafficFlows = z.infer<typeof trafficFlowsSchema>;

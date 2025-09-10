@@ -6,7 +6,7 @@ import { z } from "zod";
  * Event category list for highway alerts.
  */
 export const eventCategoriesSchema = z
-  .array(z.string())
+  .array(z.string().nullable())
   .describe(
     "Array of event category strings used for classifying highway alerts."
   );

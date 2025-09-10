@@ -14,9 +14,9 @@ export const routeSchema = z.object({
   /** Unique identifier for a route. */
   RouteID: z.number().int().describe("Unique identifier for a route."),
   /** The route's abbreviation. */
-  RouteAbbrev: z.string().describe("The route's abbreviation."),
+  RouteAbbrev: z.string().nullable().describe("The route's abbreviation."),
   /** The full name of the route. */
-  Description: z.string().describe("The full name of the route."),
+  Description: z.string().nullable().describe("The full name of the route."),
   /** Unique identifier that identifies the region associated with the route. */
   RegionID: z
     .number()
@@ -27,6 +27,7 @@ export const routeSchema = z.object({
   /** Service disruption alerts that are currently affecting the route. */
   ServiceDisruptions: z
     .array(serviceDisruptionSchema)
+    .nullable()
     .describe(
       "Service disruption alerts that are currently affecting the route."
     ),

@@ -22,10 +22,12 @@ export const fareLineItemSchema = z.object({
   /** A description of the fare (eg. "Adult (age 19 - 64)"). */
   FareLineItem: z
     .string()
+    .nullable()
     .describe('A description of the fare (eg. "Adult (age 19 - 64)").'),
   /** A logical grouping that the fare belongs to (eg. "Passenger"). */
   Category: z
     .string()
+    .nullable()
     .describe('A logical grouping that the fare belongs to (eg. "Passenger").'),
   /** A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. */
   DirectionIndependent: z

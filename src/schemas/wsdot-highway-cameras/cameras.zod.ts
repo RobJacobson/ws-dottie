@@ -6,25 +6,24 @@ import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
  *
  * Information about traffic camera.
  */
-export const cameraSchema = z
+export const highwayCameraSchema = z
   .object({
     /** Unique identifier for the camera */
-    CameraID: z
-      .number()
-      .int()
-      .positive()
-      .describe("Unique identifier for the camera"),
-    /** WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest. */
-    Region: z
-      .enum(["EA", "NC", "NW", "OL", "SC", "SW"])
-      .nullable()
-      .describe(
-        "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
-      ),
+    CameraID: z.number().int().describe("Unique identifier for the camera"),
     /** Structure identifying where the camera is located */
     CameraLocation: roadwayLocationSchema
       .nullable()
       .describe("Structure identifying where the camera is located"),
+    /** Owner of camera when not WSDOT */
+    CameraOwner: z
+      .string()
+      .nullable()
+      .describe("Owner of camera when not WSDOT"),
+    /** Short description for the camera */
+    Description: z
+      .string()
+      .nullable()
+      .describe("Short description for the camera"),
     /** Latitude of where to display the camera on a map */
     DisplayLatitude: z
       .number()
@@ -33,41 +32,30 @@ export const cameraSchema = z
     DisplayLongitude: z
       .number()
       .describe("Longitude of where to display the camera on a map"),
-    /** Title of the camera */
-    Title: z.string().nullable().describe("Title of the camera"),
-    /** Short description for the camera */
-    Description: z
-      .string()
-      .nullable()
-      .describe("Short description for the camera"),
+    /** Pixel height of the image */
+    ImageHeight: z.number().int().describe("Pixel height of the image"),
     /** Stored location of the camera image */
     ImageURL: z
       .string()
       .nullable()
       .describe("Stored location of the camera image"),
-    /** Owner of camera when not WSDOT */
-    CameraOwner: z
-      .string()
-      .nullable()
-      .describe("Owner of camera when not WSDOT"),
-    /** URL of the camera owner */
-    OwnerURL: z.string().nullable().describe("URL of the camera owner"),
     /** Pixel width of the image */
-    ImageWidth: z
-      .number()
-      .int()
-      .positive()
-      .describe("Pixel width of the image"),
-    /** Pixel height of the image */
-    ImageHeight: z
-      .number()
-      .int()
-      .positive()
-      .describe("Pixel height of the image"),
+    ImageWidth: z.number().int().describe("Pixel width of the image"),
     /** Whether the camera is active */
     IsActive: z.boolean().describe("Whether the camera is active"),
+    /** URL of the camera owner */
+    OwnerURL: z.string().nullable().describe("URL of the camera owner"),
+    /** WSDOT Region which entered the alert, valid values: ER - Eastern, NC - North Central, NW - Northwest, OL - Olympic, OS - Olympic South, SC - South Central, SW - Southwest, WA - Washington Aviation. */
+    Region: z
+      .enum(["ER", "NC", "NW", "OL", "OS", "SC", "SW", "WA"])
+      .nullable()
+      .describe(
+        "WSDOT Region which entered the alert, valid values: ER - Eastern, NC - North Central, NW - Northwest, OL - Olympic, OS - Olympic South, SC - South Central, SW - Southwest, WA - Washington Aviation."
+      ),
     /** Sort order for display */
     SortOrder: z.number().int().describe("Sort order for display"),
+    /** Title of the camera */
+    Title: z.string().nullable().describe("Title of the camera"),
   })
   .describe("Information about traffic camera.");
 
@@ -76,14 +64,14 @@ export const cameraSchema = z
  *
  * Coverage Area: Statewide. Provides access to the camera images that appear on our Traffic pages. Currently only supports snap shots (not full video). The available cameras does not change very often.
  */
-export const camerasSchema = z
-  .array(cameraSchema)
+export const highwayCamerasSchema = z
+  .array(highwayCameraSchema)
   .describe(
     "Coverage Area: Statewide. Provides access to the camera images that appear on our Traffic pages. Currently only supports snap shots (not full video). The available cameras does not change very often."
   );
 
-/** Camera type */
-export type Camera = z.infer<typeof cameraSchema>;
+/** HighwayCamera type */
+export type HighwayCamera = z.infer<typeof highwayCameraSchema>;
 
-/** Cameras type */
-export type Cameras = z.infer<typeof camerasSchema>;
+/** HighwayCameras type */
+export type HighwayCameras = z.infer<typeof highwayCamerasSchema>;

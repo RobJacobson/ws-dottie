@@ -41,10 +41,12 @@ export const lineItemSchema = z.object({
   /** A description of the fare (eg. "Adult (age 19 - 64)"). */
   FareLineItem: z
     .string()
+    .nullable()
     .describe('A description of the fare (eg. "Adult (age 19 - 64)").'),
   /** A logical grouping that the fare belongs to (eg. "Passenger"). */
   Category: z
     .string()
+    .nullable()
     .describe('A logical grouping that the fare belongs to (eg. "Passenger").'),
   /** A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. */
   DirectionIndependent: z
@@ -69,10 +71,12 @@ export const roundTripLineItemSchema = z.object({
   /** A description of the fare (eg. "Adult (age 19 - 64)"). */
   FareLineItem: z
     .string()
+    .nullable()
     .describe('A description of the fare (eg. "Adult (age 19 - 64)").'),
   /** A logical grouping that the fare belongs to (eg. "Passenger"). */
   Category: z
     .string()
+    .nullable()
     .describe('A logical grouping that the fare belongs to (eg. "Passenger").'),
   /** A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. */
   DirectionIndependent: z
@@ -99,19 +103,23 @@ export const fareLineItemsVerboseSchema = z.object({
     .array(terminalComboVerboseItemSchema)
     .describe("All valid terminal combinations associated with the trip date."),
   /** Associates a terminal combination with a one-way fare and a round trip fare for the given trip date. */
-  LineItemXref: z
+  LineItemLookup: z
     .array(lineItemXrefSchema)
     .describe(
       "Associates a terminal combination with a one-way fare and a round trip fare for the given trip date."
     ),
   /** All one-way fare line items associated with the trip date. */
   LineItems: z
-    .array(lineItemSchema)
-    .describe("All one-way fare line items associated with the trip date."),
+    .array(z.array(lineItemSchema))
+    .describe(
+      "All one-way fare line items associated with the trip date. Each terminal combination has its own array of fare items."
+    ),
   /** All round trip line items associated with the trip date. */
   RoundTripLineItems: z
-    .array(roundTripLineItemSchema)
-    .describe("All round trip line items associated with the trip date."),
+    .array(z.array(roundTripLineItemSchema))
+    .describe(
+      "All round trip line items associated with the trip date. Each terminal combination has its own array of fare items."
+    ),
 });
 
 // Note: TerminalComboVerboseItem type is exported from terminalComboVerbose.zod.ts

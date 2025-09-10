@@ -25,6 +25,7 @@ export const waitTimeSchema = z.object({
   /** Notes detailing wait time conditions along with tips for vehicles and passengers. */
   WaitTimeNotes: z
     .string()
+    .nullable()
     .describe(
       "Notes detailing wait time conditions along with tips for vehicles and passengers."
     ),
@@ -37,6 +38,7 @@ export const waitTimeSchema = z.object({
   /** Notes detailing wait time conditions (tailored for text to speech systems). */
   WaitTimeIVRNotes: z
     .string()
+    .nullable()
     .describe(
       "Notes detailing wait time conditions (tailored for text to speech systems)."
     ),

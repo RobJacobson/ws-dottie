@@ -22,10 +22,13 @@ export const terminalSchema = z.object({
     ),
 
   /** The name of the terminal. */
-  TerminalName: z.string().describe("The name of the terminal."),
+  TerminalName: z.string().nullable().describe("The name of the terminal."),
 
   /** The terminal's abbreviation. */
-  TerminalAbbrev: z.string().describe("The terminal's abbreviation."),
+  TerminalAbbrev: z
+    .string()
+    .nullable()
+    .describe("The terminal's abbreviation."),
 
   /** A preferred sort order (sort-ascending with respect to other terminals). */
   SortSeq: z

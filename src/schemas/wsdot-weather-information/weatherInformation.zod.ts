@@ -8,48 +8,48 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
  */
 export const weatherInfoSchema = z
   .object({
-    /** Station ID */
-    StationID: z.number().int().describe("Station ID"),
-    /** Station name */
-    StationName: z.string().nullable().describe("Station name"),
+    /** Barometric pressure */
+    BarometricPressure: z.number().nullable().describe("Barometric pressure"),
     /** Latitude */
     Latitude: z.number().describe("Latitude"),
     /** Longitude */
     Longitude: z.number().describe("Longitude"),
-    /** Reading time */
-    ReadingTime: zWsdotDate().describe("Reading time"),
-    /** Temperature in Fahrenheit */
-    TemperatureInFahrenheit: z
-      .number()
-      .nullable()
-      .describe("Temperature in Fahrenheit"),
     /** Precipitation in inches */
     PrecipitationInInches: z
       .number()
       .nullable()
       .describe("Precipitation in inches"),
-    /** Wind speed in MPH */
-    WindSpeedInMPH: z.number().nullable().describe("Wind speed in MPH"),
-    /** Wind gust speed in MPH */
-    WindGustSpeedInMPH: z
-      .number()
-      .nullable()
-      .describe("Wind gust speed in MPH"),
-    /** Visibility */
-    Visibility: z.number().int().nullable().describe("Visibility"),
-    /** Sky coverage */
-    SkyCoverage: z.string().nullable().describe("Sky coverage"),
-    /** Barometric pressure */
-    BarometricPressure: z.number().nullable().describe("Barometric pressure"),
+    /** Reading time */
+    ReadingTime: zWsdotDate().describe("Reading time"),
     /** Relative humidity */
     RelativeHumidity: z.number().nullable().describe("Relative humidity"),
+    /** Sky coverage */
+    SkyCoverage: z.string().nullable().describe("Sky coverage"),
+    /** Station ID */
+    StationID: z.number().int().describe("Station ID"),
+    /** Station name */
+    StationName: z.string().nullable().describe("Station name"),
+    /** Temperature in Fahrenheit */
+    TemperatureInFahrenheit: z
+      .number()
+      .nullable()
+      .describe("Temperature in Fahrenheit"),
+    /** Visibility */
+    Visibility: z.number().int().nullable().describe("Visibility"),
+    /** Wind direction */
+    WindDirection: z.number().nullable().describe("Wind direction"),
     /** Wind direction cardinal */
     WindDirectionCardinal: z
       .string()
       .nullable()
       .describe("Wind direction cardinal"),
-    /** Wind direction */
-    WindDirection: z.number().nullable().describe("Wind direction"),
+    /** Wind gust speed in MPH */
+    WindGustSpeedInMPH: z
+      .number()
+      .nullable()
+      .describe("Wind gust speed in MPH"),
+    /** Wind speed in MPH */
+    WindSpeedInMPH: z.number().nullable().describe("Wind speed in MPH"),
   })
   .describe("Current information from a weather station.");
 

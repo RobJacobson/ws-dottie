@@ -17,7 +17,7 @@ export const vesselLocationsSchema = z.object({
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 
   /** The name of the vessel. */
-  VesselName: z.string().describe("The name of the vessel."),
+  VesselName: z.string().nullable().describe("The name of the vessel."),
 
   /** The vessel's Maritime Mobile Service Identity. */
   Mmsi: z
@@ -37,6 +37,7 @@ export const vesselLocationsSchema = z.object({
   /** The name of the terminal where this vessel is docked or was last docked. */
   DepartingTerminalName: z
     .string()
+    .nullable()
     .describe(
       "The name of the terminal where this vessel is docked or was last docked."
     ),
@@ -44,6 +45,7 @@ export const vesselLocationsSchema = z.object({
   /** The abbreviated terminal name where this vessel is docked or was last docked. */
   DepartingTerminalAbbrev: z
     .string()
+    .nullable()
     .describe(
       "The abbreviated terminal name where this vessel is docked or was last docked."
     ),
@@ -83,7 +85,7 @@ export const vesselLocationsSchema = z.object({
   Speed: z.number().describe("The speed of the vessel (in Knots)."),
 
   /** The heading of the vessel (in degrees). */
-  Heading: z.number().describe("The heading of the vessel (in degrees)."),
+  Heading: z.number().int().describe("The heading of the vessel (in degrees)."),
 
   /** Indicates whether or not the vessel is in service. */
   InService: z
@@ -127,6 +129,7 @@ export const vesselLocationsSchema = z.object({
   /** An array of strings that contain 0 or more abbreviated route names currently being serviced by this vessel. */
   OpRouteAbbrev: z
     .array(z.string())
+    .nullable()
     .describe(
       "An array of strings that contain 0 or more abbreviated route names currently being serviced by this vessel."
     ),
@@ -148,11 +151,10 @@ export const vesselLocationsSchema = z.object({
       "A preferred sort order (sort-ascending with respect to other vessels)."
     ),
 
-  /** Indicates who manages this vessel. 1 for WSF, 2 for KCM. */
+  /** Indicates who manages this vessel. WSF or KCM. */
   ManagedBy: z
-    .number()
-    .int()
-    .describe("Indicates who manages this vessel. 1 for WSF, 2 for KCM."),
+    .enum(["WSF", "KCM"])
+    .describe("Indicates who manages this vessel. WSF or KCM."),
 
   /** The date and time when this vessel location was last updated. */
   TimeStamp: zWsdotDate().describe(

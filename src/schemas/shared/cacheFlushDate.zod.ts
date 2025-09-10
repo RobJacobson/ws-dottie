@@ -25,16 +25,23 @@ export const wsfScheduleCacheFlushDateSchema = z.object({
 
 /**
  * Schema for WSF Fares API cache flush date response.
- * Uses the "date" field name.
+ * Returns a direct nullable .NET timestamp string.
  */
-export const wsfFaresCacheFlushDateSchema = z.object({
-  /** If present, notes the date that certain service data was last changed. */
-  date: zWsdotDate()
-    .nullable()
-    .describe(
-      "If present, notes the date that certain service data was last changed."
-    ),
-});
+export const wsfFaresCacheFlushDateSchema = zWsdotDate()
+  .nullable()
+  .describe(
+    "If present, notes the date that certain service data was last changed."
+  );
+
+/**
+ * Standardized schema for all WSF API cache flush date responses.
+ * All WSF APIs (fares, schedule, terminals, vessels) return raw .NET timestamp strings.
+ */
+export const wsfStandardCacheFlushDateSchema = zWsdotDate()
+  .nullable()
+  .describe(
+    "If present, notes the date that certain service data was last changed."
+  );
 
 /**
  * Union schema that can handle both WSF API cache flush date formats.
@@ -52,8 +59,7 @@ export type WsfScheduleCacheFlushDate = z.infer<
 export type WsfFaresCacheFlushDate = z.infer<
   typeof wsfFaresCacheFlushDateSchema
 >;
+export type WsfStandardCacheFlushDate = z.infer<
+  typeof wsfStandardCacheFlushDateSchema
+>;
 export type WsfCacheFlushDate = z.infer<typeof wsfCacheFlushDateSchema>;
-
-// Legacy exports for backward compatibility
-export const cacheFlushDateSchema = wsfScheduleCacheFlushDateSchema;
-export type CacheFlushDate = WsfScheduleCacheFlushDate;

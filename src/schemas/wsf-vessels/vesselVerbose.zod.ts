@@ -22,25 +22,10 @@ import { vesselStatsSchema } from "./vesselStats.zod";
  * specific vessel. A valid API Access Code from the WSDOT Traveler API must be passed
  * as part of the URL string.
  */
-export const vesselVerboseSchema = vesselBasicsSchema
-  .merge(
-    vesselAccommodationsSchema.omit({
-      VesselID: true,
-      VesselSubjectID: true,
-      VesselName: true,
-      VesselAbbrev: true,
-      Class: true,
-    })
-  )
-  .merge(
-    vesselStatsSchema.omit({
-      VesselID: true,
-      VesselSubjectID: true,
-      VesselName: true,
-      VesselAbbrev: true,
-      Class: true,
-    })
-  );
+export const vesselVerboseSchema = vesselBasicsSchema.extend({
+  ...vesselAccommodationsSchema.shape,
+  ...vesselStatsSchema.shape,
+});
 
 export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
 

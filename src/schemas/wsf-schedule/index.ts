@@ -19,7 +19,7 @@ export * from "./activeSeason.zod";
 // ALERTS
 // ============================================================================
 
-export * from "./alert.zod";
+export * from "./scheduleAlerts.zod";
 export * from "./alertsResponse.zod";
 
 // ============================================================================
@@ -31,7 +31,6 @@ export * from "./contingencyAdjustment.zod";
 export * from "./timeAdjustment.zod";
 export * from "./timeAdjustmentByRoute.zod";
 export * from "./timeAdjustmentByScheduledRoute.zod";
-export * from "./timeAdjustmentResponse.zod";
 
 // ============================================================================
 // JOURNEYS & SAILINGS

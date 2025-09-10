@@ -21,6 +21,7 @@ export const serviceDisruptionSchema = z.object({
   /** The service disruption text associated with the alert. */
   DisruptionDescription: z
     .string()
+    .nullable()
     .describe("The service disruption text associated with the alert."),
 });
 

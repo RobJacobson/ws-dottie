@@ -84,6 +84,7 @@ export const terminalTransportsSchema = terminalSchema.extend({
   /** Links to transit agencies that service this terminal. */
   TransitLinks: z
     .array(transitLinkSchema)
+    .nullable()
     .describe("Links to transit agencies that service this terminal."),
 });
 

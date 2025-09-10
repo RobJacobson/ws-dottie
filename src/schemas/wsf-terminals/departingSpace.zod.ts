@@ -25,6 +25,7 @@ export const departingSpaceSchema = z.object({
   /** The name of the vessel making this departure. */
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel making this departure."),
 
   /** The maximum space available on the vessel making this departure. */
@@ -38,6 +39,7 @@ export const departingSpaceSchema = z.object({
   /** The available space for one or more destinations. */
   SpaceForArrivalTerminals: z
     .array(spaceForArrivalTerminalSchema)
+    .nullable()
     .describe("The available space for one or more destinations."),
 });
 
