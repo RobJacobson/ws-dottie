@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Reference for  http://www.wsdot.wa.gov/Ferries/API/Vessels/rest/vesselstats/{VESSELID}?apiaccesscode={APIACCESSCODE}</title>
+    <style>BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; } #content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; } A:link { color: #336699; font-weight: bold; text-decoration: underline; } A:visited { color: #6699cc; font-weight: bold; text-decoration: underline; } A:active { color: #336699; font-weight: bold; text-decoration: underline; } .heading1 { background-color: #003366; border-bottom: #336699 6px solid; color: #ffffff; font-family: Tahoma; font-size: 26px; font-weight: normal;margin: 0em 0em 10px -20px; padding-bottom: 8px; padding-left: 30px;padding-top: 16px;} pre { font-size:small; background-color: #e5e5cc; padding: 5px; font-family: Courier New; margin-top: 0px; border: 1px #f0f0e0 solid; white-space: pre-wrap; white-space: -pre-wrap; word-wrap: break-word; } table { border-collapse: collapse; border-spacing: 0px; font-family: Verdana;} table th { border-right: 2px white solid; border-bottom: 2px white solid; font-weight: bold; background-color: #cecf9c;} table td { border-right: 2px white solid; border-bottom: 2px white solid; background-color: #e5e5cc;}</style>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Reference for  http://www.wsdot.wa.gov/Ferries/API/Vessels/rest/vesselstats/{VESSELID}?apiaccesscode={APIACCESSCODE}</p>
+      <p></p>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+        <b>Url: </b>
+        <span class="uri-template">http://www.wsdot.wa.gov/Ferries/API/Vessels/rest/vesselstats/{VESSELID}?apiaccesscode={APIACCESSCODE}</span>
+      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+        <b>HTTP Method: </b>
+        <span class="method">GET</span>
+      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml">This operation supports JSONP responses. The callback function can be specified using the <b>"<span class="javascript-callback">callback</span>"</b> Url query parameter.</p>
+      <table>
+        <tr>
+          <th>Message direction</th>
+          <th>Format</th>
+          <th>Body</th>
+        </tr>
+        <tr>
+          <td>Request</td>
+          <td>N/A</td>
+          <td>The Request body is empty.</td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Xml</td>
+          <td>
+            <a href="#response-xml">Example</a>,<a href="#response-schema">Schema</a></td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Json</td>
+          <td>
+            <a href="#response-json">Example</a>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <a name="response-xml">The following is an example response Xml body:</a>
+        <pre class="response-xml">&lt;VesselStatResponse xmlns="http://www.wsdot.wa.gov/ferries/vessels/"&gt;
+  &lt;VesselID&gt;2147483647&lt;/VesselID&gt;
+  &lt;VesselSubjectID&gt;2147483647&lt;/VesselSubjectID&gt;
+  &lt;VesselName&gt;String content&lt;/VesselName&gt;
+  &lt;VesselAbbrev&gt;String content&lt;/VesselAbbrev&gt;
+  &lt;Class&gt;
+    &lt;ClassID&gt;2147483647&lt;/ClassID&gt;
+    &lt;ClassSubjectID&gt;2147483647&lt;/ClassSubjectID&gt;
+    &lt;ClassName&gt;String content&lt;/ClassName&gt;
+    &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+    &lt;DrawingImg&gt;String content&lt;/DrawingImg&gt;
+    &lt;SilhouetteImg&gt;String content&lt;/SilhouetteImg&gt;
+    &lt;PublicDisplayName&gt;String content&lt;/PublicDisplayName&gt;
+  &lt;/Class&gt;
+  &lt;VesselNameDesc&gt;String content&lt;/VesselNameDesc&gt;
+  &lt;VesselHistory&gt;String content&lt;/VesselHistory&gt;
+  &lt;Beam&gt;String content&lt;/Beam&gt;
+  &lt;CityBuilt&gt;String content&lt;/CityBuilt&gt;
+  &lt;SpeedInKnots&gt;2147483647&lt;/SpeedInKnots&gt;
+  &lt;Draft&gt;String content&lt;/Draft&gt;
+  &lt;EngineCount&gt;2147483647&lt;/EngineCount&gt;
+  &lt;Horsepower&gt;2147483647&lt;/Horsepower&gt;
+  &lt;Length&gt;String content&lt;/Length&gt;
+  &lt;MaxPassengerCount&gt;2147483647&lt;/MaxPassengerCount&gt;
+  &lt;PassengerOnly&gt;true&lt;/PassengerOnly&gt;
+  &lt;FastFerry&gt;true&lt;/FastFerry&gt;
+  &lt;PropulsionInfo&gt;String content&lt;/PropulsionInfo&gt;
+  &lt;TallDeckClearance&gt;2147483647&lt;/TallDeckClearance&gt;
+  &lt;RegDeckSpace&gt;2147483647&lt;/RegDeckSpace&gt;
+  &lt;TallDeckSpace&gt;2147483647&lt;/TallDeckSpace&gt;
+  &lt;Tonnage&gt;2147483647&lt;/Tonnage&gt;
+  &lt;Displacement&gt;2147483647&lt;/Displacement&gt;
+  &lt;YearBuilt&gt;2147483647&lt;/YearBuilt&gt;
+  &lt;YearRebuilt&gt;2147483647&lt;/YearRebuilt&gt;
+  &lt;VesselDrawingImg&gt;String content&lt;/VesselDrawingImg&gt;
+  &lt;SolasCertified&gt;true&lt;/SolasCertified&gt;
+  &lt;MaxPassengerCountForInternational&gt;2147483647&lt;/MaxPassengerCountForInternational&gt;
+&lt;/VesselStatResponse&gt;</pre>
+      </p>
+      <p>
+        <a name="response-json">The following is an example response Json body:</a>
+        <pre class="response-json">{
+	"VesselID":2147483647,
+	"VesselSubjectID":2147483647,
+	"VesselName":"String content",
+	"VesselAbbrev":"String content",
+	"Class":{
+		"ClassID":2147483647,
+		"ClassSubjectID":2147483647,
+		"ClassName":"String content",
+		"SortSeq":2147483647,
+		"DrawingImg":"String content",
+		"SilhouetteImg":"String content",
+		"PublicDisplayName":"String content"
+	},
+	"VesselNameDesc":"String content",
+	"VesselHistory":"String content",
+	"Beam":"String content",
+	"CityBuilt":"String content",
+	"SpeedInKnots":2147483647,
+	"Draft":"String content",
+	"EngineCount":2147483647,
+	"Horsepower":2147483647,
+	"Length":"String content",
+	"MaxPassengerCount":2147483647,
+	"PassengerOnly":true,
+	"FastFerry":true,
+	"PropulsionInfo":"String content",
+	"TallDeckClearance":2147483647,
+	"RegDeckSpace":2147483647,
+	"TallDeckSpace":2147483647,
+	"Tonnage":2147483647,
+	"Displacement":2147483647,
+	"YearBuilt":2147483647,
+	"YearRebuilt":2147483647,
+	"VesselDrawingImg":"String content",
+	"SolasCertified":true,
+	"MaxPassengerCountForInternational":2147483647
+}</pre>
+      </p>
+      <p>
+        <a name="response-schema">The following is the response Xml Schema:</a>
+        <pre class="response-schema">&lt;xs:schema xmlns:tns="http://www.wsdot.wa.gov/ferries/vessels/" elementFormDefault="qualified" targetNamespace="http://www.wsdot.wa.gov/ferries/vessels/" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:complexType name="VesselStatResponse"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="VesselID" type="xs:int" /&gt;
+      &lt;name="VesselSubjectID" type="xs:int" /&gt;
+      &lt;name="VesselName" nillable="true" type="xs:string" /&gt;
+      &lt;name="VesselAbbrev" nillable="true" type="xs:string" /&gt;
+      &lt;name="Class" nillable="true" type="tns:VesselClass" /&gt;
+      &lt;name="VesselNameDesc" nillable="true" type="xs:string" /&gt;
+      &lt;name="VesselHistory" nillable="true" type="xs:string" /&gt;
+      &lt;name="Beam" nillable="true" type="xs:string" /&gt;
+      &lt;name="CityBuilt" nillable="true" type="xs:string" /&gt;
+      &lt;name="SpeedInKnots" nillable="true" type="xs:int" /&gt;
+      &lt;name="Draft" nillable="true" type="xs:string" /&gt;
+      &lt;name="EngineCount" nillable="true" type="xs:int" /&gt;
+      &lt;name="Horsepower" nillable="true" type="xs:int" /&gt;
+      &lt;name="Length" nillable="true" type="xs:string" /&gt;
+      &lt;name="MaxPassengerCount" nillable="true" type="xs:int" /&gt;
+      &lt;name="PassengerOnly" type="xs:boolean" /&gt;
+      &lt;name="FastFerry" type="xs:boolean" /&gt;
+      &lt;name="PropulsionInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="TallDeckClearance" nillable="true" type="xs:int" /&gt;
+      &lt;name="RegDeckSpace" nillable="true" type="xs:int" /&gt;
+      &lt;name="TallDeckSpace" nillable="true" type="xs:int" /&gt;
+      &lt;name="Tonnage" nillable="true" type="xs:int" /&gt;
+      &lt;name="Displacement" nillable="true" type="xs:int" /&gt;
+      &lt;name="YearBuilt" nillable="true" type="xs:int" /&gt;
+      &lt;name="YearRebuilt" nillable="true" type="xs:int" /&gt;
+      &lt;name="VesselDrawingImg" nillable="true" type="xs:string" /&gt;
+      &lt;name="SolasCertified" type="xs:boolean" /&gt;
+      &lt;name="MaxPassengerCountForInternational" nillable="true" type="xs:int" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="VesselStatResponse" nillable="true" type="tns:VesselStatResponse" /&gt;
+  &lt;xs:complexType name="VesselClass"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="ClassID" type="xs:int" /&gt;
+      &lt;name="ClassSubjectID" type="xs:int" /&gt;
+      &lt;name="ClassName" nillable="true" type="xs:string" /&gt;
+      &lt;name="SortSeq" nillable="true" type="xs:int" /&gt;
+      &lt;name="DrawingImg" nillable="true" type="xs:string" /&gt;
+      &lt;name="SilhouetteImg" nillable="true" type="xs:string" /&gt;
+      &lt;name="PublicDisplayName" nillable="true" type="xs:string" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="VesselClass" nillable="true" type="tns:VesselClass" /&gt;
+&lt;/xs:schema&gt;</pre>
+      </p>
+      <p>
+        <a name="response-schema">Additional response Xml Schemas:</a>
+        <pre class="response-schema">&lt;xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="anyType" nillable="true" type="xs:anyType" /&gt;
+  &lt;xs:element name="anyURI" nillable="true" type="xs:anyURI" /&gt;
+  &lt;xs:element name="base64Binary" nillable="true" type="xs:base64Binary" /&gt;
+  &lt;xs:element name="boolean" nillable="true" type="xs:boolean" /&gt;
+  &lt;xs:element name="byte" nillable="true" type="xs:byte" /&gt;
+  &lt;xs:element name="dateTime" nillable="true" type="xs:dateTime" /&gt;
+  &lt;xs:element name="decimal" nillable="true" type="xs:decimal" /&gt;
+  &lt;xs:element name="double" nillable="true" type="xs:double" /&gt;
+  &lt;xs:element name="float" nillable="true" type="xs:float" /&gt;
+  &lt;xs:element name="int" nillable="true" type="xs:int" /&gt;
+  &lt;xs:element name="long" nillable="true" type="xs:long" /&gt;
+  &lt;xs:element name="QName" nillable="true" type="xs:QName" /&gt;
+  &lt;xs:element name="short" nillable="true" type="xs:short" /&gt;
+  &lt;xs:element name="string" nillable="true" type="xs:string" /&gt;
+  &lt;xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" /&gt;
+  &lt;xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" /&gt;
+  &lt;xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" /&gt;
+  &lt;xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" /&gt;
+  &lt;xs:element name="char" nillable="true" type="tns:char" /&gt;
+  &lt;xs:simpleType name="char"&gt;
+    &lt;xs:restriction base="xs:int" /&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="duration" nillable="true" type="tns:duration" /&gt;
+  &lt;xs:simpleType name="duration"&gt;
+    &lt;xs:restriction base="xs:duration"&gt;
+      &lt;xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" /&gt;
+      &lt;xs:minInclusive value="-P10675199DT2H48M5.4775808S" /&gt;
+      &lt;xs:maxInclusive value="P10675199DT2H48M5.4775807S" /&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="guid" nillable="true" type="tns:guid" /&gt;
+  &lt;xs:simpleType name="guid"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" /&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:attribute name="FactoryType" type="xs:QName" /&gt;
+  &lt;xs:attribute name="Id" type="xs:ID" /&gt;
+  &lt;xs:attribute name="Ref" type="xs:IDREF" /&gt;
+&lt;/xs:schema&gt;</pre>
+      </p>
+      <p>
+        <pre class="response-schema">&lt;tns:schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;tns:element name="schema"&gt;
+    &lt;tns:complexType /&gt;
+  &lt;/tns:element&gt;
+&lt;/tns:schema&gt;</pre>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Reference for  http://www.wsdot.wa.gov/Ferries/API/Schedule/rest/timeadjbyroute/{ROUTEID}?apiaccesscode={APIACCESSCODE}</title>
+    <style>BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; } #content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; } A:link { color: #336699; font-weight: bold; text-decoration: underline; } A:visited { color: #6699cc; font-weight: bold; text-decoration: underline; } A:active { color: #336699; font-weight: bold; text-decoration: underline; } .heading1 { background-color: #003366; border-bottom: #336699 6px solid; color: #ffffff; font-family: Tahoma; font-size: 26px; font-weight: normal;margin: 0em 0em 10px -20px; padding-bottom: 8px; padding-left: 30px;padding-top: 16px;} pre { font-size:small; background-color: #e5e5cc; padding: 5px; font-family: Courier New; margin-top: 0px; border: 1px #f0f0e0 solid; white-space: pre-wrap; white-space: -pre-wrap; word-wrap: break-word; } table { border-collapse: collapse; border-spacing: 0px; font-family: Verdana;} table th { border-right: 2px white solid; border-bottom: 2px white solid; font-weight: bold; background-color: #cecf9c;} table td { border-right: 2px white solid; border-bottom: 2px white solid; background-color: #e5e5cc;}</style>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Reference for  http://www.wsdot.wa.gov/Ferries/API/Schedule/rest/timeadjbyroute/{ROUTEID}?apiaccesscode={APIACCESSCODE}</p>
+      <p></p>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+        <b>Url: </b>
+        <span class="uri-template">http://www.wsdot.wa.gov/Ferries/API/Schedule/rest/timeadjbyroute/{ROUTEID}?apiaccesscode={APIACCESSCODE}</span>
+      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+        <b>HTTP Method: </b>
+        <span class="method">GET</span>
+      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml">This operation supports JSONP responses. The callback function can be specified using the <b>"<span class="javascript-callback">callback</span>"</b> Url query parameter.</p>
+      <table>
+        <tr>
+          <th>Message direction</th>
+          <th>Format</th>
+          <th>Body</th>
+        </tr>
+        <tr>
+          <td>Request</td>
+          <td>N/A</td>
+          <td>The Request body is empty.</td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Xml</td>
+          <td>
+            <a href="#response-xml">Example</a>,<a href="#response-schema">Schema</a></td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Json</td>
+          <td>
+            <a href="#response-json">Example</a>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <a name="response-xml">The following is an example response Xml body:</a>
+        <pre class="response-xml">&lt;ArrayOfSchedTimeAdjResponse xmlns="http://www.wsdot.wa.gov/ferries/schedule/"&gt;
+  &lt;SchedTimeAdjResponse&gt;
+    &lt;ScheduleID&gt;2147483647&lt;/ScheduleID&gt;
+    &lt;SchedRouteID&gt;2147483647&lt;/SchedRouteID&gt;
+    &lt;RouteID&gt;2147483647&lt;/RouteID&gt;
+    &lt;RouteDescription&gt;String content&lt;/RouteDescription&gt;
+    &lt;RouteSortSeq&gt;2147483647&lt;/RouteSortSeq&gt;
+    &lt;SailingID&gt;2147483647&lt;/SailingID&gt;
+    &lt;SailingDescription&gt;String content&lt;/SailingDescription&gt;
+    &lt;ActiveSailingDateRange&gt;
+      &lt;DateFrom&gt;1999-05-31T11:20:00&lt;/DateFrom&gt;
+      &lt;DateThru&gt;1999-05-31T11:20:00&lt;/DateThru&gt;
+      &lt;EventID&gt;2147483647&lt;/EventID&gt;
+      &lt;EventDescription&gt;String content&lt;/EventDescription&gt;
+    &lt;/ActiveSailingDateRange&gt;
+    &lt;SailingDir&gt;Westbound&lt;/SailingDir&gt;
+    &lt;JourneyID&gt;2147483647&lt;/JourneyID&gt;
+    &lt;VesselID&gt;2147483647&lt;/VesselID&gt;
+    &lt;VesselName&gt;String content&lt;/VesselName&gt;
+    &lt;VesselHandicapAccessible&gt;true&lt;/VesselHandicapAccessible&gt;
+    &lt;VesselPositionNum&gt;2147483647&lt;/VesselPositionNum&gt;
+    &lt;JourneyTerminalID&gt;2147483647&lt;/JourneyTerminalID&gt;
+    &lt;TerminalID&gt;2147483647&lt;/TerminalID&gt;
+    &lt;TerminalDescription&gt;String content&lt;/TerminalDescription&gt;
+    &lt;TerminalBriefDescription&gt;String content&lt;/TerminalBriefDescription&gt;
+    &lt;TimeToAdj&gt;1999-05-31T11:20:00&lt;/TimeToAdj&gt;
+    &lt;AdjDateFrom&gt;1999-05-31T11:20:00&lt;/AdjDateFrom&gt;
+    &lt;AdjDateThru&gt;1999-05-31T11:20:00&lt;/AdjDateThru&gt;
+    &lt;TidalAdj&gt;true&lt;/TidalAdj&gt;
+    &lt;EventID&gt;2147483647&lt;/EventID&gt;
+    &lt;EventDescription&gt;String content&lt;/EventDescription&gt;
+    &lt;DepArrIndicator&gt;Departure&lt;/DepArrIndicator&gt;
+    &lt;AdjType&gt;Addition&lt;/AdjType&gt;
+    &lt;Annotations&gt;
+      &lt;SchedAnnotation&gt;
+        &lt;AnnotationID&gt;2147483647&lt;/AnnotationID&gt;
+        &lt;AnnotationText&gt;String content&lt;/AnnotationText&gt;
+        &lt;AnnotationIVRText&gt;String content&lt;/AnnotationIVRText&gt;
+        &lt;AdjustedCrossingTime&gt;2147483647&lt;/AdjustedCrossingTime&gt;
+        &lt;AnnotationImg&gt;String content&lt;/AnnotationImg&gt;
+        &lt;TypeDescription&gt;String content&lt;/TypeDescription&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/SchedAnnotation&gt;
+      &lt;SchedAnnotation&gt;
+        &lt;AnnotationID&gt;2147483647&lt;/AnnotationID&gt;
+        &lt;AnnotationText&gt;String content&lt;/AnnotationText&gt;
+        &lt;AnnotationIVRText&gt;String content&lt;/AnnotationIVRText&gt;
+        &lt;AdjustedCrossingTime&gt;2147483647&lt;/AdjustedCrossingTime&gt;
+        &lt;AnnotationImg&gt;String content&lt;/AnnotationImg&gt;
+        &lt;TypeDescription&gt;String content&lt;/TypeDescription&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/SchedAnnotation&gt;
+    &lt;/Annotations&gt;
+  &lt;/SchedTimeAdjResponse&gt;
+  &lt;SchedTimeAdjResponse&gt;
+    &lt;ScheduleID&gt;2147483647&lt;/ScheduleID&gt;
+    &lt;SchedRouteID&gt;2147483647&lt;/SchedRouteID&gt;
+    &lt;RouteID&gt;2147483647&lt;/RouteID&gt;
+    &lt;RouteDescription&gt;String content&lt;/RouteDescription&gt;
+    &lt;RouteSortSeq&gt;2147483647&lt;/RouteSortSeq&gt;
+    &lt;SailingID&gt;2147483647&lt;/SailingID&gt;
+    &lt;SailingDescription&gt;String content&lt;/SailingDescription&gt;
+    &lt;ActiveSailingDateRange&gt;
+      &lt;DateFrom&gt;1999-05-31T11:20:00&lt;/DateFrom&gt;
+      &lt;DateThru&gt;1999-05-31T11:20:00&lt;/DateThru&gt;
+      &lt;EventID&gt;2147483647&lt;/EventID&gt;
+      &lt;EventDescription&gt;String content&lt;/EventDescription&gt;
+    &lt;/ActiveSailingDateRange&gt;
+    &lt;SailingDir&gt;Westbound&lt;/SailingDir&gt;
+    &lt;JourneyID&gt;2147483647&lt;/JourneyID&gt;
+    &lt;VesselID&gt;2147483647&lt;/VesselID&gt;
+    &lt;VesselName&gt;String content&lt;/VesselName&gt;
+    &lt;VesselHandicapAccessible&gt;true&lt;/VesselHandicapAccessible&gt;
+    &lt;VesselPositionNum&gt;2147483647&lt;/VesselPositionNum&gt;
+    &lt;JourneyTerminalID&gt;2147483647&lt;/JourneyTerminalID&gt;
+    &lt;TerminalID&gt;2147483647&lt;/TerminalID&gt;
+    &lt;TerminalDescription&gt;String content&lt;/TerminalDescription&gt;
+    &lt;TerminalBriefDescription&gt;String content&lt;/TerminalBriefDescription&gt;
+    &lt;TimeToAdj&gt;1999-05-31T11:20:00&lt;/TimeToAdj&gt;
+    &lt;AdjDateFrom&gt;1999-05-31T11:20:00&lt;/AdjDateFrom&gt;
+    &lt;AdjDateThru&gt;1999-05-31T11:20:00&lt;/AdjDateThru&gt;
+    &lt;TidalAdj&gt;true&lt;/TidalAdj&gt;
+    &lt;EventID&gt;2147483647&lt;/EventID&gt;
+    &lt;EventDescription&gt;String content&lt;/EventDescription&gt;
+    &lt;DepArrIndicator&gt;Departure&lt;/DepArrIndicator&gt;
+    &lt;AdjType&gt;Addition&lt;/AdjType&gt;
+    &lt;Annotations&gt;
+      &lt;SchedAnnotation&gt;
+        &lt;AnnotationID&gt;2147483647&lt;/AnnotationID&gt;
+        &lt;AnnotationText&gt;String content&lt;/AnnotationText&gt;
+        &lt;AnnotationIVRText&gt;String content&lt;/AnnotationIVRText&gt;
+        &lt;AdjustedCrossingTime&gt;2147483647&lt;/AdjustedCrossingTime&gt;
+        &lt;AnnotationImg&gt;String content&lt;/AnnotationImg&gt;
+        &lt;TypeDescription&gt;String content&lt;/TypeDescription&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/SchedAnnotation&gt;
+      &lt;SchedAnnotation&gt;
+        &lt;AnnotationID&gt;2147483647&lt;/AnnotationID&gt;
+        &lt;AnnotationText&gt;String content&lt;/AnnotationText&gt;
+        &lt;AnnotationIVRText&gt;String content&lt;/AnnotationIVRText&gt;
+        &lt;AdjustedCrossingTime&gt;2147483647&lt;/AdjustedCrossingTime&gt;
+        &lt;AnnotationImg&gt;String content&lt;/AnnotationImg&gt;
+        &lt;TypeDescription&gt;String content&lt;/TypeDescription&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/SchedAnnotation&gt;
+    &lt;/Annotations&gt;
+  &lt;/SchedTimeAdjResponse&gt;
+&lt;/ArrayOfSchedTimeAdjResponse&gt;</pre>
+      </p>
+      <p>
+        <a name="response-json">The following is an example response Json body:</a>
+        <pre class="response-json">[{
+	"ScheduleID":2147483647,
+	"SchedRouteID":2147483647,
+	"RouteID":2147483647,
+	"RouteDescription":"String content",
+	"RouteSortSeq":2147483647,
+	"SailingID":2147483647,
+	"SailingDescription":"String content",
+	"ActiveSailingDateRange":{
+		"DateFrom":"\/Date(928174800000-0700)\/",
+		"DateThru":"\/Date(928174800000-0700)\/",
+		"EventID":2147483647,
+		"EventDescription":"String content"
+	},
+	"SailingDir":0,
+	"JourneyID":2147483647,
+	"VesselID":2147483647,
+	"VesselName":"String content",
+	"VesselHandicapAccessible":true,
+	"VesselPositionNum":2147483647,
+	"JourneyTerminalID":2147483647,
+	"TerminalID":2147483647,
+	"TerminalDescription":"String content",
+	"TerminalBriefDescription":"String content",
+	"TimeToAdj":"\/Date(928174800000-0700)\/",
+	"AdjDateFrom":"\/Date(928174800000-0700)\/",
+	"AdjDateThru":"\/Date(928174800000-0700)\/",
+	"TidalAdj":true,
+	"EventID":2147483647,
+	"EventDescription":"String content",
+	"DepArrIndicator":0,
+	"AdjType":0,
+	"Annotations":[{
+		"AnnotationID":2147483647,
+		"AnnotationText":"String content",
+		"AnnotationIVRText":"String content",
+		"AdjustedCrossingTime":2147483647,
+		"AnnotationImg":"String content",
+		"TypeDescription":"String content",
+		"SortSeq":2147483647
+	}]
+}]</pre>
+      </p>
+      <p>
+        <a name="response-schema">The following is the response Xml Schema:</a>
+        <pre class="response-schema">&lt;xs:schema xmlns:tns="http://www.wsdot.wa.gov/ferries/schedule/" elementFormDefault="qualified" targetNamespace="http://www.wsdot.wa.gov/ferries/schedule/" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" /&gt;
+  &lt;xs:complexType name="ArrayOfSchedTimeAdjResponse"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="SchedTimeAdjResponse" nillable="true" type="tns:SchedTimeAdjResponse" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfSchedTimeAdjResponse" nillable="true" type="tns:ArrayOfSchedTimeAdjResponse" /&gt;
+  &lt;xs:complexType name="SchedTimeAdjResponse"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="ScheduleID" type="xs:int" /&gt;
+      &lt;name="SchedRouteID" type="xs:int" /&gt;
+      &lt;name="RouteID" type="xs:int" /&gt;
+      &lt;name="RouteDescription" nillable="true" type="xs:string" /&gt;
+      &lt;name="RouteSortSeq" type="xs:int" /&gt;
+      &lt;name="SailingID" type="xs:int" /&gt;
+      &lt;name="SailingDescription" nillable="true" type="xs:string" /&gt;
+      &lt;name="ActiveSailingDateRange" nillable="true" type="tns:SchedSailingDateRange" /&gt;
+      &lt;name="SailingDir" type="tns:Direction" /&gt;
+      &lt;name="JourneyID" type="xs:int" /&gt;
+      &lt;name="VesselID" type="xs:int" /&gt;
+      &lt;name="VesselName" nillable="true" type="xs:string" /&gt;
+      &lt;name="VesselHandicapAccessible" type="xs:boolean" /&gt;
+      &lt;name="VesselPositionNum" type="xs:int" /&gt;
+      &lt;name="JourneyTerminalID" type="xs:int" /&gt;
+      &lt;name="TerminalID" type="xs:int" /&gt;
+      &lt;name="TerminalDescription" nillable="true" type="xs:string" /&gt;
+      &lt;name="TerminalBriefDescription" nillable="true" type="xs:string" /&gt;
+      &lt;name="TimeToAdj" type="xs:dateTime" /&gt;
+      &lt;name="AdjDateFrom" type="xs:dateTime" /&gt;
+      &lt;name="AdjDateThru" type="xs:dateTime" /&gt;
+      &lt;name="TidalAdj" type="xs:boolean" /&gt;
+      &lt;name="EventID" nillable="true" type="xs:int" /&gt;
+      &lt;name="EventDescription" nillable="true" type="xs:string" /&gt;
+      &lt;name="DepArrIndicator" type="tns:TimeType" /&gt;
+      &lt;name="AdjType" type="tns:AdjustmentType" /&gt;
+      &lt;name="Annotations" nillable="true" type="tns:ArrayOfSchedAnnotation" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="SchedTimeAdjResponse" nillable="true" type="tns:SchedTimeAdjResponse" /&gt;
+  &lt;xs:complexType name="SchedSailingDateRange"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="DateFrom" type="xs:dateTime" /&gt;
+      &lt;name="DateThru" type="xs:dateTime" /&gt;
+      &lt;name="EventID" nillable="true" type="xs:int" /&gt;
+      &lt;name="EventDescription" nillable="true" type="xs:string" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="SchedSailingDateRange" nillable="true" type="tns:SchedSailingDateRange" /&gt;
+  &lt;xs:simpleType name="Direction"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="Westbound"&gt;
+        &lt;xs:annotation&gt;
+          &lt;xs:appinfo&gt;
+            &lt;EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/"&gt;1&lt;/EnumerationValue&gt;
+          &lt;/xs:appinfo&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:enumeration&gt;
+      &lt;xs:enumeration value="Eastbound"&gt;
+        &lt;xs:annotation&gt;
+          &lt;xs:appinfo&gt;
+            &lt;EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/"&gt;2&lt;/EnumerationValue&gt;
+          &lt;/xs:appinfo&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:enumeration&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="Direction" nillable="true" type="tns:Direction" /&gt;
+  &lt;xs:simpleType name="TimeType"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="Departure"&gt;
+        &lt;xs:annotation&gt;
+          &lt;xs:appinfo&gt;
+            &lt;EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/"&gt;1&lt;/EnumerationValue&gt;
+          &lt;/xs:appinfo&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:enumeration&gt;
+      &lt;xs:enumeration value="Arrival"&gt;
+        &lt;xs:annotation&gt;
+          &lt;xs:appinfo&gt;
+            &lt;EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/"&gt;2&lt;/EnumerationValue&gt;
+          &lt;/xs:appinfo&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:enumeration&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="TimeType" nillable="true" type="tns:TimeType" /&gt;
+  &lt;xs:simpleType name="AdjustmentType"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="Addition"&gt;
+        &lt;xs:annotation&gt;
+          &lt;xs:appinfo&gt;
+            &lt;EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/"&gt;1&lt;/EnumerationValue&gt;
+          &lt;/xs:appinfo&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:enumeration&gt;
+      &lt;xs:enumeration value="Cancellation"&gt;
+        &lt;xs:annotation&gt;
+          &lt;xs:appinfo&gt;
+            &lt;EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/"&gt;2&lt;/EnumerationValue&gt;
+          &lt;/xs:appinfo&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:enumeration&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="AdjustmentType" nillable="true" type="tns:AdjustmentType" /&gt;
+  &lt;xs:complexType name="ArrayOfSchedAnnotation"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="SchedAnnotation" nillable="true" type="tns:SchedAnnotation" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfSchedAnnotation" nillable="true" type="tns:ArrayOfSchedAnnotation" /&gt;
+  &lt;xs:complexType name="SchedAnnotation"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="AnnotationID" type="xs:int" /&gt;
+      &lt;name="AnnotationText" nillable="true" type="xs:string" /&gt;
+      &lt;name="AnnotationIVRText" nillable="true" type="xs:string" /&gt;
+      &lt;name="AdjustedCrossingTime" nillable="true" type="xs:int" /&gt;
+      &lt;name="AnnotationImg" nillable="true" type="xs:string" /&gt;
+      &lt;name="TypeDescription" nillable="true" type="xs:string" /&gt;
+      &lt;name="SortSeq" type="xs:int" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="SchedAnnotation" nillable="true" type="tns:SchedAnnotation" /&gt;
+&lt;/xs:schema&gt;</pre>
+      </p>
+      <p>
+        <a name="response-schema">Additional response Xml Schemas:</a>
+        <pre class="response-schema">&lt;xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="anyType" nillable="true" type="xs:anyType" /&gt;
+  &lt;xs:element name="anyURI" nillable="true" type="xs:anyURI" /&gt;
+  &lt;xs:element name="base64Binary" nillable="true" type="xs:base64Binary" /&gt;
+  &lt;xs:element name="boolean" nillable="true" type="xs:boolean" /&gt;
+  &lt;xs:element name="byte" nillable="true" type="xs:byte" /&gt;
+  &lt;xs:element name="dateTime" nillable="true" type="xs:dateTime" /&gt;
+  &lt;xs:element name="decimal" nillable="true" type="xs:decimal" /&gt;
+  &lt;xs:element name="double" nillable="true" type="xs:double" /&gt;
+  &lt;xs:element name="float" nillable="true" type="xs:float" /&gt;
+  &lt;xs:element name="int" nillable="true" type="xs:int" /&gt;
+  &lt;xs:element name="long" nillable="true" type="xs:long" /&gt;
+  &lt;xs:element name="QName" nillable="true" type="xs:QName" /&gt;
+  &lt;xs:element name="short" nillable="true" type="xs:short" /&gt;
+  &lt;xs:element name="string" nillable="true" type="xs:string" /&gt;
+  &lt;xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" /&gt;
+  &lt;xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" /&gt;
+  &lt;xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" /&gt;
+  &lt;xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" /&gt;
+  &lt;xs:element name="char" nillable="true" type="tns:char" /&gt;
+  &lt;xs:simpleType name="char"&gt;
+    &lt;xs:restriction base="xs:int" /&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="duration" nillable="true" type="tns:duration" /&gt;
+  &lt;xs:simpleType name="duration"&gt;
+    &lt;xs:restriction base="xs:duration"&gt;
+      &lt;xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" /&gt;
+      &lt;xs:minInclusive value="-P10675199DT2H48M5.4775808S" /&gt;
+      &lt;xs:maxInclusive value="P10675199DT2H48M5.4775807S" /&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="guid" nillable="true" type="tns:guid" /&gt;
+  &lt;xs:simpleType name="guid"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" /&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:attribute name="FactoryType" type="xs:QName" /&gt;
+  &lt;xs:attribute name="Id" type="xs:ID" /&gt;
+  &lt;xs:attribute name="Ref" type="xs:IDREF" /&gt;
+&lt;/xs:schema&gt;</pre>
+      </p>
+      <p>
+        <pre class="response-schema">&lt;tns:schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;tns:element name="schema"&gt;
+    &lt;tns:complexType /&gt;
+  &lt;/tns:element&gt;
+&lt;/tns:schema&gt;</pre>
+      </p>
+    </div>
+  </body>
+</html>
