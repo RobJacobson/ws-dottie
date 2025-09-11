@@ -2,9 +2,16 @@ import { resolve } from "node:path";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/cli/index.ts"],
+  entry: [
+    "src/index.ts",
+    "src/cli/index.ts",
+    "src/cli/dottie-fetch.ts",
+    "src/cli/native-fetch.ts",
+  ],
   format: ["esm", "cjs"], // Build both ESM and CJS formats
-  dts: true,
+  dts: {
+    entry: ["src/index.ts"], // Only generate .d.ts files for the main library entry
+  },
   splitting: false,
   sourcemap: true,
   clean: false,

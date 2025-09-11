@@ -31,7 +31,9 @@
     "docs"
   ],
   "bin": {
-    "ws-dottie": "./dist/cli/index.mjs"
+    "ws-dottie": "./dist/cli/index.mjs",
+    "dottie-fetch": "./dist/cli/dottie-fetch.mjs",
+    "native-fetch": "./dist/cli/native-fetch.mjs"
   },
   "scripts": {
     "build": "tsup",
@@ -43,7 +45,11 @@
     "type-check": "tsc --noEmit",
     "type-check:test": "tsc --noEmit --project tsconfig.test.json",
     "prepublishOnly": "npm run build",
-    "nuke-comments": "node scripts/nuke-jsdoc-comments.js"
+    "nuke-comments": "node scripts/nuke-jsdoc-comments.js",
+    "dottie": "node dist/cli/dottie-fetch.mjs",
+    "native": "node dist/cli/native-fetch.mjs",
+    "cli:help": "node dist/cli/dottie-fetch.mjs --help",
+    "cli:list": "node dist/cli/dottie-fetch.mjs --help | grep -A 100 'Available functions:' | head -20"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
