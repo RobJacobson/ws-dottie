@@ -10,7 +10,7 @@ import {
   getCommercialVehicleRestrictionsParamsSchema,
   getCommercialVehicleRestrictionsWithId,
   getCommercialVehicleRestrictionsWithIdParamsSchema,
-} from "@/api/wsdot-commercial-vehicle-restrictions";
+} from "@/clients/wsdot-commercial-vehicle-restrictions";
 
 import { wsdotTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";

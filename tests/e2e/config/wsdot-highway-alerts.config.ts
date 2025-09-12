@@ -19,7 +19,7 @@ import {
   mapAreasArraySchema,
   searchHighwayAlerts,
   searchHighwayAlertsParamsSchema,
-} from "@/api/wsdot-highway-alerts";
+} from "@/clients/wsdot-highway-alerts";
 
 import { wsdotTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";

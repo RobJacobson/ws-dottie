@@ -32,8 +32,8 @@ import {
   vesselsCacheFlushDateSchema,
   vesselVerboseArraySchema,
   vesselVerboseSchema,
-} from "@/api/wsf-vessels";
-import { getHistoricalDateRange } from "../utils/date-utils";
+} from "@/clients/wsf-vessels";
+import { datesHelper } from "@/shared/utils/dateUtils";
 import type { ApiModuleConfig } from "../utils/types";
 
 export const wsfVesselsTestConfig: ApiModuleConfig = {
@@ -430,23 +430,23 @@ export const wsfVesselsTestConfig: ApiModuleConfig = {
       outputSchema: vesselHistoryArraySchema,
       validParams: {
         vesselName: "Cathlamet",
-        dateStart: getHistoricalDateRange().startOfMonth,
-        dateEnd: getHistoricalDateRange().endOfMonth,
+        dateStart: datesHelper.startOfMonth(),
+        dateEnd: datesHelper.endOfMonth(),
       }, // Cathlamet vessel, current month
       invalidParams: [
         {
           params: {
             vesselName: "InvalidVessel",
-            dateStart: getHistoricalDateRange().startOfMonth,
-            dateEnd: getHistoricalDateRange().endOfMonth,
+            dateStart: datesHelper.startOfMonth(),
+            dateEnd: datesHelper.endOfMonth(),
           },
           expectedError: "Invalid vessel name",
         },
         {
           params: {
             vesselName: "Cathlamet",
-            dateStart: getHistoricalDateRange().endOfMonth,
-            dateEnd: getHistoricalDateRange().startOfMonth,
+            dateStart: datesHelper.endOfMonth(),
+            dateEnd: datesHelper.startOfMonth(),
           },
           expectedError: "Start date must be before end date",
         },
@@ -460,8 +460,8 @@ export const wsfVesselsTestConfig: ApiModuleConfig = {
           test: async () => {
             const result = await getVesselHistoryByVesselAndDateRange({
               vesselName: "Cathlamet",
-              dateStart: getHistoricalDateRange().startOfMonth,
-              dateEnd: getHistoricalDateRange().endOfMonth,
+              dateStart: datesHelper.startOfMonth(),
+              dateEnd: datesHelper.endOfMonth(),
             });
             expect(result.length).toBeGreaterThan(0);
             const vessel = result.find((v) => v.Vessel === "Cathlamet");
@@ -474,14 +474,14 @@ export const wsfVesselsTestConfig: ApiModuleConfig = {
           test: async () => {
             const result = await getVesselHistoryByVesselAndDateRange({
               vesselName: "Cathlamet",
-              dateStart: getHistoricalDateRange().startOfMonth,
-              dateEnd: getHistoricalDateRange().endOfMonth,
+              dateStart: datesHelper.startOfMonth(),
+              dateEnd: datesHelper.endOfMonth(),
             });
             const vessel = result.find((v) => v.Vessel === "Cathlamet");
             if (vessel && vessel.Date) {
               const historyDate = new Date(vessel.Date);
-              const startDate = getHistoricalDateRange().startOfMonth;
-              const endDate = getHistoricalDateRange().endOfMonth;
+              const startDate = datesHelper.startOfMonth();
+              const endDate = datesHelper.endOfMonth();
 
               expect(historyDate.getTime()).toBeGreaterThanOrEqual(
                 startDate.getTime()

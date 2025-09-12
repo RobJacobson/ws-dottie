@@ -29,11 +29,11 @@ import {
   terminalVerboseSchema,
   terminalWaitTimesArraySchema,
   terminalWaitTimesSchema,
-} from "@/api/wsf-terminals";
+} from "@/clients/wsf-terminals";
 import {
   getCacheFlushDateTerminals,
   getCacheFlushDateTerminalsResponseSchema,
-} from "@/api/wsf-terminals/getCacheFlushDateTerminals";
+} from "@/clients/wsf-terminals/getCacheFlushDateTerminals";
 
 import { wsfTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";

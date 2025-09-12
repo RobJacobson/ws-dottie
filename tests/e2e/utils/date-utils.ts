@@ -6,6 +6,8 @@
  * for the APIs being tested.
  */
 
+import { datesHelper } from "@/shared/utils/dateUtils";
+
 /**
  * Generate dynamic test dates based on current date
  * - Tomorrow's date for single date parameters
@@ -22,18 +24,6 @@ export const getTestDates = () => {
   dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
 
   return { tomorrow, dayAfterTomorrow };
-};
-
-/**
- * Generate a date range for testing historical data
- * Uses current month for historical data testing
- */
-export const getHistoricalDateRange = () => {
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
-  return { startOfMonth, endOfMonth };
 };
 
 /**
@@ -62,7 +52,10 @@ export const datePatterns = {
   }),
 
   // For APIs that expect historical data
-  historicalRange: () => getHistoricalDateRange(),
+  historicalRange: () => ({
+    startOfMonth: datesHelper.startOfMonth(),
+    endOfMonth: datesHelper.endOfMonth(),
+  }),
 
   // For error testing
   invalidDates: () => getInvalidDates(),

@@ -22,7 +22,7 @@ import {
   scheduleTerminalsArraySchema,
   timeAdjustmentsArraySchema,
   validDateRangeSchema,
-} from "../../../src/api/wsf-schedule";
+} from "../../../src/clients/wsf-schedule";
 import { datePatterns, getTestDates } from "../utils/date-utils";
 import type { ApiModuleConfig } from "../utils/types";
 

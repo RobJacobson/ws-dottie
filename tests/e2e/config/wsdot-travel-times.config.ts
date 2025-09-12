@@ -7,7 +7,7 @@ import {
   getTravelTimesParamsSchema,
   travelTimeRouteSchema,
   travelTimesArraySchema,
-} from "@/api/wsdot-travel-times";
+} from "@/clients/wsdot-travel-times";
 
 import { wsdotTestData } from "../utils/test-data";
 import type { ApiModuleConfig } from "../utils/types";

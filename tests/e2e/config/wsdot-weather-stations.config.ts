@@ -3,7 +3,7 @@ import { expect } from "vitest";
 import {
   getWeatherStations,
   weatherStationDataArraySchema,
-} from "@/api/wsdot-weather-stations";
+} from "@/clients/wsdot-weather-stations";
 
 import type { ApiModuleConfig } from "../utils/types";
 

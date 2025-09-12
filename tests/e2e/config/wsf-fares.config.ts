@@ -1,4 +1,4 @@
-import { wsfCacheFlushDateSchema } from "../../../src/api/wsf/cacheFlushDate";
+import { wsfCacheFlushDateSchema } from "../../../src/clients/wsf-fares/cacheFlushDate";
 import {
   fareLineItemsArraySchema,
   fareLineItemsBasicArraySchema,
@@ -29,7 +29,7 @@ import {
   terminalComboSchema,
   terminalComboVerboseArraySchema,
   terminalMatesArraySchema,
-} from "../../../src/api/wsf-fares";
+} from "../../../src/clients/wsf-fares";
 import { datePatterns, getTestDates } from "../utils/date-utils";
 import type { ApiModuleConfig } from "../utils/types";
 

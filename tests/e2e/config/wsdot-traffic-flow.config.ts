@@ -7,7 +7,7 @@ import {
   getTrafficFlowsParamsSchema,
   trafficFlowArraySchema,
   trafficFlowSchema,
-} from "@/api/wsdot-traffic-flow";
+} from "@/clients/wsdot-traffic-flow";
 
 import type { ApiModuleConfig } from "../utils/types";
 

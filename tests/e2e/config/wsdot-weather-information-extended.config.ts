@@ -9,7 +9,7 @@ import { expect } from "vitest";
 import {
   getWeatherInformationExtended,
   weatherReadingArraySchema,
-} from "@/api/wsdot-weather-information-extended";
+} from "@/clients/wsdot-weather-information-extended";
 
 import type { ApiModuleConfig } from "../utils/types";
 

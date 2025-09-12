@@ -6,7 +6,7 @@ import {
   getWeatherInformationForStations,
   weatherInfoArraySchema,
   weatherInfoSchema,
-} from "@/api/wsdot-weather-information";
+} from "@/clients/wsdot-weather-information";
 
 import type { ApiModuleConfig } from "../utils/types";
 

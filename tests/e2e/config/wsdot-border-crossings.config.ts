@@ -3,7 +3,7 @@ import { expect } from "vitest";
 import {
   borderCrossingDataArraySchema,
   getBorderCrossings,
-} from "../../../src/api/wsdot-border-crossings";
+} from "../../../src/clients/wsdot-border-crossings";
 
 import type { ApiModuleConfig } from "../utils/types";
 

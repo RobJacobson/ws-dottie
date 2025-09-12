@@ -1,22 +1,21 @@
 import { expect } from "vitest";
 
 import {
-  getTollRates,
-  getTollRatesParamsSchema,
-  getTollTripInfo,
-  getTollTripInfoParamsSchema,
-  getTollTripRates,
-  getTollTripRatesParamsSchema,
-  getTollTripVersion,
-  getTollTripVersionParamsSchema,
-  getTripRatesByDate,
-  getTripRatesByDateParamsSchema,
-  tollRateArraySchema,
-  tollTripInfoArraySchema,
-  tollTripRatesSchema,
+  getTollRatesDef,
+  getTollTripInfoDef,
+  getTollTripRatesDef,
+  getTollTripVersionDef,
+  getTripRatesByDateDef,
+} from "../../../src/clients/wsdot-toll-rates";
+import {
+  tollRatesSchema,
+  tollTripInfoSchema,
+  tollTripRateSchema,
   tollTripVersionSchema,
-} from "../../../src/api/wsdot-toll-rates";
-import { getHistoricalDateRange, getInvalidDates } from "../utils/date-utils";
+  tripRatesByDateSchema,
+} from "../../../src/schemas/wsdot-toll-rates";
+import { datesHelper } from "@/shared/utils/dateUtils";
+import { getInvalidDates } from "../utils/date-utils";
 import type { ApiModuleConfig } from "../utils/types";
 
 /**
@@ -135,27 +134,27 @@ export const wsdotTollRatesTestConfig: ApiModuleConfig = {
       inputSchema: getTripRatesByDateParamsSchema,
       outputSchema: tollRateArraySchema,
       validParams: {
-        fromDate: getHistoricalDateRange().startOfMonth,
-        toDate: getHistoricalDateRange().endOfMonth,
+        fromDate: datesHelper.startOfMonth(),
+        toDate: datesHelper.endOfMonth(),
       },
       invalidParams: [
         {
           params: {
             fromDate: getInvalidDates().invalidDate,
-            toDate: getHistoricalDateRange().endOfMonth,
+            toDate: datesHelper.endOfMonth(),
           },
           expectedError: "Invalid date",
         },
         {
           params: {
-            fromDate: getHistoricalDateRange().endOfMonth,
-            toDate: getHistoricalDateRange().startOfMonth, // fromDate after toDate
+            fromDate: datesHelper.endOfMonth(),
+            toDate: datesHelper.startOfMonth(), // fromDate after toDate
           },
           expectedError: "Invalid date range",
         },
         {
           params: {
-            fromDate: getHistoricalDateRange().startOfMonth,
+            fromDate: datesHelper.startOfMonth(),
             // Missing toDate
           },
           expectedError: "Missing required parameter",
@@ -169,8 +168,8 @@ export const wsdotTollRatesTestConfig: ApiModuleConfig = {
           name: "should return historical toll rates for valid date range",
           test: async () => {
             const result = await getTripRatesByDate({
-              fromDate: getHistoricalDateRange().startOfMonth,
-              toDate: getHistoricalDateRange().endOfMonth,
+              fromDate: datesHelper.startOfMonth(),
+              toDate: datesHelper.endOfMonth(),
             });
             expect(Array.isArray(result)).toBe(true);
             // Historical data might be empty for some date ranges
@@ -209,8 +208,8 @@ export const wsdotTollRatesTestConfig: ApiModuleConfig = {
   sharedTestData: {
     validDateRanges: [
       {
-        fromDate: getHistoricalDateRange().startOfMonth,
-        toDate: getHistoricalDateRange().endOfMonth,
+        fromDate: datesHelper.startOfMonth(),
+        toDate: datesHelper.endOfMonth(),
       },
     ],
     invalidDateFormats: [
