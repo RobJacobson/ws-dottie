@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { parseDotNetTimestamp } from "@/shared/utils/dotNetTimestamp";
+import { parseDotNetTimestamp } from "../utils/dotNetTimestamp";
 
 /**
  * @fileoverview TanStack Query validation utilities
@@ -61,7 +61,7 @@ const isWsdotDateString = (value: string): boolean =>
 const wsdotDateTimestampToJsDate = (dateString: string): Date | null => {
   // Remove escaped forward slashes if present
   const cleanDateString = dateString.replace(/\\\//g, "/");
-  
+
   // Use the shared parsing utility
   return parseDotNetTimestamp(cleanDateString);
 };

@@ -61,28 +61,6 @@ export const getSampleDates = () => {
 };
 
 /**
- * Generate a date range for testing historical data
- *
- * Uses current month for historical data testing. This provides a reasonable
- * date range that should contain historical data for APIs that support it.
- *
- * @returns Object containing start and end of current month dates
- *
- * @example
- * ```typescript
- * const range = getHistoricalDateRange();
- * // Use range.startOfMonth and range.endOfMonth for historical date ranges
- * ```
- */
-export const getHistoricalDateRange = () => {
-  const now = new Date();
-  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
-  return { startOfMonth, endOfMonth };
-};
-
-/**
  * Generate a date range for testing current and recent data
  *
  * Uses yesterday and today for testing APIs that need current or recent data.
@@ -106,6 +84,22 @@ export const getCurrentDateRange = () => {
 };
 
 /**
+ * Date helper functions for runtime evaluation
+ *
+ * These functions return Date objects when called, ensuring they are
+ * evaluated at runtime rather than build time. Perfect for use in
+ * endpoint sampleParams.
+ */
+export const datesHelper = {
+  tomorrow: (): Date => new Date(Date.now() + 24 * 60 * 60 * 1000),
+  dayAfterTomorrow: (): Date => new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+  today: (): Date => new Date(),
+  yesterday: (): Date => new Date(Date.now() - 24 * 60 * 60 * 1000),
+  startOfMonth: (): Date => new Date(2025, 7, 1), // August 1, 2025 (month is 0-indexed)
+  endOfMonth: (): Date => new Date(2025, 7, 31), // August 31, 2025
+} as const;
+
+/**
  * Standard date parameter patterns for different API types
  *
  * These patterns provide commonly used date configurations for sample parameters.
@@ -123,5 +117,8 @@ export const datePatterns = {
   }),
 
   /** For APIs that expect historical data */
-  historicalRange: () => getHistoricalDateRange(),
+  historicalRange: () => ({
+    startOfMonth: datesHelper.startOfMonth(),
+    endOfMonth: datesHelper.endOfMonth(),
+  }),
 } as const;

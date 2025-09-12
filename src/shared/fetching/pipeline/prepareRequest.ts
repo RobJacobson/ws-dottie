@@ -19,6 +19,7 @@ import { createValidationError } from "../handleErrors";
  *
  * Handles Date objects by formatting them appropriately for WSF vs WSDOT APIs.
  * All APIs use YYYY-MM-DD format for date parameters.
+ * For optional parameters not provided, removes the entire query parameter from the URL.
  *
  * @param urlTemplate - The URL template with parameter placeholders
  * @param params - Parameters to interpolate into the template
@@ -42,13 +43,16 @@ const interpolateUrlParams = (
   }
 
   // Interpolate parameters into URL template
-  const interpolatedUrl = Object.entries(params).reduce((url, [key, value]) => {
+  let interpolatedUrl = urlTemplate;
+  
+  // First, replace all provided parameters
+  Object.entries(params).forEach(([key, value]) => {
     const placeholder = `{${key}}`;
 
-    if (!url.includes(placeholder)) {
+    if (!interpolatedUrl.includes(placeholder)) {
       // Parameter provided but no placeholder found
       const availablePlaceholders =
-        url.match(/\{[^}]+\}/g)?.join(", ") || "none";
+        interpolatedUrl.match(/\{[^}]+\}/g)?.join(", ") || "none";
       throw new Error(
         `Parameter "${key}" was provided but placeholder "{${key}}" not found in URL template. ` +
           `Available placeholders: ${availablePlaceholders}`
@@ -62,16 +66,25 @@ const interpolateUrlParams = (
         ? jsDateToYyyyMmDd(value) // All APIs use YYYY-MM-DD format
         : String(value);
 
-    return url.replace(placeholder, stringValue);
-  }, urlTemplate);
+    interpolatedUrl = interpolatedUrl.replace(placeholder, stringValue);
+  });
 
-  // Check for any remaining unreplaced placeholders after interpolation
+  // Remove any remaining unreplaced placeholders and their query parameters
+  // This handles optional parameters that weren't provided
   const unreplacedPlaceholders = interpolatedUrl.match(/\{[^}]+\}/g);
-  if (unreplacedPlaceholders && unreplacedPlaceholders.length > 0) {
-    throw new Error(
-      `URL template contains unreplaced placeholders: ${unreplacedPlaceholders.join(", ")}. ` +
-        `All placeholders must be replaced with actual parameter values.`
-    );
+  if (unreplacedPlaceholders) {
+    unreplacedPlaceholders.forEach(placeholder => {
+      const paramName = placeholder.slice(1, -1); // Remove { and }
+      
+      // Remove the entire query parameter (param=value& or &param=value)
+      const paramPattern = new RegExp(`[?&]${paramName}=[^&]*`, 'g');
+      interpolatedUrl = interpolatedUrl.replace(paramPattern, '');
+      
+      // Clean up any double ampersands or trailing/leading separators
+      interpolatedUrl = interpolatedUrl.replace(/[?&]{2,}/g, '&');
+      interpolatedUrl = interpolatedUrl.replace(/\?&/, '?');
+      interpolatedUrl = interpolatedUrl.replace(/&$/, '');
+    });
   }
 
   return interpolatedUrl;

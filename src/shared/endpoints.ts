@@ -35,7 +35,7 @@ export type CacheStrategy =
  * Complete endpoint metadata interface
  *
  * This interface contains all the essential information needed for:
- * - CLI execution (endpoint, inputSchema, functionName)
+ * - CLI execution (endpoint, inputSchema, function)
  * - Testing (sampleParams for validator and e2e tests)
  * - TanStack Query integration (cacheStrategy, queryKey generation)
  * - Runtime type safety (inputSchema, outputSchema)
@@ -45,10 +45,10 @@ export type CacheStrategy =
  */
 export interface Endpoint<I, O> {
   /** Module group identifier (e.g., "wsdot-highway-cameras") */
-  moduleGroup: string;
+  api: string;
 
   /** Function name (e.g., "getHighwayCameras") */
-  functionName: string;
+  function: string;
 
   /** HTTP endpoint URL template */
   endpoint: string;
@@ -60,7 +60,7 @@ export interface Endpoint<I, O> {
   outputSchema: z.ZodSchema<O>;
 
   /** Optional sample parameters for testing and validation */
-  sampleParams?: Partial<I>;
+  sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
 
   /** Cache strategy for TanStack Query integration */
   cacheStrategy: CacheStrategy;
@@ -93,9 +93,9 @@ export interface EndpointDefinition<I, O> {
  * source of truth for all API endpoints. It generates:
  * - A handler function using zodFetch with the provided schemas
  * - TanStack Query options with appropriate caching strategy
- * - Stable query keys based on moduleGroup and functionName
+ * - Stable query keys based on api and function
  *
- * The generated query key follows the pattern [moduleGroup, functionName] which
+ * The generated query key follows the pattern [api, function] which
  * provides stable, unique identifiers for TanStack Query caching.
  *
  * @template I - The input parameters type
@@ -106,8 +106,8 @@ export interface EndpointDefinition<I, O> {
  * @example
  * ```typescript
  * export const getHighwayCamerasDef = defineEndpoint({
- *   moduleGroup: "wsdot-highway-cameras",
- *   functionName: "getHighwayCameras",
+ *   api: "wsdot-highway-cameras",
+ *   function: "getHighwayCameras",
  *   endpoint: "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
  *   inputSchema: getHighwayCamerasParamsSchema,
  *   outputSchema: camerasSchema,
@@ -129,7 +129,7 @@ export function defineEndpoint<I, O>(
     });
 
   // Generate stable query key from metadata
-  const queryKey = [meta.moduleGroup, meta.functionName];
+  const queryKey = [meta.api, meta.function];
 
   // Generate TanStack Query options with appropriate caching strategy
   const queryOptions = createQueryOptions({

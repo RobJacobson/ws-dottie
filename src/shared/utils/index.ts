@@ -16,6 +16,10 @@ export { default as log, type LoggingMode } from "./logger";
 export {
   jsDateToYyyyMmDd,
   getSampleDates,
-  getHistoricalDateRange,
+  getCurrentDateRange,
+  datesHelper,
   datePatterns,
 } from "./dateUtils";
+
+// .NET timestamp utilities
+export { parseDotNetTimestamp } from "./dotNetTimestamp";
