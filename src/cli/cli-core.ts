@@ -61,6 +61,11 @@ export const createSimpleCli = (
       "Convert .NET datetime strings to JS Date objects (native-fetch only)",
       false
     )
+    .option(
+      "--head <number>",
+      "Truncate output to first N lines (equivalent to --quiet | jq . | head -N)",
+      (value) => parseInt(value, 10)
+    )
     .addHelpText(
       "after",
       additionalHelpText || generateHelpText(name, examples)
@@ -68,7 +73,10 @@ export const createSimpleCli = (
 
   program.action(
     async (functionName: string, params: string, options: CliOptions) => {
-      const isQuiet = CLI_CONSTANTS.QUIET_MODES.some((mode) => options[mode]);
+      // Enable quiet mode when --head is used (equivalent to --quiet | jq . | head -N)
+      const isQuiet =
+        CLI_CONSTANTS.QUIET_MODES.some((mode) => options[mode]) ||
+        !!options.head;
       const consoleControl = setupConsoleSuppression(isQuiet);
 
       try {

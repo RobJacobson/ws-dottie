@@ -3,17 +3,16 @@
  */
 
 import { execSync } from "child_process";
-import type { EndpointDefinition } from "@/shared/endpoints";
 import { parseDotNetTimestamp } from "@/shared/utils";
 import { buildFetchUrl } from "@/shared/fetching/pipeline/prepareRequest";
-import type { CliOptions } from "./types";
+import type { CliOptions, AnyEndpointDefinition, CliParams } from "./types";
 
 /**
  * Execute validated API call using Zod pipeline
  */
 export const executeValidated = async (
-  endpointDef: EndpointDefinition<unknown, unknown>,
-  params: Record<string, unknown>
+  endpointDef: AnyEndpointDefinition,
+  params: CliParams
 ): Promise<unknown> => {
   return endpointDef.handleFetch(params as unknown);
 };
@@ -22,8 +21,8 @@ export const executeValidated = async (
  * Execute native API call using curl
  */
 export const executeNative = async (
-  endpointDef: EndpointDefinition<unknown, unknown>,
-  params: Record<string, unknown>,
+  endpointDef: AnyEndpointDefinition,
+  params: CliParams,
   options: CliOptions
 ): Promise<unknown> => {
   const url = buildFetchUrl(
@@ -31,7 +30,7 @@ export const executeNative = async (
     endpointDef.meta.inputSchema,
     params,
     {
-      endpoint: endpointDef.meta.functionName,
+      endpoint: endpointDef.meta.function,
       logMode: "none",
       interpolatedUrl: endpointDef.meta.endpoint,
     }

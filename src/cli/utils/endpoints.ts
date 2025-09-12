@@ -2,8 +2,13 @@
  * Endpoint management utilities
  */
 
-import type { EndpointDefinition } from "@/shared/endpoints";
-import { CLI_CONSTANTS } from "./types";
+import {
+  CLI_CONSTANTS,
+  type EndpointsMap,
+  type FunctionName,
+  type AnyEndpointDefinition,
+  type CliParams,
+} from "./types";
 
 // Import all endpoints to get the type information
 import * as allEndpoints from "../../clients";
@@ -11,43 +16,34 @@ import * as allEndpoints from "../../clients";
 /**
  * Get all endpoint definitions from the clients module
  */
-export const getAllEndpoints = (): Record<
-  string,
-  EndpointDefinition<unknown, unknown>
-> =>
+export const getAllEndpoints = (): EndpointsMap =>
   Object.entries(allEndpoints)
-    .filter(([key]) => key.endsWith(CLI_CONSTANTS.ENDPOINT_SUFFIX))
-    .filter(
-      ([, value]) =>
-        typeof value === "object" &&
-        value !== null &&
-        "meta" in value &&
-        "handleFetch" in value
-    )
-    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    .filter(([key]) => key.endsWith("Def"))
+    .reduce((acc, [, value]) => {
+      const endpointDef = value as AnyEndpointDefinition;
+      return { ...acc, [endpointDef.meta.function]: endpointDef };
+    }, {} as EndpointsMap);
 
 /**
  * Find endpoint by function name
  */
 export const findEndpoint = (
   functionName: string
-): EndpointDefinition<unknown, unknown> | null => {
+): AnyEndpointDefinition | null => {
   const endpoints = getAllEndpoints();
-  return endpoints[`${functionName}${CLI_CONSTANTS.ENDPOINT_SUFFIX}`] || null;
+  return endpoints[functionName] || null;
 };
 
 /**
  * Get available function names
  */
-export const getAvailableFunctions = (): string[] =>
-  Object.keys(getAllEndpoints()).map((key) =>
-    key.replace(CLI_CONSTANTS.ENDPOINT_SUFFIX, "")
-  );
+export const getAvailableFunctions = (): FunctionName[] =>
+  Object.keys(getAllEndpoints()) as FunctionName[];
 
 /**
  * Parse JSON parameters with date coercion
  */
-export const parseParams = (paramsString: string): Record<string, unknown> => {
+export const parseParams = (paramsString: string): CliParams => {
   try {
     return JSON.parse(paramsString, (_, value) => {
       if (
@@ -65,22 +61,34 @@ export const parseParams = (paramsString: string): Record<string, unknown> => {
 
 /**
  * Apply default parameters
+ * Only use defaults if no parameters are supplied at all.
+ * If any parameters are provided, do not use any defaults.
  */
 export const applyDefaults = (
-  endpointDef: EndpointDefinition<unknown, unknown>,
-  userParams: Record<string, unknown>
-): Record<string, unknown> => ({
-  ...(endpointDef.meta.sampleParams || {}),
-  ...userParams,
-});
+  endpointDef: AnyEndpointDefinition,
+  userParams: CliParams
+): CliParams => {
+  const sampleParams = endpointDef.meta.sampleParams || {};
+
+  // If user provided any parameters, don't use defaults
+  if (Object.keys(userParams).length > 0) {
+    return userParams;
+  }
+
+  // If no parameters provided, use sample params as defaults
+  return {
+    ...sampleParams,
+    ...userParams,
+  };
+};
 
 /**
  * Validate parameters against schema
  */
 export const validateParams = (
-  params: Record<string, unknown>,
-  endpointDef: EndpointDefinition<unknown, unknown>
-): Record<string, unknown> => {
+  params: CliParams,
+  endpointDef: AnyEndpointDefinition
+): CliParams => {
   if (!endpointDef.meta.inputSchema) {
     throw new Error("No parameter schema defined for this function");
   }
@@ -94,7 +102,7 @@ export const validateParams = (
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(
       `Parameter validation failed: ${message}\n` +
-        `Expected parameters for ${endpointDef.meta.functionName}:\n` +
+        `Expected parameters for ${endpointDef.meta.function}:\n` +
         `  ${JSON.stringify(params, null, 2)}`
     );
   }

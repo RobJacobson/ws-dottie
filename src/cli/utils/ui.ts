@@ -46,7 +46,19 @@ export const displayFunctionNotFound = (functionName: string): void => {
  * Output result with formatting
  */
 export const outputResult = (result: unknown, options: CliOptions): void => {
-  console.log(JSON.stringify(result, null, options.pretty ? 2 : undefined));
+  const jsonString = JSON.stringify(
+    result,
+    null,
+    options.pretty ? 2 : undefined
+  );
+
+  if (options.head && options.head > 0) {
+    const lines = jsonString.split("\n");
+    const truncatedLines = lines.slice(0, options.head);
+    console.log(truncatedLines.join("\n"));
+  } else {
+    console.log(jsonString);
+  }
 };
 
 /**
@@ -98,7 +110,7 @@ export const generateHelpText = (
       const functionName = key.replace("Def", "");
       const description =
         endpointDef.meta.outputSchema.description ||
-        `${endpointDef.meta.moduleGroup} - ${endpointDef.meta.functionName}`;
+        `${endpointDef.meta.api} - ${endpointDef.meta.function}`;
       return `  ${chalk.cyan(functionName)} - ${description}`;
     })
     .join("\n");
