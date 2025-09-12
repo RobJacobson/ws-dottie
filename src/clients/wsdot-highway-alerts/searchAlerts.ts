@@ -62,7 +62,6 @@
 import { z } from "zod";
 import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getCurrentDateRange } from "@/shared/utils/dateUtils";
 
 /** Params schema for searchAlerts */
 const searchAlertsParamsSchema = z.object({
