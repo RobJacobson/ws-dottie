@@ -99,11 +99,11 @@ const getModuleGroups = () => {
 
   Object.entries(endpointDefs).forEach(([key, def]) => {
     const functionName = key.replace("Def", "");
-    const moduleGroup = def.meta.moduleGroup;
+    const moduleGroup = def.meta.api;
 
     if (!groups[moduleGroup]) {
       groups[moduleGroup] = {
-        name: def.meta.moduleGroup,
+        name: def.meta.api,
         endpoints: [],
       };
     }
