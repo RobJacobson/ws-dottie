@@ -77,6 +77,17 @@ export * from "./clients/wsf-terminals";
 export * from "./clients/wsf-vessels";
 
 // ============================================================================
+// CLI UTILITIES
+// ============================================================================
+
+// CLI endpoint discovery utilities
+export {
+  getAllEndpoints,
+  getAvailableFunctions,
+  findEndpoint,
+} from "./cli/utils/endpoints";
+
+// ============================================================================
 // TYPES
 // ============================================================================
 
