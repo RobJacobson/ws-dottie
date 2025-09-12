@@ -13,8 +13,10 @@ export const activeSeasonSchema = z.object({
   ScheduleName: z.string().nullable().describe("The name of the season."),
   /** Indicates the season name. */
   ScheduleSeason: z
-    .enum(["Spring", "Summer", "Fall", "Winter"])
-    .describe("Indicates the season name."),
+    .union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)])
+    .describe(
+      "Indicates the season name (0 = Spring, 1 = Summer, 2 = Fall, 3 = Winter)."
+    ),
   /** A URL to the season in PDF format. */
   SchedulePDFUrl: z
     .string()

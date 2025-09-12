@@ -57,17 +57,10 @@ export const alertSchema = z
       ),
     /** WSDOT Region which entered the alert, valid values: Eastern, North Central, Northwest, Olympic, South Central, Southwest. */
     Region: z
-      .enum([
-        "Eastern",
-        "North Central",
-        "Northwest",
-        "Olympic",
-        "South Central",
-        "Southwest",
-      ])
+      .string()
       .nullable()
       .describe(
-        "WSDOT Region which entered the alert, valid values: Eastern, North Central, Northwest, Olympic, South Central, Southwest."
+        "WSDOT Region which entered the alert, valid values: Eastern (EA), North Central (NC), Northwest (NW), Olympic (OL), South Central (SC), Southwest (SW)."
       ),
     /** Start location for the alert on the roadway. */
     StartRoadwayLocation: roadwayLocationSchema

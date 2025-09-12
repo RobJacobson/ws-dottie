@@ -83,8 +83,10 @@ export const commercialVehiclesRestrictionSchema = z
       .describe("Restriction length in inches"),
     /** Restriction type */
     RestrictionType: z
-      .enum(["BridgeRestriction", "RoadRestriction"])
-      .describe("Restriction type"),
+      .union([z.literal(0), z.literal(1)])
+      .describe(
+        "Restriction type (0 = BridgeRestriction, 1 = RoadRestriction)"
+      ),
     /** Restriction weight in pounds */
     RestrictionWeightInPounds: z
       .number()

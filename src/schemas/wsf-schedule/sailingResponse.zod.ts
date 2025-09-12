@@ -50,8 +50,10 @@ export const sailingResponseSchema = z.object({
 
   /** Indicates the direction of travel. Westbound or Eastbound. */
   SailingDir: z
-    .enum(["Westbound", "Eastbound"])
-    .describe("Indicates the direction of travel. Westbound or Eastbound."),
+    .union([z.literal(1), z.literal(2)])
+    .describe(
+      "Indicates the direction of travel (1 = Westbound, 2 = Eastbound)."
+    ),
 
   /** A days of operation grouping for the sailing (eg. "Daily"). */
   DayOpDescription: z

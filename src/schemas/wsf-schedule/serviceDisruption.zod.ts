@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "../../shared/tanstack/validation";
 
 /**
  * Schema for service disruption response from WSF Schedule API.

@@ -14,11 +14,17 @@ export const flowDataSchema = z
       .number()
       .int()
       .describe("A unique ID that identifies a specific station."),
-    /** The current traffic condition at the flow station. Possible values: Unknown, WideOpen, Moderate, Heavy, StopAndGo, NoData */
+    /** The current traffic condition at the flow station. Possible values: 0 = Unknown, 1 = WideOpen, 2 = Moderate, 3 = Heavy, 4 = StopAndGo */
     FlowReadingValue: z
-      .enum(["Unknown", "WideOpen", "Moderate", "Heavy", "StopAndGo", "NoData"])
+      .union([
+        z.literal(0),
+        z.literal(1),
+        z.literal(2),
+        z.literal(3),
+        z.literal(4),
+      ])
       .describe(
-        "The current traffic condition at the flow station. Possible values: Unknown, WideOpen, Moderate, Heavy, StopAndGo, NoData"
+        "The current traffic condition at the flow station. Possible values: 0 = Unknown, 1 = WideOpen, 2 = Moderate, 3 = Heavy, 4 = StopAndGo"
       ),
     /** The location of the flow station. */
     FlowStationLocation: roadwayLocationSchema

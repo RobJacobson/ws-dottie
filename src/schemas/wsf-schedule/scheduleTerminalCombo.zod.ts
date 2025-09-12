@@ -14,9 +14,9 @@ export const scheduleTimeSchema = z.object({
     .describe("The date and time of the arrival."),
   /** Indicates which category of travelers are supported by this departure. */
   LoadingRule: z
-    .enum(["Passenger", "Vehicle", "Both"])
+    .union([z.literal(1), z.literal(2), z.literal(3)])
     .describe(
-      "Indicates which category of travelers are supported by this departure."
+      "Indicates which category of travelers are supported by this departure (1 = Passenger, 2 = Vehicle, 3 = Both)."
     ),
   /** Unique identifier for the vessel that's planned to service this departure. */
   VesselID: z

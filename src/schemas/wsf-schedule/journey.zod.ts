@@ -32,10 +32,10 @@ export const terminalTimeSchema = z.object({
     ),
   /** Indicates whether this stop represents a departure or an arrival. If the journey does not stop at this terminal no value will be present. */
   DepArrIndicator: z
-    .enum(["Departure", "Arrival"])
+    .union([z.literal(1), z.literal(2)])
     .nullable()
     .describe(
-      "Indicates whether this stop represents a departure or an arrival. If the journey does not stop at this terminal no value will be present."
+      "Indicates whether this stop represents a departure or an arrival (1 = Departure, 2 = Arrival). If the journey does not stop at this terminal no value will be present."
     ),
   /** If true indicates that the journey does not interact with this terminal. */
   IsNA: z

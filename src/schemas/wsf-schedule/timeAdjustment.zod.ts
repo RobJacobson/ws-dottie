@@ -49,8 +49,7 @@ export const timeAdjustmentSchema = z.object({
     .describe("A title that describes the sailing (eg. Leave Port Townsend)."),
 
   /** A collection of date ranges detailing when this sailing is active. */
-  ActiveSailingDateRange: z
-    .array(activeDateRangeSchema)
+  ActiveSailingDateRange: activeDateRangeSchema
     .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
@@ -58,10 +57,9 @@ export const timeAdjustmentSchema = z.object({
 
   /** Indicates the direction of travel. 1 for Westbound, 2 for Eastbound. */
   SailingDir: z
-    .number()
-    .int()
+    .union([z.literal(1), z.literal(2)])
     .describe(
-      "Indicates the direction of travel. 1 for Westbound, 2 for Eastbound."
+      "Indicates the direction of travel (1 = Westbound, 2 = Eastbound)."
     ),
 
   /** Unique identifier for a journey. */
@@ -154,18 +152,16 @@ export const timeAdjustmentSchema = z.object({
 
   /** Indicates whether this stop represents a departure or an arrival. 1 for Departure, 2 for Arrival. */
   DepArrIndicator: z
-    .number()
-    .int()
+    .union([z.literal(1), z.literal(2)])
     .describe(
-      "Indicates whether this stop represents a departure or an arrival. 1 for Departure, 2 for Arrival."
+      "Indicates whether this stop represents a departure or an arrival (1 = Departure, 2 = Arrival)."
     ),
 
   /** Indicates whether this adjustment represents a cancellation or addition in service. 1 for Addition, 2 for Cancellation. */
   AdjType: z
-    .number()
-    .int()
+    .union([z.literal(1), z.literal(2)])
     .describe(
-      "Indicates whether this adjustment represents a cancellation or addition in service. 1 for Addition, 2 for Cancellation."
+      "Indicates whether this adjustment represents a cancellation or addition in service (1 = Addition, 2 = Cancellation)."
     ),
 
   /** Informational attributes associated with the departure / arrival time. */

@@ -20,7 +20,7 @@ import { z } from "zod";
 export const fareTotalSchema = z.object({
   /** Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total. */
   TotalType: z
-    .enum(["Depart", "Return", "Either", "Total"])
+    .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)])
     .describe(
       "Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total."
     ),

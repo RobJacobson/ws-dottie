@@ -17,8 +17,11 @@ export const scheduleResponseSchema = z.object({
   ScheduleName: z.string().nullable().describe("The name of the season."),
   /** Indicates the season name. */
   ScheduleSeason: z
-    .enum(["Spring", "Summer", "Fall", "Winter"])
-    .describe("Indicates the season name."),
+    .number()
+    .int()
+    .describe(
+      "Indicates the season name (1 = Spring, 2 = Summer, 3 = Fall, 4 = Winter)."
+    ),
   /** A URL to the season in PDF format. */
   SchedulePDFUrl: z
     .string()
@@ -47,6 +50,13 @@ export const scheduleResponseSchema = z.object({
 });
 
 export type ScheduleResponse = z.infer<typeof scheduleResponseSchema>;
+
+/**
+ * Single schedule response.
+ */
+export const scheduleResponseSingleSchema = scheduleResponseSchema.describe(
+  "Single schedule response for departure times."
+);
 
 /**
  * Array of schedule responses.

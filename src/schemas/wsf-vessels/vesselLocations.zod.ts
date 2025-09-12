@@ -151,10 +151,10 @@ export const vesselLocationsSchema = z.object({
       "A preferred sort order (sort-ascending with respect to other vessels)."
     ),
 
-  /** Indicates who manages this vessel. WSF or KCM. */
+  /** Indicates who manages this vessel. 1 for WSF, 2 for KCM. */
   ManagedBy: z
-    .enum(["WSF", "KCM"])
-    .describe("Indicates who manages this vessel. WSF or KCM."),
+    .union([z.literal(1), z.literal(2)])
+    .describe("Indicates who manages this vessel (1 = WSF, 2 = KCM)."),
 
   /** The date and time when this vessel location was last updated. */
   TimeStamp: zWsdotDate().describe(
