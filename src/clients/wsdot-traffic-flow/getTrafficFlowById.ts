@@ -19,7 +19,7 @@
  *   - getTrafficFlowById: TrafficFlow
  *   - TrafficFlow fields:
  *     - FlowDataID: Flow data identifier (nullable)
- *     - FlowReadingValue: Numeric reading 0–4 (nullable)
+ *     - FlowReadingValue: Numeric reading 0–4 (0=Unknown, 1=WideOpen, 2=Moderate, 3=Heavy, 4=StopAndGo)
  *     - FlowStationLocation: Location details (nullable)
  *     - Region: Region name (nullable)
  *     - StationName: Station identifier (nullable)
@@ -56,20 +56,17 @@ import { flowDataSchema } from "@/schemas/wsdot-traffic-flow";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTrafficFlowById */
-export const getTrafficFlowByIdParamsSchema = z.object({
+const getTrafficFlowByIdParamsSchema = z.object({
   /** Flow data identifier */
   flowDataID: z.number(),
 });
 
 /** GetTrafficFlowById params type */
-export type GetTrafficFlowByIdParams = z.infer<
-  typeof getTrafficFlowByIdParamsSchema
->;
 
 /** Endpoint definition for getTrafficFlowById */
 export const getTrafficFlowByIdDef = defineEndpoint({
-  moduleGroup: "wsdot-traffic-flow",
-  functionName: "getTrafficFlowById",
+  api: "wsdot-traffic-flow",
+  function: "getTrafficFlowById",
   endpoint:
     "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
   inputSchema: getTrafficFlowByIdParamsSchema,

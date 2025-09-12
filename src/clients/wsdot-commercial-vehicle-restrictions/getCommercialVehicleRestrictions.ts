@@ -89,17 +89,14 @@ import { commercialVehiclesRestrictionsSchema } from "@/schemas/wsdot-commercial
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getCommercialVehicleRestrictions */
-export const getCommercialVehicleRestrictionsParamsSchema = z.object({});
+const getCommercialVehicleRestrictionsParamsSchema = z.object({});
 
 /** GetCommercialVehicleRestrictions params type */
-export type GetCommercialVehicleRestrictionsParams = z.infer<
-  typeof getCommercialVehicleRestrictionsParamsSchema
->;
 
 /** Endpoint definition for getCommercialVehicleRestrictions */
 export const getCommercialVehicleRestrictionsDef = defineEndpoint({
-  moduleGroup: "wsdot-commercial-vehicle-restrictions",
-  functionName: "getCommercialVehicleRestrictions",
+  api: "wsdot-commercial-vehicle-restrictions",
+  function: "getCommercialVehicleRestrictions",
   endpoint:
     "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson",
   inputSchema: getCommercialVehicleRestrictionsParamsSchema,

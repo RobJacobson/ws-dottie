@@ -60,17 +60,14 @@ import { borderCrossingsSchema } from "@/schemas/wsdot-border-crossings";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getBorderCrossings */
-export const getBorderCrossingsParamsSchema = z.object({});
+const getBorderCrossingsParamsSchema = z.object({});
 
 /** GetBorderCrossings params type */
-export type GetBorderCrossingsParams = z.infer<
-  typeof getBorderCrossingsParamsSchema
->;
 
 /** Endpoint definition for getBorderCrossings */
 export const getBorderCrossingsDef = defineEndpoint({
-  moduleGroup: "wsdot-border-crossings",
-  functionName: "getBorderCrossings",
+  api: "wsdot-border-crossings",
+  function: "getBorderCrossings",
   endpoint:
     "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
   inputSchema: getBorderCrossingsParamsSchema,

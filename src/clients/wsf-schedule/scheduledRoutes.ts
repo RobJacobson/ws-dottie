@@ -3,7 +3,7 @@ import { scheduledRoutesArraySchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getScheduledRoutes */
-export const getScheduledRoutesParamsSchema = z.object({});
+const getScheduledRoutesParamsSchema = z.object({});
 
 /** GetScheduledRoutes params type */
 export type GetScheduledRoutesParams = z.infer<
@@ -12,9 +12,9 @@ export type GetScheduledRoutesParams = z.infer<
 
 /** Endpoint definition for getScheduledRoutes */
 export const getScheduledRoutesDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getScheduledRoutes",
-  endpoint: "/ferries/api/schedule/rest/scheduledroutes",
+  api: "wsf-schedule",
+  function: "getScheduledRoutes",
+  endpoint: "/ferries/api/schedule/rest/schedroutes",
   inputSchema: getScheduledRoutesParamsSchema,
   outputSchema: scheduledRoutesArraySchema,
   sampleParams: {},

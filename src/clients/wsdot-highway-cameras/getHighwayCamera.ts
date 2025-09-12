@@ -79,15 +79,15 @@ import { highwayCameraSchema } from "@/schemas/wsdot-highway-cameras";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getHighwayCamera */
-export const getHighwayCameraParamsSchema = z.object({
+const getHighwayCameraParamsSchema = z.object({
   /** Camera identifier */
   cameraID: z.number().int(),
 });
 
 /** Endpoint definition for getHighwayCamera */
 export const getHighwayCameraDef = defineEndpoint({
-  moduleGroup: "wsdot-highway-cameras",
-  functionName: "getHighwayCamera",
+  api: "wsdot-highway-cameras",
+  function: "getHighwayCamera",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
   inputSchema: getHighwayCameraParamsSchema,

@@ -1,32 +1,29 @@
 import { z } from "zod";
-import { scheduleResponsesArraySchema } from "@/schemas/wsf-schedule";
+import { scheduleResponseSingleSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getSampleDates } from "@/shared/utils/dateUtils";
+import { datesHelper } from "@/shared/utils";
 
-/** Params schema for getScheduleByScheduleTerminals */
-export const getScheduleByScheduleTerminalsParamsSchema = z.object({
+/** Params schema for getScheduleByTerminals */
+const getScheduleByTerminalsParamsSchema = z.object({
   tripDate: z.date(),
   departingScheduleTerminalId: z.number().int().positive(),
   arrivingScheduleTerminalId: z.number().int().positive(),
 });
 
-/** GetScheduleByScheduleTerminals params type */
-export type GetScheduleByScheduleTerminalsParams = z.infer<
-  typeof getScheduleByScheduleTerminalsParamsSchema
->;
+/** GetScheduleByTerminals params type */
 
-/** Endpoint definition for getScheduleByScheduleTerminals */
-export const getScheduleByScheduleTerminalsDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getScheduleByScheduleTerminals",
+/** Endpoint definition for getScheduleByTerminals */
+export const getScheduleByTerminalsDef = defineEndpoint({
+  api: "wsf-schedule",
+  function: "getScheduleByTerminals",
   endpoint:
-    "/ferries/api/schedule/rest/schedulebyterminals/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
-  inputSchema: getScheduleByScheduleTerminalsParamsSchema,
-  outputSchema: scheduleResponsesArraySchema,
+    "/ferries/api/schedule/rest/schedule/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
+  inputSchema: getScheduleByTerminalsParamsSchema,
+  outputSchema: scheduleResponseSingleSchema,
   sampleParams: {
-    tripDate: getSampleDates().tomorrow,
+    tripDate: datesHelper.tomorrow(),
     departingScheduleTerminalId: 1,
-    arrivingScheduleTerminalId: 2,
+    arrivingScheduleTerminalId: 10,
   },
   cacheStrategy: "DAILY_STATIC",
 });

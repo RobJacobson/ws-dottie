@@ -1,25 +1,22 @@
 import { z } from "zod";
 import { fareLineItemsVerboseSchema } from "@/schemas/wsf-fares";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getSampleDates } from "@/shared/utils/dateUtils";
+import { datesHelper } from "@/shared/utils";
 
 /** Params schema for getFareLineItemsVerbose */
-export const getFareLineItemsVerboseParamsSchema = z.object({
+const getFareLineItemsVerboseParamsSchema = z.object({
   tripDate: z.date(),
 });
 
 /** GetFareLineItemsVerbose params type */
-export type GetFareLineItemsVerboseParams = z.infer<
-  typeof getFareLineItemsVerboseParamsSchema
->;
 
 /** Endpoint definition for getFareLineItemsVerbose */
 export const getFareLineItemsVerboseDef = defineEndpoint({
-  moduleGroup: "wsf-fares",
-  functionName: "getFareLineItemsVerbose",
+  api: "wsf-fares",
+  function: "getFareLineItemsVerbose",
   endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
   inputSchema: getFareLineItemsVerboseParamsSchema,
   outputSchema: fareLineItemsVerboseSchema,
-  sampleParams: { tripDate: getSampleDates().tomorrow },
+  sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
 });

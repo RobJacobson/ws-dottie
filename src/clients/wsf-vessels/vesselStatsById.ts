@@ -3,7 +3,7 @@ import { vesselStatsSchema } from "@/schemas/wsf-vessels";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getVesselStatsById */
-export const getVesselStatsByIdParamsSchema = z.object({
+const getVesselStatsByIdParamsSchema = z.object({
   vesselId: z
     .number()
     .int()
@@ -14,14 +14,11 @@ export const getVesselStatsByIdParamsSchema = z.object({
 });
 
 /** GetVesselStatsById params type */
-export type GetVesselStatsByIdParams = z.infer<
-  typeof getVesselStatsByIdParamsSchema
->;
 
 /** Endpoint definition for getVesselStatsById */
 export const getVesselStatsByIdDef = defineEndpoint({
-  moduleGroup: "wsf-vessels",
-  functionName: "getVesselStatsById",
+  api: "wsf-vessels",
+  function: "getVesselStatsById",
   endpoint: "/ferries/api/vessels/rest/vesselstats/{vesselId}",
   inputSchema: getVesselStatsByIdParamsSchema,
   outputSchema: vesselStatsSchema,

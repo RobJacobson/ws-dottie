@@ -83,15 +83,14 @@ import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getAlerts */
-export const getAlertsParamsSchema = z.object({});
+const getAlertsParamsSchema = z.object({});
 
 /** GetAlerts params type */
-export type GetAlertsParams = z.infer<typeof getAlertsParamsSchema>;
 
 /** Endpoint definition for getAlerts */
 export const getAlertsDef = defineEndpoint({
-  moduleGroup: "wsdot-highway-alerts",
-  functionName: "getAlerts",
+  api: "wsdot-highway-alerts",
+  function: "getAlerts",
   endpoint: "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
   inputSchema: getAlertsParamsSchema,
   outputSchema: alertsSchema,

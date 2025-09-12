@@ -42,12 +42,12 @@ import { tripRatesSchema } from "@/schemas/wsdot-toll-rates";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTollTripRates */
-export const getTollTripRatesParamsSchema = z.object({});
+const getTollTripRatesParamsSchema = z.object({});
 
 /** Endpoint definition for getTollTripRates */
 export const getTollTripRatesDef = defineEndpoint({
-  moduleGroup: "wsdot-toll-rates",
-  functionName: "getTollTripRates",
+  api: "wsdot-toll-rates",
+  function: "getTollTripRates",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson",
   inputSchema: getTollTripRatesParamsSchema,
   outputSchema: tripRatesSchema,

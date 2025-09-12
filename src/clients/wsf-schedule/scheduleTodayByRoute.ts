@@ -1,27 +1,23 @@
 import { z } from "zod";
 import { scheduleResponseSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getSampleDates } from "@/shared/utils/dateUtils";
 
 /** Params schema for getScheduleTodayByRoute */
-export const getScheduleTodayByRouteParamsSchema = z.object({
-  tripDate: z.date(),
+const getScheduleTodayByRouteParamsSchema = z.object({
   routeId: z.number().int().positive(),
+  onlyRemainingTimes: z.boolean(),
 });
 
 /** GetScheduleTodayByRoute params type */
-export type GetScheduleTodayByRouteParams = z.infer<
-  typeof getScheduleTodayByRouteParamsSchema
->;
 
 /** Endpoint definition for getScheduleTodayByRoute */
 export const getScheduleTodayByRouteDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getScheduleTodayByRoute",
+  api: "wsf-schedule",
+  function: "getScheduleTodayByRoute",
   endpoint:
-    "/ferries/api/schedule/rest/scheduletodaybyroute/{tripDate}/{routeId}",
+    "/ferries/api/schedule/rest/scheduletoday/{routeId}/{onlyRemainingTimes}",
   inputSchema: getScheduleTodayByRouteParamsSchema,
   outputSchema: scheduleResponseSchema,
-  sampleParams: { tripDate: getSampleDates().tomorrow, routeId: 1 },
+  sampleParams: { routeId: 1, onlyRemainingTimes: false },
   cacheStrategy: "DAILY_STATIC",
 });

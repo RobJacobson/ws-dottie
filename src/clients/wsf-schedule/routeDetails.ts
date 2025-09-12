@@ -1,23 +1,22 @@
 import { z } from "zod";
 import { routeDetailsArraySchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getSampleDates } from "@/shared/utils/dateUtils";
+import { datesHelper } from "@/shared/utils";
 
 /** Params schema for getRouteDetails */
-export const getRouteDetailsParamsSchema = z.object({
+const getRouteDetailsParamsSchema = z.object({
   tripDate: z.date(),
 });
 
 /** GetRouteDetails params type */
-export type GetRouteDetailsParams = z.infer<typeof getRouteDetailsParamsSchema>;
 
 /** Endpoint definition for getRouteDetails */
 export const getRouteDetailsDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getRouteDetails",
+  api: "wsf-schedule",
+  function: "getRouteDetails",
   endpoint: "/ferries/api/schedule/rest/routedetails/{tripDate}",
   inputSchema: getRouteDetailsParamsSchema,
   outputSchema: routeDetailsArraySchema,
-  sampleParams: { tripDate: getSampleDates().tomorrow },
+  sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
 });

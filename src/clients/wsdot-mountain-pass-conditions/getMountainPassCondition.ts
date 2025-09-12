@@ -70,20 +70,17 @@ import { passConditionSchema } from "@/schemas/wsdot-mountain-pass-conditions";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getMountainPassCondition */
-export const getMountainPassConditionParamsSchema = z.object({
+const getMountainPassConditionParamsSchema = z.object({
   /** Pass condition identifier */
   passConditionId: z.number().int().positive(),
 });
 
 /** GetMountainPassCondition params type */
-export type GetMountainPassConditionParams = z.infer<
-  typeof getMountainPassConditionParamsSchema
->;
 
 /** Endpoint definition for getMountainPassCondition */
 export const getMountainPassConditionDef = defineEndpoint({
-  moduleGroup: "wsdot-mountain-pass-conditions",
-  functionName: "getMountainPassCondition",
+  api: "wsdot-mountain-pass-conditions",
+  function: "getMountainPassCondition",
   endpoint:
     "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
   inputSchema: getMountainPassConditionParamsSchema,

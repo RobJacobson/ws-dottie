@@ -19,8 +19,8 @@ export const getWeatherInformationByStationIdParamsSchema = z
 
 /** Endpoint definition for getWeatherInformationByStationId */
 export const getWeatherInformationByStationIdDef = defineEndpoint({
-  moduleGroup: "wsdot-weather-information",
-  functionName: "getWeatherInformationByStationId",
+  api: "wsdot-weather-information",
+  function: "getWeatherInformationByStationId",
   endpoint:
     "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
   inputSchema: getWeatherInformationByStationIdParamsSchema,

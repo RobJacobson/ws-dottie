@@ -28,5 +28,4 @@ export type {
   TerminalComboVerbose,
   TerminalMate,
   TerminalMates,
-  ValidDateRange,
 } from "@/schemas/wsf-fares";

@@ -45,10 +45,10 @@
 import { z } from "zod";
 import { tripRatesByDateSchema } from "@/schemas/wsdot-toll-rates";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getHistoricalDateRange } from "@/shared/utils/dateUtils";
+import { datesHelper } from "@/shared/utils/dateUtils";
 
 /** Params schema for getTripRatesByDate */
-export const getTripRatesByDateParamsSchema = z.object({
+const getTripRatesByDateParamsSchema = z.object({
   /** Start date (JS Date) */
   fromDate: z.date(),
   /** End date (JS Date) */
@@ -57,15 +57,15 @@ export const getTripRatesByDateParamsSchema = z.object({
 
 /** Endpoint definition for getTripRatesByDate */
 export const getTripRatesByDateDef = defineEndpoint({
-  moduleGroup: "wsdot-toll-rates",
-  functionName: "getTripRatesByDate",
+  api: "wsdot-toll-rates",
+  function: "getTripRatesByDate",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
   inputSchema: getTripRatesByDateParamsSchema,
   outputSchema: tripRatesByDateSchema,
   sampleParams: {
-    fromDate: getHistoricalDateRange().startOfMonth,
-    toDate: getHistoricalDateRange().endOfMonth,
+    fromDate: datesHelper.startOfMonth(),
+    toDate: datesHelper.endOfMonth(),
   },
   cacheStrategy: "DAILY_STATIC",
 });

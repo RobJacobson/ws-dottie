@@ -59,24 +59,21 @@ import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getAlertsByRegionId */
-export const getAlertsByRegionIdParamsSchema = z.object({
+const getAlertsByRegionIdParamsSchema = z.object({
   /** Region numeric identifier */
   RegionId: z.number().int().positive(),
 });
 
 /** GetAlertsByRegionId params type */
-export type GetAlertsByRegionIdParams = z.infer<
-  typeof getAlertsByRegionIdParamsSchema
->;
 
 /** Endpoint definition for getAlertsByRegionId */
 export const getAlertsByRegionIdDef = defineEndpoint({
-  moduleGroup: "wsdot-highway-alerts",
-  functionName: "getAlertsByRegionId",
+  api: "wsdot-highway-alerts",
+  function: "getAlertsByRegionId",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}",
   inputSchema: getAlertsByRegionIdParamsSchema,
   outputSchema: alertsSchema,
-  sampleParams: { RegionId: 1 },
+  sampleParams: { RegionId: 9 },
   cacheStrategy: "MINUTE_UPDATES",
 });

@@ -52,39 +52,11 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import {
-  type HighwayCameras,
-  cameraArraySchema,
-} from "@/schemas/wsdot-highway-cameras";
-import { createQueryOptions } from "@/shared/tanstack/factory";
-import { zodFetch } from "@/shared/fetching";
-
-/** Searches highway cameras using optional filters */
-export const searchHighwayCameras = async (
-  params: SearchHighwayCamerasParams
-): Promise<HighwayCameras> => {
-  const queryParams = new URLSearchParams();
-  if (params.StateRoute !== undefined)
-    queryParams.append("StateRoute", String(params.StateRoute));
-  if (params.Region !== undefined)
-    queryParams.append("Region", String(params.Region));
-  if (params.StartingMilepost !== undefined)
-    queryParams.append("StartingMilepost", String(params.StartingMilepost));
-  if (params.EndingMilepost !== undefined)
-    queryParams.append("EndingMilepost", String(params.EndingMilepost));
-
-  const endpoint = `/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson?${queryParams.toString()}`;
-
-  return zodFetch({
-    endpoint,
-    inputSchema: searchHighwayCamerasParamsSchema,
-    outputSchema: cameraArraySchema,
-    params: undefined, // No URL template interpolation needed since we build the URL ourselves
-  });
-};
+import { cameraArraySchema } from "@/schemas/wsdot-highway-cameras";
+import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for searchHighwayCameras */
-export const searchHighwayCamerasParamsSchema = z
+const searchHighwayCamerasParamsSchema = z
   .object({
     /** State route code (optional) */
     StateRoute: z.string().optional(),
@@ -100,14 +72,14 @@ export const searchHighwayCamerasParamsSchema = z
   })
   .strict();
 
-/** SearchHighwayCameras params type */
-export type SearchHighwayCamerasParams = z.infer<
-  typeof searchHighwayCamerasParamsSchema
->;
-
-/** Returns options for searching cameras; polls daily */
-export const searchHighwayCamerasOptions = createQueryOptions({
-  apiFunction: searchHighwayCameras,
-  queryKey: ["wsdot", "highway-cameras", "searchHighwayCameras"],
+/** Endpoint definition for searchHighwayCameras */
+export const searchHighwayCamerasDef = defineEndpoint({
+  api: "wsdot-highway-cameras",
+  function: "searchHighwayCameras",
+  endpoint:
+    "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
+  inputSchema: searchHighwayCamerasParamsSchema,
+  outputSchema: cameraArraySchema,
+  sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });

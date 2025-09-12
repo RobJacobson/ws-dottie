@@ -3,19 +3,16 @@ import { terminalSailingSpaceSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTerminalSailingSpaceByTerminalId */
-export const getTerminalSailingSpaceByTerminalIdParamsSchema = z.object({
+const getTerminalSailingSpaceByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
 });
 
 /** GetTerminalSailingSpaceByTerminalId params type */
-export type GetTerminalSailingSpaceByTerminalIdParams = z.infer<
-  typeof getTerminalSailingSpaceByTerminalIdParamsSchema
->;
 
 /** Endpoint definition for getTerminalSailingSpaceByTerminalId */
 export const getTerminalSailingSpaceByTerminalIdDef = defineEndpoint({
-  moduleGroup: "wsf-terminals",
-  functionName: "getTerminalSailingSpaceByTerminalId",
+  api: "wsf-terminals",
+  function: "getTerminalSailingSpaceByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}",
   inputSchema: getTerminalSailingSpaceByTerminalIdParamsSchema,
   outputSchema: terminalSailingSpaceSchema,

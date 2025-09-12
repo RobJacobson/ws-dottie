@@ -3,17 +3,14 @@ import { scheduleAlertsArraySchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getScheduleAlerts */
-export const getScheduleAlertsParamsSchema = z.object({});
+const getScheduleAlertsParamsSchema = z.object({});
 
 /** GetScheduleAlerts params type */
-export type GetScheduleAlertsParams = z.infer<
-  typeof getScheduleAlertsParamsSchema
->;
 
 /** Endpoint definition for getScheduleAlerts */
 export const getScheduleAlertsDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getScheduleAlerts",
+  api: "wsf-schedule",
+  function: "getScheduleAlerts",
   endpoint: "/ferries/api/schedule/rest/alerts",
   inputSchema: getScheduleAlertsParamsSchema,
   outputSchema: scheduleAlertsArraySchema,

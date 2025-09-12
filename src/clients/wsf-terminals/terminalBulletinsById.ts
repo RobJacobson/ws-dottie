@@ -3,19 +3,16 @@ import { terminalBulletinsSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTerminalBulletinsByTerminalId */
-export const getTerminalBulletinsByTerminalIdParamsSchema = z.object({
+const getTerminalBulletinsByTerminalIdParamsSchema = z.object({
   terminalId: z.number().int(),
 });
 
 /** GetTerminalBulletinsByTerminalId params type */
-export type GetTerminalBulletinsByTerminalIdParams = z.infer<
-  typeof getTerminalBulletinsByTerminalIdParamsSchema
->;
 
 /** Endpoint definition for getTerminalBulletinsByTerminalId */
 export const getTerminalBulletinsByTerminalIdDef = defineEndpoint({
-  moduleGroup: "wsf-terminals",
-  functionName: "getTerminalBulletinsByTerminalId",
+  api: "wsf-terminals",
+  function: "getTerminalBulletinsByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins/{terminalId}",
   inputSchema: getTerminalBulletinsByTerminalIdParamsSchema,
   outputSchema: terminalBulletinsSchema,

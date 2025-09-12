@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { fareLineItemSchema } from "@/schemas/wsf-fares";
 import { defineEndpoint } from "@/shared/endpoints";
-import { getSampleDates } from "@/shared/utils/dateUtils";
+import { datesHelper } from "@/shared/utils";
 
 /** Params schema for getFareLineItems */
-export const getFareLineItemsParamsSchema = z.object({
+const getFareLineItemsParamsSchema = z.object({
   tripDate: z.date(),
   departingTerminalId: z.number().int().positive(),
   arrivingTerminalId: z.number().int().positive(),
@@ -12,20 +12,17 @@ export const getFareLineItemsParamsSchema = z.object({
 });
 
 /** GetFareLineItems params type */
-export type GetFareLineItemsParams = z.infer<
-  typeof getFareLineItemsParamsSchema
->;
 
 /** Endpoint definition for getFareLineItems */
 export const getFareLineItemsDef = defineEndpoint({
-  moduleGroup: "wsf-fares",
-  functionName: "getFareLineItems",
+  api: "wsf-fares",
+  function: "getFareLineItems",
   endpoint:
     "/ferries/api/fares/rest/farelineitems/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
   inputSchema: getFareLineItemsParamsSchema,
   outputSchema: z.array(fareLineItemSchema),
   sampleParams: {
-    tripDate: getSampleDates().tomorrow,
+    tripDate: datesHelper.tomorrow(),
     departingTerminalId: 1,
     arrivingTerminalId: 10,
     roundTrip: false,

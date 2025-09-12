@@ -3,17 +3,14 @@ import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getCacheFlushDateVessels */
-export const getCacheFlushDateVesselsParamsSchema = z.object({});
+const getCacheFlushDateVesselsParamsSchema = z.object({});
 
 /** GetCacheFlushDateVessels params type */
-export type GetCacheFlushDateVesselsParams = z.infer<
-  typeof getCacheFlushDateVesselsParamsSchema
->;
 
 /** Endpoint definition for getCacheFlushDateVessels */
 export const getCacheFlushDateVesselsDef = defineEndpoint({
-  moduleGroup: "wsf-vessels",
-  functionName: "getCacheFlushDateVessels",
+  api: "wsf-vessels",
+  function: "getCacheFlushDateVessels",
   endpoint: "/ferries/api/vessels/rest/cacheflushdate",
   inputSchema: getCacheFlushDateVesselsParamsSchema,
   outputSchema: wsfStandardCacheFlushDateSchema,

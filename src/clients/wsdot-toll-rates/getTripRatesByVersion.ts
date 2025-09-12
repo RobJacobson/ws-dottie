@@ -3,20 +3,17 @@ import { tripRatesSchema } from "@/schemas/wsdot-toll-rates";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTripRatesByVersion */
-export const getTripRatesByVersionParamsSchema = z.object({
+const getTripRatesByVersionParamsSchema = z.object({
   /** Version number to retrieve */
   version: z.number().describe("Version number to retrieve"),
 });
 
 /** GetTripRatesByVersion params type */
-export type GetTripRatesByVersionParams = z.infer<
-  typeof getTripRatesByVersionParamsSchema
->;
 
 /** Endpoint definition for getTripRatesByVersion */
 export const getTripRatesByVersionDef = defineEndpoint({
-  moduleGroup: "wsdot-toll-rates",
-  functionName: "getTripRatesByVersion",
+  api: "wsdot-toll-rates",
+  function: "getTripRatesByVersion",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByVersionAsJson?version={version}",
   inputSchema: getTripRatesByVersionParamsSchema,

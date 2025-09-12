@@ -3,7 +3,7 @@ import { scheduledRoutesArraySchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getScheduledRoutesBySeason */
-export const getScheduledRoutesBySeasonParamsSchema = z.object({
+const getScheduledRoutesBySeasonParamsSchema = z.object({
   seasonId: z.number().int().positive(),
 });
 
@@ -14,11 +14,11 @@ export type GetScheduledRoutesBySeasonParams = z.infer<
 
 /** Endpoint definition for getScheduledRoutesBySeason */
 export const getScheduledRoutesBySeasonDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getScheduledRoutesBySeason",
-  endpoint: "/ferries/api/schedule/rest/scheduledroutesbyseason/{seasonId}",
+  api: "wsf-schedule",
+  function: "getScheduledRoutesBySeason",
+  endpoint: "/ferries/api/schedule/rest/schedroutes/{seasonId}",
   inputSchema: getScheduledRoutesBySeasonParamsSchema,
   outputSchema: scheduledRoutesArraySchema,
-  sampleParams: { seasonId: 1 },
+  sampleParams: { seasonId: 192 },
   cacheStrategy: "DAILY_STATIC",
 });

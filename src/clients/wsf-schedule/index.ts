@@ -14,9 +14,6 @@ export * from "./scheduleByRoute";
 export * from "./scheduleByTerminals";
 export * from "./scheduledRoutes";
 export * from "./scheduledRoutesBySeason";
-
-// Re-export common types to avoid conflicts
-export * from "./scheduleToday";
 export * from "./scheduleTodayByRoute";
 export * from "./scheduleTodayByTerminals";
 export * from "./terminalMates";
@@ -25,7 +22,7 @@ export * from "./terminalsAndMates";
 export * from "./terminalsAndMatesByRoute";
 export * from "./timeAdjustmentsByRoute";
 export * from "./timeAdjustments";
-export * from "./validDateRange";
+export * from "./scheduleValidDateRange";
 
 // Re-export output types from schemas
 export type {
@@ -43,5 +40,4 @@ export type {
   TerminalsAndMatesByRoute,
   ScheduleTerminalCombo,
   ScheduleTerminalCombosArray,
-  ValidDateRange,
 } from "@/schemas/wsf-schedule";

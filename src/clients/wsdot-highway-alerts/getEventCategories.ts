@@ -34,17 +34,14 @@ import { eventCategoriesSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getEventCategories */
-export const getEventCategoriesParamsSchema = z.object({});
+const getEventCategoriesParamsSchema = z.object({});
 
 /** GetEventCategories params type */
-export type GetEventCategoriesParams = z.infer<
-  typeof getEventCategoriesParamsSchema
->;
 
 /** Endpoint definition for getEventCategories */
 export const getEventCategoriesDef = defineEndpoint({
-  moduleGroup: "wsdot-highway-alerts",
-  functionName: "getEventCategories",
+  api: "wsdot-highway-alerts",
+  function: "getEventCategories",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
   inputSchema: getEventCategoriesParamsSchema,

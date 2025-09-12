@@ -6,15 +6,14 @@ import {
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getVesselStats */
-export const getVesselStatsParamsSchema = z.object({});
+const getVesselStatsParamsSchema = z.object({});
 
 /** GetVesselStats params type */
-export type GetVesselStatsParams = z.infer<typeof getVesselStatsParamsSchema>;
 
 /** Endpoint definition for getVesselStats */
 export const getVesselStatsDef = defineEndpoint({
-  moduleGroup: "wsf-vessels",
-  functionName: "getVesselStats",
+  api: "wsf-vessels",
+  function: "getVesselStats",
   endpoint: "/ferries/api/vessels/rest/vesselstats",
   inputSchema: getVesselStatsParamsSchema,
   outputSchema: vesselStatsArraySchema,

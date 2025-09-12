@@ -34,12 +34,12 @@ import { tollTripVersionSchema } from "@/schemas/wsdot-toll-rates";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTollTripVersion */
-export const getTollTripVersionParamsSchema = z.object({});
+const getTollTripVersionParamsSchema = z.object({});
 
 /** Endpoint definition for getTollTripVersion */
 export const getTollTripVersionDef = defineEndpoint({
-  moduleGroup: "wsdot-toll-rates",
-  functionName: "getTollTripVersion",
+  api: "wsdot-toll-rates",
+  function: "getTollTripVersion",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
   inputSchema: getTollTripVersionParamsSchema,
   outputSchema: tollTripVersionSchema,

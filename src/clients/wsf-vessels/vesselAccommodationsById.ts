@@ -3,7 +3,7 @@ import { vesselAccommodationsSchema } from "@/schemas/wsf-vessels";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getVesselAccommodationsById */
-export const getVesselAccommodationsByIdParamsSchema = z.object({
+const getVesselAccommodationsByIdParamsSchema = z.object({
   vesselId: z
     .number()
     .int()
@@ -14,14 +14,11 @@ export const getVesselAccommodationsByIdParamsSchema = z.object({
 });
 
 /** GetVesselAccommodationsById params type */
-export type GetVesselAccommodationsByIdParams = z.infer<
-  typeof getVesselAccommodationsByIdParamsSchema
->;
 
 /** Endpoint definition for getVesselAccommodationsById */
 export const getVesselAccommodationsByIdDef = defineEndpoint({
-  moduleGroup: "wsf-vessels",
-  functionName: "getVesselAccommodationsById",
+  api: "wsf-vessels",
+  function: "getVesselAccommodationsById",
   endpoint: "/ferries/api/vessels/rest/vesselaccommodations/{vesselId}",
   inputSchema: getVesselAccommodationsByIdParamsSchema,
   outputSchema: vesselAccommodationsSchema,

@@ -3,17 +3,14 @@ import { terminalLocationArraySchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getTerminalLocations */
-export const getTerminalLocationsParamsSchema = z.object({});
+const getTerminalLocationsParamsSchema = z.object({});
 
 /** GetTerminalLocations params type */
-export type GetTerminalLocationsParams = z.infer<
-  typeof getTerminalLocationsParamsSchema
->;
 
 /** Endpoint definition for getTerminalLocations */
 export const getTerminalLocationsDef = defineEndpoint({
-  moduleGroup: "wsf-terminals",
-  functionName: "getTerminalLocations",
+  api: "wsf-terminals",
+  function: "getTerminalLocations",
   endpoint: "/ferries/api/terminals/rest/terminallocations",
   inputSchema: getTerminalLocationsParamsSchema,
   outputSchema: terminalLocationArraySchema,

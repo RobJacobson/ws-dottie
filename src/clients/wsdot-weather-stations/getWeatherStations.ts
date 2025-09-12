@@ -3,17 +3,14 @@ import { weatherStationsSchema } from "@/schemas/wsdot-weather-stations";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getWeatherStations */
-export const getWeatherStationsParamsSchema = z.object({});
+const getWeatherStationsParamsSchema = z.object({});
 
 /** GetWeatherStations params type */
-export type GetWeatherStationsParams = z.infer<
-  typeof getWeatherStationsParamsSchema
->;
 
 /** Endpoint definition for getWeatherStations */
 export const getWeatherStationsDef = defineEndpoint({
-  moduleGroup: "wsdot-weather-stations",
-  functionName: "getWeatherStations",
+  api: "wsdot-weather-stations",
+  function: "getWeatherStations",
   endpoint:
     "/Traffic/api/WeatherStations/WeatherStationsREST.svc/GetCurrentStationsAsJson",
   inputSchema: getWeatherStationsParamsSchema,

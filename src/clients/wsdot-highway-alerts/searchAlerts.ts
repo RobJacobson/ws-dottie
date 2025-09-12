@@ -65,7 +65,7 @@ import { defineEndpoint } from "@/shared/endpoints";
 import { getCurrentDateRange } from "@/shared/utils/dateUtils";
 
 /** Params schema for searchAlerts */
-export const searchAlertsParamsSchema = z.object({
+const searchAlertsParamsSchema = z.object({
   /** State route code (optional) */
   StateRoute: z.string().optional(),
   /** Region name (optional) */
@@ -81,22 +81,18 @@ export const searchAlertsParamsSchema = z.object({
 });
 
 /** Endpoint definition for searchAlerts */
-export type SearchAlertsParams = z.infer<typeof searchAlertsParamsSchema>;
 
 export const searchAlertsDef = defineEndpoint({
-  moduleGroup: "wsdot-highway-alerts",
-  functionName: "searchAlerts",
+  api: "wsdot-highway-alerts",
+  function: "searchAlerts",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
   inputSchema: searchAlertsParamsSchema,
   outputSchema: alertsSchema,
   sampleParams: {
-    StateRoute: "005",
-    Region: "Northwest",
-    SearchTimeStart: getCurrentDateRange().yesterday,
-    SearchTimeEnd: getCurrentDateRange().today,
-    StartingMilepost: 0,
-    EndingMilepost: 200,
+    StateRoute: "405",
+    SearchTimeStart: new Date("2025-08-01"),
+    SearchTimeEnd: new Date("2025-09-30"),
   },
   cacheStrategy: "MINUTE_UPDATES",
 });

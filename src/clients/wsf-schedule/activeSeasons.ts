@@ -3,17 +3,14 @@ import { activeSeasonsArraySchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getActiveSeasons */
-export const getActiveSeasonsParamsSchema = z.object({});
+const getActiveSeasonsParamsSchema = z.object({});
 
 /** GetActiveSeasons params type */
-export type GetActiveSeasonsParams = z.infer<
-  typeof getActiveSeasonsParamsSchema
->;
 
 /** Endpoint definition for getActiveSeasons */
 export const getActiveSeasonsDef = defineEndpoint({
-  moduleGroup: "wsf-schedule",
-  functionName: "getActiveSeasons",
+  api: "wsf-schedule",
+  function: "getActiveSeasons",
   endpoint: "/ferries/api/schedule/rest/activeseasons",
   inputSchema: getActiveSeasonsParamsSchema,
   outputSchema: activeSeasonsArraySchema,

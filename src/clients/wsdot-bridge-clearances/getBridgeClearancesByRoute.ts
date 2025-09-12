@@ -75,20 +75,17 @@ import { bridgeDataGISListSchema } from "@/schemas/wsdot-bridge-clearances";
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getBridgeClearancesByRoute */
-export const getBridgeClearancesByRouteParamsSchema = z.object({
+const getBridgeClearancesByRouteParamsSchema = z.object({
   /** WSDOT route string (e.g., "005") */
   route: z.string().min(1, "Route parameter is required"),
 });
 
 /** GetBridgeClearancesByRoute params type */
-export type GetBridgeClearancesByRouteParams = z.infer<
-  typeof getBridgeClearancesByRouteParamsSchema
->;
 
 /** Endpoint definition for getBridgeClearancesByRoute */
 export const getBridgeClearancesByRouteDef = defineEndpoint({
-  moduleGroup: "wsdot-bridge-clearances",
-  functionName: "getBridgeClearancesByRoute",
+  api: "wsdot-bridge-clearances",
+  function: "getBridgeClearancesByRoute",
   endpoint:
     "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
   inputSchema: getBridgeClearancesByRouteParamsSchema,

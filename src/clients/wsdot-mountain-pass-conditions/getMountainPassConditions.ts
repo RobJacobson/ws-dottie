@@ -69,17 +69,14 @@ import { mountainPassConditionsSchema } from "@/schemas/wsdot-mountain-pass-cond
 import { defineEndpoint } from "@/shared/endpoints";
 
 /** Params schema for getMountainPassConditions */
-export const getMountainPassConditionsParamsSchema = z.object({});
+const getMountainPassConditionsParamsSchema = z.object({});
 
 /** GetMountainPassConditions params type */
-export type GetMountainPassConditionsParams = z.infer<
-  typeof getMountainPassConditionsParamsSchema
->;
 
 /** Endpoint definition for getMountainPassConditions */
 export const getMountainPassConditionsDef = defineEndpoint({
-  moduleGroup: "wsdot-mountain-pass-conditions",
-  functionName: "getMountainPassConditions",
+  api: "wsdot-mountain-pass-conditions",
+  function: "getMountainPassConditions",
   endpoint:
     "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
   inputSchema: getMountainPassConditionsParamsSchema,
