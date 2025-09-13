@@ -52,7 +52,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { camerasSchema, type Camera } from "@/schemas/wsdot-highway-cameras/camera.zod";
+import {
+  type Camera,
+  camerasSchema,
+} from "@/schemas/wsdot-highway-cameras/camera.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for searchHighwayCameras */
@@ -77,8 +80,6 @@ export const searchHighwayCamerasMeta: Endpoint<
   SearchHighwayCamerasInput,
   Camera[]
 > = {
-  api: "wsdot-highway-cameras",
-  function: "searchHighwayCameras",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
   inputSchema: searchHighwayCamerasInput,

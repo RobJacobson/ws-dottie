@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  vesselLocationsSchema,
   type VesselLocations,
+  vesselLocationsSchema,
 } from "@/schemas/wsf-vessels/vesselLocations.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -13,8 +13,6 @@ export const getVesselLocationsMeta: Endpoint<
   VesselLocationsInput,
   VesselLocations
 > = {
-  api: "wsf-vessels",
-  function: "getVesselLocations",
   endpoint: "/ferries/api/vessels/rest/vessellocations",
   inputSchema: vesselLocationsInput,
   outputSchema: vesselLocationsSchema,

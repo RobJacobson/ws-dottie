@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  weatherReadingsSchema,
   type WeatherReadings,
+  weatherReadingsSchema,
 } from "@/schemas/wsdot-weather-information-extended/weatherReadings.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -13,8 +13,6 @@ export const getWeatherInformationExtendedMeta: Endpoint<
   WeatherInformationExtendedInput,
   WeatherReadings
 > = {
-  api: "wsdot-weather-information-extended",
-  function: "getWeatherInformationExtended",
   endpoint: "/traffic/api/api/Scanweb",
   inputSchema: weatherInformationExtendedInput,
   outputSchema: weatherReadingsSchema,

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  terminalVerboseSchema,
   type TerminalVerbose,
+  terminalVerboseSchema,
 } from "@/schemas/wsf-terminals/terminalVerbose.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -15,8 +15,6 @@ export const getTerminalVerboseByTerminalIdMeta: Endpoint<
   TerminalVerboseByTerminalIdInput,
   TerminalVerbose
 > = {
-  api: "wsf-terminals",
-  function: "getTerminalVerboseByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalverbose/{terminalId}",
   inputSchema: terminalVerboseByTerminalIdInput,
   outputSchema: terminalVerboseSchema,

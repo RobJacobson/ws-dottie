@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { alertsSchema, type Alert } from "@/schemas/wsf-schedule/alert.zod";
+import { type Alert, alertsSchema } from "@/schemas/wsf-schedule/alert.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlerts */
@@ -7,8 +7,6 @@ const scheduleAlertsInput = z.object({});
 
 /** Endpoint metadata for getAlerts */
 export const getScheduleAlertsMeta: Endpoint<ScheduleAlertsInput, Alert[]> = {
-  api: "wsf-schedule",
-  function: "getAlerts",
   endpoint: "/ferries/api/schedule/rest/alerts",
   inputSchema: scheduleAlertsInput,
   outputSchema: alertsSchema,

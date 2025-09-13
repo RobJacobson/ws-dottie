@@ -66,7 +66,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
  */
 import { z } from "zod";
-import { passConditionSchema, type PassCondition } from "@/schemas/wsdot-mountain-pass-conditions/passCondition.zod";
+import {
+  type PassCondition,
+  passConditionSchema,
+} from "@/schemas/wsdot-mountain-pass-conditions/passCondition.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getMountainPassCondition */
@@ -80,8 +83,6 @@ export const getMountainPassConditionMeta: Endpoint<
   MountainPassConditionInput,
   PassCondition
 > = {
-  api: "wsdot-mountain-pass-conditions",
-  function: "getMountainPassConditionById",
   endpoint:
     "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
   inputSchema: mountainPassConditionInput,

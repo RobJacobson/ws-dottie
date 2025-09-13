@@ -43,7 +43,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { tripRatesByDateSchema, type TripRatesByDate } from "@/schemas/wsdot-toll-rates/tripRatesByDate.zod";
+import {
+  type TripRatesByDate,
+  tripRatesByDateSchema,
+} from "@/schemas/wsdot-toll-rates/tripRatesByDate.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
@@ -60,8 +63,6 @@ export const getTripRatesByDateMeta: Endpoint<
   TripRatesByDateInput,
   TripRatesByDate
 > = {
-  api: "wsdot-toll-rates",
-  function: "getTripRatesByDate",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
   inputSchema: tripRatesByDateInput,

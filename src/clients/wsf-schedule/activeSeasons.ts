@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  scheduleBriefResponsesSchema,
   type ScheduleBriefResponses,
+  scheduleBriefResponsesSchema,
 } from "@/schemas/wsf-schedule/scheduleBriefResponse";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -13,8 +13,6 @@ export const getActiveSeasonsMeta: Endpoint<
   ActiveSeasonsInput,
   ScheduleBriefResponses
 > = {
-  api: "wsf-schedule",
-  function: "getActiveSeasons",
   endpoint: "/ferries/api/schedule/rest/activeseasons",
   inputSchema: activeSeasonsInput,
   outputSchema: scheduleBriefResponsesSchema,

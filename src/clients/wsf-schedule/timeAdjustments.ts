@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { timeAdjustmentsSchema, type TimeAdjustment } from "@/schemas/wsf-schedule/timeAdjustment.zod";
+import {
+  type TimeAdjustment,
+  timeAdjustmentsSchema,
+} from "@/schemas/wsf-schedule/timeAdjustment.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustments */
@@ -10,8 +13,6 @@ export const getTimeAdjustmentsMeta: Endpoint<
   TimeAdjustmentsInput,
   TimeAdjustment[]
 > = {
-  api: "wsf-schedule",
-  function: "getTimeAdjustments",
   endpoint: "/ferries/api/schedule/rest/timeadj",
   inputSchema: timeAdjustmentsInput,
   outputSchema: timeAdjustmentsSchema,

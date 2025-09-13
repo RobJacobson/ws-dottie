@@ -56,8 +56,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
  */
 import { z } from "zod";
-import type { BorderCrossing } from "@/schemas/wsdot-border-crossings";
-import { borderCrossingsSchema, type BorderCrossings } from "@/schemas/wsdot-border-crossings/borderCrossing.zod";
+import {
+  type BorderCrossings,
+  borderCrossingsSchema,
+} from "@/schemas/wsdot-border-crossings/borderCrossing.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getBorderCrossings */
@@ -66,10 +68,8 @@ const borderCrossingsInput = z.object({});
 /** Endpoint metadata for getBorderCrossings */
 export const getBorderCrossingsMeta: Endpoint<
   BorderCrossingsInput,
-  BorderCrossing[]
+  BorderCrossings
 > = {
-  api: "wsdot-border-crossings",
-  function: "getBorderCrossings",
   endpoint:
     "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
   inputSchema: borderCrossingsInput,

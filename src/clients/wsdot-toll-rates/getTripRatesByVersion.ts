@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { tollRatesSchema, type TollRate } from "@/schemas/wsdot-toll-rates/tollRate.zod";
+import {
+  type TollRate,
+  tollRatesSchema,
+} from "@/schemas/wsdot-toll-rates/tollRate.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTripRatesByVersion */
@@ -13,8 +16,6 @@ export const getTripRatesByVersionMeta: Endpoint<
   TripRatesByVersionInput,
   TollRate[]
 > = {
-  api: "wsdot-toll-rates",
-  function: "getTripRatesByVersion",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByVersionAsJson?version={version}",
   inputSchema: tripRatesByVersionInput,

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  fareLineItemsVerboseSchema,
   type FareLineItemsVerbose,
+  fareLineItemsVerboseSchema,
 } from "@/schemas/wsf-fares/fareLineItemsVerbose.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
@@ -16,8 +16,6 @@ export const getFareLineItemsVerboseMeta: Endpoint<
   FareLineItemsVerboseInput,
   FareLineItemsVerbose
 > = {
-  api: "wsf-fares",
-  function: "getFareLineItemsVerbose",
   endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
   inputSchema: fareLineItemsVerboseInput,
   outputSchema: fareLineItemsVerboseSchema,

@@ -30,7 +30,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { tollTripVersionSchema, type TollTripVersion } from "@/schemas/wsdot-toll-rates/tollTripVersion.zod";
+import {
+  type TollTripVersion,
+  tollTripVersionSchema,
+} from "@/schemas/wsdot-toll-rates/tollTripVersion.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTollTripVersion */
@@ -41,8 +44,6 @@ export const getTollTripVersionMeta: Endpoint<
   TollTripVersionInput,
   TollTripVersion
 > = {
-  api: "wsdot-toll-rates",
-  function: "getTollTripVersion",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
   inputSchema: tollTripVersionInput,
   outputSchema: tollTripVersionSchema,

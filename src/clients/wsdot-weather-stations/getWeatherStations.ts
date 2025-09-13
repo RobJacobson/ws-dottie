@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  weatherStationsSchema,
   type WeatherStations,
+  weatherStationsSchema,
 } from "@/schemas/wsdot-weather-stations/weatherStations.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -13,8 +13,6 @@ export const getWeatherStationsMeta: Endpoint<
   WeatherStationsInput,
   WeatherStations
 > = {
-  api: "wsdot-weather-stations",
-  function: "getWeatherStations",
   endpoint:
     "/Traffic/api/WeatherStations/WeatherStationsREST.svc/GetCurrentStationsAsJson",
   inputSchema: weatherStationsInput,

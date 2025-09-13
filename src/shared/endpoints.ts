@@ -44,11 +44,11 @@ export type CacheStrategy =
  * @template O - The output response type
  */
 export interface Endpoint<I, O> {
-  /** Module group identifier (e.g., "wsdot-highway-cameras") */
-  api: string;
+  /** Module group identifier (e.g., "wsdot-highway-cameras") - auto-computed from folder structure */
+  api?: string;
 
-  /** Function name (e.g., "getHighwayCameras") */
-  function: string;
+  /** Function name (e.g., "getHighwayCameras") - auto-computed from filename */
+  function?: string;
 
   /** HTTP endpoint URL template */
   endpoint: string;
@@ -90,7 +90,8 @@ export interface EndpointDefinition<I, O> {
  * Factory function for creating standardized endpoint definitions
  *
  * This function creates a complete endpoint definition that serves as the single
- * source of truth for all API endpoints. It generates:
+ * source of truth for all API endpoints. It automatically computes missing
+ * api and function fields from the calling context and generates:
  * - A handler function using zodFetch with the provided schemas
  * - TanStack Query options with appropriate caching strategy
  * - Stable query keys based on api and function
@@ -100,14 +101,13 @@ export interface EndpointDefinition<I, O> {
  *
  * @template I - The input parameters type
  * @template O - The output response type
- * @param meta - Complete endpoint metadata
+ * @param meta - Endpoint metadata (api and function are auto-computed if not provided)
  * @returns Endpoint definition with handler and options
  *
  * @example
  * ```typescript
+ * // Auto-computes api: "wsdot-highway-cameras" and function: "getHighwayCameras"
  * export const getHighwayCamerasDef = defineEndpoint({
- *   api: "wsdot-highway-cameras",
- *   function: "getHighwayCameras",
  *   endpoint: "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
  *   inputSchema: getHighwayCamerasParamsSchema,
  *   outputSchema: camerasSchema,
@@ -119,28 +119,124 @@ export interface EndpointDefinition<I, O> {
 export function defineEndpoint<I, O>(
   meta: Endpoint<I, O>
 ): EndpointDefinition<I, O> {
+  // Auto-compute missing fields from calling context
+  const computedApi = meta.api ?? inferApiFromCaller();
+  const computedFunction = meta.function ?? inferFunctionFromCaller();
+
+  // Create complete metadata with computed values
+  const completeMeta = {
+    ...meta,
+    api: computedApi,
+    function: computedFunction,
+  } as Required<Endpoint<I, O>>;
+
   // Generate handler using zodFetch with provided metadata
   const handleFetch = (params: I): Promise<O> =>
     zodFetch({
-      endpoint: meta.endpoint,
-      inputSchema: meta.inputSchema,
-      outputSchema: meta.outputSchema,
+      endpoint: completeMeta.endpoint,
+      inputSchema: completeMeta.inputSchema,
+      outputSchema: completeMeta.outputSchema,
       params,
     });
 
   // Generate stable query key from metadata
-  const queryKey = [meta.api, meta.function];
+  const queryKey = [completeMeta.api, completeMeta.function];
 
   // Generate TanStack Query options with appropriate caching strategy
   const queryOptions = createQueryOptions({
     apiFunction: handleFetch,
     queryKey,
-    cacheStrategy: meta.cacheStrategy as any, // Type assertion needed for compatibility
+    cacheStrategy: completeMeta.cacheStrategy as any, // Type assertion needed for compatibility
   });
 
   return {
-    meta,
+    meta: completeMeta,
     handleFetch,
     queryOptions,
   } as const;
+}
+
+/**
+ * Infers API name from the calling file's folder structure
+ *
+ * Extracts the API name from the file path where defineEndpoint is called.
+ * Supports both "wsdot-{api}" and "wsf-{api}" patterns.
+ *
+ * @returns API name (e.g., "wsdot-highway-cameras", "wsf-vessels")
+ */
+function inferApiFromCaller(): string {
+  try {
+    const stack = new Error().stack;
+    if (stack) {
+      const lines = stack.split("\n");
+      // Look for the calling file (skip this function and defineEndpoint)
+      for (let i = 2; i < lines.length; i++) {
+        const line = lines[i];
+        const match = line.match(/\((.*?):\d+:\d+\)/);
+        if (match) {
+          const fullPath = match[1];
+          // Convert absolute path to relative path from src/clients
+          const relativePath = fullPath.replace(/.*\/src\/clients\//, "");
+          const apiFolder = relativePath.split("/")[0];
+
+          if (
+            apiFolder &&
+            (apiFolder.startsWith("wsdot-") || apiFolder.startsWith("wsf-"))
+          ) {
+            return apiFolder;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    // Fallback if detection fails
+    console.warn("Failed to auto-detect API name from caller, using fallback");
+  }
+
+  // Fallback value
+  return "unknown-api";
+}
+
+/**
+ * Infers function name from the calling file's filename
+ *
+ * Extracts the function name from the filename where defineEndpoint is called.
+ * Converts filename to PascalCase and adds "get" prefix.
+ *
+ * @returns Function name (e.g., "getVesselHistories", "getHighwayCameras")
+ */
+function inferFunctionFromCaller(): string {
+  try {
+    const stack = new Error().stack;
+    if (stack) {
+      const lines = stack.split("\n");
+      // Look for the calling file (skip this function and defineEndpoint)
+      for (let i = 2; i < lines.length; i++) {
+        const line = lines[i];
+        const match = line.match(/\((.*?):\d+:\d+\)/);
+        if (match) {
+          const fullPath = match[1];
+          // Convert absolute path to relative path from src/clients
+          const relativePath = fullPath.replace(/.*\/src\/clients\//, "");
+          const filename = relativePath.split("/").pop();
+
+          if (filename) {
+            // Remove .ts extension and convert to PascalCase
+            const baseName = filename.replace(/\.ts$/, "");
+            const pascalCase =
+              baseName.charAt(0).toUpperCase() + baseName.slice(1);
+            return `get${pascalCase}`;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    // Fallback if detection fails
+    console.warn(
+      "Failed to auto-detect function name from caller, using fallback"
+    );
+  }
+
+  // Fallback value
+  return "getUnknown";
 }

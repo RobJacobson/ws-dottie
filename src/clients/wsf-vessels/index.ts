@@ -4,14 +4,14 @@ import { getVesselAccommodationsMeta } from "./vesselAccommodations";
 import { getVesselAccommodationsByIdMeta } from "./vesselAccommodationsById";
 import { getVesselBasicsMeta } from "./vesselBasics";
 import { getVesselBasicsByIdMeta } from "./vesselBasicsById";
-import { getVesselHistoryMeta } from "./vesselHistories";
+import { getVesselHistoriesMeta } from "./vesselHistories";
 import { getVesselHistoryByVesselAndDateRangeMeta } from "./vesselHistoriesByVesselAndDateRange";
 import { getVesselLocationsMeta } from "./vesselLocations";
 import { getVesselLocationsByVesselIdMeta } from "./vesselLocationsById";
 import { getVesselStatsMeta } from "./vesselStats";
 import { getVesselStatsByIdMeta } from "./vesselStatsById";
 import { getVesselVerboseMeta } from "./vesselsVerbose";
-import { getVesselVerboseByIdMeta } from "./vesselsVerboseById";
+import { getVesselsVerboseByIdMeta } from "./vesselsVerboseById";
 
 export const getVesselsCacheFlushDate = defineEndpoint(
   getCacheFlushDateVesselsMeta
@@ -22,7 +22,7 @@ export const vesselAccommodationsById = defineEndpoint(
 );
 export const vesselBasics = defineEndpoint(getVesselBasicsMeta);
 export const vesselBasicsById = defineEndpoint(getVesselBasicsByIdMeta);
-export const vesselHistory = defineEndpoint(getVesselHistoryMeta);
+export const vesselHistory = defineEndpoint(getVesselHistoriesMeta);
 export const vesselHistoryByVesselAndDateRange = defineEndpoint(
   getVesselHistoryByVesselAndDateRangeMeta
 );
@@ -33,7 +33,7 @@ export const vesselLocationsById = defineEndpoint(
 export const vesselStats = defineEndpoint(getVesselStatsMeta);
 export const vesselStatsById = defineEndpoint(getVesselStatsByIdMeta);
 export const vesselVerbose = defineEndpoint(getVesselVerboseMeta);
-export const vesselVerboseById = defineEndpoint(getVesselVerboseByIdMeta);
+export const vesselVerboseById = defineEndpoint(getVesselsVerboseByIdMeta);
 
 // Re-export input types from client files
 export type { CacheFlushDateVesselsInput } from "./cacheFlushDate";
@@ -41,11 +41,11 @@ export type { VesselAccommodationsInput } from "./vesselAccommodations";
 export type { VesselAccommodationsByIdInput } from "./vesselAccommodationsById";
 export type { VesselBasicsInput } from "./vesselBasics";
 export type { VesselBasicsByIdInput } from "./vesselBasicsById";
-export type { VesselHistoryInput } from "./vesselHistories";
+export type { VesselHistoriesInput } from "./vesselHistories";
 export type { VesselHistoryByVesselAndDateRangeInput } from "./vesselHistoriesByVesselAndDateRange";
 export type { VesselLocationsInput } from "./vesselLocations";
 export type { VesselLocationsByVesselIdInput } from "./vesselLocationsById";
 export type { VesselStatsInput } from "./vesselStats";
-export type { VesselStatsByIdInput } from "./vesselStatsById";
+export type { VesselsStatsByIdInput } from "./vesselStatsById";
 export type { VesselsVerboseInput as VesselVerboseInput } from "./vesselsVerbose";
-export type { VesselVerboseByIdInput } from "./vesselsVerboseById";
+export type { VesselsVerboseByIdInput } from "./vesselsVerboseById";

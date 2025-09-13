@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  terminalLocationsSchema,
   type TerminalLocation,
+  terminalLocationsSchema,
 } from "@/schemas/wsf-terminals/terminalLocation.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -13,8 +13,6 @@ export const getTerminalLocationsMeta: Endpoint<
   TerminalLocationsInput,
   TerminalLocation[]
 > = {
-  api: "wsf-terminals",
-  function: "getTerminalLocations",
   endpoint: "/ferries/api/terminals/rest/terminallocations",
   inputSchema: terminalLocationsInput,
   outputSchema: terminalLocationsSchema,

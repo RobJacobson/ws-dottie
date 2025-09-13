@@ -80,7 +80,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { highwayAlertsSchema, type HighwayAlerts } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
+import {
+  type HighwayAlerts,
+  highwayAlertsSchema,
+} from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlertsForMapArea */
@@ -94,8 +97,6 @@ export const getAlertsForMapAreaMeta: Endpoint<
   AlertsForMapAreaInput,
   HighwayAlerts
 > = {
-  api: "wsdot-highway-alerts",
-  function: "getAlertsForMapArea",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
   inputSchema: alertsForMapAreaInput,

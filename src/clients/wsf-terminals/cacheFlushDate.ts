@@ -11,8 +11,6 @@ export const getCacheFlushDateTerminalsMeta: Endpoint<
   CacheFlushDateTerminalsInput,
   WsfStandardCacheFlushDate
 > = {
-  api: "wsf-terminals",
-  function: "getCacheFlushDateTerminals",
   endpoint: "/ferries/api/terminals/rest/cacheflushdate",
   inputSchema: cacheFlushDateTerminalsInput,
   outputSchema: wsfStandardCacheFlushDateSchema,

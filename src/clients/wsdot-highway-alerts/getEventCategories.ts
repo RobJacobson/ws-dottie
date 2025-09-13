@@ -30,7 +30,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { eventCategoriesSchema, type EventCategories } from "@/schemas/wsdot-highway-alerts/eventCategories.zod";
+import {
+  type EventCategories,
+  eventCategoriesSchema,
+} from "@/schemas/wsdot-highway-alerts/eventCategories.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getEventCategories */
@@ -41,8 +44,6 @@ export const getEventCategoriesMeta: Endpoint<
   EventCategoriesInput,
   EventCategories
 > = {
-  api: "wsdot-highway-alerts",
-  function: "getEventCategories",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
   inputSchema: eventCategoriesInput,

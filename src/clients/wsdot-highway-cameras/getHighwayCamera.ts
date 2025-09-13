@@ -75,7 +75,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { cameraSchema, type Camera } from "@/schemas/wsdot-highway-cameras/camera.zod";
+import {
+  type Camera,
+  cameraSchema,
+} from "@/schemas/wsdot-highway-cameras/camera.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getHighwayCamera */
@@ -86,8 +89,6 @@ const highwayCameraInput = z.object({
 
 /** Endpoint metadata for getHighwayCamera */
 export const getHighwayCameraMeta: Endpoint<HighwayCameraInput, Camera> = {
-  api: "wsdot-highway-cameras",
-  function: "getHighwayCamera",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
   inputSchema: highwayCameraInput,

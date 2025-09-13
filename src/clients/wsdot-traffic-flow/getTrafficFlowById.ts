@@ -52,7 +52,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
  */
 import { z } from "zod";
-import { flowDataSchema, type FlowData } from "@/schemas/wsdot-traffic-flow/flowData.zod";
+import {
+  type FlowData,
+  flowDataSchema,
+} from "@/schemas/wsdot-traffic-flow/flowData.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTrafficFlowById */
@@ -64,8 +67,6 @@ const trafficFlowByIdInput = z.object({
 /** Endpoint metadata for getTrafficFlowById */
 export const getTrafficFlowByIdMeta: Endpoint<TrafficFlowByIdInput, FlowData> =
   {
-    api: "wsdot-traffic-flow",
-    function: "getTrafficFlowById",
     endpoint:
       "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
     inputSchema: trafficFlowByIdInput,

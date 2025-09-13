@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  terminalWaitTimesSchema,
   type TerminalWaitTimes,
+  terminalWaitTimesSchema,
 } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -15,8 +15,6 @@ export const getTerminalWaitTimesByTerminalIdMeta: Endpoint<
   TerminalWaitTimesByTerminalIdInput,
   TerminalWaitTimes
 > = {
-  api: "wsf-terminals",
-  function: "getTerminalWaitTimesByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalwaittimes/{terminalId}",
   inputSchema: terminalWaitTimesByTerminalIdInput,
   outputSchema: terminalWaitTimesSchema,

@@ -72,8 +72,8 @@
  */
 import { z } from "zod";
 import {
-  bridgeClearancesSchema,
   type BridgeClearances,
+  bridgeClearancesSchema,
 } from "@/schemas/wsdot-bridge-clearances/bridgeClearance.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -88,8 +88,6 @@ export const getBridgeClearancesByRouteMeta: Endpoint<
   BridgeClearancesByRouteInput,
   BridgeClearances
 > = {
-  api: "wsdot-bridge-clearances",
-  function: "getBridgeClearancesByRoute",
   endpoint:
     "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
   inputSchema: bridgeClearancesByRouteInput,

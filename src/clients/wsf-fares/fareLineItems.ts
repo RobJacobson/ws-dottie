@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  fareLineItemSchema,
   type FareLineItem,
+  fareLineItemSchema,
 } from "@/schemas/wsf-fares/fareLineItem.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
@@ -19,8 +19,6 @@ export const getFareLineItemsMeta: Endpoint<
   FareLineItemsInput,
   FareLineItem[]
 > = {
-  api: "wsf-fares",
-  function: "getFareLineItems",
   endpoint:
     "/ferries/api/fares/rest/farelineitems/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
   inputSchema: fareLineItemsInput,

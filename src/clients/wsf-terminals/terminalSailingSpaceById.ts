@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  terminalSailingSpaceSchema,
   type TerminalSailingSpace,
+  terminalSailingSpaceSchema,
 } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -15,8 +15,6 @@ export const getTerminalSailingSpaceByTerminalIdMeta: Endpoint<
   TerminalSailingSpaceByTerminalIdInput,
   TerminalSailingSpace
 > = {
-  api: "wsf-terminals",
-  function: "getTerminalSailingSpaceByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}",
   inputSchema: terminalSailingSpaceByTerminalIdInput,
   outputSchema: terminalSailingSpaceSchema,

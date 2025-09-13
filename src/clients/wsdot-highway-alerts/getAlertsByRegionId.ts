@@ -55,7 +55,10 @@
  * @see https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/help/operations/GetAlertsByRegionIDAsJson
  */
 import { z } from "zod";
-import { highwayAlertsSchema, type HighwayAlerts } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
+import {
+  type HighwayAlerts,
+  highwayAlertsSchema,
+} from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlertsByRegionId */
@@ -69,8 +72,6 @@ export const getAlertsByRegionIdMeta: Endpoint<
   AlertsByRegionIdInput,
   HighwayAlerts
 > = {
-  api: "wsdot-highway-alerts",
-  function: "getAlertsByRegionId",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}",
   inputSchema: alertsByRegionIdInput,

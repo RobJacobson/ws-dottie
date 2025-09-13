@@ -81,8 +81,8 @@
  */
 import { z } from "zod";
 import {
-  highwayAlertSchema,
   type HighwayAlert,
+  highwayAlertSchema,
 } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -94,8 +94,6 @@ const alertInput = z.object({
 
 /** Endpoint metadata for getAlert */
 export const getAlertMeta: Endpoint<AlertInput, HighwayAlert> = {
-  api: "wsdot-highway-alerts",
-  function: "getAlert",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}",
   inputSchema: alertInput,

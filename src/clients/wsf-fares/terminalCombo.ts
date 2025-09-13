@@ -18,8 +18,6 @@ export const getFaresTerminalComboMeta: Endpoint<
   FaresTerminalComboInput,
   TerminalCombo
 > = {
-  api: "wsf-fares",
-  function: "getFaresTerminalCombo",
   endpoint:
     "/ferries/api/fares/rest/terminalcombo/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
   inputSchema: faresTerminalComboInput,

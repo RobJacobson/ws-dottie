@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { weatherInfoSchema, type WeatherInfo } from "@/schemas/wsdot-weather-information/weatherInfo.zod";
+import {
+  type WeatherInfo,
+  weatherInfoSchema,
+} from "@/schemas/wsdot-weather-information/weatherInfo.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationByStationId */
@@ -22,8 +25,6 @@ export const getWeatherInformationByStationIdMeta: Endpoint<
   WeatherInformationByStationIdInput,
   WeatherInfo
 > = {
-  api: "wsdot-weather-information",
-  function: "getWeatherInformationByStationId",
   endpoint:
     "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
   inputSchema: weatherInformationByStationIdInput,

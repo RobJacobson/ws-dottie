@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { routeBriefResponseSchema, type RouteBriefResponse } from "@/schemas/wsf-schedule/routeBriefResponse.zod";
+import {
+  type RouteBriefResponse,
+  routeBriefResponseSchema,
+} from "@/schemas/wsf-schedule/routeBriefResponse.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
@@ -15,8 +18,6 @@ export const getRoutesByTerminalsMeta: Endpoint<
   RoutesByTerminalsInput,
   RouteBriefResponse[]
 > = {
-  api: "wsf-schedule",
-  function: "getRoutesByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
   inputSchema: routesByTerminalsInput,

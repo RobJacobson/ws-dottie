@@ -24,7 +24,7 @@ export const getAllEndpoints = (): EndpointsMap =>
     })
     .reduce((acc, [, value]) => {
       const endpointDef = value as AnyEndpointDefinition;
-      return { ...acc, [endpointDef.meta.function]: endpointDef };
+      return { ...acc, [endpointDef.meta.function || "unknown"]: endpointDef };
     }, {} as EndpointsMap);
 
 /**
@@ -98,7 +98,7 @@ export const validateParams = (
 
   try {
     return validateInputs(endpointDef.meta.inputSchema, params, {
-      endpoint: endpointDef.meta.function,
+      endpoint: endpointDef.meta.function || "unknown",
       logMode: "none",
       interpolatedUrl: endpointDef.meta.endpoint,
     }) as Record<string, unknown>;

@@ -11,8 +11,6 @@ export const getFaresValidDateRangeMeta: Endpoint<
   FaresValidDateRangeInput,
   ValidDateRange
 > = {
-  api: "wsf-fares",
-  function: "getFaresValidDateRange",
   endpoint: "/ferries/api/fares/rest/validdaterange",
   inputSchema: faresValidDateRangeInput,
   outputSchema: validDateRangeSchema,

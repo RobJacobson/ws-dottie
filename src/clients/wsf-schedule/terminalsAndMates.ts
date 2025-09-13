@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { terminalsAndMatesSchema, type TerminalsAndMates } from "@/schemas/wsf-schedule/terminalsAndMates.zod";
+import {
+  type TerminalsAndMates,
+  terminalsAndMatesSchema,
+} from "@/schemas/wsf-schedule/terminalsAndMates.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
@@ -13,8 +16,6 @@ export const getTerminalsAndMatesMeta: Endpoint<
   TerminalsAndMatesInput,
   TerminalsAndMates
 > = {
-  api: "wsf-schedule",
-  function: "getTerminalsAndMates",
   endpoint: "/ferries/api/schedule/rest/terminalsandmates/{tripDate}",
   inputSchema: terminalsAndMatesInput,
   outputSchema: terminalsAndMatesSchema,

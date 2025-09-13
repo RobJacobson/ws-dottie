@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  terminalBulletinsSchema,
   type TerminalBulletins,
+  terminalBulletinsSchema,
 } from "@/schemas/wsf-terminals/terminalBulletins.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
@@ -15,8 +15,6 @@ export const getTerminalBulletinsByTerminalIdMeta: Endpoint<
   TerminalBulletinsByTerminalIdInput,
   TerminalBulletins
 > = {
-  api: "wsf-terminals",
-  function: "getTerminalBulletinsByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins/{terminalId}",
   inputSchema: terminalBulletinsByTerminalIdInput,
   outputSchema: terminalBulletinsSchema,

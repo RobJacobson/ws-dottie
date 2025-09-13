@@ -15,8 +15,6 @@ export const getTerminalMatesMeta: Endpoint<
   TerminalMatesInput,
   TerminalMatesForTerminal[]
 > = {
-  api: "wsf-schedule",
-  function: "getTerminalMates",
   endpoint: "/ferries/api/schedule/rest/terminalmates/{tripDate}/{terminalId}",
   inputSchema: terminalMatesInput,
   outputSchema: terminalMatesForTerminalsSchema,

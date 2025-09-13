@@ -1,10 +1,10 @@
 import { z } from "zod";
 import {
-  vesselHistoriesSchema,
   type VesselHistories,
+  vesselHistoriesSchema,
 } from "@/schemas/wsf-vessels/vesselHistory.zod";
-import { datesHelper } from "@/shared/utils/dateUtils";
 import type { Endpoint } from "@/shared/endpoints";
+import { datesHelper } from "@/shared/utils/dateUtils";
 
 const dateRangeParams = {
   dateStart: z.date(),
@@ -24,8 +24,6 @@ export const getVesselHistoryByVesselAndDateRangeMeta: Endpoint<
   VesselHistoryByVesselAndDateRangeInput,
   VesselHistories
 > = {
-  api: "wsf-vessels",
-  function: "getVesselHistoryByVesselAndDateRange",
   endpoint:
     "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
   inputSchema: vesselHistoriesByVesselAndDateRangeInput,

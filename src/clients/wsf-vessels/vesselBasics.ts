@@ -9,8 +9,6 @@ const vesselBasicsInput = z.object({});
 /** Endpoint metadata for getVesselBasics */
 export const getVesselBasicsMeta: Endpoint<VesselBasicsInput, VesselBasics[]> =
   {
-    api: "wsf-vessels",
-    function: "getVesselBasics",
     endpoint: "/ferries/api/vessels/rest/vesselbasics",
     inputSchema: vesselBasicsInput,
     outputSchema: z.array(vesselBasicsSchema),
