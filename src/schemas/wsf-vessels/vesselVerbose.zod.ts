@@ -32,10 +32,10 @@ export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
 /**
  * Array of vessel verbose data.
  */
-export const vesselVerbosesSchema = z
+export const vesselsVerboseSchema = z
   .array(vesselVerboseSchema)
   .describe(
     "Highly detailed information pertaining to vessels in the WSF fleet."
   );
 
-export type VesselVerboses = z.infer<typeof vesselVerbosesSchema>;
+export type VesselsVerbose = z.infer<typeof vesselsVerboseSchema>;

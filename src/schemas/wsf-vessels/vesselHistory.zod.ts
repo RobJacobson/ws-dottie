@@ -42,8 +42,8 @@ export type VesselHistory = z.infer<typeof vesselHistorySchema>;
 /**
  * Array of vessel history records.
  */
-export const vesselHistorysSchema = z
+export const vesselHistoriesSchema = z
   .array(vesselHistorySchema)
   .describe("Historical data for vessels in the WSF fleet.");
 
-export type VesselHistorys = z.infer<typeof vesselHistorysSchema>;
+export type VesselHistories = z.infer<typeof vesselHistoriesSchema>;

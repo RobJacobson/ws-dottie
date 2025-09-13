@@ -12,7 +12,7 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
  * ⚠️ Important: This data changes very frequently (potentially every 5 seconds).
  * Please do not cache results in your application for an extended period of time.
  */
-export const vesselLocationsSchema = z.object({
+export const vesselLocationSchema = z.object({
   /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 
@@ -162,15 +162,15 @@ export const vesselLocationsSchema = z.object({
   ),
 });
 
-export type VesselLocations = z.infer<typeof vesselLocationsSchema>;
+export type VesselLocation = z.infer<typeof vesselLocationSchema>;
 
 /**
  * Array of vessel locations.
  */
-export const vesselLocationssSchema = z
-  .array(vesselLocationsSchema)
+export const vesselLocationsSchema = z
+  .array(vesselLocationSchema)
   .describe(
     "The current locations and associated ETA data for vessels in the WSF fleet."
   );
 
-export type VesselLocationss = z.infer<typeof vesselLocationssSchema>;
+export type VesselLocations = z.infer<typeof vesselLocationsSchema>;
