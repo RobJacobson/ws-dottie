@@ -7,22 +7,22 @@
  * while maintaining all functionality.
  */
 
-import { Command } from "commander";
 import chalk from "chalk";
-import { CLI_CONSTANTS, type CliOptions } from "./utils/types";
+import { Command } from "commander";
 import {
+  applyDefaults,
   findEndpoint,
   parseParams,
-  applyDefaults,
   validateParams,
 } from "./utils/endpoints";
-import { executeValidated, executeNative } from "./utils/execution";
+import { executeNative, executeValidated } from "./utils/execution";
+import { CLI_CONSTANTS, type CliOptions } from "./utils/types";
 import {
-  handleError,
   displayFunctionNotFound,
+  generateHelpText,
+  handleError,
   outputResult,
   setupConsoleSuppression,
-  generateHelpText,
 } from "./utils/ui";
 
 /**

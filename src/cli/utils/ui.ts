@@ -3,9 +3,9 @@
  */
 
 import chalk from "chalk";
-import type { CliOptions } from "./types";
-import { getAllEndpoints, getAvailableFunctions } from "./endpoints";
 import { WsdotApiError } from "@/shared/fetching/handleErrors";
+import { getAllEndpoints, getAvailableFunctions } from "./endpoints";
+import type { CliOptions } from "./types";
 
 /**
  * Handle errors with consistent formatting using shared error handling

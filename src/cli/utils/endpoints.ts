@@ -2,24 +2,23 @@
  * Endpoint management utilities
  */
 
-import {
-  CLI_CONSTANTS,
-  type EndpointsMap,
-  type FunctionName,
-  type AnyEndpointDefinition,
-  type CliParams,
-} from "./types";
 import { validateInputs } from "@/shared/fetching/pipeline/prepareRequest";
-
 // Import all endpoints to get the type information
 import * as allEndpoints from "../../clients";
+import {
+  type AnyEndpointDefinition,
+  CLI_CONSTANTS,
+  type CliParams,
+  type EndpointsMap,
+  type FunctionName,
+} from "./types";
 
 /**
  * Get all endpoint definitions from the clients module
  */
 export const getAllEndpoints = (): EndpointsMap =>
   Object.entries(allEndpoints)
-    .filter(([key, value]) => {
+    .filter(([_key, value]) => {
       // Look for functions that have a meta property (endpoint definitions)
       return value && typeof value === "object" && "meta" in value;
     })

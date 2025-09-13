@@ -2,10 +2,10 @@
  * API execution utilities
  */
 
-import { parseDotNetTimestamp } from "@/shared/utils";
-import { buildFetchUrl } from "@/shared/fetching/pipeline/prepareRequest";
 import { fetchNative } from "@/shared/fetching/execution/fetchNative";
-import type { CliOptions, AnyEndpointDefinition, CliParams } from "./types";
+import { buildFetchUrl } from "@/shared/fetching/pipeline/prepareRequest";
+import { parseDotNetTimestamp } from "@/shared/utils";
+import type { AnyEndpointDefinition, CliOptions, CliParams } from "./types";
 
 /**
  * Execute validated API call using Zod pipeline
