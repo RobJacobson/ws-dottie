@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { scheduleTerminalComboSchema } from "@/schemas/wsf-fares";
-import type { TerminalCombo } from "@/schemas/wsf-fares/terminalCombo.zod";
+import {
+  scheduleTerminalComboSchema,
+  type TerminalCombo,
+} from "@/schemas/wsf-fares/terminalCombo.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

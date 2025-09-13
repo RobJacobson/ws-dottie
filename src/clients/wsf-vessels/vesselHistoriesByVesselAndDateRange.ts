@@ -1,6 +1,10 @@
 import { z } from "zod";
-import { vesselHistorysSchema } from "@/schemas/wsf-vessels";
+import {
+  vesselHistoriesSchema,
+  type VesselHistories,
+} from "@/schemas/wsf-vessels/vesselHistory.zod";
 import { datesHelper } from "@/shared/utils/dateUtils";
+import type { Endpoint } from "@/shared/endpoints";
 
 const dateRangeParams = {
   dateStart: z.date(),
@@ -10,19 +14,22 @@ const dateRangeParams = {
 const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");
 
 /** Input schema for getVesselHistoryByVesselAndDateRange */
-const vesselHistoryByVesselAndDateRangeInput = z.object({
+const vesselHistoriesByVesselAndDateRangeInput = z.object({
   vesselName: vesselNameParam,
   ...dateRangeParams,
 });
 
 /** Endpoint metadata for getVesselHistoryByVesselAndDateRange */
-export const getVesselHistoryByVesselAndDateRangeMeta = {
+export const getVesselHistoryByVesselAndDateRangeMeta: Endpoint<
+  VesselHistoryByVesselAndDateRangeInput,
+  VesselHistories
+> = {
   api: "wsf-vessels",
   function: "getVesselHistoryByVesselAndDateRange",
   endpoint:
     "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
-  inputSchema: vesselHistoryByVesselAndDateRangeInput,
-  outputSchema: vesselHistorysSchema,
+  inputSchema: vesselHistoriesByVesselAndDateRangeInput,
+  outputSchema: vesselHistoriesSchema,
   sampleParams: {
     vesselName: "Cathlamet",
     dateStart: datesHelper.startOfMonth(),
@@ -31,7 +38,7 @@ export const getVesselHistoryByVesselAndDateRangeMeta = {
   cacheStrategy: "DAILY_STATIC",
 } as const;
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type VesselHistoryByVesselAndDateRangeInput = z.infer<
-  typeof vesselHistoryByVesselAndDateRangeInput
+  typeof vesselHistoriesByVesselAndDateRangeInput
 >;

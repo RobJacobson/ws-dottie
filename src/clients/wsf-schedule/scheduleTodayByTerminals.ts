@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { scheduleTodayResponseSchema } from "@/schemas/wsf-schedule";
-import type { ScheduleTodayResponse } from "@/schemas/wsf-schedule/scheduleTodayResponse.zod";
+import { scheduleTodayResponseSchema, type ScheduleTodayResponse } from "@/schemas/wsf-schedule/scheduleTodayResponse.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getScheduleTodayByScheduleTerminals */

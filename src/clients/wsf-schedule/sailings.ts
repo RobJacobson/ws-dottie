@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { sailingResponsesSchema } from "@/schemas/wsf-schedule";
-import type { SailingResponse } from "@/schemas/wsf-schedule/sailingResponse.zod";
+import { sailingResponsesSchema, type SailingResponse } from "@/schemas/wsf-schedule/sailingResponse.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getSailings */

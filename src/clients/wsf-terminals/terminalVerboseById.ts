@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalVerboseSchema } from "@/schemas/wsf-terminals";
-import type { TerminalVerbose } from "@/schemas/wsf-terminals/terminalVerbose.zod";
+import {
+  terminalVerboseSchema,
+  type TerminalVerbose,
+} from "@/schemas/wsf-terminals/terminalVerbose.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalVerboseByTerminalId */
@@ -22,7 +24,7 @@ export const getTerminalVerboseByTerminalIdMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalVerboseByTerminalIdInput = z.infer<
   typeof terminalVerboseByTerminalIdInput
 >;

@@ -74,8 +74,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { camerasSchema } from "@/schemas/wsdot-highway-cameras";
-import type { Camera } from "@/schemas/wsdot-highway-cameras/camera.zod";
+import { camerasSchema, type Camera } from "@/schemas/wsdot-highway-cameras/camera.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getHighwayCameras */

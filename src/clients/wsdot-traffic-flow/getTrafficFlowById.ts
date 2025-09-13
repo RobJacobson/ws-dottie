@@ -52,8 +52,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
  */
 import { z } from "zod";
-import { flowDataSchema } from "@/schemas/wsdot-traffic-flow";
-import type { FlowData } from "@/schemas/wsdot-traffic-flow/flowData.zod";
+import { flowDataSchema, type FlowData } from "@/schemas/wsdot-traffic-flow/flowData.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTrafficFlowById */

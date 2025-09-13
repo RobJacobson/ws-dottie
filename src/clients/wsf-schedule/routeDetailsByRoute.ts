@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { routeDetailsSchema } from "@/schemas/wsf-schedule";
-import type { RouteDetails } from "@/schemas/wsf-schedule/routeDetails.zod";
+import { routeDetailsSchema, type RouteDetails } from "@/schemas/wsf-schedule/routeDetails.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

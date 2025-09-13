@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { scheduleResponseSchema } from "@/schemas/wsf-schedule";
-import type { ScheduleResponse } from "@/schemas/wsf-schedule/scheduleResponse.zod";
+import { scheduleResponseSchema, type ScheduleResponse } from "@/schemas/wsf-schedule/scheduleResponse.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

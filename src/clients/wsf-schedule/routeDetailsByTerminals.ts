@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { routeDetailsSchema } from "@/schemas/wsf-schedule";
+import {
+  routeDetailsSchema,
+  type RouteDetails,
+} from "@/schemas/wsf-schedule/routeDetails.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
@@ -33,4 +36,3 @@ export const getRouteDetailsByTerminalsMeta: Endpoint<
 export type RouteDetailsByTerminalsInput = z.infer<
   typeof routeDetailsByTerminalsInput
 >;
-export type RouteDetails = z.infer<typeof routeDetailsSchema>;

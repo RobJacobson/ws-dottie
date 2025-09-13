@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { routeBriefResponseSchema } from "@/schemas/wsf-schedule";
-import type { RouteBriefResponse } from "@/schemas/wsf-schedule/routeBriefResponse.zod";
+import { routeBriefResponseSchema, type RouteBriefResponse } from "@/schemas/wsf-schedule/routeBriefResponse.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

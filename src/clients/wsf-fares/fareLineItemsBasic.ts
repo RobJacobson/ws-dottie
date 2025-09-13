@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { fareLineItemBasicSchema } from "@/schemas/wsf-fares";
-import type { FareLineItemBasic } from "@/schemas/wsf-fares/fareLineItemBasic.zod";
+import {
+  fareLineItemBasicSchema,
+  type FareLineItemBasic,
+} from "@/schemas/wsf-fares/fareLineItemBasic.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

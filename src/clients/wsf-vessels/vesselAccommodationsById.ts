@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { vesselAccommodationsSchema } from "@/schemas/wsf-vessels";
-import type { VesselAccommodations } from "@/schemas/wsf-vessels/vesselAccommodations.zod";
+import {
+  vesselAccommodationsSchema,
+  type VesselAccommodations,
+} from "@/schemas/wsf-vessels/vesselAccommodations.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getVesselAccommodationsById */
@@ -28,7 +30,7 @@ export const getVesselAccommodationsByIdMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type VesselAccommodationsByIdInput = z.infer<
   typeof vesselAccommodationsByIdInput
 >;

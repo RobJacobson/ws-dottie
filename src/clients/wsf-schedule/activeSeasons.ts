@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { scheduleBriefResponsesSchema } from "@/schemas/wsf-schedule";
-import type { ScheduleBriefResponses } from "@/schemas/wsf-schedule";
+import {
+  scheduleBriefResponsesSchema,
+  type ScheduleBriefResponses,
+} from "@/schemas/wsf-schedule/scheduleBriefResponse";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getActiveSeasons */

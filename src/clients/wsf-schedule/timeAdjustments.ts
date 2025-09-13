@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { timeAdjustmentsSchema } from "@/schemas/wsf-schedule";
-import type { TimeAdjustment } from "@/schemas/wsf-schedule/timeAdjustment.zod";
+import { timeAdjustmentsSchema, type TimeAdjustment } from "@/schemas/wsf-schedule/timeAdjustment.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustments */

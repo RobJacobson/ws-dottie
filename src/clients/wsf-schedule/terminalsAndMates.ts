@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { terminalsAndMatesSchema } from "@/schemas/wsf-schedule";
-import type { TerminalsAndMates } from "@/schemas/wsf-schedule/terminalsAndMates.zod";
+import { terminalsAndMatesSchema, type TerminalsAndMates } from "@/schemas/wsf-schedule/terminalsAndMates.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

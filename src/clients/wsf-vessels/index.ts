@@ -4,14 +4,14 @@ import { getVesselAccommodationsMeta } from "./vesselAccommodations";
 import { getVesselAccommodationsByIdMeta } from "./vesselAccommodationsById";
 import { getVesselBasicsMeta } from "./vesselBasics";
 import { getVesselBasicsByIdMeta } from "./vesselBasicsById";
-import { getVesselHistoryMeta } from "./vesselHistory";
-import { getVesselHistoryByVesselAndDateRangeMeta } from "./vesselHistoryByVesselAndDateRange";
+import { getVesselHistoryMeta } from "./vesselHistories";
+import { getVesselHistoryByVesselAndDateRangeMeta } from "./vesselHistoriesByVesselAndDateRange";
 import { getVesselLocationsMeta } from "./vesselLocations";
 import { getVesselLocationsByVesselIdMeta } from "./vesselLocationsById";
 import { getVesselStatsMeta } from "./vesselStats";
 import { getVesselStatsByIdMeta } from "./vesselStatsById";
-import { getVesselVerboseMeta } from "./vesselVerbose";
-import { getVesselVerboseByIdMeta } from "./vesselVerboseById";
+import { getVesselVerboseMeta } from "./vesselsVerbose";
+import { getVesselVerboseByIdMeta } from "./vesselsVerboseById";
 
 export const getVesselsCacheFlushDate = defineEndpoint(
   getCacheFlushDateVesselsMeta
@@ -41,11 +41,11 @@ export type { VesselAccommodationsInput } from "./vesselAccommodations";
 export type { VesselAccommodationsByIdInput } from "./vesselAccommodationsById";
 export type { VesselBasicsInput } from "./vesselBasics";
 export type { VesselBasicsByIdInput } from "./vesselBasicsById";
-export type { VesselHistoryInput } from "./vesselHistory";
-export type { VesselHistoryByVesselAndDateRangeInput } from "./vesselHistoryByVesselAndDateRange";
+export type { VesselHistoryInput } from "./vesselHistories";
+export type { VesselHistoryByVesselAndDateRangeInput } from "./vesselHistoriesByVesselAndDateRange";
 export type { VesselLocationsInput } from "./vesselLocations";
 export type { VesselLocationsByVesselIdInput } from "./vesselLocationsById";
 export type { VesselStatsInput } from "./vesselStats";
 export type { VesselStatsByIdInput } from "./vesselStatsById";
-export type { VesselVerboseInput } from "./vesselVerbose";
-export type { VesselVerboseByIdInput } from "./vesselVerboseById";
+export type { VesselsVerboseInput as VesselVerboseInput } from "./vesselsVerbose";
+export type { VesselVerboseByIdInput } from "./vesselsVerboseById";

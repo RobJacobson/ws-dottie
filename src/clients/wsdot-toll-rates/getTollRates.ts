@@ -45,8 +45,7 @@
  */
 
 import { z } from "zod";
-import { tollRatesSchema } from "@/schemas/wsdot-toll-rates";
-import type { TollRate } from "@/schemas/wsdot-toll-rates/tollRate.zod";
+import { tollRatesSchema, type TollRate } from "@/schemas/wsdot-toll-rates/tollRate.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTollRates */

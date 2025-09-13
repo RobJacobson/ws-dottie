@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { alertsSchema } from "@/schemas/wsf-schedule";
-import type { Alert } from "@/schemas/wsf-schedule/alert.zod";
+import { alertsSchema, type Alert } from "@/schemas/wsf-schedule/alert.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlerts */

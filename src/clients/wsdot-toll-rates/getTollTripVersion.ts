@@ -30,8 +30,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { tollTripVersionSchema } from "@/schemas/wsdot-toll-rates";
-import type { TollTripVersion } from "@/schemas/wsdot-toll-rates/tollTripVersion.zod";
+import { tollTripVersionSchema, type TollTripVersion } from "@/schemas/wsdot-toll-rates/tollTripVersion.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTollTripVersion */

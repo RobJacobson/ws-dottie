@@ -20,7 +20,7 @@ export const getTerminalSailingSpaceMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalSailingSpaceInput = z.infer<
   typeof terminalSailingSpaceInput
 >;

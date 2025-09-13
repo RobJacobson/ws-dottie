@@ -20,7 +20,7 @@ export const getCacheFlushDateTerminalsMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type CacheFlushDateTerminalsInput = z.infer<
   typeof cacheFlushDateTerminalsInput
 >;

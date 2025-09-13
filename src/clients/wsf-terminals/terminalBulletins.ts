@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalBulletinsSchema } from "@/schemas/wsf-terminals";
-import type { TerminalBulletins } from "@/schemas/wsf-terminals/terminalBulletins.zod";
+import {
+  terminalBulletinsSchema,
+  type TerminalBulletins,
+} from "@/schemas/wsf-terminals/terminalBulletins.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalBulletins */
@@ -20,5 +22,5 @@ export const getTerminalBulletinsMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalBulletinsInput = z.infer<typeof terminalBulletinsInput>;

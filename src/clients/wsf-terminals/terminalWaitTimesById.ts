@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalWaitTimesSchema } from "@/schemas/wsf-terminals";
-import type { TerminalWaitTimes } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
+import {
+  terminalWaitTimesSchema,
+  type TerminalWaitTimes,
+} from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalWaitTimesByTerminalId */
@@ -22,7 +24,7 @@ export const getTerminalWaitTimesByTerminalIdMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalWaitTimesByTerminalIdInput = z.infer<
   typeof terminalWaitTimesByTerminalIdInput
 >;

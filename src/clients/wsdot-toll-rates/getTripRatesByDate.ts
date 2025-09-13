@@ -43,8 +43,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { tripRatesByDateSchema } from "@/schemas/wsdot-toll-rates";
-import type { TripRatesByDate } from "@/schemas/wsdot-toll-rates/tripRatesByDate.zod";
+import { tripRatesByDateSchema, type TripRatesByDate } from "@/schemas/wsdot-toll-rates/tripRatesByDate.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 

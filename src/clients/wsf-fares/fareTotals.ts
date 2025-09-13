@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { fareTotalsSchema } from "@/schemas/wsf-fares";
-import type { FareTotals } from "@/schemas/wsf-fares";
+import {
+  fareTotalsSchema,
+  type FareTotals,
+} from "@/schemas/wsf-fares/fareTotal.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalSailingSpaceSchema } from "@/schemas/wsf-terminals";
-import type { TerminalSailingSpace } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
+import {
+  terminalSailingSpaceSchema,
+  type TerminalSailingSpace,
+} from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalSailingSpaceByTerminalId */
@@ -22,7 +24,7 @@ export const getTerminalSailingSpaceByTerminalIdMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalSailingSpaceByTerminalIdInput = z.infer<
   typeof terminalSailingSpaceByTerminalIdInput
 >;

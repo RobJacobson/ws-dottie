@@ -65,8 +65,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
  */
 import { z } from "zod";
-import type { MountainPassConditions } from "@/schemas/wsdot-mountain-pass-conditions";
-import { mountainPassConditionsSchema } from "@/schemas/wsdot-mountain-pass-conditions";
+import { mountainPassConditionsSchema, type MountainPassConditions } from "@/schemas/wsdot-mountain-pass-conditions/passCondition.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getMountainPassConditions */

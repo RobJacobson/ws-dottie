@@ -79,8 +79,10 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import type { HighwayAlerts } from "@/schemas/wsdot-highway-alerts";
-import { highwayAlertsSchema } from "@/schemas/wsdot-highway-alerts";
+import {
+  highwayAlertsSchema,
+  type HighwayAlerts,
+} from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlerts */

@@ -18,5 +18,5 @@ export const getVesselBasicsMeta: Endpoint<VesselBasicsInput, VesselBasics[]> =
     cacheStrategy: "DAILY_STATIC",
   };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type VesselBasicsInput = z.infer<typeof vesselBasicsInput>;

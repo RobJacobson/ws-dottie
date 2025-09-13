@@ -33,7 +33,7 @@
  */
 import { z } from "zod";
 import type { MapArea } from "@/schemas/wsdot-highway-alerts";
-import { mapAreasSchema } from "@/schemas/wsdot-highway-alerts";
+import { mapAreasSchema, type MapAreas } from "@/schemas/wsdot-highway-alerts/mapArea.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getMapAreas */

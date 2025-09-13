@@ -86,7 +86,7 @@
  */
 import { z } from "zod";
 import type { CommercialVehicleRestriction } from "@/schemas/wsdot-commercial-vehicle-restrictions";
-import { commercialVehicleRestrictionsSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
+import { commercialVehicleRestrictionsSchema, type CommercialVehicleRestrictions } from "@/schemas/wsdot-commercial-vehicle-restrictions/commercialVehicleRestriction.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictions */

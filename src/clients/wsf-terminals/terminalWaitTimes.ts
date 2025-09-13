@@ -20,5 +20,5 @@ export const getTerminalWaitTimesMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalWaitTimesInput = z.infer<typeof terminalWaitTimesInput>;

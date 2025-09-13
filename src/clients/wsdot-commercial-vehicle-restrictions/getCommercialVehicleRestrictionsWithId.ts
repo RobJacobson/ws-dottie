@@ -89,7 +89,7 @@
  */
 import { z } from "zod";
 import type { CommercialVehicleRestrictionWithId } from "@/schemas/wsdot-commercial-vehicle-restrictions";
-import { commercialVehicleRestrictionsWithIdSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
+import { commercialVehicleRestrictionsWithIdSchema, type CommercialVehicleRestrictionsWithId } from "@/schemas/wsdot-commercial-vehicle-restrictions/commercialVehicleRestrictionWithId.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictionsWithId */

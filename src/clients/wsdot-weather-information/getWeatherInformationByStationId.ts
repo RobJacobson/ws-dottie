@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { weatherInfoSchema } from "@/schemas/wsdot-weather-information";
-import type { WeatherInfo } from "@/schemas/wsdot-weather-information/weatherInfo.zod";
+import { weatherInfoSchema, type WeatherInfo } from "@/schemas/wsdot-weather-information/weatherInfo.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationByStationId */

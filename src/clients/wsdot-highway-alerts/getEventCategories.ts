@@ -30,8 +30,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import type { EventCategories } from "@/schemas/wsdot-highway-alerts";
-import { eventCategoriesSchema } from "@/schemas/wsdot-highway-alerts";
+import { eventCategoriesSchema, type EventCategories } from "@/schemas/wsdot-highway-alerts/eventCategories.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getEventCategories */

@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalLocationsSchema } from "@/schemas/wsf-terminals";
-import type { TerminalLocation } from "@/schemas/wsf-terminals/terminalLocation.zod";
+import {
+  terminalLocationsSchema,
+  type TerminalLocation,
+} from "@/schemas/wsf-terminals/terminalLocation.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalLocations */
@@ -20,5 +22,5 @@ export const getTerminalLocationsMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalLocationsInput = z.infer<typeof terminalLocationsInput>;

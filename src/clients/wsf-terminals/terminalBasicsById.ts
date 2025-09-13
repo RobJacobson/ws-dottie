@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalBasicsSchema } from "@/schemas/wsf-terminals";
-import type { TerminalBasics } from "@/schemas/wsf-terminals/terminalBasics.zod";
+import {
+  terminalBasicsSchema,
+  type TerminalBasics,
+} from "@/schemas/wsf-terminals/terminalBasics.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalBasicsByTerminalId */
@@ -22,7 +24,7 @@ export const getTerminalBasicsByTerminalIdMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalBasicsByTerminalIdInput = z.infer<
   typeof terminalBasicsByTerminalIdInput
 >;

@@ -20,5 +20,5 @@ export const getTerminalVerboseMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type TerminalVerboseInput = z.infer<typeof terminalVerboseInput>;

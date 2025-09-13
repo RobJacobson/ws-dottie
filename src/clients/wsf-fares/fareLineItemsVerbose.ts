@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { fareLineItemsVerboseSchema } from "@/schemas/wsf-fares";
-import type { FareLineItemsVerbose } from "@/schemas/wsf-fares/fareLineItemsVerbose.zod";
+import {
+  fareLineItemsVerboseSchema,
+  type FareLineItemsVerbose,
+} from "@/schemas/wsf-fares/fareLineItemsVerbose.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

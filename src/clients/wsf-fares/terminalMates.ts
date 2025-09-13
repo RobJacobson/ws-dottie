@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { terminalMateSchema } from "@/schemas/wsf-fares";
-import type { TerminalMate } from "@/schemas/wsf-fares/terminalMate.zod";
+import {
+  terminalMateSchema,
+  type TerminalMate,
+} from "@/schemas/wsf-fares/terminalMate.zod";
 import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 

@@ -57,7 +57,7 @@
  */
 import { z } from "zod";
 import type { BorderCrossing } from "@/schemas/wsdot-border-crossings";
-import { borderCrossingsSchema } from "@/schemas/wsdot-border-crossings";
+import { borderCrossingsSchema, type BorderCrossings } from "@/schemas/wsdot-border-crossings/borderCrossing.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getBorderCrossings */

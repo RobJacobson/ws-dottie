@@ -1,6 +1,8 @@
 import { z } from "zod";
-import { vesselBasicsSchema } from "@/schemas/wsf-vessels";
-import type { VesselBasics } from "@/schemas/wsf-vessels/vesselBasics.zod";
+import {
+  vesselBasicsSchema,
+  type VesselBasics,
+} from "@/schemas/wsf-vessels/vesselBasics.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getVesselBasicsById */
@@ -28,5 +30,5 @@ export const getVesselBasicsByIdMeta: Endpoint<
   cacheStrategy: "DAILY_STATIC",
 };
 
-// Type exports (ONLY input types, NO output types)
+// Type exports
 export type VesselBasicsByIdInput = z.infer<typeof vesselBasicsByIdInput>;

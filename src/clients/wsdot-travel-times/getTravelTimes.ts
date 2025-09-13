@@ -1,6 +1,5 @@
 import { z } from "zod";
-import type { TravelTimes } from "@/schemas/wsdot-travel-times";
-import { travelTimesSchema } from "@/schemas/wsdot-travel-times";
+import { travelTimesSchema, type TravelTimes } from "@/schemas/wsdot-travel-times/travelTimeRoute.zod";
 import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTravelTimes */
