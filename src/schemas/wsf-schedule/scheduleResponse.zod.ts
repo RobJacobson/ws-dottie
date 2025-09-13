@@ -50,4 +50,3 @@ export const scheduleResponseSchema = z.object({
 });
 
 export type ScheduleResponse = z.infer<typeof scheduleResponseSchema>;
-

@@ -13,13 +13,13 @@
 // ============================================================================
 
 export * from "./fareLineItem.zod";
-export * from "./fareLineItems.zod";
 export * from "./fareLineItemBasic.zod";
+export * from "./fareLineItems.zod";
 export * from "./fareLineItemsBasic.zod";
-export * from "./lineItemXref.zod";
-export * from "./lineItem.zod";
-export * from "./roundTripLineItem.zod";
 export * from "./fareLineItemsVerbose.zod";
+export * from "./lineItem.zod";
+export * from "./lineItemXref.zod";
+export * from "./roundTripLineItem.zod";
 
 // ============================================================================
 // FARE TOTALS
@@ -33,8 +33,8 @@ export * from "./fareTotals.zod";
 // ============================================================================
 
 export * from "./terminalCombo.zod";
-export * from "./terminalComboVerboseItem.zod";
 export * from "./terminalComboVerbose.zod";
+export * from "./terminalComboVerboseItem.zod";
 
 // ============================================================================
 // TERMINALS

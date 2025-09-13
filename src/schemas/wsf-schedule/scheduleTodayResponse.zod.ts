@@ -44,4 +44,3 @@ export const scheduleTodayResponseSchema = z.object({
 });
 
 export type ScheduleTodayResponse = z.infer<typeof scheduleTodayResponseSchema>;
-

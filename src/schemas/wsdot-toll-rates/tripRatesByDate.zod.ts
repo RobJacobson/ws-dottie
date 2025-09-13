@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { tollTripRatesSchema, type TollTripRates } from "./tollTripRates.zod";
+import { type TollTripRates, tollTripRatesSchema } from "./tollTripRates.zod";
 
 /**
  * TripRatesByDate schema

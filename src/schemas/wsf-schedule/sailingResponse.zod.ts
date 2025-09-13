@@ -86,4 +86,3 @@ export const sailingResponseSchema = z.object({
 });
 
 export type SailingResponse = z.infer<typeof sailingResponseSchema>;
-

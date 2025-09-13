@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { scheduleTimeSchema } from "./scheduleTime.zod";
 
-
 /**
  * Schema for terminal combo response from WSF Schedule API.
  * A grouping of departure and arrival terminal pairs.
@@ -56,4 +55,3 @@ export const scheduleTerminalComboSchema = z.object({
 });
 
 export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
-

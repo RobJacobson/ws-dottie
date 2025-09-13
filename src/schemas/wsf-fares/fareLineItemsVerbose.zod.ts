@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { terminalComboVerboseItemSchema } from "./terminalComboVerboseItem.zod";
-import { lineItemXrefSchema } from "./lineItemXref.zod";
 import { lineItemSchema } from "./lineItem.zod";
+import { lineItemXrefSchema } from "./lineItemXref.zod";
 import { roundTripLineItemSchema } from "./roundTripLineItem.zod";
+import { terminalComboVerboseItemSchema } from "./terminalComboVerboseItem.zod";
 
 // Note: terminalComboVerboseItemSchema is imported from terminalComboVerboseItem.zod.ts
 // to avoid duplication since both schemas are functionally identical

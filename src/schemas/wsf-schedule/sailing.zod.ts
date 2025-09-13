@@ -72,4 +72,3 @@ export const sailingSchema = z.object({
 });
 
 export type Sailing = z.infer<typeof sailingSchema>;
-

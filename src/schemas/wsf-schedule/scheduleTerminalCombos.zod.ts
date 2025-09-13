@@ -8,4 +8,6 @@ export const scheduleTerminalCombosSchema = z
   .array(scheduleTerminalComboSchema)
   .describe("A grouping of departure and arrival terminal pairs.");
 
-export type ScheduleTerminalCombos = z.infer<typeof scheduleTerminalCombosSchema>;
+export type ScheduleTerminalCombos = z.infer<
+  typeof scheduleTerminalCombosSchema
+>;

@@ -67,4 +67,3 @@ export const scheduledRouteSchema = z.object({
 });
 
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
-
