@@ -38,19 +38,22 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
-import { tripRatesSchema } from "@/schemas/wsdot-toll-rates";
+import { tollTripRatesSchema } from "@/schemas/wsdot-toll-rates";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTollTripRates */
-const getTollTripRatesParamsSchema = z.object({});
+/** Input schema for getTollTripRates */
+const tollTripRatesInput = z.object({});
 
-/** Endpoint definition for getTollTripRates */
-export const getTollTripRatesDef = defineEndpoint({
+/** Endpoint metadata for getTollTripRates */
+export const getTollTripRatesMeta = defineEndpoint({
   api: "wsdot-toll-rates",
   function: "getTollTripRates",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson",
-  inputSchema: getTollTripRatesParamsSchema,
-  outputSchema: tripRatesSchema,
+  inputSchema: tollTripRatesInput,
+  outputSchema: tollTripRatesSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+// Type exports
+export type TollTripRatesInput = z.infer<typeof tollTripRatesInput>;

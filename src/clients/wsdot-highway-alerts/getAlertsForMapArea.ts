@@ -83,22 +83,23 @@ import { z } from "zod";
 import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getAlertsForMapArea */
-const getAlertsForMapAreaParamsSchema = z.object({
+/** Input schema for getAlertsForMapArea */
+const alertsForMapAreaInput = z.object({
   /** Map area name */
   MapArea: z.string().min(1, "Map area cannot be empty"),
 });
 
-/** Endpoint definition for getAlertsForMapArea */
-export const getAlertsForMapAreaDef = defineEndpoint({
+/** Endpoint metadata for getAlertsForMapArea */
+export const getAlertsForMapAreaMeta = defineEndpoint({
   api: "wsdot-highway-alerts",
   function: "getAlertsForMapArea",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
-  inputSchema: getAlertsForMapAreaParamsSchema,
+  inputSchema: alertsForMapAreaInput,
   outputSchema: alertsSchema,
   sampleParams: { MapArea: "Seattle" },
   cacheStrategy: "MINUTE_UPDATES",
 });
 
-/** GetAlertsForMapArea params type */
+// Type exports
+export type AlertsForMapAreaInput = z.infer<typeof alertsForMapAreaInput>;

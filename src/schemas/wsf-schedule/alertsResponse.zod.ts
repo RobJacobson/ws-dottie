@@ -102,14 +102,3 @@ export const alertsResponseSchema = z.object({
 });
 
 export type AlertsResponse = z.infer<typeof alertsResponseSchema>;
-
-/**
- * Array of alerts responses.
- */
-export const alertsResponsesArraySchema = z
-  .array(alertsResponseSchema)
-  .describe(
-    "Alert information tailored for routes, bulletins, service disruptions, etc."
-  );
-
-export type AlertsResponsesArray = z.infer<typeof alertsResponsesArraySchema>;

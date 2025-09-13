@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { tripRatesSchema } from "./tollTripRates.zod";
+import { tollTripRatesSchema, type TollTripRates } from "./tollTripRates.zod";
 
 /**
  * TripRatesByDate schema
@@ -7,7 +7,7 @@ import { tripRatesSchema } from "./tollTripRates.zod";
  * Historical trip rates for a date range - returns array of trip rates.
  */
 export const tripRatesByDateSchema = z
-  .array(tripRatesSchema)
+  .array(tollTripRatesSchema)
   .describe(
     "Historical trip rates for a date range - returns array of trip rates"
   );
@@ -16,4 +16,4 @@ export const tripRatesByDateSchema = z
 export type TripRatesByDate = z.infer<typeof tripRatesByDateSchema>;
 
 /** TripRatesByDateItem type (alias for single item) */
-export type TripRatesByDateItem = z.infer<typeof tripRatesSchema>;
+export type TripRatesByDateItem = TollTripRates;

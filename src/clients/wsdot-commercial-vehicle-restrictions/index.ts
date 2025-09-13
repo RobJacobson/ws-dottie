@@ -3,8 +3,8 @@ export * from "./getCommercialVehicleRestrictionsWithId";
 
 // Re-export output types from schemas
 export type {
-  CommercialVehiclesRestriction,
-  CommercialVehiclesRestrictions,
-  CommercialVehiclesRestrictionWithId,
-  CommercialVehiclesRestrictionsWithId,
+  CommercialVehicleRestriction,
+  CommercialVehicleRestrictions,
+  CommercialVehicleRestrictionWithId,
+  CommercialVehicleRestrictionsWithId,
 } from "@/schemas/wsdot-commercial-vehicle-restrictions";

@@ -4,6 +4,6 @@ export * from "./searchHighwayCameras";
 
 // Re-export output types from schemas
 export type {
-  HighwayCamera,
-  HighwayCameras,
+  Camera,
+  Cameras,
 } from "@/schemas/wsdot-highway-cameras";

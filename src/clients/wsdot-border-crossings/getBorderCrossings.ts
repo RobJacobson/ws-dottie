@@ -59,19 +59,20 @@ import { z } from "zod";
 import { borderCrossingsSchema } from "@/schemas/wsdot-border-crossings";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getBorderCrossings */
-const getBorderCrossingsParamsSchema = z.object({});
+/** Input schema for getBorderCrossings */
+const borderCrossingsInput = z.object({});
 
-/** GetBorderCrossings params type */
-
-/** Endpoint definition for getBorderCrossings */
-export const getBorderCrossingsDef = defineEndpoint({
+/** Endpoint metadata for getBorderCrossings */
+export const getBorderCrossingsMeta = defineEndpoint({
   api: "wsdot-border-crossings",
   function: "getBorderCrossings",
   endpoint:
     "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
-  inputSchema: getBorderCrossingsParamsSchema,
+  inputSchema: borderCrossingsInput,
   outputSchema: borderCrossingsSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+// Type exports
+export type BorderCrossingsInput = z.infer<typeof borderCrossingsInput>;

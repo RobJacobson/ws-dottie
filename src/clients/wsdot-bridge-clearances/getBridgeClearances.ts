@@ -70,21 +70,22 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
  */
 import { z } from "zod";
-import { bridgeDataGISListSchema } from "@/schemas/wsdot-bridge-clearances";
+import { bridgeClearancesSchema } from "@/schemas/wsdot-bridge-clearances";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getBridgeClearances */
-const getBridgeClearancesParamsSchema = z.object({});
+/** Input schema for getBridgeClearances */
+const bridgeClearancesInput = z.object({});
 
-/** GetBridgeClearances params type */
-
-/** Endpoint definition for getBridgeClearances */
-export const getBridgeClearancesDef = defineEndpoint({
+/** Endpoint metadata for getBridgeClearances */
+export const getBridgeClearancesMeta = defineEndpoint({
   api: "wsdot-bridge-clearances",
   function: "getBridgeClearances",
   endpoint: "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson",
-  inputSchema: getBridgeClearancesParamsSchema,
-  outputSchema: bridgeDataGISListSchema,
+  inputSchema: bridgeClearancesInput,
+  outputSchema: bridgeClearancesSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type BridgeClearancesInput = z.infer<typeof bridgeClearancesInput>;

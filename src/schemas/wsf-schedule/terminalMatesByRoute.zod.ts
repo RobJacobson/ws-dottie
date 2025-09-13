@@ -29,16 +29,3 @@ export const terminalMatesByRouteSchema = z.object({
 });
 
 export type TerminalMatesByRoute = z.infer<typeof terminalMatesByRouteSchema>;
-
-/**
- * Array of terminal mates by route.
- */
-export const terminalMatesByRouteArraySchema = z
-  .array(terminalMatesByRouteSchema)
-  .describe(
-    "The valid departing and arriving terminal combinations for the given trip date and route."
-  );
-
-export type TerminalMatesByRouteArray = z.infer<
-  typeof terminalMatesByRouteArraySchema
->;

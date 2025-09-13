@@ -18,7 +18,7 @@ import * as allEndpoints from "../../clients";
  */
 export const getAllEndpoints = (): EndpointsMap =>
   Object.entries(allEndpoints)
-    .filter(([key]) => key.endsWith("Def"))
+    .filter(([key]) => key.endsWith("Meta"))
     .reduce((acc, [, value]) => {
       const endpointDef = value as AnyEndpointDefinition;
       return { ...acc, [endpointDef.meta.function]: endpointDef };

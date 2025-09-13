@@ -1,19 +1,20 @@
 import { z } from "zod";
-import { terminalLocationArraySchema } from "@/schemas/wsf-terminals";
+import { terminalLocationsSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalLocations */
-const getTerminalLocationsParamsSchema = z.object({});
+/** Input schema for getTerminalLocations */
+const terminalLocationsInput = z.object({});
 
-/** GetTerminalLocations params type */
-
-/** Endpoint definition for getTerminalLocations */
-export const getTerminalLocationsDef = defineEndpoint({
+/** Endpoint metadata for getTerminalLocations */
+export const getTerminalLocationsMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalLocations",
   endpoint: "/ferries/api/terminals/rest/terminallocations",
-  inputSchema: getTerminalLocationsParamsSchema,
-  outputSchema: terminalLocationArraySchema,
+  inputSchema: terminalLocationsInput,
+  outputSchema: terminalLocationsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalLocationsInput = z.infer<typeof terminalLocationsInput>;

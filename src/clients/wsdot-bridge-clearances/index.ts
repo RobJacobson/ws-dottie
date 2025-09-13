@@ -3,6 +3,6 @@ export * from "./getBridgeClearancesByRoute";
 
 // Re-export output types from schemas
 export type {
-  BridgeDataGISItem,
-  BridgeDataGIS,
+  BridgeClearance,
+  BridgeClearances,
 } from "@/schemas/wsdot-bridge-clearances";

@@ -75,13 +75,4 @@ export const routeDetailsSchema = z.object({
     .describe("Alerts associated with the route."),
 });
 
-export type RouteDetailsItem = z.infer<typeof routeDetailsSchema>;
-
-/**
- * Array of route details.
- */
-export const routeDetailsArraySchema = z
-  .array(routeDetailsSchema)
-  .describe("The detailed route information for the given trip date.");
-
-export type RouteDetails = z.infer<typeof routeDetailsArraySchema>;
+export type RouteDetails = z.infer<typeof routeDetailsSchema>;

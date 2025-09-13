@@ -45,17 +45,5 @@ export const flowDataSchema = z
   })
   .describe("A data structure that represents a Flow Station.");
 
-/**
- * TrafficFlows schema
- *
- * Array of traffic flow data from WSDOT flow stations.
- */
-export const trafficFlowsSchema = z
-  .array(flowDataSchema)
-  .describe("Array of traffic flow data from WSDOT flow stations.");
-
 /** FlowData type */
 export type FlowData = z.infer<typeof flowDataSchema>;
-
-/** TrafficFlows type */
-export type TrafficFlows = z.infer<typeof trafficFlowsSchema>;

@@ -88,22 +88,25 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___commercial_vehicle.html
  */
 import { z } from "zod";
-import { commercialVehiclesRestrictionsWithIdSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
+import { commercialVehicleRestrictionsWithIdSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getCommercialVehicleRestrictionsWithId */
-const getCommercialVehicleRestrictionsWithIdParamsSchema = z.object({});
+/** Input schema for getCommercialVehicleRestrictionsWithId */
+const commercialVehicleRestrictionsWithIdInput = z.object({});
 
-/** GetCommercialVehicleRestrictionsWithId params type */
-
-/** Endpoint definition for getCommercialVehicleRestrictionsWithId */
-export const getCommercialVehicleRestrictionsWithIdDef = defineEndpoint({
+/** Endpoint metadata for getCommercialVehicleRestrictionsWithId */
+export const getCommercialVehicleRestrictionsWithIdMeta = defineEndpoint({
   api: "wsdot-commercial-vehicle-restrictions",
   function: "getCommercialVehicleRestrictionsWithId",
   endpoint:
     "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson",
-  inputSchema: getCommercialVehicleRestrictionsWithIdParamsSchema,
-  outputSchema: commercialVehiclesRestrictionsWithIdSchema,
+  inputSchema: commercialVehicleRestrictionsWithIdInput,
+  outputSchema: commercialVehicleRestrictionsWithIdSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type CommercialVehicleRestrictionsWithIdInput = z.infer<
+  typeof commercialVehicleRestrictionsWithIdInput
+>;

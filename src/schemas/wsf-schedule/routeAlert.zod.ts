@@ -52,12 +52,3 @@ export const routeAlertSchema = z.object({
 });
 
 export type RouteAlert = z.infer<typeof routeAlertSchema>;
-
-/**
- * Array of route alerts.
- */
-export const routeAlertsArraySchema = z
-  .array(routeAlertSchema)
-  .describe("Alerts associated with a route.");
-
-export type RouteAlertsArray = z.infer<typeof routeAlertsArraySchema>;

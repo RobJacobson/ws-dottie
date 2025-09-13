@@ -34,12 +34,3 @@ export const routeSchema = z.object({
 });
 
 export type Route = z.infer<typeof routeSchema>;
-
-/**
- * Array of routes.
- */
-export const routesArraySchema = z
-  .array(routeSchema)
-  .describe("The routes available for the given trip date.");
-
-export type RoutesArray = z.infer<typeof routesArraySchema>;

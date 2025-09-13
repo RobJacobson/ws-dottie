@@ -1,92 +1,11 @@
 import { z } from "zod";
-import { terminalComboVerboseItemSchema } from "./terminalComboVerbose.zod";
+import { terminalComboVerboseItemSchema } from "./terminalComboVerboseItem.zod";
+import { lineItemXrefSchema } from "./lineItemXref.zod";
+import { lineItemSchema } from "./lineItem.zod";
+import { roundTripLineItemSchema } from "./roundTripLineItem.zod";
 
-// Note: terminalComboVerboseItemSchema is imported from terminalComboVerbose.zod.ts
+// Note: terminalComboVerboseItemSchema is imported from terminalComboVerboseItem.zod.ts
 // to avoid duplication since both schemas are functionally identical
-
-/**
- * Schema for validating a single line item cross-reference from the GET /farelineitemsverbose endpoint.
- */
-export const lineItemXrefSchema = z.object({
-  /** An array index from TerminalComboVerbose. */
-  TerminalComboIndex: z
-    .number()
-    .int()
-    .nonnegative()
-    .describe("An array index from TerminalComboVerbose."),
-  /** An array index from LineItems. */
-  LineItemIndex: z
-    .number()
-    .int()
-    .nonnegative()
-    .describe("An array index from LineItems."),
-  /** An array index from RoundTripLineItems. */
-  RoundTripLineItemIndex: z
-    .number()
-    .int()
-    .nonnegative()
-    .describe("An array index from RoundTripLineItems."),
-});
-
-/**
- * Schema for validating a single line item from the GET /farelineitemsverbose endpoint.
- */
-export const lineItemSchema = z.object({
-  /** Unique identifier for a line item. */
-  FareLineItemID: z
-    .number()
-    .int()
-    .positive()
-    .describe("Unique identifier for a line item."),
-  /** A description of the fare (eg. "Adult (age 19 - 64)"). */
-  FareLineItem: z
-    .string()
-    .nullable()
-    .describe('A description of the fare (eg. "Adult (age 19 - 64)").'),
-  /** A logical grouping that the fare belongs to (eg. "Passenger"). */
-  Category: z
-    .string()
-    .nullable()
-    .describe('A logical grouping that the fare belongs to (eg. "Passenger").'),
-  /** A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. */
-  DirectionIndependent: z
-    .boolean()
-    .describe(
-      "A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal."
-    ),
-  /** The cost of the fare in dollars. */
-  Amount: z.number().describe("The cost of the fare in dollars."),
-});
-
-/**
- * Schema for validating a single round trip line item from the GET /farelineitemsverbose endpoint.
- */
-export const roundTripLineItemSchema = z.object({
-  /** Unique identifier for a line item. */
-  FareLineItemID: z
-    .number()
-    .int()
-    .positive()
-    .describe("Unique identifier for a line item."),
-  /** A description of the fare (eg. "Adult (age 19 - 64)"). */
-  FareLineItem: z
-    .string()
-    .nullable()
-    .describe('A description of the fare (eg. "Adult (age 19 - 64)").'),
-  /** A logical grouping that the fare belongs to (eg. "Passenger"). */
-  Category: z
-    .string()
-    .nullable()
-    .describe('A logical grouping that the fare belongs to (eg. "Passenger").'),
-  /** A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. */
-  DirectionIndependent: z
-    .boolean()
-    .describe(
-      "A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal."
-    ),
-  /** The cost of the fare in dollars. */
-  Amount: z.number().describe("The cost of the fare in dollars."),
-});
 
 /**
  * Schema for validating the response from the GET /farelineitemsverbose endpoint.
@@ -122,8 +41,4 @@ export const fareLineItemsVerboseSchema = z.object({
     ),
 });
 
-// Note: TerminalComboVerboseItem type is exported from terminalComboVerbose.zod.ts
-export type LineItemXref = z.infer<typeof lineItemXrefSchema>;
-export type LineItem = z.infer<typeof lineItemSchema>;
-export type RoundTripLineItem = z.infer<typeof roundTripLineItemSchema>;
 export type FareLineItemsVerbose = z.infer<typeof fareLineItemsVerboseSchema>;

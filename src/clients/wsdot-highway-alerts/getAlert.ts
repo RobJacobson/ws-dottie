@@ -83,23 +83,23 @@ import { z } from "zod";
 import { alertSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getAlert */
-const getAlertParamsSchema = z.object({
+/** Input schema for getAlert */
+const alertInput = z.object({
   /** Alert identifier */
   AlertID: z.number().int().positive(),
 });
 
-/** Endpoint definition for getAlert */
-
-export const getAlertDef = defineEndpoint({
+/** Endpoint metadata for getAlert */
+export const getAlertMeta = defineEndpoint({
   api: "wsdot-highway-alerts",
   function: "getAlert",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}",
-  inputSchema: getAlertParamsSchema,
+  inputSchema: alertInput,
   outputSchema: alertSchema,
   sampleParams: { AlertID: 468632 },
   cacheStrategy: "MINUTE_UPDATES",
 });
 
-/** GetAlert params type */
+// Type exports
+export type AlertInput = z.infer<typeof alertInput>;

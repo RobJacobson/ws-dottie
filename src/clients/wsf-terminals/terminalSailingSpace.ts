@@ -1,19 +1,22 @@
 import { z } from "zod";
-import { terminalSailingSpaceArraySchema } from "@/schemas/wsf-terminals";
+import { terminalSailingSpacesSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalSailingSpace */
-const getTerminalSailingSpaceParamsSchema = z.object({});
+/** Input schema for getTerminalSailingSpace */
+const terminalSailingSpaceInput = z.object({});
 
-/** GetTerminalSailingSpace params type */
-
-/** Endpoint definition for getTerminalSailingSpace */
-export const getTerminalSailingSpaceDef = defineEndpoint({
+/** Endpoint metadata for getTerminalSailingSpace */
+export const getTerminalSailingSpaceMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalSailingSpace",
   endpoint: "/ferries/api/terminals/rest/terminalsailingspace",
-  inputSchema: getTerminalSailingSpaceParamsSchema,
-  outputSchema: terminalSailingSpaceArraySchema,
+  inputSchema: terminalSailingSpaceInput,
+  outputSchema: terminalSailingSpacesSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalSailingSpaceInput = z.infer<
+  typeof terminalSailingSpaceInput
+>;

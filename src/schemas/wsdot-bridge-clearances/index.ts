@@ -12,4 +12,5 @@
 // BRIDGE DATA GIS
 // ============================================================================
 
-export * from "./bridgeDataGIS.zod";
+export * from "./bridgeClearance.zod";
+export * from "./bridgeClearances.zod";

@@ -1,19 +1,20 @@
 import { z } from "zod";
-import { scheduleAlertsArraySchema } from "@/schemas/wsf-schedule";
+import { scheduleAlertsSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getScheduleAlerts */
-const getScheduleAlertsParamsSchema = z.object({});
+/** Input schema for getScheduleAlerts */
+const scheduleAlertsInput = z.object({});
 
-/** GetScheduleAlerts params type */
-
-/** Endpoint definition for getScheduleAlerts */
-export const getScheduleAlertsDef = defineEndpoint({
+/** Endpoint metadata for getScheduleAlerts */
+export const getScheduleAlertsMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getScheduleAlerts",
   endpoint: "/ferries/api/schedule/rest/alerts",
-  inputSchema: getScheduleAlertsParamsSchema,
-  outputSchema: scheduleAlertsArraySchema,
+  inputSchema: scheduleAlertsInput,
+  outputSchema: scheduleAlertsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type ScheduleAlertsInput = z.infer<typeof scheduleAlertsInput>;

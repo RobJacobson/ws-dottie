@@ -51,22 +51,3 @@ export const scheduleResponseSchema = z.object({
 
 export type ScheduleResponse = z.infer<typeof scheduleResponseSchema>;
 
-/**
- * Single schedule response.
- */
-export const scheduleResponseSingleSchema = scheduleResponseSchema.describe(
-  "Single schedule response for departure times."
-);
-
-/**
- * Array of schedule responses.
- */
-export const scheduleResponsesArraySchema = z
-  .array(scheduleResponseSchema)
-  .describe(
-    "Departure times for either a trip date and route or a trip date and terminal combination."
-  );
-
-export type ScheduleResponsesArray = z.infer<
-  typeof scheduleResponsesArraySchema
->;

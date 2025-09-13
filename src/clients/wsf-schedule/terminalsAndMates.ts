@@ -3,20 +3,21 @@ import { terminalsAndMatesSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
-/** Params schema for getTerminalsAndMates */
-const getTerminalsAndMatesParamsSchema = z.object({
+/** Input schema for getTerminalsAndMates */
+const terminalsAndMatesInput = z.object({
   tripDate: z.date(),
 });
 
-/** GetTerminalsAndMates params type */
-
-/** Endpoint definition for getTerminalsAndMates */
-export const getTerminalsAndMatesDef = defineEndpoint({
+/** Endpoint metadata for getTerminalsAndMates */
+export const getTerminalsAndMatesMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getTerminalsAndMates",
   endpoint: "/ferries/api/schedule/rest/terminalsandmates/{tripDate}",
-  inputSchema: getTerminalsAndMatesParamsSchema,
+  inputSchema: terminalsAndMatesInput,
   outputSchema: terminalsAndMatesSchema,
   sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type TerminalsAndMatesInput = z.infer<typeof terminalsAndMatesInput>;

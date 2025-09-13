@@ -170,14 +170,3 @@ export const vesselStatsSchema = vesselSchema.extend({
 });
 
 export type VesselStats = z.infer<typeof vesselStatsSchema>;
-
-/**
- * Array of vessel stats
- *
- * The specification details for vessels in the WSF fleet.
- */
-export const vesselStatsArraySchema = z
-  .array(vesselStatsSchema)
-  .describe("The specification details for vessels in the WSF fleet.");
-
-export type VesselStatsArray = z.infer<typeof vesselStatsArraySchema>;

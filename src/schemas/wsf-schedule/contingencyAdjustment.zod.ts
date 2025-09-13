@@ -43,16 +43,3 @@ export const contingencyAdjustmentSchema = z.object({
 });
 
 export type ContingencyAdjustment = z.infer<typeof contingencyAdjustmentSchema>;
-
-/**
- * Array of contingency adjustments.
- */
-export const contingencyAdjustmentsArraySchema = z
-  .array(contingencyAdjustmentSchema)
-  .describe(
-    "Defines periods of service for contingency routes (scheduled routes marked as ContingencyOnly). For non-contingency routes (scheduled routes where ContingencyOnly is false) it might define date ranges where the scheduled route is not in service."
-  );
-
-export type ContingencyAdjustmentsArray = z.infer<
-  typeof contingencyAdjustmentsArraySchema
->;

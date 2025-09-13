@@ -41,6 +41,3 @@ export const terminalBasicsSchema = terminalSchema.extend({
 });
 
 export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
-
-export const terminalBasicsArraySchema = z.array(terminalBasicsSchema);
-export type TerminalBasicsArray = z.infer<typeof terminalBasicsArraySchema>;

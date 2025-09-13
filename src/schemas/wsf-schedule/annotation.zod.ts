@@ -48,12 +48,3 @@ export const annotationSchema = z.object({
 });
 
 export type Annotation = z.infer<typeof annotationSchema>;
-
-/**
- * Array of annotations.
- */
-export const annotationsArraySchema = z
-  .array(annotationSchema)
-  .describe("Informational attributes associated with the terminal time.");
-
-export type AnnotationsArray = z.infer<typeof annotationsArraySchema>;

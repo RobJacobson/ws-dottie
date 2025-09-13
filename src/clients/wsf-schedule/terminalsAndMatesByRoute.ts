@@ -3,22 +3,25 @@ import { terminalsAndMatesByRouteSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
-/** Params schema for getTerminalsAndMatesByRoute */
-const getTerminalsAndMatesByRouteParamsSchema = z.object({
+/** Input schema for getTerminalsAndMatesByRoute */
+const terminalsAndMatesByRouteInput = z.object({
   tripDate: z.date(),
   routeId: z.number().int().positive(),
 });
 
-/** GetTerminalsAndMatesByRoute params type */
-
-/** Endpoint definition for getTerminalsAndMatesByRoute */
-export const getTerminalsAndMatesByRouteDef = defineEndpoint({
+/** Endpoint metadata for getTerminalsAndMatesByRoute */
+export const getTerminalsAndMatesByRouteMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getTerminalsAndMatesByRoute",
   endpoint:
     "/ferries/api/schedule/rest/terminalsandmatesbyroute/{tripDate}/{routeId}",
-  inputSchema: getTerminalsAndMatesByRouteParamsSchema,
+  inputSchema: terminalsAndMatesByRouteInput,
   outputSchema: terminalsAndMatesByRouteSchema,
   sampleParams: { tripDate: datesHelper.tomorrow(), routeId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type TerminalsAndMatesByRouteInput = z.infer<
+  typeof terminalsAndMatesByRouteInput
+>;

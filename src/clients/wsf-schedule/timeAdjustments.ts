@@ -2,18 +2,19 @@ import { z } from "zod";
 import { timeAdjustmentsSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTimeAdjustments */
-const getTimeAdjustmentsParamsSchema = z.object({});
+/** Input schema for getTimeAdjustments */
+const timeAdjustmentsInput = z.object({});
 
-/** GetTimeAdjustments params type */
-
-/** Endpoint definition for getTimeAdjustments */
-export const getTimeAdjustmentsDef = defineEndpoint({
+/** Endpoint metadata for getTimeAdjustments */
+export const getTimeAdjustmentsMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getTimeAdjustments",
   endpoint: "/ferries/api/schedule/rest/timeadj",
-  inputSchema: getTimeAdjustmentsParamsSchema,
+  inputSchema: timeAdjustmentsInput,
   outputSchema: timeAdjustmentsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type TimeAdjustmentsInput = z.infer<typeof timeAdjustmentsInput>;

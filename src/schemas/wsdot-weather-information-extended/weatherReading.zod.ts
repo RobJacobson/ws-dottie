@@ -196,17 +196,5 @@ export const weatherReadingSchema = z
   })
   .describe("Information from a weather station.");
 
-/**
- * WeatherReadings schema
- *
- * Array of weather readings from WSDOT weather stations.
- */
-export const weatherReadingsSchema = z
-  .array(weatherReadingSchema)
-  .describe("Array of weather readings from WSDOT weather stations.");
-
 /** WeatherReading type */
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
-
-/** WeatherReadings type */
-export type WeatherReadings = z.infer<typeof weatherReadingsSchema>;

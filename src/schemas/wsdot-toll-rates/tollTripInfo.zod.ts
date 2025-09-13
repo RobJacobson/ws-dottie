@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/shared/tanstack/validation";
-import { tollLocationSchema } from "./tollLocation.zod";
 
 /**
  * TollTripInfo schema
@@ -46,17 +45,5 @@ export const tollTripInfoSchema = z.object({
   TripName: z.string().nullable().describe("Trip identifier (nullable)"),
 });
 
-/**
- * TollTripInfos schema
- *
- * Array of toll trip info records.
- */
-export const tollTripInfosSchema = z
-  .array(tollTripInfoSchema)
-  .describe("Array of toll trip info records.");
-
 /** TollTripInfo type */
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
-
-/** TollTripInfos type */
-export type TollTripInfos = z.infer<typeof tollTripInfosSchema>;

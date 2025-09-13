@@ -73,11 +73,3 @@ export const sailingSchema = z.object({
 
 export type Sailing = z.infer<typeof sailingSchema>;
 
-/**
- * Array of sailings.
- */
-export const sailingsArraySchema = z
-  .array(sailingSchema)
-  .describe("The sailings for a particular scheduled route.");
-
-export type SailingsArray = z.infer<typeof sailingsArraySchema>;

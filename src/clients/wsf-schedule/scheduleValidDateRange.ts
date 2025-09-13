@@ -2,18 +2,21 @@ import { z } from "zod";
 import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getScheduleValidDateRange */
-const getScheduleValidDateRangeParamsSchema = z.object({});
+/** Input schema for getScheduleValidDateRange */
+const scheduleValidDateRangeInput = z.object({});
 
-/** GetScheduleValidDateRange params type */
-
-/** Endpoint definition for getScheduleValidDateRange */
-export const getScheduleValidDateRangeDef = defineEndpoint({
+/** Endpoint metadata for getScheduleValidDateRange */
+export const getScheduleValidDateRangeMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getScheduleValidDateRange",
   endpoint: "/ferries/api/schedule/rest/validdaterange",
-  inputSchema: getScheduleValidDateRangeParamsSchema,
+  inputSchema: scheduleValidDateRangeInput,
   outputSchema: validDateRangeSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type ScheduleValidDateRangeInput = z.infer<
+  typeof scheduleValidDateRangeInput
+>;

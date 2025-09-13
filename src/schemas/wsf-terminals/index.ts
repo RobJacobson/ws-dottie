@@ -14,6 +14,7 @@
 
 export * from "./bulletin.zod";
 export * from "./terminalBulletins.zod";
+export * from "./terminalBulletinss.zod";
 
 // ============================================================================
 // LOCATIONS
@@ -21,6 +22,7 @@ export * from "./terminalBulletins.zod";
 
 export * from "./dispGISZoomLoc.zod";
 export * from "./terminalLocation.zod";
+export * from "./terminalLocations.zod";
 
 // ============================================================================
 // SAILING SPACE
@@ -29,6 +31,7 @@ export * from "./terminalLocation.zod";
 export * from "./departingSpace.zod";
 export * from "./spaceForArrivalTerminal.zod";
 export * from "./terminalSailingSpace.zod";
+export * from "./terminalSailingSpaces.zod";
 
 // ============================================================================
 // TERMINALS
@@ -36,13 +39,16 @@ export * from "./terminalSailingSpace.zod";
 
 export * from "./terminal.zod";
 export * from "./terminalBasics.zod";
+export * from "./terminalBasicss.zod";
 export * from "./terminalVerbose.zod";
+export * from "./terminalVerboses.zod";
 
 // ============================================================================
 // TRANSPORTS
 // ============================================================================
 
 export * from "./terminalTransports.zod";
+export * from "./terminalTransportss.zod";
 export * from "./transitLink.zod";
 
 // ============================================================================
@@ -50,4 +56,5 @@ export * from "./transitLink.zod";
 // ============================================================================
 
 export * from "./terminalWaitTimes.zod";
+export * from "./terminalWaitTimess.zod";
 export * from "./waitTime.zod";

@@ -68,11 +68,3 @@ export const scheduledRouteSchema = z.object({
 
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
 
-/**
- * Array of scheduled routes.
- */
-export const scheduledRoutesArraySchema = z
-  .array(scheduledRouteSchema)
-  .describe("The routes that are active for a season.");
-
-export type ScheduledRoutesArray = z.infer<typeof scheduledRoutesArraySchema>;

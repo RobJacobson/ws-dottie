@@ -1,19 +1,20 @@
 import { z } from "zod";
-import { terminalVerboseArraySchema } from "@/schemas/wsf-terminals";
+import { terminalVerbosesSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalVerbose */
-const getTerminalVerboseParamsSchema = z.object({});
+/** Input schema for getTerminalVerbose */
+const terminalVerboseInput = z.object({});
 
-/** GetTerminalVerbose params type */
-
-/** Endpoint definition for getTerminalVerbose */
-export const getTerminalVerboseDef = defineEndpoint({
+/** Endpoint metadata for getTerminalVerbose */
+export const getTerminalVerboseMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalVerbose",
   endpoint: "/ferries/api/terminals/rest/terminalverbose",
-  inputSchema: getTerminalVerboseParamsSchema,
-  outputSchema: terminalVerboseArraySchema,
+  inputSchema: terminalVerboseInput,
+  outputSchema: terminalVerbosesSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalVerboseInput = z.infer<typeof terminalVerboseInput>;

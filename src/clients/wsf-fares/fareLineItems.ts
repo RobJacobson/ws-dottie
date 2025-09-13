@@ -3,23 +3,21 @@ import { fareLineItemSchema } from "@/schemas/wsf-fares";
 import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
-/** Params schema for getFareLineItems */
-const getFareLineItemsParamsSchema = z.object({
+/** Input schema for getFareLineItems */
+const fareLineItemsInput = z.object({
   tripDate: z.date(),
   departingTerminalId: z.number().int().positive(),
   arrivingTerminalId: z.number().int().positive(),
   roundTrip: z.boolean(),
 });
 
-/** GetFareLineItems params type */
-
-/** Endpoint definition for getFareLineItems */
-export const getFareLineItemsDef = defineEndpoint({
+/** Endpoint metadata for getFareLineItems */
+export const getFareLineItemsMeta = defineEndpoint({
   api: "wsf-fares",
   function: "getFareLineItems",
   endpoint:
     "/ferries/api/fares/rest/farelineitems/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
-  inputSchema: getFareLineItemsParamsSchema,
+  inputSchema: fareLineItemsInput,
   outputSchema: z.array(fareLineItemSchema),
   sampleParams: {
     tripDate: datesHelper.tomorrow(),
@@ -29,3 +27,6 @@ export const getFareLineItemsDef = defineEndpoint({
   },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type FareLineItemsInput = z.infer<typeof fareLineItemsInput>;

@@ -19,8 +19,3 @@ export const terminalWaitTimesSchema = terminalSchema.extend({
 });
 
 export type TerminalWaitTimes = z.infer<typeof terminalWaitTimesSchema>;
-
-export const terminalWaitTimesArraySchema = z.array(terminalWaitTimesSchema);
-export type TerminalWaitTimesArray = z.infer<
-  typeof terminalWaitTimesArraySchema
->;

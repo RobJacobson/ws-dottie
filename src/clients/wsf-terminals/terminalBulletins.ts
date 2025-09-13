@@ -1,19 +1,20 @@
 import { z } from "zod";
-import { terminalBulletinsArraySchema } from "@/schemas/wsf-terminals";
+import { terminalBulletinssSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalBulletins */
-const getTerminalBulletinsParamsSchema = z.object({});
+/** Input schema for getTerminalBulletins */
+const terminalBulletinsInput = z.object({});
 
-/** GetTerminalBulletins params type */
-
-/** Endpoint definition for getTerminalBulletins */
-export const getTerminalBulletinsDef = defineEndpoint({
+/** Endpoint metadata for getTerminalBulletins */
+export const getTerminalBulletinsMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalBulletins",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins",
-  inputSchema: getTerminalBulletinsParamsSchema,
-  outputSchema: terminalBulletinsArraySchema,
+  inputSchema: terminalBulletinsInput,
+  outputSchema: terminalBulletinssSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalBulletinsInput = z.infer<typeof terminalBulletinsInput>;

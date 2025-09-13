@@ -12,4 +12,5 @@
 // BORDER CROSSINGS
 // ============================================================================
 
+export * from "./borderCrossing.zod";
 export * from "./borderCrossings.zod";

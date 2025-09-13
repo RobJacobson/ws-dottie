@@ -47,21 +47,21 @@ import { tripRatesByDateSchema } from "@/schemas/wsdot-toll-rates";
 import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
-/** Params schema for getTripRatesByDate */
-const getTripRatesByDateParamsSchema = z.object({
+/** Input schema for getTripRatesByDate */
+const tripRatesByDateInput = z.object({
   /** Start date (JS Date) */
   fromDate: z.date(),
   /** End date (JS Date) */
   toDate: z.date(),
 });
 
-/** Endpoint definition for getTripRatesByDate */
-export const getTripRatesByDateDef = defineEndpoint({
+/** Endpoint metadata for getTripRatesByDate */
+export const getTripRatesByDateMeta = defineEndpoint({
   api: "wsdot-toll-rates",
   function: "getTripRatesByDate",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
-  inputSchema: getTripRatesByDateParamsSchema,
+  inputSchema: tripRatesByDateInput,
   outputSchema: tripRatesByDateSchema,
   sampleParams: {
     fromDate: datesHelper.startOfMonth(),
@@ -70,4 +70,5 @@ export const getTripRatesByDateDef = defineEndpoint({
   cacheStrategy: "DAILY_STATIC",
 });
 
-/** GetTripRatesByDate params type */
+// Type exports
+export type TripRatesByDateInput = z.infer<typeof tripRatesByDateInput>;

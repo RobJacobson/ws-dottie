@@ -12,4 +12,5 @@
 // WEATHER STATIONS
 // ============================================================================
 
+export * from "./weatherStation.zod";
 export * from "./weatherStations.zod";

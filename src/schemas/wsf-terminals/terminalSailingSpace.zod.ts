@@ -36,10 +36,3 @@ export const terminalSailingSpaceSchema = terminalSchema.extend({
 });
 
 export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
-
-export const terminalSailingSpaceArraySchema = z.array(
-  terminalSailingSpaceSchema
-);
-export type TerminalSailingSpaceArray = z.infer<
-  typeof terminalSailingSpaceArraySchema
->;

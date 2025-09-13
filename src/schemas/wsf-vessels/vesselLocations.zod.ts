@@ -163,16 +163,3 @@ export const vesselLocationsSchema = z.object({
 });
 
 export type VesselLocations = z.infer<typeof vesselLocationsSchema>;
-
-/**
- * Array of vessel locations
- *
- * The current locations and associated ETA data for vessels in the WSF fleet.
- */
-export const vesselLocationsArraySchema = z
-  .array(vesselLocationsSchema)
-  .describe(
-    "The current locations and associated ETA data for vessels in the WSF fleet."
-  );
-
-export type VesselLocationsArray = z.infer<typeof vesselLocationsArraySchema>;

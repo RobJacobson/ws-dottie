@@ -1,19 +1,22 @@
 import { z } from "zod";
-import { vesselAccommodationsArraySchema } from "@/schemas/wsf-vessels";
+import { vesselAccommodationssSchema } from "@/schemas/wsf-vessels";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getVesselAccommodations */
-const getVesselAccommodationsParamsSchema = z.object({});
+/** Input schema for getVesselAccommodations */
+const vesselAccommodationsInput = z.object({});
 
-/** GetVesselAccommodations params type */
-
-/** Endpoint definition for getVesselAccommodations */
-export const getVesselAccommodationsDef = defineEndpoint({
+/** Endpoint metadata for getVesselAccommodations */
+export const getVesselAccommodationsMeta = defineEndpoint({
   api: "wsf-vessels",
   function: "getVesselAccommodations",
   endpoint: "/ferries/api/vessels/rest/vesselaccommodations",
-  inputSchema: getVesselAccommodationsParamsSchema,
-  outputSchema: vesselAccommodationsArraySchema,
+  inputSchema: vesselAccommodationsInput,
+  outputSchema: vesselAccommodationssSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type VesselAccommodationsInput = z.infer<
+  typeof vesselAccommodationsInput
+>;

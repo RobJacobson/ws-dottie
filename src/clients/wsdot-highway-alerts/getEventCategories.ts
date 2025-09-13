@@ -33,19 +33,20 @@ import { z } from "zod";
 import { eventCategoriesSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getEventCategories */
-const getEventCategoriesParamsSchema = z.object({});
+/** Input schema for getEventCategories */
+const eventCategoriesInput = z.object({});
 
-/** GetEventCategories params type */
-
-/** Endpoint definition for getEventCategories */
-export const getEventCategoriesDef = defineEndpoint({
+/** Endpoint metadata for getEventCategories */
+export const getEventCategoriesMeta = defineEndpoint({
   api: "wsdot-highway-alerts",
   function: "getEventCategories",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
-  inputSchema: getEventCategoriesParamsSchema,
+  inputSchema: eventCategoriesInput,
   outputSchema: eventCategoriesSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+// Type exports
+export type EventCategoriesInput = z.infer<typeof eventCategoriesInput>;

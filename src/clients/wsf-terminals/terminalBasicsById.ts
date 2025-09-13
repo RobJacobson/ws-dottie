@@ -2,20 +2,23 @@ import { z } from "zod";
 import { terminalBasicsSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalBasicsByTerminalId */
-const getTerminalBasicsByTerminalIdParamsSchema = z.object({
+/** Input schema for getTerminalBasicsByTerminalId */
+const terminalBasicsByTerminalIdInput = z.object({
   terminalId: z.number().int(),
 });
 
-/** GetTerminalBasicsByTerminalId params type */
-
-/** Endpoint definition for getTerminalBasicsByTerminalId */
-export const getTerminalBasicsByTerminalIdDef = defineEndpoint({
+/** Endpoint metadata for getTerminalBasicsByTerminalId */
+export const getTerminalBasicsByTerminalIdMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalBasicsByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalbasics/{terminalId}",
-  inputSchema: getTerminalBasicsByTerminalIdParamsSchema,
+  inputSchema: terminalBasicsByTerminalIdInput,
   outputSchema: terminalBasicsSchema,
   sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalBasicsByTerminalIdInput = z.infer<
+  typeof terminalBasicsByTerminalIdInput
+>;

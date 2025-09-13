@@ -1,19 +1,20 @@
 import { z } from "zod";
-import { terminalBasicsArraySchema } from "@/schemas/wsf-terminals";
+import { terminalBasicssSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalBasics */
-const getTerminalBasicsParamsSchema = z.object({});
+/** Input schema for getTerminalBasics */
+const terminalBasicsInput = z.object({});
 
-/** GetTerminalBasics params type */
-
-/** Endpoint definition for getTerminalBasics */
-export const getTerminalBasicsDef = defineEndpoint({
+/** Endpoint metadata for getTerminalBasics */
+export const getTerminalBasicsMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalBasics",
   endpoint: "/ferries/api/terminals/rest/terminalbasics",
-  inputSchema: getTerminalBasicsParamsSchema,
-  outputSchema: terminalBasicsArraySchema,
+  inputSchema: terminalBasicsInput,
+  outputSchema: terminalBasicssSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalBasicsInput = z.infer<typeof terminalBasicsInput>;

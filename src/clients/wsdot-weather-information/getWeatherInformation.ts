@@ -2,19 +2,20 @@ import { z } from "zod";
 import { weatherInformationSchema } from "@/schemas/wsdot-weather-information";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getWeatherInformation */
-const getWeatherInformationParamsSchema = z.object({});
+/** Input schema for getWeatherInformation */
+const weatherInformationInput = z.object({});
 
-/** GetWeatherInformation params type */
-
-/** Endpoint definition for getWeatherInformation */
-export const getWeatherInformationDef = defineEndpoint({
+/** Endpoint metadata for getWeatherInformation */
+export const getWeatherInformationMeta = defineEndpoint({
   api: "wsdot-weather-information",
   function: "getWeatherInformation",
   endpoint:
     "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson",
-  inputSchema: getWeatherInformationParamsSchema,
+  inputSchema: weatherInformationInput,
   outputSchema: weatherInformationSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+// Type exports
+export type WeatherInformationInput = z.infer<typeof weatherInformationInput>;

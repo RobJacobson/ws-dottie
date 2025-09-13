@@ -45,15 +45,3 @@ export const scheduleTodayResponseSchema = z.object({
 
 export type ScheduleTodayResponse = z.infer<typeof scheduleTodayResponseSchema>;
 
-/**
- * Array of schedule today responses.
- */
-export const scheduleTodayResponsesArraySchema = z
-  .array(scheduleTodayResponseSchema)
-  .describe(
-    "Today's departure times for either a terminal combination or a route."
-  );
-
-export type ScheduleTodayResponsesArray = z.infer<
-  typeof scheduleTodayResponsesArraySchema
->;

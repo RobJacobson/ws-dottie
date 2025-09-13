@@ -87,11 +87,3 @@ export const sailingResponseSchema = z.object({
 
 export type SailingResponse = z.infer<typeof sailingResponseSchema>;
 
-/**
- * Array of sailing responses.
- */
-export const sailingResponsesArraySchema = z
-  .array(sailingResponseSchema)
-  .describe("Sailings for a particular scheduled route.");
-
-export type SailingResponsesArray = z.infer<typeof sailingResponsesArraySchema>;

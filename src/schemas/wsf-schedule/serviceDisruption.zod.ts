@@ -26,16 +26,3 @@ export const serviceDisruptionSchema = z.object({
 });
 
 export type ServiceDisruption = z.infer<typeof serviceDisruptionSchema>;
-
-/**
- * Array of service disruptions.
- */
-export const serviceDisruptionsArraySchema = z
-  .array(serviceDisruptionSchema)
-  .describe(
-    "Service disruption alerts that are currently affecting the route."
-  );
-
-export type ServiceDisruptionsArray = z.infer<
-  typeof serviceDisruptionsArraySchema
->;

@@ -2,20 +2,23 @@ import { z } from "zod";
 import { terminalBulletinsSchema } from "@/schemas/wsf-terminals";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTerminalBulletinsByTerminalId */
-const getTerminalBulletinsByTerminalIdParamsSchema = z.object({
+/** Input schema for getTerminalBulletinsByTerminalId */
+const terminalBulletinsByTerminalIdInput = z.object({
   terminalId: z.number().int(),
 });
 
-/** GetTerminalBulletinsByTerminalId params type */
-
-/** Endpoint definition for getTerminalBulletinsByTerminalId */
-export const getTerminalBulletinsByTerminalIdDef = defineEndpoint({
+/** Endpoint metadata for getTerminalBulletinsByTerminalId */
+export const getTerminalBulletinsByTerminalIdMeta = defineEndpoint({
   api: "wsf-terminals",
   function: "getTerminalBulletinsByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins/{terminalId}",
-  inputSchema: getTerminalBulletinsByTerminalIdParamsSchema,
+  inputSchema: terminalBulletinsByTerminalIdInput,
   outputSchema: terminalBulletinsSchema,
   sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type TerminalBulletinsByTerminalIdInput = z.infer<
+  typeof terminalBulletinsByTerminalIdInput
+>;

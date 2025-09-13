@@ -2,11 +2,11 @@ import { z } from "zod";
 import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
- * BridgeDataGIS schema
+ * BridgeClearance schema
  *
  * A record containing the location and clearance information of a bridge structure.
  */
-export const bridgeDataGISSchema = z
+export const bridgeClearanceSchema = z
   .object({
     /** Date record was last updated. */
     APILastUpdate: zWsdotDate().describe("Date record was last updated."),
@@ -87,12 +87,5 @@ export const bridgeDataGISSchema = z
     "A record containing the location and clearance information of a bridge structure."
   );
 
-/** BridgeDataGISItem type */
-export type BridgeDataGISItem = z.infer<typeof bridgeDataGISSchema>;
-
-export const bridgeDataGISListSchema = z
-  .array(bridgeDataGISSchema)
-  .describe("Bridge clearance information, see disclaimer.");
-
-/** BridgeDataGIS type */
-export type BridgeDataGIS = z.infer<typeof bridgeDataGISListSchema>;
+/** BridgeClearance type */
+export type BridgeClearance = z.infer<typeof bridgeClearanceSchema>;

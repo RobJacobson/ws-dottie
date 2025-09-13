@@ -19,8 +19,3 @@ export const terminalBulletinsSchema = terminalSchema.extend({
 });
 
 export type TerminalBulletins = z.infer<typeof terminalBulletinsSchema>;
-
-export const terminalBulletinsArraySchema = z.array(terminalBulletinsSchema);
-export type TerminalBulletinsArray = z.infer<
-  typeof terminalBulletinsArraySchema
->;

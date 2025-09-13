@@ -71,25 +71,28 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
  */
 import { z } from "zod";
-import { bridgeDataGISListSchema } from "@/schemas/wsdot-bridge-clearances";
+import { bridgeClearancesSchema } from "@/schemas/wsdot-bridge-clearances";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getBridgeClearancesByRoute */
-const getBridgeClearancesByRouteParamsSchema = z.object({
+/** Input schema for getBridgeClearancesByRoute */
+const bridgeClearancesByRouteInput = z.object({
   /** WSDOT route string (e.g., "005") */
   route: z.string().min(1, "Route parameter is required"),
 });
 
-/** GetBridgeClearancesByRoute params type */
-
-/** Endpoint definition for getBridgeClearancesByRoute */
-export const getBridgeClearancesByRouteDef = defineEndpoint({
+/** Endpoint metadata for getBridgeClearancesByRoute */
+export const getBridgeClearancesByRouteMeta = defineEndpoint({
   api: "wsdot-bridge-clearances",
   function: "getBridgeClearancesByRoute",
   endpoint:
     "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
-  inputSchema: getBridgeClearancesByRouteParamsSchema,
-  outputSchema: bridgeDataGISListSchema,
+  inputSchema: bridgeClearancesByRouteInput,
+  outputSchema: bridgeClearancesSchema,
   sampleParams: { route: "005" },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type BridgeClearancesByRouteInput = z.infer<
+  typeof bridgeClearancesByRouteInput
+>;

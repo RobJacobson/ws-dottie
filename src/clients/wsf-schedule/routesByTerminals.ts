@@ -1,25 +1,23 @@
 import { z } from "zod";
-import { routesArraySchema } from "@/schemas/wsf-schedule";
+import { routesSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
-/** Params schema for getRoutesByTerminals */
-const getRoutesByTerminalsParamsSchema = z.object({
+/** Input schema for getRoutesByTerminals */
+const routesByTerminalsInput = z.object({
   tripDate: z.date(),
   departingTerminalId: z.number().int().positive(),
   arrivingTerminalId: z.number().int().positive(),
 });
 
-/** GetRoutesByTerminals params type */
-
-/** Endpoint definition for getRoutesByTerminals */
-export const getRoutesByTerminalsDef = defineEndpoint({
+/** Endpoint metadata for getRoutesByTerminals */
+export const getRoutesByTerminalsMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getRoutesByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
-  inputSchema: getRoutesByTerminalsParamsSchema,
-  outputSchema: routesArraySchema,
+  inputSchema: routesByTerminalsInput,
+  outputSchema: routesSchema,
   sampleParams: {
     tripDate: datesHelper.tomorrow(),
     departingTerminalId: 1,
@@ -27,3 +25,6 @@ export const getRoutesByTerminalsDef = defineEndpoint({
   },
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type RoutesByTerminalsInput = z.infer<typeof routesByTerminalsInput>;

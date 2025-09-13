@@ -107,7 +107,7 @@ export const generateHelpText = (
   const endpoints = getAllEndpoints();
   const functionList = Object.entries(endpoints)
     .map(([key, endpointDef]) => {
-      const functionName = key.replace("Def", "");
+      const functionName = key.replace("Meta", "");
       const description =
         endpointDef.meta.outputSchema.description ||
         `${endpointDef.meta.api} - ${endpointDef.meta.function}`;

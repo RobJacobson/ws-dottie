@@ -2,18 +2,21 @@ import { z } from "zod";
 import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getCacheFlushDateVessels */
-const getCacheFlushDateVesselsParamsSchema = z.object({});
+/** Input schema for getCacheFlushDateVessels */
+const cacheFlushDateVesselsInput = z.object({});
 
-/** GetCacheFlushDateVessels params type */
-
-/** Endpoint definition for getCacheFlushDateVessels */
-export const getCacheFlushDateVesselsDef = defineEndpoint({
+/** Endpoint metadata for getCacheFlushDateVessels */
+export const getCacheFlushDateVesselsMeta = defineEndpoint({
   api: "wsf-vessels",
   function: "getCacheFlushDateVessels",
   endpoint: "/ferries/api/vessels/rest/cacheflushdate",
-  inputSchema: getCacheFlushDateVesselsParamsSchema,
+  inputSchema: cacheFlushDateVesselsInput,
   outputSchema: wsfStandardCacheFlushDateSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports (ONLY input types, NO output types)
+export type CacheFlushDateVesselsInput = z.infer<
+  typeof cacheFlushDateVesselsInput
+>;

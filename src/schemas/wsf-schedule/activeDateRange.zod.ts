@@ -28,14 +28,3 @@ export const activeDateRangeSchema = z.object({
 });
 
 export type ActiveDateRange = z.infer<typeof activeDateRangeSchema>;
-
-/**
- * Array of active date ranges.
- */
-export const activeDateRangesArraySchema = z
-  .array(activeDateRangeSchema)
-  .describe(
-    "A collection of date ranges detailing when this sailing is active."
-  );
-
-export type ActiveDateRangesArray = z.infer<typeof activeDateRangesArraySchema>;

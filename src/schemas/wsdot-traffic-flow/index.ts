@@ -12,4 +12,5 @@
 // TRAFFIC FLOW
 // ============================================================================
 
-export * from "./trafficFlow.zod";
+export * from "./flowData.zod";
+export * from "./trafficFlows.zod";

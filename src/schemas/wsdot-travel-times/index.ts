@@ -12,4 +12,5 @@
 // TRAVEL TIMES
 // ============================================================================
 
+export * from "./travelTimeRoute.zod";
 export * from "./travelTimes.zod";

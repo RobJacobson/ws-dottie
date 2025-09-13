@@ -15,7 +15,6 @@ export type {
   TollTripRate,
   TollTripVersion,
   TripRate,
-  TripRates,
   TripRatesByDate,
   TripRatesByDateItem,
 } from "@/schemas/wsdot-toll-rates";

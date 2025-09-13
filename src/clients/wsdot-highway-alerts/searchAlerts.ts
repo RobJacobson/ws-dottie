@@ -63,8 +63,8 @@ import { z } from "zod";
 import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for searchAlerts */
-const searchAlertsParamsSchema = z.object({
+/** Input schema for searchAlerts */
+const searchAlertsInput = z.object({
   /** State route code (optional) */
   StateRoute: z.string().optional(),
   /** Region name (optional) */
@@ -79,14 +79,13 @@ const searchAlertsParamsSchema = z.object({
   EndingMilepost: z.number().optional(),
 });
 
-/** Endpoint definition for searchAlerts */
-
-export const searchAlertsDef = defineEndpoint({
+/** Endpoint metadata for searchAlerts */
+export const searchAlertsMeta = defineEndpoint({
   api: "wsdot-highway-alerts",
   function: "searchAlerts",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-  inputSchema: searchAlertsParamsSchema,
+  inputSchema: searchAlertsInput,
   outputSchema: alertsSchema,
   sampleParams: {
     StateRoute: "405",
@@ -96,4 +95,5 @@ export const searchAlertsDef = defineEndpoint({
   cacheStrategy: "MINUTE_UPDATES",
 });
 
-/** SearchAlerts params type */
+// Type exports
+export type SearchAlertsInput = z.infer<typeof searchAlertsInput>;

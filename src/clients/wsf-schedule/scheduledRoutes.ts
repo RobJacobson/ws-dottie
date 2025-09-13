@@ -1,22 +1,20 @@
 import { z } from "zod";
-import { scheduledRoutesArraySchema } from "@/schemas/wsf-schedule";
+import { scheduledRoutesSchema } from "@/schemas/wsf-schedule";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getScheduledRoutes */
-const getScheduledRoutesParamsSchema = z.object({});
+/** Input schema for getScheduledRoutes */
+const scheduledRoutesInput = z.object({});
 
-/** GetScheduledRoutes params type */
-export type GetScheduledRoutesParams = z.infer<
-  typeof getScheduledRoutesParamsSchema
->;
-
-/** Endpoint definition for getScheduledRoutes */
-export const getScheduledRoutesDef = defineEndpoint({
+/** Endpoint metadata for getScheduledRoutes */
+export const getScheduledRoutesMeta = defineEndpoint({
   api: "wsf-schedule",
   function: "getScheduledRoutes",
   endpoint: "/ferries/api/schedule/rest/schedroutes",
-  inputSchema: getScheduledRoutesParamsSchema,
-  outputSchema: scheduledRoutesArraySchema,
+  inputSchema: scheduledRoutesInput,
+  outputSchema: scheduledRoutesSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type ScheduledRoutesInput = z.infer<typeof scheduledRoutesInput>;

@@ -26,18 +26,17 @@ export * from "./scheduleValidDateRange";
 
 // Re-export output types from schemas
 export type {
-  RouteDetailsItem,
   RouteDetails,
   ScheduledRoute,
-  ScheduledRoutesArray,
+  ScheduledRoutes,
   ActiveDateRange,
-  ActiveDateRangesArray,
+  ActiveDateRanges,
   Sailing,
-  SailingsArray,
+  Sailings,
   Route,
-  RoutesArray,
+  Routes,
   TerminalsAndMates,
   TerminalsAndMatesByRoute,
   ScheduleTerminalCombo,
-  ScheduleTerminalCombosArray,
+  ScheduleTerminalCombos,
 } from "@/schemas/wsf-schedule";

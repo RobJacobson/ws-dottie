@@ -17,7 +17,6 @@ export const terminalMatesForTerminalSchema = z.object({
 export type TerminalMatesForTerminal = z.infer<
   typeof terminalMatesForTerminalSchema
 >;
-
 /**
  * Array of terminal mates for a specific terminal.
  */

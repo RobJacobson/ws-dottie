@@ -55,22 +55,23 @@ import { z } from "zod";
 import { flowDataSchema } from "@/schemas/wsdot-traffic-flow";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getTrafficFlowById */
-const getTrafficFlowByIdParamsSchema = z.object({
+/** Input schema for getTrafficFlowById */
+const trafficFlowByIdInput = z.object({
   /** Flow data identifier */
   flowDataID: z.number(),
 });
 
-/** GetTrafficFlowById params type */
-
-/** Endpoint definition for getTrafficFlowById */
-export const getTrafficFlowByIdDef = defineEndpoint({
+/** Endpoint metadata for getTrafficFlowById */
+export const getTrafficFlowByIdMeta = defineEndpoint({
   api: "wsdot-traffic-flow",
   function: "getTrafficFlowById",
   endpoint:
     "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
-  inputSchema: getTrafficFlowByIdParamsSchema,
+  inputSchema: trafficFlowByIdInput,
   outputSchema: flowDataSchema,
   sampleParams: { flowDataID: 2482 },
   cacheStrategy: "MINUTE_UPDATES",
 });
+
+// Type exports
+export type TrafficFlowByIdInput = z.infer<typeof trafficFlowByIdInput>;

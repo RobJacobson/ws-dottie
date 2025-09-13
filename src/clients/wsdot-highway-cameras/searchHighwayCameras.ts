@@ -52,11 +52,11 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
-import { cameraArraySchema } from "@/schemas/wsdot-highway-cameras";
+import { camerasSchema } from "@/schemas/wsdot-highway-cameras";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for searchHighwayCameras */
-const searchHighwayCamerasParamsSchema = z
+/** Input schema for searchHighwayCameras */
+const searchHighwayCamerasInput = z
   .object({
     /** State route code (optional) */
     StateRoute: z.string().optional(),
@@ -72,14 +72,19 @@ const searchHighwayCamerasParamsSchema = z
   })
   .strict();
 
-/** Endpoint definition for searchHighwayCameras */
-export const searchHighwayCamerasDef = defineEndpoint({
+/** Endpoint metadata for searchHighwayCameras */
+export const searchHighwayCamerasMeta = defineEndpoint({
   api: "wsdot-highway-cameras",
   function: "searchHighwayCameras",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
-  inputSchema: searchHighwayCamerasParamsSchema,
-  outputSchema: cameraArraySchema,
+  inputSchema: searchHighwayCamerasInput,
+  outputSchema: camerasSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type SearchHighwayCamerasInput = z.infer<
+  typeof searchHighwayCamerasInput
+>;

@@ -89,8 +89,3 @@ export const terminalTransportsSchema = terminalSchema.extend({
 });
 
 export type TerminalTransports = z.infer<typeof terminalTransportsSchema>;
-
-export const terminalTransportsArraySchema = z.array(terminalTransportsSchema);
-export type TerminalTransportsArray = z.infer<
-  typeof terminalTransportsArraySchema
->;

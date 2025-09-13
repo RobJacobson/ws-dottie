@@ -33,16 +33,3 @@ export const routesWithServiceDisruptionsSchema = z.object({
 export type RoutesWithServiceDisruptions = z.infer<
   typeof routesWithServiceDisruptionsSchema
 >;
-
-/**
- * Array of routes with service disruptions.
- */
-export const routesWithServiceDisruptionsArraySchema = z
-  .array(routesWithServiceDisruptionsSchema)
-  .describe(
-    "The routes currently associated with service disruptions for the given trip date."
-  );
-
-export type RoutesWithServiceDisruptionsArray = z.infer<
-  typeof routesWithServiceDisruptionsArraySchema
->;

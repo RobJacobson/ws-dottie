@@ -2,18 +2,19 @@ import { z } from "zod";
 import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
 import { defineEndpoint } from "@/shared/endpoints";
 
-/** Params schema for getFaresValidDateRange */
-const getFaresValidDateRangeParamsSchema = z.object({});
+/** Input schema for getFaresValidDateRange */
+const faresValidDateRangeInput = z.object({});
 
-/** GetFaresValidDateRange params type */
-
-/** Endpoint definition for getFaresValidDateRange */
-export const getFaresValidDateRangeDef = defineEndpoint({
+/** Endpoint metadata for getFaresValidDateRange */
+export const getFaresValidDateRangeMeta = defineEndpoint({
   api: "wsf-fares",
   function: "getFaresValidDateRange",
   endpoint: "/ferries/api/fares/rest/validdaterange",
-  inputSchema: getFaresValidDateRangeParamsSchema,
+  inputSchema: faresValidDateRangeInput,
   outputSchema: validDateRangeSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
 });
+
+// Type exports
+export type FaresValidDateRangeInput = z.infer<typeof faresValidDateRangeInput>;
