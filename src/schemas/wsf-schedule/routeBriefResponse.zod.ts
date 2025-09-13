@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { serviceDisruptionSchema } from "./serviceDisruption.zod";
+import { routeBriefAlertSchema } from "./routeBriefAlert.zod";
 
 /**
  * Schema for route response from WSF Schedule API.
@@ -10,7 +10,7 @@ import { serviceDisruptionSchema } from "./serviceDisruption.zod";
  * Please format the trip date input as 'YYYY-MM-DD' (eg. '2014-04-01' for a trip date occurring on April 1, 2014).
  * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
  */
-export const routeSchema = z.object({
+export const routeBriefResponseSchema = z.object({
   /** Unique identifier for a route. */
   RouteID: z.number().int().describe("Unique identifier for a route."),
   /** The route's abbreviation. */
@@ -26,11 +26,20 @@ export const routeSchema = z.object({
     ),
   /** Service disruption alerts that are currently affecting the route. */
   ServiceDisruptions: z
-    .array(serviceDisruptionSchema)
+    .array(routeBriefAlertSchema)
     .nullable()
     .describe(
       "Service disruption alerts that are currently affecting the route."
     ),
 });
 
-export type Route = z.infer<typeof routeSchema>;
+export type RouteBriefResponse = z.infer<typeof routeBriefResponseSchema>;
+
+/**
+ * Array of route brief responses.
+ */
+export const routeBriefResponsesSchema = z
+  .array(routeBriefResponseSchema)
+  .describe("The routes available for the given trip date.");
+
+export type RouteBriefResponses = z.infer<typeof routeBriefResponsesSchema>;

@@ -102,3 +102,15 @@ export const scheduleAlertSchema = z.object({
 });
 
 export type ScheduleAlert = z.infer<typeof scheduleAlertSchema>;
+
+/**
+ * ScheduleAlerts schema
+ *
+ * Array of schedule alerts.
+ */
+export const scheduleAlertsSchema = z
+  .array(scheduleAlertSchema)
+  .describe("Array of schedule alerts from WSF Schedule API.");
+
+/** ScheduleAlerts type */
+export type ScheduleAlerts = z.infer<typeof scheduleAlertsSchema>;

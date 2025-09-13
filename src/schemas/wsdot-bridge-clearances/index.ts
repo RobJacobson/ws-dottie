@@ -13,4 +13,3 @@
 // ============================================================================
 
 export * from "./bridgeClearance.zod";
-export * from "./bridgeClearances.zod";

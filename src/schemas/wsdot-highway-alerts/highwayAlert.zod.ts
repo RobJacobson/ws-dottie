@@ -7,7 +7,7 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
  *
  * A Highway Alert.
  */
-export const alertSchema = z
+export const highwayAlertSchema = z
   .object({
     /** Unique Identifier for the alert. */
     AlertID: z.number().int().describe("Unique Identifier for the alert."),
@@ -74,4 +74,15 @@ export const alertSchema = z
   .describe("A Highway Alert.");
 
 /** Alert type */
-export type Alert = z.infer<typeof alertSchema>;
+export type HighwayAlert = z.infer<typeof highwayAlertSchema>;
+
+/**
+ * Array of alerts.
+ */
+export const highwayAlertsSchema = z
+  .array(highwayAlertSchema)
+  .describe(
+    "Coverage Area: Statewide. Provides access to all of the active incidents currently logged in our ROADS system."
+  );
+
+export type HighwayAlerts = z.infer<typeof highwayAlertsSchema>;

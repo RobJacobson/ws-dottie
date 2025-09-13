@@ -34,3 +34,14 @@ export const borderCrossingSchema = z
 
 /** BorderCrossing type */
 export type BorderCrossing = z.infer<typeof borderCrossingSchema>;
+
+/**
+ * Array of border crossings.
+ */
+export const borderCrossingsSchema = z
+  .array(borderCrossingSchema)
+  .describe(
+    "Coverage Area: I-5, SR-543, SR-539, and SR-9 crossings. Provides current wait times for the various border crossings into Canada."
+  );
+
+export type BorderCrossings = z.infer<typeof borderCrossingsSchema>;

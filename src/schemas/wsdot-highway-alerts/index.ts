@@ -12,8 +12,7 @@
 // ALERTS
 // ============================================================================
 
-export * from "./alert.zod";
-export * from "./alerts.zod";
+export * from "./highwayAlert.zod";
 
 // ============================================================================
 // EVENT CATEGORIES
@@ -26,4 +25,3 @@ export * from "./eventCategories.zod";
 // ============================================================================
 
 export * from "./mapArea.zod";
-export * from "./mapAreas.zod";

@@ -14,8 +14,6 @@
 
 export * from "./fareLineItem.zod";
 export * from "./fareLineItemBasic.zod";
-export * from "./fareLineItems.zod";
-export * from "./fareLineItemsBasic.zod";
 export * from "./fareLineItemsVerbose.zod";
 export * from "./lineItem.zod";
 export * from "./lineItemXref.zod";
@@ -26,7 +24,6 @@ export * from "./roundTripLineItem.zod";
 // ============================================================================
 
 export * from "./fareTotal.zod";
-export * from "./fareTotals.zod";
 
 // ============================================================================
 // TERMINAL COMBOS
@@ -41,9 +38,7 @@ export * from "./terminalComboVerboseItem.zod";
 // ============================================================================
 
 export * from "./faresTerminal.zod";
-export * from "./faresTerminals.zod";
 export * from "./terminalMate.zod";
-export * from "./terminalMates.zod";
 
 // ============================================================================
 // VALID DATE RANGE

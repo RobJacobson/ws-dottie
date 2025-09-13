@@ -13,4 +13,3 @@
 // ============================================================================
 
 export * from "./weatherInfo.zod";
-export * from "./weatherInformation.zod";

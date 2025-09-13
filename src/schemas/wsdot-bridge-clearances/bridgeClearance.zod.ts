@@ -89,3 +89,12 @@ export const bridgeClearanceSchema = z
 
 /** BridgeClearance type */
 export type BridgeClearance = z.infer<typeof bridgeClearanceSchema>;
+
+/**
+ * Array of bridge clearances.
+ */
+export const bridgeClearancesSchema = z
+  .array(bridgeClearanceSchema)
+  .describe("Bridge clearance information, see disclaimer.");
+
+export type BridgeClearances = z.infer<typeof bridgeClearancesSchema>;

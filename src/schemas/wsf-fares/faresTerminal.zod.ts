@@ -21,3 +21,12 @@ export const faresTerminalSchema = z.object({
 });
 
 export type FaresTerminal = z.infer<typeof faresTerminalSchema>;
+
+/**
+ * Array of fares terminals.
+ */
+export const faresTerminalsSchema = z
+  .array(faresTerminalSchema)
+  .describe("Array of valid departing terminals for a given trip date.");
+
+export type FaresTerminals = z.infer<typeof faresTerminalsSchema>;

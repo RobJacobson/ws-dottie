@@ -47,3 +47,12 @@ export const tollTripInfoSchema = z.object({
 
 /** TollTripInfo type */
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
+
+/**
+ * Array of toll trip info records.
+ */
+export const tollTripInfosSchema = z
+  .array(tollTripInfoSchema)
+  .describe("Array of toll trip info records.");
+
+export type TollTripInfos = z.infer<typeof tollTripInfosSchema>;

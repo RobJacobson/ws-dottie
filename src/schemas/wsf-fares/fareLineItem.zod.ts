@@ -40,3 +40,14 @@ export const fareLineItemSchema = z.object({
 });
 
 export type FareLineItem = z.infer<typeof fareLineItemSchema>;
+
+/**
+ * Array of fare line items.
+ */
+export const fareLineItemsSchema = z
+  .array(fareLineItemSchema)
+  .describe(
+    "Array of fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date."
+  );
+
+export type FareLineItems = z.infer<typeof fareLineItemsSchema>;

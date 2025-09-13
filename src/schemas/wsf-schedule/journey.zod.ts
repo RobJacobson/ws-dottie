@@ -59,3 +59,14 @@ export const journeySchema = z.object({
 });
 
 export type Journey = z.infer<typeof journeySchema>;
+
+/**
+ * Array of journeys.
+ */
+export const journeysSchema = z
+  .array(journeySchema)
+  .describe(
+    "A single vessel that stops at one or more terminals making a full trip in the direction described by the sailing."
+  );
+
+export type Journeys = z.infer<typeof journeysSchema>;

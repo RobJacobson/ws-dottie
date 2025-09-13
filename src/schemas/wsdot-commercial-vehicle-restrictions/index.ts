@@ -13,6 +13,4 @@
 // ============================================================================
 
 export * from "./commercialVehicleRestriction.zod";
-export * from "./commercialVehicleRestrictions.zod";
-export * from "./commercialVehicleRestrictionsWithId.zod";
 export * from "./commercialVehicleRestrictionWithId.zod";

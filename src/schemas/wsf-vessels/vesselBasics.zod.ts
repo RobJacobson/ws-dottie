@@ -31,3 +31,14 @@ export const vesselBasicsSchema = vesselSchema.extend({
 });
 
 export type VesselBasics = z.infer<typeof vesselBasicsSchema>;
+
+/**
+ * Array of vessel basics.
+ */
+export const vesselBasicssSchema = z
+  .array(vesselBasicsSchema)
+  .describe(
+    "The most basic information pertaining to vessels in the WSF fleet."
+  );
+
+export type VesselBasicss = z.infer<typeof vesselBasicssSchema>;

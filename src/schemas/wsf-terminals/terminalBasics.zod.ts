@@ -41,3 +41,12 @@ export const terminalBasicsSchema = terminalSchema.extend({
 });
 
 export type TerminalBasics = z.infer<typeof terminalBasicsSchema>;
+
+/**
+ * Array of terminal basics.
+ */
+export const terminalBasicssSchema = z
+  .array(terminalBasicsSchema)
+  .describe("The most basic / brief information pertaining to terminals.");
+
+export type TerminalBasicss = z.infer<typeof terminalBasicssSchema>;

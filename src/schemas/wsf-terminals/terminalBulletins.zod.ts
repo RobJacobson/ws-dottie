@@ -19,3 +19,12 @@ export const terminalBulletinsSchema = terminalSchema.extend({
 });
 
 export type TerminalBulletins = z.infer<typeof terminalBulletinsSchema>;
+
+/**
+ * Array of terminal bulletins.
+ */
+export const terminalBulletinssSchema = z
+  .array(terminalBulletinsSchema)
+  .describe("Alerts and bulletins associated with terminals.");
+
+export type TerminalBulletinss = z.infer<typeof terminalBulletinssSchema>;

@@ -41,3 +41,14 @@ export const fareLineItemBasicSchema = z.object({
 });
 
 export type FareLineItemBasic = z.infer<typeof fareLineItemBasicSchema>;
+
+/**
+ * Array of basic fare line items.
+ */
+export const fareLineItemsBasicSchema = z
+  .array(fareLineItemBasicSchema)
+  .describe(
+    "Array of the most popular fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date."
+  );
+
+export type FareLineItemsBasic = z.infer<typeof fareLineItemsBasicSchema>;

@@ -120,3 +120,16 @@ export const commercialVehicleRestrictionSchema = z
 export type CommercialVehicleRestriction = z.infer<
   typeof commercialVehicleRestrictionSchema
 >;
+
+/**
+ * Array of commercial vehicle restrictions.
+ */
+export const commercialVehicleRestrictionsSchema = z
+  .array(commercialVehicleRestrictionSchema)
+  .describe(
+    "Coverage Area: Statewide. Provides list of restrictions for commercial vehicles."
+  );
+
+export type CommercialVehicleRestrictions = z.infer<
+  typeof commercialVehicleRestrictionsSchema
+>;

@@ -72,3 +72,12 @@ export const terminalLocationSchema = terminalSchema.extend({
 });
 
 export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
+
+/**
+ * Array of terminal locations.
+ */
+export const terminalLocationsSchema = z
+  .array(terminalLocationSchema)
+  .describe("Detailed location information pertaining to terminals.");
+
+export type TerminalLocations = z.infer<typeof terminalLocationsSchema>;

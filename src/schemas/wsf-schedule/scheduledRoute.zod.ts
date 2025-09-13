@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { contingencyAdjustmentSchema } from "./contingencyAdjustment.zod";
-import { serviceDisruptionSchema } from "./serviceDisruption.zod";
+import { scheduleResponseSchema } from "./scheduleResponse.zod";
 
 /**
  * Schema for scheduled route response from WSF Schedule API.
@@ -52,7 +52,7 @@ export const scheduledRouteSchema = z.object({
     ),
   /** Service disruption alerts that are currently affecting the scheduled route. */
   ServiceDisruptions: z
-    .array(serviceDisruptionSchema)
+    .array(scheduleResponseSchema)
     .nullable()
     .describe(
       "Service disruption alerts that are currently affecting the scheduled route."
@@ -67,3 +67,12 @@ export const scheduledRouteSchema = z.object({
 });
 
 export type ScheduledRoute = z.infer<typeof scheduledRouteSchema>;
+
+/**
+ * Array of scheduled routes.
+ */
+export const scheduledRoutesSchema = z
+  .array(scheduledRouteSchema)
+  .describe("The routes that are active for a season.");
+
+export type ScheduledRoutes = z.infer<typeof scheduledRoutesSchema>;

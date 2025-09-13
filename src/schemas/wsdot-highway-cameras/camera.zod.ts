@@ -61,3 +61,14 @@ export const cameraSchema = z
 
 /** Camera type */
 export type Camera = z.infer<typeof cameraSchema>;
+
+/**
+ * Array of cameras.
+ */
+export const camerasSchema = z
+  .array(cameraSchema)
+  .describe(
+    "Coverage Area: Statewide. Provides access to the camera images that appear on our Traffic pages. Currently only supports snap shots (not full video). The available cameras does not change very often."
+  );
+
+export type Cameras = z.infer<typeof camerasSchema>;

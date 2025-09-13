@@ -1,4 +1,4 @@
-import type { z } from "zod";
+import { z } from "zod";
 import { vesselAccommodationsSchema } from "./vesselAccommodations.zod";
 import { vesselBasicsSchema } from "./vesselBasics.zod";
 import { vesselStatsSchema } from "./vesselStats.zod";
@@ -28,3 +28,14 @@ export const vesselVerboseSchema = vesselBasicsSchema.extend({
 });
 
 export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
+
+/**
+ * Array of vessel verbose data.
+ */
+export const vesselVerbosesSchema = z
+  .array(vesselVerboseSchema)
+  .describe(
+    "Highly detailed information pertaining to vessels in the WSF fleet."
+  );
+
+export type VesselVerboses = z.infer<typeof vesselVerbosesSchema>;

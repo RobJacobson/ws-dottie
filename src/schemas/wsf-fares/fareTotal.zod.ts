@@ -36,3 +36,14 @@ export const fareTotalSchema = z.object({
 });
 
 export type FareTotal = z.infer<typeof fareTotalSchema>;
+
+/**
+ * Array of fare totals.
+ */
+export const fareTotalsSchema = z
+  .array(fareTotalSchema)
+  .describe(
+    "Array of fare totals for a set of fares and associated quantities for either a round trip or one-way journey."
+  );
+
+export type FareTotals = z.infer<typeof fareTotalsSchema>;

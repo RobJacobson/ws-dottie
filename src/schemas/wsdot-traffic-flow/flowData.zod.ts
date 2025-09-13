@@ -47,3 +47,12 @@ export const flowDataSchema = z
 
 /** FlowData type */
 export type FlowData = z.infer<typeof flowDataSchema>;
+
+/**
+ * Array of traffic flow data.
+ */
+export const trafficFlowsSchema = z
+  .array(flowDataSchema)
+  .describe("Array of traffic flow data from WSDOT flow stations.");
+
+export type TrafficFlows = z.infer<typeof trafficFlowsSchema>;

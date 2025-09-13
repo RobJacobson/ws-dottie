@@ -13,4 +13,3 @@
 // ============================================================================
 
 export * from "./travelTimeRoute.zod";
-export * from "./travelTimes.zod";

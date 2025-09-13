@@ -38,3 +38,12 @@ export const vesselHistorySchema = z.object({
 });
 
 export type VesselHistory = z.infer<typeof vesselHistorySchema>;
+
+/**
+ * Array of vessel history records.
+ */
+export const vesselHistorysSchema = z
+  .array(vesselHistorySchema)
+  .describe("Historical data for vessels in the WSF fleet.");
+
+export type VesselHistorys = z.infer<typeof vesselHistorysSchema>;

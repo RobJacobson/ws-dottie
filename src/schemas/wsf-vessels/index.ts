@@ -20,34 +20,28 @@ export * from "./class.zod";
 
 export * from "./vessel.zod";
 export * from "./vesselBasics.zod";
-export * from "./vesselBasicss.zod";
 export * from "./vesselVerbose.zod";
-export * from "./vesselVerboses.zod";
 
 // ============================================================================
 // VESSEL ACCOMMODATIONS
 // ============================================================================
 
 export * from "./vesselAccommodations.zod";
-export * from "./vesselAccommodationss.zod";
 
 // ============================================================================
 // VESSEL HISTORY
 // ============================================================================
 
 export * from "./vesselHistory.zod";
-export * from "./vesselHistorys.zod";
 
 // ============================================================================
 // VESSEL LOCATIONS
 // ============================================================================
 
 export * from "./vesselLocations.zod";
-export * from "./vesselLocationss.zod";
 
 // ============================================================================
 // VESSEL STATISTICS
 // ============================================================================
 
 export * from "./vesselStats.zod";
-export * from "./vesselStatss.zod";

@@ -51,3 +51,14 @@ export const terminalTimeSchema = z.object({
 });
 
 export type TerminalTime = z.infer<typeof terminalTimeSchema>;
+
+/**
+ * Array of terminal times.
+ */
+export const terminalTimesSchema = z
+  .array(terminalTimeSchema)
+  .describe(
+    "One or more terminal departures or arrivals made by the same vessel."
+  );
+
+export type TerminalTimes = z.infer<typeof terminalTimesSchema>;

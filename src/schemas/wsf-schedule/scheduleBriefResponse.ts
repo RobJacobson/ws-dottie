@@ -6,7 +6,7 @@ import { zWsdotDate } from "@/shared/tanstack/validation";
  * This operation retrieves a summary of active seasons.
  * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
  */
-export const activeSeasonSchema = z.object({
+export const scheduleBriefResponseSchema = z.object({
   /** Unique identifier for a season. */
   ScheduleID: z.number().int().describe("Unique identifier for a season."),
   /** The name of the season. */
@@ -32,4 +32,15 @@ export const activeSeasonSchema = z.object({
   ),
 });
 
-export type ActiveSeason = z.infer<typeof activeSeasonSchema>;
+export type ScheduleBriefResponse = z.infer<typeof scheduleBriefResponseSchema>;
+
+/**
+ * Array of active seasons.
+ */
+export const scheduleBriefResponsesSchema = z
+  .array(scheduleBriefResponseSchema)
+  .describe("A summary of active seasons.");
+
+export type ScheduleBriefResponses = z.infer<
+  typeof scheduleBriefResponsesSchema
+>;

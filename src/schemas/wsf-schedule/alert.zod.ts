@@ -2,11 +2,11 @@ import { z } from "zod";
 import { zWsdotDate } from "@/shared/tanstack/validation";
 
 /**
- * Schema for alerts response from WSF Schedule API.
+ * Schema for alerts from WSF Schedule API.
  * This operation provides alert information tailored for routes, bulletins, service disruptions, etc.
  * A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
  */
-export const alertsResponseSchema = z.object({
+export const alertSchema = z.object({
   /** Unique identifier for the alert. */
   BulletinID: z.number().int().describe("Unique identifier for the alert."),
   /** A flag that, when true, indicates the alert includes text tailored as a bulletin. */
@@ -101,4 +101,15 @@ export const alertsResponseSchema = z.object({
     .describe("The alert text, tailored for text to speech systems."),
 });
 
-export type AlertsResponse = z.infer<typeof alertsResponseSchema>;
+export type Alert = z.infer<typeof alertSchema>;
+
+/**
+ * Array of alerts.
+ */
+export const alertsSchema = z
+  .array(alertSchema)
+  .describe(
+    "Alert information tailored for routes, bulletins, service disruptions, etc."
+  );
+
+export type Alerts = z.infer<typeof alertsSchema>;

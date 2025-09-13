@@ -75,3 +75,12 @@ export const vesselAccommodationsSchema = vesselSchema.extend({
 });
 
 export type VesselAccommodations = z.infer<typeof vesselAccommodationsSchema>;
+
+/**
+ * Array of vessel accommodations.
+ */
+export const vesselAccommodationssSchema = z
+  .array(vesselAccommodationsSchema)
+  .describe("The accommodation details for vessels in the WSF fleet.");
+
+export type VesselAccommodationss = z.infer<typeof vesselAccommodationssSchema>;

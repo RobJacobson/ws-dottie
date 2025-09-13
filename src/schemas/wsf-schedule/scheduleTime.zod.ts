@@ -62,3 +62,12 @@ export const scheduleTimeSchema = z.object({
 });
 
 export type ScheduleTime = z.infer<typeof scheduleTimeSchema>;
+
+/**
+ * Array of schedule times.
+ */
+export const scheduleTimesSchema = z
+  .array(scheduleTimeSchema)
+  .describe("Scheduled departure details, including departure times.");
+
+export type ScheduleTimes = z.infer<typeof scheduleTimesSchema>;

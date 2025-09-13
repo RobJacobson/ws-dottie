@@ -51,3 +51,14 @@ export const tollRateSchema = z.object({
 
 /** TollRate type */
 export type TollRate = z.infer<typeof tollRateSchema>;
+
+/**
+ * Array of toll rates.
+ */
+export const tollRatesSchema = z
+  .array(tollRateSchema)
+  .describe(
+    "Current toll rates and related metadata for WSDOT tolled corridors."
+  );
+
+export type TollRates = z.infer<typeof tollRatesSchema>;

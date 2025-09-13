@@ -55,3 +55,14 @@ export const scheduleTerminalComboSchema = z.object({
 });
 
 export type ScheduleTerminalCombo = z.infer<typeof scheduleTerminalComboSchema>;
+
+/**
+ * Array of terminal combos.
+ */
+export const scheduleTerminalCombosSchema = z
+  .array(scheduleTerminalComboSchema)
+  .describe("A grouping of departure and arrival terminal pairs.");
+
+export type ScheduleTerminalCombos = z.infer<
+  typeof scheduleTerminalCombosSchema
+>;

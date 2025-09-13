@@ -14,3 +14,12 @@ export const scheduleTerminalSchema = z.object({
 });
 
 export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;
+
+/**
+ * Array of schedule terminals.
+ */
+export const scheduleTerminalsSchema = z
+  .array(scheduleTerminalSchema)
+  .describe("Valid departing terminals for a given trip date.");
+
+export type ScheduleTerminals = z.infer<typeof scheduleTerminalsSchema>;

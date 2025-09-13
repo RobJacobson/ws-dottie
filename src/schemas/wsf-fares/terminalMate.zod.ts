@@ -21,3 +21,14 @@ export const terminalMateSchema = z.object({
 });
 
 export type TerminalMate = z.infer<typeof terminalMateSchema>;
+
+/**
+ * Array of terminal mates.
+ */
+export const terminalMatesSchema = z
+  .array(terminalMateSchema)
+  .describe(
+    "Array of arriving terminals for a given departing terminal and trip date."
+  );
+
+export type TerminalMates = z.infer<typeof terminalMatesSchema>;

@@ -19,3 +19,14 @@ export const terminalWaitTimesSchema = terminalSchema.extend({
 });
 
 export type TerminalWaitTimes = z.infer<typeof terminalWaitTimesSchema>;
+
+/**
+ * Array of terminal wait times.
+ */
+export const terminalWaitTimessSchema = z
+  .array(terminalWaitTimesSchema)
+  .describe(
+    "Tips and wait time conditions for both vehicles and walk-on passengers."
+  );
+
+export type TerminalWaitTimess = z.infer<typeof terminalWaitTimessSchema>;

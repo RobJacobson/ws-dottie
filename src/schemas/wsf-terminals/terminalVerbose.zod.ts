@@ -201,3 +201,12 @@ export const terminalVerboseSchema = terminalBasicsSchema.extend({
 });
 
 export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
+
+/**
+ * Array of terminal verbose.
+ */
+export const terminalVerbosesSchema = z
+  .array(terminalVerboseSchema)
+  .describe("Highly detailed information pertaining to terminals.");
+
+export type TerminalVerboses = z.infer<typeof terminalVerbosesSchema>;

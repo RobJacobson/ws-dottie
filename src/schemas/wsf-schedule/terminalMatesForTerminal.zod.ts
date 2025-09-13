@@ -17,15 +17,19 @@ export const terminalMatesForTerminalSchema = z.object({
 export type TerminalMatesForTerminal = z.infer<
   typeof terminalMatesForTerminalSchema
 >;
+
 /**
+ * TerminalMatesForTerminals schema
+ *
  * Array of terminal mates for a specific terminal.
  */
-export const terminalMatesForTerminalArraySchema = z
+export const terminalMatesForTerminalsSchema = z
   .array(terminalMatesForTerminalSchema)
   .describe(
     "The arriving terminals for the given departing terminal and trip date."
   );
 
-export type TerminalMatesForTerminalArray = z.infer<
-  typeof terminalMatesForTerminalArraySchema
+/** TerminalMatesForTerminals type */
+export type TerminalMatesForTerminals = z.infer<
+  typeof terminalMatesForTerminalsSchema
 >;

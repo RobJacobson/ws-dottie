@@ -16,3 +16,12 @@ export const mapAreaSchema = z
 
 /** MapArea type */
 export type MapArea = z.infer<typeof mapAreaSchema>;
+
+/**
+ * Array of map areas.
+ */
+export const mapAreasSchema = z
+  .array(mapAreaSchema)
+  .describe("Array of map areas used for filtering highway alerts.");
+
+export type MapAreas = z.infer<typeof mapAreasSchema>;

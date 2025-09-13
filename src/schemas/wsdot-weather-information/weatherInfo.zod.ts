@@ -55,3 +55,14 @@ export const weatherInfoSchema = z
 
 /** WeatherInfo type */
 export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
+
+/**
+ * Array of weather information.
+ */
+export const weatherInformationSchema = z
+  .array(weatherInfoSchema)
+  .describe(
+    "Returns current weather information from weather stations that are run by the Washington State Department of Transportation"
+  );
+
+export type WeatherInformation = z.infer<typeof weatherInformationSchema>;
