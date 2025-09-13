@@ -32,9 +32,9 @@
  */
 
 import { isTestEnvironment } from "@/shared/fetching/testEnvironment";
+import type { FetchStrategy } from "../types";
 import { fetchJsonp } from "./fetchJsonp";
 import { fetchNative } from "./fetchNative";
-import type { FetchStrategy } from "../types";
 
 /**
  * Cross-platform fetch strategy selector

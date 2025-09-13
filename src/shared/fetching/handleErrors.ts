@@ -7,11 +7,11 @@
  * errors and provides consistent error reporting across all environments.
  */
 
-import log from "@/shared/utils/logger";
+import type { ZodError } from "zod";
 import { isTestEnvironment } from "@/shared/fetching/testEnvironment";
+import log from "@/shared/utils/logger";
 import { buildCompleteUrl } from "./pipeline/prepareRequest";
 import type { FetchContext } from "./types";
-import type { ZodError } from "zod";
 
 /**
  * Creates a standardized error from Zod validation failures

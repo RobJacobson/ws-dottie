@@ -68,8 +68,8 @@
  * where CORS restrictions would prevent direct API access.
  */
 
-import { shouldReturnArray } from "./config";
 import type { FetchStrategy, JSONPWindow } from "../types";
+import { shouldReturnArray } from "./config";
 import { processApiResponse } from "./utils";
 
 /** Timeout duration for JSONP requests in milliseconds */

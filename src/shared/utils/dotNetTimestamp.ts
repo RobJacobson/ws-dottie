@@ -34,18 +34,18 @@ export const parseDotNetTimestamp = (dateString: string): Date | null => {
   const start = 6; // Skip "/Date("
   const end = dateString.indexOf(")");
   const timestampStr = dateString.substring(start, end);
-  
+
   // Find where the timezone starts (look for + or - after the timestamp)
   let timestampEnd = timestampStr.length;
   for (let i = 0; i < timestampStr.length; i++) {
-    if ((timestampStr[i] === '+' || timestampStr[i] === '-') && i > 0) {
+    if ((timestampStr[i] === "+" || timestampStr[i] === "-") && i > 0) {
       timestampEnd = i;
       break;
     }
   }
-  
+
   const timestamp = parseInt(timestampStr.substring(0, timestampEnd), 10);
-  
+
   // Validate timestamp is a valid number (allow negative timestamps for WSF Schedule API)
   if (Number.isNaN(timestamp)) {
     return null;

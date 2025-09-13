@@ -10,9 +10,9 @@
 import { ZodError } from "zod";
 
 import { configManager } from "@/shared/utils/configManager";
-import type { FetchContext, JsonWithDates } from "../types";
 import { jsDateToYyyyMmDd } from "../../utils/dateUtils";
 import { createValidationError } from "../handleErrors";
+import type { FetchContext, JsonWithDates } from "../types";
 
 /**
  * Interpolates parameters into URL template
@@ -44,7 +44,7 @@ const interpolateUrlParams = (
 
   // Interpolate parameters into URL template
   let interpolatedUrl = urlTemplate;
-  
+
   // First, replace all provided parameters
   Object.entries(params).forEach(([key, value]) => {
     const placeholder = `{${key}}`;
@@ -73,17 +73,17 @@ const interpolateUrlParams = (
   // This handles optional parameters that weren't provided
   const unreplacedPlaceholders = interpolatedUrl.match(/\{[^}]+\}/g);
   if (unreplacedPlaceholders) {
-    unreplacedPlaceholders.forEach(placeholder => {
+    unreplacedPlaceholders.forEach((placeholder) => {
       const paramName = placeholder.slice(1, -1); // Remove { and }
-      
+
       // Remove the entire query parameter (param=value& or &param=value)
-      const paramPattern = new RegExp(`[?&]${paramName}=[^&]*`, 'g');
-      interpolatedUrl = interpolatedUrl.replace(paramPattern, '');
-      
+      const paramPattern = new RegExp(`[?&]${paramName}=[^&]*`, "g");
+      interpolatedUrl = interpolatedUrl.replace(paramPattern, "");
+
       // Clean up any double ampersands or trailing/leading separators
-      interpolatedUrl = interpolatedUrl.replace(/[?&]{2,}/g, '&');
-      interpolatedUrl = interpolatedUrl.replace(/\?&/, '?');
-      interpolatedUrl = interpolatedUrl.replace(/&$/, '');
+      interpolatedUrl = interpolatedUrl.replace(/[?&]{2,}/g, "&");
+      interpolatedUrl = interpolatedUrl.replace(/\?&/, "?");
+      interpolatedUrl = interpolatedUrl.replace(/&$/, "");
     });
   }
 

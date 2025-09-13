@@ -12,8 +12,8 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Need for typing */
 
 import type { z } from "zod";
-import { createQueryOptions } from "./tanstack/factory";
 import { zodFetch } from "./fetching";
+import { createQueryOptions } from "./tanstack/factory";
 
 /**
  * Cache strategy configurations for different types of data
