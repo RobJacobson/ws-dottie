@@ -82,9 +82,9 @@ export * from "./clients/wsf-vessels";
 
 // CLI endpoint discovery utilities
 export {
+  findEndpoint,
   getAllEndpoints,
   getAvailableFunctions,
-  findEndpoint,
 } from "./cli/utils/endpoints";
 
 // ============================================================================
