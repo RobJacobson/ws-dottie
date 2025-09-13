@@ -1,11 +1,11 @@
 import { expect } from "vitest";
 
 import {
-  getTollRatesDef,
-  getTollTripInfoDef,
-  getTollTripRatesDef,
-  getTollTripVersionDef,
-  getTripRatesByDateDef,
+  getTollRatesMeta,
+  getTollTripInfoMeta,
+  getTollTripRatesMeta,
+  getTollTripVersionMeta,
+  getTripRatesByDateMeta,
 } from "../../../src/clients/wsdot-toll-rates";
 import {
   tollRatesSchema,
