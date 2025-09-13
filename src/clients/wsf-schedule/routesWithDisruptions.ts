@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { routesWithServiceDisruptionsSchema } from "@/schemas/wsf-schedule";
+import { routeBriefResponseSchema } from "@/schemas/wsf-schedule";
+import type { RouteBriefResponse } from "@/schemas/wsf-schedule/routeBriefResponse.zod";
+import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRoutesWithDisruptions */
@@ -8,16 +10,19 @@ const routesWithDisruptionsInput = z.object({
 });
 
 /** Endpoint metadata for getRoutesWithDisruptions */
-export const getRoutesWithDisruptionsMeta = {
+export const getRoutesWithDisruptionsMeta: Endpoint<
+  RoutesWithDisruptionsInput,
+  RouteBriefResponse[]
+> = {
   api: "wsf-schedule",
   function: "getRoutesWithDisruptions",
   endpoint:
     "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}",
   inputSchema: routesWithDisruptionsInput,
-  outputSchema: routesWithServiceDisruptionsSchema,
+  outputSchema: z.array(routeBriefResponseSchema),
   sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type RoutesWithDisruptionsInput = z.infer<

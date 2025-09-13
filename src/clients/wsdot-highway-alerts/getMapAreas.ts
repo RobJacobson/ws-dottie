@@ -32,13 +32,15 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
+import type { MapArea } from "@/schemas/wsdot-highway-alerts";
 import { mapAreasSchema } from "@/schemas/wsdot-highway-alerts";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getMapAreas */
 const getMapAreasInput = z.object({});
 
 /** Endpoint metadata for getMapAreas */
-export const getMapAreasMeta = {
+export const getMapAreasMeta: Endpoint<MapAreasInput, MapArea[]> = {
   api: "wsdot-highway-alerts",
   function: "getMapAreas",
   endpoint:
@@ -47,7 +49,7 @@ export const getMapAreasMeta = {
   outputSchema: mapAreasSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
-} as const;
+};
 
 // Type exports
 export type MapAreasInput = z.infer<typeof getMapAreasInput>;

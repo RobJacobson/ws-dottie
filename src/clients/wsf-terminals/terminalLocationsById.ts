@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { terminalLocationSchema } from "@/schemas/wsf-terminals";
+import type { TerminalLocation } from "@/schemas/wsf-terminals/terminalLocation.zod";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalLocationsByTerminalId */
 const terminalLocationsByTerminalIdInput = z.object({
@@ -7,7 +9,10 @@ const terminalLocationsByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalLocationsByTerminalId */
-export const getTerminalLocationsByTerminalIdMeta = {
+export const getTerminalLocationsByTerminalIdMeta: Endpoint<
+  TerminalLocationsByTerminalIdInput,
+  TerminalLocation
+> = {
   api: "wsf-terminals",
   function: "getTerminalLocationsByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminallocations/{terminalId}",
@@ -15,7 +20,7 @@ export const getTerminalLocationsByTerminalIdMeta = {
   outputSchema: terminalLocationSchema,
   sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports (ONLY input types, NO output types)
 export type TerminalLocationsByTerminalIdInput = z.infer<

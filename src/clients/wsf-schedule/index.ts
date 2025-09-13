@@ -1,5 +1,6 @@
 import { defineEndpoint } from "@/shared/endpoints";
 import { getActiveSeasonsMeta } from "./activeSeasons";
+import { getScheduleAlertsMeta } from "./scheduleAlerts";
 import { getAllSailingsMeta } from "./allSailings";
 import { getScheduleCacheFlushDateMeta } from "./cacheFlushDate";
 import { getRouteDetailsMeta } from "./routeDetails";
@@ -10,7 +11,6 @@ import { getRoutesByTerminalsMeta } from "./routesByTerminals";
 import { getRoutesHavingServiceDisruptionsMeta } from "./routesHavingServiceDisruptions";
 import { getRoutesWithDisruptionsMeta } from "./routesWithDisruptions";
 import { getSailingsMeta } from "./sailings";
-import { getScheduleAlertsMeta } from "./scheduleAlerts";
 import { getScheduleByRouteMeta } from "./scheduleByRoute";
 import { getScheduleByTerminalsMeta } from "./scheduleByTerminals";
 import { getScheduledRoutesMeta } from "./scheduledRoutes";
@@ -69,24 +69,9 @@ export const timeAdjustmentsByRoute = defineEndpoint(
   getTimeAdjustmentsByRouteMeta
 );
 
-// Re-export output types from schemas
-export type {
-  ActiveDateRange,
-  ActiveDateRanges,
-  Route,
-  RouteDetails,
-  Routes,
-  Sailing,
-  Sailings,
-  ScheduledRoute,
-  ScheduledRoutes,
-  ScheduleTerminalCombo,
-  ScheduleTerminalCombos,
-  TerminalsAndMates,
-  TerminalsAndMatesByRoute,
-} from "@/schemas/wsf-schedule";
 // Re-export input types from client files
 export type { ActiveSeasonsInput } from "./activeSeasons";
+export type { ScheduleAlertsInput } from "./scheduleAlerts";
 export type { AllSailingsInput } from "./allSailings";
 export type { ScheduleCacheFlushDateInput } from "./cacheFlushDate";
 export type { RouteDetailsInput } from "./routeDetails";
@@ -97,7 +82,6 @@ export type { RoutesByTerminalsInput } from "./routesByTerminals";
 export type { RoutesHavingServiceDisruptionsInput } from "./routesHavingServiceDisruptions";
 export type { RoutesWithDisruptionsInput } from "./routesWithDisruptions";
 export type { SailingsInput } from "./sailings";
-export type { ScheduleAlertsInput } from "./scheduleAlerts";
 export type { ScheduleByRouteInput } from "./scheduleByRoute";
 export type { ScheduleByTerminalsInput } from "./scheduleByTerminals";
 export type { ScheduledRoutesInput } from "./scheduledRoutes";

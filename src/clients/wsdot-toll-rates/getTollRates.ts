@@ -46,12 +46,14 @@
 
 import { z } from "zod";
 import { tollRatesSchema } from "@/schemas/wsdot-toll-rates";
+import type { TollRate } from "@/schemas/wsdot-toll-rates/tollRate.zod";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTollRates */
 const tollRatesInput = z.object({});
 
 /** Endpoint metadata for getTollRates */
-export const getTollRatesMeta = {
+export const getTollRatesMeta: Endpoint<TollRatesInput, TollRate[]> = {
   api: "wsdot-toll-rates",
   function: "getTollRates",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
@@ -59,7 +61,7 @@ export const getTollRatesMeta = {
   outputSchema: tollRatesSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
-} as const;
+};
 
 // Type exports
 export type TollRatesInput = z.infer<typeof tollRatesInput>;

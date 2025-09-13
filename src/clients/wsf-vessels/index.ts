@@ -35,25 +35,6 @@ export const vesselStatsById = defineEndpoint(getVesselStatsByIdMeta);
 export const vesselVerbose = defineEndpoint(getVesselVerboseMeta);
 export const vesselVerboseById = defineEndpoint(getVesselVerboseByIdMeta);
 
-// Re-export output types from schemas
-export type {
-  Vessel,
-  VesselAccommodations,
-  VesselAccommodationss,
-  VesselBasics,
-  VesselBasicss,
-  VesselClass,
-  VesselClasses,
-  VesselHistory,
-  VesselHistorys,
-  VesselLocations,
-  VesselLocationss,
-  VesselStats,
-  VesselStatss,
-  Vessels,
-  VesselVerbose,
-  VesselVerboses,
-} from "@/schemas/wsf-vessels";
 // Re-export input types from client files
 export type { CacheFlushDateVesselsInput } from "./cacheFlushDate";
 export type { VesselAccommodationsInput } from "./vesselAccommodations";

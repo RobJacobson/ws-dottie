@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { routeDetailsSchema } from "@/schemas/wsf-schedule";
+import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRouteDetailsByTerminals */
@@ -10,7 +11,10 @@ const routeDetailsByTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getRouteDetailsByTerminals */
-export const getRouteDetailsByTerminalsMeta = {
+export const getRouteDetailsByTerminalsMeta: Endpoint<
+  RouteDetailsByTerminalsInput,
+  RouteDetails
+> = {
   api: "wsf-schedule",
   function: "getRouteDetailsByTerminals",
   endpoint:
@@ -23,9 +27,10 @@ export const getRouteDetailsByTerminalsMeta = {
     arrivingScheduleTerminalId: 10,
   },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type RouteDetailsByTerminalsInput = z.infer<
   typeof routeDetailsByTerminalsInput
 >;
+export type RouteDetails = z.infer<typeof routeDetailsSchema>;

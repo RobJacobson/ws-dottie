@@ -13,19 +13,6 @@ export const getTollTripVersion = defineEndpoint(getTollTripVersionMeta);
 export const getTripRatesByDate = defineEndpoint(getTripRatesByDateMeta);
 export const getTripRatesByVersion = defineEndpoint(getTripRatesByVersionMeta);
 
-// Re-export output types from schemas
-export type {
-  TollLocation,
-  TollRate,
-  TollRates,
-  TollTripInfo,
-  TollTripInfos,
-  TollTripRate,
-  TollTripVersion,
-  TripRate,
-  TripRatesByDate,
-  TripRatesByDateItem,
-} from "@/schemas/wsdot-toll-rates";
 // Re-export input types from client files
 export type { TollRatesInput } from "./getTollRates";
 export type { TollTripInfoInput } from "./getTollTripInfo";

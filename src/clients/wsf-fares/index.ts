@@ -25,26 +25,6 @@ export const getFaresTerminalComboVerbose = defineEndpoint(
 );
 export const getFaresTerminalMates = defineEndpoint(getFaresTerminalMatesMeta);
 
-// Re-export output types from schemas
-export type {
-  FareLineItem,
-  FareLineItemBasic,
-  FareLineItems,
-  FareLineItemsBasic,
-  FareLineItemsVerbose,
-  FaresTerminal,
-  FaresTerminals,
-  FareTotal,
-  FareTotals,
-  LineItem,
-  LineItemXref,
-  RoundTripLineItem,
-  TerminalCombo,
-  TerminalComboVerbose,
-  TerminalComboVerboseItem,
-  TerminalMate,
-  TerminalMates,
-} from "@/schemas/wsf-fares";
 // Re-export input types from client files
 export type { FaresCacheFlushDateInput } from "./cacheFlushDate";
 export type { FareLineItemsInput } from "./fareLineItems";

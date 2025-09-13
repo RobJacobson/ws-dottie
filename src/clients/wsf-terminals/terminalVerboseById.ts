@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { terminalVerboseSchema } from "@/schemas/wsf-terminals";
+import type { TerminalVerbose } from "@/schemas/wsf-terminals/terminalVerbose.zod";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalVerboseByTerminalId */
 const terminalVerboseByTerminalIdInput = z.object({
@@ -7,7 +9,10 @@ const terminalVerboseByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalVerboseByTerminalId */
-export const getTerminalVerboseByTerminalIdMeta = {
+export const getTerminalVerboseByTerminalIdMeta: Endpoint<
+  TerminalVerboseByTerminalIdInput,
+  TerminalVerbose
+> = {
   api: "wsf-terminals",
   function: "getTerminalVerboseByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalverbose/{terminalId}",
@@ -15,7 +20,7 @@ export const getTerminalVerboseByTerminalIdMeta = {
   outputSchema: terminalVerboseSchema,
   sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports (ONLY input types, NO output types)
 export type TerminalVerboseByTerminalIdInput = z.infer<

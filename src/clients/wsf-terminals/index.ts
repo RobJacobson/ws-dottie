@@ -47,30 +47,6 @@ export const terminalWaitTimesById = defineEndpoint(
   getTerminalWaitTimesByTerminalIdMeta
 );
 
-// Re-export output types from schemas
-export type {
-  Bulletin,
-  DepartingSpace,
-  DispGISZoomLoc,
-  SpaceForArrivalTerminal,
-  Terminal,
-  TerminalBasics,
-  TerminalBasicss,
-  TerminalBulletins,
-  TerminalBulletinss,
-  TerminalLocation,
-  TerminalLocations,
-  TerminalSailingSpace,
-  TerminalSailingSpaces,
-  TerminalTransports,
-  TerminalTransportss,
-  TerminalVerbose,
-  TerminalVerboses,
-  TerminalWaitTimes,
-  TerminalWaitTimess,
-  TransitLink,
-  WaitTime,
-} from "@/schemas/wsf-terminals";
 // Re-export input types from client files
 export type { CacheFlushDateTerminalsInput } from "./cacheFlushDate";
 export type { TerminalBasicsInput } from "./terminalBasics";

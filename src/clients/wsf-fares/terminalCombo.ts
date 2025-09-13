@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { scheduleTerminalComboSchema } from "@/schemas/wsf-fares";
+import type { TerminalCombo } from "@/schemas/wsf-fares/terminalCombo.zod";
+import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFaresTerminalCombo */
@@ -10,7 +12,10 @@ const faresTerminalComboInput = z.object({
 });
 
 /** Endpoint metadata for getFaresTerminalCombo */
-export const getFaresTerminalComboMeta = {
+export const getFaresTerminalComboMeta: Endpoint<
+  FaresTerminalComboInput,
+  TerminalCombo
+> = {
   api: "wsf-fares",
   function: "getFaresTerminalCombo",
   endpoint:
@@ -23,7 +28,7 @@ export const getFaresTerminalComboMeta = {
     arrivingTerminalId: 10,
   },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type FaresTerminalComboInput = z.infer<typeof faresTerminalComboInput>;

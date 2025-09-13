@@ -80,7 +80,9 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
-import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
+import type { HighwayAlerts } from "@/schemas/wsdot-highway-alerts";
+import { highwayAlertsSchema } from "@/schemas/wsdot-highway-alerts";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlertsForMapArea */
 const alertsForMapAreaInput = z.object({
@@ -89,16 +91,19 @@ const alertsForMapAreaInput = z.object({
 });
 
 /** Endpoint metadata for getAlertsForMapArea */
-export const getAlertsForMapAreaMeta = {
+export const getAlertsForMapAreaMeta: Endpoint<
+  AlertsForMapAreaInput,
+  HighwayAlerts
+> = {
   api: "wsdot-highway-alerts",
   function: "getAlertsForMapArea",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
   inputSchema: alertsForMapAreaInput,
-  outputSchema: alertsSchema,
+  outputSchema: highwayAlertsSchema,
   sampleParams: { MapArea: "Seattle" },
   cacheStrategy: "MINUTE_UPDATES",
-} as const;
+};
 
 // Type exports
 export type AlertsForMapAreaInput = z.infer<typeof alertsForMapAreaInput>;

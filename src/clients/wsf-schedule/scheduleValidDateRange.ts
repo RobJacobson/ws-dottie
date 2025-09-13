@@ -1,11 +1,16 @@
 import { z } from "zod";
+import type { ValidDateRange } from "@/schemas/shared/validDateRange.zod";
 import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getScheduleValidDateRange */
 const scheduleValidDateRangeInput = z.object({});
 
 /** Endpoint metadata for getScheduleValidDateRange */
-export const getScheduleValidDateRangeMeta = {
+export const getScheduleValidDateRangeMeta: Endpoint<
+  ScheduleValidDateRangeInput,
+  ValidDateRange
+> = {
   api: "wsf-schedule",
   function: "getScheduleValidDateRange",
   endpoint: "/ferries/api/schedule/rest/validdaterange",
@@ -13,7 +18,7 @@ export const getScheduleValidDateRangeMeta = {
   outputSchema: validDateRangeSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type ScheduleValidDateRangeInput = z.infer<

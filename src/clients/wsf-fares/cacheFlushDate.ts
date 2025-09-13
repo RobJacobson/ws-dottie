@@ -1,11 +1,16 @@
 import { z } from "zod";
+import type { WsfStandardCacheFlushDate } from "@/schemas/shared/cacheFlushDate.zod";
 import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getFaresCacheFlushDate */
 const faresCacheFlushDateInput = z.object({});
 
 /** Endpoint metadata for getFaresCacheFlushDate */
-export const getFaresCacheFlushDateMeta = {
+export const getFaresCacheFlushDateMeta: Endpoint<
+  FaresCacheFlushDateInput,
+  WsfStandardCacheFlushDate
+> = {
   api: "wsf-fares",
   function: "getFaresCacheFlushDate",
   endpoint: "/ferries/api/fares/rest/cacheflushdate",
@@ -13,7 +18,7 @@ export const getFaresCacheFlushDateMeta = {
   outputSchema: wsfStandardCacheFlushDateSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type FaresCacheFlushDateInput = z.infer<typeof faresCacheFlushDateInput>;

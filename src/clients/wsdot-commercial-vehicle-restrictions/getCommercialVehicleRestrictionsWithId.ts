@@ -88,13 +88,18 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___commercial_vehicle.html
  */
 import { z } from "zod";
+import type { CommercialVehicleRestrictionWithId } from "@/schemas/wsdot-commercial-vehicle-restrictions";
 import { commercialVehicleRestrictionsWithIdSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
+import type { Endpoint } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictionsWithId */
 const commercialVehicleRestrictionsWithIdInput = z.object({});
 
 /** Endpoint metadata for getCommercialVehicleRestrictionsWithId */
-export const getCommercialVehicleRestrictionsWithIdMeta = {
+export const getCommercialVehicleRestrictionsWithIdMeta: Endpoint<
+  CommercialVehicleRestrictionsWithIdInput,
+  CommercialVehicleRestrictionWithId[]
+> = {
   api: "wsdot-commercial-vehicle-restrictions",
   function: "getCommercialVehicleRestrictionsWithId",
   endpoint:
@@ -103,7 +108,7 @@ export const getCommercialVehicleRestrictionsWithIdMeta = {
   outputSchema: commercialVehicleRestrictionsWithIdSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type CommercialVehicleRestrictionsWithIdInput = z.infer<

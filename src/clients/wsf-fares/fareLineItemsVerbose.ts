@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { fareLineItemsVerboseSchema } from "@/schemas/wsf-fares";
+import type { FareLineItemsVerbose } from "@/schemas/wsf-fares/fareLineItemsVerbose.zod";
+import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItemsVerbose */
@@ -8,7 +10,10 @@ const fareLineItemsVerboseInput = z.object({
 });
 
 /** Endpoint metadata for getFareLineItemsVerbose */
-export const getFareLineItemsVerboseMeta = {
+export const getFareLineItemsVerboseMeta: Endpoint<
+  FareLineItemsVerboseInput,
+  FareLineItemsVerbose
+> = {
   api: "wsf-fares",
   function: "getFareLineItemsVerbose",
   endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
@@ -16,7 +21,7 @@ export const getFareLineItemsVerboseMeta = {
   outputSchema: fareLineItemsVerboseSchema,
   sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type FareLineItemsVerboseInput = z.infer<

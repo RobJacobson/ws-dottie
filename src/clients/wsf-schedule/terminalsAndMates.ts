@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { terminalsAndMatesSchema } from "@/schemas/wsf-schedule";
+import type { TerminalsAndMates } from "@/schemas/wsf-schedule/terminalsAndMates.zod";
+import type { Endpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getTerminalsAndMates */
@@ -8,7 +10,10 @@ const terminalsAndMatesInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalsAndMates */
-export const getTerminalsAndMatesMeta = {
+export const getTerminalsAndMatesMeta: Endpoint<
+  TerminalsAndMatesInput,
+  TerminalsAndMates
+> = {
   api: "wsf-schedule",
   function: "getTerminalsAndMates",
   endpoint: "/ferries/api/schedule/rest/terminalsandmates/{tripDate}",
@@ -16,7 +21,7 @@ export const getTerminalsAndMatesMeta = {
   outputSchema: terminalsAndMatesSchema,
   sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
-} as const;
+};
 
 // Type exports
 export type TerminalsAndMatesInput = z.infer<typeof terminalsAndMatesInput>;
