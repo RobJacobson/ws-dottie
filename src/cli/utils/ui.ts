@@ -5,11 +5,34 @@
 import chalk from "chalk";
 import type { CliOptions } from "./types";
 import { getAllEndpoints, getAvailableFunctions } from "./endpoints";
+import { WsdotApiError } from "@/shared/fetching/handleErrors";
 
 /**
- * Handle errors with consistent formatting
+ * Handle errors with consistent formatting using shared error handling
  */
 export const handleError = (error: unknown, functionName: string): never => {
+  // Use shared error handling for WsdotApiError instances
+  if (error instanceof WsdotApiError) {
+    console.error(chalk.red(`❌ Error calling ${functionName}:`));
+    console.error(chalk.yellow(error.userMessage));
+
+    // Add CLI-specific context for common errors
+    if (error.code === "API_ERROR") {
+      console.error(chalk.gray("💡 Tip: Check your API key and parameters"));
+    } else if (error.code === "NETWORK_ERROR") {
+      console.error(chalk.gray("💡 Tip: Check your internet connection"));
+    } else if (error.code === "TRANSFORM_ERROR") {
+      console.error(
+        chalk.gray(
+          "💡 Tip: Check the function documentation for required parameters"
+        )
+      );
+    }
+
+    process.exit(1);
+  }
+
+  // Fallback to original error handling for non-WsdotApiError instances
   const message = error instanceof Error ? error.message : String(error);
   console.error(chalk.red(`❌ Error calling ${functionName}:`));
   console.error(chalk.yellow(message));
@@ -107,10 +130,8 @@ export const generateHelpText = (
   const endpoints = getAllEndpoints();
   const functionList = Object.entries(endpoints)
     .map(([key, endpointDef]) => {
-      const functionName = key.replace("Meta", "");
-      const description =
-        endpointDef.meta.outputSchema.description ||
-        `${endpointDef.meta.api} - ${endpointDef.meta.function}`;
+      const functionName = key;
+      const description = `${endpointDef.meta.api} - ${endpointDef.meta.function}`;
       return `  ${chalk.cyan(functionName)} - ${description}`;
     })
     .join("\n");

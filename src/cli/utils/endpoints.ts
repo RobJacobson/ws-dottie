@@ -9,6 +9,7 @@ import {
   type AnyEndpointDefinition,
   type CliParams,
 } from "./types";
+import { validateInputs } from "@/shared/fetching/pipeline/prepareRequest";
 
 // Import all endpoints to get the type information
 import * as allEndpoints from "../../clients";
@@ -18,7 +19,10 @@ import * as allEndpoints from "../../clients";
  */
 export const getAllEndpoints = (): EndpointsMap =>
   Object.entries(allEndpoints)
-    .filter(([key]) => key.endsWith("Meta"))
+    .filter(([key, value]) => {
+      // Look for functions that have a meta property (endpoint definitions)
+      return value && typeof value === "object" && "meta" in value;
+    })
     .reduce((acc, [, value]) => {
       const endpointDef = value as AnyEndpointDefinition;
       return { ...acc, [endpointDef.meta.function]: endpointDef };
@@ -83,7 +87,7 @@ export const applyDefaults = (
 };
 
 /**
- * Validate parameters against schema
+ * Validate parameters against schema using shared validation utilities
  */
 export const validateParams = (
   params: CliParams,
@@ -94,14 +98,16 @@ export const validateParams = (
   }
 
   try {
-    return endpointDef.meta.inputSchema.parse(params) as Record<
-      string,
-      unknown
-    >;
+    return validateInputs(endpointDef.meta.inputSchema, params, {
+      endpoint: endpointDef.meta.function,
+      logMode: "none",
+      interpolatedUrl: endpointDef.meta.endpoint,
+    }) as Record<string, unknown>;
   } catch (error: unknown) {
+    // Add CLI-specific context to the error message
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(
-      `Parameter validation failed: ${message}\n` +
+      `${message}\n` +
         `Expected parameters for ${endpointDef.meta.function}:\n` +
         `  ${JSON.stringify(params, null, 2)}`
     );

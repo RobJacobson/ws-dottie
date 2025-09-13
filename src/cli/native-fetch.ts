@@ -3,7 +3,7 @@
 /**
  * native-fetch CLI
  *
- * Raw WSDOT/WSF API client using curl for direct API access without validation.
+ * Raw WSDOT/WSF API client using native fetch for direct API access without validation.
  * This tool provides unvalidated access to Washington State transportation APIs
  * for debugging, testing, and when you need the raw API response.
  *
@@ -16,7 +16,7 @@ import { generateDefaultExamples } from "./utils/ui";
 // Create and run CLI tool
 createSimpleCli(
   "native-fetch",
-  "Raw WSDOT/WSF API client using curl (no validation)",
+  "Raw WSDOT/WSF API client using native fetch (no validation)",
   "1.0.0",
   false, // useValidated = false
   generateDefaultExamples("native-fetch", [
@@ -24,7 +24,7 @@ createSimpleCli(
   ]),
   `
 
-Note: This tool makes direct curl requests without validation. Use dottie-fetch for
+Note: This tool makes direct native fetch requests without validation. Use dottie-fetch for
 type-safe, validated API calls with automatic data transformation.
 
 The --fix-dates flag converts .NET datetime strings (like "/Date(1234567890123)/")

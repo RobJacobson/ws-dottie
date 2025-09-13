@@ -2,9 +2,9 @@
  * API execution utilities
  */
 
-import { execSync } from "child_process";
 import { parseDotNetTimestamp } from "@/shared/utils";
 import { buildFetchUrl } from "@/shared/fetching/pipeline/prepareRequest";
+import { fetchNative } from "@/shared/fetching/execution/fetchNative";
 import type { CliOptions, AnyEndpointDefinition, CliParams } from "./types";
 
 /**
@@ -18,7 +18,7 @@ export const executeValidated = async (
 };
 
 /**
- * Execute native API call using curl
+ * Execute native API call using native fetch
  */
 export const executeNative = async (
   endpointDef: AnyEndpointDefinition,
@@ -36,8 +36,7 @@ export const executeNative = async (
     }
   );
 
-  const curlCommand = `curl -s "${url}"`;
-  const result = execSync(curlCommand, { encoding: "utf8" });
+  const result = await fetchNative(url);
 
   return JSON.parse(result, (_, value) => {
     if (options.fixDates && typeof value === "string") {
