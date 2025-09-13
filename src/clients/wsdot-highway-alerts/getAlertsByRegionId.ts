@@ -56,7 +56,6 @@
  */
 import { z } from "zod";
 import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getAlertsByRegionId */
 const alertsByRegionIdInput = z.object({
@@ -65,7 +64,7 @@ const alertsByRegionIdInput = z.object({
 });
 
 /** Endpoint metadata for getAlertsByRegionId */
-export const getAlertsByRegionIdMeta = defineEndpoint({
+export const getAlertsByRegionIdMeta = {
   api: "wsdot-highway-alerts",
   function: "getAlertsByRegionId",
   endpoint:
@@ -74,7 +73,7 @@ export const getAlertsByRegionIdMeta = defineEndpoint({
   outputSchema: alertsSchema,
   sampleParams: { RegionId: 9 },
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type AlertsByRegionIdInput = z.infer<typeof alertsByRegionIdInput>;

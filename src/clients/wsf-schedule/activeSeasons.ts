@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { activeSeasonsSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getActiveSeasons */
 const activeSeasonsInput = z.object({});
 
 /** Endpoint metadata for getActiveSeasons */
-export const getActiveSeasonsMeta = defineEndpoint({
+export const getActiveSeasonsMeta = {
   api: "wsf-schedule",
   function: "getActiveSeasons",
   endpoint: "/ferries/api/schedule/rest/activeseasons",
@@ -14,7 +13,7 @@ export const getActiveSeasonsMeta = defineEndpoint({
   outputSchema: activeSeasonsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type ActiveSeasonsInput = z.infer<typeof activeSeasonsInput>;

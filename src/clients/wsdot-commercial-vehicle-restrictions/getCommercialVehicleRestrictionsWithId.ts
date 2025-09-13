@@ -89,13 +89,12 @@
  */
 import { z } from "zod";
 import { commercialVehicleRestrictionsWithIdSchema } from "@/schemas/wsdot-commercial-vehicle-restrictions";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictionsWithId */
 const commercialVehicleRestrictionsWithIdInput = z.object({});
 
 /** Endpoint metadata for getCommercialVehicleRestrictionsWithId */
-export const getCommercialVehicleRestrictionsWithIdMeta = defineEndpoint({
+export const getCommercialVehicleRestrictionsWithIdMeta = {
   api: "wsdot-commercial-vehicle-restrictions",
   function: "getCommercialVehicleRestrictionsWithId",
   endpoint:
@@ -104,7 +103,7 @@ export const getCommercialVehicleRestrictionsWithIdMeta = defineEndpoint({
   outputSchema: commercialVehicleRestrictionsWithIdSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type CommercialVehicleRestrictionsWithIdInput = z.infer<

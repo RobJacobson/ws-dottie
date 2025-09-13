@@ -44,7 +44,6 @@
  */
 import { z } from "zod";
 import { tripRatesByDateSchema } from "@/schemas/wsdot-toll-rates";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
 /** Input schema for getTripRatesByDate */
@@ -56,7 +55,7 @@ const tripRatesByDateInput = z.object({
 });
 
 /** Endpoint metadata for getTripRatesByDate */
-export const getTripRatesByDateMeta = defineEndpoint({
+export const getTripRatesByDateMeta = {
   api: "wsdot-toll-rates",
   function: "getTripRatesByDate",
   endpoint:
@@ -68,7 +67,7 @@ export const getTripRatesByDateMeta = defineEndpoint({
     toDate: datesHelper.endOfMonth(),
   },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type TripRatesByDateInput = z.infer<typeof tripRatesByDateInput>;

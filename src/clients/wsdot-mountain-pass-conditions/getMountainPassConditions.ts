@@ -66,13 +66,12 @@
  */
 import { z } from "zod";
 import { mountainPassConditionsSchema } from "@/schemas/wsdot-mountain-pass-conditions";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getMountainPassConditions */
 const mountainPassConditionsInput = z.object({});
 
 /** Endpoint metadata for getMountainPassConditions */
-export const getMountainPassConditionsMeta = defineEndpoint({
+export const getMountainPassConditionsMeta = {
   api: "wsdot-mountain-pass-conditions",
   function: "getMountainPassConditions",
   endpoint:
@@ -81,7 +80,7 @@ export const getMountainPassConditionsMeta = defineEndpoint({
   outputSchema: mountainPassConditionsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type MountainPassConditionsInput = z.infer<

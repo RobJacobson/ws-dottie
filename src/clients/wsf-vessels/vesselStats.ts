@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { vesselClassSchema, vesselStatssSchema } from "@/schemas/wsf-vessels";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getVesselStats */
 const vesselStatsInput = z.object({});
 
 /** Endpoint metadata for getVesselStats */
-export const getVesselStatsMeta = defineEndpoint({
+export const getVesselStatsMeta = {
   api: "wsf-vessels",
   function: "getVesselStats",
   endpoint: "/ferries/api/vessels/rest/vesselstats",
@@ -14,7 +13,7 @@ export const getVesselStatsMeta = defineEndpoint({
   outputSchema: vesselStatssSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports (ONLY input types, NO output types)
 export type VesselStatsInput = z.infer<typeof vesselStatsInput>;

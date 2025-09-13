@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { vesselHistorysSchema } from "@/schemas/wsf-vessels";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
 const dateRangeParams = {
@@ -17,7 +16,7 @@ const vesselHistoryByVesselAndDateRangeInput = z.object({
 });
 
 /** Endpoint metadata for getVesselHistoryByVesselAndDateRange */
-export const getVesselHistoryByVesselAndDateRangeMeta = defineEndpoint({
+export const getVesselHistoryByVesselAndDateRangeMeta = {
   api: "wsf-vessels",
   function: "getVesselHistoryByVesselAndDateRange",
   endpoint:
@@ -30,7 +29,7 @@ export const getVesselHistoryByVesselAndDateRangeMeta = defineEndpoint({
     dateEnd: datesHelper.endOfMonth(),
   },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports (ONLY input types, NO output types)
 export type VesselHistoryByVesselAndDateRangeInput = z.infer<

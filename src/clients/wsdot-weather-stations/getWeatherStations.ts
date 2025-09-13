@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { weatherStationsSchema } from "@/schemas/wsdot-weather-stations";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getWeatherStations */
 const weatherStationsInput = z.object({});
 
 /** Endpoint metadata for getWeatherStations */
-export const getWeatherStationsMeta = defineEndpoint({
+export const getWeatherStationsMeta = {
   api: "wsdot-weather-stations",
   function: "getWeatherStations",
   endpoint:
@@ -15,7 +14,7 @@ export const getWeatherStationsMeta = defineEndpoint({
   outputSchema: weatherStationsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type WeatherStationsInput = z.infer<typeof weatherStationsInput>;

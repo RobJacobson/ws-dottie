@@ -53,7 +53,6 @@
  */
 import { z } from "zod";
 import { flowDataSchema } from "@/schemas/wsdot-traffic-flow";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getTrafficFlowById */
 const trafficFlowByIdInput = z.object({
@@ -62,7 +61,7 @@ const trafficFlowByIdInput = z.object({
 });
 
 /** Endpoint metadata for getTrafficFlowById */
-export const getTrafficFlowByIdMeta = defineEndpoint({
+export const getTrafficFlowByIdMeta = {
   api: "wsdot-traffic-flow",
   function: "getTrafficFlowById",
   endpoint:
@@ -71,7 +70,7 @@ export const getTrafficFlowByIdMeta = defineEndpoint({
   outputSchema: flowDataSchema,
   sampleParams: { flowDataID: 2482 },
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type TrafficFlowByIdInput = z.infer<typeof trafficFlowByIdInput>;

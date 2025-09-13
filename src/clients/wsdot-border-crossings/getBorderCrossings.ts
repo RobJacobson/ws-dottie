@@ -57,13 +57,12 @@
  */
 import { z } from "zod";
 import { borderCrossingsSchema } from "@/schemas/wsdot-border-crossings";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getBorderCrossings */
 const borderCrossingsInput = z.object({});
 
 /** Endpoint metadata for getBorderCrossings */
-export const getBorderCrossingsMeta = defineEndpoint({
+export const getBorderCrossingsMeta = {
   api: "wsdot-border-crossings",
   function: "getBorderCrossings",
   endpoint:
@@ -72,7 +71,7 @@ export const getBorderCrossingsMeta = defineEndpoint({
   outputSchema: borderCrossingsSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type BorderCrossingsInput = z.infer<typeof borderCrossingsInput>;

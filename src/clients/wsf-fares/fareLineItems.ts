@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { fareLineItemSchema } from "@/schemas/wsf-fares";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItems */
@@ -12,7 +11,7 @@ const fareLineItemsInput = z.object({
 });
 
 /** Endpoint metadata for getFareLineItems */
-export const getFareLineItemsMeta = defineEndpoint({
+export const getFareLineItemsMeta = {
   api: "wsf-fares",
   function: "getFareLineItems",
   endpoint:
@@ -26,7 +25,7 @@ export const getFareLineItemsMeta = defineEndpoint({
     roundTrip: false,
   },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type FareLineItemsInput = z.infer<typeof fareLineItemsInput>;

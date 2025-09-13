@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { terminalsAndMatesByRouteSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getTerminalsAndMatesByRoute */
@@ -10,7 +9,7 @@ const terminalsAndMatesByRouteInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalsAndMatesByRoute */
-export const getTerminalsAndMatesByRouteMeta = defineEndpoint({
+export const getTerminalsAndMatesByRouteMeta = {
   api: "wsf-schedule",
   function: "getTerminalsAndMatesByRoute",
   endpoint:
@@ -19,7 +18,7 @@ export const getTerminalsAndMatesByRouteMeta = defineEndpoint({
   outputSchema: terminalsAndMatesByRouteSchema,
   sampleParams: { tripDate: datesHelper.tomorrow(), routeId: 1 },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type TerminalsAndMatesByRouteInput = z.infer<

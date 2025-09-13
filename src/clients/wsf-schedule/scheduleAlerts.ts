@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { scheduleAlertsSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getScheduleAlerts */
 const scheduleAlertsInput = z.object({});
 
 /** Endpoint metadata for getScheduleAlerts */
-export const getScheduleAlertsMeta = defineEndpoint({
+export const getScheduleAlertsMeta = {
   api: "wsf-schedule",
   function: "getScheduleAlerts",
   endpoint: "/ferries/api/schedule/rest/alerts",
@@ -14,7 +13,7 @@ export const getScheduleAlertsMeta = defineEndpoint({
   outputSchema: scheduleAlertsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type ScheduleAlertsInput = z.infer<typeof scheduleAlertsInput>;

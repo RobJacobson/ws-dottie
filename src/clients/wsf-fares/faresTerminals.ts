@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { faresTerminalSchema } from "@/schemas/wsf-fares";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFaresTerminals */
@@ -9,7 +8,7 @@ const faresTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getFaresTerminals */
-export const getFaresTerminalsMeta = defineEndpoint({
+export const getFaresTerminalsMeta = {
   api: "wsf-fares",
   function: "getFaresTerminals",
   endpoint: "/ferries/api/fares/rest/terminals/{tripDate}",
@@ -17,7 +16,7 @@ export const getFaresTerminalsMeta = defineEndpoint({
   outputSchema: z.array(faresTerminalSchema),
   sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type FaresTerminalsInput = z.infer<typeof faresTerminalsInput>;

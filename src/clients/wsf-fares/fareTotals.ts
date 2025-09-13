@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { fareTotalsSchema } from "@/schemas/wsf-fares";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareTotals */
@@ -14,7 +13,7 @@ const fareTotalsInput = z.object({
 });
 
 /** Endpoint metadata for getFareTotals */
-export const getFareTotalsMeta = defineEndpoint({
+export const getFareTotalsMeta = {
   api: "wsf-fares",
   function: "getFareTotals",
   endpoint:
@@ -30,7 +29,7 @@ export const getFareTotalsMeta = defineEndpoint({
     quantity: 2,
   },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type FareTotalsInput = z.infer<typeof fareTotalsInput>;

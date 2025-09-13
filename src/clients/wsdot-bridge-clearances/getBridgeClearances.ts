@@ -71,13 +71,12 @@
  */
 import { z } from "zod";
 import { bridgeClearancesSchema } from "@/schemas/wsdot-bridge-clearances";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getBridgeClearances */
 const bridgeClearancesInput = z.object({});
 
 /** Endpoint metadata for getBridgeClearances */
-export const getBridgeClearancesMeta = defineEndpoint({
+export const getBridgeClearancesMeta = {
   api: "wsdot-bridge-clearances",
   function: "getBridgeClearances",
   endpoint: "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson",
@@ -85,7 +84,7 @@ export const getBridgeClearancesMeta = defineEndpoint({
   outputSchema: bridgeClearancesSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type BridgeClearancesInput = z.infer<typeof bridgeClearancesInput>;

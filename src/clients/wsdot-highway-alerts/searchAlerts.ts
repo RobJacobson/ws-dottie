@@ -61,7 +61,6 @@
  */
 import { z } from "zod";
 import { alertsSchema } from "@/schemas/wsdot-highway-alerts";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for searchAlerts */
 const searchAlertsInput = z.object({
@@ -80,7 +79,7 @@ const searchAlertsInput = z.object({
 });
 
 /** Endpoint metadata for searchAlerts */
-export const searchAlertsMeta = defineEndpoint({
+export const searchAlertsMeta = {
   api: "wsdot-highway-alerts",
   function: "searchAlerts",
   endpoint:
@@ -93,7 +92,7 @@ export const searchAlertsMeta = defineEndpoint({
     SearchTimeEnd: new Date("2025-09-30"),
   },
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type SearchAlertsInput = z.infer<typeof searchAlertsInput>;

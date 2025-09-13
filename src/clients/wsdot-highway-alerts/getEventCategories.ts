@@ -31,13 +31,12 @@
  */
 import { z } from "zod";
 import { eventCategoriesSchema } from "@/schemas/wsdot-highway-alerts";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getEventCategories */
 const eventCategoriesInput = z.object({});
 
 /** Endpoint metadata for getEventCategories */
-export const getEventCategoriesMeta = defineEndpoint({
+export const getEventCategoriesMeta = {
   api: "wsdot-highway-alerts",
   function: "getEventCategories",
   endpoint:
@@ -46,7 +45,7 @@ export const getEventCategoriesMeta = defineEndpoint({
   outputSchema: eventCategoriesSchema,
   sampleParams: {},
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type EventCategoriesInput = z.infer<typeof eventCategoriesInput>;

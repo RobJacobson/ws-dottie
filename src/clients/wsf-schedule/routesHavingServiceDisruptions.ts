@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { routesWithServiceDisruptionsSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRoutesHavingServiceDisruptions */
@@ -9,7 +8,7 @@ const routesHavingServiceDisruptionsInput = z.object({
 });
 
 /** Endpoint metadata for getRoutesHavingServiceDisruptions */
-export const getRoutesHavingServiceDisruptionsMeta = defineEndpoint({
+export const getRoutesHavingServiceDisruptionsMeta = {
   api: "wsf-schedule",
   function: "getRoutesHavingServiceDisruptions",
   endpoint:
@@ -18,7 +17,7 @@ export const getRoutesHavingServiceDisruptionsMeta = defineEndpoint({
   outputSchema: routesWithServiceDisruptionsSchema,
   sampleParams: { tripDate: datesHelper.tomorrow() },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type RoutesHavingServiceDisruptionsInput = z.infer<

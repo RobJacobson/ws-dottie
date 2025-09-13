@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { tollRatesSchema } from "@/schemas/wsdot-toll-rates";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getTripRatesByVersion */
 const tripRatesByVersionInput = z.object({
@@ -9,7 +8,7 @@ const tripRatesByVersionInput = z.object({
 });
 
 /** Endpoint metadata for getTripRatesByVersion */
-export const getTripRatesByVersionMeta = defineEndpoint({
+export const getTripRatesByVersionMeta = {
   api: "wsdot-toll-rates",
   function: "getTripRatesByVersion",
   endpoint:
@@ -20,7 +19,7 @@ export const getTripRatesByVersionMeta = defineEndpoint({
     version: 352417,
   },
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type TripRatesByVersionInput = z.infer<typeof tripRatesByVersionInput>;

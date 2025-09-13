@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { weatherInfoSchema } from "@/schemas/wsdot-weather-information";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationByStationId */
 const weatherInformationByStationIdInput = z
@@ -18,7 +17,7 @@ const weatherInformationByStationIdInput = z
   );
 
 /** Endpoint metadata for getWeatherInformationByStationId */
-export const getWeatherInformationByStationIdMeta = defineEndpoint({
+export const getWeatherInformationByStationIdMeta = {
   api: "wsdot-weather-information",
   function: "getWeatherInformationByStationId",
   endpoint:
@@ -27,7 +26,7 @@ export const getWeatherInformationByStationIdMeta = defineEndpoint({
   outputSchema: weatherInfoSchema,
   sampleParams: { stationId: 1909 },
   cacheStrategy: "MINUTE_UPDATES",
-});
+} as const;
 
 // Type exports
 export type WeatherInformationByStationIdInput = z.infer<

@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { timeAdjustmentsSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustments */
 const timeAdjustmentsInput = z.object({});
 
 /** Endpoint metadata for getTimeAdjustments */
-export const getTimeAdjustmentsMeta = defineEndpoint({
+export const getTimeAdjustmentsMeta = {
   api: "wsf-schedule",
   function: "getTimeAdjustments",
   endpoint: "/ferries/api/schedule/rest/timeadj",
@@ -14,7 +13,7 @@ export const getTimeAdjustmentsMeta = defineEndpoint({
   outputSchema: timeAdjustmentsSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type TimeAdjustmentsInput = z.infer<typeof timeAdjustmentsInput>;

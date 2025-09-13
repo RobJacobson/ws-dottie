@@ -22,6 +22,6 @@ export * from "./wsdot-weather-stations";
 
 // WSF API endpoints
 export * from "./wsf-fares";
-export * from "./wsf-terminals";
 export * from "./wsf-schedule";
+export * from "./wsf-terminals";
 export * from "./wsf-vessels";

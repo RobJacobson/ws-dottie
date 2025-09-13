@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { scheduleResponseSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getScheduleTodayByRoute */
 const scheduleTodayByRouteInput = z.object({
@@ -9,7 +8,7 @@ const scheduleTodayByRouteInput = z.object({
 });
 
 /** Endpoint metadata for getScheduleTodayByRoute */
-export const getScheduleTodayByRouteMeta = defineEndpoint({
+export const getScheduleTodayByRouteMeta = {
   api: "wsf-schedule",
   function: "getScheduleTodayByRoute",
   endpoint:
@@ -18,7 +17,7 @@ export const getScheduleTodayByRouteMeta = defineEndpoint({
   outputSchema: scheduleResponseSchema,
   sampleParams: { routeId: 1, onlyRemainingTimes: false },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type ScheduleTodayByRouteInput = z.infer<

@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { sailingResponsesSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getAllSailings */
 const allSailingsInput = z.object({
@@ -8,7 +7,7 @@ const allSailingsInput = z.object({
 });
 
 /** Endpoint metadata for getAllSailings */
-export const getAllSailingsMeta = defineEndpoint({
+export const getAllSailingsMeta = {
   api: "wsf-schedule",
   function: "getAllSailings",
   endpoint: "/ferries/api/schedule/rest/allsailings/{schedRouteId}",
@@ -16,7 +15,7 @@ export const getAllSailingsMeta = defineEndpoint({
   outputSchema: sailingResponsesSchema,
   sampleParams: { schedRouteId: 2327 },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type AllSailingsInput = z.infer<typeof allSailingsInput>;

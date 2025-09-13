@@ -76,7 +76,6 @@
  */
 import { z } from "zod";
 import { cameraSchema } from "@/schemas/wsdot-highway-cameras";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getHighwayCamera */
 const highwayCameraInput = z.object({
@@ -85,7 +84,7 @@ const highwayCameraInput = z.object({
 });
 
 /** Endpoint metadata for getHighwayCamera */
-export const getHighwayCameraMeta = defineEndpoint({
+export const getHighwayCameraMeta = {
   api: "wsdot-highway-cameras",
   function: "getHighwayCamera",
   endpoint:
@@ -94,7 +93,7 @@ export const getHighwayCameraMeta = defineEndpoint({
   outputSchema: cameraSchema,
   sampleParams: { cameraID: 9818 }, // From E2E test validParams
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type HighwayCameraInput = z.infer<typeof highwayCameraInput>;

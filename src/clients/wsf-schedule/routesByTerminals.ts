@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { routesSchema } from "@/schemas/wsf-schedule";
-import { defineEndpoint } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRoutesByTerminals */
@@ -11,7 +10,7 @@ const routesByTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getRoutesByTerminals */
-export const getRoutesByTerminalsMeta = defineEndpoint({
+export const getRoutesByTerminalsMeta = {
   api: "wsf-schedule",
   function: "getRoutesByTerminals",
   endpoint:
@@ -24,7 +23,7 @@ export const getRoutesByTerminalsMeta = defineEndpoint({
     arrivingTerminalId: 10,
   },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type RoutesByTerminalsInput = z.infer<typeof routesByTerminalsInput>;

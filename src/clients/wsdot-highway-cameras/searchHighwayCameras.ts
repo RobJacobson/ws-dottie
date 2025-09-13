@@ -53,7 +53,6 @@
  */
 import { z } from "zod";
 import { camerasSchema } from "@/schemas/wsdot-highway-cameras";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for searchHighwayCameras */
 const searchHighwayCamerasInput = z
@@ -73,7 +72,7 @@ const searchHighwayCamerasInput = z
   .strict();
 
 /** Endpoint metadata for searchHighwayCameras */
-export const searchHighwayCamerasMeta = defineEndpoint({
+export const searchHighwayCamerasMeta = {
   api: "wsdot-highway-cameras",
   function: "searchHighwayCameras",
   endpoint:
@@ -82,7 +81,7 @@ export const searchHighwayCamerasMeta = defineEndpoint({
   outputSchema: camerasSchema,
   sampleParams: {},
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports
 export type SearchHighwayCamerasInput = z.infer<

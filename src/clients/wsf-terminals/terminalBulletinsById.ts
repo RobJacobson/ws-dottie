@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { terminalBulletinsSchema } from "@/schemas/wsf-terminals";
-import { defineEndpoint } from "@/shared/endpoints";
 
 /** Input schema for getTerminalBulletinsByTerminalId */
 const terminalBulletinsByTerminalIdInput = z.object({
@@ -8,7 +7,7 @@ const terminalBulletinsByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalBulletinsByTerminalId */
-export const getTerminalBulletinsByTerminalIdMeta = defineEndpoint({
+export const getTerminalBulletinsByTerminalIdMeta = {
   api: "wsf-terminals",
   function: "getTerminalBulletinsByTerminalId",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins/{terminalId}",
@@ -16,7 +15,7 @@ export const getTerminalBulletinsByTerminalIdMeta = defineEndpoint({
   outputSchema: terminalBulletinsSchema,
   sampleParams: { terminalId: 1 },
   cacheStrategy: "DAILY_STATIC",
-});
+} as const;
 
 // Type exports (ONLY input types, NO output types)
 export type TerminalBulletinsByTerminalIdInput = z.infer<
