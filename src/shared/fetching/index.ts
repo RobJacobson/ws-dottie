@@ -21,12 +21,18 @@ export {
   fetchNative,
   getEnvironmentType,
 } from "./execution";
-
+// Main API
+export { fetchZod } from "./fetchZod";
 // Error handling
 export * from "./handleErrors";
+// Independent handler functions
+export {
+  createEndpointQueryOptions,
+  fetchPlain,
+  fetchWithZod,
+} from "./handlers";
 // Core pipeline stages
 export * from "./pipeline";
-
 // Types
 export type {
   ApiErrorResponse,
@@ -37,15 +43,5 @@ export type {
   JSONPWindow,
   JsonWithDates,
 } from "./types";
-// Main API
-export { fetchZod } from "./fetchZod";
-
 // URL building utilities
 export { buildApiUrl } from "./urlBuilder";
-
-// Independent handler functions
-export {
-  fetchWithZod,
-  fetchPlain,
-  createEndpointQueryOptions,
-} from "./handlers";

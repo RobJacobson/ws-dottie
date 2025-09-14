@@ -7,9 +7,9 @@
  * at load time for optimal performance.
  */
 
-import type { Endpoint, EndpointMeta, CacheStrategy } from "./endpoint";
+import type { CacheStrategy, Endpoint, EndpointMeta } from "./endpoint";
 import { defineEndpoint } from "./endpoint";
-import { isEndpoint, discoverEndpointsFromModules } from "./endpointDiscovery";
+import { discoverEndpointsFromModules } from "./endpointDiscovery";
 
 /**
  * Type for a collection of endpoints organized by function name

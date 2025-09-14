@@ -6,23 +6,27 @@
  * discovery system to avoid code duplication while serving different purposes.
  */
 
-import type { Endpoint } from "../endpoint";
+import type { Endpoint } from "./endpoint";
 
 /**
  * Type guard to check if an object is a valid Endpoint
  */
 export const isEndpoint = (obj: unknown): obj is Endpoint<unknown, unknown> => {
+  if (!obj || typeof obj !== "object") {
+    return false;
+  }
+
+  const candidate = obj as Record<string, unknown>;
+
   return (
-    obj &&
-    typeof obj === "object" &&
-    typeof (obj as any).id === "string" &&
-    typeof (obj as any).api === "string" &&
-    typeof (obj as any).functionName === "string" &&
-    typeof (obj as any).urlTemplate === "string" &&
-    typeof (obj as any).endpoint === "string" &&
-    (obj as any).inputSchema &&
-    (obj as any).outputSchema &&
-    typeof (obj as any).cacheStrategy === "string"
+    typeof candidate.id === "string" &&
+    typeof candidate.api === "string" &&
+    typeof candidate.functionName === "string" &&
+    typeof candidate.urlTemplate === "string" &&
+    typeof candidate.endpoint === "string" &&
+    candidate.inputSchema &&
+    candidate.outputSchema &&
+    typeof candidate.cacheStrategy === "string"
   );
 };
 
@@ -33,7 +37,7 @@ export const isEndpoint = (obj: unknown): obj is Endpoint<unknown, unknown> => {
  * @returns Array of discovered Endpoint objects
  */
 export const discoverEndpointsFromModules = (
-  modules: Record<string, any>[]
+  modules: Record<string, unknown>[]
 ): Endpoint<unknown, unknown>[] => {
   const endpoints: Endpoint<unknown, unknown>[] = [];
 
@@ -144,13 +148,16 @@ export const sortEndpoints = (
 export const groupEndpointsByApi = (
   endpoints: Endpoint<unknown, unknown>[]
 ): Record<string, Endpoint<unknown, unknown>[]> => {
-  return endpoints.reduce((groups, endpoint) => {
-    if (!groups[endpoint.api]) {
-      groups[endpoint.api] = [];
-    }
-    groups[endpoint.api].push(endpoint);
-    return groups;
-  }, {} as Record<string, Endpoint<unknown, unknown>[]>);
+  return endpoints.reduce(
+    (groups, endpoint) => {
+      if (!groups[endpoint.api]) {
+        groups[endpoint.api] = [];
+      }
+      groups[endpoint.api].push(endpoint);
+      return groups;
+    },
+    {} as Record<string, Endpoint<unknown, unknown>[]>
+  );
 };
 
 /**
@@ -179,7 +186,9 @@ export const debugDiscoveredEndpoints = (
   const validation = validateDiscoveredEndpoints(endpoints);
   if (!validation.isValid) {
     console.log(`\nValidation issues found:`);
-    validation.issues.forEach((issue) => console.log(`  - ${issue}`));
+    validation.issues.forEach((issue) => {
+      console.log(`  - ${issue}`);
+    });
   } else {
     console.log(`\nAll endpoints passed validation ✓`);
   }

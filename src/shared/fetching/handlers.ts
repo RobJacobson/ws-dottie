@@ -6,11 +6,11 @@
  * testable, and flexible.
  */
 
-import { fetchZod } from "./fetchZod";
-import { fetchNative } from "./execution/fetchNative";
-import { buildApiUrl } from "./urlBuilder";
+import type { CacheStrategy, Endpoint } from "../endpoints";
 import { createQueryOptions } from "../tanstack/factory";
-import type { Endpoint, CacheStrategy } from "../endpoints";
+import { fetchNative } from "./execution/fetchNative";
+import { fetchZod } from "./fetchZod";
+import { buildApiUrl } from "./urlBuilder";
 
 /**
  * Fetches data using Zod validation and full pipeline
