@@ -86,7 +86,7 @@ function main() {
       "Usage: ./tests/e2e/run-tests-with-auto-regen.js <test-path>"
     );
     console.error(
-      "Example: ./tests/e2e/run-tests-with-auto-regen.js tests/e2e/phase4-comprehensive-suite.test.ts"
+      "Example: ./tests/e2e/run-tests-with-auto-regen.js tests/e2e/comprehensive-suite.test.ts"
     );
     process.exit(1);
   }

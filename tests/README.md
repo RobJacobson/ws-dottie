@@ -95,7 +95,7 @@ The test suite includes **automatic configuration regeneration** that runs befor
 
 ```bash
 # All npm test:e2e:* commands include auto-regeneration
-npm run test:e2e              # Phase 4 comprehensive suite
+npm run test:e2e              # Comprehensive test suite
 npm run test:e2e:auto         # Auto test suite
 npm run test:e2e:data-integrity # Data integrity tests
 npm run test:e2e:discovery    # Discovery tests
@@ -105,11 +105,11 @@ npm run test:e2e:all          # All tests with monitoring
 npm run test:regen
 
 # Disable auto-regeneration (use direct vitest)
-npm test tests/e2e/phase4-comprehensive-suite.test.ts
+npm test tests/e2e/comprehensive-suite.test.ts
 
 # Direct script execution (if needed)
-./tests/e2e/scripts/run-phase4-tests.js
-./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/phase4-comprehensive-suite.test.ts
+./tests/e2e/scripts/run-comprehensive-tests.js
+./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/comprehensive-suite.test.ts
 ```
 
 ## Quick Start
@@ -145,8 +145,8 @@ npm run test:e2e:all
 npm run test:regen
 
 # Run individual tests without auto-regeneration
-npm test tests/e2e/phase4-comprehensive-suite.test.ts
-npm test tests/e2e/auto-test-suite.test.ts
+npm test tests/e2e/comprehensive-suite.test.ts
+npm test tests/e2e/auto-suite.test.ts
 npm test tests/e2e/data-integrity-suite.test.ts
 ```
 
@@ -176,19 +176,19 @@ tests/
 │   │   └── discoveryConfig.ts             # Discovery settings
 │   ├── fixtures/                          # Test data and configurations
 │   ├── scripts/                           # Test execution scripts
-│   │   ├── run-phase4-tests.js            # Phase 4 comprehensive runner
+│   │   ├── run-comprehensive-tests.js      # Comprehensive test runner
 │   │   ├── run-tests-with-auto-regen.js   # Individual test runner
 │   │   ├── run-auto-config-generation-quiet.js # Quiet config generation
 │   │   ├── run-auto-config-generation.js  # Full config generation
 │   │   ├── run-comprehensive-tests.js     # Comprehensive test runner
 │   │   ├── run-data-integrity-tests.js    # Data integrity runner
 │   │   └── run-discovery-test.js          # Discovery test runner
-│   ├── phase4-comprehensive-suite.test.ts # Main Phase 4 test suite
-│   ├── auto-test-suite.test.ts            # Phase 2 auto test suite
+│   ├── comprehensive-suite.test.ts        # Main comprehensive test suite
+│   ├── auto-suite.test.ts                 # Auto test suite
 │   ├── data-integrity-suite.test.ts       # Data integrity tests
 │   ├── discovery.test.ts                  # Discovery proof of concept
 │   ├── setup.ts                           # Global test setup
-│   └── README-PHASE4.md                   # Phase 4 documentation
+│   └── README-COMPREHENSIVE.md            # Comprehensive documentation
 └── README.md                              # This file
 ```
 
@@ -324,14 +324,14 @@ const result = await test.test(params);
 ### Basic Test Execution
 
 ```bash
-# Run all Phase 4 tests
-./tests/e2e/run-phase4-tests.js
+# Run all comprehensive tests
+./tests/e2e/run-comprehensive-tests.js
 
 # Run specific test suite
-npm test tests/e2e/phase4-comprehensive-suite.test.ts
+npm test tests/e2e/comprehensive-suite.test.ts
 
 # Run with coverage
-npm test tests/e2e/phase4-comprehensive-suite.test.ts --coverage
+npm test tests/e2e/comprehensive-suite.test.ts --coverage
 ```
 
 ### Advanced Test Scenarios
@@ -453,10 +453,10 @@ The production test runner provides comprehensive test execution with monitoring
 
 ```bash
 # Run all tests with full monitoring
-./tests/e2e/run-phase4-tests.js
+./tests/e2e/run-comprehensive-tests.js
 
 # Run with custom configuration
-CONFIG_VERBOSE=true CONFIG_COVERAGE=true ./tests/e2e/run-phase4-tests.js
+CONFIG_VERBOSE=true CONFIG_COVERAGE=true ./tests/e2e/run-comprehensive-tests.js
 ```
 
 **Features:**
@@ -469,10 +469,10 @@ CONFIG_VERBOSE=true CONFIG_COVERAGE=true ./tests/e2e/run-phase4-tests.js
 ### Individual Test Suites
 
 ```bash
-# Phase 4 comprehensive suite (all features)
-npm test tests/e2e/phase4-comprehensive-suite.test.ts
+# Comprehensive test suite (all features)
+npm test tests/e2e/comprehensive-suite.test.ts
 
-# Modern test suite (Phase 2 features)
+# Auto test suite (enhanced features)
 npm test tests/e2e/modern-test-suite.test.ts
 
 # Data integrity tests
@@ -572,7 +572,7 @@ Error statistics and recovery recommendations.
 export TEST_TIMEOUT=120000  # 2 minutes
 
 # Check for slow endpoints
-npm test tests/e2e/phase4-comprehensive-suite.test.ts --reporter=verbose
+npm test tests/e2e/comprehensive-suite.test.ts --reporter=verbose
 ```
 
 #### 2. Memory Leaks
@@ -583,7 +583,7 @@ npm test tests/e2e/phase4-comprehensive-suite.test.ts --reporter=verbose
 export ENABLE_MEMORY_PROFILING=true
 
 # Run with memory monitoring
-node --inspect tests/e2e/run-phase4-tests.js
+node --inspect tests/e2e/run-comprehensive-tests.js
 ```
 
 #### 3. Flaky Tests
@@ -592,7 +592,7 @@ node --inspect tests/e2e/run-phase4-tests.js
 ```bash
 # Run tests multiple times to identify patterns
 for i in {1..5}; do
-  npm test tests/e2e/phase4-comprehensive-suite.test.ts
+  npm test tests/e2e/comprehensive-suite.test.ts
 done
 
 # Enable retry logic
@@ -607,7 +607,7 @@ export TEST_RETRIES=3
 curl -I https://www.wsdot.wa.gov/Traffic/api/HighwayCameras/
 
 # Run with network debugging
-DEBUG=* npm test tests/e2e/phase4-comprehensive-suite.test.ts
+DEBUG=* npm test tests/e2e/comprehensive-suite.test.ts
 ```
 
 ### Debug Mode
@@ -617,7 +617,7 @@ DEBUG=* npm test tests/e2e/phase4-comprehensive-suite.test.ts
 export DEBUG=true
 
 # Run with verbose logging
-npm test tests/e2e/phase4-comprehensive-suite.test.ts --reporter=verbose
+npm test tests/e2e/comprehensive-suite.test.ts --reporter=verbose
 
 # Check discovery process
 node -e "const { discoverEndpoints } = require('./tests/e2e/generators/endpointDiscovery'); console.log(discoverEndpoints().length);"
@@ -627,13 +627,13 @@ node -e "const { discoverEndpoints } = require('./tests/e2e/generators/endpointD
 
 ```bash
 # Profile test execution
-node --prof tests/e2e/run-phase4-tests.js
+node --prof tests/e2e/run-comprehensive-tests.js
 
 # Analyze performance
 node --prof-process isolate-*.log > performance-analysis.txt
 
 # Memory usage analysis
-node --inspect --inspect-brk tests/e2e/run-phase4-tests.js
+node --inspect --inspect-brk tests/e2e/run-comprehensive-tests.js
 ```
 
 ## Contributing
@@ -661,7 +661,7 @@ export const createCustomScenarios = (endpoint: Endpoint<unknown, unknown>) => {
 
 2. **Integrate with main test suite**:
 ```typescript
-// In phase4-comprehensive-suite.test.ts
+// In comprehensive-suite.test.ts
 import { createCustomScenarios } from './generators/advancedTestScenarios';
 
 // Add to test suite
@@ -688,7 +688,7 @@ const allModules = [
 
 3. **Verify test coverage**:
 ```bash
-npm test tests/e2e/phase4-comprehensive-suite.test.ts
+npm test tests/e2e/comprehensive-suite.test.ts
 ```
 
 ### Performance Testing Guidelines
@@ -762,4 +762,4 @@ This E2E test suite provides comprehensive, production-ready testing for the WS-
 - ✅ **Extensible**: Easy to add new test scenarios and APIs
 - ✅ **Reliable**: Sophisticated error handling and retry logic
 
-For detailed Phase 4 documentation, see [README-PHASE4.md](e2e/README-PHASE4.md).
+For detailed comprehensive test documentation, see [README-COMPREHENSIVE.md](e2e/README-COMPREHENSIVE.md).

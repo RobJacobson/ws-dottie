@@ -1,5 +1,5 @@
 /**
- * @fileoverview Auto E2E Test Suite - Phase 2 Implementation
+ * @fileoverview Auto E2E Test Suite
  *
  * This test suite demonstrates the enhanced test generators and validation utilities
  * that work with Endpoint metadata from defineEndpoint, providing comprehensive
@@ -36,7 +36,7 @@ import { getApiTimeout, shouldSkipApi } from "./config/testConfig";
 /**
  * Main test suite for the auto e2e test system
  */
-describe("Auto E2E Test Suite - Phase 2", () => {
+describe("Auto E2E Test Suite", () => {
   let discoveredEndpoints: ReturnType<typeof discoverEndpoints>;
   let apiNames: string[];
   let generatedConfigs: ReturnType<typeof generateAllApiConfigs>;

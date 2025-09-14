@@ -242,6 +242,7 @@ lib/
 
 # Test outputs
 test-results/
+test-reports/
 coverage/
 
 # Bun

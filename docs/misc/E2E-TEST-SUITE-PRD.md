@@ -65,13 +65,17 @@ tests/e2e/
 ├── config/                       # Test configuration
 │   ├── testConfig.ts            # ✅ COMPLETE: Central test configuration
 │   └── discoveryConfig.ts       # ✅ COMPLETE: Endpoint discovery settings
-├── modern-test-suite.test.ts    # ✅ COMPLETE: Phase 2 comprehensive test suite
+├── auto-test-suite.test.ts      # ✅ COMPLETE: Phase 2 auto test suite
 ├── data-integrity-suite.test.ts # ✅ COMPLETE: Phase 3 data integrity tests
-├── run-auto-config-generation.js # ✅ COMPLETE: Auto-config generation script
-├── run-data-integrity-tests.js  # ✅ COMPLETE: Data integrity test runner
-├── run-comprehensive-tests.js   # ✅ COMPLETE: Comprehensive test runner
+├── scripts/                     # Test execution scripts
+│   ├── run-phase4-tests.js      # ✅ COMPLETE: Phase 4 comprehensive runner
+│   ├── run-tests-with-auto-regen.js # ✅ COMPLETE: Individual test runner
+│   ├── run-auto-config-generation-quiet.js # ✅ COMPLETE: Quiet config generation
+│   ├── run-auto-config-generation.js # ✅ COMPLETE: Auto-config generation script
+│   ├── run-data-integrity-tests.js  # ✅ COMPLETE: Data integrity test runner
+│   ├── run-comprehensive-tests.js   # ✅ COMPLETE: Comprehensive test runner
+│   └── run-discovery-test.js        # ✅ COMPLETE: Test runner script
 ├── discovery.test.ts            # ✅ COMPLETE: Proof of concept test suite
-├── run-discovery-test.js        # ✅ COMPLETE: Test runner script
 ├── setup.ts                     # ✅ COMPLETE: Global test setup
 └── README.md                    # ✅ COMPLETE: Comprehensive documentation
 ```
