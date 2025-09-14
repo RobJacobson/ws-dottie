@@ -3,8 +3,8 @@
  */
 
 import chalk from "chalk";
-import { WsdotApiError } from "@/shared/fetching/handleErrors";
 import { getAllEndpoints, getAvailableFunctionNames } from "@/shared/endpoints";
+import { WsdotApiError } from "@/shared/fetching/handleErrors";
 import type { CliOptions } from "./types";
 
 /**

@@ -10,12 +10,12 @@
  * Usage: fetch-native <function-name> [params] [--pretty=false]
  */
 
-import { createSimpleCli } from "./cli-core";
-import { generateDefaultExamples } from "./ui";
+import type { Endpoint } from "@/shared/endpoints";
 import { fetchPlain } from "@/shared/fetching/handlers";
 import { parseDotNetTimestamp } from "@/shared/utils";
-import type { Endpoint } from "@/shared/endpoints";
+import { createSimpleCli } from "./cli-core";
 import type { CliOptions, CliParams } from "./types";
+import { generateDefaultExamples } from "./ui";
 
 /**
  * Execute plain API call using direct native fetch

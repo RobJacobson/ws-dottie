@@ -1,3 +1,6 @@
+import type { z } from "zod";
+import type { CacheStrategy } from "@/shared/endpoints/endpoint";
+
 /**
  * CLI constants
  */
@@ -39,10 +42,12 @@ export type AnyEndpointDefinition = {
   functionName: string;
   endpoint: string;
   urlTemplate: string;
-  inputSchema: any;
-  outputSchema: any;
-  sampleParams?: any;
-  cacheStrategy: any;
+  inputSchema: z.ZodSchema<unknown>;
+  outputSchema: z.ZodSchema<unknown>;
+  sampleParams?:
+    | Record<string, unknown>
+    | (() => Promise<Record<string, unknown>>);
+  cacheStrategy: CacheStrategy;
 };
 
 /**

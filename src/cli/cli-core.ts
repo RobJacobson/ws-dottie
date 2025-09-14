@@ -10,8 +10,8 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import type { Endpoint } from "@/shared/endpoints";
-import { validateInputs } from "@/shared/fetching/pipeline/prepareRequest";
 import { findEndpointByFunctionName } from "@/shared/endpoints";
+import { validateInputs } from "@/shared/fetching/pipeline/prepareRequest";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
   displayFunctionNotFound,

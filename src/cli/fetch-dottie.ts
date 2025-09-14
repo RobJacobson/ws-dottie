@@ -10,11 +10,11 @@
  * Usage: fetch-dottie <function-name> [params] [--pretty=false]
  */
 
-import { createSimpleCli } from "./cli-core";
-import { generateDefaultExamples } from "./ui";
-import { fetchWithZod } from "@/shared/fetching/handlers";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchWithZod } from "@/shared/fetching/handlers";
+import { createSimpleCli } from "./cli-core";
 import type { CliOptions, CliParams } from "./types";
+import { generateDefaultExamples } from "./ui";
 
 /**
  * Execute validated API call using Zod validation
