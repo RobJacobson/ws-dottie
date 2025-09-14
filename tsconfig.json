@@ -13,7 +13,6 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "src",
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]
@@ -21,6 +20,6 @@
     "types": ["node"],
     "lib": ["ES2022", "DOM"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

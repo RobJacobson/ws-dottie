@@ -7,9 +7,23 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
+// Import all 16 API client modules
+import * as borderCrossings from "@/clients/wsdot-border-crossings";
+import * as bridgeClearances from "@/clients/wsdot-bridge-clearances";
+import * as commercialVehicleRestrictions from "@/clients/wsdot-commercial-vehicle-restrictions";
+import * as highwayAlerts from "@/clients/wsdot-highway-alerts";
 import * as highwayCameras from "@/clients/wsdot-highway-cameras";
-import * as fares from "@/clients/wsf-fares";
+import * as mountainPassConditions from "@/clients/wsdot-mountain-pass-conditions";
+import * as tollRates from "@/clients/wsdot-toll-rates";
 import * as trafficFlow from "@/clients/wsdot-traffic-flow";
+import * as travelTimes from "@/clients/wsdot-travel-times";
+import * as weatherInformation from "@/clients/wsdot-weather-information";
+import * as weatherInformationExtended from "@/clients/wsdot-weather-information-extended";
+import * as weatherStations from "@/clients/wsdot-weather-stations";
+import * as fares from "@/clients/wsf-fares";
+import * as schedule from "@/clients/wsf-schedule";
+import * as terminals from "@/clients/wsf-terminals";
+import * as vessels from "@/clients/wsf-vessels";
 import {
   discoverEndpointsFromModules,
   validateDiscoveredEndpoints as validateEndpoints,
@@ -41,8 +55,25 @@ import {
  */
 export const discoverEndpoints = (): Endpoint<unknown, unknown>[] => {
   try {
-    // Import specific client modules for proof of concept
-    const allModules = [highwayCameras, fares, trafficFlow];
+    // Import all 16 API client modules
+    const allModules = [
+      borderCrossings,
+      bridgeClearances,
+      commercialVehicleRestrictions,
+      highwayAlerts,
+      highwayCameras,
+      mountainPassConditions,
+      tollRates,
+      trafficFlow,
+      travelTimes,
+      weatherInformation,
+      weatherInformationExtended,
+      weatherStations,
+      fares,
+      schedule,
+      terminals,
+      vessels,
+    ];
 
     // Use shared discovery utility
     const endpoints = discoverEndpointsFromModules(allModules);

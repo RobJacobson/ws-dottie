@@ -13,4 +13,10 @@ export default defineConfig({
       "@": resolve(__dirname, "../src"),
     },
   },
+  esbuild: {
+    target: "es2022",
+  },
+  define: {
+    "import.meta.vitest": "undefined",
+  },
 });

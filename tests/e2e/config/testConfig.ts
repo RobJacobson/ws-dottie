@@ -24,6 +24,18 @@ export interface TestConfig {
   /** Whether to run validation tests */
   enableValidationTests: boolean;
 
+  /** Data integrity test configuration */
+  dataIntegrityConfig: {
+    /** Default timeout for data integrity tests */
+    defaultTimeout: number;
+
+    /** Whether to run data integrity tests in parallel */
+    runInParallel: boolean;
+
+    /** Maximum number of concurrent data integrity tests */
+    maxConcurrency: number;
+  };
+
   /** API-specific configurations */
   apiConfigs: Record<string, ApiTestConfig>;
 }
@@ -58,6 +70,11 @@ export const defaultTestConfig: TestConfig = {
   enablePerformanceTests: true,
   enableDataIntegrityTests: true,
   enableValidationTests: true,
+  dataIntegrityConfig: {
+    defaultTimeout: 60000, // 60 seconds for data integrity tests
+    runInParallel: true,
+    maxConcurrency: 5,
+  },
   apiConfigs: {
     // WSDOT APIs - generally faster
     "wsdot-highway-cameras": {
