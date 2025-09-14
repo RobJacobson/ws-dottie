@@ -38,7 +38,7 @@ import { validateResponse } from "./pipeline/processResponse";
  *
  * @example
  * ```typescript
- * const data = await zodFetch({
+ * const data = await fetchZod({
  *   endpoint: "/ferries/api/schedule/rest/sailings",
  *   inputSchema: sailingParamsSchema,
  *   outputSchema: sailingResponseSchema,
@@ -47,7 +47,7 @@ import { validateResponse } from "./pipeline/processResponse";
  * });
  * ```
  */
-export const zodFetch = async <TInput = never, TOutput = unknown>({
+export const fetchZod = async <TInput = never, TOutput = unknown>({
   endpoint,
   inputSchema,
   outputSchema,

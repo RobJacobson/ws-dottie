@@ -1,242 +1,136 @@
 /**
- * @fileoverview Endpoint Definition Factory
+ * @fileoverview Endpoint Collection and Registry
  *
- * This module provides a factory function for creating standardized endpoint definitions
- * that serve as the single source of truth for all API endpoints. Each endpoint definition
- * contains all the metadata needed for CLI execution, testing, and TanStack Query integration.
- *
- * The factory eliminates duplication by centralizing endpoint metadata and providing
- * consistent patterns for handler creation, query options, and parameter validation.
+ * This module provides a singleton registry for all endpoint definitions,
+ * automatically detecting and organizing endpoints from the clients module.
+ * It uses the module pattern to ensure endpoint detection only runs once
+ * at load time for optimal performance.
  */
 
-/** biome-ignore-all lint/suspicious/noExplicitAny: Need for typing */
-
-import type { z } from "zod";
-import { zodFetch } from "./fetching";
-import { createQueryOptions } from "./tanstack/factory";
+import type { Endpoint, EndpointMeta, CacheStrategy } from "./endpoint";
+import { defineEndpoint } from "./endpoint";
 
 /**
- * Cache strategy configurations for different types of data
- *
- * These strategies align with the existing tanstackRefetchOptions and provide
- * appropriate caching behavior based on data update frequency.
+ * Type for a collection of endpoints organized by function name
  */
-export type CacheStrategy =
-  | "REALTIME_UPDATES" // Real-time data that updates frequently (5-second intervals)
-  | "MINUTE_UPDATES" // Data that updates every minute (traffic, wait times)
-  | "FIVE_MINUTE_UPDATES" // Data that updates every 5 minutes (frequent updates)
-  | "HOURLY_UPDATES" // Data that updates hourly (moderate frequency)
-  | "DAILY_UPDATES" // Data that updates daily (low frequency)
-  | "DAILY_STATIC" // Static data that rarely changes (daily refresh)
-  | "WEEKLY_STATIC" // Very static data that changes infrequently (weekly refresh)
-  | "NONE"; // No caching strategy (for testing or special cases)
+export type EndpointRegistry = Record<string, Endpoint<unknown, unknown>>;
 
 /**
- * Complete endpoint metadata interface
- *
- * This interface contains all the essential information needed for:
- * - CLI execution (endpoint, inputSchema, function)
- * - Testing (sampleParams for validator and e2e tests)
- * - TanStack Query integration (cacheStrategy, queryKey generation)
- * - Runtime type safety (inputSchema, outputSchema)
- *
- * @template I - The input parameters type
- * @template O - The output response type
+ * Type for endpoint function names
  */
-export interface Endpoint<I, O> {
-  /** Module group identifier (e.g., "wsdot-highway-cameras") - auto-computed from folder structure */
-  api?: string;
-
-  /** Function name (e.g., "getHighwayCameras") - auto-computed from filename */
-  function?: string;
-
-  /** HTTP endpoint URL template */
-  endpoint: string;
-
-  /** Zod schema for input parameter validation */
-  inputSchema: z.ZodSchema<I>;
-
-  /** Zod schema for output response validation */
-  outputSchema: z.ZodSchema<O>;
-
-  /** Optional sample parameters for testing and validation */
-  sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
-
-  /** Cache strategy for TanStack Query integration */
-  cacheStrategy: CacheStrategy;
-}
+export type EndpointFunctionName = string;
 
 /**
- * Return type from defineEndpoint factory
+ * Singleton endpoint registry that automatically detects and organizes all endpoints
  *
- * Provides the complete endpoint definition along with generated handler and options.
- * This allows for both the new metadata-driven approach and backward compatibility.
- *
- * @template I - The input parameters type
- * @template O - The output response type
+ * This registry scans the clients module at load time to find all endpoint definitions
+ * and organizes them by function name for easy lookup. It uses the module pattern to
+ * ensure the detection logic only runs once, providing optimal performance.
  */
-export interface EndpointDefinition<I, O> {
-  /** Complete endpoint metadata */
-  meta: Endpoint<I, O>;
+class EndpointRegistryClass {
+  private _endpoints: EndpointRegistry | null = null;
 
-  /** Generated handler function using zodFetch */
-  handleFetch: (params: I) => Promise<O>;
-
-  /** Generated TanStack Query options */
-  queryOptions: (params: I) => any; // Simplified type to avoid complex TanStack Query type issues
-}
-
-/**
- * Factory function for creating standardized endpoint definitions
- *
- * This function creates a complete endpoint definition that serves as the single
- * source of truth for all API endpoints. It automatically computes missing
- * api and function fields from the calling context and generates:
- * - A handler function using zodFetch with the provided schemas
- * - TanStack Query options with appropriate caching strategy
- * - Stable query keys based on api and function
- *
- * The generated query key follows the pattern [api, function] which
- * provides stable, unique identifiers for TanStack Query caching.
- *
- * @template I - The input parameters type
- * @template O - The output response type
- * @param meta - Endpoint metadata (api and function are auto-computed if not provided)
- * @returns Endpoint definition with handler and options
- *
- * @example
- * ```typescript
- * // Auto-computes api: "wsdot-highway-cameras" and function: "getHighwayCameras"
- * export const getHighwayCamerasDef = defineEndpoint({
- *   endpoint: "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
- *   inputSchema: getHighwayCamerasParamsSchema,
- *   outputSchema: camerasSchema,
- *   sampleParams: {},
- *   cacheStrategy: "DAILY_STATIC",
- * });
- * ```
- */
-export function defineEndpoint<I, O>(
-  meta: Endpoint<I, O>
-): EndpointDefinition<I, O> {
-  // Auto-compute missing fields from calling context
-  const computedApi = meta.api ?? inferApiFromCaller();
-  const computedFunction = meta.function ?? inferFunctionFromCaller();
-
-  // Create complete metadata with computed values
-  const completeMeta = {
-    ...meta,
-    api: computedApi,
-    function: computedFunction,
-  } as Required<Endpoint<I, O>>;
-
-  // Generate handler using zodFetch with provided metadata
-  const handleFetch = (params: I): Promise<O> =>
-    zodFetch({
-      endpoint: completeMeta.endpoint,
-      inputSchema: completeMeta.inputSchema,
-      outputSchema: completeMeta.outputSchema,
-      params,
-    });
-
-  // Generate stable query key from metadata
-  const queryKey = [completeMeta.api, completeMeta.function];
-
-  // Generate TanStack Query options with appropriate caching strategy
-  const queryOptions = createQueryOptions({
-    apiFunction: handleFetch,
-    queryKey,
-    cacheStrategy: completeMeta.cacheStrategy as any, // Type assertion needed for compatibility
-  });
-
-  return {
-    meta: completeMeta,
-    handleFetch,
-    queryOptions,
-  } as const;
-}
-
-/**
- * Infers API name from the calling file's folder structure
- *
- * Extracts the API name from the file path where defineEndpoint is called.
- * Supports both "wsdot-{api}" and "wsf-{api}" patterns.
- *
- * @returns API name (e.g., "wsdot-highway-cameras", "wsf-vessels")
- */
-function inferApiFromCaller(): string {
-  try {
-    const stack = new Error().stack;
-    if (stack) {
-      const lines = stack.split("\n");
-      // Look for the calling file (skip this function and defineEndpoint)
-      for (let i = 2; i < lines.length; i++) {
-        const line = lines[i];
-        const match = line.match(/\((.*?):\d+:\d+\)/);
-        if (match) {
-          const fullPath = match[1];
-          // Convert absolute path to relative path from src/clients
-          const relativePath = fullPath.replace(/.*\/src\/clients\//, "");
-          const apiFolder = relativePath.split("/")[0];
-
-          if (
-            apiFolder &&
-            (apiFolder.startsWith("wsdot-") || apiFolder.startsWith("wsf-"))
-          ) {
-            return apiFolder;
-          }
-        }
-      }
+  /**
+   * Gets all available endpoints organized by function name
+   *
+   * @returns Object mapping function names to endpoint definitions
+   */
+  get all(): EndpointRegistry {
+    if (!this._endpoints) {
+      this._endpoints = this.detectEndpoints();
     }
-  } catch (error) {
-    // Fallback if detection fails
-    console.warn("Failed to auto-detect API name from caller, using fallback");
+    return this._endpoints;
   }
 
-  // Fallback value
-  return "unknown-api";
+  /**
+   * Gets a list of all available function names
+   *
+   * @returns Array of function names for all available endpoints
+   */
+  get functionNames(): EndpointFunctionName[] {
+    return Object.keys(this.all);
+  }
+
+  /**
+   * Finds an endpoint by function name
+   *
+   * @param functionName - The function name to search for
+   * @returns The endpoint definition if found, null otherwise
+   */
+  findByFunctionName(functionName: string): Endpoint<unknown, unknown> | null {
+    return this.all[functionName] || null;
+  }
+
+  /**
+   * Detects and organizes endpoints from the clients module
+   *
+   * This method scans all exports from the clients module to find objects
+   * that match the Endpoint interface structure. It organizes them by
+   * function name for efficient lookup.
+   *
+   * @returns Object mapping function names to endpoint definitions
+   * @private
+   */
+  private detectEndpoints(): EndpointRegistry {
+    // Import all endpoints from the clients module
+    // This is done dynamically to avoid circular dependencies
+    const allClients = require("@/clients");
+
+    return Object.entries(allClients)
+      .filter(([_key, value]) => {
+        // Look for endpoint definitions (objects with urlTemplate and inputSchema)
+        return (
+          value &&
+          typeof value === "object" &&
+          "urlTemplate" in value &&
+          "inputSchema" in value &&
+          "functionName" in value
+        );
+      })
+      .reduce((acc, [, value]) => {
+        const endpoint = value as Endpoint<unknown, unknown>;
+        // Use the function name as the key for easy lookup
+        const functionName = endpoint.functionName || "unknown";
+        return { ...acc, [functionName]: endpoint };
+      }, {} as EndpointRegistry);
+  }
 }
 
 /**
- * Infers function name from the calling file's filename
+ * Singleton instance of the endpoint registry
  *
- * Extracts the function name from the filename where defineEndpoint is called.
- * Converts filename to PascalCase and adds "get" prefix.
- *
- * @returns Function name (e.g., "getVesselHistories", "getHighwayCameras")
+ * This provides a single point of access to all endpoint definitions
+ * throughout the application. The registry is automatically populated
+ * at module load time for optimal performance.
  */
-function inferFunctionFromCaller(): string {
-  try {
-    const stack = new Error().stack;
-    if (stack) {
-      const lines = stack.split("\n");
-      // Look for the calling file (skip this function and defineEndpoint)
-      for (let i = 2; i < lines.length; i++) {
-        const line = lines[i];
-        const match = line.match(/\((.*?):\d+:\d+\)/);
-        if (match) {
-          const fullPath = match[1];
-          // Convert absolute path to relative path from src/clients
-          const relativePath = fullPath.replace(/.*\/src\/clients\//, "");
-          const filename = relativePath.split("/").pop();
+export const endpointRegistry = new EndpointRegistryClass();
 
-          if (filename) {
-            // Remove .ts extension and convert to PascalCase
-            const baseName = filename.replace(/\.ts$/, "");
-            const pascalCase =
-              baseName.charAt(0).toUpperCase() + baseName.slice(1);
-            return `get${pascalCase}`;
-          }
-        }
-      }
-    }
-  } catch (error) {
-    // Fallback if detection fails
-    console.warn(
-      "Failed to auto-detect function name from caller, using fallback"
-    );
-  }
+/**
+ * Convenience function to get all endpoints
+ *
+ * @returns Object mapping function names to endpoint definitions
+ */
+export const getAllEndpoints = (): EndpointRegistry => endpointRegistry.all;
 
-  // Fallback value
-  return "getUnknown";
-}
+/**
+ * Convenience function to get all function names
+ *
+ * @returns Array of function names for all available endpoints
+ */
+export const getAvailableFunctionNames = (): EndpointFunctionName[] =>
+  endpointRegistry.functionNames;
+
+/**
+ * Convenience function to find an endpoint by function name
+ *
+ * @param functionName - The function name to search for
+ * @returns The endpoint definition if found, null otherwise
+ */
+export const findEndpointByFunctionName = (
+  functionName: string
+): Endpoint<unknown, unknown> | null =>
+  endpointRegistry.findByFunctionName(functionName);
+
+// Re-export the defineEndpoint factory and types for client modules
+export { defineEndpoint };
+export type { Endpoint, EndpointMeta, CacheStrategy };

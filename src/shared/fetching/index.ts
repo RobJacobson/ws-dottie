@@ -38,4 +38,14 @@ export type {
   JsonWithDates,
 } from "./types";
 // Main API
-export { zodFetch } from "./zodFetch";
+export { fetchZod } from "./fetchZod";
+
+// URL building utilities
+export { buildApiUrl } from "./urlBuilder";
+
+// Independent handler functions
+export {
+  fetchWithZod,
+  fetchPlain,
+  createEndpointQueryOptions,
+} from "./handlers";

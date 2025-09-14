@@ -36,7 +36,10 @@ export * from "./fetching";
 // ENDPOINT DEFINITIONS
 // ============================================================================
 
-// Endpoint definition factory and types
+// Individual endpoint definition factory and types
+export * from "./endpoint";
+
+// Endpoint collection and registry
 export * from "./endpoints";
 
 // ============================================================================

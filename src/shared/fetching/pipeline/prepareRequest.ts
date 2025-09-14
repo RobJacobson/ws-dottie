@@ -135,7 +135,7 @@ export const validateInputs = <TInput>(
  * @returns Complete URL with base URL and API key appended
  */
 export const buildCompleteUrl = (urlPath: string): string => {
-  const baseUrl = configManager.getBaseUrl();
+  const baseUrl = configManager.getDomain();
   const apiKey = configManager.getApiKey();
   const apiKeyParam = urlPath.includes("/ferries/")
     ? "apiaccesscode"

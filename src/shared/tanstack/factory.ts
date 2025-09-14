@@ -111,6 +111,15 @@ export const tanstackRefetchOptions = {
     retry: 5,
     retryDelay: FIVE_SECONDS,
   },
+
+  /** No caching strategy (for testing or special cases) */
+  NONE: {
+    staleTime: 0,
+    gcTime: 0,
+    refetchInterval: false,
+    retry: 0,
+    retryDelay: FIVE_SECONDS,
+  },
 } as const;
 
 /**

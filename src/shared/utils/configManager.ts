@@ -18,14 +18,14 @@
  * // Set API key only
  * configManager.setApiKey("your-api-key");
  *
- * // Set base URL only
- * configManager.setBaseUrl("https://custom.wsdot.wa.gov");
+ * // Set domain only
+ * configManager.setDomain("https://custom.wsdot.wa.gov");
  *
  * // Get API key (auto-initializes from environment if not set)
  * const apiKey = configManager.getApiKey();
  *
- * // Get base URL
- * const baseUrl = configManager.getBaseUrl();
+ * // Get domain
+ * const domain = configManager.getDomain();
  * ```
  */
 
@@ -109,11 +109,11 @@ const getApiKey = (): string => {
 };
 
 /**
- * Retrieves the current base URL for API requests
+ * Retrieves the current domain for API requests
  *
- * @returns Base URL string, defaults to DEFAULT_BASE_URL if not set
+ * @returns Domain string, defaults to DEFAULT_BASE_URL if not set
  */
-const getBaseUrl = (): string => {
+const getDomain = (): string => {
   return globalConfig.WSDOT_BASE_URL || DEFAULT_BASE_URL;
 };
 
@@ -132,17 +132,17 @@ const setApiKey = (apiKey: string): void => {
 };
 
 /**
- * Sets the custom base URL for WSDOT API requests
+ * Sets the custom domain for WSDOT API requests
  *
- * @param baseUrl - Base URL string to set
- * @throws {Error} When base URL is empty or invalid
+ * @param domain - Domain string to set
+ * @throws {Error} When domain is empty or invalid
  */
-const setBaseUrl = (baseUrl: string): void => {
-  if (!baseUrl || baseUrl.trim() === "") {
-    throw new Error("Base URL cannot be empty");
+const setDomain = (domain: string): void => {
+  if (!domain || domain.trim() === "") {
+    throw new Error("Domain cannot be empty");
   }
 
-  globalConfig.WSDOT_BASE_URL = baseUrl.trim();
+  globalConfig.WSDOT_BASE_URL = domain.trim();
 };
 
 /**
@@ -166,8 +166,8 @@ const clearConfig = (): void => {
  */
 export const configManager = {
   getApiKey,
-  getBaseUrl,
+  getDomain,
   setApiKey,
-  setBaseUrl,
+  setDomain,
   clearConfig,
 };

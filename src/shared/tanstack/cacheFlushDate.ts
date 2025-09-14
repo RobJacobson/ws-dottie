@@ -2,7 +2,7 @@ import type { UseQueryOptions } from "@tanstack/react-query";
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { z } from "zod";
-import { zodFetch } from "@/shared/fetching";
+import { fetchZod } from "@/shared/fetching";
 import { FIVE_MINUTES, FIVE_SECONDS, ONE_DAY } from "./constants";
 import { zWsdotDate } from "./validation";
 
@@ -64,7 +64,7 @@ export const createWsfCacheFlushDate = (apiType: WsfApiType) => {
   const getCacheFlushDate = async (
     params: WsfCacheFlushDateParams = {}
   ): Promise<WsfCacheFlushDate> => {
-    return zodFetch({
+    return fetchZod({
       endpoint,
       inputSchema: wsfCacheFlushDateParamsSchema,
       outputSchema: wsfCacheFlushDateSchema,
@@ -130,7 +130,7 @@ export const wsfCacheFlushDateOptions = (apiType: WsfApiType) => {
   return queryOptions({
     queryKey: key,
     queryFn: () =>
-      zodFetch({
+      fetchZod({
         endpoint,
         inputSchema: wsfCacheFlushDateParamsSchema,
         outputSchema: wsfCacheFlushDateSchema,
