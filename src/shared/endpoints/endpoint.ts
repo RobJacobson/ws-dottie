@@ -10,7 +10,7 @@
  */
 
 import type { z } from "zod";
-import { configManager } from "./utils/configManager";
+import { configManager } from "../utils/configManager";
 
 /**
  * Cache strategy configurations for different types of data

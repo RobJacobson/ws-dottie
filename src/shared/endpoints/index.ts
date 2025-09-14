@@ -9,6 +9,7 @@
 
 import type { Endpoint, EndpointMeta, CacheStrategy } from "./endpoint";
 import { defineEndpoint } from "./endpoint";
+import { isEndpoint, discoverEndpointsFromModules } from "./endpointDiscovery";
 
 /**
  * Type for a collection of endpoints organized by function name
@@ -76,23 +77,14 @@ class EndpointRegistryClass {
     // This is done dynamically to avoid circular dependencies
     const allClients = require("@/clients");
 
-    return Object.entries(allClients)
-      .filter(([_key, value]) => {
-        // Look for endpoint definitions (objects with urlTemplate and inputSchema)
-        return (
-          value &&
-          typeof value === "object" &&
-          "urlTemplate" in value &&
-          "inputSchema" in value &&
-          "functionName" in value
-        );
-      })
-      .reduce((acc, [, value]) => {
-        const endpoint = value as Endpoint<unknown, unknown>;
-        // Use the function name as the key for easy lookup
-        const functionName = endpoint.functionName || "unknown";
-        return { ...acc, [functionName]: endpoint };
-      }, {} as EndpointRegistry);
+    // Use shared discovery utility to find all endpoints
+    const endpoints = discoverEndpointsFromModules([allClients]);
+
+    // Organize by function name for CLI lookup
+    return endpoints.reduce((acc, endpoint) => {
+      const functionName = endpoint.functionName || "unknown";
+      return { ...acc, [functionName]: endpoint };
+    }, {} as EndpointRegistry);
   }
 }
 
