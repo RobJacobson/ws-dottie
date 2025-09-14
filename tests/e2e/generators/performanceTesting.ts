@@ -280,7 +280,7 @@ export class LoadTester {
   private async runConcurrentRequests<TParams, TOutput>(
     config: EndpointTestConfig<TParams, TOutput>,
     testConfig: PerformanceTestConfig,
-    _startTime: number
+    startTime: number
   ): Promise<void> {
     const endTime = startTime + testConfig.duration;
     const requestInterval = 1000 / testConfig.rate;

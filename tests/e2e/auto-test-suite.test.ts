@@ -1,10 +1,10 @@
 /**
- * @fileoverview Modern E2E Test Suite - Phase 2 Implementation
+ * @fileoverview Auto E2E Test Suite - Phase 2 Implementation
  *
  * This test suite demonstrates the enhanced test generators and validation utilities
  * that work with Endpoint metadata from defineEndpoint, providing comprehensive
- * testing with better error messages, automatic categorization, and performance
- * testing aligned with cache strategies.
+ * testing with automatic configuration generation, better error messages, automatic
+ * categorization, and performance testing aligned with cache strategies.
  */
 
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
@@ -34,16 +34,16 @@ import { MockDataFactory, mockConfigPresets } from "./utils/mockHelpers";
 import { getApiTimeout, shouldSkipApi } from "./config/testConfig";
 
 /**
- * Main test suite for the modern e2e test system
+ * Main test suite for the auto e2e test system
  */
-describe("Modern E2E Test Suite - Phase 2", () => {
+describe("Auto E2E Test Suite - Phase 2", () => {
   let discoveredEndpoints: ReturnType<typeof discoverEndpoints>;
   let apiNames: string[];
   let generatedConfigs: ReturnType<typeof generateAllApiConfigs>;
   let mockFactory: MockDataFactory;
 
   beforeAll(async () => {
-    console.log("🚀 Initializing Modern E2E Test Suite...");
+    console.log("🚀 Initializing Auto E2E Test Suite...");
 
     // Discover all endpoints
     console.log("🔍 Discovering endpoints...");
@@ -68,7 +68,7 @@ describe("Modern E2E Test Suite - Phase 2", () => {
   });
 
   afterAll(() => {
-    console.log("🏁 Modern E2E Test Suite completed");
+    console.log("🏁 Auto E2E Test Suite completed");
   });
 
   // Discovery and validation tests

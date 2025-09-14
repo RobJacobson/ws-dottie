@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_bridge_clearances from "@/clients/wsdot-bridge-clearances";
@@ -15,8 +16,8 @@ import * as wsdot_bridge_clearances from "@/clients/wsdot-bridge-clearances";
 /**
  * Auto-generated test configuration for getBridgeClearances endpoint
  */
-export const getBridgeClearancesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_bridge_clearances.getBridgeClearances, params),
+export const getBridgeClearancesConfig: EndpointTestConfig<z.infer<typeof wsdot_bridge_clearances.getBridgeClearances.inputSchema>, z.infer<typeof wsdot_bridge_clearances.getBridgeClearances.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_bridge_clearances.getBridgeClearances.inputSchema>) => fetchWithZod(wsdot_bridge_clearances.getBridgeClearances, params),
   inputSchema: wsdot_bridge_clearances.getBridgeClearances.inputSchema,
   outputSchema: wsdot_bridge_clearances.getBridgeClearances.outputSchema,
   validParams: wsdot_bridge_clearances.getBridgeClearances.sampleParams || {},
@@ -47,8 +48,8 @@ export const getBridgeClearancesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getBridgeClearancesByRoute endpoint
  */
-export const getBridgeClearancesByRouteConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_bridge_clearances.getBridgeClearancesByRoute, params),
+export const getBridgeClearancesByRouteConfig: EndpointTestConfig<z.infer<typeof wsdot_bridge_clearances.getBridgeClearancesByRoute.inputSchema>, z.infer<typeof wsdot_bridge_clearances.getBridgeClearancesByRoute.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_bridge_clearances.getBridgeClearancesByRoute.inputSchema>) => fetchWithZod(wsdot_bridge_clearances.getBridgeClearancesByRoute, params),
   inputSchema: wsdot_bridge_clearances.getBridgeClearancesByRoute.inputSchema,
   outputSchema: wsdot_bridge_clearances.getBridgeClearancesByRoute.outputSchema,
   validParams: wsdot_bridge_clearances.getBridgeClearancesByRoute.sampleParams || {},

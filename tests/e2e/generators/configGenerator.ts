@@ -72,7 +72,7 @@ export interface ApiModuleConfig {
   moduleName: string;
 
   /** Array of endpoint configurations */
-  endpoints: EndpointTestConfig<any, any>[];
+  endpoints: EndpointTestConfig<unknown, unknown>[];
 
   /** API-specific settings */
   settings: ApiSettings;
@@ -184,7 +184,9 @@ const generateInvalidParams = <TParams>(
 
   // Add invalid parameter variations
   invalidParams.push({} as Partial<TParams>); // Empty params
-  invalidParams.push({ invalidField: "invalidValue" } as Partial<TParams>); // Extra field
+  invalidParams.push({
+    invalidField: "invalidValue",
+  } as unknown as Partial<TParams>); // Extra field
 
   // If we have sample params, create invalid variations
   if (typeof sampleParams === "object" && sampleParams !== null) {
@@ -215,7 +217,7 @@ const generateCustomTests = <TParams, TOutput>(
   if (endpoint.cacheStrategy !== "NONE") {
     customTests.push({
       name: "Cache Strategy Validation",
-      params: endpoint.sampleParams || ({} as TParams),
+      params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
       expectation: "success",
       description: `Validates that ${endpoint.cacheStrategy} caching works correctly`,
     });
@@ -270,7 +272,8 @@ export const generateEndpointConfig = <TParams, TOutput>(
     apiFunction: (params: TParams) => fetchWithZod(endpoint, params),
     inputSchema: endpoint.inputSchema,
     outputSchema: endpoint.outputSchema,
-    validParams: endpoint.sampleParams || ({} as Partial<TParams>),
+    validParams: (endpoint.sampleParams ||
+      ({} as Partial<TParams>)) as Partial<TParams>,
     invalidParams: generateInvalidParams(endpoint),
     endpointName: endpoint.functionName,
     category: categorizeEndpoint(endpoint),

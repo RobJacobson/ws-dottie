@@ -68,7 +68,7 @@ export interface ErrorHandlingResult {
 /**
  * Edge case test scenario
  */
-export interface EdgeCaseScenario {
+export interface EdgeCaseScenario<TParams = unknown, TOutput = unknown> {
   name: string;
   description: string;
   type:
@@ -81,7 +81,7 @@ export interface EdgeCaseScenario {
   priority: "low" | "medium" | "high" | "critical";
   setup: () => Promise<void>;
   teardown: () => Promise<void>;
-  test: (config: EndpointTestConfig<any, any>) => Promise<boolean>;
+  test: (config: EndpointTestConfig<TParams, TOutput>) => Promise<boolean>;
   expectedOutcome: "success" | "error" | "timeout" | "retry";
   validation: {
     maxAttempts?: number;
@@ -266,7 +266,9 @@ export const createEdgeCaseScenarios = (
       try {
         // Test with boundary values
         const boundaryParams = generateBoundaryValues(endpoint);
-        await config.apiFunction(boundaryParams as any);
+        await config.apiFunction(
+          boundaryParams as Parameters<typeof config.apiFunction>[0]
+        );
         return true;
       } catch (error) {
         // Boundary values might cause errors, which is expected
@@ -297,7 +299,11 @@ export const createEdgeCaseScenarios = (
       const concurrency = 5;
       const promises = Array(concurrency)
         .fill(null)
-        .map(() => config.apiFunction(config.validParams as any));
+        .map(() =>
+          config.apiFunction(
+            config.validParams as Parameters<typeof config.apiFunction>[0]
+          )
+        );
 
       try {
         const results = await Promise.allSettled(promises);
@@ -336,7 +342,9 @@ export const createEdgeCaseScenarios = (
         );
 
         await Promise.race([
-          config.apiFunction(config.validParams as any),
+          config.apiFunction(
+            config.validParams as Parameters<typeof config.apiFunction>[0]
+          ),
           timeoutPromise,
         ]);
 
@@ -366,20 +374,26 @@ export const createEdgeCaseScenarios = (
       // Cleanup network error simulation
     },
     test: async (config) => {
+      // Store original URL outside try-catch
+      const originalUrl = config.endpointDefinition.urlTemplate;
+
       try {
         // Simulate network error by using invalid URL
-        const originalUrl = config.endpointDefinition.urlTemplate;
-        (config.endpointDefinition as any).urlTemplate =
+        (config.endpointDefinition as { urlTemplate: string }).urlTemplate =
           "https://invalid-url-that-should-fail.com/api";
 
-        await config.apiFunction(config.validParams as any);
+        await config.apiFunction(
+          config.validParams as Parameters<typeof config.apiFunction>[0]
+        );
 
         // Restore original URL
-        (config.endpointDefinition as any).urlTemplate = originalUrl;
+        (config.endpointDefinition as { urlTemplate: string }).urlTemplate =
+          originalUrl;
         return false; // Should have failed
       } catch (error) {
         // Restore original URL
-        (config.endpointDefinition as any).urlTemplate = originalUrl;
+        (config.endpointDefinition as { urlTemplate: string }).urlTemplate =
+          originalUrl;
         return (
           error instanceof Error &&
           (error.message.includes("network") ||
@@ -412,7 +426,9 @@ export const createEdgeCaseScenarios = (
       try {
         // Test with corrupted parameters
         const corruptedParams = generateCorruptedParams(endpoint);
-        await config.apiFunction(corruptedParams as any);
+        await config.apiFunction(
+          corruptedParams as Parameters<typeof config.apiFunction>[0]
+        );
         return false; // Should have failed
       } catch (error) {
         return (
@@ -448,7 +464,9 @@ export const createEdgeCaseScenarios = (
         // Test with resource-intensive parameters
         const resourceIntensiveParams =
           generateResourceIntensiveParams(endpoint);
-        await config.apiFunction(resourceIntensiveParams as any);
+        await config.apiFunction(
+          resourceIntensiveParams as Parameters<typeof config.apiFunction>[0]
+        );
         return true;
       } catch (error) {
         // Resource exhaustion might cause errors, which is expected
@@ -508,7 +526,7 @@ function generateResourceIntensiveParams(
   };
 }
 
-function createDeepObject(depth: number): any {
+function createDeepObject(depth: number): Record<string, unknown> | string {
   if (depth <= 0) return "leaf";
   return {
     level: depth,

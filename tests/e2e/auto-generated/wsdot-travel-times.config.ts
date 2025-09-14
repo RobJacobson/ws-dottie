@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_travel_times from "@/clients/wsdot-travel-times";
@@ -15,8 +16,8 @@ import * as wsdot_travel_times from "@/clients/wsdot-travel-times";
 /**
  * Auto-generated test configuration for getTravelTime endpoint
  */
-export const getTravelTimeConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_travel_times.getTravelTime, params),
+export const getTravelTimeConfig: EndpointTestConfig<z.infer<typeof wsdot_travel_times.getTravelTime.inputSchema>, z.infer<typeof wsdot_travel_times.getTravelTime.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_travel_times.getTravelTime.inputSchema>) => fetchWithZod(wsdot_travel_times.getTravelTime, params),
   inputSchema: wsdot_travel_times.getTravelTime.inputSchema,
   outputSchema: wsdot_travel_times.getTravelTime.outputSchema,
   validParams: wsdot_travel_times.getTravelTime.sampleParams || {},
@@ -47,8 +48,8 @@ export const getTravelTimeConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTravelTimes endpoint
  */
-export const getTravelTimesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_travel_times.getTravelTimes, params),
+export const getTravelTimesConfig: EndpointTestConfig<z.infer<typeof wsdot_travel_times.getTravelTimes.inputSchema>, z.infer<typeof wsdot_travel_times.getTravelTimes.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_travel_times.getTravelTimes.inputSchema>) => fetchWithZod(wsdot_travel_times.getTravelTimes, params),
   inputSchema: wsdot_travel_times.getTravelTimes.inputSchema,
   outputSchema: wsdot_travel_times.getTravelTimes.outputSchema,
   validParams: wsdot_travel_times.getTravelTimes.sampleParams || {},

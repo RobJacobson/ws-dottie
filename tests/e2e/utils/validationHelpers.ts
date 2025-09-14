@@ -100,7 +100,7 @@ export const validateInputWithContext = <TParams>(
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errors = error.errors.map((zodError) => ({
+      const errors = error.issues.map((zodError: z.ZodIssue) => ({
         field: zodError.path.join("."),
         message: zodError.message,
         received: zodError.received,
@@ -161,7 +161,7 @@ export const validateOutputWithContext = <TOutput>(
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errors = error.errors.map((zodError) => ({
+      const errors = error.issues.map((zodError: z.ZodIssue) => ({
         field: zodError.path.join("."),
         message: zodError.message,
         received: zodError.received,

@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_weather_information from "@/clients/wsdot-weather-information";
@@ -15,8 +16,8 @@ import * as wsdot_weather_information from "@/clients/wsdot-weather-information"
 /**
  * Auto-generated test configuration for getWeatherInformation endpoint
  */
-export const getWeatherInformationConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_weather_information.getWeatherInformation, params),
+export const getWeatherInformationConfig: EndpointTestConfig<z.infer<typeof wsdot_weather_information.getWeatherInformation.inputSchema>, z.infer<typeof wsdot_weather_information.getWeatherInformation.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_weather_information.getWeatherInformation.inputSchema>) => fetchWithZod(wsdot_weather_information.getWeatherInformation, params),
   inputSchema: wsdot_weather_information.getWeatherInformation.inputSchema,
   outputSchema: wsdot_weather_information.getWeatherInformation.outputSchema,
   validParams: wsdot_weather_information.getWeatherInformation.sampleParams || {},
@@ -47,8 +48,8 @@ export const getWeatherInformationConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getWeatherInformationByStationId endpoint
  */
-export const getWeatherInformationByStationIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_weather_information.getWeatherInformationByStationId, params),
+export const getWeatherInformationByStationIdConfig: EndpointTestConfig<z.infer<typeof wsdot_weather_information.getWeatherInformationByStationId.inputSchema>, z.infer<typeof wsdot_weather_information.getWeatherInformationByStationId.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_weather_information.getWeatherInformationByStationId.inputSchema>) => fetchWithZod(wsdot_weather_information.getWeatherInformationByStationId, params),
   inputSchema: wsdot_weather_information.getWeatherInformationByStationId.inputSchema,
   outputSchema: wsdot_weather_information.getWeatherInformationByStationId.outputSchema,
   validParams: wsdot_weather_information.getWeatherInformationByStationId.sampleParams || {},

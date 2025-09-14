@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_highway_cameras from "@/clients/wsdot-highway-cameras";
@@ -15,8 +16,8 @@ import * as wsdot_highway_cameras from "@/clients/wsdot-highway-cameras";
 /**
  * Auto-generated test configuration for getHighwayCamera endpoint
  */
-export const getHighwayCameraConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_cameras.getHighwayCamera, params),
+export const getHighwayCameraConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_cameras.getHighwayCamera.inputSchema>, z.infer<typeof wsdot_highway_cameras.getHighwayCamera.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_cameras.getHighwayCamera.inputSchema>) => fetchWithZod(wsdot_highway_cameras.getHighwayCamera, params),
   inputSchema: wsdot_highway_cameras.getHighwayCamera.inputSchema,
   outputSchema: wsdot_highway_cameras.getHighwayCamera.outputSchema,
   validParams: wsdot_highway_cameras.getHighwayCamera.sampleParams || {},
@@ -47,8 +48,8 @@ export const getHighwayCameraConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getHighwayCameras endpoint
  */
-export const getHighwayCamerasConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_cameras.getHighwayCameras, params),
+export const getHighwayCamerasConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_cameras.getHighwayCameras.inputSchema>, z.infer<typeof wsdot_highway_cameras.getHighwayCameras.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_cameras.getHighwayCameras.inputSchema>) => fetchWithZod(wsdot_highway_cameras.getHighwayCameras, params),
   inputSchema: wsdot_highway_cameras.getHighwayCameras.inputSchema,
   outputSchema: wsdot_highway_cameras.getHighwayCameras.outputSchema,
   validParams: wsdot_highway_cameras.getHighwayCameras.sampleParams || {},
@@ -79,8 +80,8 @@ export const getHighwayCamerasConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for searchHighwayCameras endpoint
  */
-export const searchHighwayCamerasConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_cameras.searchHighwayCameras, params),
+export const searchHighwayCamerasConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_cameras.searchHighwayCameras.inputSchema>, z.infer<typeof wsdot_highway_cameras.searchHighwayCameras.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_cameras.searchHighwayCameras.inputSchema>) => fetchWithZod(wsdot_highway_cameras.searchHighwayCameras, params),
   inputSchema: wsdot_highway_cameras.searchHighwayCameras.inputSchema,
   outputSchema: wsdot_highway_cameras.searchHighwayCameras.outputSchema,
   validParams: wsdot_highway_cameras.searchHighwayCameras.sampleParams || {},

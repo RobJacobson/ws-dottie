@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_commercial_vehicle_restrictions from "@/clients/wsdot-commercial-vehicle-restrictions";
@@ -15,8 +16,8 @@ import * as wsdot_commercial_vehicle_restrictions from "@/clients/wsdot-commerci
 /**
  * Auto-generated test configuration for getCommercialVehicleRestrictions endpoint
  */
-export const getCommercialVehicleRestrictionsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions, params),
+export const getCommercialVehicleRestrictionsConfig: EndpointTestConfig<z.infer<typeof wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions.inputSchema>, z.infer<typeof wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions.inputSchema>) => fetchWithZod(wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions, params),
   inputSchema: wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions.inputSchema,
   outputSchema: wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions.outputSchema,
   validParams: wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictions.sampleParams || {},
@@ -47,8 +48,8 @@ export const getCommercialVehicleRestrictionsConfig: EndpointTestConfig<any, any
 /**
  * Auto-generated test configuration for getCommercialVehicleRestrictionsWithId endpoint
  */
-export const getCommercialVehicleRestrictionsWithIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId, params),
+export const getCommercialVehicleRestrictionsWithIdConfig: EndpointTestConfig<z.infer<typeof wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId.inputSchema>, z.infer<typeof wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId.inputSchema>) => fetchWithZod(wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId, params),
   inputSchema: wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId.inputSchema,
   outputSchema: wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId.outputSchema,
   validParams: wsdot_commercial_vehicle_restrictions.getCommercialVehicleRestrictionsWithId.sampleParams || {},

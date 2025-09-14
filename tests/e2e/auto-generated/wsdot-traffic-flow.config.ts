@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_traffic_flow from "@/clients/wsdot-traffic-flow";
@@ -15,8 +16,8 @@ import * as wsdot_traffic_flow from "@/clients/wsdot-traffic-flow";
 /**
  * Auto-generated test configuration for getTrafficFlow endpoint
  */
-export const getTrafficFlowConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_traffic_flow.getTrafficFlow, params),
+export const getTrafficFlowConfig: EndpointTestConfig<z.infer<typeof wsdot_traffic_flow.getTrafficFlow.inputSchema>, z.infer<typeof wsdot_traffic_flow.getTrafficFlow.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_traffic_flow.getTrafficFlow.inputSchema>) => fetchWithZod(wsdot_traffic_flow.getTrafficFlow, params),
   inputSchema: wsdot_traffic_flow.getTrafficFlow.inputSchema,
   outputSchema: wsdot_traffic_flow.getTrafficFlow.outputSchema,
   validParams: wsdot_traffic_flow.getTrafficFlow.sampleParams || {},
@@ -47,8 +48,8 @@ export const getTrafficFlowConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTrafficFlowById endpoint
  */
-export const getTrafficFlowByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_traffic_flow.getTrafficFlowById, params),
+export const getTrafficFlowByIdConfig: EndpointTestConfig<z.infer<typeof wsdot_traffic_flow.getTrafficFlowById.inputSchema>, z.infer<typeof wsdot_traffic_flow.getTrafficFlowById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_traffic_flow.getTrafficFlowById.inputSchema>) => fetchWithZod(wsdot_traffic_flow.getTrafficFlowById, params),
   inputSchema: wsdot_traffic_flow.getTrafficFlowById.inputSchema,
   outputSchema: wsdot_traffic_flow.getTrafficFlowById.outputSchema,
   validParams: wsdot_traffic_flow.getTrafficFlowById.sampleParams || {},

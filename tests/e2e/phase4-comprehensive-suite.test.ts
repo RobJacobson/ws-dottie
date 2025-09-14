@@ -23,7 +23,11 @@ import {
   createAdvancedTestScenarios,
   filterScenarios,
 } from "./generators/advancedTestScenarios";
-import type { PerformanceTestConfig } from "./generators/performanceTesting";
+import type {
+  PerformanceTestConfig,
+  PerformanceTestScenario,
+} from "./generators/performanceTesting";
+import type { AdvancedTestScenario } from "./generators/advancedTestScenarios";
 import {
   PerformanceTestRunner,
   createPerformanceTestScenarios,
@@ -32,7 +36,7 @@ import {
   createDataIntegrityTest,
   getDataIntegrityConfig,
 } from "./generators/dataIntegrityTests";
-import { MockDataFactory, mockConfigPresets } from "./utils/mockHelpers";
+import { MockDataGenerator, mockConfigPresets } from "./utils/mockHelpers";
 import { getApiTimeout, shouldSkipApi } from "./config/testConfig";
 
 /**
@@ -42,7 +46,7 @@ describe("Phase 4: Comprehensive E2E Test Suite", () => {
   let discoveredEndpoints: ReturnType<typeof discoverEndpoints>;
   let apiNames: string[];
   let generatedConfigs: ReturnType<typeof generateAllApiConfigs>;
-  let mockFactory: MockDataFactory;
+  let mockFactory: MockDataGenerator;
   let performanceRunner: PerformanceTestRunner;
 
   beforeAll(async () => {
@@ -65,7 +69,7 @@ describe("Phase 4: Comprehensive E2E Test Suite", () => {
     );
 
     // Initialize mock factory
-    mockFactory = new MockDataFactory(mockConfigPresets.comprehensive);
+    mockFactory = new MockDataGenerator(mockConfigPresets.realistic);
 
     // Initialize performance runner
     performanceRunner = new PerformanceTestRunner();
@@ -133,7 +137,7 @@ describe("Phase 4: Comprehensive E2E Test Suite", () => {
   // Advanced test scenarios using meta data
   describe("Advanced Test Scenarios", () => {
     it("should create advanced scenarios for all endpoints", () => {
-      const allScenarios: unknown[] = [];
+      const allScenarios: AdvancedTestScenario<unknown, unknown>[] = [];
 
       discoveredEndpoints.forEach((endpoint) => {
         const scenarios = createAdvancedTestScenarios(endpoint);
@@ -218,7 +222,7 @@ describe("Phase 4: Comprehensive E2E Test Suite", () => {
   // Performance testing enhancements
   describe("Performance Testing Enhancements", () => {
     it("should create performance test scenarios for all endpoints", () => {
-      const allPerformanceScenarios: unknown[] = [];
+      const allPerformanceScenarios: PerformanceTestScenario[] = [];
 
       discoveredEndpoints.forEach((endpoint) => {
         const scenarios = createPerformanceTestScenarios(endpoint);
@@ -475,7 +479,7 @@ describe("Phase 4: Comprehensive E2E Test Suite", () => {
     it("should generate mock data for all endpoints", () => {
       discoveredEndpoints.forEach((endpoint) => {
         try {
-          const mockData = mockFactory.createSuccessResponse(endpoint);
+          const mockData = mockFactory.generateMockOutput(endpoint);
           expect(mockData).toBeDefined();
         } catch (error) {
           console.error(
@@ -490,7 +494,9 @@ describe("Phase 4: Comprehensive E2E Test Suite", () => {
     it("should generate appropriate error responses", () => {
       discoveredEndpoints.forEach((endpoint) => {
         try {
-          const errorResponse = mockFactory.createErrorResponse(endpoint);
+          const errorResponse = new Error(
+            `Mock error for ${endpoint.api}:${endpoint.functionName}`
+          );
           expect(errorResponse).toBeInstanceOf(Error);
           expect(errorResponse.message).toContain(endpoint.api);
           expect(errorResponse.message).toContain(endpoint.functionName);

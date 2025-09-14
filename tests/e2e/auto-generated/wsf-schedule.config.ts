@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsf_schedule from "@/clients/wsf-schedule";
@@ -15,8 +16,8 @@ import * as wsf_schedule from "@/clients/wsf-schedule";
 /**
  * Auto-generated test configuration for activeSeasons endpoint
  */
-export const activeSeasonsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.activeSeasons, params),
+export const activeSeasonsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.activeSeasons.inputSchema>, z.infer<typeof wsf_schedule.activeSeasons.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.activeSeasons.inputSchema>) => fetchWithZod(wsf_schedule.activeSeasons, params),
   inputSchema: wsf_schedule.activeSeasons.inputSchema,
   outputSchema: wsf_schedule.activeSeasons.outputSchema,
   validParams: wsf_schedule.activeSeasons.sampleParams || {},
@@ -47,8 +48,8 @@ export const activeSeasonsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for allSailings endpoint
  */
-export const allSailingsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.allSailings, params),
+export const allSailingsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.allSailings.inputSchema>, z.infer<typeof wsf_schedule.allSailings.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.allSailings.inputSchema>) => fetchWithZod(wsf_schedule.allSailings, params),
   inputSchema: wsf_schedule.allSailings.inputSchema,
   outputSchema: wsf_schedule.allSailings.outputSchema,
   validParams: wsf_schedule.allSailings.sampleParams || {},
@@ -79,8 +80,8 @@ export const allSailingsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for cacheFlushDate endpoint
  */
-export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.cacheFlushDate, params),
+export const cacheFlushDateConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.cacheFlushDate.inputSchema>, z.infer<typeof wsf_schedule.cacheFlushDate.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.cacheFlushDate.inputSchema>) => fetchWithZod(wsf_schedule.cacheFlushDate, params),
   inputSchema: wsf_schedule.cacheFlushDate.inputSchema,
   outputSchema: wsf_schedule.cacheFlushDate.outputSchema,
   validParams: wsf_schedule.cacheFlushDate.sampleParams || {},
@@ -111,8 +112,8 @@ export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for routeDetails endpoint
  */
-export const routeDetailsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routeDetails, params),
+export const routeDetailsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routeDetails.inputSchema>, z.infer<typeof wsf_schedule.routeDetails.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routeDetails.inputSchema>) => fetchWithZod(wsf_schedule.routeDetails, params),
   inputSchema: wsf_schedule.routeDetails.inputSchema,
   outputSchema: wsf_schedule.routeDetails.outputSchema,
   validParams: wsf_schedule.routeDetails.sampleParams || {},
@@ -143,8 +144,8 @@ export const routeDetailsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for routeDetailsByRoute endpoint
  */
-export const routeDetailsByRouteConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routeDetailsByRoute, params),
+export const routeDetailsByRouteConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routeDetailsByRoute.inputSchema>, z.infer<typeof wsf_schedule.routeDetailsByRoute.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routeDetailsByRoute.inputSchema>) => fetchWithZod(wsf_schedule.routeDetailsByRoute, params),
   inputSchema: wsf_schedule.routeDetailsByRoute.inputSchema,
   outputSchema: wsf_schedule.routeDetailsByRoute.outputSchema,
   validParams: wsf_schedule.routeDetailsByRoute.sampleParams || {},
@@ -175,8 +176,8 @@ export const routeDetailsByRouteConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for routeDetailsByTerminals endpoint
  */
-export const routeDetailsByTerminalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routeDetailsByTerminals, params),
+export const routeDetailsByTerminalsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routeDetailsByTerminals.inputSchema>, z.infer<typeof wsf_schedule.routeDetailsByTerminals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routeDetailsByTerminals.inputSchema>) => fetchWithZod(wsf_schedule.routeDetailsByTerminals, params),
   inputSchema: wsf_schedule.routeDetailsByTerminals.inputSchema,
   outputSchema: wsf_schedule.routeDetailsByTerminals.outputSchema,
   validParams: wsf_schedule.routeDetailsByTerminals.sampleParams || {},
@@ -207,8 +208,8 @@ export const routeDetailsByTerminalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for routes endpoint
  */
-export const routesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routes, params),
+export const routesConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routes.inputSchema>, z.infer<typeof wsf_schedule.routes.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routes.inputSchema>) => fetchWithZod(wsf_schedule.routes, params),
   inputSchema: wsf_schedule.routes.inputSchema,
   outputSchema: wsf_schedule.routes.outputSchema,
   validParams: wsf_schedule.routes.sampleParams || {},
@@ -239,8 +240,8 @@ export const routesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for routesByTerminals endpoint
  */
-export const routesByTerminalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routesByTerminals, params),
+export const routesByTerminalsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routesByTerminals.inputSchema>, z.infer<typeof wsf_schedule.routesByTerminals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routesByTerminals.inputSchema>) => fetchWithZod(wsf_schedule.routesByTerminals, params),
   inputSchema: wsf_schedule.routesByTerminals.inputSchema,
   outputSchema: wsf_schedule.routesByTerminals.outputSchema,
   validParams: wsf_schedule.routesByTerminals.sampleParams || {},
@@ -271,8 +272,8 @@ export const routesByTerminalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for routesHavingServiceDisruptions endpoint
  */
-export const routesHavingServiceDisruptionsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routesHavingServiceDisruptions, params),
+export const routesHavingServiceDisruptionsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routesHavingServiceDisruptions.inputSchema>, z.infer<typeof wsf_schedule.routesHavingServiceDisruptions.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routesHavingServiceDisruptions.inputSchema>) => fetchWithZod(wsf_schedule.routesHavingServiceDisruptions, params),
   inputSchema: wsf_schedule.routesHavingServiceDisruptions.inputSchema,
   outputSchema: wsf_schedule.routesHavingServiceDisruptions.outputSchema,
   validParams: wsf_schedule.routesHavingServiceDisruptions.sampleParams || {},
@@ -303,8 +304,8 @@ export const routesHavingServiceDisruptionsConfig: EndpointTestConfig<any, any> 
 /**
  * Auto-generated test configuration for routesWithDisruptions endpoint
  */
-export const routesWithDisruptionsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.routesWithDisruptions, params),
+export const routesWithDisruptionsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.routesWithDisruptions.inputSchema>, z.infer<typeof wsf_schedule.routesWithDisruptions.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.routesWithDisruptions.inputSchema>) => fetchWithZod(wsf_schedule.routesWithDisruptions, params),
   inputSchema: wsf_schedule.routesWithDisruptions.inputSchema,
   outputSchema: wsf_schedule.routesWithDisruptions.outputSchema,
   validParams: wsf_schedule.routesWithDisruptions.sampleParams || {},
@@ -335,8 +336,8 @@ export const routesWithDisruptionsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for sailings endpoint
  */
-export const sailingsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.sailings, params),
+export const sailingsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.sailings.inputSchema>, z.infer<typeof wsf_schedule.sailings.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.sailings.inputSchema>) => fetchWithZod(wsf_schedule.sailings, params),
   inputSchema: wsf_schedule.sailings.inputSchema,
   outputSchema: wsf_schedule.sailings.outputSchema,
   validParams: wsf_schedule.sailings.sampleParams || {},
@@ -367,8 +368,8 @@ export const sailingsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduleAlerts endpoint
  */
-export const scheduleAlertsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduleAlerts, params),
+export const scheduleAlertsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduleAlerts.inputSchema>, z.infer<typeof wsf_schedule.scheduleAlerts.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduleAlerts.inputSchema>) => fetchWithZod(wsf_schedule.scheduleAlerts, params),
   inputSchema: wsf_schedule.scheduleAlerts.inputSchema,
   outputSchema: wsf_schedule.scheduleAlerts.outputSchema,
   validParams: wsf_schedule.scheduleAlerts.sampleParams || {},
@@ -399,8 +400,8 @@ export const scheduleAlertsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduleByRoute endpoint
  */
-export const scheduleByRouteConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduleByRoute, params),
+export const scheduleByRouteConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduleByRoute.inputSchema>, z.infer<typeof wsf_schedule.scheduleByRoute.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduleByRoute.inputSchema>) => fetchWithZod(wsf_schedule.scheduleByRoute, params),
   inputSchema: wsf_schedule.scheduleByRoute.inputSchema,
   outputSchema: wsf_schedule.scheduleByRoute.outputSchema,
   validParams: wsf_schedule.scheduleByRoute.sampleParams || {},
@@ -431,8 +432,8 @@ export const scheduleByRouteConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduleByTerminals endpoint
  */
-export const scheduleByTerminalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduleByTerminals, params),
+export const scheduleByTerminalsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduleByTerminals.inputSchema>, z.infer<typeof wsf_schedule.scheduleByTerminals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduleByTerminals.inputSchema>) => fetchWithZod(wsf_schedule.scheduleByTerminals, params),
   inputSchema: wsf_schedule.scheduleByTerminals.inputSchema,
   outputSchema: wsf_schedule.scheduleByTerminals.outputSchema,
   validParams: wsf_schedule.scheduleByTerminals.sampleParams || {},
@@ -463,8 +464,8 @@ export const scheduleByTerminalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduledRoutes endpoint
  */
-export const scheduledRoutesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduledRoutes, params),
+export const scheduledRoutesConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduledRoutes.inputSchema>, z.infer<typeof wsf_schedule.scheduledRoutes.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduledRoutes.inputSchema>) => fetchWithZod(wsf_schedule.scheduledRoutes, params),
   inputSchema: wsf_schedule.scheduledRoutes.inputSchema,
   outputSchema: wsf_schedule.scheduledRoutes.outputSchema,
   validParams: wsf_schedule.scheduledRoutes.sampleParams || {},
@@ -495,8 +496,8 @@ export const scheduledRoutesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduledRoutesBySeason endpoint
  */
-export const scheduledRoutesBySeasonConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduledRoutesBySeason, params),
+export const scheduledRoutesBySeasonConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduledRoutesBySeason.inputSchema>, z.infer<typeof wsf_schedule.scheduledRoutesBySeason.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduledRoutesBySeason.inputSchema>) => fetchWithZod(wsf_schedule.scheduledRoutesBySeason, params),
   inputSchema: wsf_schedule.scheduledRoutesBySeason.inputSchema,
   outputSchema: wsf_schedule.scheduledRoutesBySeason.outputSchema,
   validParams: wsf_schedule.scheduledRoutesBySeason.sampleParams || {},
@@ -527,8 +528,8 @@ export const scheduledRoutesBySeasonConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduleTodayByRoute endpoint
  */
-export const scheduleTodayByRouteConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduleTodayByRoute, params),
+export const scheduleTodayByRouteConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduleTodayByRoute.inputSchema>, z.infer<typeof wsf_schedule.scheduleTodayByRoute.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduleTodayByRoute.inputSchema>) => fetchWithZod(wsf_schedule.scheduleTodayByRoute, params),
   inputSchema: wsf_schedule.scheduleTodayByRoute.inputSchema,
   outputSchema: wsf_schedule.scheduleTodayByRoute.outputSchema,
   validParams: wsf_schedule.scheduleTodayByRoute.sampleParams || {},
@@ -559,8 +560,8 @@ export const scheduleTodayByRouteConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduleTodayByTerminals endpoint
  */
-export const scheduleTodayByTerminalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduleTodayByTerminals, params),
+export const scheduleTodayByTerminalsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduleTodayByTerminals.inputSchema>, z.infer<typeof wsf_schedule.scheduleTodayByTerminals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduleTodayByTerminals.inputSchema>) => fetchWithZod(wsf_schedule.scheduleTodayByTerminals, params),
   inputSchema: wsf_schedule.scheduleTodayByTerminals.inputSchema,
   outputSchema: wsf_schedule.scheduleTodayByTerminals.outputSchema,
   validParams: wsf_schedule.scheduleTodayByTerminals.sampleParams || {},
@@ -591,8 +592,8 @@ export const scheduleTodayByTerminalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for scheduleValidDateRange endpoint
  */
-export const scheduleValidDateRangeConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.scheduleValidDateRange, params),
+export const scheduleValidDateRangeConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.scheduleValidDateRange.inputSchema>, z.infer<typeof wsf_schedule.scheduleValidDateRange.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.scheduleValidDateRange.inputSchema>) => fetchWithZod(wsf_schedule.scheduleValidDateRange, params),
   inputSchema: wsf_schedule.scheduleValidDateRange.inputSchema,
   outputSchema: wsf_schedule.scheduleValidDateRange.outputSchema,
   validParams: wsf_schedule.scheduleValidDateRange.sampleParams || {},
@@ -623,8 +624,8 @@ export const scheduleValidDateRangeConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalMates endpoint
  */
-export const terminalMatesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.terminalMates, params),
+export const terminalMatesConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.terminalMates.inputSchema>, z.infer<typeof wsf_schedule.terminalMates.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.terminalMates.inputSchema>) => fetchWithZod(wsf_schedule.terminalMates, params),
   inputSchema: wsf_schedule.terminalMates.inputSchema,
   outputSchema: wsf_schedule.terminalMates.outputSchema,
   validParams: wsf_schedule.terminalMates.sampleParams || {},
@@ -655,8 +656,8 @@ export const terminalMatesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminals endpoint
  */
-export const terminalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.terminals, params),
+export const terminalsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.terminals.inputSchema>, z.infer<typeof wsf_schedule.terminals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.terminals.inputSchema>) => fetchWithZod(wsf_schedule.terminals, params),
   inputSchema: wsf_schedule.terminals.inputSchema,
   outputSchema: wsf_schedule.terminals.outputSchema,
   validParams: wsf_schedule.terminals.sampleParams || {},
@@ -687,8 +688,8 @@ export const terminalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalsAndMates endpoint
  */
-export const terminalsAndMatesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.terminalsAndMates, params),
+export const terminalsAndMatesConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.terminalsAndMates.inputSchema>, z.infer<typeof wsf_schedule.terminalsAndMates.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.terminalsAndMates.inputSchema>) => fetchWithZod(wsf_schedule.terminalsAndMates, params),
   inputSchema: wsf_schedule.terminalsAndMates.inputSchema,
   outputSchema: wsf_schedule.terminalsAndMates.outputSchema,
   validParams: wsf_schedule.terminalsAndMates.sampleParams || {},
@@ -719,8 +720,8 @@ export const terminalsAndMatesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalsAndMatesByRoute endpoint
  */
-export const terminalsAndMatesByRouteConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.terminalsAndMatesByRoute, params),
+export const terminalsAndMatesByRouteConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.terminalsAndMatesByRoute.inputSchema>, z.infer<typeof wsf_schedule.terminalsAndMatesByRoute.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.terminalsAndMatesByRoute.inputSchema>) => fetchWithZod(wsf_schedule.terminalsAndMatesByRoute, params),
   inputSchema: wsf_schedule.terminalsAndMatesByRoute.inputSchema,
   outputSchema: wsf_schedule.terminalsAndMatesByRoute.outputSchema,
   validParams: wsf_schedule.terminalsAndMatesByRoute.sampleParams || {},
@@ -751,8 +752,8 @@ export const terminalsAndMatesByRouteConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for timeAdjustments endpoint
  */
-export const timeAdjustmentsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.timeAdjustments, params),
+export const timeAdjustmentsConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.timeAdjustments.inputSchema>, z.infer<typeof wsf_schedule.timeAdjustments.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.timeAdjustments.inputSchema>) => fetchWithZod(wsf_schedule.timeAdjustments, params),
   inputSchema: wsf_schedule.timeAdjustments.inputSchema,
   outputSchema: wsf_schedule.timeAdjustments.outputSchema,
   validParams: wsf_schedule.timeAdjustments.sampleParams || {},
@@ -783,8 +784,8 @@ export const timeAdjustmentsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for timeAdjustmentsByRoute endpoint
  */
-export const timeAdjustmentsByRouteConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_schedule.timeAdjustmentsByRoute, params),
+export const timeAdjustmentsByRouteConfig: EndpointTestConfig<z.infer<typeof wsf_schedule.timeAdjustmentsByRoute.inputSchema>, z.infer<typeof wsf_schedule.timeAdjustmentsByRoute.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_schedule.timeAdjustmentsByRoute.inputSchema>) => fetchWithZod(wsf_schedule.timeAdjustmentsByRoute, params),
   inputSchema: wsf_schedule.timeAdjustmentsByRoute.inputSchema,
   outputSchema: wsf_schedule.timeAdjustmentsByRoute.outputSchema,
   validParams: wsf_schedule.timeAdjustmentsByRoute.sampleParams || {},

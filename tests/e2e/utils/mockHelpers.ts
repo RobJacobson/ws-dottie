@@ -58,8 +58,8 @@ export class MockDataGenerator {
     // Apply custom overrides if provided
     if (this.config.customMockData?.[endpoint.functionName]) {
       return {
-        ...mockData,
-        ...this.config.customMockData[endpoint.functionName],
+        ...(typeof mockData === "object" && mockData !== null ? mockData : {}),
+        ...(this.config.customMockData[endpoint.functionName] || {}),
       } as T;
     }
 
@@ -75,8 +75,8 @@ export class MockDataGenerator {
     // Apply custom overrides if provided
     if (this.config.customMockData?.[`${endpoint.functionName}_input`]) {
       return {
-        ...mockData,
-        ...this.config.customMockData[`${endpoint.functionName}_input`],
+        ...(typeof mockData === "object" && mockData !== null ? mockData : {}),
+        ...(this.config.customMockData[`${endpoint.functionName}_input`] || {}),
       } as T;
     }
 
@@ -104,7 +104,7 @@ export class MockDataGenerator {
     }
 
     if (schema instanceof z.ZodArray) {
-      return this.generateArray(schema);
+      return this.generateArray(schema as z.ZodArray<z.ZodSchema>);
     }
 
     if (schema instanceof z.ZodObject) {
@@ -112,15 +112,15 @@ export class MockDataGenerator {
     }
 
     if (schema instanceof z.ZodUnion) {
-      return this.generateUnion(schema);
+      return this.generateUnion(schema as z.ZodUnion<z.ZodSchema[]>);
     }
 
     if (schema instanceof z.ZodOptional) {
-      return this.generateOptional(schema);
+      return this.generateOptional(schema as z.ZodOptional<z.ZodSchema>);
     }
 
     if (schema instanceof z.ZodNullable) {
-      return this.generateNullable(schema);
+      return this.generateNullable(schema as z.ZodNullable<z.ZodSchema>);
     }
 
     // Default fallback

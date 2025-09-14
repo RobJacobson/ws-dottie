@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_mountain_pass_conditions from "@/clients/wsdot-mountain-pass-conditions";
@@ -15,8 +16,8 @@ import * as wsdot_mountain_pass_conditions from "@/clients/wsdot-mountain-pass-c
 /**
  * Auto-generated test configuration for getMountainPassCondition endpoint
  */
-export const getMountainPassConditionConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_mountain_pass_conditions.getMountainPassCondition, params),
+export const getMountainPassConditionConfig: EndpointTestConfig<z.infer<typeof wsdot_mountain_pass_conditions.getMountainPassCondition.inputSchema>, z.infer<typeof wsdot_mountain_pass_conditions.getMountainPassCondition.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_mountain_pass_conditions.getMountainPassCondition.inputSchema>) => fetchWithZod(wsdot_mountain_pass_conditions.getMountainPassCondition, params),
   inputSchema: wsdot_mountain_pass_conditions.getMountainPassCondition.inputSchema,
   outputSchema: wsdot_mountain_pass_conditions.getMountainPassCondition.outputSchema,
   validParams: wsdot_mountain_pass_conditions.getMountainPassCondition.sampleParams || {},
@@ -47,8 +48,8 @@ export const getMountainPassConditionConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getMountainPassConditions endpoint
  */
-export const getMountainPassConditionsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_mountain_pass_conditions.getMountainPassConditions, params),
+export const getMountainPassConditionsConfig: EndpointTestConfig<z.infer<typeof wsdot_mountain_pass_conditions.getMountainPassConditions.inputSchema>, z.infer<typeof wsdot_mountain_pass_conditions.getMountainPassConditions.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_mountain_pass_conditions.getMountainPassConditions.inputSchema>) => fetchWithZod(wsdot_mountain_pass_conditions.getMountainPassConditions, params),
   inputSchema: wsdot_mountain_pass_conditions.getMountainPassConditions.inputSchema,
   outputSchema: wsdot_mountain_pass_conditions.getMountainPassConditions.outputSchema,
   validParams: wsdot_mountain_pass_conditions.getMountainPassConditions.sampleParams || {},

@@ -50,7 +50,7 @@ export const createCacheStrategyScenarios = <TParams, TOutput>(
     description: `Validates that ${endpoint.cacheStrategy} caching strategy works correctly`,
     category: "cache-strategy",
     priority: "high",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: getCacheStrategyTimeout(endpoint.cacheStrategy),
     validationRules: {
@@ -70,7 +70,7 @@ export const createCacheStrategyScenarios = <TParams, TOutput>(
       description: "Tests cache invalidation behavior after data refresh",
       category: "cache-strategy",
       priority: "medium",
-      params: endpoint.sampleParams || ({} as TParams),
+      params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
       expectation: "success",
       timeout: getCacheStrategyTimeout(endpoint.cacheStrategy) * 2,
       validationRules: {
@@ -100,7 +100,7 @@ export const createPerformanceScenarios = <TParams, TOutput>(
     description: "Tests endpoint performance under load",
     category: "performance",
     priority: "high",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 60000, // 1 minute
     retries: 3,
@@ -119,7 +119,7 @@ export const createPerformanceScenarios = <TParams, TOutput>(
     description: "Tests endpoint behavior under stress conditions",
     category: "performance",
     priority: "medium",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 120000, // 2 minutes
     retries: 2,
@@ -138,7 +138,7 @@ export const createPerformanceScenarios = <TParams, TOutput>(
     description: "Tests memory usage patterns during endpoint execution",
     category: "performance",
     priority: "low",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 30000,
     validationRules: {
@@ -185,7 +185,7 @@ export const createErrorHandlingScenarios = <TParams, TOutput>(
     description: "Tests endpoint behavior under network timeout conditions",
     category: "error-handling",
     priority: "medium",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "timeout",
     timeout: 5000, // Short timeout to trigger timeout error
     retries: 1,
@@ -201,7 +201,7 @@ export const createErrorHandlingScenarios = <TParams, TOutput>(
     description: "Tests endpoint behavior under rate limiting conditions",
     category: "error-handling",
     priority: "medium",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "error",
     timeout: 30000,
     metaData: {
@@ -228,7 +228,7 @@ export const createDataIntegrityScenarios = <TParams, TOutput>(
       "Tests that schema validation is consistent across multiple calls",
     category: "data-integrity",
     priority: "high",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 30000,
     validationRules: {
@@ -247,7 +247,7 @@ export const createDataIntegrityScenarios = <TParams, TOutput>(
     description: "Tests that returned data is fresh and not stale",
     category: "data-integrity",
     priority: "medium",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 30000,
     validationRules: {
@@ -294,7 +294,7 @@ export const createEdgeCaseScenarios = <TParams, TOutput>(
     description: "Tests endpoint behavior under concurrent access",
     category: "edge-cases",
     priority: "medium",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 60000,
     metaData: {
@@ -320,7 +320,7 @@ export const createIntegrationScenarios = <TParams, TOutput>(
     description: "Tests full API integration with real endpoints",
     category: "integration",
     priority: "critical",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 60000,
     retries: 2,
@@ -341,7 +341,7 @@ export const createIntegrationScenarios = <TParams, TOutput>(
     description: "Tests complete workflow from request to response",
     category: "integration",
     priority: "high",
-    params: endpoint.sampleParams || ({} as TParams),
+    params: (endpoint.sampleParams || ({} as Partial<TParams>)) as TParams,
     expectation: "success",
     timeout: 120000,
     validationRules: {

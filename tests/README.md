@@ -54,8 +54,63 @@ The test suite follows a modern, configuration-driven architecture that automati
 1. **Runtime Discovery**: All endpoints discovered at test execution time
 2. **Metadata Reuse**: Leverages existing `Endpoint` metadata directly
 3. **Zero Maintenance**: New endpoints automatically get test coverage
-4. **Comprehensive Coverage**: Tests input validation, output validation, performance, and data integrity
-5. **Production Ready**: Includes monitoring, reporting, and CI/CD integration
+4. **Auto-Regeneration**: Configurations automatically updated before each test run
+5. **Comprehensive Coverage**: Tests input validation, output validation, performance, and data integrity
+6. **Production Ready**: Includes monitoring, reporting, and CI/CD integration
+
+## Auto-Regeneration Feature
+
+The test suite includes **automatic configuration regeneration** that runs before each test execution, ensuring your test configurations are always up-to-date without manual intervention.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                Auto-Regeneration Flow                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  🚀 Start Test Execution                                    │
+│           │                                                 │
+│           ▼                                                 │
+│  🔄 Auto-Regenerate Configs (if enabled)                   │
+│           │                                                 │
+│           ▼                                                 │
+│  🧪 Run Tests                                               │
+│           │                                                 │
+│           ▼                                                 │
+│  📊 Generate Reports                                        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Benefits
+
+- **✅ Always Up-to-Date**: Configs automatically reflect latest endpoint changes
+- **✅ Zero Mental Overhead**: No need to remember when to regenerate
+- **✅ Fast Execution**: Regeneration takes <1 second
+- **✅ Fail-Safe**: Continues with existing configs if regeneration fails
+- **✅ Configurable**: Can be disabled if needed
+
+### Usage
+
+```bash
+# All npm test:e2e:* commands include auto-regeneration
+npm run test:e2e              # Phase 4 comprehensive suite
+npm run test:e2e:auto         # Auto test suite
+npm run test:e2e:data-integrity # Data integrity tests
+npm run test:e2e:discovery    # Discovery tests
+npm run test:e2e:all          # All tests with monitoring
+
+# Manual regeneration only
+npm run test:regen
+
+# Disable auto-regeneration (use direct vitest)
+npm test tests/e2e/phase4-comprehensive-suite.test.ts
+
+# Direct script execution (if needed)
+./tests/e2e/scripts/run-phase4-tests.js
+./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/phase4-comprehensive-suite.test.ts
+```
 
 ## Quick Start
 
@@ -71,28 +126,28 @@ The test suite follows a modern, configuration-driven architecture that automati
 # Install dependencies
 npm install
 
-# Generate auto-configurations for all APIs
-./tests/e2e/run-auto-config-generation.js
-
-# Run all tests
-npm test tests/e2e/phase4-comprehensive-suite.test.ts
+# Run tests with automatic configuration regeneration
+npm run test:e2e
 ```
 
 ### Basic Usage
 
 ```bash
-# Run specific test suites
-npm test tests/e2e/modern-test-suite.test.ts
+# Run specific test suites (with auto-regeneration)
+npm run test:e2e:auto
+npm run test:e2e:data-integrity
+npm run test:e2e:discovery
+
+# Run all E2E tests with comprehensive monitoring
+npm run test:e2e:all
+
+# Manual configuration regeneration (if needed)
+npm run test:regen
+
+# Run individual tests without auto-regeneration
+npm test tests/e2e/phase4-comprehensive-suite.test.ts
+npm test tests/e2e/auto-test-suite.test.ts
 npm test tests/e2e/data-integrity-suite.test.ts
-
-# Run with verbose output
-npm test tests/e2e/phase4-comprehensive-suite.test.ts --reporter=verbose
-
-# Run performance tests
-npm test tests/e2e/generators/performanceTesting.ts
-
-# Run error handling tests
-npm test tests/e2e/generators/advancedErrorHandling.ts
 ```
 
 ## Test Suite Structure
@@ -120,14 +175,18 @@ tests/
 │   │   ├── testConfig.ts                  # Central test configuration
 │   │   └── discoveryConfig.ts             # Discovery settings
 │   ├── fixtures/                          # Test data and configurations
+│   ├── scripts/                           # Test execution scripts
+│   │   ├── run-phase4-tests.js            # Phase 4 comprehensive runner
+│   │   ├── run-tests-with-auto-regen.js   # Individual test runner
+│   │   ├── run-auto-config-generation-quiet.js # Quiet config generation
+│   │   ├── run-auto-config-generation.js  # Full config generation
+│   │   ├── run-comprehensive-tests.js     # Comprehensive test runner
+│   │   ├── run-data-integrity-tests.js    # Data integrity runner
+│   │   └── run-discovery-test.js          # Discovery test runner
 │   ├── phase4-comprehensive-suite.test.ts # Main Phase 4 test suite
-│   ├── modern-test-suite.test.ts          # Phase 2 test suite
+│   ├── auto-test-suite.test.ts            # Phase 2 auto test suite
 │   ├── data-integrity-suite.test.ts       # Data integrity tests
 │   ├── discovery.test.ts                  # Discovery proof of concept
-│   ├── run-phase4-tests.js                # Production test runner
-│   ├── run-auto-config-generation.js      # Auto-config generation
-│   ├── run-data-integrity-tests.js        # Data integrity test runner
-│   ├── run-comprehensive-tests.js         # Comprehensive test runner
 │   ├── setup.ts                           # Global test setup
 │   └── README-PHASE4.md                   # Phase 4 documentation
 └── README.md                              # This file

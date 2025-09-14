@@ -7,6 +7,7 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
+import type { ApiModuleConfig } from "./configGenerator";
 import { discoverEndpoints, discoverApiNames } from "./endpointDiscovery";
 import { generateApiConfig, generateAllApiConfigs } from "./configGenerator";
 import { writeFileSync, mkdirSync } from "fs";
@@ -90,7 +91,7 @@ export const generateAllAutoConfigs = (
  * Generates individual auto-config files for each API
  */
 const generateAutoConfigFiles = (
-  apiConfigs: Record<string, any>,
+  apiConfigs: Record<string, ApiModuleConfig>,
   options: AutoConfigOptions
 ) => {
   // Ensure output directory exists
@@ -116,7 +117,7 @@ const generateAutoConfigFiles = (
  */
 const generateAutoConfigFileContent = (
   apiName: string,
-  apiConfig: any,
+  apiConfig: ApiModuleConfig,
   options: AutoConfigOptions
 ): string => {
   const moduleName = formatApiName(apiName);
@@ -138,6 +139,7 @@ const generateAutoConfigFileContent = (
   content += `import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as ${apiName.replace(/-/g, "_")} from "${importPath}";
@@ -145,15 +147,15 @@ import * as ${apiName.replace(/-/g, "_")} from "${importPath}";
 `;
 
   // Generate individual endpoint configurations
-  apiConfig.endpoints.forEach((endpointConfig: any, index: number) => {
+  apiConfig.endpoints.forEach((endpointConfig, index: number) => {
     const endpointName = endpointConfig.endpointName;
     const configName = `${endpointName}Config`;
 
     content += `/**
  * Auto-generated test configuration for ${endpointName} endpoint
  */
-export const ${configName}: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(${apiName.replace(/-/g, "_")}.${endpointName}, params),
+export const ${configName}: EndpointTestConfig<z.infer<typeof ${apiName.replace(/-/g, "_")}.${endpointName}.inputSchema>, z.infer<typeof ${apiName.replace(/-/g, "_")}.${endpointName}.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof ${apiName.replace(/-/g, "_")}.${endpointName}.inputSchema>) => fetchWithZod(${apiName.replace(/-/g, "_")}.${endpointName}, params),
   inputSchema: ${apiName.replace(/-/g, "_")}.${endpointName}.inputSchema,
   outputSchema: ${apiName.replace(/-/g, "_")}.${endpointName}.outputSchema,
   validParams: ${apiName.replace(/-/g, "_")}.${endpointName}.sampleParams || {},
@@ -186,7 +188,7 @@ export const ${configName}: EndpointTestConfig<any, any> = {
 
   // Generate exports
   const configNames = apiConfig.endpoints.map(
-    (ec: any) => `${ec.endpointName}Config`
+    (ec) => `${ec.endpointName}Config`
   );
   content += `/**
  * All endpoint configurations for this API
@@ -230,7 +232,7 @@ const formatApiName = (apiName: string): string => {
  * Validates generated configurations
  */
 const validateGeneratedConfigs = (
-  configs: Record<string, any>
+  configs: Record<string, ApiModuleConfig>
 ): { isValid: boolean; issues: string[] } => {
   const issues: string[] = [];
 
@@ -239,7 +241,7 @@ const validateGeneratedConfigs = (
       issues.push(`API ${apiName} has no endpoints configured`);
     }
 
-    config.endpoints.forEach((endpoint: any, index: number) => {
+    config.endpoints.forEach((endpoint, index: number) => {
       if (!endpoint.apiFunction) {
         issues.push(`API ${apiName}, endpoint ${index}: missing apiFunction`);
       }

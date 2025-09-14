@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsf_terminals from "@/clients/wsf-terminals";
@@ -15,8 +16,8 @@ import * as wsf_terminals from "@/clients/wsf-terminals";
 /**
  * Auto-generated test configuration for cacheFlushDate endpoint
  */
-export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.cacheFlushDate, params),
+export const cacheFlushDateConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.cacheFlushDate.inputSchema>, z.infer<typeof wsf_terminals.cacheFlushDate.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.cacheFlushDate.inputSchema>) => fetchWithZod(wsf_terminals.cacheFlushDate, params),
   inputSchema: wsf_terminals.cacheFlushDate.inputSchema,
   outputSchema: wsf_terminals.cacheFlushDate.outputSchema,
   validParams: wsf_terminals.cacheFlushDate.sampleParams || {},
@@ -47,8 +48,8 @@ export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalBasics endpoint
  */
-export const terminalBasicsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalBasics, params),
+export const terminalBasicsConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalBasics.inputSchema>, z.infer<typeof wsf_terminals.terminalBasics.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalBasics.inputSchema>) => fetchWithZod(wsf_terminals.terminalBasics, params),
   inputSchema: wsf_terminals.terminalBasics.inputSchema,
   outputSchema: wsf_terminals.terminalBasics.outputSchema,
   validParams: wsf_terminals.terminalBasics.sampleParams || {},
@@ -79,8 +80,8 @@ export const terminalBasicsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalBasicsById endpoint
  */
-export const terminalBasicsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalBasicsById, params),
+export const terminalBasicsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalBasicsById.inputSchema>, z.infer<typeof wsf_terminals.terminalBasicsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalBasicsById.inputSchema>) => fetchWithZod(wsf_terminals.terminalBasicsById, params),
   inputSchema: wsf_terminals.terminalBasicsById.inputSchema,
   outputSchema: wsf_terminals.terminalBasicsById.outputSchema,
   validParams: wsf_terminals.terminalBasicsById.sampleParams || {},
@@ -111,8 +112,8 @@ export const terminalBasicsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalBulletins endpoint
  */
-export const terminalBulletinsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalBulletins, params),
+export const terminalBulletinsConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalBulletins.inputSchema>, z.infer<typeof wsf_terminals.terminalBulletins.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalBulletins.inputSchema>) => fetchWithZod(wsf_terminals.terminalBulletins, params),
   inputSchema: wsf_terminals.terminalBulletins.inputSchema,
   outputSchema: wsf_terminals.terminalBulletins.outputSchema,
   validParams: wsf_terminals.terminalBulletins.sampleParams || {},
@@ -143,8 +144,8 @@ export const terminalBulletinsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalBulletinsById endpoint
  */
-export const terminalBulletinsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalBulletinsById, params),
+export const terminalBulletinsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalBulletinsById.inputSchema>, z.infer<typeof wsf_terminals.terminalBulletinsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalBulletinsById.inputSchema>) => fetchWithZod(wsf_terminals.terminalBulletinsById, params),
   inputSchema: wsf_terminals.terminalBulletinsById.inputSchema,
   outputSchema: wsf_terminals.terminalBulletinsById.outputSchema,
   validParams: wsf_terminals.terminalBulletinsById.sampleParams || {},
@@ -175,8 +176,8 @@ export const terminalBulletinsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalLocations endpoint
  */
-export const terminalLocationsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalLocations, params),
+export const terminalLocationsConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalLocations.inputSchema>, z.infer<typeof wsf_terminals.terminalLocations.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalLocations.inputSchema>) => fetchWithZod(wsf_terminals.terminalLocations, params),
   inputSchema: wsf_terminals.terminalLocations.inputSchema,
   outputSchema: wsf_terminals.terminalLocations.outputSchema,
   validParams: wsf_terminals.terminalLocations.sampleParams || {},
@@ -207,8 +208,8 @@ export const terminalLocationsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalLocationsById endpoint
  */
-export const terminalLocationsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalLocationsById, params),
+export const terminalLocationsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalLocationsById.inputSchema>, z.infer<typeof wsf_terminals.terminalLocationsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalLocationsById.inputSchema>) => fetchWithZod(wsf_terminals.terminalLocationsById, params),
   inputSchema: wsf_terminals.terminalLocationsById.inputSchema,
   outputSchema: wsf_terminals.terminalLocationsById.outputSchema,
   validParams: wsf_terminals.terminalLocationsById.sampleParams || {},
@@ -239,8 +240,8 @@ export const terminalLocationsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalSailingSpace endpoint
  */
-export const terminalSailingSpaceConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalSailingSpace, params),
+export const terminalSailingSpaceConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalSailingSpace.inputSchema>, z.infer<typeof wsf_terminals.terminalSailingSpace.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalSailingSpace.inputSchema>) => fetchWithZod(wsf_terminals.terminalSailingSpace, params),
   inputSchema: wsf_terminals.terminalSailingSpace.inputSchema,
   outputSchema: wsf_terminals.terminalSailingSpace.outputSchema,
   validParams: wsf_terminals.terminalSailingSpace.sampleParams || {},
@@ -271,8 +272,8 @@ export const terminalSailingSpaceConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalSailingSpaceById endpoint
  */
-export const terminalSailingSpaceByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalSailingSpaceById, params),
+export const terminalSailingSpaceByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalSailingSpaceById.inputSchema>, z.infer<typeof wsf_terminals.terminalSailingSpaceById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalSailingSpaceById.inputSchema>) => fetchWithZod(wsf_terminals.terminalSailingSpaceById, params),
   inputSchema: wsf_terminals.terminalSailingSpaceById.inputSchema,
   outputSchema: wsf_terminals.terminalSailingSpaceById.outputSchema,
   validParams: wsf_terminals.terminalSailingSpaceById.sampleParams || {},
@@ -303,8 +304,8 @@ export const terminalSailingSpaceByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalTransports endpoint
  */
-export const terminalTransportsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalTransports, params),
+export const terminalTransportsConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalTransports.inputSchema>, z.infer<typeof wsf_terminals.terminalTransports.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalTransports.inputSchema>) => fetchWithZod(wsf_terminals.terminalTransports, params),
   inputSchema: wsf_terminals.terminalTransports.inputSchema,
   outputSchema: wsf_terminals.terminalTransports.outputSchema,
   validParams: wsf_terminals.terminalTransports.sampleParams || {},
@@ -335,8 +336,8 @@ export const terminalTransportsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalTransportsById endpoint
  */
-export const terminalTransportsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalTransportsById, params),
+export const terminalTransportsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalTransportsById.inputSchema>, z.infer<typeof wsf_terminals.terminalTransportsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalTransportsById.inputSchema>) => fetchWithZod(wsf_terminals.terminalTransportsById, params),
   inputSchema: wsf_terminals.terminalTransportsById.inputSchema,
   outputSchema: wsf_terminals.terminalTransportsById.outputSchema,
   validParams: wsf_terminals.terminalTransportsById.sampleParams || {},
@@ -367,8 +368,8 @@ export const terminalTransportsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalVerbose endpoint
  */
-export const terminalVerboseConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalVerbose, params),
+export const terminalVerboseConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalVerbose.inputSchema>, z.infer<typeof wsf_terminals.terminalVerbose.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalVerbose.inputSchema>) => fetchWithZod(wsf_terminals.terminalVerbose, params),
   inputSchema: wsf_terminals.terminalVerbose.inputSchema,
   outputSchema: wsf_terminals.terminalVerbose.outputSchema,
   validParams: wsf_terminals.terminalVerbose.sampleParams || {},
@@ -399,8 +400,8 @@ export const terminalVerboseConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalVerboseById endpoint
  */
-export const terminalVerboseByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalVerboseById, params),
+export const terminalVerboseByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalVerboseById.inputSchema>, z.infer<typeof wsf_terminals.terminalVerboseById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalVerboseById.inputSchema>) => fetchWithZod(wsf_terminals.terminalVerboseById, params),
   inputSchema: wsf_terminals.terminalVerboseById.inputSchema,
   outputSchema: wsf_terminals.terminalVerboseById.outputSchema,
   validParams: wsf_terminals.terminalVerboseById.sampleParams || {},
@@ -431,8 +432,8 @@ export const terminalVerboseByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalWaitTimes endpoint
  */
-export const terminalWaitTimesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalWaitTimes, params),
+export const terminalWaitTimesConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalWaitTimes.inputSchema>, z.infer<typeof wsf_terminals.terminalWaitTimes.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalWaitTimes.inputSchema>) => fetchWithZod(wsf_terminals.terminalWaitTimes, params),
   inputSchema: wsf_terminals.terminalWaitTimes.inputSchema,
   outputSchema: wsf_terminals.terminalWaitTimes.outputSchema,
   validParams: wsf_terminals.terminalWaitTimes.sampleParams || {},
@@ -463,8 +464,8 @@ export const terminalWaitTimesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalWaitTimesById endpoint
  */
-export const terminalWaitTimesByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_terminals.terminalWaitTimesById, params),
+export const terminalWaitTimesByIdConfig: EndpointTestConfig<z.infer<typeof wsf_terminals.terminalWaitTimesById.inputSchema>, z.infer<typeof wsf_terminals.terminalWaitTimesById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_terminals.terminalWaitTimesById.inputSchema>) => fetchWithZod(wsf_terminals.terminalWaitTimesById, params),
   inputSchema: wsf_terminals.terminalWaitTimesById.inputSchema,
   outputSchema: wsf_terminals.terminalWaitTimesById.outputSchema,
   validParams: wsf_terminals.terminalWaitTimesById.sampleParams || {},

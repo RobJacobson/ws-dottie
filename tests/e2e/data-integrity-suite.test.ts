@@ -161,7 +161,9 @@ describe("Data Integrity Validation Suite", () => {
         enableContentValidation: true,
       } as unknown;
 
-      const errors = validateDataIntegrityConfig(invalidConfig);
+      const errors = validateDataIntegrityConfig(
+        invalidConfig as Record<string, unknown>
+      );
       expect(errors.length).toBeGreaterThan(0);
       expect(errors).toContain("excludedFields must be an array");
       expect(errors).toContain("strictFieldShape must be a boolean");

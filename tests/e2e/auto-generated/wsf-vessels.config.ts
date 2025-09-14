@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsf_vessels from "@/clients/wsf-vessels";
@@ -15,8 +16,8 @@ import * as wsf_vessels from "@/clients/wsf-vessels";
 /**
  * Auto-generated test configuration for cacheFlushDate endpoint
  */
-export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.cacheFlushDate, params),
+export const cacheFlushDateConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.cacheFlushDate.inputSchema>, z.infer<typeof wsf_vessels.cacheFlushDate.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.cacheFlushDate.inputSchema>) => fetchWithZod(wsf_vessels.cacheFlushDate, params),
   inputSchema: wsf_vessels.cacheFlushDate.inputSchema,
   outputSchema: wsf_vessels.cacheFlushDate.outputSchema,
   validParams: wsf_vessels.cacheFlushDate.sampleParams || {},
@@ -47,8 +48,8 @@ export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselAccommodations endpoint
  */
-export const vesselAccommodationsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselAccommodations, params),
+export const vesselAccommodationsConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselAccommodations.inputSchema>, z.infer<typeof wsf_vessels.vesselAccommodations.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselAccommodations.inputSchema>) => fetchWithZod(wsf_vessels.vesselAccommodations, params),
   inputSchema: wsf_vessels.vesselAccommodations.inputSchema,
   outputSchema: wsf_vessels.vesselAccommodations.outputSchema,
   validParams: wsf_vessels.vesselAccommodations.sampleParams || {},
@@ -79,8 +80,8 @@ export const vesselAccommodationsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselAccommodationsById endpoint
  */
-export const vesselAccommodationsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselAccommodationsById, params),
+export const vesselAccommodationsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselAccommodationsById.inputSchema>, z.infer<typeof wsf_vessels.vesselAccommodationsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselAccommodationsById.inputSchema>) => fetchWithZod(wsf_vessels.vesselAccommodationsById, params),
   inputSchema: wsf_vessels.vesselAccommodationsById.inputSchema,
   outputSchema: wsf_vessels.vesselAccommodationsById.outputSchema,
   validParams: wsf_vessels.vesselAccommodationsById.sampleParams || {},
@@ -111,8 +112,8 @@ export const vesselAccommodationsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselBasics endpoint
  */
-export const vesselBasicsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselBasics, params),
+export const vesselBasicsConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselBasics.inputSchema>, z.infer<typeof wsf_vessels.vesselBasics.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselBasics.inputSchema>) => fetchWithZod(wsf_vessels.vesselBasics, params),
   inputSchema: wsf_vessels.vesselBasics.inputSchema,
   outputSchema: wsf_vessels.vesselBasics.outputSchema,
   validParams: wsf_vessels.vesselBasics.sampleParams || {},
@@ -143,8 +144,8 @@ export const vesselBasicsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselBasicsById endpoint
  */
-export const vesselBasicsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselBasicsById, params),
+export const vesselBasicsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselBasicsById.inputSchema>, z.infer<typeof wsf_vessels.vesselBasicsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselBasicsById.inputSchema>) => fetchWithZod(wsf_vessels.vesselBasicsById, params),
   inputSchema: wsf_vessels.vesselBasicsById.inputSchema,
   outputSchema: wsf_vessels.vesselBasicsById.outputSchema,
   validParams: wsf_vessels.vesselBasicsById.sampleParams || {},
@@ -175,8 +176,8 @@ export const vesselBasicsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselHistories endpoint
  */
-export const vesselHistoriesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselHistories, params),
+export const vesselHistoriesConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselHistories.inputSchema>, z.infer<typeof wsf_vessels.vesselHistories.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselHistories.inputSchema>) => fetchWithZod(wsf_vessels.vesselHistories, params),
   inputSchema: wsf_vessels.vesselHistories.inputSchema,
   outputSchema: wsf_vessels.vesselHistories.outputSchema,
   validParams: wsf_vessels.vesselHistories.sampleParams || {},
@@ -207,8 +208,8 @@ export const vesselHistoriesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselHistoriesByVesselAndDateRange endpoint
  */
-export const vesselHistoriesByVesselAndDateRangeConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselHistoriesByVesselAndDateRange, params),
+export const vesselHistoriesByVesselAndDateRangeConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselHistoriesByVesselAndDateRange.inputSchema>, z.infer<typeof wsf_vessels.vesselHistoriesByVesselAndDateRange.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselHistoriesByVesselAndDateRange.inputSchema>) => fetchWithZod(wsf_vessels.vesselHistoriesByVesselAndDateRange, params),
   inputSchema: wsf_vessels.vesselHistoriesByVesselAndDateRange.inputSchema,
   outputSchema: wsf_vessels.vesselHistoriesByVesselAndDateRange.outputSchema,
   validParams: wsf_vessels.vesselHistoriesByVesselAndDateRange.sampleParams || {},
@@ -239,8 +240,8 @@ export const vesselHistoriesByVesselAndDateRangeConfig: EndpointTestConfig<any, 
 /**
  * Auto-generated test configuration for vesselLocations endpoint
  */
-export const vesselLocationsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselLocations, params),
+export const vesselLocationsConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselLocations.inputSchema>, z.infer<typeof wsf_vessels.vesselLocations.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselLocations.inputSchema>) => fetchWithZod(wsf_vessels.vesselLocations, params),
   inputSchema: wsf_vessels.vesselLocations.inputSchema,
   outputSchema: wsf_vessels.vesselLocations.outputSchema,
   validParams: wsf_vessels.vesselLocations.sampleParams || {},
@@ -271,8 +272,8 @@ export const vesselLocationsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselLocationsById endpoint
  */
-export const vesselLocationsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselLocationsById, params),
+export const vesselLocationsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselLocationsById.inputSchema>, z.infer<typeof wsf_vessels.vesselLocationsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselLocationsById.inputSchema>) => fetchWithZod(wsf_vessels.vesselLocationsById, params),
   inputSchema: wsf_vessels.vesselLocationsById.inputSchema,
   outputSchema: wsf_vessels.vesselLocationsById.outputSchema,
   validParams: wsf_vessels.vesselLocationsById.sampleParams || {},
@@ -303,8 +304,8 @@ export const vesselLocationsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselStats endpoint
  */
-export const vesselStatsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselStats, params),
+export const vesselStatsConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselStats.inputSchema>, z.infer<typeof wsf_vessels.vesselStats.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselStats.inputSchema>) => fetchWithZod(wsf_vessels.vesselStats, params),
   inputSchema: wsf_vessels.vesselStats.inputSchema,
   outputSchema: wsf_vessels.vesselStats.outputSchema,
   validParams: wsf_vessels.vesselStats.sampleParams || {},
@@ -335,8 +336,8 @@ export const vesselStatsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselStatsById endpoint
  */
-export const vesselStatsByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselStatsById, params),
+export const vesselStatsByIdConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselStatsById.inputSchema>, z.infer<typeof wsf_vessels.vesselStatsById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselStatsById.inputSchema>) => fetchWithZod(wsf_vessels.vesselStatsById, params),
   inputSchema: wsf_vessels.vesselStatsById.inputSchema,
   outputSchema: wsf_vessels.vesselStatsById.outputSchema,
   validParams: wsf_vessels.vesselStatsById.sampleParams || {},
@@ -367,8 +368,8 @@ export const vesselStatsByIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselsVerbose endpoint
  */
-export const vesselsVerboseConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselsVerbose, params),
+export const vesselsVerboseConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselsVerbose.inputSchema>, z.infer<typeof wsf_vessels.vesselsVerbose.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselsVerbose.inputSchema>) => fetchWithZod(wsf_vessels.vesselsVerbose, params),
   inputSchema: wsf_vessels.vesselsVerbose.inputSchema,
   outputSchema: wsf_vessels.vesselsVerbose.outputSchema,
   validParams: wsf_vessels.vesselsVerbose.sampleParams || {},
@@ -399,8 +400,8 @@ export const vesselsVerboseConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for vesselsVerboseById endpoint
  */
-export const vesselsVerboseByIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_vessels.vesselsVerboseById, params),
+export const vesselsVerboseByIdConfig: EndpointTestConfig<z.infer<typeof wsf_vessels.vesselsVerboseById.inputSchema>, z.infer<typeof wsf_vessels.vesselsVerboseById.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_vessels.vesselsVerboseById.inputSchema>) => fetchWithZod(wsf_vessels.vesselsVerboseById, params),
   inputSchema: wsf_vessels.vesselsVerboseById.inputSchema,
   outputSchema: wsf_vessels.vesselsVerboseById.outputSchema,
   validParams: wsf_vessels.vesselsVerboseById.sampleParams || {},

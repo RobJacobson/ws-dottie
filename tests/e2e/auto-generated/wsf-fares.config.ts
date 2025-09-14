@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsf_fares from "@/clients/wsf-fares";
@@ -15,8 +16,8 @@ import * as wsf_fares from "@/clients/wsf-fares";
 /**
  * Auto-generated test configuration for cacheFlushDate endpoint
  */
-export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.cacheFlushDate, params),
+export const cacheFlushDateConfig: EndpointTestConfig<z.infer<typeof wsf_fares.cacheFlushDate.inputSchema>, z.infer<typeof wsf_fares.cacheFlushDate.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.cacheFlushDate.inputSchema>) => fetchWithZod(wsf_fares.cacheFlushDate, params),
   inputSchema: wsf_fares.cacheFlushDate.inputSchema,
   outputSchema: wsf_fares.cacheFlushDate.outputSchema,
   validParams: wsf_fares.cacheFlushDate.sampleParams || {},
@@ -47,8 +48,8 @@ export const cacheFlushDateConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for fareLineItems endpoint
  */
-export const fareLineItemsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.fareLineItems, params),
+export const fareLineItemsConfig: EndpointTestConfig<z.infer<typeof wsf_fares.fareLineItems.inputSchema>, z.infer<typeof wsf_fares.fareLineItems.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.fareLineItems.inputSchema>) => fetchWithZod(wsf_fares.fareLineItems, params),
   inputSchema: wsf_fares.fareLineItems.inputSchema,
   outputSchema: wsf_fares.fareLineItems.outputSchema,
   validParams: wsf_fares.fareLineItems.sampleParams || {},
@@ -79,8 +80,8 @@ export const fareLineItemsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for fareLineItemsBasic endpoint
  */
-export const fareLineItemsBasicConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.fareLineItemsBasic, params),
+export const fareLineItemsBasicConfig: EndpointTestConfig<z.infer<typeof wsf_fares.fareLineItemsBasic.inputSchema>, z.infer<typeof wsf_fares.fareLineItemsBasic.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.fareLineItemsBasic.inputSchema>) => fetchWithZod(wsf_fares.fareLineItemsBasic, params),
   inputSchema: wsf_fares.fareLineItemsBasic.inputSchema,
   outputSchema: wsf_fares.fareLineItemsBasic.outputSchema,
   validParams: wsf_fares.fareLineItemsBasic.sampleParams || {},
@@ -111,8 +112,8 @@ export const fareLineItemsBasicConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for fareLineItemsVerbose endpoint
  */
-export const fareLineItemsVerboseConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.fareLineItemsVerbose, params),
+export const fareLineItemsVerboseConfig: EndpointTestConfig<z.infer<typeof wsf_fares.fareLineItemsVerbose.inputSchema>, z.infer<typeof wsf_fares.fareLineItemsVerbose.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.fareLineItemsVerbose.inputSchema>) => fetchWithZod(wsf_fares.fareLineItemsVerbose, params),
   inputSchema: wsf_fares.fareLineItemsVerbose.inputSchema,
   outputSchema: wsf_fares.fareLineItemsVerbose.outputSchema,
   validParams: wsf_fares.fareLineItemsVerbose.sampleParams || {},
@@ -143,8 +144,8 @@ export const fareLineItemsVerboseConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for faresTerminals endpoint
  */
-export const faresTerminalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.faresTerminals, params),
+export const faresTerminalsConfig: EndpointTestConfig<z.infer<typeof wsf_fares.faresTerminals.inputSchema>, z.infer<typeof wsf_fares.faresTerminals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.faresTerminals.inputSchema>) => fetchWithZod(wsf_fares.faresTerminals, params),
   inputSchema: wsf_fares.faresTerminals.inputSchema,
   outputSchema: wsf_fares.faresTerminals.outputSchema,
   validParams: wsf_fares.faresTerminals.sampleParams || {},
@@ -175,8 +176,8 @@ export const faresTerminalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for faresValidDateRange endpoint
  */
-export const faresValidDateRangeConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.faresValidDateRange, params),
+export const faresValidDateRangeConfig: EndpointTestConfig<z.infer<typeof wsf_fares.faresValidDateRange.inputSchema>, z.infer<typeof wsf_fares.faresValidDateRange.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.faresValidDateRange.inputSchema>) => fetchWithZod(wsf_fares.faresValidDateRange, params),
   inputSchema: wsf_fares.faresValidDateRange.inputSchema,
   outputSchema: wsf_fares.faresValidDateRange.outputSchema,
   validParams: wsf_fares.faresValidDateRange.sampleParams || {},
@@ -207,8 +208,8 @@ export const faresValidDateRangeConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for fareTotals endpoint
  */
-export const fareTotalsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.fareTotals, params),
+export const fareTotalsConfig: EndpointTestConfig<z.infer<typeof wsf_fares.fareTotals.inputSchema>, z.infer<typeof wsf_fares.fareTotals.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.fareTotals.inputSchema>) => fetchWithZod(wsf_fares.fareTotals, params),
   inputSchema: wsf_fares.fareTotals.inputSchema,
   outputSchema: wsf_fares.fareTotals.outputSchema,
   validParams: wsf_fares.fareTotals.sampleParams || {},
@@ -239,8 +240,8 @@ export const fareTotalsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalCombo endpoint
  */
-export const terminalComboConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.terminalCombo, params),
+export const terminalComboConfig: EndpointTestConfig<z.infer<typeof wsf_fares.terminalCombo.inputSchema>, z.infer<typeof wsf_fares.terminalCombo.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.terminalCombo.inputSchema>) => fetchWithZod(wsf_fares.terminalCombo, params),
   inputSchema: wsf_fares.terminalCombo.inputSchema,
   outputSchema: wsf_fares.terminalCombo.outputSchema,
   validParams: wsf_fares.terminalCombo.sampleParams || {},
@@ -271,8 +272,8 @@ export const terminalComboConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalComboVerbose endpoint
  */
-export const terminalComboVerboseConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.terminalComboVerbose, params),
+export const terminalComboVerboseConfig: EndpointTestConfig<z.infer<typeof wsf_fares.terminalComboVerbose.inputSchema>, z.infer<typeof wsf_fares.terminalComboVerbose.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.terminalComboVerbose.inputSchema>) => fetchWithZod(wsf_fares.terminalComboVerbose, params),
   inputSchema: wsf_fares.terminalComboVerbose.inputSchema,
   outputSchema: wsf_fares.terminalComboVerbose.outputSchema,
   validParams: wsf_fares.terminalComboVerbose.sampleParams || {},
@@ -303,8 +304,8 @@ export const terminalComboVerboseConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for terminalMates endpoint
  */
-export const terminalMatesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsf_fares.terminalMates, params),
+export const terminalMatesConfig: EndpointTestConfig<z.infer<typeof wsf_fares.terminalMates.inputSchema>, z.infer<typeof wsf_fares.terminalMates.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsf_fares.terminalMates.inputSchema>) => fetchWithZod(wsf_fares.terminalMates, params),
   inputSchema: wsf_fares.terminalMates.inputSchema,
   outputSchema: wsf_fares.terminalMates.outputSchema,
   validParams: wsf_fares.terminalMates.sampleParams || {},

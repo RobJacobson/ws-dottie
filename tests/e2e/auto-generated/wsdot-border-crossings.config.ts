@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_border_crossings from "@/clients/wsdot-border-crossings";
@@ -15,8 +16,8 @@ import * as wsdot_border_crossings from "@/clients/wsdot-border-crossings";
 /**
  * Auto-generated test configuration for getBorderCrossings endpoint
  */
-export const getBorderCrossingsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_border_crossings.getBorderCrossings, params),
+export const getBorderCrossingsConfig: EndpointTestConfig<z.infer<typeof wsdot_border_crossings.getBorderCrossings.inputSchema>, z.infer<typeof wsdot_border_crossings.getBorderCrossings.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_border_crossings.getBorderCrossings.inputSchema>) => fetchWithZod(wsdot_border_crossings.getBorderCrossings, params),
   inputSchema: wsdot_border_crossings.getBorderCrossings.inputSchema,
   outputSchema: wsdot_border_crossings.getBorderCrossings.outputSchema,
   validParams: wsdot_border_crossings.getBorderCrossings.sampleParams || {},

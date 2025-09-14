@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_highway_alerts from "@/clients/wsdot-highway-alerts";
@@ -15,8 +16,8 @@ import * as wsdot_highway_alerts from "@/clients/wsdot-highway-alerts";
 /**
  * Auto-generated test configuration for getAlert endpoint
  */
-export const getAlertConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.getAlert, params),
+export const getAlertConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.getAlert.inputSchema>, z.infer<typeof wsdot_highway_alerts.getAlert.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.getAlert.inputSchema>) => fetchWithZod(wsdot_highway_alerts.getAlert, params),
   inputSchema: wsdot_highway_alerts.getAlert.inputSchema,
   outputSchema: wsdot_highway_alerts.getAlert.outputSchema,
   validParams: wsdot_highway_alerts.getAlert.sampleParams || {},
@@ -47,8 +48,8 @@ export const getAlertConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getAlerts endpoint
  */
-export const getAlertsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.getAlerts, params),
+export const getAlertsConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.getAlerts.inputSchema>, z.infer<typeof wsdot_highway_alerts.getAlerts.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.getAlerts.inputSchema>) => fetchWithZod(wsdot_highway_alerts.getAlerts, params),
   inputSchema: wsdot_highway_alerts.getAlerts.inputSchema,
   outputSchema: wsdot_highway_alerts.getAlerts.outputSchema,
   validParams: wsdot_highway_alerts.getAlerts.sampleParams || {},
@@ -79,8 +80,8 @@ export const getAlertsConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getAlertsByRegionId endpoint
  */
-export const getAlertsByRegionIdConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.getAlertsByRegionId, params),
+export const getAlertsByRegionIdConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.getAlertsByRegionId.inputSchema>, z.infer<typeof wsdot_highway_alerts.getAlertsByRegionId.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.getAlertsByRegionId.inputSchema>) => fetchWithZod(wsdot_highway_alerts.getAlertsByRegionId, params),
   inputSchema: wsdot_highway_alerts.getAlertsByRegionId.inputSchema,
   outputSchema: wsdot_highway_alerts.getAlertsByRegionId.outputSchema,
   validParams: wsdot_highway_alerts.getAlertsByRegionId.sampleParams || {},
@@ -111,8 +112,8 @@ export const getAlertsByRegionIdConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getAlertsForMapArea endpoint
  */
-export const getAlertsForMapAreaConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.getAlertsForMapArea, params),
+export const getAlertsForMapAreaConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.getAlertsForMapArea.inputSchema>, z.infer<typeof wsdot_highway_alerts.getAlertsForMapArea.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.getAlertsForMapArea.inputSchema>) => fetchWithZod(wsdot_highway_alerts.getAlertsForMapArea, params),
   inputSchema: wsdot_highway_alerts.getAlertsForMapArea.inputSchema,
   outputSchema: wsdot_highway_alerts.getAlertsForMapArea.outputSchema,
   validParams: wsdot_highway_alerts.getAlertsForMapArea.sampleParams || {},
@@ -143,8 +144,8 @@ export const getAlertsForMapAreaConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getEventCategories endpoint
  */
-export const getEventCategoriesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.getEventCategories, params),
+export const getEventCategoriesConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.getEventCategories.inputSchema>, z.infer<typeof wsdot_highway_alerts.getEventCategories.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.getEventCategories.inputSchema>) => fetchWithZod(wsdot_highway_alerts.getEventCategories, params),
   inputSchema: wsdot_highway_alerts.getEventCategories.inputSchema,
   outputSchema: wsdot_highway_alerts.getEventCategories.outputSchema,
   validParams: wsdot_highway_alerts.getEventCategories.sampleParams || {},
@@ -175,8 +176,8 @@ export const getEventCategoriesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getMapAreas endpoint
  */
-export const getMapAreasConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.getMapAreas, params),
+export const getMapAreasConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.getMapAreas.inputSchema>, z.infer<typeof wsdot_highway_alerts.getMapAreas.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.getMapAreas.inputSchema>) => fetchWithZod(wsdot_highway_alerts.getMapAreas, params),
   inputSchema: wsdot_highway_alerts.getMapAreas.inputSchema,
   outputSchema: wsdot_highway_alerts.getMapAreas.outputSchema,
   validParams: wsdot_highway_alerts.getMapAreas.sampleParams || {},
@@ -207,8 +208,8 @@ export const getMapAreasConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for searchAlerts endpoint
  */
-export const searchAlertsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_highway_alerts.searchAlerts, params),
+export const searchAlertsConfig: EndpointTestConfig<z.infer<typeof wsdot_highway_alerts.searchAlerts.inputSchema>, z.infer<typeof wsdot_highway_alerts.searchAlerts.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_highway_alerts.searchAlerts.inputSchema>) => fetchWithZod(wsdot_highway_alerts.searchAlerts, params),
   inputSchema: wsdot_highway_alerts.searchAlerts.inputSchema,
   outputSchema: wsdot_highway_alerts.searchAlerts.outputSchema,
   validParams: wsdot_highway_alerts.searchAlerts.sampleParams || {},

@@ -30,6 +30,7 @@ const CONFIG = {
   coverage: true,
   performance: true,
   errorHandling: true,
+  autoRegenerateConfigs: true, // Automatically regenerate configs before tests
 };
 
 // Test execution results
@@ -61,6 +62,32 @@ let testResults = {
 };
 
 /**
+ * Auto-regenerate configurations if enabled
+ */
+function autoRegenerateConfigs() {
+  if (!CONFIG.autoRegenerateConfigs) {
+    return;
+  }
+
+  console.log("🔄 Auto-regenerating configurations...");
+
+  try {
+    const startTime = Date.now();
+    execSync("node tests/e2e/scripts/run-auto-config-generation-quiet.js", {
+      stdio: "pipe", // Less verbose output
+      cwd: process.cwd(),
+    });
+    const duration = Date.now() - startTime;
+    console.log(`✅ Configurations regenerated in ${duration}ms`);
+  } catch (error) {
+    console.warn(
+      "⚠️ Auto-regeneration failed, continuing with existing configs:"
+    );
+    console.warn(error.message);
+  }
+}
+
+/**
  * Main execution function
  */
 async function main() {
@@ -69,6 +96,9 @@ async function main() {
   console.log(`⚙️ Configuration:`, JSON.stringify(CONFIG, null, 2));
 
   try {
+    // Auto-regenerate configurations
+    autoRegenerateConfigs();
+
     // Create output directories
     createOutputDirectories();
 

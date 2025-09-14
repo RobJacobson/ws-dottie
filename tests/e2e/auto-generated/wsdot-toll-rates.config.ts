@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_toll_rates from "@/clients/wsdot-toll-rates";
@@ -15,8 +16,8 @@ import * as wsdot_toll_rates from "@/clients/wsdot-toll-rates";
 /**
  * Auto-generated test configuration for getTollRates endpoint
  */
-export const getTollRatesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_toll_rates.getTollRates, params),
+export const getTollRatesConfig: EndpointTestConfig<z.infer<typeof wsdot_toll_rates.getTollRates.inputSchema>, z.infer<typeof wsdot_toll_rates.getTollRates.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_toll_rates.getTollRates.inputSchema>) => fetchWithZod(wsdot_toll_rates.getTollRates, params),
   inputSchema: wsdot_toll_rates.getTollRates.inputSchema,
   outputSchema: wsdot_toll_rates.getTollRates.outputSchema,
   validParams: wsdot_toll_rates.getTollRates.sampleParams || {},
@@ -47,8 +48,8 @@ export const getTollRatesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTollTripInfo endpoint
  */
-export const getTollTripInfoConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_toll_rates.getTollTripInfo, params),
+export const getTollTripInfoConfig: EndpointTestConfig<z.infer<typeof wsdot_toll_rates.getTollTripInfo.inputSchema>, z.infer<typeof wsdot_toll_rates.getTollTripInfo.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_toll_rates.getTollTripInfo.inputSchema>) => fetchWithZod(wsdot_toll_rates.getTollTripInfo, params),
   inputSchema: wsdot_toll_rates.getTollTripInfo.inputSchema,
   outputSchema: wsdot_toll_rates.getTollTripInfo.outputSchema,
   validParams: wsdot_toll_rates.getTollTripInfo.sampleParams || {},
@@ -79,8 +80,8 @@ export const getTollTripInfoConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTollTripRates endpoint
  */
-export const getTollTripRatesConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_toll_rates.getTollTripRates, params),
+export const getTollTripRatesConfig: EndpointTestConfig<z.infer<typeof wsdot_toll_rates.getTollTripRates.inputSchema>, z.infer<typeof wsdot_toll_rates.getTollTripRates.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_toll_rates.getTollTripRates.inputSchema>) => fetchWithZod(wsdot_toll_rates.getTollTripRates, params),
   inputSchema: wsdot_toll_rates.getTollTripRates.inputSchema,
   outputSchema: wsdot_toll_rates.getTollTripRates.outputSchema,
   validParams: wsdot_toll_rates.getTollTripRates.sampleParams || {},
@@ -111,8 +112,8 @@ export const getTollTripRatesConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTollTripVersion endpoint
  */
-export const getTollTripVersionConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_toll_rates.getTollTripVersion, params),
+export const getTollTripVersionConfig: EndpointTestConfig<z.infer<typeof wsdot_toll_rates.getTollTripVersion.inputSchema>, z.infer<typeof wsdot_toll_rates.getTollTripVersion.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_toll_rates.getTollTripVersion.inputSchema>) => fetchWithZod(wsdot_toll_rates.getTollTripVersion, params),
   inputSchema: wsdot_toll_rates.getTollTripVersion.inputSchema,
   outputSchema: wsdot_toll_rates.getTollTripVersion.outputSchema,
   validParams: wsdot_toll_rates.getTollTripVersion.sampleParams || {},
@@ -143,8 +144,8 @@ export const getTollTripVersionConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTripRatesByDate endpoint
  */
-export const getTripRatesByDateConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_toll_rates.getTripRatesByDate, params),
+export const getTripRatesByDateConfig: EndpointTestConfig<z.infer<typeof wsdot_toll_rates.getTripRatesByDate.inputSchema>, z.infer<typeof wsdot_toll_rates.getTripRatesByDate.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_toll_rates.getTripRatesByDate.inputSchema>) => fetchWithZod(wsdot_toll_rates.getTripRatesByDate, params),
   inputSchema: wsdot_toll_rates.getTripRatesByDate.inputSchema,
   outputSchema: wsdot_toll_rates.getTripRatesByDate.outputSchema,
   validParams: wsdot_toll_rates.getTripRatesByDate.sampleParams || {},
@@ -175,8 +176,8 @@ export const getTripRatesByDateConfig: EndpointTestConfig<any, any> = {
 /**
  * Auto-generated test configuration for getTripRatesByVersion endpoint
  */
-export const getTripRatesByVersionConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_toll_rates.getTripRatesByVersion, params),
+export const getTripRatesByVersionConfig: EndpointTestConfig<z.infer<typeof wsdot_toll_rates.getTripRatesByVersion.inputSchema>, z.infer<typeof wsdot_toll_rates.getTripRatesByVersion.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_toll_rates.getTripRatesByVersion.inputSchema>) => fetchWithZod(wsdot_toll_rates.getTripRatesByVersion, params),
   inputSchema: wsdot_toll_rates.getTripRatesByVersion.inputSchema,
   outputSchema: wsdot_toll_rates.getTripRatesByVersion.outputSchema,
   validParams: wsdot_toll_rates.getTripRatesByVersion.sampleParams || {},

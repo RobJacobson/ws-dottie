@@ -8,6 +8,7 @@
 import type { Endpoint } from "@/shared/endpoints";
 import { fetchWithZod } from "@/shared/fetching";
 import type { EndpointTestConfig } from "../generators/configGenerator";
+import { z } from "zod";
 
 // Import the actual endpoint definitions
 import * as wsdot_weather_stations from "@/clients/wsdot-weather-stations";
@@ -15,8 +16,8 @@ import * as wsdot_weather_stations from "@/clients/wsdot-weather-stations";
 /**
  * Auto-generated test configuration for getWeatherStations endpoint
  */
-export const getWeatherStationsConfig: EndpointTestConfig<any, any> = {
-  apiFunction: (params: any) => fetchWithZod(wsdot_weather_stations.getWeatherStations, params),
+export const getWeatherStationsConfig: EndpointTestConfig<z.infer<typeof wsdot_weather_stations.getWeatherStations.inputSchema>, z.infer<typeof wsdot_weather_stations.getWeatherStations.outputSchema>> = {
+  apiFunction: (params: z.infer<typeof wsdot_weather_stations.getWeatherStations.inputSchema>) => fetchWithZod(wsdot_weather_stations.getWeatherStations, params),
   inputSchema: wsdot_weather_stations.getWeatherStations.inputSchema,
   outputSchema: wsdot_weather_stations.getWeatherStations.outputSchema,
   validParams: wsdot_weather_stations.getWeatherStations.sampleParams || {},
