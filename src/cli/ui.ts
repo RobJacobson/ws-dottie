@@ -4,19 +4,49 @@
 
 import chalk from "chalk";
 import { WsdotApiError } from "@/shared/fetching/handleErrors";
-import { getAllEndpoints, getAvailableFunctions } from "./endpoints";
+import { getAllEndpoints, getAvailableFunctionNames } from "@/shared/endpoints";
 import type { CliOptions } from "./types";
 
 /**
- * Handle errors with consistent formatting using shared error handling
+ * Handle errors with consistent formatting and helpful context
+ * @param error - The error to handle (can be any type)
+ * @param functionName - Name of the function that caused the error
+ * @throws Never returns, always exits process with code 1
  */
 export const handleError = (error: unknown, functionName: string): never => {
-  // Use shared error handling for WsdotApiError instances
-  if (error instanceof WsdotApiError) {
-    console.error(chalk.red(`❌ Error calling ${functionName}:`));
-    console.error(chalk.yellow(error.userMessage));
+  // Extract message based on error type
+  const message =
+    error instanceof WsdotApiError
+      ? error.userMessage
+      : error instanceof Error
+        ? error.message
+        : String(error);
 
-    // Add CLI-specific context for common errors
+  console.error(chalk.red(`❌ Error calling ${functionName}:`));
+  console.error(chalk.yellow(message));
+
+  // Add context based on error type
+  addErrorContext(error);
+
+  // Add stack trace in debug mode for generic errors
+  if (
+    error instanceof Error &&
+    !(error instanceof WsdotApiError) &&
+    error.stack &&
+    process.env.NODE_ENV === "development"
+  ) {
+    console.error(chalk.gray(error.stack));
+  }
+
+  process.exit(1);
+};
+
+/**
+ * Add helpful context based on error type
+ * @param error - The error to add context for
+ */
+const addErrorContext = (error: unknown): void => {
+  if (error instanceof WsdotApiError) {
     if (error.code === "API_ERROR") {
       console.error(chalk.gray("💡 Tip: Check your API key and parameters"));
     } else if (error.code === "NETWORK_ERROR") {
@@ -28,16 +58,12 @@ export const handleError = (error: unknown, functionName: string): never => {
         )
       );
     }
-
-    process.exit(1);
+    return;
   }
 
-  // Fallback to original error handling for non-WsdotApiError instances
+  // Generic error context
   const message = error instanceof Error ? error.message : String(error);
-  console.error(chalk.red(`❌ Error calling ${functionName}:`));
-  console.error(chalk.yellow(message));
 
-  // Add helpful context for common errors
   if (message.includes("Invalid JSON parameters")) {
     console.error(chalk.gray("💡 Tip: Ensure your parameters are valid JSON"));
   } else if (message.includes("Parameter validation failed")) {
@@ -49,15 +75,14 @@ export const handleError = (error: unknown, functionName: string): never => {
   } else if (message.includes("not found")) {
     console.error(chalk.gray("💡 Tip: Use --help to see available functions"));
   }
-
-  process.exit(1);
 };
 
 /**
- * Display function not found error
+ * Display function not found error with list of available functions
+ * @param functionName - The function name that was not found
  */
 export const displayFunctionNotFound = (functionName: string): void => {
-  const availableFunctions = getAvailableFunctions();
+  const availableFunctions = getAvailableFunctionNames();
   console.error(chalk.red(`❌ Function '${functionName}' not found`));
   console.error(chalk.yellow("Available functions:"));
   availableFunctions.forEach((func) => {
@@ -66,7 +91,9 @@ export const displayFunctionNotFound = (functionName: string): void => {
 };
 
 /**
- * Output result with formatting
+ * Output result with formatting based on CLI options
+ * @param result - The result data to output
+ * @param options - CLI options controlling output format (pretty, head, etc.)
  */
 export const outputResult = (result: unknown, options: CliOptions): void => {
   const jsonString = JSON.stringify(
@@ -86,12 +113,16 @@ export const outputResult = (result: unknown, options: CliOptions): void => {
 
 /**
  * Setup console suppression for quiet modes
+ * @param isQuiet - Whether to suppress console output
+ * @returns Object with restore method to re-enable console output
  */
 export const setupConsoleSuppression = (isQuiet: boolean) => {
   if (!isQuiet) return { restore: () => {} };
 
   const originalLog = console.log;
   const originalError = console.error;
+
+  // Suppress all console output
   console.log = console.error = () => {};
 
   return {
@@ -104,6 +135,9 @@ export const setupConsoleSuppression = (isQuiet: boolean) => {
 
 /**
  * Generate default CLI examples for a given tool name
+ * @param toolName - Name of the CLI tool
+ * @param additionalExamples - Additional examples to include
+ * @returns Array of example command strings
  */
 export const generateDefaultExamples = (
   toolName: string,
@@ -121,7 +155,10 @@ export const generateDefaultExamples = (
 };
 
 /**
- * Generate help text
+ * Generate help text with examples and available functions
+ * @param toolName - Name of the CLI tool
+ * @param examples - Array of example commands to include
+ * @returns Formatted help text string
  */
 export const generateHelpText = (
   toolName: string,
@@ -131,7 +168,10 @@ export const generateHelpText = (
   const functionList = Object.entries(endpoints)
     .map(([key, endpointDef]) => {
       const functionName = key;
-      const description = `${endpointDef.meta.api} - ${endpointDef.meta.function}`;
+      const api = endpointDef.api || endpointDef.id.split("/")[0];
+      const functionDisplayName =
+        endpointDef.functionName || endpointDef.id.split("/")[1];
+      const description = `${api} - ${functionDisplayName}`;
       return `  ${chalk.cyan(functionName)} - ${description}`;
     })
     .join("\n");
