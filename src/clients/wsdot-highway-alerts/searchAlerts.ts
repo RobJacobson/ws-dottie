@@ -64,7 +64,7 @@ import {
   type HighwayAlerts,
   highwayAlertsSchema,
 } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for searchAlerts */
 const searchAlertsInput = z.object({
@@ -83,18 +83,20 @@ const searchAlertsInput = z.object({
 });
 
 /** Endpoint metadata for searchAlerts */
-export const searchAlertsMeta: Endpoint<SearchAlertsInput, HighwayAlerts> = {
-  endpoint:
-    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-  inputSchema: searchAlertsInput,
-  outputSchema: highwayAlertsSchema,
-  sampleParams: {
-    StateRoute: "405",
-    SearchTimeStart: new Date("2025-08-01"),
-    SearchTimeEnd: new Date("2025-09-30"),
-  },
-  cacheStrategy: "MINUTE_UPDATES",
-};
+export const searchAlertsMeta: EndpointMeta<SearchAlertsInput, HighwayAlerts> =
+  {
+    id: "wsdot-highway-alerts/searchAlerts",
+    endpoint:
+      "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
+    inputSchema: searchAlertsInput,
+    outputSchema: highwayAlertsSchema,
+    sampleParams: {
+      StateRoute: "405",
+      SearchTimeStart: new Date("2025-08-01"),
+      SearchTimeEnd: new Date("2025-09-30"),
+    },
+    cacheStrategy: "MINUTE_UPDATES",
+  };
 
 // Type exports
 export type SearchAlertsInput = z.infer<typeof searchAlertsInput>;

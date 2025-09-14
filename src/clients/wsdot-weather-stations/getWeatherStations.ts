@@ -3,16 +3,17 @@ import {
   type WeatherStations,
   weatherStationsSchema,
 } from "@/schemas/wsdot-weather-stations/weatherStations.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getWeatherStations */
 const weatherStationsInput = z.object({});
 
 /** Endpoint metadata for getWeatherStations */
-export const getWeatherStationsMeta: Endpoint<
+export const getWeatherStationsMeta: EndpointMeta<
   WeatherStationsInput,
   WeatherStations
 > = {
+  id: "wsdot-weather-stations/getWeatherStations",
   endpoint:
     "/Traffic/api/WeatherStations/WeatherStationsREST.svc/GetCurrentStationsAsJson",
   inputSchema: weatherStationsInput,

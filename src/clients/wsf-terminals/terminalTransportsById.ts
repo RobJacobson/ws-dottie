@@ -3,7 +3,7 @@ import {
   type TerminalTransports,
   terminalTransportsSchema,
 } from "@/schemas/wsf-terminals/terminalTransports.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTerminalTransportsByTerminalId */
 const terminalTransportsByTerminalIdInput = z.object({
@@ -11,10 +11,11 @@ const terminalTransportsByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalTransportsByTerminalId */
-export const getTerminalTransportsByTerminalIdMeta: Endpoint<
+export const getTerminalTransportsByTerminalIdMeta: EndpointMeta<
   TerminalTransportsByTerminalIdInput,
   TerminalTransports
 > = {
+  id: "wsf-terminals/terminalTransportsById",
   endpoint: "/ferries/api/terminals/rest/terminaltransports/{terminalId}",
   inputSchema: terminalTransportsByTerminalIdInput,
   outputSchema: terminalTransportsSchema,

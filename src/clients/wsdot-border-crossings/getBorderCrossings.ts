@@ -60,16 +60,17 @@ import {
   type BorderCrossings,
   borderCrossingsSchema,
 } from "@/schemas/wsdot-border-crossings/borderCrossing.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getBorderCrossings */
 const borderCrossingsInput = z.object({});
 
 /** Endpoint metadata for getBorderCrossings */
-export const getBorderCrossingsMeta: Endpoint<
+export const getBorderCrossingsMeta: EndpointMeta<
   BorderCrossingsInput,
   BorderCrossings
 > = {
+  id: "wsdot-border-crossings/getBorderCrossings",
   endpoint:
     "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
   inputSchema: borderCrossingsInput,

@@ -3,7 +3,7 @@ import {
   type TerminalWaitTimes,
   terminalWaitTimesSchema,
 } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTerminalWaitTimesByTerminalId */
 const terminalWaitTimesByTerminalIdInput = z.object({
@@ -11,10 +11,11 @@ const terminalWaitTimesByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalWaitTimesByTerminalId */
-export const getTerminalWaitTimesByTerminalIdMeta: Endpoint<
+export const getTerminalWaitTimesByTerminalIdMeta: EndpointMeta<
   TerminalWaitTimesByTerminalIdInput,
   TerminalWaitTimes
 > = {
+  id: "wsf-terminals/terminalWaitTimesById",
   endpoint: "/ferries/api/terminals/rest/terminalwaittimes/{terminalId}",
   inputSchema: terminalWaitTimesByTerminalIdInput,
   outputSchema: terminalWaitTimesSchema,

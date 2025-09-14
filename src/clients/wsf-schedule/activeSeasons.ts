@@ -3,16 +3,17 @@ import {
   type ScheduleBriefResponses,
   scheduleBriefResponsesSchema,
 } from "@/schemas/wsf-schedule/scheduleBriefResponse";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getActiveSeasons */
 const activeSeasonsInput = z.object({});
 
 /** Endpoint metadata for getActiveSeasons */
-export const getActiveSeasonsMeta: Endpoint<
+export const getActiveSeasonsMeta: EndpointMeta<
   ActiveSeasonsInput,
   ScheduleBriefResponses
 > = {
+  id: "wsf-schedule/activeSeasons",
   endpoint: "/ferries/api/schedule/rest/activeseasons",
   inputSchema: activeSeasonsInput,
   outputSchema: scheduleBriefResponsesSchema,

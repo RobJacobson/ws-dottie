@@ -56,7 +56,7 @@ import {
   type FlowData,
   flowDataSchema,
 } from "@/schemas/wsdot-traffic-flow/flowData.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTrafficFlowById */
 const trafficFlowByIdInput = z.object({
@@ -65,15 +65,18 @@ const trafficFlowByIdInput = z.object({
 });
 
 /** Endpoint metadata for getTrafficFlowById */
-export const getTrafficFlowByIdMeta: Endpoint<TrafficFlowByIdInput, FlowData> =
-  {
-    endpoint:
-      "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
-    inputSchema: trafficFlowByIdInput,
-    outputSchema: flowDataSchema,
-    sampleParams: { flowDataID: 2482 },
-    cacheStrategy: "MINUTE_UPDATES",
-  };
+export const getTrafficFlowByIdMeta: EndpointMeta<
+  TrafficFlowByIdInput,
+  FlowData
+> = {
+  id: "wsdot-traffic-flow/getTrafficFlowById",
+  endpoint:
+    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
+  inputSchema: trafficFlowByIdInput,
+  outputSchema: flowDataSchema,
+  sampleParams: { flowDataID: 2482 },
+  cacheStrategy: "MINUTE_UPDATES",
+};
 
 // Type exports
 export type TrafficFlowByIdInput = z.infer<typeof trafficFlowByIdInput>;

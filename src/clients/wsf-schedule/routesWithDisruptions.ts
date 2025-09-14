@@ -3,7 +3,7 @@ import {
   type RouteBriefResponse,
   routeBriefResponseSchema,
 } from "@/schemas/wsf-schedule/routeBriefResponse.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRoutesWithDisruptions */
@@ -12,10 +12,11 @@ const routesWithDisruptionsInput = z.object({
 });
 
 /** Endpoint metadata for getRoutesWithDisruptions */
-export const getRoutesWithDisruptionsMeta: Endpoint<
+export const getRoutesWithDisruptionsMeta: EndpointMeta<
   RoutesWithDisruptionsInput,
   RouteBriefResponse[]
 > = {
+  id: "wsf-schedule/routesWithDisruptions",
   endpoint:
     "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}",
   inputSchema: routesWithDisruptionsInput,

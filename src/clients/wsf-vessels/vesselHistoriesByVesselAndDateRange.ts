@@ -3,7 +3,7 @@ import {
   type VesselHistories,
   vesselHistoriesSchema,
 } from "@/schemas/wsf-vessels/vesselHistory.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
 const dateRangeParams = {
@@ -20,10 +20,11 @@ const vesselHistoriesByVesselAndDateRangeInput = z.object({
 });
 
 /** Endpoint metadata for getVesselHistoryByVesselAndDateRange */
-export const getVesselHistoryByVesselAndDateRangeMeta: Endpoint<
+export const getVesselHistoryByVesselAndDateRangeMeta: EndpointMeta<
   VesselHistoryByVesselAndDateRangeInput,
   VesselHistories
 > = {
+  id: "wsf-vessels/vesselHistoriesByVesselAndDateRange",
   endpoint:
     "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
   inputSchema: vesselHistoriesByVesselAndDateRangeInput,

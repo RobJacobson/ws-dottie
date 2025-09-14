@@ -59,7 +59,7 @@ import {
   type HighwayAlerts,
   highwayAlertsSchema,
 } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getAlertsByRegionId */
 const alertsByRegionIdInput = z.object({
@@ -68,10 +68,11 @@ const alertsByRegionIdInput = z.object({
 });
 
 /** Endpoint metadata for getAlertsByRegionId */
-export const getAlertsByRegionIdMeta: Endpoint<
+export const getAlertsByRegionIdMeta: EndpointMeta<
   AlertsByRegionIdInput,
   HighwayAlerts
 > = {
+  id: "wsdot-highway-alerts/getAlertsByRegionId",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}",
   inputSchema: alertsByRegionIdInput,

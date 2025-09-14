@@ -3,16 +3,17 @@ import {
   type WeatherReadings,
   weatherReadingsSchema,
 } from "@/schemas/wsdot-weather-information-extended/weatherReadings.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationExtended */
 const weatherInformationExtendedInput = z.object({});
 
 /** Endpoint metadata for getWeatherInformationExtended */
-export const getWeatherInformationExtendedMeta: Endpoint<
+export const getWeatherInformationExtendedMeta: EndpointMeta<
   WeatherInformationExtendedInput,
   WeatherReadings
 > = {
+  id: "wsdot-weather-information-extended/getWeatherInformationExtended",
   endpoint: "/traffic/api/api/Scanweb",
   inputSchema: weatherInformationExtendedInput,
   outputSchema: weatherReadingsSchema,

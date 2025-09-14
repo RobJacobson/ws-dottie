@@ -3,16 +3,17 @@ import {
   type VesselHistories,
   vesselHistoriesSchema,
 } from "@/schemas/wsf-vessels/vesselHistory.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getVesselHistories */
 const vesselHistoriesInput = z.object({});
 
 /** Endpoint metadata for getVesselHistories */
-export const getVesselHistoriesMeta: Endpoint<
+export const getVesselHistoriesMeta: EndpointMeta<
   VesselHistoriesInput,
   VesselHistories
 > = {
+  id: "wsf-vessels/vesselHistories",
   endpoint: "/ferries/api/vessels/rest/vesselhistory",
   inputSchema: vesselHistoriesInput,
   outputSchema: vesselHistoriesSchema,

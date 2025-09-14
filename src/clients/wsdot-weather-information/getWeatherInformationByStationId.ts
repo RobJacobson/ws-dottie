@@ -3,7 +3,7 @@ import {
   type WeatherInfo,
   weatherInfoSchema,
 } from "@/schemas/wsdot-weather-information/weatherInfo.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationByStationId */
 const weatherInformationByStationIdInput = z
@@ -21,10 +21,11 @@ const weatherInformationByStationIdInput = z
   );
 
 /** Endpoint metadata for getWeatherInformationByStationId */
-export const getWeatherInformationByStationIdMeta: Endpoint<
+export const getWeatherInformationByStationIdMeta: EndpointMeta<
   WeatherInformationByStationIdInput,
   WeatherInfo
 > = {
+  id: "wsdot-weather-information/getWeatherInformationByStationId",
   endpoint:
     "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
   inputSchema: weatherInformationByStationIdInput,

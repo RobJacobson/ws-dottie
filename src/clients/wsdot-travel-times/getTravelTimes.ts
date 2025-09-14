@@ -3,13 +3,14 @@ import {
   type TravelTimes,
   travelTimesSchema,
 } from "@/schemas/wsdot-travel-times/travelTimeRoute.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTravelTimes */
 const travelTimesInput = z.object({});
 
 /** Endpoint metadata for getTravelTimes */
-export const getTravelTimesMeta: Endpoint<TravelTimesInput, TravelTimes> = {
+export const getTravelTimesMeta: EndpointMeta<TravelTimesInput, TravelTimes> = {
+  id: "wsdot-travel-times/getTravelTimes",
   endpoint: "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimesAsJson",
   inputSchema: travelTimesInput,
   outputSchema: travelTimesSchema,

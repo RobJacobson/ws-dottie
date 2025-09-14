@@ -3,16 +3,17 @@ import {
   type TerminalBulletins,
   terminalBulletinsSchema,
 } from "@/schemas/wsf-terminals/terminalBulletins.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTerminalBulletins */
 const terminalBulletinsInput = z.object({});
 
 /** Endpoint metadata for getTerminalBulletins */
-export const getTerminalBulletinsMeta: Endpoint<
+export const getTerminalBulletinsMeta: EndpointMeta<
   TerminalBulletinsInput,
   TerminalBulletins
 > = {
+  id: "wsf-terminals/terminalBulletins",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins",
   inputSchema: terminalBulletinsInput,
   outputSchema: terminalBulletinsSchema,

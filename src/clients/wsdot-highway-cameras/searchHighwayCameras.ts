@@ -56,7 +56,7 @@ import {
   type Camera,
   camerasSchema,
 } from "@/schemas/wsdot-highway-cameras/camera.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for searchHighwayCameras */
 const searchHighwayCamerasInput = z
@@ -76,10 +76,11 @@ const searchHighwayCamerasInput = z
   .strict();
 
 /** Endpoint metadata for searchHighwayCameras */
-export const searchHighwayCamerasMeta: Endpoint<
+export const searchHighwayCamerasMeta: EndpointMeta<
   SearchHighwayCamerasInput,
   Camera[]
 > = {
+  id: "wsdot-highway-cameras/searchHighwayCameras",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
   inputSchema: searchHighwayCamerasInput,

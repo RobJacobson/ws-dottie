@@ -48,20 +48,23 @@ import {
   type TollTripInfo,
   tollTripInfosSchema,
 } from "@/schemas/wsdot-toll-rates/tollTripInfo.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTollTripInfo */
 const tollTripInfoInput = z.object({});
 
 /** Endpoint metadata for getTollTripInfo */
-export const getTollTripInfoMeta: Endpoint<TollTripInfoInput, TollTripInfo[]> =
-  {
-    endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson",
-    inputSchema: tollTripInfoInput,
-    outputSchema: tollTripInfosSchema,
-    sampleParams: {},
-    cacheStrategy: "MINUTE_UPDATES",
-  };
+export const getTollTripInfoMeta: EndpointMeta<
+  TollTripInfoInput,
+  TollTripInfo[]
+> = {
+  id: "wsdot-toll-rates/getTollTripInfo",
+  endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson",
+  inputSchema: tollTripInfoInput,
+  outputSchema: tollTripInfosSchema,
+  sampleParams: {},
+  cacheStrategy: "MINUTE_UPDATES",
+};
 
 // Type exports
 export type TollTripInfoInput = z.infer<typeof tollTripInfoInput>;

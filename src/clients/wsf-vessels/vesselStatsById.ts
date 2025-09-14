@@ -3,7 +3,7 @@ import {
   type VesselsStats,
   vesselsStatsSchema,
 } from "@/schemas/wsf-vessels/vesselStats.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getVesselStatsById */
 const vesselsStatsByIdInput = z.object({
@@ -17,10 +17,11 @@ const vesselsStatsByIdInput = z.object({
 });
 
 /** Endpoint metadata for getVesselStatsById */
-export const getVesselStatsByIdMeta: Endpoint<
+export const getVesselStatsByIdMeta: EndpointMeta<
   VesselsStatsByIdInput,
   VesselsStats
 > = {
+  id: "wsf-vessels/vesselStatsById",
   endpoint: "/ferries/api/vessels/rest/vesselstats/{vesselId}",
   inputSchema: vesselsStatsByIdInput,
   outputSchema: vesselsStatsSchema,

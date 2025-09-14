@@ -3,7 +3,7 @@ import {
   type FareLineItemBasic,
   fareLineItemBasicSchema,
 } from "@/schemas/wsf-fares/fareLineItemBasic.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItemsBasic */
@@ -15,10 +15,11 @@ const fareLineItemsBasicInput = z.object({
 });
 
 /** Endpoint metadata for getFareLineItemsBasic */
-export const getFareLineItemsBasicMeta: Endpoint<
+export const getFareLineItemsBasicMeta: EndpointMeta<
   FareLineItemsBasicInput,
   FareLineItemBasic[]
 > = {
+  id: "wsf-fares/fareLineItemsBasic",
   endpoint:
     "/ferries/api/fares/rest/farelineitemsbasic/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
   inputSchema: fareLineItemsBasicInput,

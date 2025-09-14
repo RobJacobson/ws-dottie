@@ -34,16 +34,17 @@ import {
   type EventCategories,
   eventCategoriesSchema,
 } from "@/schemas/wsdot-highway-alerts/eventCategories.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getEventCategories */
 const eventCategoriesInput = z.object({});
 
 /** Endpoint metadata for getEventCategories */
-export const getEventCategoriesMeta: Endpoint<
+export const getEventCategoriesMeta: EndpointMeta<
   EventCategoriesInput,
   EventCategories
 > = {
+  id: "wsdot-highway-alerts/getEventCategories",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
   inputSchema: eventCategoriesInput,

@@ -92,16 +92,17 @@ import {
   type CommercialVehicleRestrictionsWithId,
   commercialVehicleRestrictionsWithIdSchema,
 } from "@/schemas/wsdot-commercial-vehicle-restrictions/commercialVehicleRestrictionWithId.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictionsWithId */
 const commercialVehicleRestrictionsWithIdInput = z.object({});
 
 /** Endpoint metadata for getCommercialVehicleRestrictionsWithId */
-export const getCommercialVehicleRestrictionsWithIdMeta: Endpoint<
+export const getCommercialVehicleRestrictionsWithIdMeta: EndpointMeta<
   CommercialVehicleRestrictionsWithIdInput,
   CommercialVehicleRestrictionsWithId
 > = {
+  id: "wsdot-commercial-vehicle-restrictions/getCommercialVehicleRestrictionsWithId",
   endpoint:
     "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson",
   inputSchema: commercialVehicleRestrictionsWithIdInput,

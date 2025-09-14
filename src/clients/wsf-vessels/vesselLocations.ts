@@ -3,16 +3,17 @@ import {
   type VesselLocations,
   vesselLocationsSchema,
 } from "@/schemas/wsf-vessels/vesselLocations.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getVesselLocations */
 const vesselLocationsInput = z.object({});
 
 /** Endpoint metadata for getVesselLocations */
-export const getVesselLocationsMeta: Endpoint<
+export const getVesselLocationsMeta: EndpointMeta<
   VesselLocationsInput,
   VesselLocations
 > = {
+  id: "wsf-vessels/vesselLocations",
   endpoint: "/ferries/api/vessels/rest/vessellocations",
   inputSchema: vesselLocationsInput,
   outputSchema: vesselLocationsSchema,

@@ -3,16 +3,17 @@ import {
   type TerminalLocation,
   terminalLocationsSchema,
 } from "@/schemas/wsf-terminals/terminalLocation.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTerminalLocations */
 const terminalLocationsInput = z.object({});
 
 /** Endpoint metadata for getTerminalLocations */
-export const getTerminalLocationsMeta: Endpoint<
+export const getTerminalLocationsMeta: EndpointMeta<
   TerminalLocationsInput,
   TerminalLocation[]
 > = {
+  id: "wsf-terminals/terminalLocations",
   endpoint: "/ferries/api/terminals/rest/terminallocations",
   inputSchema: terminalLocationsInput,
   outputSchema: terminalLocationsSchema,

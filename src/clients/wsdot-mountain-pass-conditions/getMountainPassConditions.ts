@@ -69,16 +69,17 @@ import {
   type MountainPassConditions,
   mountainPassConditionsSchema,
 } from "@/schemas/wsdot-mountain-pass-conditions/passCondition.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getMountainPassConditions */
 const mountainPassConditionsInput = z.object({});
 
 /** Endpoint metadata for getMountainPassConditions */
-export const getMountainPassConditionsMeta: Endpoint<
+export const getMountainPassConditionsMeta: EndpointMeta<
   MountainPassConditionsInput,
   MountainPassConditions
 > = {
+  id: "wsdot-mountain-pass-conditions/getMountainPassConditions",
   endpoint:
     "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
   inputSchema: mountainPassConditionsInput,

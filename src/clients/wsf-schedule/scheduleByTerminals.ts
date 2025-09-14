@@ -3,7 +3,7 @@ import {
   type ScheduleResponse,
   scheduleResponseSchema,
 } from "@/schemas/wsf-schedule/scheduleResponse.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getScheduleByTerminals */
@@ -14,10 +14,11 @@ const scheduleByTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getScheduleByTerminals */
-export const getScheduleByTerminalsMeta: Endpoint<
+export const getScheduleByTerminalsMeta: EndpointMeta<
   ScheduleByTerminalsInput,
   ScheduleResponse
 > = {
+  id: "wsf-schedule/scheduleByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/schedule/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
   inputSchema: scheduleByTerminalsInput,

@@ -3,7 +3,7 @@ import {
   type RouteDetails,
   routeDetailsSchema,
 } from "@/schemas/wsf-schedule/routeDetails.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRouteDetailsByRoute */
@@ -13,10 +13,11 @@ const routeDetailsByRouteInput = z.object({
 });
 
 /** Endpoint metadata for getRouteDetailsByRoute */
-export const getRouteDetailsByRouteMeta: Endpoint<
+export const getRouteDetailsByRouteMeta: EndpointMeta<
   RouteDetailsByRouteInput,
   RouteDetails
 > = {
+  id: "wsf-schedule/routeDetailsByRoute",
   endpoint: "/ferries/api/schedule/rest/routedetails/{tripDate}/{routeId}",
   inputSchema: routeDetailsByRouteInput,
   outputSchema: routeDetailsSchema,

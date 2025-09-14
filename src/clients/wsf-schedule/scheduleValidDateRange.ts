@@ -1,16 +1,17 @@
 import { z } from "zod";
 import type { ValidDateRange } from "@/schemas/shared/validDateRange.zod";
 import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getScheduleValidDateRange */
 const scheduleValidDateRangeInput = z.object({});
 
 /** Endpoint metadata for getScheduleValidDateRange */
-export const getScheduleValidDateRangeMeta: Endpoint<
+export const getScheduleValidDateRangeMeta: EndpointMeta<
   ScheduleValidDateRangeInput,
   ValidDateRange
 > = {
+  id: "wsf-schedule/scheduleValidDateRange",
   endpoint: "/ferries/api/schedule/rest/validdaterange",
   inputSchema: scheduleValidDateRangeInput,
   outputSchema: validDateRangeSchema,

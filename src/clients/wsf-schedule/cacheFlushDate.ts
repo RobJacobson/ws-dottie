@@ -1,16 +1,17 @@
 import { z } from "zod";
 import type { WsfStandardCacheFlushDate } from "@/schemas/shared/cacheFlushDate.zod";
 import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getScheduleCacheFlushDate */
 const scheduleCacheFlushDateInput = z.object({});
 
 /** Endpoint metadata for getScheduleCacheFlushDate */
-export const getScheduleCacheFlushDateMeta: Endpoint<
+export const getScheduleCacheFlushDateMeta: EndpointMeta<
   ScheduleCacheFlushDateInput,
   WsfStandardCacheFlushDate
 > = {
+  id: "wsf-schedule/cacheFlushDate",
   endpoint: "/ferries/api/schedule/rest/cacheflushdate",
   inputSchema: scheduleCacheFlushDateInput,
   outputSchema: wsfStandardCacheFlushDateSchema,

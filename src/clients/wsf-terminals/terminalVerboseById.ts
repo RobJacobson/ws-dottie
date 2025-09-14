@@ -3,7 +3,7 @@ import {
   type TerminalVerbose,
   terminalVerboseSchema,
 } from "@/schemas/wsf-terminals/terminalVerbose.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTerminalVerboseByTerminalId */
 const terminalVerboseByTerminalIdInput = z.object({
@@ -11,10 +11,11 @@ const terminalVerboseByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalVerboseByTerminalId */
-export const getTerminalVerboseByTerminalIdMeta: Endpoint<
+export const getTerminalVerboseByTerminalIdMeta: EndpointMeta<
   TerminalVerboseByTerminalIdInput,
   TerminalVerbose
 > = {
+  id: "wsf-terminals/terminalVerboseById",
   endpoint: "/ferries/api/terminals/rest/terminalverbose/{terminalId}",
   inputSchema: terminalVerboseByTerminalIdInput,
   outputSchema: terminalVerboseSchema,

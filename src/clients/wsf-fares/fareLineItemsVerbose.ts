@@ -3,7 +3,7 @@ import {
   type FareLineItemsVerbose,
   fareLineItemsVerboseSchema,
 } from "@/schemas/wsf-fares/fareLineItemsVerbose.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItemsVerbose */
@@ -12,10 +12,11 @@ const fareLineItemsVerboseInput = z.object({
 });
 
 /** Endpoint metadata for getFareLineItemsVerbose */
-export const getFareLineItemsVerboseMeta: Endpoint<
+export const getFareLineItemsVerboseMeta: EndpointMeta<
   FareLineItemsVerboseInput,
   FareLineItemsVerbose
 > = {
+  id: "wsf-fares/fareLineItemsVerbose",
   endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
   inputSchema: fareLineItemsVerboseInput,
   outputSchema: fareLineItemsVerboseSchema,

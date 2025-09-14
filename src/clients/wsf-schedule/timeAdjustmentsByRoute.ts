@@ -3,7 +3,7 @@ import {
   type TimeAdjustments,
   timeAdjustmentsSchema,
 } from "@/schemas/wsf-schedule/timeAdjustment.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustmentsByRoute */
 const timeAdjustmentsByRouteInput = z.object({
@@ -11,10 +11,11 @@ const timeAdjustmentsByRouteInput = z.object({
 });
 
 /** Endpoint metadata for getTimeAdjustmentsByRoute */
-export const getTimeAdjustmentsByRouteMeta: Endpoint<
+export const getTimeAdjustmentsByRouteMeta: EndpointMeta<
   TimeAdjustmentsByRouteInput,
   TimeAdjustments
 > = {
+  id: "wsf-schedule/timeAdjustmentsByRoute",
   endpoint: "/ferries/api/schedule/rest/timeadjbyroute/{routeId}",
   inputSchema: timeAdjustmentsByRouteInput,
   outputSchema: timeAdjustmentsSchema,

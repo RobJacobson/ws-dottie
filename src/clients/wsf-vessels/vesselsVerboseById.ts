@@ -3,7 +3,7 @@ import {
   type VesselsVerbose,
   vesselsVerboseSchema,
 } from "@/schemas/wsf-vessels/vesselVerbose.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 
 /** Input schema for getVesselVerboseById */
 const vesselsVerboseByIdInput = z.object({
@@ -17,10 +17,11 @@ const vesselsVerboseByIdInput = z.object({
 });
 
 /** Endpoint metadata for getVesselVerboseById */
-export const getVesselsVerboseByIdMeta: Endpoint<
+export const getVesselsVerboseByIdMeta: EndpointMeta<
   VesselsVerboseByIdInput,
   VesselsVerbose
 > = {
+  id: "wsf-vessels/vesselsVerboseById",
   endpoint: "/ferries/api/vessels/rest/vesselverbose/{vesselId}",
   inputSchema: vesselsVerboseByIdInput,
   outputSchema: vesselsVerboseSchema,

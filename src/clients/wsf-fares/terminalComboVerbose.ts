@@ -3,7 +3,7 @@ import {
   type TerminalComboVerboseItem,
   terminalComboVerboseItemSchema,
 } from "@/schemas/wsf-fares/terminalComboVerboseItem.zod";
-import type { Endpoint } from "@/shared/endpoints";
+import type { EndpointMeta } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getTerminalComboVerbose */
@@ -12,10 +12,11 @@ const terminalComboVerboseInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalComboVerbose */
-export const getTerminalComboVerboseMeta: Endpoint<
+export const getTerminalComboVerboseMeta: EndpointMeta<
   FaresTerminalComboVerboseInput,
   TerminalComboVerboseItem[]
 > = {
+  id: "wsf-fares/terminalComboVerbose",
   endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}",
   inputSchema: terminalComboVerboseInput,
   outputSchema: z.array(terminalComboVerboseItemSchema),
