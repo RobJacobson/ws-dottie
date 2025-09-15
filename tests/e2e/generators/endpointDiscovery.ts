@@ -32,6 +32,10 @@ import {
   sortEndpoints,
   debugDiscoveredEndpoints as debugEndpoints,
 } from "@/shared/endpoints/endpointDiscovery";
+import {
+  getDiscoveryConfig,
+  filterDiscoveredEndpoints,
+} from "../config/discoveryConfig";
 
 /**
  * Discovers all Endpoint objects from the clients directory
@@ -41,7 +45,10 @@ import {
  * discovery mechanism that automatically adapts to changes in the endpoint
  * definitions without requiring manual test configuration updates.
  *
- * @returns Array of all discovered Endpoint objects
+ * The function respects the discovery configuration to filter endpoints
+ * based on API inclusion/exclusion rules.
+ *
+ * @returns Array of discovered Endpoint objects (filtered by configuration)
  *
  * @example
  * ```typescript
@@ -76,10 +83,14 @@ export const discoverEndpoints = (): Endpoint<unknown, unknown>[] => {
     ];
 
     // Use shared discovery utility
-    const endpoints = discoverEndpointsFromModules(allModules);
+    const allEndpoints = discoverEndpointsFromModules(allModules);
+
+    // Get discovery configuration and apply filtering
+    const config = getDiscoveryConfig();
+    const filteredEndpoints = filterDiscoveredEndpoints(allEndpoints, config);
 
     // Sort endpoints by API and function name for consistent ordering
-    return sortEndpoints(endpoints);
+    return sortEndpoints(filteredEndpoints);
   } catch (error) {
     console.error("Failed to discover endpoints:", error);
     throw new Error(

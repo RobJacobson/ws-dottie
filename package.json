@@ -37,7 +37,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "vitest --config config/vitest.config.ts --run",
+    "test": "node tests/e2e/scripts/test-runner.js",
+    "test:direct": "vitest --config config/vitest.config.ts --run",
     "tests": "node scripts/run-api-tests.js",
     "test:e2e": "./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/comprehensive-suite.test.ts",
     "test:e2e:auto": "./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/auto-suite.test.ts",

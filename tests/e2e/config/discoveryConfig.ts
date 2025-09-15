@@ -85,7 +85,6 @@ export const productionDiscoveryConfig: DiscoveryConfig = {
  * Gets the active discovery configuration
  */
 export const getDiscoveryConfig = (): DiscoveryConfig => {
-  // Use POC config for now, can be switched to production later
   const configMode = process.env.DISCOVERY_CONFIG_MODE || "poc";
 
   switch (configMode) {
@@ -95,6 +94,17 @@ export const getDiscoveryConfig = (): DiscoveryConfig => {
       return pocDiscoveryConfig;
     case "default":
       return defaultDiscoveryConfig;
+    case "test-runner":
+      // Try to import test runner config, fallback to poc if not available
+      try {
+        const testRunnerConfig = require("./testRunnerConfig.js");
+        return testRunnerConfig.testRunnerConfig;
+      } catch (error) {
+        console.warn(
+          "Test runner config not found, falling back to poc config"
+        );
+        return pocDiscoveryConfig;
+      }
     default:
       return pocDiscoveryConfig;
   }
