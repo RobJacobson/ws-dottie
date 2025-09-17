@@ -1,173 +1,91 @@
 /**
- * @fileoverview WSDOT API Configuration Manager
+ * @fileoverview Configuration Management for WS-Dottie
  *
- * This module provides centralized configuration management for WSDOT and WSF APIs.
- * It handles API key management, base URL configuration, and environment-based
- * configuration loading across different platforms (Node.js, browser, test environments).
- *
- * Key Features:
- * - Environment-based API key loading (WSDOT_ACCESS_TOKEN)
- * - Configurable base URL (WSDOT_BASE_URL)
- * - Cross-platform compatibility (Node.js, browser, test)
- * - Global configuration state management
- * - Type-safe configuration interface
- * - Always-on Zod validation for fail-fast error handling
- *
- * Usage:
- * ```typescript
- * // Set API key only
- * configManager.setApiKey("your-api-key");
- *
- * // Set domain only
- * configManager.setDomain("https://custom.wsdot.wa.gov");
- *
- * // Get API key (auto-initializes from environment if not set)
- * const apiKey = configManager.getApiKey();
- *
- * // Get domain
- * const domain = configManager.getDomain();
- * ```
+ * This module provides configuration management for WS-Dottie API operations,
+ * including API key and domain configuration with runtime modification
+ * capability. It supports environment variable configuration and runtime
+ * updates for different deployment scenarios.
  */
 
-/** Default base URL for WSDOT/WSF requests */
-const DEFAULT_BASE_URL = "https://www.wsdot.wa.gov";
+/** Default base URL for WSDOT/WSF API requests */
+const DEFAULT_BASE_URL = "http://www.wsdot.wa.gov";
 
 /**
- * Configuration interface for WSDOT API settings
+ * Configuration interface for WS-Dottie
  *
- * This interface defines the structure for WSDOT API configuration,
- * including required API keys and optional base URL overrides.
+ * Defines the structure for WS-Dottie configuration including API key
+ * and domain settings.
  */
 export interface WsdotConfig {
-  /** Required API access token for WSDOT API authentication */
-  WSDOT_ACCESS_TOKEN: string;
-  /** Optional custom base URL for WSDOT API requests */
-  WSDOT_BASE_URL?: string;
+  /** WSDOT API access token for authentication */
+  apiKey: string;
+  /** Base domain for API requests */
+  domain: string;
 }
 
-/**
- * Safely accesses environment variables across different platforms
- *
- * This function provides cross-platform environment variable access that works
- * in Node.js, browser environments (with custom env objects), and bundler contexts.
- *
- * @param key - Environment variable key to retrieve
- * @returns Environment variable value or undefined if not found
- */
-const getEnvVar = (key: string): string | undefined => {
-  // Check Node.js environment first
-  if (typeof process !== "undefined" && process.env) {
-    return process.env[key];
-  }
-
-  // Check browser environment with custom env object
-  if (typeof window !== "undefined") {
-    type EnvWindow = Window & { __ENV__?: Record<string, string> };
-    const env = (window as EnvWindow).__ENV__;
-    if (env) return env[key];
-  }
-
-  // For bundlers that inject environment variables, rely on consuming application
-  // to provide configuration rather than trying to access them directly
-  return undefined;
+/** Runtime configuration state */
+let runtimeConfig = {
+  apiKey: process.env.WSDOT_ACCESS_TOKEN || "",
+  domain: process.env.WSDOT_BASE_URL || DEFAULT_BASE_URL,
 };
 
 /**
- * Initializes configuration from environment variables at module load
+ * Gets the current WSDOT API access token
  *
- * This function is called when the module is first loaded to set up the
- * initial configuration from environment variables or defaults.
+ * This function returns the currently configured API access token,
+ * which is used for authenticating requests to WSDOT/WSF APIs.
  *
- * @returns Initial configuration object with environment values or defaults
+ * @returns The current API key string
  */
-const initializeFromEnv = (): WsdotConfig => {
-  const apiKey = getEnvVar("WSDOT_ACCESS_TOKEN") || "";
-  const baseUrl = getEnvVar("WSDOT_BASE_URL") || DEFAULT_BASE_URL;
-
-  return {
-    WSDOT_ACCESS_TOKEN: apiKey,
-    WSDOT_BASE_URL: baseUrl,
-  };
-};
-
-/** Global configuration state - initialized from environment at module load */
-let globalConfig: WsdotConfig = initializeFromEnv();
-
-/**
- * Retrieves the current API key, throwing an error if not configured
- *
- * @returns Current API key string
- * @throws {Error} When API key is not set
- */
-const getApiKey = (): string => {
-  if (!globalConfig.WSDOT_ACCESS_TOKEN) {
-    throw new Error(
-      "WSDOT_ACCESS_TOKEN is required. Set it via WSDOT_ACCESS_TOKEN environment variable or use configManager.setApiKey()."
-    );
-  }
-  return globalConfig.WSDOT_ACCESS_TOKEN;
+export const getApiKey = (): string => {
+  return runtimeConfig.apiKey;
 };
 
 /**
- * Retrieves the current domain for API requests
+ * Gets the current WSDOT base URL
  *
- * @returns Domain string, defaults to DEFAULT_BASE_URL if not set
+ * This function returns the currently configured base URL for
+ * WSDOT/WSF API requests.
+ *
+ * @returns The current base URL string
  */
-const getDomain = (): string => {
-  return globalConfig.WSDOT_BASE_URL || DEFAULT_BASE_URL;
+export const getDomain = (): string => {
+  return runtimeConfig.domain;
 };
 
 /**
- * Sets the API key for WSDOT API authentication
+ * Sets the WSDOT API access token
  *
- * @param apiKey - API key string to set
- * @throws {Error} When API key is empty or invalid
+ * This function allows runtime modification of the API access token,
+ * useful for different environments or when tokens need to be updated.
+ *
+ * @param apiKey - The new API key string to set
  */
-const setApiKey = (apiKey: string): void => {
-  if (!apiKey || apiKey.trim() === "") {
-    throw new Error("API key cannot be empty");
-  }
-
-  globalConfig.WSDOT_ACCESS_TOKEN = apiKey.trim();
+export const setApiKey = (apiKey: string): void => {
+  runtimeConfig.apiKey = apiKey;
 };
 
 /**
- * Sets the custom domain for WSDOT API requests
+ * Sets the WSDOT base URL
  *
- * @param domain - Domain string to set
- * @throws {Error} When domain is empty or invalid
+ * This function allows runtime modification of the base URL,
+ * useful for different environments or API endpoints.
+ *
+ * @param domain - The new domain string to set
  */
-const setDomain = (domain: string): void => {
-  if (!domain || domain.trim() === "") {
-    throw new Error("Domain cannot be empty");
-  }
-
-  globalConfig.WSDOT_BASE_URL = domain.trim();
+export const setDomain = (domain: string): void => {
+  runtimeConfig.domain = domain;
 };
 
 /**
- * Resets configuration to initial environment-based values
+ * Configuration manager object
  *
- * Useful for testing or when configuration needs to be refreshed.
- * This function reloads configuration from environment variables.
- */
-const clearConfig = (): void => {
-  globalConfig = initializeFromEnv();
-};
-
-/**
- * Configuration manager object providing a clean interface for all configuration operations
- *
- * This object provides a centralized interface for managing WSDOT API configuration,
- * including API keys, base URLs, and configuration state management.
- *
- * @note Zod validation is always enabled for all API requests to ensure
- * fail-fast error handling and consistent behavior across environments.
+ * This object provides a convenient interface for accessing and
+ * modifying WS-Dottie configuration settings.
  */
 export const configManager = {
   getApiKey,
   getDomain,
   setApiKey,
   setDomain,
-  clearConfig,
 };

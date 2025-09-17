@@ -1,47 +1,43 @@
 /**
- * @fileoverview Data Fetching Pipeline for WSDOT and WSF APIs
+ * @fileoverview Simplified Data Fetching for WSDOT and WSF APIs
  *
- * This module provides a complete data fetching system with validation,
- * organized into three main stages:
- * - Request preparation (validation, URL building)
- * - Request execution (strategy selection, fetch operations)
- * - Response processing (validation, transformation)
- *
- * The pipeline automatically selects the appropriate fetch strategy based on
- * the environment (JSONP for browsers, native fetch for servers) and provides
- * comprehensive error handling and validation throughout.
+ * This is the simplified version that eliminates over-engineering:
+ * - Single main API function
+ * - Simple strategy selection
+ * - Minimal error handling
+ * - No unnecessary pipeline abstraction
  */
 
-// Date utilities
-export { jsDateToYyyyMmDd } from "../utils/dateUtils";
-// Execution strategies
-export {
-  executeRequest,
-  fetchJsonp,
-  fetchNative,
-  getEnvironmentType,
-} from "./execution";
 // Main API
-export { fetchZod } from "./fetchZod";
-// Error handling
-export * from "./handleErrors";
-// Independent handler functions
+export { fetchZod, fetchNative } from "@/shared/fetching/fetchCore";
+
+// Strategies
 export {
-  createEndpointQueryOptions,
-  fetchPlain,
-  fetchWithZod,
-} from "./handlers";
-// Core pipeline stages
-export * from "./pipeline";
+  fetchJsonp,
+  selectFetchStrategy,
+} from "@/shared/fetching/fetchStrategies";
+
+// Low-level fetch strategies (for internal use)
+export { fetchNative as fetchNativeStrategy } from "@/shared/fetching/fetchStrategies";
+
+// Environment detection
+export {
+  getEnvironmentType,
+  isTestEnvironment,
+  isWebEnvironment,
+  shouldForceJsonp,
+} from "@/shared/fetching/detectEnvironment";
+
+// Error handling
+export {
+  createApiError,
+  isApiError,
+  type ApiError,
+  type ErrorContext,
+} from "@/shared/fetching/handleError";
+
 // Types
-export type {
-  ApiErrorResponse,
-  FetchContext,
-  FetchSchemas,
-  FetchStrategy,
-  JSONPCallback,
-  JSONPWindow,
-  JsonWithDates,
-} from "./types";
+export type { FetchStrategy } from "@/shared/types";
+
 // URL building utilities
-export { buildApiUrl } from "./urlBuilder";
+export { buildApiUrl } from "@/shared/fetching/buildUrl";

@@ -8,15 +8,11 @@
 
 // Configuration management
 export { configManager, type WsdotConfig } from "./configManager";
-// Date utilities
+// Date utilities (consolidated)
 export {
-  datePatterns,
   datesHelper,
-  getCurrentDateRange,
-  getSampleDates,
   jsDateToYyyyMmDd,
+  wsdotDateTimeToJSDate as wsdotTimeToJSDate,
 } from "./dateUtils";
-// .NET timestamp utilities
-export { parseDotNetTimestamp } from "./dotNetTimestamp";
 // Logging utilities
-export { default as log, type LoggingMode } from "./logger";
+export { default as log } from "./logger";
