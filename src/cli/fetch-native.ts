@@ -1,65 +1,93 @@
 #!/usr/bin/env node
 
 /**
- * fetch-native CLI
+ * @fileoverview Fetch-Native CLI Tool
  *
- * Raw WSDOT/WSF API client using native fetch for direct API access without validation.
- * This tool provides unvalidated access to Washington State transportation APIs
- * for debugging, testing, and when you need the raw API response.
+ * This module provides the fetch-native command-line tool, which offers raw
+ * access to WSDOT/WSF APIs using native fetch without validation. This tool
+ * is designed for debugging, testing, and scenarios where you need direct
+ * access to the raw API response without data transformation.
  *
- * Usage: fetch-native <function-name> [params] [--pretty=false]
+ * ## Features
+ *
+ * - **Raw API Access**: Direct access to APIs without validation overhead
+ * - **Automatic Date Conversion**: Converts .NET datetime strings to JavaScript Date objects
+ * - **Fast Execution**: Minimal processing for maximum performance
+ * - **Debugging Support**: Ideal for exploring API responses and debugging
+ * - **Flexible Output**: Support for pretty-printing, quiet mode, and output truncation
+ * - **No Validation**: Bypasses Zod validation for raw data access
+ *
+ * ## Usage
+ *
+ * ```bash
+ * fetch-native <function-name> [params] [options]
+ * ```
+ *
+ * @example
+ * ```bash
+ * # List all available functions
+ * fetch-native --list
+ *
+ * # Call a function with default parameters
+ * fetch-native getBorderCrossings
+ *
+ * # Call a function with custom parameters
+ * fetch-native getFareLineItems '{"originTerminalId": 7, "destinationTerminalId": 3}'
+ *
+ * # Pretty-print output
+ * fetch-native getVesselBasics --pretty
+ * ```
+ *
+ * @note This tool makes direct native fetch requests without validation but with
+ * automatic conversion of .NET datetime strings to JavaScript Date objects.
+ * Use fetch-dottie for type-safe, validated API calls with comprehensive
+ * data transformation.
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import { fetchPlain } from "@/shared/fetching/handlers";
-import { parseDotNetTimestamp } from "@/shared/utils";
+import { fetchNative } from "@/shared/fetching";
 import { createSimpleCli } from "./cli-core";
 import type { CliOptions, CliParams } from "./types";
 import { generateDefaultExamples } from "./ui";
 
 /**
- * Execute plain API call using direct native fetch
- * @param endpoint - Endpoint definition with URL and input schema
- * @param params - Validated parameters to send with the request
- * @param options - CLI options for request configuration (e.g., fixDates)
- * @returns Promise resolving to raw response data
+ * Executes API requests using the native fetchNative function
+ *
+ * This function serves as the executor for the fetch-native CLI tool,
+ * providing raw API access without validation but with automatic
+ * .NET date conversion. It uses the shared fetchNative function to
+ * ensure consistent behavior across all API calls.
+ *
+ * @template I - The input parameters type for the endpoint
+ * @template O - The output response type for the endpoint
+ * @param endpoint - Endpoint definition with configuration
+ * @param params - Parameters to send with the request (not validated)
+ * @param _options - CLI options (unused in this implementation)
+ * @returns Promise resolving to raw API response data with .NET dates converted
  */
 const executeNative = async <I, O>(
   endpoint: Endpoint<I, O>,
   params: CliParams,
-  options: CliOptions
+  _options: CliOptions
 ): Promise<unknown> => {
-  // Use the independent fetchPlain function
-  const result = await fetchPlain(endpoint, params as I);
-
-  // Apply date fixing if requested
-  if (options.fixDates) {
-    return JSON.parse(JSON.stringify(result), (_, value) => {
-      if (typeof value === "string") {
-        const date = parseDotNetTimestamp(value);
-        return date || value;
-      }
-      return value;
-    });
-  }
-
-  return result;
+  return fetchNative({
+    endpoint: endpoint.endpoint,
+    params: params as I,
+    logMode: "none",
+  });
 };
 
 // Create and run CLI tool
 createSimpleCli(
   "fetch-native",
-  "Raw WSDOT/WSF API client using native fetch (no validation)",
-  "1.0.0",
+  "Raw WSDOT/WSF API client using native fetch with automatic date conversion",
   executeNative,
   generateDefaultExamples("fetch-native", [
-    "fetch-native getVesselBasics --fix-dates  # Convert .NET dates to JS Date objects",
+    "fetch-native getVesselBasics  # Automatically converts .NET dates to JS Date objects",
   ]),
   `
 
-Note: This tool makes direct native fetch requests without validation. Use fetch-dottie for
-type-safe, validated API calls with automatic data transformation.
-
-The --fix-dates flag converts .NET datetime strings (like "/Date(1234567890123)/")
-to JavaScript Date objects in the response, making the data easier to work with.`
+Note: This tool makes direct native fetch requests without validation but with automatic
+conversion of .NET datetime strings to JavaScript Date objects. Use fetch-dottie for
+type-safe, validated API calls with comprehensive data transformation.`
 );
