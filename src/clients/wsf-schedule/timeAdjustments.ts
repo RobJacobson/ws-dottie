@@ -3,13 +3,13 @@ import {
   type TimeAdjustment,
   timeAdjustmentsSchema,
 } from "@/schemas/wsf-schedule/timeAdjustment.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustments */
 const timeAdjustmentsInput = z.object({});
 
 /** Endpoint metadata for getTimeAdjustments */
-export const getTimeAdjustmentsMeta: EndpointMeta<
+export const getTimeAdjustmentsMeta: EndpointDefinition<
   TimeAdjustmentsInput,
   TimeAdjustment[]
 > = {
@@ -18,7 +18,7 @@ export const getTimeAdjustmentsMeta: EndpointMeta<
   inputSchema: timeAdjustmentsInput,
   outputSchema: timeAdjustmentsSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

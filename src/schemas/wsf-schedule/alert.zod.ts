@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * Schema for alerts from WSF Schedule API.

@@ -3,7 +3,7 @@ import {
   type VesselAccommodations,
   vesselAccommodationsSchema,
 } from "@/schemas/wsf-vessels/vesselAccommodations.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselAccommodationsById */
 const vesselAccommodationsByIdInput = z.object({
@@ -17,7 +17,7 @@ const vesselAccommodationsByIdInput = z.object({
 });
 
 /** Endpoint metadata for getVesselAccommodationsById */
-export const getVesselAccommodationsByIdMeta: EndpointMeta<
+export const getVesselAccommodationsByIdMeta: EndpointDefinition<
   VesselAccommodationsByIdInput,
   VesselAccommodations
 > = {
@@ -26,7 +26,7 @@ export const getVesselAccommodationsByIdMeta: EndpointMeta<
   inputSchema: vesselAccommodationsByIdInput,
   outputSchema: vesselAccommodationsSchema,
   sampleParams: { vesselId: 1 },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

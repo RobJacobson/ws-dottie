@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * TravelTimeRoute schema

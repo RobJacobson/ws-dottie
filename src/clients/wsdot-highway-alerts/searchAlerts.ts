@@ -64,7 +64,7 @@ import {
   type HighwayAlerts,
   highwayAlertsSchema,
 } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for searchAlerts */
 const searchAlertsInput = z.object({
@@ -83,7 +83,7 @@ const searchAlertsInput = z.object({
 });
 
 /** Endpoint metadata for searchAlerts */
-export const searchAlertsMeta: EndpointMeta<SearchAlertsInput, HighwayAlerts> =
+export const searchAlertsMeta: EndpointDefinition<SearchAlertsInput, HighwayAlerts> =
   {
     id: "wsdot-highway-alerts/searchAlerts",
     endpoint:
@@ -95,7 +95,7 @@ export const searchAlertsMeta: EndpointMeta<SearchAlertsInput, HighwayAlerts> =
       SearchTimeStart: new Date("2025-08-01"),
       SearchTimeEnd: new Date("2025-09-30"),
     },
-    cacheStrategy: "MINUTE_UPDATES",
+    cacheStrategy: "FREQUENT",
   };
 
 // Type exports

@@ -1,13 +1,13 @@
 import { z } from "zod";
 import type { TerminalSailingSpace } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
 import { terminalSailingSpaceSchema } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalSailingSpace */
 const terminalSailingSpaceInput = z.object({});
 
 /** Endpoint metadata for getTerminalSailingSpace */
-export const getTerminalSailingSpaceMeta: EndpointMeta<
+export const getTerminalSailingSpaceMeta: EndpointDefinition<
   TerminalSailingSpaceInput,
   TerminalSailingSpace[]
 > = {
@@ -16,7 +16,7 @@ export const getTerminalSailingSpaceMeta: EndpointMeta<
   inputSchema: terminalSailingSpaceInput,
   outputSchema: z.array(terminalSailingSpaceSchema),
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

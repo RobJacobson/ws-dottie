@@ -3,13 +3,13 @@ import {
   type ScheduleBriefResponses,
   scheduleBriefResponsesSchema,
 } from "@/schemas/wsf-schedule/scheduleBriefResponse";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getActiveSeasons */
 const activeSeasonsInput = z.object({});
 
 /** Endpoint metadata for getActiveSeasons */
-export const getActiveSeasonsMeta: EndpointMeta<
+export const getActiveSeasonsMeta: EndpointDefinition<
   ActiveSeasonsInput,
   ScheduleBriefResponses
 > = {
@@ -18,7 +18,7 @@ export const getActiveSeasonsMeta: EndpointMeta<
   inputSchema: activeSeasonsInput,
   outputSchema: scheduleBriefResponsesSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

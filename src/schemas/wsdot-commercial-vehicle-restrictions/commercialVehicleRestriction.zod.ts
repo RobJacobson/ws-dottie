@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * CommercialVehicleRestriction schema
@@ -113,6 +113,8 @@ export const commercialVehicleRestrictionSchema = z
     TDMaxAxle: z.number().int().nullable().describe("TD Max Axle weight"),
     /** Vehicle type description */
     VehicleType: z.string().nullable().describe("Vehicle type description"),
+    /** Unique ID */
+    UniqueID: z.string().optional().describe("Unique ID"),
   })
   .describe("Represents a Commercial Vehicle Restriction.");
 

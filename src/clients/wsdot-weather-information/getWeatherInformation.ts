@@ -3,13 +3,13 @@ import {
   type WeatherInfo,
   weatherInformationSchema,
 } from "@/schemas/wsdot-weather-information/weatherInfo.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformation */
 const weatherInformationInput = z.object({});
 
 /** Endpoint metadata for getWeatherInformation */
-export const getWeatherInformationMeta: EndpointMeta<
+export const getWeatherInformationMeta: EndpointDefinition<
   WeatherInformationInput,
   WeatherInfo[]
 > = {
@@ -19,7 +19,7 @@ export const getWeatherInformationMeta: EndpointMeta<
   inputSchema: weatherInformationInput,
   outputSchema: weatherInformationSchema,
   sampleParams: {},
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

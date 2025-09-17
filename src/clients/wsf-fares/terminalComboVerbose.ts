@@ -3,7 +3,7 @@ import {
   type TerminalComboVerboseItem,
   terminalComboVerboseItemSchema,
 } from "@/schemas/wsf-fares/terminalComboVerboseItem.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getTerminalComboVerbose */
@@ -12,7 +12,7 @@ const terminalComboVerboseInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalComboVerbose */
-export const getTerminalComboVerboseMeta: EndpointMeta<
+export const getTerminalComboVerboseMeta: EndpointDefinition<
   FaresTerminalComboVerboseInput,
   TerminalComboVerboseItem[]
 > = {
@@ -21,7 +21,7 @@ export const getTerminalComboVerboseMeta: EndpointMeta<
   inputSchema: terminalComboVerboseInput,
   outputSchema: z.array(terminalComboVerboseItemSchema),
   sampleParams: { tripDate: datesHelper.tomorrow() },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

@@ -55,13 +55,13 @@ import {
   type FlowData,
   trafficFlowsSchema,
 } from "@/schemas/wsdot-traffic-flow/flowData.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTrafficFlows */
 const trafficFlowsInput = z.object({});
 
 /** Endpoint metadata for getTrafficFlows */
-export const getTrafficFlowsMeta: EndpointMeta<TrafficFlowsInput, FlowData[]> =
+export const getTrafficFlowsMeta: EndpointDefinition<TrafficFlowsInput, FlowData[]> =
   {
     id: "wsdot-traffic-flow/getTrafficFlow",
     endpoint:
@@ -69,7 +69,7 @@ export const getTrafficFlowsMeta: EndpointMeta<TrafficFlowsInput, FlowData[]> =
     inputSchema: trafficFlowsInput,
     outputSchema: trafficFlowsSchema,
     sampleParams: {},
-    cacheStrategy: "MINUTE_UPDATES",
+    cacheStrategy: "FREQUENT",
   };
 
 // Type exports

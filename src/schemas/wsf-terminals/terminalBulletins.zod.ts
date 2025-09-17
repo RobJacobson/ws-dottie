@@ -23,8 +23,8 @@ export type TerminalBulletins = z.infer<typeof terminalBulletinsSchema>;
 /**
  * Array of terminal bulletins.
  */
-export const terminalBulletinssSchema = z
+export const terminalBulletinsListSchema = z
   .array(terminalBulletinsSchema)
   .describe("Alerts and bulletins associated with terminals.");
 
-export type TerminalBulletinss = z.infer<typeof terminalBulletinssSchema>;
+export type TerminalBulletinsList = z.infer<typeof terminalBulletinsListSchema>;

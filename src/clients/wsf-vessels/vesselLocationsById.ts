@@ -1,9 +1,9 @@
 import { z } from "zod";
 import {
-  type VesselLocations,
-  vesselLocationsSchema,
+  type VesselLocation,
+  vesselLocationSchema,
 } from "@/schemas/wsf-vessels/vesselLocations.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselLocationsByVesselId */
 const vesselLocationsByVesselIdInput = z.object({
@@ -17,16 +17,16 @@ const vesselLocationsByVesselIdInput = z.object({
 });
 
 /** Endpoint metadata for getVesselLocationsByVesselId */
-export const getVesselLocationsByVesselIdMeta: EndpointMeta<
+export const getVesselLocationsByVesselIdMeta: EndpointDefinition<
   VesselLocationsByVesselIdInput,
-  VesselLocations
+  VesselLocation
 > = {
   id: "wsf-vessels/vesselLocationsById",
   endpoint: "/ferries/api/vessels/rest/vessellocations/{vesselId}",
   inputSchema: vesselLocationsByVesselIdInput,
-  outputSchema: vesselLocationsSchema,
+  outputSchema: vesselLocationSchema,
   sampleParams: { vesselId: 1 },
-  cacheStrategy: "REALTIME_UPDATES",
+  cacheStrategy: "REALTIME",
 } as const;
 
 // Type exports

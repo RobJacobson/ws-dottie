@@ -89,13 +89,13 @@ import {
   type CommercialVehicleRestrictions,
   commercialVehicleRestrictionsSchema,
 } from "@/schemas/wsdot-commercial-vehicle-restrictions/commercialVehicleRestriction.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictions */
 const commercialVehicleRestrictionsInput = z.object({});
 
 /** Endpoint metadata for getCommercialVehicleRestrictions */
-export const getCommercialVehicleRestrictionsMeta: EndpointMeta<
+export const getCommercialVehicleRestrictionsMeta: EndpointDefinition<
   CommercialVehicleRestrictionsInput,
   CommercialVehicleRestrictions
 > = {
@@ -105,7 +105,7 @@ export const getCommercialVehicleRestrictionsMeta: EndpointMeta<
   inputSchema: commercialVehicleRestrictionsInput,
   outputSchema: commercialVehicleRestrictionsSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

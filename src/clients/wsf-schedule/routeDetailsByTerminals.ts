@@ -1,9 +1,9 @@
 import { z } from "zod";
 import {
-  type RouteDetails,
-  routeDetailsSchema,
+  type RouteDetailsList,
+  routeDetailsListSchema,
 } from "@/schemas/wsf-schedule/routeDetails.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRouteDetailsByTerminals */
@@ -14,21 +14,21 @@ const routeDetailsByTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getRouteDetailsByTerminals */
-export const getRouteDetailsByTerminalsMeta: EndpointMeta<
+export const getRouteDetailsByTerminalsMeta: EndpointDefinition<
   RouteDetailsByTerminalsInput,
-  RouteDetails
+  RouteDetailsList
 > = {
   id: "wsf-schedule/routeDetailsByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/routedetails/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
   inputSchema: routeDetailsByTerminalsInput,
-  outputSchema: routeDetailsSchema,
+  outputSchema: routeDetailsListSchema,
   sampleParams: {
     tripDate: datesHelper.tomorrow(),
     departingScheduleTerminalId: 1,
     arrivingScheduleTerminalId: 10,
   },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

@@ -1,13 +1,13 @@
 import { z } from "zod";
 import type { ValidDateRange } from "@/schemas/shared/validDateRange.zod";
 import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleValidDateRange */
 const scheduleValidDateRangeInput = z.object({});
 
 /** Endpoint metadata for getScheduleValidDateRange */
-export const getScheduleValidDateRangeMeta: EndpointMeta<
+export const getScheduleValidDateRangeMeta: EndpointDefinition<
   ScheduleValidDateRangeInput,
   ValidDateRange
 > = {
@@ -16,7 +16,7 @@ export const getScheduleValidDateRangeMeta: EndpointMeta<
   inputSchema: scheduleValidDateRangeInput,
   outputSchema: validDateRangeSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

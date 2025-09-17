@@ -3,13 +3,13 @@ import {
   type ScheduledRoute,
   scheduledRoutesSchema,
 } from "@/schemas/wsf-schedule/scheduledRoute.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduledRoutes */
 const scheduledRoutesInput = z.object({});
 
 /** Endpoint metadata for getScheduledRoutes */
-export const getScheduledRoutesMeta: EndpointMeta<
+export const getScheduledRoutesMeta: EndpointDefinition<
   ScheduledRoutesInput,
   ScheduledRoute[]
 > = {
@@ -18,7 +18,7 @@ export const getScheduledRoutesMeta: EndpointMeta<
   inputSchema: scheduledRoutesInput,
   outputSchema: scheduledRoutesSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

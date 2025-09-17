@@ -3,13 +3,13 @@ import {
   type TerminalLocation,
   terminalLocationsSchema,
 } from "@/schemas/wsf-terminals/terminalLocation.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalLocations */
 const terminalLocationsInput = z.object({});
 
 /** Endpoint metadata for getTerminalLocations */
-export const getTerminalLocationsMeta: EndpointMeta<
+export const getTerminalLocationsMeta: EndpointDefinition<
   TerminalLocationsInput,
   TerminalLocation[]
 > = {
@@ -18,7 +18,7 @@ export const getTerminalLocationsMeta: EndpointMeta<
   inputSchema: terminalLocationsInput,
   outputSchema: terminalLocationsSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

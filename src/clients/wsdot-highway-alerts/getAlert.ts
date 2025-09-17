@@ -84,7 +84,7 @@ import {
   type HighwayAlert,
   highwayAlertSchema,
 } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getAlert */
 const alertInput = z.object({
@@ -93,14 +93,14 @@ const alertInput = z.object({
 });
 
 /** Endpoint metadata for getAlert */
-export const getAlertMeta: EndpointMeta<AlertInput, HighwayAlert> = {
+export const getAlertMeta: EndpointDefinition<AlertInput, HighwayAlert> = {
   id: "wsdot-highway-alerts/getAlert",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}",
   inputSchema: alertInput,
   outputSchema: highwayAlertSchema,
   sampleParams: { AlertID: 468632 },
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

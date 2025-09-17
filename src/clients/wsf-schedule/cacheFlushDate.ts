@@ -1,13 +1,13 @@
 import { z } from "zod";
 import type { WsfStandardCacheFlushDate } from "@/schemas/shared/cacheFlushDate.zod";
 import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleCacheFlushDate */
 const scheduleCacheFlushDateInput = z.object({});
 
 /** Endpoint metadata for getScheduleCacheFlushDate */
-export const getScheduleCacheFlushDateMeta: EndpointMeta<
+export const getScheduleCacheFlushDateMeta: EndpointDefinition<
   ScheduleCacheFlushDateInput,
   WsfStandardCacheFlushDate
 > = {
@@ -16,7 +16,7 @@ export const getScheduleCacheFlushDateMeta: EndpointMeta<
   inputSchema: scheduleCacheFlushDateInput,
   outputSchema: wsfStandardCacheFlushDateSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

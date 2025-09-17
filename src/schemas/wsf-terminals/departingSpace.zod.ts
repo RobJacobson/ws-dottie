@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "@/shared/tanstack";
 import { spaceForArrivalTerminalSchema } from "./spaceForArrivalTerminal.zod";
 
 /**

@@ -6,7 +6,7 @@ import { z } from "zod";
  * A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  * A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
  */
-export const terminalsAndMatesSchema = z.object({
+const terminalsAndMatesItemSchema = z.object({
   /** Unique identifier for the departing terminal. */
   DepartingTerminalID: z
     .number()
@@ -26,5 +26,12 @@ export const terminalsAndMatesSchema = z.object({
     .string()
     .describe("The name of the arriving terminal."),
 });
+
+/**
+ * Array of terminal mate combinations
+ */
+export const terminalsAndMatesSchema = z
+  .array(terminalsAndMatesItemSchema)
+  .describe("Array of terminals and mates combinations");
 
 export type TerminalsAndMates = z.infer<typeof terminalsAndMatesSchema>;

@@ -47,7 +47,7 @@ import {
   type TripRatesByDate,
   tripRatesByDateSchema,
 } from "@/schemas/wsdot-toll-rates/tripRatesByDate.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
 /** Input schema for getTripRatesByDate */
@@ -59,7 +59,7 @@ const tripRatesByDateInput = z.object({
 });
 
 /** Endpoint metadata for getTripRatesByDate */
-export const getTripRatesByDateMeta: EndpointMeta<
+export const getTripRatesByDateMeta: EndpointDefinition<
   TripRatesByDateInput,
   TripRatesByDate
 > = {
@@ -72,7 +72,7 @@ export const getTripRatesByDateMeta: EndpointMeta<
     fromDate: datesHelper.startOfMonth(),
     toDate: datesHelper.endOfMonth(),
   },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

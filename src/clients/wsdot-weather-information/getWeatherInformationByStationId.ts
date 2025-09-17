@@ -3,7 +3,7 @@ import {
   type WeatherInfo,
   weatherInfoSchema,
 } from "@/schemas/wsdot-weather-information/weatherInfo.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationByStationId */
 const weatherInformationByStationIdInput = z
@@ -21,7 +21,7 @@ const weatherInformationByStationIdInput = z
   );
 
 /** Endpoint metadata for getWeatherInformationByStationId */
-export const getWeatherInformationByStationIdMeta: EndpointMeta<
+export const getWeatherInformationByStationIdMeta: EndpointDefinition<
   WeatherInformationByStationIdInput,
   WeatherInfo
 > = {
@@ -31,7 +31,7 @@ export const getWeatherInformationByStationIdMeta: EndpointMeta<
   inputSchema: weatherInformationByStationIdInput,
   outputSchema: weatherInfoSchema,
   sampleParams: { stationId: 1909 },
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

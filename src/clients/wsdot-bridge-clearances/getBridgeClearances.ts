@@ -74,13 +74,13 @@ import {
   type BridgeClearances,
   bridgeClearancesSchema,
 } from "@/schemas/wsdot-bridge-clearances/bridgeClearance.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getBridgeClearances */
 const bridgeClearancesInput = z.object({});
 
 /** Endpoint metadata for getBridgeClearances */
-export const getBridgeClearancesMeta: EndpointMeta<
+export const getBridgeClearancesMeta: EndpointDefinition<
   BridgeClearancesInput,
   BridgeClearances
 > = {
@@ -89,7 +89,7 @@ export const getBridgeClearancesMeta: EndpointMeta<
   inputSchema: bridgeClearancesInput,
   outputSchema: bridgeClearancesSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

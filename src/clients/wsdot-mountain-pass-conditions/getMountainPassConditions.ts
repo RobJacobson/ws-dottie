@@ -69,13 +69,13 @@ import {
   type MountainPassConditions,
   mountainPassConditionsSchema,
 } from "@/schemas/wsdot-mountain-pass-conditions/passCondition.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getMountainPassConditions */
 const mountainPassConditionsInput = z.object({});
 
 /** Endpoint metadata for getMountainPassConditions */
-export const getMountainPassConditionsMeta: EndpointMeta<
+export const getMountainPassConditionsMeta: EndpointDefinition<
   MountainPassConditionsInput,
   MountainPassConditions
 > = {
@@ -85,7 +85,7 @@ export const getMountainPassConditionsMeta: EndpointMeta<
   inputSchema: mountainPassConditionsInput,
   outputSchema: mountainPassConditionsSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

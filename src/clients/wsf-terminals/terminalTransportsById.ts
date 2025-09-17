@@ -3,7 +3,7 @@ import {
   type TerminalTransports,
   terminalTransportsSchema,
 } from "@/schemas/wsf-terminals/terminalTransports.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalTransportsByTerminalId */
 const terminalTransportsByTerminalIdInput = z.object({
@@ -11,7 +11,7 @@ const terminalTransportsByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalTransportsByTerminalId */
-export const getTerminalTransportsByTerminalIdMeta: EndpointMeta<
+export const getTerminalTransportsByTerminalIdMeta: EndpointDefinition<
   TerminalTransportsByTerminalIdInput,
   TerminalTransports
 > = {
@@ -20,7 +20,7 @@ export const getTerminalTransportsByTerminalIdMeta: EndpointMeta<
   inputSchema: terminalTransportsByTerminalIdInput,
   outputSchema: terminalTransportsSchema,
   sampleParams: { terminalId: 1 },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

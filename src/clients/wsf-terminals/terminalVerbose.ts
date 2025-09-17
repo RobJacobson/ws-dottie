@@ -1,13 +1,13 @@
 import { z } from "zod";
 import type { TerminalVerbose } from "@/schemas/wsf-terminals/terminalVerbose.zod";
 import { terminalVerboseSchema } from "@/schemas/wsf-terminals/terminalVerbose.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalVerbose */
 const terminalVerboseInput = z.object({});
 
 /** Endpoint metadata for getTerminalVerbose */
-export const getTerminalVerboseMeta: EndpointMeta<
+export const getTerminalVerboseMeta: EndpointDefinition<
   TerminalVerboseInput,
   TerminalVerbose[]
 > = {
@@ -16,7 +16,7 @@ export const getTerminalVerboseMeta: EndpointMeta<
   inputSchema: terminalVerboseInput,
   outputSchema: z.array(terminalVerboseSchema),
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

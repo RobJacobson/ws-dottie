@@ -3,13 +3,13 @@ import {
   type VesselHistories,
   vesselHistoriesSchema,
 } from "@/schemas/wsf-vessels/vesselHistory.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselHistories */
 const vesselHistoriesInput = z.object({});
 
 /** Endpoint metadata for getVesselHistories */
-export const getVesselHistoriesMeta: EndpointMeta<
+export const getVesselHistoriesMeta: EndpointDefinition<
   VesselHistoriesInput,
   VesselHistories
 > = {
@@ -18,7 +18,7 @@ export const getVesselHistoriesMeta: EndpointMeta<
   inputSchema: vesselHistoriesInput,
   outputSchema: vesselHistoriesSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

@@ -3,7 +3,7 @@ import {
   type ScheduleResponse,
   scheduleResponseSchema,
 } from "@/schemas/wsf-schedule/scheduleResponse.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getScheduleByRoute */
@@ -13,7 +13,7 @@ const scheduleByRouteInput = z.object({
 });
 
 /** Endpoint metadata for getScheduleByRoute */
-export const getScheduleByRouteMeta: EndpointMeta<
+export const getScheduleByRouteMeta: EndpointDefinition<
   ScheduleByRouteInput,
   ScheduleResponse
 > = {
@@ -22,7 +22,7 @@ export const getScheduleByRouteMeta: EndpointMeta<
   inputSchema: scheduleByRouteInput,
   outputSchema: scheduleResponseSchema,
   sampleParams: { tripDate: datesHelper.tomorrow(), routeId: 1 },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

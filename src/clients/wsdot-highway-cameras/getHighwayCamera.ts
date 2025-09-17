@@ -79,7 +79,7 @@ import {
   type Camera,
   cameraSchema,
 } from "@/schemas/wsdot-highway-cameras/camera.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getHighwayCamera */
 const highwayCameraInput = z.object({
@@ -88,14 +88,14 @@ const highwayCameraInput = z.object({
 });
 
 /** Endpoint metadata for getHighwayCamera */
-export const getHighwayCameraMeta: EndpointMeta<HighwayCameraInput, Camera> = {
+export const getHighwayCameraMeta: EndpointDefinition<HighwayCameraInput, Camera> = {
   id: "wsdot-highway-cameras/getHighwayCamera",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
   inputSchema: highwayCameraInput,
   outputSchema: cameraSchema,
   sampleParams: { cameraID: 9818 }, // From E2E test validParams
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

@@ -93,10 +93,12 @@ export type TerminalTransports = z.infer<typeof terminalTransportsSchema>;
 /**
  * Array of terminal transports.
  */
-export const terminalTransportssSchema = z
+export const terminalTransportsListSchema = z
   .array(terminalTransportsSchema)
   .describe(
     "Helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc)."
   );
 
-export type TerminalTransportss = z.infer<typeof terminalTransportssSchema>;
+export type TerminalTransportsList = z.infer<
+  typeof terminalTransportsListSchema
+>;

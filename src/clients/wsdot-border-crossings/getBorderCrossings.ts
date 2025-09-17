@@ -60,13 +60,13 @@ import {
   type BorderCrossings,
   borderCrossingsSchema,
 } from "@/schemas/wsdot-border-crossings/borderCrossing.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getBorderCrossings */
 const borderCrossingsInput = z.object({});
 
 /** Endpoint metadata for getBorderCrossings */
-export const getBorderCrossingsMeta: EndpointMeta<
+export const getBorderCrossingsMeta: EndpointDefinition<
   BorderCrossingsInput,
   BorderCrossings
 > = {
@@ -76,7 +76,7 @@ export const getBorderCrossingsMeta: EndpointMeta<
   inputSchema: borderCrossingsInput,
   outputSchema: borderCrossingsSchema,
   sampleParams: {},
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

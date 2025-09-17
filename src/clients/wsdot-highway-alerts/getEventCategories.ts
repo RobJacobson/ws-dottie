@@ -34,13 +34,13 @@ import {
   type EventCategories,
   eventCategoriesSchema,
 } from "@/schemas/wsdot-highway-alerts/eventCategories.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getEventCategories */
 const eventCategoriesInput = z.object({});
 
 /** Endpoint metadata for getEventCategories */
-export const getEventCategoriesMeta: EndpointMeta<
+export const getEventCategoriesMeta: EndpointDefinition<
   EventCategoriesInput,
   EventCategories
 > = {
@@ -50,7 +50,7 @@ export const getEventCategoriesMeta: EndpointMeta<
   inputSchema: eventCategoriesInput,
   outputSchema: eventCategoriesSchema,
   sampleParams: {},
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

@@ -3,13 +3,13 @@ import {
   type VesselLocations,
   vesselLocationsSchema,
 } from "@/schemas/wsf-vessels/vesselLocations.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselLocations */
 const vesselLocationsInput = z.object({});
 
 /** Endpoint metadata for getVesselLocations */
-export const getVesselLocationsMeta: EndpointMeta<
+export const getVesselLocationsMeta: EndpointDefinition<
   VesselLocationsInput,
   VesselLocations
 > = {
@@ -18,7 +18,7 @@ export const getVesselLocationsMeta: EndpointMeta<
   inputSchema: vesselLocationsInput,
   outputSchema: vesselLocationsSchema,
   sampleParams: {},
-  cacheStrategy: "REALTIME_UPDATES",
+  cacheStrategy: "REALTIME",
 } as const;
 
 // Type exports

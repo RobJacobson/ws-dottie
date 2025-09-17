@@ -3,7 +3,7 @@ import {
   type TravelTimeRoute,
   travelTimeRouteSchema,
 } from "@/schemas/wsdot-travel-times/travelTimeRoute.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTravelTime */
 const travelTimeInput = z.object({
@@ -11,7 +11,7 @@ const travelTimeInput = z.object({
 });
 
 /** Endpoint metadata for getTravelTime */
-export const getTravelTimeMeta: EndpointMeta<TravelTimeInput, TravelTimeRoute> =
+export const getTravelTimeMeta: EndpointDefinition<TravelTimeInput, TravelTimeRoute> =
   {
     id: "wsdot-travel-times/getTravelTime",
     endpoint:
@@ -19,7 +19,7 @@ export const getTravelTimeMeta: EndpointMeta<TravelTimeInput, TravelTimeRoute> =
     inputSchema: travelTimeInput,
     outputSchema: travelTimeRouteSchema,
     sampleParams: { travelTimeId: 1 },
-    cacheStrategy: "DAILY_STATIC",
+    cacheStrategy: "STATIC",
   };
 
 // Type exports

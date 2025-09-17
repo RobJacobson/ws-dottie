@@ -3,7 +3,7 @@ import {
   type FaresTerminal,
   faresTerminalSchema,
 } from "@/schemas/wsf-fares/faresTerminal.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFaresTerminals */
@@ -12,7 +12,7 @@ const faresTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getFaresTerminals */
-export const getFaresTerminalsMeta: EndpointMeta<
+export const getFaresTerminalsMeta: EndpointDefinition<
   FaresTerminalsInput,
   FaresTerminal[]
 > = {
@@ -21,7 +21,7 @@ export const getFaresTerminalsMeta: EndpointMeta<
   inputSchema: faresTerminalsInput,
   outputSchema: z.array(faresTerminalSchema),
   sampleParams: { tripDate: datesHelper.tomorrow() },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

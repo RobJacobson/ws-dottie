@@ -3,13 +3,13 @@ import {
   type WeatherReadings,
   weatherReadingsSchema,
 } from "@/schemas/wsdot-weather-information-extended/weatherReadings.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getWeatherInformationExtended */
 const weatherInformationExtendedInput = z.object({});
 
 /** Endpoint metadata for getWeatherInformationExtended */
-export const getWeatherInformationExtendedMeta: EndpointMeta<
+export const getWeatherInformationExtendedMeta: EndpointDefinition<
   WeatherInformationExtendedInput,
   WeatherReadings
 > = {
@@ -18,7 +18,7 @@ export const getWeatherInformationExtendedMeta: EndpointMeta<
   inputSchema: weatherInformationExtendedInput,
   outputSchema: weatherReadingsSchema,
   sampleParams: {},
-  cacheStrategy: "HOURLY_UPDATES",
+  cacheStrategy: "MODERATE",
 };
 
 // Type exports

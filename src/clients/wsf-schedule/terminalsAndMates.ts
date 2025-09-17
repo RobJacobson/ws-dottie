@@ -3,7 +3,7 @@ import {
   type TerminalsAndMates,
   terminalsAndMatesSchema,
 } from "@/schemas/wsf-schedule/terminalsAndMates.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getTerminalsAndMates */
@@ -12,7 +12,7 @@ const terminalsAndMatesInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalsAndMates */
-export const getTerminalsAndMatesMeta: EndpointMeta<
+export const getTerminalsAndMatesMeta: EndpointDefinition<
   TerminalsAndMatesInput,
   TerminalsAndMates
 > = {
@@ -21,7 +21,7 @@ export const getTerminalsAndMatesMeta: EndpointMeta<
   inputSchema: terminalsAndMatesInput,
   outputSchema: terminalsAndMatesSchema,
   sampleParams: { tripDate: datesHelper.tomorrow() },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

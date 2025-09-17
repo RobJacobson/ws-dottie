@@ -3,7 +3,7 @@ import {
   type TerminalVerbose,
   terminalVerboseSchema,
 } from "@/schemas/wsf-terminals/terminalVerbose.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalVerboseByTerminalId */
 const terminalVerboseByTerminalIdInput = z.object({
@@ -11,7 +11,7 @@ const terminalVerboseByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalVerboseByTerminalId */
-export const getTerminalVerboseByTerminalIdMeta: EndpointMeta<
+export const getTerminalVerboseByTerminalIdMeta: EndpointDefinition<
   TerminalVerboseByTerminalIdInput,
   TerminalVerbose
 > = {
@@ -20,7 +20,7 @@ export const getTerminalVerboseByTerminalIdMeta: EndpointMeta<
   inputSchema: terminalVerboseByTerminalIdInput,
   outputSchema: terminalVerboseSchema,
   sampleParams: { terminalId: 1 },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

@@ -3,7 +3,7 @@ import {
   type TerminalSailingSpace,
   terminalSailingSpaceSchema,
 } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalSailingSpaceByTerminalId */
 const terminalSailingSpaceByTerminalIdInput = z.object({
@@ -11,7 +11,7 @@ const terminalSailingSpaceByTerminalIdInput = z.object({
 });
 
 /** Endpoint metadata for getTerminalSailingSpaceByTerminalId */
-export const getTerminalSailingSpaceByTerminalIdMeta: EndpointMeta<
+export const getTerminalSailingSpaceByTerminalIdMeta: EndpointDefinition<
   TerminalSailingSpaceByTerminalIdInput,
   TerminalSailingSpace
 > = {
@@ -20,7 +20,7 @@ export const getTerminalSailingSpaceByTerminalIdMeta: EndpointMeta<
   inputSchema: terminalSailingSpaceByTerminalIdInput,
   outputSchema: terminalSailingSpaceSchema,
   sampleParams: { terminalId: 1 },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

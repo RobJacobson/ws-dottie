@@ -84,7 +84,7 @@ import {
   type HighwayAlerts,
   highwayAlertsSchema,
 } from "@/schemas/wsdot-highway-alerts/highwayAlert.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getAlertsForMapArea */
 const alertsForMapAreaInput = z.object({
@@ -93,7 +93,7 @@ const alertsForMapAreaInput = z.object({
 });
 
 /** Endpoint metadata for getAlertsForMapArea */
-export const getAlertsForMapAreaMeta: EndpointMeta<
+export const getAlertsForMapAreaMeta: EndpointDefinition<
   AlertsForMapAreaInput,
   HighwayAlerts
 > = {
@@ -103,7 +103,7 @@ export const getAlertsForMapAreaMeta: EndpointMeta<
   inputSchema: alertsForMapAreaInput,
   outputSchema: highwayAlertsSchema,
   sampleParams: { MapArea: "Seattle" },
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

@@ -3,13 +3,13 @@ import {
   type WeatherStations,
   weatherStationsSchema,
 } from "@/schemas/wsdot-weather-stations/weatherStations.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getWeatherStations */
 const weatherStationsInput = z.object({});
 
 /** Endpoint metadata for getWeatherStations */
-export const getWeatherStationsMeta: EndpointMeta<
+export const getWeatherStationsMeta: EndpointDefinition<
   WeatherStationsInput,
   WeatherStations
 > = {
@@ -19,7 +19,7 @@ export const getWeatherStationsMeta: EndpointMeta<
   inputSchema: weatherStationsInput,
   outputSchema: weatherStationsSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

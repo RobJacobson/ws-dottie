@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * Schema for contingency adjustment response from WSF Schedule API.
@@ -28,9 +28,9 @@ export const contingencyAdjustmentSchema = z.object({
     .describe("Describes what prompted this contingency adjustment."),
   /** Indicates whether this adjustment represents a cancellation or addition in service. */
   AdjType: z
-    .enum(["Addition", "Cancellation"])
+    .union([z.literal(1), z.literal(2)])
     .describe(
-      "Indicates whether this adjustment represents a cancellation or addition in service."
+      "Indicates whether this adjustment represents a cancellation or addition in service. 1 for Addition, 2 for Cancellation."
     ),
   /** If this is a non-contingency route that's being cancelled (scheduled route where ContingencyOnly is false and the AdjType is 2) then this value reflects the unique identifier of the contingency scheduled route that's replacing it. */
   ReplacedBySchedRouteID: z

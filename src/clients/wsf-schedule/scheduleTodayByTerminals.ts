@@ -3,7 +3,7 @@ import {
   type ScheduleTodayResponse,
   scheduleTodayResponseSchema,
 } from "@/schemas/wsf-schedule/scheduleTodayResponse.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleTodayByScheduleTerminals */
 const scheduleTodayByScheduleTerminalsInput = z.object({
@@ -13,7 +13,7 @@ const scheduleTodayByScheduleTerminalsInput = z.object({
 });
 
 /** Endpoint metadata for getScheduleTodayByScheduleTerminals */
-export const getScheduleTodayByScheduleTerminalsMeta: EndpointMeta<
+export const getScheduleTodayByScheduleTerminalsMeta: EndpointDefinition<
   ScheduleTodayByScheduleTerminalsInput,
   ScheduleTodayResponse
 > = {
@@ -27,7 +27,7 @@ export const getScheduleTodayByScheduleTerminalsMeta: EndpointMeta<
     arrivingScheduleTerminalId: 10,
     onlyRemainingTimes: false,
   },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

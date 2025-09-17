@@ -34,13 +34,13 @@ import {
   type TollTripVersion,
   tollTripVersionSchema,
 } from "@/schemas/wsdot-toll-rates/tollTripVersion.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTollTripVersion */
 const tollTripVersionInput = z.object({});
 
 /** Endpoint metadata for getTollTripVersion */
-export const getTollTripVersionMeta: EndpointMeta<
+export const getTollTripVersionMeta: EndpointDefinition<
   TollTripVersionInput,
   TollTripVersion
 > = {
@@ -49,7 +49,7 @@ export const getTollTripVersionMeta: EndpointMeta<
   inputSchema: tollTripVersionInput,
   outputSchema: tollTripVersionSchema,
   sampleParams: {},
-  cacheStrategy: "MINUTE_UPDATES",
+  cacheStrategy: "FREQUENT",
 };
 
 // Type exports

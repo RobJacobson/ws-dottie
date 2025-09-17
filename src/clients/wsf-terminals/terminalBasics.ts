@@ -3,13 +3,13 @@ import {
   type TerminalBasicsList,
   terminalBasicsListSchema,
 } from "@/schemas/wsf-terminals/terminalBasics.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalBasics */
 const terminalBasicsInput = z.object({});
 
 /** Endpoint metadata for getTerminalBasics */
-export const getTerminalBasicsMeta: EndpointMeta<
+export const getTerminalBasicsMeta: EndpointDefinition<
   TerminalBasicsInput,
   TerminalBasicsList
 > = {
@@ -18,7 +18,7 @@ export const getTerminalBasicsMeta: EndpointMeta<
   inputSchema: terminalBasicsInput,
   outputSchema: terminalBasicsListSchema,
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

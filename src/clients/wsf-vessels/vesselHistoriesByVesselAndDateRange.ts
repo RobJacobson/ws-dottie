@@ -3,7 +3,7 @@ import {
   type VesselHistories,
   vesselHistoriesSchema,
 } from "@/schemas/wsf-vessels/vesselHistory.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
 const dateRangeParams = {
@@ -20,7 +20,7 @@ const vesselHistoriesByVesselAndDateRangeInput = z.object({
 });
 
 /** Endpoint metadata for getVesselHistoryByVesselAndDateRange */
-export const getVesselHistoryByVesselAndDateRangeMeta: EndpointMeta<
+export const getVesselHistoryByVesselAndDateRangeMeta: EndpointDefinition<
   VesselHistoryByVesselAndDateRangeInput,
   VesselHistories
 > = {
@@ -34,7 +34,7 @@ export const getVesselHistoryByVesselAndDateRangeMeta: EndpointMeta<
     dateStart: datesHelper.startOfMonth(),
     dateEnd: datesHelper.endOfMonth(),
   },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 } as const;
 
 // Type exports

@@ -73,7 +73,7 @@ export const timeAdjustmentsByRoute = defineEndpoint(
 export type { ActiveSeasonsInput } from "./activeSeasons";
 export type { AllSailingsInput } from "./allSailings";
 export type { ScheduleCacheFlushDateInput } from "./cacheFlushDate";
-export type { RouteDetailsInput } from "./routeDetails";
+export type { RouteDetailsListInput } from "./routeDetails";
 export type { RouteDetailsByRouteInput } from "./routeDetailsByRoute";
 export type { RouteDetailsByTerminalsInput } from "./routeDetailsByTerminals";
 export type { RoutesInput } from "./routes";

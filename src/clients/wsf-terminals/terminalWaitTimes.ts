@@ -1,13 +1,13 @@
 import { z } from "zod";
 import type { TerminalWaitTimes } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
 import { terminalWaitTimesSchema } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalWaitTimes */
 const terminalWaitTimesInput = z.object({});
 
 /** Endpoint metadata for getTerminalWaitTimes */
-export const getTerminalWaitTimesMeta: EndpointMeta<
+export const getTerminalWaitTimesMeta: EndpointDefinition<
   TerminalWaitTimesInput,
   TerminalWaitTimes[]
 > = {
@@ -16,7 +16,7 @@ export const getTerminalWaitTimesMeta: EndpointMeta<
   inputSchema: terminalWaitTimesInput,
   outputSchema: z.array(terminalWaitTimesSchema),
   sampleParams: {},
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

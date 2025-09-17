@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack/validation";
+import { zWsdotDate } from "@/shared/tanstack";
 import { activeDateRangeSchema } from "./activeDateRange.zod";
 import { annotationSchema } from "./annotation.zod";
 

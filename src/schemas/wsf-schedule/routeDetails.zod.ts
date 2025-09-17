@@ -76,3 +76,12 @@ export const routeDetailsSchema = z.object({
 });
 
 export type RouteDetails = z.infer<typeof routeDetailsSchema>;
+
+/**
+ * Array of route details
+ */
+export const routeDetailsListSchema = z
+  .array(routeDetailsSchema)
+  .describe("Array of route details");
+
+export type RouteDetailsList = z.infer<typeof routeDetailsListSchema>;

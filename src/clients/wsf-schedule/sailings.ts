@@ -3,7 +3,7 @@ import {
   type SailingResponse,
   sailingResponsesSchema,
 } from "@/schemas/wsf-schedule/sailingResponse.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getSailings */
 const sailingsInput = z.object({
@@ -11,13 +11,13 @@ const sailingsInput = z.object({
 });
 
 /** Endpoint metadata for getSailings */
-export const getSailingsMeta: EndpointMeta<SailingsInput, SailingResponse[]> = {
+export const getSailingsMeta: EndpointDefinition<SailingsInput, SailingResponse[]> = {
   id: "wsf-schedule/sailings",
   endpoint: "/ferries/api/schedule/rest/sailings/{schedRouteId}",
   inputSchema: sailingsInput,
   outputSchema: sailingResponsesSchema,
   sampleParams: { schedRouteId: 2327 },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports

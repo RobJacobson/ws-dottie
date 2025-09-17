@@ -3,7 +3,7 @@ import {
   type FareLineItemsVerbose,
   fareLineItemsVerboseSchema,
 } from "@/schemas/wsf-fares/fareLineItemsVerbose.zod";
-import type { EndpointMeta } from "@/shared/endpoints";
+import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItemsVerbose */
@@ -12,7 +12,7 @@ const fareLineItemsVerboseInput = z.object({
 });
 
 /** Endpoint metadata for getFareLineItemsVerbose */
-export const getFareLineItemsVerboseMeta: EndpointMeta<
+export const getFareLineItemsVerboseMeta: EndpointDefinition<
   FareLineItemsVerboseInput,
   FareLineItemsVerbose
 > = {
@@ -21,7 +21,7 @@ export const getFareLineItemsVerboseMeta: EndpointMeta<
   inputSchema: fareLineItemsVerboseInput,
   outputSchema: fareLineItemsVerboseSchema,
   sampleParams: { tripDate: datesHelper.tomorrow() },
-  cacheStrategy: "DAILY_STATIC",
+  cacheStrategy: "STATIC",
 };
 
 // Type exports
