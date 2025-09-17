@@ -8,6 +8,7 @@
  */
 
 import type { LoggingMode } from "@/shared/types";
+import type { Endpoint } from "@/shared/endpoints";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
 import { selectFetchStrategy } from "@/shared/fetching/fetchStrategies";
 import { createApiError } from "@/shared/fetching/handleError";
@@ -81,41 +82,30 @@ export const fetchCore = async <TInput = never, TOutput = unknown>({
  *
  * @template TInput - The input parameters type
  * @template TOutput - The output response type
- * @param params - Fetch parameters with validation schemas
- * @param params.endpoint - The API endpoint to call
- * @param params.inputSchema - Zod schema for input validation
- * @param params.outputSchema - Zod schema for output validation
- * @param params.params - Optional input parameters to validate
- * @param params.logMode - Optional logging mode
+ * @param endpoint - Complete endpoint object containing schemas and configuration
+ * @param params - Optional input parameters to validate
+ * @param logMode - Optional logging mode
  * @returns Promise resolving to validated response data
  */
-export const fetchZod = async <TInput = never, TOutput = unknown>({
-  endpoint,
-  inputSchema,
-  outputSchema,
-  params,
-  logMode,
-}: {
-  endpoint: string;
-  inputSchema: import("zod").ZodType<TInput>;
-  outputSchema: import("zod").ZodType<TOutput>;
-  params?: TInput;
-  logMode?: LoggingMode;
-}): Promise<TOutput> => {
+export const fetchZod = async <TInput = never, TOutput = unknown>(
+  endpoint: Endpoint<TInput, TOutput>,
+  params?: TInput,
+  logMode?: LoggingMode
+): Promise<TOutput> => {
   // Validate input parameters if provided
   if (params) {
-    inputSchema.parse(params);
+    endpoint.inputSchema.parse(params);
   }
 
   // Get raw data from fetchCore
   const rawData = await fetchCore({
-    endpoint,
+    endpoint: endpoint.endpoint,
     params,
     logMode,
   });
 
   // Validate and return output
-  return outputSchema.parse(rawData);
+  return endpoint.outputSchema.parse(rawData);
 };
 
 /**
@@ -128,24 +118,19 @@ export const fetchZod = async <TInput = never, TOutput = unknown>({
  *
  * @template TInput - The input parameters type
  * @template TOutput - The output response type
- * @param params - Fetch parameters
- * @param params.endpoint - The API endpoint to call
- * @param params.params - Optional input parameters
- * @param params.logMode - Optional logging mode
+ * @param endpoint - Complete endpoint object containing configuration
+ * @param params - Optional input parameters
+ * @param logMode - Optional logging mode
  * @returns Promise resolving to response data with .NET dates converted
  */
-export const fetchNative = async <TInput = never, TOutput = unknown>({
-  endpoint,
-  params,
-  logMode,
-}: {
-  endpoint: string;
-  params?: TInput;
-  logMode?: LoggingMode;
-}): Promise<TOutput> => {
+export const fetchNative = async <TInput = never, TOutput = unknown>(
+  endpoint: Endpoint<TInput, TOutput>,
+  params?: TInput,
+  logMode?: LoggingMode
+): Promise<TOutput> => {
   // Get raw data from fetchCore
   const rawData = await fetchCore({
-    endpoint,
+    endpoint: endpoint.endpoint,
     params,
     logMode,
   });

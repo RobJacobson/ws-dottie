@@ -64,15 +64,7 @@ const executeDottie = async <I, O>(
   endpoint: Endpoint<I, O>,
   params: CliParams,
   _options: CliOptions
-): Promise<unknown> => {
-  return fetchZod({
-    endpoint: endpoint.endpoint,
-    inputSchema: endpoint.inputSchema,
-    outputSchema: endpoint.outputSchema,
-    params: params as I,
-    logMode: "none",
-  });
-};
+): Promise<unknown> => fetchZod(endpoint, params as I, "none");
 
 // Create and run CLI tool
 createSimpleCli(

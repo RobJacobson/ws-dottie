@@ -69,13 +69,7 @@ const executeNative = async <I, O>(
   endpoint: Endpoint<I, O>,
   params: CliParams,
   _options: CliOptions
-): Promise<unknown> => {
-  return fetchNative({
-    endpoint: endpoint.endpoint,
-    params: params as I,
-    logMode: "none",
-  });
-};
+): Promise<unknown> => fetchNative(endpoint, params as I, "none");
 
 // Create and run CLI tool
 createSimpleCli(
