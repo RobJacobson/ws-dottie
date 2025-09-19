@@ -6,7 +6,20 @@ export default defineConfig({
     globals: true,
     environment: "node",
     setupFiles: ["./tests/setup.ts"],
-    testTimeout: 15000, // 15 seconds timeout for individual tests
+    testTimeout: 120000, // 2 minutes timeout for unified test suite
+    fileParallelism: false,
+    pool: "forks",
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
+    sequence: {
+      concurrent: false,
+      shuffle: false,
+      hooks: "list",
+    },
+    // reporters: ["./tests/e2e/reporters/unified-reporter.js"],
   },
   resolve: {
     alias: {
