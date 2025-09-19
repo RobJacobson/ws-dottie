@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack";
+
 import { travelRestrictionSchema } from "./travelRestriction.zod";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * PassCondition schema

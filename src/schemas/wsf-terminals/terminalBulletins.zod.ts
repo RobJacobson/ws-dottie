@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { bulletinSchema } from "./bulletin.zod";
 import { terminalSchema } from "./terminal.zod";
 

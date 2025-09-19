@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { terminalBasicsSchema } from "./terminalBasics.zod";
 import { terminalBulletinsSchema } from "./terminalBulletins.zod";
 import { terminalLocationSchema } from "./terminalLocation.zod";

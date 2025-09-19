@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { weatherReadingSchema } from "./weatherReading.zod";
 
 /**

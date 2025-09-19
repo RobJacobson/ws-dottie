@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack";
+
 import { annotationSchema } from "./annotation.zod";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * Schema for terminal time response from WSF Schedule API.

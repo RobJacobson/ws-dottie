@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/shared/tanstack";
+
 import { scheduleTerminalComboSchema } from "./scheduleTerminalCombo.zod";
+import { zWsdotDate } from "@/shared/tanstack";
 
 /**
  * Schema for schedule response from WSF Schedule API.

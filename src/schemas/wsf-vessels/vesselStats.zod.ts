@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import { vesselClassSchema } from "./class.zod";
 import { vesselSchema } from "./vessel.zod";
 
