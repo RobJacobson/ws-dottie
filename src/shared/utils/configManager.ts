@@ -24,7 +24,7 @@ export interface WsdotConfig {
 }
 
 /** Runtime configuration state */
-let runtimeConfig = {
+const runtimeConfig = {
   apiKey: process.env.WSDOT_ACCESS_TOKEN || "",
   domain: process.env.WSDOT_BASE_URL || DEFAULT_BASE_URL,
 };

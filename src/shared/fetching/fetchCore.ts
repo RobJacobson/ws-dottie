@@ -7,13 +7,16 @@
  * with automatic .NET date conversion for native fetch operations.
  */
 
-import type { LoggingMode } from "@/shared/types";
 import type { Endpoint } from "@/shared/endpoints";
-import { logApiCall, logApiResults } from "@/shared/utils/logger";
+import {
+  buildUrlWithApiKey,
+  buildUrlWithParams,
+} from "@/shared/fetching/buildUrl";
 import { selectFetchStrategy } from "@/shared/fetching/fetchStrategies";
 import { createApiError } from "@/shared/fetching/handleError";
-import { buildApiUrl } from "@/shared/fetching/buildUrl";
+import type { LoggingMode } from "@/shared/types";
 import { convertDotNetDates } from "@/shared/utils/dateUtils";
+import { logApiCall, logApiResults } from "@/shared/utils/logger";
 
 /**
  * Core fetching logic shared between fetchZod and fetchNative
@@ -41,34 +44,37 @@ export const fetchCore = async <TInput = never, TOutput = unknown>({
   logMode?: LoggingMode;
 }): Promise<TOutput> => {
   const startTime = Date.now();
-  const endpointName = endpoint.split("/").pop() || endpoint;
 
-  // Log the API call
+  // Log the API call if needed
   if (logMode !== "none") {
-    logApiCall(endpointName, params);
+    logApiCall(endpoint, params);
   }
 
   try {
     // 1. Build URL with parameters
-    const url = buildApiUrl(endpoint, params as Record<string, unknown>);
+    const urlWithParams = buildUrlWithParams(
+      endpoint,
+      params as Record<string, unknown>
+    );
+    console.log(`Fetching: ${urlWithParams}`);
 
-    // 2. Execute request using appropriate strategy
+    // 2. Append API key
+    const urlWithApiKey = buildUrlWithApiKey(urlWithParams);
+
+    // 3. Execute request using appropriate strategy
     const fetchStrategy = selectFetchStrategy();
-    const responseData = await fetchStrategy(url);
+    const responseData = await fetchStrategy(urlWithApiKey);
 
-    // 3. Parse response JSON
+    // 4. Parse response JSON
     const jsonData = JSON.parse(responseData);
 
-    // 4. Log results with performance metrics
+    // 5. Log results with performance metrics
     if (logMode !== "none") {
-      const duration = Date.now() - startTime;
-      const responseSize = responseData.length;
-      const objectCount = Array.isArray(jsonData) ? jsonData.length : 1;
-      logApiResults(objectCount, duration, responseSize);
+      logApiResults(jsonData, startTime, responseData.length);
     }
 
     return jsonData as TOutput;
-  } catch (error: unknown) {
+  } catch (error) {
     throw createApiError(error, endpoint);
   }
 };

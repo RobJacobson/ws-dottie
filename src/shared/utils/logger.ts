@@ -44,15 +44,16 @@ const log = {
  * using a single line format that can be completed by logApiResults. It
  * uses colored output for better visibility in console logs.
  *
- * @param endpoint - The API endpoint being called
+ * @param endpoint - The full API endpoint path (will extract endpoint name internally)
  * @param params - Parameters being sent to the endpoint
  */
 export const logApiCall = (endpoint: string, params?: unknown): void => {
+  const endpointName = endpoint.split("/").pop() || endpoint;
   const paramsStr = params ? JSON.stringify(params) : "none";
   const message = chalk.blue(
-    `Calling ${endpoint} with parameters ${paramsStr}...`
+    `Calling ${endpointName} with parameters ${paramsStr}...`
   );
-  process.stdout.write(message);
+  console.log(message);
 };
 
 /**
@@ -62,16 +63,18 @@ export const logApiCall = (endpoint: string, params?: unknown): void => {
  * current line. It provides performance metrics including duration, response
  * size, and object count for comprehensive API operation monitoring.
  *
- * @param objectCount - Number of objects retrieved from the API
- * @param durationMs - Duration of the API call in milliseconds
+ * @param jsonData - The parsed JSON response data (will calculate object count internally)
+ * @param startTime - The timestamp when the request started (will calculate duration internally)
  * @param responseSize - Response size in bytes
  */
 export const logApiResults = (
-  objectCount: number,
-  durationMs: number,
+  jsonData: unknown,
+  startTime: number,
   responseSize: number
 ): void => {
-  const durationSec = (durationMs / 1000).toFixed(1);
+  const duration = Date.now() - startTime;
+  const objectCount = Array.isArray(jsonData) ? jsonData.length : 1;
+  const durationSec = (duration / 1000).toFixed(1);
   const sizeKb = (responseSize / 1024).toFixed(1);
   const results = chalk.green(
     ` Retrieved ${objectCount} objects in ${durationSec} sec (${sizeKb} kb).`

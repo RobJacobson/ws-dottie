@@ -8,18 +8,11 @@
  * - No unnecessary pipeline abstraction
  */
 
-// Main API
-export { fetchZod, fetchNative } from "@/shared/fetching/fetchCore";
-
-// Strategies
+// URL building utilities
 export {
-  fetchJsonp,
-  selectFetchStrategy,
-} from "@/shared/fetching/fetchStrategies";
-
-// Low-level fetch strategies (for internal use)
-export { fetchNative as fetchNativeStrategy } from "@/shared/fetching/fetchStrategies";
-
+  buildUrlWithApiKey,
+  buildUrlWithParams,
+} from "@/shared/fetching/buildUrl";
 // Environment detection
 export {
   getEnvironmentType,
@@ -27,17 +20,21 @@ export {
   isWebEnvironment,
   shouldForceJsonp,
 } from "@/shared/fetching/detectEnvironment";
-
+// Main API
+export { fetchNative, fetchZod } from "@/shared/fetching/fetchCore";
+// Strategies
+// Low-level fetch strategies (for internal use)
+export {
+  fetchJsonp,
+  fetchNative as fetchNativeStrategy,
+  selectFetchStrategy,
+} from "@/shared/fetching/fetchStrategies";
 // Error handling
 export {
-  createApiError,
-  isApiError,
   type ApiError,
+  createApiError,
   type ErrorContext,
+  isApiError,
 } from "@/shared/fetching/handleError";
-
 // Types
 export type { FetchStrategy } from "@/shared/types";
-
-// URL building utilities
-export { buildApiUrl } from "@/shared/fetching/buildUrl";

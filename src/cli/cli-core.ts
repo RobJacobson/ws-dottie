@@ -26,8 +26,7 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import { z } from "zod";
-import type { Endpoint } from "@/shared/endpoints";
-import { discoverEndpoints } from "@/shared/endpoints";
+
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
   displayFunctionNotFound,
@@ -36,6 +35,8 @@ import {
   outputResult,
   setupConsoleSuppression,
 } from "./ui";
+import type { Endpoint } from "@/shared/endpoints";
+import { discoverEndpoints } from "@/shared/endpoints";
 
 /**
  * Validates input parameters against a Zod schema

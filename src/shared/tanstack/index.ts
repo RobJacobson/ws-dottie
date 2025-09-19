@@ -5,8 +5,7 @@
  * straightforward query options creation and cache strategies.
  */
 
-// Query options creation
-export { createQueryOptions, cacheStrategies } from "./queryOptions";
-
 // Date validation utilities
 export { zWsdotDate } from "./cacheStrategies";
+// Query options creation
+export { cacheStrategies, createQueryOptions } from "./queryOptions";

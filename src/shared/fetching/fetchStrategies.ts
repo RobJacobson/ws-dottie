@@ -7,12 +7,12 @@
  * based on the current environment.
  */
 
-import type { FetchStrategy } from "@/shared/types";
 import {
   isTestEnvironment,
   isWebEnvironment,
   shouldForceJsonp,
 } from "@/shared/fetching/detectEnvironment";
+import type { FetchStrategy } from "@/shared/types";
 
 /**
  * Callback function type for JSONP responses

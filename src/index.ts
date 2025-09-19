@@ -26,37 +26,26 @@ export * from "./shared";
 
 // Border Crossings
 export * from "./clients/wsdot-border-crossings";
-
 // Bridge Clearances
 export * from "./clients/wsdot-bridge-clearances";
-
 // Commercial Vehicle Restrictions
 export * from "./clients/wsdot-commercial-vehicle-restrictions";
-
 // Highway Alerts
 export * from "./clients/wsdot-highway-alerts";
-
 // Highway Cameras
 export * from "./clients/wsdot-highway-cameras";
-
 // Mountain Pass Conditions
 export * from "./clients/wsdot-mountain-pass-conditions";
-
 // Toll Rates
 export * from "./clients/wsdot-toll-rates";
-
 // Traffic Flow
 export * from "./clients/wsdot-traffic-flow";
-
 // Travel Times
 export * from "./clients/wsdot-travel-times";
-
 // Weather Information
 export * from "./clients/wsdot-weather-information";
-
 // Weather Information Extended
 export * from "./clients/wsdot-weather-information-extended";
-
 // Weather Stations
 export * from "./clients/wsdot-weather-stations";
 
@@ -66,13 +55,10 @@ export * from "./clients/wsdot-weather-stations";
 
 // Fares
 export * from "./clients/wsf-fares";
-
 // Schedule
 export * from "./clients/wsf-schedule";
-
 // Terminals
 export * from "./clients/wsf-terminals";
-
 // Vessels
 export * from "./clients/wsf-vessels";
 
@@ -81,5 +67,5 @@ export * from "./clients/wsf-vessels";
 // TYPES
 // ============================================================================
 
-// Common types
-export * from "./types";
+// Note: Common types are now exported through shared utilities
+// The types.ts file previously contained unused schema generation types

@@ -102,6 +102,29 @@ export const convertDotNetDates = (data: unknown): unknown => {
 };
 
 /**
+ * Converts a JavaScript Date to .NET datetime string format
+ *
+ * This function formats a JavaScript Date object as a .NET datetime string
+ * in the format "/Date(milliseconds-offset)/" which is expected by WSDOT APIs.
+ *
+ * @param date - The JavaScript Date object to convert
+ * @returns .NET datetime string in "/Date(milliseconds-offset)/" format
+ * @example
+ * ```typescript
+ * jsDateToDotNetDate(new Date(2024, 0, 15)) // Returns "/Date(1705276800000-0800)/"
+ * ```
+ */
+export const jsDateToDotNetDate = (date: Date): string => {
+  const timestamp = date.getTime();
+  const offset = -date.getTimezoneOffset(); // Convert to positive offset
+  const offsetHours = Math.floor(Math.abs(offset) / 60);
+  const offsetMinutes = Math.abs(offset) % 60;
+  const offsetSign = offset >= 0 ? "+" : "-";
+  const offsetString = `${offsetSign}${offsetHours.toString().padStart(2, "0")}${offsetMinutes.toString().padStart(2, "0")}`;
+  return `/Date(${timestamp}${offsetString})/`;
+};
+
+/**
  * Date helper functions for runtime evaluation
  *
  * These functions return Date objects when called, ensuring they are

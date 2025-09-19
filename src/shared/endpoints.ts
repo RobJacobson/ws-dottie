@@ -6,8 +6,9 @@
  */
 
 import type { z } from "zod";
-import { configManager } from "./utils/configManager";
+
 import type { CacheStrategy } from "./types";
+import { configManager } from "./utils/configManager";
 
 /**
  * Simple endpoint definition (for client files)
@@ -80,31 +81,49 @@ export function defineEndpoint<I, O>(config: {
 /**
  * Discovers all endpoints from client modules
  *
- * This function dynamically imports all client modules and extracts endpoint
+ * This function uses static imports to access all client modules and extracts endpoint
  * objects from them. All client modules export enriched endpoint objects.
  *
  * @returns Array of all discovered endpoints, sorted alphabetically
  */
+// Import all client modules statically
+import * as wsdotBorderCrossings from "@/clients/wsdot-border-crossings";
+import * as wsdotBridgeClearances from "@/clients/wsdot-bridge-clearances";
+import * as wsdotCommercialVehicleRestrictions from "@/clients/wsdot-commercial-vehicle-restrictions";
+import * as wsdotHighwayAlerts from "@/clients/wsdot-highway-alerts";
+import * as wsdotHighwayCameras from "@/clients/wsdot-highway-cameras";
+import * as wsdotMountainPassConditions from "@/clients/wsdot-mountain-pass-conditions";
+import * as wsdotTollRates from "@/clients/wsdot-toll-rates";
+import * as wsdotTrafficFlow from "@/clients/wsdot-traffic-flow";
+import * as wsdotTravelTimes from "@/clients/wsdot-travel-times";
+import * as wsdotWeatherInformation from "@/clients/wsdot-weather-information";
+import * as wsdotWeatherInformationExtended from "@/clients/wsdot-weather-information-extended";
+import * as wsdotWeatherStations from "@/clients/wsdot-weather-stations";
+import * as wsfFares from "@/clients/wsf-fares";
+import * as wsfSchedule from "@/clients/wsf-schedule";
+import * as wsfTerminals from "@/clients/wsf-terminals";
+import * as wsfVessels from "@/clients/wsf-vessels";
 
 export const discoverEndpoints = (): Endpoint<unknown, unknown>[] => {
-  // Import all client modules
+  // Use static imports to avoid async complexity
+  // Modules are ordered alphabetically by API name
   const modules = [
-    require("@/clients/wsdot-border-crossings"),
-    require("@/clients/wsdot-bridge-clearances"),
-    require("@/clients/wsdot-commercial-vehicle-restrictions"),
-    require("@/clients/wsdot-highway-alerts"),
-    require("@/clients/wsdot-highway-cameras"),
-    require("@/clients/wsdot-mountain-pass-conditions"),
-    require("@/clients/wsdot-toll-rates"),
-    require("@/clients/wsdot-traffic-flow"),
-    require("@/clients/wsdot-travel-times"),
-    require("@/clients/wsdot-weather-information"),
-    require("@/clients/wsdot-weather-information-extended"),
-    require("@/clients/wsdot-weather-stations"),
-    require("@/clients/wsf-fares"),
-    require("@/clients/wsf-schedule"),
-    require("@/clients/wsf-terminals"),
-    require("@/clients/wsf-vessels"),
+    wsdotBorderCrossings,
+    wsdotBridgeClearances,
+    wsdotCommercialVehicleRestrictions,
+    wsdotHighwayAlerts,
+    wsdotHighwayCameras,
+    wsdotMountainPassConditions,
+    wsdotTollRates,
+    wsdotTrafficFlow,
+    wsdotTravelTimes,
+    wsdotWeatherInformation,
+    wsdotWeatherInformationExtended,
+    wsdotWeatherStations,
+    wsfFares,
+    wsfSchedule,
+    wsfTerminals,
+    wsfVessels,
   ];
 
   return modules
@@ -112,6 +131,62 @@ export const discoverEndpoints = (): Endpoint<unknown, unknown>[] => {
     .filter(isEndpoint)
     .sort(sortByApiAndFunction);
 };
+
+/**
+ * Discovers all API names from discovered endpoints
+ *
+ * @returns Array of unique API names, sorted alphabetically
+ */
+export const discoverApiNames = (): string[] => {
+  const endpoints = discoverEndpoints();
+  const apiNames = [...new Set(endpoints.map((ep) => ep.api))];
+  return apiNames.sort();
+};
+
+/**
+ * Alias for discoverApiNames for backward compatibility
+ */
+export const getApiNames = discoverApiNames;
+
+/**
+ * Validates discovered endpoints
+ *
+ * @param endpoints - Array of endpoints to validate
+ * @returns Validation result with issues if any
+ */
+export const validateDiscoveredEndpoints = (
+  endpoints: Endpoint<unknown, unknown>[]
+): { isValid: boolean; issues: string[] } => {
+  const issues: string[] = [];
+
+  endpoints.forEach((endpoint, index) => {
+    if (!endpoint.id || !endpoint.api || !endpoint.functionName) {
+      issues.push(`Endpoint ${index}: missing required fields`);
+    }
+
+    if (!endpoint.inputSchema || !endpoint.outputSchema) {
+      issues.push(`Endpoint ${index}: missing schemas`);
+    }
+
+    if (!endpoint.urlTemplate || !endpoint.urlTemplate.startsWith("http")) {
+      issues.push(`Endpoint ${index}: invalid URL template`);
+    }
+
+    if (!endpoint.cacheStrategy) {
+      issues.push(`Endpoint ${index}: missing cache strategy`);
+    }
+  });
+
+  return {
+    isValid: issues.length === 0,
+    issues,
+  };
+};
+
+/**
+ * Alias for validateDiscoveredEndpoints for backward compatibility
+ */
+export const validateEndpoints = validateDiscoveredEndpoints;
 
 // Helper function for sorting
 const sortByApiAndFunction = (

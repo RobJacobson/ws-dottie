@@ -39,11 +39,11 @@
  * ```
  */
 
-import type { Endpoint } from "@/shared/endpoints";
-import { fetchZod } from "@/shared/fetching";
 import { createSimpleCli } from "./cli-core";
 import type { CliOptions, CliParams } from "./types";
 import { generateDefaultExamples } from "./ui";
+import type { Endpoint } from "@/shared/endpoints";
+import { fetchZod } from "@/shared/fetching";
 
 /**
  * Executes API requests using the validated fetchZod function

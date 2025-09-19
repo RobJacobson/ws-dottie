@@ -8,6 +8,7 @@
  */
 
 import { queryOptions } from "@tanstack/react-query";
+
 import type { CacheStrategy } from "@/shared/types";
 
 /**

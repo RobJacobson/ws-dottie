@@ -15,9 +15,10 @@
  */
 
 import chalk from "chalk";
+
+import type { CliOptions } from "./types";
 import { discoverEndpoints } from "@/shared/endpoints";
 import { isApiError } from "@/shared/fetching/handleError";
-import type { CliOptions } from "./types";
 
 /**
  * Handles errors with consistent formatting and helpful context
