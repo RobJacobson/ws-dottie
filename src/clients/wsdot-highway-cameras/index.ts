@@ -1,7 +1,7 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getHighwayCameraMeta } from "./getHighwayCamera";
 import { getHighwayCamerasMeta } from "./getHighwayCameras";
 import { searchHighwayCamerasMeta } from "./searchHighwayCameras";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const getHighwayCamera = defineEndpoint(getHighwayCameraMeta);
 export const getHighwayCameras = defineEndpoint(getHighwayCamerasMeta);

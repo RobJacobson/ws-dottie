@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import {
   type RouteBriefResponse,
   routeBriefResponsesSchema,
@@ -12,7 +13,10 @@ const routesInput = z.object({
 });
 
 /** Endpoint metadata for getRoutes */
-export const getRoutesMeta: EndpointDefinition<RoutesInput, RouteBriefResponse[]> = {
+export const getRoutesMeta: EndpointDefinition<
+  RoutesInput,
+  RouteBriefResponse[]
+> = {
   id: "wsf-schedule/routes",
   endpoint: "/ferries/api/schedule/rest/routes/{tripDate}",
   inputSchema: routesInput,

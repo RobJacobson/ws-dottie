@@ -19,7 +19,6 @@ export * from "./wsdot-travel-times";
 export * from "./wsdot-weather-information";
 export * from "./wsdot-weather-information-extended";
 export * from "./wsdot-weather-stations";
-
 // WSF API endpoints
 export * from "./wsf-fares";
 export * from "./wsf-schedule";

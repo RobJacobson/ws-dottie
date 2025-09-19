@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import {
   type FareTotals,
   fareTotalsSchema,
@@ -17,7 +18,10 @@ const fareTotalsInput = z.object({
 });
 
 /** Endpoint metadata for getFareTotals */
-export const getFareTotalsMeta: EndpointDefinition<FareTotalsInput, FareTotals> = {
+export const getFareTotalsMeta: EndpointDefinition<
+  FareTotalsInput,
+  FareTotals
+> = {
   id: "wsf-fares/fareTotals",
   endpoint:
     "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}",

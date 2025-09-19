@@ -30,6 +30,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___tolling.html
  */
 import { z } from "zod";
+
 import {
   type TollTripVersion,
   tollTripVersionSchema,

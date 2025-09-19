@@ -56,6 +56,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___border_crossings.html
  */
 import { z } from "zod";
+
 import {
   type BorderCrossings,
   borderCrossingsSchema,

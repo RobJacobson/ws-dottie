@@ -1,6 +1,6 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getBridgeClearancesMeta } from "./getBridgeClearances";
 import { getBridgeClearancesByRouteMeta } from "./getBridgeClearancesByRoute";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const getBridgeClearances = defineEndpoint(getBridgeClearancesMeta);
 export const getBridgeClearancesByRoute = defineEndpoint(

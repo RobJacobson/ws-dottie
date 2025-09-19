@@ -74,6 +74,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
+
 import {
   type Camera,
   camerasSchema,

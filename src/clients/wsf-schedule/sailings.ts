@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import {
   type SailingResponse,
   sailingResponsesSchema,
@@ -11,7 +12,10 @@ const sailingsInput = z.object({
 });
 
 /** Endpoint metadata for getSailings */
-export const getSailingsMeta: EndpointDefinition<SailingsInput, SailingResponse[]> = {
+export const getSailingsMeta: EndpointDefinition<
+  SailingsInput,
+  SailingResponse[]
+> = {
   id: "wsf-schedule/sailings",
   endpoint: "/ferries/api/schedule/rest/sailings/{schedRouteId}",
   inputSchema: sailingsInput,

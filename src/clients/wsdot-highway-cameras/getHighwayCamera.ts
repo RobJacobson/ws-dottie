@@ -75,6 +75,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_cameras.html
  */
 import { z } from "zod";
+
 import {
   type Camera,
   cameraSchema,
@@ -88,7 +89,10 @@ const highwayCameraInput = z.object({
 });
 
 /** Endpoint metadata for getHighwayCamera */
-export const getHighwayCameraMeta: EndpointDefinition<HighwayCameraInput, Camera> = {
+export const getHighwayCameraMeta: EndpointDefinition<
+  HighwayCameraInput,
+  Camera
+> = {
   id: "wsdot-highway-cameras/getHighwayCamera",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",

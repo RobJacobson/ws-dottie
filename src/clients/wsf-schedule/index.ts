@@ -1,4 +1,3 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getActiveSeasonsMeta } from "./activeSeasons";
 import { getAllSailingsMeta } from "./allSailings";
 import { getScheduleCacheFlushDateMeta } from "./cacheFlushDate";
@@ -24,6 +23,7 @@ import { getTerminalsAndMatesMeta } from "./terminalsAndMates";
 import { getTerminalsAndMatesByRouteMeta } from "./terminalsAndMatesByRoute";
 import { getTimeAdjustmentsMeta } from "./timeAdjustments";
 import { getTimeAdjustmentsByRouteMeta } from "./timeAdjustmentsByRoute";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const activeSeasons = defineEndpoint(getActiveSeasonsMeta);
 export const allSailings = defineEndpoint(getAllSailingsMeta);

@@ -71,6 +71,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/class_clearance.html
  */
 import { z } from "zod";
+
 import {
   type BridgeClearances,
   bridgeClearancesSchema,

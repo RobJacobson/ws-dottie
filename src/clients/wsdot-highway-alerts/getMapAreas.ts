@@ -32,6 +32,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___highway_alerts.html
  */
 import { z } from "zod";
+
 import {
   type MapAreas,
   mapAreasSchema,

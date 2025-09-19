@@ -1,6 +1,6 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getTravelTimeMeta } from "./getTravelTime";
 import { getTravelTimesMeta } from "./getTravelTimes";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const getTravelTime = defineEndpoint(getTravelTimeMeta);
 export const getTravelTimes = defineEndpoint(getTravelTimesMeta);

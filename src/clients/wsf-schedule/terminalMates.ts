@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { TerminalMatesForTerminal } from "@/schemas/wsf-schedule/terminalMatesForTerminal.zod";
 import { terminalMatesForTerminalsSchema } from "@/schemas/wsf-schedule/terminalMatesForTerminal.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";

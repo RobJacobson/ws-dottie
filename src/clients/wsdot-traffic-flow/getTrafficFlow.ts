@@ -51,6 +51,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
  */
 import { z } from "zod";
+
 import {
   type FlowData,
   trafficFlowsSchema,
@@ -61,16 +62,18 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 const trafficFlowsInput = z.object({});
 
 /** Endpoint metadata for getTrafficFlows */
-export const getTrafficFlowsMeta: EndpointDefinition<TrafficFlowsInput, FlowData[]> =
-  {
-    id: "wsdot-traffic-flow/getTrafficFlow",
-    endpoint:
-      "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
-    inputSchema: trafficFlowsInput,
-    outputSchema: trafficFlowsSchema,
-    sampleParams: {},
-    cacheStrategy: "FREQUENT",
-  };
+export const getTrafficFlowsMeta: EndpointDefinition<
+  TrafficFlowsInput,
+  FlowData[]
+> = {
+  id: "wsdot-traffic-flow/getTrafficFlow",
+  endpoint:
+    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
+  inputSchema: trafficFlowsInput,
+  outputSchema: trafficFlowsSchema,
+  sampleParams: {},
+  cacheStrategy: "FREQUENT",
+};
 
 // Type exports
 export type TrafficFlowsInput = z.infer<typeof trafficFlowsInput>;

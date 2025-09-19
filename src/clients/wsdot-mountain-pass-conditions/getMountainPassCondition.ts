@@ -66,6 +66,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___mountain_pass.html
  */
 import { z } from "zod";
+
 import {
   type PassCondition,
   passConditionSchema,

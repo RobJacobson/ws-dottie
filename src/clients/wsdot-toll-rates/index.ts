@@ -1,10 +1,10 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getTollRatesMeta } from "./getTollRates";
 import { getTollTripInfoMeta } from "./getTollTripInfo";
 import { getTollTripRatesMeta } from "./getTollTripRates";
 import { getTollTripVersionMeta } from "./getTollTripVersion";
 import { getTripRatesByDateMeta } from "./getTripRatesByDate";
 import { getTripRatesByVersionMeta } from "./getTripRatesByVersion";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const getTollRates = defineEndpoint(getTollRatesMeta);
 export const getTollTripInfo = defineEndpoint(getTollTripInfoMeta);

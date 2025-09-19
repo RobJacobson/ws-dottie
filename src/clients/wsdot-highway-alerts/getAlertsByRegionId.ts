@@ -55,6 +55,7 @@
  * @see https://wsdot.wa.gov/traffic/api/HighwayAlerts/HighwayAlertsREST.svc/help/operations/GetAlertsByRegionIDAsJson
  */
 import { z } from "zod";
+
 import {
   type HighwayAlerts,
   highwayAlertsSchema,

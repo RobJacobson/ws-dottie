@@ -52,6 +52,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___traffic_flow.html
  */
 import { z } from "zod";
+
 import {
   type FlowData,
   flowDataSchema,

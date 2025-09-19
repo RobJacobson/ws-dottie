@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { VesselAccommodations } from "@/schemas/wsf-vessels/vesselAccommodations.zod";
 import { vesselAccommodationsSchema } from "@/schemas/wsf-vessels/vesselAccommodations.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";

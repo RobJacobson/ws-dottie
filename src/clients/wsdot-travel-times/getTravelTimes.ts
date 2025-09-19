@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import {
   type TravelTimes,
   travelTimesSchema,
@@ -9,7 +10,10 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 const travelTimesInput = z.object({});
 
 /** Endpoint metadata for getTravelTimes */
-export const getTravelTimesMeta: EndpointDefinition<TravelTimesInput, TravelTimes> = {
+export const getTravelTimesMeta: EndpointDefinition<
+  TravelTimesInput,
+  TravelTimes
+> = {
   id: "wsdot-travel-times/getTravelTimes",
   endpoint: "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimesAsJson",
   inputSchema: travelTimesInput,

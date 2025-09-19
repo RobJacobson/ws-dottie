@@ -1,6 +1,6 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getMountainPassConditionMeta } from "./getMountainPassCondition";
 import { getMountainPassConditionsMeta } from "./getMountainPassConditions";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const getMountainPassCondition = defineEndpoint(
   getMountainPassConditionMeta

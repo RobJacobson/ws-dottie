@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { TerminalVerbose } from "@/schemas/wsf-terminals/terminalVerbose.zod";
 import { terminalVerboseSchema } from "@/schemas/wsf-terminals/terminalVerbose.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";

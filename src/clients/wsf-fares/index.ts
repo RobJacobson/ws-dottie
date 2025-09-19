@@ -1,4 +1,3 @@
-import { defineEndpoint } from "@/shared/endpoints";
 import { getFaresCacheFlushDateMeta } from "./cacheFlushDate";
 import { getFareLineItemsMeta } from "./fareLineItems";
 import { getFareLineItemsBasicMeta } from "./fareLineItemsBasic";
@@ -9,6 +8,7 @@ import { getFareTotalsMeta } from "./fareTotals";
 import { getFaresTerminalComboMeta } from "./terminalCombo";
 import { getTerminalComboVerboseMeta } from "./terminalComboVerbose";
 import { getFaresTerminalMatesMeta } from "./terminalMates";
+import { defineEndpoint } from "@/shared/endpoints";
 
 export const getFaresCacheFlushDate = defineEndpoint(
   getFaresCacheFlushDateMeta

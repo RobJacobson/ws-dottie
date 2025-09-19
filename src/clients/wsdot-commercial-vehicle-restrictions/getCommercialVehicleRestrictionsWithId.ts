@@ -88,6 +88,7 @@
  * @see https://wsdot.wa.gov/traffic/api/Documentation/group___commercial_vehicle.html
  */
 import { z } from "zod";
+
 import {
   type CommercialVehicleRestrictionsWithId,
   commercialVehicleRestrictionsWithIdSchema,

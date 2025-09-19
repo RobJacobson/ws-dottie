@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import {
   type TravelTimeRoute,
   travelTimeRouteSchema,
@@ -11,16 +12,18 @@ const travelTimeInput = z.object({
 });
 
 /** Endpoint metadata for getTravelTime */
-export const getTravelTimeMeta: EndpointDefinition<TravelTimeInput, TravelTimeRoute> =
-  {
-    id: "wsdot-travel-times/getTravelTime",
-    endpoint:
-      "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={travelTimeId}",
-    inputSchema: travelTimeInput,
-    outputSchema: travelTimeRouteSchema,
-    sampleParams: { travelTimeId: 1 },
-    cacheStrategy: "STATIC",
-  };
+export const getTravelTimeMeta: EndpointDefinition<
+  TravelTimeInput,
+  TravelTimeRoute
+> = {
+  id: "wsdot-travel-times/getTravelTime",
+  endpoint:
+    "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={travelTimeId}",
+  inputSchema: travelTimeInput,
+  outputSchema: travelTimeRouteSchema,
+  sampleParams: { travelTimeId: 1 },
+  cacheStrategy: "STATIC",
+};
 
 // Type exports
 export type TravelTimeInput = z.infer<typeof travelTimeInput>;

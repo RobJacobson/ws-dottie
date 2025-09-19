@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { TerminalSailingSpace } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
 import { terminalSailingSpaceSchema } from "@/schemas/wsf-terminals/terminalSailingSpace.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";

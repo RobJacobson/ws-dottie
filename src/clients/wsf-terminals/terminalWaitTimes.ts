@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 import type { TerminalWaitTimes } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
 import { terminalWaitTimesSchema } from "@/schemas/wsf-terminals/terminalWaitTimes.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";
