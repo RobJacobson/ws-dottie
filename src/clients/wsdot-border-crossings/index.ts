@@ -1,5 +1,5 @@
-import { getBorderCrossingsMeta } from "./getBorderCrossings";
 import { defineEndpoint } from "@/shared/endpoints";
+import { getBorderCrossingsMeta } from "./getBorderCrossings";
 
 export const getBorderCrossings = defineEndpoint(getBorderCrossingsMeta);
 

@@ -1,6 +1,6 @@
+import { defineEndpoint } from "@/shared/endpoints";
 import { getWeatherInformationMeta } from "./getWeatherInformation";
 import { getWeatherInformationByStationIdMeta } from "./getWeatherInformationByStationId";
-import { defineEndpoint } from "@/shared/endpoints";
 
 export const getWeatherInformation = defineEndpoint(getWeatherInformationMeta);
 export const getWeatherInformationByStationId = defineEndpoint(

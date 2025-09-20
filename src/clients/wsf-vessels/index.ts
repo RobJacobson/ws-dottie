@@ -1,3 +1,4 @@
+import { defineEndpoint } from "@/shared/endpoints";
 import { getCacheFlushDateVesselsMeta } from "./cacheFlushDate";
 import { getVesselAccommodationsMeta } from "./vesselAccommodations";
 import { getVesselAccommodationsByIdMeta } from "./vesselAccommodationsById";
@@ -11,7 +12,6 @@ import { getVesselStatsMeta } from "./vesselStats";
 import { getVesselStatsByIdMeta } from "./vesselStatsById";
 import { getVesselVerboseMeta } from "./vesselsVerbose";
 import { getVesselsVerboseByIdMeta } from "./vesselsVerboseById";
-import { defineEndpoint } from "@/shared/endpoints";
 
 export const getVesselsCacheFlushDate = defineEndpoint(
   getCacheFlushDateVesselsMeta

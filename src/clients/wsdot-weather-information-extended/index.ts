@@ -1,5 +1,5 @@
-import { getWeatherInformationExtendedMeta } from "./getWeatherInformationExtended";
 import { defineEndpoint } from "@/shared/endpoints";
+import { getWeatherInformationExtendedMeta } from "./getWeatherInformationExtended";
 
 export const getWeatherInformationExtended = defineEndpoint(
   getWeatherInformationExtendedMeta

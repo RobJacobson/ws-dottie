@@ -1,6 +1,6 @@
+import { defineEndpoint } from "@/shared/endpoints";
 import { getTrafficFlowsMeta } from "./getTrafficFlow";
 import { getTrafficFlowByIdMeta } from "./getTrafficFlowById";
-import { defineEndpoint } from "@/shared/endpoints";
 
 export const getTrafficFlow = defineEndpoint(getTrafficFlowsMeta);
 export const getTrafficFlowById = defineEndpoint(getTrafficFlowByIdMeta);

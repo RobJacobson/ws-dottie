@@ -1,3 +1,4 @@
+import { defineEndpoint } from "@/shared/endpoints";
 import { getAlertMeta } from "./getAlert";
 import { getAlertsMeta } from "./getAlerts";
 import { getAlertsByRegionIdMeta } from "./getAlertsByRegionId";
@@ -5,7 +6,6 @@ import { getAlertsForMapAreaMeta } from "./getAlertsForMapArea";
 import { getEventCategoriesMeta } from "./getEventCategories";
 import { getMapAreasMeta } from "./getMapAreas";
 import { searchAlertsMeta } from "./searchAlerts";
-import { defineEndpoint } from "@/shared/endpoints";
 
 export const getAlert = defineEndpoint(getAlertMeta);
 export const getAlerts = defineEndpoint(getAlertsMeta);

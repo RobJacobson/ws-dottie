@@ -1,3 +1,4 @@
+import { defineEndpoint } from "@/shared/endpoints";
 import { getCacheFlushDateTerminalsMeta } from "./cacheFlushDate";
 import { getTerminalBasicsMeta } from "./terminalBasics";
 import { getTerminalBasicsByTerminalIdMeta } from "./terminalBasicsById";
@@ -13,7 +14,6 @@ import { getTerminalVerboseMeta } from "./terminalVerbose";
 import { getTerminalVerboseByTerminalIdMeta } from "./terminalVerboseById";
 import { getTerminalWaitTimesMeta } from "./terminalWaitTimes";
 import { getTerminalWaitTimesByTerminalIdMeta } from "./terminalWaitTimesById";
-import { defineEndpoint } from "@/shared/endpoints";
 
 export const getTerminalsCacheFlushDate = defineEndpoint(
   getCacheFlushDateTerminalsMeta

@@ -1,6 +1,6 @@
+import { defineEndpoint } from "@/shared/endpoints";
 import { getCommercialVehicleRestrictionsMeta } from "./getCommercialVehicleRestrictions";
 import { getCommercialVehicleRestrictionsWithIdMeta } from "./getCommercialVehicleRestrictionsWithId";
-import { defineEndpoint } from "@/shared/endpoints";
 
 export const getCommercialVehicleRestrictions = defineEndpoint(
   getCommercialVehicleRestrictionsMeta
