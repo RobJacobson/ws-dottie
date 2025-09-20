@@ -1,7 +1,6 @@
 import { z } from "zod";
-
-import { spaceForArrivalTerminalSchema } from "./spaceForArrivalTerminal.zod";
 import { zWsdotDate } from "@/shared/tanstack";
+import { spaceForArrivalTerminalSchema } from "./spaceForArrivalTerminal.zod";
 
 /**
  * Departing space schema for WSF Terminals API

@@ -8,6 +8,7 @@
  * @see {@link https://www.wsdot.wa.gov/ferries/api/} WSF API Documentation
  */
 
+export * from "../shared/validDateRange.zod";
 export * from "./activeDateRange.zod";
 export * from "./alert.zod";
 export * from "./annotation.zod";
@@ -37,4 +38,3 @@ export * from "./terminalTime.zod";
 export * from "./timeAdjustment.zod";
 export * from "./timeAdjustmentByRoute.zod";
 export * from "./timeAdjustmentByScheduledRoute.zod";
-export * from "../shared/validDateRange.zod";

@@ -1,7 +1,6 @@
 import { z } from "zod";
-
-import { tollTripRateSchema } from "./tollTripRate.zod";
 import { zWsdotDate } from "@/shared/tanstack";
+import { tollTripRateSchema } from "./tollTripRate.zod";
 
 /**
  * TollTripRates schema
