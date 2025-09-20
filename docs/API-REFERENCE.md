@@ -21,7 +21,7 @@ import {
   tanstackQueryOptions,
   
   // Error handling
-  WsdotApiError,
+  ApiError,
   
   // Types
   VesselLocation,
@@ -630,14 +630,14 @@ import {
 
 ### Basic Hook Usage
 ```typescript
-import { useVesselLocations, useHighwayAlerts, WsdotApiError } from 'ws-dottie';
+import { useVesselLocations, useHighwayAlerts, ApiError } from 'ws-dottie';
 
 function TransportationDashboard() {
   // Automatic type inference - TypeScript knows all types automatically
   const { data: vessels, isLoading, error } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
 
-  if (error instanceof WsdotApiError) {
+  if (error instanceof ApiError) {
     return <div>API Error: {error.message}</div>;
   }
 
@@ -712,7 +712,7 @@ This approach allows you to:
 ### Error Handling in React Components
 
 ```typescript
-import { useVesselLocations, WsdotApiError } from 'ws-dottie';
+import { useVesselLocations, ApiError } from 'ws-dottie';
 
 function VesselList() {
   // TypeScript automatically infers error types for proper error handling
@@ -722,8 +722,8 @@ function VesselList() {
     return <div className="loading">Loading vessels...</div>;
   }
 
-  if (error instanceof WsdotApiError) {
-    return <div className="error">Error loading vessels: {error.getUserMessage()}</div>;
+  if (error instanceof ApiError) {
+    return <div className="error">Error loading vessels: {error.message}</div>;
   }
 
   return (
@@ -889,37 +889,50 @@ This pattern provides:
 
 ## 🚨 Error Handling
 
-All APIs throw `WsdotApiError` for consistent error handling:
+All APIs throw `ApiError` for consistent error handling:
 
 ```javascript
-import { WsdotApiError } from 'ws-dottie';
+import { isApiError } from 'ws-dottie';
 
 try {
   const data = await WsfVessels.getVesselLocations();
 } catch (error) {
-  if (error instanceof WsdotApiError) {
+  if (isApiError(error)) {
     console.log('API Error:', error.message);
     console.log('Status:', error.status);
-    console.log('Details:', error.details);
-    console.log('User Message:', error.getUserMessage());
+    console.log('Context:', error.context);
   }
 }
 ```
 
-### Error Types
-- `API_ERROR` - Server returned an error response
-- `NETWORK_ERROR` - Network connection failed
-- `TIMEOUT_ERROR` - Request timed out
-- `CORS_ERROR` - CORS error (should not happen with JSONP)
-- `TRANSFORM_ERROR` - Data transformation failed
-- `INVALID_RESPONSE` - Invalid response format
-- `RATE_LIMIT_ERROR` - Rate limit exceeded
+### Error Properties
+- `message` - The actual error message from the API or network
+- `status` - HTTP status code if available
+- `context` - Additional context including endpoint, URL, and timestamp
 
-### User-Friendly Messages
+### Type Guard
+Use the `isApiError` type guard for safe error type checking:
+
 ```javascript
-const error = new WsdotApiError('Network failed', 'NETWORK_ERROR');
-console.log(error.getUserMessage()); 
-// "Network connection failed. Please check your internet connection."
+import { isApiError } from 'ws-dottie';
+
+if (isApiError(error)) {
+  // TypeScript now knows this is an ApiError
+  console.log('Status:', error.status);
+  console.log('Context:', error.context);
+}
+```
+
+### Error Context
+```javascript
+import { isApiError } from 'ws-dottie';
+
+if (isApiError(error)) {
+  console.log('Endpoint:', error.context.endpoint);
+  console.log('URL:', error.context.url);
+  console.log('Timestamp:', error.context.timestamp);
+  console.log('Status:', error.status);
+}
 ```
 
 ## 📅 Data Transformation

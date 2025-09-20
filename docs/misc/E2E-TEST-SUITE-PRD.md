@@ -51,8 +51,7 @@ tests/e2e/
 ├── generators/                   # Enhanced test generators
 │   ├── endpointDiscovery.ts      # ✅ COMPLETE: Discover Endpoint objects
 │   ├── configGenerator.ts        # ✅ COMPLETE: Generate configs from Endpoint
-│   ├── test-generators.ts        # ✅ COMPLETE: Enhanced with new features
-│   ├── autoConfigGenerator.ts    # ✅ COMPLETE: Auto-generate all configs
+│   ├── simple-config-generator.ts # ✅ COMPLETE: Generate configs from Endpoint
 │   └── dataIntegrityTests.ts     # ✅ COMPLETE: zodFetch vs native fetch validation
 ├── fixtures/                     # Test data and configurations (Phase 2)
 │   ├── apiConfigs.ts
@@ -75,7 +74,6 @@ tests/e2e/
 │   ├── run-data-integrity-tests.js  # ✅ COMPLETE: Data integrity test runner
 │   ├── run-comprehensive-tests.js   # ✅ COMPLETE: Comprehensive test runner
 │   └── run-discovery-test.js        # ✅ COMPLETE: Test runner script
-├── discovery.test.ts            # ✅ COMPLETE: Proof of concept test suite
 ├── setup.ts                     # ✅ COMPLETE: Global test setup
 └── README.md                    # ✅ COMPLETE: Comprehensive documentation
 ```
@@ -103,7 +101,6 @@ import * as fares from '@/clients/wsf-fares';
 import * as trafficFlow from '@/clients/wsdot-traffic-flow';
 import {
   discoverEndpointsFromModules,
-  validateDiscoveredEndpoints as validateEndpoints,
   filterEndpointsByApi,
   getUniqueApiNames,
   sortEndpoints,
@@ -290,7 +287,7 @@ export const createDataIntegrityTest = <TParams, TOutput>(
 
 ### 4. Enhanced Test Generators
 
-**Updated Test Generator (`test-generators.ts`)**
+**Updated Test Generator (`simple-config-generator.ts`)**
 ```typescript
 import type { Endpoint } from '@/shared/endpoints';
 
@@ -311,13 +308,11 @@ export const createModernEndpointTestSuite = <TParams, TOutput>(
 
 ### 5. Runtime Test Discovery ✅ COMPLETE
 
-**Main Test Runner (`tests/e2e/discovery.test.ts`)**
+**Main Test Runner (`tests/e2e/main-suite.test.ts`)**
 ```typescript
 import { describe, it, expect, beforeAll } from "vitest";
 import {
   discoverEndpoints,
-  discoverApiNames,
-  validateDiscoveredEndpoints,
   debugDiscoveredEndpoints,
 } from "./generators/endpointDiscovery";
 import {
@@ -334,7 +329,7 @@ describe("Endpoint Discovery System", () => {
   beforeAll(async () => {
     // Discover all endpoints
     discoveredEndpoints = discoverEndpoints();
-    apiNames = discoverApiNames();
+    apiNames = Object.keys(discoveredEndpoints).sort();
     
     // Generate configurations
     generatedConfigs = generateAllApiConfigs(discoveredEndpoints);

@@ -91,7 +91,7 @@ Modern bundlers and Node.js will automatically choose the optimal format. The li
 WS-Dottie provides direct API functions for Node.js applications with strong typing:
 
 ```javascript
-import { WsfVessels, WsdotHighwayAlerts, WsdotApiError } from 'ws-dottie';
+import { WsfVessels, WsdotHighwayAlerts, ApiError } from 'ws-dottie';
 
 // Get real-time ferry locations
 const vessels = await WsfVessels.getVesselLocations();
@@ -105,7 +105,7 @@ console.log(`Found ${alerts.length} active alerts`);
 try {
   const data = await WsfVessels.getVesselLocations();
 } catch (error) {
-  if (error instanceof WsdotApiError) {
+  if (error instanceof ApiError) {
     console.log('API Error:', error.message);
   }
 }
