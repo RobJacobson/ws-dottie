@@ -1,48 +1,52 @@
 /**
- * @fileoverview Centralized Logging Utility for WS-Dottie
+ * @fileoverview Simplified Logging Utility for WS-Dottie
  *
- * This module provides a centralized logging interface for WS-Dottie with
- * environment-aware debug logging and specialized API call logging with
- * performance metrics. It includes both general logging functions and
- * specialized functions for API operations.
+ * This module provides a simplified logging interface for WS-Dottie with
+ * environment-aware debug logging and specialized API call logging.
+ * Focused on essential functionality used by the core library.
  */
 
 import chalk from "chalk";
 
 // ============================================================================
-// LOGGING IMPLEMENTATION
+// SIMPLIFIED LOGGING IMPLEMENTATION
 // ============================================================================
 
-/** Determine if we're in development mode for conditional logging */
-const isDevelopment =
-  typeof process !== "undefined" && process.env.NODE_ENV === "development";
-
 /**
- * Centralized logging utility for WS-Dottie
+ * Simple logging utility for WS-Dottie
  *
- * This object provides a consistent logging interface with environment-aware
- * debug logging. Debug logging is automatically disabled in production
- * environments to improve performance and reduce noise.
+ * Provides basic logging functions with environment-aware debug logging.
+ * Debug logging is automatically disabled in production environments.
  */
-const log = {
+export const logger = {
   /** Debug logging (disabled in production) */
-  debug: isDevelopment
-    ? console.debug.bind(console, "[WS-Dottie Debug]")
-    : () => {}, // No-op in production
+  debug: (message: string): void => {
+    if (process.env.NODE_ENV === "development") {
+      console.debug(`[WS-Dottie] ${message}`);
+    }
+  },
+
   /** General information logging */
-  info: console.info.bind(console, "[WS-Dottie Info]"),
+  info: (message: string): void => {
+    console.info(`[WS-Dottie] ${message}`);
+  },
+
   /** Warning message logging */
-  warn: console.warn.bind(console, "[WS-Dottie Warn]"),
+  warn: (message: string): void => {
+    console.warn(`[WS-Dottie] ${message}`);
+  },
+
   /** Error message logging */
-  error: console.error.bind(console, "[WS-Dottie Error]"),
+  error: (message: string): void => {
+    console.error(`[WS-Dottie] ${message}`);
+  },
 };
 
 /**
  * Logs API call information in a single line format
  *
- * This function logs the start of an API call with endpoint and parameters
- * using a single line format that can be completed by logApiResults. It
- * uses colored output for better visibility in console logs.
+ * Simplified API call logging for the core fetching functionality.
+ * Used only by fetchCore.ts for basic API operation monitoring.
  *
  * @param endpoint - The full API endpoint path (will extract endpoint name internally)
  * @param params - Parameters being sent to the endpoint
@@ -57,11 +61,10 @@ export const logApiCall = (endpoint: string, params?: unknown): void => {
 };
 
 /**
- * Appends API call results to the current line
+ * Logs API call results with performance metrics
  *
- * This function completes the API call logging by appending results to the
- * current line. It provides performance metrics including duration, response
- * size, and object count for comprehensive API operation monitoring.
+ * Simplified API result logging for the core fetching functionality.
+ * Provides basic performance metrics including duration and response size.
  *
  * @param jsonData - The parsed JSON response data (will calculate object count internally)
  * @param startTime - The timestamp when the request started (will calculate duration internally)
@@ -81,5 +84,3 @@ export const logApiResults = (
   );
   console.log(results);
 };
-
-export default log;

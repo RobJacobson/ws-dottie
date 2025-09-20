@@ -94,11 +94,37 @@ export const jsDateToYyyyMmDd = (date: Date): string => {
 export const convertDotNetDates = (data: unknown): unknown => {
   return JSON.parse(JSON.stringify(data), (_, value) => {
     if (typeof value === "string") {
-      const date = wsdotDateTimeToJSDate(value);
-      return date || value;
+      // Try .NET date format first
+      const dotNetDate = wsdotDateTimeToJSDate(value);
+      if (dotNetDate) {
+        return dotNetDate;
+      }
+
+      // Try ISO-8601 date format
+      const isoDate = new Date(value);
+      if (!Number.isNaN(isoDate.getTime()) && isIso8601DateString(value)) {
+        return isoDate;
+      }
+
+      return value;
     }
     return value;
   });
+};
+
+/**
+ * Type guard for ISO-8601 date format
+ *
+ * This function checks if a string matches the ISO-8601 date format
+ * with optional time and timezone information.
+ *
+ * @param value - The string to check
+ * @returns True if the string matches ISO-8601 date format
+ */
+const isIso8601DateString = (value: string): boolean => {
+  const isoRegex =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?(Z|[+-]\d{2}:\d{2})?$/;
+  return isoRegex.test(value);
 };
 
 /**

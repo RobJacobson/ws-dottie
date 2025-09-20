@@ -56,7 +56,11 @@ export const fetchCore = async <TInput = never, TOutput = unknown>({
       endpoint,
       params as Record<string, unknown>
     );
-    console.log(`Fetching: ${urlWithParams}`);
+
+    // Log the fetching URL if needed
+    if (logMode !== "none") {
+      console.log(`Fetching: ${urlWithParams}`);
+    }
 
     // 2. Append API key
     const urlWithApiKey = buildUrlWithApiKey(urlWithParams);

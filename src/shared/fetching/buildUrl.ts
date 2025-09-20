@@ -17,19 +17,6 @@ import { configManager } from "@/shared/utils/configManager";
 import { jsDateToYyyyMmDd } from "@/shared/utils/dateUtils";
 
 /**
- * Determines the service type based on URL path patterns
- *
- * @param url - The URL string to analyze
- * @returns The detected service type
- */
-const getServiceType = (url: string): "wsdot" | "wsf" | "unknown" => {
-  const lowerUrl = url.toLowerCase();
-  if (lowerUrl.includes("/traffic/")) return "wsdot";
-  if (lowerUrl.includes("/ferries/")) return "wsf";
-  return "unknown";
-};
-
-/**
  * Builds a complete API URL with template parameter replacement
  *
  * This function constructs a complete URL for API requests by combining
@@ -68,10 +55,11 @@ export const buildUrlWithParams = (
     });
   }
 
-  // Step 2: Remove any remaining unreplaced template parameters from the URL
-  processedEndpoint = processedEndpoint.replace(/\{[^}]+\}/g, "");
+  // Step 2: Remove entire query parameters for unreplaced template parameters
+  // This handles optional parameters by removing "&param={param}" entirely
+  processedEndpoint = processedEndpoint.replace(/&[^&]*\{[^}]+\}/g, "");
 
-  // Step 3: Clean up empty parameters and malformed query strings
+  // Step 3: Clean up any remaining malformed query strings
   // Remove patterns like "&param=&" or "&param=" to prevent invalid URLs
   processedEndpoint = processedEndpoint.replace(/([?&])[^=&]+=&/g, "$1");
 
@@ -108,4 +96,17 @@ export const buildUrlWithApiKey = (url: string): string => {
   }
 
   return urlWithKey.toString();
+};
+
+/**
+ * Determines the service type based on URL path patterns
+ *
+ * @param url - The URL string to analyze
+ * @returns The detected service type
+ */
+const getServiceType = (url: string): "wsdot" | "wsf" | "unknown" => {
+  const lowerUrl = url.toLowerCase();
+  if (lowerUrl.includes("/traffic/")) return "wsdot";
+  if (lowerUrl.includes("/ferries/")) return "wsf";
+  return "unknown";
 };
