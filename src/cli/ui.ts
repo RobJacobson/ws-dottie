@@ -15,10 +15,9 @@
  */
 
 import chalk from "chalk";
-
-import type { CliOptions } from "./types";
-import { discoverEndpoints } from "@/shared/endpoints";
+import { getAllEndpoints } from "@/shared/endpoints";
 import { isApiError } from "@/shared/fetching/handleError";
+import type { CliOptions } from "./types";
 
 /**
  * Handles errors with consistent formatting and helpful context
@@ -133,7 +132,7 @@ const addErrorContext = (error: unknown): void => {
  * @param functionName - The function name that was not found
  */
 export const displayFunctionNotFound = (functionName: string): void => {
-  const endpoints = discoverEndpoints();
+  const endpoints = getAllEndpoints();
   const availableFunctions = endpoints.map((ep) => ep.functionName);
   console.error(chalk.red(`❌ Function '${functionName}' not found`));
   console.error(chalk.yellow("Available functions:"));
@@ -235,7 +234,7 @@ export const generateHelpText = (
   toolName: string,
   examples: string[] = []
 ): string => {
-  const endpoints = discoverEndpoints();
+  const endpoints = getAllEndpoints();
   const functionList = endpoints
     .map((endpointDef) => {
       const functionName = endpointDef.functionName;

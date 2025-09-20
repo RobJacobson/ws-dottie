@@ -26,7 +26,8 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import { z } from "zod";
-
+import type { Endpoint } from "@/shared/endpoints";
+import { getAllEndpoints } from "@/shared/endpoints";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
   displayFunctionNotFound,
@@ -35,8 +36,6 @@ import {
   outputResult,
   setupConsoleSuppression,
 } from "./ui";
-import type { Endpoint } from "@/shared/endpoints";
-import { discoverEndpoints } from "@/shared/endpoints";
 
 /**
  * Validates input parameters against a Zod schema
@@ -251,7 +250,7 @@ export const createSimpleCli = (
         // Handle --list option
         if (options.list) {
           consoleControl.restore();
-          const endpoints = discoverEndpoints();
+          const endpoints = getAllEndpoints();
           const functionList = endpoints
             .map((endpointDef) => {
               const functionName = endpointDef.functionName;
@@ -272,7 +271,7 @@ export const createSimpleCli = (
         }
 
         // Find endpoint
-        const endpoints = discoverEndpoints();
+        const endpoints = getAllEndpoints();
         const endpoint = endpoints.find(
           (ep) => ep.functionName === functionName.trim()
         );
