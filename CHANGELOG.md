@@ -5,15 +5,15 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
-## [0.7.0] - 2025-08-24
+## [0.7.0] - 2025-09-20
 
 - Improvements
-  - Complete refactoring of fetch system to use Zod end-to-end, including strict schema validation of both inputs and outputs. Zod uses "regular fetch" for most use cases, such as on server, but switches automatically to our custom JSONP fetch code for browser environment, to sidestep CORS issues.
-  - Overhaul of API codebase to a one-file-per-endpoint file structure, instead of separating fetch functions, input schemas, output schemas, and TanStack Query hooks into separate files.
+  - Complete refactoring of fetch system to use Zod end-to-end, including strict schema validation of both inputs and outputs. Zod uses "regular fetch" for most use cases, such as on server, but switches automatically to our custom JSONP fetch code for browser environment, as a workaround for CORS issues.
+  - Overhaul of API codebase to a one-file-per-endpoint file structure, instead of separating fetch functions, input schemas, output schemas, and TanStack Query hooks into separate files. The new files are organized as Zod schemas that are connected through metadata files to generate fetch functions.
   - Refactoring of TanStack Query real-time cache invalidation strategy for Washington State Ferry endpoints through its cacheFlushDate endpoint, in new useQueryWithAutoUpdate hook that wraps useQuery.
-  - Reimplemented all e2e tests around the Zod schema as the single source of truth, while using higher-order components to ensure consistent testing strategies for 90+ endpoints and prevent duplication of code.
   - Rigorously validate Zod schema for correctness against the official WSDOT and WSF API specifications, while using curl requests against each endpoint to ensure correctness and detect misalignments between the data and the official specs. In cases of mismatches, the Zod schema follows the type of the actual data returned, not the spec (e.g., numbers for enums, not strings).
   - Enhanced Zod descriptions for endpoints and returned fields with supplemental information from WSDOT and WSF.
+  - Overhauled and simplified e2e testing through automatically-generated tests based on new endpoint detection registry.
 
 ## [0.6.0] - 2025-08-12
 
