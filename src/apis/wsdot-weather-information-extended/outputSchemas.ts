@@ -1,0 +1,188 @@
+import { z } from "zod";
+
+import { zWsdotDate } from "@/apis/shared";
+
+/**
+ * ScanwebSurfaceMeasurements schema
+ *
+ * Measurements recorded by surface sensors.
+ */
+const scanwebSurfaceMeasurementsSchema = z
+  .object({
+    SensorId: z.number().int().describe("Sensor ID."),
+    SurfaceTemperature: z.number().nullable().describe("Surface temperature."),
+    RoadFreezingTemperature: z
+      .number()
+      .nullable()
+      .describe("Road freezing temperature."),
+    RoadSurfaceCondition: z
+      .number()
+      .nullable()
+      .describe("Road surface condition."),
+  })
+  .describe("Measurements recorded by surface sensors.");
+
+export type ScanwebSurfaceMeasurements = z.infer<
+  typeof scanwebSurfaceMeasurementsSchema
+>;
+
+/**
+ * ScanwebSubSurfaceMeasurements schema
+ *
+ * Measurements recorded by sub-surface sensors.
+ */
+const scanwebSubSurfaceMeasurementsSchema = z
+  .object({
+    SensorId: z.number().int().describe("Sensor ID."),
+    SubSurfaceTemperature: z
+      .number()
+      .nullable()
+      .describe("Sub-surface temperature."),
+  })
+  .describe("Measurements recorded by sub-surface sensors.");
+
+export type ScanwebSubSurfaceMeasurements = z.infer<
+  typeof scanwebSubSurfaceMeasurementsSchema
+>;
+
+/**
+ * WeatherReading schema
+ *
+ * Information from a weather station.
+ */
+export const weatherReadingSchema = z
+  .object({
+    StationId: z.string().describe("NWS assigned name for station."),
+    StationName: z.string().describe("WSDOT assigned name."),
+    Latitude: z.number().describe("Latitude of station."),
+    Longitude: z.number().describe("Longitude of station."),
+    Elevation: z.number().int().describe("Elevation from sea level in meters."),
+    ReadingTime: zWsdotDate()
+      .nullable()
+      .describe("Date and Time reading was taken."),
+    AirTemperature: z
+      .number()
+      .nullable()
+      .describe("Air temperature at the site in Celcius."),
+    RelativeHumidty: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture."
+      ),
+    AverageWindSpeed: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Average speed of the wind during an evaluation cycle in Kilometers per hour."
+      ),
+    AverageWindDirection: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Average wind direction during an evaluation cycle in degrees."
+      ),
+    WindGust: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Maximum wind speed measured during an evaluation cycle. The time period over which wind gust speed is monitored can vary based on the type and manufacturer of the RWIS site."
+      ),
+    Visibility: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Average distance that you can see, both day and night, computed every three minutes in meters."
+      ),
+    PrecipitationIntensity: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Intensity of the precipitation as derived from the precipitation rate."
+      ),
+    PrecipitationType: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Type of precipitation detected by a precipitation sensor, if one is available. Certain types of precipitation sensors can only detect the presence or absence of precipitation and will display Yes or No (1 or 0 respectively)."
+      ),
+    PrecipitationPast1Hour: z
+      .number()
+      .nullable()
+      .describe(
+        "Rainfall amount or snowfall liquid equivalent for the previous 1 hour period. Measured in millimeters."
+      ),
+    PrecipitationPast3Hours: z
+      .number()
+      .nullable()
+      .describe(
+        "Rainfall amount or snowfall liquid equivalent for the previous 3 hour period. Measured in millimeters."
+      ),
+    PrecipitationPast6Hours: z
+      .number()
+      .nullable()
+      .describe(
+        "Rainfall amount or snowfall liquid equivalent for the previous 6 hour period. Measured in millimeters."
+      ),
+    PrecipitationPast12Hours: z
+      .number()
+      .nullable()
+      .describe(
+        "Rainfall amount or snowfall liquid equivalent for the previous 12 hour period. Measured in millimeters."
+      ),
+    PrecipitationPast24Hours: z
+      .number()
+      .nullable()
+      .describe(
+        "Rainfall amount or snowfall liquid equivalent for the previous 24 hour period. Measured in millimeters."
+      ),
+    PrecipitationAccumulation: z
+      .number()
+      .nullable()
+      .describe(
+        "Rainfall amount or snowfall liquid equivalent for the period from midnight GMT to the current time. At midnight GMT the total accumulation is reset to zero. Measured in millimeters."
+      ),
+    BarometricPressure: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "The force per unit area exerted by the atmosphere in millibars. This reading is not adjusted for site elevation."
+      ),
+    SnowDepth: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "The depth of snow on representative areas other than the highway pavement, avoiding drifts and plowed areas in centimeters."
+      ),
+    SurfaceMeasurements: z
+      .array(scanwebSurfaceMeasurementsSchema)
+      .nullable()
+      .describe("Surface measurements."),
+    SubSurfaceMeasurements: z
+      .array(scanwebSubSurfaceMeasurementsSchema)
+      .nullable()
+      .describe("Sub-surface measurements."),
+  })
+  .describe("Information from a weather station.");
+
+export type WeatherReading = z.infer<typeof weatherReadingSchema>;
+
+/**
+ * WeatherReadings schema
+ *
+ * Array of weather readings from WSDOT weather stations.
+ */
+export const weatherReadingsSchema = z
+  .array(weatherReadingSchema)
+  .describe("Array of weather readings from WSDOT weather stations.");
+
+export type WeatherReadings = z.infer<typeof weatherReadingsSchema>;
