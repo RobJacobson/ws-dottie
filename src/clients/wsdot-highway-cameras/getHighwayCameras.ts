@@ -82,7 +82,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getHighwayCameras */
-const highwayCamerasInput = z.object({});
+const highwayCamerasInput = z.object({}).strict();
 
 /** Endpoint metadata for getHighwayCameras */
 export const getHighwayCamerasMeta: EndpointDefinition<

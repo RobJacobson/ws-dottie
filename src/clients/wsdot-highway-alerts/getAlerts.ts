@@ -87,7 +87,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getAlerts */
-const alertsInput = z.object({});
+const alertsInput = z.object({}).strict();
 
 /** Endpoint metadata for getAlerts */
 export const getAlertsMeta: EndpointDefinition<AlertsInput, HighwayAlerts> = {

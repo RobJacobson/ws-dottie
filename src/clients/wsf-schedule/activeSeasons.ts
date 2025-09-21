@@ -7,7 +7,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getActiveSeasons */
-const activeSeasonsInput = z.object({});
+const activeSeasonsInput = z.object({}).strict();
 
 /** Endpoint metadata for getActiveSeasons */
 export const getActiveSeasonsMeta: EndpointDefinition<

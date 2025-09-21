@@ -4,7 +4,7 @@ import { type Alert, alertsSchema } from "@/schemas/wsf-schedule/alert.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getAlerts */
-const scheduleAlertsInput = z.object({});
+const scheduleAlertsInput = z.object({}).strict();
 
 /** Endpoint metadata for getAlerts */
 export const getScheduleAlertsMeta: EndpointDefinition<

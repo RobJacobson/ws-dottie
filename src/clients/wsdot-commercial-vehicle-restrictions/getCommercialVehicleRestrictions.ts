@@ -93,7 +93,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getCommercialVehicleRestrictions */
-const commercialVehicleRestrictionsInput = z.object({});
+const commercialVehicleRestrictionsInput = z.object({}).strict();
 
 /** Endpoint metadata for getCommercialVehicleRestrictions */
 export const getCommercialVehicleRestrictionsMeta: EndpointDefinition<

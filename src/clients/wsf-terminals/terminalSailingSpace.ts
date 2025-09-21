@@ -5,7 +5,7 @@ import { terminalSailingSpaceSchema } from "@/schemas/wsf-terminals/terminalSail
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalSailingSpace */
-const terminalSailingSpaceInput = z.object({});
+const terminalSailingSpaceInput = z.object({}).strict();
 
 /** Endpoint metadata for getTerminalSailingSpace */
 export const getTerminalSailingSpaceMeta: EndpointDefinition<

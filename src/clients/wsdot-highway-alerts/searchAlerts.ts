@@ -68,20 +68,22 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for searchAlerts */
-const searchAlertsInput = z.object({
-  /** State route code (optional) */
-  StateRoute: z.string().optional(),
-  /** Region name (optional) */
-  Region: z.string().optional(),
-  /** Start time (JS Date, optional) */
-  SearchTimeStart: z.date().optional(),
-  /** End time (JS Date, optional) */
-  SearchTimeEnd: z.date().optional(),
-  /** Starting milepost (optional) */
-  StartingMilepost: z.number().optional(),
-  /** Ending milepost (optional) */
-  EndingMilepost: z.number().optional(),
-});
+const searchAlertsInput = z
+  .object({
+    /** State route code (optional) */
+    StateRoute: z.string().optional(),
+    /** Region name (optional) */
+    Region: z.string().optional(),
+    /** Start time (JS Date, optional) */
+    SearchTimeStart: z.date().optional(),
+    /** End time (JS Date, optional) */
+    SearchTimeEnd: z.date().optional(),
+    /** Starting milepost (optional) */
+    StartingMilepost: z.number().optional(),
+    /** Ending milepost (optional) */
+    EndingMilepost: z.number().optional(),
+  })
+  .strict();
 
 /** Endpoint metadata for searchAlerts */
 export const searchAlertsMeta: EndpointDefinition<

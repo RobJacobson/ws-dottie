@@ -40,7 +40,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getMapAreas */
-const getMapAreasInput = z.object({});
+const getMapAreasInput = z.object({}).strict();
 
 /** Endpoint metadata for getMapAreas */
 export const getMapAreasMeta: EndpointDefinition<MapAreasInput, MapAreas> = {

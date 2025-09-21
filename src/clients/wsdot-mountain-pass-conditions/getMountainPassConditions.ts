@@ -73,7 +73,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getMountainPassConditions */
-const mountainPassConditionsInput = z.object({});
+const mountainPassConditionsInput = z.object({}).strict();
 
 /** Endpoint metadata for getMountainPassConditions */
 export const getMountainPassConditionsMeta: EndpointDefinition<

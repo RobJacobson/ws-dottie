@@ -5,7 +5,7 @@ import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getCacheFlushDateVessels */
-const cacheFlushDateVesselsInput = z.object({});
+const cacheFlushDateVesselsInput = z.object({}).strict();
 
 /** Endpoint metadata for getCacheFlushDateVessels */
 export const getCacheFlushDateVesselsMeta: EndpointDefinition<

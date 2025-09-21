@@ -5,7 +5,7 @@ import { vesselBasicsSchema } from "@/schemas/wsf-vessels/vesselBasics.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselBasics */
-const vesselBasicsInput = z.object({});
+const vesselBasicsInput = z.object({}).strict();
 
 /** Endpoint metadata for getVesselBasics */
 export const getVesselBasicsMeta: EndpointDefinition<

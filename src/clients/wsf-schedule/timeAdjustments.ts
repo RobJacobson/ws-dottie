@@ -7,7 +7,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustments */
-const timeAdjustmentsInput = z.object({});
+const timeAdjustmentsInput = z.object({}).strict();
 
 /** Endpoint metadata for getTimeAdjustments */
 export const getTimeAdjustmentsMeta: EndpointDefinition<

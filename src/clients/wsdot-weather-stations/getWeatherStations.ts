@@ -7,7 +7,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getWeatherStations */
-const weatherStationsInput = z.object({});
+const weatherStationsInput = z.object({}).strict();
 
 /** Endpoint metadata for getWeatherStations */
 export const getWeatherStationsMeta: EndpointDefinition<

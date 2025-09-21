@@ -38,7 +38,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTollTripVersion */
-const tollTripVersionInput = z.object({});
+const tollTripVersionInput = z.object({}).strict();
 
 /** Endpoint metadata for getTollTripVersion */
 export const getTollTripVersionMeta: EndpointDefinition<

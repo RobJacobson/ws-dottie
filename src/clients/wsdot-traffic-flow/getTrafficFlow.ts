@@ -59,7 +59,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTrafficFlows */
-const trafficFlowsInput = z.object({});
+const trafficFlowsInput = z.object({}).strict();
 
 /** Endpoint metadata for getTrafficFlows */
 export const getTrafficFlowsMeta: EndpointDefinition<

@@ -7,7 +7,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselVerbose */
-const vesselsVerboseInput = z.object({});
+const vesselsVerboseInput = z.object({}).strict();
 
 /** Endpoint metadata for getVesselVerbose */
 export const getVesselVerboseMeta: EndpointDefinition<

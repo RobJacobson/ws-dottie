@@ -78,7 +78,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getBridgeClearances */
-const bridgeClearancesInput = z.object({});
+const bridgeClearancesInput = z.object({}).strict();
 
 /** Endpoint metadata for getBridgeClearances */
 export const getBridgeClearancesMeta: EndpointDefinition<

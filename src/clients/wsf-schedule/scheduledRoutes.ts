@@ -7,7 +7,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduledRoutes */
-const scheduledRoutesInput = z.object({});
+const scheduledRoutesInput = z.object({}).strict();
 
 /** Endpoint metadata for getScheduledRoutes */
 export const getScheduledRoutesMeta: EndpointDefinition<

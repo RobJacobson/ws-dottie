@@ -5,7 +5,7 @@ import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleValidDateRange */
-const scheduleValidDateRangeInput = z.object({});
+const scheduleValidDateRangeInput = z.object({}).strict();
 
 /** Endpoint metadata for getScheduleValidDateRange */
 export const getScheduleValidDateRangeMeta: EndpointDefinition<

@@ -52,7 +52,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTollTripInfo */
-const tollTripInfoInput = z.object({});
+const tollTripInfoInput = z.object({}).strict();
 
 /** Endpoint metadata for getTollTripInfo */
 export const getTollTripInfoMeta: EndpointDefinition<

@@ -7,7 +7,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalTransports */
-const terminalTransportsInput = z.object({});
+const terminalTransportsInput = z.object({}).strict();
 
 /** Endpoint metadata for getTerminalTransports */
 export const getTerminalTransportsMeta: EndpointDefinition<

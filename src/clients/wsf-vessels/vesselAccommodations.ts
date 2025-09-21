@@ -5,7 +5,7 @@ import { vesselAccommodationsSchema } from "@/schemas/wsf-vessels/vesselAccommod
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselAccommodations */
-const vesselAccommodationsInput = z.object({});
+const vesselAccommodationsInput = z.object({}).strict();
 
 /** Endpoint metadata for getVesselAccommodations */
 export const getVesselAccommodationsMeta: EndpointDefinition<

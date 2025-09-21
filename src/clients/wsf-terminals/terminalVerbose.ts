@@ -5,7 +5,7 @@ import { terminalVerboseSchema } from "@/schemas/wsf-terminals/terminalVerbose.z
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalVerbose */
-const terminalVerboseInput = z.object({});
+const terminalVerboseInput = z.object({}).strict();
 
 /** Endpoint metadata for getTerminalVerbose */
 export const getTerminalVerboseMeta: EndpointDefinition<

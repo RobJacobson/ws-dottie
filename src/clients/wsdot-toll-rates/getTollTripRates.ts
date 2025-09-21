@@ -46,7 +46,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTollTripRates */
-const tollTripRatesInput = z.object({});
+const tollTripRatesInput = z.object({}).strict();
 
 /** Endpoint metadata for getTollTripRates */
 export const getTollTripRatesMeta: EndpointDefinition<

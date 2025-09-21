@@ -5,7 +5,7 @@ import { validDateRangeSchema } from "@/schemas/shared/validDateRange.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getFaresValidDateRange */
-const faresValidDateRangeInput = z.object({});
+const faresValidDateRangeInput = z.object({}).strict();
 
 /** Endpoint metadata for getFaresValidDateRange */
 export const getFaresValidDateRangeMeta: EndpointDefinition<

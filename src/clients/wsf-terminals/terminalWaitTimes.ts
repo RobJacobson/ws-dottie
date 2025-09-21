@@ -5,7 +5,7 @@ import { terminalWaitTimesSchema } from "@/schemas/wsf-terminals/terminalWaitTim
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalWaitTimes */
-const terminalWaitTimesInput = z.object({});
+const terminalWaitTimesInput = z.object({}).strict();
 
 /** Endpoint metadata for getTerminalWaitTimes */
 export const getTerminalWaitTimesMeta: EndpointDefinition<

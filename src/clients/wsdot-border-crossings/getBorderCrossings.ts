@@ -64,7 +64,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getBorderCrossings */
-const borderCrossingsInput = z.object({});
+const borderCrossingsInput = z.object({}).strict();
 
 /** Endpoint metadata for getBorderCrossings */
 export const getBorderCrossingsMeta: EndpointDefinition<

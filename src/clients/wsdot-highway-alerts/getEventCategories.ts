@@ -38,7 +38,7 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getEventCategories */
-const eventCategoriesInput = z.object({});
+const eventCategoriesInput = z.object({}).strict();
 
 /** Endpoint metadata for getEventCategories */
 export const getEventCategoriesMeta: EndpointDefinition<
