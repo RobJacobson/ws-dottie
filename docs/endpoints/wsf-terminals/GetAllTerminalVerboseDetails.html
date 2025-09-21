@@ -1,0 +1,562 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Reference for  http://www.wsdot.wa.gov/Ferries/API/Terminals/rest/terminalverbose?apiaccesscode={APIACCESSCODE}</title>
+    <style>BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; } #content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; } A:link { color: #336699; font-weight: bold; text-decoration: underline; } A:visited { color: #6699cc; font-weight: bold; text-decoration: underline; } A:active { color: #336699; font-weight: bold; text-decoration: underline; } .heading1 { background-color: #003366; border-bottom: #336699 6px solid; color: #ffffff; font-family: Tahoma; font-size: 26px; font-weight: normal;margin: 0em 0em 10px -20px; padding-bottom: 8px; padding-left: 30px;padding-top: 16px;} pre { font-size:small; background-color: #e5e5cc; padding: 5px; font-family: Courier New; margin-top: 0px; border: 1px #f0f0e0 solid; white-space: pre-wrap; white-space: -pre-wrap; word-wrap: break-word; } table { border-collapse: collapse; border-spacing: 0px; font-family: Verdana;} table th { border-right: 2px white solid; border-bottom: 2px white solid; font-weight: bold; background-color: #cecf9c;} table td { border-right: 2px white solid; border-bottom: 2px white solid; background-color: #e5e5cc;}</style>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Reference for  http://www.wsdot.wa.gov/Ferries/API/Terminals/rest/terminalverbose?apiaccesscode={APIACCESSCODE}</p>
+      <p></p>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+        <b>Url: </b>
+        <span class="uri-template">http://www.wsdot.wa.gov/Ferries/API/Terminals/rest/terminalverbose?apiaccesscode={APIACCESSCODE}</span>
+      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml">
+        <b>HTTP Method: </b>
+        <span class="method">GET</span>
+      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml">This operation supports JSONP responses. The callback function can be specified using the <b>"<span class="javascript-callback">callback</span>"</b> Url query parameter.</p>
+      <table>
+        <tr>
+          <th>Message direction</th>
+          <th>Format</th>
+          <th>Body</th>
+        </tr>
+        <tr>
+          <td>Request</td>
+          <td>N/A</td>
+          <td>The Request body is empty.</td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Xml</td>
+          <td>
+            <a href="#response-xml">Example</a>,<a href="#response-schema">Schema</a></td>
+        </tr>
+        <tr>
+          <td>Response</td>
+          <td>Json</td>
+          <td>
+            <a href="#response-json">Example</a>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <a name="response-xml">The following is an example response Xml body:</a>
+        <pre class="response-xml">&lt;ArrayOfTerminalVerboseResponse xmlns="http://www.wsdot.wa.gov/ferries/terminals/"&gt;
+  &lt;TerminalVerboseResponse&gt;
+    &lt;TerminalID&gt;2147483647&lt;/TerminalID&gt;
+    &lt;TerminalSubjectID&gt;2147483647&lt;/TerminalSubjectID&gt;
+    &lt;RegionID&gt;2147483647&lt;/RegionID&gt;
+    &lt;TerminalName&gt;String content&lt;/TerminalName&gt;
+    &lt;TerminalAbbrev&gt;String content&lt;/TerminalAbbrev&gt;
+    &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+    &lt;OverheadPassengerLoading&gt;true&lt;/OverheadPassengerLoading&gt;
+    &lt;Elevator&gt;true&lt;/Elevator&gt;
+    &lt;WaitingRoom&gt;true&lt;/WaitingRoom&gt;
+    &lt;FoodService&gt;true&lt;/FoodService&gt;
+    &lt;Restroom&gt;true&lt;/Restroom&gt;
+    &lt;Latitude&gt;1.26743233E+15&lt;/Latitude&gt;
+    &lt;Longitude&gt;1.26743233E+15&lt;/Longitude&gt;
+    &lt;AddressLineOne&gt;String content&lt;/AddressLineOne&gt;
+    &lt;AddressLineTwo&gt;String content&lt;/AddressLineTwo&gt;
+    &lt;City&gt;String content&lt;/City&gt;
+    &lt;State&gt;String content&lt;/State&gt;
+    &lt;ZipCode&gt;String content&lt;/ZipCode&gt;
+    &lt;Country&gt;String content&lt;/Country&gt;
+    &lt;MapLink&gt;String content&lt;/MapLink&gt;
+    &lt;Directions&gt;String content&lt;/Directions&gt;
+    &lt;DispGISZoomLoc&gt;
+      &lt;GISZoomLocation&gt;
+        &lt;ZoomLevel&gt;2147483647&lt;/ZoomLevel&gt;
+        &lt;Latitude&gt;1.26743233E+15&lt;/Latitude&gt;
+        &lt;Longitude&gt;1.26743233E+15&lt;/Longitude&gt;
+      &lt;/GISZoomLocation&gt;
+      &lt;GISZoomLocation&gt;
+        &lt;ZoomLevel&gt;2147483647&lt;/ZoomLevel&gt;
+        &lt;Latitude&gt;1.26743233E+15&lt;/Latitude&gt;
+        &lt;Longitude&gt;1.26743233E+15&lt;/Longitude&gt;
+      &lt;/GISZoomLocation&gt;
+    &lt;/DispGISZoomLoc&gt;
+    &lt;ParkingInfo&gt;String content&lt;/ParkingInfo&gt;
+    &lt;ParkingShuttleInfo&gt;String content&lt;/ParkingShuttleInfo&gt;
+    &lt;AirportInfo&gt;String content&lt;/AirportInfo&gt;
+    &lt;AirportShuttleInfo&gt;String content&lt;/AirportShuttleInfo&gt;
+    &lt;MotorcycleInfo&gt;String content&lt;/MotorcycleInfo&gt;
+    &lt;TruckInfo&gt;String content&lt;/TruckInfo&gt;
+    &lt;BikeInfo&gt;String content&lt;/BikeInfo&gt;
+    &lt;TrainInfo&gt;String content&lt;/TrainInfo&gt;
+    &lt;TaxiInfo&gt;String content&lt;/TaxiInfo&gt;
+    &lt;HovInfo&gt;String content&lt;/HovInfo&gt;
+    &lt;TransitLinks&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+    &lt;/TransitLinks&gt;
+    &lt;WaitTimes&gt;
+      &lt;WaitTime&gt;
+        &lt;RouteID&gt;2147483647&lt;/RouteID&gt;
+        &lt;RouteName&gt;String content&lt;/RouteName&gt;
+        &lt;WaitTimeNotes&gt;String content&lt;/WaitTimeNotes&gt;
+        &lt;WaitTimeLastUpdated&gt;1999-05-31T11:20:00&lt;/WaitTimeLastUpdated&gt;
+        &lt;WaitTimeIVRNotes&gt;String content&lt;/WaitTimeIVRNotes&gt;
+      &lt;/WaitTime&gt;
+      &lt;WaitTime&gt;
+        &lt;RouteID&gt;2147483647&lt;/RouteID&gt;
+        &lt;RouteName&gt;String content&lt;/RouteName&gt;
+        &lt;WaitTimeNotes&gt;String content&lt;/WaitTimeNotes&gt;
+        &lt;WaitTimeLastUpdated&gt;1999-05-31T11:20:00&lt;/WaitTimeLastUpdated&gt;
+        &lt;WaitTimeIVRNotes&gt;String content&lt;/WaitTimeIVRNotes&gt;
+      &lt;/WaitTime&gt;
+    &lt;/WaitTimes&gt;
+    &lt;AdditionalInfo&gt;String content&lt;/AdditionalInfo&gt;
+    &lt;LostAndFoundInfo&gt;String content&lt;/LostAndFoundInfo&gt;
+    &lt;SecurityInfo&gt;String content&lt;/SecurityInfo&gt;
+    &lt;ConstructionInfo&gt;String content&lt;/ConstructionInfo&gt;
+    &lt;FoodServiceInfo&gt;String content&lt;/FoodServiceInfo&gt;
+    &lt;AdaInfo&gt;String content&lt;/AdaInfo&gt;
+    &lt;FareDiscountInfo&gt;String content&lt;/FareDiscountInfo&gt;
+    &lt;TallySystemInfo&gt;String content&lt;/TallySystemInfo&gt;
+    &lt;ChamberOfCommerce&gt;
+      &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+      &lt;LinkName&gt;String content&lt;/LinkName&gt;
+      &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+    &lt;/ChamberOfCommerce&gt;
+    &lt;FacInfo&gt;String content&lt;/FacInfo&gt;
+    &lt;ResourceStatus&gt;String content&lt;/ResourceStatus&gt;
+    &lt;TypeDesc&gt;String content&lt;/TypeDesc&gt;
+    &lt;REALTIME_SHUTOFF_FLAG&gt;true&lt;/REALTIME_SHUTOFF_FLAG&gt;
+    &lt;REALTIME_SHUTOFF_MESSAGE&gt;String content&lt;/REALTIME_SHUTOFF_MESSAGE&gt;
+    &lt;VisitorLinks&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+    &lt;/VisitorLinks&gt;
+    &lt;Bulletins&gt;
+      &lt;Bulletin&gt;
+        &lt;BulletinTitle&gt;String content&lt;/BulletinTitle&gt;
+        &lt;BulletinText&gt;String content&lt;/BulletinText&gt;
+        &lt;BulletinSortSeq&gt;2147483647&lt;/BulletinSortSeq&gt;
+        &lt;BulletinLastUpdated&gt;1999-05-31T11:20:00&lt;/BulletinLastUpdated&gt;
+        &lt;BulletinLastUpdatedSortable&gt;String content&lt;/BulletinLastUpdatedSortable&gt;
+      &lt;/Bulletin&gt;
+      &lt;Bulletin&gt;
+        &lt;BulletinTitle&gt;String content&lt;/BulletinTitle&gt;
+        &lt;BulletinText&gt;String content&lt;/BulletinText&gt;
+        &lt;BulletinSortSeq&gt;2147483647&lt;/BulletinSortSeq&gt;
+        &lt;BulletinLastUpdated&gt;1999-05-31T11:20:00&lt;/BulletinLastUpdated&gt;
+        &lt;BulletinLastUpdatedSortable&gt;String content&lt;/BulletinLastUpdatedSortable&gt;
+      &lt;/Bulletin&gt;
+    &lt;/Bulletins&gt;
+    &lt;IsNoFareCollected&gt;true&lt;/IsNoFareCollected&gt;
+    &lt;NoFareCollectedMsg&gt;String content&lt;/NoFareCollectedMsg&gt;
+    &lt;RealtimeIntroMsg&gt;String content&lt;/RealtimeIntroMsg&gt;
+  &lt;/TerminalVerboseResponse&gt;
+  &lt;TerminalVerboseResponse&gt;
+    &lt;TerminalID&gt;2147483647&lt;/TerminalID&gt;
+    &lt;TerminalSubjectID&gt;2147483647&lt;/TerminalSubjectID&gt;
+    &lt;RegionID&gt;2147483647&lt;/RegionID&gt;
+    &lt;TerminalName&gt;String content&lt;/TerminalName&gt;
+    &lt;TerminalAbbrev&gt;String content&lt;/TerminalAbbrev&gt;
+    &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+    &lt;OverheadPassengerLoading&gt;true&lt;/OverheadPassengerLoading&gt;
+    &lt;Elevator&gt;true&lt;/Elevator&gt;
+    &lt;WaitingRoom&gt;true&lt;/WaitingRoom&gt;
+    &lt;FoodService&gt;true&lt;/FoodService&gt;
+    &lt;Restroom&gt;true&lt;/Restroom&gt;
+    &lt;Latitude&gt;1.26743233E+15&lt;/Latitude&gt;
+    &lt;Longitude&gt;1.26743233E+15&lt;/Longitude&gt;
+    &lt;AddressLineOne&gt;String content&lt;/AddressLineOne&gt;
+    &lt;AddressLineTwo&gt;String content&lt;/AddressLineTwo&gt;
+    &lt;City&gt;String content&lt;/City&gt;
+    &lt;State&gt;String content&lt;/State&gt;
+    &lt;ZipCode&gt;String content&lt;/ZipCode&gt;
+    &lt;Country&gt;String content&lt;/Country&gt;
+    &lt;MapLink&gt;String content&lt;/MapLink&gt;
+    &lt;Directions&gt;String content&lt;/Directions&gt;
+    &lt;DispGISZoomLoc&gt;
+      &lt;GISZoomLocation&gt;
+        &lt;ZoomLevel&gt;2147483647&lt;/ZoomLevel&gt;
+        &lt;Latitude&gt;1.26743233E+15&lt;/Latitude&gt;
+        &lt;Longitude&gt;1.26743233E+15&lt;/Longitude&gt;
+      &lt;/GISZoomLocation&gt;
+      &lt;GISZoomLocation&gt;
+        &lt;ZoomLevel&gt;2147483647&lt;/ZoomLevel&gt;
+        &lt;Latitude&gt;1.26743233E+15&lt;/Latitude&gt;
+        &lt;Longitude&gt;1.26743233E+15&lt;/Longitude&gt;
+      &lt;/GISZoomLocation&gt;
+    &lt;/DispGISZoomLoc&gt;
+    &lt;ParkingInfo&gt;String content&lt;/ParkingInfo&gt;
+    &lt;ParkingShuttleInfo&gt;String content&lt;/ParkingShuttleInfo&gt;
+    &lt;AirportInfo&gt;String content&lt;/AirportInfo&gt;
+    &lt;AirportShuttleInfo&gt;String content&lt;/AirportShuttleInfo&gt;
+    &lt;MotorcycleInfo&gt;String content&lt;/MotorcycleInfo&gt;
+    &lt;TruckInfo&gt;String content&lt;/TruckInfo&gt;
+    &lt;BikeInfo&gt;String content&lt;/BikeInfo&gt;
+    &lt;TrainInfo&gt;String content&lt;/TrainInfo&gt;
+    &lt;TaxiInfo&gt;String content&lt;/TaxiInfo&gt;
+    &lt;HovInfo&gt;String content&lt;/HovInfo&gt;
+    &lt;TransitLinks&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+    &lt;/TransitLinks&gt;
+    &lt;WaitTimes&gt;
+      &lt;WaitTime&gt;
+        &lt;RouteID&gt;2147483647&lt;/RouteID&gt;
+        &lt;RouteName&gt;String content&lt;/RouteName&gt;
+        &lt;WaitTimeNotes&gt;String content&lt;/WaitTimeNotes&gt;
+        &lt;WaitTimeLastUpdated&gt;1999-05-31T11:20:00&lt;/WaitTimeLastUpdated&gt;
+        &lt;WaitTimeIVRNotes&gt;String content&lt;/WaitTimeIVRNotes&gt;
+      &lt;/WaitTime&gt;
+      &lt;WaitTime&gt;
+        &lt;RouteID&gt;2147483647&lt;/RouteID&gt;
+        &lt;RouteName&gt;String content&lt;/RouteName&gt;
+        &lt;WaitTimeNotes&gt;String content&lt;/WaitTimeNotes&gt;
+        &lt;WaitTimeLastUpdated&gt;1999-05-31T11:20:00&lt;/WaitTimeLastUpdated&gt;
+        &lt;WaitTimeIVRNotes&gt;String content&lt;/WaitTimeIVRNotes&gt;
+      &lt;/WaitTime&gt;
+    &lt;/WaitTimes&gt;
+    &lt;AdditionalInfo&gt;String content&lt;/AdditionalInfo&gt;
+    &lt;LostAndFoundInfo&gt;String content&lt;/LostAndFoundInfo&gt;
+    &lt;SecurityInfo&gt;String content&lt;/SecurityInfo&gt;
+    &lt;ConstructionInfo&gt;String content&lt;/ConstructionInfo&gt;
+    &lt;FoodServiceInfo&gt;String content&lt;/FoodServiceInfo&gt;
+    &lt;AdaInfo&gt;String content&lt;/AdaInfo&gt;
+    &lt;FareDiscountInfo&gt;String content&lt;/FareDiscountInfo&gt;
+    &lt;TallySystemInfo&gt;String content&lt;/TallySystemInfo&gt;
+    &lt;ChamberOfCommerce&gt;
+      &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+      &lt;LinkName&gt;String content&lt;/LinkName&gt;
+      &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+    &lt;/ChamberOfCommerce&gt;
+    &lt;FacInfo&gt;String content&lt;/FacInfo&gt;
+    &lt;ResourceStatus&gt;String content&lt;/ResourceStatus&gt;
+    &lt;TypeDesc&gt;String content&lt;/TypeDesc&gt;
+    &lt;REALTIME_SHUTOFF_FLAG&gt;true&lt;/REALTIME_SHUTOFF_FLAG&gt;
+    &lt;REALTIME_SHUTOFF_MESSAGE&gt;String content&lt;/REALTIME_SHUTOFF_MESSAGE&gt;
+    &lt;VisitorLinks&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+      &lt;Link&gt;
+        &lt;LinkURL&gt;String content&lt;/LinkURL&gt;
+        &lt;LinkName&gt;String content&lt;/LinkName&gt;
+        &lt;SortSeq&gt;2147483647&lt;/SortSeq&gt;
+      &lt;/Link&gt;
+    &lt;/VisitorLinks&gt;
+    &lt;Bulletins&gt;
+      &lt;Bulletin&gt;
+        &lt;BulletinTitle&gt;String content&lt;/BulletinTitle&gt;
+        &lt;BulletinText&gt;String content&lt;/BulletinText&gt;
+        &lt;BulletinSortSeq&gt;2147483647&lt;/BulletinSortSeq&gt;
+        &lt;BulletinLastUpdated&gt;1999-05-31T11:20:00&lt;/BulletinLastUpdated&gt;
+        &lt;BulletinLastUpdatedSortable&gt;String content&lt;/BulletinLastUpdatedSortable&gt;
+      &lt;/Bulletin&gt;
+      &lt;Bulletin&gt;
+        &lt;BulletinTitle&gt;String content&lt;/BulletinTitle&gt;
+        &lt;BulletinText&gt;String content&lt;/BulletinText&gt;
+        &lt;BulletinSortSeq&gt;2147483647&lt;/BulletinSortSeq&gt;
+        &lt;BulletinLastUpdated&gt;1999-05-31T11:20:00&lt;/BulletinLastUpdated&gt;
+        &lt;BulletinLastUpdatedSortable&gt;String content&lt;/BulletinLastUpdatedSortable&gt;
+      &lt;/Bulletin&gt;
+    &lt;/Bulletins&gt;
+    &lt;IsNoFareCollected&gt;true&lt;/IsNoFareCollected&gt;
+    &lt;NoFareCollectedMsg&gt;String content&lt;/NoFareCollectedMsg&gt;
+    &lt;RealtimeIntroMsg&gt;String content&lt;/RealtimeIntroMsg&gt;
+  &lt;/TerminalVerboseResponse&gt;
+&lt;/ArrayOfTerminalVerboseResponse&gt;</pre>
+      </p>
+      <p>
+        <a name="response-json">The following is an example response Json body:</a>
+        <pre class="response-json">[{
+	"TerminalID":2147483647,
+	"TerminalSubjectID":2147483647,
+	"RegionID":2147483647,
+	"TerminalName":"String content",
+	"TerminalAbbrev":"String content",
+	"SortSeq":2147483647,
+	"OverheadPassengerLoading":true,
+	"Elevator":true,
+	"WaitingRoom":true,
+	"FoodService":true,
+	"Restroom":true,
+	"Latitude":1.26743233E+15,
+	"Longitude":1.26743233E+15,
+	"AddressLineOne":"String content",
+	"AddressLineTwo":"String content",
+	"City":"String content",
+	"State":"String content",
+	"ZipCode":"String content",
+	"Country":"String content",
+	"MapLink":"String content",
+	"Directions":"String content",
+	"DispGISZoomLoc":[{
+		"ZoomLevel":2147483647,
+		"Latitude":1.26743233E+15,
+		"Longitude":1.26743233E+15
+	}],
+	"ParkingInfo":"String content",
+	"ParkingShuttleInfo":"String content",
+	"AirportInfo":"String content",
+	"AirportShuttleInfo":"String content",
+	"MotorcycleInfo":"String content",
+	"TruckInfo":"String content",
+	"BikeInfo":"String content",
+	"TrainInfo":"String content",
+	"TaxiInfo":"String content",
+	"HovInfo":"String content",
+	"TransitLinks":[{
+		"LinkURL":"String content",
+		"LinkName":"String content",
+		"SortSeq":2147483647
+	}],
+	"WaitTimes":[{
+		"RouteID":2147483647,
+		"RouteName":"String content",
+		"WaitTimeNotes":"String content",
+		"WaitTimeLastUpdated":"\/Date(928174800000-0700)\/",
+		"WaitTimeIVRNotes":"String content"
+	}],
+	"AdditionalInfo":"String content",
+	"LostAndFoundInfo":"String content",
+	"SecurityInfo":"String content",
+	"ConstructionInfo":"String content",
+	"FoodServiceInfo":"String content",
+	"AdaInfo":"String content",
+	"FareDiscountInfo":"String content",
+	"TallySystemInfo":"String content",
+	"ChamberOfCommerce":{
+		"LinkURL":"String content",
+		"LinkName":"String content",
+		"SortSeq":2147483647
+	},
+	"FacInfo":"String content",
+	"ResourceStatus":"String content",
+	"TypeDesc":"String content",
+	"REALTIME_SHUTOFF_FLAG":true,
+	"REALTIME_SHUTOFF_MESSAGE":"String content",
+	"VisitorLinks":[{
+		"LinkURL":"String content",
+		"LinkName":"String content",
+		"SortSeq":2147483647
+	}],
+	"Bulletins":[{
+		"BulletinTitle":"String content",
+		"BulletinText":"String content",
+		"BulletinSortSeq":2147483647,
+		"BulletinLastUpdated":"\/Date(928174800000-0700)\/",
+		"BulletinLastUpdatedSortable":"String content"
+	}],
+	"IsNoFareCollected":true,
+	"NoFareCollectedMsg":"String content",
+	"RealtimeIntroMsg":"String content"
+}]</pre>
+      </p>
+      <p>
+        <a name="response-schema">The following is the response Xml Schema:</a>
+        <pre class="response-schema">&lt;xs:schema xmlns:tns="http://www.wsdot.wa.gov/ferries/terminals/" elementFormDefault="qualified" targetNamespace="http://www.wsdot.wa.gov/ferries/terminals/" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:complexType name="ArrayOfTerminalVerboseResponse"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="TerminalVerboseResponse" nillable="true" type="tns:TerminalVerboseResponse" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfTerminalVerboseResponse" nillable="true" type="tns:ArrayOfTerminalVerboseResponse" /&gt;
+  &lt;xs:complexType name="TerminalVerboseResponse"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="TerminalID" type="xs:int" /&gt;
+      &lt;name="TerminalSubjectID" type="xs:int" /&gt;
+      &lt;name="RegionID" type="xs:int" /&gt;
+      &lt;name="TerminalName" nillable="true" type="xs:string" /&gt;
+      &lt;name="TerminalAbbrev" nillable="true" type="xs:string" /&gt;
+      &lt;name="SortSeq" type="xs:int" /&gt;
+      &lt;name="OverheadPassengerLoading" type="xs:boolean" /&gt;
+      &lt;name="Elevator" type="xs:boolean" /&gt;
+      &lt;name="WaitingRoom" type="xs:boolean" /&gt;
+      &lt;name="FoodService" type="xs:boolean" /&gt;
+      &lt;name="Restroom" type="xs:boolean" /&gt;
+      &lt;name="Latitude" nillable="true" type="xs:double" /&gt;
+      &lt;name="Longitude" nillable="true" type="xs:double" /&gt;
+      &lt;name="AddressLineOne" nillable="true" type="xs:string" /&gt;
+      &lt;name="AddressLineTwo" nillable="true" type="xs:string" /&gt;
+      &lt;name="City" nillable="true" type="xs:string" /&gt;
+      &lt;name="State" nillable="true" type="xs:string" /&gt;
+      &lt;name="ZipCode" nillable="true" type="xs:string" /&gt;
+      &lt;name="Country" nillable="true" type="xs:string" /&gt;
+      &lt;name="MapLink" nillable="true" type="xs:string" /&gt;
+      &lt;name="Directions" nillable="true" type="xs:string" /&gt;
+      &lt;name="DispGISZoomLoc" nillable="true" type="tns:ArrayOfGISZoomLocation" /&gt;
+      &lt;name="ParkingInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="ParkingShuttleInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="AirportInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="AirportShuttleInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="MotorcycleInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="TruckInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="BikeInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="TrainInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="TaxiInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="HovInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="TransitLinks" nillable="true" type="tns:ArrayOfLink" /&gt;
+      &lt;name="WaitTimes" nillable="true" type="tns:ArrayOfWaitTime" /&gt;
+      &lt;name="AdditionalInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="LostAndFoundInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="SecurityInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="ConstructionInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="FoodServiceInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="AdaInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="FareDiscountInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="TallySystemInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="ChamberOfCommerce" nillable="true" type="tns:Link" /&gt;
+      &lt;name="FacInfo" nillable="true" type="xs:string" /&gt;
+      &lt;name="ResourceStatus" nillable="true" type="xs:string" /&gt;
+      &lt;name="TypeDesc" nillable="true" type="xs:string" /&gt;
+      &lt;name="REALTIME_SHUTOFF_FLAG" type="xs:boolean" /&gt;
+      &lt;name="REALTIME_SHUTOFF_MESSAGE" nillable="true" type="xs:string" /&gt;
+      &lt;name="VisitorLinks" nillable="true" type="tns:ArrayOfLink" /&gt;
+      &lt;name="Bulletins" nillable="true" type="tns:ArrayOfBulletin" /&gt;
+      &lt;name="IsNoFareCollected" nillable="true" type="xs:boolean" /&gt;
+      &lt;name="NoFareCollectedMsg" nillable="true" type="xs:string" /&gt;
+      &lt;name="RealtimeIntroMsg" nillable="true" type="xs:string" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="TerminalVerboseResponse" nillable="true" type="tns:TerminalVerboseResponse" /&gt;
+  &lt;xs:complexType name="ArrayOfGISZoomLocation"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="GISZoomLocation" nillable="true" type="tns:GISZoomLocation" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfGISZoomLocation" nillable="true" type="tns:ArrayOfGISZoomLocation" /&gt;
+  &lt;xs:complexType name="GISZoomLocation"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="ZoomLevel" type="xs:int" /&gt;
+      &lt;name="Latitude" nillable="true" type="xs:double" /&gt;
+      &lt;name="Longitude" nillable="true" type="xs:double" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="GISZoomLocation" nillable="true" type="tns:GISZoomLocation" /&gt;
+  &lt;xs:complexType name="ArrayOfLink"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="Link" nillable="true" type="tns:Link" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfLink" nillable="true" type="tns:ArrayOfLink" /&gt;
+  &lt;xs:complexType name="Link"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="LinkURL" nillable="true" type="xs:string" /&gt;
+      &lt;name="LinkName" nillable="true" type="xs:string" /&gt;
+      &lt;name="SortSeq" nillable="true" type="xs:int" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="Link" nillable="true" type="tns:Link" /&gt;
+  &lt;xs:complexType name="ArrayOfWaitTime"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="WaitTime" nillable="true" type="tns:WaitTime" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfWaitTime" nillable="true" type="tns:ArrayOfWaitTime" /&gt;
+  &lt;xs:complexType name="WaitTime"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="RouteID" nillable="true" type="xs:int" /&gt;
+      &lt;name="RouteName" nillable="true" type="xs:string" /&gt;
+      &lt;name="WaitTimeNotes" nillable="true" type="xs:string" /&gt;
+      &lt;name="WaitTimeLastUpdated" nillable="true" type="xs:dateTime" /&gt;
+      &lt;name="WaitTimeIVRNotes" nillable="true" type="xs:string" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="WaitTime" nillable="true" type="tns:WaitTime" /&gt;
+  &lt;xs:complexType name="ArrayOfBulletin"&gt;
+    &lt;xs:sequence&gt;
+      &lt;maxOccurs="unbounded" name="Bulletin" nillable="true" type="tns:Bulletin" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="ArrayOfBulletin" nillable="true" type="tns:ArrayOfBulletin" /&gt;
+  &lt;xs:complexType name="Bulletin"&gt;
+    &lt;xs:sequence&gt;
+      &lt;name="BulletinTitle" nillable="true" type="xs:string" /&gt;
+      &lt;name="BulletinText" nillable="true" type="xs:string" /&gt;
+      &lt;name="BulletinSortSeq" type="xs:int" /&gt;
+      &lt;name="BulletinLastUpdated" nillable="true" type="xs:dateTime" /&gt;
+      &lt;name="BulletinLastUpdatedSortable" nillable="true" type="xs:string" /&gt;
+    &lt;/xs:sequence&gt;
+  &lt;/xs:complexType&gt;
+  &lt;xs:element name="Bulletin" nillable="true" type="tns:Bulletin" /&gt;
+&lt;/xs:schema&gt;</pre>
+      </p>
+      <p>
+        <a name="response-schema">Additional response Xml Schemas:</a>
+        <pre class="response-schema">&lt;xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;xs:element name="anyType" nillable="true" type="xs:anyType" /&gt;
+  &lt;xs:element name="anyURI" nillable="true" type="xs:anyURI" /&gt;
+  &lt;xs:element name="base64Binary" nillable="true" type="xs:base64Binary" /&gt;
+  &lt;xs:element name="boolean" nillable="true" type="xs:boolean" /&gt;
+  &lt;xs:element name="byte" nillable="true" type="xs:byte" /&gt;
+  &lt;xs:element name="dateTime" nillable="true" type="xs:dateTime" /&gt;
+  &lt;xs:element name="decimal" nillable="true" type="xs:decimal" /&gt;
+  &lt;xs:element name="double" nillable="true" type="xs:double" /&gt;
+  &lt;xs:element name="float" nillable="true" type="xs:float" /&gt;
+  &lt;xs:element name="int" nillable="true" type="xs:int" /&gt;
+  &lt;xs:element name="long" nillable="true" type="xs:long" /&gt;
+  &lt;xs:element name="QName" nillable="true" type="xs:QName" /&gt;
+  &lt;xs:element name="short" nillable="true" type="xs:short" /&gt;
+  &lt;xs:element name="string" nillable="true" type="xs:string" /&gt;
+  &lt;xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" /&gt;
+  &lt;xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" /&gt;
+  &lt;xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" /&gt;
+  &lt;xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" /&gt;
+  &lt;xs:element name="char" nillable="true" type="tns:char" /&gt;
+  &lt;xs:simpleType name="char"&gt;
+    &lt;xs:restriction base="xs:int" /&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="duration" nillable="true" type="tns:duration" /&gt;
+  &lt;xs:simpleType name="duration"&gt;
+    &lt;xs:restriction base="xs:duration"&gt;
+      &lt;xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" /&gt;
+      &lt;xs:minInclusive value="-P10675199DT2H48M5.4775808S" /&gt;
+      &lt;xs:maxInclusive value="P10675199DT2H48M5.4775807S" /&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:element name="guid" nillable="true" type="tns:guid" /&gt;
+  &lt;xs:simpleType name="guid"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" /&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+  &lt;xs:attribute name="FactoryType" type="xs:QName" /&gt;
+  &lt;xs:attribute name="Id" type="xs:ID" /&gt;
+  &lt;xs:attribute name="Ref" type="xs:IDREF" /&gt;
+&lt;/xs:schema&gt;</pre>
+      </p>
+      <p>
+        <pre class="response-schema">&lt;tns:schema targetNamespace="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;tns:element name="schema"&gt;
+    &lt;tns:complexType /&gt;
+  &lt;/tns:element&gt;
+&lt;/tns:schema&gt;</pre>
+      </p>
+    </div>
+  </body>
+</html>

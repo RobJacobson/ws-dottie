@@ -19,6 +19,10 @@
       "types": "./src/index.ts",
       "import": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./cli": {
+      "node": "./dist/cli/index.mjs",
+      "default": "./dist/cli/index.mjs"
     }
   },
   "files": [
@@ -26,22 +30,35 @@
     "README.md",
     "docs"
   ],
+  "bin": {
+    "fetch-dottie": "./dist/cli/fetch-dottie.mjs",
+    "fetch-native": "./dist/cli/fetch-native.mjs"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "vitest --config config/vitest.config.ts --run",
-    "lint": "biome lint src/ tests/",
-    "format": "biome format --write src/ tests/",
+    "test": "node scripts/testRunner.js",
+    "test:direct": "vitest --config config/vitest.config.ts --run",
+    "test:module": "vitest --config config/vitest.config.ts --run tests/e2e/main.test.ts",
+    "tests": "node scripts/run-api-tests.js",
+    "test:e2e": "vitest --config config/vitest.config.ts --run tests/e2e/main.test.ts --reporter=verbose",
+    "lint": "biome lint src/",
+    "format": "biome check --write src/",
     "type-check": "tsc --noEmit",
     "type-check:test": "tsc --noEmit --project tsconfig.test.json",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "nuke-comments": "node scripts/nuke-jsdoc-comments.js",
+    "dottie": "node dist/cli/fetch-dottie.mjs",
+    "native": "node dist/cli/fetch-native.mjs",
+    "cli:help": "node dist/cli/fetch-dottie.mjs --help",
+    "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
     "react": ">=18.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
+    "@biomejs/biome": "^2.2.4",
     "@happy-dom/global-registrator": "^18.0.1",
     "@tanstack/react-query": "^5.0.0",
     "@testing-library/react": "^16.3.0",
@@ -50,12 +67,14 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitest/ui": "^3.2.4",
+    "chalk": "^5.6.0",
+    "commander": "^14.0.0",
     "dotenv": "^17.2.0",
     "jsdom": "^26.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
   "dependencies": {

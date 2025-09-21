@@ -1,47 +1,71 @@
-// WSDOT API Client Library
-// Main entry point for the WSDOT API client library
+/**
+ * WS-Dottie - Washington State Transportation APIs
+ *
+ * A comprehensive TypeScript library for accessing Washington State Department of
+ * Transportation (WSDOT) and Washington State Ferries (WSF) APIs with built-in
+ * validation, caching, and type safety.
+ *
+ * This library provides:
+ * - Type-safe API clients for all WSDOT and WSF endpoints
+ * - Automatic data validation using Zod schemas
+ * - Smart caching strategies optimized for transportation data
+ * - React hooks for seamless integration
+ * - CLI interface for command-line usage
+ */
 
 // ============================================================================
-// Configuration
+// SHARED UTILITIES
 // ============================================================================
 
-export {
-  configManager,
-  type WsdotConfig,
-} from "./shared/configManager";
-export type { LoggingMode } from "./shared/utils";
-
-// ============================================================================
-// API Modules (Namespace Exports)
-// ============================================================================
-
-// WSDOT APIs
-export * as WsdotBorderCrossings from "./api/wsdot-border-crossings";
-export * as WsdotBridgeClearances from "./api/wsdot-bridge-clearances";
-export * as WsdotCommercialVehicleRestrictions from "./api/wsdot-commercial-vehicle-restrictions";
-export * as WsdotHighwayAlerts from "./api/wsdot-highway-alerts";
-export * as WsdotHighwayCameras from "./api/wsdot-highway-cameras";
-export * as WsdotMountainPassConditions from "./api/wsdot-mountain-pass-conditions";
-export * as WsdotTollRates from "./api/wsdot-toll-rates";
-export * as WsdotTrafficFlow from "./api/wsdot-traffic-flow";
-export * as WsdotTravelTimes from "./api/wsdot-travel-times";
-export * as WsdotWeatherInformation from "./api/wsdot-weather-information";
-export * as WsdotWeatherInformationExtended from "./api/wsdot-weather-information-extended";
-export * as WsdotWeatherStations from "./api/wsdot-weather-stations";
-// WSF APIs
-export * as WsfFares from "./api/wsf-fares";
-export * as WsfSchedule from "./api/wsf-schedule";
-export * as WsfTerminals from "./api/wsf-terminals";
-export * as WsfVessels from "./api/wsf-vessels";
-
-// ============================================================================
-// TanStack Query Configuration
-// ============================================================================
-
-export { tanstackQueryOptions } from "./shared/config";
-
-// ============================================================================
-// Shared Utilities
-// ============================================================================
-
+// Core shared functionality
 export * from "./shared";
+
+// ============================================================================
+// WSDOT APIs
+// ============================================================================
+
+// Border Crossings
+export * from "./clients/wsdot-border-crossings";
+// Bridge Clearances
+export * from "./clients/wsdot-bridge-clearances";
+// Commercial Vehicle Restrictions
+export * from "./clients/wsdot-commercial-vehicle-restrictions";
+// Highway Alerts
+export * from "./clients/wsdot-highway-alerts";
+// Highway Cameras
+export * from "./clients/wsdot-highway-cameras";
+// Mountain Pass Conditions
+export * from "./clients/wsdot-mountain-pass-conditions";
+// Toll Rates
+export * from "./clients/wsdot-toll-rates";
+// Traffic Flow
+export * from "./clients/wsdot-traffic-flow";
+// Travel Times
+export * from "./clients/wsdot-travel-times";
+// Weather Information
+export * from "./clients/wsdot-weather-information";
+// Weather Information Extended
+export * from "./clients/wsdot-weather-information-extended";
+// Weather Stations
+export * from "./clients/wsdot-weather-stations";
+
+// ============================================================================
+// WSF APIs
+// ============================================================================
+
+// Fares
+export * from "./clients/wsf-fares";
+// Schedule
+export * from "./clients/wsf-schedule";
+// Terminals
+export * from "./clients/wsf-terminals";
+// Vessels
+export * from "./clients/wsf-vessels";
+
+// ============================================================================
+// ============================================================================
+// TYPES
+// ============================================================================
+
+// Note: Common types are now exported through shared utilities
+// The types.ts file previously contained unused schema generation types

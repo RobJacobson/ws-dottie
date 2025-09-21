@@ -2,9 +2,11 @@ import { resolve } from "node:path";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: ["src/index.ts", "src/cli/fetch-dottie.ts", "src/cli/fetch-native.ts"],
   format: ["esm", "cjs"], // Build both ESM and CJS formats
-  dts: true,
+  dts: {
+    entry: ["src/index.ts"], // Only generate .d.ts files for the main library entry
+  },
   splitting: false,
   sourcemap: true,
   clean: false,
@@ -14,6 +16,9 @@ export default defineConfig({
     "react-dom",
     "@tanstack/react-query",
     "@tanstack/query-core",
+    // CLI dependencies - exclude from main bundle
+    "commander",
+    "chalk",
   ],
   outDir: "dist",
   outExtension({ format }) {

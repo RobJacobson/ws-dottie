@@ -1,0 +1,25 @@
+import { z } from "zod";
+
+/**
+ * Schema for WSF Schedule API terminal response.
+ * This operation retrieves valid departing terminals for a given trip date.
+ * A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
+ * A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
+ */
+export const scheduleTerminalSchema = z.object({
+  /** Unique identifier for a terminal. */
+  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  /** The name of the terminal. */
+  Description: z.string().nullable().describe("The name of the terminal."),
+});
+
+export type ScheduleTerminal = z.infer<typeof scheduleTerminalSchema>;
+
+/**
+ * Array of schedule terminals.
+ */
+export const scheduleTerminalsSchema = z
+  .array(scheduleTerminalSchema)
+  .describe("Valid departing terminals for a given trip date.");
+
+export type ScheduleTerminals = z.infer<typeof scheduleTerminalsSchema>;

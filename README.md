@@ -127,6 +127,88 @@ function TransportationDashboard() {
 }
 ```
 
+## 🖥️ Command Line Interface
+
+WS-Dottie includes a powerful CLI for quick testing, debugging, and production use cases. Access all transportation data directly from your terminal without writing code.
+
+### Installation
+
+The CLI is included with WS-Dottie and works in Node.js environments:
+
+```bash
+# Install ws-dottie (includes CLI)
+npm install ws-dottie
+
+# Or use directly with npx (no installation required)
+npx ws-dottie --help
+```
+
+### Configuration
+
+Set your WSDOT API key as an environment variable:
+
+```bash
+export WSDOT_ACCESS_TOKEN=your_api_key_here
+```
+
+### Usage
+
+```bash
+ws-dottie <function-name> [params] [--pretty=false]
+```
+
+### Examples
+
+**Get border crossing data:**
+```bash
+ws-dottie getBorderCrossings
+```
+
+**Get bridge clearances with parameters:**
+```bash
+ws-dottie getBridgeClearances '{"route": "005"}'
+```
+
+**Get ferry fare information:**
+```bash
+ws-dottie getFareLineItems '{"originTerminalId": 7, "destinationTerminalId": 3, "date": "2025-01-27"}'
+```
+
+**Get raw (unformatted) JSON output:**
+```bash
+ws-dottie getBorderCrossings --raw
+```
+
+### Available Functions
+
+The CLI supports all 89+ endpoints across 16 APIs:
+
+- **WSDOT APIs**: Border Crossings, Bridge Clearances, Highway Alerts, Traffic Cameras, Weather Stations, Travel Times, Toll Rates, Mountain Passes, Commercial Vehicle Restrictions
+- **WSF APIs**: Ferry Schedules, Vessel Locations, Terminal Information, Fare Data
+
+Use `ws-dottie --help` to see all available functions with descriptions.
+
+### Pretty Printing
+
+By default, JSON output is formatted with 2-space indentation for readability. Use `--raw` or `--pretty=false` for compact output:
+
+```bash
+# Pretty-printed (default)
+ws-dottie getBorderCrossings
+
+# Raw JSON
+ws-dottie getBorderCrossings --raw
+```
+
+### Parameter Validation
+
+The CLI validates parameters against the expected schema for each function, providing clear error messages when parameters are missing or invalid:
+
+```bash
+# This will show parameter validation errors
+ws-dottie getBridgeClearances '{"invalid": "parameter"}'
+```
+
 ## 📊 Available Data Sources (16 APIs, 89 endpoints)
 
 ### WSDOT APIs
