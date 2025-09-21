@@ -245,6 +245,10 @@ test-results/
 test-reports/
 coverage/
 
+# Generated test files
+tests/e2e/auto-generated/
+tests/e2e/generated/
+
 # Bun
 bun.lockb 
 

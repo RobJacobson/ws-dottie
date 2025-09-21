@@ -37,15 +37,11 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "node tests/e2e/scripts/test-runner.js",
+    "test": "node scripts/testRunner.js",
     "test:direct": "vitest --config config/vitest.config.ts --run",
+    "test:module": "vitest --config config/vitest.config.ts --run tests/e2e/main.test.ts",
     "tests": "node scripts/run-api-tests.js",
-    "test:e2e": "./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/comprehensive-suite.test.ts",
-    "test:e2e:auto": "./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/auto-suite.test.ts",
-    "test:e2e:data-integrity": "./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/data-integrity-suite.test.ts",
-    "test:e2e:discovery": "./tests/e2e/scripts/run-tests-with-auto-regen.js tests/e2e/discovery.test.ts",
-    "test:e2e:all": "./tests/e2e/scripts/run-comprehensive-tests.js",
-    "test:regen": "./tests/e2e/scripts/run-auto-config-generation-quiet.js",
+    "test:e2e": "vitest --config config/vitest.config.ts --run tests/e2e/main.test.ts --reporter=verbose",
     "lint": "biome lint src/",
     "format": "biome check --write src/",
     "type-check": "tsc --noEmit",
@@ -62,7 +58,7 @@
     "react": ">=18.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
+    "@biomejs/biome": "^2.2.4",
     "@happy-dom/global-registrator": "^18.0.1",
     "@tanstack/react-query": "^5.0.0",
     "@testing-library/react": "^16.3.0",
