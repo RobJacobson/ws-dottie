@@ -1,336 +1,254 @@
 # WSF Fares API
 
-**Source:** [WSDOT Ferries API Documentation](https://www.wsdot.wa.gov/ferries/api/fares/documentation/rest.html)
+The WSF Fares API provides comprehensive access to Washington State Ferries fare information, including fare line items, terminal combinations, fare calculations, and cache management.
 
-**Base URL:** `https://www.wsdot.wa.gov/ferries/api/fares/rest`
+## Overview
 
-## API Access Code
+This module provides access to the WSF Fares API, which offers comprehensive fare information for Washington State Ferries, including fare line items, terminal combinations, fare calculations, and cache management for data freshness.
 
-Most of the REST operations require that an API Access Code be passed as part of the URL string. In order to get a valid API Access Code, please register your email address with the WSDOT Traveler API.
+### Key Features
 
+| Feature | Description | Availability |
+|---------|-------------|--------------|
+| **Fare Calculation** | Calculate costs for specific routes and passenger types | ✅ Available |
+| **Trip Planning** | Get fare information for route planning | ✅ Available |
+| **Ticket Pricing** | Display current fares for ticket sales | ✅ Available |
+| **Route Analysis** | Compare fares between different routes | ✅ Available |
+| **Terminal Discovery** | Find available terminals and connections | ✅ Available |
+| **Cache Management** | Track data freshness with cache flush dates | ✅ Available |
+| **Date Validation** | Ensure fare queries use valid dates | ✅ Available |
+| **Multiple Formats** | Basic, verbose, and detailed fare information | ✅ Available |
 
----
+### Data Update Frequency
 
-## /cacheflushdate
+| Data Type | Update Frequency | Cache Strategy | Notes |
+|-----------|------------------|----------------|-------|
+| **Fare Data** | As needed | `WEEKLY_UPDATES` | Updated when fare changes occur |
+| **Terminal Data** | Static | `WEEKLY_UPDATES` | Infrastructure data |
+| **Cache Information** | Real-time | `MINUTE_UPDATES` | Cache flush date tracking |
 
-### Endpoints
+## WSF Documentation
 
-```http
-GET /cacheflushdate
+- **[WSF Fares API Documentation](https://www.wsdot.wa.gov/ferries/api/)**
+- **[WSF Fares API Help](https://www.wsdot.wa.gov/ferries/api/fares/)**
+
+## API Endpoints
+
+### Endpoints Summary
+
+| Endpoint | Method | Description | Parameters | Returns |
+|----------|--------|-------------|------------|---------|
+| `cacheflushdate` | GET | API cache flush date | None | `Date` |
+| `validdaterange` | GET | Valid date range for fare queries | None | `ValidDateRange` |
+| `terminals/{TripDate}` | GET | All terminals available for a date | `TripDate` | `Terminal[]` |
+| `terminalmates/{TripDate}/{TerminalID}` | GET | Terminals that connect to a specific terminal | `TripDate`, `TerminalID` | `TerminalMate[]` |
+| `terminalcombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}` | GET | Terminal combination details | `TripDate`, `DepartingTerminalID`, `ArrivingTerminalID` | `TerminalCombo[]` |
+| `farelineitems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}` | GET | All fares for a route | `TripDate`, `DepartingTerminalID`, `ArrivingTerminalID`, `RoundTrip` | `FareLineItem[]` |
+| `faretotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}` | GET | Fare total calculations | `TripDate`, `DepartingTerminalID`, `ArrivingTerminalID`, `RoundTrip`, `FareLineItemID`, `Quantity` | `FareTotal[]` |
+
+### Base URL
+```
+https://www.wsdot.wa.gov/ferries/api/fares
 ```
 
-### Valid Accept Headers
+## Usage Examples
 
-- `application/json`
-- `text/xml`
+### Basic Usage
 
-### Description
+```typescript
+import { WsfFares } from 'ws-dottie';
 
-Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
+// Get cache flush date
+const cacheFlushDate = await WsfFares.getCacheFlushDate();
 
-The following operations return data that changes infrequently and can be cached in the manner described above:
+// Get valid date range
+const validDateRange = await WsfFares.getValidDateRange();
 
-- `/validdaterange`
-- `/terminals`
-- `/terminalmates`
-- `/terminalcombo`
-- `/terminalcomboverbose`
-- `/farelineitemsbasic`
-- `/farelineitems`
-- `/farelineitemsverbose`
-- `/faretotals`
+// Get terminals for a trip date
+const terminals = await WsfFares.getTerminals({ tripDate: new Date("2024-04-01") });
 
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `CacheFlushDate` | `date` (optional) | If present, notes the date that certain service data was last changed (see description). |
-
-
----
-
-## /validdaterange
-
-### Endpoints
-
-```http
-GET /validdaterange?apiaccesscode={APIAccessCode}
+// Get fare line items for a route
+const fareLineItems = await WsfFares.getFareLineItems({ 
+  tripDate: new Date("2024-04-01"), 
+  departingTerminalID: 7, 
+  arrivingTerminalID: 8, 
+  roundTrip: false 
+});
 ```
 
-### Valid Accept Headers
+### Parameter Examples
 
-- `application/json`
-- `text/xml`
+| Function | Parameters | Example | Description |
+|----------|------------|---------|-------------|
+| `getCacheFlushDate` | None | `getCacheFlushDate()` | Get API cache flush date |
+| `getValidDateRange` | None | `getValidDateRange()` | Get valid date range for fare queries |
+| `getTerminals` | `{ tripDate: Date }` | `getTerminals({ tripDate: new Date("2024-04-01") })` | Get all terminals for a trip date |
+| `getFareLineItems` | `{ tripDate: Date, departingTerminalID: number, arrivingTerminalID: number, roundTrip: boolean }` | `getFareLineItems({ tripDate: new Date("2024-04-01"), departingTerminalID: 7, arrivingTerminalID: 8, roundTrip: false })` | Get all fares for a route |
 
-### Description
+### Returns
 
-This operation retrieves a date range for which fares data is currently published & available. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+See Data Types below. Fare and terminal lookups return typed arrays; totals return a `FareTotal` with a breakdown. Date range functions return `ValidDateRange`.
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+### Common Use Cases
 
-### Model
+```typescript
+// Example 1: Get fare information for a route
+const fareLineItems = await WsfFares.getFareLineItems({ 
+  tripDate: "2024-04-01", 
+  departingTerminalId: 7, 
+  arrivingTerminalId: 8, 
+  roundTrip: false 
+});
+fareLineItems.forEach(fare => {
+  console.log(`${fare.Description}: $${fare.Price}`);
+});
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `DateFrom` | `date` | Fares information is available from this date onward. |
-| `DateThru` | `date` | Fares information is not available after this date. |
-
-
----
-
-## /terminals/{TripDate}
-
-### Endpoints
-
-```http
-GET /terminals/{TripDate}?apiaccesscode={APIAccessCode}
+// Example 2: Calculate fare total
+const fareTotal = await WsfFares.getFareTotal({ 
+  tripDate: "2024-04-01", 
+  departingTerminalId: 7, 
+  arrivingTerminalId: 8, 
+  roundTrip: false, 
+  fareLineItemId: 1, 
+  quantity: 2 
+});
+// Display calculated fare total
 ```
 
-### Valid Accept Headers
+## React Integration
 
-- `application/json`
-- `text/xml`
+For comprehensive React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
 
-### Description
+### Available Hooks
 
-This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
+| Hook | Parameters | Description | Caching Strategy |
+|------|------------|-------------|------------------|
+| `useCacheFlushDate` | None | Get API cache flush date | `MINUTE_UPDATES` |
+| `useValidDateRange` | None | Get valid date range for fare queries | `WEEKLY_UPDATES` |
+| `useTerminals` | `{ tripDate: string }` | Get all terminals for a trip date | `WEEKLY_UPDATES` |
+| `useFareLineItems` | `{ tripDate: string, departingTerminalId: number, arrivingTerminalId: number, roundTrip: boolean }` | Get all fares for a route | `WEEKLY_UPDATES` |
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+### Basic Hook Usage
 
-### Model
+```typescript
+import { useFareLineItems } from 'ws-dottie';
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `Description` | `string` | The name of the terminal. |
+function FareLineItemsList() {
+  const { data, isLoading, error } = useFareLineItems({ 
+    tripDate: "2024-04-01", 
+    departingTerminalId: 7, 
+    arrivingTerminalId: 8, 
+    roundTrip: false 
+  });
 
+  if (isLoading) return <div>Loading fare information...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
----
-
-## /terminalmates/{TripDate}/{TerminalID}
-
-### Endpoints
-
-```http
-GET /terminalmates/{TripDate}/{TerminalID}?apiaccesscode={APIAccessCode}
+  return (
+    <div>
+      {data?.map(fare => (
+        <div key={fare.FareLineItemID}>
+          <h3>{fare.Description}</h3>
+          <p>Price: ${fare.Price}</p>
+          <p>Category: {fare.Category}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 ```
 
-### Valid Accept Headers
+## Data Types
 
-- `application/json`
-- `text/xml`
+### Type Summary
 
-### Description
+| Type Name | Description | Key Properties |
+|-----------|-------------|----------------|
+| `ValidDateRange` | Valid date range for fare queries | `StartDate`, `EndDate` |
+| `Terminal` | Terminal information | `TerminalID`, `TerminalName`, `TerminalAbbrev` |
+| `FareLineItem` | Fare line item information | `FareLineItemID`, `Description`, `Price`, `Category` |
+| `FareTotal` | Fare total calculation | `TotalPrice`, `Breakdown` |
 
-This operation provides arriving terminals for a given departing terminal and trip date. A valid departing terminal may be found by using `/terminals`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
+### Detailed Type Definitions
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+```typescript
+type ValidDateRange = {
+  StartDate: string;                             // Start date for valid fare queries
+  EndDate: string;                               // End date for valid fare queries
+};
 
-### Model
+type Terminal = {
+  TerminalID: number;                            // Unique identifier for the terminal
+  TerminalName: string;                          // Full name of the terminal
+  TerminalAbbrev: string;                        // Abbreviated terminal name
+  TerminalDescription: string;                   // Description of the terminal
+};
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `Description` | `string` | The name of the terminal. |
+type FareLineItem = {
+  FareLineItemID: number;                        // Unique identifier for the fare line item
+  Description: string;                           // Description of the fare
+  Price: number;                                 // Price in dollars
+  Category: string;                              // Category of the fare (e.g., "Passenger", "Vehicle")
+  RoundTrip: boolean;                            // Whether this is a round trip fare
+};
 
----
-
-## /terminalcombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}
-
-### Endpoints
-
-```http
-GET /terminalcombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}?apiaccesscode={APIAccessCode}
+type FareTotal = {
+  TotalPrice: number;                            // Total calculated price
+  Breakdown: FareLineItem[];                     // Breakdown of fare components
+};
 ```
 
-### Valid Accept Headers
+## Common Use Cases
 
-- `application/json`
-- `text/xml`
+### Use Case 1: Fare Planning and Calculation
+**Scenario**: Help users plan ferry trips by calculating fares for different routes and passenger types
+**Solution**: Use the `getFareLineItems` and `getFareTotal` functions to provide comprehensive fare information
 
-### Description
-
-This operation describes what fares are collected for a given departing terminal, arriving terminal and trip date. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `DepartingDescription` | `string` | The name of the departing terminal. |
-| `ArrivingDescritpion` | `string` | The name of the arriving terminal. |
-| `CollectionDescription` | `string` | Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc). |
-
-
----
-
-## /terminalcomboverbose/{TripDate}
-
-### Endpoints
-
-```http
-GET /terminalcomboverbose/{TripDate}?apiaccesscode={APIAccessCode}
+```typescript
+// Implementation example
+const fareLineItems = await WsfFares.getFareLineItems({ 
+  tripDate: "2024-04-01", 
+  departingTerminalId: 7, 
+  arrivingTerminalId: 8, 
+  roundTrip: false 
+});
+// Display fare options for trip planning
 ```
 
-### Valid Accept Headers
+### Use Case 2: Terminal and Route Discovery
+**Scenario**: Help users discover available terminals and routes for ferry travel
+**Solution**: Use the `getTerminals` and `getTerminalMates` functions to show available connections
 
-- `application/json`
-- `text/xml`
-
-### Description
-
-This operation retrieves fare collection descriptions for all terminal combinations available on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `DepartingTerminalID` | `integer` | Unique identifier for the departing terminal. |
-| `DepartingDescription` | `string` | The name of the departing terminal. |
-| `ArrivingTerminalID` | `integer` | Unique identifier for the arriving terminal. |
-| `ArrivingDescritpion` | `string` | The name of the arriving terminal. |
-| `CollectionDescription` | `string` | Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc). |
-
----
-
-## /farelineitemsbasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}
-
-### Endpoints
-
-```http
-GET /farelineitemsbasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}?apiaccesscode={APIAccessCode}
+```typescript
+// Implementation example
+const terminals = await WsfFares.getTerminals({ tripDate: new Date("2024-04-01") });
+// Display available terminals for trip planning
 ```
 
-### Valid Accept Headers
+## Performance & Caching
 
-- `application/json`
-- `text/xml`
+This API uses the **WEEKLY_UPDATES** caching strategy. For detailed information about caching configuration, performance optimization, and advanced caching options, see the [Performance & Caching](../API-REFERENCE.md#performance--caching) section in the API Reference.
 
-### Description
+| Caching Aspect | Configuration | Description |
+|----------------|---------------|-------------|
+| **Stale Time** | 1 day | Data considered fresh for 1 day |
+| **Refetch Interval** | 1 day | Automatically refetch data every 1 day |
+| **GC Time** | 2 days | Keep unused data in cache for 2 days |
+| **Retry** | 5 attempts | Retry failed requests up to 5 times |
 
-This operation retrieves the most popular fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
+## Update Frequency
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+Refer to Data Update Frequency near the top of this page for freshness guidance (weekly for fare tables and terminals; minute‑level only for cache timestamps).
 
-### Model
+## Common Patterns
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `FareLineItemID` | `integer` | Unique identifier for a line item. |
-| `FareLineItem` | `string` | A description of the fare (eg. "Adult (age 19 - 64)"). |
-| `Category` | `string` | A logical grouping that the fare belongs to (eg. "Passenger"). |
-| `DirectionIndependent` | `boolean` | A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. |
-| `Amount` | `decimal` | The cost of the fare in dollars. |
+For information about data transformation, error handling, caching strategies, and other common patterns, see the [API Reference](../API-REFERENCE.md) documentation.
 
+## References
 
----
-
-## /farelineitems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}
-
-### Endpoints
-
-```http
-GET /farelineitems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}?apiaccesscode={APIAccessCode}
-```
-
-### Valid Accept Headers
-
-- `application/json`
-- `text/xml`
-
-### Description
-
-This operation retrieves fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `FareLineItemID` | `integer` | Unique identifier for a line item. |
-| `FareLineItem` | `string` | A description of the fare (eg. "Adult (age 19 - 64)"). |
-| `Category` | `string` | A logical grouping that the fare belongs to (eg. "Passenger"). |
-| `DirectionIndependent` | `boolean` | A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. |
-| `Amount` | `decimal` | The cost of the fare in dollars. |
-
----
-
-## /farelineitemsverbose/{TripDate}
-
-### Endpoints
-
-```http
-GET /farelineitemsverbose/{TripDate}?apiaccesscode={APIAccessCode}
-```
-
-### Valid Accept Headers
-
-- `application/json`
-- `text/xml`
-
-### Description
-
-This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalComboVerbose` | `array` | All valid terminal combinations associated with the trip date. |
-| `TerminalComboVerbose[].DepartingTerminalID` | `integer` | Unique identifier for the departing terminal. |
-| `TerminalComboVerbose[].DepartingDescription` | `string` | The name of the departing terminal. |
-| `TerminalComboVerbose[].ArrivingTerminalID` | `integer` | Unique identifier for the arriving terminal. |
-| `TerminalComboVerbose[].ArrivingDescritpion` | `string` | The name of the arriving terminal. |
-| `TerminalComboVerbose[].CollectionDescription` | `string` | Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc). |
-| `LineItemXref` | `array` | Associates a terminal combination with a one-way fare and a round trip fare for the given trip date. |
-| `LineItemXref[].TerminalComboIndex` | `integer` | An array index from TerminalComboVerbose. |
-| `LineItemXref[].LineItemIndex` | `integer` | An array index from LineItems. |
-| `LineItemXref[].RoundTripLineItemIndex` | `integer` | An array index from RoundTripLineItems. |
-| `LineItems` | `array` | All one-way fare line items associated with the trip date. |
-| `LineItems[].FareLineItemID` | `integer` | Unique identifier for a line item. |
-| `LineItems[].FareLineItem` | `string` | A description of the fare (eg. "Adult (age 19 - 64)"). |
-| `LineItems[].Category` | `string` | A logical grouping that the fare belongs to (eg. "Passenger"). |
-| `LineItems[].DirectionIndependent` | `boolean` | A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. |
-| `LineItems[].Amount` | `decimal` | The cost of the fare in dollars. |
-| `RoundTripLineItems` | `array` | All round trip line items associated with the trip date. |
-| `RoundTripLineItems[].FareLineItemID` | `integer` | Unique identifier for a line item. |
-| `RoundTripLineItems[].FareLineItem` | `string` | A description of the fare (eg. "Adult (age 19 - 64)"). |
-| `RoundTripLineItems[].Category` | `string` | A logical grouping that the fare belongs to (eg. "Passenger"). |
-| `RoundTripLineItems[].DirectionIndependent` | `boolean` | A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal. |
-| `RoundTripLineItems[].Amount` | `decimal` | The cost of the fare in dollars. |
-
----
-
-## /faretotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}
-
-### Endpoints
-
-```http
-GET /faretotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}?apiaccesscode={APIAccessCode}
-```
-
-### Valid Accept Headers
-
-- `application/json`
-- `text/xml`
-
-### Description
-
-This operation totals a set of fares & associated quantities for either a round trip or one-way journey, given a departing terminal, arriving terminal and trip date. Fare line item ID is a comma delimited array of line items you'd like to have totalled. Use `/farelineitems` to find valid fare line item ID values. Quantity is also a comma delimited array. Quantity values must be greater than or equal to zero. The same index in the fare line item ID and quantity input arrays must associate a fare with a quantity. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). A valid API Access Code from the WSDOT Traveler API must also be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `FareTotalType` | `enum/integer` | Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total. |
-| `Description` | `string` | A description of the amount. |
-| `BriefDescription` | `string` | A string representation of the FareTotalType. |
-| `Amount` | `decimal` | A total of the fares in dollars. |
+- **[Error Handling](../API-REFERENCE.md#error-handling)** - Comprehensive error handling patterns
+- **[Data Transformation](../API-REFERENCE.md#data-transformation)** - Automatic data conversion and filtering
+- **[React Hooks](../API-REFERENCE.md#react-hooks)** - Complete React integration guide
+- **[Performance & Caching](../API-REFERENCE.md#performance--caching)** - Advanced caching configuration
+- **[Testing Status](../API-REFERENCE.md#testing-status)** - E2E test completion and validation status
+- **[API Compliance](../API-REFERENCE.md#api-compliance)** - WSF API alignment verification 

@@ -1,321 +1,321 @@
 # WSF Vessels API
 
-**Source:** [WSDOT Ferries API Documentation](https://www.wsdot.wa.gov/ferries/api/vessels/documentation/rest.html)
+The WSF Vessels API provides comprehensive access to Washington State Ferries vessel information, including vessel details, real-time locations, accommodations, statistics, and historical data.
 
-**Base URL:** `https://www.wsdot.wa.gov/ferries/api/vessels/rest`
+> **📚 Documentation Navigation**: [Index](../INDEX.md) • [Getting Started](../GETTING-STARTED.md) • [API Reference](../API-REFERENCE.md) • [Examples](../EXAMPLES.md)
 
-## Table of Contents
+## Overview
 
-- [API Access Code](#api-access-code)
-- [/cacheflushdate](#cacheflushdate)
-- [/vesselbasics](#vesselbasics)
-- [/vesselbasics/{VesselID}](#vesselbasicsvesselid)
-- [/vesselaccommodations](#vesselaccommodations)
-- [/vesselaccommodations/{VesselID}](#vesselaccommodationsvesselid)
-- [/vesselstats](#vesselstats)
-- [/vesselstats/{VesselID}](#vesselstatsvesselid)
-- [/vessellocations](#vessellocations)
-- [/vessellocations/{VesselID}](#vessellocationsvesselid)
-- [/vesselverbose](#vesselverbose)
-- [/vesselverbose/{VesselID}](#vesselverbosevesselid)
+This module provides access to the WSF Vessels API, which offers comprehensive information about Washington State Ferries vessels, including real-time vessel locations, specifications, accommodations, and operational statistics.
 
-[Note: also see [this link](https://www.wsdot.wa.gov/ferries/api/vessels/rest/help/operations/GetVesselHistory) and [this link](https://www.wsdot.wa.gov/ferries/api/vessels/rest/help/operations/GetAllVessels) for the VesselHistory endpoint, which is not documented on the WSF API page above.]
+### Key Features
 
+| Feature | Description | Availability |
+|---------|-------------|--------------|
+| **Real-time Locations** | Live vessel positions, speeds, and headings | ✅ Available |
+| **Vessel Basics** | Names, abbreviations, and operational status | ✅ Available |
+| **Vessel Specifications** | Detailed technical specifications and capabilities | ✅ Available |
+| **Accommodation Data** | Passenger and vehicle capacity information | ✅ Available |
+| **Operational Statistics** | Performance metrics and operational data | ✅ Available |
+| **Historical Data** | Past routes, schedules, and operational history | ✅ Available |
+| **Cache Management** | Cache flush dates for data freshness | ✅ Available |
+| **Fleet Management** | Monitor vessel status and operational information | ✅ Available |
+| **Travel Planning** | Check vessel availability and routes | ✅ Available |
+| **Accessibility Information** | Provide ADA and accommodation details | ✅ Available |
 
-## API Access Code
+> **📝 Note**: The general vessel history endpoint (`/vesselhistory`) is deprecated and returns minimal data. Use the date-range specific endpoints (`/vesselhistory/{VesselName}/{DateStart}/{DateEnd}`) for complete historical data.
+>
+> **⚡ Performance Note**: The `getMultipleVesselHistories` and `getAllVesselHistories` functions use batched processing (default: 6 concurrent requests) to avoid overwhelming the server and browser connection limits. This provides optimal performance while maintaining reliability.
 
-Most of the REST operations require that an API Access Code be passed as part of the URL string. In order to get a valid API Access Code, please register your email address with the WSDOT Traveler API.
+### Data Update Frequency
 
----
+| Data Type | Update Frequency | Cache Strategy | Notes |
+|-----------|------------------|----------------|-------|
+| **Vessel Locations** | Real-time | `MINUTE_UPDATES` | Updated continuously as vessels move |
+| **Vessel Data** | Static | `WEEKLY_UPDATES` | Updated when vessel information changes |
+| **Statistics** | Daily | `DAILY_UPDATES` | Updated daily with operational data |
+| **Historical Data** | Minute-level | `MINUTE_UPDATES` | Updated every minute for fresh historical data |
 
-## /vesselbasics
+## WSF Documentation
 
-### Endpoints
+- **[WSF Vessels API Documentation](https://www.wsdot.wa.gov/ferries/api/)**
+- **[WSF Vessels API Help](https://www.wsdot.wa.gov/ferries/api/vessels/)**
 
-```http
-GET /vesselbasics?apiaccesscode={APIAccessCode}
-GET /vesselbasics/{VesselID}?apiaccesscode={APIAccessCode}
+## API Endpoints
+
+### Endpoints Summary
+
+| Endpoint | Method | Description | Parameters | Returns |
+|----------|--------|-------------|------------|---------|
+| `vesselbasics` | GET | Get all vessel basics | None | `VesselBasic[]` |
+| `vesselbasics/{VesselID}` | GET | Get specific vessel basics | `VesselID` | `VesselBasic` |
+| `vessellocations` | GET | Get all vessel locations | None | `VesselLocation[]` |
+| `vessellocations/{VesselID}` | GET | Get specific vessel location | `VesselID` | `VesselLocation` |
+| `vesselverbose` | GET | Get all vessel verbose data | None | `VesselVerbose[]` |
+| `vesselaccommodations` | GET | Get all vessel accommodations | None | `VesselAccommodation[]` |
+| `vesselstats` | GET | Get all vessel statistics | None | `VesselStats[]` |
+| `vesselhistory/{VesselName}/{DateStart}/{DateEnd}` | GET | Get vessel history for specific vessel and date range | `VesselName`, `DateStart`, `DateEnd` | `VesselHistory[]` |
+| `cacheflushdate` | GET | Get cache flush date | None | `VesselsCacheFlushDate` |
+
+### Base URL
+```
+https://www.wsdot.wa.gov/ferries/api/vessels
 ```
 
-### Valid Accept Headers
+## Usage Examples
 
-- `application/json`
-- `text/xml`
+### Basic Usage
 
-### Description
+```typescript
+import { WsfVessels } from 'ws-dottie';
 
-This operation retrieves the most basic / brief information pertaining to vessels. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+// Get all vessel basics
+const vessels = await WsfVessels.getVesselBasics();
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+// Get specific vessel basics
+const vessel = await WsfVessels.getVesselBasicsById({ vesselId: 1 });
 
-### Model
+// Get all vessel locations
+const locations = await WsfVessels.getVesselLocations();
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `VesselID` | `integer` | Unique identifier for a vessel. |
-| `VesselSubjectID` | `integer` | Identifies this vessel as a unique WSF subject. |
-| `VesselName` | `string` | The name of the vessel. |
-| `VesselAbbrev` | `string` | The vessel's abbreviation. |
-| `Class` | `complex` | Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel. |
-| `Class.ClassID` | `integer` | Unique identifier for a vessel class. |
-| `Class.ClassSubjectID` | `integer` | Identifies this vessel class as a unique WSF subject. |
-| `Class.ClassName` | `string` | The name of the vessel class. |
-| `Class.SortSeq` | `integer` (optional) | A preferred sort order (sort-ascending with respect to other vessel classes). |
-| `Class.DrawingImg` | `string` | A URL that points to a detailed drawing of the vessel class. |
-| `Class.SilhouetteImg` | `string` | A URL that points to a small drawing of the vessel class. |
-| `Class.PublicDisplayName` | `string` | The name of this vessel class, formatted for the public. |
-| `Status` | `enum/integer` (optional) | Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. |
-| `OwnedByWSF` | `boolean` | Indicates whether or not the vessel is owned by WSF. |
+// Get vessel accommodations
+const accommodations = await WsfVessels.getVesselAccommodations();
 
+// Get vessel statistics
+const stats = await WsfVessels.getVesselStats();
 
+// Get vessel history for a specific vessel and date range
+const history = await WsfVessels.getVesselHistoryByVesselAndDateRange({
+  vesselName: "Spokane",
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
 
----
+// Get vessel history for multiple vessels
+const multiVesselHistory = await WsfVessels.getMultipleVesselHistories({
+  vesselNames: ["Spokane", "Walla Walla"],
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
 
-## /vesselaccommodations
+// Get vessel history for all vessels in the fleet
+const allVesselHistory = await WsfVessels.getAllVesselHistories({
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-02")
+});
 
-### Endpoints
+### Parameter Examples
 
-```http
-GET /vesselaccommodations?apiaccesscode={APIAccessCode}
-GET /vesselaccommodations/{VesselID}?apiaccesscode={APIAccessCode}
+| Function | Parameters | Example | Description |
+|----------|------------|---------|-------------|
+| `getVesselBasics` | None | `getVesselBasics()` | Get all vessel basics |
+| `getVesselBasicsById` | `{ vesselId: number }` | `getVesselBasicsById({ vesselId: 1 })` | Get specific vessel basics |
+| `getVesselLocations` | None | `getVesselLocations()` | Get all vessel locations |
+| `getVesselAccommodations` | None | `getVesselAccommodations()` | Get all vessel accommodations |
+| `getVesselHistoryByVesselAndDateRange` | `{ vesselName: string, dateStart: Date, dateEnd: Date }` | `getVesselHistoryByVesselAndDateRange({ vesselName: "Spokane", dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for specific vessel and date range |
+| `getMultipleVesselHistories` | `{ vesselNames: string[], dateStart: Date, dateEnd: Date, batchSize?: number }` | `getMultipleVesselHistories({ vesselNames: ["Spokane", "Walla Walla"], dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for multiple vessels |
+| `getAllVesselHistories` | `{ dateStart: Date, dateEnd: Date, batchSize?: number }` | `getAllVesselHistories({ dateStart: new Date("2024-01-01"), dateEnd: new Date("2024-01-02") })` | Get vessel history for all 21 vessels in the fleet |
+
+### Returns
+
+See Data Types below. Each function returns strongly typed data validated at runtime. Historical endpoints return arrays of `VesselHistory`; basics, stats, accommodations, and verbose endpoints return their respective typed arrays or single items.
+
+### Common Use Cases
+
+```typescript
+// Example 1: Display all vessels
+const vessels = await WsfVessels.getVesselBasics();
+vessels.forEach(vessel => {
+  console.log(`${vessel.VesselName}: ${vessel.VesselAbbrev}`);
+});
+
+// Example 2: Get vessel locations
+const locations = await WsfVessels.getVesselLocations();
+// Display real-time vessel positions
 ```
 
-### Valid Accept Headers
+## React Integration
 
-- `application/json`
-- `text/xml`
+For comprehensive React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
 
-### Description
+### Available Hooks
 
-This operation provides details regarding vessel accommodations (bathrooms, galley, elevator, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+| Hook | Parameters | Description | Caching Strategy |
+|------|------------|-------------|------------------|
+| `useVesselBasics` | None | Get all vessel basics | `WEEKLY_UPDATES` |
+| `useVesselBasicsByVesselId` | `{ vesselId: number }` | Get specific vessel basics | `WEEKLY_UPDATES` |
+| `useVesselLocations` | None | Get all vessel locations | `MINUTE_UPDATES` |
+| `useVesselAccommodations` | None | Get all vessel accommodations | `WEEKLY_UPDATES` |
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+### Basic Hook Usage
 
-### Model
+```typescript
+import { useVesselBasics } from 'ws-dottie';
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `VesselID` | `integer` | Unique identifier for a vessel. |
-| `VesselSubjectID` | `integer` | Identifies this vessel as a unique WSF subject. |
-| `VesselName` | `string` | The name of the vessel. |
-| `VesselAbbrev` | `string` | The vessel's abbreviation. |
-| `Class` | `complex` | Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel. |
-| `Class.ClassID` | `integer` | Unique identifier for a vessel class. |
-| `Class.ClassSubjectID` | `integer` | Identifies this vessel class as a unique WSF subject. |
-| `Class.ClassName` | `string` | The name of the vessel class. |
-| `Class.SortSeq` | `integer` (optional) | A preferred sort order (sort-ascending with respect to other vessel classes). |
-| `Class.DrawingImg` | `string` | A URL that points to a detailed drawing of the vessel class. |
-| `Class.SilhouetteImg` | `string` | A URL that points to a small drawing of the vessel class. |
-| `Class.PublicDisplayName` | `string` | The name of this vessel class, formatted for the public. |
-| `CarDeckRestroom` | `boolean` | Indicates whether or not the vessel has an ADA restroom on the car deck. |
-| `CarDeckShelter` | `boolean` | Indicates whether or not the vessel has an ADA shelter on the car deck. |
-| `Elevator` | `boolean` | Indicates whether or not the vessel has an elevator. |
-| `ADAAccessible` | `boolean` | Indicates whether or not the vessel is ADA accessible. |
-| `MainCabinGalley` | `boolean` | Indicates whether or not the vessel has a galley in the main cabin. |
-| `MainCabinRestroom` | `boolean` | Indicates whether or not the vessel has a restroom in the main cabin. |
-| `PublicWifi` | `boolean` | Indicates whether or not Wifi is available on the vessel. |
-| `ADAInfo` | `string` (optional) | Additional ADA notes concerning this vessel. |
-| `AdditionalInfo` | `string` (optional) | Additional miscellaneous notes concerning this vessel. |
+function VesselsList() {
+  const { data, isLoading, error } = useVesselBasics();
 
+  if (isLoading) return <div>Loading vessels...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-
-
----
-
-## /vesselstats
-
-### Endpoints
-
-```http
-GET /vesselstats?apiaccesscode={APIAccessCode}
-GET /vesselstats/{VesselID}?apiaccesscode={APIAccessCode}
+  return (
+    <div>
+      {data?.map(vessel => (
+        <div key={vessel.VesselID}>
+          <h3>{vessel.VesselName}</h3>
+          <p>Abbreviation: {vessel.VesselAbbrev}</p>
+          {/* Status not provided in current schema; available fields include Class, Status (numeric), etc. */}
+        </div>
+      ))}
+    </div>
+  );
+}
 ```
 
-### Valid Accept Headers
+## Data Types
 
-- `application/json`
-- `text/xml`
+### Type Summary
 
-### Description
+| Type Name | Description | Key Properties |
+|-----------|-------------|----------------|
+| `VesselBasic` | Basic vessel information | `VesselID`, `VesselName`, `VesselAbbrev`, `VesselStatus` |
+| `VesselLocation` | Vessel location data | `VesselID`, `Latitude`, `Longitude`, `Speed`, `Heading` |
+| `VesselAccommodation` | Vessel accommodation data | `VesselID`, `PassengerCapacity`, `VehicleCapacity` |
+| `VesselStats` | Vessel statistics | `VesselID`, `OperationalHours`, `PassengersCarried` |
+| `VesselHistory` | Vessel historical data | `VesselId`, `Vessel`, `Departing`, `Arriving`, `ScheduledDepart`, `ActualDepart`, `EstArrival`, `Date` |
 
-This operation provides details regarding vessel specifications (engine count, length of vessel, year built, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+### Detailed Type Definitions
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+```typescript
+type VesselBasic = {
+  VesselID: number;                              // Unique identifier for the vessel
+  VesselName: string;                            // Full name of the vessel
+  VesselAbbrev: string;                          // Abbreviated vessel name
+  VesselStatus: string;                          // Current operational status
+  VesselDescription: string;                     // Description of the vessel
+};
 
-### Model
+type VesselLocation = {
+  VesselID: number;                              // Unique identifier for the vessel
+  Latitude: number;                              // Current latitude coordinate
+  Longitude: number;                             // Current longitude coordinate
+  Speed: number;                                 // Current speed in knots
+  Heading: number;                               // Current heading in degrees
+  LastUpdated: string;                           // Last update timestamp
+  VesselName: string;                            // Name of the vessel
+};
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `VesselID` | `integer` | Unique identifier for a vessel. |
-| `VesselSubjectID` | `integer` | Identifies this vessel as a unique WSF subject. |
-| `VesselName` | `string` | The name of the vessel. |
-| `VesselAbbrev` | `string` | The vessel's abbreviation. |
-| `Class` | `complex` | Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel. |
-| `Class.ClassID` | `integer` | Unique identifier for a vessel class. |
-| `Class.ClassSubjectID` | `integer` | Identifies this vessel class as a unique WSF subject. |
-| `Class.ClassName` | `string` | The name of the vessel class. |
-| `Class.SortSeq` | `integer` (optional) | A preferred sort order (sort-ascending with respect to other vessel classes). |
-| `Class.DrawingImg` | `string` | A URL that points to a detailed drawing of the vessel class. |
-| `Class.SilhouetteImg` | `string` | A URL that points to a small drawing of the vessel class. |
-| `Class.PublicDisplayName` | `string` | The name of this vessel class, formatted for the public. |
-| `VesselNameDesc` | `string` | The definition or significance behind the name of the vessel. |
-| `VesselHistory` | `string` (optional) | The history of the vessel. |
-| `Beam` | `string` | The length of the vessel's beam in feet / inches. |
-| `CityBuilt` | `string` | The location where the vessel was built. |
-| `SpeedInKnots` | `integer` (optional) | The speed of the vessel. |
-| `Draft` | `string` | The draft of the vessel in feet / inches. |
-| `EngineCount` | `integer` (optional) | The total count of engines aboard the vessel. |
-| `Horsepower` | `integer` (optional) | The horsepower of the vessel. |
-| `Length` | `string` | The length of the vessel in feet / inches. |
-| `MaxPassengerCount` | `integer` (optional) | The max passenger count aboard the vessel. |
-| `PassengerOnly` | `boolean` | Indicates whether or not this vessel supports vehicles (true for passenger only, false for vehicles and passengers). |
-| `FastFerry` | `boolean` | Indicates whether or not this vessel is considered a fast ferry. |
-| `PropulsionInfo` | `string` | The type of engine used in this vessel. |
-| `TallDeckClearance` | `integer` (optional) | The auto deck clearance (in inches) aboard the vessel. |
-| `RegDeckSpace` | `integer` (optional) | The max number of vehicles (includes TallDeckSpace). |
-| `TallDeckSpace` | `integer` (optional) | The total number of tall deck spaces associated with this vessel. |
-| `Tonnage` | `integer` (optional) | The tonnage of the vessel. |
-| `Displacement` | `integer` (optional) | The displacement (weight in long tons) of the vessel. |
-| `YearBuilt` | `integer` (optional) | The year the vessel was built. |
-| `YearRebuilt` | `integer` (optional) | The year the vessel was rebuilt. |
-| `VesselDrawingImg` | `string` (optional) | A URL that points to a detailed drawing of the vessel. If not available, the DrawingImg from the vessel class may be used. |
-| `SolasCertified` | `boolean` | Indicates whether or not the vessel is certified for international travel. |
-| `MaxPassengerCountForInternational` | `integer` (optional) | The max passenger count aboard the vessel for international travel. |
+type VesselAccommodation = {
+  VesselID: number;                              // Unique identifier for the vessel
+  PassengerCapacity: number;                     // Maximum passenger capacity
+  VehicleCapacity: number;                       // Maximum vehicle capacity
+  VesselName: string;                            // Name of the vessel
+  AccommodationDetails: string;                  // Detailed accommodation information
+};
 
+type VesselStats = {
+  VesselID: number;                              // Unique identifier for the vessel
+  OperationalHours: number;                      // Total operational hours
+  PassengersCarried: number;                     // Total passengers carried
+  VesselName: string;                            // Name of the vessel
+  LastUpdated: string;                           // Last update timestamp
+};
 
-
----
-
-## /vessellocations
-
-### Endpoints
-
-```http
-GET /vessellocations?apiaccesscode={APIAccessCode}
-GET /vessellocations/{VesselID}?apiaccesscode={APIAccessCode}
+type VesselHistory = {
+  VesselId: number;                              // Unique identifier for the vessel
+  Vessel: string;                                // Name of the vessel
+  Departing: string | null;                      // Departure terminal name
+  Arriving: string | null;                       // Arrival terminal name
+  ScheduledDepart: Date | null;                  // Scheduled departure time
+  ActualDepart: Date | null;                     // Actual departure time
+  EstArrival: Date | null;                       // Estimated arrival time
+  Date: Date | null;                             // Date of the trip
+};
 ```
 
-### Valid Accept Headers
+## Common Use Cases
 
-- `application/json`
-- `text/xml`
+### Use Case 1: Fleet Monitoring and Management
+**Scenario**: Monitor the entire WSF fleet for operational status and real-time locations
+**Solution**: Use the `getVesselBasics` and `getVesselLocations` functions to display fleet information
 
-### Description
-
-This operation provides vessel locations and associated ETA data. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
-
-**⚠️ Important:** This data changes very frequently (potentially every 5 seconds). Please do not cache results in your application for an extended period of time.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `VesselID` | `integer` | Unique identifier for a vessel. |
-| `VesselName` | `string` | The name of the vessel. |
-| `Mmsi` | `integer` (optional) | The vessel's Maritime Mobile Service Identity. |
-| `DepartingTerminalID` | `integer` | Unique identifier pertaining to the terminal where this vessel is docked or was last docked. |
-| `DepartingTerminalName` | `string` | The name of the terminal where this vessel is docked or was last docked. |
-| `DepartingTerminalAbbrev` | `string` | The abbreviated terminal name where this vessel is docked or was last docked. |
-| `ArrivingTerminalID` | `integer` (optional) | Unique identifier pertaining to the terminal that represents the vessel's next destination. Might not be present if the next scheduled destination is still being determined. |
-| `ArrivingTerminalName` | `string` (optional) | The name of the terminal that represents the vessel's next destination. Might not be present if the next scheduled destination is still being determined. |
-| `ArrivingTerminalAbbrev` | `string` (optional) | The abbreviated terminal name that represent's the vessel's next destination. Might not be present if the next scheduled destination is still being determined. |
-| `Latitude` | `double` | The latitude of the vessel. |
-| `Longitude` | `double` | The longitude of the vessel. |
-| `Speed` | `double` | The speed of the vessel (in Knots). |
-| `Heading` | `double` | The heading of the vessel (in degrees). |
-| `InService` | `boolean` | Indicates whether or not the vessel is in service. |
-| `AtDock` | `boolean` | Indicates whether or not the vessel is docked. |
-| `LeftDock` | `date` (optional) | The date and time that the vessel last left the dock. This value is not present when docked. |
-| `Eta` | `date` (optional) | The estimated date and time that the vessel will arrive at its destination. This value is not present when docked. |
-| `EtaBasis` | `string` (optional) | A brief description summarizing how the Eta is being calculated. This value is not present when docked. |
-| `ScheduledDeparture` | `date` (optional) | The date and time when this vessel was or is scheduled to leave its departing terminal. Might not be present if the next scheduled destination is still being determined. |
-| `OpRouteAbbrev` | `array` | An array of strings that contain 0 or more abbreviated route names currently being serviced by this vessel. |
-| `VesselPositionNum` | `integer` (optional) | For a given route, the number used to identify the scheduled departures being serviced by this vessel. Not present if vessel is not in service. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other vessels). |
-| `ManagedBy` | `enum/integer` | Indicates who manages this vessel. 1 for WSF, 2 for KCM. |
-| `TimeStamp` | `date` | The date and time when this vessel location was last updated. |
-
-
-
----
-
-## /vesselverbose
-
-### Endpoints
-
-```http
-GET /vesselverbose?apiaccesscode={APIAccessCode}
-GET /vesselverbose/{VesselID}?apiaccesscode={APIAccessCode}
+```typescript
+// Implementation example
+const vessels = await wsfVessels.getVesselBasics();
+const locations = await wsfVessels.getVesselLocations();
+// Display fleet monitoring dashboard
 ```
 
-### Valid Accept Headers
+### Use Case 2: Vessel-Specific Information
+**Scenario**: Provide detailed information about specific vessels for travelers
+**Solution**: Use the `getVesselBasicsByVesselId` and `getVesselAccommodations` functions to show vessel details
 
-- `application/json`
-- `text/xml`
+```typescript
+// Implementation example
+const vessel = await WsfVessels.getVesselBasicsById({ vesselId: 1 });
+const accommodations = await WsfVessels.getVesselAccommodations();
+// Display detailed vessel information for travelers
+```
 
-### Description
+### Use Case 3: Vessel Historical Analysis
+**Scenario**: Analyze vessel performance and operational patterns over time
+**Solution**: Use the `getVesselHistoryByVesselAndDateRange` and `getVesselHistoryForMultipleVessels` functions to retrieve historical data
 
-This operation retrieves highly detailed information pertaining to vessels. It should be used if you need to reduce the "chattiness" of your application and don't mind receiving a larger payload of data. The results include and expand on what's already available through the following operations:
+```typescript
+// Implementation example - Single vessel analysis
+const history = await WsfVessels.getVesselHistoryByVesselAndDateRange({
+  vesselName: "Spokane",
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-31")
+});
 
-- `/vesselbasics`
-- `/vesselbasics/{VesselID}`
-- `/vesselaccommodations`
-- `/vesselaccommodations/{VesselID}`
-- `/vesselstats`
-- `/vesselstats/{VesselID}`
+// Analyze on-time performance for single vessel
+const onTimeTrips = history.filter(trip => 
+  trip.ActualDepart && trip.ScheduledDepart && 
+  Math.abs(trip.ActualDepart.getTime() - trip.ScheduledDepart.getTime()) < 5 * 60 * 1000 // Within 5 minutes
+);
 
-A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+console.log(`Spokane on-time performance: ${(onTimeTrips.length / history.length * 100).toFixed(1)}%`);
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+// Implementation example - Fleet-wide analysis
+const allVesselHistory = await WsfVessels.getAllVesselHistories({
+  dateStart: new Date("2024-01-01"),
+  dateEnd: new Date("2024-01-31")
+});
 
-### Model
+// Analyze fleet-wide on-time performance
+const fleetOnTimeTrips = allVesselHistory.filter(trip => 
+  trip.ActualDepart && trip.ScheduledDepart && 
+  Math.abs(trip.ActualDepart.getTime() - trip.ScheduledDepart.getTime()) < 5 * 60 * 1000
+);
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `VesselID` | `integer` | Unique identifier for a vessel. |
-| `VesselSubjectID` | `integer` | Identifies this vessel as a unique WSF subject. |
-| `VesselName` | `string` | The name of the vessel. |
-| `VesselAbbrev` | `string` | The vessel's abbreviation. |
-| `Class` | `complex` | Similar vessels in the fleet are grouped into the same class. This object describes the class associated with this vessel. |
-| `Class.ClassID` | `integer` | Unique identifier for a vessel class. |
-| `Class.ClassSubjectID` | `integer` | Identifies this vessel class as a unique WSF subject. |
-| `Class.ClassName` | `string` | The name of the vessel class. |
-| `Class.SortSeq` | `integer` (optional) | A preferred sort order (sort-ascending with respect to other vessel classes). |
-| `Class.DrawingImg` | `string` | A URL that points to a detailed drawing of the vessel class. |
-| `Class.SilhouetteImg` | `string` | A URL that points to a small drawing of the vessel class. |
-| `Class.PublicDisplayName` | `string` | The name of this vessel class, formatted for the public. |
-| `Status` | `enum/integer` (optional) | Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. |
-| `OwnedByWSF` | `boolean` | Indicates whether or not the vessel is owned by WSF. |
-| `CarDeckRestroom` | `boolean` | Indicates whether or not the vessel has an ADA restroom on the car deck. |
-| `CarDeckShelter` | `boolean` | Indicates whether or not the vessel has an ADA shelter on the car deck. |
-| `Elevator` | `boolean` | Indicates whether or not the vessel has an elevator. |
-| `ADAAccessible` | `boolean` | Indicates whether or not the vessel is ADA accessible. |
-| `MainCabinGalley` | `boolean` | Indicates whether or not the vessel has a galley in the main cabin. |
-| `MainCabinRestroom` | `boolean` | Indicates whether or not the vessel has a restroom in the main cabin. |
-| `PublicWifi` | `boolean` | Indicates whether or not Wifi is available on the vessel. |
-| `ADAInfo` | `string` (optional) | Additional ADA notes concerning this vessel. |
-| `AdditionalInfo` | `string` (optional) | Additional miscellaneous notes concerning this vessel. |
-| `VesselNameDesc` | `string` | The definition or significance behind the name of the vessel. |
-| `VesselHistory` | `string` (optional) | The history of the vessel. |
-| `Beam` | `string` | The length of the vessel's beam in feet / inches. |
-| `CityBuilt` | `string` | The location where the vessel was built. |
-| `SpeedInKnots` | `integer` (optional) | The speed of the vessel. |
-| `Draft` | `string` | The draft of the vessel in feet / inches. |
-| `EngineCount` | `integer` (optional) | The total count of engines aboard the vessel. |
-| `Horsepower` | `integer` (optional) | The horsepower of the vessel. |
-| `Length` | `string` | The length of the vessel in feet / inches. |
-| `MaxPassengerCount` | `integer` (optional) | The max passenger count aboard the vessel. |
-| `PassengerOnly` | `boolean` | Indicates whether or not this vessel supports vehicles (true for passenger only, false for vehicles and passengers). |
-| `FastFerry` | `boolean` | Indicates whether or not this vessel is considered a fast ferry. |
-| `PropulsionInfo` | `string` | The type of engine used in this vessel. |
-| `TallDeckClearance` | `integer` (optional) | The auto deck clearance (in inches) aboard the vessel. |
-| `RegDeckSpace` | `integer` (optional) | The max number of vehicles (includes TallDeckSpace). |
-| `TallDeckSpace` | `integer` (optional) | The total number of tall deck spaces associated with this vessel. |
-| `Tonnage` | `integer` (optional) | The tonnage of the vessel. |
-| `Displacement` | `integer` (optional) | The displacement (weight in long tons) of the vessel. |
-| `YearBuilt` | `integer` (optional) | The year the vessel was built. |
-| `YearRebuilt` | `integer` (optional) | The year the vessel was rebuilt. |
-| `VesselDrawingImg` | `string` (optional) | A URL that points to a detailed drawing of the vessel. If not available, the DrawingImg from the vessel class may be used. |
-| `SolasCertified` | `boolean` | Indicates whether or not the vessel is certified for international travel. |
-| `MaxPassengerCountForInternational` | `integer` (optional) | The max passenger count aboard the vessel for international travel. |
+console.log(`Fleet-wide on-time performance: ${(fleetOnTimeTrips.length / allVesselHistory.length * 100).toFixed(1)}%`);
+```
 
+## Performance & Caching
+
+This API uses the **WEEKLY_UPDATES** caching strategy for static data, **MINUTE_UPDATES** for real-time and historical data, and **DAILY_UPDATES** for statistics. For detailed information about caching configuration, performance optimization, and advanced caching options, see the [Performance & Caching](../API-REFERENCE.md#performance--caching) section in the API Reference.
+
+| Caching Aspect | Configuration | Description |
+|----------------|---------------|-------------|
+| **Stale Time** | 7 days (static), 1 minute (real-time/historical), 1 day (statistics) | Data considered fresh for 7 days (static), 1 minute (real-time/historical), or 1 day (statistics) |
+| **Refetch Interval** | 7 days (static), 1 minute (real-time/historical), 1 day (statistics) | Automatically refetch data every 7 days (static), 1 minute (real-time/historical), or 1 day (statistics) |
+| **GC Time** | 14 days (static), 1 hour (real-time/historical), 2 days (statistics) | Keep unused data in cache for 14 days (static), 1 hour (real-time/historical), or 2 days (statistics) |
+| **Retry** | 5 attempts (static), 0 attempts (real-time/historical), 5 attempts (statistics) | Retry failed requests up to 5 times (static/statistics) or no retries (real-time/historical) |
+
+## Update Frequency
+
+Refer to Data Update Frequency near the top of this page for freshness guidance (real‑time locations, daily stats, weekly static data).
+
+## Common Patterns
+
+For information about data transformation, error handling, caching strategies, and other common patterns, see the [API Reference](../API-REFERENCE.md) documentation.
+
+## References
+
+- **[Error Handling](../API-REFERENCE.md#error-handling)** - Comprehensive error handling patterns
+- **[Data Transformation](../API-REFERENCE.md#data-transformation)** - Automatic data conversion and filtering
+- **[React Hooks](../API-REFERENCE.md#react-hooks)** - Complete React integration guide
+- **[Performance & Caching](../API-REFERENCE.md#performance--caching)** - Advanced caching configuration
+- **[Testing Status](../API-REFERENCE.md#testing-status)** - E2E test completion and validation status
+- **[API Compliance](../API-REFERENCE.md#api-compliance)** - WSF API alignment verification 

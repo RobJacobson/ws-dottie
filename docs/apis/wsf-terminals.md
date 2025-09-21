@@ -1,386 +1,238 @@
 # WSF Terminals API
 
-**Source:** [WSDOT Ferries API Documentation](https://www.wsdot.wa.gov/ferries/api/terminals/documentation/rest.html)
+The WSF Terminals API provides comprehensive access to Washington State Ferries terminal information, including basic terminal data, sailing space availability, terminal locations, wait times, and detailed terminal facilities.
 
-**Base URL:** `https://www.wsdot.wa.gov/ferries/api/terminals/rest`
+## Overview
 
-## Table of Contents
+This module provides access to the WSF Terminals API, which offers comprehensive information about Washington State Ferries terminals, including basic terminal data, sailing space availability, terminal locations, wait times, and detailed terminal facilities.
 
-- [API Access Code](#api-access-code)
-- [/cacheflushdate](#cacheflushdate)
-- [/terminalbasics](#terminalbasics)
-- [/terminalbasics/{TerminalID}](#terminalbasicsterminalid)
-- [/terminalbulletins](#terminalbulletins)
-- [/terminalbulletins/{TerminalID}](#terminalbulletinsterminalid)
-- [/terminallocations](#terminallocations)
-- [/terminallocations/{TerminalID}](#terminallocationsterminalid)
-- [/terminalsailingspace](#terminalsailingspace)
-- [/terminalsailingspace/{TerminalID}](#terminalsailingspaceterminalid)
-- [/terminaltransports](#terminaltransports)
-- [/terminaltransports/{TerminalID}](#terminaltransportsterminalid)
-- [/terminalverbose](#terminalverbose)
-- [/terminalverbose/{TerminalID}](#terminalverboseterminalid)
-- [/terminalwaittimes](#terminalwaittimes)
-- [/terminalwaittimes/{TerminalID}](#terminalwaittimesterminalid)
+### Key Features
 
+| Feature | Description | Availability |
+|---------|-------------|--------------|
+| **Terminal Information** | Access basic terminal details and contact information | ✅ Available |
+| **Space Availability** | Monitor real-time parking and space availability | ✅ Available |
+| **Wait Time Monitoring** | Track current wait times and congestion | ✅ Available |
+| **Location Services** | Get terminal coordinates for mapping applications | ✅ Available |
+| **Facility Information** | Access detailed terminal amenities and services | ✅ Available |
+| **Real-time Updates** | Monitor space and wait time changes | ✅ Available |
+| **Transportation Planning** | Find transit connections to terminals | ✅ Available |
+| **Caching Strategy** | Coordinate data caching using cache flush dates | ✅ Available |
+| **Geographic Data** | Multiple zoom levels for GIS display applications | ✅ Available |
+| **Comprehensive Details** | Verbose terminal information for major terminals | ✅ Available |
 
-## API Access Code
+### Data Update Frequency
 
-Most of the REST operations require that an API Access Code be passed as part of the URL string. In order to get a valid API Access Code, please register your email address with the WSDOT Traveler API.
+| Data Type | Update Frequency | Cache Strategy | Notes |
+|-----------|------------------|----------------|-------|
+| **Terminal Data** | Static | `WEEKLY_UPDATES` | Updated when terminal information changes |
+| **Space Availability** | Real-time | `MINUTE_UPDATES` | Updated continuously as space changes |
+| **Wait Times** | Real-time | `MINUTE_UPDATES` | Updated continuously as wait times change |
 
----
+## WSF Documentation
 
-## /cacheflushdate
+- **[WSF Terminals API Documentation](https://www.wsdot.wa.gov/ferries/api/)**
+- **[WSF Terminals API Help](https://www.wsdot.wa.gov/ferries/api/terminals/)**
 
-### Endpoints
+## API Endpoints
 
-```http
-GET /cacheflushdate
+### Endpoints Summary
+
+| Endpoint | Method | Description | Parameters | Returns |
+|----------|--------|-------------|------------|---------|
+| `cacheflushdate` | GET | Cache flush date for coordinating data caching | None | `TerminalsCacheFlushDate` |
+| `terminalbasics` | GET | Basic details for all terminals | None | `TerminalBasics[]` |
+| `terminalbasics/{TerminalID}` | GET | Basic details for specific terminal | `TerminalID` | `TerminalBasics` |
+| `terminallocations` | GET | Location details for all terminals | None | `TerminalLocation[]` |
+| `terminalsailingspace` | GET | Sailing space availability for all terminals | None | `TerminalSailingSpace[]` |
+| `terminalwaittimes` | GET | Wait times for all terminals | None | `TerminalWaitTimes[]` |
+| `terminalverbose` | GET | Detailed terminal facilities for all terminals | None | `TerminalVerbose[]` |
+
+### Base URL
+```
+https://www.wsdot.wa.gov/ferries/api/terminals
 ```
 
-### Valid Accept Headers
+## Usage Examples
 
-- `application/json`
-- `text/xml`
+### Basic Usage
 
-### Description
+```typescript
+import { WsfTerminals } from 'ws-dottie';
 
-Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
+// Get all terminal basics
+const terminals = await WsfTerminals.getTerminalBasics();
 
-The following operations return data that changes infrequently and can be cached in the manner described above:
+// Get specific terminal basics
+const terminal = await WsfTerminals.getTerminalBasicsByTerminalId({ terminalId: 7 });
 
-- `/terminalbasics`
-- `/terminalbasics/{TerminalID}`
-- `/terminalbulletins`
-- `/terminalbulletins/{TerminalID}`
-- `/terminallocations`
-- `/terminallocations/{TerminalID}`
-- `/terminaltransports`
-- `/terminaltransports/{TerminalID}`
-- `/terminalverbose`
-- `/terminalverbose/{TerminalID}`
-- `/terminalwaittimes`
-- `/terminalwaittimes/{TerminalID}`
+// Get terminal sailing space
+const spaceData = await WsfTerminals.getTerminalSailingSpace();
 
-### Model
+// Get terminal wait times
+const waitTimes = await WsfTerminals.getTerminalWaitTimes();
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `CacheFlushDate` | `date` (optional) | If present, notes the date that certain service data was last changed (see description). |
-
-
-
----
-
-## /terminalbasics
-
-### Endpoints
-
-```http
-GET /terminalbasics?apiaccesscode={APIAccessCode}
-GET /terminalbasics/{TerminalID}?apiaccesscode={APIAccessCode}
+// Get detailed terminal information
+const verboseTerminals = await WsfTerminals.getTerminalVerbose();
 ```
 
-### Valid Accept Headers
+### Parameter Examples
 
-- `application/json`
-- `text/xml`
+| Function | Parameters | Example | Description |
+|----------|------------|---------|-------------|
+| `getTerminalBasics` | None | `getTerminalBasics()` | Get basic details for all terminals |
+| `getTerminalBasicsByTerminalId` | `{ terminalId: number }` | `getTerminalBasicsByTerminalId({ terminalId: 7 })` | Get basic details for specific terminal |
+| `getTerminalSailingSpace` | None | `getTerminalSailingSpace()` | Get sailing space availability for all terminals |
+| `getTerminalWaitTimes` | None | `getTerminalWaitTimes()` | Get wait times for all terminals |
 
-### Description
+### Returns
 
-This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+See Data Types below. Basics, locations, sailing space, wait times, and verbose endpoints return typed arrays; single‑terminal basics return a single `TerminalBasics` item.
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+### Common Use Cases
 
-### Model
+```typescript
+// Example 1: Display all terminal information
+const terminals = await WsfTerminals.getTerminalBasics();
+terminals.forEach(terminal => {
+  console.log(`${terminal.TerminalName}: ${terminal.TerminalAbbrev}`);
+});
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `TerminalSubjectID` | `integer` | Identifies this terminal as a unique WSF subject. |
-| `RegionID` | `integer` | Identifies the geographical region where the terminal is located. |
-| `TerminalName` | `string` | The name of the terminal. |
-| `TerminalAbbrev` | `string` | The terminal's abbreviation. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other terminals). |
-| `OverheadPassengerLoading` | `boolean` | Indicates whether or not overhead passenger loading is available. |
-| `Elevator` | `boolean` | Indicates whether or not the terminal has an elevator. |
-| `WaitingRoom` | `boolean` | Indicates whether or not the terminal has a waiting room. |
-| `FoodService` | `boolean` | Indicates whether or not the terminal offers food service. |
-| `Restroom` | `boolean` | Indicates whether or not the terminal has one or more restrooms. |
-
-
-
----
-
-## /terminalbulletins
-
-### Endpoints
-
-```http
-GET /terminalbulletins?apiaccesscode={APIAccessCode}
-GET /terminalbulletins/{TerminalID}?apiaccesscode={APIAccessCode}
+// Example 2: Get specific terminal details
+const terminal = await WsfTerminals.getTerminalBasicsByTerminalId({ terminalId: 7 });
+// Display detailed terminal information
 ```
 
-### Valid Accept Headers
+## React Integration
 
-- `application/json`
-- `text/xml`
+For comprehensive React Query hooks, TanStack Query setup, error handling, and caching strategies, see the [API Reference](../API-REFERENCE.md) documentation.
 
-### Description
+### Available Hooks
 
-This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+| Hook | Parameters | Description | Caching Strategy |
+|------|------------|-------------|------------------|
+| `useTerminalBasics` | None | Get basic details for all terminals | `WEEKLY_UPDATES` |
+| `useTerminalBasicsByTerminalId` | `{ terminalId: number }` | Get basic details for specific terminal | `WEEKLY_UPDATES` |
+| `useTerminalSailingSpace` | None | Get sailing space availability for all terminals | `MINUTE_UPDATES` |
+| `useTerminalWaitTimes` | None | Get wait times for all terminals | `MINUTE_UPDATES` |
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+### Basic Hook Usage
 
-### Model
+```typescript
+import { useTerminalBasics } from 'ws-dottie';
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `TerminalSubjectID` | `integer` | Identifies this terminal as a unique WSF subject. |
-| `RegionID` | `integer` | Identifies the geographical region where the terminal is located. |
-| `TerminalName` | `string` | The name of the terminal. |
-| `TerminalAbbrev` | `string` | The terminal's abbreviation. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other terminals). |
-| `Bulletins` | `array` | The bulletins / alerts associated with this terminal. |
-| `Bulletins[].BulletinTitle` | `string` | The title of the bulletin. |
-| `Bulletins[].BulletinText` | `string` | The content of the bulletin. |
-| `Bulletins[].BulletinSortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other bulletins in this array). |
-| `Bulletins[].BulletinLastUpdated` | `date` (optional) | The date that this bulletin was last updated. |
-| `Bulletins[].BulletinLastUpdatedSortable` | `string` (optional) | Legacy string representation of BulletinLastUpdated. |
+function TerminalsList() {
+  const { data, isLoading, error } = useTerminalBasics();
 
+  if (isLoading) return <div>Loading terminals...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
----
-
-## /terminallocations
-
-### Endpoints
-
-```http
-GET /terminallocations?apiaccesscode={APIAccessCode}
-GET /terminallocations/{TerminalID}?apiaccesscode={APIAccessCode}
+  return (
+    <div>
+      {data?.map(terminal => (
+        <div key={terminal.TerminalID}>
+          <h3>{terminal.TerminalName}</h3>
+          <p>Abbreviation: {terminal.TerminalAbbrev}</p>
+          <p>Description: {terminal.TerminalDescription}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 ```
 
-### Valid Accept Headers
+## Data Types
 
-- `application/json`
-- `text/xml`
+### Type Summary
 
-### Description
+| Type Name | Description | Key Properties |
+|-----------|-------------|----------------|
+| `TerminalBasics` | Basic terminal information | `TerminalID`, `TerminalName`, `TerminalAbbrev`, `TerminalDescription` |
+| `TerminalLocation` | Terminal location data | `TerminalID`, `Latitude`, `Longitude`, `ZoomLevel` |
+| `TerminalSailingSpace` | Sailing space availability | `TerminalID`, `SpaceAvailable`, `LastUpdated` |
+| `TerminalWaitTimes` | Terminal wait times | `TerminalID`, `WaitTime`, `LastUpdated` |
 
-This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+### Detailed Type Definitions
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+```typescript
+type TerminalBasics = {
+  TerminalID: number;                            // Unique identifier for the terminal
+  TerminalName: string;                          // Full name of the terminal
+  TerminalAbbrev: string;                        // Abbreviated terminal name
+  TerminalDescription: string;                   // Description of the terminal
+  TerminalStatus: string;                        // Current status of the terminal
+};
 
-### Model
+type TerminalLocation = {
+  TerminalID: number;                            // Unique identifier for the terminal
+  Latitude: number;                              // Latitude coordinate of the terminal
+  Longitude: number;                             // Longitude coordinate of the terminal
+  ZoomLevel: number;                             // Recommended zoom level for mapping
+  TerminalName: string;                          // Name of the terminal
+};
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `TerminalSubjectID` | `integer` | Identifies this terminal as a unique WSF subject. |
-| `RegionID` | `integer` | Identifies the geographical region where the terminal is located. |
-| `TerminalName` | `string` | The name of the terminal. |
-| `TerminalAbbrev` | `string` | The terminal's abbreviation. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other terminals). |
-| `Latitude` | `double` (optional) | The latitude of the terminal. |
-| `Longitude` | `double` (optional) | The longitude of the terminal. |
-| `AddressLineOne` | `string` (optional) | The first line of the terminal's address. |
-| `AddressLineTwo` | `string` (optional) | The second line of the terminal's address. |
-| `City` | `string` (optional) | The city where the terminal is located. |
-| `State` | `string` (optional) | The state where the terminal is located. |
-| `ZipCode` | `string` (optional) | The terminal's zip code. |
-| `Country` | `string` (optional) | The country where the terminal is located. |
-| `MapLink` | `string` (optional) | A URL to a page that displays the terminal on a GIS map. |
-| `Directions` | `string` (optional) | Instructions detailing how to drive to the terminal. |
-| `DispGISZoomLoc` | `array` | Where this terminal should appear on a GIS map (at various zoom levels). |
-| `DispGISZoomLoc[].ZoomLevel` | `integer` | The GIS zoom level. |
-| `DispGISZoomLoc[].Latitude` | `double` (optional) | The terminal's latitude for this GIS zoom level. |
-| `DispGISZoomLoc[].Longitude` | `double` (optional) | The terminal's longitude for this GIS zoom level. |
+type TerminalSailingSpace = {
+  TerminalID: number;                            // Unique identifier for the terminal
+  SpaceAvailable: number;                        // Available sailing space
+  LastUpdated: string;                           // Last update timestamp
+  TerminalName: string;                          // Name of the terminal
+};
 
-
-
----
-
-## /terminalsailingspace
-
-### Endpoints
-
-```http
-GET /terminalsailingspace?apiaccesscode={APIAccessCode}
-GET /terminalsailingspace/{TerminalID}?apiaccesscode={APIAccessCode}
+type TerminalWaitTimes = {
+  TerminalID: number;                            // Unique identifier for the terminal
+  WaitTime: number;                              // Current wait time in minutes
+  LastUpdated: string;                           // Last update timestamp
+  TerminalName: string;                          // Name of the terminal
+};
 ```
 
-### Valid Accept Headers
+## Common Use Cases
 
-- `application/json`
-- `text/xml`
+### Use Case 1: Terminal Information Display
+**Scenario**: Display comprehensive terminal information for ferry travelers
+**Solution**: Use the `getTerminalBasics` function to show all terminal details and contact information
 
-### Description
-
-This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
-
-**⚠️ Important:** This data changes very frequently (potentially every 5 seconds). Please do not cache results in your application for an extended period of time.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `TerminalSubjectID` | `integer` | Identifies this terminal as a unique WSF subject. |
-| `RegionID` | `integer` | Identifies the geographical region where the terminal is located. |
-| `TerminalName` | `string` | The name of the terminal. |
-| `TerminalAbbrev` | `string` | The terminal's abbreviation. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other terminals). |
-| `DepartingSpaces` | `array` | The most recent departures leaving this terminal. |
-| `DepartingSpaces[].Departure` | `date` | The date and time of the departure. |
-| `DepartingSpaces[].IsCancelled` | `boolean` | Indicates whether or not the departure is cancelled. |
-| `DepartingSpaces[].VesselID` | `integer` | Unique identifier for the vessel making this departure. |
-| `DepartingSpaces[].VesselName` | `string` | The name of the vessel making this departure. |
-| `DepartingSpaces[].MaxSpaceCount` | `integer` | The maximum space available on the vessel making this departure. |
-| `DepartingSpaces[].SpaceForArrivalTerminals` | `array` | The available space for one or more destinations. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].TerminalID` | `integer` | Unique identifier for the next closest arrival terminal. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].TerminalName` | `string` | The name of the arrival terminal. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].VesselID` | `integer` | Unique identifier for the vessel making this departure. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].VesselName` | `string` | The name of the vessel making this departure. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].DisplayReservableSpace` | `boolean` | Indicates whether or not reservable space should be displayed. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].ReservableSpaceCount` | `integer` (optional) | The remaining reservable space available on the vessel. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].ReservableSpaceHexColor` | `string` (optional) | A Hex color representing the ReservableSpaceCount. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].DisplayDriveUpSpace` | `boolean` | Indicates whether or not drive-up space should be displayed. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].DriveUpSpaceCount` | `integer` (optional) | The remaining drive-up space available on the vessel. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].DriveUpSpaceHexColor` | `string` (optional) | A Hex color representing DriveUpSpaceCount. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].MaxSpaceCount` | `integer` | The maximum space available on the vessel making this departure. |
-| `DepartingSpaces[].SpaceForArrivalTerminals[].ArrivalTerminalIDs` | `array` | An array of integers representing all arrival terminals associated with this set of counts. |
-| `IsNoFareCollected` | `boolean` (optional) | True if this terminal isn't capable of collecting fares. |
-| `NoFareCollectedMsg` | `string` (optional) | An optional message detailing how inability to collect fares could affect terminal conditions data. |
-
-
-
----
-
-## /terminaltransports
-
-### Endpoints
-
-```http
-GET /terminaltransports?apiaccesscode={APIAccessCode}
-GET /terminaltransports/{TerminalID}?apiaccesscode={APIAccessCode}
+```typescript
+// Implementation example
+const terminals = await WsfTerminals.getTerminalBasics();
+// Display terminal information for travelers
 ```
 
-### Valid Accept Headers
+### Use Case 2: Real-time Space and Wait Time Monitoring
+**Scenario**: Monitor real-time space availability and wait times for trip planning
+**Solution**: Use the `getTerminalSailingSpace` and `getTerminalWaitTimes` functions to display current conditions
 
-- `application/json`
-- `text/xml`
-
-### Description
-
-This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `TerminalSubjectID` | `integer` | Identifies this terminal as a unique WSF subject. |
-| `RegionID` | `integer` | Identifies the geographical region where the terminal is located. |
-| `TerminalName` | `string` | The name of the terminal. |
-| `TerminalAbbrev` | `string` | The terminal's abbreviation. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other terminals). |
-| `ParkingInfo` | `string` (optional) | Parking information for this terminal. |
-| `ParkingShuttleInfo` | `string` (optional) | Information about parking-related shuttles that service this terminal. |
-| `AirportInfo` | `string` (optional) | Tips for commuting to this terminal from the airport. |
-| `AirportShuttleInfo` | `string` (optional) | Information about parking shuttles that go between the airport and this terminal. |
-| `MotorcycleInfo` | `string` (optional) | Information for travelers who plan on taking a motorcycle to this terminal. |
-| `TruckInfo` | `string` (optional) | Information for travelers who plan on taking a truck to this terminal. |
-| `BikeInfo` | `string` (optional) | Information for travelers who plan on taking their bicycle to this terminal. |
-| `TrainInfo` | `string` (optional) | Information about trains that service this terminal. |
-| `TaxiInfo` | `string` (optional) | Information about taxis that service this terminal. |
-| `HovInfo` | `string` (optional) | Tips for carpool/vanpools commuting to this terminal. |
-| `TransitLinks` | `array` | Links to transit agencies that service this terminal. |
-| `TransitLinks[].LinkURL` | `string` | The URL of the transit link. |
-| `TransitLinks[].LinkName` | `string` | The name of the transit agency. |
-| `TransitLinks[].SortSeq` | `integer` (optional) | A preferred sort order (sort-ascending with respect to other transit links in this array). |
-
-
-
----
-
-## /terminalverbose
-
-### Endpoints
-
-```http
-GET /terminalverbose?apiaccesscode={APIAccessCode}
-GET /terminalverbose/{TerminalID}?apiaccesscode={APIAccessCode}
+```typescript
+// Implementation example
+const spaceData = await WsfTerminals.getTerminalSailingSpace();
+const waitTimes = await WsfTerminals.getTerminalWaitTimes();
+// Display real-time space availability and wait times
 ```
 
-### Valid Accept Headers
+## Performance & Caching
 
-- `application/json`
-- `text/xml`
+This API uses the **WEEKLY_UPDATES** caching strategy for static data and **MINUTE_UPDATES** for real-time data. For detailed information about caching configuration, performance optimization, and advanced caching options, see the [Performance & Caching](../API-REFERENCE.md#performance--caching) section in the API Reference.
 
-### Description
+| Caching Aspect | Configuration | Description |
+|----------------|---------------|-------------|
+| **Stale Time** | 7 days (static), 1 minute (real-time) | Data considered fresh for 7 days (static) or 1 minute (real-time) |
+| **Refetch Interval** | 7 days (static), 1 minute (real-time) | Automatically refetch data every 7 days (static) or 1 minute (real-time) |
+| **GC Time** | 14 days (static), 1 hour (real-time) | Keep unused data in cache for 14 days (static) or 1 hour (real-time) |
+| **Retry** | 5 attempts (static), 0 attempts (real-time) | Retry failed requests up to 5 times (static) or no retries (real-time) |
 
-This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don't mind receiving a larger payload of data. The results include and expand on what's already available through the following operations:
+## Update Frequency
 
-- `/terminalbasics`
-- `/terminalbasics/{TerminalID}`
-- `/terminalbulletins`
-- `/terminalbulletins/{TerminalID}`
-- `/terminallocations`
-- `/terminallocations/{TerminalID}`
-- `/terminaltransports`
-- `/terminaltransports/{TerminalID}`
-- `/terminalwaittimes`
-- `/terminalwaittimes/{TerminalID}`
+Refer to Data Update Frequency near the top of this page for freshness guidance (real‑time for space/wait times; weekly for static terminal data).
 
-TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
+## Common Patterns
 
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
+For information about data transformation, error handling, caching strategies, and other common patterns, see the [API Reference](../API-REFERENCE.md) documentation.
 
-### Model
+## References
 
-*Note: This endpoint returns a comprehensive model that includes all fields from the other terminal endpoints. See individual endpoint documentation for specific field descriptions.*
-    RealtimeIntroMsg (string, optional): An optional intro message for terminal conditions data that pertains to terminals capable of collecting fares.
-
-
-
----
-
-## /terminalwaittimes
-
-### Endpoints
-
-```http
-GET /terminalwaittimes?apiaccesscode={APIAccessCode}
-GET /terminalwaittimes/{TerminalID}?apiaccesscode={APIAccessCode}
-```
-
-### Valid Accept Headers
-
-- `application/json`
-- `text/xml`
-
-### Description
-
-This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal. A valid API Access Code from the WSDOT Traveler API must be passed as part of the URL string.
-
-Please consider using `/cacheflushdate` to coordinate the caching of this data in your application.
-
-### Model
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `TerminalID` | `integer` | Unique identifier for a terminal. |
-| `TerminalSubjectID` | `integer` | Identifies this terminal as a unique WSF subject. |
-| `RegionID` | `integer` | Identifies the geographical region where the terminal is located. |
-| `TerminalName` | `string` | The name of the terminal. |
-| `TerminalAbbrev` | `string` | The terminal's abbreviation. |
-| `SortSeq` | `integer` | A preferred sort order (sort-ascending with respect to other terminals). |
-| `WaitTimes` | `array` | The wait times associated with this terminal. |
-| `WaitTimes[].RouteID` | `integer` (optional) | Unique identifier for the route associated with this wait time. |
-| `WaitTimes[].RouteName` | `string` (optional) | The name of the route associated with this wait time. |
-| `WaitTimes[].WaitTimeNotes` | `string` | Notes detailing wait time conditions along with tips for vehicles and passengers. |
-| `WaitTimes[].WaitTimeLastUpdated` | `date` (optional) | The date this wait time information was last updated. |
-| `WaitTimes[].WaitTimeIVRNotes` | `string` | Notes detailing wait time conditions (tailored for text to speech systems). |
+- **[Error Handling](../API-REFERENCE.md#error-handling)** - Comprehensive error handling patterns
+- **[Data Transformation](../API-REFERENCE.md#data-transformation)** - Automatic data conversion and filtering
+- **[React Hooks](../API-REFERENCE.md#react-hooks)** - Complete React integration guide
+- **[Performance & Caching](../API-REFERENCE.md#performance--caching)** - Advanced caching configuration
+- **[Testing Status](../API-REFERENCE.md#testing-status)** - E2E test completion and validation status
+- **[API Compliance](../API-REFERENCE.md#api-compliance)** - WSF API alignment verification 
