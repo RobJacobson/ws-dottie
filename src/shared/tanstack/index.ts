@@ -6,6 +6,6 @@
  */
 
 // Date validation utilities
-export { zWsdotDate } from "./cacheStrategies";
+export { zWsdotDate } from "../../apis/shared/zWsdotDateSchema";
 // Query options creation
 export { cacheStrategies, createQueryOptions } from "./queryOptions";

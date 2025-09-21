@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { zWsdotDate } from "@/shared/tanstack";
+import { zWsdotDate } from "@/apis/shared";
 
 /**
  * Schema for contingency adjustment response from WSF Schedule API.

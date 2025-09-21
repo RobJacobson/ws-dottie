@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { zWsdotDate } from "@/shared/tanstack";
+import { zWsdotDate } from "@/apis/shared";
 
 /**
  * Cache flush date schema for WSF APIs

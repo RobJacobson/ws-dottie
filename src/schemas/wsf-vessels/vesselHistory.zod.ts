@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { zWsdotDate } from "@/shared/tanstack";
+import { zWsdotDate } from "@/apis/shared";
 
 /**
  * Vessel history schema for WSF Vessels API
