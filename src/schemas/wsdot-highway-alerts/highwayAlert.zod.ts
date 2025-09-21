@@ -1,7 +1,6 @@
 import { z } from "zod";
-
-import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
 import { zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema } from "@/schemas/shared/roadwayLocation.zod";
 
 /**
  * Alert schema
