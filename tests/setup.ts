@@ -13,8 +13,9 @@ const originalConsoleLog = console.log;
 const originalConsoleWarn = console.warn;
 const originalConsoleError = console.error;
 
-// Only show console output in verbose mode
-if (!process.env.VERBOSE_TESTS) {
+// Only show console output in verbose mode, but allow it for vitest runs (e2e tests)
+const isVitestRun = process.env.VITEST_WORKER_ID !== undefined;
+if (!process.env.VERBOSE_TESTS && !isVitestRun) {
   console.log = () => {};
   console.warn = () => {};
   console.error = () => {};

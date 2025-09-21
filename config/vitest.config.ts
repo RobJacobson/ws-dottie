@@ -7,6 +7,7 @@ export default defineConfig({
     environment: "node",
     setupFiles: ["./tests/setup.ts"],
     testTimeout: 120000, // 2 minutes timeout for unified test suite
+    // reporters are provided via CLI (see package.json)
     fileParallelism: false,
     pool: "forks",
     poolOptions: {
@@ -19,7 +20,6 @@ export default defineConfig({
       shuffle: false,
       hooks: "list",
     },
-    // reporters: ["./tests/e2e/reporters/unified-reporter.js"],
   },
   resolve: {
     alias: {
