@@ -15,4 +15,4 @@ export {
   wsdotDateTimeToJSDate as wsdotTimeToJSDate,
 } from "./dateUtils";
 // Logging utilities
-export { default as log } from "./logger";
+export { logger, logApiCall, logApiResults } from "./logger";
