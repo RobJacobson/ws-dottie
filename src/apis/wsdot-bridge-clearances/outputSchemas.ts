@@ -16,7 +16,7 @@ export const BridgeDataGISSchema = z.object({
   CrossingDescription: z
     .string()
     .nullable()
-    .describe("A description of the crossing."),
+    .describe("The crossing description."),
   CrossingLocationId: z
     .number()
     .describe("A unique identifier for the crossing."),
@@ -38,7 +38,7 @@ export const BridgeDataGISSchema = z.object({
   Longitude: z
     .number()
     .describe("Longitude is a west-east measurement of position on the Earth."),
-  RouteDate: zWsdotDate().describe(""),
+  RouteDate: zWsdotDate().describe("The route date."),
   SRMP: z
     .number()
     .describe(

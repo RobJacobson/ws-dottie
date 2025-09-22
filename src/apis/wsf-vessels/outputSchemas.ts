@@ -59,7 +59,7 @@ export const vesselBasicDetailsSchema = z
       .union([z.literal(1), z.literal(2), z.literal(3)])
       .nullable()
       .describe(
-        "Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. (1 = InService, 2 = Maintenance, 3 = OutOfService)"
+        "Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. (1 = InService, 2 = Maintenance, 3 = OutOfService)."
       ),
     OwnedByWSF: z
       .boolean()
@@ -83,9 +83,9 @@ export const vesselAccommodationsSchema = z
       .number()
       .int()
       .describe("Identifies this vessel as a unique WSF subject."),
-    VesselName: z.string().describe("The name of the vessel."),
-    VesselAbbrev: z.string().describe("The vessel's abbreviation."),
-    Class: vesselClassSchema,
+    VesselName: z.string().nullable().describe("The name of the vessel."),
+    VesselAbbrev: z.string().nullable().describe("The vessel's abbreviation."),
+    Class: vesselClassSchema.nullable(),
     CarDeckRestroom: z
       .boolean()
       .describe(
@@ -142,9 +142,9 @@ export const vesselStatsSchema = z
       .number()
       .int()
       .describe("Identifies this vessel as a unique WSF subject."),
-    VesselName: z.string().describe("The name of the vessel."),
-    VesselAbbrev: z.string().describe("The vessel's abbreviation."),
-    Class: vesselClassSchema,
+    VesselName: z.string().nullable().describe("The name of the vessel."),
+    VesselAbbrev: z.string().nullable().describe("The vessel's abbreviation."),
+    Class: vesselClassSchema.nullable(),
     VesselNameDesc: z
       .string()
       .describe(
@@ -256,7 +256,7 @@ export type VesselStats = z.infer<typeof vesselStatsSchema>;
 export const vesselLocationsSchema = z
   .object({
     VesselID: z.number().int().describe("Unique identifier for a vessel."),
-    VesselName: z.string().describe("The name of the vessel."),
+    VesselName: z.string().nullable().describe("The name of the vessel."),
     Mmsi: z
       .number()
       .int()
@@ -270,11 +270,13 @@ export const vesselLocationsSchema = z
       ),
     DepartingTerminalName: z
       .string()
+      .nullable()
       .describe(
         "The name of the terminal where this vessel is docked or was last docked."
       ),
     DepartingTerminalAbbrev: z
       .string()
+      .nullable()
       .describe(
         "The abbreviated terminal name where this vessel is docked or was last docked."
       ),
@@ -330,6 +332,7 @@ export const vesselLocationsSchema = z
       ),
     OpRouteAbbrev: z
       .array(z.string())
+      .nullable()
       .describe(
         "An array of strings that contain 0 or more abbreviated route names currently being serviced by this vessel."
       ),
@@ -349,11 +352,25 @@ export const vesselLocationsSchema = z
     ManagedBy: z
       .union([z.literal(1), z.literal(2)])
       .describe(
-        "Indicates who manages this vessel. 1 for WSF, 2 for KCM. (1 = WSF, 2 = KCM)"
+        "Indicates who manages this vessel. 1 for WSF, 2 for KCM. (1 = WSF, 2 = KCM)."
       ),
     TimeStamp: zWsdotDate().describe(
       "The date and time when this vessel location was last updated."
     ),
+    VesselWatchShutID: z
+      .number()
+      .int()
+      .describe("Vessel watch shutdown identifier."),
+    VesselWatchShutMsg: z
+      .string()
+      .nullable()
+      .describe("Vessel watch shutdown message."),
+    VesselWatchShutFlag: z
+      .string()
+      .nullable()
+      .describe("Vessel watch shutdown flag."),
+    VesselWatchStatus: z.string().nullable().describe("Vessel watch status."),
+    VesselWatchMsg: z.string().nullable().describe("Vessel watch message."),
   })
   .describe("Provides vessel locations and associated ETA data.");
 
@@ -372,14 +389,14 @@ export const vesselVerboseDetailsSchema = z
       .number()
       .int()
       .describe("Identifies this vessel as a unique WSF subject."),
-    VesselName: z.string().describe("The name of the vessel."),
-    VesselAbbrev: z.string().describe("The vessel's abbreviation."),
-    Class: vesselClassSchema,
+    VesselName: z.string().nullable().describe("The name of the vessel."),
+    VesselAbbrev: z.string().nullable().describe("The vessel's abbreviation."),
+    Class: vesselClassSchema.nullable(),
     Status: z
       .union([z.literal(1), z.literal(2), z.literal(3)])
       .nullable()
       .describe(
-        "Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. (1 = InService, 2 = Maintenance, 3 = OutOfService)"
+        "Indicates the operational status of the vessel. 1 for In Service, 2 for Maintenance and 3 for Out of Service. (1 = InService, 2 = Maintenance, 3 = OutOfService)."
       ),
     OwnedByWSF: z
       .boolean()

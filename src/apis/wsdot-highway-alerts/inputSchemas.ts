@@ -72,3 +72,19 @@ export const GetAlertsByRegionIDInputSchema = z.object({
 export type GetAlertsByRegionIDInput = z.infer<
   typeof GetAlertsByRegionIDInputSchema
 >;
+
+/**
+ * Input schema for GetEventCategories endpoint
+ */
+export const GetEventCategoriesInputSchema = z.object({});
+
+export type GetEventCategoriesInput = z.infer<
+  typeof GetEventCategoriesInputSchema
+>;
+
+/**
+ * Input schema for GetMapAreas endpoint
+ */
+export const GetMapAreasInputSchema = z.object({});
+
+export type GetMapAreasInput = z.infer<typeof GetMapAreasInputSchema>;

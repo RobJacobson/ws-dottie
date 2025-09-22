@@ -193,6 +193,60 @@ src/apis/{api-name}/
 - ✅ **All input properties**: Must have `.describe()` annotations with exact text from official WSF/WSDOT documentation
 - ✅ **Missing documentation**: Use empty quotes `""` if official text cannot be found
 
+### WSF Endpoint Naming Conventions - CRITICAL
+
+**For WSF APIs (wsf-fares, wsf-schedule, wsf-terminals, wsf-vessels), use the following naming conventions:**
+
+#### Schema and Type Naming Rules
+
+1. **Remove "Get" prefix** from endpoint names
+2. **Remove "All" prefix** from collection endpoints
+3. **Remove "Specific" prefix** from individual item endpoints
+4. **Remove "Detail" suffix** from endpoint names
+5. **Use PascalCase** for both schema names and type names
+6. **For endpoints with ID parameters**, use "ById" suffix
+
+#### Examples
+
+**Endpoint → Schema/Type Name:**
+- `/cacheflushdate` → `CacheFlushDateInputSchema` / `CacheFlushDateInput`
+- `/validdaterange` → `ValidDateRangeInputSchema` / `ValidDateRangeInput`
+- `/terminals` → `TerminalsInputSchema` / `TerminalsInput`
+- `/terminalmates` → `TerminalMatesInputSchema` / `TerminalMatesInput`
+- `/terminalcombo` → `TerminalComboInputSchema` / `TerminalComboInput`
+- `/terminalcomboverbose` → `TerminalComboVerboseInputSchema` / `TerminalComboVerboseInput`
+- `/farelineitemsbasic` → `FareLineItemsBasicInputSchema` / `FareLineItemsBasicInput`
+- `/farelineitems` → `FareLineItemsInputSchema` / `FareLineItemsInput`
+- `/farelineitemsverbose` → `FareLineItemsVerboseInputSchema` / `FareLineItemsVerboseInput`
+- `/faretotals` → `FareTotalsInputSchema` / `FareTotalsInput`
+- `/vesselbasics` → `VesselBasicsInputSchema` / `VesselBasicsInput`
+- `/vesselbasics/{VesselID}` → `VesselBasicsByIdInputSchema` / `VesselBasicsByIdInput`
+- `/terminalbasics` → `TerminalBasicsInputSchema` / `TerminalBasicsInput`
+- `/terminalbasics/{TerminalID}` → `TerminalBasicsByIdInputSchema` / `TerminalBasicsByIdInput`
+
+#### Naming Pattern Summary
+
+```typescript
+// ✅ CORRECT - WSF naming convention
+export const CacheFlushDateInputSchema = z.object({});
+export type CacheFlushDateInput = z.infer<typeof CacheFlushDateInputSchema>;
+
+export const TerminalsInputSchema = z.object({
+  TripDate: z.string().describe("Trip date in YYYY-MM-DD format."),
+});
+export type TerminalsInput = z.infer<typeof TerminalsInputSchema>;
+
+export const VesselBasicsByIdInputSchema = z.object({
+  VesselID: z.number().int().describe("Unique identifier for a vessel."),
+});
+export type VesselBasicsByIdInput = z.infer<typeof VesselBasicsByIdInputSchema>;
+
+// ❌ WRONG - Old naming convention
+export const GetCacheFlushDateInputSchema = z.object({});
+export const GetAllTerminalsInputSchema = z.object({});
+export const GetSpecificVesselBasicDetailInputSchema = z.object({});
+```
+
 ### Export Ordering Rules - CRITICAL
 
 **Each type export must immediately follow its corresponding schema export.**
@@ -301,6 +355,9 @@ Before submitting, verify:
 - [ ] **Export ordering follows pattern** - Schema export immediately followed by its type export
 - [ ] **Enum fields are inlined with numeric literals** - NO separate enum schemas
 - [ ] **Enum descriptions include numeric mapping** - Format: "Description. (0 = Value1, 1 = Value2)"
+- [ ] **WSF APIs use correct naming conventions** - Remove "Get", "All", "Specific", "Detail" prefixes/suffixes
+- [ ] **WSF endpoint schemas use PascalCase** - Both schema and type names
+- [ ] **WSF ID-based endpoints use "ById" suffix** - e.g., `VesselBasicsByIdInputSchema`
 - [ ] Each complex type has its own schema
 - [ ] All schemas and types are exported
 - [ ] **NO JSDoc comments above individual fields**
@@ -327,6 +384,9 @@ Before submitting, verify:
 15. **Including "AsJson" in input schema names** - Remove "AsJson" suffix from schema names
 16. **Missing `.describe()` annotations on input parameters** - All input parameters need descriptions
 17. **Incorrect export ordering** - Schema exports must be immediately followed by their type exports
+18. **WSF APIs using old naming conventions** - Remove "Get", "All", "Specific", "Detail" prefixes/suffixes
+19. **WSF schemas using camelCase instead of PascalCase** - Use PascalCase for both schema and type names
+20. **WSF ID-based endpoints missing "ById" suffix** - Use "ById" for endpoints with ID parameters
 
 ## Remember
 

@@ -65,3 +65,25 @@ export const getCurrentWeatherForStationsInputSchema = z
 export type GetCurrentWeatherForStationsInput = z.infer<
   typeof getCurrentWeatherForStationsInputSchema
 >;
+
+/**
+ * GetWeatherInformationExtended input schema
+ *
+ * Input parameters for getting extended weather information.
+ */
+export const getWeatherInformationExtendedInputSchema = z.object({});
+
+export type GetWeatherInformationExtendedInput = z.infer<
+  typeof getWeatherInformationExtendedInputSchema
+>;
+
+/**
+ * GetCurrentStations input schema
+ *
+ * Input parameters for getting current weather stations.
+ */
+export const getCurrentStationsInputSchema = z.object({});
+
+export type GetCurrentStationsInput = z.infer<
+  typeof getCurrentStationsInputSchema
+>;

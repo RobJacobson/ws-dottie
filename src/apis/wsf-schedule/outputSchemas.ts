@@ -41,7 +41,7 @@ export type ValidDateRange = z.infer<typeof ValidDateRangeSchema>;
  */
 export const TerminalSchema = z.object({
   TerminalID: z.number().describe("Unique identifier for a terminal."),
-  Description: z.string().describe("The name of the terminal."),
+  Description: z.string().nullable().describe("The name of the terminal."),
 });
 
 export type Terminal = z.infer<typeof TerminalSchema>;
@@ -91,8 +91,8 @@ export type ServiceDisruption = z.infer<typeof ServiceDisruptionSchema>;
  */
 export const RouteSchema = z.object({
   RouteID: z.number().describe("Unique identifier for a route."),
-  RouteAbbrev: z.string().describe("The route's abbreviation."),
-  Description: z.string().describe("The full name of the route."),
+  RouteAbbrev: z.string().nullable().describe("The route's abbreviation."),
+  Description: z.string().nullable().describe("The full name of the route."),
   RegionID: z
     .number()
     .describe(
@@ -100,6 +100,7 @@ export const RouteSchema = z.object({
     ),
   ServiceDisruptions: z
     .array(ServiceDisruptionSchema)
+    .nullable()
     .describe(
       "Service disruption alerts that are currently affecting the route."
     ),
@@ -311,9 +312,11 @@ export const AnnotationSchema = z.object({
   AnnotationID: z.number().describe("Unique identifier for an annotation."),
   AnnotationText: z
     .string()
+    .nullable()
     .describe("The descriptive content of the annotation."),
   AnnotationIVRText: z
     .string()
+    .nullable()
     .describe("The descriptive content of the annotation formatted for IVR."),
   AdjustedCrossingTime: z
     .number()
@@ -323,11 +326,13 @@ export const AnnotationSchema = z.object({
     ),
   AnnotationImg: z
     .string()
+    .nullable()
     .describe(
       "A URL to an image that can be used to graphically represent this annotation."
     ),
   TypeDescription: z
     .string()
+    .nullable()
     .describe(
       "A logical grouping for the annotation (Day Type, Informational, etc)."
     ),
@@ -348,9 +353,13 @@ export const TerminalTimeSchema = z.object({
     .number()
     .describe("Unique identifier for a terminal time."),
   TerminalID: z.number().describe("Unique identifier for a terminal."),
-  TerminalDescription: z.string().describe("The full name of the terminal."),
+  TerminalDescription: z
+    .string()
+    .nullable()
+    .describe("The full name of the terminal."),
   TerminalBriefDescription: z
     .string()
+    .nullable()
     .describe("A brief / shortened name for the terminal."),
   Time: zWsdotDate()
     .nullable()
@@ -370,6 +379,7 @@ export const TerminalTimeSchema = z.object({
     ),
   Annotations: z
     .array(AnnotationSchema)
+    .nullable()
     .describe("Informational attributes associated with the terminal time."),
 });
 
@@ -400,6 +410,7 @@ export const JourneySchema = z.object({
     ),
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel that's planned to service this journey."),
   VesselHandicapAccessible: z
     .boolean()
@@ -413,6 +424,7 @@ export const JourneySchema = z.object({
     ),
   TerminalTimes: z
     .array(TerminalTimeSchema)
+    .nullable()
     .describe(
       "One or more terminal departures or arrivals made by the same vessel."
     ),
@@ -430,6 +442,7 @@ export const SailingSchema = z.object({
   SailingID: z.number().describe("Unique identifier for a sailing."),
   SailingDescription: z
     .string()
+    .nullable()
     .describe("A title that describes the sailing (eg. Leave Port Townsend)."),
   SailingNotes: z
     .string()
@@ -447,6 +460,7 @@ export const SailingSchema = z.object({
     ),
   DayOpDescription: z
     .string()
+    .nullable()
     .describe('A days of operation grouping for the sailing (eg. "Daily").'),
   DayOpUseForHoliday: z
     .boolean()
@@ -455,11 +469,13 @@ export const SailingSchema = z.object({
     ),
   ActiveDateRanges: z
     .array(ActiveDateRangeSchema)
+    .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
     ),
   Journs: z
     .array(JourneySchema)
+    .nullable()
     .describe(
       "A single vessel that stops at one or more terminals making a full trip in the direction described by the sailing."
     ),
@@ -474,7 +490,10 @@ export const TimeAdjustmentSchema = z.object({
   ScheduleID: z.number().describe("Unique identifier for a season."),
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
   RouteID: z.number().describe("Unique identifier for the underlying route."),
-  RouteDescription: z.string().describe("The full name of the route."),
+  RouteDescription: z
+    .string()
+    .nullable()
+    .describe("The full name of the route."),
   RouteSortSeq: z
     .number()
     .describe(
@@ -483,9 +502,11 @@ export const TimeAdjustmentSchema = z.object({
   SailingID: z.number().describe("Unique identifier for a sailing."),
   SailingDescription: z
     .string()
+    .nullable()
     .describe("A title that describes the sailing (eg. Leave Port Townsend)."),
   ActiveSailingDateRange: z
     .array(ActiveDateRangeSchema)
+    .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
     ),
@@ -502,6 +523,7 @@ export const TimeAdjustmentSchema = z.object({
     ),
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel that's planned to service this journey."),
   VesselHandicapAccessible: z
     .boolean()

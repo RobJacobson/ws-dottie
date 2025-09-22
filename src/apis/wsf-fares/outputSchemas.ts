@@ -10,7 +10,7 @@ import { zWsdotDate } from "@/apis/shared";
 /**
  * Cache flush date response schema for GetCacheFlushDate endpoint
  */
-export const CacheFlushDateResponseSchema = zWsdotDate;
+export const CacheFlushDateResponseSchema = zWsdotDate();
 
 export type CacheFlushDateResponse = z.infer<
   typeof CacheFlushDateResponseSchema
@@ -37,7 +37,7 @@ export type ValidDateRangeResponse = z.infer<
  */
 export const TerminalResponseSchema = z.object({
   TerminalID: z.number().describe("Unique identifier for a terminal."),
-  Description: z.string().nullable().describe("The name of the terminal."),
+  Description: z.string().describe("The name of the terminal."),
 });
 
 export type TerminalResponse = z.infer<typeof TerminalResponseSchema>;

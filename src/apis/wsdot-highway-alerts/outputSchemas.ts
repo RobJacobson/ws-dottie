@@ -1,6 +1,29 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { RoadwayLocationSchema } from "../shared/roadwayLocationSchema";
+
+/**
+ * Schema for RoadwayLocation - represents location information for a roadway in WSDOT Highway Alerts
+ */
+export const RoadwayLocationSchema = z.object({
+  Description: z
+    .string()
+    .nullable()
+    .describe(
+      "Description of the location. This could be a cross street or a nearby landmark."
+    ),
+  Direction: z
+    .string()
+    .nullable()
+    .describe(
+      "The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction."
+    ),
+  Latitude: z.number().describe("Latitude of the location."),
+  Longitude: z.number().describe("Longitude of the location."),
+  MilePost: z.number().describe("The milepost of the location."),
+  RoadName: z.string().nullable().describe("The name of the road."),
+});
+
+export type RoadwayLocation = z.infer<typeof RoadwayLocationSchema>;
 
 /**
  * Schema for Alert - represents a Highway Alert
@@ -27,7 +50,7 @@ export const AlertSchema = z.object({
     .string()
     .nullable()
     .describe(
-      "Additional information about the alert, used for relaying useful extra information for an alert."
+      "Optional - Additional information about the alert, used for relaying useful extra information for an alert."
     ),
   HeadlineDescription: z
     .string()
@@ -89,6 +112,3 @@ export type ArrayOfArea = z.infer<typeof ArrayOfAreaSchema>;
 export const ArrayOfStringSchema = z.array(z.string());
 
 export type ArrayOfString = z.infer<typeof ArrayOfStringSchema>;
-
-// Export shared types
-export type { RoadwayLocation } from "../shared/roadwayLocationSchema";

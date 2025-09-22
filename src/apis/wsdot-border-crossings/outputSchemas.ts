@@ -7,11 +7,11 @@ import { RoadwayLocationSchema } from "../shared/roadwayLocationSchema";
  */
 export const BorderCrossingDataSchema = z.object({
   BorderCrossingLocation: RoadwayLocationSchema.nullable().describe(
-    "Location information for the border crossing."
+    "Where the crossing is located."
   ),
-  CrossingName: z.string().nullable().describe("Name of the border crossing."),
-  Time: zWsdotDate().describe("Time when the wait time data was recorded."),
-  WaitTime: z.number().describe("Estimated wait time in minutes."),
+  CrossingName: z.string().nullable().describe("Common name of the crossing."),
+  Time: zWsdotDate().describe("When the reading was taken."),
+  WaitTime: z.number().describe("Current time to cross border."),
 });
 
 export type BorderCrossingData = z.infer<typeof BorderCrossingDataSchema>;

@@ -1,25 +1,23 @@
 import { z } from "zod";
 
 /**
- * Schema for GetBridgeClearances input parameters (all routes)
+ * Schema for GetClearances input parameters (all routes)
  */
-export const GetBridgeClearancesInputSchema = z.object({});
+export const GetClearancesInputSchema = z.object({});
 
-export type GetBridgeClearancesInput = z.infer<
-  typeof GetBridgeClearancesInputSchema
->;
+export type GetClearancesInput = z.infer<typeof GetClearancesInputSchema>;
 
 /**
- * Schema for GetBridgeClearancesByRoute input parameters
+ * Schema for GetClearancesByRoute input parameters
  */
-export const GetBridgeClearancesByRouteInputSchema = z.object({
+export const GetClearancesByRouteInputSchema = z.object({
   Route: z
     .string()
     .describe(
-      "Route number to filter bridge clearances by specific highway routes."
+      "A State Route formatted as a three digit number. I-5 would be 005."
     ),
 });
 
-export type GetBridgeClearancesByRouteInput = z.infer<
-  typeof GetBridgeClearancesByRouteInputSchema
+export type GetClearancesByRouteInput = z.infer<
+  typeof GetClearancesByRouteInputSchema
 >;

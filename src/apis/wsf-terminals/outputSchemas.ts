@@ -13,13 +13,9 @@ import { zWsdotDate } from "@/apis/shared";
  *
  * Contains the cache flush date for terminal data.
  */
-export const cacheFlushDateSchema = z.object({
-  CacheFlushDate: zWsdotDate()
-    .nullable()
-    .describe(
-      "If present, notes the date that certain service data was last changed (see description)."
-    ),
-});
+export const cacheFlushDateSchema = zWsdotDate().describe(
+  "If present, notes the date that certain service data was last changed (see description)."
+);
 
 export type CacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
@@ -104,8 +100,8 @@ export type GetSpecificTerminalBasicDetail = z.infer<
  * Contains bulletin information for a terminal.
  */
 export const bulletinSchema = z.object({
-  BulletinTitle: z.string().describe("The title of the bulletin."),
-  BulletinText: z.string().describe("The content of the bulletin."),
+  BulletinTitle: z.string().nullable().describe("The title of the bulletin."),
+  BulletinText: z.string().nullable().describe("The content of the bulletin."),
   BulletinSortSeq: z
     .number()
     .int()
@@ -304,13 +300,17 @@ export const spaceForArrivalTerminalSchema = z.object({
     .number()
     .int()
     .describe("Unique identifier for the next closest arrival terminal."),
-  TerminalName: z.string().describe("The name of the arrival terminal."),
+  TerminalName: z
+    .string()
+    .nullable()
+    .describe("The name of the arrival terminal."),
   VesselID: z
     .number()
     .int()
     .describe("Unique identifier for the vessel making this departure."),
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel making this departure."),
   DisplayReservableSpace: z
     .boolean()
@@ -344,6 +344,7 @@ export const spaceForArrivalTerminalSchema = z.object({
     ),
   ArrivalTerminalIDs: z
     .array(z.number().int())
+    .nullable()
     .describe(
       "An array of integers representing all arrival terminals associated with this set of counts."
     ),
@@ -369,6 +370,7 @@ export const departingSpaceSchema = z.object({
     .describe("Unique identifier for the vessel making this departure."),
   VesselName: z
     .string()
+    .nullable()
     .describe("The name of the vessel making this departure."),
   MaxSpaceCount: z
     .number()
@@ -378,6 +380,7 @@ export const departingSpaceSchema = z.object({
     ),
   SpaceForArrivalTerminals: z
     .array(spaceForArrivalTerminalSchema)
+    .nullable()
     .describe("The available space for one or more destinations."),
 });
 
@@ -459,8 +462,8 @@ export type GetSpecificTerminalSailingSpace = z.infer<
  * Contains transit link information.
  */
 export const transitLinkSchema = z.object({
-  LinkURL: z.string().describe("The URL of the transit link."),
-  LinkName: z.string().describe("The name of the transit agency."),
+  LinkURL: z.string().nullable().describe("The URL of the transit link."),
+  LinkName: z.string().nullable().describe("The name of the transit agency."),
   SortSeq: z
     .number()
     .int()
@@ -847,6 +850,75 @@ export const terminalVerboseDetailSchema = z.object({
     .describe(
       "An optional intro message for terminal conditions data that pertains to terminals capable of collecting fares."
     ),
+  AdditionalInfo: z
+    .string()
+    .nullable()
+    .describe("Additional information about the terminal."),
+  LostAndFoundInfo: z
+    .string()
+    .nullable()
+    .describe("Lost and found information for the terminal."),
+  SecurityInfo: z
+    .string()
+    .nullable()
+    .describe("Security information for the terminal."),
+  ConstructionInfo: z
+    .string()
+    .nullable()
+    .describe("Construction information for the terminal."),
+  FoodServiceInfo: z
+    .string()
+    .nullable()
+    .describe("Food service information for the terminal."),
+  AdaInfo: z
+    .string()
+    .nullable()
+    .describe("ADA accessibility information for the terminal."),
+  FareDiscountInfo: z
+    .string()
+    .nullable()
+    .describe("Fare discount information for the terminal."),
+  TallySystemInfo: z
+    .string()
+    .nullable()
+    .describe("Tally system information for the terminal."),
+  ChamberOfCommerce: z
+    .object({
+      LinkURL: z
+        .string()
+        .nullable()
+        .describe("The URL of the chamber of commerce link."),
+      LinkName: z
+        .string()
+        .nullable()
+        .describe("The name of the chamber of commerce."),
+      SortSeq: z.number().int().describe("A preferred sort order."),
+    })
+    .nullable()
+    .describe("Chamber of commerce information for the terminal."),
+  FacInfo: z
+    .string()
+    .nullable()
+    .describe("Facility information for the terminal."),
+  ResourceStatus: z
+    .string()
+    .nullable()
+    .describe("Resource status information for the terminal."),
+  TypeDesc: z
+    .string()
+    .nullable()
+    .describe("Type description for the terminal."),
+  REALTIME_SHUTOFF_FLAG: z
+    .boolean()
+    .describe("Real-time shutoff flag for the terminal."),
+  REALTIME_SHUTOFF_MESSAGE: z
+    .string()
+    .nullable()
+    .describe("Real-time shutoff message for the terminal."),
+  VisitorLinks: z
+    .array(transitLinkSchema)
+    .nullable()
+    .describe("Visitor links for the terminal."),
 });
 
 export type TerminalVerboseDetail = z.infer<typeof terminalVerboseDetailSchema>;

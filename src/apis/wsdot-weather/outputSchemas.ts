@@ -3,6 +3,74 @@ import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
 
 /**
+ * WeatherInfo schema
+ *
+ * Current information from a weather station.
+ */
+export const weatherInfoSchema = z
+  .object({
+    BarometricPressure: z
+      .number()
+      .nullable()
+      .describe(
+        "The force per unit area exerted by the atmosphere in millibars. This reading is not adjusted for site elevation."
+      ),
+    Latitude: z.number().describe("Latitude of station."),
+    Longitude: z.number().describe("Longitude of station."),
+    PrecipitationInInches: z
+      .number()
+      .nullable()
+      .describe("Precipitation in inches."),
+    ReadingTime: zWsdotDate().describe("Date and Time reading was taken."),
+    RelativeHumidity: z
+      .number()
+      .nullable()
+      .describe(
+        "Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture."
+      ),
+    SkyCoverage: z.string().nullable().describe("Sky coverage."),
+    StationID: z.number().int().describe("Station ID."),
+    StationName: z.string().nullable().describe("WSDOT assigned name."),
+    TemperatureInFahrenheit: z
+      .number()
+      .nullable()
+      .describe("Temperature in Fahrenheit."),
+    Visibility: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Average distance that you can see, both day and night, computed every three minutes in meters."
+      ),
+    WindDirection: z.number().nullable().describe("Wind direction."),
+    WindDirectionCardinal: z
+      .string()
+      .nullable()
+      .describe("Wind direction cardinal."),
+    WindGustSpeedInMPH: z
+      .number()
+      .nullable()
+      .describe("Wind gust speed in MPH."),
+    WindSpeedInMPH: z.number().nullable().describe("Wind speed in MPH."),
+  })
+  .describe("Current information from a weather station.");
+
+export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
+
+/**
+ * WeatherInformation schema
+ *
+ * Returns current weather information from weather stations that are run by the Washington State Department of Transportation.
+ */
+export const weatherInformationSchema = z
+  .array(weatherInfoSchema)
+  .describe(
+    "Returns current weather information from weather stations that are run by the Washington State Department of Transportation."
+  );
+
+export type WeatherInformation = z.infer<typeof weatherInformationSchema>;
+
+/**
  * ScanwebSurfaceMeasurements schema
  *
  * Measurements recorded by surface sensors.
@@ -186,3 +254,33 @@ export const weatherReadingsSchema = z
   .describe("Array of weather readings from WSDOT weather stations.");
 
 export type WeatherReadings = z.infer<typeof weatherReadingsSchema>;
+
+/**
+ * WeatherStationData schema
+ *
+ * Contains information about weather stations.
+ */
+export const weatherStationDataSchema = z
+  .object({
+    Latitude: z.number().describe("Latitude of station."),
+    Longitude: z.number().describe("Longitude of station."),
+    StationCode: z.number().int().describe("Identifier of weather station."),
+    StationName: z
+      .string()
+      .nullable()
+      .describe("Common name assigned to weather station."),
+  })
+  .describe("Contains information about weather stations.");
+
+export type WeatherStationData = z.infer<typeof weatherStationDataSchema>;
+
+/**
+ * WeatherStations schema
+ *
+ * Return current list of weather stations maintained by WSDOT.
+ */
+export const weatherStationsSchema = z
+  .array(weatherStationDataSchema)
+  .describe("Return current list of weather stations maintained by WSDOT.");
+
+export type WeatherStations = z.infer<typeof weatherStationsSchema>;

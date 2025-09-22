@@ -16,7 +16,6 @@ import { zWsdotDate } from "@/apis/shared";
  * road signs due to timing issues between WSDOT and the tolling contractor.
  */
 export const TollRateSchema = z.object({
-  SignName: z.string().nullable().describe("Sign name for the toll rate."),
   TripName: z.string().nullable().describe("Name for the toll trip."),
   CurrentToll: z
     .number()
@@ -28,9 +27,15 @@ export const TollRateSchema = z.object({
     .nullable()
     .describe("Message displayed on the sign in place of a toll."),
   StateRoute: z.string().nullable().describe("Route the toll applies to."),
-  TravelDirection: z.string().nullable().describe("Travel direction the toll applies to."),
+  TravelDirection: z
+    .string()
+    .nullable()
+    .describe("Travel direction the toll applies to."),
   StartMilepost: z.number().describe("The start milepost for a toll trip."),
-  StartLocationName: z.string().nullable().describe("Common name of the start location."),
+  StartLocationName: z
+    .string()
+    .nullable()
+    .describe("Common name of the start location."),
   StartLatitude: z
     .number()
     .describe("Approximate geographical latitude of the start location."),
@@ -38,7 +43,10 @@ export const TollRateSchema = z.object({
     .number()
     .describe("Approximate geographical longitude of the start location."),
   EndMilepost: z.number().describe("The end milepost for a toll trip."),
-  EndLocationName: z.string().nullable().describe("Common name of the end location."),
+  EndLocationName: z
+    .string()
+    .nullable()
+    .describe("Common name of the end location."),
   EndLatitude: z
     .number()
     .describe("Approximate geographical latitude of the end location."),
@@ -62,7 +70,9 @@ export type ArrayOfTollRate = z.infer<typeof ArrayOfTollRateSchema>;
  */
 export const TripRateSchema = z.object({
   Message: z.string().nullable().describe("Message for the trip rate."),
-  MessageUpdateTime: zWsdotDate().describe("Time when the message was last updated."),
+  MessageUpdateTime: zWsdotDate().describe(
+    "Time when the message was last updated."
+  ),
   Toll: z.number().describe("The toll amount for the trip."),
   TripName: z.string().nullable().describe("Name of the trip."),
 });
@@ -102,13 +112,24 @@ export const TollTripInfoSchema = z.object({
   EndLocationName: z.string().nullable().describe("Name of the end location."),
   EndLongitude: z.number().describe("End longitude of the trip."),
   EndMilepost: z.number().describe("End milepost of the trip."),
-  Geometry: z.string().nullable().describe("Geometry information for the trip."),
-  ModifiedDate: zWsdotDate().describe("Date when the trip information was last modified."),
+  Geometry: z
+    .string()
+    .nullable()
+    .describe("Geometry information for the trip."),
+  ModifiedDate: zWsdotDate().describe(
+    "Date when the trip information was last modified."
+  ),
   StartLatitude: z.number().describe("Start latitude of the trip."),
-  StartLocationName: z.string().nullable().describe("Name of the start location."),
+  StartLocationName: z
+    .string()
+    .nullable()
+    .describe("Name of the start location."),
   StartLongitude: z.number().describe("Start longitude of the trip."),
   StartMilepost: z.number().describe("Start milepost of the trip."),
-  TravelDirection: z.string().nullable().describe("Direction of travel for the trip."),
+  TravelDirection: z
+    .string()
+    .nullable()
+    .describe("Direction of travel for the trip."),
   TripName: z.string().nullable().describe("Name of the trip."),
 });
 
