@@ -14,6 +14,7 @@ import { z } from "zod";
  * AccessCode is handled separately and not included in input schemas.
  */
 export const getTrafficFlowInputSchema = z.object({
+  /** The ID of the station you wish to retrieve. */
   FlowDataID: z
     .number()
     .describe("The ID of the station you wish to retrieve."),

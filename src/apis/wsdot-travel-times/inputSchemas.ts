@@ -14,6 +14,7 @@ import { z } from "zod";
  * AccessCode is handled separately and not included in input schemas.
  */
 export const getTravelTimeInputSchema = z.object({
+  /** ID of a specific Travel Time Route to retrieve. */
   TravelTimeID: z
     .number()
     .describe("ID of a specific Travel Time Route to retrieve."),

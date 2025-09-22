@@ -19,6 +19,7 @@ export type GetMountainPassConditionsInput = z.infer<
  * The AccessCode is handled separately and not included in this schema.
  */
 export const getMountainPassConditionInputSchema = z.object({
+  /** A PassConditionID for a specific pass condition report. */
   PassConditionID: z
     .number()
     .int()

@@ -11,6 +11,7 @@ export type GetClearancesInput = z.infer<typeof getClearancesInputSchema>;
  * Schema for GetClearancesByRoute input parameters
  */
 export const getClearancesByRouteInputSchema = z.object({
+  /** A State Route formatted as a three digit number. I-5 would be 005. */
   Route: z
     .string()
     .describe(

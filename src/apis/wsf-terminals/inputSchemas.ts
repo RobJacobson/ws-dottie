@@ -104,6 +104,7 @@ export type TerminalWaitTimesInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalBasicsByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
@@ -118,6 +119,7 @@ export type TerminalBasicsByIdInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalBulletinsByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
@@ -132,6 +134,7 @@ export type TerminalBulletinsByIdInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalLocationsByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
@@ -146,6 +149,7 @@ export type TerminalLocationsByIdInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalSailingSpaceByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
@@ -160,6 +164,7 @@ export type TerminalSailingSpaceByIdInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalTransportsByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
@@ -174,6 +179,7 @@ export type TerminalTransportsByIdInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalVerboseByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
@@ -188,6 +194,7 @@ export type TerminalVerboseByIdInput = z.infer<
  * AccessCode is handled separately and not included in input schemas.
  */
 export const terminalWaitTimesByIdInputSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 

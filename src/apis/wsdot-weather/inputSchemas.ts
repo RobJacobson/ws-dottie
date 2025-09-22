@@ -20,6 +20,7 @@ export type GetCurrentWeatherInformationInput = z.infer<
  */
 export const getCurrentWeatherInformationByStationIDInputSchema = z
   .object({
+    /** Station ID. */
     StationID: z.number().int().describe("Station ID."),
   })
   .describe(
@@ -37,8 +38,11 @@ export type GetCurrentWeatherInformationByStationIDInput = z.infer<
  */
 export const searchWeatherInformationInputSchema = z
   .object({
+    /** Station ID. */
     StationID: z.number().int().describe("Station ID."),
+    /** Search start time. */
     SearchStartTime: zWsdotDate().describe("Search start time."),
+    /** Search end time. */
     SearchEndTime: zWsdotDate().describe("Search end time."),
   })
   .describe(
@@ -56,6 +60,7 @@ export type SearchWeatherInformationInput = z.infer<
  */
 export const getCurrentWeatherForStationsInputSchema = z
   .object({
+    /** Station list. */
     StationList: z.string().describe("Station list."),
   })
   .describe(

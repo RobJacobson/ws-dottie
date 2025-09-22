@@ -20,9 +20,15 @@ export type CacheFlushDateResponse = z.infer<
  * Valid date range response schema for GetValidDateRange endpoint
  */
 export const validDateRangeResponseSchema = z.object({
+  /**
+   * Fares information is available from this date onward.
+   */
   DateFrom: zWsdotDate().describe(
     "Fares information is available from this date onward."
   ),
+  /**
+   * Fares information is not available after this date.
+   */
   DateThru: zWsdotDate().describe(
     "Fares information is not available after this date."
   ),
@@ -36,7 +42,9 @@ export type ValidDateRangeResponse = z.infer<
  * Base terminal schema for fares API
  */
 export const terminalBaseSchema = z.object({
+  /** Unique identifier for a terminal. */
   TerminalID: z.number().describe("Unique identifier for a terminal."),
+  /** The name of the terminal. */
   Description: z.string().describe("The name of the terminal."),
 });
 
@@ -54,22 +62,25 @@ export type TerminalResponse = z.infer<typeof terminalResponseSchema>;
  */
 export const terminalResponsesListSchema = z.array(terminalResponseSchema);
 
-export type TerminalResponseList = z.infer<
-  typeof terminalResponsesListSchema
->;
+export type TerminalResponseList = z.infer<typeof terminalResponsesListSchema>;
 
 /**
  * Terminal combo response schema for GetTerminalComboDetail endpoint
  */
 export const terminalComboResponseSchema = z.object({
+  /** The name of the departing terminal. */
   DepartingDescription: z
     .string()
     .nullable()
     .describe("The name of the departing terminal."),
+  /** The name of the arriving terminal. */
   ArrivingDescription: z
     .string()
     .nullable()
     .describe("The name of the arriving terminal."),
+  /**
+   * Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc).
+   */
   CollectionDescription: z
     .string()
     .nullable()
@@ -84,20 +95,27 @@ export type TerminalComboResponse = z.infer<typeof terminalComboResponseSchema>;
  * Terminal combo verbose response schema for GetTerminalComboVerboseDetail endpoint
  */
 export const terminalComboVerboseResponseSchema = z.object({
+  /** Unique identifier for the departing terminal. */
   DepartingTerminalID: z
     .number()
     .describe("Unique identifier for the departing terminal."),
+  /** The name of the departing terminal. */
   DepartingDescription: z
     .string()
     .nullable()
     .describe("The name of the departing terminal."),
+  /** Unique identifier for the arriving terminal. */
   ArrivingTerminalID: z
     .number()
     .describe("Unique identifier for the arriving terminal."),
+  /** The name of the arriving terminal. */
   ArrivingDescription: z
     .string()
     .nullable()
     .describe("The name of the arriving terminal."),
+  /**
+   * Text describing what fares are collected at the departing terminal (vehicle/driver, passenger, etc).
+   */
   CollectionDescription: z
     .string()
     .nullable()
@@ -125,20 +143,27 @@ export type TerminalComboVerboseResponseList = z.infer<
  * Line item response schema used by multiple endpoints
  */
 export const lineItemResponseSchema = z.object({
+  /** Unique identifier for a line item. */
   FareLineItemID: z.number().describe("Unique identifier for a line item."),
+  /** A description of the fare (eg. "Adult (age 19 - 64)"). */
   FareLineItem: z
     .string()
     .nullable()
     .describe('A description of the fare (eg. "Adult (age 19 - 64)").'),
+  /** A logical grouping that the fare belongs to (eg. "Passenger"). */
   Category: z
     .string()
     .nullable()
     .describe('A logical grouping that the fare belongs to (eg. "Passenger").'),
+  /**
+   * A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal.
+   */
   DirectionIndependent: z
     .boolean()
     .describe(
       "A flag that, when true, indicates that the fare Amount is not influenced by the departing terminal of use. When false, the Amount might change depending on the departing terminal."
     ),
+  /** The cost of the fare in dollars. */
   Amount: z.number().describe("The cost of the fare in dollars."),
 });
 
@@ -149,9 +174,7 @@ export type LineItemResponse = z.infer<typeof lineItemResponseSchema>;
  */
 export const lineItemResponsesListSchema = z.array(lineItemResponseSchema);
 
-export type LineItemResponseList = z.infer<
-  typeof lineItemResponsesListSchema
->;
+export type LineItemResponseList = z.infer<typeof lineItemResponsesListSchema>;
 
 /**
  * List of lists of line item responses schema
@@ -168,10 +191,13 @@ export type LineItemResponseListList = z.infer<
  * Line item cross-reference schema for GetFareLineItemsVerboseDetail endpoint
  */
 export const lineItemXrefSchema = z.object({
+  /** An list index from TerminalComboVerbose. */
   TerminalComboIndex: z
     .number()
     .describe("An list index from TerminalComboVerbose."),
+  /** An list index from LineItems. */
   LineItemIndex: z.number().describe("An list index from LineItems."),
+  /** An list index from RoundTripLineItems. */
   RoundTripLineItemIndex: z
     .number()
     .describe("An list index from RoundTripLineItems."),
@@ -190,17 +216,23 @@ export type LineItemXrefList = z.infer<typeof lineItemXrefsListSchema>;
  * Line item verbose response schema for GetFareLineItemsVerboseDetail endpoint
  */
 export const lineItemVerboseResponseSchema = z.object({
+  /** All valid terminal combinations associated with the trip date. */
   TerminalComboVerbose: terminalComboVerboseResponsesListSchema
     .nullable()
     .describe("All valid terminal combinations associated with the trip date."),
+  /**
+   * Associates a terminal combination with a one-way fare and a round trip fare for the given trip date.
+   */
   LineItemLookup: lineItemXrefsListSchema
     .nullable()
     .describe(
       "Associates a terminal combination with a one-way fare and a round trip fare for the given trip date."
     ),
+  /** All one-way fare line items associated with the trip date. */
   LineItems: lineItemResponsesListListSchema
     .nullable()
     .describe("All one-way fare line items associated with the trip date."),
+  /** All round trip line items associated with the trip date. */
   RoundTripLineItems: lineItemResponsesListListSchema
     .nullable()
     .describe("All round trip line items associated with the trip date."),
@@ -225,14 +257,20 @@ export type FareTotalType = z.infer<typeof fareTotalTypeSchema>;
  * Fare total response schema for GetFareTotals endpoint
  */
 export const fareTotalResponseSchema = z.object({
+  /**
+   * Indicates a logical grouping for the total. (1 = Depart, 2 = Return, 3 = Either, 4 = Total)
+   */
   TotalType: fareTotalTypeSchema.describe(
     "Indicates a logical grouping for the total. (1 = Depart, 2 = Return, 3 = Either, 4 = Total)"
   ),
+  /** A description of the amount. */
   Description: z.string().nullable().describe("A description of the amount."),
+  /** A string representation of the FareTotalType. */
   BriefDescription: z
     .string()
     .nullable()
     .describe("A string representation of the FareTotalType."),
+  /** A total of the fares in dollars. */
   Amount: z.number().describe("A total of the fares in dollars."),
 });
 

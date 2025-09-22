@@ -18,6 +18,7 @@ export type VesselBasicsInput = z.infer<typeof vesselBasicsInputSchema>;
  * VesselBasicsById input schema
  */
 export const vesselBasicsByIdInputSchema = z.object({
+  /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
@@ -36,6 +37,7 @@ export type VesselAccommodationsInput = z.infer<
  * VesselAccommodationsById input schema
  */
 export const vesselAccommodationsByIdInputSchema = z.object({
+  /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
@@ -54,6 +56,7 @@ export type VesselStatsInput = z.infer<typeof vesselStatsInputSchema>;
  * VesselStatsById input schema
  */
 export const vesselStatsByIdInputSchema = z.object({
+  /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
@@ -70,6 +73,7 @@ export type VesselLocationsInput = z.infer<typeof vesselLocationsInputSchema>;
  * VesselLocationsById input schema
  */
 export const vesselLocationsByIdInputSchema = z.object({
+  /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
@@ -88,6 +92,7 @@ export type VesselVerboseInput = z.infer<typeof vesselVerboseInputSchema>;
  * VesselVerboseById input schema
  */
 export const vesselVerboseByIdInputSchema = z.object({
+  /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
@@ -100,8 +105,11 @@ export type VesselVerboseByIdInput = z.infer<
  */
 export const getVesselHistoryInputSchema = z
   .object({
+    /** The name of the vessel. */
     VesselName: z.string().describe("The name of the vessel."),
+    /** The start date for the history query. */
     DateStart: z.string().describe("The start date for the history query."),
+    /** The end date for the history query. */
     DateEnd: z.string().describe("The end date for the history query."),
   })
   .describe("Input parameters for vessel history endpoint.");
