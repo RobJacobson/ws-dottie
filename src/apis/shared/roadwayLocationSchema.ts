@@ -3,7 +3,7 @@ import { z } from "zod";
 /**
  * Schema for RoadwayLocation - represents location information for a roadway
  */
-export const RoadwayLocationSchema = z.object({
+export const roadwayLocationSchema = z.object({
   Description: z
     .string()
     .nullable()
@@ -22,4 +22,4 @@ export const RoadwayLocationSchema = z.object({
   RoadName: z.string().nullable().describe("The name of the road."),
 });
 
-export type RoadwayLocation = z.infer<typeof RoadwayLocationSchema>;
+export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;

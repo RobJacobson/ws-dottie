@@ -10,52 +10,52 @@ import { z } from "zod";
 /**
  * Input schema for GetTollRates endpoint (void input - only AccessCode)
  */
-export const GetTollRatesInputSchema = z.object({});
+export const getTollRatesInputSchema = z.object({});
 
-export type GetTollRatesInput = z.infer<typeof GetTollRatesInputSchema>;
+export type GetTollRatesInput = z.infer<typeof getTollRatesInputSchema>;
 
 /**
  * Input schema for GetTollTripInfo endpoint (void input - only AccessCode)
  */
-export const GetTollTripInfoInputSchema = z.object({});
+export const getTollTripInfoInputSchema = z.object({});
 
-export type GetTollTripInfoInput = z.infer<typeof GetTollTripInfoInputSchema>;
+export type GetTollTripInfoInput = z.infer<typeof getTollTripInfoInputSchema>;
 
 /**
  * Input schema for GetTollTripRates endpoint (void input - only AccessCode)
  */
-export const GetTollTripRatesInputSchema = z.object({});
+export const getTollTripRatesInputSchema = z.object({});
 
-export type GetTollTripRatesInput = z.infer<typeof GetTollTripRatesInputSchema>;
+export type GetTollTripRatesInput = z.infer<typeof getTollTripRatesInputSchema>;
 
 /**
  * Input schema for GetTollTripVersion endpoint (void input - only AccessCode)
  */
-export const GetTollTripVersionInputSchema = z.object({});
+export const getTollTripVersionInputSchema = z.object({});
 
 export type GetTollTripVersionInput = z.infer<
-  typeof GetTollTripVersionInputSchema
+  typeof getTollTripVersionInputSchema
 >;
 
 /**
  * Input schema for GetTripRatesByDate endpoint
  */
-export const GetTripRatesByDateInputSchema = z.object({
+export const getTripRatesByDateInputSchema = z.object({
   fromDate: z.string().describe("Start date for the trip rates query."),
   toDate: z.string().describe("End date for the trip rates query."),
 });
 
 export type GetTripRatesByDateInput = z.infer<
-  typeof GetTripRatesByDateInputSchema
+  typeof getTripRatesByDateInputSchema
 >;
 
 /**
  * Input schema for GetTripRatesByVersion endpoint
  */
-export const GetTripRatesByVersionInputSchema = z.object({
+export const getTripRatesByVersionInputSchema = z.object({
   version: z.number().describe("Version number for the trip rates query."),
 });
 
 export type GetTripRatesByVersionInput = z.infer<
-  typeof GetTripRatesByVersionInputSchema
+  typeof getTripRatesByVersionInputSchema
 >;

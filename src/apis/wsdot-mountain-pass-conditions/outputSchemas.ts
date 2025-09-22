@@ -4,7 +4,7 @@ import { zWsdotDate } from "@/apis/shared";
 /**
  * Schema for TravelRestriction - represents travel restrictions for mountain passes
  */
-export const TravelRestrictionSchema = z.object({
+export const travelRestrictionSchema = z.object({
   RestrictionText: z
     .string()
     .nullable()
@@ -15,12 +15,12 @@ export const TravelRestrictionSchema = z.object({
     .describe("The direction of this restriction."),
 });
 
-export type TravelRestriction = z.infer<typeof TravelRestrictionSchema>;
+export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 
 /**
  * Schema for PassCondition - represents the conditions of a mountain pass
  */
-export const PassConditionSchema = z.object({
+export const passConditionSchema = z.object({
   MountainPassId: z
     .number()
     .int()
@@ -56,25 +56,25 @@ export const PassConditionSchema = z.object({
   TravelAdvisoryActive: z
     .boolean()
     .describe("Indicates if a travel advisory is active."),
-  RestrictionOne: TravelRestrictionSchema.nullable().describe(
-    "The travel restriction in the primary direction."
-  ),
-  RestrictionTwo: TravelRestrictionSchema.nullable().describe(
-    "The travel restriction in the secondary direction."
-  ),
+  RestrictionOne: travelRestrictionSchema
+    .nullable()
+    .describe("The travel restriction in the primary direction."),
+  RestrictionTwo: travelRestrictionSchema
+    .nullable()
+    .describe("The travel restriction in the secondary direction."),
 });
 
-export type PassCondition = z.infer<typeof PassConditionSchema>;
+export type PassCondition = z.infer<typeof passConditionSchema>;
 
 /**
- * Schema for array of PassCondition - represents all mountain pass conditions
+ * Schema for MountainPassConditionsList - represents all mountain pass conditions
  */
-export const MountainPassConditionsSchema = z
-  .array(PassConditionSchema)
+export const mountainPassConditionsListSchema = z
+  .array(passConditionSchema)
   .describe(
     "Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/). Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system."
   );
 
-export type MountainPassConditions = z.infer<
-  typeof MountainPassConditionsSchema
+export type MountainPassConditionsList = z.infer<
+  typeof mountainPassConditionsListSchema
 >;

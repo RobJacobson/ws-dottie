@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { RoadwayLocationSchema } from "../shared/roadwayLocationSchema";
+import { roadwayLocationSchema } from "../shared/roadwayLocationSchema";
 
 /**
  * Schema for Camera - represents a traffic camera
  */
-export const CameraSchema = z.object({
+export const cameraSchema = z.object({
   CameraID: z.number().describe("Unique identifier for the camera."),
-  CameraLocation: RoadwayLocationSchema.nullable().describe(
-    "Structure identifying where the camera is located."
-  ),
+  CameraLocation: roadwayLocationSchema
+    .nullable()
+    .describe("Structure identifying where the camera is located."),
   CameraOwner: z
     .string()
     .nullable()
@@ -45,14 +45,14 @@ export const CameraSchema = z.object({
   Title: z.string().nullable().describe("Title for the camera."),
 });
 
-export type Camera = z.infer<typeof CameraSchema>;
+export type Camera = z.infer<typeof cameraSchema>;
 
 /**
- * Schema for array of Camera
+ * Schema for CamerasList - represents a list of traffic cameras
  */
-export const ArrayOfCameraSchema = z.array(CameraSchema);
+export const camerasListSchema = z.array(cameraSchema);
 
-export type ArrayOfCamera = z.infer<typeof ArrayOfCameraSchema>;
+export type CameraList = z.infer<typeof camerasListSchema>;
 
 // Export types from shared
 export type { RoadwayLocation } from "../shared/roadwayLocationSchema";

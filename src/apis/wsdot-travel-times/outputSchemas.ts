@@ -8,7 +8,7 @@
 
 import { z } from "zod";
 
-import { RoadwayLocationSchema, zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zWsdotDate } from "@/apis/shared";
 
 /**
  * Schema for TravelTimeRoute - represents a travel time route
@@ -16,7 +16,7 @@ import { RoadwayLocationSchema, zWsdotDate } from "@/apis/shared";
  * Data structure that represents a travel time route. Provides current travel
  * times for many popular travel routes around Washington State.
  */
-export const TravelTimeRouteSchema = z.object({
+export const travelTimeRouteSchema = z.object({
   AverageTime: z
     .number()
     .describe(
@@ -29,13 +29,13 @@ export const TravelTimeRouteSchema = z.object({
     ),
   Description: z.string().nullable().describe("A description for the route."),
   Distance: z.number().describe("Total distance of this route in miles."),
-  EndPoint: RoadwayLocationSchema.nullable().describe(
-    "The location where this route ends."
-  ),
+  EndPoint: roadwayLocationSchema
+    .nullable()
+    .describe("The location where this route ends."),
   Name: z.string().nullable().describe("A friendly name for the route."),
-  StartPoint: RoadwayLocationSchema.nullable().describe(
-    "The location where this route begins."
-  ),
+  StartPoint: roadwayLocationSchema
+    .nullable()
+    .describe("The location where this route begins."),
   TimeUpdated: zWsdotDate().describe(
     "The last time that the data for this route was updated."
   ),
@@ -43,12 +43,10 @@ export const TravelTimeRouteSchema = z.object({
 });
 
 /**
- * Schema for ArrayOfTravelTimeRoute - the main response array for GetTravelTimes
+ * Schema for TravelTimeRoutesList - the main response list for GetTravelTimes
  */
-export const ArrayOfTravelTimeRouteSchema = z.array(TravelTimeRouteSchema);
+export const travelTimeRoutesListSchema = z.array(travelTimeRouteSchema);
 
 // Export types
-export type TravelTimeRoute = z.infer<typeof TravelTimeRouteSchema>;
-export type ArrayOfTravelTimeRoute = z.infer<
-  typeof ArrayOfTravelTimeRouteSchema
->;
+export type TravelTimeRoute = z.infer<typeof travelTimeRouteSchema>;
+export type TravelTimeRoutesList = z.infer<typeof travelTimeRoutesListSchema>;

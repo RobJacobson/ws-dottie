@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { RoadwayLocationSchema } from "../shared/roadwayLocationSchema";
+import { roadwayLocationSchema } from "../shared/roadwayLocationSchema";
 
 /**
  * Schema for CVRestrictionData - represents a Commercial Vehicle Restriction
  */
-export const CVRestrictionDataSchema = z.object({
+export const cVRestrictionDataSchema = z.object({
   BLMaxAxle: z
     .number()
     .nullable()
@@ -25,9 +25,9 @@ export const CVRestrictionDataSchema = z.object({
   DatePosted: zWsdotDate().describe(
     "Date when the restriction was first posted."
   ),
-  EndRoadwayLocation: RoadwayLocationSchema.nullable().describe(
-    "End location for the alert on the roadway."
-  ),
+  EndRoadwayLocation: roadwayLocationSchema
+    .nullable()
+    .describe("End location for the alert on the roadway."),
   IsDetourAvailable: z
     .boolean()
     .describe("Indicates if a detour is available."),
@@ -77,9 +77,9 @@ export const CVRestrictionDataSchema = z.object({
     .nullable()
     .describe("The maximum width for a load in inches."),
   SAMaxAxle: z.number().nullable().describe(""),
-  StartRoadwayLocation: RoadwayLocationSchema.nullable().describe(
-    "Start location for the alert on the roadway."
-  ),
+  StartRoadwayLocation: roadwayLocationSchema
+    .nullable()
+    .describe("Start location for the alert on the roadway."),
   State: z.string().nullable().describe("State where restriction is located."),
   StateRouteID: z
     .string()
@@ -89,12 +89,21 @@ export const CVRestrictionDataSchema = z.object({
   VehicleType: z.string().nullable().describe(""),
 });
 
-export type CVRestrictionData = z.infer<typeof CVRestrictionDataSchema>;
+export type CVRestrictionData = z.infer<typeof cVRestrictionDataSchema>;
+
+/**
+ * Schema for list of CVRestrictionData
+ */
+export const cVRestrictionDataListSchema = z.array(cVRestrictionDataSchema);
+
+export type CVRestrictionDataList = z.infer<
+  typeof cVRestrictionDataListSchema
+>;
 
 /**
  * Schema for CVRestrictionDataWithId - extends CVRestrictionData with a unique identifier
  */
-export const CVRestrictionDataWithIdSchema = CVRestrictionDataSchema.extend({
+export const cVRestrictionDataWithIdSchema = cVRestrictionDataSchema.extend({
   UniqueID: z
     .string()
     .nullable()
@@ -102,27 +111,18 @@ export const CVRestrictionDataWithIdSchema = CVRestrictionDataSchema.extend({
 });
 
 export type CVRestrictionDataWithId = z.infer<
-  typeof CVRestrictionDataWithIdSchema
+  typeof cVRestrictionDataWithIdSchema
 >;
 
 /**
- * Schema for array of CVRestrictionData
+ * Schema for list of CVRestrictionDataWithId
  */
-export const ArrayOfCVRestrictionDataSchema = z.array(CVRestrictionDataSchema);
-
-export type ArrayOfCVRestrictionData = z.infer<
-  typeof ArrayOfCVRestrictionDataSchema
->;
-
-/**
- * Schema for array of CVRestrictionDataWithId
- */
-export const ArrayOfCVRestrictionDataWithIdSchema = z.array(
-  CVRestrictionDataWithIdSchema
+export const cVRestrictionDataWithIdListSchema = z.array(
+  cVRestrictionDataWithIdSchema
 );
 
-export type ArrayOfCVRestrictionDataWithId = z.infer<
-  typeof ArrayOfCVRestrictionDataWithIdSchema
+export type CVRestrictionDataWithIdList = z.infer<
+  typeof cVRestrictionDataWithIdListSchema
 >;
 
 // Re-export shared types

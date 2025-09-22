@@ -20,11 +20,9 @@ export const cacheFlushDateSchema = zWsdotDate().describe(
 export type CacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
 /**
- * TerminalBasicDetail schema
- *
- * Contains basic terminal information.
+ * Base terminal schema containing common fields shared across all terminal schemas
  */
-export const terminalBasicDetailSchema = z.object({
+export const terminalBaseSchema = z.object({
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
   TerminalSubjectID: z
     .number()
@@ -47,6 +45,16 @@ export const terminalBasicDetailSchema = z.object({
     .describe(
       "A preferred sort order (sort-ascending with respect to other terminals)."
     ),
+});
+
+export type TerminalBase = z.infer<typeof terminalBaseSchema>;
+
+/**
+ * TerminalBasicDetail schema
+ *
+ * Contains basic terminal information.
+ */
+export const terminalBasicSchema = terminalBaseSchema.extend({
   OverheadPassengerLoading: z
     .boolean()
     .describe(
@@ -68,30 +76,39 @@ export const terminalBasicDetailSchema = z.object({
     ),
 });
 
-export type TerminalBasicDetail = z.infer<typeof terminalBasicDetailSchema>;
+export type TerminalBasic = z.infer<typeof terminalBasicSchema>;
+
+/**
+ * Terminal Basic Details List Schema
+ *
+ * Represents a list of basic terminal information.
+ */
+export const terminalBasicDetailsListSchema = z.array(terminalBasicSchema);
+
+export type TerminalBasicDetailsList = z.infer<
+  typeof terminalBasicDetailsListSchema
+>;
 
 /**
  * GetAllTerminalBasicDetails schema
  *
  * Returns all terminal basic details.
  */
-export const getAllTerminalBasicDetailsSchema = z
-  .array(terminalBasicDetailSchema)
-  .describe("Returns all terminal basic details.");
+export const getAllTerminalBasicSchema = terminalBasicDetailsListSchema.describe(
+  "Returns all terminal basic details."
+);
 
-export type GetAllTerminalBasicDetails = z.infer<
-  typeof getAllTerminalBasicDetailsSchema
->;
+export type GetAllTerminalBasic = z.infer<typeof getAllTerminalBasicSchema>;
 
 /**
  * GetSpecificTerminalBasicDetail schema
  *
  * Returns basic details for a specific terminal.
  */
-export const getSpecificTerminalBasicDetailSchema = terminalBasicDetailSchema;
+export const getSpecificTerminalBasicSchema = terminalBasicSchema;
 
-export type GetSpecificTerminalBasicDetail = z.infer<
-  typeof getSpecificTerminalBasicDetailSchema
+export type GetSpecificTerminalBasic = z.infer<
+  typeof getSpecificTerminalBasicSchema
 >;
 
 /**
@@ -106,7 +123,7 @@ export const bulletinSchema = z.object({
     .number()
     .int()
     .describe(
-      "A preferred sort order (sort-ascending with respect to other bulletins in this array)."
+      "A preferred sort order (sort-ascending with respect to other bulletins in this list)."
     ),
   BulletinLastUpdated: zWsdotDate()
     .nullable()
@@ -120,48 +137,46 @@ export const bulletinSchema = z.object({
 export type Bulletin = z.infer<typeof bulletinSchema>;
 
 /**
+ * Bulletins List Schema
+ *
+ * Represents a list of bulletin information.
+ */
+export const bulletinsListSchema = z.array(bulletinSchema);
+
+export type BulletinList = z.infer<typeof bulletinsListSchema>;
+
+/**
  * TerminalBulletin schema
  *
  * Contains terminal information with associated bulletins.
  */
-export const terminalBulletinSchema = z.object({
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-  TerminalSubjectID: z
-    .number()
-    .int()
-    .describe("Identifies this terminal as a unique WSF subject."),
-  RegionID: z
-    .number()
-    .int()
-    .describe(
-      "Identifies the geographical region where the terminal is located."
-    ),
-  TerminalName: z.string().nullable().describe("The name of the terminal."),
-  TerminalAbbrev: z
-    .string()
-    .nullable()
-    .describe("The terminal's abbreviation."),
-  SortSeq: z
-    .number()
-    .int()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other terminals)."
-    ),
-  Bulletins: z
-    .array(bulletinSchema)
-    .describe("The bulletins / alerts associated with this terminal."),
+export const terminalBulletinSchema = terminalBaseSchema.extend({
+  Bulletins: bulletinsListSchema.describe(
+    "The bulletins / alerts associated with this terminal."
+  ),
 });
 
 export type TerminalBulletin = z.infer<typeof terminalBulletinSchema>;
+
+/**
+ * Terminal Bulletins List Schema
+ *
+ * Represents a list of terminal bulletin information.
+ */
+export const terminalBulletinsListSchema = z.array(terminalBulletinSchema);
+
+export type TerminalBulletinsList = z.infer<
+  typeof terminalBulletinsListSchema
+>;
 
 /**
  * GetAllTerminalBulletins schema
  *
  * Returns all terminal bulletins.
  */
-export const getAllTerminalBulletinsSchema = z
-  .array(terminalBulletinSchema)
-  .describe("Returns all terminal bulletins.");
+export const getAllTerminalBulletinsSchema = terminalBulletinsListSchema.describe(
+  "Returns all terminal bulletins."
+);
 
 export type GetAllTerminalBulletins = z.infer<
   typeof getAllTerminalBulletinsSchema
@@ -198,33 +213,22 @@ export const dispGISZoomLocSchema = z.object({
 export type DispGISZoomLoc = z.infer<typeof dispGISZoomLocSchema>;
 
 /**
+ * Disp GIS Zoom Locs List Schema
+ *
+ * Represents a list of GIS zoom level location information.
+ */
+export const dispGISZoomLocsListSchema = z.array(dispGISZoomLocSchema);
+
+export type DispGISZoomLocList = z.infer<
+  typeof dispGISZoomLocsListSchema
+>;
+
+/**
  * TerminalLocation schema
  *
  * Contains detailed location information for a terminal.
  */
-export const terminalLocationSchema = z.object({
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-  TerminalSubjectID: z
-    .number()
-    .int()
-    .describe("Identifies this terminal as a unique WSF subject."),
-  RegionID: z
-    .number()
-    .int()
-    .describe(
-      "Identifies the geographical region where the terminal is located."
-    ),
-  TerminalName: z.string().nullable().describe("The name of the terminal."),
-  TerminalAbbrev: z
-    .string()
-    .nullable()
-    .describe("The terminal's abbreviation."),
-  SortSeq: z
-    .number()
-    .int()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other terminals)."
-    ),
+export const terminalLocationSchema = terminalBaseSchema.extend({
   Latitude: z.number().nullable().describe("The latitude of the terminal."),
   Longitude: z.number().nullable().describe("The longitude of the terminal."),
   AddressLineOne: z
@@ -256,8 +260,7 @@ export const terminalLocationSchema = z.object({
     .string()
     .nullable()
     .describe("Instructions detailing how to drive to the terminal."),
-  DispGISZoomLoc: z
-    .array(dispGISZoomLocSchema)
+  DispGISZoomLoc: dispGISZoomLocsListSchema
     .nullable()
     .describe(
       "Where this terminal should appear on a GIS map (at various zoom levels)."
@@ -267,13 +270,24 @@ export const terminalLocationSchema = z.object({
 export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
 
 /**
+ * Terminal Locations List Schema
+ *
+ * Represents a list of detailed location information for terminals.
+ */
+export const terminalLocationsListSchema = z.array(terminalLocationSchema);
+
+export type TerminalLocationsList = z.infer<
+  typeof terminalLocationsListSchema
+>;
+
+/**
  * GetAllTerminalLocations schema
  *
  * Returns all terminal locations.
  */
-export const getAllTerminalLocationsSchema = z
-  .array(terminalLocationSchema)
-  .describe("Returns all terminal locations.");
+export const getAllTerminalLocationsSchema = terminalLocationsListSchema.describe(
+  "Returns all terminal locations."
+);
 
 export type GetAllTerminalLocations = z.infer<
   typeof getAllTerminalLocationsSchema
@@ -346,12 +360,25 @@ export const spaceForArrivalTerminalSchema = z.object({
     .array(z.number().int())
     .nullable()
     .describe(
-      "An array of integers representing all arrival terminals associated with this set of counts."
+      "An list of integers representing all arrival terminals associated with this set of counts."
     ),
 });
 
 export type SpaceForArrivalTerminal = z.infer<
   typeof spaceForArrivalTerminalSchema
+>;
+
+/**
+ * Space For Arrival Terminals List Schema
+ *
+ * Represents a list of space information for arrival terminals.
+ */
+export const spaceForArrivalTerminalsListSchema = z.array(
+  spaceForArrivalTerminalSchema
+);
+
+export type SpaceForArrivalTerminalsList = z.infer<
+  typeof spaceForArrivalTerminalsListSchema
 >;
 
 /**
@@ -378,8 +405,7 @@ export const departingSpaceSchema = z.object({
     .describe(
       "The maximum space available on the vessel making this departure."
     ),
-  SpaceForArrivalTerminals: z
-    .array(spaceForArrivalTerminalSchema)
+  SpaceForArrivalTerminals: spaceForArrivalTerminalsListSchema
     .nullable()
     .describe("The available space for one or more destinations."),
 });
@@ -387,35 +413,23 @@ export const departingSpaceSchema = z.object({
 export type DepartingSpace = z.infer<typeof departingSpaceSchema>;
 
 /**
+ * Departing Spaces List Schema
+ *
+ * Represents a list of departing space information.
+ */
+export const departingSpacesListSchema = z.array(departingSpaceSchema);
+
+export type DepartingSpacesList = z.infer<
+  typeof departingSpacesListSchema
+>;
+
+/**
  * TerminalSailingSpace schema
  *
  * Contains terminal sailing space information.
  */
-export const terminalSailingSpaceSchema = z.object({
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-  TerminalSubjectID: z
-    .number()
-    .int()
-    .describe("Identifies this terminal as a unique WSF subject."),
-  RegionID: z
-    .number()
-    .int()
-    .describe(
-      "Identifies the geographical region where the terminal is located."
-    ),
-  TerminalName: z.string().nullable().describe("The name of the terminal."),
-  TerminalAbbrev: z
-    .string()
-    .nullable()
-    .describe("The terminal's abbreviation."),
-  SortSeq: z
-    .number()
-    .int()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other terminals)."
-    ),
-  DepartingSpaces: z
-    .array(departingSpaceSchema)
+export const terminalSailingSpaceSchema = terminalBaseSchema.extend({
+  DepartingSpaces: departingSpacesListSchema
     .nullable()
     .describe("The most recent departures leaving this terminal."),
   IsNoFareCollected: z
@@ -433,13 +447,26 @@ export const terminalSailingSpaceSchema = z.object({
 export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
 
 /**
+ * Terminal Sailing Spaces List Schema
+ *
+ * Represents a list of terminal sailing space information.
+ */
+export const terminalSailingSpacesListSchema = z.array(
+  terminalSailingSpaceSchema
+);
+
+export type TerminalSailingSpacesList = z.infer<
+  typeof terminalSailingSpacesListSchema
+>;
+
+/**
  * GetAllTerminalSailingSpace schema
  *
  * Returns all terminal sailing space information.
  */
-export const getAllTerminalSailingSpaceSchema = z
-  .array(terminalSailingSpaceSchema)
-  .describe("Returns all terminal sailing space information.");
+export const getAllTerminalSailingSpaceSchema = terminalSailingSpacesListSchema.describe(
+  "Returns all terminal sailing space information."
+);
 
 export type GetAllTerminalSailingSpace = z.infer<
   typeof getAllTerminalSailingSpaceSchema
@@ -469,40 +496,27 @@ export const transitLinkSchema = z.object({
     .int()
     .nullable()
     .describe(
-      "A preferred sort order (sort-ascending with respect to other transit links in this array)."
+      "A preferred sort order (sort-ascending with respect to other transit links in this list)."
     ),
 });
 
 export type TransitLink = z.infer<typeof transitLinkSchema>;
 
 /**
+ * Transit Links List Schema
+ *
+ * Represents a list of transit link information.
+ */
+export const transitLinksListSchema = z.array(transitLinkSchema);
+
+export type TransitLinksList = z.infer<typeof transitLinksListSchema>;
+
+/**
  * TerminalTransportationOption schema
  *
  * Contains terminal transportation options.
  */
-export const terminalTransportationOptionSchema = z.object({
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-  TerminalSubjectID: z
-    .number()
-    .int()
-    .describe("Identifies this terminal as a unique WSF subject."),
-  RegionID: z
-    .number()
-    .int()
-    .describe(
-      "Identifies the geographical region where the terminal is located."
-    ),
-  TerminalName: z.string().nullable().describe("The name of the terminal."),
-  TerminalAbbrev: z
-    .string()
-    .nullable()
-    .describe("The terminal's abbreviation."),
-  SortSeq: z
-    .number()
-    .int()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other terminals)."
-    ),
+export const terminalTransportationOptionSchema = terminalBaseSchema.extend({
   ParkingInfo: z
     .string()
     .nullable()
@@ -553,8 +567,7 @@ export const terminalTransportationOptionSchema = z.object({
     .string()
     .nullable()
     .describe("Tips for carpool/vanpools commuting to this terminal."),
-  TransitLinks: z
-    .array(transitLinkSchema)
+  TransitLinks: transitLinksListSchema
     .nullable()
     .describe("Links to transit agencies that service this terminal."),
 });
@@ -564,13 +577,26 @@ export type TerminalTransportationOption = z.infer<
 >;
 
 /**
+ * Terminal Transportation Options List Schema
+ *
+ * Represents a list of terminal transportation options.
+ */
+export const terminalTransportationOptionsListSchema = z.array(
+  terminalTransportationOptionSchema
+);
+
+export type TerminalTransportationOptionsList = z.infer<
+  typeof terminalTransportationOptionsListSchema
+>;
+
+/**
  * GetAllTerminalTransportationOptions schema
  *
  * Returns all terminal transportation options.
  */
-export const getAllTerminalTransportationOptionsSchema = z
-  .array(terminalTransportationOptionSchema)
-  .describe("Returns all terminal transportation options.");
+export const getAllTerminalTransportationOptionsSchema = terminalTransportationOptionsListSchema.describe(
+  "Returns all terminal transportation options."
+);
 
 export type GetAllTerminalTransportationOptions = z.infer<
   typeof getAllTerminalTransportationOptionsSchema
@@ -625,35 +651,21 @@ export const waitTimeSchema = z.object({
 export type WaitTime = z.infer<typeof waitTimeSchema>;
 
 /**
+ * Wait Times List Schema
+ *
+ * Represents a list of wait time information.
+ */
+export const waitTimesListSchema = z.array(waitTimeSchema);
+
+export type WaitTimeList = z.infer<typeof waitTimesListSchema>;
+
+/**
  * TerminalWaitTime schema
  *
  * Contains terminal wait time information.
  */
-export const terminalWaitTimeSchema = z.object({
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-  TerminalSubjectID: z
-    .number()
-    .int()
-    .describe("Identifies this terminal as a unique WSF subject."),
-  RegionID: z
-    .number()
-    .int()
-    .describe(
-      "Identifies the geographical region where the terminal is located."
-    ),
-  TerminalName: z.string().nullable().describe("The name of the terminal."),
-  TerminalAbbrev: z
-    .string()
-    .nullable()
-    .describe("The terminal's abbreviation."),
-  SortSeq: z
-    .number()
-    .int()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other terminals)."
-    ),
-  WaitTimes: z
-    .array(waitTimeSchema)
+export const terminalWaitTimeSchema = terminalBaseSchema.extend({
+  WaitTimes: waitTimesListSchema
     .nullable()
     .describe("The wait times associated with this terminal."),
 });
@@ -661,13 +673,24 @@ export const terminalWaitTimeSchema = z.object({
 export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
 
 /**
+ * Terminal Wait Times List Schema
+ *
+ * Represents a list of terminal wait time information.
+ */
+export const terminalWaitTimesListSchema = z.array(terminalWaitTimeSchema);
+
+export type TerminalWaitTimesList = z.infer<
+  typeof terminalWaitTimesListSchema
+>;
+
+/**
  * GetAllTerminalWaitTimes schema
  *
  * Returns all terminal wait times.
  */
-export const getAllTerminalWaitTimesSchema = z
-  .array(terminalWaitTimeSchema)
-  .describe("Returns all terminal wait times.");
+export const getAllTerminalWaitTimesSchema = terminalWaitTimesListSchema.describe(
+  "Returns all terminal wait times."
+);
 
 export type GetAllTerminalWaitTimes = z.infer<
   typeof getAllTerminalWaitTimesSchema
@@ -685,265 +708,126 @@ export type GetSpecificTerminalWaitTime = z.infer<
 >;
 
 /**
- * TerminalVerboseDetail schema
+ * TerminalVerbose schema
  *
  * Contains comprehensive terminal information including all other terminal data.
  */
-export const terminalVerboseDetailSchema = z.object({
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-  TerminalSubjectID: z
-    .number()
-    .int()
-    .describe("Identifies this terminal as a unique WSF subject."),
-  RegionID: z
-    .number()
-    .int()
-    .describe(
-      "Identifies the geographical region where the terminal is located."
-    ),
-  TerminalName: z.string().nullable().describe("The name of the terminal."),
-  TerminalAbbrev: z
-    .string()
-    .nullable()
-    .describe("The terminal's abbreviation."),
-  SortSeq: z
-    .number()
-    .int()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other terminals)."
-    ),
-  OverheadPassengerLoading: z
-    .boolean()
-    .describe(
-      "Indicates whether or not overhead passenger loading is available."
-    ),
-  Elevator: z
-    .boolean()
-    .describe("Indicates whether or not the terminal has an elevator."),
-  WaitingRoom: z
-    .boolean()
-    .describe("Indicates whether or not the terminal has a waiting room."),
-  FoodService: z
-    .boolean()
-    .describe("Indicates whether or not the terminal offers food service."),
-  Restroom: z
-    .boolean()
-    .describe(
-      "Indicates whether or not the terminal has one or more restrooms."
-    ),
-  Bulletins: z
-    .array(bulletinSchema)
-    .nullable()
-    .describe("The bulletins / alerts associated with this terminal."),
-  Latitude: z.number().nullable().describe("The latitude of the terminal."),
-  Longitude: z.number().nullable().describe("The longitude of the terminal."),
-  AddressLineOne: z
-    .string()
-    .nullable()
-    .describe("The first line of the terminal's address."),
-  AddressLineTwo: z
-    .string()
-    .nullable()
-    .describe("The second line of the terminal's address."),
-  City: z
-    .string()
-    .nullable()
-    .describe("The city where the terminal is located."),
-  State: z
-    .string()
-    .nullable()
-    .describe("The state where the terminal is located."),
-  ZipCode: z.string().nullable().describe("The terminal's zip code."),
-  Country: z
-    .string()
-    .nullable()
-    .describe("The country where the terminal is located."),
-  MapLink: z
-    .string()
-    .nullable()
-    .describe("A URL to a page that displays the terminal on a GIS map."),
-  Directions: z
-    .string()
-    .nullable()
-    .describe("Instructions detailing how to drive to the terminal."),
-  DispGISZoomLoc: z
-    .array(dispGISZoomLocSchema)
-    .nullable()
-    .describe(
-      "Where this terminal should appear on a GIS map (at various zoom levels)."
-    ),
-  DepartingSpaces: z
-    .array(departingSpaceSchema)
-    .nullable()
-    .describe("The most recent departures leaving this terminal."),
-  IsNoFareCollected: z
-    .boolean()
-    .nullable()
-    .describe("True if this terminal isn't capable of collecting fares."),
-  NoFareCollectedMsg: z
-    .string()
-    .nullable()
-    .describe(
-      "An optional message detailing how inability to collect fares could affect terminal conditions data."
-    ),
-  ParkingInfo: z
-    .string()
-    .nullable()
-    .describe("Parking information for this terminal."),
-  ParkingShuttleInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information about parking-related shuttles that service this terminal."
-    ),
-  AirportInfo: z
-    .string()
-    .nullable()
-    .describe("Tips for commuting to this terminal from the airport."),
-  AirportShuttleInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information about parking shuttles that go between the airport and this terminal."
-    ),
-  MotorcycleInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information for travelers who plan on taking a motorcycle to this terminal."
-    ),
-  TruckInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information for travelers who plan on taking a truck to this terminal."
-    ),
-  BikeInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information for travelers who plan on taking their bicycle to this terminal."
-    ),
-  TrainInfo: z
-    .string()
-    .nullable()
-    .describe("Information about trains that service this terminal."),
-  TaxiInfo: z
-    .string()
-    .nullable()
-    .describe("Information about taxis that service this terminal."),
-  HovInfo: z
-    .string()
-    .nullable()
-    .describe("Tips for carpool/vanpools commuting to this terminal."),
-  TransitLinks: z
-    .array(transitLinkSchema)
-    .nullable()
-    .describe("Links to transit agencies that service this terminal."),
-  WaitTimes: z
-    .array(waitTimeSchema)
-    .nullable()
-    .describe("The wait times associated with this terminal."),
-  RealtimeIntroMsg: z
-    .string()
-    .nullable()
-    .describe(
-      "An optional intro message for terminal conditions data that pertains to terminals capable of collecting fares."
-    ),
-  AdditionalInfo: z
-    .string()
-    .nullable()
-    .describe("Additional information about the terminal."),
-  LostAndFoundInfo: z
-    .string()
-    .nullable()
-    .describe("Lost and found information for the terminal."),
-  SecurityInfo: z
-    .string()
-    .nullable()
-    .describe("Security information for the terminal."),
-  ConstructionInfo: z
-    .string()
-    .nullable()
-    .describe("Construction information for the terminal."),
-  FoodServiceInfo: z
-    .string()
-    .nullable()
-    .describe("Food service information for the terminal."),
-  AdaInfo: z
-    .string()
-    .nullable()
-    .describe("ADA accessibility information for the terminal."),
-  FareDiscountInfo: z
-    .string()
-    .nullable()
-    .describe("Fare discount information for the terminal."),
-  TallySystemInfo: z
-    .string()
-    .nullable()
-    .describe("Tally system information for the terminal."),
-  ChamberOfCommerce: z
-    .object({
-      LinkURL: z
+export const terminalVerboseSchema = terminalBasicSchema
+  .and(terminalBulletinSchema)
+  .and(terminalLocationSchema)
+  .and(terminalSailingSpaceSchema)
+  .and(terminalTransportationOptionSchema)
+  .and(terminalWaitTimeSchema)
+  .and(
+    z.object({
+      RealtimeIntroMsg: z
         .string()
         .nullable()
-        .describe("The URL of the chamber of commerce link."),
-      LinkName: z
+        .describe(
+          "An optional intro message for terminal conditions data that pertains to terminals capable of collecting fares."
+        ),
+      AdditionalInfo: z
         .string()
         .nullable()
-        .describe("The name of the chamber of commerce."),
-      SortSeq: z.number().int().describe("A preferred sort order."),
+        .describe("Additional information about the terminal."),
+      LostAndFoundInfo: z
+        .string()
+        .nullable()
+        .describe("Lost and found information for the terminal."),
+      SecurityInfo: z
+        .string()
+        .nullable()
+        .describe("Security information for the terminal."),
+      ConstructionInfo: z
+        .string()
+        .nullable()
+        .describe("Construction information for the terminal."),
+      FoodServiceInfo: z
+        .string()
+        .nullable()
+        .describe("Food service information for the terminal."),
+      AdaInfo: z
+        .string()
+        .nullable()
+        .describe("ADA accessibility information for the terminal."),
+      FareDiscountInfo: z
+        .string()
+        .nullable()
+        .describe("Fare discount information for the terminal."),
+      TallySystemInfo: z
+        .string()
+        .nullable()
+        .describe("Tally system information for the terminal."),
+      ChamberOfCommerce: z
+        .object({
+          LinkURL: z
+            .string()
+            .nullable()
+            .describe("The URL of the chamber of commerce link."),
+          LinkName: z
+            .string()
+            .nullable()
+            .describe("The name of the chamber of commerce."),
+          SortSeq: z.number().int().describe("A preferred sort order."),
+        })
+        .nullable()
+        .describe("Chamber of commerce information for the terminal."),
+      FacInfo: z
+        .string()
+        .nullable()
+        .describe("Facility information for the terminal."),
+      ResourceStatus: z
+        .string()
+        .nullable()
+        .describe("Resource status information for the terminal."),
+      TypeDesc: z
+        .string()
+        .nullable()
+        .describe("Type description for the terminal."),
+      REALTIME_SHUTOFF_FLAG: z
+        .boolean()
+        .describe("Real-time shutoff flag for the terminal."),
+      REALTIME_SHUTOFF_MESSAGE: z
+        .string()
+        .nullable()
+        .describe("Real-time shutoff message for the terminal."),
+      VisitorLinks: transitLinksListSchema
+        .nullable()
+        .describe("Visitor links for the terminal."),
     })
-    .nullable()
-    .describe("Chamber of commerce information for the terminal."),
-  FacInfo: z
-    .string()
-    .nullable()
-    .describe("Facility information for the terminal."),
-  ResourceStatus: z
-    .string()
-    .nullable()
-    .describe("Resource status information for the terminal."),
-  TypeDesc: z
-    .string()
-    .nullable()
-    .describe("Type description for the terminal."),
-  REALTIME_SHUTOFF_FLAG: z
-    .boolean()
-    .describe("Real-time shutoff flag for the terminal."),
-  REALTIME_SHUTOFF_MESSAGE: z
-    .string()
-    .nullable()
-    .describe("Real-time shutoff message for the terminal."),
-  VisitorLinks: z
-    .array(transitLinkSchema)
-    .nullable()
-    .describe("Visitor links for the terminal."),
-});
+  );
 
-export type TerminalVerboseDetail = z.infer<typeof terminalVerboseDetailSchema>;
+export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
+
+/**
+ * Terminal Verbose Details List Schema
+ *
+ * Represents a list of comprehensive terminal information.
+ */
+export const terminalVerboseDetailsListSchema = z.array(terminalVerboseSchema);
+
+export type TerminalVerboseDetailsList = z.infer<
+  typeof terminalVerboseDetailsListSchema
+>;
 
 /**
  * GetAllTerminalVerboseDetails schema
  *
  * Returns all terminal verbose details.
  */
-export const getAllTerminalVerboseDetailsSchema = z
-  .array(terminalVerboseDetailSchema)
-  .describe("Returns all terminal verbose details.");
+export const getAllTerminalVerboseSchema = terminalVerboseDetailsListSchema.describe(
+  "Returns all terminal verbose details."
+);
 
-export type GetAllTerminalVerboseDetails = z.infer<
-  typeof getAllTerminalVerboseDetailsSchema
->;
+export type GetAllTerminalVerbose = z.infer<typeof getAllTerminalVerboseSchema>;
 
 /**
  * GetSpecificTerminalVerboseDetail schema
  *
  * Returns verbose details for a specific terminal.
  */
-export const getSpecificTerminalVerboseDetailSchema =
-  terminalVerboseDetailSchema;
+export const getSpecificTerminalVerboseSchema = terminalVerboseSchema;
 
-export type GetSpecificTerminalVerboseDetail = z.infer<
-  typeof getSpecificTerminalVerboseDetailSchema
+export type GetSpecificTerminalVerbose = z.infer<
+  typeof getSpecificTerminalVerboseSchema
 >;

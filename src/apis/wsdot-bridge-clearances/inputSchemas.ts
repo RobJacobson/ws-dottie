@@ -3,14 +3,14 @@ import { z } from "zod";
 /**
  * Schema for GetClearances input parameters (all routes)
  */
-export const GetClearancesInputSchema = z.object({});
+export const getClearancesInputSchema = z.object({});
 
-export type GetClearancesInput = z.infer<typeof GetClearancesInputSchema>;
+export type GetClearancesInput = z.infer<typeof getClearancesInputSchema>;
 
 /**
  * Schema for GetClearancesByRoute input parameters
  */
-export const GetClearancesByRouteInputSchema = z.object({
+export const getClearancesByRouteInputSchema = z.object({
   Route: z
     .string()
     .describe(
@@ -19,5 +19,5 @@ export const GetClearancesByRouteInputSchema = z.object({
 });
 
 export type GetClearancesByRouteInput = z.infer<
-  typeof GetClearancesByRouteInputSchema
+  typeof getClearancesByRouteInputSchema
 >;

@@ -6,10 +6,10 @@ import { z } from "zod";
  * This endpoint only requires AccessCode, so no additional parameters are needed.
  * The AccessCode is handled separately and not included in this schema.
  */
-export const GetMountainPassConditionsInputSchema = z.object({});
+export const getMountainPassConditionsInputSchema = z.object({});
 
 export type GetMountainPassConditionsInput = z.infer<
-  typeof GetMountainPassConditionsInputSchema
+  typeof getMountainPassConditionsInputSchema
 >;
 
 /**
@@ -18,7 +18,7 @@ export type GetMountainPassConditionsInput = z.infer<
  * This endpoint requires a PassConditionID parameter in addition to the AccessCode.
  * The AccessCode is handled separately and not included in this schema.
  */
-export const GetMountainPassConditionInputSchema = z.object({
+export const getMountainPassConditionInputSchema = z.object({
   PassConditionID: z
     .number()
     .int()
@@ -26,5 +26,5 @@ export const GetMountainPassConditionInputSchema = z.object({
 });
 
 export type GetMountainPassConditionInput = z.infer<
-  typeof GetMountainPassConditionInputSchema
+  typeof getMountainPassConditionInputSchema
 >;

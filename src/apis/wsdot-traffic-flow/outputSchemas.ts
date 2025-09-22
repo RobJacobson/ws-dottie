@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { RoadwayLocationSchema, zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zWsdotDate } from "@/apis/shared";
 
 /**
  * Schema for FlowData - represents a traffic flow station
@@ -15,7 +15,7 @@ import { RoadwayLocationSchema, zWsdotDate } from "@/apis/shared";
  * A data structure that represents a Flow Station. Provides real-time data on
  * Traffic Flow sensors for the entire state. Data is updated every 90 seconds.
  */
-export const FlowDataSchema = z.object({
+export const flowDataSchema = z.object({
   FlowDataID: z
     .number()
     .describe("A unique ID that identifies a specific station."),
@@ -31,9 +31,9 @@ export const FlowDataSchema = z.object({
     .describe(
       "The current traffic condition at the flow station. (0 = Unknown, 1 = WideOpen, 2 = Moderate, 3 = Heavy, 4 = StopAndGo, 5 = NoData)"
     ),
-  FlowStationLocation: RoadwayLocationSchema.nullable().describe(
-    "The location of the flow station."
-  ),
+  FlowStationLocation: roadwayLocationSchema
+    .nullable()
+    .describe("The location of the flow station."),
   Region: z
     .string()
     .nullable()
@@ -42,11 +42,11 @@ export const FlowDataSchema = z.object({
   Time: zWsdotDate().describe("The time of the station reading."),
 });
 
-export type FlowData = z.infer<typeof FlowDataSchema>;
+export type FlowData = z.infer<typeof flowDataSchema>;
 
 /**
- * Schema for ArrayOfFlowData - the main response array for GetTrafficFlows
+ * Schema for FlowDataList - the main response list for GetTrafficFlows
  */
-export const ArrayOfFlowDataSchema = z.array(FlowDataSchema);
+export const flowDataListSchema = z.array(flowDataSchema);
 
-export type ArrayOfFlowData = z.infer<typeof ArrayOfFlowDataSchema>;
+export type FlowDataList = z.infer<typeof flowDataListSchema>;

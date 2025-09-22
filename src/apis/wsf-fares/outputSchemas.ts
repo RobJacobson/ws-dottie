@@ -10,16 +10,16 @@ import { zWsdotDate } from "@/apis/shared";
 /**
  * Cache flush date response schema for GetCacheFlushDate endpoint
  */
-export const CacheFlushDateResponseSchema = zWsdotDate();
+export const cacheFlushDateResponseSchema = zWsdotDate();
 
 export type CacheFlushDateResponse = z.infer<
-  typeof CacheFlushDateResponseSchema
+  typeof cacheFlushDateResponseSchema
 >;
 
 /**
  * Valid date range response schema for GetValidDateRange endpoint
  */
-export const ValidDateRangeResponseSchema = z.object({
+export const validDateRangeResponseSchema = z.object({
   DateFrom: zWsdotDate().describe(
     "Fares information is available from this date onward."
   ),
@@ -29,32 +29,39 @@ export const ValidDateRangeResponseSchema = z.object({
 });
 
 export type ValidDateRangeResponse = z.infer<
-  typeof ValidDateRangeResponseSchema
+  typeof validDateRangeResponseSchema
 >;
 
 /**
- * Terminal response schema used by multiple endpoints
+ * Base terminal schema for fares API
  */
-export const TerminalResponseSchema = z.object({
+export const terminalBaseSchema = z.object({
   TerminalID: z.number().describe("Unique identifier for a terminal."),
   Description: z.string().describe("The name of the terminal."),
 });
 
-export type TerminalResponse = z.infer<typeof TerminalResponseSchema>;
+export type TerminalBase = z.infer<typeof terminalBaseSchema>;
 
 /**
- * Array of terminal responses schema
+ * Terminal response schema used by multiple endpoints
  */
-export const ArrayOfTerminalResponseSchema = z.array(TerminalResponseSchema);
+export const terminalResponseSchema = terminalBaseSchema;
 
-export type ArrayOfTerminalResponse = z.infer<
-  typeof ArrayOfTerminalResponseSchema
+export type TerminalResponse = z.infer<typeof terminalResponseSchema>;
+
+/**
+ * List of terminal responses schema
+ */
+export const terminalResponsesListSchema = z.array(terminalResponseSchema);
+
+export type TerminalResponseList = z.infer<
+  typeof terminalResponsesListSchema
 >;
 
 /**
  * Terminal combo response schema for GetTerminalComboDetail endpoint
  */
-export const TerminalComboResponseSchema = z.object({
+export const terminalComboResponseSchema = z.object({
   DepartingDescription: z
     .string()
     .nullable()
@@ -71,12 +78,12 @@ export const TerminalComboResponseSchema = z.object({
     ),
 });
 
-export type TerminalComboResponse = z.infer<typeof TerminalComboResponseSchema>;
+export type TerminalComboResponse = z.infer<typeof terminalComboResponseSchema>;
 
 /**
  * Terminal combo verbose response schema for GetTerminalComboVerboseDetail endpoint
  */
-export const TerminalComboVerboseResponseSchema = z.object({
+export const terminalComboVerboseResponseSchema = z.object({
   DepartingTerminalID: z
     .number()
     .describe("Unique identifier for the departing terminal."),
@@ -100,24 +107,24 @@ export const TerminalComboVerboseResponseSchema = z.object({
 });
 
 export type TerminalComboVerboseResponse = z.infer<
-  typeof TerminalComboVerboseResponseSchema
+  typeof terminalComboVerboseResponseSchema
 >;
 
 /**
- * Array of terminal combo verbose responses schema
+ * List of terminal combo verbose responses schema
  */
-export const ArrayOfTerminalComboVerboseResponseSchema = z.array(
-  TerminalComboVerboseResponseSchema
+export const terminalComboVerboseResponsesListSchema = z.array(
+  terminalComboVerboseResponseSchema
 );
 
-export type ArrayOfTerminalComboVerboseResponse = z.infer<
-  typeof ArrayOfTerminalComboVerboseResponseSchema
+export type TerminalComboVerboseResponseList = z.infer<
+  typeof terminalComboVerboseResponsesListSchema
 >;
 
 /**
  * Line item response schema used by multiple endpoints
  */
-export const LineItemResponseSchema = z.object({
+export const lineItemResponseSchema = z.object({
   FareLineItemID: z.number().describe("Unique identifier for a line item."),
   FareLineItem: z
     .string()
@@ -135,89 +142,90 @@ export const LineItemResponseSchema = z.object({
   Amount: z.number().describe("The cost of the fare in dollars."),
 });
 
-export type LineItemResponse = z.infer<typeof LineItemResponseSchema>;
+export type LineItemResponse = z.infer<typeof lineItemResponseSchema>;
 
 /**
- * Array of line item responses schema
+ * List of line item responses schema
  */
-export const ArrayOfLineItemResponseSchema = z.array(LineItemResponseSchema);
+export const lineItemResponsesListSchema = z.array(lineItemResponseSchema);
 
-export type ArrayOfLineItemResponse = z.infer<
-  typeof ArrayOfLineItemResponseSchema
+export type LineItemResponseList = z.infer<
+  typeof lineItemResponsesListSchema
 >;
 
 /**
- * Array of arrays of line item responses schema
+ * List of lists of line item responses schema
  */
-export const ArrayOfArrayOfLineItemResponseSchema = z.array(
-  ArrayOfLineItemResponseSchema
+export const lineItemResponsesListListSchema = z.array(
+  lineItemResponsesListSchema
 );
 
-export type ArrayOfArrayOfLineItemResponse = z.infer<
-  typeof ArrayOfArrayOfLineItemResponseSchema
+export type LineItemResponseListList = z.infer<
+  typeof lineItemResponsesListListSchema
 >;
 
 /**
  * Line item cross-reference schema for GetFareLineItemsVerboseDetail endpoint
  */
-export const LineItemXrefSchema = z.object({
+export const lineItemXrefSchema = z.object({
   TerminalComboIndex: z
     .number()
-    .describe("An array index from TerminalComboVerbose."),
-  LineItemIndex: z.number().describe("An array index from LineItems."),
+    .describe("An list index from TerminalComboVerbose."),
+  LineItemIndex: z.number().describe("An list index from LineItems."),
   RoundTripLineItemIndex: z
     .number()
-    .describe("An array index from RoundTripLineItems."),
+    .describe("An list index from RoundTripLineItems."),
 });
 
-export type LineItemXref = z.infer<typeof LineItemXrefSchema>;
+export type LineItemXref = z.infer<typeof lineItemXrefSchema>;
 
 /**
- * Array of line item cross-references schema
+ * List of line item cross-references schema
  */
-export const ArrayOfLineItemXrefSchema = z.array(LineItemXrefSchema);
+export const lineItemXrefsListSchema = z.array(lineItemXrefSchema);
 
-export type ArrayOfLineItemXref = z.infer<typeof ArrayOfLineItemXrefSchema>;
+export type LineItemXrefList = z.infer<typeof lineItemXrefsListSchema>;
 
 /**
  * Line item verbose response schema for GetFareLineItemsVerboseDetail endpoint
  */
-export const LineItemVerboseResponseSchema = z.object({
-  TerminalComboVerbose:
-    ArrayOfTerminalComboVerboseResponseSchema.nullable().describe(
-      "All valid terminal combinations associated with the trip date."
+export const lineItemVerboseResponseSchema = z.object({
+  TerminalComboVerbose: terminalComboVerboseResponsesListSchema
+    .nullable()
+    .describe("All valid terminal combinations associated with the trip date."),
+  LineItemLookup: lineItemXrefsListSchema
+    .nullable()
+    .describe(
+      "Associates a terminal combination with a one-way fare and a round trip fare for the given trip date."
     ),
-  LineItemLookup: ArrayOfLineItemXrefSchema.nullable().describe(
-    "Associates a terminal combination with a one-way fare and a round trip fare for the given trip date."
-  ),
-  LineItems: ArrayOfArrayOfLineItemResponseSchema.nullable().describe(
-    "All one-way fare line items associated with the trip date."
-  ),
-  RoundTripLineItems: ArrayOfArrayOfLineItemResponseSchema.nullable().describe(
-    "All round trip line items associated with the trip date."
-  ),
+  LineItems: lineItemResponsesListListSchema
+    .nullable()
+    .describe("All one-way fare line items associated with the trip date."),
+  RoundTripLineItems: lineItemResponsesListListSchema
+    .nullable()
+    .describe("All round trip line items associated with the trip date."),
 });
 
 export type LineItemVerboseResponse = z.infer<
-  typeof LineItemVerboseResponseSchema
+  typeof lineItemVerboseResponseSchema
 >;
 
 /**
  * Fare total type enum for GetFareTotals endpoint
  */
-export const FareTotalTypeSchema = z
+export const fareTotalTypeSchema = z
   .union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)])
   .describe(
     "Indicates a logical grouping for the total. (1 = Depart, 2 = Return, 3 = Either, 4 = Total)"
   );
 
-export type FareTotalType = z.infer<typeof FareTotalTypeSchema>;
+export type FareTotalType = z.infer<typeof fareTotalTypeSchema>;
 
 /**
  * Fare total response schema for GetFareTotals endpoint
  */
-export const FareTotalResponseSchema = z.object({
-  TotalType: FareTotalTypeSchema.describe(
+export const fareTotalResponseSchema = z.object({
+  TotalType: fareTotalTypeSchema.describe(
     "Indicates a logical grouping for the total. (1 = Depart, 2 = Return, 3 = Either, 4 = Total)"
   ),
   Description: z.string().nullable().describe("A description of the amount."),
@@ -228,13 +236,13 @@ export const FareTotalResponseSchema = z.object({
   Amount: z.number().describe("A total of the fares in dollars."),
 });
 
-export type FareTotalResponse = z.infer<typeof FareTotalResponseSchema>;
+export type FareTotalResponse = z.infer<typeof fareTotalResponseSchema>;
 
 /**
- * Array of fare total responses schema
+ * List of fare total responses schema
  */
-export const ArrayOfFareTotalResponseSchema = z.array(FareTotalResponseSchema);
+export const fareTotalResponsesListSchema = z.array(fareTotalResponseSchema);
 
-export type ArrayOfFareTotalResponse = z.infer<
-  typeof ArrayOfFareTotalResponseSchema
+export type FareTotalResponseList = z.infer<
+  typeof fareTotalResponsesListSchema
 >;

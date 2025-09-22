@@ -15,7 +15,7 @@ import { zWsdotDate } from "@/apis/shared";
  * The tolls reported here may not match what is currently displayed on the
  * road signs due to timing issues between WSDOT and the tolling contractor.
  */
-export const TollRateSchema = z.object({
+export const tollRateSchema = z.object({
   TripName: z.string().nullable().describe("Name for the toll trip."),
   CurrentToll: z
     .number()
@@ -56,19 +56,19 @@ export const TollRateSchema = z.object({
   TimeUpdated: zWsdotDate().describe("Last time updated for this toll trip."),
 });
 
-export type TollRate = z.infer<typeof TollRateSchema>;
+export type TollRate = z.infer<typeof tollRateSchema>;
 
 /**
- * Schema for ArrayOfTollRate - the main response array
+ * Schema for TollRatesList - the main response list
  */
-export const ArrayOfTollRateSchema = z.array(TollRateSchema);
+export const tollRatesListSchema = z.array(tollRateSchema);
 
-export type ArrayOfTollRate = z.infer<typeof ArrayOfTollRateSchema>;
+export type TollRatesList = z.infer<typeof tollRatesListSchema>;
 
 /**
  * Schema for trip rate information
  */
-export const TripRateSchema = z.object({
+export const tripRateSchema = z.object({
   Message: z.string().nullable().describe("Message for the trip rate."),
   MessageUpdateTime: zWsdotDate().describe(
     "Time when the message was last updated."
@@ -77,37 +77,37 @@ export const TripRateSchema = z.object({
   TripName: z.string().nullable().describe("Name of the trip."),
 });
 
-export type TripRate = z.infer<typeof TripRateSchema>;
+export type TripRate = z.infer<typeof tripRateSchema>;
 
 /**
- * Schema for ArrayOfTripRate - array of trip rates
+ * Schema for TripRatesList - list of trip rates
  */
-export const ArrayOfTripRateSchema = z.array(TripRateSchema);
+export const tripRatesListSchema = z.array(tripRateSchema);
 
-export type ArrayOfTripRate = z.infer<typeof ArrayOfTripRateSchema>;
+export type TripRatesList = z.infer<typeof tripRatesListSchema>;
 
 /**
  * Schema for toll trips container
  */
-export const TollTripsSchema = z.object({
+export const tollTripsSchema = z.object({
   LastUpdated: zWsdotDate().describe("Last time the toll trips were updated."),
-  Trips: z.array(TripRateSchema).nullable().describe("Array of trip rates."),
+  Trips: tripRatesListSchema.nullable().describe("List of trip rates."),
   Version: z.number().describe("Version number of the toll trips data."),
 });
 
-export type TollTrips = z.infer<typeof TollTripsSchema>;
+export type TollTrips = z.infer<typeof tollTripsSchema>;
 
 /**
- * Schema for ArrayOfTollTrips - array of toll trips
+ * Schema for TollTripsList - list of toll trips
  */
-export const ArrayOfTollTripsSchema = z.array(TollTripsSchema);
+export const tollTripsListSchema = z.array(tollTripsSchema);
 
-export type ArrayOfTollTrips = z.infer<typeof ArrayOfTollTripsSchema>;
+export type TollTripsList = z.infer<typeof tollTripsListSchema>;
 
 /**
  * Schema for toll trip information
  */
-export const TollTripInfoSchema = z.object({
+export const tollTripInfoSchema = z.object({
   EndLatitude: z.number().describe("End latitude of the trip."),
   EndLocationName: z.string().nullable().describe("Name of the end location."),
   EndLongitude: z.number().describe("End longitude of the trip."),
@@ -133,21 +133,21 @@ export const TollTripInfoSchema = z.object({
   TripName: z.string().nullable().describe("Name of the trip."),
 });
 
-export type TollTripInfo = z.infer<typeof TollTripInfoSchema>;
+export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 
 /**
- * Schema for ArrayOfTollTripInfo - array of toll trip information
+ * Schema for TollTripInfoList - list of toll trip information
  */
-export const ArrayOfTollTripInfoSchema = z.array(TollTripInfoSchema);
+export const tollTripInfoListSchema = z.array(tollTripInfoSchema);
 
-export type ArrayOfTollTripInfo = z.infer<typeof ArrayOfTollTripInfoSchema>;
+export type TollTripInfoList = z.infer<typeof tollTripInfoListSchema>;
 
 /**
  * Schema for toll trip version information
  */
-export const TollTripVersionSchema = z.object({
+export const tollTripVersionSchema = z.object({
   TimeStamp: zWsdotDate().describe("Timestamp of the version."),
   Version: z.number().describe("Version number."),
 });
 
-export type TollTripVersion = z.infer<typeof TollTripVersionSchema>;
+export type TollTripVersion = z.infer<typeof tollTripVersionSchema>;

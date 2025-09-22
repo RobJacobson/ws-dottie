@@ -8,11 +8,12 @@
 import { z } from "zod";
 
 import { zWsdotDate } from "@/apis/shared";
+import { numbersListSchema, stringsListSchema } from "@/apis/shared/schemas";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information
  */
-export const CacheFlushDateSchema = z.object({
+export const cacheFlushDateSchema = z.object({
   CacheFlushDate: zWsdotDate()
     .nullable()
     .describe(
@@ -20,12 +21,12 @@ export const CacheFlushDateSchema = z.object({
     ),
 });
 
-export type CacheFlushDate = z.infer<typeof CacheFlushDateSchema>;
+export type CacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Schema for ValidDateRange - represents valid date range for schedule data
  */
-export const ValidDateRangeSchema = z.object({
+export const validDateRangeSchema = z.object({
   DateFrom: zWsdotDate().describe(
     "Schedule information is available from this trip date onward."
   ),
@@ -34,22 +35,81 @@ export const ValidDateRangeSchema = z.object({
   ),
 });
 
-export type ValidDateRange = z.infer<typeof ValidDateRangeSchema>;
+export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
+
+/**
+ * Base schedule schema containing common schedule fields
+ */
+export const scheduleBaseSchema = z.object({
+  ScheduleID: z.number().describe("Unique identifier for a season."),
+  ScheduleName: z.string().describe("The name of the season."),
+  ScheduleSeason: z
+    .union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)])
+    .describe(
+      "Indicates a quarterly identifier. 0 for Spring, 1 for Summer, 2 for Fall and 3 for Winter."
+    ),
+  SchedulePDFUrl: z.string().describe("A URL to the season in PDF format."),
+  ScheduleStart: zWsdotDate().describe(
+    "A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am."
+  ),
+  ScheduleEnd: zWsdotDate().describe(
+    "A trip date that represents the end of the season. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a ScheduleEnd of 2014-09-20 is returned, this would indicate the season ends precisely on 2014-09-21 at 2:59am."
+  ),
+});
+
+export type ScheduleBase = z.infer<typeof scheduleBaseSchema>;
+
+/**
+ * Schedules List Schema - represents an list of schedules
+ */
+export const schedulesListSchema = z.array(scheduleBaseSchema);
+
+export type ScheduleList = z.infer<typeof schedulesListSchema>;
+
+/**
+ * Base route schema containing common route fields
+ */
+export const routeBaseSchema = z.object({
+  RouteID: z.number().describe("Unique identifier for a route."),
+  RouteAbbrev: z.string().nullable().describe("The route's abbreviation."),
+  Description: z.string().nullable().describe("The full name of the route."),
+  RegionID: z
+    .number()
+    .describe(
+      "Unique identifier that identifies the region associated with the route."
+    ),
+});
+
+export type RouteBase = z.infer<typeof routeBaseSchema>;
+
+/**
+ * Routes List Schema - represents an list of routes
+ */
+export const routesListSchema = z.array(routeBaseSchema);
+
+export type RouteList = z.infer<typeof routesListSchema>;
 
 /**
  * Schema for Terminal - represents terminal information
  */
-export const TerminalSchema = z.object({
+export const terminalSchema = z.object({
   TerminalID: z.number().describe("Unique identifier for a terminal."),
   Description: z.string().nullable().describe("The name of the terminal."),
 });
 
-export type Terminal = z.infer<typeof TerminalSchema>;
+export type Terminal = z.infer<typeof terminalSchema>;
+
+/**
+ * Terminals List Schema - represents an list of terminals
+ */
+export const terminalsListSchema = z.array(terminalSchema);
+
+export type TerminalList = z.infer<typeof terminalsListSchema>;
 
 /**
  * Schema for TerminalMate - represents terminal mate information
  */
-export const TerminalMateSchema = z.object({
+export const terminalMateSchema = z.object({
   DepartingTerminalID: z
     .number()
     .describe("Unique identifier for the departing terminal."),
@@ -64,12 +124,19 @@ export const TerminalMateSchema = z.object({
     .describe("The name of the arriving terminal."),
 });
 
-export type TerminalMate = z.infer<typeof TerminalMateSchema>;
+export type TerminalMate = z.infer<typeof terminalMateSchema>;
+
+/**
+ * Terminal Mates List Schema - represents an list of terminal mates
+ */
+export const terminalMatesListSchema = z.array(terminalMateSchema);
+
+export type TerminalMateList = z.infer<typeof terminalMatesListSchema>;
 
 /**
  * Schema for ServiceDisruption - represents service disruption information
  */
-export const ServiceDisruptionSchema = z.object({
+export const serviceDisruptionSchema = z.object({
   BulletinID: z.number().describe("Unique identifier for the alert."),
   BulletinFlag: z
     .boolean()
@@ -84,34 +151,34 @@ export const ServiceDisruptionSchema = z.object({
     .describe("The service disruption text associated with the alert."),
 });
 
-export type ServiceDisruption = z.infer<typeof ServiceDisruptionSchema>;
+export type ServiceDisruption = z.infer<typeof serviceDisruptionSchema>;
+
+/**
+ * Service Disruptions List Schema - represents an list of service disruptions
+ */
+export const serviceDisruptionsListSchema = z.array(serviceDisruptionSchema);
+
+export type ServiceDisruptionList = z.infer<
+  typeof serviceDisruptionsListSchema
+>;
 
 /**
  * Schema for Route - represents basic route information
  */
-export const RouteSchema = z.object({
-  RouteID: z.number().describe("Unique identifier for a route."),
-  RouteAbbrev: z.string().nullable().describe("The route's abbreviation."),
-  Description: z.string().nullable().describe("The full name of the route."),
-  RegionID: z
-    .number()
-    .describe(
-      "Unique identifier that identifies the region associated with the route."
-    ),
-  ServiceDisruptions: z
-    .array(ServiceDisruptionSchema)
+export const routeSchema = routeBaseSchema.extend({
+  ServiceDisruptions: serviceDisruptionsListSchema
     .nullable()
     .describe(
       "Service disruption alerts that are currently affecting the route."
     ),
 });
 
-export type Route = z.infer<typeof RouteSchema>;
+export type Route = z.infer<typeof routeSchema>;
 
 /**
  * Schema for Alert - represents alert information
  */
-export const AlertSchema = z.object({
+export const alertSchema = z.object({
   BulletinID: z.number().describe("Unique identifier for the alert."),
   BulletinFlag: z
     .boolean()
@@ -144,20 +211,19 @@ export const AlertSchema = z.object({
     .describe("The alert text, tailored for text to speech systems."),
 });
 
-export type Alert = z.infer<typeof AlertSchema>;
+export type Alert = z.infer<typeof alertSchema>;
+
+/**
+ * Alerts List Schema - represents an list of alerts
+ */
+export const alertsListSchema = z.array(alertSchema);
+
+export type AlertList = z.infer<typeof alertsListSchema>;
 
 /**
  * Schema for RouteDetail - represents detailed route information
  */
-export const RouteDetailSchema = z.object({
-  RouteID: z.number().describe("Unique identifier for a route."),
-  RouteAbbrev: z.string().describe("The route's abbreviation."),
-  Description: z.string().describe("The full name of the route."),
-  RegionID: z
-    .number()
-    .describe(
-      "Unique identifier that identifies the region associated with the route."
-    ),
+export const routeDetailSchema = routeBaseSchema.extend({
   VesselWatchID: z
     .number()
     .describe("Unique identifier used to group routes for VesselWatch."),
@@ -192,37 +258,22 @@ export const RouteDetailSchema = z.object({
     .describe(
       "Route notes specific to the season that the trip date is associated with."
     ),
-  Alerts: z.array(AlertSchema).describe("Alerts associated with the route."),
+  Alerts: alertsListSchema.describe("Alerts associated with the route."),
 });
 
-export type RouteDetail = z.infer<typeof RouteDetailSchema>;
+export type RouteDetail = z.infer<typeof routeDetailSchema>;
 
 /**
  * Schema for ActiveSeason - represents active season information
  */
-export const ActiveSeasonSchema = z.object({
-  ScheduleID: z.number().describe("Unique identifier for a season."),
-  ScheduleName: z.string().describe("The name of the season."),
-  ScheduleSeason: z
-    .union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)])
-    .describe(
-      "Indicates a quarterly identifier. 0 for Spring, 1 for Summer, 2 for Fall and 3 for Winter."
-    ),
-  SchedulePDFUrl: z.string().describe("A URL to the season in PDF format."),
-  ScheduleStart: zWsdotDate().describe(
-    "A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am."
-  ),
-  ScheduleEnd: zWsdotDate().describe(
-    "A trip date that represents the end of the season. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a ScheduleEnd of 2014-09-20 is returned, this would indicate the season ends precisely on 2014-09-21 at 2:59am."
-  ),
-});
+export const activeSeasonSchema = scheduleBaseSchema;
 
-export type ActiveSeason = z.infer<typeof ActiveSeasonSchema>;
+export type ActiveSeason = z.infer<typeof activeSeasonSchema>;
 
 /**
  * Schema for ContingencyAdj - represents contingency adjustment information
  */
-export const ContingencyAdjSchema = z.object({
+export const contingencyAdjSchema = z.object({
   DateFrom: zWsdotDate().describe(
     "The precise date and time that the contingency adjustment starts."
   ),
@@ -247,18 +298,25 @@ export const ContingencyAdjSchema = z.object({
     ),
 });
 
-export type ContingencyAdj = z.infer<typeof ContingencyAdjSchema>;
+export type ContingencyAdj = z.infer<typeof contingencyAdjSchema>;
+
+/**
+ * Contingency Adjs List Schema - represents an list of contingency adjustments
+ */
+export const contingencyAdjsListSchema = z.array(contingencyAdjSchema);
+
+export type ContingencyAdjList = z.infer<typeof contingencyAdjsListSchema>;
 
 /**
  * Schema for SchedRoute - represents scheduled route information
  */
-export const SchedRouteSchema = z.object({
+export const schedRouteSchema = z.object({
   ScheduleID: z.number().describe("Unique identifier for a season."),
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
   ContingencyOnly: z
     .boolean()
     .describe(
-      "If true, see additions in the ContingencyAdj array for the periods of time this scheduled route is active. If false, this scheduled route operates the majority of the season (yet could still be replaced by contingencies specified in the ContingencyAdj array)."
+      "If true, see additions in the ContingencyAdj list for the periods of time this scheduled route is active. If false, this scheduled route operates the majority of the season (yet could still be replaced by contingencies specified in the ContingencyAdj list)."
     ),
   RouteID: z.number().describe("Unique identifier for the underlying route."),
   RouteAbbrev: z.string().describe("The underlying route's abbreviation."),
@@ -272,24 +330,27 @@ export const SchedRouteSchema = z.object({
     .describe(
       "Unique identifier that identifies the region associated with the underlying route."
     ),
-  ServiceDisruptions: z
-    .array(ServiceDisruptionSchema)
-    .describe(
-      "Service disruption alerts that are currently affecting the scheduled route."
-    ),
-  ContingencyAdj: z
-    .array(ContingencyAdjSchema)
-    .describe(
-      "Defines periods of service for contingency routes (scheduled routes marked as ContingencyOnly). For non-contingency routes (scheduled routes where ContingencyOnly is false) it might define date ranges where the scheduled route is not in service."
-    ),
+  ServiceDisruptions: serviceDisruptionsListSchema.describe(
+    "Service disruption alerts that are currently affecting the scheduled route."
+  ),
+  ContingencyAdj: contingencyAdjsListSchema.describe(
+    "Defines periods of service for contingency routes (scheduled routes marked as ContingencyOnly). For non-contingency routes (scheduled routes where ContingencyOnly is false) it might define date ranges where the scheduled route is not in service."
+  ),
 });
 
-export type SchedRoute = z.infer<typeof SchedRouteSchema>;
+export type SchedRoute = z.infer<typeof schedRouteSchema>;
+
+/**
+ * Sched Routes List Schema - represents an list of scheduled routes
+ */
+export const schedRoutesListSchema = z.array(schedRouteSchema);
+
+export type SchedRouteList = z.infer<typeof schedRoutesListSchema>;
 
 /**
  * Schema for ActiveDateRange - represents active date range information
  */
-export const ActiveDateRangeSchema = z.object({
+export const activeDateRangeSchema = z.object({
   DateFrom: zWsdotDate().describe(
     "A trip date that represents the start of the active sailing date range. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a DateFrom of 2014-06-15 is returned, this would indicate the active date range starts precisely on 2014-06-15 at 3:00am."
   ),
@@ -303,12 +364,19 @@ export const ActiveDateRangeSchema = z.object({
     .describe("Explaination (if necessary) of this sailing date range."),
 });
 
-export type ActiveDateRange = z.infer<typeof ActiveDateRangeSchema>;
+export type ActiveDateRange = z.infer<typeof activeDateRangeSchema>;
+
+/**
+ * Active Date Ranges List Schema - represents an list of active date ranges
+ */
+export const activeDateRangesListSchema = z.array(activeDateRangeSchema);
+
+export type ActiveDateRangeList = z.infer<typeof activeDateRangesListSchema>;
 
 /**
  * Schema for Annotation - represents annotation information
  */
-export const AnnotationSchema = z.object({
+export const annotationSchema = z.object({
   AnnotationID: z.number().describe("Unique identifier for an annotation."),
   AnnotationText: z
     .string()
@@ -343,12 +411,19 @@ export const AnnotationSchema = z.object({
     ),
 });
 
-export type Annotation = z.infer<typeof AnnotationSchema>;
+export type Annotation = z.infer<typeof annotationSchema>;
+
+/**
+ * Annotations List Schema - represents an list of annotations
+ */
+export const annotationsListSchema = z.array(annotationSchema);
+
+export type AnnotationList = z.infer<typeof annotationsListSchema>;
 
 /**
  * Schema for TerminalTime - represents terminal time information
  */
-export const TerminalTimeSchema = z.object({
+export const terminalTimeSchema = z.object({
   JourneyTerminalID: z
     .number()
     .describe("Unique identifier for a terminal time."),
@@ -377,18 +452,24 @@ export const TerminalTimeSchema = z.object({
     .describe(
       "If true indicates that the journey does not interact with this terminal."
     ),
-  Annotations: z
-    .array(AnnotationSchema)
+  Annotations: annotationsListSchema
     .nullable()
     .describe("Informational attributes associated with the terminal time."),
 });
 
-export type TerminalTime = z.infer<typeof TerminalTimeSchema>;
+export type TerminalTime = z.infer<typeof terminalTimeSchema>;
+
+/**
+ * Terminal Times List Schema - represents an list of terminal times
+ */
+export const terminalTimesListSchema = z.array(terminalTimeSchema);
+
+export type TerminalTimeList = z.infer<typeof terminalTimesListSchema>;
 
 /**
  * Schema for Journey - represents journey information
  */
-export const JourneySchema = z.object({
+export const journeySchema = z.object({
   JourneyID: z.number().describe("Unique identifier for a journey."),
   ReservationInd: z
     .boolean()
@@ -422,20 +503,26 @@ export const JourneySchema = z.object({
     .describe(
       "A number that represents a single vessel that services all of the stops in the journey."
     ),
-  TerminalTimes: z
-    .array(TerminalTimeSchema)
+  TerminalTimes: terminalTimesListSchema
     .nullable()
     .describe(
       "One or more terminal departures or arrivals made by the same vessel."
     ),
 });
 
-export type Journey = z.infer<typeof JourneySchema>;
+export type Journey = z.infer<typeof journeySchema>;
+
+/**
+ * Journeys List Schema - represents an list of journeys
+ */
+export const journeysListSchema = z.array(journeySchema);
+
+export type JourneyList = z.infer<typeof journeysListSchema>;
 
 /**
  * Schema for Sailing - represents sailing information
  */
-export const SailingSchema = z.object({
+export const sailingSchema = z.object({
   ScheduleID: z.number().describe("Unique identifier for a season."),
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
   RouteID: z.number().describe("Unique identifier for the underlying route."),
@@ -467,26 +554,31 @@ export const SailingSchema = z.object({
     .describe(
       "A flag that indicates whether or not the sailing should apply for holidays."
     ),
-  ActiveDateRanges: z
-    .array(ActiveDateRangeSchema)
+  ActiveDateRanges: activeDateRangesListSchema
     .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
     ),
-  Journs: z
-    .array(JourneySchema)
+  Journs: journeysListSchema
     .nullable()
     .describe(
       "A single vessel that stops at one or more terminals making a full trip in the direction described by the sailing."
     ),
 });
 
-export type Sailing = z.infer<typeof SailingSchema>;
+export type Sailing = z.infer<typeof sailingSchema>;
+
+/**
+ * Sailings List Schema - represents an list of sailings
+ */
+export const sailingsListSchema = z.array(sailingSchema);
+
+export type SailingList = z.infer<typeof sailingsListSchema>;
 
 /**
  * Schema for TimeAdjustment - represents time adjustment information
  */
-export const TimeAdjustmentSchema = z.object({
+export const timeAdjustmentSchema = z.object({
   ScheduleID: z.number().describe("Unique identifier for a season."),
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
   RouteID: z.number().describe("Unique identifier for the underlying route."),
@@ -504,8 +596,7 @@ export const TimeAdjustmentSchema = z.object({
     .string()
     .nullable()
     .describe("A title that describes the sailing (eg. Leave Port Townsend)."),
-  ActiveSailingDateRange: z
-    .array(ActiveDateRangeSchema)
+  ActiveSailingDateRange: activeDateRangesListSchema
     .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
@@ -572,19 +663,24 @@ export const TimeAdjustmentSchema = z.object({
     .describe(
       "Indicates whether this adjustment represents a cancellation or addition in service. 1 for Addition, 2 for Cancellation."
     ),
-  Annotations: z
-    .array(AnnotationSchema)
-    .describe(
-      "Informational attributes associated with the departure / arrival time."
-    ),
+  Annotations: annotationsListSchema.describe(
+    "Informational attributes associated with the departure / arrival time."
+  ),
 });
 
-export type TimeAdjustment = z.infer<typeof TimeAdjustmentSchema>;
+export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
+
+/**
+ * Time Adjustments List Schema - represents an list of time adjustments
+ */
+export const timeAdjustmentsListSchema = z.array(timeAdjustmentSchema);
+
+export type TimeAdjustmentList = z.infer<typeof timeAdjustmentsListSchema>;
 
 /**
  * Schema for TerminalCombo - represents terminal combination information
  */
-export const TerminalComboSchema = z.object({
+export const terminalComboSchema = z.object({
   DepartingTerminalID: z
     .number()
     .describe("Unique identifier for the departing terminal."),
@@ -602,11 +698,9 @@ export const TerminalComboSchema = z.object({
     .describe(
       "Informational text that might be associated with the underlying sailing."
     ),
-  Annotations: z
-    .array(z.string())
-    .describe(
-      "An array of annotation strings assigned to one or more items in the Times array."
-    ),
+  Annotations: stringsListSchema.describe(
+    "An list of annotation strings assigned to one or more items in the Times list."
+  ),
   Times: z
     .array(
       z.object({
@@ -641,62 +735,47 @@ export const TerminalComboSchema = z.object({
           .describe(
             "A number that represents a single vessel that services all of the stops in the journey."
           ),
-        Routes: z
-          .array(z.number())
-          .describe(
-            "An array of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes."
-          ),
-        AnnotationIndexes: z
-          .array(z.number())
-          .describe(
-            "An array of index integers indicating the elements in the Annotations array that apply to this departure."
-          ),
+        Routes: numbersListSchema.describe(
+          "An list of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes."
+        ),
+        AnnotationIndexes: numbersListSchema.describe(
+          "An list of index integers indicating the elements in the Annotations list that apply to this departure."
+        ),
       })
     )
     .describe("Scheduled departure details, including departure times."),
-  AnnotationsIVR: z
-    .array(z.string())
-    .describe(
-      "An array of annotation strings assigned to one or more items in the Times array formatted for IVR."
-    ),
+  AnnotationsIVR: stringsListSchema.describe(
+    "An list of annotation strings assigned to one or more items in the Times list formatted for IVR."
+  ),
 });
 
-export type TerminalCombo = z.infer<typeof TerminalComboSchema>;
+export type TerminalCombo = z.infer<typeof terminalComboSchema>;
+
+/**
+ * Terminal Combos List Schema - represents an list of terminal combinations
+ */
+export const terminalCombosListSchema = z.array(terminalComboSchema);
+
+export type TerminalComboList = z.infer<typeof terminalCombosListSchema>;
 
 /**
  * Schema for Schedule - represents schedule information
  */
-export const ScheduleSchema = z.object({
-  ScheduleID: z.number().describe("Unique identifier for a season."),
-  ScheduleName: z.string().describe("The name of the season."),
-  ScheduleSeason: z
-    .union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)])
-    .describe(
-      "Indicates a quarterly identifier. 0 for Spring, 1 for Summer, 2 for Fall and 3 for Winter."
-    ),
-  SchedulePDFUrl: z.string().describe("A URL to the season in PDF format."),
-  ScheduleStart: zWsdotDate().describe(
-    "A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am."
+export const scheduleSchema = scheduleBaseSchema.extend({
+  AllRoutes: numbersListSchema.describe(
+    "An list of RouteID integers representing all the routes accounted for in this resultset."
   ),
-  ScheduleEnd: zWsdotDate().describe(
-    "A trip date that represents the end of the season. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a ScheduleEnd of 2014-09-20 is returned, this would indicate the season ends precisely on 2014-09-21 at 2:59am."
+  TerminalCombos: terminalCombosListSchema.describe(
+    "A grouping of departure and arrival terminal pairs."
   ),
-  AllRoutes: z
-    .array(z.number())
-    .describe(
-      "An array of RouteID integers representing all the routes accounted for in this resultset."
-    ),
-  TerminalCombos: z
-    .array(TerminalComboSchema)
-    .describe("A grouping of departure and arrival terminal pairs."),
 });
 
-export type Schedule = z.infer<typeof ScheduleSchema>;
+export type Schedule = z.infer<typeof scheduleSchema>;
 
 /**
  * Schema for AlertDetail - represents detailed alert information
  */
-export const AlertDetailSchema = z.object({
+export const alertDetailSchema = z.object({
   BulletinID: z.number().describe("Unique identifier for the alert."),
   BulletinFlag: z
     .boolean()
@@ -759,15 +838,20 @@ export const AlertDetailSchema = z.object({
       'A type / category that the alert belongs to (eg. "General Information").'
     ),
   AlertFullTitle: z.string().describe("The title of the alert."),
-  AffectedRouteIDs: z
-    .array(z.number())
-    .describe(
-      "An array of integers that represent the unique identifiers of routes affected by the alert."
-    ),
+  AffectedRouteIDs: numbersListSchema.describe(
+    "An list of integers that represent the unique identifiers of routes affected by the alert."
+  ),
   IVRText: z
     .string()
     .nullable()
     .describe("The alert text, tailored for text to speech systems."),
 });
 
-export type AlertDetail = z.infer<typeof AlertDetailSchema>;
+export type AlertDetail = z.infer<typeof alertDetailSchema>;
+
+/**
+ * Alert Details List Schema - represents an list of detailed alerts
+ */
+export const alertDetailsListSchema = z.array(alertDetailSchema);
+
+export type AlertDetailList = z.infer<typeof alertDetailsListSchema>;

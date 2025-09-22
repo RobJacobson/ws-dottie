@@ -1,10 +1,11 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
+import { stringsListSchema } from "@/apis/shared/schemas";
 
 /**
  * Schema for RoadwayLocation - represents location information for a roadway in WSDOT Highway Alerts
  */
-export const RoadwayLocationSchema = z.object({
+export const roadwayLocationSchema = z.object({
   Description: z
     .string()
     .nullable()
@@ -23,20 +24,20 @@ export const RoadwayLocationSchema = z.object({
   RoadName: z.string().nullable().describe("The name of the road."),
 });
 
-export type RoadwayLocation = z.infer<typeof RoadwayLocationSchema>;
+export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
 
 /**
  * Schema for Alert - represents a Highway Alert
  */
-export const AlertSchema = z.object({
+export const alertSchema = z.object({
   AlertID: z.number().describe("Unique Identifier for the alert."),
   County: z
     .string()
     .nullable()
     .describe("Used for countywide alerts, name of the affected county."),
-  EndRoadwayLocation: RoadwayLocationSchema.nullable().describe(
-    "End location for the alert on the roadway."
-  ),
+  EndRoadwayLocation: roadwayLocationSchema
+    .nullable()
+    .describe("End location for the alert on the roadway."),
   EndTime: zWsdotDate().nullable().describe("Estimated end time for alert."),
   EventCategory: z
     .string()
@@ -69,20 +70,27 @@ export const AlertSchema = z.object({
     .describe(
       "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
     ),
-  StartRoadwayLocation: RoadwayLocationSchema.nullable().describe(
-    "Start location for the alert on the roadway."
-  ),
+  StartRoadwayLocation: roadwayLocationSchema
+    .nullable()
+    .describe("Start location for the alert on the roadway."),
   StartTime: zWsdotDate()
     .nullable()
     .describe("When the impact on traffic began."),
 });
 
-export type Alert = z.infer<typeof AlertSchema>;
+export type Alert = z.infer<typeof alertSchema>;
+
+/**
+ * Schema for AlertsList - represents a list of Highway Alerts
+ */
+export const alertsListSchema = z.array(alertSchema);
+
+export type AlertsList = z.infer<typeof alertsListSchema>;
 
 /**
  * Schema for Area - represents a map area
  */
-export const AreaSchema = z.object({
+export const areaSchema = z.object({
   MapArea: z.string().nullable().describe("The map area identifier."),
   MapAreaDescription: z
     .string()
@@ -90,25 +98,18 @@ export const AreaSchema = z.object({
     .describe("Description of the map area."),
 });
 
-export type Area = z.infer<typeof AreaSchema>;
+export type Area = z.infer<typeof areaSchema>;
 
 /**
- * Schema for array of Alert
+ * Schema for AreasList - represents a list of map areas
  */
-export const ArrayOfAlertSchema = z.array(AlertSchema);
+export const areasListSchema = z.array(areaSchema);
 
-export type ArrayOfAlert = z.infer<typeof ArrayOfAlertSchema>;
+export type AreasList = z.infer<typeof areasListSchema>;
 
 /**
- * Schema for array of Area
+ * Schema for list of strings (used for event categories)
  */
-export const ArrayOfAreaSchema = z.array(AreaSchema);
+export { stringsListSchema };
 
-export type ArrayOfArea = z.infer<typeof ArrayOfAreaSchema>;
-
-/**
- * Schema for array of strings (used for event categories)
- */
-export const ArrayOfStringSchema = z.array(z.string());
-
-export type ArrayOfString = z.infer<typeof ArrayOfStringSchema>;
+export type StringList = z.infer<typeof stringsListSchema>;

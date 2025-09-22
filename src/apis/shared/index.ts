@@ -7,6 +7,6 @@
 
 export {
   type RoadwayLocation,
-  RoadwayLocationSchema,
+  roadwayLocationSchema,
 } from "./roadwayLocationSchema";
 export { zWsdotDate } from "./zWsdotDateSchema";

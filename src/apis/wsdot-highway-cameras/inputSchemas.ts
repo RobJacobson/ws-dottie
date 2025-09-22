@@ -3,14 +3,14 @@ import { z } from "zod";
 /**
  * Input schema for GetCameras endpoint
  */
-export const GetCamerasInputSchema = z.object({});
+export const getCamerasInputSchema = z.object({});
 
-export type GetCamerasInput = z.infer<typeof GetCamerasInputSchema>;
+export type GetCamerasInput = z.infer<typeof getCamerasInputSchema>;
 
 /**
  * Input schema for SearchCameras endpoint
  */
-export const SearchCamerasInputSchema = z.object({
+export const searchCamerasInputSchema = z.object({
   StateRoute: z.string().describe("The state route of the camera."),
   Region: z
     .string()
@@ -21,13 +21,13 @@ export const SearchCamerasInputSchema = z.object({
   EndingMilepost: z.number().nullable().describe("Ending Milepost."),
 });
 
-export type SearchCamerasInput = z.infer<typeof SearchCamerasInputSchema>;
+export type SearchCamerasInput = z.infer<typeof searchCamerasInputSchema>;
 
 /**
  * Input schema for GetCamera endpoint
  */
-export const GetCameraInputSchema = z.object({
+export const getCameraInputSchema = z.object({
   CameraID: z.number().describe("An ID of a specific camera."),
 });
 
-export type GetCameraInput = z.infer<typeof GetCameraInputSchema>;
+export type GetCameraInput = z.infer<typeof getCameraInputSchema>;

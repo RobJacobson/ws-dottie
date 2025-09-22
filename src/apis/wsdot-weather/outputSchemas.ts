@@ -62,13 +62,15 @@ export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
  *
  * Returns current weather information from weather stations that are run by the Washington State Department of Transportation.
  */
-export const weatherInformationSchema = z
+export const weatherInformationListSchema = z
   .array(weatherInfoSchema)
   .describe(
     "Returns current weather information from weather stations that are run by the Washington State Department of Transportation."
   );
 
-export type WeatherInformation = z.infer<typeof weatherInformationSchema>;
+export type WeatherInformationList = z.infer<
+  typeof weatherInformationListSchema
+>;
 
 /**
  * ScanwebSurfaceMeasurements schema
@@ -95,6 +97,19 @@ export type ScanwebSurfaceMeasurements = z.infer<
 >;
 
 /**
+ * Scanweb Surface Measurements List Schema
+ *
+ * Represents a list of surface measurements.
+ */
+export const scanwebSurfaceMeasurementsListSchema = z.array(
+  scanwebSurfaceMeasurementsSchema
+);
+
+export type ScanwebSurfaceMeasurementsList = z.infer<
+  typeof scanwebSurfaceMeasurementsListSchema
+>;
+
+/**
  * ScanwebSubSurfaceMeasurements schema
  *
  * Measurements recorded by sub-surface sensors.
@@ -111,6 +126,19 @@ const scanwebSubSurfaceMeasurementsSchema = z
 
 export type ScanwebSubSurfaceMeasurements = z.infer<
   typeof scanwebSubSurfaceMeasurementsSchema
+>;
+
+/**
+ * Scanweb Sub Surface Measurements List Schema
+ *
+ * Represents a list of sub-surface measurements.
+ */
+export const scanwebSubSurfaceMeasurementsListSchema = z.array(
+  scanwebSubSurfaceMeasurementsSchema
+);
+
+export type ScanwebSubSurfaceMeasurementsList = z.infer<
+  typeof scanwebSubSurfaceMeasurementsListSchema
 >;
 
 /**
@@ -231,12 +259,10 @@ export const weatherReadingSchema = z
       .describe(
         "The depth of snow on representative areas other than the highway pavement, avoiding drifts and plowed areas in centimeters."
       ),
-    SurfaceMeasurements: z
-      .array(scanwebSurfaceMeasurementsSchema)
+    SurfaceMeasurements: scanwebSurfaceMeasurementsListSchema
       .nullable()
       .describe("Surface measurements."),
-    SubSurfaceMeasurements: z
-      .array(scanwebSubSurfaceMeasurementsSchema)
+    SubSurfaceMeasurements: scanwebSubSurfaceMeasurementsListSchema
       .nullable()
       .describe("Sub-surface measurements."),
   })
@@ -245,15 +271,15 @@ export const weatherReadingSchema = z
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 
 /**
- * WeatherReadings schema
+ * WeatherReadingsList schema
  *
- * Array of weather readings from WSDOT weather stations.
+ * List of weather readings from WSDOT weather stations.
  */
-export const weatherReadingsSchema = z
+export const weatherReadingsListSchema = z
   .array(weatherReadingSchema)
-  .describe("Array of weather readings from WSDOT weather stations.");
+  .describe("List of weather readings from WSDOT weather stations.");
 
-export type WeatherReadings = z.infer<typeof weatherReadingsSchema>;
+export type WeatherReadingsList = z.infer<typeof weatherReadingsListSchema>;
 
 /**
  * WeatherStationData schema
@@ -275,12 +301,12 @@ export const weatherStationDataSchema = z
 export type WeatherStationData = z.infer<typeof weatherStationDataSchema>;
 
 /**
- * WeatherStations schema
+ * WeatherStationsList schema
  *
  * Return current list of weather stations maintained by WSDOT.
  */
-export const weatherStationsSchema = z
+export const weatherStationsListSchema = z
   .array(weatherStationDataSchema)
   .describe("Return current list of weather stations maintained by WSDOT.");
 
-export type WeatherStations = z.infer<typeof weatherStationsSchema>;
+export type WeatherStationsList = z.infer<typeof weatherStationsListSchema>;

@@ -1,28 +1,26 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { RoadwayLocationSchema } from "../shared/roadwayLocationSchema";
+import { roadwayLocationSchema } from "../shared/roadwayLocationSchema";
 
 /**
  * Schema for BorderCrossingData - represents border crossing wait time data
  */
-export const BorderCrossingDataSchema = z.object({
-  BorderCrossingLocation: RoadwayLocationSchema.nullable().describe(
-    "Where the crossing is located."
-  ),
+export const borderCrossingDataSchema = z.object({
+  BorderCrossingLocation: roadwayLocationSchema
+    .nullable()
+    .describe("Where the crossing is located."),
   CrossingName: z.string().nullable().describe("Common name of the crossing."),
   Time: zWsdotDate().describe("When the reading was taken."),
   WaitTime: z.number().describe("Current time to cross border."),
 });
 
-export type BorderCrossingData = z.infer<typeof BorderCrossingDataSchema>;
+export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
 
 /**
- * Schema for ArrayOfBorderCrossingData - the main response array
+ * Schema for BorderCrossingDataList - the main response list
  */
-export const ArrayOfBorderCrossingDataSchema = z.array(
-  BorderCrossingDataSchema
-);
+export const borderCrossingDataListSchema = z.array(borderCrossingDataSchema);
 
-export type ArrayOfBorderCrossingData = z.infer<
-  typeof ArrayOfBorderCrossingDataSchema
+export type BorderCrossingDataList = z.infer<
+  typeof borderCrossingDataListSchema
 >;

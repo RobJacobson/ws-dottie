@@ -3,17 +3,17 @@ import { z } from "zod";
 /**
  * Schema for GetCommercialVehicleRestrictions input parameters
  */
-export const GetCommercialVehicleRestrictionsInputSchema = z.object({});
+export const getCommercialVehicleRestrictionsInputSchema = z.object({});
 
 export type GetCommercialVehicleRestrictionsInput = z.infer<
-  typeof GetCommercialVehicleRestrictionsInputSchema
+  typeof getCommercialVehicleRestrictionsInputSchema
 >;
 
 /**
  * Schema for GetCommercialVehicleRestrictionsWithId input parameters
  */
-export const GetCommercialVehicleRestrictionsWithIdInputSchema = z.object({});
+export const getCommercialVehicleRestrictionsWithIdInputSchema = z.object({});
 
 export type GetCommercialVehicleRestrictionsWithIdInput = z.infer<
-  typeof GetCommercialVehicleRestrictionsWithIdInputSchema
+  typeof getCommercialVehicleRestrictionsWithIdInputSchema
 >;

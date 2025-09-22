@@ -4,7 +4,7 @@ import { zWsdotDate } from "@/apis/shared";
 /**
  * Schema for BridgeDataGIS - represents bridge clearance data
  */
-export const BridgeDataGISSchema = z.object({
+export const bridgeDataGISSchema = z.object({
   APILastUpdate: zWsdotDate().describe("Date record was last updated."),
   BridgeNumber: z
     .string()
@@ -78,11 +78,11 @@ export const BridgeDataGISSchema = z.object({
     .describe("Minimum expected clearance of bridge in inches."),
 });
 
-export type BridgeDataGIS = z.infer<typeof BridgeDataGISSchema>;
+export type BridgeDataGIS = z.infer<typeof bridgeDataGISSchema>;
 
 /**
- * Schema for ArrayOfBridgeDataGIS - the main response array
+ * Schema for BridgeDataGISList - the main response list
  */
-export const ArrayOfBridgeDataGISSchema = z.array(BridgeDataGISSchema);
+export const bridgeDataGISListSchema = z.array(bridgeDataGISSchema);
 
-export type ArrayOfBridgeDataGIS = z.infer<typeof ArrayOfBridgeDataGISSchema>;
+export type BridgeDataGISList = z.infer<typeof bridgeDataGISListSchema>;
