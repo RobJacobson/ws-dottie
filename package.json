@@ -31,8 +31,7 @@
     "docs"
   ],
   "bin": {
-    "fetch-dottie": "./dist/cli/fetch-dottie.mjs",
-    "fetch-native": "./dist/cli/fetch-native.mjs"
+    "fetch-dottie": "./dist/cli/fetch-dottie.mjs"
   },
   "scripts": {
     "build": "tsup",
@@ -49,7 +48,6 @@
     "prepublishOnly": "npm run build",
     "nuke-comments": "node scripts/nuke-jsdoc-comments.js",
     "dottie": "node dist/cli/fetch-dottie.mjs",
-    "native": "node dist/cli/fetch-native.mjs",
     "cli:help": "node dist/cli/fetch-dottie.mjs --help",
     "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20"
   },
