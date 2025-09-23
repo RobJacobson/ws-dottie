@@ -4,6 +4,8 @@
  * Consolidated type definitions without over-engineering.
  */
 
+import type { Endpoint } from "./endpoints";
+
 // ============================================================================
 // CACHE STRATEGY TYPES
 // ============================================================================
@@ -47,3 +49,36 @@ export type LoggingMode = "none" | "info" | "debug";
  * fetch implementations.
  */
 export type FetchStrategy = (url: string) => Promise<string>;
+
+/**
+ * Core fetch tool interface for WS-Dottie APIs
+ *
+ * This interface defines the standard way to fetch data from WSDOT/WSF APIs
+ * with explicit control over transport strategy and validation approach.
+ * All fetch tools implement this interface for consistency.
+ */
+export type FetchTool = <TInput, TOutput>(
+  endpoint: Endpoint<TInput, TOutput>,
+  params?: TInput,
+  options?: FetchOptions
+) => Promise<TOutput>;
+
+/**
+ * Options for fetch operations
+ *
+ * Provides configuration options for fetch tools including logging
+ * and future extensibility.
+ */
+export interface FetchOptions {
+  /** Logging verbosity level */
+  logMode?: LoggingMode;
+}
+
+/**
+ * Transport strategy for data fetching
+ *
+ * Defines the underlying transport mechanism used to fetch data.
+ * - native: Uses standard fetch API (works in Node.js and modern browsers)
+ * - jsonp: Uses JSONP callbacks (browser-only, bypasses CORS)
+ */
+export type TransportStrategy = "native" | "jsonp";

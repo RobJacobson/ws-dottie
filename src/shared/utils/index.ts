@@ -7,7 +7,7 @@
  */
 
 // Configuration management
-export { configManager, type WsdotConfig } from "./configManager";
+export { configManager } from "./configManager";
 // Date utilities (consolidated)
 export {
   datesHelper,
