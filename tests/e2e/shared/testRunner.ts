@@ -34,7 +34,7 @@ export interface TestExecutionConfig {
  */
 export async function runEndpointTests<TResult>(
   endpoints: Endpoints,
-  testFn: (endpoint: Endpoint) => Promise<TResult>,
+  testFn: (endpoint: Endpoint<unknown, unknown>) => Promise<TResult>,
   config: TestExecutionConfig = {}
 ): Promise<TResult[]> {
   const {

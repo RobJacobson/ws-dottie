@@ -2,8 +2,8 @@
  * @fileoverview Memory Usage Concern (module)
  */
 
-import { fetchZod } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchNativeZod } from "@/shared/fetching";
 
 export async function runMemoryUsage(
   endpoint: Endpoint<unknown, unknown>,
@@ -14,7 +14,7 @@ export async function runMemoryUsage(
   const before = process.memoryUsage().heapUsed;
   try {
     for (let i = 0; i < loops; i++) {
-      await fetchZod(endpoint, params, "none");
+      await fetchNativeZod(endpoint, params, { logMode: "none" });
     }
     const after = process.memoryUsage().heapUsed;
     const inc = after - before;

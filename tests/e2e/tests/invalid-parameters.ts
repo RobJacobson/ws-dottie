@@ -2,8 +2,8 @@
  * @fileoverview Invalid Parameters Concern (module)
  */
 
-import { fetchZod } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchNativeZod } from "@/shared/fetching";
 
 export async function runInvalidParameters(
   endpoint: Endpoint<unknown, unknown>
@@ -13,10 +13,10 @@ export async function runInvalidParameters(
       string,
       unknown
     >;
-    await fetchZod(
+    await fetchNativeZod(
       endpoint as unknown as Endpoint<Record<string, unknown>, unknown>,
       invalidParams,
-      "none"
+      { logMode: "none" }
     );
     return {
       success: false,

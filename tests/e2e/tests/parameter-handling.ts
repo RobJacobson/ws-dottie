@@ -5,15 +5,15 @@
  * Orchestrated by main.test.ts. No test registration here.
  */
 
-import { fetchZod } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchNativeZod } from "@/shared/fetching";
 
 export async function runParameterHandling(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   try {
     const params = endpoint.sampleParams || {};
-    const result = await fetchZod(endpoint, params, "none");
+    const result = await fetchNativeZod(endpoint, params, { logMode: "none" });
     if (result === undefined) {
       return { success: false, message: "Result is undefined" };
     }

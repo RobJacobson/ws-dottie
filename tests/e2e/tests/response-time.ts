@@ -2,8 +2,8 @@
  * @fileoverview Response Time Concern (module)
  */
 
-import { fetchZod } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchNativeZod } from "@/shared/fetching";
 
 export async function runResponseTime(
   endpoint: Endpoint<unknown, unknown>,
@@ -12,7 +12,7 @@ export async function runResponseTime(
   const params = endpoint.sampleParams || {};
   const start = Date.now();
   try {
-    await fetchZod(endpoint, params, "none");
+    await fetchNativeZod(endpoint, params, { logMode: "none" });
     const duration = Date.now() - start;
     const ok = duration <= maxMs;
     return {

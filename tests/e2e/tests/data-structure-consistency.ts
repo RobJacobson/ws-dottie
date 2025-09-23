@@ -4,16 +4,16 @@
  * Ensures repeated calls return consistent types and reasonable array sizes.
  */
 
-import { fetchZod } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchNativeZod } from "@/shared/fetching";
 
 export async function runDataStructureConsistency(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   try {
     const params = endpoint.sampleParams || {};
-    const r1 = await fetchZod(endpoint, params, "none");
-    const r2 = await fetchZod(endpoint, params, "none");
+    const r1 = await fetchNativeZod(endpoint, params, { logMode: "none" });
+    const r2 = await fetchNativeZod(endpoint, params, { logMode: "none" });
 
     if (typeof r1 !== typeof r2) {
       return { success: false, message: "Type mismatch between calls" };

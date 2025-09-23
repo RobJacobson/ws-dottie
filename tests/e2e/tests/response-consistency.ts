@@ -2,8 +2,8 @@
  * @fileoverview Response Consistency Concern (module)
  */
 
-import { fetchZod } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/endpoints";
+import { fetchNativeZod } from "@/shared/fetching";
 
 export async function runResponseConsistency(
   endpoint: Endpoint<unknown, unknown>,
@@ -22,7 +22,7 @@ export async function runResponseConsistency(
     const times: number[] = [];
     for (let i = 0; i < samples; i++) {
       const start = Date.now();
-      await fetchZod(endpoint, params, "none");
+      await fetchNativeZod(endpoint, params, { logMode: "none" });
       times.push(Date.now() - start);
     }
     const min = Math.min(...times);
