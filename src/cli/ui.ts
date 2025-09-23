@@ -16,7 +16,7 @@
 
 import chalk from "chalk";
 import { getAllEndpoints } from "@/shared/endpoints";
-import { isApiError } from "@/shared/fetching/handleError";
+import { isApiError } from "@/shared/fetching/shared/handleError";
 import type { CliOptions } from "./types";
 
 /**
@@ -220,19 +220,48 @@ export const generateDefaultExamples = (
 };
 
 /**
- * Generates help text with examples and available functions
+ * Generates CLI examples showing different fetch strategies
  *
- * This function creates comprehensive help text for CLI tools, including
- * example commands and a list of all available functions. It dynamically
- * discovers endpoints and formats them for display.
+ * This function creates examples that demonstrate the different fetch strategies
+ * available in the CLI tool, including native/JSONP and validation options.
+ *
+ * @returns Array of example command strings
+ */
+export const generateExamples = (): string[] => {
+  return [
+    "# Default: native fetch with validation",
+    "fetch-dottie vesselBasics",
+    "",
+    "# Native fetch without validation (faster, raw data)",
+    "fetch-dottie vesselBasics --no-validation",
+    "",
+    "# JSONP with validation (browser environments)",
+    "fetch-dottie vesselBasics --jsonp",
+    "",
+    "# JSONP without validation (browser environments, raw data)",
+    "fetch-dottie vesselBasics --jsonp --no-validation",
+    "",
+    "# With parameters and pretty printing",
+    'fetch-dottie getFareLineItems \'{"originTerminalId": 7, "destinationTerminalId": 3}\' --pretty',
+    "",
+    "# Quiet mode for scripting",
+    "fetch-dottie getBorderCrossings --quiet",
+  ];
+};
+
+/**
+ * Generates help text with strategy examples and available functions
+ *
+ * This function creates comprehensive help text for the CLI tool,
+ * including examples of different fetch strategies and a list of all available functions.
  *
  * @param toolName - Name of the CLI tool
  * @param examples - Array of example commands to include
  * @returns Formatted help text string
  */
 export const generateHelpText = (
-  toolName: string,
-  examples: string[] = []
+  _toolName: string,
+  _examples: string[] = []
 ): string => {
   const endpoints = getAllEndpoints();
   const functionList = endpoints
@@ -244,13 +273,17 @@ export const generateHelpText = (
     })
     .join("\n");
 
-  const defaultExamples = generateDefaultExamples(toolName);
-
-  const exampleList = examples.length > 0 ? examples : defaultExamples;
+  const exampleList = _examples.length > 0 ? _examples : generateExamples();
 
   return `
 Examples:
 ${exampleList.map((ex) => `  ${ex}`).join("\n")}
+
+Fetch Strategies:
+  Default: Native fetch with Zod validation (recommended)
+  --no-validation: Disable validation for faster, raw data access
+  --jsonp: Use JSONP for browser environments (bypasses CORS)
+  --jsonp --no-validation: JSONP without validation (browser, raw data)
 
 Available functions:
 ${functionList}
