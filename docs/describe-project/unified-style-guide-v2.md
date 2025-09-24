@@ -49,106 +49,190 @@ const objectSchema = z.object({
 
 ## 2. Rich Description Guidelines (`.describe()`)
 
-The `description` field should be the primary source of information, following these principles:
+The `description` field should be the primary source of information, following these principles that reflect proper model-entity relationships and conventional API design practices:
 
 ### Length and Structure
 
-- **Field-Level Descriptions:** 1-3 sentences (20-100 words)
-- **Schema-Level Descriptions:** 2-4 sentences (30-120 words)
-- **Structure:** Verb + Purpose → Context → Cross-Reference → Additional Context
+- **Input Schema Descriptions:** 1-2 sentences (15-40 words)
+- **Input Field Descriptions:** 1-2 sentences (20-50 words)
+- **Output Schema Descriptions:** 2-3 sentences (30-80 words)
+- **Output Field Descriptions:** 1-3 sentences (15-80 words)
 
-### Writing Principles
+### Writing Principles by Schema Type
 
-1. **Start with Action Verbs:** Begin descriptions with verbs that clarify data flow direction
-2. **Semantic Richness:** Go beyond literal definitions. Explain the *why* and *meaning*, not just the *what*
-3. **Active Voice:** Use imperative mood and present tense consistently
-4. **Contextual Clarity:** Include domain-specific context that might not be obvious
-5. **Cross-Reference Integration:** Include related endpoints for discoverability
-6. **Example Integration:** Weave examples naturally into descriptions
-7. **Business Context:** Include operational and business logic information
+#### Input Schemas (API Parameters)
+1. **Start with "Input parameters to..."** - Clearly indicate these are request parameters
+2. **Focus on filtering/selection logic** - Explain how parameters determine results
+3. **No output data description** - Don't describe what's returned
+4. **No cross-references** - Don't reference other endpoints
 
-### Verb-Starting Description Patterns
+#### Input Fields (Individual Parameters)
+1. **Start with "A" or "The"** - Describe the parameter as a data type
+2. **Explain filtering purpose** - How the parameter affects results
+3. **Include examples naturally** - Show typical values
 
-To ensure consistency and clarity, all descriptions should start with action verbs that clarify the data flow direction:
+#### Output Schemas (Returned Data)
+1. **Start with "Returns..."** - Clearly indicate this is returned data
+2. **Specify entity type** - Single entity vs. list of entities
+3. **Include usage context** - How the data can be used with other functions
+4. **Business context** - Real-world applications
 
-#### Field Description Templates
+#### Output Fields (Individual Properties)
+1. **Start with "The [entity]'s..."** - Describe as a property of the entity
+2. **Include data type** - Specify the type of data
+3. **Examples at end of first sentence** - Show typical values
+4. **Cross-references for discovery** - How to use with related functions
+
+### Description Templates by Schema Type
+
+#### Input Schema Templates
+
+**For No-Parameter APIs:**
+```typescript
+"Input parameters to retrieve [entity type] across [scope] (none required)."
+// Example: "Input parameters to retrieve a list of all highway cameras across Washington State (none required)."
+```
+
+**For Single-Entity Retrieval:**
+```typescript
+"Input parameter to retrieve a specific [entity type] by [identifier type]."
+// Example: "Input parameter to retrieve a specific highway camera by unique identifier."
+```
+
+**For Filtered Searches:**
+```typescript
+"Input parameters to search [entity type] by [filter criteria]. Provides [filtering logic] for [target scope]."
+// Example: "Input parameters to search highway cameras by route, region, and milepost range. Provides filtered camera results for specific geographic areas and roadway segments."
+```
+
+#### Input Field Templates
 
 **For Identifiers:**
 ```typescript
-"Provides a unique identifier for [entity type] used for [primary purpose]. Use [api]/[endpoint] to retrieve [related data]. [Additional context or business rules]."
-// Example: "Provides a unique identifier for a WSF terminal used for route planning and fare calculations. Use wsf-terminals/terminalbasics to retrieve terminal details. Terminal IDs remain consistent across all WSF systems."
+"A [entity type] identifier as [data type] for [filtering purpose]. Use this to [selection logic] (e.g., '[example1]', '[example2]')."
+// Example: "A state route identifier as a string for filtering highway cameras by specific roadway. Use this to find cameras on particular routes (e.g., 'I-5' for Interstate 5, 'SR-520' for State Route 520)."
 ```
 
-**For Values/Amounts:**
+**For Ranges:**
 ```typescript
-"Returns the [value type] in [units] for [specific purpose]. Used for [business context] with [related endpoint]. [Business logic or calculation notes]."
-// Example: "Returns the fare amount in USD for the specified passenger category, excluding promotional discounts. Used for fare calculations with wsf-fares/calculateFares. Walk-on passengers are charged once for round trips."
+"The [range type] as [data type] for [filtering purpose]. Use this to [selection logic] (e.g., '[example1]', '[example2]'). Use with [related field] to [combined logic]."
+// Example: "The starting milepost location as a number for filtering cameras along a specific route segment. Use this to find cameras within a milepost range (e.g., '0' for route beginning, '10' for 10 miles from start). Use with EndingMilepost to define a route segment."
 ```
 
-**For Dates/Times:**
+#### Output Schema Templates
+
+**For Entity Lists:**
 ```typescript
-"Returns the [date/time purpose] in [format] for [specific use case]. [Special handling notes if applicable]. Use [api]/[endpoint] for [related operations]."
-// Example: "Returns the trip date in YYYY-MM-DD format for fare calculations. Reflects WSF 'sailing day' (3:00 AM Pacific to 2:59 AM next day). Use wsf-schedules/routes for schedule lookups."
+"Returns a list of [entity type], including [key data types] for [primary use case]. Provides [business value] for [target users]. Covers [scope and context]."
+// Example: "Returns a list of highway alerts, including incident details, location data, timing information, and impact assessment for traffic management and traveler notification systems. Provides comprehensive data for understanding current traffic conditions and planning alternative routes."
 ```
 
-**For Enums/Status Fields:**
+**For Single Entities:**
 ```typescript
-"Indicates the [field purpose] with [enum meaning] (1=Value1, 2=Value2, 3=Value3). Used for [business logic]. [Additional context if needed]."
-// Example: "Indicates the fare total type with logical grouping (1=Depart, 2=Return, 3=Either, 4=Total). Used for organizing fare calculations by trip leg. Each leg may have different pricing rules."
+"Returns information for one [entity type], including [key data types] for [primary use case]. Provides [business value] for [target users]. Covers [scope and context]."
+// Example: "Returns information for one highway camera, including location details, image data, and operational status for traffic monitoring and traveler information systems. Provides essential data for real-time traffic visualization and route planning."
 ```
 
-**For Locations/Geographic:**
+#### Output Field Templates
+
+**For Identifiers:**
 ```typescript
-"Provides [location type] data including [key components] for [use case]. Coordinates reference [coordinate system]. Use [api]/[endpoint] for [related operations]."
-// Example: "Provides geographic location details including coordinates, road information, and milepost for border crossing navigation. Coordinates reference WGS84 decimal degrees. Use wsdot-border-crossings/getBorderCrossings for wait time data."
+"The [entity]'s unique [identifier type] as [data type] (e.g., '[example1]', '[example2]'). Use this [identifier type] to [related function purpose] via [api]/[endpoint]."
+// Example: "The highway camera's unique numeric identifier as an integer (e.g., '9818' for Anacortes Airport, '9460' for SR 9 at MP 2.7). Use this ID to fetch data for individual cameras via wsdot-highway-cameras/getHighwayCamera."
 ```
 
-**For Collections:**
+**For Coordinates:**
 ```typescript
-"Returns a collection of [entity type] providing [primary purpose] for [target users]. Data includes [key components] and updates [frequency]. Use [api]/[endpoint] for [related operations]."
-// Example: "Returns a collection of real-time border crossing wait time data providing comprehensive coverage of all monitored crossings into Canada. Data includes wait times, crossing names, and location details, updated every minute. Use wsdot-border-crossings/getBorderCrossings for current conditions."
+"The [entity]'s [coordinate type] coordinate in [unit system] for [display purpose] (e.g., '[example1]', '[example2]'). Use this for [usage context]."
+// Example: "The highway camera's latitude coordinate in decimal degrees for displaying the camera location on maps and navigation systems (e.g., '47.821539' for Seattle area, '48.498333' for Anacortes). Use this for map positioning and geographic visualization."
 ```
 
-#### Schema Description Templates
-
-**For Data Collections:**
+**For Status/Enum Fields:**
 ```typescript
-"Returns a collection of [entity type] providing [primary purpose] for [target users]. Data includes [key components] and updates [frequency]. Use [api]/[endpoint] for [related operations]."
+"The [entity]'s [field purpose] indicating [enum meaning] ([value mappings]). Used for [business logic]."
+// Example: "The highway alert's severity level indicating impact assessment (1=Low, 2=Medium, 3=High, 4=Critical). Used for prioritizing alert display and routing decisions."
 ```
 
-**For Individual Entities:**
+### Common Anti-Patterns to Avoid
+
+#### Input Schema Anti-Patterns
+❌ **Don't describe returned data in input schemas:**
 ```typescript
-"Returns complete [entity type] information including [key components] for [primary use case]. Links to [related entities] via [relationship fields]. Used for [business context]."
+// Wrong - describes output data
+"Returns parameters for retrieving all highway camera data across Washington State. Provides access to all active traffic monitoring cameras statewide..."
+
+// Correct - focuses on input parameters
+"Input parameters to retrieve a list of all highway cameras across Washington State (none required)."
 ```
 
-### Enhanced Semantic Patterns
-
-#### Data Freshness Indicators
+❌ **Don't include cross-references in input schemas:**
 ```typescript
-"Returns real-time border crossing wait times updated every minute for traveler information systems."
-"Provides cached terminal information that updates when WSF schedules change."
-"Returns static bridge clearance data that rarely changes."
+// Wrong - includes output usage
+"Input parameters to retrieve highway camera data. Use wsdot-highway-cameras/getHighwayCameras for current camera data."
+
+// Correct - focuses on parameters only
+"Input parameters to retrieve a list of all highway cameras across Washington State (none required)."
 ```
 
-#### Business Context Integration
+#### Output Schema Anti-Patterns
+❌ **Don't include redundant cross-references in output schemas:**
 ```typescript
-"Provides terminal identifiers for route planning and fare calculations in the WSF system."
-"Returns weather station readings for mountain pass condition monitoring and traveler safety."
-"Provides traffic flow data for congestion analysis and travel time calculations."
+// Wrong - redundant cross-reference
+"Returns a list of highway alerts for traffic management systems. Use wsdot-highway-alerts/getAlerts for current alert conditions."
+
+// Correct - focuses on data and usage context
+"Returns a list of highway alerts, including incident details, location data, timing information, and impact assessment for traffic management and traveler notification systems."
 ```
 
-#### Usage Context Clues
+#### Field Description Anti-Patterns
+❌ **Don't use action verbs for output fields:**
 ```typescript
-"Returns vessel position data for real-time tracking and passenger information displays."
-"Provides fare line items for payment processing and receipt generation."
-"Returns highway alert data for traveler notification systems and route planning."
+// Wrong - uses action verb
+"Provides a unique numeric identifier for the highway camera used for system integration..."
+
+// Correct - describes as entity property
+"The highway camera's unique numeric identifier as an integer (e.g., 9818 for Anacortes Airport, 9460 for SR 9 at MP 2.7)."
 ```
 
-#### Data Relationship Hints
+❌ **Don't use action verbs for input fields:**
 ```typescript
-"Provides terminal identifiers that correspond to terminal names in wsf-terminals/terminalbasics."
-"Returns route IDs that link to schedule data in wsf-schedules/routes."
-"Provides weather station IDs that match readings in wsdot-weather/weatherInfo."
+// Wrong - uses action verb
+"Provides a state route identifier for filtering highway cameras..."
+
+// Correct - describes as parameter
+"A state route identifier as a string for filtering highway cameras by specific roadway."
+```
+
+### Example Data Formatting Rules
+
+**All example data must be in quotes to indicate literal values:**
+
+✅ **Correct Examples:**
+```typescript
+// String identifiers
+"A state route identifier as a string (e.g., 'I-5', 'SR-520')."
+
+// Numeric identifiers  
+"The highway camera's unique numeric identifier as an integer (e.g., '9818', '9460')."
+
+// Coordinates
+"The camera's latitude coordinate in decimal degrees (e.g., '47.821539', '48.498333')."
+
+// Milepost values
+"The starting milepost location as a number (e.g., '0', '10', '15.5')."
+```
+
+❌ **Incorrect Examples:**
+```typescript
+// Missing quotes - unclear if literal values
+"A state route identifier as a string (e.g., I-5, SR-520)."
+"The highway camera's unique numeric identifier as an integer (e.g., 9818, 9460)."
+"The camera's latitude coordinate in decimal degrees (e.g., 47.821539, 48.498333)."
+```
+
+**Exception:** Enum values with mappings don't need quotes:
+```typescript
+"The alert's severity level indicating impact assessment (1=Low, 2=Medium, 3=High, 4=Critical)."
 ```
 
 ### Parenthetical Inclusion Patterns
@@ -158,13 +242,13 @@ When including sample data or enum values in descriptions, use these consistent 
 #### Sample Data Inclusion
 ```typescript
 // For single examples
-"Provides terminal identifier (e.g., 1 for Seattle, 3 for Bainbridge Island)"
+"Provides terminal identifier (e.g., '1' for Seattle, '3' for Bainbridge Island)"
 
 // For multiple examples with context
-"Returns fare amount in USD (e.g., $15.50 for adult passenger, $7.75 for child)"
+"Returns fare amount in USD (e.g., '$15.50' for adult passenger, '$7.75' for child)"
 
 // For conditional examples
-"Returns wind speed in MPH (e.g., 15 for moderate conditions, null if sensor unavailable)"
+"Returns wind speed in MPH (e.g., '15' for moderate conditions, null if sensor unavailable)"
 ```
 
 #### Enum Value Inclusion
@@ -181,13 +265,26 @@ When including sample data or enum values in descriptions, use these consistent 
 
 ### Tone and Voice Guidelines
 
-- **Start with action verbs:** "Provides", "Returns", "Indicates", "Shows"
-- **Use present tense:** "Returns" not "Is used to return"
-- **Be direct and confident:** "Provides" not "Is intended to provide"
-- **Use active voice:** "Enables route planning" not "Route planning is enabled by"
-- **Avoid hedging:** "Indicates" not "May indicate" (unless uncertainty is genuine)
-- **Be specific:** "Terminal identifier" not "Identifier"
-- **Use consistent terminology:** Always "terminal" not "station" for ferry docks
+#### For Input Schemas
+- **Start with "Input parameters to..."** - Clearly indicate these are request parameters
+- **Use present tense:** "Input parameters to retrieve" not "Input parameters that are used to retrieve"
+- **Be concise:** Focus on parameter purpose, not output data
+
+#### For Input Fields
+- **Start with "A" or "The"** - Describe the parameter as a data type
+- **Use present tense:** "A state route identifier as a string" not "A state route identifier that is a string"
+- **Be specific:** "State route identifier" not "Route identifier"
+
+#### For Output Schemas
+- **Start with "Returns..."** - Clearly indicate this is returned data
+- **Use present tense:** "Returns a list of" not "Will return a list of"
+- **Be specific:** "Highway camera" not "Camera"
+
+#### For Output Fields
+- **Start with "The [entity]'s..."** - Describe as a property of the entity
+- **Use present tense:** "The camera's location" not "The camera's location that is"
+- **Be specific:** "Highway camera's unique identifier" not "Unique identifier"
+- **Use consistent terminology:** Always "highway camera" not "traffic camera"
 
 ## 3. Minimal Metadata Structure (`.meta()`)
 
@@ -251,7 +348,81 @@ The `meta()` object should contain only high-value metadata that provides genuin
 - `units` - Already in description
 - `timezone` - Already in description when relevant
 
-## 4. Date and Time Handling
+## 4. Comprehensive Examples by Schema Type
+
+### Input Schema Examples
+```typescript
+// Good: No-parameter API
+z.object({}).describe(
+  "Input parameters to retrieve a list of all highway cameras across Washington State (none required)."
+)
+
+// Good: Single-entity retrieval
+z.object({
+  CameraID: z.number()
+}).describe(
+  "Input parameter to retrieve a specific highway camera by unique identifier."
+)
+
+// Good: Filtered search
+z.object({
+  StateRoute: z.string(),
+  StartingMilepost: z.number(),
+  EndingMilepost: z.number()
+}).describe(
+  "Input parameters to search highway cameras by route, region, and milepost range. Provides filtered camera results for specific geographic areas and roadway segments."
+)
+```
+
+### Input Field Examples
+```typescript
+// Good: Identifier parameter
+z.string().describe(
+  "A state route identifier as a string for filtering highway cameras by specific roadway. Use this to find cameras on particular routes (e.g., 'I-5' for Interstate 5, 'SR-520' for State Route 520)."
+)
+
+// Good: Range parameter
+z.number().describe(
+  "The starting milepost location as a number for filtering cameras along a specific route segment. Use this to find cameras within a milepost range (e.g., '0' for route beginning, '10' for 10 miles from start). Use with EndingMilepost to define a route segment."
+)
+```
+
+### Output Schema Examples
+```typescript
+// Good: Entity list
+z.array(cameraSchema).describe(
+  "Returns a list of highway cameras, including location details, image data, and operational status for traffic monitoring and traveler information systems. Provides comprehensive data for real-time traffic visualization and route planning. Covers all WSDOT-operated cameras statewide."
+)
+
+// Good: Single entity
+z.object({
+  CameraID: z.number(),
+  DisplayLatitude: z.number(),
+  DisplayLongitude: z.number()
+}).describe(
+  "Returns information for one highway camera, including location details, image data, and operational status for traffic monitoring and traveler information systems. Provides essential data for real-time traffic visualization and route planning."
+)
+```
+
+### Output Field Examples
+```typescript
+// Good: Identifier field
+z.number().describe(
+  "The highway camera's unique numeric identifier as an integer (e.g., '9818' for Anacortes Airport, '9460' for SR 9 at MP 2.7). Use this ID to fetch data for individual cameras via wsdot-highway-cameras/getHighwayCamera."
+)
+
+// Good: Coordinate field
+z.number().describe(
+  "The highway camera's latitude coordinate in decimal degrees for displaying the camera location on maps and navigation systems (e.g., '47.821539' for Seattle area, '48.498333' for Anacortes). Use this for map positioning and geographic visualization."
+)
+
+// Good: Status field
+z.number().describe(
+  "The highway alert's severity level indicating impact assessment (1=Low, 2=Medium, 3=High, 4=Critical). Used for prioritizing alert display and routing decisions."
+)
+```
+
+## 5. Date and Time Handling
 
 ### Output Dates
 ```typescript
@@ -269,7 +440,7 @@ For WSF Schedules and Fares APIs:
 z.string().describe("Returns the trip date in YYYY-MM-DD format reflecting the 'sailing day' (3:00 AM Pacific to 2:59 AM next calendar day). Use wsf-schedules/routes for schedule lookups. Early morning ferries (1:00 AM) on September 23rd fall under the sailing day of September 22nd.")
 ```
 
-## 5. Domain-Specific Guidelines
+## 6. Domain-Specific Guidelines
 
 ### Transportation APIs (WSDOT/WSF)
 
@@ -295,7 +466,7 @@ z.string().describe("Returns the trip date in YYYY-MM-DD format reflecting the '
 - Include precision expectations
 - Explain location context
 
-## 6. Quality Assurance Framework
+## 7. Quality Assurance Framework
 
 ### Comprehensive Review Checklist
 
@@ -365,7 +536,7 @@ Create a markdown table with "Endpoint/Field" and "Notes" columns:
 - [ ] Relationships to other entities are well-documented
 - [ ] Metadata is minimal and non-redundant
 
-## 7. Implementation Guidelines
+## 8. Implementation Guidelines
 
 ### Agent Workflow
 
@@ -460,7 +631,7 @@ z.string().describe("Returns the trip date in YYYY-MM-DD format for fare calcula
 z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).describe("Indicates the fare total type with logical grouping (1=Depart, 2=Return, 3=Either, 4=Total). Used for organizing fare calculations by trip leg. Each leg may have different pricing rules.")
 ```
 
-## 8. Update Frequency Guidelines
+## 9. Update Frequency Guidelines
 
 ### Real-Time Data Classification
 
@@ -502,7 +673,7 @@ z.array(borderCrossingSchema).describe("Returns a collection of border crossing 
 
 **Note:** Do not include "static" in descriptions - it's implied for non-real-time data.
 
-## 9. Best Practices Summary
+## 10. Best Practices Summary
 
 1. **Start with Action Verbs:** Every description should start with "Provides", "Returns", "Indicates", or "Shows"
 2. **Include Cross-References:** Add related endpoints for discoverability
@@ -513,7 +684,7 @@ z.array(borderCrossingSchema).describe("Returns a collection of border crossing 
 7. **Minimal Metadata:** Only include high-value metadata for programmatic discovery
 8. **Maintain Accuracy:** Verify all information against actual API behavior
 
-## 10. Comprehensive Examples and Anti-Patterns
+## 11. Comprehensive Examples and Anti-Patterns
 
 ### Field-Level Examples
 
@@ -611,7 +782,7 @@ z.object({
 7. **Missing Business Context:** No operational information → Clear business logic
 8. **Doesn't Start with Verb:** "Unique identifier" → "Provides a unique identifier"
 
-## 11. Domain Glossary Reference
+## 12. Domain Glossary Reference
 
 ### Ferry System Components (WSF APIs)
 

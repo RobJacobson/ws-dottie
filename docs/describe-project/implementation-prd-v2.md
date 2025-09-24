@@ -37,14 +37,14 @@ Before beginning any schema modifications, agents **MUST** complete all of the f
 **Data Collection Commands:**
 ```bash
 # List available functions for your API
-fetch-dottie --list
+npx fetch-dottie --help
 
 # Fetch sample data for each endpoint (use default parameters)
-fetch-dottie [function-name] --quiet
-
-# For endpoints requiring parameters, try with defaults first
-fetch-dottie [function-name] --help  # See parameter requirements
+npx fetch-dottie [function-name] --quiet
 ```
+
+See docs/misc/getting-started-agents.md for details about fetch-dottie and fetching data.
+
 
 ### ✅ Step 4: Official Documentation Review
 - [ ] **Study the official API documentation** provided by the user
@@ -76,8 +76,11 @@ fetch-dottie [function-name] --help  # See parameter requirements
 - [ ] **No schema modifications** until all prerequisites are met
 
 ### Quality Requirements (Blocking)
-- [ ] **Every field has a verb-starting description** following established patterns
-- [ ] **All descriptions include cross-references** to related endpoints
+- [ ] **Input schemas** start with "Input parameters to..." and focus on filtering/selection logic
+- [ ] **Input fields** start with "A" or "The" and describe parameters as data types
+- [ ] **Output schemas** start with "Returns..." and specify entity type (single vs. list)
+- [ ] **Output fields** start with "The [entity]'s..." and describe as entity properties
+- [ ] **All descriptions include cross-references** to related endpoints where appropriate
 - [ ] **Real-world examples provided** from actual API data (2-4 per field)
 - [ ] **Business context included** in descriptions
 - [ ] **Minimal metadata only** (`relatedEndpoints`, `updateFrequency: "real-time" | "static"`, `businessRules`)
@@ -87,9 +90,9 @@ fetch-dottie [function-name] --help  # See parameter requirements
 - [ ] **Follows established templates** for similar field types
 - [ ] **Uses consistent terminology** from the domain glossary
 - [ ] **Maintains uniform tone and voice** across all descriptions
-- [ ] **Proper parenthetical patterns** for examples and enums
+- [ ] **Proper parenthetical patterns** for examples and enums (all example data in quotes)
 - [ ] **Correct cross-reference formatting** (`[api]/[endpoint]` format)
-- [ ] **All descriptions start with action verbs** ("Provides", "Returns", "Indicates", "Shows")
+- [ ] **Schema-specific starting patterns** followed correctly (Input: "Input parameters to...", Output: "Returns...", etc.)
 
 ## 📁 File Structure and Scope
 
@@ -102,8 +105,11 @@ Each agent will work on **exactly two files** for their assigned API:
 ```typescript
 // Example structure for inputSchemas.ts
 export const [endpointName]InputSchema = z.object({
-  // Enhanced field definitions with .describe() annotations
-}).describe("Returns parameters for [purpose] including [key components]. Use [api]/[endpoint] for [related operations].")
+  // Input field examples:
+  // ParameterField: z.string().describe(
+  //   "A [parameter type] as [data type] for [filtering purpose]. Use this to [selection logic] (e.g., '[example1]', '[example2]')."
+  // ),
+}).describe("Input parameters to retrieve [entity type] [by specific criteria if applicable]. [Filtering logic if any].")
   .meta({
     // Minimal metadata only when needed
     relatedEndpoints: ["api/endpoint"],
@@ -112,8 +118,11 @@ export const [endpointName]InputSchema = z.object({
 
 // Example structure for outputSchemas.ts
 export const [endpointName]OutputSchema = z.object({
-  // Enhanced field definitions with .describe() annotations
-}).describe("Returns a collection of [entity type] providing [primary purpose] for [target users]. Data includes [key components]. Use [api]/[endpoint] for [related operations].")
+  // Output field examples:
+  // IdentifierField: z.number().describe(
+  //   "The [entity]'s unique [identifier type] as [data type] (e.g., '[example1]', '[example2]'). Use this [identifier type] to [related function purpose] via [api]/[endpoint]."
+  // ),
+}).describe("Returns [a list of/one] [entity type], including [key data types] for [primary use case]. Provides [business value] for [target users]. Covers [scope and context].")
   .meta({
     // Schema-level metadata only when needed
     relatedEndpoints: ["api/endpoint"],
@@ -131,8 +140,8 @@ export const [endpointName]OutputSchema = z.object({
 5. **Identify cross-reference opportunities** between endpoints
 
 ### Phase 2: Annotation Creation
-1. **Start with verb-starting descriptions** using established templates
-2. **Add cross-references** to related endpoints for discoverability
+1. **Use schema-specific starting patterns** (Input: "Input parameters to...", Output: "Returns...")
+2. **Add cross-references** to related endpoints for discoverability where appropriate
 3. **Include real examples** from fetched API data
 4. **Add business context** and operational information
 5. **Add minimal metadata** only for high-value programmatic discovery
