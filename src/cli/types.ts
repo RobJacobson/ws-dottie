@@ -13,8 +13,6 @@
  * all CLI tools for parameter parsing, output control, and validation.
  */
 export const CLI_CONSTANTS = {
-  /** Regular expression for matching ISO date strings in JSON parameters */
-  ISO_DATE_REGEX: /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/,
   /** Array of quiet mode option names */
   QUIET_MODES: ["quiet", "silent"] as const,
   /** Default empty JSON parameters string */

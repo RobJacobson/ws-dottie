@@ -14,7 +14,7 @@
  * - **Data Transformation**: Automatic validation and transformation of API responses
  * - **Comprehensive Error Handling**: Detailed error messages with helpful context
  * - **Flexible Output**: Support for pretty-printing, quiet mode, and output truncation
- * - **Date Handling**: Automatic conversion of .NET datetime strings to JavaScript Date objects
+ * - **Date Handling**: Support for YYYY-MM-DD date strings in API parameters
  *
  * ## Usage
  *

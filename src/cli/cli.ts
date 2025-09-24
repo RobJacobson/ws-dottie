@@ -14,6 +14,7 @@ import { getAllEndpoints } from "@/shared/endpoints";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
+  displayCollisionError,
   displayFunctionNotFound,
   generateHelpText,
   handleError,
@@ -33,56 +34,6 @@ import { processParameters } from "./validation";
  */
 const shouldSuppressOutput = (options: CliOptions): boolean =>
   CLI_CONSTANTS.QUIET_MODES.some((mode) => options[mode]) || !!options.head;
-
-/**
- * Validates function name format and exits if invalid
- *
- * This function performs basic validation on the function name parameter,
- * ensuring it's a non-empty string. If validation fails, it displays
- * helpful error messages and exits the process.
- *
- * @param functionName - The function name to validate
- * @throws Exits process with code 1 if function name is invalid
- */
-const validateFunctionName = (functionName: string): void => {
-  if (
-    !functionName ||
-    typeof functionName !== "string" ||
-    functionName.trim() === ""
-  ) {
-    console.error(chalk.red("❌ Function name is required"));
-    console.error(chalk.gray("💡 Tip: Use --help to see available functions"));
-    process.exit(1);
-  }
-};
-
-/**
- * Executes the API request with appropriate logging
- *
- * This function handles the execution of API requests with conditional
- * logging based on the quiet mode setting.
- *
- * @template I - The input parameters type for the endpoint
- * @template O - The output response type for the endpoint
- * @param endpoint - Endpoint definition with function name, endpoint URL, and input schema
- * @param params - Validated parameters to send with the request
- * @param options - CLI options for request configuration
- * @param isQuiet - Whether to suppress logging output
- * @returns Promise resolving to the API response data
- */
-const executeRequest = async <I, O>(
-  endpoint: Endpoint<I, O>,
-  params: CliParams,
-  options: CliOptions,
-  isQuiet: boolean
-): Promise<unknown> => {
-  if (!isQuiet) {
-    const strategy = getStrategyDescription(options);
-    console.error(`🔍 Calling ${endpoint.functionName} (${strategy})...`);
-  }
-
-  return await executeApiRequest(endpoint, params as I, options);
-};
 
 /**
  * Sets up and runs the CLI tool
@@ -131,37 +82,16 @@ export const setupCli = (): void => {
       try {
         // Handle --list option
         if (options.list) {
-          consoleControl.restore();
-          const endpoints = getAllEndpoints();
-          const functionList = endpoints
-            .map((endpointDef) => {
-              const functionName = endpointDef.functionName;
-              const api = endpointDef.api;
-              const description = `${api} - ${functionName}`;
-              return `  ${chalk.cyan(functionName)} - ${description}`;
-            })
-            .join("\n");
-
-          console.log("Available endpoints:");
-          console.log(functionList);
-          return;
+          handleListOption(consoleControl.restore);
         }
 
-        // Validate function name (only if not using --list)
+        // Only validate function name if not listing endpoints
         if (!options.list) {
           validateFunctionName(functionName);
         }
 
-        // Find endpoint
-        const endpoints = getAllEndpoints();
-        const endpoint = endpoints.find(
-          (ep) => ep.functionName === functionName.trim()
-        );
-        if (!endpoint) {
-          consoleControl.restore();
-          displayFunctionNotFound(functionName);
-          process.exit(1);
-        }
+        // Parse function name and find endpoint
+        const endpoint = findEndpoint(functionName, consoleControl.restore);
 
         // Process parameters
         const validatedParams = processParameters(params, endpoint);
@@ -185,4 +115,152 @@ export const setupCli = (): void => {
   );
 
   program.parse();
+};
+
+/**
+ * Handles the --list option, displaying all available endpoints and then exiting.
+ * @param consoleRestore - Function to restore the console output.
+ */
+const handleListOption = (consoleRestore: () => void): void => {
+  consoleRestore();
+  const endpoints = getAllEndpoints();
+  const functionList = endpoints
+    .map((endpointDef) => {
+      const { functionName, api } = endpointDef;
+      const description = `${api} - ${functionName}`;
+      return `  ${chalk.cyan(functionName)} - ${description}`;
+    })
+    .join("\n");
+
+  console.log("Available endpoints:");
+  console.log(functionList);
+  process.exit(0);
+};
+
+/**
+ * Parses function name to extract API namespace and endpoint name
+ *
+ * This function handles both namespace syntax (api:endpoint) and simple
+ * endpoint names. It returns an object with the parsed components.
+ *
+ * @param functionName - The function name to parse (e.g., "api:endpoint" or "endpoint")
+ * @returns Object with api and endpoint properties
+ */
+const parseFunctionName = (
+  functionName: string
+): { api?: string; endpoint: string } => {
+  const trimmed = functionName.trim();
+  const colonIndex = trimmed.indexOf(":");
+
+  if (colonIndex === -1) {
+    // No namespace, just endpoint name
+    return { endpoint: trimmed };
+  }
+
+  // Has namespace
+  const api = trimmed.substring(0, colonIndex);
+  const endpoint = trimmed.substring(colonIndex + 1);
+
+  return { api, endpoint };
+};
+
+/**
+ * Validates function name format and exits if invalid
+ *
+ * This function performs basic validation on the function name parameter,
+ * ensuring it's a non-empty string. If validation fails, it displays
+ * helpful error messages and exits the process.
+ *
+ * @param functionName - The function name to validate
+ * @throws Exits process with code 1 if function name is invalid
+ */
+const validateFunctionName = (functionName: string): void => {
+  if (
+    !functionName ||
+    typeof functionName !== "string" ||
+    functionName.trim() === ""
+  ) {
+    console.error(chalk.red("❌ Function name is required"));
+    console.error(chalk.gray("💡 Tip: Use --help to see available functions"));
+    process.exit(1);
+  }
+};
+
+/**
+ * Finds an endpoint based on the function name, handling namespaces and collisions.
+ * Exits the process with an error if the function is not found or if there are collisions.
+ *
+ * @param functionName - The function name provided by the user.
+ * @param consoleRestore - Function to restore the console output.
+ * @returns The found Endpoint object.
+ */
+const findEndpoint = (
+  functionName: string,
+  consoleRestore: () => void
+): Endpoint<unknown, unknown> => {
+  const { api, endpoint: endpointName } = parseFunctionName(functionName);
+  const endpoints = getAllEndpoints();
+
+  let endpoint: Endpoint<unknown, unknown> | undefined;
+
+  if (api) {
+    // Namespace specified - find exact match
+    endpoint = endpoints.find(
+      (ep) => ep.api === api && ep.functionName === endpointName
+    );
+  } else {
+    // No namespace - check for collisions
+    const matchingEndpoints = endpoints.filter(
+      (ep) => ep.functionName === endpointName
+    );
+
+    if (matchingEndpoints.length === 0) {
+      // No matches found
+      endpoint = undefined;
+    } else if (matchingEndpoints.length === 1) {
+      // Single match - use it
+      endpoint = matchingEndpoints[0];
+    } else {
+      // Multiple matches - show collision error
+      consoleRestore();
+      displayCollisionError(endpointName, matchingEndpoints);
+      process.exit(1);
+    }
+  }
+
+  if (!endpoint) {
+    consoleRestore();
+    displayFunctionNotFound(functionName);
+    process.exit(1);
+  }
+
+  return endpoint;
+};
+
+/**
+ * Executes the API request with appropriate logging
+ *
+ * This function handles the execution of API requests with conditional
+ * logging based on the quiet mode setting.
+ *
+ * @template I - The input parameters type for the endpoint
+ * @template O - The output response type for the endpoint
+ * @param endpoint - Endpoint definition with function name, endpoint URL, and input schema
+ * @param params - Validated parameters to send with the request
+ * @param options - CLI options for request configuration
+ * @param isQuiet - Whether to suppress logging output
+ * @returns Promise resolving to the API response data
+ */
+const executeRequest = async <I, O>(
+  endpoint: Endpoint<I, O>,
+  params: CliParams,
+  options: CliOptions,
+  isQuiet: boolean
+): Promise<unknown> => {
+  if (!isQuiet) {
+    const strategy = getStrategyDescription(options);
+    console.error(`🔍 Calling ${endpoint.functionName} (${strategy})...`);
+  }
+
+  return await executeApiRequest(endpoint, params as I, options);
 };

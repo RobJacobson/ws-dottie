@@ -13,7 +13,7 @@ import { CLI_CONSTANTS, type CliParams } from "./types";
  * Processes parameters from command line input
  *
  * This function handles the parameter processing workflow:
- * 1. Parses JSON parameters with automatic date coercion
+ * 1. Parses JSON parameters (no special date coercion needed)
  * 2. Applies default values from endpoint sample parameters
  *
  * Note: Parameter validation is handled by the fetching layer,
@@ -30,14 +30,10 @@ export const processParameters = <I, O>(
   params: string,
   endpoint: Endpoint<I, O>
 ): CliParams => {
-  // Parse JSON parameters with automatic date coercion for ISO date strings
+  // Parse JSON parameters (no special coercion needed for string dates)
   const userParams = (() => {
     try {
-      return JSON.parse(params, (_, value) =>
-        typeof value === "string" && CLI_CONSTANTS.ISO_DATE_REGEX.test(value)
-          ? new Date(value)
-          : value
-      );
+      return JSON.parse(params);
     } catch (error) {
       throw new Error(`Invalid JSON parameters: ${error}`);
     }

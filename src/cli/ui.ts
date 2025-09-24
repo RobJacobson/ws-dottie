@@ -16,6 +16,7 @@
 
 import chalk from "chalk";
 import { getAllEndpoints } from "@/shared/endpoints";
+import type { ApiError } from "@/shared/fetching/shared/handleError";
 import { isApiError } from "@/shared/fetching/shared/handleError";
 import type { CliOptions } from "./types";
 
@@ -70,42 +71,70 @@ export const handleError = (error: unknown, functionName: string): never => {
 const addErrorContext = (error: unknown): void => {
   if (isApiError(error)) {
     // Provide context based on HTTP status codes
-    if (error.status && error.status >= 400) {
-      if (error.status === 404) {
-        console.error(
-          chalk.gray("💡 Tip: Check if the endpoint or parameters are correct")
-        );
-      } else if (error.status >= 500) {
-        console.error(
-          chalk.gray(
-            "💡 Tip: The API server may be experiencing issues. Try again later"
-          )
-        );
-      } else if (error.status === 401 || error.status === 403) {
-        console.error(chalk.gray("💡 Tip: Check your API access permissions"));
-      } else {
-        console.error(
-          chalk.gray("💡 Tip: Check your request parameters and try again")
-        );
-      }
-    } else if (error.message.includes("timeout")) {
-      console.error(
-        chalk.gray(
-          "💡 Tip: The request timed out. Check your internet connection"
-        )
-      );
-    } else if (
-      error.message.includes("network") ||
-      error.message.includes("fetch")
-    ) {
-      console.error(chalk.gray("💡 Tip: Check your internet connection"));
-    }
+    getApiErrorTip(error);
     return;
   }
 
   // Generic error context
-  const message = error instanceof Error ? error.message : String(error);
+  const message = extractErrorMessage(error);
+  getGenericErrorTip(message);
+};
 
+/**
+ * Extracts the error message from an unknown error type.
+ * @param error - The error to extract the message from.
+ * @returns The extracted error message as a string.
+ */
+const extractErrorMessage = (error: unknown): string => {
+  return isApiError(error)
+    ? error.message
+    : error instanceof Error
+      ? error.message
+      : String(error);
+};
+
+/**
+ * Provides context-specific tips for API errors based on status codes or message content.
+ * @param error - The ApiError instance.
+ */
+const getApiErrorTip = (error: ApiError): void => {
+  if (error.status && error.status >= 400) {
+    if (error.status === 404) {
+      console.error(
+        chalk.gray("💡 Tip: Check if the endpoint or parameters are correct")
+      );
+    } else if (error.status >= 500) {
+      console.error(
+        chalk.gray(
+          "💡 Tip: The API server may be experiencing issues. Try again later"
+        )
+      );
+    } else if (error.status === 401 || error.status === 403) {
+      console.error(chalk.gray("💡 Tip: Check your API access permissions"));
+    } else {
+      console.error(
+        chalk.gray("💡 Tip: Check your request parameters and try again")
+      );
+    }
+  } else if (error.message.includes("timeout")) {
+    console.error(
+      chalk.gray(
+        "💡 Tip: The request timed out. Check your internet connection"
+      )
+    );
+  } else if (
+    error.message.includes("network") ||
+    error.message.includes("fetch")
+  ) {
+    console.error(chalk.gray("💡 Tip: Check your internet connection"));
+  }
+};
+
+/**
+ * Provides context-specific tips for generic errors based on message content.
+ * @param message - The error message string.
+ */
+const getGenericErrorTip = (message: string): void => {
   if (message.includes("Invalid JSON parameters")) {
     console.error(chalk.gray("💡 Tip: Ensure your parameters are valid JSON"));
   } else if (
@@ -120,6 +149,43 @@ const addErrorContext = (error: unknown): void => {
   } else if (message.includes("not found")) {
     console.error(chalk.gray("💡 Tip: Use --help to see available functions"));
   }
+};
+
+/**
+ * Displays collision error when multiple endpoints have the same name
+ *
+ * This function provides a helpful error message when a requested function
+ * name matches multiple endpoints, showing the user how to use namespace
+ * syntax to disambiguate.
+ *
+ * @param endpointName - The endpoint name that has collisions
+ * @param matchingEndpoints - Array of endpoints that match the name
+ */
+export const displayCollisionError = (
+  endpointName: string,
+  matchingEndpoints: Array<{
+    api: string;
+    functionName: string;
+    urlTemplate: string;
+  }>
+): void => {
+  console.error(
+    chalk.red(`❌ Multiple endpoints found with name '${endpointName}':`)
+  );
+  console.error(chalk.yellow("Please use a fully-qualified name:"));
+  console.error();
+
+  matchingEndpoints.forEach((ep) => {
+    console.error(chalk.cyan(`  ${ep.api}:${endpointName}`));
+    console.error(chalk.gray(`    → ${ep.urlTemplate}`));
+  });
+
+  console.error();
+  console.error(
+    chalk.gray(
+      "💡 Tip: Use the format 'api:endpoint' to specify which endpoint you want"
+    )
+  );
 };
 
 /**
@@ -232,6 +298,10 @@ export const generateExamples = (): string[] => {
     "# Default: native fetch with validation",
     "fetch-dottie vesselBasics",
     "",
+    "# Using namespace syntax for disambiguation",
+    "fetch-dottie wsf-fares:cacheFlushDate",
+    "fetch-dottie wsf-schedule:cacheFlushDate",
+    "",
     "# Native fetch without validation (faster, raw data)",
     "fetch-dottie vesselBasics --no-validation",
     "",
@@ -278,6 +348,10 @@ export const generateHelpText = (
   return `
 Examples:
 ${exampleList.map((ex) => `  ${ex}`).join("\n")}
+
+Function Names:
+  Simple: fetch-dottie vesselBasics
+  Namespace: fetch-dottie wsf-fares:cacheFlushDate (for disambiguation)
 
 Fetch Strategies:
   Default: Native fetch with Zod validation (recommended)
