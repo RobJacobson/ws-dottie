@@ -1,21 +1,21 @@
-# Product Requirements Document: Zod Schema Annotation Implementation
+# Product Requirements Document: Zod Schema Annotation Implementation (v2)
 
 ## Overview
 
-This PRD provides comprehensive instructions for AI agents tasked with enhancing Zod 4 schema annotations for individual WSDOT and WSF APIs. Each agent will be assigned to work on one specific API, refactoring both `inputSchemas.ts` and `outputSchemas.ts` files according to the unified style guide.
+This PRD provides comprehensive instructions for AI agents tasked with enhancing Zod 4 schema annotations for individual WSDOT and WSF APIs. Each agent will be assigned to work on one specific API, refactoring both `inputSchemas.ts` and `outputSchemas.ts` files according to the unified style guide v2.
 
 ## 🎯 Mission Statement
 
-Transform terse, generic Zod schema descriptions into rich, semantic annotations that serve both human developers and AI agents through Model Context Protocol (MCP) servers. Create consistent, high-quality documentation that enhances API discoverability and usability.
+Transform terse, generic Zod schema descriptions into rich, semantic annotations that serve both human developers and AI agents through a **hybrid approach** using Zod 4's `.describe()` method with minimal, high-value metadata. Create consistent, high-quality documentation that enhances API discoverability and usability while avoiding verbose, non-standardized metadata.
 
 ## 📋 Pre-Implementation Checklist
 
 Before beginning any schema modifications, agents **MUST** complete all of the following steps. **Failure to complete any step is a blocking condition** - agents must pause and request user guidance.
 
 ### ✅ Step 1: Style Guide Review
-- [ ] **Read and understand** `docs/describe-project/unified-style-guide.md` completely
-- [ ] **Familiarize yourself** with the layered hybrid approach using `.meta()`
-- [ ] **Study the examples** and anti-patterns sections thoroughly
+- [ ] **Read and understand** `docs/describe-project/unified-style-guide-v2.md` completely
+- [ ] **Familiarize yourself** with the hybrid approach using `.describe()` with minimal metadata
+- [ ] **Study the verb-starting patterns** and cross-reference requirements
 - [ ] **Understand the quality assurance framework** and review checklist
 - [ ] **Review the domain glossary** for your assigned API domain
 
@@ -27,7 +27,8 @@ Before beginning any schema modifications, agents **MUST** complete all of the f
 
 ### ✅ Step 3: Data Collection and Analysis
 - [ ] **List all endpoints** in your assigned API
-- [ ] **Fetch sample data** for each endpoint using `fetch-dottie` with default parameters
+- [ ] **Fetch sample data** for each endpoint using `fetch-dottie` with default parameters:
+      **`npm run fetch-dottie [endpoint]`**
 - [ ] **Document the data structure** and identify key patterns
 - [ ] **Note any discrepancies** between expected and actual data
 - [ ] **Identify relationships** between different endpoints and fields
@@ -75,11 +76,11 @@ fetch-dottie [function-name] --help  # See parameter requirements
 - [ ] **No schema modifications** until all prerequisites are met
 
 ### Quality Requirements (Blocking)
-- [ ] **Every field has a clear, declarative description** following established patterns
-- [ ] **All required metadata keys included** (`domain`, `entity`, `semanticType`)
+- [ ] **Every field has a verb-starting description** following established patterns
+- [ ] **All descriptions include cross-references** to related endpoints
 - [ ] **Real-world examples provided** from actual API data (2-4 per field)
-- [ ] **Relationships documented** where applicable (`relatedEndpoints`, `crossReferences`)
-- [ ] **Operational context included** (`updateFrequency`, `cachingPolicy`, `businessRules`)
+- [ ] **Business context included** in descriptions
+- [ ] **Minimal metadata only** (`relatedEndpoints`, `updateFrequency: "real-time" | "static"`, `businessRules`)
 - [ ] **Descriptions pass the "read aloud" test** - natural, flowing language
 
 ### Consistency Requirements (Blocking)
@@ -88,6 +89,7 @@ fetch-dottie [function-name] --help  # See parameter requirements
 - [ ] **Maintains uniform tone and voice** across all descriptions
 - [ ] **Proper parenthetical patterns** for examples and enums
 - [ ] **Correct cross-reference formatting** (`[api]/[endpoint]` format)
+- [ ] **All descriptions start with action verbs** ("Provides", "Returns", "Indicates", "Shows")
 
 ## 📁 File Structure and Scope
 
@@ -100,23 +102,23 @@ Each agent will work on **exactly two files** for their assigned API:
 ```typescript
 // Example structure for inputSchemas.ts
 export const [endpointName]InputSchema = z.object({
-  // Enhanced field definitions with .meta() annotations
-}).meta({
-  description: "Schema-level description",
-  agentMetadata: {
-    // Schema-level metadata
-  }
-});
+  // Enhanced field definitions with .describe() annotations
+}).describe("Returns parameters for [purpose] including [key components]. Use [api]/[endpoint] for [related operations].")
+  .meta({
+    // Minimal metadata only when needed
+    relatedEndpoints: ["api/endpoint"],
+    updateFrequency: "static" // "real-time" or "static"
+  });
 
 // Example structure for outputSchemas.ts
 export const [endpointName]OutputSchema = z.object({
-  // Enhanced field definitions with .meta() annotations
-}).meta({
-  description: "Schema-level description", 
-  agentMetadata: {
-    // Schema-level metadata
-  }
-});
+  // Enhanced field definitions with .describe() annotations
+}).describe("Returns a collection of [entity type] providing [primary purpose] for [target users]. Data includes [key components]. Use [api]/[endpoint] for [related operations].")
+  .meta({
+    // Schema-level metadata only when needed
+    relatedEndpoints: ["api/endpoint"],
+    updateFrequency: "real-time" // "real-time" or "static"
+  });
 ```
 
 ## 🔧 Implementation Process
@@ -126,21 +128,23 @@ export const [endpointName]OutputSchema = z.object({
 2. **Identify field types** and their current descriptions
 3. **Map fields to domain entities** using the glossary
 4. **Plan annotation strategy** for each field type
+5. **Identify cross-reference opportunities** between endpoints
 
 ### Phase 2: Annotation Creation
-1. **Start with core descriptions** using established templates
-2. **Add domain context** (`domain`, `entity`, `semanticType`)
+1. **Start with verb-starting descriptions** using established templates
+2. **Add cross-references** to related endpoints for discoverability
 3. **Include real examples** from fetched API data
-4. **Document relationships** and cross-references
-5. **Add operational context** and business rules
-6. **Complete metadata structure** with all relevant keys
+4. **Add business context** and operational information
+5. **Add minimal metadata** only for high-value programmatic discovery
+6. **Complete description structure** with all required elements
 
 ### Phase 3: Quality Review
 1. **Apply the 20-point review checklist** from the style guide
 2. **Test descriptions** by reading them aloud
-3. **Verify examples** against actual API data
-4. **Check consistency** with established patterns
-5. **Validate relationships** and cross-references
+3. **Verify verb-starting patterns** for all descriptions
+4. **Check cross-references** are complete and accurate
+5. **Validate examples** against actual API data
+6. **Ensure metadata is minimal** and non-redundant
 
 ### Phase 4: Final Validation
 1. **Ensure all success criteria met**
@@ -179,14 +183,17 @@ After completing all schema modifications, provide a comprehensive report in thi
 ### Quantitative Metrics
 - **100% field coverage** - Every field has enhanced annotations
 - **2-4 examples per field** - Real-world examples from API data
-- **Complete metadata** - All required keys present
+- **Cross-references included** - All related endpoints documented
+- **Verb-starting descriptions** - All descriptions start with action verbs
+- **Minimal metadata** - Only high-value metadata included
 - **Zero blocking issues** - All success criteria met
 
 ### Qualitative Metrics
 - **Natural readability** - Descriptions flow when read aloud
 - **Semantic richness** - Clear purpose and context for each field
 - **Consistent style** - Uniform patterns across all annotations
-- **Actionable metadata** - Useful information for AI agents
+- **Discoverability** - Cross-references enable endpoint discovery
+- **Agent-friendly** - Descriptions provide actionable information for AI agents
 
 ## 🚫 What NOT to Do
 
@@ -197,14 +204,17 @@ After completing all schema modifications, provide a comprehensive report in thi
 - **Never include .NET datetime references** - use abstraction layer
 - **Never make assumptions** about business logic without research
 - **Never proceed with questions** - always ask for clarification
+- **Never use verbose metadata** - only include high-value metadata
+- **Never start descriptions without action verbs** - always use "Provides", "Returns", "Indicates", "Shows"
 
 ### Common Mistakes to Avoid
 - **Missing real examples** - always use actual API data
 - **Inconsistent terminology** - follow the domain glossary
 - **Passive voice** - use active, declarative statements
-- **Missing relationships** - document cross-endpoint connections
-- **Incomplete metadata** - include all relevant keys
+- **Missing cross-references** - document related endpoints
+- **Verbose metadata** - avoid redundant or non-standardized metadata
 - **Generic descriptions** - provide specific, contextual information
+- **Missing action verbs** - all descriptions must start with action verbs
 
 ## 🔄 Iteration and Feedback
 
@@ -240,8 +250,10 @@ After completing all schema modifications, provide a comprehensive report in thi
 
 Your implementation is complete when:
 - [ ] **All pre-implementation steps completed**
-- [ ] **Both schema files enhanced** with rich annotations
+- [ ] **Both schema files enhanced** with rich, verb-starting annotations
 - [ ] **All success criteria met**
+- [ ] **Cross-references included** for all related endpoints
+- [ ] **Minimal metadata only** - `updateFrequency: "real-time" | "static"` only
 - [ ] **Discrepancy report submitted**
 - [ ] **User review completed** and feedback addressed
 - [ ] **No blocking issues remain**
@@ -249,9 +261,8 @@ Your implementation is complete when:
 ## 📚 Reference Materials
 
 ### Essential Documents
-- `docs/describe-project/unified-style-guide.md` - Primary implementation guide
-- `docs/describe-project/best-practices.md` - Foundational principles
-- `docs/describe-project/annotation-principles.md` - Technical architecture
+- `docs/describe-project/unified-style-guide-v2.md` - Primary implementation guide
+- `docs/describe-project/implementation-prd-v2.md` - This document
 - `docs/misc/getting-started-for-agents.md` - CLI usage guide
 
 ### Domain Resources
@@ -262,4 +273,4 @@ Your implementation is complete when:
 
 ---
 
-**Remember:** Quality over speed. Take the time to understand the domain, fetch real data, and create meaningful annotations. The goal is to create documentation that truly enhances the developer and AI agent experience.
+**Remember:** Quality over speed. Take the time to understand the domain and the relationship between different entities and endpoints, fetch real data, and create meaningful annotations. The goal is to create documentation that truly enhances the developer and AI agent experience through rich, discoverable descriptions with minimal, high-value metadata.
