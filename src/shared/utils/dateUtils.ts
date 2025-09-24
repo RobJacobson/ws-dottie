@@ -130,21 +130,24 @@ const isIso8601DateString = (value: string): boolean => {
 /**
  * Date helper functions for runtime evaluation
  *
- * These functions return Date objects when called, ensuring they are
+ * These functions return YYYY-MM-DD date strings when called, ensuring they are
  * evaluated at runtime rather than build time. This is useful for
  * generating dynamic dates in API requests and sample data.
  */
 export const datesHelper = {
-  /** Returns tomorrow's date */
-  tomorrow: (): Date => new Date(Date.now() + 24 * 60 * 60 * 1000),
-  /** Returns the day after tomorrow's date */
-  dayAfterTomorrow: (): Date => new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-  /** Returns today's date */
-  today: (): Date => new Date(),
-  /** Returns yesterday's date */
-  yesterday: (): Date => new Date(Date.now() - 24 * 60 * 60 * 1000),
-  /** Returns August 1, 2025 (start of month for sample data) */
-  startOfMonth: (): Date => new Date(2025, 7, 1), // August 1, 2025
-  /** Returns August 31, 2025 (end of month for sample data) */
-  endOfMonth: (): Date => new Date(2025, 7, 31), // August 31, 2025
+  /** Returns tomorrow's date as YYYY-MM-DD string */
+  tomorrow: (): string =>
+    jsDateToYyyyMmDd(new Date(Date.now() + 24 * 60 * 60 * 1000)),
+  /** Returns the day after tomorrow's date as YYYY-MM-DD string */
+  dayAfterTomorrow: (): string =>
+    jsDateToYyyyMmDd(new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)),
+  /** Returns today's date as YYYY-MM-DD string */
+  today: (): string => jsDateToYyyyMmDd(new Date()),
+  /** Returns yesterday's date as YYYY-MM-DD string */
+  yesterday: (): string =>
+    jsDateToYyyyMmDd(new Date(Date.now() - 24 * 60 * 60 * 1000)),
+  /** Returns August 1, 2025 (start of month for sample data) as YYYY-MM-DD string */
+  startOfMonth: (): string => jsDateToYyyyMmDd(new Date(2025, 7, 1)), // August 1, 2025
+  /** Returns August 31, 2025 (end of month for sample data) as YYYY-MM-DD string */
+  endOfMonth: (): string => jsDateToYyyyMmDd(new Date(2025, 7, 31)), // August 31, 2025
 } as const;

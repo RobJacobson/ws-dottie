@@ -14,15 +14,14 @@
  */
 
 import { configManager } from "@/shared/utils/configManager";
-import { jsDateToYyyyMmDd } from "@/shared/utils/dateUtils";
 
 /**
  * Builds a complete API URL with template parameter replacement
  *
  * This function constructs a complete URL for API requests by combining
  * the base domain, endpoint path, and replacing template parameters in the URL.
- * It handles template parameter replacement (e.g., {terminalId} -> actual value),
- * automatic date conversion to string format, and URL cleanup.
+ * It handles template parameter replacement (e.g., {terminalId} -> actual value)
+ * and URL cleanup.
  *
  * @param endpoint - The API endpoint path with optional template parameters (e.g., "/ferries/schedule/{terminalId}")
  * @param params - Optional parameters for template replacement and query string construction
@@ -30,7 +29,7 @@ import { jsDateToYyyyMmDd } from "@/shared/utils/dateUtils";
  * @example
  * ```typescript
  * buildUrlWithParams("/ferries/api/schedule/rest/schedule/{tripDate}/{routeId}", {
- *   tripDate: new Date("2024-01-01")
+ *   tripDate: "2024-01-01"
  *   routeId: 1,
  * });
  * // Returns: URL object with processed endpoint and parameters
@@ -48,9 +47,8 @@ export const buildUrlWithParams = (
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
       const replaceParam = `{${key}}`;
-      // Convert Date objects to text date format for WSDOT API compatibility
-      const replaceValue =
-        value instanceof Date ? jsDateToYyyyMmDd(value) : String(value);
+      // Convert values to string format for URL replacement
+      const replaceValue = String(value);
       processedEndpoint = processedEndpoint.replace(replaceParam, replaceValue);
     });
   }

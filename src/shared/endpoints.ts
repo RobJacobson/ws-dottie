@@ -79,28 +79,26 @@ export type EndpointsByApi = Record<string, Endpoints>;
  *
  * @template I - The input parameters type for the endpoint
  * @template O - The output response type for the endpoint
- * @param config - Basic endpoint configuration object
- * @param config.id - Unique identifier in format "api/function"
- * @param config.endpoint - HTTP endpoint URL template relative to base domain
- * @param config.inputSchema - Zod schema for input parameter validation
- * @param config.outputSchema - Zod schema for output response validation
- * @param config.sampleParams - Optional sample parameters for testing
- * @param config.cacheStrategy - Cache strategy for TanStack Query integration
- * @returns Complete endpoint object with all computed properties
+ * @param definition - Basic endpoint configuration object
+ * @returns Complete endpoint object with all computed properties:
+ *   - `id`: Unique identifier in format "api/function"
+ *   - `endpoint`: HTTP endpoint URL template relative to base domain
+ *   - `inputSchema`: Zod schema for input parameter validation
+ *   - `outputSchema`: Zod schema for output response validation
+ *   - `sampleParams`: Optional sample parameters for testing
+ *   - `cacheStrategy`: Cache strategy for TanStack Query integration
+ *   - `api`: API group name (computed from id)
+ *   - `functionName`: Function name (computed from id)
+ *   - `urlTemplate`: Complete URL template with domain (computed)
  */
-export function defineEndpoint<I, O>(config: {
-  id: string;
-  endpoint: string;
-  inputSchema: z.ZodSchema<I>;
-  outputSchema: z.ZodSchema<O>;
-  sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
-  cacheStrategy: CacheStrategy;
-}): Endpoint<I, O> {
-  const [api, functionName] = config.id.split("/");
-  const urlTemplate = `${configManager.getDomain()}${config.endpoint}`;
+export function defineEndpoint<I, O>(
+  definition: EndpointDefinition<I, O>
+): Endpoint<I, O> {
+  const [api, functionName] = definition.id.split(":");
+  const urlTemplate = `${configManager.getDomain()}${definition.endpoint}`;
 
   return {
-    ...config,
+    ...definition,
     api,
     functionName,
     urlTemplate,
