@@ -9,7 +9,9 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getScheduleByTerminals */
 const scheduleByTerminalsInput = z.object({
-  tripDate: z.date(),
+  tripDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
   departingScheduleTerminalId: z.number().int().positive(),
   arrivingScheduleTerminalId: z.number().int().positive(),
 });
@@ -19,7 +21,7 @@ export const getScheduleByTerminalsMeta: EndpointDefinition<
   ScheduleByTerminalsInput,
   ScheduleResponse
 > = {
-  id: "wsf-schedule/scheduleByTerminals",
+  id: "wsf-schedule:scheduleByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/schedule/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
   inputSchema: scheduleByTerminalsInput,

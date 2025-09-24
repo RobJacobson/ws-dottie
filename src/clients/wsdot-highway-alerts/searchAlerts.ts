@@ -74,10 +74,16 @@ const searchAlertsInput = z
     StateRoute: z.string().optional(),
     /** Region name (optional) */
     Region: z.string().optional(),
-    /** Start time (JS Date, optional) */
-    SearchTimeStart: z.date().optional(),
-    /** End time (JS Date, optional) */
-    SearchTimeEnd: z.date().optional(),
+    /** Start time (YYYY-MM-DD string, optional) */
+    SearchTimeStart: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
+      .optional(),
+    /** End time (YYYY-MM-DD string, optional) */
+    SearchTimeEnd: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
+      .optional(),
     /** Starting milepost (optional) */
     StartingMilepost: z.number().optional(),
     /** Ending milepost (optional) */
@@ -90,15 +96,15 @@ export const searchAlertsMeta: EndpointDefinition<
   SearchAlertsInput,
   HighwayAlerts
 > = {
-  id: "wsdot-highway-alerts/searchAlerts",
+  id: "wsdot-highway-alerts:searchAlerts",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
   inputSchema: searchAlertsInput,
   outputSchema: highwayAlertsSchema,
   sampleParams: {
     StateRoute: "405",
-    SearchTimeStart: new Date("2025-08-01"),
-    SearchTimeEnd: new Date("2025-09-30"),
+    SearchTimeStart: "2025-08-01",
+    SearchTimeEnd: "2025-09-30",
   },
   cacheStrategy: "FREQUENT",
 };

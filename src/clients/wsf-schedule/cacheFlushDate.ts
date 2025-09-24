@@ -12,7 +12,7 @@ export const getScheduleCacheFlushDateMeta: EndpointDefinition<
   ScheduleCacheFlushDateInput,
   WsfStandardCacheFlushDate
 > = {
-  id: "wsf-schedule/cacheFlushDate",
+  id: "wsf-schedule:cacheFlushDate",
   endpoint: "/ferries/api/schedule/rest/cacheflushdate",
   inputSchema: scheduleCacheFlushDateInput,
   outputSchema: wsfStandardCacheFlushDateSchema,

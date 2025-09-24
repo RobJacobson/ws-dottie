@@ -12,7 +12,7 @@ export const getScheduleValidDateRangeMeta: EndpointDefinition<
   ScheduleValidDateRangeInput,
   ValidDateRange
 > = {
-  id: "wsf-schedule/scheduleValidDateRange",
+  id: "wsf-schedule:scheduleValidDateRange",
   endpoint: "/ferries/api/schedule/rest/validdaterange",
   inputSchema: scheduleValidDateRangeInput,
   outputSchema: validDateRangeSchema,

@@ -45,7 +45,7 @@ export const getEventCategoriesMeta: EndpointDefinition<
   EventCategoriesInput,
   EventCategories
 > = {
-  id: "wsdot-highway-alerts/getEventCategories",
+  id: "wsdot-highway-alerts:getEventCategories",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
   inputSchema: eventCategoriesInput,

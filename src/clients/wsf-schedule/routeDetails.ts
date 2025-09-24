@@ -9,7 +9,9 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRouteDetails */
 const routeDetailsInput = z.object({
-  tripDate: z.date(),
+  tripDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
 
 /** Endpoint metadata for getRouteDetails */
@@ -17,7 +19,7 @@ export const getRouteDetailsMeta: EndpointDefinition<
   RouteDetailsListInput,
   RouteDetailsList
 > = {
-  id: "wsf-schedule/routeDetails",
+  id: "wsf-schedule:routeDetails",
   endpoint: "/ferries/api/schedule/rest/routedetails/{tripDate}",
   inputSchema: routeDetailsInput,
   outputSchema: routeDetailsListSchema,

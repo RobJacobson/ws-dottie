@@ -12,7 +12,7 @@ export const getTerminalWaitTimesMeta: EndpointDefinition<
   TerminalWaitTimesInput,
   TerminalWaitTimes[]
 > = {
-  id: "wsf-terminals/terminalWaitTimes",
+  id: "wsf-terminals:terminalWaitTimes",
   endpoint: "/ferries/api/terminals/rest/terminalwaittimes",
   inputSchema: terminalWaitTimesInput,
   outputSchema: z.array(terminalWaitTimesSchema),

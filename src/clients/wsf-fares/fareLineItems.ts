@@ -9,7 +9,9 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItems */
 const fareLineItemsInput = z.object({
-  tripDate: z.date(),
+  tripDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
   departingTerminalId: z.number().int().positive(),
   arrivingTerminalId: z.number().int().positive(),
   roundTrip: z.boolean(),
@@ -20,7 +22,7 @@ export const getFareLineItemsMeta: EndpointDefinition<
   FareLineItemsInput,
   FareLineItem[]
 > = {
-  id: "wsf-fares/fareLineItems",
+  id: "wsf-fares:fareLineItems",
   endpoint:
     "/ferries/api/fares/rest/farelineitems/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
   inputSchema: fareLineItemsInput,

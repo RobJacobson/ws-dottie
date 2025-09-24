@@ -14,7 +14,7 @@ export const getVesselHistoriesMeta: EndpointDefinition<
   VesselHistoriesInput,
   VesselHistories
 > = {
-  id: "wsf-vessels/vesselHistories",
+  id: "wsf-vessels:vesselHistories",
   endpoint: "/ferries/api/vessels/rest/vesselhistory",
   inputSchema: vesselHistoriesInput,
   outputSchema: vesselHistoriesSchema,

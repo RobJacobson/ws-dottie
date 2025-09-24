@@ -66,7 +66,7 @@ export const getTrafficFlowsMeta: EndpointDefinition<
   TrafficFlowsInput,
   FlowData[]
 > = {
-  id: "wsdot-traffic-flow/getTrafficFlow",
+  id: "wsdot-traffic-flow:getTrafficFlow",
   endpoint:
     "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
   inputSchema: trafficFlowsInput,

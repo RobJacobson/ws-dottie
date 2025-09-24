@@ -14,7 +14,7 @@ export const getScheduledRoutesMeta: EndpointDefinition<
   ScheduledRoutesInput,
   ScheduledRoute[]
 > = {
-  id: "wsf-schedule/scheduledRoutes",
+  id: "wsf-schedule:scheduledRoutes",
   endpoint: "/ferries/api/schedule/rest/schedroutes",
   inputSchema: scheduledRoutesInput,
   outputSchema: scheduledRoutesSchema,

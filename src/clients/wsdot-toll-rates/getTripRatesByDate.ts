@@ -53,10 +53,14 @@ import { datesHelper } from "@/shared/utils/dateUtils";
 
 /** Input schema for getTripRatesByDate */
 const tripRatesByDateInput = z.object({
-  /** Start date (JS Date) */
-  fromDate: z.date(),
-  /** End date (JS Date) */
-  toDate: z.date(),
+  /** Start date (YYYY-MM-DD string) */
+  fromDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  /** End date (YYYY-MM-DD string) */
+  toDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
 
 /** Endpoint metadata for getTripRatesByDate */
@@ -64,7 +68,7 @@ export const getTripRatesByDateMeta: EndpointDefinition<
   TripRatesByDateInput,
   TripRatesByDate
 > = {
-  id: "wsdot-toll-rates/getTripRatesByDate",
+  id: "wsdot-toll-rates:getTripRatesByDate",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
   inputSchema: tripRatesByDateInput,

@@ -14,7 +14,7 @@ export const getActiveSeasonsMeta: EndpointDefinition<
   ActiveSeasonsInput,
   ScheduleBriefResponses
 > = {
-  id: "wsf-schedule/activeSeasons",
+  id: "wsf-schedule:activeSeasons",
   endpoint: "/ferries/api/schedule/rest/activeseasons",
   inputSchema: activeSeasonsInput,
   outputSchema: scheduleBriefResponsesSchema,

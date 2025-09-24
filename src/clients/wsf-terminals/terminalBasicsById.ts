@@ -16,7 +16,7 @@ export const getTerminalBasicsByTerminalIdMeta: EndpointDefinition<
   TerminalBasicsByTerminalIdInput,
   TerminalBasics
 > = {
-  id: "wsf-terminals/terminalBasicsById",
+  id: "wsf-terminals:terminalBasicsById",
   endpoint: "/ferries/api/terminals/rest/terminalbasics/{terminalId}",
   inputSchema: terminalBasicsByTerminalIdInput,
   outputSchema: terminalBasicsSchema,

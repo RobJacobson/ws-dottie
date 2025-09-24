@@ -12,7 +12,7 @@ export const getTerminalVerboseMeta: EndpointDefinition<
   TerminalVerboseInput,
   TerminalVerbose[]
 > = {
-  id: "wsf-terminals/terminalVerbose",
+  id: "wsf-terminals:terminalVerbose",
   endpoint: "/ferries/api/terminals/rest/terminalverbose",
   inputSchema: terminalVerboseInput,
   outputSchema: z.array(terminalVerboseSchema),

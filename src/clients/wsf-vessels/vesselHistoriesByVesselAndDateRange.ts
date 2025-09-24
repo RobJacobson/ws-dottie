@@ -8,8 +8,12 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
 const dateRangeParams = {
-  dateStart: z.date(),
-  dateEnd: z.date(),
+  dateStart: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  dateEnd: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 };
 
 const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");

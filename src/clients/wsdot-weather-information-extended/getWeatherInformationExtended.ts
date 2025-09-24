@@ -14,7 +14,7 @@ export const getWeatherInformationExtendedMeta: EndpointDefinition<
   WeatherInformationExtendedInput,
   WeatherReadings
 > = {
-  id: "wsdot-weather-information-extended/getWeatherInformationExtended",
+  id: "wsdot-weather-information-extended:getWeatherInformationExtended",
   endpoint: "/traffic/api/api/Scanweb",
   inputSchema: weatherInformationExtendedInput,
   outputSchema: weatherReadingsSchema,

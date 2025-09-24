@@ -9,7 +9,9 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareTotals */
 const fareTotalsInput = z.object({
-  tripDate: z.date(),
+  tripDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
   departingTerminalId: z.number().int().positive(),
   arrivingTerminalId: z.number().int().positive(),
   roundTrip: z.boolean(),
@@ -22,7 +24,7 @@ export const getFareTotalsMeta: EndpointDefinition<
   FareTotalsInput,
   FareTotals
 > = {
-  id: "wsf-fares/fareTotals",
+  id: "wsf-fares:fareTotals",
   endpoint:
     "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}",
   inputSchema: fareTotalsInput,

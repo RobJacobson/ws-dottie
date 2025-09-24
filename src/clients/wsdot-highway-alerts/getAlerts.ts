@@ -91,7 +91,7 @@ const alertsInput = z.object({}).strict();
 
 /** Endpoint metadata for getAlerts */
 export const getAlertsMeta: EndpointDefinition<AlertsInput, HighwayAlerts> = {
-  id: "wsdot-highway-alerts/getAlerts",
+  id: "wsdot-highway-alerts:getAlerts",
   endpoint: "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
   inputSchema: alertsInput,
   outputSchema: highwayAlertsSchema,

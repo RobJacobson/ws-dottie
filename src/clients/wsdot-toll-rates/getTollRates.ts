@@ -58,7 +58,7 @@ const tollRatesInput = z.object({}).strict();
 /** Endpoint metadata for getTollRates */
 export const getTollRatesMeta: EndpointDefinition<TollRatesInput, TollRate[]> =
   {
-    id: "wsdot-toll-rates/getTollRates",
+    id: "wsdot-toll-rates:getTollRates",
     endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
     inputSchema: tollRatesInput,
     outputSchema: tollRatesSchema,
