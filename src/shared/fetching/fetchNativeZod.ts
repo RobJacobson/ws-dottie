@@ -10,7 +10,6 @@ import type { Endpoint } from "@/shared/endpoints";
 import { fetchCore } from "@/shared/fetching/shared/core";
 import { createApiError } from "@/shared/fetching/shared/handleError";
 import type { FetchOptions, FetchTool } from "@/shared/types";
-import { convertDotNetDates } from "@/shared/utils/dateUtils";
 
 /**
  * Native fetch with full Zod validation and .NET date conversion
@@ -43,11 +42,11 @@ export const fetchNativeZod: FetchTool = async <
     // Get raw data using native fetch
     const rawData = await fetchCore(endpoint, params, options, "native");
 
-    // Apply .NET date conversion
-    const convertedData = convertDotNetDates(rawData);
+    // Note: Skip convertDotNetDates here because zWsdotDate schemas handle conversion
+    // during validation. This prevents double conversion (string -> Date -> string -> Date)
 
-    // Validate and return output
-    return endpoint.outputSchema.parse(convertedData);
+    // Validate and return output (zWsdotDate will handle .NET date conversion)
+    return endpoint.outputSchema.parse(rawData);
   } catch (error) {
     // Re-throw ApiErrors as-is, wrap other errors (including ZodErrors) in ApiError
     if (

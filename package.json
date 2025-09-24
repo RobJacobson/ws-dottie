@@ -46,8 +46,7 @@
     "type-check": "tsc --noEmit",
     "type-check:test": "tsc --noEmit --project tsconfig.test.json",
     "prepublishOnly": "npm run build",
-    "nuke-comments": "node scripts/nuke-jsdoc-comments.js",
-    "dottie": "node dist/cli/fetch-dottie.mjs",
+    "fetch-dottie": "node dist/cli/fetch-dottie.mjs",
     "cli:help": "node dist/cli/fetch-dottie.mjs --help",
     "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20"
   },
