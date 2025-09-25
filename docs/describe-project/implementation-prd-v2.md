@@ -81,7 +81,7 @@ See docs/misc/getting-started-agents.md for details about fetch-dottie and fetch
 - [ ] **Output schemas** start with "Returns..." and specify entity type (single vs. list)
 - [ ] **Output fields** start with "The [entity]'s..." and describe as entity properties
 - [ ] **All descriptions include cross-references** to related endpoints where appropriate
-- [ ] **Real-world examples provided** from actual API data (2-4 per field)
+- [ ] **Real-world examples provided** from actual API data (2-4 per field, placed at end of first sentence)
 - [ ] **Business context included** in descriptions
 - [ ] **Minimal metadata only** (`relatedEndpoints`, `updateFrequency: "real-time" | "static"`, `businessRules`)
 - [ ] **Descriptions pass the "read aloud" test** - natural, flowing language
@@ -90,7 +90,7 @@ See docs/misc/getting-started-agents.md for details about fetch-dottie and fetch
 - [ ] **Follows established templates** for similar field types
 - [ ] **Uses consistent terminology** from the domain glossary
 - [ ] **Maintains uniform tone and voice** across all descriptions
-- [ ] **Proper parenthetical patterns** for examples and enums (all example data in quotes)
+- [ ] **Proper parenthetical patterns** for examples and enums (all example data in quotes, placed at end of first sentence)
 - [ ] **Correct cross-reference formatting** (`[api]/[endpoint]` format)
 - [ ] **Schema-specific starting patterns** followed correctly (Input: "Input parameters to...", Output: "Returns...", etc.)
 

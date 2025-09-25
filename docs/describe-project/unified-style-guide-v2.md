@@ -80,7 +80,7 @@ The `description` field should be the primary source of information, following t
 #### Output Fields (Individual Properties)
 1. **Start with "The [entity]'s..."** - Describe as a property of the entity
 2. **Include data type** - Specify the type of data
-3. **Examples at end of first sentence** - Show typical values
+3. **Examples at end of first sentence** - Show typical values in parenthetical at the end of the *first sentence* (REQUIRED)
 4. **Cross-references for discovery** - How to use with related functions
 
 ### Description Templates by Schema Type
@@ -205,29 +205,34 @@ The `description` field should be the primary source of information, following t
 
 ### Example Data Formatting Rules
 
-**All example data must be in quotes to indicate literal values:**
+**All example data must be in quotes to indicate literal values and placed at the end of the first sentence:**
 
 ✅ **Correct Examples:**
 ```typescript
-// String identifiers
-"A state route identifier as a string (e.g., 'I-5', 'SR-520')."
+// String identifiers - examples at end of first sentence
+"A state route identifier as a string for filtering highway cameras by specific roadway (e.g., 'I-5', 'SR-520'). Use this to find cameras on particular routes."
 
-// Numeric identifiers  
-"The highway camera's unique numeric identifier as an integer (e.g., '9818', '9460')."
+// Numeric identifiers - examples at end of first sentence
+"The highway camera's unique numeric identifier as an integer (e.g., '9818', '9460'). Use this ID to fetch data for individual cameras via wsdot-highway-cameras/getHighwayCamera."
 
-// Coordinates
-"The camera's latitude coordinate in decimal degrees (e.g., '47.821539', '48.498333')."
+// Coordinates - examples at end of first sentence
+"The camera's latitude coordinate in decimal degrees for displaying the camera location on maps (e.g., '47.821539', '48.498333'). Use this for map positioning and geographic visualization."
 
-// Milepost values
-"The starting milepost location as a number (e.g., '0', '10', '15.5')."
+// Milepost values - examples at end of first sentence
+"The starting milepost location as a number for filtering cameras along a specific route segment (e.g., '0', '10', '15.5'). Use this to find cameras within a milepost range."
 ```
 
 ❌ **Incorrect Examples:**
 ```typescript
+// Examples at end of description - wrong placement
+"A state route identifier as a string for filtering highway cameras by specific roadway. Use this to find cameras on particular routes (e.g., 'I-5', 'SR-520')."
+
+// Examples in middle of description - wrong placement
+"A state route identifier as a string (e.g., 'I-5', 'SR-520') for filtering highway cameras."
+
 // Missing quotes - unclear if literal values
 "A state route identifier as a string (e.g., I-5, SR-520)."
 "The highway camera's unique numeric identifier as an integer (e.g., 9818, 9460)."
-"The camera's latitude coordinate in decimal degrees (e.g., 47.821539, 48.498333)."
 ```
 
 **Exception:** Enum values with mappings don't need quotes:
@@ -586,6 +591,53 @@ export const fareCalculationInputSchema = z.object({
 - **Field References:** Use `[api]/[function].[fieldname]` format
 - **Consistent Terminology:** Use established domain glossary terms
 
+### Internal Array Schema Descriptions
+
+Internal array schemas (like `spaceForArrivalTerminalsListSchema`, `departingSpacesListSchema`, etc.) should include concise but informative descriptions that explain their purpose and context within the parent schema.
+
+#### Guidelines for Internal Array Descriptions
+
+1. **Start with "Array of"** - Clearly indicate this is an array structure
+2. **Explain Purpose** - Describe what the array contains and why it exists
+3. **Reference Parent Context** - Explain how it relates to the parent schema
+4. **Keep Concise** - Use 1-2 sentences (20-40 words) for internal arrays
+5. **Include Business Value** - Explain the operational or business purpose
+
+#### Examples
+
+```typescript
+// Good: Internal array with clear purpose and context
+export const spaceForArrivalTerminalsListSchema = z.array(
+  spaceForArrivalTerminalSchema
+).describe(
+  "Array of arrival terminal space availability data for this sailing departure, including reservation and drive-up space counts for each destination terminal."
+);
+
+// Good: Internal array with parent context
+export const departingSpacesListSchema = z.array(departingSpaceSchema).describe(
+  "Array of upcoming sailing departures from this terminal with real-time space availability, vessel information, and departure scheduling data."
+);
+
+// Good: Internal array with business context
+export const transitLinksListSchema = z.array(transitLinkSchema).describe(
+  "Array of transit agency connections providing links to public transportation services that connect with this terminal for multimodal trip planning."
+);
+```
+
+#### What NOT to Include
+
+- **Don't describe the element type** - The element schema already has its own description
+- **Don't include examples** - Internal arrays typically don't need examples
+- **Don't add metadata** - Internal arrays rarely need `.meta()` calls
+- **Don't reference other endpoints** - Internal arrays are implementation details
+
+#### When to Skip Descriptions
+
+Internal array schemas that are purely structural (like simple wrappers around base types) may not need descriptions if:
+- The array name clearly indicates its purpose
+- The element schema provides sufficient context
+- The array is only used in one place
+
 ### Annotation Priority Order
 
 When creating annotations, prioritize in this order:
@@ -678,11 +730,12 @@ z.array(borderCrossingSchema).describe("Returns a collection of border crossing 
 1. **Start with Action Verbs:** Every description should start with "Provides", "Returns", "Indicates", or "Shows"
 2. **Include Cross-References:** Add related endpoints for discoverability
 3. **Use Examples:** Provide realistic examples that illustrate usage
-4. **Document Relationships:** Explain how schemas connect to each other
-5. **Be Consistent:** Follow established patterns across all schemas
-6. **Test Readability:** Ensure descriptions flow naturally when read aloud
-7. **Minimal Metadata:** Only include high-value metadata for programmatic discovery
-8. **Maintain Accuracy:** Verify all information against actual API behavior
+4. **Place Examples at End of First Sentence:** Always put "(e.g., 'example1', 'example2')" at the end of the first sentence (REQUIRED for all output fields)
+5. **Document Relationships:** Explain how schemas connect to each other
+6. **Be Consistent:** Follow established patterns across all schemas
+7. **Test Readability:** Ensure descriptions flow naturally when read aloud
+8. **Minimal Metadata:** Only include high-value metadata for programmatic discovery
+9. **Maintain Accuracy:** Verify all information against actual API behavior
 
 ## 11. Comprehensive Examples and Anti-Patterns
 
@@ -713,29 +766,29 @@ z.string().describe("Unique identifier for a WSF terminal used for route plannin
 #### ✅ Good Examples
 
 ```typescript
-// Terminal ID with full context and cross-references
-z.string().describe("Provides a unique identifier for a WSF terminal used for route planning and fare calculations. Use wsf-terminals/terminalbasics to retrieve terminal details. Terminal IDs remain consistent across all WSF systems.")
+// Terminal ID with full context and cross-references - examples at end of first sentence
+z.string().describe("Provides a unique identifier for a WSF terminal used for route planning and fare calculations (e.g., '1' for Seattle, '3' for Bainbridge Island). Use wsf-terminals/terminalbasics to retrieve terminal details. Terminal IDs remain consistent across all WSF systems.")
   .meta({
     relatedEndpoints: ["wsf-terminals/terminalbasics", "wsf-schedules/terminals"]
   })
 
-// Fare amount with business context
-z.number().describe("Returns the fare amount in USD for the specified passenger category, excluding promotional discounts. Used for fare calculations with wsf-fares/calculateFares. Walk-on passengers are charged once for round trips.")
+// Fare amount with business context - examples at end of first sentence
+z.number().describe("Returns the fare amount in USD for the specified passenger category, excluding promotional discounts (e.g., '$15.50' for adult passenger, '$7.75' for child). Used for fare calculations with wsf-fares/calculateFares. Walk-on passengers are charged once for round trips.")
   .meta({
     relatedEndpoints: ["wsf-fares/calculateFares"]
   })
 
-// Date field with sailing day logic
-z.string().describe("Returns the trip date in YYYY-MM-DD format for fare calculations. Reflects WSF 'sailing day' (3:00 AM Pacific to 2:59 AM next day). Use wsf-schedules/routes for schedule lookups.")
+// Date field with sailing day logic - examples at end of first sentence
+z.string().describe("Returns the trip date in YYYY-MM-DD format for fare calculations (e.g., '2024-01-15' for January 15, 2024). Reflects WSF 'sailing day' (3:00 AM Pacific to 2:59 AM next day). Use wsf-schedules/routes for schedule lookups.")
   .meta({
     relatedEndpoints: ["wsf-schedules/routes"]
   })
 
-// Enum field with complete value mapping
+// Enum field with complete value mapping - examples at end of first sentence
 z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]).describe("Indicates the fare total type with logical grouping (1=Depart, 2=Return, 3=Either, 4=Total). Used for organizing fare calculations by trip leg. Each leg may have different pricing rules.")
 
-// Complex cross-reference field
-z.integer().describe("Provides an array index referencing TerminalComboVerbose array to find corresponding terminal combination details. Use wsf-fares/terminals for terminal combination information. Index values start at 0.")
+// Complex cross-reference field - examples at end of first sentence
+z.integer().describe("Provides an array index referencing TerminalComboVerbose array to find corresponding terminal combination details (e.g., '0' for first combination, '1' for second combination). Use wsf-fares/terminals for terminal combination information. Index values start at 0.")
   .meta({
     relatedEndpoints: ["wsf-fares/terminals"]
   })
