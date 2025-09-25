@@ -22,7 +22,7 @@ export const getVesselBasicsByIdMeta: EndpointDefinition<
   VesselBasicsByIdInput,
   VesselBasics
 > = {
-  id: "wsf-vessels/vesselBasicsById",
+  id: "wsf-vessels:vesselBasicsById",
   endpoint: "/ferries/api/vessels/rest/vesselbasics/{vesselId}",
   inputSchema: vesselBasicsByIdInput,
   outputSchema: vesselBasicsSchema,

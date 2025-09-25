@@ -22,7 +22,7 @@ export const getVesselLocationsByVesselIdMeta: EndpointDefinition<
   VesselLocationsByVesselIdInput,
   VesselLocation
 > = {
-  id: "wsf-vessels/vesselLocationsById",
+  id: "wsf-vessels:vesselLocationsById",
   endpoint: "/ferries/api/vessels/rest/vessellocations/{vesselId}",
   inputSchema: vesselLocationsByVesselIdInput,
   outputSchema: vesselLocationSchema,

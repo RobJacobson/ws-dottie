@@ -98,7 +98,7 @@ export const getAlertsForMapAreaMeta: EndpointDefinition<
   AlertsForMapAreaInput,
   HighwayAlerts
 > = {
-  id: "wsdot-highway-alerts/getAlertsForMapArea",
+  id: "wsdot-highway-alerts:getAlertsForMapArea",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
   inputSchema: alertsForMapAreaInput,

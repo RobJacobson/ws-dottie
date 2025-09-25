@@ -9,11 +9,23 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRouteDetailsByTerminals */
 const routeDetailsByTerminalsInput = z.object({
+  /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   tripDate: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  departingScheduleTerminalId: z.number().int().positive(),
-  arrivingScheduleTerminalId: z.number().int().positive(),
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
+    .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
+  /** Unique identifier for the departing terminal. */
+  departingScheduleTerminalId: z
+    .number()
+    .int()
+    .positive()
+    .describe("Unique identifier for the departing terminal."),
+  /** Unique identifier for the arriving terminal. */
+  arrivingScheduleTerminalId: z
+    .number()
+    .int()
+    .positive()
+    .describe("Unique identifier for the arriving terminal."),
 });
 
 /** Endpoint metadata for getRouteDetailsByTerminals */

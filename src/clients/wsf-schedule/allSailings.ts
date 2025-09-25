@@ -8,7 +8,14 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getAllSailings */
 const allSailingsInput = z.object({
-  schedRouteId: z.number().int().positive(),
+  /** Unique identifier for a scheduled route. */
+  schedRouteId: z
+    .number()
+    .int()
+    .positive()
+    .describe("Unique identifier for a scheduled route."),
+  /** Parameter Y for the request. */
+  y: z.number().int().describe("Parameter Y for the request."),
 });
 
 /** Endpoint metadata for getAllSailings */
@@ -17,10 +24,10 @@ export const getAllSailingsMeta: EndpointDefinition<
   SailingResponse[]
 > = {
   id: "wsf-schedule:allSailings",
-  endpoint: "/ferries/api/schedule/rest/allsailings/{schedRouteId}",
+  endpoint: "/ferries/api/schedule/rest/allsailings/{schedRouteId}/{y}",
   inputSchema: allSailingsInput,
   outputSchema: sailingResponsesSchema,
-  sampleParams: { schedRouteId: 2327 },
+  sampleParams: { schedRouteId: 2327, y: 1 },
   cacheStrategy: "STATIC",
 };
 

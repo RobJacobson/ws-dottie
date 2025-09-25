@@ -9,9 +9,11 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRoutesHavingServiceDisruptions */
 const routesHavingServiceDisruptionsInput = z.object({
+  /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   tripDate: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
+    .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
 });
 
 /** Endpoint metadata for getRoutesHavingServiceDisruptions */

@@ -16,7 +16,7 @@ export const getTravelTimeMeta: EndpointDefinition<
   TravelTimeInput,
   TravelTimeRoute
 > = {
-  id: "wsdot-travel-times/getTravelTime",
+  id: "wsdot-travel-times:getTravelTime",
   endpoint:
     "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={travelTimeId}",
   inputSchema: travelTimeInput,

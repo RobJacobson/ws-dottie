@@ -75,7 +75,7 @@ export const getTripRatesByDateMeta: EndpointDefinition<
   outputSchema: tripRatesByDateSchema,
   sampleParams: {
     fromDate: datesHelper.startOfMonth(),
-    toDate: datesHelper.endOfMonth(),
+    toDate: datesHelper.yesterday(),
   },
   cacheStrategy: "STATIC",
 };

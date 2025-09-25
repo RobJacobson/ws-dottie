@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import type { WsfStandardCacheFlushDate } from "@/schemas/shared/cacheFlushDate.zod";
-import { wsfStandardCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
+import type { WsfScheduleCacheFlushDate } from "@/schemas/shared/cacheFlushDate.zod";
+import { wsfScheduleCacheFlushDateSchema } from "@/schemas/shared/cacheFlushDate.zod";
 import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleCacheFlushDate */
@@ -10,12 +10,12 @@ const scheduleCacheFlushDateInput = z.object({}).strict();
 /** Endpoint metadata for getScheduleCacheFlushDate */
 export const getScheduleCacheFlushDateMeta: EndpointDefinition<
   ScheduleCacheFlushDateInput,
-  WsfStandardCacheFlushDate
+  WsfScheduleCacheFlushDate
 > = {
   id: "wsf-schedule:cacheFlushDate",
   endpoint: "/ferries/api/schedule/rest/cacheflushdate",
   inputSchema: scheduleCacheFlushDateInput,
-  outputSchema: wsfStandardCacheFlushDateSchema,
+  outputSchema: wsfScheduleCacheFlushDateSchema,
   sampleParams: {},
   cacheStrategy: "STATIC",
 };
