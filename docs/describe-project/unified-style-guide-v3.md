@@ -82,6 +82,46 @@ const objectSchema = z.object({
 "The terminal's latitude coordinate in decimal degrees for displaying the terminal location on maps and navigation systems (e.g., '47.821539' for Seattle area, '48.498333' for Anacortes). Use this for map positioning and geographic visualization."
 ```
 
+## 2.1. Plain English Guidelines
+
+### Write Like You're Talking to a Colleague
+- **Use natural language**: "The time when this was recorded" not "The timestamp when this border crossing wait time reading was recorded as a JavaScript Date object in UTC"
+- **Be concise**: One clear sentence, not two verbose ones
+- **Skip obvious details**: Don't explain standard data types unless there's something special
+- **Focus on meaning**: What does this field tell me? Why do I care?
+
+### When to Use Examples
+- **Use examples for business data**: Terminal names, route codes, status values
+- **Skip examples for standard data**: Timestamps, IDs, counts (unless there's something special)
+- **Make examples meaningful**: Show real values that help understanding
+
+### Examples of Good vs. Bad
+
+**❌ Too verbose and technical:**
+```typescript
+"The timestamp when this border crossing wait time reading was recorded as a JavaScript Date object in UTC for determining data freshness and historical tracking (e.g., '2025-09-25T04:35:00.000Z' for current conditions). Use this to validate data recency for travel planning."
+```
+
+**✅ Clear and concise:**
+```typescript
+"The time and date of the last reading, in UTC."
+```
+
+**❌ Unnecessary example:**
+```typescript
+"The vessel's unique identifier as an integer (e.g., '123', '456')."
+```
+
+**✅ Better without example:**
+```typescript
+"The vessel's unique identifier as an integer."
+```
+
+**✅ Good example when it adds value:**
+```typescript
+"The crossing name indicating the specific lane or route (e.g., 'I5', 'SR539Nexus', 'SR543TrucksFast')."
+```
+
 ## 3. Example Placement Rules (Simple)
 
 **Rule:** Examples always go at the end of the first sentence in parentheses.
@@ -487,50 +527,56 @@ The `endpoint-descriptions.json` file contains a simple mapping of endpoint name
 ### Endpoint Description Guidelines
 
 #### Purpose and Scope
-Endpoint descriptions should answer these key questions:
-1. **What does this endpoint do?** - Clear, concise explanation of the endpoint's function
-2. **Why would you use it?** - Business purpose and use cases
-3. **When would you use it?** - Context and timing for when this endpoint is appropriate
-4. **How does it fit into workflows?** - Relationship to other endpoints and common usage patterns
+Endpoint descriptions should be a **synthesis of the input and output schemas** in plain English, focusing on business value rather than technical details. They should answer:
 
-#### Writing Style
-- **Start with action verbs**: "Retrieves", "Calculates", "Provides", "Returns"
-- **Use present tense**: "Returns current data" not "Will return current data"
-- **Be specific**: "Retrieves real-time vessel positions" not "Gets vessel data"
-- **Include business context**: Explain the real-world application
-- **Keep concise**: 1-2 sentences maximum per endpoint
+1. **What business problem does this solve?** - Real-world use case in simple terms
+2. **Why would I use this?** - Business value and decision-making context
+3. **How does it fit into workflows?** - Relationship to other APIs and common usage patterns
 
-#### Template Patterns
+#### Writing Style - Plain English Focus
+- **Write like you're explaining to a colleague**: Natural, conversational tone
+- **Focus on business value**: What problem does this solve?
+- **Use simple language**: Avoid technical jargon unless necessary
+- **Be concise**: One clear sentence that captures the essence
+- **Include business context**: Real-world scenarios and use cases
 
-**For Data Retrieval Endpoints:**
+#### Synthesis Approach
+- **Read both input and output schemas** to understand the complete picture
+- **Identify the core business function** - what does this endpoint accomplish?
+- **Explain the business value** - why would someone use this?
+- **Use concrete examples** - specific scenarios where this would be useful
+
+#### Template Patterns - Plain English Examples
+
+**For Simple Data Retrieval:**
 ```json
 {
-  "getVesselBasics": "Retrieves basic vessel information including names, classes, and operational status for fleet management and passenger information systems.",
-  "getTerminalBasics": "Retrieves basic terminal information including amenities and location data for route planning and passenger navigation."
+  "getBorderCrossings": "Shows current wait times at Canadian border crossings to help travelers choose the fastest route.",
+  "getVesselBasics": "Lists all ferry vessels with basic info like names and capacity for trip planning."
 }
 ```
 
-**For Calculation/Processing Endpoints:**
+**For Calculation/Processing:**
 ```json
 {
-  "calculateFares": "Calculates ferry fares for specific terminal combinations and passenger categories for cost planning and booking systems.",
-  "getTravelTimes": "Calculates estimated travel times for popular routes considering current traffic conditions for trip planning and route optimization."
+  "calculateFares": "Figures out how much a ferry trip costs based on your route and passenger count.",
+  "getTravelTimes": "Estimates how long it takes to drive popular routes considering current traffic."
 }
 ```
 
-**For Real-time Data Endpoints:**
+**For Real-time Data:**
 ```json
 {
-  "getVesselLocations": "Provides real-time vessel position data including current location, speed, and heading for passenger tracking and arrival time predictions.",
-  "getTrafficFlow": "Provides real-time traffic flow data including speed and congestion levels from highway sensors for traffic management and route planning."
+  "getVesselLocations": "Tracks where ferries are right now and when they'll arrive at terminals.",
+  "getTrafficFlow": "Shows current traffic speeds and congestion on major highways."
 }
 ```
 
-**For Discovery/Reference Endpoints:**
+**For Discovery/Reference:**
 ```json
 {
-  "getValidDateRange": "Provides the valid date range for which schedule and fare data is available for trip planning and date validation.",
-  "getTerminals": "Lists all valid departing terminals for a specific trip date for route planning and schedule lookups."
+  "getValidDateRange": "Tells you what dates have published ferry schedules and fares.",
+  "getTerminals": "Lists all ferry terminals you can depart from on a specific date."
 }
 ```
 
@@ -539,41 +585,41 @@ Endpoint descriptions should answer these key questions:
 #### WSF Vessels API Examples
 ```json
 {
-  "getVesselBasics": "Retrieves basic vessel information including names, classes, and operational status for fleet management and passenger information systems.",
-  "getVesselBasicsById": "Retrieves detailed information for a specific vessel by ID for passenger planning and vessel-specific inquiries.",
-  "getVesselAccommodations": "Retrieves vessel accommodation details including amenities and accessibility features for passenger planning and accessibility compliance.",
-  "getVesselStats": "Retrieves vessel technical specifications including dimensions, capacity, and performance data for operational planning and fleet management.",
-  "getVesselLocations": "Provides real-time vessel position data including current location, speed, and heading for passenger tracking and arrival time predictions.",
-  "getVesselVerbose": "Retrieves comprehensive vessel information combining basics, accommodations, and specifications for detailed vessel analysis and planning."
+  "getVesselBasics": "Lists all ferry vessels with basic info like names and capacity for trip planning.",
+  "getVesselBasicsById": "Shows details for a specific ferry vessel when you know its ID.",
+  "getVesselAccommodations": "Tells you what amenities each ferry has, like restrooms and elevators.",
+  "getVesselStats": "Shows technical details like vessel size, speed, and passenger capacity.",
+  "getVesselLocations": "Tracks where ferries are right now and when they'll arrive at terminals.",
+  "getVesselVerbose": "Gets everything about a vessel - basics, amenities, and technical specs in one call."
 }
 ```
 
 #### WSF Schedules API Examples
 ```json
 {
-  "getValidDateRange": "Provides the valid date range for which schedule data is available for trip planning and date validation.",
-  "getTerminals": "Lists all valid departing terminals for a specific trip date for route planning and schedule lookups.",
-  "getTerminalsAndMates": "Lists all valid terminal combinations for a specific trip date for comprehensive route planning and fare calculations.",
-  "getRoutes": "Retrieves route information including service disruptions and regional coverage for route planning and service status monitoring.",
-  "getSchedule": "Retrieves departure times and vessel assignments for specific terminal combinations and dates for trip planning and schedule coordination.",
-  "getScheduleToday": "Provides today's departure times for specific routes or terminal combinations for immediate trip planning and real-time scheduling."
+  "getValidDateRange": "Tells you what dates have published ferry schedules and fares.",
+  "getTerminals": "Lists all ferry terminals you can depart from on a specific date.",
+  "getTerminalsAndMates": "Shows all possible ferry routes between terminals for a given date.",
+  "getRoutes": "Lists ferry routes with any current service disruptions or alerts.",
+  "getSchedule": "Shows departure times and which ferry will be used for a specific route and date.",
+  "getScheduleToday": "Shows today's ferry departures for immediate trip planning."
 }
 ```
 
 #### WSDOT Weather API Examples
 ```json
 {
-  "getCurrentWeatherInformation": "Retrieves current weather conditions from all WSDOT weather stations for environmental monitoring and traveler safety.",
-  "getCurrentWeatherInformationByStationID": "Retrieves current weather conditions from a specific weather station for localized weather monitoring and analysis.",
-  "searchWeatherInformation": "Searches historical weather data from specific stations within date ranges for weather analysis and trend monitoring."
+  "getCurrentWeatherInformation": "Shows current weather conditions from all WSDOT weather stations across the state.",
+  "getCurrentWeatherInformationByStationID": "Shows weather conditions from a specific weather station when you know its ID.",
+  "searchWeatherInformation": "Looks up historical weather data from specific stations for past dates."
 }
 ```
 
 #### WSDOT Traffic Flow API Examples
 ```json
 {
-  "getTrafficFlow": "Retrieves real-time traffic flow data from a specific sensor station for traffic monitoring and congestion analysis.",
-  "getTrafficFlows": "Retrieves real-time traffic flow data from all sensor stations across Washington State for comprehensive traffic monitoring and route planning."
+  "getTrafficFlow": "Shows current traffic speeds and congestion at a specific highway sensor location.",
+  "getTrafficFlows": "Shows current traffic speeds and congestion from all highway sensors across Washington State."
 }
 ```
 
@@ -607,14 +653,24 @@ Endpoint descriptions complement but do not replace schema documentation:
   "getVesselBasics": "Returns vessel objects with ID, name, class, and status fields"
 }
 
-// ❌ Too verbose
+// ❌ Too verbose and mechanical
 {
   "getVesselBasics": "This endpoint retrieves basic information about ferry vessels including their unique identifiers, names, vessel classes, operational status, ownership information, and other fundamental attributes that are used throughout the ferry system for identification and management purposes."
 }
 
-// ✅ Good - business-focused and concise
+// ❌ Restates the obvious
 {
-  "getVesselBasics": "Retrieves basic vessel information including names, classes, and operational status for fleet management and passenger information systems."
+  "getBorderCrossings": "Retrieves real-time wait times for all Canadian border crossings in Washington State including I-5, SR-543, SR-539, and SR-9 crossings for traveler planning and route optimization."
+}
+
+// ✅ Good - plain English and business-focused
+{
+  "getVesselBasics": "Lists all ferry vessels with basic info like names and capacity for trip planning."
+}
+
+// ✅ Good - explains the business value
+{
+  "getBorderCrossings": "Shows current wait times at Canadian border crossings to help travelers choose the fastest route."
 }
 ```
 
