@@ -26,14 +26,14 @@ import { processParameters } from "./validation";
 /**
  * Determines if output should be suppressed based on CLI options
  *
- * This function checks if any quiet modes are enabled or if the head option
+ * This function checks if any quiet modes are enabled or if the limit option
  * is specified, which would suppress normal output in favor of truncated results.
  *
- * @param options - CLI options object containing quiet/silent flags and head count
+ * @param options - CLI options object containing quiet/silent flags and limit count
  * @returns True if output should be suppressed, false otherwise
  */
 const shouldSuppressOutput = (options: CliOptions): boolean =>
-  CLI_CONSTANTS.QUIET_MODES.some((mode) => options[mode]) || !!options.head;
+  CLI_CONSTANTS.QUIET_MODES.some((mode) => options[mode]) || !!options.limit;
 
 /**
  * Sets up and runs the CLI tool
@@ -60,7 +60,7 @@ export const setupCli = (): void => {
       "Silent mode: suppress all output except final JSON result"
     )
     .option(
-      "--head <number>",
+      "--limit <number>",
       "Truncate output to first N lines (equivalent to --quiet | jq . | head -N)",
       (value) => parseInt(value, 10)
     )
