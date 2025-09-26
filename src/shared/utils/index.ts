@@ -12,7 +12,6 @@ export { configManager } from "./configManager";
 export {
   datesHelper,
   jsDateToYyyyMmDd,
-  wsdotDateTimeToJSDate as wsdotTimeToJSDate,
 } from "./dateUtils";
 // Logging utilities
 export { logApiCall, logApiResults, logger } from "./logger";

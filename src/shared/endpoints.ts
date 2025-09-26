@@ -78,6 +78,20 @@ export type Endpoints = Endpoint<unknown, unknown>[];
 export type EndpointsByApi = Record<string, Endpoints>;
 
 /**
+ * Type guard to ensure a value is an Endpoint at runtime
+ */
+const isEndpoint = (value: unknown): value is Endpoint<unknown, unknown> => {
+  if (!value || typeof value !== "object") return false;
+  const v = value as Record<string, unknown>;
+  return (
+    typeof v.id === "string" &&
+    typeof v.endpoint === "string" &&
+    typeof v.api === "string" &&
+    typeof v.functionName === "string"
+  );
+};
+
+/**
  * Creates a complete endpoint configuration object with computed properties
  *
  * This factory function takes a basic endpoint configuration and enriches it
@@ -102,7 +116,7 @@ export type EndpointsByApi = Record<string, Endpoints>;
 export function defineEndpoint<I, O>(
   definition: EndpointDefinition<I, O>
 ): Endpoint<I, O> {
-  const [api, functionName] = definition.id.split(ENDPOINT_SEPARATOR);
+  const [api, functionName] = definition.id.split(":");
   const urlTemplate = `${configManager.getDomain()}${definition.endpoint}`;
 
   return {
@@ -164,7 +178,7 @@ export const discoverEndpoints = (): EndpointsByApi => {
 
   // Create nested structure grouped by API using functional approach
   const endpointsByApi = modules
-    .map((module) => Object.values(module))
+    .map((module) => Object.values(module).filter(isEndpoint))
     .filter((endpoints) => endpoints.length > 0)
     .reduce((acc, endpoints) => {
       const apiName = endpoints[0].api;

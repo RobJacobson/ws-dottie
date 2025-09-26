@@ -88,7 +88,8 @@ export const buildUrlWithApiKey = (url: string): string => {
 
   // Inject the correct API key parameter based on service type
   if (serviceType === "wsdot") {
-    urlWithKey.searchParams.set("accesscode", apiKey);
+    // WSDOT expects 'AccessCode' with this exact casing
+    urlWithKey.searchParams.set("AccessCode", apiKey);
   } else if (serviceType === "wsf") {
     urlWithKey.searchParams.set("apiaccesscode", apiKey);
   }
