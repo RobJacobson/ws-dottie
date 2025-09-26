@@ -7,7 +7,7 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import { CLI_CONSTANTS, type CliParams } from "./types";
+import type { CliParams } from "./types";
 
 /**
  * Processes parameters from command line input

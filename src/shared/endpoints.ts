@@ -15,6 +15,14 @@ import type { CacheStrategy } from "./types";
 import { configManager } from "./utils/configManager";
 
 /**
+ * Separator used in endpoint IDs to separate API name from endpoint name
+ *
+ * Format: "api-name:endpoint-name"
+ * Example: "wsdot-bridge-clearances:getBridgeClearances"
+ */
+export const ENDPOINT_SEPARATOR = ":";
+
+/**
  * Simple endpoint definition interface for client files
  *
  * This interface defines the structure that client modules use to describe
@@ -94,7 +102,7 @@ export type EndpointsByApi = Record<string, Endpoints>;
 export function defineEndpoint<I, O>(
   definition: EndpointDefinition<I, O>
 ): Endpoint<I, O> {
-  const [api, functionName] = definition.id.split(":");
+  const [api, functionName] = definition.id.split(ENDPOINT_SEPARATOR);
   const urlTemplate = `${configManager.getDomain()}${definition.endpoint}`;
 
   return {

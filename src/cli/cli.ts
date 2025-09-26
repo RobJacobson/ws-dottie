@@ -10,7 +10,7 @@
 import chalk from "chalk";
 import { Command } from "commander";
 import type { Endpoint } from "@/shared/endpoints";
-import { getAllEndpoints } from "@/shared/endpoints";
+import { ENDPOINT_SEPARATOR, getAllEndpoints } from "@/shared/endpoints";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
@@ -150,16 +150,16 @@ const parseFunctionName = (
   functionName: string
 ): { api?: string; endpoint: string } => {
   const trimmed = functionName.trim();
-  const colonIndex = trimmed.indexOf(":");
+  const separatorIndex = trimmed.indexOf(ENDPOINT_SEPARATOR);
 
-  if (colonIndex === -1) {
+  if (separatorIndex === -1) {
     // No namespace, just endpoint name
     return { endpoint: trimmed };
   }
 
   // Has namespace
-  const api = trimmed.substring(0, colonIndex);
-  const endpoint = trimmed.substring(colonIndex + 1);
+  const api = trimmed.substring(0, separatorIndex);
+  const endpoint = trimmed.substring(separatorIndex + 1);
 
   return { api, endpoint };
 };
