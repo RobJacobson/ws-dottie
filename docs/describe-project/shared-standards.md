@@ -112,7 +112,13 @@ For cross-references, use the client function names:
 - **Null values**: "(e.g., 'I5', 'null' for no location data)"
 - **Date formats**: "(e.g., '/Date(1758909900000-0700)/')"
 
-## Schema Documentation Templates
+## Schema Documentation Requirements
+
+### CRITICAL: .describe() Annotations Required
+- **ALL schema definitions MUST have a detailed `.describe()` clause**
+- **DO NOT modify existing JSDoc comments** - they preserve original WSDOT/WSF documentation
+- **DO NOT add new JSDoc comments** - use `.describe()` annotations instead
+- **Preserve original variable names** - do not rename schema variables
 
 ### Input Schema Descriptions
 - **No parameters**: "Input parameters to retrieve all [entity type] across [scope] (none required)."
@@ -122,6 +128,35 @@ For cross-references, use the client function names:
 ### Output Schema Descriptions
 ```
 "Returns [container] of [entity type] including [key data] for [use case] (typically [cardinality]). [Business context]. [Data freshness]."
+```
+
+### Schema Documentation Examples
+
+#### ✅ CORRECT - Preserve JSDoc, Add .describe()
+```typescript
+/**
+ * Schema for GetBorderCrossings input parameters
+ */
+export const getBorderCrossingsInputSchema = z.object({}).describe(
+  "Input parameters to retrieve all border crossing wait times across Washington State (none required)."
+);
+```
+
+#### ❌ WRONG - Modified JSDoc, No .describe()
+```typescript
+/**
+ * Input parameters to retrieve all border crossing wait times across Washington State (none required).
+ * This endpoint provides comprehensive wait time data for all active US-Canada border crossings,
+ * enabling travelers to compare conditions and choose the optimal crossing route.
+ */
+export const getBorderCrossingsInputSchema = z.object({});
+```
+
+#### ❌ WRONG - Renamed Variables
+```typescript
+export const borderCrossingsInputSchema = z.object({}).describe(
+  "Input parameters to retrieve all border crossing wait times across Washington State (none required)."
+);
 ```
 
 ### Endpoint Descriptions
@@ -177,6 +212,11 @@ For cross-references, use the client function names:
 - **Ferry routes**: `wsf-vessels/vesselBasicsById`, `wsf-vessels/vesselAccommodations`, `wsf-terminals/terminalBasicsById`
 
 ## Common Issues and Solutions
+
+### Missing .describe() Annotations
+- **Problem**: Adding JSDoc comments instead of `.describe()` annotations
+- **Solution**: ALWAYS add `.describe()` clauses to schema definitions, preserve original JSDoc comments
+- **Do Not**: Modify existing JSDoc comments or rename schema variables
 
 ### Data Fetching Failures
 - **Problem**: `fetch-dottie` returns no data

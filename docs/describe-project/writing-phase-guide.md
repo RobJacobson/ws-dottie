@@ -25,6 +25,12 @@ See `shared-standards.md` for complete field description guidelines, sentence st
 
 See `shared-standards.md` for complete schema documentation templates and data freshness defaults.
 
+### CRITICAL Requirements
+- **ALL schema definitions MUST have a detailed `.describe()` clause**
+- **DO NOT modify existing JSDoc comments** - they preserve original WSDOT/WSF documentation
+- **DO NOT add new JSDoc comments** - use `.describe()` annotations instead
+- **Preserve original variable names** - do not rename schema variables
+
 ### Key Requirements
 - Explain what parameters are required and their purpose
 - Explain what data is returned and its business value
@@ -95,6 +101,11 @@ See `shared-standards.md` for complete file naming conventions and examples.
 ## Common Issues
 
 See `shared-standards.md` for complete common issues and solutions. Key writing phase issues:
+
+### Missing .describe() Annotations
+- **Problem**: Adding JSDoc comments instead of `.describe()` annotations
+- **Solution**: ALWAYS add `.describe()` clauses to schema definitions, preserve original JSDoc comments
+- **Do Not**: Modify existing JSDoc comments or rename schema variables
 
 ### Over-Engineering Simple Fields
 - **Problem**: Writing too much for obvious fields
