@@ -64,13 +64,15 @@ Before beginning any documentation work, agents **MUST** complete all of the fol
       **`npx fetch-dottie [endpointname]`**
 - [ ] **Document the data structure** and identify key patterns
 - [ ] **Note any discrepancies** between expected and actual data
-- [ ] **Extract real-world examples** for use in annotations
- - [ ] **Blocking condition**: If you cannot fetch real data with `fetch-dottie`, stop and request assistance; do not write or modify related descriptions
+- [ ] **Extract verbatim examples** from actual API responses for use in annotations (no data transformation permitted)
+ - [ ] **MANDATORY STOPPING CONDITION**: If you cannot fetch real data with `fetch-dottie`, you MUST stop all work and request assistance. Do NOT use curl, direct HTTP requests, or any other method to circumvent this requirement. Do NOT write or modify any related descriptions. This is a hard blocking condition with no exceptions.
  - [ ] **Canonical endpoint names**: Read the `id` fields in `src/clients/**` (format: `api:endpoint`) as the source of truth. Convert to `api/endpoint` when writing documentation and cross-references.
 - [ ] **Identify relationships** between different endpoints and fields
 
 **⚠️ CRITICAL: Use Default Parameters Only**
-Default parameters are automatically applied by the client `sampleParams` in `src/clients/**`. Do not pass parameters manually. If a no-parameter call fails to return data, treat it as a blocking condition and ask for assistance.
+Default parameters are automatically applied by the client `sampleParams` in `src/clients/**`. Do not pass parameters manually. 
+
+**🚨 MANDATORY STOPPING CONDITION**: If a no-parameter call fails to return data, you MUST stop all work and request assistance. Do NOT use curl, direct HTTP requests, or any other method to circumvent this requirement. This is a hard blocking condition with no exceptions.
 ```bash
 # ✅ CORRECT - Use default parameters (no additional parameters)
 npx fetch-dottie getBridgeClearancesByRoute
@@ -113,11 +115,11 @@ npx fetch-dottie getBridgeClearancesByRoute --route "I-5" --date "2024-01-01"
 - **Clarity over compression**: Do not shorten complex provider descriptions if it harms clarity; it is acceptable to match the source's length when needed  
 - **❌ FORBIDDEN**: Embedding cross-references within a sentence (e.g., using "via" inline)
 - **Example Format**:
-  - **Clarify units when single example**: "(e.g., '$3.50' for $3.50)" - makes units clear at a glance
-  - **Currency format**: Use USD with a dollar sign and two decimals unless the API specifies otherwise (e.g., '$3.50')
-  - **Multiple values avoid repetition**: "(e.g., 5, 35, -1 for closed)" when unit mentioned in description
-  - **Include meaningful edge cases**: Show status values and error conditions
-  - **Nulls and sentinel values**: Include `null` in examples when applicable (e.g., "(e.g., 47.6019; null when unknown)") and show sentinel values with brief labels (e.g., "(e.g., 5, 35, -1 for closed)")
+  - **CRITICAL**: Use verbatim data from actual API responses. No data transformation is permitted.
+  - **PRESERVE**: Original data formats (e.g., .NET dates, null values, exact strings)
+  - **NO CONVERSION**: Do not convert dates, add spaces, or modify any values
+  - **Anomalous values**: Include and explain anomalous values like -1, null, or special status codes (e.g., "(e.g., 'I5', 15, -1 for unavailable)")
+  - **Nulls and sentinel values**: Include `null` in examples when applicable (e.g., "(e.g., 'I5', null for no location data)")
   - **Cross-references**: Use exact endpoint function names (e.g., `wsdot-traffic-flow/getTrafficFlow`)
 - **Example**: "The vessel's unique identifier as an integer (e.g., 1). Use this to fetch detailed vessel information. Use with wsf-vessels/vesselBasicsById to get complete vessel data."
 
@@ -279,7 +281,7 @@ src/apis/wsdot-border-crossings/endpointDescriptions.bob.json
 
 ### Must-Have Requirements (Blocking)
 - [ ] **All research phases completed** before any documentation work
-- [ ] **Real API data fetched and analyzed** for every endpoint
+- [ ] **Real API data fetched and analyzed** for every endpoint using `fetch-dottie` only (no curl or direct HTTP requests)
 - [ ] **Domain research completed** with business context documented
 - [ ] **Plain English throughout** - no technical jargon without explanation
 - [ ] **Business context included** in all descriptions
@@ -288,7 +290,7 @@ src/apis/wsdot-border-crossings/endpointDescriptions.bob.json
 ### Quality Requirements (Blocking)
 - [ ] **Appropriate detail level** - brief for obvious, detailed for complex
 - [ ] **Real-world examples** from actual API data
-- [ ] **Real-world examples** from actual API data (no placeholders; fetch failures are blocking)
+- [ ] **Real-world examples** from actual API data (no placeholders; fetch failures are blocking; no curl workarounds)
 - [ ] **Natural language** that reads like conversation
 - [ ] **Specific cross-references** - actionable endpoint connections
 - [ ] **Business value explained** - why and how to use each endpoint
@@ -323,6 +325,7 @@ src/apis/wsdot-border-crossings/endpointDescriptions.bob.json
 - **Never skip research phases** - domain understanding is critical
 - **Never edit canonical unsuffixed files** - create or edit only agent-suffixed files
 - **Never proceed without real data** - if `fetch-dottie` fails, ask for help and do not write related descriptions
+- **Never use curl or direct HTTP requests** - if `fetch-dottie` fails, this is a mandatory stopping condition with no workarounds
 - **Never use technical jargon** without plain English explanation
 - **Never write generic descriptions** like "A string value" or "An identifier"
 - **Never make assumptions** about business logic without research

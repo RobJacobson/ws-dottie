@@ -58,32 +58,29 @@ Add cross-references only during the Integration Phase. Place them at the end of
 **Avoid generic cross-references:**
 > "This might be useful for route planning and navigation systems."
 
-### 4. Meaningful Examples
-Use examples that help understanding, not just show data format. Include edge cases and clarify units, but avoid redundant explanations.
+### 4. Literal Data Examples
+Use verbatim data from actual API responses. Include edge cases and anomalous values with explanatory labels, but preserve original data formats exactly.
 
-**Good examples:**
-- **Unit clarification**: "(e.g., '$3.50' for $3.50)" - makes units clear at a glance
-- **Single example format**: "(e.g., '$1.25' for normal period, '$0' for free periods)"
-- **Multiple values with shared unit**: "(e.g., '5', '35', '-1' for closed)" when unit is mentioned in description  
-- **Edge cases with clear status**: "(e.g., '5', '-1' for closed)" - show normal vs special state  
-- **⚠️ CLEAR RULE: If field description says "minutes", then examples should NOT repeat "for X minutes"**
-- **Geographic coordinates when helpful**: "(e.g., '49.004776°N, -122.756964°W')"
+**Mandatory literal data**:
+- **CRITICAL**: Use verbatim examples from actual API responses. No data transformation is permitted.
+- **PRESERVE**: Original data formats (e.g., .NET dates, null values, exact strings)
+- **NO CONVERSION**: Do not convert dates, add spaces, or modify any values
+- **BLOCKING CONDITION**: If you cannot fetch real data with `fetch-dottie`, stop and request assistance; do not write related descriptions
 
-**Mandatory real data**:
-- Use examples taken from actual API responses. If you cannot fetch data, do not write related descriptions and request assistance; this is a blocking condition.
+**Example format with explanatory labels**:
+- **Normal values**: "(e.g., 'I5', 'SR539', 15, 5)"
+- **Anomalous values**: "(e.g., 'I5', 'SR539', 15, -1 for unavailable)"
+- **Null values**: "(e.g., 'I5', null for no location data)"
+- **Date formats**: "(e.g., '/Date(1758909900000-0700)/')" - preserve original format
+- **Multiple values**: "(e.g., 'I5', 'SR539Nexus', 'SR543Trucks')"
 
-**Avoid redundant explanations:**
-- Don't do: "(e.g., '5' for 5 minutes, '35' for 35 minutes)" - repetitive when unit is same
-- Do this instead: "(e.g., '5', '35', '-1' for closed)"
-- When explaining units is helpful: "(e.g., '$3.50' for $3.50, null if unavailable)"
-- Avoid: "(e.g., '$3.50' for $3.50, '$1.25' for $1.25)" when repeating same format
+**Required anomalous value handling**:
+- **MANDATORY**: Include anomalous values like -1, null, or special status codes
+- **EXPLAIN**: Add brief explanatory labels for anomalous values
+- **PRESERVE**: Keep original values exactly as returned by API
 
-**Nulls and sentinel values:**
-- Do not say "nullable"; instead, include null directly in examples when applicable (e.g., "(e.g., 47.6019; null when unknown)").
-- Include sentinel values alongside normal examples with a brief label (e.g., "(e.g., 5, 35, -1 for closed)").
-
-**Currency examples:**
-- Use USD with a dollar sign and two decimals unless otherwise specified by the API (e.g., '$3.50').
+**Currency examples**:
+- Use exact format from API response (e.g., '$3.50' if that's what the API returns)
 
 ## Documentation Structure
 
