@@ -4,6 +4,13 @@
 
 Add cross-references between endpoints and perform final quality review to create comprehensive, integrated documentation.
 
+## Context Management
+
+- Focus only on cross-reference opportunities
+- Reference previous work rather than re-reading everything
+- Work systematically through endpoints
+- Monitor context usage - if approaching 70%, summarize progress and continue
+
 ## Duration
 1-2 hours
 

@@ -56,6 +56,14 @@ See `shared-standards.md` for complete quality standards, templates, and example
 4. **Complete phases sequentially**: Do not skip ahead
 5. **Show compliance in chat**: No separate markdown files needed
 
+## Large API Strategy
+
+For APIs with >10 endpoints:
+1. **Process in batches**: Work on 3-4 endpoints per session
+2. **Complete full phase**: Finish research phase for those endpoints before moving to next batch
+3. **Continue sequentially**: Move to next batch and repeat
+4. **Final integration**: Combine all work in final integration phase
+
 ## Support
 
 - **Data fetching issues**: Stop work and request assistance

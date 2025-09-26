@@ -4,6 +4,13 @@
 
 Understand the business domain and collect real API data to inform documentation decisions. This phase establishes the foundation for all subsequent work.
 
+## Context Management
+
+- Use `--limit 500` for all data fetching to control context consumption
+- Focus on representative samples, not exhaustive data analysis
+- Extract 3-5 examples per field type maximum
+- Monitor context usage - if approaching 70%, summarize findings and continue
+
 ## Duration
 2-3 hours
 
@@ -31,27 +38,28 @@ Create `src/apis/[api-name]/domain-analysis.[agent].md` (see `shared-standards.m
 ## Step 2: Data Collection
 
 ### Data Fetching Requirements
-**CRITICAL**: Use only `fetch-dottie` CLI with default parameters. No curl, direct HTTP requests, or manual parameters.
+**CRITICAL**: Use only `fetch-dottie` CLI with `--limit 500` parameter. No curl, direct HTTP requests, or other parameters.
 
 **MANDATORY STOPPING CONDITION**: If `fetch-dottie` fails, stop all work and request assistance. Do not write related descriptions.
 
 ### Fetching Process
 ```bash
-# ✅ CORRECT - Use default parameters only
-npx fetch-dottie getBridgeClearancesByRoute
-npx fetch-dottie getBorderCrossings
-npx fetch-dottie getVesselBasics
+# ✅ CORRECT - Use --limit 500 for all endpoints
+npx fetch-dottie getBridgeClearancesByRoute --limit 500
+npx fetch-dottie getBorderCrossings --limit 500
+npx fetch-dottie getVesselBasics --limit 500
 
-# ❌ WRONG - Never pass parameters manually
+# ❌ WRONG - Never use other parameters or no limit
 npx fetch-dottie getBridgeClearancesByRoute --route "I-5"
+npx fetch-dottie getBorderCrossings
 ```
 
 ### Data Analysis
 - List all endpoints in assigned API
-- Fetch sample data for each endpoint
+- Fetch sample data for each endpoint (--limit 500)
 - Document data structure and identify patterns
-- Note discrepancies between expected and actual data
-- Extract verbatim examples for use in annotations
+- Extract 3-5 representative examples per field type
+- Focus on structure analysis, not exhaustive data review
 
 ### Canonical Endpoint Names
 - Read `id` fields in `src/clients/**` (format: `api:endpoint`)
@@ -86,9 +94,9 @@ npx fetch-dottie getBridgeClearancesByRoute --route "I-5"
 
 ### Data Collection
 - [ ] All endpoints listed and analyzed
-- [ ] Real API data fetched for every endpoint
+- [ ] Real API data fetched for every endpoint (--limit 500)
 - [ ] Data structure documented with patterns identified
-- [ ] Verbatim examples extracted for annotations
+- [ ] 3-5 representative examples extracted per field type
 - [ ] Canonical endpoint names confirmed
 
 ### Business Context
@@ -128,9 +136,9 @@ Follow `shared-standards.md` for complete quality standards. Key research phase 
 - Understanding of target users
 
 ### Data Collection
-- 100% endpoint coverage with real data
+- 100% endpoint coverage with real data (--limit 500)
 - Accurate data structure documentation
-- Verbatim examples preserved exactly (see `shared-standards.md` for data example formatting)
+- 3-5 representative examples per field type (see `shared-standards.md` for data example formatting)
 - Canonical endpoint names confirmed
 
 ### Business Context

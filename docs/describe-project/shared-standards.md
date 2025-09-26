@@ -211,6 +211,27 @@ export const borderCrossingsInputSchema = z.object({}).describe(
 - **Vehicle restrictions**: `wsdot-bridge-clearances/getBridgeClearances`
 - **Ferry routes**: `wsf-vessels/vesselBasicsById`, `wsf-vessels/vesselAccommodations`, `wsf-terminals/terminalBasicsById`
 
+## Context Management
+
+### Data Fetching Limits
+- **Always use `--limit 500`** for all data fetching commands
+- This controls JSON output lines, not records
+- Prevents context overflow on APIs with many endpoints
+- Provides representative sample for documentation
+
+### Context Usage Guidelines
+- **Monitor context usage** throughout work
+- **If approaching 70%**, summarize findings and continue
+- **Focus on quality** over quantity of data analysis
+- **Use templates** to reduce cognitive load
+
+### Large API Strategy
+For APIs with >10 endpoints:
+1. Process 3-4 endpoints per session
+2. Complete full phase for those endpoints
+3. Move to next batch and repeat
+4. Final integration phase combines all work
+
 ## Common Issues and Solutions
 
 ### Missing .describe() Annotations

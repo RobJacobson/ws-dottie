@@ -107,7 +107,7 @@ fetch-dottie <function-name> [params] [options]
 - `--pretty`: Pretty-print JSON output with 2-space indentation
 - `--quiet`: Suppress debug output and verbose messages
 - `--silent`: Suppress all output except final JSON result
-- `--head <number>`: Truncate output to first N lines
+- `--limit <number>`: Truncate output to first N lines
 - `--jsonp`: Use JSONP instead of native fetch (for browser environments)
 - `--no-validation`: Disable Zod validation (use raw fetch with .NET date conversion)
 

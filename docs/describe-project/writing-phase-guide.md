@@ -4,6 +4,13 @@
 
 Create enhanced documentation for input/output schemas and endpoint descriptions using business context from the research phase.
 
+## Context Management
+
+- Reference research phase findings rather than re-analyzing data
+- Work on one endpoint at a time to maintain focus
+- Use templates to reduce cognitive load
+- Monitor context usage - if approaching 70%, summarize progress and continue
+
 ## Duration
 3-4 hours
 
