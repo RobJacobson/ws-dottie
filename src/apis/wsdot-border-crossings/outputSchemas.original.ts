@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { roadwayLocationSchema } from "../shared/roadwayLocationSchema";
+import { roadwayLocationSchema } from "../shared/roadwayLocationSchema.original";
 
 /**
  * Schema for BorderCrossingData - represents border crossing wait time data

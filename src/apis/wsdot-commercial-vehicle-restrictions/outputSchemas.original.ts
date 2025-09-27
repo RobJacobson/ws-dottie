@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { roadwayLocationSchema } from "../shared/roadwayLocationSchema";
+import { roadwayLocationSchema } from "../shared/roadwayLocationSchema.original";
 
 /**
  * Schema for CVRestrictionData - represents a Commercial Vehicle Restriction
@@ -154,4 +154,4 @@ export type CVRestrictionDataWithIdList = z.infer<
 >;
 
 // Re-export shared types
-export type { RoadwayLocation } from "../shared/roadwayLocationSchema";
+export type { RoadwayLocation } from "../shared/roadwayLocationSchema.original";

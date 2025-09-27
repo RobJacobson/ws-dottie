@@ -8,5 +8,5 @@
 export {
   type RoadwayLocation,
   roadwayLocationSchema,
-} from "./roadwayLocationSchema";
-export { zWsdotDate } from "./zWsdotDateSchema";
+} from "./roadwayLocationSchema.original";
+export { zWsdotDate } from "./zWsdotDateSchema.original";
