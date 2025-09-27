@@ -31,6 +31,22 @@ For cross-references, use the client function names:
 - `wsdot-border-crossings/getBorderCrossings`
 - `wsf-vessels/vesselBasicsById`
 
+### Import Path Requirements
+**Shared schemas:**
+```typescript
+import { schemaName } from "@/schemas/shared/schemaName.zod";
+```
+
+**API-specific schemas:**
+```typescript
+import { schemaName } from "@/schemas/[api-name]/schemaName.zod";
+```
+
+**NEVER use:**
+- Relative paths with agent suffixes (e.g., `../shared/schema.alice`)
+- References to .original files in working code
+- Inconsistent path formats across agents
+
 ### Final Output Structure
 ```bash
 # Main API directory contains original files and final Editor synthesis:
@@ -92,30 +108,41 @@ src/apis/[api-name]/
 - **Third sentence**: Additional clarification (only if needed)
 
 ### Decision Tree for Sentence Count
-- **Simple fields** (IDs, timestamps, coordinates): 1-2 sentences
-- **Moderate complexity** (business logic, enums): 2 sentences  
-- **High complexity** (domain-specific concepts): 2-3 sentences
+- **Simple fields** (IDs, timestamps, coordinates): 1 sentence (50-150 chars)
+- **Moderate complexity** (business logic, enums): 1-2 sentences (150-400 chars)
+- **High complexity** (domain-specific concepts): 2 sentences max (400-600 chars)
 
-### Templates for Simple Fields
+### Conciseness Strategy for Scale (1000+ Fields)
+- **Pattern consolidation**: Create reusable description patterns for similar field types
+- **Cross-reference consolidation**: Move integration guidance to schema/endpoint level
+- **Essential-only content**: Focus on decision-making value, eliminate redundancy
+- **Tiered detail**: Core description + optional extended context for complex cases
+
+### Templates for Simple Fields (Optimized for Scale)
 
 #### Identifiers
 ```
-"The [entity]'s unique identifier as [type] (e.g., '[example]')."
+"Unique [entity] identifier (e.g., '[example]')."
 ```
 
-#### Timestamps
+#### Timestamps  
 ```
-"The time when [event] occurred, in UTC (e.g., '[example]')."
+"When [event] occurred, in UTC (e.g., '[example]')."
 ```
 
 #### Coordinates
 ```
-"The [entity]'s [coordinate type] coordinate in decimal degrees (e.g., '[example]')."
+"[Entity] [latitude/longitude] in decimal degrees (e.g., '[example]')."
 ```
 
 #### Amounts
 ```
-"The [value type] in [units] for [purpose] (e.g., '[example]')."
+"[Value type] in [units] (e.g., '[example]')."
+```
+
+#### Boolean Flags
+```
+"Whether [condition] (e.g., 'true' for [case], 'false' for [case])."
 ```
 
 ### Data Examples
@@ -198,15 +225,20 @@ export const borderCrossingsInputSchema = z.object({}).describe(
 
 ## Cross-Reference Guidelines
 
+### Cross-Reference Placement Strategy
+**Field-level**: Only for direct data relationships (IDs that reference other endpoints)
+**Schema-level**: For workflow integrations and complementary data
+**Endpoint-level**: For comprehensive integration patterns and user workflows
+
 ### When to Add Cross-References
-- **Specific endpoint relationships**: When data from one endpoint is used as input for another
-- **Workflow guidance**: When endpoints are designed to work together
-- **Discovery purposes**: When related data provides additional context
+- **Field-level**: When field contains ID/key that directly references another endpoint
+- **Schema-level**: When entire dataset commonly used with other APIs
+- **Endpoint-level**: For comprehensive workflow guidance and discovery
 
 ### Cross-Reference Format
-- **Placement**: Add as separate final sentence or appended clause
-- **Timing**: Add only during Integration Phase, not during writing
-- **Format**: Use exact endpoint function names in `[api-name]/[function-name]` format
+- **Field-level**: `"Use with [api]/[endpoint] to fetch detailed [entity] information."`
+- **Schema-level**: `"Use with [api]/[endpoint] and [api]/[endpoint] for comprehensive [workflow]."`
+- **Endpoint-level**: Focus on business workflows and user decision-making patterns
 
 ### Verb Usage
 - **"Use with"**: For sequential flows (A output → B input)

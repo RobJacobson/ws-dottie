@@ -28,6 +28,19 @@ Follow `shared-standards.md` for complete writing style standards and quality pr
 
 See `shared-standards.md` for complete field description guidelines, sentence structure rules, templates, and data example formatting.
 
+### Description Length Limits (ENFORCED)
+- **Simple fields**: 50-150 characters (IDs, timestamps, coordinates)
+- **Business fields**: 150-400 characters (most domain-specific fields)
+- **Complex integration fields**: 400-600 characters (MAX - requires justification)
+- **Endpoint descriptions**: 200-800 characters
+- **Exceeding limits**: Requires explicit justification in documentation
+
+### Length Management Strategy
+- **Prioritize business context** over technical details
+- **Use cross-references** instead of embedded explanations
+- **Consolidate similar patterns** rather than repeating explanations
+- **Focus on decision-making value** for the user
+
 ## Schema Documentation
 
 See `shared-standards.md` for complete schema documentation templates and data freshness defaults.

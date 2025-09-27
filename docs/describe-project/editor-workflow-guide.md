@@ -56,10 +56,16 @@ Follow all research requirements from `research-phase-guide.md`:
 6. **Edge Case Coverage**: Identify which agents found unusual values and edge cases
 
 #### Quality Assessment Criteria
-**Excellent (A)**: Comprehensive, accurate, follows all standards
-**Good (B)**: Solid implementation with minor gaps or issues  
-**Basic (C)**: Meets minimum requirements but lacks depth
-**Inadequate (D/F)**: Significant issues, missing requirements, or incorrect information
+**Excellent (A)**: Exceeds all requirements, no technical errors, superior insights, exceptional business context
+**Good (B)**: Meets all requirements, minor issues, solid quality implementation
+**Basic (C)**: Meets minimum requirements, several issues, basic quality with gaps
+**Inadequate (D/F)**: Missing requirements, major errors, inadequate quality
+
+#### Grading Calibration Standards
+- **Default assumption**: Most agent work is B-level quality
+- **A grades require**: Exceptional quality exceeding standards in multiple areas
+- **C grades indicate**: Basic compliance but missing depth or having notable issues
+- **Grade inflation prevention**: Critically assess against standards, not effort
 
 #### Deliverable
 - `working/quality-review.editor.md` - Systematic critique of each agent's work
@@ -145,6 +151,16 @@ WaitTime: z.number().describe(
 - [ ] Consistent terminology throughout
 - [ ] Plain English maintained throughout
 - [ ] Conciseness preserved while maximizing value
+
+#### Technical Validation Requirements
+- [ ] All import paths follow project standards (@/schemas/...)
+- [ ] All cross-references use correct endpoint names from src/clients/**
+- [ ] All examples match actual API data format with single quotes
+- [ ] All edge cases documented with business rationale using Doug's pattern
+- [ ] All descriptions within length guidelines (see writing-phase-guide.md)
+- [ ] All data freshness claims validated against actual API behavior
+- [ ] No technical errors in schema structure or typing
+- [ ] Consistent terminology and naming conventions throughout
 
 ## File Structure
 

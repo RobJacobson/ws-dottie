@@ -66,6 +66,14 @@ npx fetch-dottie getBorderCrossings
   - Use Doug's format: `(e.g., 'normal value' for normal condition, 'edge value' for special condition)`
 - Focus on structure analysis, not exhaustive data review
 
+### MANDATORY Edge Case Analysis Checklist
+- [ ] Examine ALL numeric fields for magic numbers (-1, 0, 999, etc.)
+- [ ] Document ALL null/empty values with business rationale  
+- [ ] Test boundary conditions (min/max values observed)
+- [ ] Identify special status indicators (CLOSED, N/A, UNKNOWN)
+- [ ] Validate edge cases represent actual business conditions
+- [ ] Document edge cases using Doug's format in field descriptions
+
 ### Canonical Endpoint Names
 - Read `id` fields in `src/clients/**` (format: `api:endpoint`)
 - Convert to `api-name/function-name` when writing documentation (see `shared-standards.md` for cross-reference format)
@@ -88,6 +96,13 @@ npx fetch-dottie getBorderCrossings
 - Document non-obvious business concepts
 - Capture endpoint purpose and target users
 - Note workflow patterns and dependencies
+
+### Data Freshness Validation Protocol
+- [ ] Analyze timestamp patterns across multiple API calls
+- [ ] Document observed update frequencies with evidence
+- [ ] Distinguish between claimed vs. observed update patterns
+- [ ] Validate data freshness claims with actual API behavior
+- [ ] Note any discrepancies between documentation and reality
 
 ## Phase Completion Checklist
 

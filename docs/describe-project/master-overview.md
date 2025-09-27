@@ -4,6 +4,25 @@
 
 Transform terse, generic API descriptions into rich, semantic documentation that explains business purpose, real-world meaning, and endpoint relationships. Create discoverable documentation that enables both human developers and AI agents to understand and effectively use Washington State transportation APIs.
 
+## Target Audience: Dual Purpose Documentation
+
+### Human Developers
+- Need clear business context and real-world applications
+- Require integration examples and cross-API workflows
+- Benefit from concise, actionable guidance
+
+### AI Agents via Model Context Protocol (MCP)
+- **Semantic Discovery**: Rich descriptions enable AI agents to understand when and how to use endpoints
+- **Context Efficiency**: Concise but complete descriptions fit within AI context windows
+- **Integration Intelligence**: Cross-references help AI agents chain API calls for complex workflows
+- **Business Logic**: Edge cases and business rules prevent AI agents from making incorrect assumptions
+
+### Documentation Strategy
+- **Business-first explanations** serve both audiences
+- **Semantic richness** enables AI discovery without overwhelming humans
+- **Structured cross-references** guide both human integration and AI workflow planning
+- **Edge case documentation** prevents both human errors and AI hallucinations
+
 ## Agent Assignment Structure
 
 ### Work Model: Siloed Independence
