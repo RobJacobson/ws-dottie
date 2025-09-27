@@ -127,9 +127,9 @@ Follow `shared-standards.md` for complete quality standards. Key integration pha
 ## Expected Deliverables
 
 ### Updated Files
-- `src/apis/[api-name]/inputSchemas.[agent].ts` (with cross-references)
-- `src/apis/[api-name]/outputSchemas.[agent].ts` (with cross-references)
-- `src/apis/[api-name]/endpointDescriptions.[agent].json` (with cross-references)
+- `src/apis/[api-name]/working/inputSchemas.[agent].ts` (with cross-references)
+- `src/apis/[api-name]/working/outputSchemas.[agent].ts` (with cross-references)
+- `src/apis/[api-name]/working/endpointDescriptions.[agent].json` (with cross-references)
 
 ### Quality Assurance
 - Comprehensive cross-reference coverage

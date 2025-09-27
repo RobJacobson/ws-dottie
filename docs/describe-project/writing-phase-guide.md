@@ -59,9 +59,9 @@ See `shared-standards.md` for complete endpoint description templates and exampl
 See `shared-standards.md` for complete file naming conventions and examples.
 
 ### File Types Created
-- `src/apis/[api-name]/inputSchemas.[agent].ts`
-- `src/apis/[api-name]/outputSchemas.[agent].ts`
-- `src/apis/[api-name]/endpointDescriptions.[agent].json`
+- `src/apis/[api-name]/working/inputSchemas.[agent].ts`
+- `src/apis/[api-name]/working/outputSchemas.[agent].ts`
+- `src/apis/[api-name]/working/endpointDescriptions.[agent].json`
 
 ## Phase Completion Checklist
 
@@ -69,6 +69,7 @@ See `shared-standards.md` for complete file naming conventions and examples.
 - [ ] All input fields documented with business context
 - [ ] All output fields documented with business context
 - [ ] Examples use literal API data with single quotes (see `shared-standards.md`)
+- [ ] **Edge cases documented using Doug's format** - unusual values explained with business meaning
 - [ ] Sentence count appropriate for field complexity
 - [ ] Plain English throughout
 
@@ -95,9 +96,9 @@ See `shared-standards.md` for complete file naming conventions and examples.
 ## Expected Deliverables
 
 ### Files Created
-- `src/apis/[api-name]/inputSchemas.[agent].ts`
-- `src/apis/[api-name]/outputSchemas.[agent].ts`
-- `src/apis/[api-name]/endpointDescriptions.[agent].json`
+- `src/apis/[api-name]/working/inputSchemas.[agent].ts`
+- `src/apis/[api-name]/working/outputSchemas.[agent].ts`
+- `src/apis/[api-name]/working/endpointDescriptions.[agent].json`
 
 ### Content Quality
 - Enhanced descriptions for all fields

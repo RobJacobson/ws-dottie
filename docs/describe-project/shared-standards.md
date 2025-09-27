@@ -2,15 +2,15 @@
 
 ## File Naming Conventions
 
-### WIP Files (Agent Work)
+### WIP Files (Agent Work) - All stored in working/ subdirectory
 ```
-src/apis/[api-name]/[file-type].[agent-name].[extension]
+src/apis/[api-name]/working/[file-type].[agent-name].[extension]
 ```
 
 **Examples:**
-- `src/apis/wsdot-border-crossings/inputSchemas.alice.ts`
-- `src/apis/wsdot-border-crossings/outputSchemas.alice.ts`
-- `src/apis/wsdot-border-crossings/endpointDescriptions.alice.json`
+- `src/apis/wsdot-border-crossings/working/inputSchemas.alice.ts`
+- `src/apis/wsdot-border-crossings/working/outputSchemas.alice.ts`
+- `src/apis/wsdot-border-crossings/working/endpointDescriptions.alice.json`
 
 ### Client Files (Reference)
 ```
@@ -31,10 +31,30 @@ For cross-references, use the client function names:
 - `wsdot-border-crossings/getBorderCrossings`
 - `wsf-vessels/vesselBasicsById`
 
+### Final Output Structure
+```bash
+# Main API directory contains original files and final Editor synthesis:
+src/apis/[api-name]/
+├── inputSchemas.original.ts           # Original file (renamed)
+├── outputSchemas.original.ts          # Original file (renamed)  
+├── inputSchemas.final.ts              # Editor's final synthesis
+├── outputSchemas.final.ts             # Editor's final synthesis
+├── endpointDescriptions.final.json    # Editor's final synthesis
+├── domain-analysis.final.md           # Editor's final domain analysis
+└── working/                           # All work-in-progress files
+    ├── inputSchemas.alice.ts          # Agent Alice's work
+    ├── outputSchemas.alice.ts         
+    ├── endpointDescriptions.alice.json
+    ├── domain-analysis.alice.md
+    ├── inputSchemas.bob.ts            # Agent Bob's work
+    └── [... all other agent and editor working files ...]
+```
+
 ### Editing Rule
-- Create and edit only agent-suffixed files
-- Do not modify canonical unsuffixed files
-- This preserves independence and avoids conflicts
+- **Agents**: Create and edit only agent-suffixed files in `working/` subdirectory
+- **Editor**: Create final synthesis files with `.final.*` extensions in main directory
+- Do not modify `.original.*` files - they preserve the baseline
+- This preserves independence and enables quality synthesis workflow
 
 ## Quality Standards
 
@@ -108,9 +128,16 @@ For cross-references, use the client function names:
 
 #### Example Formats
 - **Normal values**: "(e.g., 'I5', 'SR539', '15')"
-- **Anomalous values**: "(e.g., 'I5', 'SR539', '-1' for unavailable)"
+- **Anomalous values with edge cases**: "(e.g., 'I5', 'SR539', '15' for normal wait, '-1' for lane closed or unavailable)"
 - **Null values**: "(e.g., 'I5', 'null' for no location data)"
 - **Date formats**: "(e.g., '/Date(1758909900000-0700)/')"
+
+#### CRITICAL: Edge Case Documentation
+**MANDATORY**: When examining API data, actively look for and document edge cases - unusual values that represent special conditions rather than normal data:
+- **Magic numbers**: Values like `-1`, `0`, `999` that indicate special states
+- **Special strings**: Values like 'CLOSED', 'N/A', 'UNKNOWN' that represent conditions
+- **Format**: Always document edge cases using Doug's pattern: `(e.g., 'normal value' for normal condition, 'edge value' for special condition, 'another edge' for another condition)`
+- **Business context**: Explain what the edge case means in real-world terms
 
 ## Schema Documentation Requirements
 
@@ -233,6 +260,12 @@ For APIs with >10 endpoints:
 4. Final integration phase combines all work
 
 ## Common Issues and Solutions
+
+### Missing Edge Case Documentation
+- **Problem**: Only documenting normal/expected values, ignoring unusual values that represent special conditions
+- **Solution**: ALWAYS analyze data for magic numbers (e.g., `-1`, `0`, `999`) and special strings that indicate edge cases
+- **Format**: Use Doug's pattern: `(e.g., 'normal value' for normal condition, 'edge value' for special condition)`
+- **Example**: `(e.g., '10' for 10-minute wait, '5' for 5-minute wait, '-1' for lane closed or unavailable)`
 
 ### Missing .describe() Annotations
 - **Problem**: Adding JSDoc comments instead of `.describe()` annotations

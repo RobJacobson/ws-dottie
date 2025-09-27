@@ -33,6 +33,11 @@ Transform terse, generic API descriptions into rich, semantic documentation that
 **Duration**: 1-2 hours
 **Deliverables**: Cross-references, final quality review, completed API documentation
 
+### Phase 4: Editorial Synthesis (Optional)
+**Guide**: `editor-workflow-guide.md`
+**Duration**: 5-8 hours
+**Deliverables**: Synthesized final documentation combining best work from all agents
+
 ## File Naming Convention
 
 See `shared-standards.md` for complete file naming conventions and examples.

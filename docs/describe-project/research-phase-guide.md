@@ -29,7 +29,7 @@ Understand the business domain and collect real API data to inform documentation
 - Identify key business concepts and terminology
 
 ### Domain Analysis Document
-Create `src/apis/[api-name]/domain-analysis.[agent].md` (see `shared-standards.md` for file naming conventions):
+Create `src/apis/[api-name]/working/domain-analysis.[agent].md` (see `shared-standards.md` for file naming conventions):
 - Business purpose and real-world applications
 - Key terminology and concepts
 - Target users and use cases
@@ -59,6 +59,11 @@ npx fetch-dottie getBorderCrossings
 - Fetch sample data for each endpoint (--limit 500)
 - Document data structure and identify patterns
 - Extract 3-5 representative examples per field type
+- **CRITICAL: Edge Case Analysis** - Actively examine data for unusual values that represent special conditions:
+  - Look for magic numbers (e.g., `-1`, `0`, `999`) that indicate special states
+  - Identify special strings or null values with business meaning
+  - Document what these edge cases represent in real-world terms
+  - Use Doug's format: `(e.g., 'normal value' for normal condition, 'edge value' for special condition)`
 - Focus on structure analysis, not exhaustive data review
 
 ### Canonical Endpoint Names
@@ -97,6 +102,7 @@ npx fetch-dottie getBorderCrossings
 - [ ] Real API data fetched for every endpoint (--limit 500)
 - [ ] Data structure documented with patterns identified
 - [ ] 3-5 representative examples extracted per field type
+- [ ] **Edge cases identified and documented** (magic numbers, special states, unusual values)
 - [ ] Canonical endpoint names confirmed
 
 ### Business Context
@@ -115,9 +121,9 @@ npx fetch-dottie getBorderCrossings
 ## Expected Deliverables
 
 ### Files Created
-- `src/apis/[api-name]/domain-analysis.[agent].md`
-- `src/apis/[api-name]/business-workflows.[agent].md` (optional)
-- `src/apis/[api-name]/work-notes.[agent].md` (optional)
+- `src/apis/[api-name]/working/domain-analysis.[agent].md`
+- `src/apis/[api-name]/working/business-workflows.[agent].md` (optional)
+- `src/apis/[api-name]/working/work-notes.[agent].md` (optional)
 
 ### Knowledge Gained
 - Deep understanding of business domain
