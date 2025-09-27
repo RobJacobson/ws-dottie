@@ -162,6 +162,24 @@ WaitTime: z.number().describe(
 - [ ] No technical errors in schema structure or typing
 - [ ] Consistent terminology and naming conventions throughout
 
+#### Example Quality Validation
+- [ ] **Multiple examples justified**: Each additional example shows different category/type/state
+- [ ] **No duplicate random values**: Avoid multiple coordinates, dates, IDs of same type
+- [ ] **GUID simplification**: Remove unnecessary 36-character examples
+- [ ] **Location context**: Geographic coordinates reference specific places when possible
+- [ ] **Enum completeness**: All meaningful enum values documented when field represents choices
+- [ ] **Example decision tree applied**: Ask "Do these examples teach something different?" before using multiple
+
+#### Parallel Language Validation
+- [ ] **Related fields use parallel structure**: Same concept fields have identical business purpose explanations
+- [ ] **Format distinction only**: Only unit/format descriptions vary between related fields
+- [ ] **Consistent examples**: Corresponding values used across related fields (e.g., '21 ft 6 in' = '258' inches)
+- [ ] **No conflicting emphasis**: Related fields don't suggest different business purposes
+- [ ] **Context distribution**: API purpose at endpoint/schema level, not repeated in every field
+- [ ] **Field focus**: Field descriptions focus on distinctions, not obvious API context
+- [ ] **Meaningful distinctions explained**: When fields represent different aspects (min/max, different measurements), explain why both exist and when to use each
+- [ ] **Field relationship strategy applied**: Same concepts use parallel language, similar-but-different concepts focus on differences, unrelated concepts described independently
+
 ## File Structure
 
 ### Working Directory Organization
@@ -174,7 +192,7 @@ src/apis/[api-name]/
 ├── endpointDescriptions.final.json   # Editor's synthesis
 ├── domain-analysis.final.md          # Editor's final domain analysis
 └── working/                          # All work-in-progress files
-    ├── domain-analysis.editor.md     # Editor's independent research
+    ├── synthesis-rationale.editor.md # Editorial decisions and research insights
     ├── quality-review.editor.md      # Editor's systematic critique
     ├── synthesis-rationale.editor.md # Editorial decision rationale
     ├── inputSchemas.alice.ts         # Agent work products

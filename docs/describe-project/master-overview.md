@@ -88,6 +88,21 @@ For APIs with >10 endpoints:
 3. **Continue sequentially**: Move to next batch and repeat
 4. **Final integration**: Combine all work in final integration phase
 
+## Quality Standards
+
+### For All Agents
+- **Example quality**: Apply decision tree for single vs. multiple examples - only use multiple when they show different categories/types/states
+- **Length management**: Stay within character limits (150-600 chars) while maximizing business value
+- **Business focus**: Prioritize decision-making value over technical details
+- **Edge case coverage**: Identify and document unusual values with business meaning
+- **Cross-reference accuracy**: Use exact endpoint names from project documentation
+
+### For Editor
+- **Superior synthesis**: Combine best elements while maintaining conciseness
+- **Length enforcement**: Ensure final output meets all character limits
+- **Example validation**: Apply example quality checklist during synthesis
+- **Technical excellence**: Perfect schema structure and import paths
+
 ## Support
 
 - **Data fetching issues**: Stop work and request assistance

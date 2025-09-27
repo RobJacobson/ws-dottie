@@ -122,17 +122,18 @@ src/apis/[api-name]/
 
 #### Identifiers
 ```
-"Unique [entity] identifier (e.g., '[example]')."
+"Unique [entity] identifier (e.g., '[single-example]')."
+"System-generated unique identifier for [purpose]." // For GUIDs - no example needed
 ```
 
 #### Timestamps  
 ```
-"When [event] occurred, in UTC (e.g., '[example]')."
+"When [event] occurred, in UTC (e.g., '[single-timestamp]')."
 ```
 
 #### Coordinates
 ```
-"[Entity] [latitude/longitude] in decimal degrees (e.g., '[example]')."
+"[Entity] [latitude/longitude] in decimal degrees (e.g., '[coordinate]' for [location-context])."
 ```
 
 #### Amounts
@@ -145,6 +146,11 @@ src/apis/[api-name]/
 "Whether [condition] (e.g., 'true' for [case], 'false' for [case])."
 ```
 
+#### Route and Location References
+```
+"[Description] (e.g., '[code]' for [highway-name])."
+```
+
 ### Data Examples
 
 #### Formatting Rules
@@ -153,11 +159,140 @@ src/apis/[api-name]/
 - **Include anomalous values** with explanatory labels
 - **No data transformation** permitted
 
-#### Example Formats
-- **Normal values**: "(e.g., 'I5', 'SR539', '15')"
-- **Anomalous values with edge cases**: "(e.g., 'I5', 'SR539', '15' for normal wait, '-1' for lane closed or unavailable)"
-- **Null values**: "(e.g., 'I5', 'null' for no location data)"
-- **Date formats**: "(e.g., '/Date(1758909900000-0700)/')"
+#### Example Guidelines
+
+**Single vs. Multiple Examples Decision Tree:**
+
+**Use SINGLE example when:**
+- Values are the same type/format (e.g., two random coordinates, two random dates)
+- Examples don't illustrate different categories or business meanings
+- Field represents homogeneous data (simple IDs, measurements, timestamps)
+
+**Use MULTIPLE examples when:**
+- Examples show **different categories** within the same field (e.g., interstate vs. state route vs. collector-distributor)
+- Examples illustrate **different states or conditions** (e.g., normal vs. edge case values)
+- Examples demonstrate **format variations** that users need to understand (e.g., different route naming conventions)
+- Field represents **enum-like values** with distinct meanings
+
+**Quality Test**: Ask "Do these examples teach the user something different about the field's possible values or business meaning?" If no, use one example.
+
+### Parallel Language for Related Fields
+
+**CRITICAL**: When fields represent the same concept in different formats/units, use parallel language structure to avoid confusion.
+
+**Problem Example:**
+```typescript
+// ❌ CONFUSING - Same concept, different emphasis
+MaximumFeetInch: "...Provides the highest clearance point for reference, though minimum clearance is critical for safety."
+MaximumInches: "...Used by routing software to determine clearance margins and safety buffers."
+```
+
+**Solution Example:**
+```typescript
+// ✅ PARALLEL - Same concept, consistent emphasis
+MaximumFeetInch: "Maximum vertical clearance under the bridge in human-readable feet and inches format (e.g., '21 ft 6 in'). Provides the highest clearance point for reference."
+MaximumInches: "Maximum vertical clearance under the bridge measured in inches for precise calculations (e.g., '258' for 21 ft 6 in). Provides the highest clearance point for reference."
+```
+
+**Parallel Structure Rules:**
+1. **Same core concept**: Use identical business purpose explanation
+2. **Format distinction only**: Only vary the format/unit description
+3. **Consistent examples**: Use corresponding values (e.g., '21 ft 6 in' = '258' inches)
+4. **Avoid different emphasis**: Don't make users think they serve different purposes
+5. **Avoid obvious repetition**: Don't repeat the API's main purpose in every field - put that context at endpoint/schema level
+
+**Improved Example (Concise):**
+```typescript
+// ✅ BETTER - Focus on field distinction, not obvious API purpose
+MaximumFeetInch: "Maximum vertical clearance in human-readable format (e.g., '21 ft 6 in')."
+MaximumInches: "Maximum vertical clearance in inches for calculations (e.g., '258' for 21 ft 6 in)."
+```
+
+### Explaining Field Distinctions vs. Format Differences
+
+**Format Differences (Parallel Language):**
+When fields represent the same measurement in different units, use parallel structure:
+```typescript
+HeightFeetInch: "Bridge clearance in human-readable format (e.g., '14 ft 5 in')."
+HeightInches: "Bridge clearance in inches for calculations (e.g., '173' for 14 ft 5 in)."
+```
+
+**Meaningful Distinctions (Explain the Difference):**
+When fields represent different aspects of the same concept, explain why both exist:
+```typescript
+MaximumFeetInch: "Highest clearance point under bridge in human-readable format (e.g., '16 ft 2 in'). Useful for reference but use minimum for safety."
+MinimumFeetInch: "Lowest clearance point under bridge in human-readable format (e.g., '14 ft 5 in'). Critical measurement - vehicles must be shorter than this height."
+```
+
+**Key Principle**: Explain **why** users need both values when the distinction has real-world implications.
+
+## Field Relationship Strategy
+
+### Core Principle: Focus on Similarities and Differences
+
+**When fields describe the SAME thing:**
+- Use consistent, parallel language
+- Vary only format/unit descriptions
+- Maintain identical business purpose
+
+**When fields describe SIMILAR-BUT-DIFFERENT concepts:**
+- Focus descriptions on "what's different"
+- Use factual distinctions (highest/lowest, first/last, etc.)
+- Avoid speculative safety advice or usage guidance unless clearly documented in source API
+
+### Field Relationship Analysis
+
+**Step 1: Identify the Relationship**
+- **Identical concept, different format**: Use parallel language
+- **Related concepts with meaningful differences**: Explain the differences
+- **Unrelated concepts**: Describe independently
+
+**Step 2: Apply Appropriate Strategy**
+
+#### Same Concept Strategy
+```typescript
+// ✅ Identical concept - parallel language
+HeightFeetInch: "Bridge clearance in human-readable format (e.g., '14 ft 5 in')."
+HeightInches: "Bridge clearance in inches for calculations (e.g., '173')."
+```
+
+#### Similar-But-Different Strategy  
+```typescript
+// ✅ Related concepts - focus on differences
+MaxHeight: "Highest clearance point under bridge (e.g., '16 ft 2 in')."
+MinHeight: "Lowest clearance point under bridge (e.g., '14 ft 5 in')."
+```
+
+#### Different Concepts Strategy
+```typescript
+// ✅ Unrelated concepts - describe independently
+BridgeNumber: "Two-part identifier for bridge inventory tracking (e.g., '5/629A')."
+Latitude: "Bridge location latitude for GPS navigation (e.g., '47.961343')."
+```
+
+#### Example Formats by Field Type
+
+**Multiple Examples (Different Categories):**
+- **Enum values**: "(e.g., 'I' for increasing milepost direction, 'D' for decreasing milepost direction, 'B' for both directions)"
+- **Route types**: "(e.g., '005' for I-5, '520' for SR 522, '522CI01071' for collector-distributor roads)"
+- **Bridge identifiers**: "(e.g., '5/629A' for bridge on I-5, '520/36.8P' for pedestrian bridge on SR 520, 'BOT-09' for maintenance structures)"
+- **Crossing types**: "(e.g., 'I-5 UNDER NE 130TH ST' for interstate crossing, 'SR 522 EB UNDER ESFR RAILROAD' for railroad crossing)"
+
+**Single Examples (Homogeneous Data):**
+- **Simple measurements**: "(e.g., '174' inches)"
+- **Coordinates**: "(e.g., '47.961343' for Seattle area bridge location)"
+- **Timestamps**: "(e.g., '2025-09-27T21:30:00.000Z')"
+- **Simple IDs**: "(e.g., '6192')"
+
+**Edge Cases:**
+- **With special conditions**: "(e.g., '15' for normal wait, '-1' for lane closed)"
+- **With null handling**: "(e.g., 'I5', 'null' for no location data)"
+
+**Technical Fields:**
+- **Date formats**: "(e.g., '2025-09-27T21:30:00.000Z')"
+- **Geographic coordinates**: "(e.g., '47.961343' for [specific bridge location])"
+- **Numeric IDs**: "(e.g., '6192')"
+- **GUIDs**: No example needed, or "(GUID format)" if format clarification needed
 
 #### CRITICAL: Edge Case Documentation
 **MANDATORY**: When examining API data, actively look for and document edge cases - unusual values that represent special conditions rather than normal data:
@@ -223,7 +358,27 @@ export const borderCrossingsInputSchema = z.object({}).describe(
 - "Lists all ferry vessels with basic info like names and capacity for trip planning."
 - "Calculates toll costs for HOV lanes to help drivers decide whether to use them."
 
-## Cross-Reference Guidelines
+## Context and Cross-Reference Guidelines
+
+### Context Placement Strategy
+**Endpoint-level**: Overall API purpose, target users, primary workflows
+**Schema-level**: Dataset characteristics, data patterns, integration workflows  
+**Field-level**: Specific field purpose, format distinctions, edge cases
+
+**Avoid Redundancy**: Don't repeat obvious API context in every field description.
+
+**Example Context Distribution:**
+```typescript
+// ✅ Endpoint level: Overall purpose
+"Retrieves bridge clearance data for commercial vehicle route planning..."
+
+// ✅ Schema level: Dataset characteristics  
+"Returns array of bridge clearance records (typically 500+ bridges statewide)..."
+
+// ✅ Field level: Specific distinctions
+MaximumFeetInch: "Maximum clearance in human-readable format (e.g., '21 ft 6 in')."
+MinimumFeetInch: "Minimum clearance in human-readable format (e.g., '14 ft 1 in')."
+```
 
 ### Cross-Reference Placement Strategy
 **Field-level**: Only for direct data relationships (IDs that reference other endpoints)
@@ -293,11 +448,18 @@ For APIs with >10 endpoints:
 
 ## Common Issues and Solutions
 
-### Missing Edge Case Documentation
-- **Problem**: Only documenting normal/expected values, ignoring unusual values that represent special conditions
-- **Solution**: ALWAYS analyze data for magic numbers (e.g., `-1`, `0`, `999`) and special strings that indicate edge cases
-- **Format**: Use Doug's pattern: `(e.g., 'normal value' for normal condition, 'edge value' for special condition)`
-- **Example**: `(e.g., '10' for 10-minute wait, '5' for 5-minute wait, '-1' for lane closed or unavailable)`
+### Edge Case Documentation Requirements
+- **Mandatory analysis**: Always examine data for unusual values that represent special conditions
+- **Magic numbers**: Look for values like `-1`, `0`, `999` that indicate special states
+- **Special strings**: Document values like 'CLOSED', 'N/A', 'UNKNOWN' that represent conditions
+- **Format**: Use pattern: `(e.g., 'normal value' for normal condition, 'edge value' for special condition)`
+- **Example**: `(e.g., '10' for 10-minute wait, '-1' for lane closed or unavailable)`
+
+### Example Quality Standards
+- **Use single examples** for simple fields unless variation shows different meanings
+- **Add context to coordinates**: Reference specific locations when possible
+- **Minimize GUID examples**: System identifiers rarely need full examples
+- **Focus on business value**: Examples should illustrate the field's purpose
 
 ### Missing .describe() Annotations
 - **Problem**: Adding JSDoc comments instead of `.describe()` annotations

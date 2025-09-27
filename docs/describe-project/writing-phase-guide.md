@@ -40,6 +40,99 @@ See `shared-standards.md` for complete field description guidelines, sentence st
 - **Use cross-references** instead of embedded explanations
 - **Consolidate similar patterns** rather than repeating explanations
 - **Focus on decision-making value** for the user
+- **Apply example decision tree**: Multiple examples only when they show different categories/types
+- **Minimize obvious fields**: GUIDs and simple IDs need minimal examples
+- **Add location context**: Geographic coordinates should reference specific places when possible
+
+### Example Quality Control
+**Before adding multiple examples, ask:**
+1. Do these examples represent **different categories** of the same field?
+2. Do they illustrate **different business meanings** or **states**?
+3. Do they show **format variations** users need to understand?
+4. Would a user learn something **different** from each example?
+
+**If the answer is NO to all questions, use ONE example.**
+
+### Parallel Language Requirements
+**CRITICAL**: When describing related fields that represent the same concept in different formats:
+
+1. **Use identical business purpose**: Same core explanation of what the field represents
+2. **Vary only format description**: Only change the unit/format explanation
+3. **Maintain consistent examples**: Use corresponding values across related fields
+4. **Avoid different emphasis**: Don't make users think they serve different business purposes
+5. **Avoid obvious repetition**: Don't repeat the API's main purpose in every field
+
+**Example Pattern:**
+```typescript
+// Same concept, parallel structure, no redundant context
+HeightFeetInch: "[Concept] in human-readable format (e.g., '21 ft 6 in')."
+HeightInches: "[Concept] in inches for calculations (e.g., '258' for 21 ft 6 in)."
+```
+
+### Context Distribution Strategy
+**Endpoint Level**: Overall API purpose, target users, primary workflows
+**Schema Level**: Dataset characteristics, data patterns, integration workflows
+**Field Level**: Specific field distinctions, format differences, edge cases
+
+**Avoid**: Repeating obvious API context in individual field descriptions.
+
+### Field Distinction Guidelines
+
+**Format Differences (Use Parallel Language):**
+When fields are the same measurement in different units:
+```typescript
+// Same data, different format - use parallel structure
+ClearanceFeet: "Bridge clearance in feet and inches format (e.g., '14 ft 5 in')."
+ClearanceInches: "Bridge clearance in inches for calculations (e.g., '173' for 14 ft 5 in)."
+```
+
+**Meaningful Distinctions (Explain the Difference):**
+When fields represent different aspects that users need to understand:
+```typescript
+// Different measurements - focus on factual distinctions
+MaximumClearance: "Highest clearance point under bridge (e.g., '16 ft 2 in')."
+MinimumClearance: "Lowest clearance point under bridge (e.g., '14 ft 5 in')."
+```
+
+**Key Question**: Does the user need to understand why both fields exist and when to use each one?
+
+## Field Relationship Analysis
+
+### Step 1: Analyze Field Relationships
+Before writing descriptions, identify how fields relate to each other:
+
+**Same Concept, Different Format:**
+- Height in feet/inches vs. height in inches
+- Date in different formats
+- ID in different representations
+
+**Similar Concepts, Meaningful Differences:**
+- Minimum vs. maximum measurements
+- Different types of the same category
+- Related but distinct business concepts
+
+**Unrelated Concepts:**
+- Completely different data types
+- Independent business concepts
+
+### Step 2: Apply Relationship Strategy
+
+**For SAME concepts → Use parallel language:**
+- Identical business purpose explanations
+- Vary only format/unit descriptions
+- Consistent examples and structure
+
+**For SIMILAR-BUT-DIFFERENT concepts → Focus on differences:**
+- Emphasize what makes each field unique using factual distinctions
+- Avoid speculative usage advice unless documented in source API
+- Let clear field names (Maximum/Minimum, First/Last) speak for themselves
+
+**For UNRELATED concepts → Describe independently:**
+- Each field gets its own complete description
+- No need for comparative language
+
+### Step 3: Quality Check
+Ask: "Would a user understand the relationship between these fields and know when to use each one?"
 
 ## Schema Documentation
 
