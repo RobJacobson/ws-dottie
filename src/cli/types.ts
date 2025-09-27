@@ -33,7 +33,7 @@ export interface CliOptions {
   /** Silent mode: suppress all output except final JSON result */
   silent?: boolean;
   /** Truncate output to first N lines */
-  head?: number;
+  limit?: number;
   /** List all available endpoints and exit */
   list?: boolean;
   /** Use JSONP instead of native fetch (for browser environments) */

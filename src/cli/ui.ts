@@ -223,9 +223,9 @@ export const outputResult = (result: unknown, options: CliOptions): void => {
     options.pretty ? 2 : undefined
   );
 
-  if (options.head && options.head > 0) {
+  if (options.limit && options.limit > 0) {
     const lines = jsonString.split("\n");
-    const truncatedLines = lines.slice(0, options.head);
+    const truncatedLines = lines.slice(0, options.limit);
     console.log(truncatedLines.join("\n"));
   } else {
     console.log(jsonString);
