@@ -20,7 +20,8 @@ export const getTerminalsAndMatesByRouteMeta: EndpointDefinition<
   TerminalsAndMatesByRouteInput,
   TerminalsAndMatesByRoute
 > = {
-  id: "wsf-schedule:terminalsAndMatesByRoute",
+  api: "wsf-schedule",
+  function: "terminalsAndMatesByRoute",
   endpoint:
     "/ferries/api/schedule/rest/terminalsandmatesbyroute/{tripDate}/{routeId}",
   inputSchema: terminalsAndMatesByRouteInput,

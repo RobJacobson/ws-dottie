@@ -59,7 +59,8 @@ export const getTollTripInfoMeta: EndpointDefinition<
   TollTripInfoInput,
   TollTripInfo[]
 > = {
-  id: "wsdot-toll-rates:getTollTripInfo",
+  api: "wsdot-toll-rates",
+  function: "getTollTripInfo",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson",
   inputSchema: tollTripInfoInput,
   outputSchema: tollTripInfosSchema,

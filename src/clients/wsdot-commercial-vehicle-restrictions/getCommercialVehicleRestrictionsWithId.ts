@@ -103,7 +103,8 @@ export const getCommercialVehicleRestrictionsWithIdMeta: EndpointDefinition<
   CommercialVehicleRestrictionsWithIdInput,
   CommercialVehicleRestrictionsWithId
 > = {
-  id: "wsdot-commercial-vehicle-restrictions:getCommercialVehicleRestrictionsWithId",
+  api: "wsdot-commercial-vehicle-restrictions",
+  function: "getCommercialVehicleRestrictionsWithId",
   endpoint:
     "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson",
   inputSchema: commercialVehicleRestrictionsWithIdInput,

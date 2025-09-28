@@ -21,7 +21,8 @@ export const getRoutesHavingServiceDisruptionsMeta: EndpointDefinition<
   RoutesHavingServiceDisruptionsInput,
   RouteBriefResponse[]
 > = {
-  id: "wsf-schedule:routesHavingServiceDisruptions",
+  api: "wsf-schedule",
+  function: "routesHavingServiceDisruptions",
   endpoint:
     "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}",
   inputSchema: routesHavingServiceDisruptionsInput,

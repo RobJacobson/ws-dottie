@@ -19,7 +19,8 @@ export const getFareLineItemsVerboseMeta: EndpointDefinition<
   FareLineItemsVerboseInput,
   FareLineItemsVerbose
 > = {
-  id: "wsf-fares:fareLineItemsVerbose",
+  api: "wsf-fares",
+  function: "fareLineItemsVerbose",
   endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
   inputSchema: fareLineItemsVerboseInput,
   outputSchema: fareLineItemsVerboseSchema,

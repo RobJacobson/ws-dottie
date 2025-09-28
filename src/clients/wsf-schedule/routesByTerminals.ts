@@ -33,7 +33,8 @@ export const getRoutesByTerminalsMeta: EndpointDefinition<
   RoutesByTerminalsInput,
   RouteBriefResponse[]
 > = {
-  id: "wsf-schedule:routesByTerminals",
+  api: "wsf-schedule",
+  function: "routesByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/routes/{tripDate}/{departingTerminalId}/{arrivingTerminalId}",
   inputSchema: routesByTerminalsInput,

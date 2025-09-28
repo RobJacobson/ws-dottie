@@ -96,7 +96,8 @@ export const searchAlertsMeta: EndpointDefinition<
   SearchAlertsInput,
   HighwayAlerts
 > = {
-  id: "wsdot-highway-alerts:searchAlerts",
+  api: "wsdot-highway-alerts",
+  function: "searchAlerts",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
   inputSchema: searchAlertsInput,

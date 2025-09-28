@@ -19,7 +19,8 @@ export const getTerminalComboVerboseMeta: EndpointDefinition<
   FaresTerminalComboVerboseInput,
   TerminalComboVerboseItem[]
 > = {
-  id: "wsf-fares:terminalComboVerbose",
+  api: "wsf-fares",
+  function: "terminalComboVerbose",
   endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}",
   inputSchema: terminalComboVerboseInput,
   outputSchema: z.array(terminalComboVerboseItemSchema),

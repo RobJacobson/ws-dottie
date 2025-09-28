@@ -20,7 +20,8 @@ export const getFaresTerminalMatesMeta: EndpointDefinition<
   FaresTerminalMatesInput,
   TerminalMate[]
 > = {
-  id: "wsf-fares:terminalMates",
+  api: "wsf-fares",
+  function: "terminalMates",
   endpoint: "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalId}",
   inputSchema: faresTerminalMatesInput,
   outputSchema: z.array(terminalMateSchema),

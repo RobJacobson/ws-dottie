@@ -16,7 +16,8 @@ export const getSailingsMeta: EndpointDefinition<
   SailingsInput,
   SailingResponse[]
 > = {
-  id: "wsf-schedule:sailings",
+  api: "wsf-schedule",
+  function: "sailings",
   endpoint: "/ferries/api/schedule/rest/sailings/{schedRouteId}",
   inputSchema: sailingsInput,
   outputSchema: sailingResponsesSchema,

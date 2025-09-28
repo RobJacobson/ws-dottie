@@ -16,7 +16,8 @@ export const getScheduledRoutesBySeasonMeta: EndpointDefinition<
   ScheduledRoutesBySeasonInput,
   ScheduledRoute[]
 > = {
-  id: "wsf-schedule:scheduledRoutesBySeason",
+  api: "wsf-schedule",
+  function: "scheduledRoutesBySeason",
   endpoint: "/ferries/api/schedule/rest/schedroutes/{seasonId}",
   inputSchema: scheduledRoutesBySeasonInput,
   outputSchema: scheduledRoutesSchema,

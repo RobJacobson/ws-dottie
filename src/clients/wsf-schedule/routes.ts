@@ -21,7 +21,8 @@ export const getRoutesMeta: EndpointDefinition<
   RoutesInput,
   RouteBriefResponse[]
 > = {
-  id: "wsf-schedule:routes",
+  api: "wsf-schedule",
+  function: "routes",
   endpoint: "/ferries/api/schedule/rest/routes/{tripDate}",
   inputSchema: routesInput,
   outputSchema: routeBriefResponsesSchema,

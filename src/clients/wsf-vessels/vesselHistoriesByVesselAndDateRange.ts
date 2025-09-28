@@ -29,7 +29,8 @@ export const getVesselHistoryByVesselAndDateRangeMeta: EndpointDefinition<
   VesselHistoryByVesselAndDateRangeInput,
   VesselHistories
 > = {
-  id: "wsf-vessels:vesselHistoriesByVesselAndDateRange",
+  api: "wsf-vessels",
+  function: "vesselHistoriesByVesselAndDateRange",
   endpoint:
     "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
   inputSchema: vesselHistoriesByVesselAndDateRangeInput,

@@ -24,7 +24,8 @@ export const getFareTotalsMeta: EndpointDefinition<
   FareTotalsInput,
   FareTotals
 > = {
-  id: "wsf-fares:fareTotals",
+  api: "wsf-fares",
+  function: "fareTotals",
   endpoint:
     "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}",
   inputSchema: fareTotalsInput,

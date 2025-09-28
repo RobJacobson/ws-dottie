@@ -44,7 +44,8 @@ const getMapAreasInput = z.object({}).strict();
 
 /** Endpoint metadata for getMapAreas */
 export const getMapAreasMeta: EndpointDefinition<MapAreasInput, MapAreas> = {
-  id: "wsdot-highway-alerts:getMapAreas",
+  api: "wsdot-highway-alerts",
+  function: "getMapAreas",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetMapAreasAsJson",
   inputSchema: getMapAreasInput,

@@ -73,7 +73,8 @@ export const getAlertsByRegionIdMeta: EndpointDefinition<
   AlertsByRegionIdInput,
   HighwayAlerts
 > = {
-  id: "wsdot-highway-alerts:getAlertsByRegionId",
+  api: "wsdot-highway-alerts",
+  function: "getAlertsByRegionId",
   endpoint:
     "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}",
   inputSchema: alertsByRegionIdInput,

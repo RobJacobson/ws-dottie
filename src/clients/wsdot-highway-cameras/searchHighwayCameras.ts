@@ -81,7 +81,8 @@ export const searchHighwayCamerasMeta: EndpointDefinition<
   SearchHighwayCamerasInput,
   Camera[]
 > = {
-  id: "wsdot-highway-cameras:searchHighwayCameras",
+  api: "wsdot-highway-cameras",
+  function: "searchHighwayCameras",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
   inputSchema: searchHighwayCamerasInput,

@@ -22,7 +22,8 @@ export const getFareLineItemsMeta: EndpointDefinition<
   FareLineItemsInput,
   FareLineItem[]
 > = {
-  id: "wsf-fares:fareLineItems",
+  api: "wsf-fares",
+  function: "fareLineItems",
   endpoint:
     "/ferries/api/fares/rest/farelineitems/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
   inputSchema: fareLineItemsInput,

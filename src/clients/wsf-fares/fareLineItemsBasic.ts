@@ -22,7 +22,8 @@ export const getFareLineItemsBasicMeta: EndpointDefinition<
   FareLineItemsBasicInput,
   FareLineItemBasic[]
 > = {
-  id: "wsf-fares:fareLineItemsBasic",
+  api: "wsf-fares",
+  function: "fareLineItemsBasic",
   endpoint:
     "/ferries/api/fares/rest/farelineitemsbasic/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}",
   inputSchema: fareLineItemsBasicInput,

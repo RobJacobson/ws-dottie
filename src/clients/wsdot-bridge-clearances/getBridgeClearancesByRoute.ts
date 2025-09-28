@@ -89,7 +89,8 @@ export const getBridgeClearancesByRouteMeta: EndpointDefinition<
   BridgeClearancesByRouteInput,
   BridgeClearances
 > = {
-  id: "wsdot-bridge-clearances:getBridgeClearancesByRoute",
+  api: "wsdot-bridge-clearances",
+  function: "getBridgeClearancesByRoute",
   endpoint:
     "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
   inputSchema: bridgeClearancesByRouteInput,

@@ -16,7 +16,8 @@ export const getTimeAdjustmentsByRouteMeta: EndpointDefinition<
   TimeAdjustmentsByRouteInput,
   TimeAdjustments
 > = {
-  id: "wsf-schedule:timeAdjustmentsByRoute",
+  api: "wsf-schedule",
+  function: "timeAdjustmentsByRoute",
   endpoint: "/ferries/api/schedule/rest/timeadjbyroute/{routeId}",
   inputSchema: timeAdjustmentsByRouteInput,
   outputSchema: timeAdjustmentsSchema,

@@ -14,7 +14,8 @@ export const getWeatherInformationMeta: EndpointDefinition<
   WeatherInformationInput,
   WeatherInfo[]
 > = {
-  id: "wsdot-weather-information:getWeatherInformation",
+  api: "wsdot-weather-information",
+  function: "getWeatherInformation",
   endpoint:
     "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationAsJson",
   inputSchema: weatherInformationInput,

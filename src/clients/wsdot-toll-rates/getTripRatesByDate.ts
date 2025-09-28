@@ -68,7 +68,8 @@ export const getTripRatesByDateMeta: EndpointDefinition<
   TripRatesByDateInput,
   TripRatesByDate
 > = {
-  id: "wsdot-toll-rates:getTripRatesByDate",
+  api: "wsdot-toll-rates",
+  function: "getTripRatesByDate",
   endpoint:
     "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
   inputSchema: tripRatesByDateInput,

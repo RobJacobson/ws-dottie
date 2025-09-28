@@ -53,7 +53,8 @@ export const getTollTripRatesMeta: EndpointDefinition<
   TollTripRatesInput,
   TollTripRates
 > = {
-  id: "wsdot-toll-rates:getTollTripRates",
+  api: "wsdot-toll-rates",
+  function: "getTollTripRates",
   endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson",
   inputSchema: tollTripRatesInput,
   outputSchema: tollTripRatesSchema,

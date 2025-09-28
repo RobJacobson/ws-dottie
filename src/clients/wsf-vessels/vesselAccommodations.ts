@@ -12,7 +12,8 @@ export const getVesselAccommodationsMeta: EndpointDefinition<
   VesselAccommodationsInput,
   VesselAccommodations[]
 > = {
-  id: "wsf-vessels:vesselAccommodations",
+  api: "wsf-vessels",
+  function: "vesselAccommodations",
   endpoint: "/ferries/api/vessels/rest/vesselaccommodations",
   inputSchema: vesselAccommodationsInput,
   outputSchema: z.array(vesselAccommodationsSchema),

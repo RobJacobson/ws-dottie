@@ -16,7 +16,8 @@ export const getTerminalSailingSpaceByTerminalIdMeta: EndpointDefinition<
   TerminalSailingSpaceByTerminalIdInput,
   TerminalSailingSpace
 > = {
-  id: "wsf-terminals:terminalSailingSpaceById",
+  api: "wsf-terminals",
+  function: "terminalSailingSpaceById",
   endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}",
   inputSchema: terminalSailingSpaceByTerminalIdInput,
   outputSchema: terminalSailingSpaceSchema,

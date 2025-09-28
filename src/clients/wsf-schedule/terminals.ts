@@ -19,7 +19,8 @@ export const getScheduleTerminalsMeta: EndpointDefinition<
   ScheduleTerminalsInput,
   ScheduleTerminal[]
 > = {
-  id: "wsf-schedule:terminals",
+  api: "wsf-schedule",
+  function: "terminals",
   endpoint: "/ferries/api/schedule/rest/terminals/{tripDate}",
   inputSchema: scheduleTerminalsInput,
   outputSchema: scheduleTerminalsSchema,

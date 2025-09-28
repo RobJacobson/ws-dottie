@@ -18,7 +18,8 @@ export const getScheduleTodayByScheduleTerminalsMeta: EndpointDefinition<
   ScheduleTodayByScheduleTerminalsInput,
   ScheduleTodayResponse
 > = {
-  id: "wsf-schedule:scheduleTodayByTerminals",
+  api: "wsf-schedule",
+  function: "scheduleTodayByTerminals",
   endpoint:
     "/ferries/api/schedule/rest/scheduletoday/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}/{onlyRemainingTimes}",
   inputSchema: scheduleTodayByScheduleTerminalsInput,

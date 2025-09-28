@@ -71,7 +71,8 @@ export const getBorderCrossingsMeta: EndpointDefinition<
   BorderCrossingsInput,
   BorderCrossings
 > = {
-  id: "wsdot-border-crossings:getBorderCrossings",
+  api: "wsdot-border-crossings",
+  function: "getBorderCrossings",
   endpoint:
     "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
   inputSchema: borderCrossingsInput,

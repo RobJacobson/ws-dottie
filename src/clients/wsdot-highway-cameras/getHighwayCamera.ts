@@ -93,7 +93,8 @@ export const getHighwayCameraMeta: EndpointDefinition<
   HighwayCameraInput,
   Camera
 > = {
-  id: "wsdot-highway-cameras:getHighwayCamera",
+  api: "wsdot-highway-cameras",
+  function: "getHighwayCamera",
   endpoint:
     "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
   inputSchema: highwayCameraInput,

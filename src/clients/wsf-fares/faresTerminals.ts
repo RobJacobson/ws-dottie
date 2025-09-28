@@ -19,7 +19,8 @@ export const getFaresTerminalsMeta: EndpointDefinition<
   FaresTerminalsInput,
   FaresTerminal[]
 > = {
-  id: "wsf-fares:faresTerminals",
+  api: "wsf-fares",
+  function: "faresTerminals",
   endpoint: "/ferries/api/fares/rest/terminals/{tripDate}",
   inputSchema: faresTerminalsInput,
   outputSchema: z.array(faresTerminalSchema),

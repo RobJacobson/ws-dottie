@@ -14,7 +14,8 @@ export const getWeatherStationsMeta: EndpointDefinition<
   WeatherStationsInput,
   WeatherStations
 > = {
-  id: "wsdot-weather-stations:getWeatherStations",
+  api: "wsdot-weather-stations",
+  function: "getWeatherStations",
   endpoint:
     "/Traffic/api/WeatherStations/WeatherStationsREST.svc/GetCurrentStationsAsJson",
   inputSchema: weatherStationsInput,

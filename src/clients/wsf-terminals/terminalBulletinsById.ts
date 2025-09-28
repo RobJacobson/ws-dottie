@@ -16,7 +16,8 @@ export const getTerminalBulletinsByTerminalIdMeta: EndpointDefinition<
   TerminalBulletinsByTerminalIdInput,
   TerminalBulletins
 > = {
-  id: "wsf-terminals:terminalBulletinsById",
+  api: "wsf-terminals",
+  function: "terminalBulletinsById",
   endpoint: "/ferries/api/terminals/rest/terminalbulletins/{terminalId}",
   inputSchema: terminalBulletinsByTerminalIdInput,
   outputSchema: terminalBulletinsSchema,

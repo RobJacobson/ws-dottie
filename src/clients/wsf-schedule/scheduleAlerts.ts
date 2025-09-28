@@ -11,7 +11,8 @@ export const getScheduleAlertsMeta: EndpointDefinition<
   ScheduleAlertsInput,
   Alert[]
 > = {
-  id: "wsf-schedule:scheduleAlerts",
+  api: "wsf-schedule",
+  function: "scheduleAlerts",
   endpoint: "/ferries/api/schedule/rest/alerts",
   inputSchema: scheduleAlertsInput,
   outputSchema: alertsSchema,

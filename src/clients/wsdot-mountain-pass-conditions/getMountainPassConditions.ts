@@ -80,7 +80,8 @@ export const getMountainPassConditionsMeta: EndpointDefinition<
   MountainPassConditionsInput,
   MountainPassConditions
 > = {
-  id: "wsdot-mountain-pass-conditions:getMountainPassConditions",
+  api: "wsdot-mountain-pass-conditions",
+  function: "getMountainPassConditions",
   endpoint:
     "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
   inputSchema: mountainPassConditionsInput,
