@@ -15,9 +15,9 @@ Create enhanced documentation for input/output schemas and endpoint descriptions
 3-4 hours
 
 ## Phase Deliverables
-- Enhanced input schemas with business context
-- Enhanced output schemas with business context  
-- Endpoint descriptions with business purpose
+- **MUST:** Enhanced input schemas with business context
+- **MUST:** Enhanced output schemas with business context  
+- **MUST:** Endpoint descriptions with business purpose
 - All examples using literal API data
 
 ## Writing Style Standards
@@ -32,13 +32,11 @@ See `shared-standards.md` for complete field description guidelines, sentence st
 - **Simple fields**: 50-150 characters (IDs, timestamps, coordinates)
 - **Business fields**: 150-400 characters (most domain-specific fields)
 - **Complex integration fields**: 400-600 characters (MAX - requires justification)
-- **Endpoint descriptions**: 200-800 characters
+- **Endpoint descriptions**: 200-800 characters (as a single narrative string)
 - **Exceeding limits**: Requires explicit justification in documentation
 
 ### Length Management Strategy
 - **Prioritize business context** over technical details
-- **Use cross-references** instead of embedded explanations
-- **Consolidate similar patterns** rather than repeating explanations
 - **Focus on decision-making value** for the user
 - **Apply example decision tree**: Multiple examples only when they show different categories/types
 - **Minimize obvious fields**: GUIDs and simple IDs need minimal examples
@@ -71,7 +69,7 @@ HeightInches: "[Concept] in inches for calculations (e.g., '258' for 21 ft 6 in)
 
 ### Context Distribution Strategy
 **Endpoint Level**: Overall API purpose, target users, primary workflows
-**Schema Level**: Dataset characteristics, data patterns, integration workflows
+**Schema Level**: Dataset characteristics, data patterns
 **Field Level**: Specific field distinctions, format differences, edge cases
 
 **Avoid**: Repeating obvious API context in individual field descriptions.
@@ -136,29 +134,23 @@ Ask: "Would a user understand the relationship between these fields and know whe
 
 ## Schema Documentation
 
-See `shared-standards.md` for complete schema documentation templates and data freshness defaults.
-
-### CRITICAL Requirements
-- **ALL schema definitions MUST have a detailed `.describe()` clause**
-- **DO NOT modify existing JSDoc comments** - they preserve original WSDOT/WSF documentation
-- **DO NOT add new JSDoc comments** - use `.describe()` annotations instead
-- **Preserve original variable names** - do not rename schema variables
+See `shared-standards.md` for complete schema documentation templates, data freshness documentation, and critical `.describe()` annotation requirements.
 
 ### Key Requirements
 - Explain what parameters are required and their purpose
 - Explain what data is returned and its business value
 - Include container type and typical cardinality
-- Add data freshness information (use patterns from research phase)
 
 ## Endpoint Descriptions
 
-See `shared-standards.md` for complete endpoint description templates and examples.
+See `shared-standards.md` for complete endpoint description format, required content elements, and cross-reference guidelines.
 
 ### Key Requirements
 - High-level endpoint descriptions (write after field and schema work)
 - Focus on when and why to use each endpoint
 - Target audience and use case guidance
-- Do not include data examples at endpoint level
+- No data examples at endpoint level
+- Cross-references **MUST** be integrated into the narrative string as specified in `shared-standards.md`.
 
 ## File Structure
 
@@ -172,32 +164,34 @@ See `shared-standards.md` for complete file naming conventions and examples.
 ## Phase Completion Checklist
 
 ### Field Documentation
-- [ ] All input fields documented with business context
-- [ ] All output fields documented with business context
-- [ ] Examples use literal API data with single quotes (see `shared-standards.md`)
-- [ ] **Edge cases documented using Doug's format** - unusual values explained with business meaning
-- [ ] Sentence count appropriate for field complexity
-- [ ] Plain English throughout
+- [x] All input fields documented with business context
+- [x] All output fields documented with business context
+- [x] Examples use literal API data with single quotes (see `shared-standards.md`)
+- [x] **Edge cases documented using Doug's format** - unusual values explained with business meaning
+- [x] Sentence count appropriate for field complexity
+- [x] Plain English throughout
 
 ### Schema Documentation
-- [ ] Input schemas explain parameter purpose
-- [ ] Output schemas explain business value
-- [ ] Data freshness information included (use research phase patterns)
-- [ ] Container type and cardinality specified
+- [x] Input schemas explain parameter purpose
+- [x] Output schemas explain business value
+- [x] Data freshness information included (see `shared-standards.md`)
+- [x] Container type and cardinality specified
+- [x] **CRITICAL:** All schema definitions **MUST** have a detailed `.describe()` clause.
 
 ### Endpoint Documentation
-- [ ] Endpoint descriptions focus on business purpose
-- [ ] Target audience and use cases clear
-- [ ] No data examples at endpoint level
-- [ ] Business context integrated
+- [x] Endpoint descriptions focus on business purpose
+- [x] Target audience and use cases clear
+- [x] No data examples at endpoint level
+- [x] Business context integrated
+- [x] Cross-references **MUST** be integrated into the narrative string as specified in `shared-standards.md`.
 
 ### Quality Standards
-- [ ] Follow all standards in `shared-standards.md`
-- [ ] Natural, conversational language
-- [ ] Active voice throughout
-- [ ] Consistent terminology
-- [ ] Business value explained
-- [ ] Real-world meaning clear
+- [x] Follow all standards in `shared-standards.md`
+- [x] Natural, conversational language
+- [x] Active voice throughout
+- [x] Consistent terminology
+- [x] Business value explained
+- [x] Real-world meaning clear
 
 ## Expected Deliverables
 
