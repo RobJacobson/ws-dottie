@@ -57,16 +57,13 @@ Transform terse, generic API descriptions into rich, semantic documentation that
 **Duration**: 5-8 hours
 **Deliverables**: Synthesized final documentation combining best work from all agents
 
-## Documentation Hierarchy
+## File Naming Convention
 
-**This overview provides high-level project understanding. ALL detailed rules are in `shared-standards.md`.**
+See `shared-standards.md` for complete file naming conventions and examples.
 
-### Document Roles:
-- **`master-overview.md`** → Mission, phases, workflow (THIS FILE)
-- **`shared-standards.md`** → **SINGLE SOURCE OF TRUTH** for all detailed rules, templates, examples
-- **`[phase]-guide.md`** → Phase-specific workflows and timing only
+## Quality Standards
 
-### Rule: If there's conflict between documents, `shared-standards.md` takes precedence.
+See `shared-standards.md` for complete quality standards, templates, and examples.
 
 ### Success Criteria
 - 100% field coverage with enhanced descriptions
@@ -77,12 +74,11 @@ Transform terse, generic API descriptions into rich, semantic documentation that
 
 ## Getting Started
 
-**CRITICAL: Read documents in this order:**
-
-1. **Read this overview** → Understand mission, phases, workflow
-2. **Read `shared-standards.md`** → **REQUIRED** - Contains ALL detailed rules, templates, examples
-3. **Follow phase guides sequentially** → Start with `research-phase-guide.md`
-4. **Reference `shared-standards.md`** → For every detailed question during work
+1. **Read this overview** to understand the project structure
+2. **Review shared standards**: Read `shared-standards.md` for all common rules and templates
+3. **Begin with Phase 1**: Follow `research-phase-guide.md`
+4. **Complete phases sequentially**: Do not skip ahead
+5. **Show compliance in chat**: No separate markdown files needed
 
 ## Large API Strategy
 

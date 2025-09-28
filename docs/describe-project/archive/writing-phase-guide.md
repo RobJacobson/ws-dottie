@@ -4,83 +4,29 @@
 
 Create enhanced documentation for input/output schemas and endpoint descriptions using business context from the research phase.
 
-**CRITICAL: NO cross-references are added in this phase. Cross-references are ONLY added in Integration Phase (Phase 3).**
-
 ## Context Management
 
 - Reference research phase findings rather than re-analyzing data
 - Work on one endpoint at a time to maintain focus
 - Use templates to reduce cognitive load
-- **Context management**: Tips are for very large APIs (20+ endpoints). For typical APIs with 2-5 endpoints, context should not be a concern
+- Monitor context usage - if approaching 70%, summarize progress and continue
 
 ## Duration
-
-**Complexity-Based Timing:**
-- **Simple APIs** (1-2 endpoints, <10 fields): 2-2.5 hours
-- **Medium APIs** (2-3 endpoints, 10-15 fields): 3-4 hours  
-- **Complex APIs** (3+ endpoints, 15+ fields): 4-5 hours
-
-**Total Project Time by Complexity:**
-- **Simple APIs**: 1.5 + 2.5 + 1 = 5 hours total
-- **Complex APIs**: 4 + 5 + 2 = 11 hours total
+3-4 hours
 
 ## Phase Deliverables
 - **MUST:** Enhanced input schemas with business context
 - **MUST:** Enhanced output schemas with business context  
-- **MUST:** Endpoint descriptions with business purpose (NO cross-references)
+- **MUST:** Endpoint descriptions with business purpose
 - All examples using literal API data
 
-**CRITICAL REMINDER: NO cross-references in any Phase 2 deliverables. All cross-references are added in Phase 3 only.**
+## Writing Style Standards
 
-## **REQUIRED: Data Freshness Statement**
+Follow `shared-standards.md` for complete writing style standards and quality principles.
 
-**CRITICAL:** Data freshness statement MUST be included in the **main output array schema** `.describe()` annotation using these exact patterns:
+## Field Description Guidelines
 
-| API Type | Required Statement |
-|----------|-------------------|
-| Border crossings | `"Data updates frequently."` |
-| Bridge clearances | `"Data updates infrequently."` |
-| Ferry schedules | `"Data updates infrequently."` |
-| Ferry locations | `"Data is real-time."` |
-| Traffic flow | `"Data updates frequently."` |
-| Weather stations | `"Data updates frequently."` |
-
-### **Exact Placement Examples:**
-
-**✅ CORRECT - In main array schema:**
-```typescript
-export const borderCrossingDataListSchema = z
-  .array(borderCrossingDataSchema)
-  .describe(
-    "Returns array of border crossing wait time data... Data updates frequently."
-  );
-```
-
-**❌ WRONG - In individual field descriptions:**
-```typescript
-WaitTime: z.number().describe("Wait time in minutes. Data updates frequently.")
-```
-
-**❌ WRONG - In individual object schema:**
-```typescript
-export const borderCrossingDataSchema = z.object({...}).describe("Border crossing data. Data updates frequently.")
-```
-
-## Reference Guide
-
-**ALL detailed rules are in `shared-standards.md` - this guide focuses on writing phase workflow and timing.**
-
-For complete details, see `shared-standards.md` sections:
-- Writing Standards → Business context, plain English, conciseness
-- Field Description Guidelines → 4-part structure, examples, templates  
-- Schema Documentation → Input/output templates, data freshness
-- Edge Case Documentation → Discovery checklist, systematic approach
-
-## **⚠️ CRITICAL WORKFLOW RULE**
-**If you find yourself wanting to mention other APIs or endpoints during Phase 2, STOP. Note the integration opportunity for Phase 3 instead.**
-
-**Phase 2 Focus**: Individual field meanings, business context, edge cases, data freshness
-**Phase 3 Focus**: Cross-API integrations, workflow connections, alternative scenarios
+See `shared-standards.md` for complete field description guidelines, sentence structure rules, templates, and data example formatting.
 
 ### Description Length Limits (ENFORCED)
 - **Simple fields**: 50-150 characters (IDs, timestamps, coordinates)
@@ -96,24 +42,14 @@ For complete details, see `shared-standards.md` sections:
 - **Minimize obvious fields**: GUIDs and simple IDs need minimal examples
 - **Add location context**: Geographic coordinates should reference specific places when possible
 
-### Example Decision Tree (Use This Checklist)
+### Example Quality Control
+**Before adding multiple examples, ask:**
+1. Do these examples represent **different categories** of the same field?
+2. Do they illustrate **different business meanings** or **states**?
+3. Do they show **format variations** users need to understand?
+4. Would a user learn something **different** from each example?
 
-**Before adding examples, apply this numbered checklist:**
-
-1. **Are these examples different CATEGORIES?** (Yes → Multiple examples)
-   - *Example: Route types: highway vs local roads*
-2. **Do they show different BUSINESS STATES?** (Yes → Multiple examples)  
-   - *Example: Normal operation vs emergency closure*
-3. **Do they show FORMAT VARIATIONS?** (Yes → Multiple examples)
-   - *Example: '16 ft 1 in' vs '193' inches*
-4. **If all answers are NO** → Use ONE representative example
-5. **If any answer is YES** → Multiple examples add value
-
-**Quick Check:**
-- Different categories ✓ = Multiple examples
-- Different business states ✓ = Multiple examples  
-- Different formats ✓ = Multiple examples
-- All same ✓ = Single example only
+**If the answer is NO to all questions, use ONE example.**
 
 ### Parallel Language Requirements
 **CRITICAL**: When describing related fields that represent the same concept in different formats:
@@ -196,26 +132,29 @@ Before writing descriptions, identify how fields relate to each other:
 ### Step 3: Quality Check
 Ask: "Would a user understand the relationship between these fields and know when to use each one?"
 
-## Workflow Summary
+## Schema Documentation
 
-**Key requirements - see `shared-standards.md` for complete templates and examples:**
+See `shared-standards.md` for complete schema documentation templates, data freshness documentation, and critical `.describe()` annotation requirements.
 
-### Schema Documentation Requirements
-- Input schemas: Explain parameters and their purpose  
-- Output schemas: Explain business value, include data freshness statement
-- All schemas: Use `.describe()` annotations, preserve JSDoc comments
+### Key Requirements
+- Explain what parameters are required and their purpose
+- Explain what data is returned and its business value
+- Include container type and typical cardinality
 
-### Endpoint Description Requirements  
-- Write AFTER field and schema work is complete
-- Focus on business purpose and target audience
-- Cross-references integrated into narrative string (see `shared-standards.md`)
-- Single JSON file with endpoint key-value pairs
+## Endpoint Descriptions
 
-### File Creation Requirements
-All files go in: `src/apis/[api-name]/working/`
-- `inputSchemas.[agent-name].ts` 
-- `outputSchemas.[agent-name].ts`
-- `endpointDescriptions.[agent-name].json`
+See `shared-standards.md` for complete endpoint description format, required content elements, and cross-reference guidelines.
+
+### Key Requirements
+- High-level endpoint descriptions (write after field and schema work)
+- Focus on when and why to use each endpoint
+- Target audience and use case guidance
+- No data examples at endpoint level
+- Cross-references **MUST** be integrated into the narrative string as specified in `shared-standards.md`.
+
+## File Structure
+
+See `shared-standards.md` for complete file naming conventions and examples.
 
 ### File Types Created
 - `src/apis/[api-name]/working/inputSchemas.[agent].ts`
