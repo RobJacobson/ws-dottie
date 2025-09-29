@@ -9,10 +9,17 @@ Understand the business domain and collect real API data to inform documentation
 - Use `--limit 500` for all data fetching to control context consumption
 - Focus on representative samples, not exhaustive data analysis
 - Extract 3-5 examples per field type maximum
-- Monitor context usage - if approaching 70%, summarize findings and continue
+- **Context management**: Tips are for very large APIs (20+ endpoints). For typical APIs with 2-5 endpoints, context should not be a concern
 
 ## Duration
-2-3 hours
+
+**Complexity-Based Timing:**
+- **Simple APIs** (1-2 endpoints, <10 fields): 1-1.5 hours
+  - *Example: Border crossings (4 fields) → 1.5 hours*
+- **Medium APIs** (2-3 endpoints, 10-15 fields): 2-3 hours  
+  - *Example: Weather stations, traffic flow → 2.5 hours*
+- **Complex APIs** (3+ endpoints, 15+ fields): 3-4 hours
+  - *Example: Bridge clearances (16+ fields) → 3-4 hours*
 
 ## Phase Deliverables
 - Domain analysis document
@@ -29,7 +36,7 @@ Understand the business domain and collect real API data to inform documentation
 - Identify key business concepts and terminology
 
 ### Domain Analysis Document
-Create `src/apis/[api-name]/working/domain-analysis.[agent].md` (see `shared-standards.md` for file naming conventions):
+Create `src/apis/[api-name]/working/domain-analysis.[agent-name].md` (see `shared-standards.md` for file naming conventions):
 - Business purpose and real-world applications
 - Key terminology and concepts
 - Target users and use cases
@@ -43,16 +50,27 @@ Create `src/apis/[api-name]/working/domain-analysis.[agent].md` (see `shared-sta
 **MANDATORY STOPPING CONDITION**: If `fetch-dottie` fails, stop all work and request assistance. Do not write related descriptions.
 
 ### Fetching Process
-```bash
-# ✅ CORRECT - Use --limit 500 for all endpoints
-npx fetch-dottie getBridgeClearancesByRoute --limit 500
-npx fetch-dottie getBorderCrossings --limit 500
-npx fetch-dottie getVesselBasics --limit 500
 
-# ❌ WRONG - Never use other parameters or no limit
-npx fetch-dottie getBridgeClearancesByRoute --route "I-5"
-npx fetch-dottie getBorderCrossings
+**CRITICAL COMMAND FORMATS - Use these exact patterns:**
+
+```bash
+# ✅ CORRECT FORMATS
+npx fetch-dottie getBorderCrossings --limit 500
+npx fetch-dottie getBridgeClearancesByRoute --limit 500
+npx fetch-dottie getVesselBasics --limit 500
+npx fetch-dottie getTravelTimes --limit 500
+npx fetch-dottie getAlerts --limit 500
+
+# ❌ COMMON ERRORS TO AVOID
+npx fetch-dottie GetBorderCrossings --limit 500                    # Wrong capitalization
+npx fetch-dottie wsdot-border-crossings/getBorderCrossings --limit 500   # Wrong path format
+npx fetch-dottie getBorderCrossings                               # Missing --limit 500
 ```
+
+**TROUBLESHOOTING CLI ERRORS:**
+- Command not found → Check if you're in the project root directory
+- Function not found → Use lowercase function names (getBorderCrossings, not GetBorderCrossings)
+- No data returned → Verify API is working with `--limit 5` first
 
 ### Data Analysis
 - List all endpoints in assigned API
@@ -68,16 +86,48 @@ npx fetch-dottie getBorderCrossings
 
 ### MANDATORY Edge Case Analysis Checklist
 - [ ] Examine ALL numeric fields for magic numbers (-1, 0, 999, etc.)
-- [ ] Document ALL null/empty values with business rationale  
+- [ ] Examine ALL string fields for magic contants ("NONE," "UNUSED," etc.) and enum values ("N," "S," "E," "W," etc.)
+- [ ] Document ALL null/empty values with business rationale
+- [ ] Document ALL non-unique string values (like those above) with business rationale
 - [ ] Test boundary conditions (min/max values observed)
 - [ ] Identify special status indicators (CLOSED, N/A, UNKNOWN)
 - [ ] Validate edge cases represent actual business conditions
 - [ ] Document edge cases using Doug's format in field descriptions
 
-### Canonical Endpoint Names
-- Read `id` fields in `src/clients/**` (format: `api:endpoint`)
-- Convert to `api-name/function-name` when writing documentation (see `shared-standards.md` for cross-reference format)
-- Use these as source of truth for endpoint names
+### Canonical Endpoint Names Discovery
+
+**REQUIRED PROCESS - Follow these steps exactly:**
+
+1. **List client directory:** `list_dir src/clients/[api-name]/`
+2. **Read each client file:** `read_file src/clients/[api-name]/[filename].ts`
+3. **Find EndpointDefinition exports:** Look for patterns like:
+   ```typescript
+   export const getBorderCrossingsMeta: EndpointDefinition<...> = {
+     api: "wsdot-border-crossings",
+     function: "getBorderCrossings",
+     endpoint: "/Traffic/api/...",
+     ...
+   };
+   ```
+4. **Extract canonical names:** Use the `function` field value (e.g., 'getBorderCrossings')
+5. **Use for cross-references:** Format as `[api]/[function]` (e.g., 'wsdot-border-crossings/getBorderCrossings')
+
+**EXAMPLE DISCOVERY PROCESS:**
+```bash
+# Step 1: Find client files
+list_dir src/clients/wsdot-border-crossings/
+
+# Step 2: Read client definitions  
+read_file src/clients/wsdot-border-crossings/getBorderCrossings.ts
+
+# Step 3: Extract from EndpointDefinition
+// Found: function: "getBorderCrossings"
+// Found: api: "wsdot-border-crossings"
+
+# Step 4: Use in documentation
+// Cross-reference format: wsdot-border-crossings/getBorderCrossings
+// fetch-dottie format: getBorderCrossings (function name only)
+```
 
 ## Step 3: Business Context Analysis
 
@@ -98,11 +148,22 @@ npx fetch-dottie getBorderCrossings
 - Note workflow patterns and dependencies
 
 ### Data Freshness Validation Protocol
-- [ ] Analyze timestamp patterns across multiple API calls
-- [ ] Document observed update frequencies with evidence
-- [ ] Distinguish between claimed vs. observed update patterns
-- [ ] Validate data freshness claims with actual API behavior
-- [ ] Note any discrepancies between documentation and reality
+
+**CRITICAL: Prioritize source API documentation over assumptions**
+
+- [ ] **Extract EXACT data freshness statements** from source API documentation first
+- [ ] **Analyze data type patterns:** Real-time (border crossings, vessel locations) vs. Static (bridge clearances, schedules)
+- [ ] **Document observed update frequencies** with evidence from API calls
+- [ ] **Validate assumptions against API behavior** - multiple calls to check update patterns
+- [ ] **Use API-specific patterns when no explicit documentation exists:**
+  - Border crossing wait times = "Data updates frequently" (real-time traffic)
+  - Bridge clearances = "Data updates infrequently" (static infrastructure)
+  - Vessel locations = "Data is real-time" (GPS tracking)
+  - Ferry schedules = "Data updates infrequently" (published schedules)
+- [ ] **Note discrepancies** between documentation claims and observed behavior
+
+**WRONG EXAMPLE:** Labeling real-time border crossing data as "updates infrequently"
+**CORRECT APPROACH:** Always prioritize the nature of the data type and source documentation
 
 ## Phase Completion Checklist
 
@@ -136,9 +197,15 @@ npx fetch-dottie getBorderCrossings
 ## Expected Deliverables
 
 ### Files Created
-- `src/apis/[api-name]/working/domain-analysis.[agent].md`
-- `src/apis/[api-name]/working/business-workflows.[agent].md` (optional)
-- `src/apis/[api-name]/working/work-notes.[agent].md` (optional)
+
+**REQUIRED FILES (EVERY API):**
+- `src/apis/[api-name]/working/domain-analysis.[agent-name].md` (MANDATORY)
+
+**OPTIONAL SUPPORTING FILES:**
+- `src/apis/[api-name]/working/business-workflows.[agent-name].md` 
+- `src/apis/[api-name]/working/work-notes.[agent-name].md`
+
+**CRITICAL:** Each API must have its own separate `domain-analysis.[agent-name].md` file. Do NOT combine multiple APIs into one analysis file.
 
 ### Knowledge Gained
 - Deep understanding of business domain

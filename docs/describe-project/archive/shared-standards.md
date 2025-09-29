@@ -4,17 +4,147 @@ This document provides comprehensive standards and guidelines for agents working
 
 ## Table of Contents
 
-1. [Quick Start Checklist](#quick-start-checklist)
-2. [File Naming and Structure](#file-naming-and-structure)
-3. [Code Modification Rules](#code-modification-rules)
-4. [Writing Standards](#writing-standards)
-5. [Field Description Guidelines](#field-description-guidelines)
-6. [Schema Documentation](#schema-documentation)
-7. [Endpoint Descriptions](#endpoint-descriptions)
-8. [Cross-Reference Guidelines](#cross-reference-guidelines)
-9. [Data and Examples](#data-and-examples)
-10. [Quality Control](#quality-control)
-11. [Common Issues and Solutions](#common-issues-and-solutions)
+1. [File Structure Overview (READ FIRST)](#file-structure-overview-read-first)
+2. [Critical Code Modification Rules](#critical-code-modification-rules)
+3. [Quick Start Checklist](#quick-start-checklist)
+4. [File Naming and Structure](#file-naming-and-structure)
+5. [Writing Standards](#writing-standards)
+6. [Field Description Guidelines](#field-description-guidelines)
+7. [Schema Documentation](#schema-documentation)
+8. [Endpoint Descriptions](#endpoint-descriptions)
+9. [Cross-Reference Guidelines](#cross-reference-guidelines)
+10. [Integration Discovery Process](#integration-discovery-process)
+11. [Data and Examples](#data-and-examples)
+12. [Quality Control](#quality-control)
+13. [Common Issues and Solutions](#common-issues-and-solutions)
+
+---
+
+## Quick Reference Tables
+
+### Data Freshness by API Type
+| API Type | Required Statement |
+|----------|-------------------|
+| Border crossings | `"Data updates frequently."` |
+| Bridge clearances | `"Data updates infrequently."` |
+| Ferry schedules | `"Data updates infrequently."` |
+| Ferry locations | `"Data is real-time."` |
+| Traffic flow | `"Data updates frequently."` |
+| Weather stations | `"Data updates frequently."` |
+| Travel times | `"Data updates frequently."` |
+| Highway alerts | `"Data updates frequently."` |
+
+### Edge Case Documentation Template
+**Standard Format:**
+```
+"[Normal business purpose]. E.g., '[normal_value]' for [normal_condition], '[edge_value]' for [special_condition]. [Business meaning of edge case]."
+```
+
+**Example Application:**
+```
+"The estimated wait time to cross the border, in minutes. E.g., '5' for normal traffic conditions, '-1' for lane closure or unavailable status. Negative values indicate the lane is not operational for safety or maintenance reasons."
+```
+
+### Integration Discovery Stopping Criteria
+**Stop adding cross-references when you've covered:**
+- **Sequential workflows**: 1-2 maximum per endpoint
+- **Complementary data**: 1-2 maximum per endpoint  
+- **Alternative scenarios**: 0-1 maximum per endpoint
+- **Total cross-references per endpoint**: 2-4 maximum
+
+### Agent Naming Convention
+**All agent-specific files use format:** `[agent-name]`
+**Examples:** `domain-analysis.alice.md`, `outputSchemas.francis.ts`, `inputSchemas.doug.ts`
+
+---
+
+## File Structure Overview (READ FIRST)
+
+### Work Directory Structure
+
+**ALL agent work goes in the `/working/` subdirectory of each API:**
+
+```
+src/apis/[api-name]/working/
+├── domain-analysis.[agent-name].md    # REQUIRED: Business domain analysis
+├── inputSchemas.[agent-name].ts       # REQUIRED: Enhanced input schemas
+├── outputSchemas.[agent-name].ts      # REQUIRED: Enhanced output schemas
+├── endpointDescriptions.[agent-name].json  # REQUIRED: Endpoint descriptions
+└── [other-files].[agent-name].*       # Optional supporting files
+```
+
+### Shared Files Structure
+
+**If you need to create your own version of shared files, save them to `/working/` subdirectory:**
+
+```
+src/apis/shared/working/
+├── roadwayLocationSchema.[agent-name].ts  # Your version of shared schema
+└── [other-shared-files].[agent-name].ts   # Other shared file versions
+```
+
+### Example for Agent Alice working on wsdot-border-crossings:
+
+```
+src/apis/wsdot-border-crossings/working/
+├── domain-analysis.alice.md
+├── inputSchemas.alice.ts
+├── outputSchemas.alice.ts
+└── endpointDescriptions.alice.json
+
+src/apis/shared/working/
+└── roadwayLocationSchema.alice.ts     # If Alice modifies shared schema
+```
+
+**Import Structure:** Even when creating your own versions, follow the canonical import paths:
+- `import { schema } from "@/apis/shared/schemaName.original"`
+- `import { schema } from "@/schemas/[api-name]/schemaName.zod"`
+
+---
+
+## Critical Code Modification Rules
+
+⚠️ **CRITICAL WARNING: VIOLATION = COMPLETE WORK REJECTION** ⚠️
+
+### ABSOLUTELY PROHIBITED CODE CHANGES:
+
+```typescript
+❌ NEVER DO THIS:
+
+// Renaming schema variables
+export const borderCrossingSchema = z.object({...});  // WRONG: renamed from borderCrossingDataSchema
+
+// Adding Zod validation methods 
+WaitTime: z.number().int().min(-1)     // WRONG: .int() and .min() are structure changes
+VesselID: z.string().uuid()            // WRONG: .uuid() is a structure change
+params: z.object({}).strict()          // WRONG: .strict() is a structure change
+
+// Adding or modifying JSDoc comments
+/** New JSDoc comment */               // WRONG: Don't add JSDoc blocks
+/** Modified existing comment */       // WRONG: Don't modify existing JSDoc
+
+// Any code structure changes
+// WRONG: All of these are prohibited
+```
+
+### ONLY PERMITTED CHANGES:
+
+```typescript
+✅ CORRECT APPROACH:
+
+// Keep original schema names exactly
+export const borderCrossingDataSchema = z.object({...});
+
+// Only add .describe() annotations
+WaitTime: z.number().describe("The estimated wait time...")
+
+// Preserve all existing JSDoc comments unchanged
+/** Original comment stays exactly as-is */
+export const originalSchema = z.object({
+  // Only add .describe() to fields
+  field: z.string().describe("Enhanced description...")
+})
+```
 
 ---
 
@@ -24,10 +154,18 @@ This document provides comprehensive standards and guidelines for agents working
 
 ✅ **Critical Rules:**
 - NEVER modify existing code except `.describe()` annotations
-- NEVER modify JSDoc comments
-- ALWAYS use exact API data with single quotes in examples
+- NEVER rename schema variables - keep original names exactly
+- NEVER add Zod methods like `.int()`, `.uuid()`, `.strict()` - these are structure changes
+- NEVER modify JSDoc comments or add new JSDoc blocks
 - ALWAYS add `.describe()` clauses to all schema definitions and all fields
+- ALWAYS use exact API data with single quotes in examples
 - ALWAYS use aliased import paths (`@/apis/shared/`) not relative paths
+
+✅ **REQUIRED FILES CHECKLIST:**
+- [ ] `src/apis/[api-name]/working/domain-analysis.[agent-name].md` (EVERY API)
+- [ ] `src/apis/[api-name]/working/inputSchemas.[agent-name].ts`
+- [ ] `src/apis/[api-name]/working/outputSchemas.[agent-name].ts`
+- [ ] `src/apis/[api-name]/working/endpointDescriptions.[agent-name].json`
 
 ✅ **File Naming:**
 - Work files: `src/apis/[api-name]/working/[file-type].[agent-name].[extension]`
@@ -98,10 +236,38 @@ import { schemaName } from "@/apis/shared"; // If re-exported from index.ts
 import { schemaName } from "@/schemas/[api-name]/schemaName.zod";
 ```
 
+**❌ NEVER CREATE OR IMPORT:**
+```typescript
+❌ import { roadwayLocationSchema } from "./roadwayLocationSchema.alice"; 
+❌ import { roadwayLocationSchema } from "../shared/roadwayLocationSchema.bob";
+❌ import { schema } from "src/schemas/shared/roadwayLocation.zod"; // Wrong path format
+```
+
+**✅ ALWAYS USE CANONICAL IMPORTS:**
+```typescript
+✅ import { roadwayLocationSchema } from "@/apis/shared/roadwayLocationSchema.original";
+✅ import { zWsdotDate } from "@/apis/shared";
+```
+
+### **Import Path Decision Tree:**
+
+**1. For shared schemas (roadwayLocationSchema, zWsdotDate, etc.):**
+- ✅ **ALWAYS use**: `@/apis/shared/schemaName.original`
+- ❌ **NEVER use**: `../shared/schemaName.original` (relative paths)
+
+**2. For API-specific schemas:**
+- ✅ **Use**: `@/schemas/[api-name]/schemaName.zod`
+- ❌ **NEVER use**: `./schemaName` or `../otherApi/schemaName`
+
+**3. Quick Check:**
+- Does path start with `@/`? ✅ Correct canonical format
+- Does path start with `../` or `./`? ❌ Wrong relative format
+
 **❌ NEVER:**
 - Use relative paths (e.g., `../shared/schema.alice`)
-- Import agent-suffixed files (e.g., `roadwayLocationSchema.Alice.ts`)
-- Reference `.original` files in working code (except shared schemas)
+- Create agent-suffixed shared schema files (e.g., `roadwayLocationSchema.alice.ts`)
+- Import from agent-suffixed files (e.g., `roadwayLocationSchema.bob`)
+- Reference `.original` files in working code (except canonical shared schemas)
 
 ### Final File Structure
 ```bash
@@ -127,7 +293,7 @@ src/apis/[api-name]/
 
 **✅ PERMITTED:**
 1. **`.describe()` annotations**: Add or modify for narrative documentation
-2. **`domain-analysis.[agent].md` files**: Create comprehensive domain analysis
+2. **`domain-analysis.[agent-name].md` files**: Create comprehensive domain analysis
 3. **`endpointDescriptions.[agent].json` files**: Create high-level endpoint descriptions
 
 **❌ STRICTLY PROHIBITED:**
@@ -178,7 +344,8 @@ src/apis/[api-name]/
 **Factual Grounding**
 - Base descriptions on WSDOT API specification
 - Use actual API data and website information
-- Apply common sense, but don't speculate
+- Apply common sense, but don't speculate about specific reasons for edge cases
+- Document what the data shows, not what you assume it means
 - Prefer existing WSDOT language as starting point
 
 ---
@@ -261,38 +428,118 @@ Do not follow these rules mechanically. Instead, direct the level of explanation
 - **High complexity** (domain-specific concepts): Typically 3-4 sentences (400-600 chars)
 
 
-### Templates for Common Field Types
+### Business-Focused Data Type Templates
 
-#### Identifiers
-```
-"The unique ID for [this entity], as a/an [type]. E.g., '[single-example] for [name or identifier].'"
-"The unique ID for this terminal, as an integer. E.g., '3' for Bainbridge Island."
-"The unique ID for this bridge, as a GUID. E.g., '035e8793-d467-4ac4-b38f-0f9602f89f6c' for BridgeNumber 12/348S."
+**CRITICAL FORMAT REQUIREMENT:** Each description must start with business purpose, conclude the first sentence with a comma and data type specification, then provide examples and context.
+
+**Template Structure:** `"[Business purpose], as [business-focused data type]. E.g., '[example]' for [context]. [Additional context if needed]."`
+
+#### **Common Data Type Reference Table**
+
+| Schema Type | Business Data Type | Template Format |
+|-------------|-------------------|-----------------|
+| `z.string()` | `as a string` | Basic text identifier or description |
+| `z.number()` | `as a number` | Numeric measurement or count |
+| `z.number().int()` | `as an integer` | Whole number ID or count |
+| `z.boolean()` | `as a boolean flag` | True/false operational state |
+| `zWsdotDate()` | `as a UTC date` | Timestamp for events or updates |
+| `roadwayLocationSchema` | `as a roadway location object` | Geographic location with route context |
+| `z.number()` (lat/lon) | `in decimal degrees` | Geographic coordinates |
+| `z.enum([...])` | `as a status code` | Predefined operational states |
+| `z.union([...])` | `as a coded value` | Multiple possible value types |
+| Monetary amounts | `in dollars` | Currency values |
+| Time durations | `in minutes` | Time measurements |
+| Physical measurements | `in [units]` | Distance, clearance, etc. |
+
+#### **Template Examples by Data Type**
+
+##### **Identifiers (z.string(), z.number().int())**
+```typescript
+// String ID Template
+"[Entity] identifier for [primary purpose], as a string. E.g., '[value]' for [specific example]. [Integration context if relevant]."
+
+// Numeric ID Template  
+"[Entity] identifier for [primary purpose], as an integer. E.g., '[value]' for [specific example]. [Integration context if relevant]."
+
+// Examples:
+"Terminal identifier for ferry scheduling and routing, as an integer. E.g., '3' for Bainbridge Island terminal. Used across ferry system APIs for cross-referencing."
+
+"Bridge number for infrastructure identification and safety planning, as a string. E.g., '12/348S' for State Route 12 bridge. Two-part format combines route and bridge sequence."
 ```
 
-#### Timestamps
-```
-"The [entity or event], as a UTC date." (No example needed.)
-"The scheduled departure for this vessel, as a UTC date."
+##### **Timestamps (zWsdotDate())**
+```typescript
+// Template
+"[Event/state] timestamp for [business purpose], as a UTC date. E.g., '[timestamp]' for [context]. [Usage guidance if relevant]."
+
+// Examples:
+"Vessel departure timestamp for schedule tracking and passenger planning, as a UTC date. E.g., '2025-09-29T14:30:00.000Z' for afternoon departure."
+
+"Bridge data update timestamp for maintenance scheduling and safety monitoring, as a UTC date. Critical for determining data currency."
 ```
 
-#### Coordinates
-```
-"The [latitude/longitude] of [this entity], in decimal degrees. E.g., '[coordinate]' for [location or entity]."
-"The latitude of this bridge, in decimal degrees. E.g., '46.626058' for BridgeNumber 12/348S.
+##### **Geographic Coordinates (z.number() for lat/lon)**
+```typescript
+// Template
+"[Location type] coordinate for [primary purpose], in decimal degrees. E.g., '[coordinate]' for [specific location]. [Integration context]."
+
+// Examples: 
+"Bridge latitude coordinate for mapping and navigation systems, in decimal degrees. E.g., '47.961343' for I-5 bridge in Seattle area."
+
+"Border crossing longitude for precise location identification, in decimal degrees. E.g., '-122.756964' for Blaine crossing point."
 ```
 
-#### Amounts
-```
-"The [value-type] of/for [this entity], in [units]. E.g., '[example]' for [explanation]."
-"The maximum vertical clearance for this bridge in inches, as a number. E.g., '193' for a bridge with maximum clearance of 16 feet and 1 inch."
-"The maximum vertical clearance for this bridge in feet and inches, as a string. E.g., '16 ft 1 in' for a maximum clearance of 193 inches.
+##### **Physical Measurements (z.number())**
+```typescript
+// Template
+"[Physical measurement] for [safety/operational purpose], in [units]. E.g., '[value]' for [real-world context]. [Usage guidance]."
+
+// Examples:
+"Maximum bridge clearance for commercial vehicle safety planning, in inches. E.g., '193' for typical overpass clearance. Compare against vehicle height before route planning."
+
+"Wait time estimate for border crossing optimization, in minutes. E.g., '15' for normal traffic flow, '-1' for closed lanes."
 ```
 
-#### Boolean Flags
+##### **Boolean Flags (z.boolean())**
+```typescript
+// Template
+"[Operational state] indicator for [decision making], as a boolean flag. True means [active state], false means [inactive state]. [Business impact]."
+
+// Examples:
+"Vessel docking status for passenger boarding decisions, as a boolean flag. True means docked and available for boarding, false means en route."
+
+"Direction independence flag for fare calculation, as a boolean flag. True means fare is same regardless of departure terminal, false means fare varies by terminal."
 ```
-"Whether the [entity] is [condition]. I.e., 'true' if [describe-case], 'false' if [describe-case])." 
-"Whether this vessel is at dock. I.e., 'true' if docked at a terminal, 'false' if at sea."
+
+##### **Status Codes/Enums (z.enum(), z.union())**
+```typescript
+// Template
+"[System state] indicator for [business purpose], as a status code. E.g., '[code]' for [condition], '[code2]' for [condition2]. [Business meaning explanation]."
+
+// Examples:
+"Traffic flow condition at the monitoring station, as a status code. E.g., '1' for wide open traffic, '3' for heavy congestion, '4' for stop-and-go conditions."
+
+"Mountain pass travel advisory level, as a status code. E.g., 'OPEN' for normal conditions, 'CHAINS_REQUIRED' for winter driving restrictions."
+```
+
+##### **Complex Objects (roadwayLocationSchema, etc.)**
+```typescript
+// Template
+"[Business context] information for [primary purpose], as a [object type]. E.g., [description of typical content]. [Special conditions if any]."
+
+// Examples:
+"Geographic location details for the border crossing point, as a roadway location object. Includes route designation, coordinates, and highway information. Returns null when location data unavailable for specific lane types."
+
+"Vessel position and status information for real-time tracking, as a vessel location object. Contains coordinates, heading, and operational status for ferry monitoring."
+```
+
+##### **Monetary Values (z.number() for currency)**
+```typescript
+// Template
+"[Cost/price] for [business purpose], in dollars. E.g., '[amount]' for [fare type/context]. [Pricing context if relevant]."
+
+// Examples:
+"Fare amount for passenger transportation, in dollars. E.g., '8.50' for adult passenger fare, '4.25' for senior discount fare."
 ```
 
 ### Parallel language
@@ -337,13 +584,33 @@ Also use parallel language for equivalent examples and business-context explanat
 
 ### Data Freshness Documentation
 
-**MANDATORY for all endpoint descriptions:**
+**REQUIRED PLACEMENT: Output schema `.describe()` annotations**
 
-- **Default for WSDOT APIs**: `'Data updates infrequently.'`
-- **Real-time/Dynamic APIs**: `'Data is real-time.'` (when no specific cadence documented)
-- **Specific cadence documented**: `'Data updates every [X] minutes.'` (only if officially documented)
-- **No inferences**: Don't state specific update cadences unless officially documented
-- **Consistency**: Apply the same statement across all files for the API
+**DATA FRESHNESS PRIORITY ORDER:**
+1. **Extract EXACT statements from source API documentation** (highest priority)
+2. **Use API-specific patterns** based on data type (real-time vs. static)
+3. **Only use defaults** when no specific information is available
+
+**CRITICAL EXAMPLES:**
+- Border crossing data = **"Data updates frequently"** (real-time traffic data)
+- Bridge clearance data = **"Data updates infrequently"** (static infrastructure)
+- Ferry vessel locations = **"Data is real-time"** (GPS tracking data)
+- Ferry schedules = **"Data updates infrequently"** (published schedules)
+
+**FORMAT REQUIREMENTS:**
+```typescript
+// REQUIRED: Include in output schema description
+export const outputSchema = z.array(itemSchema).describe(
+  "Returns [data description]. [Business context]. [DATA FRESHNESS STATEMENT]."
+);
+
+// EXAMPLES:
+"...for commercial vehicle routing. Data updates infrequently."
+"...for real-time border crossing planning. Data updates frequently."
+"...for vessel tracking and scheduling. Data is real-time."
+```
+
+**CONSISTENCY RULE:** Use the same data freshness statement across ALL files for each API.
 
 ### Schema Documentation Examples
 
@@ -392,12 +659,28 @@ The `endpointDescriptions.[agent].json` file **MUST** contain a single JSON obje
 "[High-level function]. [Business purpose/value]. Target users include [list]. Key use cases are [list]. [Cross-references naturally integrated]."
 ```
 
-### Cross-Reference Integration
+### Cross-Reference Integration and Timing
 
+**CRITICAL: Cross-references are ONLY added in Integration Phase (Phase 3).**
+**Writing Phase focuses purely on individual field and schema documentation.**
+
+**WHY RESTRICTION TO endpointDescriptions.json:**
+- Prevents context bloat in schema files
+- Maintains clear separation of concerns  
+- Schema descriptions focus on data meaning, endpoint descriptions focus on integration
+- Single source of truth for workflow guidance
+
+**DEFINITIVE PHASE TIMING:**
+- **Writing Phase (Phase 2):** NO cross-references - focus on field/schema descriptions only
+- **Integration Phase (Phase 3):** ALL cross-references created, reviewed, and validated
+
+**INTEGRATION FORMAT:**
 Cross-references **MUST** be integrated naturally into the narrative string:
 
-```
-"Shows current wait times at Canadian border crossings to help travelers choose the fastest route. Use with wsdot-traffic-flow/getTrafficFlow to get comprehensive travel conditions and with wsdot-highway-alerts/getAlerts to identify potential delays."
+```json
+{
+  "wsdot-border-crossings/getBorderCrossings": "Shows current wait times at Canadian border crossings to help travelers choose the fastest route. Use with wsdot-traffic-flow/getTrafficFlow to get comprehensive travel conditions and with wsdot-highway-alerts/getAlerts to identify potential delays."
+}
 ```
 
 ---
@@ -487,16 +770,132 @@ Cross-references **MUST** be integrated naturally into the narrative string:
 
 ### CRITICAL: Edge Case Documentation
 
-**MANDATORY**: Actively look for and document edge cases - unusual values representing special conditions:
+**MANDATORY**: Actively look for and document edge cases - unusual values representing special conditions.
 
-- **Magic numbers**: Values like `-1`, `0`, `999` indicating special states
-- **Special strings**: Values like 'CLOSED', 'N/A', 'UNKNOWN' representing conditions
-- **Format**: Use pattern: `(e.g., 'normal value' for normal condition, 'edge value' for special condition)`
-- **Business context**: Explain what the edge case means in real-world terms
+#### **EDGE CASE DISCOVERY CHECKLIST**
+
+For each field in the API data, systematically look for:
+
+- [ ] **Negative values** (e.g., `-1` for closed/unavailable, `-999` for error states)
+- [ ] **Zero values with special meaning** (not just numeric zero)
+- [ ] **Null/empty values** and their business context
+- [ ] **Magic numbers** (999, 9999, 0, -1) indicating limits or special states
+- [ ] **Special strings** ('CLOSED', 'N/A', 'UNKNOWN', 'OFFLINE', 'MAINTENANCE')
+- [ ] **Format variations** within the same field type
+- [ ] **Boundary conditions** (0.0, 100.0, min/max values)
+
+#### **DOCUMENTATION FORMAT:**
+```typescript
+// PATTERN: Normal example first, then edge cases
+field.describe("Business purpose. E.g., 'normal_value' for normal condition, 'edge_value' for special condition. Business context explanation.")
+
+// EXAMPLES:
+WaitTime: z.number().describe(
+  "Wait time in minutes for border crossing. E.g., '15' for normal wait, '-1' for lane closed or unavailable. Negative values indicate the lane is not operational."
+)
+
+Status: z.string().describe(
+  "Operational status of the vessel. E.g., 'IN_SERVICE' for active operations, 'MAINTENANCE' for scheduled repairs, 'OUT_OF_SERVICE' for decommissioned vessels."
+)
+```
+
+#### **BUSINESS CONTEXT REQUIREMENT:**
+Always explain what edge cases mean in real-world terms, not just their technical representation.
+
+#### **AVOID SPECULATION - FACTUAL ACCURACY:**
+**CRITICAL:** Never speculate about specific reasons for edge cases or unusual values. Document observable behavior, not assumptions.
+
+**✅ CORRECT - Document what you observe:**
+```typescript
+WaitTime: z.number().describe(
+  "Current wait time for the border crossing, in minutes. E.g., '15' for normal traffic. Returns '-1' when the lane is closed or data is unavailable."
+)
+```
+
+**❌ WRONG - Speculative assumptions:**
+```typescript
+WaitTime: z.number().describe(
+  "Returns '-1' when crossing is closed for maintenance, emergencies, or weather."
+)
+```
+
+**Guidelines:**
+- **Document patterns**: What value indicates what state
+- **Avoid specific reasons**: Don't guess why the system returns that value  
+- **Use inclusive language**: "when closed or unavailable" vs "when closed for maintenance"
+- **Base on data observation**: Only document patterns you actually see in the data
+
+#### **EDGE CASE DOCUMENTATION SCOPE:**
+
+**ALWAYS DOCUMENT (High Priority):**
+- **Negative values** with business meaning (e.g., -1 = closed, -999 = error)
+- **Null values** that indicate shared infrastructure or unavailable data
+- **Special status codes** (0 = inactive, 999 = unknown)
+- **Format variations** users need to understand (feet vs inches)
+
+**DOCUMENT IF BUSINESS-CRITICAL (Medium Priority):**
+- **Empty strings** vs null distinctions when they have different meanings
+- **Boundary values** (0, maximum limits) when they indicate special states
+- **Timestamp patterns** (null = never updated, specific dates = last maintenance)
+
+**USUALLY SKIP (Low Priority):**
+- **Technical null values** with no business impact
+- **Standard database patterns** (auto-increment IDs, GUIDs)
+- **Implementation details** that don't affect user decisions
+
+#### **SYSTEMATIC APPROACH:**
+1. **Examine EVERY field** in actual API response data
+2. **Look for patterns** across multiple records/responses
+3. **Apply scope priorities** above to decide what to document
+4. **Document systematically** using the format above
+5. **Verify business context** - don't speculate about meanings
+
+#### **COMMON EDGE CASE PATTERNS:**
+- **Transport Status**: 'IN_SERVICE', 'MAINTENANCE', 'OUT_OF_SERVICE', 'CLOSED'
+- **Wait Times**: Normal minutes vs. -1 for closed, 999 for unknown
+- **Availability**: Active records vs. null for inactive/shared infrastructure  
+- **Measurements**: Normal ranges vs. 0 for unmeasured, -1 for errors
+- **Identifiers**: Standard IDs vs. special codes for system states
 
 ---
 
 ## Quality Control
+
+### Quality Self-Assessment Checklist
+
+**Use this checklist to validate your work before submission:**
+
+#### **Code Compliance Check**
+- [ ] Schema variable names unchanged from original (no renaming)
+- [ ] No Zod methods added (.int(), .uuid(), .strict(), .min(), etc.)
+- [ ] No JSDoc comments added or modified
+- [ ] Only `.describe()` annotations added to schemas and fields
+- [ ] Import paths use canonical format (@/apis/shared/, @/schemas/)
+
+#### **File Creation Check**
+- [ ] `domain-analysis.[agent-name].md` created for each API
+- [ ] `inputSchemas.[agent-name].ts` created with enhanced descriptions
+- [ ] `outputSchemas.[agent-name].ts` created with enhanced descriptions
+- [ ] `endpointDescriptions.[agent-name].json` created with business context
+
+#### **Content Quality Check**
+- [ ] All fields have business context (not just technical descriptions)
+- [ ] Examples use literal API data with single quotes
+- [ ] Edge cases documented with business meaning (using discovery checklist)
+- [ ] Data freshness statements accurate (prioritize source documentation)
+- [ ] Cross-references integrated in endpointDescriptions.json only
+
+#### **Length and Structure Check**  
+- [ ] Field descriptions within character limits (simple: 50-150, business: 150-400, complex: 400-600)
+- [ ] Progressive disclosure structure used ([Purpose] + [Examples] + [Technical] + [Integration])
+- [ ] Parallel language used for related fields
+- [ ] Plain English throughout, active voice
+
+#### **Business Value Check**
+- [ ] Real-world applications explained for each endpoint
+- [ ] Usage guidance provided where appropriate
+- [ ] Business context prioritized over technical implementation
+- [ ] Target audience clear from descriptions
 
 ### Context Distribution Strategy
 
@@ -506,18 +905,129 @@ Cross-references **MUST** be integrated naturally into the narrative string:
 
 **Avoid Redundancy**: Don't repeat obvious API context in every field description.
 
+### Context Management Strategies
+
+**SYSTEMATIC APPROACH to prevent context overflow:**
+
+#### **Session Planning:**
+- Work on **maximum 2-3 endpoints** per session
+- Complete **full phase** for those endpoints before continuing
+- **Monitor context usage** - summarize progress at 70% usage
+
+#### **Context Optimization Techniques:**
+- **Use templates** to reduce repetitive context
+- **Reference previous work** rather than re-reading files  
+- **Batch similar work** (all input schemas, then all output schemas)
+- **Summarize findings** when context gets heavy
+
+#### **Information Management:**
+- **Extract key patterns** early in research phase
+- **Document reusable insights** in domain analysis
+- **Focus on decision-making value** over comprehensive coverage
+- **Avoid redundant API context** in individual field descriptions
+
+#### **When to Summarize:**
+- Context usage approaching 70%
+- Repetitive patterns identified across endpoints
+- Complex APIs with >10 endpoints
+- Long API responses that exceed practical limits
+
 ### Length Management for Scale (1000+ Fields)
 
 - **Pattern consolidation**: Create reusable description patterns for similar field types
 - **Essential-only content**: Focus on decision-making value, eliminate redundancy
 - **Tiered detail**: Core description + optional extended context for complex cases
 
-### Data Fetching Standards
+### Data Fetching and Validation Standards
 
+**FETCHING REQUIREMENTS:**
 - **Always use `--limit 500`** for all data fetching commands
 - This prevents context overflow on APIs with many endpoints
 - Provides representative sample for documentation
 - Monitor context usage throughout work
+
+**EXAMPLE DATA VALIDATION PROCESS:**
+
+#### **Step 1: Data Quality Check**
+Before using examples in descriptions:
+- [ ] **Verify data format** matches schema expectations
+- [ ] **Check for realistic values** (not test data like 'test@example.com')
+- [ ] **Confirm current data** (timestamps within last 24-48 hours when possible)
+- [ ] **Validate edge cases** actually exist in data (not assumptions)
+
+#### **Step 2: Business Context Validation**
+- [ ] **Research real locations** mentioned in data
+- [ ] **Verify terminology** against official transportation sources
+- [ ] **Check status meanings** (e.g., what does `Status: 2` actually mean?)
+- [ ] **Confirm business logic** (e.g., negative wait times indicate closure)
+
+#### **Step 3: Example Selection Criteria**
+**PRIORITIZE:**
+1. **Most representative** values (common use cases)
+2. **Clear business meaning** (obvious real-world significance) 
+3. **Current/recent data** (not outdated examples)
+4. **Edge case coverage** (when they add value)
+
+**AVOID:**
+- Generic placeholder data
+- Extremely long values that don't add clarity
+- Outdated timestamps or deprecated formats
+- Confusing edge cases without business context
+
+### Limited Data Scenario Guidance
+
+**When APIs return very few records or have limited field variations:**
+
+#### **For APIs with <5 Total Records:**
+- **Use ALL available data** for examples
+- Don't force 3-5 examples if only 1-2 exist
+- **Quality over quantity** - better to have accurate examples than fabricated ones
+- Document the limited dataset size in domain analysis
+
+#### **For Fields with <3 Variations:**
+- **Use ALL observed variations** in examples
+- Don't create hypothetical examples to reach 3-5 target
+- **Focus on representative coverage** of actual data patterns
+- Note limited variation patterns in field descriptions
+
+### **Context Management Concrete Guidance**
+
+#### **When to Apply Context Management:**
+- **Large APIs**: 15+ endpoints OR 100+ total fields
+- **Complex domains**: Multiple interconnected data types
+- **Extensive documentation**: When approaching token limits
+
+#### **Context Management Techniques:**
+1. **Batch Processing**: Work on 2-3 related endpoints per session
+2. **Progressive summarization**: After each endpoint, note key patterns
+3. **Template reuse**: Create field description templates for similar concepts
+4. **Reference previous work**: Link to earlier findings rather than re-analyzing
+
+#### **Context Warning Thresholds:**
+- **70% context usage**: Start summarizing key findings
+- **80% context usage**: Complete current endpoint and summarize session
+- **90% context usage**: Emergency summarization and continuation planning
+
+**For typical APIs (2-5 endpoints): Context management is usually unnecessary**
+
+#### **Example Approach:**
+```typescript
+// API returns only 2 border crossings
+CrossingName: z.string().describe(
+  "Border crossing identifier. E.g., 'I5' for Interstate 5 crossing or 'SR539' for State Route 539 crossing. Limited to major US-Canada crossings in Washington State."
+)
+
+// Field has consistent format across all records  
+WaitTime: z.number().describe(
+  "Current wait time in minutes. E.g., '15' for normal conditions. Negative values like '-1' indicate closed or unavailable lanes."
+)
+```
+
+#### **Documentation Notes:**
+- **Acknowledge limitations** when they exist
+- **Don't speculate** beyond observed data
+- **Use clear language** about dataset scope
+- **Focus on business value** of available data
 
 ### Large API Strategy
 
@@ -529,45 +1039,227 @@ For APIs with >10 endpoints:
 
 ---
 
-## Common Issues and Solutions
+## Comprehensive Troubleshooting Guide
 
-### Missing .describe() Annotations
-**Problem**: Adding JSDoc comments instead of `.describe()` annotations  
-**Solution**: ALWAYS add `.describe()` clauses to schema definitions, preserve original JSDoc comments  
-**Do Not**: Modify existing JSDoc comments or rename schema variables
+### Critical Code Violations
 
-### Over-Engineering Simple Fields
-**Problem**: Writing too much for obvious fields  
-**Solution**: Use templates for simple fields, focus on business context for complex ones
+#### **Schema Variable Renaming**
+**Problem**: Renaming original schema variables  
+**Examples**: `borderCrossingSchema` instead of `borderCrossingDataSchema`  
+**Solution**: Keep ALL original variable names exactly as provided  
+**Prevention**: Read original files carefully, preserve naming conventions
 
-### Missing Business Context
-**Problem**: Technical descriptions without real-world meaning  
-**Solution**: Always explain what the data means in practice
+#### **Unauthorized Code Structure Changes**
+**Problem**: Adding Zod validation methods  
+**Examples**: `.int()`, `.uuid()`, `.strict()`, `.min()`, `.max()`  
+**Solution**: Use ONLY `.describe()` annotations  
+**Prevention**: Remember: ANY method addition is a structure change and prohibited
 
-### Inconsistent Examples
-**Problem**: Examples don't match actual API data  
-**Solution**: Use only literal data from API responses with single quotes
+#### **JSDoc Comment Modifications**
+**Problem**: Adding or modifying JSDoc comments  
+**Solution**: Preserve all existing JSDoc exactly, use `.describe()` for enhancements  
+**Prevention**: Think of JSDoc as read-only, use `.describe()` for documentation
 
-### Generic Descriptions
-**Problem**: Descriptions like "A string value" or "An identifier"  
-**Solution**: Always include business context and real-world meaning
+### Data and Process Issues
 
-### Incorrect Endpoint Names
-**Problem**: Using generic names instead of exact function names  
-**Solution**: Always use exact endpoint function names from `src/clients/**`
+#### **fetch-dottie Command Failures**
+**Problem**: `fetch-dottie` returns no data or fails  
+**Common Causes**:
+- Using `api/function` format instead of function name only
+- API endpoint temporarily unavailable  
+- Invalid function name from endpoint discovery
 
-### Embedded Cross-References
-**Problem**: Adding cross-references mid-sentence in schema files  
-**Solution**: Only add cross-references in `endpointDescriptions.json` files
+**Solutions**:
+- Verify using function name only: `getBorderCrossings` not `wsdot-border-crossings/getBorderCrossings`
+- Double-check function name from `src/clients/` directory
+- If persistent failure: Stop work and request assistance
 
-### Non-Actionable Cross-References
-**Problem**: Generic references like "This might be useful for route planning"  
-**Solution**: Provide specific, actionable guidance with exact endpoint names
-
-### Data Fetching Failures
-**Problem**: `fetch-dottie` returns no data  
-**Solution**: Stop work and request assistance  
 **Do Not**: Use curl, direct HTTP requests, or workarounds
+
+#### **Import Path Violations**
+**Problem**: Creating agent-suffixed shared files or using wrong import paths  
+**Examples**: 
+- `import from "./roadwayLocationSchema.alice"`
+- `import from "src/schemas/shared/roadwayLocation.zod"`
+
+**Solution**: Always use canonical imports:
+- `import { schema } from "@/apis/shared/schemaName.original"`
+- `import { schema } from "@/schemas/[api-name]/schemaName.zod"`
+
+### Content Quality Issues
+
+#### **Missing Business Context**
+**Problem**: Technical descriptions without real-world meaning  
+**Examples**: "A string value", "An identifier", "Number field"  
+**Solution**: Always explain business purpose and real-world application  
+**Template**: "[Business purpose] for [real-world use]. E.g., '[example]' for [context]."
+
+#### **Inconsistent Examples**
+**Problem**: Examples don't match actual API data  
+**Solution**: Use ONLY literal data from API responses with single quotes  
+**Verification**: Cross-check examples against fetched API data
+
+#### **Incorrect Data Freshness**
+**Problem**: Wrong data freshness statements  
+**Examples**: Labeling real-time data as "updates infrequently"  
+**Solution**: Prioritize source documentation, then data type patterns  
+**Pattern Reference**:
+- Border crossings = "Data updates frequently" (real-time)
+- Bridge clearances = "Data updates infrequently" (static)
+
+## Integration Discovery Process
+
+### SYSTEMATIC APPROACH to identify cross-API integration opportunities:
+
+#### **Step 1: Data Relationship Analysis**
+Look for shared field patterns across APIs:
+
+**Location-Based Connections:**
+- **Road identifiers**: Traffic flow shows 'I-405' data, travel times connect 'I-405' routes, alerts affect 'I-405' segments
+- **Geographic coordinates**: Border crossings at `47.879865594, -124.35087107`, traffic cameras near same locations
+- **Mile posts**: Alerts from 'milepost 184 to 185' connect with traffic flow sensors at similar mileposts
+
+**Real-World Example:**
+```javascript
+// Travel times show: "I-405 @ NE 8th St in Bellevue" with delays
+// → Check traffic flow on "405" near milepost 13.33  
+// → Get alerts for "405" construction between MP 11-15
+// → Find alternate routes via border crossings if international travel
+```
+
+#### **Step 2: Workflow Analysis**  
+Identify natural sequences where one API's data feeds into another:
+
+**Sequential Usage Patterns:**
+```
+Planning: getTravelTimes() → getTrafficFlow() → getAlerts() → (if delays) getBorderCrossings()
+Monitoring: getVesselLocations() → (if ferry delays) getTravelTimes() → getAlerts() 
+Navigation: getAlerts() → (if closures) getTrafficFlow() → getTravelTimes()
+```
+
+**Real Example from Current Data:**
+- Travel time shows "CurrentTime: -1" (unavailable) for Seattle-Federal Way
+- → Use getTrafficFlow() for I-5 segments between those points  
+- → Check getAlerts() for construction affecting that route
+- → Consider getBorderCrossings() if international alternatives needed
+
+#### **Step 3: Complementary Information Patterns**
+
+**Temporal Enhancement:**
+- **Alert** shows construction 8pm-6am → **Travel times** may be affected during those hours
+- **Traffic flow** shows current conditions → **Alerts** explain why (construction, incidents)
+
+**Spatial Enhancement:** 
+- **Bridge clearances** provide static limits → **Traffic flow** shows real-time usage
+- **Border wait times** (-1 = closed) → **Travel times** for alternate routes
+
+**Status Correlation:**
+- Travel time `AverageTime: 25, CurrentTime: 34` (33% delay) suggests checking alerts for that route
+- Traffic flow `FlowReadingValue: 0` often correlates with closure alerts
+
+#### **Step 4: Integration Value Assessment**
+
+**HIGH VALUE integrations (Always Include):**
+- **Sequential workflows**: `getTravelTimes() → getAlerts() → getBorderCrossings()`
+- **Real-time + explanatory**: `getTrafficFlow() + getAlerts()` (current conditions + why)
+- **Static + dynamic combinations**: `getBridgeClearances() + getTrafficFlow()` (limits + usage)
+- **Alternative route planning**: Primary route blocked → alternative options
+
+**MEDIUM VALUE integrations (Include if Space):**
+- **Backup scenarios**: Ferry delays → road alternatives via `getTravelTimes()`
+- **Related planning**: `getVesselSchedules() + getBorderCrossings()` (different transport modes)
+- **Complementary timing**: Schedule data + real-time status updates
+
+**LOW VALUE integrations (Usually Skip):**
+- **Multi-step chains**: A → B → C → D (too complex for practical use)
+- **Different user bases**: Commercial trucking + recreational boating
+- **Tenuous geographic connections**: APIs covering different regions with minimal overlap
+- **Technical correlations**: APIs that share data formats but serve different purposes
+
+**STOPPING CRITERIA EXAMPLES:**
+- ✅ **Good**: "Use with wsdot-traffic-flow/getTrafficFlow to get current conditions on approach routes"
+- ❌ **Too tenuous**: "Could potentially be used with ferry data if travelers are considering water transport as an alternative to land routes"
+
+---
+
+### Integration and Cross-Reference Issues
+
+#### **Embedded Cross-References**
+**Problem**: Adding cross-references in schema `.describe()` annotations  
+**Solution**: ONLY add cross-references in `endpointDescriptions.json` files  
+**Reason**: Prevents context bloat, maintains separation of concerns
+
+#### **Incorrect Endpoint Names**
+**Problem**: Using generic names instead of exact function names  
+**Solution**: Use exact names from `EndpointDefinition` in `src/clients/`  
+**Process**: Follow canonical endpoint discovery process in research guide
+
+#### **Non-Actionable Cross-References**
+**Problem**: Vague references like "useful for planning"  
+**Solution**: Provide specific, actionable integration guidance  
+**Template**: "Use with [api]/[endpoint] to [specific purpose]"
+
+### File Management Issues
+
+#### **Missing Required Files**
+**Problem**: Not creating all required files per API  
+**Solution**: Use file creation checklist:
+- `domain-analysis.[agent-name].md` (EVERY API)
+- `inputSchemas.[agent-name].ts`  
+- `outputSchemas.[agent-name].ts`
+- `endpointDescriptions.[agent-name].json`
+
+#### **Incorrect File Placement**
+**Problem**: Creating files outside `/working/` subdirectory  
+**Solution**: ALL agent work goes in `src/apis/[api-name]/working/`  
+**Prevention**: Follow file structure overview at top of this document
+
+### Quality Assurance Workflow
+
+#### **Technical Compliance Checklist**
+1. **Use Quality Self-Assessment Checklist** before completing work
+2. **Verify against troubleshooting guide** for common issues
+3. **Cross-check examples** against actual API data
+4. **Validate file structure** and naming conventions  
+5. **Confirm code compliance** - no prohibited changes made
+
+#### **Qualitative Success Criteria**
+
+**EXCELLENT Documentation demonstrates:**
+
+**Clarity & Usability:**
+- [ ] **Non-expert understanding** - Someone unfamiliar with the domain can understand field purposes
+- [ ] **Decision-making value** - Descriptions help users decide whether to use this field/endpoint
+- [ ] **Real-world context** - Clear connection between data fields and business scenarios
+- [ ] **Actionable guidance** - Users know what to do with the information
+
+**Completeness & Accuracy:**
+- [ ] **Edge case coverage** - Important special conditions documented with business meaning
+- [ ] **Integration clarity** - Clear guidance on using with related APIs/endpoints
+- [ ] **Current examples** - Data reflects recent, realistic usage patterns
+- [ ] **Consistent terminology** - Same concepts described same way throughout
+
+**Professional Quality:**
+- [ ] **Narrative flow** - Descriptions read naturally, not like technical specifications
+- [ ] **Appropriate detail level** - Right amount of information without overwhelming
+- [ ] **Error-free content** - No grammar, spelling, or factual errors
+- [ ] **Developer empathy** - Anticipates and addresses common developer questions
+
+**MCP-Optimization:**
+- [ ] **Agent-friendly structure** - Information organized for programmatic consumption
+- [ ] **Context efficiency** - Maximum insight per token used
+- [ ] **Discovery support** - Helps agents understand data relationships and usage patterns
+- [ ] **Integration guidance** - Clear pathways between related functionality
+
+### When to Request Help
+
+**STOP WORK and request assistance for:**
+- Persistent `fetch-dottie` failures after verifying command syntax
+- Unclear business domain concepts that research doesn't resolve
+- Technical issues with file access or tool failures  
+- Conflicting information in source documentation
+
+**Do Not**: Make workarounds, assumptions, or skip requirements
 
 ---
 

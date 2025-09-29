@@ -1,118 +1,79 @@
-# API Documentation Enhancement - Master Overview
+# API Documentation Enhancement - Project Overview
+
+## 🚀 Quick Start
+
+**For all agents and editors working on API documentation:**
+
+### **READ THIS FIRST: [API Documentation Handbook](./api-documentation-handbook.md)**
+
+The comprehensive handbook contains everything you need:
+- Complete agent workflows (Research → Writing → Integration)
+- Editor synthesis processes and quality frameworks
+- All standards, rules, templates, and examples
+- Troubleshooting guide and quick reference tables
 
 ## Project Mission
 
 Transform terse, generic API descriptions into rich, semantic documentation that explains business purpose, real-world meaning, and endpoint relationships. Create discoverable documentation that enables both human developers and AI agents to understand and effectively use Washington State transportation APIs.
 
-## Target Audience: Dual Purpose Documentation
+## Documentation Structure
 
-### Human Developers
-- Need clear business context and real-world applications
-- Require integration examples and cross-API workflows
-- Benefit from concise, actionable guidance
+### **Single Source of Truth**
+- **`api-documentation-handbook.md`** → **COMPLETE GUIDE** for all work
+- **`master-overview.md`** → This overview file (you are here)
+- **`archive/`** → Previous fragmented documentation (reference only)
 
-### AI Agents via Model Context Protocol (MCP)
-- **Semantic Discovery**: Rich descriptions enable AI agents to understand when and how to use endpoints
-- **Context Efficiency**: Concise but complete descriptions fit within AI context windows
-- **Integration Intelligence**: Cross-references help AI agents chain API calls for complex workflows
-- **Business Logic**: Edge cases and business rules prevent AI agents from making incorrect assumptions
+### **Work Models**
 
-### Documentation Strategy
-- **Business-first explanations** serve both audiences
-- **Semantic richness** enables AI discovery without overwhelming humans
-- **Structured cross-references** guide both human integration and AI workflow planning
-- **Edge case documentation** prevents both human errors and AI hallucinations
+#### **Agents**: Independent API Documentation
+- Work independently on complete APIs
+- Follow 3-phase process: Research → Writing → Integration
+- Create enhanced schemas and endpoint descriptions
+- No coordination between agents during development
 
-## Agent Assignment Structure
+#### **Editors**: Multi-Agent Synthesis
+- Receive completed work from multiple agents
+- Compare, evaluate, and synthesize best elements
+- Optimize for length, clarity, and technical excellence
+- Ensure consistency across entire project
 
-### Work Model: Siloed Independence
-- Agents work independently unless specifically instructed otherwise
-- No coordination or collaboration between agents during development
-- Agents may be asked to compare/critique work after completion
+## Success Criteria
 
-### Assignment Options
-- **Single Agent**: Complete ownership of entire API
-- **Multiple Agents**: Each agent works on complete API independently
-- **Agent Names**: Assigned names (Alice, Bob, Charlie) or default to "Alice"
-
-## Phase Progression
-
-### Phase 1: Research and Domain Understanding
-**Guide**: `research-phase-guide.md`
-**Duration**: 2-3 hours
-**Deliverables**: Domain analysis, API data samples, business context documentation
-
-### Phase 2: Field and Schema Documentation  
-**Guide**: `writing-phase-guide.md`
-**Duration**: 3-4 hours
-**Deliverables**: Enhanced input/output schemas, endpoint descriptions
-
-### Phase 3: Integration and Cross-References
-**Guide**: `integration-phase-guide.md`
-**Duration**: 1-2 hours
-**Deliverables**: Cross-references, final quality review, completed API documentation
-
-### Phase 4: Editorial Synthesis (Optional)
-**Guide**: `editor-workflow-guide.md`
-**Duration**: 5-8 hours
-**Deliverables**: Synthesized final documentation combining best work from all agents
-
-## Documentation Hierarchy
-
-**This overview provides high-level project understanding. ALL detailed rules are in `shared-standards.md`.**
-
-### Document Roles:
-- **`master-overview.md`** → Mission, phases, workflow (THIS FILE)
-- **`shared-standards.md`** → **SINGLE SOURCE OF TRUTH** for all detailed rules, templates, examples
-- **`[phase]-guide.md`** → Phase-specific workflows and timing only
-
-### Rule: If there's conflict between documents, `shared-standards.md` takes precedence.
-
-### Success Criteria
+### **For All Work**
 - 100% field coverage with enhanced descriptions
 - Real examples from actual API data
 - Cross-references to related endpoints
 - Natural, readable language
 - Clear business value explanation
 
+### **Quality Standards**
+- **Business context first**: Real-world purpose and user value
+- **Length optimization**: Maximum information within character limits
+- **Edge case coverage**: Unusual values with business meaning
+- **Integration intelligence**: Actionable cross-references
+- **Technical excellence**: Perfect schema structure and imports
+
 ## Getting Started
 
-**CRITICAL: Read documents in this order:**
+### **For Agents**
+1. **Read the handbook** → `api-documentation-handbook.md`
+2. **Start with Phase 1** → Research workflow
+3. **Follow sequentially** → Writing → Integration
+4. **Use reference materials** → Templates, examples, troubleshooting
 
-1. **Read this overview** → Understand mission, phases, workflow
-2. **Read `shared-standards.md`** → **REQUIRED** - Contains ALL detailed rules, templates, examples
-3. **Follow phase guides sequentially** → Start with `research-phase-guide.md`
-4. **Reference `shared-standards.md`** → For every detailed question during work
-
-## Large API Strategy
-
-For APIs with >10 endpoints:
-1. **Process in batches**: Work on 3-4 endpoints per session
-2. **Complete full phase**: Finish research phase for those endpoints before moving to next batch
-3. **Continue sequentially**: Move to next batch and repeat
-4. **Final integration**: Combine all work in final integration phase
-
-## Quality Standards
-
-### For All Agents
-- **Example quality**: Apply decision tree for single vs. multiple examples - only use multiple when they show different categories/types/states
-- **Length management**: Stay within character limits (150-600 chars) while maximizing business value
-- **Business focus**: Prioritize decision-making value over technical details
-- **Edge case coverage**: Identify and document unusual values with business meaning
-- **Cross-reference accuracy**: Use exact endpoint names from project documentation
-
-### For Editor
-- **Superior synthesis**: Combine best elements while maintaining conciseness
-- **Length enforcement**: Ensure final output meets all character limits
-- **Example validation**: Apply example quality checklist during synthesis
-- **Technical excellence**: Perfect schema structure and import paths
+### **For Editors**
+1. **Read the handbook** → `api-documentation-handbook.md`
+2. **Review Section 5** → Editor synthesis workflows
+3. **Apply quality framework** → Multi-agent comparison methodology
+4. **Synthesize and optimize** → Create superior final documentation
 
 ## Support
 
-- **Data fetching issues**: Stop work and request assistance
+- **Technical issues**: Stop work and request assistance
 - **Unclear requirements**: Ask for clarification before proceeding
-- **Technical problems**: Escalate rather than work around
+- **Quality questions**: Reference handbook quality assessment framework
+- **Process questions**: Follow handbook troubleshooting guide
 
 ---
 
-**Next Step**: Review `shared-standards.md`, then begin with `research-phase-guide.md`
+**Next Step**: Open [`api-documentation-handbook.md`](./api-documentation-handbook.md) and begin with the appropriate section for your role.
