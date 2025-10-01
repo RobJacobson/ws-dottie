@@ -8,7 +8,6 @@
 import { z } from "zod";
 
 import { zWsdotDate } from "@/apis/shared";
-import { numbersListSchema, stringsListSchema } from "@/apis/shared/schemas";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information
@@ -967,9 +966,11 @@ export const terminalComboSchema = z.object({
   /**
    * An list of annotation strings assigned to one or more items in the Times list.
    */
-  Annotations: stringsListSchema.describe(
-    "An list of annotation strings assigned to one or more items in the Times list."
-  ),
+  Annotations: z
+    .array(z.string())
+    .describe(
+      "An list of annotation strings assigned to one or more items in the Times list."
+    ),
   /**
    * Scheduled departure details, including departure times.
    */
@@ -1027,24 +1028,30 @@ export const terminalComboSchema = z.object({
         /**
          * An list of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes.
          */
-        Routes: numbersListSchema.describe(
-          "An list of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes."
-        ),
+        Routes: z
+          .array(z.number())
+          .describe(
+            "An list of RouteID integers representing the routes serviced by this departure. Will be either equal to or a subset of AllRoutes."
+          ),
         /**
          * An list of index integers indicating the elements in the Annotations list that apply to this departure.
          */
-        AnnotationIndexes: numbersListSchema.describe(
-          "An list of index integers indicating the elements in the Annotations list that apply to this departure."
-        ),
+        AnnotationIndexes: z
+          .array(z.number())
+          .describe(
+            "An list of index integers indicating the elements in the Annotations list that apply to this departure."
+          ),
       })
     )
     .describe("Scheduled departure details, including departure times."),
   /**
    * An list of annotation strings assigned to one or more items in the Times list formatted for IVR.
    */
-  AnnotationsIVR: stringsListSchema.describe(
-    "An list of annotation strings assigned to one or more items in the Times list formatted for IVR."
-  ),
+  AnnotationsIVR: z
+    .array(z.string())
+    .describe(
+      "An list of annotation strings assigned to one or more items in the Times list formatted for IVR."
+    ),
 });
 
 export type TerminalCombo = z.infer<typeof terminalComboSchema>;
@@ -1063,9 +1070,11 @@ export const scheduleSchema = scheduleBaseSchema.extend({
   /**
    * An list of RouteID integers representing all the routes accounted for in this resultset.
    */
-  AllRoutes: numbersListSchema.describe(
-    "An list of RouteID integers representing all the routes accounted for in this resultset."
-  ),
+  AllRoutes: z
+    .array(z.number())
+    .describe(
+      "An list of RouteID integers representing all the routes accounted for in this resultset."
+    ),
   /**
    * A grouping of departure and arrival terminal pairs.
    */
@@ -1176,9 +1185,11 @@ export const alertDetailSchema = z.object({
   /**
    * An list of integers that represent the unique identifiers of routes affected by the alert.
    */
-  AffectedRouteIDs: numbersListSchema.describe(
-    "An list of integers that represent the unique identifiers of routes affected by the alert."
-  ),
+  AffectedRouteIDs: z
+    .array(z.number())
+    .describe(
+      "An list of integers that represent the unique identifiers of routes affected by the alert."
+    ),
   /** The alert text, tailored for text to speech systems. */
   IVRText: z
     .string()

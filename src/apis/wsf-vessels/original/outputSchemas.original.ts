@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { stringsListSchema } from "@/apis/shared/schemas";
 
 /**
  * VesselClass schema
@@ -476,7 +475,8 @@ export const vesselLocationsSchema = z
     /**
      * An list of strings that contain 0 or more abbreviated route names currently being serviced by this vessel.
      */
-    OpRouteAbbrev: stringsListSchema
+    OpRouteAbbrev: z
+      .array(z.string())
       .nullable()
       .describe(
         "An list of strings that contain 0 or more abbreviated route names currently being serviced by this vessel."

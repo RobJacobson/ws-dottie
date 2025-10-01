@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
-import { stringsListSchema } from "@/apis/shared/schemas";
 
 /**
  * Schema for RoadwayLocation - represents location information for a roadway in WSDOT Highway Alerts
@@ -135,10 +134,3 @@ export type Area = z.infer<typeof areaSchema>;
 export const areasListSchema = z.array(areaSchema);
 
 export type AreasList = z.infer<typeof areasListSchema>;
-
-/**
- * Schema for list of strings (used for event categories)
- */
-export { stringsListSchema };
-
-export type StringList = z.infer<typeof stringsListSchema>;

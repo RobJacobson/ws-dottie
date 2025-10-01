@@ -1,0 +1,3 @@
+{
+  "getBorderCrossings": "Retrieves current wait times for US-Canada border crossings in Washington State, covering I-5, SR-543, SR-539, and SR-9 crossing points. Provides specific wait times for general purpose, NEXUS trusted traveler, commercial truck, and FAST expedited lanes. Essential for international travel planning, enabling travelers and commercial operators to select optimal crossing times and routes to minimize delays based on real-time conditions and program eligibility. Integrate with wsdot-traffic-flow/getTrafficFlow to assess approach route congestion, wsdot-highway-alerts/getAlerts for border-related incidents, and wsdot-travel-times/getTravelTimes for comprehensive journey planning including border delays."
+}
