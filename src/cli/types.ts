@@ -40,6 +40,8 @@ export interface CliOptions {
   jsonp?: boolean;
   /** Validation flag (set by Commander.js when --no-validation is used) */
   validation?: boolean;
+  /** Concise array output: brackets on own lines, items indented and compact */
+  concise?: boolean;
 }
 
 /**

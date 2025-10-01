@@ -7,8 +7,8 @@
  * command-line tool, including support for transport and validation flags.
  */
 
-import chalk from "chalk";
 import { Command } from "commander";
+import pc from "picocolors";
 import type { Endpoint } from "@/shared/endpoints";
 import { getAllEndpoints } from "@/shared/endpoints";
 import { executeApiRequest, getStrategyDescription } from "./execution";
@@ -54,6 +54,10 @@ export const setupCli = (): void => {
     )
     .option("--list", "List all available endpoints")
     .option("--pretty", "Pretty-print JSON output with 2-space indentation")
+    .option(
+      "--concise",
+      "Concise array output: brackets on own lines, items indented and compact"
+    )
     .option("--quiet", "Quiet mode: suppress debug output and verbose messages")
     .option(
       "--silent",
@@ -128,7 +132,7 @@ const handleListOption = (consoleRestore: () => void): void => {
     .map((endpointDef) => {
       const { functionName, api } = endpointDef;
       const description = `${api} - ${functionName}`;
-      return `  ${chalk.cyan(functionName)} - ${description}`;
+      return `  ${pc.cyan(functionName)} - ${description}`;
     })
     .join("\n");
 
@@ -180,8 +184,8 @@ const validateFunctionName = (functionName: string): void => {
     typeof functionName !== "string" ||
     functionName.trim() === ""
   ) {
-    console.error(chalk.red("❌ Function name is required"));
-    console.error(chalk.gray("💡 Tip: Use --help to see available functions"));
+    console.error(pc.red("❌ Function name is required"));
+    console.error(pc.gray("💡 Tip: Use --help to see available functions"));
     process.exit(1);
   }
 };

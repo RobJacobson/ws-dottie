@@ -6,7 +6,7 @@
  * Focused on essential functionality used by the core library.
  */
 
-import chalk from "chalk";
+import pc from "picocolors";
 
 // ============================================================================
 // SIMPLIFIED LOGGING IMPLEMENTATION
@@ -54,7 +54,7 @@ export const logger = {
 export const logApiCall = (endpoint: string, params?: unknown): void => {
   const endpointName = endpoint.split("/").pop() || endpoint;
   const paramsStr = params ? JSON.stringify(params) : "none";
-  const message = chalk.blue(
+  const message = pc.blue(
     `Calling ${endpointName} with parameters ${paramsStr}...`
   );
   console.log(message);
@@ -79,7 +79,7 @@ export const logApiResults = (
   const objectCount = Array.isArray(jsonData) ? jsonData.length : 1;
   const durationSec = (duration / 1000).toFixed(1);
   const sizeKb = (responseSize / 1024).toFixed(1);
-  const results = chalk.green(
+  const results = pc.green(
     ` Retrieved ${objectCount} objects in ${durationSec} sec (${sizeKb} kb).`
   );
   console.log(results);

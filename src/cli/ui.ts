@@ -14,7 +14,7 @@
  * - **User Feedback**: Colored output and informative messages
  */
 
-import chalk from "chalk";
+import pc from "picocolors";
 import { getAllEndpoints } from "@/shared/endpoints";
 import type { ApiError } from "@/shared/fetching/shared/handleError";
 import { isApiError } from "@/shared/fetching/shared/handleError";
@@ -40,8 +40,8 @@ export const handleError = (error: unknown, functionName: string): never => {
       ? error.message
       : String(error);
 
-  console.error(chalk.red(`❌ Error calling ${functionName}:`));
-  console.error(chalk.yellow(message));
+  console.error(pc.red(`❌ Error calling ${functionName}:`));
+  console.error(pc.yellow(message));
 
   // Add context based on error type
   addErrorContext(error);
@@ -53,7 +53,7 @@ export const handleError = (error: unknown, functionName: string): never => {
     error.stack &&
     process.env.NODE_ENV === "development"
   ) {
-    console.error(chalk.gray(error.stack));
+    console.error(pc.gray(error.stack));
   }
 
   process.exit(1);
@@ -101,32 +101,30 @@ const getApiErrorTip = (error: ApiError): void => {
   if (error.status && error.status >= 400) {
     if (error.status === 404) {
       console.error(
-        chalk.gray("💡 Tip: Check if the endpoint or parameters are correct")
+        pc.gray("💡 Tip: Check if the endpoint or parameters are correct")
       );
     } else if (error.status >= 500) {
       console.error(
-        chalk.gray(
+        pc.gray(
           "💡 Tip: The API server may be experiencing issues. Try again later"
         )
       );
     } else if (error.status === 401 || error.status === 403) {
-      console.error(chalk.gray("💡 Tip: Check your API access permissions"));
+      console.error(pc.gray("💡 Tip: Check your API access permissions"));
     } else {
       console.error(
-        chalk.gray("💡 Tip: Check your request parameters and try again")
+        pc.gray("💡 Tip: Check your request parameters and try again")
       );
     }
   } else if (error.message.includes("timeout")) {
     console.error(
-      chalk.gray(
-        "💡 Tip: The request timed out. Check your internet connection"
-      )
+      pc.gray("💡 Tip: The request timed out. Check your internet connection")
     );
   } else if (
     error.message.includes("network") ||
     error.message.includes("fetch")
   ) {
-    console.error(chalk.gray("💡 Tip: Check your internet connection"));
+    console.error(pc.gray("💡 Tip: Check your internet connection"));
   }
 };
 
@@ -136,18 +134,18 @@ const getApiErrorTip = (error: ApiError): void => {
  */
 const getGenericErrorTip = (message: string): void => {
   if (message.includes("Invalid JSON parameters")) {
-    console.error(chalk.gray("💡 Tip: Ensure your parameters are valid JSON"));
+    console.error(pc.gray("💡 Tip: Ensure your parameters are valid JSON"));
   } else if (
     message.includes("Parameter validation failed") ||
     message.includes("Validation failed")
   ) {
     console.error(
-      chalk.gray(
+      pc.gray(
         "💡 Tip: Check the function documentation for required parameters"
       )
     );
   } else if (message.includes("not found")) {
-    console.error(chalk.gray("💡 Tip: Use --help to see available functions"));
+    console.error(pc.gray("💡 Tip: Use --help to see available functions"));
   }
 };
 
@@ -170,19 +168,19 @@ export const displayCollisionError = (
   }>
 ): void => {
   console.error(
-    chalk.red(`❌ Multiple endpoints found with name '${endpointName}':`)
+    pc.red(`❌ Multiple endpoints found with name '${endpointName}':`)
   );
-  console.error(chalk.yellow("Please use a fully-qualified name:"));
+  console.error(pc.yellow("Please use a fully-qualified name:"));
   console.error();
 
   matchingEndpoints.forEach((ep) => {
-    console.error(chalk.cyan(`  ${ep.api}:${endpointName}`));
-    console.error(chalk.gray(`    → ${ep.urlTemplate}`));
+    console.error(pc.cyan(`  ${ep.api}:${endpointName}`));
+    console.error(pc.gray(`    → ${ep.urlTemplate}`));
   });
 
   console.error();
   console.error(
-    chalk.gray(
+    pc.gray(
       "💡 Tip: Use the format 'api:endpoint' to specify which endpoint you want"
     )
   );
@@ -200,10 +198,10 @@ export const displayCollisionError = (
 export const displayFunctionNotFound = (functionName: string): void => {
   const endpoints = getAllEndpoints();
   const availableFunctions = endpoints.map((ep) => ep.functionName);
-  console.error(chalk.red(`❌ Function '${functionName}' not found`));
-  console.error(chalk.yellow("Available functions:"));
+  console.error(pc.red(`❌ Function '${functionName}' not found`));
+  console.error(pc.yellow("Available functions:"));
   availableFunctions.forEach((func) => {
-    console.error(chalk.gray(`  ${func}`));
+    console.error(pc.gray(`  ${func}`));
   });
 };
 
@@ -217,6 +215,12 @@ export const displayFunctionNotFound = (functionName: string): void => {
  * @param options - CLI options controlling output format (pretty, head, etc.)
  */
 export const outputResult = (result: unknown, options: CliOptions): void => {
+  // Handle concise output for arrays
+  if (options.concise && Array.isArray(result)) {
+    outputConciseArray(result, options);
+    return;
+  }
+
   const jsonString = JSON.stringify(
     result,
     null,
@@ -229,6 +233,64 @@ export const outputResult = (result: unknown, options: CliOptions): void => {
     console.log(truncatedLines.join("\n"));
   } else {
     console.log(jsonString);
+  }
+};
+
+/**
+ * Outputs array in concise format: brackets on own lines, items indented and compact
+ * Colors are automatically handled by picocolors based on TTY detection
+ *
+ * @param result - Array of items to output
+ * @param options - CLI options controlling output format
+ */
+const outputConciseArray = (result: unknown[], options: CliOptions): void => {
+  // Apply limit if specified
+  const itemsToShow =
+    options.limit && options.limit > 0
+      ? result.slice(0, options.limit)
+      : result;
+
+  console.log("[");
+  itemsToShow.forEach((item, index) => {
+    const isLast = index === itemsToShow.length - 1;
+    const colorizedItem = colorizeValue(item);
+    console.log(`  ${colorizedItem}${isLast ? "" : ","}`);
+  });
+  console.log("]");
+};
+
+/**
+ * Recursively colorizes a JavaScript value using picocolors
+ * Handles all JSON types: objects, arrays, strings, numbers, booleans, null
+ *
+ * @param value - Value to colorize
+ * @returns Colorized string representation
+ */
+const colorizeValue = (value: unknown): string => {
+  // Handle null first (typeof null === 'object')
+  if (value === null) return pc.yellow("null");
+
+  // Handle arrays before objects (Array.isArray needed since typeof array === 'object')
+  if (Array.isArray(value)) {
+    const items = value.map(colorizeValue);
+    return `[${items.join(",")}]`;
+  }
+
+  switch (typeof value) {
+    case "string":
+      return pc.green(`"${value}"`);
+    case "number":
+      return pc.cyan(String(value));
+    case "boolean":
+      return pc.yellow(String(value));
+    case "object": {
+      const entries = Object.entries(value).map(
+        ([key, val]) => `${pc.gray(`"${key}"`)}:${colorizeValue(val)}`
+      );
+      return `{${entries.join(",")}}`;
+    }
+    default:
+      return String(value);
   }
 };
 
@@ -339,7 +401,7 @@ export const generateHelpText = (
       const functionName = endpointDef.functionName;
       const api = endpointDef.api;
       const description = `${api} - ${functionName}`;
-      return `  ${chalk.cyan(functionName)} - ${description}`;
+      return `  ${pc.cyan(functionName)} - ${description}`;
     })
     .join("\n");
 
