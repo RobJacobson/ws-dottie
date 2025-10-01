@@ -9,10 +9,10 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getScheduleByRoute */
 const scheduleByRouteInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  routeId: z.number().int().positive(),
+  RouteID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getScheduleByRoute */
@@ -22,10 +22,10 @@ export const getScheduleByRouteMeta: EndpointDefinition<
 > = {
   api: "wsf-schedule",
   function: "scheduleByRoute",
-  endpoint: "/ferries/api/schedule/rest/schedule/{tripDate}/{routeId}",
+  endpoint: "/ferries/api/schedule/rest/schedule/{TripDate}/{RouteID}",
   inputSchema: scheduleByRouteInput,
   outputSchema: scheduleResponseSchema,
-  sampleParams: { tripDate: datesHelper.tomorrow(), routeId: 1 },
+  sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
   cacheStrategy: "STATIC",
 };
 

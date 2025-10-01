@@ -9,11 +9,11 @@
  * - Flow station identifier, numeric flow reading (0–4), station location, region, station name, and observation time (JS Date)
  *
  * @functions
- *   - getTrafficFlowById: Returns a single traffic flow by `flowDataID`
+ *   - getTrafficFlowById: Returns a single traffic flow by `FlowDataID`
  *
  * @input
  *   - getTrafficFlowById:
- *     - flowDataID: Flow data identifier
+ *     - FlowDataID: Flow data identifier
  *
  * @output
  *   - getTrafficFlowById: TrafficFlow
@@ -30,7 +30,7 @@
  *   - FlowStationLocation: Station location details
  *
  * @cli
- *   - getTrafficFlowById: node dist/cli.mjs getTrafficFlowById '{"flowDataID": 2482}'
+ *   - getTrafficFlowById: node dist/cli.mjs getTrafficFlowById '{"FlowDataID": 2482}'
  *
  * @exampleResponse
  * {
@@ -62,7 +62,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getTrafficFlowById */
 const trafficFlowByIdInput = z.object({
   /** Flow data identifier */
-  flowDataID: z.number(),
+  FlowDataID: z.number(),
 });
 
 /** Endpoint metadata for getTrafficFlowById */
@@ -73,10 +73,10 @@ export const getTrafficFlowByIdMeta: EndpointDefinition<
   api: "wsdot-traffic-flow",
   function: "getTrafficFlowById",
   endpoint:
-    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={flowDataID}",
+    "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={FlowDataID}",
   inputSchema: trafficFlowByIdInput,
   outputSchema: flowDataSchema,
-  sampleParams: { flowDataID: 2482 },
+  sampleParams: { FlowDataID: 2482 },
   cacheStrategy: "FREQUENT",
 };
 

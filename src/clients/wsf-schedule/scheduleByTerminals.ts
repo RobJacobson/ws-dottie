@@ -9,11 +9,11 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getScheduleByTerminals */
 const scheduleByTerminalsInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  departingScheduleTerminalId: z.number().int().positive(),
-  arrivingScheduleTerminalId: z.number().int().positive(),
+  DepartingScheduleTerminalID: z.number().int().positive(),
+  ArrivingScheduleTerminalID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getScheduleByTerminals */
@@ -24,13 +24,13 @@ export const getScheduleByTerminalsMeta: EndpointDefinition<
   api: "wsf-schedule",
   function: "scheduleByTerminals",
   endpoint:
-    "/ferries/api/schedule/rest/schedule/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
+    "/ferries/api/schedule/rest/schedule/{TripDate}/{DepartingScheduleTerminalID}/{ArrivingScheduleTerminalID}",
   inputSchema: scheduleByTerminalsInput,
   outputSchema: scheduleResponseSchema,
   sampleParams: {
-    tripDate: datesHelper.tomorrow(),
-    departingScheduleTerminalId: 1,
-    arrivingScheduleTerminalId: 10,
+    TripDate: datesHelper.tomorrow(),
+    DepartingScheduleTerminalID: 1,
+    ArrivingScheduleTerminalID: 10,
   },
   cacheStrategy: "STATIC",
 };

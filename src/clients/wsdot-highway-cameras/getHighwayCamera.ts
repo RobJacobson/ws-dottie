@@ -13,7 +13,7 @@
  *
  * @input
  *   - getHighwayCamera:
- *     - cameraID: Camera identifier
+ *     - CameraID: Camera identifier
  *
  * @output
  *   - getHighwayCamera: Camera
@@ -45,7 +45,7 @@
  *   - CameraLocation: Camera location details
  *
  * @cli
- *   - getHighwayCamera: node dist/cli.mjs getHighwayCamera '{"cameraID": 9818}'
+ *   - getHighwayCamera: node dist/cli.mjs getHighwayCamera '{"CameraID": 9818}'
  *
  * @exampleResponse
  * {
@@ -85,7 +85,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getHighwayCamera */
 const highwayCameraInput = z.object({
   /** Camera identifier */
-  cameraID: z.number().int(),
+  CameraID: z.number().int(),
 });
 
 /** Endpoint metadata for getHighwayCamera */
@@ -96,10 +96,10 @@ export const getHighwayCameraMeta: EndpointDefinition<
   api: "wsdot-highway-cameras",
   function: "getHighwayCamera",
   endpoint:
-    "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={cameraID}",
+    "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={CameraID}",
   inputSchema: highwayCameraInput,
   outputSchema: cameraSchema,
-  sampleParams: { cameraID: 9818 }, // From E2E test validParams
+  sampleParams: { CameraID: 9818 }, // From E2E test validParams
   cacheStrategy: "STATIC",
 };
 

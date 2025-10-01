@@ -9,7 +9,7 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getTerminalComboVerbose */
 const terminalComboVerboseInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
@@ -21,10 +21,10 @@ export const getTerminalComboVerboseMeta: EndpointDefinition<
 > = {
   api: "wsf-fares",
   function: "terminalComboVerbose",
-  endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{tripDate}",
+  endpoint: "/ferries/api/fares/rest/terminalcomboverbose/{TripDate}",
   inputSchema: terminalComboVerboseInput,
   outputSchema: z.array(terminalComboVerboseItemSchema),
-  sampleParams: { tripDate: datesHelper.tomorrow() },
+  sampleParams: { TripDate: datesHelper.tomorrow() },
   cacheStrategy: "STATIC",
 };
 

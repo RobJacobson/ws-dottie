@@ -9,14 +9,14 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareTotals */
 const fareTotalsInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  departingTerminalId: z.number().int().positive(),
-  arrivingTerminalId: z.number().int().positive(),
-  roundTrip: z.boolean(),
-  fareLineItemId: z.number().int().positive(),
-  quantity: z.number().int().positive(),
+  DepartingTerminalID: z.number().int().positive(),
+  ArrivingTerminalID: z.number().int().positive(),
+  RoundTrip: z.boolean(),
+  FareLineItemID: z.number().int().positive(),
+  Quantity: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getFareTotals */
@@ -27,16 +27,16 @@ export const getFareTotalsMeta: EndpointDefinition<
   api: "wsf-fares",
   function: "fareTotals",
   endpoint:
-    "/ferries/api/fares/rest/faretotals/{tripDate}/{departingTerminalId}/{arrivingTerminalId}/{roundTrip}/{fareLineItemId}/{quantity}",
+    "/ferries/api/fares/rest/faretotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
   inputSchema: fareTotalsInput,
   outputSchema: fareTotalsSchema,
   sampleParams: {
-    tripDate: datesHelper.tomorrow(),
-    departingTerminalId: 1,
-    arrivingTerminalId: 10,
-    roundTrip: false,
-    fareLineItemId: 1,
-    quantity: 2,
+    TripDate: datesHelper.tomorrow(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
+    RoundTrip: false,
+    FareLineItemID: 1,
+    Quantity: 2,
   },
   cacheStrategy: "STATIC",
 };

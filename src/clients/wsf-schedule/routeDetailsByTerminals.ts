@@ -10,18 +10,18 @@ import { datesHelper } from "@/shared/utils";
 /** Input schema for getRouteDetailsByTerminals */
 const routeDetailsByTerminalsInput = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
     .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
   /** Unique identifier for the departing terminal. */
-  departingScheduleTerminalId: z
+  DepartingScheduleTerminalID: z
     .number()
     .int()
     .positive()
     .describe("Unique identifier for the departing terminal."),
   /** Unique identifier for the arriving terminal. */
-  arrivingScheduleTerminalId: z
+  ArrivingScheduleTerminalID: z
     .number()
     .int()
     .positive()
@@ -36,13 +36,13 @@ export const getRouteDetailsByTerminalsMeta: EndpointDefinition<
   api: "wsf-schedule",
   function: "routeDetailsByTerminals",
   endpoint:
-    "/ferries/api/schedule/rest/routedetails/{tripDate}/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}",
+    "/ferries/api/schedule/rest/routedetails/{TripDate}/{DepartingScheduleTerminalID}/{ArrivingScheduleTerminalID}",
   inputSchema: routeDetailsByTerminalsInput,
   outputSchema: routeDetailsListSchema,
   sampleParams: {
-    tripDate: datesHelper.tomorrow(),
-    departingScheduleTerminalId: 1,
-    arrivingScheduleTerminalId: 10,
+    TripDate: datesHelper.tomorrow(),
+    DepartingScheduleTerminalID: 1,
+    ArrivingScheduleTerminalID: 10,
   },
   cacheStrategy: "STATIC",
 };

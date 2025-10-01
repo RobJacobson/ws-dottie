@@ -8,9 +8,9 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleTodayByScheduleTerminals */
 const scheduleTodayByScheduleTerminalsInput = z.object({
-  departingScheduleTerminalId: z.number().int().positive(),
-  arrivingScheduleTerminalId: z.number().int().positive(),
-  onlyRemainingTimes: z.boolean(),
+  DepartingScheduleTerminalID: z.number().int().positive(),
+  ArrivingScheduleTerminalID: z.number().int().positive(),
+  OnlyRemainingTimes: z.boolean(),
 });
 
 /** Endpoint metadata for getScheduleTodayByScheduleTerminals */
@@ -21,13 +21,13 @@ export const getScheduleTodayByScheduleTerminalsMeta: EndpointDefinition<
   api: "wsf-schedule",
   function: "scheduleTodayByTerminals",
   endpoint:
-    "/ferries/api/schedule/rest/scheduletoday/{departingScheduleTerminalId}/{arrivingScheduleTerminalId}/{onlyRemainingTimes}",
+    "/ferries/api/schedule/rest/scheduletoday/{DepartingScheduleTerminalID}/{ArrivingScheduleTerminalID}/{OnlyRemainingTimes}",
   inputSchema: scheduleTodayByScheduleTerminalsInput,
   outputSchema: scheduleTodayResponseSchema,
   sampleParams: {
-    departingScheduleTerminalId: 1,
-    arrivingScheduleTerminalId: 10,
-    onlyRemainingTimes: false,
+    DepartingScheduleTerminalID: 1,
+    ArrivingScheduleTerminalID: 10,
+    OnlyRemainingTimes: false,
   },
   cacheStrategy: "STATIC",
 };

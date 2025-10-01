@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getVesselLocationsByVesselId */
 const vesselLocationsByVesselIdInput = z.object({
-  vesselId: z
+  VesselID: z
     .number()
     .int()
     .positive()
@@ -24,10 +24,10 @@ export const getVesselLocationsByVesselIdMeta: EndpointDefinition<
 > = {
   api: "wsf-vessels",
   function: "vesselLocationsById",
-  endpoint: "/ferries/api/vessels/rest/vessellocations/{vesselId}",
+  endpoint: "/ferries/api/vessels/rest/vessellocations/{VesselID}",
   inputSchema: vesselLocationsByVesselIdInput,
   outputSchema: vesselLocationSchema,
-  sampleParams: { vesselId: 1 },
+  sampleParams: { VesselID: 18 },
   cacheStrategy: "REALTIME",
 } as const;
 

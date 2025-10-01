@@ -9,7 +9,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getWeatherInformationByStationId */
 const weatherInformationByStationIdInput = z
   .object({
-    stationId: z
+    StationID: z
       .number()
       .int()
       .positive()
@@ -29,10 +29,10 @@ export const getWeatherInformationByStationIdMeta: EndpointDefinition<
   api: "wsdot-weather-information",
   function: "getWeatherInformationByStationId",
   endpoint:
-    "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={stationId}",
+    "/Traffic/api/WeatherInformation/WeatherInformationREST.svc/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
   inputSchema: weatherInformationByStationIdInput,
   outputSchema: weatherInfoSchema,
-  sampleParams: { stationId: 1909 },
+  sampleParams: { StationID: 1909 },
   cacheStrategy: "FREQUENT",
 };
 

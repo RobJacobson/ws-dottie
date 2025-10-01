@@ -13,7 +13,7 @@
  *
  * @input
  *   - getMountainPassConditionById:
- *     - passConditionId: Pass condition identifier
+ *     - PassConditionID: Pass condition identifier
  *
  * @output
  *   - getMountainPassConditionById: MountainPassCondition
@@ -39,7 +39,7 @@
  *   - TravelRestriction: Travel restriction detail
  *
  * @cli
- *   - getMountainPassConditionById: node dist/cli.mjs getMountainPassConditionById '{"passConditionId": 1}'
+ *   - getMountainPassConditionById: node dist/cli.mjs getMountainPassConditionById '{"PassConditionID": 1}'
  *
  * @exampleResponse
  * {
@@ -76,7 +76,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getMountainPassCondition */
 const mountainPassConditionInput = z.object({
   /** Pass condition identifier */
-  passConditionId: z.number().int().positive(),
+  PassConditionID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getMountainPassCondition */
@@ -87,10 +87,10 @@ export const getMountainPassConditionMeta: EndpointDefinition<
   api: "wsdot-mountain-pass-conditions",
   function: "getMountainPassCondition",
   endpoint:
-    "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={passConditionId}",
+    "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={PassConditionID}",
   inputSchema: mountainPassConditionInput,
   outputSchema: passConditionSchema,
-  sampleParams: { passConditionId: 1 },
+  sampleParams: { PassConditionID: 12 },
   cacheStrategy: "STATIC",
 };
 

@@ -8,8 +8,8 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getScheduleTodayByRoute */
 const scheduleTodayByRouteInput = z.object({
-  routeId: z.number().int().positive(),
-  onlyRemainingTimes: z.boolean(),
+  RouteID: z.number().int().positive(),
+  OnlyRemainingTimes: z.boolean(),
 });
 
 /** Endpoint metadata for getScheduleTodayByRoute */
@@ -20,10 +20,10 @@ export const getScheduleTodayByRouteMeta: EndpointDefinition<
   api: "wsf-schedule",
   function: "scheduleTodayByRoute",
   endpoint:
-    "/ferries/api/schedule/rest/scheduletoday/{routeId}/{onlyRemainingTimes}",
+    "/ferries/api/schedule/rest/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
   inputSchema: scheduleTodayByRouteInput,
   outputSchema: scheduleTodayResponseSchema,
-  sampleParams: { routeId: 1, onlyRemainingTimes: false },
+  sampleParams: { RouteID: 1, OnlyRemainingTimes: false },
   cacheStrategy: "STATIC",
 };
 

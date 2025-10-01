@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTravelTime */
 const travelTimeInput = z.object({
-  travelTimeId: z.number().int().positive(),
+  TravelTimeID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getTravelTime */
@@ -19,10 +19,10 @@ export const getTravelTimeMeta: EndpointDefinition<
   api: "wsdot-travel-times",
   function: "getTravelTime",
   endpoint:
-    "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={travelTimeId}",
+    "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={TravelTimeID}",
   inputSchema: travelTimeInput,
   outputSchema: travelTimeRouteSchema,
-  sampleParams: { travelTimeId: 1 },
+  sampleParams: { TravelTimeID: 1 },
   cacheStrategy: "STATIC",
 };
 

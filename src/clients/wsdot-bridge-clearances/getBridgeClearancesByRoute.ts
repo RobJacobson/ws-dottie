@@ -14,7 +14,7 @@
  *
  * @input
  *   - getBridgeClearancesByRoute:
- *     - route: WSDOT route string (e.g., "005")
+ *     - Route: WSDOT route string (e.g., "005")
  *
  * @output
  *   - getBridgeClearancesByRoute: BridgeDataGISArray
@@ -43,7 +43,7 @@
  *   - BridgeDataGIS: Bridge clearance record
  *
  * @cli
- *   - getBridgeClearancesByRoute: node dist/cli.mjs getBridgeClearancesByRoute '{"route": "005"}'
+ *   - getBridgeClearancesByRoute: node dist/cli.mjs getBridgeClearancesByRoute '{"Route": "005"}'
  *
  * @exampleResponse
  * {
@@ -81,7 +81,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getBridgeClearancesByRoute */
 const bridgeClearancesByRouteInput = z.object({
   /** WSDOT route string (e.g., "005") */
-  route: z.string().min(1, "Route parameter is required"),
+  Route: z.string().min(1, "Route parameter is required"),
 });
 
 /** Endpoint metadata for getBridgeClearancesByRoute */
@@ -92,10 +92,10 @@ export const getBridgeClearancesByRouteMeta: EndpointDefinition<
   api: "wsdot-bridge-clearances",
   function: "getBridgeClearancesByRoute",
   endpoint:
-    "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={route}",
+    "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={Route}",
   inputSchema: bridgeClearancesByRouteInput,
   outputSchema: bridgeClearancesSchema,
-  sampleParams: { route: "005" },
+  sampleParams: { Route: "005" },
   cacheStrategy: "STATIC",
 };
 

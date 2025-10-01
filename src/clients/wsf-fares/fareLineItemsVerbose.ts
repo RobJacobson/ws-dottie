@@ -9,7 +9,7 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFareLineItemsVerbose */
 const fareLineItemsVerboseInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
@@ -21,10 +21,10 @@ export const getFareLineItemsVerboseMeta: EndpointDefinition<
 > = {
   api: "wsf-fares",
   function: "fareLineItemsVerbose",
-  endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{tripDate}",
+  endpoint: "/ferries/api/fares/rest/farelineitemsverbose/{TripDate}",
   inputSchema: fareLineItemsVerboseInput,
   outputSchema: fareLineItemsVerboseSchema,
-  sampleParams: { tripDate: datesHelper.tomorrow() },
+  sampleParams: { TripDate: datesHelper.tomorrow() },
   cacheStrategy: "STATIC",
 };
 

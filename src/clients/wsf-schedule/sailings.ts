@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getSailings */
 const sailingsInput = z.object({
-  schedRouteId: z.number().int().positive(),
+  SchedRouteID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getSailings */
@@ -18,10 +18,10 @@ export const getSailingsMeta: EndpointDefinition<
 > = {
   api: "wsf-schedule",
   function: "sailings",
-  endpoint: "/ferries/api/schedule/rest/sailings/{schedRouteId}",
+  endpoint: "/ferries/api/schedule/rest/sailings/{SchedRouteID}",
   inputSchema: sailingsInput,
   outputSchema: sailingResponsesSchema,
-  sampleParams: { schedRouteId: 2327 },
+  sampleParams: { SchedRouteID: 2327 },
   cacheStrategy: "STATIC",
 };
 

@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalWaitTimesByTerminalId */
 const terminalWaitTimesByTerminalIdInput = z.object({
-  terminalId: z.number().int(),
+  TerminalID: z.number().int(),
 });
 
 /** Endpoint metadata for getTerminalWaitTimesByTerminalId */
@@ -18,10 +18,10 @@ export const getTerminalWaitTimesByTerminalIdMeta: EndpointDefinition<
 > = {
   api: "wsf-terminals",
   function: "terminalWaitTimesById",
-  endpoint: "/ferries/api/terminals/rest/terminalwaittimes/{terminalId}",
+  endpoint: "/ferries/api/terminals/rest/terminalwaittimes/{TerminalID}",
   inputSchema: terminalWaitTimesByTerminalIdInput,
   outputSchema: terminalWaitTimesSchema,
-  sampleParams: { terminalId: 1 },
+  sampleParams: { TerminalID: 1 },
   cacheStrategy: "STATIC",
 };
 

@@ -9,10 +9,10 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getFaresTerminalMates */
 const faresTerminalMatesInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  terminalId: z.number().int().positive(),
+  TerminalID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getFaresTerminalMates */
@@ -22,10 +22,10 @@ export const getFaresTerminalMatesMeta: EndpointDefinition<
 > = {
   api: "wsf-fares",
   function: "terminalMates",
-  endpoint: "/ferries/api/fares/rest/terminalmates/{tripDate}/{terminalId}",
+  endpoint: "/ferries/api/fares/rest/terminalmates/{TripDate}/{TerminalID}",
   inputSchema: faresTerminalMatesInput,
   outputSchema: z.array(terminalMateSchema),
-  sampleParams: { tripDate: datesHelper.tomorrow(), terminalId: 1 },
+  sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
   cacheStrategy: "STATIC",
 };
 

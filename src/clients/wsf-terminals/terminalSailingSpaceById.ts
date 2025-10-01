@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalSailingSpaceByTerminalId */
 const terminalSailingSpaceByTerminalIdInput = z.object({
-  terminalId: z.number().int(),
+  TerminalID: z.number().int(),
 });
 
 /** Endpoint metadata for getTerminalSailingSpaceByTerminalId */
@@ -18,10 +18,10 @@ export const getTerminalSailingSpaceByTerminalIdMeta: EndpointDefinition<
 > = {
   api: "wsf-terminals",
   function: "terminalSailingSpaceById",
-  endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{terminalId}",
+  endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{TerminalID}",
   inputSchema: terminalSailingSpaceByTerminalIdInput,
   outputSchema: terminalSailingSpaceSchema,
-  sampleParams: { terminalId: 1 },
+  sampleParams: { TerminalID: 1 },
   cacheStrategy: "STATIC",
 };
 

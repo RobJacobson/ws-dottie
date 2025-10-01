@@ -9,7 +9,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getTripRatesByVersion */
 const tripRatesByVersionInput = z.object({
   /** Version number to retrieve */
-  version: z.number().describe("Version number to retrieve"),
+  Version: z.number().describe("Version number to retrieve"),
 });
 
 /** Endpoint metadata for getTripRatesByVersion */
@@ -20,11 +20,11 @@ export const getTripRatesByVersionMeta: EndpointDefinition<
   api: "wsdot-toll-rates",
   function: "getTripRatesByVersion",
   endpoint:
-    "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByVersionAsJson?version={version}",
+    "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByVersionAsJson?Version={Version}",
   inputSchema: tripRatesByVersionInput,
   outputSchema: tollTripRatesSchema,
   sampleParams: {
-    version: 352417,
+    Version: 352417,
   },
   cacheStrategy: "FREQUENT",
 };

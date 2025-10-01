@@ -7,21 +7,17 @@ import {
 import type { EndpointDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils/dateUtils";
 
-const dateRangeParams = {
-  dateStart: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  dateEnd: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-};
-
 const vesselNameParam = z.string().min(1, "Vessel name cannot be empty");
 
 /** Input schema for getVesselHistoryByVesselAndDateRange */
 const vesselHistoriesByVesselAndDateRangeInput = z.object({
-  vesselName: vesselNameParam,
-  ...dateRangeParams,
+  VesselName: z.string().min(1, "Vessel name cannot be empty"),
+  DateStart: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  DateEnd: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
 
 /** Endpoint metadata for getVesselHistoryByVesselAndDateRange */
@@ -32,13 +28,13 @@ export const getVesselHistoryByVesselAndDateRangeMeta: EndpointDefinition<
   api: "wsf-vessels",
   function: "vesselHistoriesByVesselAndDateRange",
   endpoint:
-    "/ferries/api/vessels/rest/vesselhistory/{vesselName}/{dateStart}/{dateEnd}",
+    "/ferries/api/vessels/rest/vesselhistory/{VesselName}/{DateStart}/{DateEnd}",
   inputSchema: vesselHistoriesByVesselAndDateRangeInput,
   outputSchema: vesselHistoriesSchema,
   sampleParams: {
-    vesselName: "Cathlamet",
-    dateStart: datesHelper.startOfMonth(),
-    dateEnd: datesHelper.endOfMonth(),
+    VesselName: "Cathlamet",
+    DateStart: datesHelper.startOfMonth(),
+    DateEnd: datesHelper.endOfMonth(),
   },
   cacheStrategy: "STATIC",
 } as const;

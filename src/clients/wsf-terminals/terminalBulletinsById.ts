@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTerminalBulletinsByTerminalId */
 const terminalBulletinsByTerminalIdInput = z.object({
-  terminalId: z.number().int(),
+  TerminalID: z.number().int(),
 });
 
 /** Endpoint metadata for getTerminalBulletinsByTerminalId */
@@ -18,10 +18,10 @@ export const getTerminalBulletinsByTerminalIdMeta: EndpointDefinition<
 > = {
   api: "wsf-terminals",
   function: "terminalBulletinsById",
-  endpoint: "/ferries/api/terminals/rest/terminalbulletins/{terminalId}",
+  endpoint: "/ferries/api/terminals/rest/terminalbulletins/{TerminalID}",
   inputSchema: terminalBulletinsByTerminalIdInput,
   outputSchema: terminalBulletinsSchema,
-  sampleParams: { terminalId: 1 },
+  sampleParams: { TerminalID: 1 },
   cacheStrategy: "STATIC",
 };
 

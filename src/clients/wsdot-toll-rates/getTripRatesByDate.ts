@@ -14,8 +14,8 @@
  *
  * @input
  *   - getTripRatesByDate:
- *     - fromDate: Start date (JS Date)
- *     - toDate: End date (JS Date)
+ *     - FromDate: Start date (JS Date)
+ *     - ToDate: End date (JS Date)
  *
  * @output
  *   - getTripRatesByDate: TripRatesByDate
@@ -23,8 +23,8 @@
  * @cli
  *   - Dates as strings are accepted; the CLI converts YYYY-MM-DD to JS Date.
  *   - Examples:
- *     - node dist/cli.mjs getTripRatesByDate '{"fromDate":"2025-08-01","toDate":"2025-08-02"}'
- *     - node dist/cli.mjs getTripRatesByDate '{"fromDate":"2025-09-03","toDate":"2025-09-03"}'
+ *     - node dist/cli.mjs getTripRatesByDate '{"FromDate":"2025-08-01","ToDate":"2025-08-02"}'
+ *     - node dist/cli.mjs getTripRatesByDate '{"FromDate":"2025-09-03","ToDate":"2025-09-03"}'
  *
  * @exampleResponse
  * {
@@ -54,11 +54,11 @@ import { datesHelper } from "@/shared/utils/dateUtils";
 /** Input schema for getTripRatesByDate */
 const tripRatesByDateInput = z.object({
   /** Start date (YYYY-MM-DD string) */
-  fromDate: z
+  FromDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
   /** End date (YYYY-MM-DD string) */
-  toDate: z
+  ToDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
@@ -71,12 +71,12 @@ export const getTripRatesByDateMeta: EndpointDefinition<
   api: "wsdot-toll-rates",
   function: "getTripRatesByDate",
   endpoint:
-    "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?fromDate={fromDate}&toDate={toDate}",
+    "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
   inputSchema: tripRatesByDateInput,
   outputSchema: tripRatesByDateSchema,
   sampleParams: {
-    fromDate: datesHelper.startOfMonth(),
-    toDate: datesHelper.yesterday(),
+    FromDate: datesHelper.startOfMonth(),
+    ToDate: datesHelper.yesterday(),
   },
   cacheStrategy: "STATIC",
 };

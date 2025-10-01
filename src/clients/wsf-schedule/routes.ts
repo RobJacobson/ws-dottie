@@ -10,7 +10,7 @@ import { datesHelper } from "@/shared/utils";
 /** Input schema for getRoutes */
 const routesInput = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
     .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
@@ -23,10 +23,10 @@ export const getRoutesMeta: EndpointDefinition<
 > = {
   api: "wsf-schedule",
   function: "routes",
-  endpoint: "/ferries/api/schedule/rest/routes/{tripDate}",
+  endpoint: "/ferries/api/schedule/rest/routes/{TripDate}",
   inputSchema: routesInput,
   outputSchema: routeBriefResponsesSchema,
-  sampleParams: { tripDate: datesHelper.tomorrow() },
+  sampleParams: { TripDate: datesHelper.tomorrow() },
   cacheStrategy: "STATIC",
 };
 

@@ -13,13 +13,13 @@
  *
  * @input
  *   - getAlertsByRegionId:
- *     - RegionId: Region numeric identifier
+ *     - RegionID: Region numeric identifier
  *
  * @output
  *   - getAlertsByRegionId: HighwayAlert[]
  *
  * @cli
- *   - getAlertsByRegionId: node dist/cli.mjs getAlertsByRegionId '{"RegionId": 8}'
+ *   - getAlertsByRegionId: node dist/cli.mjs getAlertsByRegionId '{"RegionID": 8}'
  *
  * @exampleResponse
  * {
@@ -65,7 +65,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 /** Input schema for getAlertsByRegionId */
 const alertsByRegionIdInput = z.object({
   /** Region numeric identifier */
-  RegionId: z.number().int().positive(),
+  RegionID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getAlertsByRegionId */
@@ -76,10 +76,10 @@ export const getAlertsByRegionIdMeta: EndpointDefinition<
   api: "wsdot-highway-alerts",
   function: "getAlertsByRegionId",
   endpoint:
-    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionId={RegionId}",
+    "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionID={RegionID}",
   inputSchema: alertsByRegionIdInput,
   outputSchema: highwayAlertsSchema,
-  sampleParams: { RegionId: 9 },
+  sampleParams: { RegionID: 9 },
   cacheStrategy: "FREQUENT",
 };
 

@@ -8,7 +8,7 @@ import type { EndpointDefinition } from "@/shared/endpoints";
 
 /** Input schema for getTimeAdjustmentsByRoute */
 const timeAdjustmentsByRouteInput = z.object({
-  routeId: z.number().int().positive(),
+  RouteID: z.number().int().positive(),
 });
 
 /** Endpoint metadata for getTimeAdjustmentsByRoute */
@@ -18,10 +18,10 @@ export const getTimeAdjustmentsByRouteMeta: EndpointDefinition<
 > = {
   api: "wsf-schedule",
   function: "timeAdjustmentsByRoute",
-  endpoint: "/ferries/api/schedule/rest/timeadjbyroute/{routeId}",
+  endpoint: "/ferries/api/schedule/rest/timeadjbyroute/{RouteID}",
   inputSchema: timeAdjustmentsByRouteInput,
   outputSchema: timeAdjustmentsSchema,
-  sampleParams: { routeId: 1 },
+  sampleParams: { RouteID: 1 },
   cacheStrategy: "STATIC",
 };
 

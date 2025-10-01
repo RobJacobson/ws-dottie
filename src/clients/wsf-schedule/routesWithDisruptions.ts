@@ -9,7 +9,7 @@ import { datesHelper } from "@/shared/utils";
 
 /** Input schema for getRoutesWithDisruptions */
 const routesWithDisruptionsInput = z.object({
-  tripDate: z
+  TripDate: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
 });
@@ -22,10 +22,10 @@ export const getRoutesWithDisruptionsMeta: EndpointDefinition<
   api: "wsf-schedule",
   function: "routesWithDisruptions",
   endpoint:
-    "/ferries/api/schedule/rest/routeshavingservicedisruptions/{tripDate}",
+    "/ferries/api/schedule/rest/routeshavingservicedisruptions/{TripDate}",
   inputSchema: routesWithDisruptionsInput,
   outputSchema: z.array(routeBriefResponseSchema),
-  sampleParams: { tripDate: datesHelper.tomorrow() },
+  sampleParams: { TripDate: datesHelper.tomorrow() },
   cacheStrategy: "STATIC",
 };
 
