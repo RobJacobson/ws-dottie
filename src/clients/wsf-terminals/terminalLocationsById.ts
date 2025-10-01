@@ -21,7 +21,7 @@ export const getTerminalLocationsByTerminalIdMeta: EndpointDefinition<
   endpoint: "/ferries/api/terminals/rest/terminallocations/{TerminalID}",
   inputSchema: terminalLocationsByTerminalIdInput,
   outputSchema: terminalLocationSchema,
-  sampleParams: { TerminalID: 1 },
+  sampleParams: { TerminalID: 5 },
   cacheStrategy: "STATIC",
 };
 

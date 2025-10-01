@@ -21,7 +21,7 @@ export const getTerminalBulletinsByTerminalIdMeta: EndpointDefinition<
   endpoint: "/ferries/api/terminals/rest/terminalbulletins/{TerminalID}",
   inputSchema: terminalBulletinsByTerminalIdInput,
   outputSchema: terminalBulletinsSchema,
-  sampleParams: { TerminalID: 1 },
+  sampleParams: { TerminalID: 3 },
   cacheStrategy: "STATIC",
 };
 

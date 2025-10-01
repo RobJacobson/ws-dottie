@@ -21,7 +21,7 @@ export const getTerminalTransportsByTerminalIdMeta: EndpointDefinition<
   endpoint: "/ferries/api/terminals/rest/terminaltransports/{TerminalID}",
   inputSchema: terminalTransportsByTerminalIdInput,
   outputSchema: terminalTransportsSchema,
-  sampleParams: { TerminalID: 1 },
+  sampleParams: { TerminalID: 10 },
   cacheStrategy: "STATIC",
 };
 

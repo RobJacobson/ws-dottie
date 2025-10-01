@@ -21,7 +21,7 @@ export const getTerminalWaitTimesByTerminalIdMeta: EndpointDefinition<
   endpoint: "/ferries/api/terminals/rest/terminalwaittimes/{TerminalID}",
   inputSchema: terminalWaitTimesByTerminalIdInput,
   outputSchema: terminalWaitTimesSchema,
-  sampleParams: { TerminalID: 1 },
+  sampleParams: { TerminalID: 11 },
   cacheStrategy: "STATIC",
 };
 

@@ -21,7 +21,7 @@ export const getTerminalVerboseByTerminalIdMeta: EndpointDefinition<
   endpoint: "/ferries/api/terminals/rest/terminalverbose/{TerminalID}",
   inputSchema: terminalVerboseByTerminalIdInput,
   outputSchema: terminalVerboseSchema,
-  sampleParams: { TerminalID: 1 },
+  sampleParams: { TerminalID: 4 },
   cacheStrategy: "STATIC",
 };
 

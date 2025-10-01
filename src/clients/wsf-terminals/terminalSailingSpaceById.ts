@@ -21,7 +21,7 @@ export const getTerminalSailingSpaceByTerminalIdMeta: EndpointDefinition<
   endpoint: "/ferries/api/terminals/rest/terminalsailingspace/{TerminalID}",
   inputSchema: terminalSailingSpaceByTerminalIdInput,
   outputSchema: terminalSailingSpaceSchema,
-  sampleParams: { TerminalID: 1 },
+  sampleParams: { TerminalID: 7 },
   cacheStrategy: "STATIC",
 };
 
