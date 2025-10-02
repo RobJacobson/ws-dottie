@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { roadwayLocationSchema } from "../shared/roadwayLocationSchema.original";
+import { roadwayLocationSchema } from "@/apis/shared";
 
 /**
  * Schema for Camera - represents a traffic camera
@@ -71,4 +71,4 @@ export const camerasListSchema = z.array(cameraSchema);
 export type CameraList = z.infer<typeof camerasListSchema>;
 
 // Export types from shared
-export type { RoadwayLocation } from "../shared/roadwayLocationSchema.original";
+export type { RoadwayLocation } from "@/apis/shared";

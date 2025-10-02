@@ -1,0 +1,88 @@
+import { createApiDefinition } from "../utils";
+import {
+  cacheFlushDateInputSchema,
+  getVesselHistoryInputSchema,
+  vesselAccommodationsByIdInputSchema,
+  vesselAccommodationsInputSchema,
+  vesselBasicsByIdInputSchema,
+  vesselBasicsInputSchema,
+  vesselLocationsInputSchema,
+  vesselStatsInputSchema,
+} from "./original/inputSchemas.original";
+import {
+  cacheFlushDateSchema,
+  vesselAccommodationsListSchema,
+  vesselAccommodationsSchema,
+  vesselBasicDetailsListSchema,
+  vesselBasicSchema,
+  vesselHistoryResponseSchema,
+  vesselLocationsSchema,
+  vesselStatsSchema,
+} from "./original/outputSchemas.original";
+
+export const wsfVesselsApi = createApiDefinition("wsf-vessels", [
+  {
+    function: "cacheFlushDate",
+    endpoint: "/ferries/api/vessels/rest/cacheflushdate",
+    inputSchema: cacheFlushDateInputSchema,
+    outputSchema: cacheFlushDateSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "vesselAccommodations",
+    endpoint: "/ferries/api/vessels/rest/vesselaccommodations",
+    inputSchema: vesselAccommodationsInputSchema,
+    outputSchema: vesselAccommodationsListSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "vesselAccommodationsById",
+    endpoint: "/ferries/api/vessels/rest/vesselaccommodations/{VesselID}",
+    inputSchema: vesselAccommodationsByIdInputSchema,
+    outputSchema: vesselAccommodationsSchema,
+    sampleParams: { VesselID: 65 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "vesselBasics",
+    endpoint: "/ferries/api/vessels/rest/vesselbasics",
+    inputSchema: vesselBasicsInputSchema,
+    outputSchema: vesselBasicDetailsListSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "vesselBasicsById",
+    endpoint: "/ferries/api/vessels/rest/vesselbasics/{VesselID}",
+    inputSchema: vesselBasicsByIdInputSchema,
+    outputSchema: vesselBasicSchema,
+    sampleParams: { VesselID: 15 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "vesselHistories",
+    endpoint: "/ferries/api/vessels/rest/vesselhistory",
+    inputSchema: getVesselHistoryInputSchema,
+    outputSchema: vesselHistoryResponseSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "vesselLocations",
+    endpoint: "/ferries/api/vessels/rest/vessellocations",
+    inputSchema: vesselLocationsInputSchema,
+    outputSchema: vesselLocationsSchema,
+    sampleParams: {},
+    cacheStrategy: "REALTIME",
+  },
+  {
+    function: "vesselStats",
+    endpoint: "/ferries/api/vessels/rest/vesselstats",
+    inputSchema: vesselStatsInputSchema,
+    outputSchema: vesselStatsSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+]);
