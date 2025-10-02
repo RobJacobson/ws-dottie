@@ -41,7 +41,7 @@ export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
     endpoint:
       "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
     inputSchema: input.getTripRatesByDateSchema,
-    outputSchema: output.tripRatesListSchema,
+    outputSchema: output.tollTripsListSchema,
     sampleParams: {
       FromDate: datesHelper.startOfMonth(),
       ToDate: datesHelper.yesterday(),

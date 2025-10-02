@@ -33,23 +33,19 @@ export type GetTollTripRatesInput = z.infer<typeof getTollTripRatesSchema>;
  */
 export const getTollTripVersionSchema = z.object({});
 
-export type GetTollTripVersionInput = z.infer<
-  typeof getTollTripVersionSchema
->;
+export type GetTollTripVersionInput = z.infer<typeof getTollTripVersionSchema>;
 
 /**
  * Input schema for GetTripRatesByDate endpoint
  */
 export const getTripRatesByDateSchema = z.object({
   /** Start date for the trip rates query. */
-  fromDate: z.string().describe("Start date for the trip rates query."),
+  FromDate: z.string().describe("Start date for the trip rates query."),
   /** End date for the trip rates query. */
-  toDate: z.string().describe("End date for the trip rates query."),
+  ToDate: z.string().describe("End date for the trip rates query."),
 });
 
-export type GetTripRatesByDateInput = z.infer<
-  typeof getTripRatesByDateSchema
->;
+export type GetTripRatesByDateInput = z.infer<typeof getTripRatesByDateSchema>;
 
 /**
  * Input schema for GetTripRatesByVersion endpoint
