@@ -32,13 +32,10 @@ export const tollRateSchema = z.object({
     .nullable()
     .describe("Message displayed on the sign in place of a toll."),
   /** Route the toll applies to. */
-  StateRoute: z
-    .enum(["099", "167", "405", "509", "520"])
-    .nullable()
-    .describe("Route the toll applies to."),
+  StateRoute: z.string().nullable().describe("Route the toll applies to."),
   /** Travel direction the toll applies to. */
   TravelDirection: z
-    .enum(["E", "N", "S"])
+    .string()
     .nullable()
     .describe("Travel direction the toll applies to."),
   /** The start milepost for a toll trip. */
@@ -164,7 +161,7 @@ export const tollTripInfoSchema = z.object({
   StartMilepost: z.int().describe("Start milepost of the trip."),
   /** Direction of travel for the trip. */
   TravelDirection: z
-    .enum(["E", "N", "S"])
+    .enum(["E", "N", "S", "W"])
     .nullable()
     .describe("Direction of travel for the trip."),
   /** Name of the trip. */

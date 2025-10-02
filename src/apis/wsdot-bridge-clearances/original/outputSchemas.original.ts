@@ -35,7 +35,7 @@ export const bridgeDataGISSchema = z.object({
    * A code that represents whether the transportation asset or project is located in the (I) Increasing Milepost Direction of Travel, (D) Decreasing Milepost Direction of Travel or, (B) Both Milepost Directions of Travel.
    */
   InventoryDirection: z
-    .enum(["I", "D", "B", "i", "d"])
+    .string()
     .nullable()
     .describe(
       "A code that represents whether the transportation asset or project is located in the (I) Increasing Milepost Direction of Travel, (D) Decreasing Milepost Direction of Travel or, (B) Both Milepost Directions of Travel."

@@ -37,7 +37,7 @@ export const weatherInfoSchema = z
         "Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture."
       ),
     /** Sky coverage. */
-    SkyCoverage: z.enum(["N/A"]).nullable().describe("Sky coverage."),
+    SkyCoverage: z.string().nullable().describe("Sky coverage."),
     /** Station ID. */
     StationID: z.int().describe("Station ID."),
     /** WSDOT assigned name. */
@@ -60,25 +60,7 @@ export const weatherInfoSchema = z
     WindDirection: z.number().nullable().describe("Wind direction."),
     /** Wind direction cardinal. */
     WindDirectionCardinal: z
-      .enum([
-        "N/A",
-        "N",
-        "N'",
-        "NE",
-        "NNE",
-        "E",
-        "ESE",
-        "SE",
-        "SSE",
-        "S",
-        "SSW",
-        "SW",
-        "WSW",
-        "W",
-        "WNW",
-        "NW",
-        "NNW",
-      ])
+      .string()
       .nullable()
       .describe("Wind direction cardinal."),
     /** Wind gust speed in MPH. */
