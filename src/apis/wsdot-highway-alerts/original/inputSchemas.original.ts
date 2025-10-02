@@ -79,7 +79,7 @@ export type GetAlertsForMapAreaInput = z.infer<
  */
 export const getAlertsByRegionIDSchema = z.object({
   /** The region ID to limit results to. */
-  RegionID: z.string().describe("The region ID to limit results to."),
+  RegionID: z.number().describe("The region ID to limit results to."),
 });
 
 export type GetAlertsByRegionIDInput = z.infer<
@@ -91,9 +91,7 @@ export type GetAlertsByRegionIDInput = z.infer<
  */
 export const getEventCategoriesSchema = z.object({});
 
-export type GetEventCategoriesInput = z.infer<
-  typeof getEventCategoriesSchema
->;
+export type GetEventCategoriesInput = z.infer<typeof getEventCategoriesSchema>;
 
 /**
  * Input schema for GetMapAreas endpoint
