@@ -16,8 +16,8 @@
 
 import pc from "picocolors";
 import { getAllEndpoints } from "@/shared/endpoints";
-import type { ApiError } from "@/shared/fetching/shared/handleError";
-import { isApiError } from "@/shared/fetching/shared/handleError";
+import type { ApiError } from "@/shared/fetching";
+import { isApiError } from "@/shared/fetching";
 import type { CliOptions } from "./types";
 
 /**

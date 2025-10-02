@@ -7,12 +7,8 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import {
-  fetchJsonpTool,
-  fetchJsonpZod,
-  fetchNative,
-  fetchNativeZod,
-} from "@/shared/fetching";
+import type { FetchStrategy, ValidationStrategy } from "@/shared/fetching";
+import { fetch } from "@/shared/fetching/internal/fetch";
 import type { CliOptions } from "./types";
 
 /**
@@ -34,21 +30,13 @@ export const executeApiRequest = async <I, O>(
   params: I,
   options: CliOptions
 ): Promise<unknown> => {
-  const useJsonp = options.jsonp ?? false;
+  const fetchStrategy: FetchStrategy =
+    (options.jsonp ?? false) ? "jsonp" : "native";
   // Commander.js converts --no-validation to validation: false
-  const useValidation = options.validation !== false;
+  const validationStrategy: ValidationStrategy =
+    options.validation !== false ? "zod" : "none";
 
-  // Select the appropriate fetch function based on flags
-  if (useJsonp && useValidation) {
-    return fetchJsonpZod(endpoint, params, { logMode: "none" });
-  } else if (useJsonp && !useValidation) {
-    return fetchJsonpTool(endpoint, params, { logMode: "none" });
-  } else if (!useJsonp && useValidation) {
-    return fetchNativeZod(endpoint, params, { logMode: "none" });
-  } else {
-    // !useJsonp && !useValidation
-    return fetchNative(endpoint, params, { logMode: "none" });
-  }
+  return fetch(endpoint, params, fetchStrategy, validationStrategy, "none");
 };
 
 /**
