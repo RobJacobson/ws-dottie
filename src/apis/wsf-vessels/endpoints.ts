@@ -46,8 +46,8 @@ export const wsfVesselsApi = createApiDefinition("wsf-vessels", [
   {
     function: "vesselHistories",
     endpoint: "/ferries/api/vessels/rest/vesselhistory",
-    inputSchema: input.getVesselHistorySchema,
-    outputSchema: output.vesselHistoryResponseSchema,
+    inputSchema: input.getAllVesselHistorySchema,
+    outputSchema: output.vesselHistoryResponseListSchema,
     sampleParams: {},
     cacheStrategy: "STATIC",
   },
@@ -56,7 +56,7 @@ export const wsfVesselsApi = createApiDefinition("wsf-vessels", [
     endpoint:
       "/ferries/api/vessels/rest/vesselhistory/{VesselName}/{DateStart}/{DateEnd}",
     inputSchema: input.getVesselHistorySchema,
-    outputSchema: output.vesselHistoryResponseSchema,
+    outputSchema: output.vesselHistoryResponseListSchema,
     sampleParams: {
       VesselName: "Cathlamet",
       DateStart: datesHelper.startOfMonth(),
@@ -68,7 +68,7 @@ export const wsfVesselsApi = createApiDefinition("wsf-vessels", [
     function: "vesselLocations",
     endpoint: "/ferries/api/vessels/rest/vessellocations",
     inputSchema: input.vesselLocationsSchema,
-    outputSchema: output.vesselLocationsSchema,
+    outputSchema: output.vesselLocationsListSchema,
     sampleParams: {},
     cacheStrategy: "REALTIME",
   },
@@ -84,7 +84,7 @@ export const wsfVesselsApi = createApiDefinition("wsf-vessels", [
     function: "vesselStats",
     endpoint: "/ferries/api/vessels/rest/vesselstats",
     inputSchema: input.vesselStatsSchema,
-    outputSchema: output.vesselStatsSchema,
+    outputSchema: output.vesselStatsListSchema,
     sampleParams: {},
     cacheStrategy: "STATIC",
   },

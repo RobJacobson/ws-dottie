@@ -3,14 +3,14 @@ import { z } from "zod";
 /**
  * CacheFlushDate input schema
  */
-export const cacheFlushDateSchema = z.object({});
+export const cacheFlushDateSchema = z.object({}).strict();
 
 export type VesselsCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * VesselBasics input schema
  */
-export const vesselBasicsSchema = z.object({});
+export const vesselBasicsSchema = z.object({}).strict();
 
 export type VesselBasicsInput = z.infer<typeof vesselBasicsSchema>;
 
@@ -27,7 +27,7 @@ export type VesselBasicsByIdInput = z.infer<typeof vesselBasicsByIdSchema>;
 /**
  * VesselAccommodations input schema
  */
-export const vesselAccommodationsSchema = z.object({});
+export const vesselAccommodationsSchema = z.object({}).strict();
 
 export type VesselAccommodationsInput = z.infer<
   typeof vesselAccommodationsSchema
@@ -48,7 +48,7 @@ export type VesselAccommodationsByIdInput = z.infer<
 /**
  * VesselStats input schema
  */
-export const vesselStatsSchema = z.object({});
+export const vesselStatsSchema = z.object({}).strict();
 
 export type VesselStatsInput = z.infer<typeof vesselStatsSchema>;
 
@@ -65,7 +65,7 @@ export type VesselStatsByIdInput = z.infer<typeof vesselStatsByIdSchema>;
 /**
  * VesselLocations input schema
  */
-export const vesselLocationsSchema = z.object({});
+export const vesselLocationsSchema = z.object({}).strict();
 
 export type VesselLocationsInput = z.infer<typeof vesselLocationsSchema>;
 
@@ -84,7 +84,7 @@ export type VesselLocationsByIdInput = z.infer<
 /**
  * VesselVerbose input schema
  */
-export const vesselVerboseSchema = z.object({});
+export const vesselVerboseSchema = z.object({}).strict();
 
 export type VesselVerboseInput = z.infer<typeof vesselVerboseSchema>;
 
@@ -110,13 +110,21 @@ export const getVesselHistorySchema = z
     /** The end date for the history query. */
     DateEnd: z.string().describe("The end date for the history query."),
   })
-  .describe("Input parameters for vessel history endpoint.");
+  .describe("Input parameters for vessel history endpoint with parameters.");
 
 export type GetVesselHistoryInput = z.infer<typeof getVesselHistorySchema>;
+
+export const getAllVesselHistorySchema = z
+  .object({})
+  .describe("Input parameters for vessel history endpoint without parameters.");
+
+export type GetAllVesselHistoryInput = z.infer<
+  typeof getAllVesselHistorySchema
+>;
 
 /**
  * GetAllVessels input schema
  */
-export const getAllVesselsSchema = z.object({});
+export const getAllVesselsSchema = z.object({}).strict();
 
 export type GetAllVesselsInput = z.infer<typeof getAllVesselsSchema>;

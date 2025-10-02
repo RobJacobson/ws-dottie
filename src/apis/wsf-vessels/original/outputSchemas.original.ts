@@ -568,16 +568,9 @@ export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
  *
  * Provides the cache flush date for coordinating data caching.
  */
-export const cacheFlushDateSchema = z
-  .object({
-    /**
-     * The date and time when the cache was last flushed.
-     */
-    CacheFlushDate: zWsdotDate().describe(
-      "The date and time when the cache was last flushed."
-    ),
-  })
-  .describe("Provides the cache flush date for coordinating data caching.");
+export const cacheFlushDateSchema = zWsdotDate().describe(
+  "The date and time when the cache was last flushed."
+);
 
 export type VesselsCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
