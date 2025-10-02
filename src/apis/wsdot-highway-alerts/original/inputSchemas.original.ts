@@ -1,8 +1,8 @@
 import { z } from "zod";
+import { zWsdotDate } from "@/apis/shared";
 
 /**
  * Input schema for GetAlerts endpoint
- * Retrieves an array of currently active incidents
  */
 export const getAlertsSchema = z.object({});
 
@@ -10,7 +10,6 @@ export type GetAlertsInput = z.infer<typeof getAlertsSchema>;
 
 /**
  * Input schema for GetAlert endpoint
- * Retrieves a specific incident
  */
 export const getAlertSchema = z.object({
   /** AlertID for a specific incident. */
@@ -21,7 +20,6 @@ export type GetAlertInput = z.infer<typeof getAlertSchema>;
 
 /**
  * Input schema for SearchAlerts endpoint
- * Retrieves an array of incidents that match certain criteria
  */
 export const searchAlertsSchema = z.object({
   /**
@@ -68,7 +66,6 @@ export type SearchAlertsInput = z.infer<typeof searchAlertsSchema>;
 
 /**
  * Input schema for GetAlertsForMapArea endpoint
- * Return alerts for a specific area
  */
 export const getAlertsForMapAreaSchema = z.object({
   /** The area to limit results to. */
@@ -93,7 +90,6 @@ export type GetAlertsByRegionIDInput = z.infer<
 
 /**
  * Input schema for GetEventCategories endpoint
- * Selects an array of valid categories to use with SearchAlerts
  */
 export const getEventCategoriesSchema = z.object({});
 
@@ -101,7 +97,6 @@ export type GetEventCategoriesInput = z.infer<typeof getEventCategoriesSchema>;
 
 /**
  * Input schema for GetMapAreas endpoint
- * Return list of areas and associated IDs
  */
 export const getMapAreasSchema = z.object({});
 

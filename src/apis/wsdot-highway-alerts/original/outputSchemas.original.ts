@@ -37,7 +37,6 @@ export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
 
 /**
  * Schema for Alert - represents a Highway Alert
- * Coverage Area: Statewide. Provides access to all of the active incidents currently logged in our ROADS system.
  */
 export const alertSchema = z.object({
   /** Unique Identifier for the alert. */
@@ -55,12 +54,23 @@ export const alertSchema = z.object({
   EndTime: zWsdotDate().nullable().describe("Estimated end time for alert."),
   /** Categorization of alert, i.e. Collision, Maintenance, etc. */
   EventCategory: z
-    .string()
+    .enum([
+      "Closure",
+      "Collision",
+      "Construction",
+      "Fire",
+      "Lane Closure",
+      "Maintenance",
+      "Rest Area",
+      "Road work",
+      "Special Event",
+      "Speed Limit",
+    ])
     .nullable()
     .describe("Categorization of alert, i.e. Collision, Maintenance, etc."),
   /** Current status of alert, open, closed. */
   EventStatus: z
-    .enum(["Open", "Closed"])
+    .enum(["Open"])
     .nullable()
     .describe("Current status of alert, open, closed."),
   /**
@@ -77,10 +87,10 @@ export const alertSchema = z.object({
     .string()
     .nullable()
     .describe("Information about what the alert has been issued for."),
-  /** When the alert was last changed. */
+  /** When was alert was last changed. */
   LastUpdatedTime: zWsdotDate()
     .nullable()
-    .describe("When the alert was last changed."),
+    .describe("When was alert was last changed."),
   /** Expected impact on traffic, highest, high, medium, low. */
   Priority: z
     .enum(["High", "Highest", "Low", "Lowest", "Medium"])
@@ -116,7 +126,6 @@ export type Alert = z.infer<typeof alertSchema>;
 
 /**
  * Schema for AlertsList - represents a list of Highway Alerts
- * The GetAlerts endpoint returns an array of currently active incidents
  */
 export const alertsListSchema = z.array(alertSchema);
 
@@ -139,7 +148,6 @@ export type Area = z.infer<typeof areaSchema>;
 
 /**
  * Schema for AreasList - represents a list of map areas
- * The GetMapAreas endpoint returns a list of areas and associated IDs
  */
 export const areasListSchema = z.array(areaSchema);
 
@@ -147,7 +155,7 @@ export type AreasList = z.infer<typeof areasListSchema>;
 
 /**
  * Schema for EventCategoriesList - represents a list of event category strings
- * The GetEventCategories endpoint returns an array of strings containing Event Categories currently in use
+ * The getEventCategories endpoint returns an array of strings, not objects
  */
 export const eventCategoriesListSchema = z.array(z.string());
 
