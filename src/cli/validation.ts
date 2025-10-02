@@ -32,6 +32,10 @@ export const processParameters = <I, O>(
 ): CliParams => {
   // Parse JSON parameters (no special coercion needed for string dates)
   const userParams = (() => {
+    // Handle empty string or undefined parameters
+    if (!params || params.trim() === "") {
+      return {};
+    }
     try {
       return JSON.parse(params);
     } catch (error) {
