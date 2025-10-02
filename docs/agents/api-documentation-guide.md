@@ -1,6 +1,15 @@
 # API Documentation Guide (Simplified - G25)
 *Streamlined guide for agents and editors working on Washington State transportation API documentation*
 
+## 🚨 CRITICAL: Data Volume Management
+
+**ALWAYS use `--limit 10` when fetching data with fetch-dottie.** This prevents overwhelming agent context windows by truncating output to 10KB. The output may be cut mid-item - this is intentional for sampling purposes.
+
+```bash
+# REQUIRED format for all data fetching:
+npx fetch-dottie [api-name]:[function-name] --limit 10
+```
+
 ---
 
 ## 📋 Table of Contents
@@ -23,6 +32,9 @@
 - [10.0 Templates & Examples](#10-0-templates--examples)
 - [11.0 Quick References](#11-0-quick-references)
 - [12.0 Troubleshooting Guide](#12-0-troubleshooting-guide)
+
+### **📋 Essential Reference**
+- **API Index**: `docs/api-index.md` - The canonical reference for all API names, function names, endpoint URLs, and sample parameters. Always consult this file before using `fetch-dottie` commands.
 
 ---
 
@@ -125,93 +137,49 @@ When you receive an assignment to complete the "updating process" for multiple A
 Task: Discover available API endpoints, fetch representative sample data using `npx fetch-dottie`, and conduct independent online research to gather additional business context.
 
 Required Inputs:
-*   The API client files (e.g., `src/clients/[api-name]/`)
+*   The API index file (`docs/api-index.md`) for canonical endpoint names
 *   The official API documentation (e.g., WSDOT/WSF docs)
 
 Output: Raw API data samples and a solid understanding of the API's business domain and context.
 
 ## 2.1 Instructions for Endpoint Discovery and Data Fetching
 
-To discover endpoints and fetch data, follow these steps:
+### Step-by-Step Process
 
-### ⚠️ CRITICAL: Finding the Correct Function Names
+1. **Open the API Index**: Read `docs/api-index.md` to find all endpoints for your assigned API.
 
-**NEVER GUESS function names.** You MUST check the client files to find the exact export names.
+2. **Copy Function Names**: Use the exact function names from the "Function Name" column.
 
-1.  **List client files** in `src/clients/[api-name]/` to identify available endpoints:
-```bash
-list_dir src/clients/[api-name]/
-```
+3. **Fetch Data**: Run `npx fetch-dottie [api-name]:[function-name] --limit 10` for each endpoint.
 
-2.  **Read each client file** to find the exact exported function name:
-```bash
-read_file src/clients/[api-name]/[endpoint-file].ts
-```
+4. **Extract Examples**: Get 3-5 representative examples per field type from the responses.
 
-3.  **Look for the export statement** at the bottom of each client file:
-```typescript
-// Look for lines like these:
-export const getBorderCrossings = createDottieClient(...)  // WSDOT example
-export const vesselBasics = createDottieClient(...)        // WSF example
-```
-
-### 📌 API Naming Convention Differences
-
-**WSDOT APIs** use **"get"** or **"search"** prefixes:
-- ✅ `getBorderCrossings`
-- ✅ `getAlerts` (not getHighwayAlerts)
-- ✅ `searchAlertsByRoute`
-
-**WSF APIs** do **NOT** use prefixes:
-- ✅ `vesselBasics`
-- ✅ `terminalLocations`
-- ✅ `scheduleTodayByRoute`
-
-### Step-by-Step Fetching Process
-
-1.  **Discover Available Endpoints**: List the client files in `src/clients/[api-name]/` to identify available API endpoints.
-
-2.  **Read Client Files**: Open each client file to find the exact exported function name. DO NOT guess based on patterns from other APIs.
-
-3.  **Fetch Sample Data**: Use `npx fetch-dottie [api-name]:[exact-function-name]` with the fully-qualified function name. The API prefix prevents naming conflicts when functions have duplicate names across different APIs. Extract 3-5 representative examples per field type from the fetched data.
-
-### ✅ CORRECT Examples (Fully-Qualified Format):
-
-**WSDOT APIs (with "get" prefix):**
-```bash
-npx fetch-dottie wsdot-border-crossings:getBorderCrossings
-npx fetch-dottie wsdot-highway-alerts:getAlerts
-npx fetch-dottie wsdot-travel-times:getTravelTimes
-```
-
-**WSF APIs (NO "get" prefix):**
-```bash
-npx fetch-dottie wsf-vessels:vesselBasics
-npx fetch-dottie wsf-terminals:terminalLocations
-npx fetch-dottie wsf-schedule:scheduleTodayByRoute
-```
-
-**Functions with duplicate names across APIs (use API prefix):**
-```bash
-npx fetch-dottie wsf-vessels:cacheFlushDate
-npx fetch-dottie wsf-terminals:cacheFlushDate
-npx fetch-dottie wsf-schedule:cacheFlushDate
-```
-
-### ❌ WRONG Examples:
+### Command Format
 
 ```bash
-❌ npx fetch-dottie getVesselBasics              # Wrong: WSF functions don't have "get"
-❌ npx fetch-dottie GetBorderCrossings           # Wrong: uppercase function name
-❌ npx fetch-dottie api/getBorderCrossings       # Wrong: don't include path
-❌ npx fetch-dottie border-crossings             # Wrong: don't use kebab-case
-❌ npx fetch-dottie vesselBasics                 # Wrong: missing API prefix
-❌ npx fetch-dottie wsf-vessels/vesselBasics     # Wrong: use colon, not slash
+# REQUIRED: Always use --limit 10 to prevent overwhelming agent context windows
+npx fetch-dottie [api-name]:[function-name] --limit 10
+
+# Examples:
+npx fetch-dottie wsdot-border-crossings:getBorderCrossings --limit 10
+npx fetch-dottie wsf-vessels:vesselBasics --limit 10
+npx fetch-dottie wsf-terminals:terminalLocations --limit 10
 ```
+
+### ⚠️ Important: Data Truncation Behavior
+
+**CRITICAL**: The `--limit 10` flag truncates output to 10KB (10,240 bytes) by cutting off data at the byte limit. This means:
+
+- **Output may be cut mid-item**: The last object, array element, or field may be incomplete
+- **JSON structure may be broken**: Truncated output may not be valid JSON
+- **Purpose is sampling**: This is intentional - you need enough data to understand structure and extract examples, not complete datasets
+- **Works consistently**: Same 10KB limit applies regardless of `--pretty`, `--concise`, or raw output
+
+**Do NOT attempt to fix or complete truncated JSON** - work with the partial data as provided.
 
 ### 🛑 Critical Stopping Condition
 
-If `fetch-dottie` consistently fails to return data, **stop all work and request assistance**. Do not proceed or attempt workarounds.
+If `fetch-dottie` consistently fails to return data, **stop all work and request assistance**.
 
 3.  **Gather Additional Context**: Conduct independent online research to gather additional business context related to the API, its data, and how this data can be meaningfully used.
     *   **Search Example**: For the `GetBorderCrossingsAsJson` endpoint, search for keywords like:
@@ -225,7 +193,7 @@ If `fetch-dottie` consistently fails to return data, **stop all work and request
 # 3.0 Task 2: Domain Analysis Creation
 
 Required inputs: 
-*   The API client files (e.g., `src/clients/[api-name]/`)
+*   The API index file (`docs/api-index.md`) for endpoint reference
 *   The official API documentation (e.g., WSDOT/WSF docs), provided by the user
 *   The raw API sample data (from Task 1)
 *   The results from independent online research (from Task 1).
@@ -243,7 +211,7 @@ Output: A comprehensive `domain-analysis.[agent-name].md` file detailing the bus
 To create a comprehensive domain analysis, follow these steps:
 
 1.  **Review Collected Inputs**: Thoroughly examine all required inputs:
-    *   API client files (e.g., `src/clients/[api-name]/`)
+    *   API index file (`docs/api-index.md`) for endpoint reference
     *   Official API documentation (e.g., WSDOT/WSF docs)
     *   Raw API sample data (from Task 1)
     *   Results from independent online research (from Task 1)
@@ -1041,7 +1009,16 @@ export const borderCrossingDataListSchema = z
 
 # 11.0 Quick References
 
-## 11.1 Data Freshness Quick Reference
+## 11.1 Data Volume Management Quick Reference
+
+| Command | Purpose | Usage |
+|---------|---------|-------|
+| `--limit 10` | **REQUIRED** for all data fetching | Always use to prevent overwhelming agent context windows |
+| `--sample N` | Optional array sampling | Use only when you need specific array item counts |
+
+**CRITICAL**: Always use `--limit 10` when fetching data. This truncates output to 10KB and may cut data mid-item. This is intentional for sampling purposes.
+
+## 11.2 Data Freshness Quick Reference
 
 | API Pattern | Statement | Placement |
 |-------------|-----------|-----------|
@@ -1049,7 +1026,7 @@ export const borderCrossingDataListSchema = z
 | Frequent updates (traffic, weather) | `"Data updates frequently."` | Main array schema |
 | Infrequent updates (schedules, infrastructure) | `"Data updates infrequently."` | Main array schema |
 
-## 11.2 Edge Case Documentation Template
+## 11.3 Edge Case Documentation Template
 
 | Pattern | Template | Example |
 |---------|----------|---------|
@@ -1057,7 +1034,7 @@ export const borderCrossingDataListSchema = z
 | Null values | `"[Purpose]. E.g., '[normal]' when [condition], null when [special condition]. [Business meaning]."` | `"Route designation. E.g., 'I-5' for major highways, null for local roads. Null indicates non-highway infrastructure."` |
 | Status codes | `"[Purpose]. E.g., '[code1]' for [state1], '[code2]' for [state2]. [Business context]."` | `"Service status. E.g., 'ACTIVE' for normal operations, 'MAINTENANCE' for repairs. Determines service availability."` |
 
-## 11.3 Integration Discovery Stopping Criteria
+## 11.4 Integration Discovery Stopping Criteria
 
 | Integration Type | Include If | Skip If |
 |------------------|------------|---------|
@@ -1066,7 +1043,7 @@ export const borderCrossingDataListSchema = z
 | Alternative scenarios | Primary fails → backup option | Tenuous geographic connection |
 | Static + dynamic | Infrastructure limits + current usage | Technical correlation only |
 
-## 11.4 Agent Naming Convention
+## 11.5 Agent Naming Convention
 
 | File Type | Location | Format | Example |
 |-----------|----------|--------|---------|
@@ -1080,13 +1057,13 @@ export const borderCrossingDataListSchema = z
 | Final output schemas (Editor) | `src/apis/[api-name]/editor/` | `outputSchemas.final.ts` | `outputSchemas.final.ts` |
 | Final endpoint descriptions (Editor) | `src/apis/[api-name]/editor/` | `endpointDescriptions.final.json` | `endpointDescriptions.final.json` |
 
-## 11.5 Description Length Limits (ENFORCED)
+## 11.6 Description Length Limits (ENFORCED)
 - **Simple fields**: 50-150 characters (IDs, timestamps, coordinates)
 - **Business fields**: 150-400 characters (most domain-specific fields)
 - **Complex integration fields**: 400-600 characters (MAX - requires justification)
 - **Endpoint descriptions**: 200-800 characters (as a single narrative string)
 
-## 11.6 Example Decision Tree
+## 11.7 Example Decision Tree
 
 **Before adding examples, apply this numbered checklist:**
 
@@ -1110,8 +1087,8 @@ export const borderCrossingDataListSchema = z
 #### **Issue**: `fetch-dottie` command fails
 **Symptoms**: Command not found, network errors, empty responses
 **Solutions**:
-1.  **Verify command format**: Use exact function name from client files from `src/clients/[api-name]/`. Remember: WSDOT APIs use "get" prefix, WSF APIs do NOT.
-2.  **Read the client file**: Don't guess the function name - open the client file and look for the export statement.
+1.  **Verify command format**: Use exact function name from `docs/api-index.md`. Remember: WSDOT APIs use "get" prefix, WSF APIs do NOT.
+2.  **Consult the API index**: Don't guess the function name - check `docs/api-index.md` for the exact function name and sample parameters.
 3.  **Check network connection**: Ensure internet access.
 4.  **Request assistance**: If persistent, stop work and request help.
 
