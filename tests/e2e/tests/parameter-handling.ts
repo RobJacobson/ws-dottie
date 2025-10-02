@@ -6,14 +6,14 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import { fetchNativeZod } from "@/shared/fetching";
+import { fetchAndValidateNative } from "@/shared/fetching";
 
 export async function runParameterHandling(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   try {
     const params = endpoint.sampleParams || {};
-    const result = await fetchNativeZod(endpoint, params, { logMode: "none" });
+    const result = await fetchAndValidateNative(endpoint, params, "none");
     if (result === undefined) {
       return { success: false, message: "Result is undefined" };
     }

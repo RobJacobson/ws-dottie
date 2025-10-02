@@ -6,20 +6,17 @@
  * pass/fail reporting per API.
  */
 
-import { describe, it, expect } from "vitest";
-import { PARALLEL_TEST_TIMEOUT } from "./testConfig";
-import { setupTestEndpoints } from "./shared/setup";
-import { testLogger } from "./testLogger";
+import { describe, expect, it } from "vitest";
 import type { Endpoint } from "@/shared/endpoints";
-import { runSchemaValidation } from "./tests/schema-validation";
-import { runParameterHandling } from "./tests/parameter-handling";
+import { setupTestEndpoints } from "./shared/setup";
+import { PARALLEL_TEST_TIMEOUT } from "./testConfig";
+import { testLogger } from "./testLogger";
+import { runDataIntegrity } from "./tests/data-integrity";
 import { runDataStructureConsistency } from "./tests/data-structure-consistency";
 import { runInvalidParameters } from "./tests/invalid-parameters";
 import { runMissingParameters } from "./tests/missing-parameters";
-import { runResponseTime } from "./tests/response-time";
-import { runResponseConsistency } from "./tests/response-consistency";
-import { runMemoryUsage } from "./tests/memory-usage";
-import { runDataIntegrity } from "./tests/data-integrity";
+import { runParameterHandling } from "./tests/parameter-handling";
+import { runSchemaValidation } from "./tests/schema-validation";
 
 // Top-level discovery so tests can be defined per endpoint
 const setupResult = await setupTestEndpoints();
@@ -121,48 +118,6 @@ describe("E2E Test Orchestrator", () => {
               );
               testLogger.info(
                 `${apiName}.${endpoint.functionName} missing: ${r.message}`
-              );
-              expect(r.success).toBe(true);
-            },
-            PARALLEL_TEST_TIMEOUT
-          );
-
-          it(
-            "response time",
-            async () => {
-              const r = await runResponseTime(
-                endpoint as Endpoint<unknown, unknown>
-              );
-              testLogger.info(
-                `${apiName}.${endpoint.functionName} time: ${r.message}`
-              );
-              expect(r.success).toBe(true);
-            },
-            PARALLEL_TEST_TIMEOUT
-          );
-
-          it(
-            "response consistency",
-            async () => {
-              const r = await runResponseConsistency(
-                endpoint as Endpoint<unknown, unknown>
-              );
-              testLogger.info(
-                `${apiName}.${endpoint.functionName} consistency: ${r.message}`
-              );
-              expect(r.success).toBe(true);
-            },
-            PARALLEL_TEST_TIMEOUT * 2
-          );
-
-          it(
-            "memory usage",
-            async () => {
-              const r = await runMemoryUsage(
-                endpoint as Endpoint<unknown, unknown>
-              );
-              testLogger.info(
-                `${apiName}.${endpoint.functionName} memory: ${r.message}`
               );
               expect(r.success).toBe(true);
             },

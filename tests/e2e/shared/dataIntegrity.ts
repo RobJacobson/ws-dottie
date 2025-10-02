@@ -6,7 +6,7 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import { fetchNativeNew, fetchNativeZod } from "@/shared/fetching";
+import { fetchAndValidateNative, fetchNative } from "@/shared/fetching";
 
 /**
  * Fields that should be ignored during data integrity comparison
@@ -195,8 +195,8 @@ export const createDataIntegrityTest = <TParams, TOutput>(
 
     try {
       const [zodResult, nativeResult] = await Promise.all([
-        fetchNativeZod(endpoint, params, { logMode: "none" }),
-        fetchNativeNew(endpoint, params, { logMode: "none" }),
+        fetchAndValidateNative(endpoint, params, "none"),
+        fetchNative(endpoint, params, "none"),
       ]);
 
       compareDataIntegrity(zodResult, nativeResult, context);
