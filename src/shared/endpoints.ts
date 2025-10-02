@@ -123,63 +123,60 @@ export function defineEndpoint<I, O>(
 }
 
 /**
- * Discovers all endpoints from client modules
+ * Discovers all endpoints from API modules
  *
- * This function uses static imports to access all client modules and extracts
- * endpoint objects from them. All client modules export enriched endpoint
- * objects that are automatically discovered and organized by API group.
+ * This function uses static imports to access all API modules and extracts
+ * endpoint objects from them. All API modules export ApiDefinition objects
+ * that contain endpoint definitions which are automatically discovered and
+ * organized by API group.
  *
  * @returns Object with endpoints grouped by API name, sorted alphabetically
  */
-// Import all client modules statically
-import * as wsdotBorderCrossings from "@/clients/wsdot-border-crossings";
-import * as wsdotBridgeClearances from "@/clients/wsdot-bridge-clearances";
-import * as wsdotCommercialVehicleRestrictions from "@/clients/wsdot-commercial-vehicle-restrictions";
-import * as wsdotHighwayAlerts from "@/clients/wsdot-highway-alerts";
-import * as wsdotHighwayCameras from "@/clients/wsdot-highway-cameras";
-import * as wsdotMountainPassConditions from "@/clients/wsdot-mountain-pass-conditions";
-import * as wsdotTollRates from "@/clients/wsdot-toll-rates";
-import * as wsdotTrafficFlow from "@/clients/wsdot-traffic-flow";
-import * as wsdotTravelTimes from "@/clients/wsdot-travel-times";
-import * as wsdotWeatherInformation from "@/clients/wsdot-weather-information";
-import * as wsdotWeatherInformationExtended from "@/clients/wsdot-weather-information-extended";
-import * as wsdotWeatherStations from "@/clients/wsdot-weather-stations";
-import * as wsfFares from "@/clients/wsf-fares";
-import * as wsfSchedule from "@/clients/wsf-schedule";
-import * as wsfTerminals from "@/clients/wsf-terminals";
-import * as wsfVessels from "@/clients/wsf-vessels";
+// Import all API modules statically
+import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/endpoints";
+import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/endpoints";
+import { wsdotCommercialVehicleRestrictionsApi } from "@/apis/wsdot-commercial-vehicle-restrictions/endpoints";
+import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/endpoints";
+import { wsdotHighwayCamerasApi } from "@/apis/wsdot-highway-cameras/endpoints";
+import { wsdotMountainPassConditionsApi } from "@/apis/wsdot-mountain-pass-conditions/endpoints";
+import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/endpoints";
+import { wsdotTrafficFlowApi } from "@/apis/wsdot-traffic-flow/endpoints";
+import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/endpoints";
+import { wsdotWeatherInformationApi } from "@/apis/wsdot-weather/endpoints";
+import { wsfFaresApi } from "@/apis/wsf-fares/endpoints";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/endpoints";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/endpoints";
+import { wsfVesselsApi } from "@/apis/wsf-vessels/endpoints";
 
 export const discoverEndpoints = (): EndpointsByApi => {
   // Use static imports to avoid async complexity
-  // Modules are ordered alphabetically by API name for consistent results
-  const modules = [
-    wsdotBorderCrossings,
-    wsdotBridgeClearances,
-    wsdotCommercialVehicleRestrictions,
-    wsdotHighwayAlerts,
-    wsdotHighwayCameras,
-    wsdotMountainPassConditions,
-    wsdotTollRates,
-    wsdotTrafficFlow,
-    wsdotTravelTimes,
-    wsdotWeatherInformation,
-    wsdotWeatherInformationExtended,
-    wsdotWeatherStations,
-    wsfFares,
-    wsfSchedule,
-    wsfTerminals,
-    wsfVessels,
+  // API modules are ordered alphabetically by API name for consistent results
+  const apiModules = [
+    wsdotBorderCrossingsApi,
+    wsdotBridgeClearancesApi,
+    wsdotCommercialVehicleRestrictionsApi,
+    wsdotHighwayAlertsApi,
+    wsdotHighwayCamerasApi,
+    wsdotMountainPassConditionsApi,
+    wsdotTollRatesApi,
+    wsdotTrafficFlowApi,
+    wsdotTravelTimesApi,
+    wsdotWeatherInformationApi,
+    wsfFaresApi,
+    wsfScheduleApi,
+    wsfTerminalsApi,
+    wsfVesselsApi,
   ];
 
   // Create nested structure grouped by API using functional approach
-  const endpointsByApi = modules
-    .map((module) => Object.values(module).filter(isEndpoint))
-    .filter((endpoints) => endpoints.length > 0)
-    .reduce((acc, endpoints) => {
-      const apiName = endpoints[0].api;
-      acc[apiName] = endpoints;
-      return acc;
-    }, {} as EndpointsByApi);
+  const endpointsByApi = apiModules.reduce((acc, apiModule) => {
+    // Convert endpoint definitions to full Endpoint objects using defineEndpoint
+    const endpoints = apiModule.endpointDefinitions.map((definition) =>
+      defineEndpoint(definition)
+    );
+    acc[apiModule.name] = endpoints;
+    return acc;
+  }, {} as EndpointsByApi);
 
   return endpointsByApi;
 };
