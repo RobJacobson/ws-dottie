@@ -52,7 +52,7 @@ export type GetTripRatesByDateInput = z.infer<typeof getTripRatesByDateSchema>;
  */
 export const getTripRatesByVersionSchema = z.object({
   /** Version number for the trip rates query. */
-  version: z.number().describe("Version number for the trip rates query."),
+  Version: z.number().describe("Version number for the trip rates query."),
 });
 
 export type GetTripRatesByVersionInput = z.infer<

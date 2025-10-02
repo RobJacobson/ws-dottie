@@ -21,7 +21,6 @@ export type GetMountainPassConditionsInput = z.infer<
 export const getMountainPassConditionSchema = z.object({
   /** A PassConditionID for a specific pass condition report. */
   PassConditionID: z
-    .number()
     .int()
     .describe("A PassConditionID for a specific pass condition report."),
 });

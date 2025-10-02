@@ -22,7 +22,7 @@ export type {
 export type {
   TollRatesList,
   TollTripInfoList,
-  TollTrips,
+  TollTripsRates as TollTrips,
   TollTripVersion,
   TripRatesList,
 } from "./original/outputSchemas.original";

@@ -18,7 +18,7 @@ export const roadwayLocationSchema = z.object({
    * The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction.
    */
   Direction: z
-    .string()
+    .enum(["B", "E", "N", "S", "W"])
     .nullable()
     .describe(
       "The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction."
@@ -40,7 +40,7 @@ export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
  */
 export const alertSchema = z.object({
   /** Unique Identifier for the alert. */
-  AlertID: z.number().describe("Unique Identifier for the alert."),
+  AlertID: z.int().describe("Unique Identifier for the alert."),
   /** Used for countywide alerts, name of the affected county. */
   County: z
     .string()
@@ -54,12 +54,23 @@ export const alertSchema = z.object({
   EndTime: zWsdotDate().nullable().describe("Estimated end time for alert."),
   /** Categorization of alert, i.e. Collision, Maintenance, etc. */
   EventCategory: z
-    .string()
+    .enum([
+      "Closure",
+      "Collision",
+      "Construction",
+      "Fire",
+      "Lane Closure",
+      "Maintenance",
+      "Rest Area",
+      "Road work",
+      "Special Event",
+      "Speed Limit",
+    ])
     .nullable()
     .describe("Categorization of alert, i.e. Collision, Maintenance, etc."),
   /** Current status of alert, open, closed. */
   EventStatus: z
-    .string()
+    .enum(["Open"])
     .nullable()
     .describe("Current status of alert, open, closed."),
   /**
@@ -82,14 +93,21 @@ export const alertSchema = z.object({
     .describe("When was alert was last changed."),
   /** Expected impact on traffic, highest, high, medium, low. */
   Priority: z
-    .string()
+    .enum(["High", "Highest", "Low", "Lowest", "Medium"])
     .nullable()
     .describe("Expected impact on traffic, highest, high, medium, low."),
   /**
    * WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest.
    */
   Region: z
-    .string()
+    .enum([
+      "Eastern",
+      "North Central",
+      "Northwest",
+      "Olympic",
+      "South Central",
+      "Southwest",
+    ])
     .nullable()
     .describe(
       "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
@@ -134,3 +152,11 @@ export type Area = z.infer<typeof areaSchema>;
 export const areasListSchema = z.array(areaSchema);
 
 export type AreasList = z.infer<typeof areasListSchema>;
+
+/**
+ * Schema for EventCategoriesList - represents a list of event category strings
+ * The getEventCategories endpoint returns an array of strings, not objects
+ */
+export const eventCategoriesListSchema = z.array(z.string());
+
+export type EventCategoriesList = z.infer<typeof eventCategoriesListSchema>;

@@ -206,8 +206,6 @@ export type GetSchedSailingsBySchedRouteInput = z.infer<
 export const getAllSchedSailingsBySchedRouteSchema = z.object({
   /** Unique identifier for a scheduled route. */
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
-  /** Parameter Y for the request. */
-  Y: z.number().describe("Parameter Y for the request."),
 });
 
 export type GetAllSchedSailingsBySchedRouteInput = z.infer<

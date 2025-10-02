@@ -1011,21 +1011,18 @@ export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
  *
  * Represents a list of comprehensive terminal information.
  */
-export const terminalVerboseDetailsListSchema = z.array(terminalVerboseSchema);
+export const terminalVerboseListSchema = z.array(terminalVerboseSchema);
 
-export type TerminalVerboseDetailsList = z.infer<
-  typeof terminalVerboseDetailsListSchema
->;
+export type TerminalVerboseList = z.infer<typeof terminalVerboseListSchema>;
 
 /**
  * GetAllTerminalVerboseDetails schema
  *
  * Returns all terminal verbose details.
  */
-export const getAllTerminalVerboseSchema =
-  terminalVerboseDetailsListSchema.describe(
-    "Returns all terminal verbose details."
-  );
+export const getAllTerminalVerboseSchema = terminalVerboseListSchema.describe(
+  "Returns all terminal verbose details."
+);
 
 export type GetAllTerminalVerbose = z.infer<typeof getAllTerminalVerboseSchema>;
 

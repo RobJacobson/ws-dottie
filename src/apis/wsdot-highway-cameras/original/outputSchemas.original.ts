@@ -48,7 +48,10 @@ export const cameraSchema = z.object({
     .nullable()
     .describe("Website for camera owner when not WSDOT."),
   /** WSDOT region which owns the camera. */
-  Region: z.string().nullable().describe("WSDOT region which owns the camera."),
+  Region: z
+    .enum(["ER", "NC", "NW", "OL", "OS", "SC", "SW", "WA"])
+    .nullable()
+    .describe("WSDOT region which owns the camera."),
   /**
    * When more than one camera is located in the same area this is order of display.
    */

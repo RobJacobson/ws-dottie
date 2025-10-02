@@ -22,7 +22,7 @@ export const tollRateSchema = z.object({
    * The computed toll in cents which is sent to the tolling company, may not match what is displayed on the sign due to timing issues, a negative value will be used when toll is not available.
    */
   CurrentToll: z
-    .number()
+    .int()
     .describe(
       "The computed toll in cents which is sent to the tolling company, may not match what is displayed on the sign due to timing issues, a negative value will be used when toll is not available."
     ),
@@ -32,14 +32,17 @@ export const tollRateSchema = z.object({
     .nullable()
     .describe("Message displayed on the sign in place of a toll."),
   /** Route the toll applies to. */
-  StateRoute: z.string().nullable().describe("Route the toll applies to."),
+  StateRoute: z
+    .enum(["099", "167", "405", "509", "520"])
+    .nullable()
+    .describe("Route the toll applies to."),
   /** Travel direction the toll applies to. */
   TravelDirection: z
-    .string()
+    .enum(["E", "N", "S"])
     .nullable()
     .describe("Travel direction the toll applies to."),
   /** The start milepost for a toll trip. */
-  StartMilepost: z.number().describe("The start milepost for a toll trip."),
+  StartMilepost: z.int().describe("The start milepost for a toll trip."),
   /** Common name of the start location. */
   StartLocationName: z
     .string()
@@ -54,7 +57,7 @@ export const tollRateSchema = z.object({
     .number()
     .describe("Approximate geographical longitude of the start location."),
   /** The end milepost for a toll trip. */
-  EndMilepost: z.number().describe("The end milepost for a toll trip."),
+  EndMilepost: z.int().describe("The end milepost for a toll trip."),
   /** Common name of the end location. */
   EndLocationName: z
     .string()
@@ -92,7 +95,7 @@ export const tripRateSchema = z.object({
     "Time when the message was last updated."
   ),
   /** The toll amount for the trip. */
-  Toll: z.number().describe("The toll amount for the trip."),
+  Toll: z.int().describe("The toll amount for the trip."),
   /** Name of the trip. */
   TripName: z.string().nullable().describe("Name of the trip."),
 });
@@ -109,23 +112,23 @@ export type TripRatesList = z.infer<typeof tripRatesListSchema>;
 /**
  * Schema for toll trips container
  */
-export const tollTripsSchema = z.object({
+export const tollTripsRatesSchema = z.object({
   /** Last time the toll trips were updated. */
   LastUpdated: zWsdotDate().describe("Last time the toll trips were updated."),
   /** List of trip rates. */
   Trips: tripRatesListSchema.nullable().describe("List of trip rates."),
   /** Version number of the toll trips data. */
-  Version: z.number().describe("Version number of the toll trips data."),
+  Version: z.int().describe("Version number of the toll trips data."),
 });
 
-export type TollTrips = z.infer<typeof tollTripsSchema>;
+export type TollTripsRates = z.infer<typeof tollTripsRatesSchema>;
 
 /**
  * Schema for TollTripsList - list of toll trips
  */
-export const tollTripsListSchema = z.array(tollTripsSchema);
+export const tollTripsRatesListSchema = z.array(tollTripsRatesSchema);
 
-export type TollTripsList = z.infer<typeof tollTripsListSchema>;
+export type TollTripsRatesList = z.infer<typeof tollTripsRatesListSchema>;
 
 /**
  * Schema for toll trip information
@@ -138,7 +141,7 @@ export const tollTripInfoSchema = z.object({
   /** End longitude of the trip. */
   EndLongitude: z.number().describe("End longitude of the trip."),
   /** End milepost of the trip. */
-  EndMilepost: z.number().describe("End milepost of the trip."),
+  EndMilepost: z.int().describe("End milepost of the trip."),
   /** Geometry information for the trip. */
   Geometry: z
     .string()
@@ -158,10 +161,10 @@ export const tollTripInfoSchema = z.object({
   /** Start longitude of the trip. */
   StartLongitude: z.number().describe("Start longitude of the trip."),
   /** Start milepost of the trip. */
-  StartMilepost: z.number().describe("Start milepost of the trip."),
+  StartMilepost: z.int().describe("Start milepost of the trip."),
   /** Direction of travel for the trip. */
   TravelDirection: z
-    .string()
+    .enum(["E", "N", "S"])
     .nullable()
     .describe("Direction of travel for the trip."),
   /** Name of the trip. */
@@ -184,7 +187,7 @@ export const tollTripVersionSchema = z.object({
   /** Timestamp of the version. */
   TimeStamp: zWsdotDate().describe("Timestamp of the version."),
   /** Version number. */
-  Version: z.number().describe("Version number."),
+  Version: z.int().describe("Version number."),
 });
 
 export type TollTripVersion = z.infer<typeof tollTripVersionSchema>;

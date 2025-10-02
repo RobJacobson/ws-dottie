@@ -14,7 +14,7 @@ export const borderCrossingDataSchema = z.object({
   /** When the reading was taken. */
   Time: zWsdotDate().describe("When the reading was taken."),
   /** Current time to cross border. */
-  WaitTime: z.number().describe("Current time to cross border."),
+  WaitTime: z.int().describe("Current time to cross border."),
 });
 
 export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;

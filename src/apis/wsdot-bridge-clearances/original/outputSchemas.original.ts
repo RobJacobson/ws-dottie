@@ -35,7 +35,7 @@ export const bridgeDataGISSchema = z.object({
    * A code that represents whether the transportation asset or project is located in the (I) Increasing Milepost Direction of Travel, (D) Decreasing Milepost Direction of Travel or, (B) Both Milepost Directions of Travel.
    */
   InventoryDirection: z
-    .string()
+    .enum(["I", "D", "B", "i", "d"])
     .nullable()
     .describe(
       "A code that represents whether the transportation asset or project is located in the (I) Increasing Milepost Direction of Travel, (D) Decreasing Milepost Direction of Travel or, (B) Both Milepost Directions of Travel."
@@ -66,7 +66,7 @@ export const bridgeDataGISSchema = z.object({
    * An indicator that denotes if the Milepost is within a back mileage equation area. A back mileage equation area occurs when a segment of a route is added at any point other than the end of an existing route, or when a realignment occurs.
    */
   SRMPAheadBackIndicator: z
-    .string()
+    .enum(["A", "B"])
     .nullable()
     .describe(
       "An indicator that denotes if the Milepost is within a back mileage equation area. A back mileage equation area occurs when a segment of a route is added at any point other than the end of an existing route, or when a realignment occurs."

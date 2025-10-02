@@ -7,7 +7,7 @@ export const wsdotMountainPassConditionsApi = createApiDefinition(
     {
       function: "getMountainPassCondition",
       endpoint:
-        "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJson?PassConditionID={PassConditionID}",
+        "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={PassConditionID}",
       inputSchema: input.getMountainPassConditionSchema,
       outputSchema: output.passConditionSchema,
       sampleParams: { PassConditionID: 12 },

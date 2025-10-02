@@ -37,9 +37,9 @@ export const weatherInfoSchema = z
         "Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture."
       ),
     /** Sky coverage. */
-    SkyCoverage: z.string().nullable().describe("Sky coverage."),
+    SkyCoverage: z.enum(["N/A"]).nullable().describe("Sky coverage."),
     /** Station ID. */
-    StationID: z.number().int().describe("Station ID."),
+    StationID: z.int().describe("Station ID."),
     /** WSDOT assigned name. */
     StationName: z.string().nullable().describe("WSDOT assigned name."),
     /** Temperature in Fahrenheit. */
@@ -51,7 +51,6 @@ export const weatherInfoSchema = z
      * Average distance that you can see, both day and night, computed every three minutes in meters.
      */
     Visibility: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -61,7 +60,25 @@ export const weatherInfoSchema = z
     WindDirection: z.number().nullable().describe("Wind direction."),
     /** Wind direction cardinal. */
     WindDirectionCardinal: z
-      .string()
+      .enum([
+        "N/A",
+        "N",
+        "N'",
+        "NE",
+        "NNE",
+        "E",
+        "ESE",
+        "SE",
+        "SSE",
+        "S",
+        "SSW",
+        "SW",
+        "WSW",
+        "W",
+        "WNW",
+        "NW",
+        "NNW",
+      ])
       .nullable()
       .describe("Wind direction cardinal."),
     /** Wind gust speed in MPH. */
@@ -99,7 +116,7 @@ export type WeatherInformationList = z.infer<
 const scanwebSurfaceMeasurementsSchema = z
   .object({
     /** Sensor ID. */
-    SensorId: z.number().int().describe("Sensor ID."),
+    SensorId: z.int().describe("Sensor ID."),
     /** Surface temperature. */
     SurfaceTemperature: z.number().nullable().describe("Surface temperature."),
     /** Road freezing temperature. */
@@ -109,7 +126,7 @@ const scanwebSurfaceMeasurementsSchema = z
       .describe("Road freezing temperature."),
     /** Road surface condition. */
     RoadSurfaceCondition: z
-      .number()
+      .union([z.literal(101), z.literal(102), z.literal(103), z.literal(104)])
       .nullable()
       .describe("Road surface condition."),
   })
@@ -140,7 +157,7 @@ export type ScanwebSurfaceMeasurementsList = z.infer<
 const scanwebSubSurfaceMeasurementsSchema = z
   .object({
     /** Sensor ID. */
-    SensorId: z.number().int().describe("Sensor ID."),
+    SensorId: z.int().describe("Sensor ID."),
     /** Sub-surface temperature. */
     SubSurfaceTemperature: z
       .number()
@@ -182,7 +199,7 @@ export const weatherReadingSchema = z
     /** Longitude of station. */
     Longitude: z.number().describe("Longitude of station."),
     /** Elevation from sea level in meters. */
-    Elevation: z.number().int().describe("Elevation from sea level in meters."),
+    Elevation: z.int().describe("Elevation from sea level in meters."),
     /** Date and Time reading was taken. */
     ReadingTime: zWsdotDate()
       .nullable()
@@ -196,7 +213,6 @@ export const weatherReadingSchema = z
      * Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture.
      */
     RelativeHumidty: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -206,7 +222,6 @@ export const weatherReadingSchema = z
      * Average speed of the wind during an evaluation cycle in Kilometers per hour.
      */
     AverageWindSpeed: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -216,7 +231,6 @@ export const weatherReadingSchema = z
      * Average wind direction during an evaluation cycle in degrees.
      */
     AverageWindDirection: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -226,7 +240,6 @@ export const weatherReadingSchema = z
      * Maximum wind speed measured during an evaluation cycle. The time period over which wind gust speed is monitored can vary based on the type and manufacturer of the RWIS site.
      */
     WindGust: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -236,7 +249,6 @@ export const weatherReadingSchema = z
      * Average distance that you can see, both day and night, computed every three minutes in meters.
      */
     Visibility: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -246,7 +258,6 @@ export const weatherReadingSchema = z
      * Intensity of the precipitation as derived from the precipitation rate.
      */
     PrecipitationIntensity: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -256,8 +267,7 @@ export const weatherReadingSchema = z
      * Type of precipitation detected by a precipitation sensor, if one is available. Certain types of precipitation sensors can only detect the presence or absence of precipitation and will display Yes or No (1 or 0 respectively).
      */
     PrecipitationType: z
-      .number()
-      .int()
+      .union([z.literal(0), z.literal(2), z.literal(41)])
       .nullable()
       .describe(
         "Type of precipitation detected by a precipitation sensor, if one is available. Certain types of precipitation sensors can only detect the presence or absence of precipitation and will display Yes or No (1 or 0 respectively)."
@@ -320,7 +330,6 @@ export const weatherReadingSchema = z
      * The force per unit area exerted by the atmosphere in millibars. This reading is not adjusted for site elevation.
      */
     BarometricPressure: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -330,7 +339,6 @@ export const weatherReadingSchema = z
      * The depth of snow on representative areas other than the highway pavement, avoiding drifts and plowed areas in centimeters.
      */
     SnowDepth: z
-      .number()
       .int()
       .nullable()
       .describe(
@@ -372,7 +380,7 @@ export const weatherStationDataSchema = z
     /** Longitude of station. */
     Longitude: z.number().describe("Longitude of station."),
     /** Identifier of weather station. */
-    StationCode: z.number().int().describe("Identifier of weather station."),
+    StationCode: z.int().describe("Identifier of weather station."),
     /** Common name assigned to weather station. */
     StationName: z
       .string()

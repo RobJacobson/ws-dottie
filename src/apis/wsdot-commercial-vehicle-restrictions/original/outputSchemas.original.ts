@@ -113,7 +113,7 @@ export const cVRestrictionDataSchema = z.object({
     .describe("State route restriction is located on."),
   /**  */
   TDMaxAxle: z.number().nullable().describe(""),
-  /**  */
+  /** Type of vehicle affected by the restriction. */
   VehicleType: z.string().nullable().describe(""),
 });
 

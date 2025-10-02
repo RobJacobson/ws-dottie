@@ -41,7 +41,7 @@ export type {
   TerminalTransportationOption,
   TerminalTransportationOptionsList,
   TerminalVerbose,
-  TerminalVerboseDetailsList,
+  TerminalVerboseList as TerminalVerboseDetailsList,
   TerminalWaitTime,
   TerminalWaitTimesList,
 } from "./original/outputSchemas.original";

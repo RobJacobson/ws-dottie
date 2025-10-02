@@ -41,7 +41,7 @@ export const flowDataSchema = z.object({
     .describe("The location of the flow station."),
   /** The region that maintains the flow station. */
   Region: z
-    .string()
+    .enum(["Eastern", "Northwest", "Olympic", "Southwest"])
     .nullable()
     .describe("The region that maintains the flow station."),
   /** The name of the flow station. */

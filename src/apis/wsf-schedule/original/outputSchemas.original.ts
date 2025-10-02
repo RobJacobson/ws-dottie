@@ -11,17 +11,11 @@ import { zWsdotDate } from "@/apis/shared";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information
+ * The API returns a string directly, not an object with CacheFlushDate property
  */
-export const cacheFlushDateSchema = z.object({
-  /**
-   * If present, notes the date that certain service data was last changed.
-   */
-  CacheFlushDate: zWsdotDate()
-    .nullable()
-    .describe(
-      "If present, notes the date that certain service data was last changed."
-    ),
-});
+export const cacheFlushDateSchema = zWsdotDate().describe(
+  "The date that certain service data was last changed."
+);
 
 export type SchedulesCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
@@ -339,6 +333,13 @@ export const routeDetailSchema = routeBaseSchema.extend({
 });
 
 export type RouteDetail = z.infer<typeof routeDetailSchema>;
+
+/**
+ * Schema for RouteDetailsList - represents a list of route details
+ */
+export const routeDetailsListSchema = z.array(routeDetailSchema);
+
+export type RouteDetailsList = z.infer<typeof routeDetailsListSchema>;
 
 /**
  * Schema for ActiveSeason - represents active season information

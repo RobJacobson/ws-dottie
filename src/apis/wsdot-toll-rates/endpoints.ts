@@ -23,7 +23,7 @@ export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
     function: "getTollTripRates",
     endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson",
     inputSchema: input.getTollTripRatesSchema,
-    outputSchema: output.tollTripsSchema,
+    outputSchema: output.tollTripsRatesSchema,
     sampleParams: {},
     cacheStrategy: "FREQUENT",
   },
@@ -41,7 +41,7 @@ export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
     endpoint:
       "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
     inputSchema: input.getTripRatesByDateSchema,
-    outputSchema: output.tollTripsListSchema,
+    outputSchema: output.tollTripsRatesListSchema,
     sampleParams: {
       FromDate: datesHelper.startOfMonth(),
       ToDate: datesHelper.yesterday(),
@@ -53,7 +53,7 @@ export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
     endpoint:
       "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByVersionAsJson?Version={Version}",
     inputSchema: input.getTripRatesByVersionSchema,
-    outputSchema: output.tripRatesListSchema,
+    outputSchema: output.tollTripsRatesSchema,
     sampleParams: { Version: 352417 },
     cacheStrategy: "FREQUENT",
   },

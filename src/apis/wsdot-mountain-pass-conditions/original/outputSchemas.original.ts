@@ -12,7 +12,7 @@ export const travelRestrictionSchema = z.object({
     .describe("The text of this restriction."),
   /** The direction of this restriction. */
   TravelDirection: z
-    .string()
+    .enum(["Eastbound", "Northbound", "Southbound", "Westbound"])
     .nullable()
     .describe("The direction of this restriction."),
 });
@@ -24,10 +24,7 @@ export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
  */
 export const passConditionSchema = z.object({
   /** A unique identifier for a mountain pass. */
-  MountainPassId: z
-    .number()
-    .int()
-    .describe("A unique identifier for a mountain pass."),
+  MountainPassId: z.int().describe("A unique identifier for a mountain pass."),
   /** A friendly name for a mountain pass. */
   MountainPassName: z
     .string()
@@ -45,7 +42,6 @@ export const passConditionSchema = z.object({
    * The temperature reading at the mountain pass in degrees fahrenheit.
    */
   TemperatureInFahrenheit: z
-    .number()
     .int()
     .nullable()
     .describe(
@@ -53,7 +49,6 @@ export const passConditionSchema = z.object({
     ),
   /** The elevation of the mountain pass in feet. */
   ElevationInFeet: z
-    .number()
     .int()
     .describe("The elevation of the mountain pass in feet."),
   /** The weather conditions at the pass. */

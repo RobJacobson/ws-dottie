@@ -1,3 +1,4 @@
+import { datesHelper } from "@/shared/utils";
 import { createApiDefinition } from "../utils";
 import { input, output } from "./schemas";
 
@@ -45,7 +46,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
       inputSchema: input.getEventCategoriesSchema,
-      outputSchema: output.areasListSchema,
+      outputSchema: output.eventCategoriesListSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
     },
@@ -66,8 +67,8 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       outputSchema: output.alertsListSchema,
       sampleParams: {
         StateRoute: "405",
-        SearchTimeStart: "2025-08-01",
-        SearchTimeEnd: "2025-09-30",
+        SearchTimeStart: datesHelper.yesterday(),
+        SearchTimeEnd: datesHelper.tomorrow(),
       },
       cacheStrategy: "FREQUENT",
     },

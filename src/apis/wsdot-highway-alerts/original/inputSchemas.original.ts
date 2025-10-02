@@ -35,17 +35,19 @@ export const searchAlertsSchema = z.object({
    * Optional. Use the integer code as follows: 8 - North Central, 11 - South Central, 12 - Southwest, 9 - Northwest, 10 - Olympic, 7 - Eastern.
    */
   Region: z
-    .string()
+    .int()
     .optional()
     .describe(
       "Optional. Use the integer code as follows: 8 - North Central, 11 - South Central, 12 - Southwest, 9 - Northwest, 10 - Olympic, 7 - Eastern."
     ),
   /** Optional. Will only find alerts occuring after this time. */
-  SearchTimeStart: zWsdotDate()
+  SearchTimeStart: z
+    .string()
     .optional()
     .describe("Optional. Will only find alerts occuring after this time."),
   /** Optional. Will only find alerts occuring before this time. */
-  SearchTimeEnd: zWsdotDate()
+  SearchTimeEnd: z
+    .string()
     .optional()
     .describe("Optional. Will only find alerts occuring before this time."),
   /** Optional. Will only find alerts after this milepost. */
