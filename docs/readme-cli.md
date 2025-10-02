@@ -52,7 +52,7 @@ fetch-dottie getBorderCrossings --jsonp
 fetch-dottie getBorderCrossings --jsonp --no-validation
 
 # Get ferry terminal information with parameters
-fetch-dottie getTerminalWaitTimes
+fetch-dottie terminalWaitTimes
 
 # List all available functions
 fetch-dottie --list
@@ -105,6 +105,7 @@ fetch-dottie <function-name> [params] [options]
 ### Available Options
 - `--list`: List all available endpoints
 - `--pretty`: Pretty-print JSON output with 2-space indentation
+- `--concise`: Concise array output: brackets on own lines, items indented and compact
 - `--quiet`: Suppress debug output and verbose messages
 - `--silent`: Suppress all output except final JSON result
 - `--limit <number>`: Truncate output to first N lines
@@ -117,10 +118,13 @@ fetch-dottie <function-name> [params] [options]
 fetch-dottie getBorderCrossings
 
 # Function with JSON parameters
-fetch-dottie getBridgeClearances '{"route": "005"}'
+fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}'
 
 # Pretty-print output
 fetch-dottie getBorderCrossings --pretty
+
+# Concise array output
+fetch-dottie getBorderCrossings --concise
 
 # Quiet mode (no debug messages)
 fetch-dottie getBorderCrossings --quiet
@@ -193,10 +197,12 @@ fetch-dottie getBorderCrossings --silent
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
-| `getWeatherInformation` | Weather stations data | wsdot-weather-information |
-| `getWeatherInformationByStationId` | Specific station weather | wsdot-weather-information |
-| `getWeatherInformationExtended` | Extended weather data | wsdot-weather-information-extended |
-| `getWeatherStations` | Weather station locations | wsdot-weather-stations |
+| `getWeatherInformation` | Weather stations data | wsdot-weather |
+| `getWeatherInformationByStationId` | Specific station weather | wsdot-weather |
+| `getCurrentWeatherForStations` | Current weather for multiple stations | wsdot-weather |
+| `searchWeatherInformation` | Search weather by date range | wsdot-weather |
+| `getWeatherInformationExtended` | Extended weather data | wsdot-weather |
+| `getWeatherStations` | Weather station locations | wsdot-weather |
 | `getMountainPassCondition` | Mountain pass status | wsdot-mountain-pass-conditions |
 | `getMountainPassConditions` | All mountain passes | wsdot-mountain-pass-conditions |
 
@@ -251,7 +257,7 @@ fetch-dottie getBorderCrossings --silent
 | `terminalSailingSpace` | Terminal sailing space | wsf-terminals |
 | `terminalSailingSpaceById` | Sailing space by terminal | wsf-terminals |
 | `terminalWaitTimes` | Current wait times | wsf-terminals |
-| `terminalWaitTimesById` | Wait times by terminal | wsf-terminals |
+| `terminalWaitTimesByTerminalId` | Wait times by terminal | wsf-terminals |
 | `terminalBulletins` | Terminal bulletins | wsf-terminals |
 | `terminalBulletinsById` | Bulletins by terminal | wsf-terminals |
 | `terminalTransports` | Terminal transport options | wsf-terminals |
@@ -269,7 +275,6 @@ fetch-dottie getBorderCrossings --silent
 | `routes` | All routes | wsf-schedule |
 | `routesByTerminals` | Routes by terminals | wsf-schedule |
 | `routesHavingServiceDisruptions` | Routes with disruptions | wsf-schedule |
-| `routesWithDisruptions` | Routes with disruptions | wsf-schedule |
 | `sailings` | Sailing information | wsf-schedule |
 | `scheduleAlerts` | Schedule alerts | wsf-schedule |
 | `scheduleByRoute` | Schedule by route | wsf-schedule |
@@ -348,28 +353,28 @@ The unified CLI tool supports four different fetch strategies:
 **Default (native fetch with validation):**
 ```bash
 # ✅ Valid parameters (validated against Zod schemas)
-fetch-dottie terminalWaitTimesById '{"terminalId": 7}'
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}'
 
 # ❌ Invalid parameters (shows validation error)
-fetch-dottie terminalWaitTimesById '{"invalidParam": "value"}'
+fetch-dottie terminalWaitTimesByTerminalId '{"invalidParam": "value"}'
 ```
 
 **Raw data access (native fetch, no validation):**
 ```bash
 # Parameters passed directly to API (no validation)
-fetch-dottie terminalWaitTimesById '{"terminalId": 7}' --no-validation
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}' --no-validation
 ```
 
 **JSONP with validation (browser environments):**
 ```bash
 # JSONP request with validation
-fetch-dottie terminalWaitTimesById '{"terminalId": 7}' --jsonp
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}' --jsonp
 ```
 
 **JSONP without validation (browser environments, raw data):**
 ```bash
 # JSONP request without validation
-fetch-dottie terminalWaitTimesById '{"terminalId": 7}' --jsonp --no-validation
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}' --jsonp --no-validation
 ```
 
 ## 🤖 Agent Mode
@@ -537,7 +542,7 @@ fetch-dottie getMountainPassConditions
 ### 🚛 **Commercial Vehicle**
 ```bash
 # Check bridge clearances
-fetch-dottie getBridgeClearances '{"route": "005"}'
+fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}'
 
 # Find commercial restrictions
 fetch-dottie getCommercialVehicleRestrictions
@@ -556,7 +561,7 @@ fetch-dottie getAlerts --no-validation --quiet > raw.json
 fetch-dottie --list
 
 # Test with specific parameters
-fetch-dottie terminalWaitTimesById '{"terminalId": 7}'
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}'
 
 # Get raw response for debugging
 fetch-dottie getBorderCrossings --no-validation --silent
@@ -582,9 +587,9 @@ fetch-dottie --help
 ```bash
 # Check the expected parameter format
 fetch-dottie --help
-# Example: terminalId should be a number, tripDate should be YYYY-MM-DD string
-fetch-dottie terminalWaitTimesById '{"terminalId": "7"}'  # ❌ String
-fetch-dottie terminalWaitTimesById '{"terminalId": 7}'    # ✅ Number
+# Example: TerminalID should be a number, tripDate should be YYYY-MM-DD string
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": "7"}'  # ❌ String
+fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}'    # ✅ Number
 fetch-dottie scheduleByRoute '{"tripDate": "invalid-date", "routeId": 1}'  # ❌ Invalid date format
 fetch-dottie scheduleByRoute '{"tripDate": "2025-10-01", "routeId": 1}'    # ✅ YYYY-MM-DD format
 ```
@@ -592,8 +597,8 @@ fetch-dottie scheduleByRoute '{"tripDate": "2025-10-01", "routeId": 1}'    # ✅
 **"Invalid JSON parameters" error:**
 ```bash
 # Ensure your parameters are valid JSON
-fetch-dottie getBridgeClearances '{"route": "005"}'  # ✅ Valid JSON
-fetch-dottie getBridgeClearances '{route: "005"}'    # ❌ Invalid JSON
+fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}'  # ✅ Valid JSON
+fetch-dottie getBridgeClearancesByRoute '{Route: "005"}'    # ❌ Invalid JSON
 ```
 
 **API errors:**
