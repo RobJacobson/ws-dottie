@@ -13,11 +13,9 @@ import { z } from "zod";
  * Used for retrieving the date range for which schedule data is available.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getValidDateRangeInputSchema = z.object({});
+export const getValidDateRangeSchema = z.object({});
 
-export type GetValidDateRangeInput = z.infer<
-  typeof getValidDateRangeInputSchema
->;
+export type GetValidDateRangeInput = z.infer<typeof getValidDateRangeSchema>;
 
 /**
  * Schema for GetTerminals input parameters
@@ -25,14 +23,14 @@ export type GetValidDateRangeInput = z.infer<
  * Used for retrieving valid departing terminals for a given trip date.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTerminalsInputSchema = z.object({
+export const getTerminalsSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
     .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
 });
 
-export type GetTerminalsInput = z.infer<typeof getTerminalsInputSchema>;
+export type GetTerminalsInput = z.infer<typeof getTerminalsSchema>;
 
 /**
  * Schema for GetTerminalsAndMates input parameters
@@ -41,7 +39,7 @@ export type GetTerminalsInput = z.infer<typeof getTerminalsInputSchema>;
  * for a given trip date.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTerminalsAndMatesInputSchema = z.object({
+export const getTerminalsAndMatesSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -49,7 +47,7 @@ export const getTerminalsAndMatesInputSchema = z.object({
 });
 
 export type GetTerminalsAndMatesInput = z.infer<
-  typeof getTerminalsAndMatesInputSchema
+  typeof getTerminalsAndMatesSchema
 >;
 
 /**
@@ -59,7 +57,7 @@ export type GetTerminalsAndMatesInput = z.infer<
  * for a given trip date and route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTerminalsAndMatesByRouteInputSchema = z.object({
+export const getTerminalsAndMatesByRouteSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -69,7 +67,7 @@ export const getTerminalsAndMatesByRouteInputSchema = z.object({
 });
 
 export type GetTerminalsAndMatesByRouteInput = z.infer<
-  typeof getTerminalsAndMatesByRouteInputSchema
+  typeof getTerminalsAndMatesByRouteSchema
 >;
 
 /**
@@ -79,7 +77,7 @@ export type GetTerminalsAndMatesByRouteInput = z.infer<
  * and trip date.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTerminalMatesInputSchema = z.object({
+export const getTerminalMatesSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -88,7 +86,7 @@ export const getTerminalMatesInputSchema = z.object({
   TerminalID: z.number().describe("Unique identifier for a terminal."),
 });
 
-export type GetTerminalMatesInput = z.infer<typeof getTerminalMatesInputSchema>;
+export type GetTerminalMatesInput = z.infer<typeof getTerminalMatesSchema>;
 
 /**
  * Schema for GetRoutes input parameters
@@ -96,7 +94,7 @@ export type GetTerminalMatesInput = z.infer<typeof getTerminalMatesInputSchema>;
  * Used for retrieving route information. Can be filtered by terminal combination.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getRoutesInputSchema = z.object({
+export const getRoutesSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -113,7 +111,7 @@ export const getRoutesInputSchema = z.object({
     .describe("Unique identifier for the arriving terminal."),
 });
 
-export type GetRoutesInput = z.infer<typeof getRoutesInputSchema>;
+export type GetRoutesInput = z.infer<typeof getRoutesSchema>;
 
 /**
  * Schema for GetRoutesHavingServiceDisruptions input parameters
@@ -121,7 +119,7 @@ export type GetRoutesInput = z.infer<typeof getRoutesInputSchema>;
  * Used for retrieving routes currently associated with service disruptions.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getRoutesHavingServiceDisruptionsInputSchema = z.object({
+export const getRoutesHavingServiceDisruptionsSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -129,7 +127,7 @@ export const getRoutesHavingServiceDisruptionsInputSchema = z.object({
 });
 
 export type GetRoutesHavingServiceDisruptionsInput = z.infer<
-  typeof getRoutesHavingServiceDisruptionsInputSchema
+  typeof getRoutesHavingServiceDisruptionsSchema
 >;
 
 /**
@@ -138,7 +136,7 @@ export type GetRoutesHavingServiceDisruptionsInput = z.infer<
  * Used for retrieving detailed route information. Can be filtered by various criteria.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getRouteDetailsInputSchema = z.object({
+export const getRouteDetailsSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -157,7 +155,7 @@ export const getRouteDetailsInputSchema = z.object({
   RouteID: z.number().optional().describe("Unique identifier for a route."),
 });
 
-export type GetRouteDetailsInput = z.infer<typeof getRouteDetailsInputSchema>;
+export type GetRouteDetailsInput = z.infer<typeof getRouteDetailsSchema>;
 
 /**
  * Schema for GetActiveScheduledSeasons input parameters
@@ -165,10 +163,10 @@ export type GetRouteDetailsInput = z.infer<typeof getRouteDetailsInputSchema>;
  * Used for retrieving a summary of active seasons.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getActiveScheduledSeasonsInputSchema = z.object({});
+export const getActiveScheduledSeasonsSchema = z.object({});
 
 export type GetActiveScheduledSeasonsInput = z.infer<
-  typeof getActiveScheduledSeasonsInputSchema
+  typeof getActiveScheduledSeasonsSchema
 >;
 
 /**
@@ -177,12 +175,12 @@ export type GetActiveScheduledSeasonsInput = z.infer<
  * Used for retrieving scheduled routes. Can be filtered by season.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getSchedRoutesInputSchema = z.object({
+export const getSchedRoutesSchema = z.object({
   /** Unique identifier for a season. */
   ScheduleID: z.number().optional().describe("Unique identifier for a season."),
 });
 
-export type GetSchedRoutesInput = z.infer<typeof getSchedRoutesInputSchema>;
+export type GetSchedRoutesInput = z.infer<typeof getSchedRoutesSchema>;
 
 /**
  * Schema for GetSchedSailingsBySchedRoute input parameters
@@ -190,13 +188,13 @@ export type GetSchedRoutesInput = z.infer<typeof getSchedRoutesInputSchema>;
  * Used for retrieving sailings for a particular scheduled route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getSchedSailingsBySchedRouteInputSchema = z.object({
+export const getSchedSailingsBySchedRouteSchema = z.object({
   /** Unique identifier for a scheduled route. */
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
 });
 
 export type GetSchedSailingsBySchedRouteInput = z.infer<
-  typeof getSchedSailingsBySchedRouteInputSchema
+  typeof getSchedSailingsBySchedRouteSchema
 >;
 
 /**
@@ -205,7 +203,7 @@ export type GetSchedSailingsBySchedRouteInput = z.infer<
  * Used for retrieving all sailings for a particular scheduled route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getAllSchedSailingsBySchedRouteInputSchema = z.object({
+export const getAllSchedSailingsBySchedRouteSchema = z.object({
   /** Unique identifier for a scheduled route. */
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
   /** Parameter Y for the request. */
@@ -213,7 +211,7 @@ export const getAllSchedSailingsBySchedRouteInputSchema = z.object({
 });
 
 export type GetAllSchedSailingsBySchedRouteInput = z.infer<
-  typeof getAllSchedSailingsBySchedRouteInputSchema
+  typeof getAllSchedSailingsBySchedRouteSchema
 >;
 
 /**
@@ -222,9 +220,9 @@ export type GetAllSchedSailingsBySchedRouteInput = z.infer<
  * Used for retrieving time adjustments for all routes.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTimeAdjInputSchema = z.object({});
+export const getTimeAdjSchema = z.object({});
 
-export type GetTimeAdjInput = z.infer<typeof getTimeAdjInputSchema>;
+export type GetTimeAdjInput = z.infer<typeof getTimeAdjSchema>;
 
 /**
  * Schema for GetTimeAdjByRoute input parameters
@@ -232,14 +230,12 @@ export type GetTimeAdjInput = z.infer<typeof getTimeAdjInputSchema>;
  * Used for retrieving time adjustments for a specific route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTimeAdjByRouteInputSchema = z.object({
+export const getTimeAdjByRouteSchema = z.object({
   /** Unique identifier for a route. */
   RouteID: z.number().describe("Unique identifier for a route."),
 });
 
-export type GetTimeAdjByRouteInput = z.infer<
-  typeof getTimeAdjByRouteInputSchema
->;
+export type GetTimeAdjByRouteInput = z.infer<typeof getTimeAdjByRouteSchema>;
 
 /**
  * Schema for GetTimeAdjBySchedRoute input parameters
@@ -247,13 +243,13 @@ export type GetTimeAdjByRouteInput = z.infer<
  * Used for retrieving time adjustments for a specific scheduled route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTimeAdjBySchedRouteInputSchema = z.object({
+export const getTimeAdjBySchedRouteSchema = z.object({
   /** Unique identifier for a scheduled route. */
   SchedRouteID: z.number().describe("Unique identifier for a scheduled route."),
 });
 
 export type GetTimeAdjBySchedRouteInput = z.infer<
-  typeof getTimeAdjBySchedRouteInputSchema
+  typeof getTimeAdjBySchedRouteSchema
 >;
 
 /**
@@ -262,7 +258,7 @@ export type GetTimeAdjBySchedRouteInput = z.infer<
  * Used for retrieving schedule by terminal combination.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getScheduleByTerminalComboInputSchema = z.object({
+export const getScheduleByTerminalComboSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -278,7 +274,7 @@ export const getScheduleByTerminalComboInputSchema = z.object({
 });
 
 export type GetScheduleByTerminalComboInput = z.infer<
-  typeof getScheduleByTerminalComboInputSchema
+  typeof getScheduleByTerminalComboSchema
 >;
 
 /**
@@ -287,7 +283,7 @@ export type GetScheduleByTerminalComboInput = z.infer<
  * Used for retrieving schedule by route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getScheduleByRouteInputSchema = z.object({
+export const getScheduleByRouteSchema = z.object({
   /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -296,9 +292,7 @@ export const getScheduleByRouteInputSchema = z.object({
   RouteID: z.number().describe("Unique identifier for a route."),
 });
 
-export type GetScheduleByRouteInput = z.infer<
-  typeof getScheduleByRouteInputSchema
->;
+export type GetScheduleByRouteInput = z.infer<typeof getScheduleByRouteSchema>;
 
 /**
  * Schema for GetTodaysScheduleByTerminalCombo input parameters
@@ -306,7 +300,7 @@ export type GetScheduleByRouteInput = z.infer<
  * Used for retrieving today's schedule by terminal combination.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTodaysScheduleByTerminalComboInputSchema = z.object({
+export const getTodaysScheduleByTerminalComboSchema = z.object({
   /** Unique identifier for the departing terminal. */
   DepartingTerminalID: z
     .number()
@@ -326,7 +320,7 @@ export const getTodaysScheduleByTerminalComboInputSchema = z.object({
 });
 
 export type GetTodaysScheduleByTerminalComboInput = z.infer<
-  typeof getTodaysScheduleByTerminalComboInputSchema
+  typeof getTodaysScheduleByTerminalComboSchema
 >;
 
 /**
@@ -335,7 +329,7 @@ export type GetTodaysScheduleByTerminalComboInput = z.infer<
  * Used for retrieving today's schedule by route.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTodaysScheduleByRouteInputSchema = z.object({
+export const getTodaysScheduleByRouteSchema = z.object({
   /** Unique identifier for a route. */
   RouteID: z.number().describe("Unique identifier for a route."),
   /**
@@ -349,7 +343,7 @@ export const getTodaysScheduleByRouteInputSchema = z.object({
 });
 
 export type GetTodaysScheduleByRouteInput = z.infer<
-  typeof getTodaysScheduleByRouteInputSchema
+  typeof getTodaysScheduleByRouteSchema
 >;
 
 /**
@@ -358,6 +352,6 @@ export type GetTodaysScheduleByRouteInput = z.infer<
  * Used for retrieving alert information.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getAllAlertsInputSchema = z.object({});
+export const getAllAlertsSchema = z.object({});
 
-export type GetAllAlertsInput = z.infer<typeof getAllAlertsInputSchema>;
+export type GetAllAlertsInput = z.infer<typeof getAllAlertsSchema>;

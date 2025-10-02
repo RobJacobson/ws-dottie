@@ -1,80 +1,230 @@
-import { z } from "zod";
 import { datesHelper } from "@/shared/utils";
 import { createApiDefinition } from "../utils";
-import {
-  cacheFlushDateSchema,
-  routeDetailSchema,
-  routesListSchema,
-  sailingsListSchema,
-  schedulesListSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsfScheduleApi = createApiDefinition("wsf-schedule", [
   {
     function: "activeSeasons",
     endpoint: "/ferries/api/schedule/rest/activeseasons",
-    inputSchema: z.object({}).strict(),
-    outputSchema: schedulesListSchema,
+    inputSchema: input.getActiveScheduledSeasonsSchema,
+    outputSchema: output.activeSeasonSchema,
     sampleParams: {},
     cacheStrategy: "STATIC",
   },
   {
     function: "allSailings",
-    endpoint: "/ferries/api/schedule/rest/allsailings/{SchedRouteID}/{Y}",
-    inputSchema: z.object({
-      /** Unique identifier for a scheduled route. */
-      SchedRouteID: z
-        .number()
-        .int()
-        .positive()
-        .describe("Unique identifier for a scheduled route."),
-      /** Parameter Y for the request. */
-      Y: z.number().int().describe("Parameter Y for the request."),
-    }),
-    outputSchema: sailingsListSchema,
-    sampleParams: { SchedRouteID: 2327, Y: 1 },
+    endpoint: "/ferries/api/schedule/rest/allsailings/{SchedRouteID}",
+    inputSchema: input.getAllSchedSailingsBySchedRouteSchema,
+    outputSchema: output.sailingSchema,
+    sampleParams: { SchedRouteID: 2327 },
     cacheStrategy: "STATIC",
   },
   {
     function: "cacheFlushDate",
     endpoint: "/ferries/api/schedule/rest/cacheflushdate",
-    inputSchema: z.object({}).strict(),
-    outputSchema: cacheFlushDateSchema,
+    inputSchema: input.getValidDateRangeSchema,
+    outputSchema: output.cacheFlushDateSchema,
     sampleParams: {},
     cacheStrategy: "STATIC",
   },
   {
     function: "routeDetails",
     endpoint: "/ferries/api/schedule/rest/routedetails/{TripDate}",
-    inputSchema: z.object({
-      /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
-      TripDate: z
-        .string()
-        .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
-        .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
-    }),
-    outputSchema: routesListSchema,
+    inputSchema: input.getRouteDetailsSchema,
+    outputSchema: output.routeDetailSchema,
     sampleParams: { TripDate: datesHelper.tomorrow() },
     cacheStrategy: "STATIC",
   },
   {
     function: "routeDetailsByRoute",
     endpoint: "/ferries/api/schedule/rest/routedetails/{TripDate}/{RouteID}",
-    inputSchema: z.object({
-      /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
-      TripDate: z
-        .string()
-        .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format")
-        .describe("The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01')."),
-      /** Unique identifier for a route. */
-      RouteID: z
-        .number()
-        .int()
-        .positive()
-        .describe("Unique identifier for a route."),
-    }),
-    outputSchema: routeDetailSchema,
+    inputSchema: input.getRouteDetailsSchema,
+    outputSchema: output.routeDetailSchema,
     sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "routeDetailsByTerminals",
+    endpoint:
+      "/ferries/api/schedule/rest/routedetails/{TripDate}/{DepartingScheduleTerminalID}/{ArrivingScheduleTerminalID}",
+    inputSchema: input.getRouteDetailsSchema,
+    outputSchema: output.routeDetailSchema,
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingScheduleTerminalID: 1,
+      ArrivingScheduleTerminalID: 10,
+    },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "routes",
+    endpoint: "/ferries/api/schedule/rest/routes/{TripDate}",
+    inputSchema: input.getRoutesSchema,
+    outputSchema: output.routeSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "routesByTerminals",
+    endpoint:
+      "/ferries/api/schedule/rest/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+    inputSchema: input.getTerminalsSchema,
+    outputSchema: output.routesListSchema,
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingTerminalID: 1,
+      ArrivingTerminalID: 10,
+    },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "routesHavingServiceDisruptions",
+    endpoint:
+      "/ferries/api/schedule/rest/routeshavingservicedisruptions/{TripDate}",
+    inputSchema: input.getRoutesHavingServiceDisruptionsSchema,
+    outputSchema: output.serviceDisruptionsListSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "sailings",
+    endpoint: "/ferries/api/schedule/rest/sailings/{SchedRouteID}",
+    inputSchema: input.getSchedSailingsBySchedRouteSchema,
+    outputSchema: output.sailingSchema,
+    sampleParams: { SchedRouteID: 2327 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduleAlerts",
+    endpoint: "/ferries/api/schedule/rest/alerts",
+    inputSchema: input.getAllAlertsSchema,
+    outputSchema: output.scheduleSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduleByRoute",
+    endpoint: "/ferries/api/schedule/rest/schedule/{TripDate}/{RouteID}",
+    inputSchema: input.getScheduleByRouteSchema,
+    outputSchema: output.schedRouteSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduleByTerminals",
+    endpoint:
+      "/ferries/api/schedule/rest/schedule/{TripDate}/{DepartingScheduleTerminalID}/{ArrivingScheduleTerminalID}",
+    inputSchema: input.getScheduleByTerminalComboSchema,
+    outputSchema: output.scheduleBaseSchema,
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingScheduleTerminalID: 1,
+      ArrivingScheduleTerminalID: 10,
+    },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduledRoutes",
+    endpoint: "/ferries/api/schedule/rest/schedroutes",
+    inputSchema: input.getSchedRoutesSchema,
+    outputSchema: output.schedRouteSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduledRoutesBySeason",
+    endpoint: "/ferries/api/schedule/rest/schedroutes/{SeasonID}",
+    inputSchema: input.getSchedRoutesSchema,
+    outputSchema: output.schedRoutesListSchema,
+    sampleParams: { SeasonID: 192 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduleTodayByRoute",
+    endpoint:
+      "/ferries/api/schedule/rest/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
+    inputSchema: input.getScheduleByRouteSchema,
+    outputSchema: output.scheduleBaseSchema,
+    sampleParams: { RouteID: 1, OnlyRemainingTimes: false },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduleTodayByTerminals",
+    endpoint:
+      "/ferries/api/schedule/rest/scheduletoday/{DepartingScheduleTerminalID}/{ArrivingScheduleTerminalID}/{OnlyRemainingTimes}",
+    inputSchema: input.getTodaysScheduleByTerminalComboSchema,
+    outputSchema: output.scheduleBaseSchema,
+    sampleParams: {
+      DepartingScheduleTerminalID: 1,
+      ArrivingScheduleTerminalID: 10,
+      OnlyRemainingTimes: false,
+    },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "scheduleValidDateRange",
+    endpoint: "/ferries/api/schedule/rest/validdaterange",
+    inputSchema: input.getValidDateRangeSchema,
+    outputSchema: output.validDateRangeSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "terminalMates",
+    endpoint:
+      "/ferries/api/schedule/rest/terminalmates/{TripDate}/{TerminalID}",
+    inputSchema: input.getTerminalMatesSchema,
+    outputSchema: output.terminalMateSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "terminals",
+    endpoint: "/ferries/api/schedule/rest/terminals/{TripDate}",
+    inputSchema: input.getTerminalsSchema,
+    outputSchema: output.terminalSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "terminalsAndMates",
+    endpoint: "/ferries/api/schedule/rest/terminalsandmates/{TripDate}",
+    inputSchema: input.getTerminalsAndMatesSchema,
+    outputSchema: output.terminalMateSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "terminalsAndMatesByRoute",
+    endpoint:
+      "/ferries/api/schedule/rest/terminalsandmatesbyroute/{TripDate}/{RouteID}",
+    inputSchema: input.getTerminalsAndMatesByRouteSchema,
+    outputSchema: output.terminalMatesListSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "timeAdjustments",
+    endpoint: "/ferries/api/schedule/rest/timeadj",
+    inputSchema: input.getTimeAdjSchema,
+    outputSchema: output.timeAdjustmentSchema,
+    sampleParams: {},
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "timeAdjustmentsByRoute",
+    endpoint: "/ferries/api/schedule/rest/timeadjbyroute/{RouteID}",
+    inputSchema: input.getTimeAdjByRouteSchema,
+    outputSchema: output.timeAdjustmentSchema,
+    sampleParams: { RouteID: 1 },
+    cacheStrategy: "STATIC",
+  },
+  {
+    function: "timeAdjustmentsBySchedRoute",
+    endpoint: "/ferries/api/schedule/rest/timeadjbyschedroute/{SchedRouteID}",
+    inputSchema: input.getTimeAdjBySchedRouteSchema,
+    outputSchema: output.timeAdjustmentSchema,
+    sampleParams: { SchedRouteID: 2395 },
     cacheStrategy: "STATIC",
   },
 ]);

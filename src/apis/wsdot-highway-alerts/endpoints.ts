@@ -1,18 +1,5 @@
 import { createApiDefinition } from "../utils";
-import {
-  getAlertInputSchema,
-  getAlertsByRegionIDInputSchema,
-  getAlertsForMapAreaInputSchema,
-  getAlertsInputSchema,
-  getEventCategoriesInputSchema,
-  getMapAreasInputSchema,
-  searchAlertsInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  alertSchema,
-  alertsListSchema,
-  areasListSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotHighwayAlertsApi = createApiDefinition(
   "wsdot-highway-alerts",
@@ -21,8 +8,8 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       function: "getAlerts",
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
-      inputSchema: getAlertsInputSchema,
-      outputSchema: alertsListSchema,
+      inputSchema: input.getAlertsSchema,
+      outputSchema: output.alertsListSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
     },
@@ -30,8 +17,8 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       function: "getAlert",
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}",
-      inputSchema: getAlertInputSchema,
-      outputSchema: alertSchema,
+      inputSchema: input.getAlertSchema,
+      outputSchema: output.alertSchema,
       sampleParams: { AlertID: 468632 },
       cacheStrategy: "FREQUENT",
     },
@@ -39,8 +26,8 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       function: "getAlertsByRegionId",
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionID={RegionID}",
-      inputSchema: getAlertsByRegionIDInputSchema,
-      outputSchema: alertsListSchema,
+      inputSchema: input.getAlertsByRegionIDSchema,
+      outputSchema: output.alertsListSchema,
       sampleParams: { RegionID: 9 },
       cacheStrategy: "FREQUENT",
     },
@@ -48,8 +35,8 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       function: "getAlertsForMapArea",
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
-      inputSchema: getAlertsForMapAreaInputSchema,
-      outputSchema: alertsListSchema,
+      inputSchema: input.getAlertsForMapAreaSchema,
+      outputSchema: output.alertsListSchema,
       sampleParams: { MapArea: "Seattle" },
       cacheStrategy: "FREQUENT",
     },
@@ -57,8 +44,8 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       function: "getEventCategories",
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
-      inputSchema: getEventCategoriesInputSchema,
-      outputSchema: areasListSchema,
+      inputSchema: input.getEventCategoriesSchema,
+      outputSchema: output.areasListSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
     },
@@ -66,18 +53,22 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       function: "getMapAreas",
       endpoint:
         "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetMapAreasAsJson",
-      inputSchema: getMapAreasInputSchema,
-      outputSchema: areasListSchema,
+      inputSchema: input.getMapAreasSchema,
+      outputSchema: output.areasListSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
     },
     {
       function: "searchAlerts",
       endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?SearchText={SearchText}",
-      inputSchema: searchAlertsInputSchema,
-      outputSchema: alertsListSchema,
-      sampleParams: { SearchText: "I-5" },
+        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
+      inputSchema: input.searchAlertsSchema,
+      outputSchema: output.alertsListSchema,
+      sampleParams: {
+        StateRoute: "405",
+        SearchTimeStart: "2025-08-01",
+        SearchTimeEnd: "2025-09-30",
+      },
       cacheStrategy: "FREQUENT",
     },
   ]

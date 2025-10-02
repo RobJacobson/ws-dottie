@@ -17,7 +17,7 @@ export const cacheFlushDateSchema = zWsdotDate().describe(
   "If present, notes the date that certain service data was last changed (see description)."
 );
 
-export type CacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
+export type TerminalsCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Base terminal schema containing common fields shared across all terminal schemas

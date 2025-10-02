@@ -10,7 +10,6 @@ export { wsfTerminalsApi } from "./endpoints";
 
 // Export all input types
 export type {
-  CacheFlushDateInput,
   TerminalBasicsByIdInput,
   TerminalBasicsInput,
   TerminalBulletinsByIdInput,
@@ -19,6 +18,7 @@ export type {
   TerminalLocationsInput,
   TerminalSailingSpaceByIdInput,
   TerminalSailingSpaceInput,
+  TerminalsCacheFlushDateInput,
   TerminalTransportsByIdInput,
   TerminalTransportsInput,
   TerminalVerboseByIdInput,
@@ -29,7 +29,6 @@ export type {
 
 // Export all output types
 export type {
-  CacheFlushDate,
   TerminalBasic,
   TerminalBasicDetailsList,
   TerminalBulletin,
@@ -38,6 +37,7 @@ export type {
   TerminalLocationsList,
   TerminalSailingSpace,
   TerminalSailingSpacesList,
+  TerminalsCacheFlushDate,
   TerminalTransportationOption,
   TerminalTransportationOptionsList,
   TerminalVerbose,

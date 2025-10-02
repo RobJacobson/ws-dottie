@@ -23,7 +23,7 @@ export const cacheFlushDateSchema = z.object({
     ),
 });
 
-export type CacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
+export type SchedulesCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Schema for ValidDateRange - represents valid date range for schedule data

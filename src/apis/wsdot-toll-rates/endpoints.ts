@@ -1,43 +1,29 @@
-import { datesHelper } from "@/shared/utils/dateUtils";
+import { datesHelper } from "@/shared/utils";
 import { createApiDefinition } from "../utils";
-import {
-  getTollRatesInputSchema,
-  getTollTripInfoInputSchema,
-  getTollTripRatesInputSchema,
-  getTollTripVersionInputSchema,
-  getTripRatesByDateInputSchema,
-  getTripRatesByVersionInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  tollRatesListSchema,
-  tollTripInfoListSchema,
-  tollTripsSchema,
-  tollTripVersionSchema,
-  tripRatesListSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
   {
     function: "getTollRates",
     endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollRatesAsJson",
-    inputSchema: getTollRatesInputSchema,
-    outputSchema: tollRatesListSchema,
+    inputSchema: input.getTollRatesSchema,
+    outputSchema: output.tollRatesListSchema,
     sampleParams: {},
     cacheStrategy: "FREQUENT",
   },
   {
     function: "getTollTripInfo",
     endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripInfoAsJson",
-    inputSchema: getTollTripInfoInputSchema,
-    outputSchema: tollTripInfoListSchema,
+    inputSchema: input.getTollTripInfoSchema,
+    outputSchema: output.tollTripInfoListSchema,
     sampleParams: {},
     cacheStrategy: "FREQUENT",
   },
   {
     function: "getTollTripRates",
     endpoint: "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripRatesAsJson",
-    inputSchema: getTollTripRatesInputSchema,
-    outputSchema: tollTripsSchema,
+    inputSchema: input.getTollTripRatesSchema,
+    outputSchema: output.tollTripsSchema,
     sampleParams: {},
     cacheStrategy: "FREQUENT",
   },
@@ -45,20 +31,20 @@ export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
     function: "getTollTripVersion",
     endpoint:
       "/Traffic/api/TollRates/TollRatesREST.svc/GetTollTripVersionAsJson",
-    inputSchema: getTollTripVersionInputSchema,
-    outputSchema: tollTripVersionSchema,
+    inputSchema: input.getTollTripVersionSchema,
+    outputSchema: output.tollTripVersionSchema,
     sampleParams: {},
     cacheStrategy: "FREQUENT",
   },
   {
     function: "getTripRatesByDate",
     endpoint:
-      "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?TripDate={TripDate}",
-    inputSchema: getTripRatesByDateInputSchema,
-    outputSchema: tripRatesListSchema,
+      "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
+    inputSchema: input.getTripRatesByDateSchema,
+    outputSchema: output.tripRatesListSchema,
     sampleParams: {
-      fromDate: datesHelper.tomorrow(),
-      toDate: datesHelper.tomorrow(),
+      FromDate: datesHelper.startOfMonth(),
+      ToDate: datesHelper.yesterday(),
     },
     cacheStrategy: "FREQUENT",
   },
@@ -66,9 +52,9 @@ export const wsdotTollRatesApi = createApiDefinition("wsdot-toll-rates", [
     function: "getTripRatesByVersion",
     endpoint:
       "/Traffic/api/TollRates/TollRatesREST.svc/GetTripRatesByVersionAsJson?Version={Version}",
-    inputSchema: getTripRatesByVersionInputSchema,
-    outputSchema: tripRatesListSchema,
-    sampleParams: { version: 2024 },
+    inputSchema: input.getTripRatesByVersionSchema,
+    outputSchema: output.tripRatesListSchema,
+    sampleParams: { Version: 352417 },
     cacheStrategy: "FREQUENT",
   },
 ]);

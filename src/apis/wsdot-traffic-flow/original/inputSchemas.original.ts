@@ -13,14 +13,14 @@ import { z } from "zod";
  * Used for retrieving traffic flow data for a specific station by FlowDataID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const getTrafficFlowInputSchema = z.object({
+export const getTrafficFlowSchema = z.object({
   /** The ID of the station you wish to retrieve. */
   FlowDataID: z
     .number()
     .describe("The ID of the station you wish to retrieve."),
 });
 
-export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowInputSchema>;
+export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowSchema>;
 
 /**
  * Schema for GetTrafficFlows input parameters
@@ -28,6 +28,6 @@ export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowInputSchema>;
  * Used for retrieving all traffic flow data. Only requires AccessCode which is
  * handled separately and not included in input schemas.
  */
-export const getTrafficFlowsInputSchema = z.object({});
+export const getTrafficFlowsSchema = z.object({});
 
-export type GetTrafficFlowsInput = z.infer<typeof getTrafficFlowsInputSchema>;
+export type GetTrafficFlowsInput = z.infer<typeof getTrafficFlowsSchema>;

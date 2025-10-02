@@ -4,24 +4,24 @@ import { zWsdotDate } from "@/apis/shared";
 /**
  * Input schema for GetAlerts endpoint
  */
-export const getAlertsInputSchema = z.object({});
+export const getAlertsSchema = z.object({});
 
-export type GetAlertsInput = z.infer<typeof getAlertsInputSchema>;
+export type GetAlertsInput = z.infer<typeof getAlertsSchema>;
 
 /**
  * Input schema for GetAlert endpoint
  */
-export const getAlertInputSchema = z.object({
+export const getAlertSchema = z.object({
   /** AlertID for a specific incident. */
   AlertID: z.number().describe("AlertID for a specific incident."),
 });
 
-export type GetAlertInput = z.infer<typeof getAlertInputSchema>;
+export type GetAlertInput = z.infer<typeof getAlertSchema>;
 
 /**
  * Input schema for SearchAlerts endpoint
  */
-export const searchAlertsInputSchema = z.object({
+export const searchAlertsSchema = z.object({
   /**
    * Optional. A State Route formatted as a three digit number. I-5 would be 005.
    */
@@ -60,44 +60,44 @@ export const searchAlertsInputSchema = z.object({
     .describe("Optional. Will only find alerts before this milepost."),
 });
 
-export type SearchAlertsInput = z.infer<typeof searchAlertsInputSchema>;
+export type SearchAlertsInput = z.infer<typeof searchAlertsSchema>;
 
 /**
  * Input schema for GetAlertsForMapArea endpoint
  */
-export const getAlertsForMapAreaInputSchema = z.object({
+export const getAlertsForMapAreaSchema = z.object({
   /** The area to limit results to. */
   MapArea: z.string().describe("The area to limit results to."),
 });
 
 export type GetAlertsForMapAreaInput = z.infer<
-  typeof getAlertsForMapAreaInputSchema
+  typeof getAlertsForMapAreaSchema
 >;
 
 /**
  * Input schema for GetAlertsByRegionID endpoint
  */
-export const getAlertsByRegionIDInputSchema = z.object({
+export const getAlertsByRegionIDSchema = z.object({
   /** The region ID to limit results to. */
   RegionID: z.string().describe("The region ID to limit results to."),
 });
 
 export type GetAlertsByRegionIDInput = z.infer<
-  typeof getAlertsByRegionIDInputSchema
+  typeof getAlertsByRegionIDSchema
 >;
 
 /**
  * Input schema for GetEventCategories endpoint
  */
-export const getEventCategoriesInputSchema = z.object({});
+export const getEventCategoriesSchema = z.object({});
 
 export type GetEventCategoriesInput = z.infer<
-  typeof getEventCategoriesInputSchema
+  typeof getEventCategoriesSchema
 >;
 
 /**
  * Input schema for GetMapAreas endpoint
  */
-export const getMapAreasInputSchema = z.object({});
+export const getMapAreasSchema = z.object({});
 
-export type GetMapAreasInput = z.infer<typeof getMapAreasInputSchema>;
+export type GetMapAreasInput = z.infer<typeof getMapAreasSchema>;

@@ -3,14 +3,14 @@ import { z } from "zod";
 /**
  * Schema for GetClearances input parameters (all routes)
  */
-export const getClearancesInputSchema = z.object({});
+export const getClearancesSchema = z.object({});
 
-export type GetClearancesInput = z.infer<typeof getClearancesInputSchema>;
+export type GetClearancesInput = z.infer<typeof getClearancesSchema>;
 
 /**
  * Schema for GetClearancesByRoute input parameters
  */
-export const getClearancesByRouteInputSchema = z.object({
+export const getClearancesByRouteSchema = z.object({
   /** A State Route formatted as a three digit number. I-5 would be 005. */
   Route: z
     .string()
@@ -20,5 +20,5 @@ export const getClearancesByRouteInputSchema = z.object({
 });
 
 export type GetClearancesByRouteInput = z.infer<
-  typeof getClearancesByRouteInputSchema
+  typeof getClearancesByRouteSchema
 >;

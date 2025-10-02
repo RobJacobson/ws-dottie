@@ -9,10 +9,10 @@
 export { wsfFaresApi } from "./endpoints";
 // Export all input types
 export type {
-  CacheFlushDateInput,
   FareLineItemsBasicInput,
   FareLineItemsInput,
   FareLineItemsVerboseInput,
+  FaresCacheFlushDateInput,
   FareTotalsInput,
   TerminalComboInput,
   TerminalComboVerboseInput,
@@ -22,7 +22,7 @@ export type {
 } from "./original/inputSchemas.original";
 // Export all output types
 export type {
-  CacheFlushDateResponse,
+  FaresCacheFlushDateResponse,
   FareTotalResponse,
   LineItemResponse,
   LineItemResponseList,

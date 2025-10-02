@@ -1,9 +1,5 @@
 import { createApiDefinition } from "../utils";
-import {
-  getClearancesByRouteInputSchema,
-  getClearancesInputSchema,
-} from "./original/inputSchemas.original";
-import { bridgeDataGISListSchema } from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotBridgeClearancesApi = createApiDefinition(
   "wsdot-bridge-clearances",
@@ -11,8 +7,8 @@ export const wsdotBridgeClearancesApi = createApiDefinition(
     {
       function: "getBridgeClearances",
       endpoint: "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson",
-      inputSchema: getClearancesInputSchema,
-      outputSchema: bridgeDataGISListSchema,
+      inputSchema: input.getClearancesSchema,
+      outputSchema: output.bridgeDataGISListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },
@@ -20,8 +16,8 @@ export const wsdotBridgeClearancesApi = createApiDefinition(
       function: "getBridgeClearancesByRoute",
       endpoint:
         "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={Route}",
-      inputSchema: getClearancesByRouteInputSchema,
-      outputSchema: bridgeDataGISListSchema,
+      inputSchema: input.getClearancesByRouteSchema,
+      outputSchema: output.bridgeDataGISListSchema,
       sampleParams: { Route: "005" },
       cacheStrategy: "STATIC",
     },

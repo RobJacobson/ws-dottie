@@ -1,6 +1,5 @@
 import { createApiDefinition } from "../utils";
-import { getBorderCrossingsInputSchema } from "./original/inputSchemas.original";
-import { borderCrossingDataListSchema } from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotBorderCrossingsApi = createApiDefinition(
   "wsdot-border-crossings",
@@ -9,8 +8,8 @@ export const wsdotBorderCrossingsApi = createApiDefinition(
       function: "getBorderCrossings",
       endpoint:
         "/Traffic/api/BorderCrossings/BorderCrossingsREST.svc/GetBorderCrossingsAsJson",
-      inputSchema: getBorderCrossingsInputSchema,
-      outputSchema: borderCrossingDataListSchema,
+      inputSchema: input.getBorderCrossingsSchema,
+      outputSchema: output.borderCrossingDataListSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
     },

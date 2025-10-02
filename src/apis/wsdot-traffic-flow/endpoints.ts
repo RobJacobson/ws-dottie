@@ -1,20 +1,13 @@
 import { createApiDefinition } from "../utils";
-import {
-  getTrafficFlowInputSchema,
-  getTrafficFlowsInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  flowDataListSchema,
-  flowDataSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotTrafficFlowApi = createApiDefinition("wsdot-traffic-flow", [
   {
     function: "getTrafficFlow",
     endpoint:
-      "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
-    inputSchema: getTrafficFlowsInputSchema,
-    outputSchema: flowDataListSchema,
+      "/Traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowsAsJson",
+    inputSchema: input.getTrafficFlowsSchema,
+    outputSchema: output.flowDataListSchema,
     sampleParams: {},
     cacheStrategy: "FREQUENT",
   },
@@ -22,8 +15,8 @@ export const wsdotTrafficFlowApi = createApiDefinition("wsdot-traffic-flow", [
     function: "getTrafficFlowById",
     endpoint:
       "/traffic/api/TrafficFlow/TrafficFlowREST.svc/GetTrafficFlowAsJson?FlowDataID={FlowDataID}",
-    inputSchema: getTrafficFlowInputSchema,
-    outputSchema: flowDataSchema,
+    inputSchema: input.getTrafficFlowSchema,
+    outputSchema: output.flowDataSchema,
     sampleParams: { FlowDataID: 2482 },
     cacheStrategy: "FREQUENT",
   },

@@ -11,36 +11,36 @@ import { z } from "zod";
  * Input schema for CacheFlushDate endpoint
  * GET /cacheflushdate
  */
-export const cacheFlushDateInputSchema = z.object({});
+export const cacheFlushDateSchema = z.object({});
 
-export type CacheFlushDateInput = z.infer<typeof cacheFlushDateInputSchema>;
+export type FaresCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Input schema for ValidDateRange endpoint
  * GET /validdaterange?apiaccesscode={APIAccessCode}
  */
-export const validDateRangeInputSchema = z.object({});
+export const validDateRangeSchema = z.object({});
 
-export type ValidDateRangeInput = z.infer<typeof validDateRangeInputSchema>;
+export type ValidDateRangeInput = z.infer<typeof validDateRangeSchema>;
 
 /**
  * Input schema for Terminals endpoint
  * GET /terminals/{TripDate}?apiaccesscode={APIAccessCode}
  */
-export const terminalsInputSchema = z.object({
+export const terminalsSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
     .describe("Trip date in YYYY-MM-DD format (e.g., '2014-04-01')."),
 });
 
-export type TerminalsInput = z.infer<typeof terminalsInputSchema>;
+export type TerminalsInput = z.infer<typeof terminalsSchema>;
 
 /**
  * Input schema for TerminalMates endpoint
  * GET /terminalmates/{TripDate}/{TerminalID}?apiaccesscode={APIAccessCode}
  */
-export const terminalMatesInputSchema = z.object({
+export const terminalMatesSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -51,13 +51,13 @@ export const terminalMatesInputSchema = z.object({
     .describe("Unique identifier for the departing terminal."),
 });
 
-export type TerminalMatesInput = z.infer<typeof terminalMatesInputSchema>;
+export type TerminalMatesInput = z.infer<typeof terminalMatesSchema>;
 
 /**
  * Input schema for TerminalCombo endpoint
  * GET /terminalcombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}?apiaccesscode={APIAccessCode}
  */
-export const terminalComboInputSchema = z.object({
+export const terminalComboSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -72,13 +72,13 @@ export const terminalComboInputSchema = z.object({
     .describe("Unique identifier for the arriving terminal."),
 });
 
-export type TerminalComboInput = z.infer<typeof terminalComboInputSchema>;
+export type TerminalComboInput = z.infer<typeof terminalComboSchema>;
 
 /**
  * Input schema for TerminalComboVerbose endpoint
  * GET /terminalcomboverbose/{TripDate}?apiaccesscode={APIAccessCode}
  */
-export const terminalComboVerboseInputSchema = z.object({
+export const terminalComboVerboseSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -86,14 +86,14 @@ export const terminalComboVerboseInputSchema = z.object({
 });
 
 export type TerminalComboVerboseInput = z.infer<
-  typeof terminalComboVerboseInputSchema
+  typeof terminalComboVerboseSchema
 >;
 
 /**
  * Input schema for FareLineItemsBasic endpoint
  * GET /farelineitemsbasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}?apiaccesscode={APIAccessCode}
  */
-export const fareLineItemsBasicInputSchema = z.object({
+export const fareLineItemsBasicSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -116,15 +116,13 @@ export const fareLineItemsBasicInputSchema = z.object({
     ),
 });
 
-export type FareLineItemsBasicInput = z.infer<
-  typeof fareLineItemsBasicInputSchema
->;
+export type FareLineItemsBasicInput = z.infer<typeof fareLineItemsBasicSchema>;
 
 /**
  * Input schema for FareLineItems endpoint
  * GET /farelineitems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}?apiaccesscode={APIAccessCode}
  */
-export const fareLineItemsInputSchema = z.object({
+export const fareLineItemsSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -147,13 +145,13 @@ export const fareLineItemsInputSchema = z.object({
     ),
 });
 
-export type FareLineItemsInput = z.infer<typeof fareLineItemsInputSchema>;
+export type FareLineItemsInput = z.infer<typeof fareLineItemsSchema>;
 
 /**
  * Input schema for FareLineItemsVerbose endpoint
  * GET /farelineitemsverbose/{TripDate}?apiaccesscode={APIAccessCode}
  */
-export const fareLineItemsVerboseInputSchema = z.object({
+export const fareLineItemsVerboseSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -161,14 +159,14 @@ export const fareLineItemsVerboseInputSchema = z.object({
 });
 
 export type FareLineItemsVerboseInput = z.infer<
-  typeof fareLineItemsVerboseInputSchema
+  typeof fareLineItemsVerboseSchema
 >;
 
 /**
  * Input schema for FareTotals endpoint
  * GET /faretotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}?apiaccesscode={APIAccessCode}
  */
-export const fareTotalsInputSchema = z.object({
+export const fareTotalsSchema = z.object({
   /** Trip date in YYYY-MM-DD format (e.g., '2014-04-01'). */
   TripDate: z
     .string()
@@ -207,4 +205,4 @@ export const fareTotalsInputSchema = z.object({
     ),
 });
 
-export type FareTotalsInput = z.infer<typeof fareTotalsInputSchema>;
+export type FareTotalsInput = z.infer<typeof fareTotalsSchema>;

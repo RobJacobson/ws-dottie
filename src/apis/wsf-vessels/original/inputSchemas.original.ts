@@ -3,107 +3,105 @@ import { z } from "zod";
 /**
  * CacheFlushDate input schema
  */
-export const cacheFlushDateInputSchema = z.object({});
+export const cacheFlushDateSchema = z.object({});
 
-export type CacheFlushDateInput = z.infer<typeof cacheFlushDateInputSchema>;
+export type VesselsCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * VesselBasics input schema
  */
-export const vesselBasicsInputSchema = z.object({});
+export const vesselBasicsSchema = z.object({});
 
-export type VesselBasicsInput = z.infer<typeof vesselBasicsInputSchema>;
+export type VesselBasicsInput = z.infer<typeof vesselBasicsSchema>;
 
 /**
  * VesselBasicsById input schema
  */
-export const vesselBasicsByIdInputSchema = z.object({
+export const vesselBasicsByIdSchema = z.object({
   /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
-export type VesselBasicsByIdInput = z.infer<typeof vesselBasicsByIdInputSchema>;
+export type VesselBasicsByIdInput = z.infer<typeof vesselBasicsByIdSchema>;
 
 /**
  * VesselAccommodations input schema
  */
-export const vesselAccommodationsInputSchema = z.object({});
+export const vesselAccommodationsSchema = z.object({});
 
 export type VesselAccommodationsInput = z.infer<
-  typeof vesselAccommodationsInputSchema
+  typeof vesselAccommodationsSchema
 >;
 
 /**
  * VesselAccommodationsById input schema
  */
-export const vesselAccommodationsByIdInputSchema = z.object({
+export const vesselAccommodationsByIdSchema = z.object({
   /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
 export type VesselAccommodationsByIdInput = z.infer<
-  typeof vesselAccommodationsByIdInputSchema
+  typeof vesselAccommodationsByIdSchema
 >;
 
 /**
  * VesselStats input schema
  */
-export const vesselStatsInputSchema = z.object({});
+export const vesselStatsSchema = z.object({});
 
-export type VesselStatsInput = z.infer<typeof vesselStatsInputSchema>;
+export type VesselStatsInput = z.infer<typeof vesselStatsSchema>;
 
 /**
  * VesselStatsById input schema
  */
-export const vesselStatsByIdInputSchema = z.object({
+export const vesselStatsByIdSchema = z.object({
   /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
-export type VesselStatsByIdInput = z.infer<typeof vesselStatsByIdInputSchema>;
+export type VesselStatsByIdInput = z.infer<typeof vesselStatsByIdSchema>;
 
 /**
  * VesselLocations input schema
  */
-export const vesselLocationsInputSchema = z.object({});
+export const vesselLocationsSchema = z.object({});
 
-export type VesselLocationsInput = z.infer<typeof vesselLocationsInputSchema>;
+export type VesselLocationsInput = z.infer<typeof vesselLocationsSchema>;
 
 /**
  * VesselLocationsById input schema
  */
-export const vesselLocationsByIdInputSchema = z.object({
+export const vesselLocationsByIdSchema = z.object({
   /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
 export type VesselLocationsByIdInput = z.infer<
-  typeof vesselLocationsByIdInputSchema
+  typeof vesselLocationsByIdSchema
 >;
 
 /**
  * VesselVerbose input schema
  */
-export const vesselVerboseInputSchema = z.object({});
+export const vesselVerboseSchema = z.object({});
 
-export type VesselVerboseInput = z.infer<typeof vesselVerboseInputSchema>;
+export type VesselVerboseInput = z.infer<typeof vesselVerboseSchema>;
 
 /**
  * VesselVerboseById input schema
  */
-export const vesselVerboseByIdInputSchema = z.object({
+export const vesselVerboseByIdSchema = z.object({
   /** Unique identifier for a vessel. */
   VesselID: z.number().int().describe("Unique identifier for a vessel."),
 });
 
-export type VesselVerboseByIdInput = z.infer<
-  typeof vesselVerboseByIdInputSchema
->;
+export type VesselVerboseByIdInput = z.infer<typeof vesselVerboseByIdSchema>;
 
 /**
  * GetVesselHistory input schema
  */
-export const getVesselHistoryInputSchema = z
+export const getVesselHistorySchema = z
   .object({
     /** The name of the vessel. */
     VesselName: z.string().describe("The name of the vessel."),
@@ -114,11 +112,11 @@ export const getVesselHistoryInputSchema = z
   })
   .describe("Input parameters for vessel history endpoint.");
 
-export type GetVesselHistoryInput = z.infer<typeof getVesselHistoryInputSchema>;
+export type GetVesselHistoryInput = z.infer<typeof getVesselHistorySchema>;
 
 /**
  * GetAllVessels input schema
  */
-export const getAllVesselsInputSchema = z.object({});
+export const getAllVesselsSchema = z.object({});
 
-export type GetAllVesselsInput = z.infer<typeof getAllVesselsInputSchema>;
+export type GetAllVesselsInput = z.infer<typeof getAllVesselsSchema>;

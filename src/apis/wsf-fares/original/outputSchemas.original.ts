@@ -12,7 +12,7 @@ import { zWsdotDate } from "@/apis/shared";
  */
 export const cacheFlushDateResponseSchema = zWsdotDate();
 
-export type CacheFlushDateResponse = z.infer<
+export type FaresCacheFlushDateResponse = z.infer<
   typeof cacheFlushDateResponseSchema
 >;
 

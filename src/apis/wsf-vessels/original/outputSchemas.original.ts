@@ -579,7 +579,7 @@ export const cacheFlushDateSchema = z
   })
   .describe("Provides the cache flush date for coordinating data caching.");
 
-export type CacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
+export type VesselsCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * VesselHistoryResponse schema

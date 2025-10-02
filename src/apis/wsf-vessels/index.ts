@@ -10,7 +10,6 @@ export { wsfVesselsApi } from "./endpoints";
 
 // Export all input types
 export type {
-  CacheFlushDateInput,
   GetVesselHistoryInput,
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
@@ -18,11 +17,11 @@ export type {
   VesselBasicsInput,
   VesselLocationsInput,
   VesselStatsInput,
+  VesselsCacheFlushDateInput,
 } from "./original/inputSchemas.original";
 
 // Export all output types
 export type {
-  CacheFlushDate,
   VesselAccommodations,
   VesselAccommodationsList,
   VesselBasic,
@@ -30,4 +29,5 @@ export type {
   VesselHistoryResponse,
   VesselLocations,
   VesselStats,
+  VesselsCacheFlushDate,
 } from "./original/outputSchemas.original";

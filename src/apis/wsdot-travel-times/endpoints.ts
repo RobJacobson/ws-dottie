@@ -1,20 +1,13 @@
 import { createApiDefinition } from "../utils";
-import {
-  getTravelTimeInputSchema,
-  getTravelTimesInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  travelTimeRouteSchema,
-  travelTimeRoutesListSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotTravelTimesApi = createApiDefinition("wsdot-travel-times", [
   {
     function: "getTravelTime",
     endpoint:
       "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimeAsJson?TravelTimeID={TravelTimeID}",
-    inputSchema: getTravelTimeInputSchema,
-    outputSchema: travelTimeRouteSchema,
+    inputSchema: input.getTravelTimeSchema,
+    outputSchema: output.travelTimeRouteSchema,
     sampleParams: { TravelTimeID: 1 },
     cacheStrategy: "STATIC",
   },
@@ -22,8 +15,8 @@ export const wsdotTravelTimesApi = createApiDefinition("wsdot-travel-times", [
     function: "getTravelTimes",
     endpoint:
       "/Traffic/api/TravelTimes/TravelTimesREST.svc/GetTravelTimesAsJson",
-    inputSchema: getTravelTimesInputSchema,
-    outputSchema: travelTimeRoutesListSchema,
+    inputSchema: input.getTravelTimesSchema,
+    outputSchema: output.travelTimeRoutesListSchema,
     sampleParams: {},
     cacheStrategy: "STATIC",
   },

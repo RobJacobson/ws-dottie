@@ -38,7 +38,10 @@ export interface SimpleEndpointDefinition<I, O> {
  * This abstracts away the z.infer calls and makes endpoint definitions much cleaner
  * while preserving full type safety and IntelliSense support.
  */
-export function defineEndpoint<I extends z.ZodTypeAny, O extends z.ZodTypeAny>(
+export function defineApiEndpoint<
+  I extends z.ZodTypeAny,
+  O extends z.ZodTypeAny,
+>(
   input: I,
   output: O,
   definition: Omit<

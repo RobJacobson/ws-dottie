@@ -1,13 +1,5 @@
 import { createApiDefinition } from "../utils";
-import {
-  getCameraInputSchema,
-  getCamerasInputSchema,
-  searchCamerasInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  cameraSchema,
-  camerasListSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotHighwayCamerasApi = createApiDefinition(
   "wsdot-highway-cameras",
@@ -16,8 +8,8 @@ export const wsdotHighwayCamerasApi = createApiDefinition(
       function: "getHighwayCamera",
       endpoint:
         "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={CameraID}",
-      inputSchema: getCameraInputSchema,
-      outputSchema: cameraSchema,
+      inputSchema: input.getCameraSchema,
+      outputSchema: output.cameraSchema,
       sampleParams: { CameraID: 9818 },
       cacheStrategy: "STATIC",
     },
@@ -25,8 +17,8 @@ export const wsdotHighwayCamerasApi = createApiDefinition(
       function: "getHighwayCameras",
       endpoint:
         "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
-      inputSchema: getCamerasInputSchema,
-      outputSchema: camerasListSchema,
+      inputSchema: input.getCamerasSchema,
+      outputSchema: output.camerasListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },
@@ -34,8 +26,8 @@ export const wsdotHighwayCamerasApi = createApiDefinition(
       function: "searchHighwayCameras",
       endpoint:
         "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
-      inputSchema: searchCamerasInputSchema,
-      outputSchema: camerasListSchema,
+      inputSchema: input.searchCamerasSchema,
+      outputSchema: output.camerasListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },

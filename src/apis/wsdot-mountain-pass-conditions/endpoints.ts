@@ -1,12 +1,5 @@
 import { createApiDefinition } from "../utils";
-import {
-  getMountainPassConditionInputSchema,
-  getMountainPassConditionsInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  mountainPassConditionsListSchema,
-  passConditionSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotMountainPassConditionsApi = createApiDefinition(
   "wsdot-mountain-pass-conditions",
@@ -14,9 +7,9 @@ export const wsdotMountainPassConditionsApi = createApiDefinition(
     {
       function: "getMountainPassCondition",
       endpoint:
-        "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJon?PassConditionID={PassConditionID}",
-      inputSchema: getMountainPassConditionInputSchema,
-      outputSchema: passConditionSchema,
+        "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionAsJson?PassConditionID={PassConditionID}",
+      inputSchema: input.getMountainPassConditionSchema,
+      outputSchema: output.passConditionSchema,
       sampleParams: { PassConditionID: 12 },
       cacheStrategy: "STATIC",
     },
@@ -24,8 +17,8 @@ export const wsdotMountainPassConditionsApi = createApiDefinition(
       function: "getMountainPassConditions",
       endpoint:
         "/Traffic/api/MountainPassConditions/MountainPassConditionsREST.svc/GetMountainPassConditionsAsJson",
-      inputSchema: getMountainPassConditionsInputSchema,
-      outputSchema: mountainPassConditionsListSchema,
+      inputSchema: input.getMountainPassConditionsSchema,
+      outputSchema: output.mountainPassConditionsListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },

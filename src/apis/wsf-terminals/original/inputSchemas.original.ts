@@ -13,9 +13,9 @@ import { z } from "zod";
  * Used for retrieving cache flush date information.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const cacheFlushDateInputSchema = z.object({});
+export const cacheFlushDateSchema = z.object({});
 
-export type CacheFlushDateInput = z.infer<typeof cacheFlushDateInputSchema>;
+export type TerminalsCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Schema for TerminalBasics input parameters
@@ -23,9 +23,9 @@ export type CacheFlushDateInput = z.infer<typeof cacheFlushDateInputSchema>;
  * Used for retrieving all terminal basic details.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalBasicsInputSchema = z.object({});
+export const terminalBasicsSchema = z.object({});
 
-export type TerminalBasicsInput = z.infer<typeof terminalBasicsInputSchema>;
+export type TerminalBasicsInput = z.infer<typeof terminalBasicsSchema>;
 
 /**
  * Schema for TerminalBulletins input parameters
@@ -33,11 +33,9 @@ export type TerminalBasicsInput = z.infer<typeof terminalBasicsInputSchema>;
  * Used for retrieving all terminal bulletins.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalBulletinsInputSchema = z.object({});
+export const terminalBulletinsSchema = z.object({});
 
-export type TerminalBulletinsInput = z.infer<
-  typeof terminalBulletinsInputSchema
->;
+export type TerminalBulletinsInput = z.infer<typeof terminalBulletinsSchema>;
 
 /**
  * Schema for TerminalLocations input parameters
@@ -45,11 +43,9 @@ export type TerminalBulletinsInput = z.infer<
  * Used for retrieving all terminal locations.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalLocationsInputSchema = z.object({});
+export const terminalLocationsSchema = z.object({});
 
-export type TerminalLocationsInput = z.infer<
-  typeof terminalLocationsInputSchema
->;
+export type TerminalLocationsInput = z.infer<typeof terminalLocationsSchema>;
 
 /**
  * Schema for TerminalSailingSpace input parameters
@@ -57,10 +53,10 @@ export type TerminalLocationsInput = z.infer<
  * Used for retrieving all terminal sailing space information.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalSailingSpaceInputSchema = z.object({});
+export const terminalSailingSpaceSchema = z.object({});
 
 export type TerminalSailingSpaceInput = z.infer<
-  typeof terminalSailingSpaceInputSchema
+  typeof terminalSailingSpaceSchema
 >;
 
 /**
@@ -69,11 +65,9 @@ export type TerminalSailingSpaceInput = z.infer<
  * Used for retrieving all terminal transportation options.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalTransportsInputSchema = z.object({});
+export const terminalTransportsSchema = z.object({});
 
-export type TerminalTransportsInput = z.infer<
-  typeof terminalTransportsInputSchema
->;
+export type TerminalTransportsInput = z.infer<typeof terminalTransportsSchema>;
 
 /**
  * Schema for TerminalVerbose input parameters
@@ -81,9 +75,9 @@ export type TerminalTransportsInput = z.infer<
  * Used for retrieving all terminal verbose details.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalVerboseInputSchema = z.object({});
+export const terminalVerboseSchema = z.object({});
 
-export type TerminalVerboseInput = z.infer<typeof terminalVerboseInputSchema>;
+export type TerminalVerboseInput = z.infer<typeof terminalVerboseSchema>;
 
 /**
  * Schema for TerminalWaitTimes input parameters
@@ -91,11 +85,9 @@ export type TerminalVerboseInput = z.infer<typeof terminalVerboseInputSchema>;
  * Used for retrieving all terminal wait times.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalWaitTimesInputSchema = z.object({});
+export const terminalWaitTimesSchema = z.object({});
 
-export type TerminalWaitTimesInput = z.infer<
-  typeof terminalWaitTimesInputSchema
->;
+export type TerminalWaitTimesInput = z.infer<typeof terminalWaitTimesSchema>;
 
 /**
  * Schema for TerminalBasicsById input parameters
@@ -103,14 +95,12 @@ export type TerminalWaitTimesInput = z.infer<
  * Used for retrieving basic terminal information for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalBasicsByIdInputSchema = z.object({
+export const terminalBasicsByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
-export type TerminalBasicsByIdInput = z.infer<
-  typeof terminalBasicsByIdInputSchema
->;
+export type TerminalBasicsByIdInput = z.infer<typeof terminalBasicsByIdSchema>;
 
 /**
  * Schema for TerminalBulletinsById input parameters
@@ -118,13 +108,13 @@ export type TerminalBasicsByIdInput = z.infer<
  * Used for retrieving terminal bulletins for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalBulletinsByIdInputSchema = z.object({
+export const terminalBulletinsByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
 export type TerminalBulletinsByIdInput = z.infer<
-  typeof terminalBulletinsByIdInputSchema
+  typeof terminalBulletinsByIdSchema
 >;
 
 /**
@@ -133,13 +123,13 @@ export type TerminalBulletinsByIdInput = z.infer<
  * Used for retrieving terminal location information for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalLocationsByIdInputSchema = z.object({
+export const terminalLocationsByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
 export type TerminalLocationsByIdInput = z.infer<
-  typeof terminalLocationsByIdInputSchema
+  typeof terminalLocationsByIdSchema
 >;
 
 /**
@@ -148,13 +138,13 @@ export type TerminalLocationsByIdInput = z.infer<
  * Used for retrieving terminal sailing space information for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalSailingSpaceByIdInputSchema = z.object({
+export const terminalSailingSpaceByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
 export type TerminalSailingSpaceByIdInput = z.infer<
-  typeof terminalSailingSpaceByIdInputSchema
+  typeof terminalSailingSpaceByIdSchema
 >;
 
 /**
@@ -163,13 +153,13 @@ export type TerminalSailingSpaceByIdInput = z.infer<
  * Used for retrieving terminal transportation options for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalTransportsByIdInputSchema = z.object({
+export const terminalTransportsByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
 export type TerminalTransportsByIdInput = z.infer<
-  typeof terminalTransportsByIdInputSchema
+  typeof terminalTransportsByIdSchema
 >;
 
 /**
@@ -178,13 +168,13 @@ export type TerminalTransportsByIdInput = z.infer<
  * Used for retrieving detailed terminal information for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalVerboseByIdInputSchema = z.object({
+export const terminalVerboseByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
 export type TerminalVerboseByIdInput = z.infer<
-  typeof terminalVerboseByIdInputSchema
+  typeof terminalVerboseByIdSchema
 >;
 
 /**
@@ -193,11 +183,11 @@ export type TerminalVerboseByIdInput = z.infer<
  * Used for retrieving terminal wait time information for a specific terminal by TerminalID.
  * AccessCode is handled separately and not included in input schemas.
  */
-export const terminalWaitTimesByIdInputSchema = z.object({
+export const terminalWaitTimesByIdSchema = z.object({
   /** Unique identifier for a terminal. */
   TerminalID: z.number().int().describe("Unique identifier for a terminal."),
 });
 
 export type TerminalWaitTimesByIdInput = z.infer<
-  typeof terminalWaitTimesByIdInputSchema
+  typeof terminalWaitTimesByIdSchema
 >;

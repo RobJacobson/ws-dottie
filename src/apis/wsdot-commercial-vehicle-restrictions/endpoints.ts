@@ -1,12 +1,5 @@
 import { createApiDefinition } from "../utils";
-import {
-  getCommercialVehicleRestrictionsInputSchema,
-  getCommercialVehicleRestrictionsWithIdInputSchema,
-} from "./original/inputSchemas.original";
-import {
-  cVRestrictionDataListSchema,
-  cVRestrictionDataWithIdListSchema,
-} from "./original/outputSchemas.original";
+import { input, output } from "./schemas";
 
 export const wsdotCommercialVehicleRestrictionsApi = createApiDefinition(
   "wsdot-commercial-vehicle-restrictions",
@@ -15,8 +8,8 @@ export const wsdotCommercialVehicleRestrictionsApi = createApiDefinition(
       function: "getCommercialVehicleRestrictions",
       endpoint:
         "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson",
-      inputSchema: getCommercialVehicleRestrictionsInputSchema,
-      outputSchema: cVRestrictionDataListSchema,
+      inputSchema: input.getCommercialVehicleRestrictionsSchema,
+      outputSchema: output.cVRestrictionDataListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },
@@ -24,8 +17,8 @@ export const wsdotCommercialVehicleRestrictionsApi = createApiDefinition(
       function: "getCommercialVehicleRestrictionsWithId",
       endpoint:
         "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson",
-      inputSchema: getCommercialVehicleRestrictionsWithIdInputSchema,
-      outputSchema: cVRestrictionDataWithIdListSchema,
+      inputSchema: input.getCommercialVehicleRestrictionsWithIdSchema,
+      outputSchema: output.cVRestrictionDataWithIdListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },

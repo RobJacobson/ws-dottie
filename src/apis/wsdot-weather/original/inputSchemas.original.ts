@@ -7,10 +7,10 @@ import { zWsdotDate } from "@/apis/shared";
  *
  * Input parameters for getting current weather information.
  */
-export const getCurrentWeatherInformationInputSchema = z.object({});
+export const getCurrentWeatherInformationSchema = z.object({});
 
 export type GetCurrentWeatherInformationInput = z.infer<
-  typeof getCurrentWeatherInformationInputSchema
+  typeof getCurrentWeatherInformationSchema
 >;
 
 /**
@@ -18,7 +18,7 @@ export type GetCurrentWeatherInformationInput = z.infer<
  *
  * Input parameters for getting current weather information by station ID.
  */
-export const getCurrentWeatherInformationByStationIDInputSchema = z
+export const getCurrentWeatherInformationByStationIDSchema = z
   .object({
     /** Station ID. */
     StationID: z.number().int().describe("Station ID."),
@@ -28,7 +28,7 @@ export const getCurrentWeatherInformationByStationIDInputSchema = z
   );
 
 export type GetCurrentWeatherInformationByStationIDInput = z.infer<
-  typeof getCurrentWeatherInformationByStationIDInputSchema
+  typeof getCurrentWeatherInformationByStationIDSchema
 >;
 
 /**
@@ -36,7 +36,7 @@ export type GetCurrentWeatherInformationByStationIDInput = z.infer<
  *
  * Input parameters for searching weather information by station ID and time range.
  */
-export const searchWeatherInformationInputSchema = z
+export const searchWeatherInformationSchema = z
   .object({
     /** Station ID. */
     StationID: z.number().int().describe("Station ID."),
@@ -50,7 +50,7 @@ export const searchWeatherInformationInputSchema = z
   );
 
 export type SearchWeatherInformationInput = z.infer<
-  typeof searchWeatherInformationInputSchema
+  typeof searchWeatherInformationSchema
 >;
 
 /**
@@ -58,7 +58,7 @@ export type SearchWeatherInformationInput = z.infer<
  *
  * Input parameters for getting current weather information for multiple stations.
  */
-export const getCurrentWeatherForStationsInputSchema = z
+export const getCurrentWeatherForStationsSchema = z
   .object({
     /** Station list. */
     StationList: z.string().describe("Station list."),
@@ -68,7 +68,7 @@ export const getCurrentWeatherForStationsInputSchema = z
   );
 
 export type GetCurrentWeatherForStationsInput = z.infer<
-  typeof getCurrentWeatherForStationsInputSchema
+  typeof getCurrentWeatherForStationsSchema
 >;
 
 /**
@@ -76,10 +76,10 @@ export type GetCurrentWeatherForStationsInput = z.infer<
  *
  * Input parameters for getting extended weather information.
  */
-export const getWeatherInformationExtendedInputSchema = z.object({});
+export const getWeatherInformationExtendedSchema = z.object({});
 
 export type GetWeatherInformationExtendedInput = z.infer<
-  typeof getWeatherInformationExtendedInputSchema
+  typeof getWeatherInformationExtendedSchema
 >;
 
 /**
@@ -87,8 +87,8 @@ export type GetWeatherInformationExtendedInput = z.infer<
  *
  * Input parameters for getting current weather stations.
  */
-export const getCurrentStationsInputSchema = z.object({});
+export const getCurrentStationsSchema = z.object({});
 
 export type GetCurrentStationsInput = z.infer<
-  typeof getCurrentStationsInputSchema
+  typeof getCurrentStationsSchema
 >;
