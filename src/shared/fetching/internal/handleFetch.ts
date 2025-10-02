@@ -6,6 +6,8 @@
  * low-level details of making HTTP requests.
  */
 
+import type { FetchHandler } from "@/shared/types";
+
 /**
  * Callback function type for JSONP responses
  */
@@ -26,7 +28,9 @@ type JSONPWindow = Window & Record<string, JSONPCallback | undefined>;
  * @returns Promise resolving to the response data as a string
  * @throws Error if the response is not ok (status >= 400)
  */
-export const handleNativeFetch = async (url: string): Promise<string> => {
+export const handleFetchNative: FetchHandler = async (
+  url: string
+): Promise<string> => {
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -47,7 +51,9 @@ export const handleNativeFetch = async (url: string): Promise<string> => {
  * @returns Promise resolving to the response data as a JSON string
  * @throws Error if the JSONP request fails or times out
  */
-export const handleJsonpFetch = async (url: string): Promise<string> => {
+export const handleFetchJsonp: FetchHandler = async (
+  url: string
+): Promise<string> => {
   return new Promise((resolve, reject) => {
     // DOM availability check with optional chaining
     if (!document?.head) {

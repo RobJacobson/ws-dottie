@@ -44,11 +44,11 @@ export type LoggingMode = "none" | "info" | "debug";
 /**
  * Function type for fetching data from URLs
  *
- * This type defines the interface for fetch strategies that can retrieve
+ * This type defines the interface for fetch handlers that can retrieve
  * data from URLs and return it as a string. Used by both JSONP and native
  * fetch implementations.
  */
-export type FetchStrategy = (url: string) => Promise<string>;
+export type FetchHandler = (url: string) => Promise<string>;
 
 /**
  * Core fetch tool interface for WS-Dottie APIs
@@ -59,26 +59,26 @@ export type FetchStrategy = (url: string) => Promise<string>;
  */
 export type FetchTool = <TInput, TOutput>(
   endpoint: Endpoint<TInput, TOutput>,
-  params?: TInput,
-  options?: FetchOptions
+  params: TInput | undefined,
+  fetchStrategy: FetchStrategy,
+  validationStrategy: ValidationStrategy,
+  logMode?: LoggingMode
 ) => Promise<TOutput>;
 
 /**
- * Options for fetch operations
- *
- * Provides configuration options for fetch tools including logging
- * and future extensibility.
- */
-export interface FetchOptions {
-  /** Logging verbosity level */
-  logMode?: LoggingMode;
-}
-
-/**
- * Transport strategy for data fetching
+ * Fetch strategy for data fetching
  *
  * Defines the underlying transport mechanism used to fetch data.
  * - native: Uses standard fetch API (works in Node.js and modern browsers)
  * - jsonp: Uses JSONP callbacks (browser-only, bypasses CORS)
  */
-export type TransportStrategy = "native" | "jsonp";
+export type FetchStrategy = "native" | "jsonp";
+
+/**
+ * Validation strategy for data fetching
+ *
+ * Defines how input and output data should be validated.
+ * - none: No validation performed
+ * - zod: Full validation using Zod schemas
+ */
+export type ValidationStrategy = "none" | "zod";
