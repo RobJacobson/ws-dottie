@@ -142,7 +142,7 @@ import { wsdotMountainPassConditionsApi } from "@/apis/wsdot-mountain-pass-condi
 import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/endpoints";
 import { wsdotTrafficFlowApi } from "@/apis/wsdot-traffic-flow/endpoints";
 import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/endpoints";
-import { wsdotWeatherInformationApi } from "@/apis/wsdot-weather/endpoints";
+import { wsdotWeatherApi } from "@/apis/wsdot-weather/endpoints";
 import { wsfFaresApi } from "@/apis/wsf-fares/endpoints";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/endpoints";
 import { wsfTerminalsApi } from "@/apis/wsf-terminals/endpoints";
@@ -161,7 +161,7 @@ export const discoverEndpoints = (): EndpointsByApi => {
     wsdotTollRatesApi,
     wsdotTrafficFlowApi,
     wsdotTravelTimesApi,
-    wsdotWeatherInformationApi,
+    wsdotWeatherApi,
     wsfFaresApi,
     wsfScheduleApi,
     wsfTerminalsApi,
