@@ -811,7 +811,7 @@ export const timeAdjustmentSchema = z.object({
   /**
    * A collection of date ranges detailing when this sailing is active.
    */
-  ActiveSailingDateRange: activeDateRangesListSchema
+  ActiveSailingDateRange: activeDateRangeSchema
     .nullable()
     .describe(
       "A collection of date ranges detailing when this sailing is active."
