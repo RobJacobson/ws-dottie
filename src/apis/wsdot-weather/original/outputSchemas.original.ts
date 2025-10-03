@@ -78,12 +78,12 @@ export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
 /**
  * WeatherInformation schema
  *
- * Returns current weather information from weather stations that are run by the Washington State Department of Transportation.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 export const weatherInformationListSchema = z
   .array(weatherInfoSchema)
   .describe(
-    "Returns current weather information from weather stations that are run by the Washington State Department of Transportation."
+    "Provides current information from weather stations. Coverage Area: Statewide."
   );
 
 export type WeatherInformationList = z.infer<
@@ -93,7 +93,7 @@ export type WeatherInformationList = z.infer<
 /**
  * ScanwebSurfaceMeasurements schema
  *
- * Measurements recorded by surface sensors.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 const scanwebSurfaceMeasurementsSchema = z
   .object({
@@ -121,11 +121,11 @@ export type ScanwebSurfaceMeasurements = z.infer<
 /**
  * Scanweb Surface Measurements List Schema
  *
- * Represents a list of surface measurements.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const scanwebSurfaceMeasurementsListSchema = z.array(
-  scanwebSurfaceMeasurementsSchema
-);
+export const scanwebSurfaceMeasurementsListSchema = z
+  .array(scanwebSurfaceMeasurementsSchema)
+  .describe("Scanweb Surface Measurements List Schema");
 
 export type ScanwebSurfaceMeasurementsList = z.infer<
   typeof scanwebSurfaceMeasurementsListSchema
@@ -134,7 +134,7 @@ export type ScanwebSurfaceMeasurementsList = z.infer<
 /**
  * ScanwebSubSurfaceMeasurements schema
  *
- * Measurements recorded by sub-surface sensors.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 const scanwebSubSurfaceMeasurementsSchema = z
   .object({
@@ -155,11 +155,11 @@ export type ScanwebSubSurfaceMeasurements = z.infer<
 /**
  * Scanweb Sub Surface Measurements List Schema
  *
- * Represents a list of sub-surface measurements.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const scanwebSubSurfaceMeasurementsListSchema = z.array(
-  scanwebSubSurfaceMeasurementsSchema
-);
+export const scanwebSubSurfaceMeasurementsListSchema = z
+  .array(scanwebSubSurfaceMeasurementsSchema)
+  .describe("Scanweb Sub Surface Measurements List Schema");
 
 export type ScanwebSubSurfaceMeasurementsList = z.infer<
   typeof scanwebSubSurfaceMeasurementsListSchema
@@ -168,7 +168,7 @@ export type ScanwebSubSurfaceMeasurementsList = z.infer<
 /**
  * WeatherReading schema
  *
- * Information from a weather station.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 export const weatherReadingSchema = z
   .object({
@@ -342,18 +342,20 @@ export type WeatherReading = z.infer<typeof weatherReadingSchema>;
 /**
  * WeatherReadingsList schema
  *
- * List of weather readings from WSDOT weather stations.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 export const weatherReadingsListSchema = z
   .array(weatherReadingSchema)
-  .describe("List of weather readings from WSDOT weather stations.");
+  .describe(
+    "Provides current information from weather stations. Coverage Area: Statewide."
+  );
 
 export type WeatherReadingsList = z.infer<typeof weatherReadingsListSchema>;
 
 /**
  * WeatherStationData schema
  *
- * Contains information about weather stations.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 export const weatherStationDataSchema = z
   .object({
@@ -376,10 +378,12 @@ export type WeatherStationData = z.infer<typeof weatherStationDataSchema>;
 /**
  * WeatherStationsList schema
  *
- * Return current list of weather stations maintained by WSDOT.
+ * Provides current information from weather stations. Coverage Area: Statewide.
  */
 export const weatherStationsListSchema = z
   .array(weatherStationDataSchema)
-  .describe("Return current list of weather stations maintained by WSDOT.");
+  .describe(
+    "Provides current information from weather stations. Coverage Area: Statewide."
+  );
 
 export type WeatherStationsList = z.infer<typeof weatherStationsListSchema>;

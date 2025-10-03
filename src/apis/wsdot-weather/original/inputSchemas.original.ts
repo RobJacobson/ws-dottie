@@ -4,11 +4,14 @@ import { zWsdotDate } from "@/apis/shared";
 
 /**
  * GetCurrentWeatherInformation input schema
- * Coverage Area: Statewide. Provides current information from weather stations.
  *
- * Input parameters for getting current weather information.
+ * Input parameters for getting current weather information. Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const getCurrentWeatherInformationSchema = z.object({});
+export const getCurrentWeatherInformationSchema = z
+  .object({})
+  .describe(
+    "Input parameters for getting current weather information. Provides current information from weather stations. Coverage Area: Statewide."
+  );
 
 export type GetCurrentWeatherInformationInput = z.infer<
   typeof getCurrentWeatherInformationSchema
@@ -16,9 +19,8 @@ export type GetCurrentWeatherInformationInput = z.infer<
 
 /**
  * GetCurrentWeatherInformationByStationID input schema
- * Coverage Area: Statewide. Provides current information from weather stations.
  *
- * Input parameters for getting current weather information by station ID.
+ * Input parameters for getting current weather information by station ID. Provides current information from weather stations. Coverage Area: Statewide.
  */
 export const getCurrentWeatherInformationByStationIDSchema = z
   .object({
@@ -26,7 +28,7 @@ export const getCurrentWeatherInformationByStationIDSchema = z
     StationID: z.int().describe("Station ID."),
   })
   .describe(
-    "Input parameters for getting current weather information by station ID."
+    "Input parameters for getting current weather information by station ID. Provides current information from weather stations. Coverage Area: Statewide."
   );
 
 export type GetCurrentWeatherInformationByStationIDInput = z.infer<
@@ -48,7 +50,7 @@ export const searchWeatherInformationSchema = z
     SearchEndTime: zWsdotDate().describe("Search end time."),
   })
   .describe(
-    "Input parameters for searching weather information by station ID and time range."
+    "Provides current information from weather stations. Coverage Area: Statewide."
   );
 
 export type SearchWeatherInformationInput = z.infer<
@@ -66,7 +68,7 @@ export const getCurrentWeatherForStationsSchema = z
     StationList: z.string().describe("Station list."),
   })
   .describe(
-    "Input parameters for getting current weather information for multiple stations."
+    "Provides current information from weather stations. Coverage Area: Statewide."
   );
 
 export type GetCurrentWeatherForStationsInput = z.infer<
@@ -78,7 +80,11 @@ export type GetCurrentWeatherForStationsInput = z.infer<
  *
  * Input parameters for getting extended weather information.
  */
-export const getWeatherInformationExtendedSchema = z.object({});
+export const getWeatherInformationExtendedSchema = z
+  .object({})
+  .describe(
+    "Provides current information from weather stations. Coverage Area: Statewide."
+  );
 
 export type GetWeatherInformationExtendedInput = z.infer<
   typeof getWeatherInformationExtendedSchema
@@ -89,6 +95,10 @@ export type GetWeatherInformationExtendedInput = z.infer<
  *
  * Input parameters for getting current weather stations.
  */
-export const getCurrentStationsSchema = z.object({});
+export const getCurrentStationsSchema = z
+  .object({})
+  .describe(
+    "Provides current information from weather stations. Coverage Area: Statewide."
+  );
 
 export type GetCurrentStationsInput = z.infer<typeof getCurrentStationsSchema>;

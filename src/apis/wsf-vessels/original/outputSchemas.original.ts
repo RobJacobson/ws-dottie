@@ -78,7 +78,7 @@ export type VesselBase = z.infer<typeof vesselBaseSchema>;
 /**
  * VesselBasic schema
  *
- * Contains the most basic / brief information pertaining to vessels.
+ * This operation retrieves the most basic / brief information pertaining to vessels. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
 export const vesselBasicSchema = vesselBaseSchema.extend({
   /**
@@ -103,7 +103,7 @@ export type VesselBasic = z.infer<typeof vesselBasicSchema>;
 /**
  * VesselAccommodations schema
  *
- * Provides details regarding vessel accommodations (bathrooms, galley, elevator, etc).
+ * This operation retrieves details regarding vessel accommodations (bathrooms, galley, elevator, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
 export const vesselAccommodationsSchema = vesselBaseSchema
   .extend({
@@ -181,7 +181,7 @@ export type VesselAccommodations = z.infer<typeof vesselAccommodationsSchema>;
 /**
  * VesselStats schema
  *
- * Provides details regarding vessel specifications (engine count, length of vessel, year built, etc).
+ * This operation retrieves details regarding vessel specifications (engine count, length of vessel, year built, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
 export const vesselStatsSchema = vesselBaseSchema
   .extend({
@@ -348,7 +348,7 @@ export type VesselStats = z.infer<typeof vesselStatsSchema>;
 /**
  * VesselLocations schema
  *
- * Provides vessel locations and associated ETA data.
+ * This operation retrieves vessel locations and associated ETA data. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
 export const vesselLocationsSchema = z
   .object({
@@ -551,8 +551,7 @@ export type VesselLocations = z.infer<typeof vesselLocationsSchema>;
 /**
  * VesselVerbose schema
  *
- * Contains highly detailed information pertaining to vessels, combining data from
- * basic details, accommodations, and stats endpoints.
+ * This operation retrieves highly detailed information pertaining to vessels. It should be used if you need to reduce the "chattiness" of your application and don't mind receiving a larger payload of data. VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
 export const vesselVerboseSchema = vesselBasicSchema
   .and(vesselAccommodationsSchema)
@@ -566,7 +565,7 @@ export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
 /**
  * CacheFlushDate schema
  *
- * Provides the cache flush date for coordinating data caching.
+ * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
 export const cacheFlushDateSchema = zWsdotDate().describe(
   "The date and time when the cache was last flushed."
@@ -615,7 +614,9 @@ export type VesselHistoryResponse = z.infer<typeof vesselHistoryResponseSchema>;
  */
 export const vesselBasicDetailsListSchema = z
   .array(vesselBasicSchema)
-  .describe("List of vessel basic details.");
+  .describe(
+    "This operation retrieves the most basic / brief information pertaining to vessels. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+  );
 
 export type VesselBasicDetailsList = z.infer<
   typeof vesselBasicDetailsListSchema
@@ -628,7 +629,9 @@ export type VesselBasicDetailsList = z.infer<
  */
 export const vesselAccommodationsListSchema = z
   .array(vesselAccommodationsSchema)
-  .describe("List of vessel accommodations.");
+  .describe(
+    "This operation retrieves details regarding vessel accommodations (bathrooms, galley, elevator, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+  );
 
 export type VesselAccommodationsList = z.infer<
   typeof vesselAccommodationsListSchema
@@ -641,7 +644,9 @@ export type VesselAccommodationsList = z.infer<
  */
 export const vesselStatsListSchema = z
   .array(vesselStatsSchema)
-  .describe("List of vessel statistics.");
+  .describe(
+    "This operation retrieves details regarding vessel specifications (engine count, length of vessel, year built, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+  );
 
 export type VesselStatsList = z.infer<typeof vesselStatsListSchema>;
 
@@ -652,7 +657,9 @@ export type VesselStatsList = z.infer<typeof vesselStatsListSchema>;
  */
 export const vesselLocationsListSchema = z
   .array(vesselLocationsSchema)
-  .describe("List of vessel locations.");
+  .describe(
+    "This operation retrieves vessel locations and associated ETA data. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+  );
 
 export type VesselLocationsList = z.infer<typeof vesselLocationsListSchema>;
 
@@ -663,7 +670,9 @@ export type VesselLocationsList = z.infer<typeof vesselLocationsListSchema>;
  */
 export const vesselVerboseDetailsListSchema = z
   .array(vesselVerboseSchema)
-  .describe("List of vessel verbose details.");
+  .describe(
+    'This operation retrieves highly detailed information pertaining to vessels. It should be used if you need to reduce the "chattiness" of your application and don\'t mind receiving a larger payload of data. VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.'
+  );
 
 export type VesselVerboseDetailsList = z.infer<
   typeof vesselVerboseDetailsListSchema
@@ -676,7 +685,9 @@ export type VesselVerboseDetailsList = z.infer<
  */
 export const vesselHistoryResponseListSchema = z
   .array(vesselHistoryResponseSchema)
-  .describe("List of vessel history responses.");
+  .describe(
+    "This operation retrieves vessel history information including departure and arrival details. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+  );
 
 export type VesselHistoryResponseList = z.infer<
   typeof vesselHistoryResponseListSchema

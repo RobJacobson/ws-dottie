@@ -9,27 +9,31 @@ import { z } from "zod";
 
 /**
  * Schema for GetTrafficFlow input parameters
- * Coverage Area: Statewide. Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds.
  *
- * Used for retrieving traffic flow data for a specific station by FlowDataID.
- * AccessCode is handled separately and not included in input schemas.
+ * Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide.
  */
-export const getTrafficFlowSchema = z.object({
-  /** The ID of the station you wish to retrieve. */
-  FlowDataID: z
-    .number()
-    .describe("The ID of the station you wish to retrieve."),
-});
+export const getTrafficFlowSchema = z
+  .object({
+    /** The ID of the station you wish to retrieve. */
+    FlowDataID: z
+      .number()
+      .describe("The ID of the station you wish to retrieve."),
+  })
+  .describe(
+    "Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide."
+  );
 
 export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowSchema>;
 
 /**
  * Schema for GetTrafficFlows input parameters
- * Coverage Area: Statewide. Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds.
  *
- * Used for retrieving all traffic flow data. Only requires AccessCode which is
- * handled separately and not included in input schemas.
+ * Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide.
  */
-export const getTrafficFlowsSchema = z.object({});
+export const getTrafficFlowsSchema = z
+  .object({})
+  .describe(
+    "Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide."
+  );
 
 export type GetTrafficFlowsInput = z.infer<typeof getTrafficFlowsSchema>;

@@ -10,50 +10,67 @@ import { z } from "zod";
 /**
  * Schema for CacheFlushDate input parameters
  *
- * Used for retrieving cache flush date information.
- * AccessCode is handled separately and not included in input schemas.
+ * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateSchema = z.object({});
+export const cacheFlushDateSchema = z
+  .object({})
+  .describe(
+    "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
+  );
 
 export type TerminalsCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Schema for TerminalBasics input parameters
  *
- * Used for retrieving all terminal basic details.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBasicsSchema = z.object({});
+export const terminalBasicsSchema = z
+  .object({})
+  .describe(
+    "This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalBasicsInput = z.infer<typeof terminalBasicsSchema>;
 
 /**
  * Schema for TerminalBulletins input parameters
  *
- * Used for retrieving all terminal bulletins.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBulletinsSchema = z.object({});
+export const terminalBulletinsSchema = z
+  .object({})
+  .describe(
+    "This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalBulletinsInput = z.infer<typeof terminalBulletinsSchema>;
 
 /**
  * Schema for TerminalLocations input parameters
  *
- * Used for retrieving all terminal locations.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalLocationsSchema = z.object({});
+export const terminalLocationsSchema = z
+  .object({})
+  .describe(
+    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalLocationsInput = z.infer<typeof terminalLocationsSchema>;
 
 /**
  * Schema for TerminalSailingSpace input parameters
  *
- * Used for retrieving all terminal sailing space information.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
+ *
+ * **⚠️ Important:** This data changes very frequently (potentially every 5 seconds). Please do not cache results in your application for an extended period of time.
  */
-export const terminalSailingSpaceSchema = z.object({});
+export const terminalSailingSpaceSchema = z
+  .object({})
+  .describe(
+    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalSailingSpaceInput = z.infer<
   typeof terminalSailingSpaceSchema
@@ -62,56 +79,71 @@ export type TerminalSailingSpaceInput = z.infer<
 /**
  * Schema for TerminalTransports input parameters
  *
- * Used for retrieving all terminal transportation options.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalTransportsSchema = z.object({});
+export const terminalTransportsSchema = z
+  .object({})
+  .describe(
+    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalTransportsInput = z.infer<typeof terminalTransportsSchema>;
 
 /**
  * Schema for TerminalVerbose input parameters
  *
- * Used for retrieving all terminal verbose details.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don't mind receiving a larger payload of data. The results include and expand on what's already available through the following operations: /terminalbasics, /terminalbulletins, /terminallocations, /terminaltransports, /terminalwaittimes.
  */
-export const terminalVerboseSchema = z.object({});
+export const terminalVerboseSchema = z
+  .object({})
+  .describe(
+    'This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don\'t mind receiving a larger payload of data. TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.'
+  );
 
 export type TerminalVerboseInput = z.infer<typeof terminalVerboseSchema>;
 
 /**
  * Schema for TerminalWaitTimes input parameters
  *
- * Used for retrieving all terminal wait times.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalWaitTimesSchema = z.object({});
+export const terminalWaitTimesSchema = z
+  .object({})
+  .describe(
+    "This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalWaitTimesInput = z.infer<typeof terminalWaitTimesSchema>;
 
 /**
  * Schema for TerminalBasicsById input parameters
  *
- * Used for retrieving basic terminal information for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBasicsByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalBasicsByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    "This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalBasicsByIdInput = z.infer<typeof terminalBasicsByIdSchema>;
 
 /**
  * Schema for TerminalBulletinsById input parameters
  *
- * Used for retrieving terminal bulletins for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBulletinsByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalBulletinsByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    "This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalBulletinsByIdInput = z.infer<
   typeof terminalBulletinsByIdSchema
@@ -120,13 +152,16 @@ export type TerminalBulletinsByIdInput = z.infer<
 /**
  * Schema for TerminalLocationsById input parameters
  *
- * Used for retrieving terminal location information for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalLocationsByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalLocationsByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalLocationsByIdInput = z.infer<
   typeof terminalLocationsByIdSchema
@@ -135,13 +170,18 @@ export type TerminalLocationsByIdInput = z.infer<
 /**
  * Schema for TerminalSailingSpaceById input parameters
  *
- * Used for retrieving terminal sailing space information for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
+ *
+ * **⚠️ Important:** This data changes very frequently (potentially every 5 seconds). Please do not cache results in your application for an extended period of time.
  */
-export const terminalSailingSpaceByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalSailingSpaceByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalSailingSpaceByIdInput = z.infer<
   typeof terminalSailingSpaceByIdSchema
@@ -150,13 +190,16 @@ export type TerminalSailingSpaceByIdInput = z.infer<
 /**
  * Schema for TerminalTransportsById input parameters
  *
- * Used for retrieving terminal transportation options for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalTransportsByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalTransportsByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalTransportsByIdInput = z.infer<
   typeof terminalTransportsByIdSchema
@@ -165,13 +208,16 @@ export type TerminalTransportsByIdInput = z.infer<
 /**
  * Schema for TerminalVerboseById input parameters
  *
- * Used for retrieving detailed terminal information for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don't mind receiving a larger payload of data. The results include and expand on what's already available through the following operations: /terminalbasics, /terminalbulletins, /terminallocations, /terminaltransports, /terminalwaittimes.
  */
-export const terminalVerboseByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalVerboseByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    'This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don\'t mind receiving a larger payload of data. TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.'
+  );
 
 export type TerminalVerboseByIdInput = z.infer<
   typeof terminalVerboseByIdSchema
@@ -180,13 +226,16 @@ export type TerminalVerboseByIdInput = z.infer<
 /**
  * Schema for TerminalWaitTimesById input parameters
  *
- * Used for retrieving terminal wait time information for a specific terminal by TerminalID.
- * AccessCode is handled separately and not included in input schemas.
+ * This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalWaitTimesByIdSchema = z.object({
-  /** Unique identifier for a terminal. */
-  TerminalID: z.number().int().describe("Unique identifier for a terminal."),
-});
+export const terminalWaitTimesByIdSchema = z
+  .object({
+    /** Unique identifier for a terminal. */
+    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+  })
+  .describe(
+    "This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalWaitTimesByIdInput = z.infer<
   typeof terminalWaitTimesByIdSchema

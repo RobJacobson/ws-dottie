@@ -11,36 +11,54 @@ import { zWsdotDate } from "@/apis/shared";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information
- * The API returns a string directly, not an object with CacheFlushDate property
+ *
+ * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateSchema = zWsdotDate().describe(
-  "The date that certain service data was last changed."
-);
+export const cacheFlushDateSchema = z
+  .object({
+    /** If present, notes the date that certain service data was last changed (see description). */
+    CacheFlushDate: zWsdotDate()
+      .optional()
+      .describe(
+        "If present, notes the date that certain service data was last changed (see description)."
+      ),
+  })
+  .describe(
+    "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
+  );
 
 export type SchedulesCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
 
 /**
  * Schema for ValidDateRange - represents valid date range for schedule data
+ *
+ * This operation retrieves a date range for which schedule data is currently published & available.
  */
-export const validDateRangeSchema = z.object({
-  /**
-   * Schedule information is available from this trip date onward.
-   */
-  DateFrom: zWsdotDate().describe(
-    "Schedule information is available from this trip date onward."
-  ),
-  /**
-   * Schedule information is not available after this trip date.
-   */
-  DateThru: zWsdotDate().describe(
-    "Schedule information is not available after this trip date."
-  ),
-});
+export const validDateRangeSchema = z
+  .object({
+    /**
+     * Schedule information is available from this trip date onward.
+     */
+    DateFrom: zWsdotDate().describe(
+      "Schedule information is available from this trip date onward."
+    ),
+    /**
+     * Schedule information is not available after this trip date.
+     */
+    DateThru: zWsdotDate().describe(
+      "Schedule information is not available after this trip date."
+    ),
+  })
+  .describe(
+    "This operation retrieves a date range for which schedule data is currently published & available."
+  );
 
 export type ValidDateRange = z.infer<typeof validDateRangeSchema>;
 
 /**
  * Base schedule schema containing common schedule fields
+ *
+ * This operation retrieves a summary of active seasons.
  */
 export const scheduleBaseSchema = z.object({
   /** Unique identifier for a season. */
@@ -76,7 +94,9 @@ export type ScheduleBase = z.infer<typeof scheduleBaseSchema>;
 /**
  * Schedules List Schema - represents an list of schedules
  */
-export const schedulesListSchema = z.array(scheduleBaseSchema);
+export const schedulesListSchema = z
+  .array(scheduleBaseSchema)
+  .describe("This operation retrieves a summary of active seasons.");
 
 export type ScheduleList = z.infer<typeof schedulesListSchema>;
 
@@ -105,7 +125,11 @@ export type RouteBase = z.infer<typeof routeBaseSchema>;
 /**
  * Routes List Schema - represents an list of routes
  */
-export const routesListSchema = z.array(routeBaseSchema);
+export const routesListSchema = z
+  .array(routeBaseSchema)
+  .describe(
+    "This operation retrieves the most basic / brief information pertaining to routes. If only a trip date is included in the URL string, all routes available for that date of travel are returned. If a trip date, departing terminal and arriving terminal are included then routes in the resultset are filtered to match accordingly. Valid departing and arriving terminals may be found using `/terminalsandmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
+  );
 
 export type RouteList = z.infer<typeof routesListSchema>;
 
@@ -124,7 +148,11 @@ export type Terminal = z.infer<typeof terminalSchema>;
 /**
  * Terminals List Schema - represents an list of terminals
  */
-export const terminalsListSchema = z.array(terminalSchema);
+export const terminalsListSchema = z
+  .array(terminalSchema)
+  .describe(
+    "This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
+  );
 
 export type TerminalList = z.infer<typeof terminalsListSchema>;
 
@@ -155,7 +183,11 @@ export type TerminalMate = z.infer<typeof terminalMateSchema>;
 /**
  * Terminal Mates List Schema - represents an list of terminal mates
  */
-export const terminalMatesListSchema = z.array(terminalMateSchema);
+export const terminalMatesListSchema = z
+  .array(terminalMateSchema)
+  .describe(
+    "This operation provides arriving terminals for a given departing terminal and trip date. A valid departing terminal may be found by using `/terminals`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
+  );
 
 export type TerminalMateList = z.infer<typeof terminalMatesListSchema>;
 
@@ -188,7 +220,11 @@ export type ServiceDisruption = z.infer<typeof serviceDisruptionSchema>;
 /**
  * Service Disruptions List Schema - represents an list of service disruptions
  */
-export const serviceDisruptionsListSchema = z.array(serviceDisruptionSchema);
+export const serviceDisruptionsListSchema = z
+  .array(serviceDisruptionSchema)
+  .describe(
+    "This operation retrieves the most basic / brief information for routes currently associated with service disruptions. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
+  );
 
 export type ServiceDisruptionList = z.infer<
   typeof serviceDisruptionsListSchema
@@ -337,7 +373,11 @@ export type RouteDetail = z.infer<typeof routeDetailSchema>;
 /**
  * Schema for RouteDetailsList - represents a list of route details
  */
-export const routeDetailsListSchema = z.array(routeDetailSchema);
+export const routeDetailsListSchema = z
+  .array(routeDetailSchema)
+  .describe(
+    "This operation retrieves highly detailed information pertaining to routes. If only a trip date is included in the URL string, all routes available for that date of travel are returned. If a trip date, departing terminal and arriving terminal are included then routes in the resultset are filtered to match accordingly. Along the same lines, including only a trip date and route will filter the resultset to a single route. Valid departing and arriving terminals may be found using `/terminalsandmates` while valid routes may be found using `/routes`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
+  );
 
 export type RouteDetailsList = z.infer<typeof routeDetailsListSchema>;
 
@@ -395,7 +435,11 @@ export type ContingencyAdj = z.infer<typeof contingencyAdjSchema>;
 /**
  * Contingency Adjs List Schema - represents an list of contingency adjustments
  */
-export const contingencyAdjsListSchema = z.array(contingencyAdjSchema);
+export const contingencyAdjsListSchema = z
+  .array(contingencyAdjSchema)
+  .describe(
+    "This operation provides a listing of routes that are active for a season. For example, \"Anacortes / Sidney B.C.\" may be a valid route, but if it's not scheduled to run during Winter 2014, it won't be returned as part of the Winter 2014 scheduled routes resultset. Results will include all known scheduled routes spanning current and upcoming seasons or, alternatively, results can be filtered to only include scheduled routes for a specific season (when the season is specified with a ScheduleID value). Seasons may be determined using `/activeseasons`."
+  );
 
 export type ContingencyAdjList = z.infer<typeof contingencyAdjsListSchema>;
 
@@ -453,7 +497,11 @@ export type SchedRoute = z.infer<typeof schedRouteSchema>;
 /**
  * Sched Routes List Schema - represents an list of scheduled routes
  */
-export const schedRoutesListSchema = z.array(schedRouteSchema);
+export const schedRoutesListSchema = z
+  .array(schedRouteSchema)
+  .describe(
+    "This operation provides a listing of routes that are active for a season. For example, \"Anacortes / Sidney B.C.\" may be a valid route, but if it's not scheduled to run during Winter 2014, it won't be returned as part of the Winter 2014 scheduled routes resultset. Results will include all known scheduled routes spanning current and upcoming seasons or, alternatively, results can be filtered to only include scheduled routes for a specific season (when the season is specified with a ScheduleID value). Seasons may be determined using `/activeseasons`."
+  );
 
 export type SchedRouteList = z.infer<typeof schedRoutesListSchema>;
 
@@ -487,7 +535,11 @@ export type ActiveDateRange = z.infer<typeof activeDateRangeSchema>;
 /**
  * Active Date Ranges List Schema - represents an list of active date ranges
  */
-export const activeDateRangesListSchema = z.array(activeDateRangeSchema);
+export const activeDateRangesListSchema = z
+  .array(activeDateRangeSchema)
+  .describe(
+    "This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+  );
 
 export type ActiveDateRangeList = z.infer<typeof activeDateRangesListSchema>;
 
@@ -549,7 +601,11 @@ export type Annotation = z.infer<typeof annotationSchema>;
 /**
  * Annotations List Schema - represents an list of annotations
  */
-export const annotationsListSchema = z.array(annotationSchema);
+export const annotationsListSchema = z
+  .array(annotationSchema)
+  .describe(
+    "This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+  );
 
 export type AnnotationList = z.infer<typeof annotationsListSchema>;
 
@@ -611,7 +667,11 @@ export type TerminalTime = z.infer<typeof terminalTimeSchema>;
 /**
  * Terminal Times List Schema - represents an list of terminal times
  */
-export const terminalTimesListSchema = z.array(terminalTimeSchema);
+export const terminalTimesListSchema = z
+  .array(terminalTimeSchema)
+  .describe(
+    "This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+  );
 
 export type TerminalTimeList = z.infer<typeof terminalTimesListSchema>;
 
@@ -689,7 +749,11 @@ export type Journey = z.infer<typeof journeySchema>;
 /**
  * Journeys List Schema - represents an list of journeys
  */
-export const journeysListSchema = z.array(journeySchema);
+export const journeysListSchema = z
+  .array(journeySchema)
+  .describe(
+    "This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+  );
 
 export type JourneyList = z.infer<typeof journeysListSchema>;
 
@@ -773,7 +837,11 @@ export type Sailing = z.infer<typeof sailingSchema>;
 /**
  * Sailings List Schema - represents an list of sailings
  */
-export const sailingsListSchema = z.array(sailingSchema);
+export const sailingsListSchema = z
+  .array(sailingSchema)
+  .describe(
+    "This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+  );
 
 export type SailingList = z.infer<typeof sailingsListSchema>;
 
@@ -932,7 +1000,11 @@ export type TimeAdjustment = z.infer<typeof timeAdjustmentSchema>;
 /**
  * Time Adjustments List Schema - represents an list of time adjustments
  */
-export const timeAdjustmentsListSchema = z.array(timeAdjustmentSchema);
+export const timeAdjustmentsListSchema = z
+  .array(timeAdjustmentSchema)
+  .describe(
+    "This operation provides a listing of all additions and cancellations that deviate on specific dates from the scheduled times found in the `/sailings` resultset (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014)."
+  );
 
 export type TimeAdjustmentList = z.infer<typeof timeAdjustmentsListSchema>;
 
@@ -1060,7 +1132,11 @@ export type TerminalCombo = z.infer<typeof terminalComboSchema>;
 /**
  * Terminal Combos List Schema - represents an list of terminal combinations
  */
-export const terminalCombosListSchema = z.array(terminalComboSchema);
+export const terminalCombosListSchema = z
+  .array(terminalComboSchema)
+  .describe(
+    "This operation provides departure times for either a trip date and route or a trip date and terminal combination. The resultset accounts for all contingencies, sailing date ranges and time adjustments. Valid departing and arriving terminals may be found using `/terminalsandmates` while valid routes may be found using `/routes`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
+  );
 
 export type TerminalComboList = z.infer<typeof terminalCombosListSchema>;
 
@@ -1203,6 +1279,10 @@ export type AlertDetail = z.infer<typeof alertDetailSchema>;
 /**
  * Alert Details List Schema - represents an list of detailed alerts
  */
-export const alertDetailsListSchema = z.array(alertDetailSchema);
+export const alertDetailsListSchema = z
+  .array(alertDetailSchema)
+  .describe(
+    "This operation provides alert information tailored for routes, bulletins, service disruptions, etc."
+  );
 
 export type AlertDetailList = z.infer<typeof alertDetailsListSchema>;

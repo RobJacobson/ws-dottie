@@ -2,9 +2,14 @@ import { z } from "zod";
 
 /**
  * Schema for GetCommercialVehicleRestrictions input parameters
- * Coverage Area: Statewide. Provides list of restrictions for commercial vehicles.
+ *
+ * Provides list of restrictions for commercial vehicles. Coverage Area: Statewide.
  */
-export const getCommercialVehicleRestrictionsSchema = z.object({});
+export const getCommercialVehicleRestrictionsSchema = z
+  .object({})
+  .describe(
+    "Provides list of restrictions for commercial vehicles. Coverage Area: Statewide."
+  );
 
 export type GetCommercialVehicleRestrictionsInput = z.infer<
   typeof getCommercialVehicleRestrictionsSchema
@@ -12,9 +17,14 @@ export type GetCommercialVehicleRestrictionsInput = z.infer<
 
 /**
  * Schema for GetCommercialVehicleRestrictionsWithId input parameters
- * Coverage Area: Statewide. Provides list of restrictions for commercial vehicles.
+ *
+ * Provides list of restrictions for commercial vehicles. Coverage Area: Statewide.
  */
-export const getCommercialVehicleRestrictionsWithIdSchema = z.object({});
+export const getCommercialVehicleRestrictionsWithIdSchema = z
+  .object({})
+  .describe(
+    "Provides list of restrictions for commercial vehicles. Coverage Area: Statewide."
+  );
 
 export type GetCommercialVehicleRestrictionsWithIdInput = z.infer<
   typeof getCommercialVehicleRestrictionsWithIdSchema

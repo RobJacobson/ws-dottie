@@ -2,12 +2,14 @@ import { z } from "zod";
 
 /**
  * Input schema for GetMountainPassConditions endpoint
- * Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/). Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system.
  *
- * This endpoint only requires AccessCode, so no additional parameters are needed.
- * The AccessCode is handled separately and not included in this schema.
+ * Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/).
  */
-export const getMountainPassConditionsSchema = z.object({});
+export const getMountainPassConditionsSchema = z
+  .object({})
+  .describe(
+    "Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/)."
+  );
 
 export type GetMountainPassConditionsInput = z.infer<
   typeof getMountainPassConditionsSchema
@@ -15,17 +17,19 @@ export type GetMountainPassConditionsInput = z.infer<
 
 /**
  * Input schema for GetMountainPassCondition endpoint
- * Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/). Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system.
  *
- * This endpoint requires a PassConditionID parameter in addition to the AccessCode.
- * The AccessCode is handled separately and not included in this schema.
+ * Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/).
  */
-export const getMountainPassConditionSchema = z.object({
-  /** A PassConditionID for a specific pass condition report. */
-  PassConditionID: z
-    .int()
-    .describe("A PassConditionID for a specific pass condition report."),
-});
+export const getMountainPassConditionSchema = z
+  .object({
+    /** A PassConditionID for a specific pass condition report. */
+    PassConditionID: z
+      .int()
+      .describe("A PassConditionID for a specific pass condition report."),
+  })
+  .describe(
+    "Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/)."
+  );
 
 export type GetMountainPassConditionInput = z.infer<
   typeof getMountainPassConditionSchema

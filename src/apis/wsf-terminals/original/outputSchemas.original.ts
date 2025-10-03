@@ -11,7 +11,7 @@ import { zWsdotDate } from "@/apis/shared";
 /**
  * CacheFlushDate schema
  *
- * Contains the cache flush date for terminal data.
+ * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
 export const cacheFlushDateSchema = zWsdotDate().describe(
   "If present, notes the date that certain service data was last changed (see description)."
@@ -62,7 +62,7 @@ export type TerminalBase = z.infer<typeof terminalBaseSchema>;
 /**
  * TerminalBasicDetail schema
  *
- * Contains basic terminal information.
+ * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const terminalBasicSchema = terminalBaseSchema.extend({
   /**
@@ -106,9 +106,13 @@ export type TerminalBasic = z.infer<typeof terminalBasicSchema>;
 /**
  * Terminal Basic Details List Schema
  *
- * Represents a list of basic terminal information.
+ * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBasicDetailsListSchema = z.array(terminalBasicSchema);
+export const terminalBasicDetailsListSchema = z
+  .array(terminalBasicSchema)
+  .describe(
+    "This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalBasicDetailsList = z.infer<
   typeof terminalBasicDetailsListSchema
@@ -121,7 +125,7 @@ export type TerminalBasicDetailsList = z.infer<
  */
 export const getAllTerminalBasicSchema =
   terminalBasicDetailsListSchema.describe(
-    "Returns all terminal basic details."
+    "This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
 export type GetAllTerminalBasic = z.infer<typeof getAllTerminalBasicSchema>;
@@ -140,7 +144,7 @@ export type GetSpecificTerminalBasic = z.infer<
 /**
  * Bulletin schema
  *
- * Contains bulletin information for a terminal.
+ * This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const bulletinSchema = z.object({
   /** The title of the bulletin. */
@@ -201,7 +205,11 @@ export type TerminalBulletin = z.infer<typeof terminalBulletinSchema>;
  *
  * Represents a list of terminal bulletin information.
  */
-export const terminalBulletinsListSchema = z.array(terminalBulletinSchema);
+export const terminalBulletinsListSchema = z
+  .array(terminalBulletinSchema)
+  .describe(
+    "This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalBulletinsList = z.infer<typeof terminalBulletinsListSchema>;
 
@@ -211,7 +219,9 @@ export type TerminalBulletinsList = z.infer<typeof terminalBulletinsListSchema>;
  * Returns all terminal bulletins.
  */
 export const getAllTerminalBulletinsSchema =
-  terminalBulletinsListSchema.describe("Returns all terminal bulletins.");
+  terminalBulletinsListSchema.describe(
+    "This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type GetAllTerminalBulletins = z.infer<
   typeof getAllTerminalBulletinsSchema
@@ -262,7 +272,7 @@ export type DispGISZoomLocList = z.infer<typeof dispGISZoomLocsListSchema>;
 /**
  * TerminalLocation schema
  *
- * Contains detailed location information for a terminal.
+ * This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const terminalLocationSchema = terminalBaseSchema.extend({
   /** The latitude of the terminal. */
@@ -323,7 +333,11 @@ export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
  *
  * Represents a list of detailed location information for terminals.
  */
-export const terminalLocationsListSchema = z.array(terminalLocationSchema);
+export const terminalLocationsListSchema = z
+  .array(terminalLocationSchema)
+  .describe(
+    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalLocationsList = z.infer<typeof terminalLocationsListSchema>;
 
@@ -333,7 +347,9 @@ export type TerminalLocationsList = z.infer<typeof terminalLocationsListSchema>;
  * Returns all terminal locations.
  */
 export const getAllTerminalLocationsSchema =
-  terminalLocationsListSchema.describe("Returns all terminal locations.");
+  terminalLocationsListSchema.describe(
+    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type GetAllTerminalLocations = z.infer<
   typeof getAllTerminalLocationsSchema
@@ -520,7 +536,7 @@ export type DepartingSpacesList = z.infer<typeof departingSpacesListSchema>;
 /**
  * TerminalSailingSpace schema
  *
- * Contains terminal sailing space information.
+ * This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const terminalSailingSpaceSchema = terminalBaseSchema.extend({
   /**
@@ -554,9 +570,11 @@ export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
  *
  * Represents a list of terminal sailing space information.
  */
-export const terminalSailingSpacesListSchema = z.array(
-  terminalSailingSpaceSchema
-);
+export const terminalSailingSpacesListSchema = z
+  .array(terminalSailingSpaceSchema)
+  .describe(
+    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalSailingSpacesList = z.infer<
   typeof terminalSailingSpacesListSchema
@@ -569,7 +587,7 @@ export type TerminalSailingSpacesList = z.infer<
  */
 export const getAllTerminalSailingSpaceSchema =
   terminalSailingSpacesListSchema.describe(
-    "Returns all terminal sailing space information."
+    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
 export type GetAllTerminalSailingSpace = z.infer<
@@ -623,7 +641,7 @@ export type TransitLinksList = z.infer<typeof transitLinksListSchema>;
 /**
  * TerminalTransportationOption schema
  *
- * Contains terminal transportation options.
+ * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const terminalTransportationOptionSchema = terminalBaseSchema.extend({
   /** Parking information for this terminal. */
@@ -721,9 +739,11 @@ export type TerminalTransportationOption = z.infer<
  *
  * Represents a list of terminal transportation options.
  */
-export const terminalTransportationOptionsListSchema = z.array(
-  terminalTransportationOptionSchema
-);
+export const terminalTransportationOptionsListSchema = z
+  .array(terminalTransportationOptionSchema)
+  .describe(
+    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalTransportationOptionsList = z.infer<
   typeof terminalTransportationOptionsListSchema
@@ -736,7 +756,7 @@ export type TerminalTransportationOptionsList = z.infer<
  */
 export const getAllTerminalTransportationOptionsSchema =
   terminalTransportationOptionsListSchema.describe(
-    "Returns all terminal transportation options."
+    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
 export type GetAllTerminalTransportationOptions = z.infer<
@@ -816,7 +836,7 @@ export type WaitTimeList = z.infer<typeof waitTimesListSchema>;
 /**
  * TerminalWaitTime schema
  *
- * Contains terminal wait time information.
+ * This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const terminalWaitTimeSchema = terminalBaseSchema.extend({
   /**
@@ -834,7 +854,11 @@ export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
  *
  * Represents a list of terminal wait time information.
  */
-export const terminalWaitTimesListSchema = z.array(terminalWaitTimeSchema);
+export const terminalWaitTimesListSchema = z
+  .array(terminalWaitTimeSchema)
+  .describe(
+    "This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type TerminalWaitTimesList = z.infer<typeof terminalWaitTimesListSchema>;
 
@@ -844,7 +868,9 @@ export type TerminalWaitTimesList = z.infer<typeof terminalWaitTimesListSchema>;
  * Returns all terminal wait times.
  */
 export const getAllTerminalWaitTimesSchema =
-  terminalWaitTimesListSchema.describe("Returns all terminal wait times.");
+  terminalWaitTimesListSchema.describe(
+    "This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+  );
 
 export type GetAllTerminalWaitTimes = z.infer<
   typeof getAllTerminalWaitTimesSchema
@@ -864,7 +890,7 @@ export type GetSpecificTerminalWaitTime = z.infer<
 /**
  * TerminalVerbose schema
  *
- * Contains comprehensive terminal information including all other terminal data.
+ * This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don't mind receiving a larger payload of data. TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
 export const terminalVerboseSchema = terminalBasicSchema
   .and(terminalBulletinSchema)
@@ -1011,7 +1037,11 @@ export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
  *
  * Represents a list of comprehensive terminal information.
  */
-export const terminalVerboseListSchema = z.array(terminalVerboseSchema);
+export const terminalVerboseListSchema = z
+  .array(terminalVerboseSchema)
+  .describe(
+    'This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don\'t mind receiving a larger payload of data. TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.'
+  );
 
 export type TerminalVerboseList = z.infer<typeof terminalVerboseListSchema>;
 
