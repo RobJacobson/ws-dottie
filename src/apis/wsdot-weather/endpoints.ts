@@ -1,4 +1,4 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as input from "./original/inputSchemas.original";
 import * as output from "./original/outputSchemas.original";

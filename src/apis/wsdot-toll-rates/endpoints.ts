@@ -1,10 +1,10 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { input, output } from "./schemas";
 
 export const wsdotTollRatesApi: ApiDefinition = {
   name: "wsdot-toll-rates",
-  baseUrl: "http://www.wsdot.wa.gov/traffic/api/tollrates/tollratesrest.svc",
+  baseUrl: "https://www.wsdot.wa.gov/traffic/api/tollrates/tollratesrest.svc",
   endpoints: [
     {
       function: "getTollRates",

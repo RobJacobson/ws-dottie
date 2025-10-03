@@ -1,9 +1,9 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { input, output } from "./schemas";
 
 export const wsdotBridgeClearancesApi: ApiDefinition = {
   name: "wsdot-bridge-clearances",
-  baseUrl: "http://www.wsdot.wa.gov/traffic/api/bridges/clearancerest.svc",
+  baseUrl: "https://www.wsdot.wa.gov/traffic/api/bridges/clearancerest.svc",
   endpoints: [
     {
       function: "getBridgeClearances",

@@ -1,10 +1,10 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { input, output } from "./schemas";
 
 export const wsfFaresApi: ApiDefinition = {
   name: "wsf-fares",
-  baseUrl: "http://www.wsdot.wa.gov/ferries/api/fares/rest",
+  baseUrl: "https://www.wsdot.wa.gov/ferries/api/fares/rest",
   endpoints: [
     {
       function: "cacheFlushDate",

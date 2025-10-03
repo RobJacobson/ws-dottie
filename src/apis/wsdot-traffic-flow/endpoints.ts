@@ -1,4 +1,4 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { input, output } from "./schemas";
 
 export const wsdotTrafficFlowApi: ApiDefinition = {

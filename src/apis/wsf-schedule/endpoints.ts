@@ -1,10 +1,10 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { input, output } from "./schemas";
 
 export const wsfScheduleApi: ApiDefinition = {
   name: "wsf-schedule",
-  baseUrl: "http://www.wsdot.wa.gov/ferries/api/schedule/rest",
+  baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
   endpoints: [
     {
       function: "activeSeasons",

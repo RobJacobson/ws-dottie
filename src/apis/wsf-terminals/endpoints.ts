@@ -1,9 +1,9 @@
-import type { ApiDefinition } from "@/shared/endpoints";
+import type { ApiDefinition } from "@/apis/types";
 import { input, output } from "./schemas";
 
 export const wsfTerminalsApi: ApiDefinition = {
   name: "wsf-terminals",
-  baseUrl: "http://www.wsdot.wa.gov/ferries/api/terminals/rest",
+  baseUrl: "https://www.wsdot.wa.gov/ferries/api/terminals/rest",
   endpoints: [
     {
       function: "cacheFlushDate",

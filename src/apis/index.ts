@@ -57,8 +57,8 @@ export * from "./wsf-terminals";
 export * from "./wsf-vessels";
 
 // ============================================================================
-// UTILITIES
+// TYPES
 // ============================================================================
 
-// API utilities
-export * from "./utils";
+// API type definitions
+export * from "./types";
