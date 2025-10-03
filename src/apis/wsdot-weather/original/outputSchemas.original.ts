@@ -108,7 +108,13 @@ const scanwebSurfaceMeasurementsSchema = z
       .describe("Road freezing temperature."),
     /** Road surface condition. */
     RoadSurfaceCondition: z
-      .union([z.literal(101), z.literal(102), z.literal(103), z.literal(104)])
+      .union([
+        z.literal(101),
+        z.literal(102),
+        z.literal(103),
+        z.literal(104),
+        z.literal(105),
+      ])
       .nullable()
       .describe("Road surface condition."),
   })
@@ -249,7 +255,7 @@ export const weatherReadingSchema = z
      * Type of precipitation detected by a precipitation sensor, if one is available. Certain types of precipitation sensors can only detect the presence or absence of precipitation and will display Yes or No (1 or 0 respectively).
      */
     PrecipitationType: z
-      .union([z.literal(0), z.literal(2), z.literal(41)])
+      .int()
       .nullable()
       .describe(
         "Type of precipitation detected by a precipitation sensor, if one is available. Certain types of precipitation sensors can only detect the presence or absence of precipitation and will display Yes or No (1 or 0 respectively)."

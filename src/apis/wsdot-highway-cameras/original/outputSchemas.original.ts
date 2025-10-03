@@ -52,7 +52,7 @@ export const cameraSchema = z
       .describe("Website for camera owner when not WSDOT."),
     /** WSDOT region which owns the camera. */
     Region: z
-      .enum(["ER", "NC", "NW", "OL", "OS", "SC", "SW", "WA"])
+      .string()
       .nullable()
       .describe("WSDOT region which owns the camera."),
     /**

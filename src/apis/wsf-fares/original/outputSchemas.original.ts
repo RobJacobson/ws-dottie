@@ -12,18 +12,9 @@ import { zWsdotDate } from "@/apis/shared";
  *
  * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateResponseSchema = z
-  .object({
-    /** If present, notes the date that certain service data was last changed (see description). */
-    CacheFlushDate: zWsdotDate()
-      .optional()
-      .describe(
-        "If present, notes the date that certain service data was last changed (see description)."
-      ),
-  })
-  .describe(
-    "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
-  );
+export const cacheFlushDateResponseSchema = zWsdotDate().describe(
+  "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
+);
 
 export type FaresCacheFlushDateResponse = z.infer<
   typeof cacheFlushDateResponseSchema
@@ -269,27 +260,17 @@ export type LineItemXrefList = z.infer<typeof lineItemXrefsListSchema>;
  * This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
 export const lineItemVerboseResponseSchema = z
   .object({
-    /** All valid terminal combinations associated with the trip date. */
     TerminalComboVerbose: terminalComboVerboseResponsesListSchema
-      .nullable()
-      .describe(
-        "All valid terminal combinations associated with the trip date."
-      ),
-    /**
-     * Associates a terminal combination with a one-way fare and a round trip fare for the given trip date.
-     */
-    LineItemXref: lineItemXrefsListSchema
-      .nullable()
-      .describe(
-        "Associates a terminal combination with a one-way fare and a round trip fare for the given trip date."
-      ),
-    /** All one-way fare line items associated with the trip date. */
+      .optional()
+      .describe("Array of terminal combination verbose responses."),
+    LineItemLookup: lineItemXrefsListSchema
+      .optional()
+      .describe("Array of line item cross-reference responses."),
     LineItems: lineItemResponsesListListSchema
-      .nullable()
+      .optional()
       .describe("All one-way fare line items associated with the trip date."),
-    /** All round trip line items associated with the trip date. */
     RoundTripLineItems: lineItemResponsesListListSchema
-      .nullable()
+      .optional()
       .describe("All round trip line items associated with the trip date."),
   })
   .describe(
@@ -320,7 +301,7 @@ export const fareTotalResponseSchema = z
     /**
      * Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total.
      */
-    FareTotalType: fareTotalTypeSchema.describe(
+    TotalType: fareTotalTypeSchema.describe(
       "Indicates a logical grouping for the total. 1 for Departing, 2 for Return, 3 for Either (direction independent) and 4 for Total."
     ),
     /** A description of the amount. */

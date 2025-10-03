@@ -71,7 +71,7 @@ export const bridgeDataGISSchema = z
      * An indicator that denotes if the Milepost is within a back mileage equation area. A back mileage equation area occurs when a segment of a route is added at any point other than the end of an existing route, or when a realignment occurs.
      */
     SRMPAheadBackIndicator: z
-      .enum(["A", "B"])
+      .string()
       .nullable()
       .describe(
         "An indicator that denotes if the Milepost is within a back mileage equation area. A back mileage equation area occurs when a segment of a route is added at any point other than the end of an existing route, or when a realignment occurs."

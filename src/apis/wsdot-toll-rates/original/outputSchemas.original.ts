@@ -39,7 +39,7 @@ export const tollRateSchema = z
       .nullable()
       .describe("Travel direction the toll applies to."),
     /** The start milepost for a toll trip. */
-    StartMilepost: z.int().describe("The start milepost for a toll trip."),
+    StartMilepost: z.number().describe("The start milepost for a toll trip."),
     /** Common name of the start location. */
     StartLocationName: z
       .string()
@@ -54,7 +54,7 @@ export const tollRateSchema = z
       .number()
       .describe("Approximate geographical longitude of the start location."),
     /** The end milepost for a toll trip. */
-    EndMilepost: z.int().describe("The end milepost for a toll trip."),
+    EndMilepost: z.number().describe("The end milepost for a toll trip."),
     /** Common name of the end location. */
     EndLocationName: z
       .string()
@@ -102,7 +102,7 @@ export const tripRateSchema = z
       "Time when the message was last updated."
     ),
     /** The toll amount for the trip. */
-    Toll: z.int().describe("The toll amount for the trip."),
+    Toll: z.number().describe("The toll amount for the trip."),
     /** Name of the trip. */
     TripName: z.string().nullable().describe("Name of the trip."),
   })
@@ -173,7 +173,7 @@ export const tollTripInfoSchema = z
     /** End longitude of the trip. */
     EndLongitude: z.number().describe("End longitude of the trip."),
     /** End milepost of the trip. */
-    EndMilepost: z.int().describe("End milepost of the trip."),
+    EndMilepost: z.number().describe("End milepost of the trip."),
     /** Geometry information for the trip. */
     Geometry: z
       .string()
@@ -193,10 +193,10 @@ export const tollTripInfoSchema = z
     /** Start longitude of the trip. */
     StartLongitude: z.number().describe("Start longitude of the trip."),
     /** Start milepost of the trip. */
-    StartMilepost: z.int().describe("Start milepost of the trip."),
+    StartMilepost: z.number().describe("Start milepost of the trip."),
     /** Direction of travel for the trip. */
     TravelDirection: z
-      .enum(["E", "N", "S", "W"])
+      .string()
       .nullable()
       .describe("Direction of travel for the trip."),
     /** Name of the trip. */

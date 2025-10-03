@@ -11,7 +11,7 @@ export const roadwayLocationSchema = z.object({
       "Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient."
     ),
   Direction: z
-    .enum(["B", "E", "N", "O", "S", "W", "EB", "NB", "SB", "WB"])
+    .string()
     .nullable()
     .describe(
       "Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation."

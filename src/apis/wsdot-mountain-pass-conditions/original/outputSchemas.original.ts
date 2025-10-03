@@ -15,7 +15,7 @@ export const travelRestrictionSchema = z
       .describe("The text of this restriction."),
     /** The direction of this restriction. */
     TravelDirection: z
-      .enum(["Eastbound", "Northbound", "Southbound", "Westbound"])
+      .string()
       .nullable()
       .describe("The direction of this restriction."),
   })

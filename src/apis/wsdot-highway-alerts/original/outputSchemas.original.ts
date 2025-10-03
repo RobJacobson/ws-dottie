@@ -20,7 +20,7 @@ export const roadwayLocationSchema = z.object({
    * The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction.
    */
   Direction: z
-    .enum(["B", "E", "N", "S", "W"])
+    .string()
     .nullable()
     .describe(
       "The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction."
@@ -63,7 +63,7 @@ export const alertSchema = z.object({
     .describe("Categorization of alert, i.e. Collision, Maintenance, etc."),
   /** Current status of alert, open, closed. */
   EventStatus: z
-    .enum(["Open", "Closed"])
+    .string()
     .nullable()
     .describe("Current status of alert, open, closed."),
   /**
@@ -86,21 +86,14 @@ export const alertSchema = z.object({
     .describe("When the alert was last changed."),
   /** Expected impact on traffic, highest, high, medium, low. */
   Priority: z
-    .enum(["High", "Highest", "Low", "Lowest", "Medium"])
+    .string()
     .nullable()
     .describe("Expected impact on traffic, highest, high, medium, low."),
   /**
    * WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest.
    */
   Region: z
-    .enum([
-      "Eastern",
-      "North Central",
-      "Northwest",
-      "Olympic",
-      "South Central",
-      "Southwest",
-    ])
+    .string()
     .nullable()
     .describe(
       "WSDOT Region which entered the alert, valid values: EA - Eastern, NC - North Central, NW - Northwest, OL - Olympic, SC - South Central, SW - Southwest."
@@ -122,7 +115,11 @@ export type Alert = z.infer<typeof alertSchema>;
  *
  * The GetAlerts endpoint returns an array of currently active incidents
  */
-export const alertsListSchema = z.array(alertSchema).describe("The GetAlerts endpoint returns an array of currently active incidents");
+export const alertsListSchema = z
+  .array(alertSchema)
+  .describe(
+    "The GetAlerts endpoint returns an array of currently active incidents"
+  );
 
 export type AlertsList = z.infer<typeof alertsListSchema>;
 
@@ -148,7 +145,11 @@ export type Area = z.infer<typeof areaSchema>;
  *
  * The GetMapAreas endpoint returns a list of areas and associated IDs
  */
-export const areasListSchema = z.array(areaSchema).describe("The GetMapAreas endpoint returns a list of areas and associated IDs");
+export const areasListSchema = z
+  .array(areaSchema)
+  .describe(
+    "The GetMapAreas endpoint returns a list of areas and associated IDs"
+  );
 
 export type AreasList = z.infer<typeof areasListSchema>;
 
@@ -157,6 +158,10 @@ export type AreasList = z.infer<typeof areasListSchema>;
  *
  * The GetEventCategories endpoint returns an array of strings containing Event Categories currently in use
  */
-export const eventCategoriesListSchema = z.array(z.string()).describe("The GetEventCategories endpoint returns an array of strings containing Event Categories currently in use");
+export const eventCategoriesListSchema = z
+  .array(z.string())
+  .describe(
+    "The GetEventCategories endpoint returns an array of strings containing Event Categories currently in use"
+  );
 
 export type EventCategoriesList = z.infer<typeof eventCategoriesListSchema>;
