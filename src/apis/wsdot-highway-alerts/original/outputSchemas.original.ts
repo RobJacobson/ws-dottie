@@ -37,7 +37,7 @@ export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
 
 /**
  * Schema for Alert - represents a Highway Alert
- * Coverage Area: Statewide. Provides access to all of the active incidents currently logged in our ROADS system.
+ * A Highway Alert.
  */
 export const alertSchema = z.object({
   /** Unique Identifier for the alert. */

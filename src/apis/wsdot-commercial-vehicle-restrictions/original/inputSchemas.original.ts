@@ -2,6 +2,7 @@ import { z } from "zod";
 
 /**
  * Schema for GetCommercialVehicleRestrictions input parameters
+ * Coverage Area: Statewide. Provides list of restrictions for commercial vehicles.
  */
 export const getCommercialVehicleRestrictionsSchema = z.object({});
 
@@ -11,6 +12,7 @@ export type GetCommercialVehicleRestrictionsInput = z.infer<
 
 /**
  * Schema for GetCommercialVehicleRestrictionsWithId input parameters
+ * Coverage Area: Statewide. Provides list of restrictions for commercial vehicles.
  */
 export const getCommercialVehicleRestrictionsWithIdSchema = z.object({});
 

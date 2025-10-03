@@ -4,6 +4,7 @@ import { zWsdotDate } from "@/apis/shared";
 
 /**
  * GetCurrentWeatherInformation input schema
+ * Coverage Area: Statewide. Provides current information from weather stations.
  *
  * Input parameters for getting current weather information.
  */
@@ -15,6 +16,7 @@ export type GetCurrentWeatherInformationInput = z.infer<
 
 /**
  * GetCurrentWeatherInformationByStationID input schema
+ * Coverage Area: Statewide. Provides current information from weather stations.
  *
  * Input parameters for getting current weather information by station ID.
  */

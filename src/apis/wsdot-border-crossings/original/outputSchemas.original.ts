@@ -3,6 +3,7 @@ import { roadwayLocationSchema, zWsdotDate } from "@/apis/shared/";
 
 /**
  * Schema for BorderCrossingData - represents border crossing wait time data
+ * Information about Canadian border crossing wait times.
  */
 export const borderCrossingDataSchema = z.object({
   /** Where the crossing is located. */

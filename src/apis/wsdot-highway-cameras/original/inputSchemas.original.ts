@@ -2,6 +2,7 @@ import { z } from "zod";
 
 /**
  * Input schema for GetCameras endpoint
+ * Coverage Area: Statewide. Provides list of traffic cameras.
  */
 export const getCamerasSchema = z.object({});
 
@@ -9,6 +10,7 @@ export type GetCamerasInput = z.infer<typeof getCamerasSchema>;
 
 /**
  * Input schema for SearchCameras endpoint
+ * Coverage Area: Statewide. Provides list of traffic cameras.
  */
 export const searchCamerasSchema = z.object({
   /** The state route of the camera. */
@@ -36,6 +38,7 @@ export type SearchCamerasInput = z.infer<typeof searchCamerasSchema>;
 
 /**
  * Input schema for GetCamera endpoint
+ * Coverage Area: Statewide. Provides list of traffic cameras.
  */
 export const getCameraSchema = z.object({
   /** An ID of a specific camera. */

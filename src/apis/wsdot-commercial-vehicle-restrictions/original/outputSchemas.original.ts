@@ -98,8 +98,11 @@ export const cVRestrictionDataSchema = z.object({
     .number()
     .nullable()
     .describe("The maximum width for a load in inches."),
-  /**  */
-  SAMaxAxle: z.number().nullable().describe(""),
+  /** Maximum axle weight for SA classification. */
+  SAMaxAxle: z
+    .number()
+    .nullable()
+    .describe("Maximum axle weight for SA classification."),
   /** Start location for the alert on the roadway. */
   StartRoadwayLocation: roadwayLocationSchema
     .nullable()
@@ -111,10 +114,16 @@ export const cVRestrictionDataSchema = z.object({
     .string()
     .nullable()
     .describe("State route restriction is located on."),
-  /**  */
-  TDMaxAxle: z.number().nullable().describe(""),
+  /** Maximum axle weight for TD classification. */
+  TDMaxAxle: z
+    .number()
+    .nullable()
+    .describe("Maximum axle weight for TD classification."),
   /** Type of vehicle affected by the restriction. */
-  VehicleType: z.string().nullable().describe(""),
+  VehicleType: z
+    .string()
+    .nullable()
+    .describe("Type of vehicle affected by the restriction."),
 });
 
 export type CVRestrictionData = z.infer<typeof cVRestrictionDataSchema>;

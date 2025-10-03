@@ -9,6 +9,7 @@ import { z } from "zod";
 
 /**
  * Schema for GetTrafficFlow input parameters
+ * Coverage Area: Statewide. Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds.
  *
  * Used for retrieving traffic flow data for a specific station by FlowDataID.
  * AccessCode is handled separately and not included in input schemas.
@@ -24,6 +25,7 @@ export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowSchema>;
 
 /**
  * Schema for GetTrafficFlows input parameters
+ * Coverage Area: Statewide. Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds.
  *
  * Used for retrieving all traffic flow data. Only requires AccessCode which is
  * handled separately and not included in input schemas.

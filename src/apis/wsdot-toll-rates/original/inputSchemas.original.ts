@@ -9,6 +9,7 @@ import { z } from "zod";
 
 /**
  * Input schema for GetTollRates endpoint (void input - only AccessCode)
+ * Coverage Area: Statewide. Provides current toll rates for high occupancy lanes.
  */
 export const getTollRatesSchema = z.object({});
 
@@ -16,6 +17,7 @@ export type GetTollRatesInput = z.infer<typeof getTollRatesSchema>;
 
 /**
  * Input schema for GetTollTripInfo endpoint (void input - only AccessCode)
+ * Coverage Area: Statewide. Provides current toll rates for high occupancy lanes.
  */
 export const getTollTripInfoSchema = z.object({});
 
