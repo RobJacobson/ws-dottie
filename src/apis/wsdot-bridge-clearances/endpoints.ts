@@ -1,12 +1,13 @@
-import { createApiDefinition } from "../utils";
+import type { ApiDefinition } from "@/shared/endpoints";
 import { input, output } from "./schemas";
 
-export const wsdotBridgeClearancesApi = createApiDefinition(
-  "wsdot-bridge-clearances",
-  [
+export const wsdotBridgeClearancesApi: ApiDefinition = {
+  name: "wsdot-bridge-clearances",
+  baseUrl: "http://www.wsdot.wa.gov/traffic/api/bridges/clearancerest.svc",
+  endpoints: [
     {
       function: "getBridgeClearances",
-      endpoint: "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson",
+      endpoint: "/getClearancesAsJson",
       inputSchema: input.getClearancesSchema,
       outputSchema: output.bridgeDataGISListSchema,
       sampleParams: {},
@@ -14,12 +15,11 @@ export const wsdotBridgeClearancesApi = createApiDefinition(
     },
     {
       function: "getBridgeClearancesByRoute",
-      endpoint:
-        "/Traffic/api/Bridges/ClearanceREST.svc/GetClearancesAsJson?Route={Route}",
+      endpoint: "/getClearancesAsJson?Route={Route}",
       inputSchema: input.getClearancesByRouteSchema,
       outputSchema: output.bridgeDataGISListSchema,
       sampleParams: { Route: "005" },
       cacheStrategy: "STATIC",
     },
-  ]
-);
+  ],
+};

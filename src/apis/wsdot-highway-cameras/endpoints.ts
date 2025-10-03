@@ -1,13 +1,14 @@
-import { createApiDefinition } from "../utils";
+import type { ApiDefinition } from "@/shared/endpoints";
 import { input, output } from "./schemas";
 
-export const wsdotHighwayCamerasApi = createApiDefinition(
-  "wsdot-highway-cameras",
-  [
+export const wsdotHighwayCamerasApi: ApiDefinition = {
+  name: "wsdot-highway-cameras",
+  baseUrl:
+    "http://www.wsdot.wa.gov/traffic/api/highwaycameras/highwaycamerasrest.svc",
+  endpoints: [
     {
       function: "getHighwayCamera",
-      endpoint:
-        "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCameraAsJson?CameraID={CameraID}",
+      endpoint: "/getCameraAsJson?CameraID={CameraID}",
       inputSchema: input.getCameraSchema,
       outputSchema: output.cameraSchema,
       sampleParams: { CameraID: 9818 },
@@ -15,8 +16,7 @@ export const wsdotHighwayCamerasApi = createApiDefinition(
     },
     {
       function: "getHighwayCameras",
-      endpoint:
-        "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/GetCamerasAsJson",
+      endpoint: "/getCamerasAsJson",
       inputSchema: input.getCamerasSchema,
       outputSchema: output.camerasListSchema,
       sampleParams: {},
@@ -24,12 +24,11 @@ export const wsdotHighwayCamerasApi = createApiDefinition(
     },
     {
       function: "searchHighwayCameras",
-      endpoint:
-        "/Traffic/api/HighwayCameras/HighwayCamerasREST.svc/SearchCamerasAsJson",
+      endpoint: "/searchCamerasAsJson",
       inputSchema: input.searchCamerasSchema,
       outputSchema: output.camerasListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },
-  ]
-);
+  ],
+};

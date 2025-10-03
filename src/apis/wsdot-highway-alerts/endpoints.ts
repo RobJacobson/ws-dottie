@@ -1,14 +1,15 @@
+import type { ApiDefinition } from "@/shared/endpoints";
 import { datesHelper } from "@/shared/utils";
-import { createApiDefinition } from "../utils";
 import { input, output } from "./schemas";
 
-export const wsdotHighwayAlertsApi = createApiDefinition(
-  "wsdot-highway-alerts",
-  [
+export const wsdotHighwayAlertsApi: ApiDefinition = {
+  name: "wsdot-highway-alerts",
+  baseUrl:
+    "http://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
+  endpoints: [
     {
       function: "getAlerts",
-      endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsAsJson",
+      endpoint: "/getAlertsAsJson",
       inputSchema: input.getAlertsSchema,
       outputSchema: output.alertsListSchema,
       sampleParams: {},
@@ -16,8 +17,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
     },
     {
       function: "getAlert",
-      endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertAsJson?AlertID={AlertID}",
+      endpoint: "/getAlertAsJson?AlertID={AlertID}",
       inputSchema: input.getAlertSchema,
       outputSchema: output.alertSchema,
       sampleParams: { AlertID: 468632 },
@@ -25,8 +25,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
     },
     {
       function: "getAlertsByRegionId",
-      endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByRegionIDAsJson?RegionID={RegionID}",
+      endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
       inputSchema: input.getAlertsByRegionIDSchema,
       outputSchema: output.alertsListSchema,
       sampleParams: { RegionID: 9 },
@@ -34,8 +33,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
     },
     {
       function: "getAlertsForMapArea",
-      endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetAlertsByMapAreaAsJson?MapArea={MapArea}",
+      endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
       inputSchema: input.getAlertsForMapAreaSchema,
       outputSchema: output.alertsListSchema,
       sampleParams: { MapArea: "Seattle" },
@@ -43,8 +41,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
     },
     {
       function: "getEventCategories",
-      endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetEventCategoriesAsJson",
+      endpoint: "/getEventCategoriesAsJson",
       inputSchema: input.getEventCategoriesSchema,
       outputSchema: output.eventCategoriesListSchema,
       sampleParams: {},
@@ -52,8 +49,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
     },
     {
       function: "getMapAreas",
-      endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/GetMapAreasAsJson",
+      endpoint: "/getMapAreasAsJson",
       inputSchema: input.getMapAreasSchema,
       outputSchema: output.areasListSchema,
       sampleParams: {},
@@ -62,7 +58,7 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
     {
       function: "searchAlerts",
       endpoint:
-        "/Traffic/api/HighwayAlerts/HighwayAlertsREST.svc/SearchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
+        "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
       inputSchema: input.searchAlertsSchema,
       outputSchema: output.alertsListSchema,
       sampleParams: {
@@ -72,5 +68,5 @@ export const wsdotHighwayAlertsApi = createApiDefinition(
       },
       cacheStrategy: "FREQUENT",
     },
-  ]
-);
+  ],
+};

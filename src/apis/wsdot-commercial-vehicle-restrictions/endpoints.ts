@@ -1,13 +1,14 @@
-import { createApiDefinition } from "../utils";
+import type { ApiDefinition } from "@/shared/endpoints";
 import { input, output } from "./schemas";
 
-export const wsdotCommercialVehicleRestrictionsApi = createApiDefinition(
-  "wsdot-commercial-vehicle-restrictions",
-  [
+export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
+  name: "wsdot-commercial-vehicle-restrictions",
+  baseUrl:
+    "http://www.wsdot.wa.gov/traffic/api/cvrestrictions/cvrestrictionsrest.svc",
+  endpoints: [
     {
       function: "getCommercialVehicleRestrictions",
-      endpoint:
-        "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsAsJson",
+      endpoint: "/getCommercialVehicleRestrictionsAsJson",
       inputSchema: input.getCommercialVehicleRestrictionsSchema,
       outputSchema: output.cVRestrictionDataListSchema,
       sampleParams: {},
@@ -15,12 +16,11 @@ export const wsdotCommercialVehicleRestrictionsApi = createApiDefinition(
     },
     {
       function: "getCommercialVehicleRestrictionsWithId",
-      endpoint:
-        "/Traffic/api/CVRestrictions/CVRestrictionsREST.svc/GetCommercialVehicleRestrictionsWithIdAsJson",
+      endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
       inputSchema: input.getCommercialVehicleRestrictionsWithIdSchema,
       outputSchema: output.cVRestrictionDataWithIdListSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
     },
-  ]
-);
+  ],
+};
