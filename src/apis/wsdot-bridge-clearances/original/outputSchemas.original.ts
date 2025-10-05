@@ -118,14 +118,3 @@ export const bridgeDataGISSchema = z
   );
 
 export type BridgeDataGIS = z.infer<typeof bridgeDataGISSchema>;
-
-/**
- * Schema for BridgeDataGISList - the main response list
- *
- * Bridge clearance information, see disclaimer
- */
-export const bridgeDataGISListSchema = z
-  .array(bridgeDataGISSchema)
-  .describe("Bridge clearance information, see disclaimer");
-
-export type BridgeDataGISList = z.infer<typeof bridgeDataGISListSchema>;

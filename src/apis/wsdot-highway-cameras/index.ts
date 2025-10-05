@@ -16,7 +16,4 @@ export type {
 } from "./original/inputSchemas.original";
 
 // Export all output types
-export type {
-  Camera,
-  CameraList,
-} from "./original/outputSchemas.original";
+export type { Camera } from "./original/outputSchemas.original";

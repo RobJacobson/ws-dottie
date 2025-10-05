@@ -40,8 +40,8 @@ export interface EndpointDefinition<I, O> {
   inputSchema: z.ZodSchema<I>;
   /** Zod schema for output validation */
   outputSchema: z.ZodSchema<O>;
-  /** Optional sample parameters for testing */
-  sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
+  /** Optional sample parameters for testing - must match the input schema exactly */
+  sampleParams?: I | (() => Promise<I>);
   /** Cache strategy */
   cacheStrategy: CacheStrategy;
 }

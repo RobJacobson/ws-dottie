@@ -15,7 +15,4 @@ export type {
 } from "./original/inputSchemas.original";
 
 // Export all output types
-export type {
-  TravelTimeRoute,
-  TravelTimeRoutesList,
-} from "./original/outputSchemas.original";
+export type { TravelTimeRoute } from "./original/outputSchemas.original";

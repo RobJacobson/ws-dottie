@@ -1,118 +1,158 @@
-import type { ApiDefinition } from "@/apis/types";
-import { datesHelper } from "@/shared/utils";
-import { input, output } from "./schemas";
+import { z } from "zod";
+import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
+import * as i from "./original/inputSchemas.original";
+import * as o from "./original/outputSchemas.original";
 
 export const wsfVesselsApi: ApiDefinition = {
   name: "wsf-vessels",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/vessels/rest",
   endpoints: [
+    /**
+     * CacheFlushDate response
+     */
     {
       function: "cacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: input.cacheFlushDateSchema,
-      outputSchema: output.cacheFlushDateSchema,
+      inputSchema: i.cacheFlushDateSchema,
+      outputSchema: o.cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.VesselsCacheFlushDateInput,
+      o.VesselsCacheFlushDate
+    >,
+    /**
+     * VesselAccommodations response
+     */
     {
       function: "vesselAccommodations",
       endpoint: "/vesselAccommodations",
-      inputSchema: input.vesselAccommodationsSchema,
-      outputSchema: output.vesselAccommodationsListSchema,
+      inputSchema: i.vesselAccommodationsSchema,
+      outputSchema: z.array(o.vesselAccommodationsSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.VesselAccommodationsInput,
+      o.VesselAccommodations[]
+    >,
     {
       function: "vesselAccommodationsById",
       endpoint: "/vesselAccommodations/{VesselID}",
-      inputSchema: input.vesselAccommodationsByIdSchema,
-      outputSchema: output.vesselAccommodationsSchema,
+      inputSchema: i.vesselAccommodationsByIdSchema,
+      outputSchema: o.vesselAccommodationsSchema,
       sampleParams: { VesselID: 65 },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.VesselAccommodationsByIdInput,
+      o.VesselAccommodations
+    >,
+    /**
+     * VesselBasics response
+     */
     {
       function: "vesselBasics",
       endpoint: "/vesselBasics",
-      inputSchema: input.vesselBasicsSchema,
-      outputSchema: output.vesselBasicDetailsListSchema,
+      inputSchema: i.vesselBasicsSchema,
+      outputSchema: z.array(o.vesselBasicSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.VesselBasicsInput, o.VesselBasic[]>,
     {
       function: "vesselBasicsById",
       endpoint: "/vesselBasics/{VesselID}",
-      inputSchema: input.vesselBasicsByIdSchema,
-      outputSchema: output.vesselBasicSchema,
-      sampleParams: { VesselID: 15 },
+      inputSchema: i.vesselBasicsByIdSchema,
+      outputSchema: o.vesselBasicSchema,
+      sampleParams: { VesselID: 74 },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.VesselBasicsByIdInput, o.VesselBasic>,
+    /**
+     * VesselHistories response
+     */
     {
       function: "vesselHistories",
       endpoint: "/vesselHistory",
-      inputSchema: input.getAllVesselHistorySchema,
-      outputSchema: output.vesselHistoryResponseListSchema,
+      inputSchema: i.getAllVesselHistorySchema,
+      outputSchema: z.array(o.vesselHistoryResponseSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.GetAllVesselHistoryInput,
+      o.VesselHistoryResponse[]
+    >,
     {
       function: "vesselHistoriesByVesselAndDateRange",
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-      inputSchema: input.getVesselHistorySchema,
-      outputSchema: output.vesselHistoryResponseListSchema,
+      inputSchema: i.getVesselHistorySchema,
+      outputSchema: z.array(o.vesselHistoryResponseSchema),
       sampleParams: {
-        VesselName: "Cathlamet",
-        DateStart: datesHelper.startOfMonth(),
-        DateEnd: datesHelper.endOfMonth(),
+        VesselName: "Tacoma",
+        DateStart: "2025-09-01",
+        DateEnd: "2025-10-01",
       },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.GetVesselHistoryInput,
+      o.VesselHistoryResponse[]
+    >,
+    /**
+     * VesselLocations response
+     */
     {
       function: "vesselLocations",
       endpoint: "/vesselLocations",
-      inputSchema: input.vesselLocationsSchema,
-      outputSchema: output.vesselLocationsListSchema,
+      inputSchema: i.vesselLocationsSchema,
+      outputSchema: z.array(o.vesselLocationsSchema),
       sampleParams: {},
       cacheStrategy: "REALTIME",
-    },
+    } satisfies EndpointDefinition<i.VesselLocationsInput, o.VesselLocations[]>,
     {
       function: "vesselLocationsById",
       endpoint: "/vesselLocations/{VesselID}",
-      inputSchema: input.vesselLocationsByIdSchema,
-      outputSchema: output.vesselLocationsSchema,
+      inputSchema: i.vesselLocationsByIdSchema,
+      outputSchema: o.vesselLocationsSchema,
       sampleParams: { VesselID: 18 },
       cacheStrategy: "REALTIME",
-    },
+    } satisfies EndpointDefinition<
+      i.VesselLocationsByIdInput,
+      o.VesselLocations
+    >,
+    /**
+     * VesselStats response
+     */
     {
       function: "vesselStats",
       endpoint: "/vesselStats",
-      inputSchema: input.vesselStatsSchema,
-      outputSchema: output.vesselStatsListSchema,
+      inputSchema: i.vesselStatsSchema,
+      outputSchema: z.array(o.vesselStatsSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.VesselStatsInput, o.VesselStats[]>,
     {
       function: "vesselStatsById",
       endpoint: "/vesselStats/{VesselID}",
-      inputSchema: input.vesselStatsByIdSchema,
-      outputSchema: output.vesselStatsSchema,
+      inputSchema: i.vesselStatsByIdSchema,
+      outputSchema: o.vesselStatsSchema,
       sampleParams: { VesselID: 32 },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.VesselStatsByIdInput, o.VesselStats>,
+    /**
+     * VesselsVerbose response
+     */
     {
       function: "vesselsVerbose",
       endpoint: "/vesselVerbose",
-      inputSchema: input.vesselVerboseSchema,
-      outputSchema: output.vesselVerboseDetailsListSchema,
+      inputSchema: i.vesselVerboseSchema,
+      outputSchema: z.array(o.vesselVerboseSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.VesselVerboseInput, o.VesselVerbose[]>,
     {
       function: "vesselsVerboseById",
       endpoint: "/vesselVerbose/{VesselID}",
-      inputSchema: input.vesselVerboseByIdSchema,
-      outputSchema: output.vesselVerboseSchema,
+      inputSchema: i.vesselVerboseByIdSchema,
+      outputSchema: o.vesselVerboseSchema,
       sampleParams: { VesselID: 68 },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.VesselVerboseByIdInput, o.VesselVerbose>,
   ],
 };

@@ -55,16 +55,3 @@ export const flowDataSchema = z
   .describe("Schema for FlowData - represents a traffic flow station");
 
 export type FlowData = z.infer<typeof flowDataSchema>;
-
-/**
- * Schema for FlowDataList - the main response list for GetTrafficFlows
- *
- * Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide.
- */
-export const flowDataListSchema = z
-  .array(flowDataSchema)
-  .describe(
-    "Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide."
-  );
-
-export type FlowDataList = z.infer<typeof flowDataListSchema>;

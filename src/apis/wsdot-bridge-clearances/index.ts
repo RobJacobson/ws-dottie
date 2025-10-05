@@ -15,4 +15,4 @@ export type {
 } from "./original/inputSchemas.original";
 
 // Export all output types
-export type { BridgeDataGISList } from "./original/outputSchemas.original";
+export type { BridgeDataGIS } from "./original/outputSchemas.original";

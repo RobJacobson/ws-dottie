@@ -25,11 +25,9 @@ export type {
   FaresCacheFlushDateResponse,
   FareTotalResponse,
   LineItemResponse,
-  LineItemResponseList,
   LineItemVerboseResponse,
   TerminalComboResponse,
   TerminalComboVerboseResponse,
   TerminalResponse,
-  TerminalResponseList,
   ValidDateRangeResponse,
 } from "./original/outputSchemas.original";

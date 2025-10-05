@@ -12,4 +12,4 @@ export { wsdotBorderCrossingsApi } from "./endpoints";
 export type { GetBorderCrossingsInput } from "./original/inputSchemas.original";
 
 // Export all output types
-export type { BorderCrossingDataList } from "./original/outputSchemas.original";
+export type { BorderCrossingData } from "./original/outputSchemas.original";

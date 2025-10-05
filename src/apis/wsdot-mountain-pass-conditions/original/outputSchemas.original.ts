@@ -90,18 +90,3 @@ export const passConditionSchema = z
   );
 
 export type PassCondition = z.infer<typeof passConditionSchema>;
-
-/**
- * Schema for MountainPassConditionsList - represents all mountain pass conditions
- *
- * Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/).
- */
-export const mountainPassConditionsListSchema = z
-  .array(passConditionSchema)
-  .describe(
-    "Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/)."
-  );
-
-export type MountainPassConditionsList = z.infer<
-  typeof mountainPassConditionsListSchema
->;

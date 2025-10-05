@@ -56,17 +56,5 @@ export const travelTimeRouteSchema = z
   })
   .describe("Schema for TravelTimeRoute - represents a travel time route");
 
-/**
- * Schema for TravelTimeRoutesList - the main response list for GetTravelTimes
- *
- * Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas.
- */
-export const travelTimeRoutesListSchema = z
-  .array(travelTimeRouteSchema)
-  .describe(
-    "Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas."
-  );
-
 // Export types
 export type TravelTimeRoute = z.infer<typeof travelTimeRouteSchema>;
-export type TravelTimeRoutesList = z.infer<typeof travelTimeRoutesListSchema>;

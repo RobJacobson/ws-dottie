@@ -104,27 +104,13 @@ export const terminalBasicSchema = terminalBaseSchema.extend({
 export type TerminalBasic = z.infer<typeof terminalBasicSchema>;
 
 /**
- * Terminal Basic Details List Schema
- *
- * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
- */
-export const terminalBasicDetailsListSchema = z
-  .array(terminalBasicSchema)
-  .describe(
-    "This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
-  );
-
-export type TerminalBasicDetailsList = z.infer<
-  typeof terminalBasicDetailsListSchema
->;
-
-/**
  * GetAllTerminalBasicDetails schema
  *
  * Returns all terminal basic details.
  */
-export const getAllTerminalBasicSchema =
-  terminalBasicDetailsListSchema.describe(
+export const getAllTerminalBasicSchema = z
+  .array(terminalBasicSchema)
+  .describe(
     "This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
@@ -176,15 +162,6 @@ export const bulletinSchema = z.object({
 export type Bulletin = z.infer<typeof bulletinSchema>;
 
 /**
- * Bulletins List Schema
- *
- * Represents a list of bulletin information.
- */
-export const bulletinsListSchema = z.array(bulletinSchema);
-
-export type BulletinList = z.infer<typeof bulletinsListSchema>;
-
-/**
  * TerminalBulletin schema
  *
  * Contains terminal information with associated bulletins.
@@ -193,33 +170,21 @@ export const terminalBulletinSchema = terminalBaseSchema.extend({
   /**
    * The bulletins / alerts associated with this terminal.
    */
-  Bulletins: bulletinsListSchema.describe(
-    "The bulletins / alerts associated with this terminal."
-  ),
+  Bulletins: z
+    .array(bulletinSchema)
+    .describe("The bulletins / alerts associated with this terminal."),
 });
 
 export type TerminalBulletin = z.infer<typeof terminalBulletinSchema>;
-
-/**
- * Terminal Bulletins List Schema
- *
- * Represents a list of terminal bulletin information.
- */
-export const terminalBulletinsListSchema = z
-  .array(terminalBulletinSchema)
-  .describe(
-    "This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
-  );
-
-export type TerminalBulletinsList = z.infer<typeof terminalBulletinsListSchema>;
 
 /**
  * GetAllTerminalBulletins schema
  *
  * Returns all terminal bulletins.
  */
-export const getAllTerminalBulletinsSchema =
-  terminalBulletinsListSchema.describe(
+export const getAllTerminalBulletinsSchema = z
+  .array(terminalBulletinSchema)
+  .describe(
     "This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
@@ -259,15 +224,6 @@ export const dispGISZoomLocSchema = z.object({
 });
 
 export type DispGISZoomLoc = z.infer<typeof dispGISZoomLocSchema>;
-
-/**
- * Disp GIS Zoom Locs List Schema
- *
- * Represents a list of GIS zoom level location information.
- */
-export const dispGISZoomLocsListSchema = z.array(dispGISZoomLocSchema);
-
-export type DispGISZoomLocList = z.infer<typeof dispGISZoomLocsListSchema>;
 
 /**
  * TerminalLocation schema
@@ -319,7 +275,8 @@ export const terminalLocationSchema = terminalBaseSchema.extend({
   /**
    * Where this terminal should appear on a GIS map (at various zoom levels).
    */
-  DispGISZoomLoc: dispGISZoomLocsListSchema
+  DispGISZoomLoc: z
+    .array(dispGISZoomLocSchema)
     .nullable()
     .describe(
       "Where this terminal should appear on a GIS map (at various zoom levels)."
@@ -329,25 +286,13 @@ export const terminalLocationSchema = terminalBaseSchema.extend({
 export type TerminalLocation = z.infer<typeof terminalLocationSchema>;
 
 /**
- * Terminal Locations List Schema
- *
- * Represents a list of detailed location information for terminals.
- */
-export const terminalLocationsListSchema = z
-  .array(terminalLocationSchema)
-  .describe(
-    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
-  );
-
-export type TerminalLocationsList = z.infer<typeof terminalLocationsListSchema>;
-
-/**
  * GetAllTerminalLocations schema
  *
  * Returns all terminal locations.
  */
-export const getAllTerminalLocationsSchema =
-  terminalLocationsListSchema.describe(
+export const getAllTerminalLocationsSchema = z
+  .array(terminalLocationSchema)
+  .describe(
     "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
@@ -465,19 +410,6 @@ export type SpaceForArrivalTerminal = z.infer<
 >;
 
 /**
- * Space For Arrival Terminals List Schema
- *
- * Represents a list of space information for arrival terminals.
- */
-export const spaceForArrivalTerminalsListSchema = z.array(
-  spaceForArrivalTerminalSchema
-);
-
-export type SpaceForArrivalTerminalsList = z.infer<
-  typeof spaceForArrivalTerminalsListSchema
->;
-
-/**
  * DepartingSpace schema
  *
  * Contains departing space information.
@@ -517,21 +449,13 @@ export const departingSpaceSchema = z.object({
   /**
    * The available space for one or more destinations.
    */
-  SpaceForArrivalTerminals: spaceForArrivalTerminalsListSchema
+  SpaceForArrivalTerminals: z
+    .array(spaceForArrivalTerminalSchema)
     .nullable()
     .describe("The available space for one or more destinations."),
 });
 
 export type DepartingSpace = z.infer<typeof departingSpaceSchema>;
-
-/**
- * Departing Spaces List Schema
- *
- * Represents a list of departing space information.
- */
-export const departingSpacesListSchema = z.array(departingSpaceSchema);
-
-export type DepartingSpacesList = z.infer<typeof departingSpacesListSchema>;
 
 /**
  * TerminalSailingSpace schema
@@ -542,7 +466,8 @@ export const terminalSailingSpaceSchema = terminalBaseSchema.extend({
   /**
    * The most recent departures leaving this terminal.
    */
-  DepartingSpaces: departingSpacesListSchema
+  DepartingSpaces: z
+    .array(departingSpaceSchema)
     .nullable()
     .describe("The most recent departures leaving this terminal."),
   /**
@@ -566,27 +491,13 @@ export const terminalSailingSpaceSchema = terminalBaseSchema.extend({
 export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
 
 /**
- * Terminal Sailing Spaces List Schema
- *
- * Represents a list of terminal sailing space information.
- */
-export const terminalSailingSpacesListSchema = z
-  .array(terminalSailingSpaceSchema)
-  .describe(
-    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
-  );
-
-export type TerminalSailingSpacesList = z.infer<
-  typeof terminalSailingSpacesListSchema
->;
-
-/**
  * GetAllTerminalSailingSpace schema
  *
  * Returns all terminal sailing space information.
  */
-export const getAllTerminalSailingSpaceSchema =
-  terminalSailingSpacesListSchema.describe(
+export const getAllTerminalSailingSpaceSchema = z
+  .array(terminalSailingSpaceSchema)
+  .describe(
     "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
@@ -628,15 +539,6 @@ export const transitLinkSchema = z.object({
 });
 
 export type TransitLink = z.infer<typeof transitLinkSchema>;
-
-/**
- * Transit Links List Schema
- *
- * Represents a list of transit link information.
- */
-export const transitLinksListSchema = z.array(transitLinkSchema);
-
-export type TransitLinksList = z.infer<typeof transitLinksListSchema>;
 
 /**
  * TerminalTransportationOption schema
@@ -725,7 +627,8 @@ export const terminalTransportationOptionSchema = terminalBaseSchema.extend({
   /**
    * Links to transit agencies that service this terminal.
    */
-  TransitLinks: transitLinksListSchema
+  TransitLinks: z
+    .array(transitLinkSchema)
     .nullable()
     .describe("Links to transit agencies that service this terminal."),
 });
@@ -735,27 +638,13 @@ export type TerminalTransportationOption = z.infer<
 >;
 
 /**
- * Terminal Transportation Options List Schema
- *
- * Represents a list of terminal transportation options.
- */
-export const terminalTransportationOptionsListSchema = z
-  .array(terminalTransportationOptionSchema)
-  .describe(
-    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
-  );
-
-export type TerminalTransportationOptionsList = z.infer<
-  typeof terminalTransportationOptionsListSchema
->;
-
-/**
  * GetAllTerminalTransportationOptions schema
  *
  * Returns all terminal transportation options.
  */
-export const getAllTerminalTransportationOptionsSchema =
-  terminalTransportationOptionsListSchema.describe(
+export const getAllTerminalTransportationOptionsSchema = z
+  .array(terminalTransportationOptionSchema)
+  .describe(
     "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
@@ -825,15 +714,6 @@ export const waitTimeSchema = z.object({
 export type WaitTime = z.infer<typeof waitTimeSchema>;
 
 /**
- * Wait Times List Schema
- *
- * Represents a list of wait time information.
- */
-export const waitTimesListSchema = z.array(waitTimeSchema);
-
-export type WaitTimeList = z.infer<typeof waitTimesListSchema>;
-
-/**
  * TerminalWaitTime schema
  *
  * This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
@@ -842,7 +722,8 @@ export const terminalWaitTimeSchema = terminalBaseSchema.extend({
   /**
    * The wait times associated with this terminal.
    */
-  WaitTimes: waitTimesListSchema
+  WaitTimes: z
+    .array(waitTimeSchema)
     .nullable()
     .describe("The wait times associated with this terminal."),
 });
@@ -850,25 +731,13 @@ export const terminalWaitTimeSchema = terminalBaseSchema.extend({
 export type TerminalWaitTime = z.infer<typeof terminalWaitTimeSchema>;
 
 /**
- * Terminal Wait Times List Schema
- *
- * Represents a list of terminal wait time information.
- */
-export const terminalWaitTimesListSchema = z
-  .array(terminalWaitTimeSchema)
-  .describe(
-    "This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
-  );
-
-export type TerminalWaitTimesList = z.infer<typeof terminalWaitTimesListSchema>;
-
-/**
  * GetAllTerminalWaitTimes schema
  *
  * Returns all terminal wait times.
  */
-export const getAllTerminalWaitTimesSchema =
-  terminalWaitTimesListSchema.describe(
+export const getAllTerminalWaitTimesSchema = z
+  .array(terminalWaitTimeSchema)
+  .describe(
     "This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
   );
 
@@ -1024,7 +893,8 @@ export const terminalVerboseSchema = terminalBasicSchema
       /**
        * Visitor links for the terminal.
        */
-      VisitorLinks: transitLinksListSchema
+      VisitorLinks: z
+        .array(transitLinkSchema)
         .nullable()
         .describe("Visitor links for the terminal."),
     })
@@ -1033,26 +903,13 @@ export const terminalVerboseSchema = terminalBasicSchema
 export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
 
 /**
- * Terminal Verbose Details List Schema
- *
- * Represents a list of comprehensive terminal information.
- */
-export const terminalVerboseListSchema = z
-  .array(terminalVerboseSchema)
-  .describe(
-    'This operation retrieves highly detailed information pertaining to terminals. It should be used if you need to reduce the "chattiness" of your application and don\'t mind receiving a larger payload of data. TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.'
-  );
-
-export type TerminalVerboseList = z.infer<typeof terminalVerboseListSchema>;
-
-/**
  * GetAllTerminalVerboseDetails schema
  *
  * Returns all terminal verbose details.
  */
-export const getAllTerminalVerboseSchema = terminalVerboseListSchema.describe(
-  "Returns all terminal verbose details."
-);
+export const getAllTerminalVerboseSchema = z
+  .array(terminalVerboseSchema)
+  .describe("Returns all terminal verbose details.");
 
 export type GetAllTerminalVerbose = z.infer<typeof getAllTerminalVerboseSchema>;
 

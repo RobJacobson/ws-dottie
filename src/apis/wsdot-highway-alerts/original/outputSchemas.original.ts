@@ -111,19 +111,6 @@ export const alertSchema = z.object({
 export type Alert = z.infer<typeof alertSchema>;
 
 /**
- * Schema for AlertsList - represents a list of Highway Alerts
- *
- * The GetAlerts endpoint returns an array of currently active incidents
- */
-export const alertsListSchema = z
-  .array(alertSchema)
-  .describe(
-    "The GetAlerts endpoint returns an array of currently active incidents"
-  );
-
-export type AlertsList = z.infer<typeof alertsListSchema>;
-
-/**
  * Schema for Area - represents a map area
  *
  * Return list of areas and associated IDs
@@ -139,29 +126,3 @@ export const areaSchema = z.object({
 });
 
 export type Area = z.infer<typeof areaSchema>;
-
-/**
- * Schema for AreasList - represents a list of map areas
- *
- * The GetMapAreas endpoint returns a list of areas and associated IDs
- */
-export const areasListSchema = z
-  .array(areaSchema)
-  .describe(
-    "The GetMapAreas endpoint returns a list of areas and associated IDs"
-  );
-
-export type AreasList = z.infer<typeof areasListSchema>;
-
-/**
- * Schema for EventCategoriesList - represents a list of event category strings
- *
- * The GetEventCategories endpoint returns an array of strings containing Event Categories currently in use
- */
-export const eventCategoriesListSchema = z
-  .array(z.string())
-  .describe(
-    "The GetEventCategories endpoint returns an array of strings containing Event Categories currently in use"
-  );
-
-export type EventCategoriesList = z.infer<typeof eventCategoriesListSchema>;

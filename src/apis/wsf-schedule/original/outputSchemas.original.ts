@@ -92,15 +92,6 @@ export const scheduleBaseSchema = z.object({
 export type ScheduleBase = z.infer<typeof scheduleBaseSchema>;
 
 /**
- * Schedules List Schema - represents an list of schedules
- */
-export const schedulesListSchema = z
-  .array(scheduleBaseSchema)
-  .describe("This operation retrieves a summary of active seasons.");
-
-export type ScheduleList = z.infer<typeof schedulesListSchema>;
-
-/**
  * Base route schema containing common route fields
  */
 export const routeBaseSchema = z.object({
@@ -123,17 +114,6 @@ export const routeBaseSchema = z.object({
 export type RouteBase = z.infer<typeof routeBaseSchema>;
 
 /**
- * Routes List Schema - represents an list of routes
- */
-export const routesListSchema = z
-  .array(routeBaseSchema)
-  .describe(
-    "This operation retrieves the most basic / brief information pertaining to routes. If only a trip date is included in the URL string, all routes available for that date of travel are returned. If a trip date, departing terminal and arriving terminal are included then routes in the resultset are filtered to match accordingly. Valid departing and arriving terminals may be found using `/terminalsandmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type RouteList = z.infer<typeof routesListSchema>;
-
-/**
  * Schema for Terminal - represents terminal information
  */
 export const terminalSchema = z.object({
@@ -144,17 +124,6 @@ export const terminalSchema = z.object({
 });
 
 export type Terminal = z.infer<typeof terminalSchema>;
-
-/**
- * Terminals List Schema - represents an list of terminals
- */
-export const terminalsListSchema = z
-  .array(terminalSchema)
-  .describe(
-    "This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type TerminalList = z.infer<typeof terminalsListSchema>;
 
 /**
  * Schema for TerminalMate - represents terminal mate information

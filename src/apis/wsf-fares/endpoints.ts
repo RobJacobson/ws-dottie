@@ -1,25 +1,36 @@
-import type { ApiDefinition } from "@/apis/types";
+import { z } from "zod";
+import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { input, output } from "./schemas";
+import * as i from "./original/inputSchemas.original";
+import * as o from "./original/outputSchemas.original";
 
 export const wsfFaresApi: ApiDefinition = {
   name: "wsf-fares",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/fares/rest",
   endpoints: [
+    /**
+     * CacheFlushDateResponse response
+     */
     {
       function: "cacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: input.cacheFlushDateSchema,
-      outputSchema: output.cacheFlushDateResponseSchema,
+      inputSchema: i.cacheFlushDateSchema,
+      outputSchema: o.cacheFlushDateResponseSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.FaresCacheFlushDateInput,
+      o.FaresCacheFlushDateResponse
+    >,
+    /**
+     * LineItemResponse response
+     */
     {
       function: "fareLineItems",
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: input.fareLineItemsSchema,
-      outputSchema: output.lineItemResponsesListSchema,
+      inputSchema: i.fareLineItemsSchema,
+      outputSchema: z.array(o.lineItemResponseSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 3,
@@ -27,13 +38,13 @@ export const wsfFaresApi: ApiDefinition = {
         RoundTrip: false,
       },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.FareLineItemsInput, o.LineItemResponse[]>,
     {
       function: "fareLineItemsBasic",
       endpoint:
         "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: input.fareLineItemsBasicSchema,
-      outputSchema: output.lineItemResponsesListSchema,
+      inputSchema: i.fareLineItemsBasicSchema,
+      outputSchema: z.array(o.lineItemResponseSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -41,37 +52,66 @@ export const wsfFaresApi: ApiDefinition = {
         RoundTrip: false,
       },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.FareLineItemsBasicInput,
+      o.LineItemResponse[]
+    >,
+    /**
+     * LineItemVerboseResponse response
+     */
     {
       function: "fareLineItemsVerbose",
       endpoint: "/fareLineItemsVerbose/{TripDate}",
-      inputSchema: input.fareLineItemsVerboseSchema,
-      outputSchema: output.lineItemVerboseResponseSchema,
+      inputSchema: i.fareLineItemsVerboseSchema,
+      outputSchema: o.lineItemVerboseResponseSchema,
       sampleParams: { TripDate: datesHelper.today() },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.FareLineItemsVerboseInput,
+      o.LineItemVerboseResponse
+    >,
+    /**
+     * TerminalResponse response
+     */
     {
       function: "faresTerminals",
       endpoint: "/terminals/{TripDate}",
-      inputSchema: input.terminalsSchema,
-      outputSchema: output.terminalResponsesListSchema,
+      inputSchema: i.terminalsSchema,
+      outputSchema: z.array(o.terminalResponseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.TerminalsInput, o.TerminalResponse[]>,
+    {
+      function: "terminalMates",
+      endpoint: "/terminalMates/{TripDate}/{TerminalID}",
+      inputSchema: i.terminalMatesSchema,
+      outputSchema: z.array(o.terminalResponseSchema),
+      sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
+      cacheStrategy: "STATIC",
+    } satisfies EndpointDefinition<i.TerminalMatesInput, o.TerminalResponse[]>,
+    /**
+     * ValidDateRangeResponse response
+     */
     {
       function: "faresValidDateRange",
       endpoint: "/validdaterange",
-      inputSchema: input.validDateRangeSchema,
-      outputSchema: output.validDateRangeResponseSchema,
+      inputSchema: i.validDateRangeSchema,
+      outputSchema: o.validDateRangeResponseSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.ValidDateRangeInput,
+      o.ValidDateRangeResponse
+    >,
+    /**
+     * FareTotalResponse response
+     */
     {
       function: "fareTotals",
       endpoint:
         "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
-      inputSchema: input.fareTotalsSchema,
-      outputSchema: output.fareTotalResponsesListSchema,
+      inputSchema: i.fareTotalsSchema,
+      outputSchema: z.array(o.fareTotalResponseSchema),
       sampleParams: {
         TripDate: datesHelper.today(),
         DepartingTerminalID: 1,
@@ -81,35 +121,39 @@ export const wsfFaresApi: ApiDefinition = {
         Quantity: "3,1",
       },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.FareTotalsInput, o.FareTotalResponse[]>,
+    /**
+     * TerminalComboResponse response
+     */
     {
       function: "terminalCombo",
       endpoint:
         "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: input.terminalComboSchema,
-      outputSchema: output.terminalComboResponseSchema,
+      inputSchema: i.terminalComboSchema,
+      outputSchema: o.terminalComboResponseSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.TerminalComboInput,
+      o.TerminalComboResponse
+    >,
+    /**
+     * TerminalComboVerboseResponse response
+     */
     {
       function: "terminalComboVerbose",
       endpoint: "/terminalComboVerbose/{TripDate}",
-      inputSchema: input.terminalComboVerboseSchema,
-      outputSchema: output.terminalComboVerboseResponsesListSchema,
+      inputSchema: i.terminalComboVerboseSchema,
+      outputSchema: z.array(o.terminalComboVerboseResponseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       cacheStrategy: "STATIC",
-    },
-    {
-      function: "terminalMates",
-      endpoint: "/terminalMates/{TripDate}/{TerminalID}",
-      inputSchema: input.terminalMatesSchema,
-      outputSchema: output.terminalResponsesListSchema,
-      sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
-      cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<
+      i.TerminalComboVerboseInput,
+      o.TerminalComboVerboseResponse[]
+    >,
   ],
 };

@@ -15,7 +15,4 @@ export type {
 } from "./original/inputSchemas.original";
 
 // Export all output types
-export type {
-  MountainPassConditionsList,
-  PassCondition,
-} from "./original/outputSchemas.original";
+export type { PassCondition } from "./original/outputSchemas.original";

@@ -20,9 +20,9 @@ export type {
 
 // Export all output types
 export type {
-  TollRatesList,
-  TollTripInfoList,
+  TollRate,
+  TollTripInfo,
   TollTripsRates as TollTrips,
   TollTripVersion,
-  TripRatesList,
+  TripRate,
 } from "./original/outputSchemas.original";

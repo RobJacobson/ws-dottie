@@ -13,9 +13,9 @@ export { wsfScheduleApi } from "./endpoints";
 
 // Export all output types
 export type {
+  RouteBase as Route,
   RouteDetail,
-  RouteList,
-  SailingList,
-  ScheduleList,
+  Sailing,
+  ScheduleBase as Schedule,
   SchedulesCacheFlushDate,
 } from "./original/outputSchemas.original";

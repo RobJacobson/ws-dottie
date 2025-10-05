@@ -1,72 +1,85 @@
-import type { ApiDefinition } from "@/apis/types";
+import { z } from "zod";
+import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { input, output } from "./schemas";
+import * as i from "./original/inputSchemas.original";
+import * as o from "./original/outputSchemas.original";
 
 export const wsdotHighwayAlertsApi: ApiDefinition = {
   name: "wsdot-highway-alerts",
   baseUrl:
     "http://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
   endpoints: [
+    /**
+     * Alert response
+     */
     {
       function: "getAlerts",
       endpoint: "/getAlertsAsJson",
-      inputSchema: input.getAlertsSchema,
-      outputSchema: output.alertsListSchema,
+      inputSchema: i.getAlertsSchema,
+      outputSchema: z.array(o.alertSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
-    },
+    } satisfies EndpointDefinition<i.GetAlertsInput, o.Alert[]>,
     {
       function: "getAlert",
       endpoint: "/getAlertAsJson?AlertID={AlertID}",
-      inputSchema: input.getAlertSchema,
-      outputSchema: output.alertSchema,
+      inputSchema: i.getAlertSchema,
+      outputSchema: o.alertSchema,
       sampleParams: { AlertID: 468632 },
       cacheStrategy: "FREQUENT",
-    },
+    } satisfies EndpointDefinition<i.GetAlertInput, o.Alert>,
     {
       function: "getAlertsByRegionId",
       endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
-      inputSchema: input.getAlertsByRegionIDSchema,
-      outputSchema: output.alertsListSchema,
+      inputSchema: i.getAlertsByRegionIDSchema,
+      outputSchema: z.array(o.alertSchema),
       sampleParams: { RegionID: 9 },
       cacheStrategy: "FREQUENT",
-    },
+    } satisfies EndpointDefinition<i.GetAlertsByRegionIDInput, o.Alert[]>,
     {
       function: "getAlertsForMapArea",
       endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
-      inputSchema: input.getAlertsForMapAreaSchema,
-      outputSchema: output.alertsListSchema,
+      inputSchema: i.getAlertsForMapAreaSchema,
+      outputSchema: z.array(o.alertSchema),
       sampleParams: { MapArea: "Seattle" },
       cacheStrategy: "FREQUENT",
-    },
-    {
-      function: "getEventCategories",
-      endpoint: "/getEventCategoriesAsJson",
-      inputSchema: input.getEventCategoriesSchema,
-      outputSchema: output.eventCategoriesListSchema,
-      sampleParams: {},
-      cacheStrategy: "FREQUENT",
-    },
-    {
-      function: "getMapAreas",
-      endpoint: "/getMapAreasAsJson",
-      inputSchema: input.getMapAreasSchema,
-      outputSchema: output.areasListSchema,
-      sampleParams: {},
-      cacheStrategy: "FREQUENT",
-    },
+    } satisfies EndpointDefinition<i.GetAlertsForMapAreaInput, o.Alert[]>,
     {
       function: "searchAlerts",
       endpoint:
         "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-      inputSchema: input.searchAlertsSchema,
-      outputSchema: output.alertsListSchema,
+      inputSchema: i.searchAlertsSchema,
+      outputSchema: z.array(o.alertSchema),
       sampleParams: {
         StateRoute: "405",
+        StartingMilepost: 10,
+        EndingMilepost: 20,
         SearchTimeStart: datesHelper.yesterday(),
-        SearchTimeEnd: datesHelper.tomorrow(),
+        SearchTimeEnd: datesHelper.today(),
       },
       cacheStrategy: "FREQUENT",
-    },
+    } satisfies EndpointDefinition<i.SearchAlertsInput, o.Alert[]>,
+    /**
+     * String response
+     */
+    {
+      function: "getEventCategories",
+      endpoint: "/getEventCategoriesAsJson",
+      inputSchema: i.getEventCategoriesSchema,
+      outputSchema: z.array(z.string()),
+      sampleParams: {},
+      cacheStrategy: "FREQUENT",
+    } satisfies EndpointDefinition<i.GetEventCategoriesInput, string[]>,
+    /**
+     * Area response
+     */
+    {
+      function: "getMapAreas",
+      endpoint: "/getMapAreasAsJson",
+      inputSchema: i.getMapAreasSchema,
+      outputSchema: z.array(o.areaSchema),
+      sampleParams: {},
+      cacheStrategy: "FREQUENT",
+    } satisfies EndpointDefinition<i.GetMapAreasInput, o.Area[]>,
   ],
 };

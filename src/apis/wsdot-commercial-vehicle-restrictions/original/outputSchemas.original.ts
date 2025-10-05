@@ -139,19 +139,6 @@ export const cVRestrictionDataSchema = z
 export type CVRestrictionData = z.infer<typeof cVRestrictionDataSchema>;
 
 /**
- * Schema for list of CVRestrictionData
- *
- * Provides list of restrictions for commercial vehicles. Coverage Area: Statewide.
- */
-export const cVRestrictionDataListSchema = z
-  .array(cVRestrictionDataSchema)
-  .describe(
-    "Provides list of restrictions for commercial vehicles. Coverage Area: Statewide."
-  );
-
-export type CVRestrictionDataList = z.infer<typeof cVRestrictionDataListSchema>;
-
-/**
  * Schema for CVRestrictionDataWithId - extends CVRestrictionData with a unique identifier
  *
  * Provides list of restrictions for commercial vehicles. Coverage Area: Statewide.
@@ -170,21 +157,6 @@ export const cVRestrictionDataWithIdSchema = cVRestrictionDataSchema
 
 export type CVRestrictionDataWithId = z.infer<
   typeof cVRestrictionDataWithIdSchema
->;
-
-/**
- * Schema for list of CVRestrictionDataWithId
- *
- * Provides list of restrictions for commercial vehicles. Coverage Area: Statewide.
- */
-export const cVRestrictionDataWithIdListSchema = z
-  .array(cVRestrictionDataWithIdSchema)
-  .describe(
-    "Provides list of restrictions for commercial vehicles. Coverage Area: Statewide."
-  );
-
-export type CVRestrictionDataWithIdList = z.infer<
-  typeof cVRestrictionDataWithIdListSchema
 >;
 
 // Re-export shared types

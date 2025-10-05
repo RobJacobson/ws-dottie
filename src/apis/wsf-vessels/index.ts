@@ -23,11 +23,10 @@ export type {
 // Export all output types
 export type {
   VesselAccommodations,
-  VesselAccommodationsList,
   VesselBasic,
-  VesselBasicDetailsList,
   VesselHistoryResponse,
   VesselLocations,
   VesselStats,
   VesselsCacheFlushDate,
+  VesselVerbose,
 } from "./original/outputSchemas.original";

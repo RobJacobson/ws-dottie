@@ -76,19 +76,6 @@ export const tollRateSchema = z
 export type TollRate = z.infer<typeof tollRateSchema>;
 
 /**
- * Schema for TollRatesList - the main response list
- *
- * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
- */
-export const tollRatesListSchema = z
-  .array(tollRateSchema)
-  .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
-  );
-
-export type TollRatesList = z.infer<typeof tollRatesListSchema>;
-
-/**
  * Schema for trip rate information
  *
  * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
@@ -111,19 +98,6 @@ export const tripRateSchema = z
 export type TripRate = z.infer<typeof tripRateSchema>;
 
 /**
- * Schema for TripRatesList - list of trip rates
- *
- * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
- */
-export const tripRatesListSchema = z
-  .array(tripRateSchema)
-  .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
-  );
-
-export type TripRatesList = z.infer<typeof tripRatesListSchema>;
-
-/**
  * Schema for toll trips container
  *
  * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
@@ -135,26 +109,13 @@ export const tollTripsRatesSchema = z
       "Last time the toll trips were updated."
     ),
     /** List of trip rates. */
-    Trips: tripRatesListSchema.nullable().describe("List of trip rates."),
+    Trips: z.array(tripRateSchema).nullable().describe("List of trip rates."),
     /** Version number of the toll trips data. */
     Version: z.int().describe("Version number of the toll trips data."),
   })
   .describe("Schema for toll trips container");
 
 export type TollTripsRates = z.infer<typeof tollTripsRatesSchema>;
-
-/**
- * Schema for TollTripsList - list of toll trips
- *
- * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
- */
-export const tollTripsRatesListSchema = z
-  .array(tollTripsRatesSchema)
-  .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
-  );
-
-export type TollTripsRatesList = z.infer<typeof tollTripsRatesListSchema>;
 
 /**
  * Schema for toll trip information
@@ -205,19 +166,6 @@ export const tollTripInfoSchema = z
   .describe("Schema for toll trip information");
 
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
-
-/**
- * Schema for TollTripInfoList - list of toll trip information
- *
- * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
- */
-export const tollTripInfoListSchema = z
-  .array(tollTripInfoSchema)
-  .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
-  );
-
-export type TollTripInfoList = z.infer<typeof tollTripInfoListSchema>;
 
 /**
  * Schema for toll trip version information

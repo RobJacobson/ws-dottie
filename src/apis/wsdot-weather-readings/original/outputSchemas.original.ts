@@ -3,94 +3,6 @@ import { z } from "zod";
 import { zWsdotDate } from "@/apis/shared";
 
 /**
- * WeatherInfo schema
- *
- * Current information from a weather station.
- */
-export const weatherInfoSchema = z
-  .object({
-    /** The force per unit area exerted by the atmosphere in millibars. This reading is not adjusted for site elevation. */
-    BarometricPressure: z
-      .number()
-      .nullable()
-      .describe(
-        "The force per unit area exerted by the atmosphere in millibars. This reading is not adjusted for site elevation."
-      ),
-    /** Latitude of station. */
-    Latitude: z.number().describe("Latitude of station."),
-    /** Longitude of station. */
-    Longitude: z.number().describe("Longitude of station."),
-    /** Precipitation in inches. */
-    PrecipitationInInches: z
-      .number()
-      .nullable()
-      .describe("Precipitation in inches."),
-    /** Date and Time reading was taken. */
-    ReadingTime: zWsdotDate().describe("Date and Time reading was taken."),
-    /**
-     * Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture.
-     */
-    RelativeHumidity: z
-      .number()
-      .nullable()
-      .describe(
-        "Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture."
-      ),
-    /** Sky coverage. */
-    SkyCoverage: z.string().nullable().describe("Sky coverage."),
-    /** Station ID. */
-    StationID: z.int().describe("Station ID."),
-    /** WSDOT assigned name. */
-    StationName: z.string().nullable().describe("WSDOT assigned name."),
-    /** Temperature in Fahrenheit. */
-    TemperatureInFahrenheit: z
-      .number()
-      .nullable()
-      .describe("Temperature in Fahrenheit."),
-    /**
-     * Average distance that you can see, both day and night, computed every three minutes in meters.
-     */
-    Visibility: z
-      .int()
-      .nullable()
-      .describe(
-        "Average distance that you can see, both day and night, computed every three minutes in meters."
-      ),
-    /** Wind direction. */
-    WindDirection: z.number().nullable().describe("Wind direction."),
-    /** Wind direction cardinal. */
-    WindDirectionCardinal: z
-      .string()
-      .nullable()
-      .describe("Wind direction cardinal."),
-    /** Wind gust speed in MPH. */
-    WindGustSpeedInMPH: z
-      .number()
-      .nullable()
-      .describe("Wind gust speed in MPH."),
-    /** Wind speed in MPH. */
-    WindSpeedInMPH: z.number().nullable().describe("Wind speed in MPH."),
-  })
-  .describe("Current information from a weather station.");
-
-export type WeatherInfo = z.infer<typeof weatherInfoSchema>;
-
-/**
- * WeatherInformation schema
- *
- * Provides current information from weather stations. Coverage Area: Statewide.
- */
-export const weatherInformationListSchema = z
-  .array(weatherInfoSchema)
-  .describe(
-    "Provides current information from weather stations. Coverage Area: Statewide."
-  );
-
-export type WeatherInformationList = z.infer<
-  typeof weatherInformationListSchema
->;
-
-/**
  * ScanwebSurfaceMeasurements schema
  *
  * Provides current information from weather stations. Coverage Area: Statewide.
@@ -125,19 +37,6 @@ export type ScanwebSurfaceMeasurements = z.infer<
 >;
 
 /**
- * Scanweb Surface Measurements List Schema
- *
- * Provides current information from weather stations. Coverage Area: Statewide.
- */
-export const scanwebSurfaceMeasurementsListSchema = z
-  .array(scanwebSurfaceMeasurementsSchema)
-  .describe("Scanweb Surface Measurements List Schema");
-
-export type ScanwebSurfaceMeasurementsList = z.infer<
-  typeof scanwebSurfaceMeasurementsListSchema
->;
-
-/**
  * ScanwebSubSurfaceMeasurements schema
  *
  * Provides current information from weather stations. Coverage Area: Statewide.
@@ -156,19 +55,6 @@ const scanwebSubSurfaceMeasurementsSchema = z
 
 export type ScanwebSubSurfaceMeasurements = z.infer<
   typeof scanwebSubSurfaceMeasurementsSchema
->;
-
-/**
- * Scanweb Sub Surface Measurements List Schema
- *
- * Provides current information from weather stations. Coverage Area: Statewide.
- */
-export const scanwebSubSurfaceMeasurementsListSchema = z
-  .array(scanwebSubSurfaceMeasurementsSchema)
-  .describe("Scanweb Sub Surface Measurements List Schema");
-
-export type ScanwebSubSurfaceMeasurementsList = z.infer<
-  typeof scanwebSubSurfaceMeasurementsListSchema
 >;
 
 /**
@@ -333,63 +219,16 @@ export const weatherReadingSchema = z
         "The depth of snow on representative areas other than the highway pavement, avoiding drifts and plowed areas in centimeters."
       ),
     /** Surface measurements. */
-    SurfaceMeasurements: scanwebSurfaceMeasurementsListSchema
+    SurfaceMeasurements: z
+      .array(scanwebSurfaceMeasurementsSchema)
       .nullable()
       .describe("Surface measurements."),
     /** Sub-surface measurements. */
-    SubSurfaceMeasurements: scanwebSubSurfaceMeasurementsListSchema
+    SubSurfaceMeasurements: z
+      .array(scanwebSubSurfaceMeasurementsSchema)
       .nullable()
       .describe("Sub-surface measurements."),
   })
   .describe("Information from a weather station.");
 
 export type WeatherReading = z.infer<typeof weatherReadingSchema>;
-
-/**
- * WeatherReadingsList schema
- *
- * Provides current information from weather stations. Coverage Area: Statewide.
- */
-export const weatherReadingsListSchema = z
-  .array(weatherReadingSchema)
-  .describe(
-    "Provides current information from weather stations. Coverage Area: Statewide."
-  );
-
-export type WeatherReadingsList = z.infer<typeof weatherReadingsListSchema>;
-
-/**
- * WeatherStationData schema
- *
- * Provides current information from weather stations. Coverage Area: Statewide.
- */
-export const weatherStationDataSchema = z
-  .object({
-    /** Latitude of station. */
-    Latitude: z.number().describe("Latitude of station."),
-    /** Longitude of station. */
-    Longitude: z.number().describe("Longitude of station."),
-    /** Identifier of weather station. */
-    StationCode: z.int().describe("Identifier of weather station."),
-    /** Common name assigned to weather station. */
-    StationName: z
-      .string()
-      .nullable()
-      .describe("Common name assigned to weather station."),
-  })
-  .describe("Contains information about weather stations.");
-
-export type WeatherStationData = z.infer<typeof weatherStationDataSchema>;
-
-/**
- * WeatherStationsList schema
- *
- * Provides current information from weather stations. Coverage Area: Statewide.
- */
-export const weatherStationsListSchema = z
-  .array(weatherStationDataSchema)
-  .describe(
-    "Provides current information from weather stations. Coverage Area: Statewide."
-  );
-
-export type WeatherStationsList = z.infer<typeof weatherStationsListSchema>;

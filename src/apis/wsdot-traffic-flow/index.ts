@@ -15,7 +15,4 @@ export type {
 } from "./original/inputSchemas.original";
 
 // Export all output types
-export type {
-  FlowData,
-  FlowDataList,
-} from "./original/outputSchemas.original";
+export type { FlowData } from "./original/outputSchemas.original";

@@ -16,6 +16,6 @@ export type {
 
 // Export all output types
 export type {
-  CVRestrictionDataList,
-  CVRestrictionDataWithIdList,
+  CVRestrictionData,
+  CVRestrictionDataWithId,
 } from "./original/outputSchemas.original";

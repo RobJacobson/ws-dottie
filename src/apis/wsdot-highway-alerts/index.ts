@@ -22,6 +22,5 @@ export type {
 // Export all output types
 export type {
   Alert,
-  AlertsList,
-  AreasList,
+  Area,
 } from "./original/outputSchemas.original";

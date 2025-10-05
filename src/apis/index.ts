@@ -37,8 +37,12 @@ export * from "./wsdot-traffic-flow";
 // Travel Times
 export * from "./wsdot-travel-times";
 
-// Weather
-export * from "./wsdot-weather";
+// Weather Information
+export * from "./wsdot-weather-information";
+// Weather Readings
+export * from "./wsdot-weather-readings";
+// Weather Stations
+export * from "./wsdot-weather-stations";
 
 // ============================================================================
 // WSF APIs

@@ -68,17 +68,6 @@ export const terminalResponseSchema = terminalBaseSchema;
 export type TerminalResponse = z.infer<typeof terminalResponseSchema>;
 
 /**
- * List of terminal responses schema
- */
-export const terminalResponsesListSchema = z
-  .array(terminalResponseSchema)
-  .describe(
-    "This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type TerminalResponseList = z.infer<typeof terminalResponsesListSchema>;
-
-/**
  * Terminal combo response schema for GetTerminalComboDetail endpoint
  *
  * This operation describes what fares are collected for a given departing terminal, arriving terminal and trip date. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
@@ -153,19 +142,6 @@ export type TerminalComboVerboseResponse = z.infer<
 >;
 
 /**
- * List of terminal combo verbose responses schema
- */
-export const terminalComboVerboseResponsesListSchema = z
-  .array(terminalComboVerboseResponseSchema)
-  .describe(
-    "This operation retrieves fare collection descriptions for all terminal combinations available on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type TerminalComboVerboseResponseList = z.infer<
-  typeof terminalComboVerboseResponsesListSchema
->;
-
-/**
  * Line item response schema used by multiple endpoints
  *
  * This operation retrieves fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
@@ -197,30 +173,6 @@ export const lineItemResponseSchema = z.object({
 export type LineItemResponse = z.infer<typeof lineItemResponseSchema>;
 
 /**
- * List of line item responses schema
- */
-export const lineItemResponsesListSchema = z
-  .array(lineItemResponseSchema)
-  .describe(
-    "This operation retrieves fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type LineItemResponseList = z.infer<typeof lineItemResponsesListSchema>;
-
-/**
- * List of lists of line item responses schema
- */
-export const lineItemResponsesListListSchema = z
-  .array(lineItemResponsesListSchema)
-  .describe(
-    "This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type LineItemResponseListList = z.infer<
-  typeof lineItemResponsesListListSchema
->;
-
-/**
  * Line item cross-reference schema for GetFareLineItemsVerboseDetail endpoint
  *
  * This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
@@ -244,32 +196,25 @@ export const lineItemXrefSchema = z
 export type LineItemXref = z.infer<typeof lineItemXrefSchema>;
 
 /**
- * List of line item cross-references schema
- */
-export const lineItemXrefsListSchema = z
-  .array(lineItemXrefSchema)
-  .describe(
-    "This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type LineItemXrefList = z.infer<typeof lineItemXrefsListSchema>;
-
-/**
  * Line item verbose response schema for GetFareLineItemsVerboseDetail endpoint
  *
  * This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
 export const lineItemVerboseResponseSchema = z
   .object({
-    TerminalComboVerbose: terminalComboVerboseResponsesListSchema
+    TerminalComboVerbose: z
+      .array(terminalComboVerboseResponseSchema)
       .optional()
       .describe("Array of terminal combination verbose responses."),
-    LineItemLookup: lineItemXrefsListSchema
+    LineItemLookup: z
+      .array(lineItemXrefSchema)
       .optional()
       .describe("Array of line item cross-reference responses."),
-    LineItems: lineItemResponsesListListSchema
+    LineItems: z
+      .array(z.array(lineItemResponseSchema))
       .optional()
       .describe("All one-way fare line items associated with the trip date."),
-    RoundTripLineItems: lineItemResponsesListListSchema
+    RoundTripLineItems: z
+      .array(z.array(lineItemResponseSchema))
       .optional()
       .describe("All round trip line items associated with the trip date."),
   })
@@ -319,16 +264,3 @@ export const fareTotalResponseSchema = z
   );
 
 export type FareTotalResponse = z.infer<typeof fareTotalResponseSchema>;
-
-/**
- * List of fare total responses schema
- */
-export const fareTotalResponsesListSchema = z
-  .array(fareTotalResponseSchema)
-  .describe(
-    "This operation totals a set of fares & associated quantities for either a round trip or one-way journey, given a departing terminal, arriving terminal and trip date. Fare line item ID is a comma delimited array of line items you'd like to have totalled. Use `/farelineitems` to find valid fare line item ID values. Quantity is also a comma delimited array. Quantity values must be greater than or equal to zero. The same index in the fare line item ID and quantity input arrays must associate a fare with a quantity. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
-
-export type FareTotalResponseList = z.infer<
-  typeof fareTotalResponsesListSchema
->;

@@ -20,16 +20,3 @@ export const borderCrossingDataSchema = z.object({
 });
 
 export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
-
-/**
- * Schema for BorderCrossingDataList - the main response list
- *
- * Information about Canadian border crossing wait times.
- */
-export const borderCrossingDataListSchema = z
-  .array(borderCrossingDataSchema)
-  .describe("Information about Canadian border crossing wait times.");
-
-export type BorderCrossingDataList = z.infer<
-  typeof borderCrossingDataListSchema
->;

@@ -1,26 +1,31 @@
-import type { ApiDefinition } from "@/apis/types";
-import { input, output } from "./schemas";
+import { z } from "zod";
+import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
+import * as i from "./original/inputSchemas.original";
+import * as o from "./original/outputSchemas.original";
 
 export const wsdotTravelTimesApi: ApiDefinition = {
   name: "wsdot-travel-times",
   baseUrl:
     "http://www.wsdot.wa.gov/traffic/api/traveltimes/traveltimesrest.svc",
   endpoints: [
+    /**
+     * TravelTimeRoute response
+     */
     {
       function: "getTravelTime",
       endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
-      inputSchema: input.getTravelTimeSchema,
-      outputSchema: output.travelTimeRouteSchema,
+      inputSchema: i.getTravelTimeSchema,
+      outputSchema: o.travelTimeRouteSchema,
       sampleParams: { TravelTimeID: 1 },
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
     {
       function: "getTravelTimes",
       endpoint: "/getTravelTimesAsJson",
-      inputSchema: input.getTravelTimesSchema,
-      outputSchema: output.travelTimeRoutesListSchema,
+      inputSchema: i.getTravelTimesSchema,
+      outputSchema: z.array(o.travelTimeRouteSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    },
+    } satisfies EndpointDefinition<i.GetTravelTimesInput, o.TravelTimeRoute[]>,
   ],
 };

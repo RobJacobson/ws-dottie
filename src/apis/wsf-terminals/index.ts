@@ -30,18 +30,11 @@ export type {
 // Export all output types
 export type {
   TerminalBasic,
-  TerminalBasicDetailsList,
   TerminalBulletin,
-  TerminalBulletinsList,
   TerminalLocation,
-  TerminalLocationsList,
   TerminalSailingSpace,
-  TerminalSailingSpacesList,
   TerminalsCacheFlushDate,
   TerminalTransportationOption,
-  TerminalTransportationOptionsList,
   TerminalVerbose,
-  TerminalVerboseList as TerminalVerboseDetailsList,
   TerminalWaitTime,
-  TerminalWaitTimesList,
 } from "./original/outputSchemas.original";

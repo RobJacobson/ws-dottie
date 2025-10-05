@@ -70,16 +70,5 @@ export const cameraSchema = z
 
 export type Camera = z.infer<typeof cameraSchema>;
 
-/**
- * Schema for CamerasList - represents a list of traffic cameras
- *
- * Provides list of traffic cameras. Coverage Area: Statewide.
- */
-export const camerasListSchema = z
-  .array(cameraSchema)
-  .describe("Provides list of traffic cameras. Coverage Area: Statewide.");
-
-export type CameraList = z.infer<typeof camerasListSchema>;
-
 // Export types from shared
 export type { RoadwayLocation } from "@/apis/shared";
