@@ -1,0 +1,172 @@
+# Camera Class Reference
+
+[Highway Cameras](group___highway_cameras.html)
+
+| Column | Column | Column |
+| --- | --- | --- |
+ | Properties |  | 
+ | int | [CameraID](class_camera.html#a90e5c2d4c2b8ed913d0d6398cdb207a5) `[get, set]` | 
+ |  |  | 
+ | string | [Region](class_camera.html#a7750604df47c1f71ee0fa3811fdea1a3) `[get, set]` | 
+ |  |  | 
+ | [RoadwayLocation](class_roadway_location.html) | [CameraLocation](class_camera.html#a747ebd7b5ec5fab9ed255e7d1651a901) `[get, set]` | 
+ |  |  | 
+ | double | [DisplayLatitude](class_camera.html#a7f15d9efb20d6e729f1383f14793e1a2) `[get, set]` | 
+ |  |  | 
+ | double | [DisplayLongitude](class_camera.html#ad232f98cb41c73e4e851efec9844ca85) `[get, set]` | 
+ |  |  | 
+ | string | [Title](class_camera.html#a81418cdda6b99f8fee3e070a8a83bc38) `[get, set]` | 
+ |  |  | 
+ | string | [Description](class_camera.html#a2ed51ae12e93e9753a87f1b692962089) `[get, set]` | 
+ |  |  | 
+ | string | [ImageURL](class_camera.html#a06f14dcec9351af42fdc8017b0ab23c6) `[get, set]` | 
+ |  |  | 
+ | string | [CameraOwner](class_camera.html#ac70f779179bf718b4f6a6a9c9dcf91cf) `[get, set]` | 
+ |  |  | 
+ | string | [OwnerURL](class_camera.html#a1b542e4baef06afa2952e250e7fbe163) `[get, set]` | 
+ |  |  | 
+ | int | [ImageWidth](class_camera.html#adda9aeb169b256e1ea6c7538e0c2f2d1) `[get, set]` | 
+ |  |  | 
+ | int | [ImageHeight](class_camera.html#a3d42eca518fff3d073d6d4880696317e) `[get, set]` | 
+ |  |  | 
+ | bool | [IsActive](class_camera.html#a98b6a6969e7a74ce9079a5e7b8f0f00f) `[get, set]` | 
+ |  |  | 
+ | int | [SortOrder](class_camera.html#aa696efeffbe12dd5dd65b606043f7fc9) `[get, set]` | 
+ |  |  | 
+
+
+## Detailed Description
+
+Information about traffic camera.
+
+## Property Documentation
+
+## [◆](#a90e5c2d4c2b8ed913d0d6398cdb207a5)CameraID
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | int Camera.CameraID |  | getset | 
+
+
+Unique identifier for the camera
+
+## [◆](#a747ebd7b5ec5fab9ed255e7d1651a901)CameraLocation
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | [RoadwayLocation](class_roadway_location.html) Camera.CameraLocation |  | getset | 
+
+
+Structure identifying where the camera is located
+
+## [◆](#ac70f779179bf718b4f6a6a9c9dcf91cf)CameraOwner
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string Camera.CameraOwner |  | getset | 
+
+
+Owner of camera when not WSDOT
+
+## [◆](#a2ed51ae12e93e9753a87f1b692962089)Description
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string Camera.Description |  | getset | 
+
+
+Short description for the camera
+
+## [◆](#a7f15d9efb20d6e729f1383f14793e1a2)DisplayLatitude
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | double Camera.DisplayLatitude |  | getset | 
+
+
+Latitude of where to display the camera on a map
+
+## [◆](#ad232f98cb41c73e4e851efec9844ca85)DisplayLongitude
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | double Camera.DisplayLongitude |  | getset | 
+
+
+Longitude of where to display the camera on a map
+
+## [◆](#a3d42eca518fff3d073d6d4880696317e)ImageHeight
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | int Camera.ImageHeight |  | getset | 
+
+
+Pixel height of the image
+
+## [◆](#a06f14dcec9351af42fdc8017b0ab23c6)ImageURL
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string Camera.ImageURL |  | getset | 
+
+
+Stored location of the camera image
+
+## [◆](#adda9aeb169b256e1ea6c7538e0c2f2d1)ImageWidth
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | int Camera.ImageWidth |  | getset | 
+
+
+Pixel width of the image
+
+## [◆](#a98b6a6969e7a74ce9079a5e7b8f0f00f)IsActive
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | bool Camera.IsActive |  | getset | 
+
+
+Indicator if the camera is still actively being updated
+
+## [◆](#a1b542e4baef06afa2952e250e7fbe163)OwnerURL
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string Camera.OwnerURL |  | getset | 
+
+
+Website for camera owner when not WSDOT
+
+## [◆](#a7750604df47c1f71ee0fa3811fdea1a3)Region
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string Camera.Region |  | getset | 
+
+
+WSDOT region which owns the camera
+
+## [◆](#aa696efeffbe12dd5dd65b606043f7fc9)SortOrder
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | int Camera.SortOrder |  | getset | 
+
+
+When more than one camera is located in the same area this is order of display
+
+## [◆](#a81418cdda6b99f8fee3e070a8a83bc38)Title
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string Camera.Title |  | getset | 
+
+
+Title for the camera
+
+* [Camera](class_camera.html)
+* Generated by [![doxygen](doxygen.svg)](https://www.doxygen.org/index.html) 1.9.5
+
