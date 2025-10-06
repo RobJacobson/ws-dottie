@@ -6,14 +6,14 @@ import * as o from "./original/outputSchemas.original";
 export const wsdotBorderCrossingsApi: ApiDefinition = {
   name: "wsdot-border-crossings",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/bordercrossings/bordercrossingsrest.svc",
+    "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc",
   endpoints: [
     /**
      * BorderCrossingData response
      */
     {
       function: "getBorderCrossings",
-      endpoint: "/getBorderCrossingsAsJson",
+      endpoint: "/GetBorderCrossingsAsJson",
       inputSchema: i.getBorderCrossingsSchema,
       outputSchema: z.array(o.borderCrossingDataSchema),
       sampleParams: {},

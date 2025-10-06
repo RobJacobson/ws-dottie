@@ -6,7 +6,7 @@ import * as o from "./original/outputSchemas.original";
 export const wsdotWeatherStationsApi: ApiDefinition = {
   name: "wsdot-weather-stations",
   baseUrl:
-    "http://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc",
+    "https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc",
   endpoints: [
     /**
      * WeatherStation response
