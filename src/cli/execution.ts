@@ -33,11 +33,15 @@ export const executeApiRequest = async <I, O>(
   const validate = options.validation !== false;
   const fetchMode = (options.jsonp ?? false) ? "jsonp" : "native";
 
+  // Use "none" logging mode during tests to avoid interfering with JSON parsing
+  // In normal usage, this will be overridden by the CLI options
+  const logMode = process.env.NODE_ENV === "test" ? "none" : "info";
+
   return fetchDottie({
     endpoint,
     params,
     fetchMode,
-    logMode: "none",
+    logMode,
     validate,
   });
 };
