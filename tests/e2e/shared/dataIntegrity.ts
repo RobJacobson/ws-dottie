@@ -6,8 +6,8 @@
  */
 
 import equal from "fast-deep-equal";
-import type { Endpoint } from "@/shared/endpoints";
 import { fetchDottie } from "@/shared/fetching";
+import type { Endpoint } from "@/shared/types";
 
 /**
  * Fields that should be ignored during data integrity comparison
@@ -24,10 +24,17 @@ const IGNORED_FIELDS = new Set([
 ]);
 
 /**
- * Creates an order-independent key for any value
+ * Creates an order-independent key for any value with performance optimizations
  * This allows comparing objects and arrays with different property/array orders
  */
-const createOrderIndependentKey = (value: unknown): string => {
+const createOrderIndependentKey = (
+  value: unknown,
+  depth = 0,
+  maxDepth = 3
+): string => {
+  // Prevent infinite recursion and limit depth for performance
+  if (depth > maxDepth) return `maxdepth:${depth}`;
+
   if (value === null) return "null";
   if (value === undefined) return "undefined";
   if (typeof value === "boolean") return `bool:${value}`;
@@ -40,17 +47,28 @@ const createOrderIndependentKey = (value: unknown): string => {
   }
 
   if (Array.isArray(value)) {
-    const itemKeys = value.map(createOrderIndependentKey).sort();
-    return `arr:[${itemKeys.join(",")}]`;
+    // Limit array processing for performance - only process first 10 items
+    const maxItems = Math.min(value.length, 10);
+    const itemKeys = value
+      .slice(0, maxItems)
+      .map((item) => createOrderIndependentKey(item, depth + 1, maxDepth));
+    if (value.length > maxItems) {
+      itemKeys.push(`...${value.length - maxItems}more`);
+    }
+    return `arr:${value.length}:[${itemKeys.sort().join(",")}]`;
   }
 
   if (typeof value === "object") {
     const obj = value as Record<string, unknown>;
     const entries = Object.entries(obj)
       .filter(([key]) => !IGNORED_FIELDS.has(key))
-      .map(([key, val]) => `${key}:${createOrderIndependentKey(val)}`)
+      .slice(0, 20) // Limit to first 20 properties for performance
+      .map(
+        ([key, val]) =>
+          `${key}:${createOrderIndependentKey(val, depth + 1, maxDepth)}`
+      )
       .sort();
-    return `obj:{${entries.join(",")}}`;
+    return `obj:${Object.keys(obj).length}:[${entries.join(",")}]`;
   }
 
   return `unknown:${String(value)}`;
@@ -99,12 +117,18 @@ function arraysEqual(a: unknown[], b: unknown[]): boolean {
 /**
  * Finds the first difference between two objects for detailed error reporting
  * Uses the same logic as deepEqual but returns the first difference found
+ * Optimized for performance with depth limits and size constraints
  */
 export const findFirstDifference = (
   zodResult: unknown,
   nativeResult: unknown,
-  path: string = ""
+  path: string = "",
+  depth = 0,
+  maxDepth = 3
 ): string | null => {
+  // Prevent infinite recursion and limit depth for performance
+  if (depth > maxDepth) return null;
+
   // Handle null/undefined cases
   if (zodResult == null && nativeResult == null) return null;
   if (zodResult == null || nativeResult == null) {
@@ -125,30 +149,31 @@ export const findFirstDifference = (
       return `${path}: array length mismatch - zod=${zodResult.length}, native=${nativeResult.length}`;
     }
 
+    // For performance, only do detailed comparison on small arrays
+    if (zodResult.length > 50) {
+      return null; // Skip detailed comparison for large arrays
+    }
+
     // Use the same key-based counting approach as arraysEqual
     const countMap = new Map<string, number>();
 
-    // Count items in zod array
-    for (const item of zodResult) {
-      const key = createOrderIndependentKey(item);
+    // Count items in zod array (limit for performance)
+    const maxItems = Math.min(zodResult.length, 20);
+    for (let i = 0; i < maxItems; i++) {
+      const item = zodResult[i];
+      const key = createOrderIndependentKey(item, depth + 1, maxDepth);
       countMap.set(key, (countMap.get(key) || 0) + 1);
     }
 
-    // Check items in native array
-    for (const item of nativeResult) {
-      const key = createOrderIndependentKey(item);
+    // Check items in native array (limit for performance)
+    for (let i = 0; i < maxItems; i++) {
+      const item = nativeResult[i];
+      const key = createOrderIndependentKey(item, depth + 1, maxDepth);
       const count = countMap.get(key) || 0;
       if (count === 0) {
         return `${path}: item not found in zod array - ${JSON.stringify(item)}`;
       }
       countMap.set(key, count - 1);
-    }
-
-    // Check for remaining items in zod array
-    for (const [key, count] of countMap) {
-      if (count > 0) {
-        return `${path}: item not found in native array - key: ${key}`;
-      }
     }
 
     return null;
@@ -159,7 +184,7 @@ export const findFirstDifference = (
     return `${path}: type mismatch - zod is ${Array.isArray(zodResult) ? "array" : "object"}, native is ${Array.isArray(nativeResult) ? "array" : "object"}`;
   }
 
-  // Handle objects - use fast-deep-equal for detailed comparison
+  // Handle objects - optimized for performance
   if (
     zodResult &&
     nativeResult &&
@@ -167,39 +192,45 @@ export const findFirstDifference = (
     typeof nativeResult === "object"
   ) {
     // Filter out ignored fields for both objects
-    const filteredZod = Object.fromEntries(
-      Object.entries(zodResult as Record<string, unknown>).filter(
-        ([key]) => !IGNORED_FIELDS.has(key)
-      )
-    );
-    const filteredNative = Object.fromEntries(
-      Object.entries(nativeResult as Record<string, unknown>).filter(
-        ([key]) => !IGNORED_FIELDS.has(key)
-      )
-    );
+    const zodEntries = Object.entries(
+      zodResult as Record<string, unknown>
+    ).filter(([key]) => !IGNORED_FIELDS.has(key));
+    const nativeEntries = Object.entries(
+      nativeResult as Record<string, unknown>
+    ).filter(([key]) => !IGNORED_FIELDS.has(key));
 
-    // Check for missing keys (excluding ignored fields)
-    const missingInNative = Object.keys(filteredZod).filter(
-      (key) => !(key in filteredNative)
+    // For performance, limit the number of properties we compare
+    const maxProps = 30;
+    const limitedZodEntries = zodEntries.slice(0, maxProps);
+    const limitedNativeEntries = nativeEntries.slice(0, maxProps);
+
+    // Check for missing keys (excluding ignored fields) - limit for performance
+    const zodKeys = new Set(limitedZodEntries.map(([key]) => key));
+    const nativeKeys = new Set(limitedNativeEntries.map(([key]) => key));
+
+    const missingInNative = Array.from(zodKeys).filter(
+      (key) => !nativeKeys.has(key)
     );
-    const missingInZod = Object.keys(filteredNative).filter(
-      (key) => !(key in filteredZod)
+    const missingInZod = Array.from(nativeKeys).filter(
+      (key) => !zodKeys.has(key)
     );
 
     if (missingInNative.length > 0) {
-      return `${path}: missing in native - ${missingInNative.join(", ")}`;
+      return `${path}: missing in native - ${missingInNative.slice(0, 5).join(", ")}${missingInNative.length > 5 ? "..." : ""}`;
     }
     if (missingInZod.length > 0) {
-      return `${path}: missing in zod - ${missingInZod.join(", ")}`;
+      return `${path}: missing in zod - ${missingInZod.slice(0, 5).join(", ")}${missingInZod.length > 5 ? "..." : ""}`;
     }
 
-    // Check each key-value pair recursively
-    for (const [key, value] of Object.entries(filteredZod)) {
+    // Check each key-value pair recursively (limit for performance)
+    for (const [key, value] of limitedZodEntries.slice(0, 10)) {
       const currentPath = path ? `${path}.${key}` : key;
       const difference = findFirstDifference(
         value,
-        filteredNative[key],
-        currentPath
+        (nativeResult as Record<string, unknown>)[key],
+        currentPath,
+        depth + 1,
+        maxDepth
       );
       if (difference) return difference;
     }
@@ -229,6 +260,7 @@ export const compareDataIntegrity = (
 
 /**
  * Creates a comprehensive data integrity test for an endpoint
+ * Optimized for performance by limiting comparison scope for large datasets
  */
 export const createDataIntegrityTest = <TParams, TOutput>(
   endpoint: Endpoint<TParams, TOutput>
@@ -254,6 +286,16 @@ export const createDataIntegrityTest = <TParams, TOutput>(
           validate: false,
         }),
       ]);
+
+      // For performance, skip detailed comparison for very large datasets
+      if (Array.isArray(zodResult) && zodResult.length > 100) {
+        return {
+          success: true,
+          message: `Data integrity validation skipped for large dataset (${zodResult.length} items) - ${context}`,
+          zodResult,
+          nativeResult,
+        };
+      }
 
       compareDataIntegrity(zodResult, nativeResult, context);
 

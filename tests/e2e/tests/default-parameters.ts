@@ -8,7 +8,7 @@
 
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
-import type { Endpoint } from "@/shared/endpoints";
+import type { Endpoint } from "@/shared/types";
 import { testLogger } from "../testLogger";
 
 const execAsync = promisify(exec);
@@ -36,11 +36,17 @@ async function testEndpointWithDefaultParams(
     testLogger.info(`Testing ${qualifiedFunctionName} with default parameters`);
 
     // Call fetch-dottie with --no-validation flag
-    const command = `npx fetch-dottie ${qualifiedFunctionName} --no-validation`;
+    const command = `node dist/cli/fetch-dottie.mjs -- ${qualifiedFunctionName} --no-validation`;
     const { stdout, stderr } = await execAsync(command, {
       cwd: process.cwd(),
       timeout: 30000, // 30 second timeout
       maxBuffer: 1024 * 1024 * 10, // 10MB buffer to handle large API responses
+      env: {
+        ...process.env,
+        WSDOT_ACCESS_TOKEN:
+          process.env.WSDOT_ACCESS_TOKEN ||
+          "9e61c697-3c2f-490e-af96-72d4e8ecbc7e",
+      },
     });
 
     if (stderr?.trim()) {
