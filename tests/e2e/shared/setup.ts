@@ -5,22 +5,18 @@
  * and filtering logic that is common across all test files.
  */
 
-import {
-  discoverEndpoints,
-  getAllEndpoints,
-  type EndpointsByApi,
-  type Endpoints,
-} from "@/shared/endpoints";
-import { testLogger } from "../testLogger";
+import { apis, endpoints } from "@/shared/endpoints";
+import type { Api, Endpoint } from "@/shared/types";
 import { getTargetModule, shouldTestSpecificModule } from "../testConfig";
+import { testLogger } from "../testLogger";
 
 /**
  * Result of test endpoint setup
  */
 export interface TestSetupResult {
-  discoveredEndpoints: EndpointsByApi;
-  allEndpoints: Endpoints;
-  filteredEndpoints: Endpoints;
+  discoveredEndpoints: Record<string, Endpoint<unknown, unknown>[]>;
+  allEndpoints: Endpoint<unknown, unknown>[];
+  filteredEndpoints: Endpoint<unknown, unknown>[];
   targetModule: string | null;
   apiNames: string[];
 }
@@ -30,9 +26,16 @@ export interface TestSetupResult {
  * This replaces the duplicated setup code in all test files
  */
 export async function setupTestEndpoints(): Promise<TestSetupResult> {
-  // Discover all endpoints (filtered by configuration)
-  const discoveredEndpoints = await discoverEndpoints();
-  const allEndpoints = await getAllEndpoints();
+  // Create discoveredEndpoints object from apis
+  const discoveredEndpoints = apis.reduce(
+    (acc, api) => {
+      acc[api.name] = api.endpoints;
+      return acc;
+    },
+    {} as Record<string, Endpoint<unknown, unknown>[]>
+  );
+
+  const allEndpoints = endpoints;
 
   // Check for module filtering via environment variable
   const targetModule = getTargetModule();

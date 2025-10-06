@@ -20,6 +20,8 @@ export default defineConfig({
       shuffle: false,
       hooks: "list",
     },
+    // Truncate large test outputs to prevent buffer overflow issues
+    outputTruncateLength: 10000, // 10KB limit for test output display
   },
   resolve: {
     alias: {

@@ -3,14 +3,20 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import { fetchAndValidateNative } from "@/shared/fetching";
+import { fetchDottie } from "@/shared/fetching";
 
 export async function runMissingParameters(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   try {
     const params = endpoint.sampleParams || {};
-    await fetchAndValidateNative(endpoint, params, "none");
+    await fetchDottie({
+      endpoint,
+      params,
+      fetchMode: "native",
+      logMode: "none",
+      validate: true,
+    });
     return {
       success: true,
       message: "Endpoint accepts provided/empty params",

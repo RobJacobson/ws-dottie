@@ -13,6 +13,7 @@ import { PARALLEL_TEST_TIMEOUT } from "./testConfig";
 import { testLogger } from "./testLogger";
 import { runDataIntegrity } from "./tests/data-integrity";
 import { runDataStructureConsistency } from "./tests/data-structure-consistency";
+import { runDefaultParameters } from "./tests/default-parameters";
 import { runInvalidParameters } from "./tests/invalid-parameters";
 import { runMissingParameters } from "./tests/missing-parameters";
 import { runParameterHandling } from "./tests/parameter-handling";
@@ -54,6 +55,20 @@ describe("E2E Test Orchestrator", () => {
 
       for (const endpoint of filtered) {
         describe(endpoint.functionName, () => {
+          it(
+            "default parameters",
+            async () => {
+              const r = await runDefaultParameters(
+                endpoint as Endpoint<unknown, unknown>
+              );
+              testLogger.info(
+                `${apiName}.${endpoint.functionName} default params: ${r.message}`
+              );
+              expect(r.success).toBe(true);
+            },
+            PARALLEL_TEST_TIMEOUT
+          );
+
           it(
             "schema validation",
             async () => {

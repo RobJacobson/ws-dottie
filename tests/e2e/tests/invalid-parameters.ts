@@ -3,7 +3,7 @@
  */
 
 import type { Endpoint } from "@/shared/endpoints";
-import { fetchAndValidateNative } from "@/shared/fetching";
+import { fetchDottie } from "@/shared/fetching";
 
 export async function runInvalidParameters(
   endpoint: Endpoint<unknown, unknown>
@@ -23,11 +23,16 @@ export async function runInvalidParameters(
     const invalidParams = {
       unexpectedParam: "not-expected",
     } as unknown as Record<string, unknown>;
-    await fetchAndValidateNative(
-      endpoint as unknown as Endpoint<Record<string, unknown>, unknown>,
-      invalidParams,
-      "none"
-    );
+    await fetchDottie({
+      endpoint: endpoint as unknown as Endpoint<
+        Record<string, unknown>,
+        unknown
+      >,
+      params: invalidParams,
+      fetchMode: "native",
+      logMode: "none",
+      validate: true,
+    });
     return {
       success: false,
       message: "No error thrown for unexpected parameters",
