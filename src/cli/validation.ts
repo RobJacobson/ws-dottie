@@ -6,7 +6,7 @@
  * Validation is handled by the fetching layer, not here.
  */
 
-import type { Endpoint } from "@/shared/endpoints";
+import type { Endpoint } from "@/shared/types";
 import type { CliParams } from "./types";
 
 /**

@@ -15,7 +15,7 @@
  */
 
 import pc from "picocolors";
-import { getAllEndpoints } from "@/shared/endpoints";
+import { endpoints } from "@/shared/endpoints";
 import type { ApiError } from "@/shared/fetching";
 import { isApiError } from "@/shared/fetching";
 import type { CliOptions } from "./types";
@@ -196,8 +196,8 @@ export const displayCollisionError = (
  * @param functionName - The function name that was not found
  */
 export const displayFunctionNotFound = (functionName: string): void => {
-  const endpoints = getAllEndpoints();
-  const availableFunctions = endpoints.map((ep) => ep.functionName);
+  const allEndpoints = endpoints;
+  const availableFunctions = allEndpoints.map((ep) => ep.functionName);
   console.error(pc.red(`❌ Function '${functionName}' not found`));
   console.error(pc.yellow("Available functions:"));
   availableFunctions.forEach((func) => {
@@ -395,7 +395,7 @@ export const generateHelpText = (
   _toolName: string,
   _examples: string[] = []
 ): string => {
-  const endpoints = getAllEndpoints();
+  const allEndpoints = endpoints;
   const functionList = endpoints
     .map((endpointDef) => {
       const functionName = endpointDef.functionName;

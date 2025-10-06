@@ -9,8 +9,8 @@
 
 import { Command } from "commander";
 import pc from "picocolors";
-import type { Endpoint } from "@/shared/endpoints";
-import { getAllEndpoints } from "@/shared/endpoints";
+import { endpoints } from "@/shared/endpoints";
+import type { Endpoint } from "@/shared/types";
 import { executeApiRequest, getStrategyDescription } from "./execution";
 import { CLI_CONSTANTS, type CliOptions, type CliParams } from "./types";
 import {
@@ -127,7 +127,7 @@ export const setupCli = (): void => {
  */
 const handleListOption = (consoleRestore: () => void): void => {
   consoleRestore();
-  const endpoints = getAllEndpoints();
+  const allEndpoints = endpoints;
   const functionList = endpoints
     .map((endpointDef) => {
       const { functionName, api } = endpointDef;
@@ -203,18 +203,18 @@ const findEndpoint = (
   consoleRestore: () => void
 ): Endpoint<unknown, unknown> => {
   const { api, endpoint: endpointName } = parseFunctionName(functionName);
-  const endpoints = getAllEndpoints();
+  const allEndpoints = endpoints;
 
   let endpoint: Endpoint<unknown, unknown> | undefined;
 
   if (api) {
     // Namespace specified - find exact match
-    endpoint = endpoints.find(
+    endpoint = allEndpoints.find(
       (ep) => ep.api === api && ep.functionName === endpointName
     );
   } else {
     // No namespace - check for collisions
-    const matchingEndpoints = endpoints.filter(
+    const matchingEndpoints = allEndpoints.filter(
       (ep) => ep.functionName === endpointName
     );
 

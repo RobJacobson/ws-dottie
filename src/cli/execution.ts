@@ -2,21 +2,20 @@
  * @fileoverview API Request Execution for WS-Dottie CLI
  *
  * This module handles the execution of API requests with different fetch strategies
- * based on CLI options. It provides a single function that selects the appropriate
- * fetch method based on the --jsonp and --no-validation flags.
+ * based on CLI options. It provides a single function that uses the new fetchDottie
+ * function with appropriate options based on the --jsonp and --no-validation flags.
  */
 
-import type { Endpoint } from "@/shared/endpoints";
-import type { FetchStrategy, ValidationStrategy } from "@/shared/fetching";
-import { fetch } from "@/shared/fetching/internal/fetch";
+import { fetchDottie } from "@/shared/fetching";
+import type { Endpoint } from "@/shared/types";
 import type { CliOptions } from "./types";
 
 /**
- * Executes API requests using the appropriate fetch strategy based on CLI flags
+ * Executes API requests using the new fetchDottie function with CLI options
  *
- * This function selects the appropriate fetch function based on the --jsonp and
- * --no-validation flags, providing a single interface that can handle all four
- * fetch strategies.
+ * This function uses the unified fetchDottie function with options derived from
+ * the --jsonp and --no-validation flags, providing a single interface that can
+ * handle all fetch strategies.
  *
  * @template I - The input parameters type for the endpoint
  * @template O - The output response type for the endpoint
@@ -30,13 +29,17 @@ export const executeApiRequest = async <I, O>(
   params: I,
   options: CliOptions
 ): Promise<unknown> => {
-  const fetchStrategy: FetchStrategy =
-    (options.jsonp ?? false) ? "jsonp" : "native";
   // Commander.js converts --no-validation to validation: false
-  const validationStrategy: ValidationStrategy =
-    options.validation !== false ? "zod" : "none";
+  const validate = options.validation !== false;
+  const fetchMode = (options.jsonp ?? false) ? "jsonp" : "native";
 
-  return fetch(endpoint, params, fetchStrategy, validationStrategy, "none");
+  return fetchDottie({
+    endpoint,
+    params,
+    fetchMode,
+    logMode: "none",
+    validate,
+  });
 };
 
 /**

@@ -6,8 +6,7 @@
  * between the four main fetch functions.
  */
 
-import type { Endpoint } from "@/shared/endpoints";
-import type { FetchStrategy, LoggingMode } from "@/shared/types";
+import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
 import { buildCompleteUrl } from "./buildUrl";
 import { createApiError } from "./handleError";
@@ -43,7 +42,7 @@ export const fetchCore = async <TInput = never, TOutput = unknown>(
 
   try {
     // 1. Build complete URL with parameters and API key
-    const completeUrl = buildCompleteUrl(endpoint.endpoint, params);
+    const completeUrl = buildCompleteUrl(endpoint.urlTemplate, params);
 
     // Log the fetching URL if needed
     if (logMode !== "none") {

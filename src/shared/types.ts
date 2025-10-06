@@ -4,7 +4,7 @@
  * Consolidated type definitions without over-engineering.
  */
 
-import type { Endpoint } from "./endpoints";
+import type { z } from "zod";
 
 // ============================================================================
 // CACHE STRATEGY TYPES
@@ -22,6 +22,55 @@ export type CacheStrategy =
   | "FREQUENT" // Frequently updated data (5-minute updates) - schedules, delays
   | "MODERATE" // Moderately updated data (hourly updates) - weather, conditions
   | "STATIC"; // Static data (daily updates) - terminals, vessels, routes
+
+// ============================================================================
+// ENDPOINT TYPES
+// ============================================================================
+
+/**
+ * Runtime endpoint interface with computed properties
+ *
+ * This interface defines the structure for runtime endpoint objects that are
+ * created from ApiDefinition and EndpointDefinition structures. It includes
+ * all necessary information for validation, caching, and URL generation.
+ */
+export interface Endpoint<I, O> {
+  /** API group name (e.g., "wsdot-bridge-clearances") */
+  api: string;
+  /** Function name (e.g., "getBridgeClearances") */
+  function: string;
+  /** Complete HTTP endpoint URL template */
+  endpoint: string;
+  /** Zod schema for input validation */
+  inputSchema: z.ZodSchema<I>;
+  /** Zod schema for output validation */
+  outputSchema: z.ZodSchema<O>;
+  /** Optional sample parameters for testing */
+  sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
+  /** Cache strategy */
+  cacheStrategy: CacheStrategy;
+  /** Function name (alias for function field) */
+  functionName: string;
+  /** Complete URL template with domain */
+  urlTemplate: string;
+  /** Computed unique identifier in format "api:function" for backward compatibility */
+  id: string;
+}
+
+/**
+ * Full API interface with computed endpoints
+ *
+ * This interface represents a complete API with all its endpoints converted
+ * to runtime Endpoint objects with computed properties.
+ */
+export interface Api {
+  /** The internal API name (e.g., "wsf-schedule") */
+  name: string;
+  /** The base URL for the API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
+  baseUrl: string;
+  /** Array of runtime endpoints with computed properties */
+  endpoints: Endpoint<unknown, unknown>[];
+}
 
 // ============================================================================
 // LOGGING TYPES

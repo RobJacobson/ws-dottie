@@ -43,7 +43,18 @@ export const buildCompleteUrl = <TInput = never>(
   endpoint: string,
   params?: TInput
 ): string => {
-  const baseUrl = configManager.getDomain();
+  // Check if endpoint is already a complete URL (contains protocol)
+  const isCompleteUrl =
+    endpoint.startsWith("http://") || endpoint.startsWith("https://");
+
+  let baseUrl: string;
+  if (isCompleteUrl) {
+    // If it's already a complete URL, use it as-is
+    baseUrl = "";
+  } else {
+    // Otherwise, use the configured domain
+    baseUrl = configManager.getDomain();
+  }
 
   // Replace template parameters in the endpoint string
   let processedEndpoint = endpoint;
@@ -72,7 +83,9 @@ export const buildCompleteUrl = <TInput = never>(
   processedEndpoint = processedEndpoint.replace(MALFORMED_QUERY_REGEX, "$1");
 
   // Construct the URL and inject API key
-  const url = new URL(processedEndpoint, baseUrl);
+  const url = baseUrl
+    ? new URL(processedEndpoint, baseUrl)
+    : new URL(processedEndpoint);
   const serviceType = getServiceType(url.toString());
   const apiKey = configManager.getApiKey();
 
@@ -85,63 +98,6 @@ export const buildCompleteUrl = <TInput = never>(
   }
 
   return url.toString();
-};
-
-/**
- * @deprecated Use buildCompleteUrl instead. This function will be removed in a future version.
- * @see buildCompleteUrl
- */
-export const buildUrlWithParams = (
-  endpoint: string,
-  params?: Record<string, unknown>
-): string => {
-  const baseUrl = configManager.getDomain();
-
-  // Replace template parameters in the endpoint string
-  let processedEndpoint = endpoint;
-  if (params) {
-    // Validate that all provided parameters have corresponding templates
-    validateUrlParams(endpoint, params);
-
-    // Replace template parameters with actual values
-    Object.entries(params).forEach(([key, value]) => {
-      const replaceParam = `{${key}}`;
-      // Convert values to string format for URL replacement
-      const replaceValue = String(value);
-      processedEndpoint = processedEndpoint.replace(replaceParam, replaceValue);
-    });
-  }
-
-  // Step 2: Remove entire query parameters for unreplaced template parameters
-  // This handles optional parameters by removing "&param={param}" entirely
-  processedEndpoint = processedEndpoint.replace(UNREPLACED_PARAM_REGEX, "");
-
-  // Step 3: Clean up any remaining malformed query strings
-  // Remove patterns like "&param=&" or "&param=" to prevent invalid URLs
-  processedEndpoint = processedEndpoint.replace(MALFORMED_QUERY_REGEX, "$1");
-
-  // Step 4: Construct the final URL object (API key injection handled separately)
-  return new URL(processedEndpoint, baseUrl).toString();
-};
-
-/**
- * @deprecated Use buildCompleteUrl instead. This function will be removed in a future version.
- * @see buildCompleteUrl
- */
-export const buildUrlWithApiKey = (url: string): string => {
-  const serviceType = getServiceType(url);
-  const apiKey = configManager.getApiKey();
-  const urlWithKey = new URL(url);
-
-  // Inject the correct API key parameter based on service type
-  if (serviceType === "wsdot") {
-    // WSDOT expects 'AccessCode' with this exact casing
-    urlWithKey.searchParams.set("AccessCode", apiKey);
-  } else if (serviceType === "wsf") {
-    urlWithKey.searchParams.set("apiaccesscode", apiKey);
-  }
-
-  return urlWithKey.toString();
 };
 
 /**
