@@ -12,7 +12,7 @@ import { promisify } from "node:util";
 import type { Endpoint } from "@/shared/types";
 import { getTargetModule } from "../testConfig";
 import { testLogger } from "../testLogger";
-import { createTestSuite, runParallelTest } from "../testRunner";
+import { runParallelTest } from "../testRunner";
 
 const execAsync = promisify(exec);
 
@@ -68,7 +68,21 @@ async function testEndpointWithDefaultParams(
     }
 
     // Check if data is useful (not null, not empty array if array)
-    const isUsefulData = (value: unknown): boolean => {
+    const isUsefulData = (
+      value: unknown,
+      qualifiedFunctionName: string
+    ): boolean => {
+      // Whitelist for endpoints that are expected to return empty data
+      const emptyDataWhitelist = [
+        "wsf-schedule:routesHavingServiceDisruptions",
+        "wsf-schedule:timeAdjustmentsBySchedRoute",
+      ];
+
+      if (emptyDataWhitelist.includes(qualifiedFunctionName)) {
+        // For whitelisted endpoints, return true even if data is empty
+        return true;
+      }
+
       if (value === null || value === undefined) {
         return false;
       }
@@ -84,7 +98,8 @@ async function testEndpointWithDefaultParams(
       return true;
     };
 
-    if (!isUsefulData(data)) {
+    const hasUsefulData = isUsefulData(data, qualifiedFunctionName);
+    if (!hasUsefulData) {
       return {
         success: false,
         message: `Returned data is not useful (null, undefined, or empty)`,
