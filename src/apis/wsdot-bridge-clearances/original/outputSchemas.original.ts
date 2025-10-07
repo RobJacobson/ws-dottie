@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for BridgeDataGIS - represents bridge clearance data
@@ -9,7 +9,7 @@ import { zWsdotDate } from "@/apis/shared";
 export const bridgeDataGISSchema = z
   .object({
     /** Date record was last updated. */
-    APILastUpdate: zWsdotDate().describe("Date record was last updated."),
+    APILastUpdate: zDotnetDate().describe("Date record was last updated."),
     /**
      * A two-part identifier that has a unique set of up to 10 alphanumeric characters. The first part of the Bridge Number is the State Route associated with the bridge, either as a part of the route, or the route is under or adjacent to the bridge. The second part of the Bridge Number is the number or number and alpha character combination assigned to the bridge. If a Bridge is less than 20 feet in length, the sequence number is carried to the 100th (0.01).
      */
@@ -58,7 +58,7 @@ export const bridgeDataGISSchema = z
         "Longitude is a west-east measurement of position on the Earth."
       ),
     /** The route date. */
-    RouteDate: zWsdotDate().describe("The route date."),
+    RouteDate: zDotnetDate().describe("The route date."),
     /**
      * A logical number, assigned by a Linear Referencing Method, to a given point along a State Route.
      */

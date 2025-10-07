@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-import { zWsdotDate } from "@/apis/shared";
-
 /**
  * GetCurrentWeatherInformation input schema
  *

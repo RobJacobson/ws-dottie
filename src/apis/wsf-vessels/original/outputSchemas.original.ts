@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * VesselClass schema
@@ -442,7 +442,7 @@ export const vesselLocationsSchema = z
     /**
      * The date and time that the vessel last left the dock. This value is not present when docked.
      */
-    LeftDock: zWsdotDate()
+    LeftDock: zDotnetDate()
       .nullable()
       .describe(
         "The date and time that the vessel last left the dock. This value is not present when docked."
@@ -450,7 +450,7 @@ export const vesselLocationsSchema = z
     /**
      * The estimated date and time that the vessel will arrive at its destination. This value is not present when docked.
      */
-    Eta: zWsdotDate()
+    Eta: zDotnetDate()
       .nullable()
       .describe(
         "The estimated date and time that the vessel will arrive at its destination. This value is not present when docked."
@@ -467,7 +467,7 @@ export const vesselLocationsSchema = z
     /**
      * The date and time when this vessel was or is scheduled to leave its departing terminal. Might not be present if the next scheduled destination is still being determined.
      */
-    ScheduledDeparture: zWsdotDate()
+    ScheduledDeparture: zDotnetDate()
       .nullable()
       .describe(
         "The date and time when this vessel was or is scheduled to leave its departing terminal. Might not be present if the next scheduled destination is still being determined."
@@ -511,7 +511,7 @@ export const vesselLocationsSchema = z
     /**
      * The date and time when this vessel location was last updated.
      */
-    TimeStamp: zWsdotDate().describe(
+    TimeStamp: zDotnetDate().describe(
       "The date and time when this vessel location was last updated."
     ),
     /**
@@ -567,7 +567,7 @@ export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;
  *
  * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateSchema = zWsdotDate().describe(
+export const cacheFlushDateSchema = zDotnetDate().describe(
   "The date and time when the cache was last flushed."
 );
 
@@ -589,17 +589,17 @@ export const vesselHistoryResponseSchema = z
     /** The arriving terminal name. */
     Arriving: z.string().nullable().describe("The arriving terminal name."),
     /** The scheduled departure time. */
-    ScheduledDepart: zWsdotDate()
+    ScheduledDepart: zDotnetDate()
       .nullable()
       .describe("The scheduled departure time."),
     /** The actual departure time. */
-    ActualDepart: zWsdotDate()
+    ActualDepart: zDotnetDate()
       .nullable()
       .describe("The actual departure time."),
     /** The estimated arrival time. */
-    EstArrival: zWsdotDate().nullable().describe("The estimated arrival time."),
+    EstArrival: zDotnetDate().nullable().describe("The estimated arrival time."),
     /** The date of the voyage. */
-    Date: zWsdotDate().nullable().describe("The date of the voyage."),
+    Date: zDotnetDate().nullable().describe("The date of the voyage."),
   })
   .describe(
     "Contains vessel history information including departure and arrival details."

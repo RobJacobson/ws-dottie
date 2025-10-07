@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { roadwayLocationSchema, zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for CVRestrictionData - represents a Commercial Vehicle Restriction
@@ -26,15 +26,15 @@ export const cVRestrictionDataSchema = z
       .nullable()
       .describe("Maximum axle weight for CL8 classification."),
     /** Date when the restriction comes into effect. */
-    DateEffective: zWsdotDate().describe(
+    DateEffective: zDotnetDate().describe(
       "Date when the restriction comes into effect."
     ),
     /** Date when the restriction is no longer in force. */
-    DateExpires: zWsdotDate().describe(
+    DateExpires: zDotnetDate().describe(
       "Date when the restriction is no longer in force."
     ),
     /** Date when the restriction was first posted. */
-    DatePosted: zWsdotDate().describe(
+    DatePosted: zDotnetDate().describe(
       "Date when the restriction was first posted."
     ),
     /** End location for the alert on the roadway. */

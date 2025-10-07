@@ -5,14 +5,14 @@
  */
 
 import { z } from "zod";
-import { zWsdotDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Cache flush date response schema for GetCacheFlushDate endpoint
  *
  * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateResponseSchema = zWsdotDate().describe(
+export const cacheFlushDateResponseSchema = zDotnetDate().describe(
   "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
 );
 
@@ -29,13 +29,13 @@ export const validDateRangeResponseSchema = z
     /**
      * Fares information is available from this date onward.
      */
-    DateFrom: zWsdotDate().describe(
+    DateFrom: zDotnetDate().describe(
       "Fares information is available from this date onward."
     ),
     /**
      * Fares information is not available after this date.
      */
-    DateThru: zWsdotDate().describe(
+    DateThru: zDotnetDate().describe(
       "Fares information is not available after this date."
     ),
   })

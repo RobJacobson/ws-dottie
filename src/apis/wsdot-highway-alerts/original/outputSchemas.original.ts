@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for RoadwayLocation - represents location information for a roadway in WSDOT Highway Alerts
@@ -55,7 +55,7 @@ export const alertSchema = z.object({
     .nullable()
     .describe("End location for the alert on the roadway."),
   /** Estimated end time for alert. */
-  EndTime: zWsdotDate().nullable().describe("Estimated end time for alert."),
+  EndTime: zDotnetDate().nullable().describe("Estimated end time for alert."),
   /** Categorization of alert, i.e. Collision, Maintenance, etc. */
   EventCategory: z
     .string()
@@ -81,7 +81,7 @@ export const alertSchema = z.object({
     .nullable()
     .describe("Information about what the alert has been issued for."),
   /** When the alert was last changed. */
-  LastUpdatedTime: zWsdotDate()
+  LastUpdatedTime: zDotnetDate()
     .nullable()
     .describe("When the alert was last changed."),
   /** Expected impact on traffic, highest, high, medium, low. */
@@ -103,7 +103,7 @@ export const alertSchema = z.object({
     .nullable()
     .describe("Start location for the alert on the roadway."),
   /** When the impact on traffic began. */
-  StartTime: zWsdotDate()
+  StartTime: zDotnetDate()
     .nullable()
     .describe("When the impact on traffic began."),
 });

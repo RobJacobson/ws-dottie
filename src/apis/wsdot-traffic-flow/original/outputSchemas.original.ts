@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { roadwayLocationSchema, zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for FlowData - represents a traffic flow station
@@ -50,7 +50,7 @@ export const flowDataSchema = z
       .nullable()
       .describe("The name of the flow station."),
     /** The time of the station reading. */
-    Time: zWsdotDate().describe("The time of the station reading."),
+    Time: zDotnetDate().describe("The time of the station reading."),
   })
   .describe("Schema for FlowData - represents a traffic flow station");
 

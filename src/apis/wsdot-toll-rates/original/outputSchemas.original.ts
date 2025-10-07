@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for toll rate information for HOV toll lanes
@@ -69,7 +69,9 @@ export const tollRateSchema = z
       .number()
       .describe("Approximate geographical longitude of the end location."),
     /** Last time updated for this toll trip. */
-    TimeUpdated: zWsdotDate().describe("Last time updated for this toll trip."),
+    TimeUpdated: zDotnetDate().describe(
+      "Last time updated for this toll trip."
+    ),
   })
   .describe("Schema for toll rate information for HOV toll lanes");
 
@@ -85,7 +87,7 @@ export const tripRateSchema = z
     /** Message for the trip rate. */
     Message: z.string().nullable().describe("Message for the trip rate."),
     /** Time when the message was last updated. */
-    MessageUpdateTime: zWsdotDate().describe(
+    MessageUpdateTime: zDotnetDate().describe(
       "Time when the message was last updated."
     ),
     /** The toll amount for the trip. */
@@ -105,7 +107,7 @@ export type TripRate = z.infer<typeof tripRateSchema>;
 export const tollTripsRatesSchema = z
   .object({
     /** Last time the toll trips were updated. */
-    LastUpdated: zWsdotDate().describe(
+    LastUpdated: zDotnetDate().describe(
       "Last time the toll trips were updated."
     ),
     /** List of trip rates. */
@@ -141,7 +143,7 @@ export const tollTripInfoSchema = z
       .nullable()
       .describe("Geometry information for the trip."),
     /** Date when the trip information was last modified. */
-    ModifiedDate: zWsdotDate().describe(
+    ModifiedDate: zDotnetDate().describe(
       "Date when the trip information was last modified."
     ),
     /** Start latitude of the trip. */
@@ -175,7 +177,7 @@ export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;
 export const tollTripVersionSchema = z
   .object({
     /** Timestamp of the version. */
-    TimeStamp: zWsdotDate().describe("Timestamp of the version."),
+    TimeStamp: zDotnetDate().describe("Timestamp of the version."),
     /** Version number. */
     Version: z.int().describe("Version number."),
   })

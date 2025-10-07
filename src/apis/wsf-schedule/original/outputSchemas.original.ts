@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information
@@ -17,7 +17,7 @@ import { zWsdotDate } from "@/apis/shared";
 export const cacheFlushDateSchema = z
   .object({
     /** If present, notes the date that certain service data was last changed (see description). */
-    CacheFlushDate: zWsdotDate()
+    CacheFlushDate: zDotnetDate()
       .optional()
       .describe(
         "If present, notes the date that certain service data was last changed (see description)."
@@ -39,13 +39,13 @@ export const validDateRangeSchema = z
     /**
      * Schedule information is available from this trip date onward.
      */
-    DateFrom: zWsdotDate().describe(
+    DateFrom: zDotnetDate().describe(
       "Schedule information is available from this trip date onward."
     ),
     /**
      * Schedule information is not available after this trip date.
      */
-    DateThru: zWsdotDate().describe(
+    DateThru: zDotnetDate().describe(
       "Schedule information is not available after this trip date."
     ),
   })
@@ -78,13 +78,13 @@ export const scheduleBaseSchema = z.object({
   /**
    * A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am.
    */
-  ScheduleStart: zWsdotDate().describe(
+  ScheduleStart: zDotnetDate().describe(
     "A trip date that represents the start of the season. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a ScheduleStart of 2014-06-15 is returned, this would indicate the season starts precisely on 2014-06-15 at 3:00am."
   ),
   /**
    * A trip date that represents the end of the season. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a ScheduleEnd of 2014-09-20 is returned, this would indicate the season ends precisely on 2014-09-21 at 2:59am."
    */
-  ScheduleEnd: zWsdotDate().describe(
+  ScheduleEnd: zDotnetDate().describe(
     "A trip date that represents the end of the season. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a ScheduleEnd of 2014-09-20 is returned, this would indicate the season ends precisely on 2014-09-21 at 2:59am."
   ),
 });
@@ -175,7 +175,7 @@ export const serviceDisruptionSchema = z.object({
       "A flag that, when true, indicates the alert is also being used as a bulletin."
     ),
   /** The date the alert was published. */
-  PublishDate: zWsdotDate()
+  PublishDate: zDotnetDate()
     .nullable()
     .describe("The date the alert was published."),
   /** The service disruption text associated with the alert. */
@@ -238,7 +238,7 @@ export const alertSchema = z.object({
       "A flag that, when true, indicates the alert is also being used as a communications announcement."
     ),
   /** The date the alert was published. */
-  PublishDate: zWsdotDate()
+  PublishDate: zDotnetDate()
     .nullable()
     .describe("The date the alert was published."),
   /** The alert text, tailored as a brief route announcement. */
@@ -364,13 +364,13 @@ export const contingencyAdjSchema = z.object({
   /**
    * The precise date and time that the contingency adjustment starts.
    */
-  DateFrom: zWsdotDate().describe(
+  DateFrom: zDotnetDate().describe(
     "The precise date and time that the contingency adjustment starts."
   ),
   /**
    * The precise date and time that the contingency adjustment ends.
    */
-  DateThru: zWsdotDate().describe(
+  DateThru: zDotnetDate().describe(
     "The precise date and time that the contingency adjustment ends."
   ),
   /** Unique identifier for an event. */
@@ -481,13 +481,13 @@ export const activeDateRangeSchema = z.object({
   /**
    * A trip date that represents the start of the active sailing date range. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a DateFrom of 2014-06-15 is returned, this would indicate the active date range starts precisely on 2014-06-15 at 3:00am.
    */
-  DateFrom: zWsdotDate().describe(
+  DateFrom: zDotnetDate().describe(
     "A trip date that represents the start of the active sailing date range. If the consumer needs specifics about time, they can translate this trip date value to 3:00am. For example, if a DateFrom of 2014-06-15 is returned, this would indicate the active date range starts precisely on 2014-06-15 at 3:00am."
   ),
   /**
    * A trip date that represents the end of the active sailing date range. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a DateThru of 2014-09-20 is returned, this would indicate the active date range ends precisely on 2014-09-21 at 2:59am."
    */
-  DateThru: zWsdotDate().describe(
+  DateThru: zDotnetDate().describe(
     "A trip date that represents the end of the active sailing date range. If the consumer needs specifics about time, they can translate this trip date value to the next calendar date at 2:59am. For example, if a DateThru of 2014-09-20 is returned, this would indicate the active date range ends precisely on 2014-09-21 at 2:59am."
   ),
   /** Unique identifier for an event. */
@@ -601,7 +601,7 @@ export const terminalTimeSchema = z.object({
   /**
    * The time of the departure / arrival. If the journey does not stop at this terminal no value will be present.
    */
-  Time: zWsdotDate()
+  Time: zDotnetDate()
     .nullable()
     .describe(
       "The time of the departure / arrival. If the journey does not stop at this terminal no value will be present."
@@ -910,19 +910,19 @@ export const timeAdjustmentSchema = z.object({
   /**
    * The departure / arrival time that is either being added or cancelled.
    */
-  TimeToAdj: zWsdotDate().describe(
+  TimeToAdj: zDotnetDate().describe(
     "The departure / arrival time that is either being added or cancelled."
   ),
   /**
    * The starting trip date when the adjustment should be applied.
    */
-  AdjDateFrom: zWsdotDate().describe(
+  AdjDateFrom: zDotnetDate().describe(
     "The starting trip date when the adjustment should be applied."
   ),
   /**
    * The ending trip date when the adjustment should be applied. If same as AdjDateFrom then the adjustment should only be applied to a single date.
    */
-  AdjDateThru: zWsdotDate().describe(
+  AdjDateThru: zDotnetDate().describe(
     "The ending trip date when the adjustment should be applied. If same as AdjDateFrom then the adjustment should only be applied to a single date."
   ),
   /**
@@ -1020,11 +1020,11 @@ export const terminalComboSchema = z.object({
     .array(
       z.object({
         /** The date and time of the departure. */
-        DepartingTime: zWsdotDate().describe(
+        DepartingTime: zDotnetDate().describe(
           "The date and time of the departure."
         ),
         /** The date and time of the arrival. */
-        ArrivingTime: zWsdotDate()
+        ArrivingTime: zDotnetDate()
           .nullable()
           .describe("The date and time of the arrival."),
         /**
@@ -1182,7 +1182,7 @@ export const alertDetailSchema = z.object({
     .nullable()
     .describe("The alert text, tailored for a landing page."),
   /** The date the alert was published. */
-  PublishDate: zWsdotDate()
+  PublishDate: zDotnetDate()
     .nullable()
     .describe("The date the alert was published."),
   /**

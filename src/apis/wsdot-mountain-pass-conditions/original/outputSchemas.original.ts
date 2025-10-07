@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for TravelRestriction - represents travel restrictions for mountain passes
@@ -46,7 +46,7 @@ export const passConditionSchema = z
     /** The longitude of the mountain pass. */
     Longitude: z.number().describe("The longitude of the mountain pass."),
     /** Date and time to display to public, DisplayDate in the database. */
-    DateUpdated: zWsdotDate().describe(
+    DateUpdated: zDotnetDate().describe(
       "Date and time to display to public, DisplayDate in the database."
     ),
     /**

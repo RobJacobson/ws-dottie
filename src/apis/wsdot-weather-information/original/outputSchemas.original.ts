@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * WeatherInfo schema
@@ -26,7 +26,7 @@ export const weatherInfoSchema = z
       .nullable()
       .describe("Precipitation in inches."),
     /** Date and Time reading was taken. */
-    ReadingTime: zWsdotDate().describe("Date and Time reading was taken."),
+    ReadingTime: zDotnetDate().describe("Date and Time reading was taken."),
     /**
      * Percent of moisture in the air. A relative humidity of 0% shows that the air contains no moisture and 100% shows that the air is completely saturated and cannot absorb more moisture.
      */

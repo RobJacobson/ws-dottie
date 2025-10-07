@@ -8,7 +8,7 @@
 
 import { z } from "zod";
 
-import { roadwayLocationSchema, zWsdotDate } from "@/apis/shared";
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for TravelTimeRoute - represents a travel time route
@@ -48,7 +48,7 @@ export const travelTimeRouteSchema = z
       .nullable()
       .describe("The location where this route begins."),
     /** The last time that the data for this route was updated. */
-    TimeUpdated: zWsdotDate().describe(
+    TimeUpdated: zDotnetDate().describe(
       "The last time that the data for this route was updated."
     ),
     /** Unique ID that is specific to a route. */
