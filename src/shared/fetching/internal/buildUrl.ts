@@ -69,7 +69,13 @@ export const buildCompleteUrl = <TInput = never>(
     Object.entries(paramsRecord).forEach(([key, value]) => {
       const replaceParam = `{${key}}`;
       // Convert values to string format for URL replacement
-      const replaceValue = String(value);
+      let replaceValue: string;
+      if (value instanceof Date) {
+        // Format Date objects as ISO-8601 strings for WSDOT APIs
+        replaceValue = value.toISOString();
+      } else {
+        replaceValue = String(value);
+      }
       processedEndpoint = processedEndpoint.replace(replaceParam, replaceValue);
     });
   }

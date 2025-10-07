@@ -20,12 +20,24 @@ import { wsdotDateTimeToJSDate } from "@/shared/utils/dateUtils";
  */
 export const zWsdotDate = () =>
   z
-    .string()
-    .refine((value) => isWsdotDateString(value) || isIso8601DateString(value), {
-      message:
-        "Invalid date format. Expected /Date(timestamp)/ or ISO-8601 string",
-    })
+    .union([z.string(), z.date()])
+    .refine(
+      (value) => {
+        if (typeof value === "string") {
+          return isWsdotDateString(value) || isIso8601DateString(value);
+        }
+        return value instanceof Date;
+      },
+      {
+        message:
+          "Invalid date format. Expected /Date(timestamp)/, ISO-8601 string, or Date object",
+      }
+    )
     .transform((val) => {
+      if (val instanceof Date) {
+        return val;
+      }
+
       if (isWsdotDateString(val)) {
         const date = wsdotDateTimeToJSDate(val.replace(/\\\//g, "/"));
         if (!date) throw new Error(`Failed to parse WSDOT date: ${val}`);
