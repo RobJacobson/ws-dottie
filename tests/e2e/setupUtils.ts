@@ -1,14 +1,14 @@
 /**
  * @fileoverview Common Test Setup Utilities
  *
- * Shared utilities for setting up E2E tests, including endpoint discovery
+ * Utilities for setting up E2E tests, including endpoint discovery
  * and filtering logic that is common across all test files.
  */
 
 import { apis, endpoints } from "@/shared/endpoints";
 import type { Api, Endpoint } from "@/shared/types";
-import { getTargetModule, shouldTestSpecificModule } from "../testConfig";
-import { testLogger } from "../testLogger";
+import { getTargetModule, shouldTestSpecificModule } from "./testConfig";
+import { testLogger } from "./testLogger";
 
 /**
  * Result of test endpoint setup

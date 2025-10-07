@@ -4,12 +4,15 @@
  * This test validates that all endpoints work with default parameters when called
  * via fetch-dottie with the --no-validation flag. It runs before other tests to
  * ensure basic functionality is working.
+ * Can run independently with parallel execution across all endpoints.
  */
 
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import type { Endpoint } from "@/shared/types";
+import { getTargetModule } from "../testConfig";
 import { testLogger } from "../testLogger";
+import { createTestSuite, runParallelTest } from "../testRunner";
 
 const execAsync = promisify(exec);
 
@@ -36,10 +39,10 @@ async function testEndpointWithDefaultParams(
     testLogger.info(`Testing ${qualifiedFunctionName} with default parameters`);
 
     // Call fetch-dottie with --no-validation flag
-    const command = `node dist/cli/fetch-dottie.mjs -- ${qualifiedFunctionName} --no-validation`;
+    const command = `node dist/cli/fetch-dottie.mjs ${qualifiedFunctionName} --no-validation`;
     const { stdout, stderr } = await execAsync(command, {
       cwd: process.cwd(),
-      timeout: 30000, // 30 second timeout
+      timeout: 60000, // 60 second timeout
       maxBuffer: 1024 * 1024 * 10, // 10MB buffer to handle large API responses
       env: {
         ...process.env,
@@ -49,9 +52,8 @@ async function testEndpointWithDefaultParams(
       },
     });
 
-    if (stderr?.trim()) {
-      testLogger.warn(`Stderr for ${qualifiedFunctionName}: ${stderr}`);
-    }
+    // Note: CLI stderr output is suppressed for cleaner test output
+    // Original stderr was: ${stderr}
 
     // Parse the JSON output
     let data: unknown;
@@ -113,3 +115,17 @@ export async function runDefaultParameters(
 ): Promise<DefaultParameterTestResult> {
   return await testEndpointWithDefaultParams(endpoint);
 }
+
+// Configuration for this specific test
+const config = {
+  apiName: getTargetModule() || undefined,
+};
+
+// Run the test suite
+runParallelTest(
+  runDefaultParameters as (
+    endpoint: Endpoint<unknown, unknown>
+  ) => Promise<{ success: boolean; message: string }>,
+  "default parameters",
+  config
+);

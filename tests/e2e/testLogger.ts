@@ -58,14 +58,14 @@ export const testLogger = {
    * Log an error message
    */
   error: (message: string): void => {
-    console.error(`❌ ${message}`);
+    console.log(`❌ ${message}`);
   },
 
   /**
    * Log a warning message
    */
   warn: (message: string): void => {
-    console.warn(`⚠️ ${message}`);
+    console.log(`⚠️ ${message}`);
   },
 
   /**

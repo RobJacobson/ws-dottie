@@ -11,9 +11,17 @@ export const DEFAULT_TIMEOUT = 60000;
 /** Test timeout for parallel execution (60 seconds) - increased for external API variability */
 export const PARALLEL_TEST_TIMEOUT = 60000;
 
-/** Get the target module from environment variable */
+/** Get the target module from command line arguments */
 export const getTargetModule = (): string | null => {
-  return process.env.TEST_MODULE || null;
+  // Check command line arguments
+  const args = process.argv;
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--api" || args[i] === "-a") {
+      return args[i + 1] || null;
+    }
+  }
+  // Default to null if not specified (meaning run all APIs)
+  return null;
 };
 
 /** Check if we should test a specific module */
