@@ -106,14 +106,14 @@ export const wsfScheduleApi: ApiDefinition = {
       function: "routesByTerminals",
       endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: i.routesByTerminalsSchema,
-      outputSchema: z.array(o.routeBaseSchema),
+      outputSchema: z.array(o.routeSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<i.RoutesByTerminalsInput, o.RouteBase[]>,
+    } satisfies EndpointDefinition<i.RoutesByTerminalsInput, o.Route[]>,
     /**
      * ServiceDisruption response
      */

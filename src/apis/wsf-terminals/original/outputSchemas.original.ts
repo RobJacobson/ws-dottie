@@ -469,6 +469,7 @@ export const terminalSailingSpaceSchema = terminalBaseSchema.extend({
   DepartingSpaces: z
     .array(departingSpaceSchema)
     .nullable()
+    .optional()
     .describe("The most recent departures leaving this terminal."),
   /**
    * True if this terminal isn't capable of collecting fares.
@@ -852,7 +853,7 @@ export const terminalVerboseSchema = terminalBasicSchema
           /**
            * A preferred sort order.
            */
-          SortSeq: z.number().int().describe("A preferred sort order."),
+          SortSeq: z.int().nullable().describe("A preferred sort order."),
         })
         .nullable()
         .describe("Chamber of commerce information for the terminal."),
