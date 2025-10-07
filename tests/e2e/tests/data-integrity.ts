@@ -12,7 +12,6 @@
  * Can run independently with parallel execution across all endpoints.
  */
 
-import equal from "fast-deep-equal";
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
 import { getTargetModule } from "../testConfig";
@@ -32,56 +31,97 @@ const IGNORED_FIELDS = new Set([
   "TimeUpdated", // Timestamps change between API calls
 ]);
 
-/**
- * Creates an order-independent key for any value with performance optimizations
- * This allows comparing objects and arrays with different property/array orders
- */
-const createOrderIndependentKey = (
-  value: unknown,
-  depth = 0,
-  maxDepth = 3
-): string => {
-  // Prevent infinite recursion and limit depth for performance
-  if (depth > maxDepth) return `maxdepth:${depth}`;
-
-  if (value === null) return "null";
-  if (value === undefined) return "undefined";
-  if (typeof value === "boolean") return `bool:${value}`;
-  if (typeof value === "number") return `num:${value}`;
-  if (typeof value === "string") return `str:${value}`;
-  if (value instanceof Date) {
-    // Normalize timestamps to minute precision for comparison
-    const normalizedTime = Math.floor(value.getTime() / 60000) * 60000;
-    return `date:${normalizedTime}`;
-  }
-
-  if (Array.isArray(value)) {
-    // Limit array processing for performance - only process first 10 items
-    const maxItems = Math.min(value.length, 10);
-    const itemKeys = value
-      .slice(0, maxItems)
-      .map((item) => createOrderIndependentKey(item, depth + 1, maxDepth));
-    if (value.length > maxItems) {
-      itemKeys.push(`...${value.length - maxItems}more`);
-    }
-    return `arr:${value.length}:[${itemKeys.sort().join(",")}]`;
-  }
-
-  if (typeof value === "object") {
-    const obj = value as Record<string, unknown>;
-    const entries = Object.entries(obj)
-      .filter(([key]) => !IGNORED_FIELDS.has(key))
-      .slice(0, 20) // Limit to first 20 properties for performance
-      .map(
-        ([key, val]) =>
-          `${key}:${createOrderIndependentKey(val, depth + 1, maxDepth)}`
-      )
-      .sort();
-    return `obj:${Object.keys(obj).length}:[${entries.join(",")}]`;
-  }
-
-  return `unknown:${String(value)}`;
+type CanonOptions = {
+  treatArraysAsMultisets?: boolean; // default true
+  includeUndefined?: boolean; // default true (undefined is encoded)
 };
+
+const defaultOptions: Required<CanonOptions> = {
+  treatArraysAsMultisets: true,
+  includeUndefined: true,
+};
+
+function isPlainObject(x: unknown): x is Record<string, unknown> {
+  return (
+    x !== null &&
+    typeof x === "object" &&
+    (Object.getPrototypeOf(x) === Object.prototype ||
+      Object.getPrototypeOf(x) === null)
+  );
+}
+
+function canonicalize(
+  value: unknown,
+  opts: CanonOptions = defaultOptions
+): string {
+  const o = { ...defaultOptions, ...opts };
+
+  // Primitives and special cases
+  if (value === null) return "null";
+  const t = typeof value;
+
+  if (t === "string") return `s:${JSON.stringify(value)}`;
+  if (t === "boolean") return value ? "b:1" : "b:0";
+  if (t === "number") {
+    if (Number.isNaN(value)) return "n:NaN";
+    if (value === 0 && 1 / value === -Infinity) return "n:-0";
+    if (!Number.isFinite(value))
+      return (value as number) > 0 ? "n:+Inf" : "n:-Inf";
+    return `n:${value}`;
+  }
+  if (t === "bigint") return `bi:${(value as bigint).toString()}`;
+  if (t === "undefined") return o.includeUndefined ? "u" : "null";
+
+  // Dates (customize as needed)
+  if (value instanceof Date) return `d:${value.toISOString()}`;
+
+  // Array or object
+  if (Array.isArray(value)) {
+    const elems = value.map((v) => canonicalize(v, o));
+    if (o.treatArraysAsMultisets) {
+      elems.sort(); // order-insensitive
+    }
+    return `A[${elems.length}|${elems.join(",")}]`;
+  }
+
+  if (isPlainObject(value)) {
+    const keys = Object.keys(value).sort();
+    const parts: string[] = [];
+    for (const k of keys) {
+      const v = (value as Record<string, unknown>)[k];
+      if (v === undefined && !o.includeUndefined) continue;
+      parts.push(`${JSON.stringify(k)}:${canonicalize(v, o)}`);
+    }
+    return `O{${parts.length}|${parts.join(",")}}`;
+  }
+
+  // Fallback for other objects (Map/Set/RegExp/Buffer/etc.)
+  // Define explicit policies if you need them.
+  return `X:${Object.prototype.toString.call(value)}`;
+}
+
+export function arraysEqualAsUnorderedMultisets(
+  a: unknown[],
+  b: unknown[],
+  opts: CanonOptions = defaultOptions
+): boolean {
+  if (a.length !== b.length) return false;
+
+  const counts = new Map<string, number>();
+
+  for (const item of a) {
+    const key = canonicalize(item, opts);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  for (const item of b) {
+    const key = canonicalize(item, opts);
+    const cur = counts.get(key);
+    if (cur === undefined) return false;
+    if (cur === 1) counts.delete(key);
+    else counts.set(key, cur - 1);
+  }
+  return counts.size === 0;
+}
 
 /**
  * Deep equality comparison with proper type handling
@@ -92,36 +132,12 @@ const createOrderIndependentKey = (
 export const deepEqual = (a: unknown, b: unknown): boolean => {
   // Handle arrays with order-independent comparison
   if (Array.isArray(a) && Array.isArray(b)) {
-    return arraysEqual(a, b);
+    return arraysEqualAsUnorderedMultisets(a, b);
   }
 
-  // Use fast-deep-equal for non-array comparisons
-  return equal(a, b);
+  // Use canonicalization for non-array comparisons
+  return canonicalize(a) === canonicalize(b);
 };
-
-/**
- * Order-independent array comparison using key-based counting
- */
-function arraysEqual(a: unknown[], b: unknown[]): boolean {
-  if (a.length !== b.length) return false;
-
-  // Count items in first array
-  const countMap = new Map<string, number>();
-  for (const item of a) {
-    const key = createOrderIndependentKey(item);
-    countMap.set(key, (countMap.get(key) || 0) + 1);
-  }
-
-  // Subtract counts from second array
-  for (const item of b) {
-    const key = createOrderIndependentKey(item);
-    const count = countMap.get(key) || 0;
-    if (count === 0) return false;
-    countMap.set(key, count - 1);
-  }
-
-  return true;
-}
 
 /**
  * Finds the first difference between two objects for detailed error reporting
@@ -158,31 +174,19 @@ export const findFirstDifference = (
       return `${path}: array length mismatch - zod=${zodResult.length}, native=${nativeResult.length}`;
     }
 
-    // For performance, only do detailed comparison on small arrays
-    if (zodResult.length > 50) {
-      return null; // Skip detailed comparison for large arrays
-    }
+    // Use canonicalization-based comparison to find differences
+    const zodCanonicals = zodResult.map((item) => canonicalize(item));
+    const nativeCanonicals = nativeResult.map((item) => canonicalize(item));
 
-    // Use the same key-based counting approach as arraysEqual
-    const countMap = new Map<string, number>();
+    // Sort both arrays of canonical forms for comparison
+    zodCanonicals.sort();
+    nativeCanonicals.sort();
 
-    // Count items in zod array (limit for performance)
-    const maxItems = Math.min(zodResult.length, 20);
-    for (let i = 0; i < maxItems; i++) {
-      const item = zodResult[i];
-      const key = createOrderIndependentKey(item, depth + 1, maxDepth);
-      countMap.set(key, (countMap.get(key) || 0) + 1);
-    }
-
-    // Check items in native array (limit for performance)
-    for (let i = 0; i < maxItems; i++) {
-      const item = nativeResult[i];
-      const key = createOrderIndependentKey(item, depth + 1, maxDepth);
-      const count = countMap.get(key) || 0;
-      if (count === 0) {
-        return `${path}: item not found in zod array - ${JSON.stringify(item)}`;
+    // Compare sorted canonical forms
+    for (let i = 0; i < zodCanonicals.length; i++) {
+      if (zodCanonicals[i] !== nativeCanonicals[i]) {
+        return `${path}: array item mismatch at index ${i} - zod canonical form: ${zodCanonicals[i]}, native canonical form: ${nativeCanonicals[i]}`;
       }
-      countMap.set(key, count - 1);
     }
 
     return null;
@@ -279,6 +283,7 @@ export const createDataIntegrityTest = <TParams, TOutput>(
     const context = `${endpoint.api}.${endpoint.functionName}`;
 
     try {
+      // Execute both fetches simultaneously to ensure consistent data
       const [zodResult, nativeResult] = await Promise.all([
         fetchDottie({
           endpoint,
