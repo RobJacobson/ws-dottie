@@ -8,7 +8,7 @@
 
 import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
 import { convertDotNetDates } from "@/shared/utils/dateUtils";
-import { fetchCore } from "./internal/core";
+import { fetchCore } from "./internal/fetchCore";
 import { createApiError } from "./internal/handleError";
 
 // ============================================================================
