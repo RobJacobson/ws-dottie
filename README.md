@@ -14,14 +14,19 @@
 [![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)                                                    
 
 
-Meet Dottie — not just another API wrapper, but your cheerful, unauthorized guide to real-time Washington State transportation data pufrom the Department of Transportation and Washington State Ferries. Whether you're tracking ferries across Puget Sound or monitoring traffic on I‑5, Dottie makes it feel like you're chatting with a knowledgeable friend who happens to have real‑time access to every traffic camera, weather station, and ferry terminal in the state.          
+Meet Dottie — your comprehensive TypeScript companion for fetching real-time Washington State transportation data. This production-ready library provides type-safe access to **16 WSDOT and WSF APIs** with **90+ endpoints**, transforming complex government APIs into a modern, developer-friendly interface.
 
-This friendly TypeScript client library provides type‑safe data fetching from 16 Washington State transportation APIs, spanning 96 documented endpoints — from real‑time ferry locations to traffic cameras, weather stations, and highway alerts. Whether you're building a weekend project, a classroom demo, or a production app, WS‑Dottie helps you tame the data firehose with smart caching, strict typing, JSONP support for browsers to resolve CORS roadblocks, and seamless TanStack Query integration — all free and easy to use.                                  
+## Why WS-Dottie is Special
 
-Why folks love WS‑Dottie:
-- Fun, friendly DX with strong TypeScript types
-- Works great for education, hobbyist builds, and commercial apps
-- Sensible defaults you can override with standard TanStack Query options
+**🚀 Comprehensive Coverage**: Access the full spectrum of Washington State transportation data — from real-time ferry locations and traffic cameras to weather stations, highway alerts, toll rates, and border crossings.
+
+**🎯 Production-Ready**: Built for real applications with smart caching strategies, comprehensive error handling, and environment-aware logging. Works seamlessly in browsers (JSONP), servers (native fetch), and CLI environments.
+
+**⚡ Developer Experience**: Type-safe from end-to-end with Zod validation, automatic .NET datetime conversion, and sensible defaults. Includes a powerful CLI for debugging and testing.
+
+**🔄 Smart Caching**: TanStack Query integration with transportation-optimized cache strategies — from 5-second real-time updates for traffic cameras to daily updates for static data like terminals and vessels.
+
+**🌐 Environment Agnostic**: Same code works in React apps, Node.js servers, and command-line tools. Automatic CORS handling with JSONP support for browsers.
 
 ### Zod‑powered validation (Zod 4)
 
@@ -100,20 +105,7 @@ Modern bundlers and Node.js will choose the optimal format automatically. Deep s
 
 ### 5. Start Building
 
-**Node.js Application**
-```javascript
-import { WsfVessels, WsdotHighwayAlerts } from 'ws-dottie';
-
-// Get real-time ferry locations
-const vessels = await WsfVessels.getVesselLocations();
-console.log(`Found ${vessels.length} active vessels`);
-
-// Get current highway alerts
-const alerts = await WsdotHighwayAlerts.getHighwayAlerts();
-console.log(`Found ${alerts.length} active alerts`);
-```
-
-**React Application**
+**React Application (Recommended)**
 ```javascript
 import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
 
@@ -131,9 +123,82 @@ function TransportationDashboard() {
 }
 ```
 
+**Server-Side (Node.js)**
+```javascript
+import { fetchDottie, vesselLocationsById, getAlert, fareLineItems } from 'ws-dottie';
+
+// Get specific vessel location (VesselID: 18)
+const vessel = await fetchDottie({
+  endpoint: vesselLocationsById,
+  params: { VesselID: 18 },
+  fetchMode: 'native',
+  validate: true
+});
+
+// Get specific highway alert (AlertID: 468632)
+const alert = await fetchDottie({
+  endpoint: getAlert,
+  params: { AlertID: 468632 },
+  fetchMode: 'native',
+  validate: true
+});
+
+// Get ferry fare information for tomorrow's trip
+const fares = await fetchDottie({
+  endpoint: fareLineItems,
+  params: {
+    TripDate: '2025-01-28',
+    DepartingTerminalID: 3,
+    ArrivingTerminalID: 7,
+    RoundTrip: false
+  },
+  fetchMode: 'native',
+  validate: true
+});
+```
+
+**Browser (CORS-Safe)**
+```javascript
+import { fetchDottie, vesselBasicsById, getBridgeClearancesByRoute } from 'ws-dottie';
+
+// Get specific vessel details (VesselID: 74)
+const vessel = await fetchDottie({
+  endpoint: vesselBasicsById,
+  params: { VesselID: 74 },
+  fetchMode: 'jsonp', // Bypasses CORS
+  validate: true
+});
+
+// Get bridge clearances for I-5 (Route: "005")
+const clearances = await fetchDottie({
+  endpoint: getBridgeClearancesByRoute,
+  params: { Route: "005" },
+  fetchMode: 'jsonp',
+  validate: true
+});
+```
+
+**Command Line (Debugging & Testing)**
+```bash
+# List all available endpoints
+fetch-dottie --list
+
+# Test specific vessel location (VesselID: 18)
+fetch-dottie vesselLocationsById '{"VesselID": 18}'
+
+# Get ferry fares for specific trip
+fetch-dottie fareLineItems '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
+
+# Fast testing without validation (raw data)
+fetch-dottie vesselBasicsById '{"VesselID": 74}' --no-validation --pretty
+
+# Browser-compatible JSONP testing with parameters
+fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}' --jsonp
+```
+
 ## 🖥️ Command Line Interface
 
-WS-Dottie includes a powerful CLI for quick testing, debugging, and production use cases. Access all transportation data directly from your terminal without writing code.                                                                      
+WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 90+ endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
 
 ### Installation
 
@@ -163,49 +228,61 @@ fetch-dottie <function-name> [params] [options]
 
 ### Examples
 
-**Get border crossing data:**
+**🚀 Quick Testing & Debugging**
 ```bash
+# List all available endpoints
+fetch-dottie --list
+
+# Test any endpoint with full validation
 fetch-dottie getBorderCrossings
+
+# Fast testing without validation (raw data)
+fetch-dottie vesselBasics --no-validation
 ```
 
-**Get bridge clearances with parameters:**
+**🌐 Environment Testing**
 ```bash
-fetch-dottie getBridgeClearances '{"route": "005"}'
-```
+# Server-side testing (default)
+fetch-dottie getVesselLocations
 
-**Get ferry fare information:**
-```bash
-fetch-dottie getFareLineItems '{"originTerminalId": 7, "destinationTerminalId": 3, "date": "2025-01-27"}'                                                          
-```
-
-**Pretty-printed output:**
-```bash
-fetch-dottie getBorderCrossings --pretty
-```
-
-**Concise array output:**
-```bash
-fetch-dottie getVesselLocations --concise
-```
-
-**Silent mode (JSON only):**
-```bash
-fetch-dottie getBorderCrossings --silent
-```
-
-**Limit output to first 5 items:**
-```bash
-fetch-dottie getVesselLocations --limit 5
-```
-
-**JSONP mode for browser environments:**
-```bash
+# Browser environment testing (JSONP)
 fetch-dottie getBorderCrossings --jsonp
+
+# Mixed: JSONP without validation (fastest)
+fetch-dottie vesselBasics --jsonp --no-validation
 ```
 
-**Raw fetch without validation:**
+**📊 Data Exploration**
 ```bash
-fetch-dottie getBorderCrossings --no-validation
+# Get bridge clearances for I-5
+fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}'
+
+# Get ferry fare information for specific trip
+fetch-dottie fareLineItems '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
+
+# Get specific vessel location (VesselID: 18)
+fetch-dottie vesselLocationsById '{"VesselID": 18}'
+
+# Get specific highway alert (AlertID: 468632)
+fetch-dottie getAlert '{"AlertID": 468632}'
+
+# Get weather from specific station (StationID: 1909)
+fetch-dottie getWeatherInformationByStationId '{"StationID": 1909}'
+
+# Get vessel history for specific date range
+fetch-dottie vesselHistoriesByVesselAndDateRange '{"VesselName": "Tacoma", "DateStart": "2025-09-01", "DateEnd": "2025-10-01"}'
+
+# Pretty-printed output
+fetch-dottie getBorderCrossings --pretty
+
+# Concise array output
+fetch-dottie getVesselLocations --concise
+
+# Silent mode (JSON only)
+fetch-dottie getBorderCrossings --silent
+
+# Limit output to first 5 items
+fetch-dottie getVesselLocations --limit 5
 ```
 
 ### Available Functions
@@ -219,12 +296,18 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 
 ### CLI Options
 
+**Transport & Validation Control**
+- `--jsonp` - Use JSONP transport for browser environments (bypasses CORS)
+- `--no-validation` - Disable Zod validation (raw fetch with .NET date conversion)
+
+**Output Formatting**
 - `--pretty` - Pretty-print JSON output with 2-space indentation (default)
 - `--concise` - Concise array output with brackets on own lines
 - `--silent` - Suppress all output except final JSON result
 - `--limit <number>` - Truncate output to first N items
-- `--jsonp` - Use JSONP transport for browser environments
-- `--no-validation` - Disable Zod validation (raw fetch with .NET date conversion)
+
+**Discovery**
+- `--list` - List all available endpoints with descriptions
 
 ## 📊 Available Data Sources (16 APIs, 90+ endpoints)
 
@@ -247,18 +330,135 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 - **Schedules** - Ferry schedules and sailing times
 - **Fares** - Fare information and pricing
 
-## 🔧 Features
+## 🔧 Core Features
 
-- **🔄 Smart Caching** - Built‑in TanStack Query integration with optimized caching strategies for different data types                                         
-- **🌐 Cross-Platform** - Works in browsers (JSONP) and Node.js (fetch)
-- **📱 React Ready** - Hooks for all APIs with automatic cache management
-- **🎯 Strong Typing** - Zod‑inferred TypeScript types for all APIs, parameters, and responses                                                                  
-- **📦 Parameter Objects** - Consistent single‑parameter object pattern for all API calls                                                                       
-- **⚙️ Flexible Configuration** - Environment variables or runtime configuration with type‑safe interface                                                        
-- **🔍 Debugging** - Optional logging for troubleshooting API calls
-- **⚡ Tree‑Shaking** - Only import what you need to keep bundles small
-- **🛡️ Error Handling** - Consistent error types with user‑friendly messages
-- **📅 Date Conversion** - Automatic conversion of upstream date strings to JavaScript Date objects (lean parser) with Zod 4 runtime validation                 
+### **🚀 Comprehensive API Coverage**
+- **16 distinct APIs** covering WSDOT (traffic, weather, tolls) and WSF (ferries, schedules)
+- **90+ endpoints** with full type safety and validation
+- **Unified interface** — all APIs work consistently regardless of source
+
+### **🔄 Smart Caching & React Integration**
+- **TanStack Query integration** with transportation-optimized cache strategies:
+  - `REALTIME` (5-second updates) for traffic cameras, vessel locations
+  - `FREQUENT` (5-minute updates) for schedules, alerts  
+  - `MODERATE` (hourly updates) for weather, conditions
+  - `STATIC` (daily updates) for terminals, vessels, routes
+- **Zero-configuration React hooks** with automatic revalidation and background refresh
+
+### **🌐 Flexible Fetching Strategies**
+- **Native fetch** for server-side and Node.js applications
+- **JSONP support** for browser environments (bypasses CORS restrictions)
+- **Optional Zod validation** for performance vs. safety tradeoffs
+- **Unified API** — same code works in browser and server
+
+### **🛠️ Production-Ready Developer Experience**
+- **Command-line debugging tool** with all endpoints accessible via CLI
+- **Comprehensive error handling** with detailed context and helpful messages
+- **Environment-aware logging** with performance metrics
+- **Automatic .NET datetime conversion** (handles WSDOT's `/Date(timestamp)/` format)
+- **Type-safe configuration** via environment variables or runtime setup
+
+### **🎯 Developer-Friendly Design**
+- **Strong TypeScript types** inferred from Zod schemas
+- **Consistent parameter patterns** across all APIs
+- **Tree-shaking support** — only import what you need
+- **Sample parameters** provided for every endpoint                 
+
+## 🔄 TanStack Query Integration
+
+WS-Dottie provides **zero-configuration React hooks** with transportation-optimized caching strategies. Each API endpoint automatically uses the appropriate cache strategy based on data update frequency.
+
+### **Cache Strategies**
+
+```javascript
+import { useVesselLocations, useHighwayAlerts, useVesselBasics } from 'ws-dottie';
+
+function TransportationDashboard() {
+  // REALTIME: 5-second updates for vessel locations
+  const { data: vessels, isLoading: vesselsLoading } = useVesselLocations();
+  
+  // FREQUENT: 5-minute updates for highway alerts  
+  const { data: alerts, isLoading: alertsLoading } = useHighwayAlerts();
+  
+  // STATIC: Daily updates for vessel information
+  const { data: vesselInfo } = useVesselBasics();
+
+  return (
+    <div>
+      <h2>Active Vessels: {vessels?.length || 0}</h2>
+      <h2>Highway Alerts: {alerts?.length || 0}</h2>
+      <h2>Vessel Details: {vesselInfo?.length || 0}</h2>
+    </div>
+  );
+}
+```
+
+### **Parameterized Queries**
+
+```javascript
+import { useVesselLocationsById, useGetAlert, useFareLineItems } from 'ws-dottie';
+
+function SpecificDataView() {
+  // Get specific vessel location (REALTIME caching)
+  const { data: vessel } = useVesselLocationsById({ VesselID: 18 });
+  
+  // Get specific highway alert (FREQUENT caching)
+  const { data: alert } = useGetAlert({ AlertID: 468632 });
+  
+  // Get ferry fares for specific trip (STATIC caching)
+  const { data: fares } = useFareLineItems({
+    TripDate: '2025-01-28',
+    DepartingTerminalID: 3,
+    ArrivingTerminalID: 7,
+    RoundTrip: false
+  });
+
+  return (
+    <div>
+      <h3>Vessel: {vessel?.VesselName}</h3>
+      <h3>Alert: {alert?.Headline}</h3>
+      <h3>Fares: {fares?.length} options</h3>
+    </div>
+  );
+}
+```
+
+### **Advanced Query Options**
+
+```javascript
+import { useQuery } from '@tanstack/react-query';
+import { fetchDottie, vesselBasicsById } from 'ws-dottie';
+
+function CustomQueryExample() {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['vessel', 74],
+    queryFn: () => fetchDottie({
+      endpoint: vesselBasicsById,
+      params: { VesselID: 74 },
+      fetchMode: 'native',
+      validate: true
+    }),
+    staleTime: 60 * 1000, // Custom stale time
+    refetchInterval: 30 * 1000, // Custom refetch interval
+    retry: 3,
+    retryDelay: 1000
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return <div>Vessel: {data?.VesselName}</div>;
+}
+```
+
+### **Cache Strategy Details**
+
+| Strategy | Update Frequency | Use Cases | Stale Time | Refetch Interval |
+|----------|------------------|-----------|------------|------------------|
+| `REALTIME` | 5 seconds | Traffic cameras, vessel locations | 5s | 5s |
+| `FREQUENT` | 5 minutes | Schedules, alerts, weather | 5m | 5m |
+| `MODERATE` | 1 hour | Weather conditions, road status | 1h | 1h |
+| `STATIC` | 1 day | Terminals, vessels, routes | 1d | 1d |
 
 ## 📚 Documentation
 
@@ -269,23 +469,202 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 ### Doc Map
 - Start here: **[Documentation Index](./docs/old%20docs/INDEX.md)** — canonical entry point with links to all API docs and guides                                          
 
-## 🎯 Example Projects
+## 🎯 Implementation Examples
 
-Here are some projects you could build with WS-Dottie:
+### **React Dashboard (Recommended)**
+```javascript
+import { 
+  useVesselLocations, 
+  useHighwayAlerts, 
+  useVesselLocationsById,
+  useGetAlert,
+  useFareLineItems 
+} from 'ws-dottie';
 
-### For Hobbyists
+function TransportationDashboard() {
+  // Real-time data with automatic caching
+  const { data: allVessels, isLoading: vesselsLoading } = useVesselLocations();
+  const { data: alerts, isLoading: alertsLoading } = useHighwayAlerts();
+  
+  // Specific vessel tracking (VesselID: 18)
+  const { data: specificVessel } = useVesselLocationsById({ VesselID: 18 });
+  
+  // Specific alert details (AlertID: 468632)
+  const { data: alertDetails } = useGetAlert({ AlertID: 468632 });
+  
+  // Ferry fare calculation for tomorrow's trip
+  const { data: fares } = useFareLineItems({
+    TripDate: '2025-01-28',
+    DepartingTerminalID: 3,
+    ArrivingTerminalID: 7,
+    RoundTrip: false
+  });
+
+  return (
+    <div className="dashboard">
+      <section>
+        <h2>Active Ferries: {allVessels?.length || 0}</h2>
+        {specificVessel && <p>Tracking: {specificVessel.VesselName}</p>}
+        {vesselsLoading && <div>Loading vessels...</div>}
+      </section>
+      
+      <section>
+        <h2>Highway Alerts: {alerts?.length || 0}</h2>
+        {alertDetails && <p>Latest: {alertDetails.Headline}</p>}
+        {alertsLoading && <div>Loading alerts...</div>}
+      </section>
+      
+      <section>
+        <h2>Trip Planning</h2>
+        <p>Ferry fares: {fares?.length || 0} options available</p>
+      </section>
+    </div>
+  );
+}
+```
+
+### **Server-Side API Integration**
+```javascript
+import { 
+  fetchDottie, 
+  getBorderCrossings, 
+  vesselLocationsById,
+  getAlert,
+  getBridgeClearancesByRoute 
+} from 'ws-dottie';
+
+// Express.js route handler with parameterized queries
+app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
+  try {
+    const { vesselId, alertId } = req.params;
+    
+    const [crossings, vessel, alert, clearances] = await Promise.all([
+      // All border crossings
+      fetchDottie({
+        endpoint: getBorderCrossings,
+        params: {},
+        fetchMode: 'native',
+        validate: true
+      }),
+      
+      // Specific vessel location
+      fetchDottie({
+        endpoint: vesselLocationsById,
+        params: { VesselID: parseInt(vesselId) },
+        fetchMode: 'native',
+        validate: true
+      }),
+      
+      // Specific highway alert
+      fetchDottie({
+        endpoint: getAlert,
+        params: { AlertID: parseInt(alertId) },
+        fetchMode: 'native',
+        validate: true
+      }),
+      
+      // Bridge clearances for I-5
+      fetchDottie({
+        endpoint: getBridgeClearancesByRoute,
+        params: { Route: "005" },
+        fetchMode: 'native',
+        validate: true
+      })
+    ]);
+
+    res.json({ crossings, vessel, alert, clearances });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+```
+
+### **Browser Application (CORS-Safe)**
+```javascript
+import { 
+  fetchDottie, 
+  vesselBasicsById, 
+  getWeatherInformationByStationId,
+  getAlertsByRegionId 
+} from 'ws-dottie';
+
+// Browser-safe data fetching with parameters
+async function loadTransportationData(vesselId = 74, stationId = 1909, regionId = 9) {
+  const [vessel, weather, regionalAlerts] = await Promise.all([
+    // Specific vessel details
+    fetchDottie({
+      endpoint: vesselBasicsById,
+      params: { VesselID: vesselId },
+      fetchMode: 'jsonp', // Bypasses CORS
+      validate: true
+    }),
+    
+    // Weather from specific station
+    fetchDottie({
+      endpoint: getWeatherInformationByStationId,
+      params: { StationID: stationId },
+      fetchMode: 'jsonp',
+      validate: true
+    }),
+    
+    // Alerts from specific region
+    fetchDottie({
+      endpoint: getAlertsByRegionId,
+      params: { RegionID: regionId },
+      fetchMode: 'jsonp',
+      validate: true
+    })
+  ]);
+
+  return { vessel, weather, regionalAlerts };
+}
+```
+
+### **CLI Automation & Testing**
+```bash
+#!/bin/bash
+# Automated monitoring script with specific parameters
+
+# Check specific vessel status (VesselID: 18)
+echo "=== Vessel Status ==="
+fetch-dottie vesselLocationsById '{"VesselID": 18}' --concise
+
+# Check highway alerts for specific region (RegionID: 9)
+echo "=== Regional Alerts ==="
+fetch-dottie getAlertsByRegionId '{"RegionID": 9}' --limit 5
+
+# Check weather from specific station (StationID: 1909)
+echo "=== Weather Station ==="
+fetch-dottie getWeatherInformationByStationId '{"StationID": 1909}'
+
+# Get ferry fares for tomorrow's trip
+echo "=== Ferry Fares ==="
+fetch-dottie fareLineItems '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}' --pretty
+
+# Fast testing without validation
+echo "=== Quick Test ==="
+fetch-dottie vesselBasicsById '{"VesselID": 74}' --no-validation --silent
+
+# Check bridge clearances for I-5
+echo "=== Bridge Clearances ==="
+fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}' --concise
+```
+
+## 🚀 Example Projects
+
+### **For Hobbyists**
 - **Ferry Tracker** - Real-time map showing vessel locations and wait times
 - **Traffic Camera Viewer** - Browse and view traffic cameras by region
 - **Weather Dashboard** - Road conditions and weather for your commute
 - **Toll Calculator** - Plan trips with real-time toll pricing
 
-### For Developers
+### **For Developers**
 - **Transportation Analytics** - Analyze traffic patterns and ferry usage
 - **Route Planning** - Integrate real-time data into navigation apps
 - **Emergency Response** - Monitor highway alerts and conditions
 - **Logistics Tools** - Commercial vehicle routing with restrictions
 
-### For Enterprise
+### **For Enterprise**
 - **Fleet Management** - Track vehicles with real-time traffic data
 - **Supply Chain Planning** - Optimize routes using traffic and weather data
 - **Public Safety** - Monitor transportation infrastructure
