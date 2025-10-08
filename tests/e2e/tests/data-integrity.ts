@@ -301,16 +301,6 @@ export const createDataIntegrityTest = <TParams, TOutput>(
         }),
       ]);
 
-      // For performance, skip detailed comparison for very large datasets
-      if (Array.isArray(zodResult) && zodResult.length > 100) {
-        return {
-          success: true,
-          message: `Data integrity validation skipped for large dataset (${zodResult.length} items) - ${context}`,
-          zodResult,
-          nativeResult,
-        };
-      }
-
       compareDataIntegrity(zodResult, nativeResult, context);
 
       return {
