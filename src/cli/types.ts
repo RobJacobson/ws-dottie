@@ -13,8 +13,6 @@
  * all CLI tools for parameter parsing, output control, and validation.
  */
 export const CLI_CONSTANTS = {
-  /** Regular expression for matching ISO date strings in JSON parameters */
-  ISO_DATE_REGEX: /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/,
   /** Array of quiet mode option names */
   QUIET_MODES: ["quiet", "silent"] as const,
   /** Default empty JSON parameters string */
@@ -25,7 +23,7 @@ export const CLI_CONSTANTS = {
  * CLI options interface
  *
  * Defines the available command-line options for WS-Dottie CLI tools.
- * These options control output formatting, verbosity, and behavior.
+ * These options control output formatting, verbosity, behavior, and fetch strategy.
  */
 export interface CliOptions {
   /** Pretty-print JSON output with 2-space indentation */
@@ -35,9 +33,15 @@ export interface CliOptions {
   /** Silent mode: suppress all output except final JSON result */
   silent?: boolean;
   /** Truncate output to first N lines */
-  head?: number;
+  limit?: number;
   /** List all available endpoints and exit */
   list?: boolean;
+  /** Use JSONP instead of native fetch (for browser environments) */
+  jsonp?: boolean;
+  /** Validation flag (set by Commander.js when --no-validation is used) */
+  validation?: boolean;
+  /** Concise array output: brackets on own lines, items indented and compact */
+  concise?: boolean;
 }
 
 /**

@@ -1,0 +1,152 @@
+# WeatherInfo Class Reference
+
+[Current Weather](group___weather.html)
+
+| Column | Column | Column |
+| --- | --- | --- |
+ | Properties |  | 
+ | int | [StationID](class_weather_info.html#a15ab38c8d8e5a891fe11f58206bbd497) `[get, set]` | 
+ |  |  | 
+ | string | [StationName](class_weather_info.html#a7868a8a8049684ea0037744fb99fb687) `[get, set]` | 
+ |  |  | 
+ | decimal | [Latitude](class_weather_info.html#a83f9dbeca437c41c86eaee79a6ce4214) `[get, set]` | 
+ |  |  | 
+ | decimal | [Longitude](class_weather_info.html#aa4d2066c1fd86a4076f9fcf9a1e4335d) `[get, set]` | 
+ |  |  | 
+ | DateTime | [ReadingTime](class_weather_info.html#a08be71b0efe78db940a2878850eeafc4) `[get, set]` | 
+ |  |  | 
+ | decimal? | [TemperatureInFahrenheit](class_weather_info.html#a89f8692601dc0f483f0cba876d6880a3) `[get, set]` | 
+ |  |  | 
+ | decimal? | [PrecipitationInInches](class_weather_info.html#a86ac889ac85b6357faf613ba43394fa3) `[get, set]` | 
+ |  |  | 
+ | decimal? | [WindSpeedInMPH](class_weather_info.html#a233a5da688fc335b0f179fbcc3af43e5) `[get, set]` | 
+ |  |  | 
+ | decimal? | [WindGustSpeedInMPH](class_weather_info.html#a9c724a02a656eec3f40c6b21c4346f2c) `[get, set]` | 
+ |  |  | 
+ | int? | [Visibility](class_weather_info.html#a5ef4b739fbeadc86f822cc4d1a783781) `[get, set]` | 
+ |  |  | 
+ | string | [SkyCoverage](class_weather_info.html#adfd231c057f8623c5a385ae4db06ccdb) `[get, set]` | 
+ |  |  | 
+ | decimal? | [BarometricPressure](class_weather_info.html#a2ac8527381212c17ddc91ff31855d4ba) `[get, set]` | 
+ |  |  | 
+ | decimal? | [RelativeHumidity](class_weather_info.html#ac3f283a35941940b1c14bd4071ea91ce) `[get, set]` | 
+ |  |  | 
+ | string | [WindDirectionCardinal](class_weather_info.html#a9867850d90d2e143b1971834bf3aa991) `[get, set]` | 
+ |  |  | 
+ | decimal? | [WindDirection](class_weather_info.html#af6349055eba52dd8a721cd8a58e6cf95) `[get, set]` | 
+ |  |  | 
+
+
+## Detailed Description
+
+Current information from a weather station.
+
+## Property Documentation
+
+## [◆](#a2ac8527381212c17ddc91ff31855d4ba)BarometricPressure
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.BarometricPressure |  | getset | 
+
+
+## [◆](#a83f9dbeca437c41c86eaee79a6ce4214)Latitude
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal WeatherInfo.Latitude |  | getset | 
+
+
+## [◆](#aa4d2066c1fd86a4076f9fcf9a1e4335d)Longitude
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal WeatherInfo.Longitude |  | getset | 
+
+
+## [◆](#a86ac889ac85b6357faf613ba43394fa3)PrecipitationInInches
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.PrecipitationInInches |  | getset | 
+
+
+## [◆](#a08be71b0efe78db940a2878850eeafc4)ReadingTime
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | DateTime WeatherInfo.ReadingTime |  | getset | 
+
+
+## [◆](#ac3f283a35941940b1c14bd4071ea91ce)RelativeHumidity
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.RelativeHumidity |  | getset | 
+
+
+## [◆](#adfd231c057f8623c5a385ae4db06ccdb)SkyCoverage
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string WeatherInfo.SkyCoverage |  | getset | 
+
+
+## [◆](#a15ab38c8d8e5a891fe11f58206bbd497)StationID
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | int WeatherInfo.StationID |  | getset | 
+
+
+## [◆](#a7868a8a8049684ea0037744fb99fb687)StationName
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string WeatherInfo.StationName |  | getset | 
+
+
+## [◆](#a89f8692601dc0f483f0cba876d6880a3)TemperatureInFahrenheit
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.TemperatureInFahrenheit |  | getset | 
+
+
+## [◆](#a5ef4b739fbeadc86f822cc4d1a783781)Visibility
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | int? WeatherInfo.Visibility |  | getset | 
+
+
+## [◆](#af6349055eba52dd8a721cd8a58e6cf95)WindDirection
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.WindDirection |  | getset | 
+
+
+## [◆](#a9867850d90d2e143b1971834bf3aa991)WindDirectionCardinal
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | string WeatherInfo.WindDirectionCardinal |  | getset | 
+
+
+## [◆](#a9c724a02a656eec3f40c6b21c4346f2c)WindGustSpeedInMPH
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.WindGustSpeedInMPH |  | getset | 
+
+
+## [◆](#a233a5da688fc335b0f179fbcc3af43e5)WindSpeedInMPH
+
+| Column | Column | Column | Column |
+| --- | --- | --- | --- |
+ |  |  |  | --- |  | decimal? WeatherInfo.WindSpeedInMPH |  | getset | 
+
+
+* [WeatherInfo](class_weather_info.html)
+* Generated by [![doxygen](doxygen.svg)](https://www.doxygen.org/index.html) 1.9.5

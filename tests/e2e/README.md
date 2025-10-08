@@ -15,23 +15,17 @@ The E2E testing system is built on top of the unified endpoint system defined in
 
 ```
 tests/e2e/
-├── main.test.ts              # Main test orchestrator
-├── testConfig.ts             # Test configuration and timeouts
-├── testLogger.ts             # Logging utilities
-├── shared/                   # Shared testing utilities
-│   ├── setup.ts             # Common test setup and endpoint discovery
-│   ├── testRunner.ts        # Test execution utilities
-│   └── dataIntegrity.ts     # Data comparison utilities
-└── tests/                   # Individual test concern modules
-    ├── schema-validation.ts
-    ├── parameter-handling.ts
-    ├── data-structure-consistency.ts
-    ├── invalid-parameters.ts
-    ├── missing-parameters.ts
-    ├── response-time.ts
-    ├── response-consistency.ts
-    ├── memory-usage.ts
-    └── data-integrity.ts
+├── testConfig.ts                    # Test configuration and timeouts
+├── testLogger.ts                    # Logging utilities
+├── testRunner.ts                    # Parallel test execution utilities
+├── shared/                          # Shared testing utilities
+│   ├── setup.ts                    # Common test setup and endpoint discovery
+│   └── dataIntegrity.ts            # Data comparison utilities
+└── tests/                          # Consolidated test concern modules
+    ├── parameter-validation.ts         # Comprehensive parameter validation (valid/invalid/missing)
+    ├── schema-and-consistency-validation.ts  # Schema compliance and temporal consistency
+    ├── default-parameters.ts           # CLI functionality testing
+    └── data-integrity.ts               # Fetch mode consistency (Zod vs native)
 ```
 
 ## Endpoint System Integration
@@ -56,7 +50,7 @@ Each endpoint is defined using the `defineEndpoint()` factory function with:
   inputSchema: zodInputSchema,           // Zod schema for input validation
   outputSchema: zodOutputSchema,         // Zod schema for output validation
   sampleParams: { /* sample data */ },   // Sample parameters for testing
-  cacheStrategy: CacheStrategy           // Caching configuration
+ cacheStrategy: CacheStrategy           // Caching configuration
 }
 ```
 
@@ -67,14 +61,14 @@ The factory automatically enriches this with computed properties:
 
 ## Test Architecture
 
-### Orchestrated Testing
+### Sequential Test Execution
 
-The `main.test.ts` file serves as the central orchestrator that:
+Each test file in the `tests/` directory runs **all endpoints sequentially** within a single test case. This provides:
 
-1. **Discovers all endpoints** using the endpoint system
-2. **Filters by module/endpoint** using environment variables
-3. **Runs comprehensive tests** for each endpoint sequentially
-4. **Provides detailed logging** for debugging and monitoring
+1. **Sequential Execution**: Tests run endpoints one after another for consistent API testing
+2. **Independent Operation**: Each test file can be run without dependencies
+3. **Flexible Targeting**: Users can specify which API and which test to run
+4. **Configurable Filtering**: Command line options control which endpoints are tested
 
 ### Test Execution Flow
 
@@ -85,46 +79,32 @@ The `main.test.ts` file serves as the central orchestrator that:
    └── Group by API name
 
 2. Filtering Phase
-   ├── Check TEST_MODULE environment variable
-   ├── Check TEST_ENDPOINT environment variable
-   └── Filter to target endpoints
+   ├── Check --api CLI option
+   └── Filter to target API
 
-3. Testing Phase
-   ├── For each API (alphabetically sorted)
-   │   ├── For each endpoint (alphabetically sorted)
-   │   │   ├── Schema validation
-   │   │   ├── Parameter handling
-   │   │   ├── Data structure consistency
-   │   │   ├── Invalid parameter handling
-   │   │   ├── Missing parameter handling
-   │   │   ├── Response time validation
-   │   │   ├── Response consistency
-   │   │   ├── Memory usage validation
-   │   │   └── Data integrity (Zod vs native fetch)
-   │   └── Log results per endpoint
-   └── Log results per API
+3. Sequential Execution Phase
+   ├── For each matching API
+   │   ├── Discover all endpoints for the API
+   │   ├── Execute test function across all endpoints sequentially
+   │   └── Report results per endpoint
+   └── Log summary results
 ```
 
 ### Test Concerns
 
-Each test file focuses on a single concern:
+Each test file focuses on a specific concern with clear separation:
 
-#### **API Functionality Tests**
-- **`schema-validation.ts`**: Validates API responses match Zod schemas
-- **`parameter-handling.ts`**: Tests different parameter types and combinations
-- **`data-structure-consistency.ts`**: Ensures consistent data structures across calls
+#### **Parameter Validation**
+- **`parameter-validation.ts`**: Comprehensive parameter testing including valid parameters, invalid parameter rejection, and missing parameter handling
 
-#### **Error Handling Tests**
-- **`invalid-parameters.ts`**: Tests handling of invalid parameter types
-- **`missing-parameters.ts`**: Tests handling of missing required parameters
+#### **Schema & Consistency Validation**
+- **`schema-and-consistency-validation.ts`**: Validates API responses match Zod schemas and ensures consistent data structures across multiple calls
 
-#### **Performance Tests**
-- **`response-time.ts`**: Validates response times are within acceptable limits
-- **`response-consistency.ts`**: Tests consistency across multiple API calls
-- **`memory-usage.ts`**: Tests for memory leaks in API calls
+#### **Data Integrity**
+- **`data-integrity.ts`**: Ensures Zod schema validation and native fetch return identical results (fetch mode consistency)
 
-#### **Data Integrity Tests**
-- **`data-integrity.ts`**: Ensures Zod and native fetch return identical results
+#### **Integration Testing**
+- **`default-parameters.ts`**: Tests CLI functionality with default parameters
 
 ## Client-Schema Integration
 
@@ -170,34 +150,74 @@ export const getAlert = defineEndpoint(getAlertMeta);
 
 ## Running Tests
 
-### Test All Modules
+### Run All Tests
 ```bash
-npm test all
-# or
 npm run test:e2e
-```
-
-**Note**: The e2e tests use the `--reporter=verbose` flag to provide hierarchical test structure with individual test results visible for each API, endpoint, and test concern.npm
-
-### Test Specific Module
-```bash
-npm test wsdot-highway-alerts
-npm test wsf-fares
-npm test wsdot-bridge-clearances
-```
-
-### Test Specific Endpoint
-```bash
-TEST_MODULE=wsdot-highway-alerts TEST_ENDPOINT=getAlert npm run test:e2e
-```
-
-### Direct Vitest Commands
-```bash
-# Test all modules
+# or
 npm run test:module
+```
 
-# Test specific module (via environment variable)
-TEST_MODULE=wsdot-highway-alerts npm run test:module
+### Run Individual Test Files
+
+**⚠️ IMPORTANT: Always use the vitest config when running individual test files**
+
+#### Run Specific Test Files
+```bash
+# Run default parameters tests across all endpoints
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/default-parameters.ts
+
+# Run comprehensive parameter validation tests across all endpoints
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/parameter-validation.ts
+
+# Run schema and consistency validation tests across all endpoints
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/schema-and-consistency-validation.ts
+
+# Run data integrity tests across all endpoints (Zod vs native fetch consistency)
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/data-integrity.ts
+```
+
+#### Target Specific API with Individual Test
+```bash
+# Run default parameters for a specific API using CLI option
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/default-parameters.ts -- --api wsdot-highway-alerts
+
+# Run parameter validation for a specific API using CLI option
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/parameter-validation.ts -- --api wsf-terminals
+
+# Run schema and consistency validation for a specific API using CLI option
+npx vitest --config config/vitest.config.ts --run tests/e2e/tests/schema-and-consistency-validation.ts -- --api wsdot-highway-cameras
+```
+
+### Run Individual Test Files (Legacy Examples)
+```bash
+# Run comprehensive parameter validation tests across all endpoints
+npx vitest tests/e2e/tests/parameter-validation.ts
+
+# Run schema and consistency validation tests across all endpoints
+npx vitest tests/e2e/tests/schema-and-consistency-validation.ts
+
+# Run data integrity tests across all endpoints
+npx vitest tests/e2e/tests/data-integrity.ts
+```
+
+### Target Specific API
+```bash
+# Run schema validation for a specific API using CLI option
+npx vitest tests/e2e/tests/schema-and-consistency-validation.ts -- --api wsdot-highway-alerts
+
+# Run parameter handling for a specific API using CLI option
+npx vitest tests/e2e/tests/parameter-validation.ts -- --api wsf-fares
+
+```
+
+### Test All Modules with Specific Test Type
+```bash
+# Run all schema validation tests across all APIs
+npx vitest tests/e2e/tests/schema-and-consistency-validation.ts -- --api all
+
+# Run all parameter handling tests across all APIs
+npx vitest tests/e2e/tests/parameter-validation.ts -- --api all
+
 ```
 
 ## Available APIs
@@ -226,17 +246,21 @@ The system automatically tests all available APIs:
 
 ## Configuration
 
-### Environment Variables
+### CLI Options
 
-- **`TEST_MODULE`**: Target specific API module (e.g., "wsdot-highway-alerts")
-- **`TEST_ENDPOINT`**: Target specific endpoint function (e.g., "getAlert")
+- **`--api` or `-a`**: Target specific API module (e.g., "wsdot-highway-alerts") or "all" for all modules
 
 ### Test Configuration
 
 Key settings in `testConfig.ts`:
 - **`DEFAULT_TIMEOUT`**: 60 seconds for API requests (increased for external API variability)
 - **`PARALLEL_TEST_TIMEOUT`**: 60 seconds for test execution (increased for external API variability)
-- **Module filtering**: Automatic filtering based on environment variables
+- **Module filtering**: Automatic filtering based on CLI options
+
+**Timeout Settings:**
+- **Vitest test timeout**: 10 minutes (600,000ms) - configured in `config/vitest.config.ts`
+- **Individual API call timeout**: 60 seconds - configured in test files
+- **Total execution time**: Varies based on number of APIs/endpoints being tested
 
 ## Data Integrity Testing
 
@@ -252,8 +276,8 @@ The data integrity testing system uses sophisticated comparison algorithms:
 #### **Field Whitelisting**
 - Known problematic fields are automatically ignored during comparison
 - Currently whitelisted fields:
-  - `VesselWatchShutID`
-  - `VesselWatchShutMsg`
+ - `VesselWatchShutID`
+ - `VesselWatchShutMsg`
   - `VesselWatchShutFlag`
   - `VesselWatchStatus`
   - `VesselWatchMsg`
@@ -289,6 +313,13 @@ The data integrity testing system uses sophisticated comparison algorithms:
 - **Performance Monitoring**: Tracks response times and memory usage
 - **Advanced Comparison**: Handles dynamic APIs with order-independent array comparison
 
+### **Performance & Flexibility**
+- **Sequential Execution**: Tests run across endpoints sequentially for consistent API testing
+- **Independent Operation**: Each test file runs independently without dependencies
+- **Selective Targeting**: Users can run specific tests on specific APIs/endpoints
+- **Efficient Execution**: Tests are organized for effective endpoint coverage
+- **Reliable Completion**: Tests complete properly without vitest hanging or CPU issues
+
 ### **Maintainability**
 - **No Hardcoding**: Endpoints are discovered automatically
 - **Single Source of Truth**: Tests always match actual endpoint definitions
@@ -298,31 +329,32 @@ The data integrity testing system uses sophisticated comparison algorithms:
 
 ### **Developer Experience**
 - **Clear Organization**: Tests are organized by concern
-- **Detailed Logging**: Comprehensive logging for debugging
-- **Selective Testing**: Can test specific modules or endpoints
-- **Consistent Results**: Alphabetical sorting ensures predictable test order
+- **Detailed Logging**: Comprehensive logging for debugging (all output to stdout)
+- **Flexible Execution**: Can run all tests or specific tests as needed
+- **Consistent Results**: Predictable test execution and reporting
+- **Clean Output**: All test logging uses stdout for consistent test framework integration
 - **Robust Error Handling**: Detailed error messages for troubleshooting
 
-### **Eliminates Common Issues**
-- ❌ **Hardcoded endpoint lists** - endpoints are discovered dynamically
-- ❌ **Generated test files** - tests are written once, run everywhere
-- ❌ **Manual test maintenance** - new endpoints are automatically tested
-- ❌ **File system manipulation** - tests use static imports
-- ❌ **Mismatched tests** - tests always match actual API definitions
-- ❌ **Order-dependent array failures** - arrays compared as sets
-- ❌ **Schema evolution issues** - whitelisted fields handle API changes
+### **Addresses Common Issues**
+- ✅ **Dynamic endpoint discovery** - endpoints are discovered automatically from API definitions
+- ✅ **Independent test execution** - each test file runs independently
+- ✅ **Automatic test inclusion** - new endpoints are automatically included in tests
+- ✅ **Order-independent comparisons** - arrays compared as sets for stable testing
+- ✅ **Schema evolution handling** - whitelisted fields handle known API changes
+- ✅ **Flexible API targeting** - control over which APIs/endpoints to test
+- ✅ **Vitest hanging resolved** - tests complete properly without vitest remaining open
 
 ## Shared Utilities
 
-### **`shared/setup.ts`**
+### **`setupUtils.ts`**
 - Common test setup and endpoint discovery
 - Module filtering logic
 - Test configuration management
 
-### **`shared/testRunner.ts`**
-- Test execution utilities
-- Parallel test execution patterns
-- Error handling and reporting
+### **`testRunner.ts`**
+- Parallel test execution utilities
+- Configuration handling for API/endpoint targeting
+- Asynchronous test execution within Vitest framework
 
 ### **`shared/dataIntegrity.ts`**
 - Advanced data comparison utilities
@@ -331,4 +363,4 @@ The data integrity testing system uses sophisticated comparison algorithms:
 - Zod vs native fetch validation
 - Response consistency checking
 
-This architecture provides a robust, maintainable, and comprehensive testing system that automatically adapts to changes in the API structure while ensuring complete coverage and data integrity. The system handles real-world API variability through intelligent comparison algorithms and graceful handling of known schema evolution issues.
+This architecture provides a robust, maintainable, and comprehensive testing system that automatically adapts to changes in the API structure while ensuring complete coverage and data integrity. The system handles real-world API variability through intelligent comparison algorithms and graceful handling of known schema evolution issues. Each test file can run independently with sequential execution across all endpoints, providing reliable completion and proper vitest cleanup.

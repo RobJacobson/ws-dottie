@@ -7,12 +7,11 @@
  */
 
 // Configuration management
-export { configManager, type WsdotConfig } from "./configManager";
+export { configManager } from "./configManager";
 // Date utilities (consolidated)
 export {
   datesHelper,
   jsDateToYyyyMmDd,
-  wsdotDateTimeToJSDate as wsdotTimeToJSDate,
 } from "./dateUtils";
 // Logging utilities
-export { logger, logApiCall, logApiResults } from "./logger";
+export { logApiCall, logApiResults, logger } from "./logger";
