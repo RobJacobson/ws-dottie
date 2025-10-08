@@ -1,7 +1,7 @@
 # WS-Dottie 🚢
 
 <div align="center">
-  <img src="assets/dottie.png" alt="WS-Dottie Logo" width="200">
+  <img src="assets/dottie.png" alt="WS-Dottie Logo" width="400">
 </div>
 
 [![npm version](https://img.shields.io/npm/v/ws-dottie.svg)](https://www.npmjs.com/package/ws-dottie)                                                           
