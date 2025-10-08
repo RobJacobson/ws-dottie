@@ -339,9 +339,9 @@ export const generateDefaultExamples = (
   const baseExamples = [
     `${toolName} getBorderCrossings`,
     `${toolName} getBridgeClearances '{"route": "005"}'`,
-    `${toolName} getFareLineItems '{"originTerminalId": 7, "destinationTerminalId": 3, "date": "2025-01-27"}'`,
-    `${toolName} getVesselLocationsByVesselId  # Uses default vesselId: 1`,
-    `${toolName} getBorderCrossings --raw`,
+    `${toolName} fareLineItems '{"originTerminalId": 7, "destinationTerminalId": 3, "date": "2025-01-27"}'`,
+    `${toolName} vesselLocationsById  # Uses default vesselId: 1`,
+    `${toolName} getBorderCrossings --no-validation`,
   ];
 
   return [...baseExamples, ...additionalExamples];
@@ -374,7 +374,7 @@ export const generateExamples = (): string[] => {
     "fetch-dottie vesselBasics --jsonp --no-validation",
     "",
     "# With parameters and pretty printing",
-    'fetch-dottie getFareLineItems \'{"originTerminalId": 7, "destinationTerminalId": 3}\' --pretty',
+    'fetch-dottie fareLineItems \'{"originTerminalId": 7, "destinationTerminalId": 3}\' --pretty',
     "",
     "# Quiet mode for scripting",
     "fetch-dottie getBorderCrossings --quiet",

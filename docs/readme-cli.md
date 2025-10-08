@@ -197,12 +197,12 @@ fetch-dottie getBorderCrossings --silent
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
-| `getWeatherInformation` | Weather stations data | wsdot-weather |
-| `getWeatherInformationByStationId` | Specific station weather | wsdot-weather |
-| `getCurrentWeatherForStations` | Current weather for multiple stations | wsdot-weather |
-| `searchWeatherInformation` | Search weather by date range | wsdot-weather |
-| `getWeatherInformationExtended` | Extended weather data | wsdot-weather |
-| `getWeatherStations` | Weather station locations | wsdot-weather |
+| `getWeatherInformation` | Weather stations data | wsdot-weather-information |
+| `getWeatherInformationByStationId` | Specific station weather | wsdot-weather-information |
+| `getCurrentWeatherForStations` | Current weather for multiple stations | wsdot-weather-information |
+| `searchWeatherInformation` | Search weather by date range | wsdot-weather-information |
+| `getWeatherStations` | Weather station locations | wsdot-weather-stations |
+| `getWeatherReadings` | Weather readings data | wsdot-weather-readings |
 | `getMountainPassCondition` | Mountain pass status | wsdot-mountain-pass-conditions |
 | `getMountainPassConditions` | All mountain passes | wsdot-mountain-pass-conditions |
 
@@ -243,25 +243,27 @@ fetch-dottie getBorderCrossings --silent
 | `vesselAccommodationsById` | Specific vessel accommodations | wsf-vessels |
 | `vesselHistories` | Recent vessel history | wsf-vessels |
 | `vesselHistoriesByVesselAndDateRange` | Historical vessel data | wsf-vessels |
+| `cacheFlushDate` | Cache flush date | wsf-vessels |
 
 #### 🚟 **Terminals**
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
 | `terminalBasics` | Basic terminal information | wsf-terminals |
-| `terminalBasicsById` | Specific terminal | wsf-terminals |
+| `terminalBasicsByTerminalId` | Specific terminal | wsf-terminals |
 | `terminalLocations` | Terminal locations | wsf-terminals |
-| `terminalLocationsById` | Specific terminal location | wsf-terminals |
+| `terminalLocationsByTerminalId` | Specific terminal location | wsf-terminals |
 | `terminalVerbose` | Detailed terminal info | wsf-terminals |
-| `terminalVerboseById` | Detailed terminal by ID | wsf-terminals |
+| `terminalVerboseByTerminalId` | Detailed terminal by ID | wsf-terminals |
 | `terminalSailingSpace` | Terminal sailing space | wsf-terminals |
-| `terminalSailingSpaceById` | Sailing space by terminal | wsf-terminals |
+| `terminalSailingSpaceByTerminalId` | Sailing space by terminal | wsf-terminals |
 | `terminalWaitTimes` | Current wait times | wsf-terminals |
 | `terminalWaitTimesByTerminalId` | Wait times by terminal | wsf-terminals |
 | `terminalBulletins` | Terminal bulletins | wsf-terminals |
-| `terminalBulletinsById` | Bulletins by terminal | wsf-terminals |
+| `terminalBulletinsByTerminalId` | Bulletins by terminal | wsf-terminals |
 | `terminalTransports` | Terminal transport options | wsf-terminals |
-| `terminalTransportsById` | Transport by terminal | wsf-terminals |
+| `terminalTransportsByTerminalId` | Transport by terminal | wsf-terminals |
+| `cacheFlushDate` | Cache flush date | wsf-terminals |
 
 #### 📅 **Schedules**
 
@@ -269,10 +271,10 @@ fetch-dottie getBorderCrossings --silent
 |----------|-------------|-----------|
 | `activeSeasons` | Active seasons | wsf-schedule |
 | `allSailings` | All sailings | wsf-schedule |
-| `routeDetails` | Route details | wsf-schedule |
-| `routeDetailsByRoute` | Route by route ID | wsf-schedule |
-| `routeDetailsByTerminals` | Route by terminals | wsf-schedule |
-| `routes` | All routes | wsf-schedule |
+| `routeDetailsByTripDate` | Route details by trip date | wsf-schedule |
+| `routeDetailsByTripDateAndRouteId` | Route by trip date and route ID | wsf-schedule |
+| `routeDetailsByTripDateAndTerminals` | Route by trip date and terminals | wsf-schedule |
+| `routesByTripDate` | Routes by trip date | wsf-schedule |
 | `routesByTerminals` | Routes by terminals | wsf-schedule |
 | `routesHavingServiceDisruptions` | Routes with disruptions | wsf-schedule |
 | `sailings` | Sailing information | wsf-schedule |
@@ -283,13 +285,15 @@ fetch-dottie getBorderCrossings --silent
 | `scheduleTodayByTerminals` | Today's schedule | wsf-schedule |
 | `scheduleValidDateRange` | Valid date range | wsf-schedule |
 | `scheduledRoutes` | Scheduled routes | wsf-schedule |
-| `scheduledRoutesBySeason` | Routes by season | wsf-schedule |
+| `scheduledRoutesById` | Routes by schedule ID | wsf-schedule |
 | `terminalMates` | Terminal connections | wsf-schedule |
 | `terminals` | Terminal list | wsf-schedule |
 | `terminalsAndMates` | Terminals and connections | wsf-schedule |
 | `terminalsAndMatesByRoute` | By route | wsf-schedule |
 | `timeAdjustments` | Time adjustments | wsf-schedule |
 | `timeAdjustmentsByRoute` | Adjustments by route | wsf-schedule |
+| `timeAdjustmentsBySchedRoute` | Adjustments by scheduled route | wsf-schedule |
+| `cacheFlushDate` | Cache flush date | wsf-schedule |
 
 #### 💰 **Fares**
 
@@ -304,6 +308,7 @@ fetch-dottie getBorderCrossings --silent
 | `terminalCombo` | Terminal combinations | wsf-fares |
 | `terminalComboVerbose` | Detailed combinations | wsf-fares |
 | `terminalMates` | Terminal fare connections | wsf-fares |
+| `cacheFlushDate` | Cache flush date | wsf-fares |
 
 ## 📅 Date Handling
 
@@ -530,7 +535,7 @@ fetch-dottie vesselLocations
 fetch-dottie getHighwayCameras
 
 # Check traffic flow
-fetch-dottie getTrafficFlows
+fetch-dottie getTrafficFlow
 
 # Monitor weather conditions
 fetch-dottie getWeatherInformation
