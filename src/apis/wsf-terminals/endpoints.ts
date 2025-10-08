@@ -155,12 +155,12 @@ export const wsfTerminalsApi: ApiDefinition = {
       function: "terminalVerboseByTerminalId",
       endpoint: "/terminalVerbose/{TerminalID}",
       inputSchema: i.terminalVerboseByIdSchema,
-      outputSchema: z.array(o.terminalVerboseSchema),
+      outputSchema: o.terminalVerboseSchema,
       sampleParams: { TerminalID: 4 },
       cacheStrategy: "STATIC",
     } satisfies EndpointDefinition<
       i.TerminalVerboseByIdInput,
-      o.TerminalVerbose[]
+      o.TerminalVerbose
     >,
     /**
      * TerminalWaitTime response

@@ -7,22 +7,15 @@
 
 import { z } from "zod";
 
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information
  *
  * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateSchema = z
-  .object({
-    /** If present, notes the date that certain service data was last changed (see description). */
-    CacheFlushDate: zDotnetDate()
-      .optional()
-      .describe(
-        "If present, notes the date that certain service data was last changed (see description)."
-      ),
-  })
+export const cacheFlushDateSchema = zDotnetDate()
+  .optional()
   .describe(
     "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
   );
@@ -258,7 +251,7 @@ export const alertSchema = z.object({
   /** The title of the alert. */
   AlertFullTitle: z.string().describe("The title of the alert."),
   /** The full text of the alert. */
-  AlertFullText: z.string().describe("The full text of the alert."),
+  AlertFullText: z.string().nullable().describe("The full text of the alert."),
   /** The alert text, tailored for text to speech systems. */
   IVRText: z
     .string()

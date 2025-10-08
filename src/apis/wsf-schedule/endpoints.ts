@@ -98,10 +98,10 @@ export const wsfScheduleApi: ApiDefinition = {
       function: "routesByTripDate",
       endpoint: "/routes/{TripDate}",
       inputSchema: i.routesSchema,
-      outputSchema: z.array(o.routeBaseSchema),
+      outputSchema: z.array(o.routeSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<i.RoutesInput, o.RouteBase[]>,
+    } satisfies EndpointDefinition<i.RoutesInput, o.Route[]>,
     {
       function: "routesByTerminals",
       endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
@@ -143,34 +143,31 @@ export const wsfScheduleApi: ApiDefinition = {
       function: "scheduleAlerts",
       endpoint: "/alerts",
       inputSchema: i.allAlertsSchema,
-      outputSchema: z.array(o.alertSchema),
+      outputSchema: z.array(o.alertDetailSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<i.AllAlertsInput, o.Alert[]>,
+    } satisfies EndpointDefinition<i.AllAlertsInput, o.AlertDetail[]>,
     {
       function: "scheduleByRoute",
       endpoint: "/schedule/{TripDate}/{RouteID}",
       inputSchema: i.scheduleByRouteSchema,
-      outputSchema: z.array(o.scheduleBaseSchema),
+      outputSchema: o.scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<i.ScheduleByRouteInput, o.ScheduleBase[]>,
+    } satisfies EndpointDefinition<i.ScheduleByRouteInput, o.Schedule>,
     {
       function: "scheduleByTerminals",
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: i.scheduleByTerminalComboSchema,
-      outputSchema: z.array(o.scheduleBaseSchema),
+      outputSchema: o.scheduleSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<
-      i.ScheduleByTerminalComboInput,
-      o.ScheduleBase[]
-    >,
+    } satisfies EndpointDefinition<i.ScheduleByTerminalComboInput, o.Schedule>,
     /**
      * SchedRoute response
      */
@@ -197,19 +194,16 @@ export const wsfScheduleApi: ApiDefinition = {
       function: "scheduleTodayByRoute",
       endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
       inputSchema: i.scheduleTodayByRouteSchema,
-      outputSchema: z.array(o.scheduleBaseSchema),
+      outputSchema: o.scheduleSchema,
       sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<
-      i.ScheduleTodayByRouteInput,
-      o.ScheduleBase[]
-    >,
+    } satisfies EndpointDefinition<i.ScheduleTodayByRouteInput, o.Schedule>,
     {
       function: "scheduleTodayByTerminals",
       endpoint:
         "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
       inputSchema: i.todaysScheduleByTerminalComboSchema,
-      outputSchema: z.array(o.scheduleBaseSchema),
+      outputSchema: o.scheduleSchema,
       sampleParams: {
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
@@ -218,7 +212,7 @@ export const wsfScheduleApi: ApiDefinition = {
       cacheStrategy: "STATIC",
     } satisfies EndpointDefinition<
       i.TodaysScheduleByTerminalComboInput,
-      o.ScheduleBase[]
+      o.Schedule
     >,
     /**
      * ValidDateRange response
@@ -232,16 +226,16 @@ export const wsfScheduleApi: ApiDefinition = {
       cacheStrategy: "STATIC",
     } satisfies EndpointDefinition<i.ValidDateRangeInput, o.ValidDateRange>,
     /**
-     * TerminalMate response
+     * Terminal response (terminal mates actually returns simple terminals)
      */
     {
       function: "terminalMates",
       endpoint: "/terminalmates/{TripDate}/{TerminalID}",
       inputSchema: i.terminalMatesSchema,
-      outputSchema: z.array(o.terminalMateSchema),
+      outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       cacheStrategy: "STATIC",
-    } satisfies EndpointDefinition<i.TerminalMatesInput, o.TerminalMate[]>,
+    } satisfies EndpointDefinition<i.TerminalMatesInput, o.Terminal[]>,
     /**
      * Terminal response
      */

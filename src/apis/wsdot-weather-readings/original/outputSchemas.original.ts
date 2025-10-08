@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { zDotnetDate } from "@/apis/shared";
+import { zIsoDateString } from "@/apis/shared";
 
 /**
  * ScanwebSurfaceMeasurements schema
@@ -75,7 +75,7 @@ export const weatherReadingSchema = z
     /** Elevation from sea level in meters. */
     Elevation: z.int().describe("Elevation from sea level in meters."),
     /** Date and Time reading was taken. */
-    ReadingTime: zDotnetDate()
+    ReadingTime: zIsoDateString()
       .nullable()
       .describe("Date and Time reading was taken."),
     /** Air temperature at the site in Celcius. */
