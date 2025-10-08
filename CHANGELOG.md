@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
-## [0.8.0] - 2025-10-07
+## [0.8.0] - 2025-01-27
 
 - Features
   - **CLI Tool Enhancement**: Added comprehensive `fetch-dottie` command-line tool with configurable transport options (`--jsonp`, `--no-validation`), output formatting (`--concise`, `--silent`, `--limit`), and improved parameter processing with automatic defaults
   - **Agent Documentation**: Added extensive documentation and handoff guides for AI agents, including API integration guides, schema refactoring documentation, and WSDOT naming convention standards
+  - **README Overhaul**: Complete redesign of README with emphasis on production-ready features, comprehensive parameterized examples, and detailed TanStack Query integration documentation
 
 - Improvements
   - **API Architecture Overhaul**: Complete restructuring from individual client/schema files to unified endpoint-based architecture, consolidating 90+ endpoints across 16 API modules for better maintainability and consistency
@@ -29,6 +30,7 @@ All notable changes to this project will be documented in this file.
   - **API Documentation**: Created structured endpoint specifications and cheat sheets for all 90+ endpoints
   - **Quality Standards**: Added detailed documentation standards and validation requirements for schema descriptions
   - **Integration Guides**: Enhanced documentation for Context7 integration and API usage patterns
+  - **README Enhancement**: Added comprehensive TanStack Query integration section, parameterized examples using real sampleParams, and production-ready implementation patterns
 
 - Build/Chore
   - **Dependency Updates**: Updated package dependencies and removed unused development dependencies
