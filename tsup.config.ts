@@ -7,7 +7,7 @@ export default defineConfig({
   dts: {
     entry: ["src/index.ts"], // Only generate .d.ts files for the main library entry
   },
-  splitting: false,
+  splitting: true,
   sourcemap: true,
   clean: false,
   minify: true,

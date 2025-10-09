@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [0.8.1] - 2025-10-09
+
+- Improvements
+  - **Bundle Size Optimization**: Enabled code-splitting in build configuration to reduce initial bundle size and improve tree-shaking for consumers
+  - **Build Performance**: Automatic chunk splitting for shared code and CLI components, reducing main bundle from monolithic structure
+
+- Build/Chore
+  - **Code Splitting**: Updated tsup.config.ts to enable splitting for better bundle optimization
+  - **Version Bump**: Patch release for bundle size improvements
+
 ## [0.8.0] - 2025-01-27
 
 - Features
