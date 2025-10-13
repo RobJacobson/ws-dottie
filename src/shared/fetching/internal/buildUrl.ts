@@ -58,26 +58,45 @@ export const buildCompleteUrl = <TInput = never>(
 
   // Replace template parameters in the endpoint string
   let processedEndpoint = endpoint;
+  const queryParamObject: Record<string, unknown> = {};
+
   if (params) {
     // Cast to Record<string, unknown> for URL building operations
     const paramsRecord = params as Record<string, unknown>;
 
-    // Validate that all provided parameters have corresponding templates
-    validateUrlParams(endpoint, paramsRecord);
+    // Get template parameters that exist in the endpoint
+    const templateParams = getUrlParams(endpoint);
 
     // Replace template parameters with actual values
     Object.entries(paramsRecord).forEach(([key, value]) => {
       const replaceParam = `{${key}}`;
-      // Convert values to string format for URL replacement
-      let replaceValue: string;
-      if (value instanceof Date) {
-        // Format Date objects as ISO-8601 strings for WSDOT APIs
-        replaceValue = value.toISOString();
+      // Check if this parameter is a template parameter
+      if (templateParams.has(key)) {
+        // Convert values to string format for URL replacement
+        let replaceValue: string;
+        if (value instanceof Date) {
+          // Format Date objects as ISO-8601 strings for WSDOT APIs
+          replaceValue = value.toISOString();
+        } else {
+          replaceValue = String(value);
+        }
+        processedEndpoint = processedEndpoint.replace(
+          replaceParam,
+          replaceValue
+        );
       } else {
-        replaceValue = String(value);
+        // This is a query parameter, not a template parameter
+        queryParamObject[key] = value;
       }
-      processedEndpoint = processedEndpoint.replace(replaceParam, replaceValue);
     });
+
+    // Validate that all provided parameters that are supposed to be template parameters have corresponding templates
+    if (templateParams.size > 0) {
+      const templateParamValues = Object.fromEntries(
+        Object.entries(paramsRecord).filter(([key]) => templateParams.has(key))
+      );
+      validateUrlParams(endpoint, templateParamValues);
+    }
   }
 
   // Remove entire query parameters for unreplaced template parameters
@@ -92,6 +111,13 @@ export const buildCompleteUrl = <TInput = never>(
   const url = baseUrl
     ? new URL(processedEndpoint, baseUrl)
     : new URL(processedEndpoint);
+
+  // Add query parameters that were not template parameters
+  Object.entries(queryParamObject).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      url.searchParams.set(key, String(value));
+    }
+  });
   const serviceType = getServiceType(url.toString());
   const apiKey = configManager.getApiKey();
 
