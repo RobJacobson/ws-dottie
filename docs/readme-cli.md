@@ -52,7 +52,7 @@ fetch-dottie getBorderCrossings --jsonp
 fetch-dottie getBorderCrossings --jsonp --no-validation
 
 # Get ferry terminal information with parameters
-fetch-dottie terminalWaitTimes
+fetch-dottie getTerminalWaitTimes
 
 # List all available functions
 fetch-dottie --list
@@ -231,83 +231,83 @@ fetch-dottie getBorderCrossings --silent
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
-| `vesselBasics` | Basic vessel information | wsf-vessels |
-| `vesselBasicsById` | Specific vessel details | wsf-vessels |
-| `vesselLocations` | Real-time vessel positions | wsf-vessels |
-| `vesselLocationsById` | Specific vessel location | wsf-vessels |
-| `vesselsVerbose` | Detailed vessel information | wsf-vessels |
-| `vesselsVerboseById` | Detailed vessel by ID | wsf-vessels |
-| `vesselStats` | Vessel statistics | wsf-vessels |
-| `vesselStatsById` | Specific vessel stats | wsf-vessels |
-| `vesselAccommodations` | Vessel accommodation info | wsf-vessels |
-| `vesselAccommodationsById` | Specific vessel accommodations | wsf-vessels |
-| `vesselHistories` | Recent vessel history | wsf-vessels |
-| `vesselHistoriesByVesselAndDateRange` | Historical vessel data | wsf-vessels |
+| `getVesselBasics` | Basic vessel information | wsf-vessels |
+| `getVesselBasicsByVesselId` | Specific vessel details | wsf-vessels |
+| `getVesselLocations` | Real-time vessel positions | wsf-vessels |
+| `getVesselLocationsByVesselId` | Specific vessel location | wsf-vessels |
+| `getVesselsVerbose` | Detailed vessel information | wsf-vessels |
+| `getVesselsVerboseByVesselId` | Detailed vessel by ID | wsf-vessels |
+| `getVesselStats` | Vessel statistics | wsf-vessels |
+| `getVesselStatsByVesselId` | Specific vessel stats | wsf-vessels |
+| `getVesselAccommodations` | Vessel accommodation info | wsf-vessels |
+| `getVesselAccommodationsByVesselId` | Specific vessel accommodations | wsf-vessels |
+| `getVesselHistories` | Recent vessel history | wsf-vessels |
+| `getVesselHistoriesByVesselNameAndDateRange` | Historical vessel data | wsf-vessels |
 | `cacheFlushDate` | Cache flush date | wsf-vessels |
 
 #### 🚟 **Terminals**
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
-| `terminalBasics` | Basic terminal information | wsf-terminals |
-| `terminalBasicsByTerminalId` | Specific terminal | wsf-terminals |
-| `terminalLocations` | Terminal locations | wsf-terminals |
-| `terminalLocationsByTerminalId` | Specific terminal location | wsf-terminals |
-| `terminalVerbose` | Detailed terminal info | wsf-terminals |
-| `terminalVerboseByTerminalId` | Detailed terminal by ID | wsf-terminals |
-| `terminalSailingSpace` | Terminal sailing space | wsf-terminals |
-| `terminalSailingSpaceByTerminalId` | Sailing space by terminal | wsf-terminals |
-| `terminalWaitTimes` | Current wait times | wsf-terminals |
-| `terminalWaitTimesByTerminalId` | Wait times by terminal | wsf-terminals |
-| `terminalBulletins` | Terminal bulletins | wsf-terminals |
-| `terminalBulletinsByTerminalId` | Bulletins by terminal | wsf-terminals |
-| `terminalTransports` | Terminal transport options | wsf-terminals |
-| `terminalTransportsByTerminalId` | Transport by terminal | wsf-terminals |
+| `getTerminalBasics` | Basic terminal information | wsf-terminals |
+| `getTerminalBasicsByTerminalId` | Specific terminal | wsf-terminals |
+| `getTerminalLocations` | Terminal locations | wsf-terminals |
+| `getTerminalLocationsByTerminalId` | Specific terminal location | wsf-terminals |
+| `getTerminalVerbose` | Detailed terminal info | wsf-terminals |
+| `getTerminalVerboseByTerminalId` | Detailed terminal by ID | wsf-terminals |
+| `getTerminalSailingSpace` | Terminal sailing space | wsf-terminals |
+| `getTerminalSailingSpaceByTerminalId` | Sailing space by terminal | wsf-terminals |
+| `getTerminalWaitTimes` | Current wait times | wsf-terminals |
+| `getTerminalWaitTimesByTerminalId` | Wait times by terminal | wsf-terminals |
+| `getTerminalBulletins` | Terminal bulletins | wsf-terminals |
+| `getTerminalBulletinsByTerminalId` | Bulletins by terminal | wsf-terminals |
+| `getTerminalTransports` | Terminal transport options | wsf-terminals |
+| `getTerminalTransportsByTerminalId` | Transport by terminal | wsf-terminals |
 | `cacheFlushDate` | Cache flush date | wsf-terminals |
 
 #### 📅 **Schedules**
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
-| `activeSeasons` | Active seasons | wsf-schedule |
-| `allSailings` | All sailings | wsf-schedule |
-| `routeDetailsByTripDate` | Route details by trip date | wsf-schedule |
-| `routeDetailsByTripDateAndRouteId` | Route by trip date and route ID | wsf-schedule |
-| `routeDetailsByTripDateAndTerminals` | Route by trip date and terminals | wsf-schedule |
-| `routesByTripDate` | Routes by trip date | wsf-schedule |
-| `routesByTerminals` | Routes by terminals | wsf-schedule |
-| `routesHavingServiceDisruptions` | Routes with disruptions | wsf-schedule |
-| `sailings` | Sailing information | wsf-schedule |
-| `scheduleAlerts` | Schedule alerts | wsf-schedule |
-| `scheduleByRoute` | Schedule by route | wsf-schedule |
-| `scheduleByTerminals` | Schedule by terminals | wsf-schedule |
-| `scheduleTodayByRoute` | Today's schedule by route | wsf-schedule |
-| `scheduleTodayByTerminals` | Today's schedule | wsf-schedule |
-| `scheduleValidDateRange` | Valid date range | wsf-schedule |
-| `scheduledRoutes` | Scheduled routes | wsf-schedule |
-| `scheduledRoutesById` | Routes by schedule ID | wsf-schedule |
-| `terminalMates` | Terminal connections | wsf-schedule |
-| `terminals` | Terminal list | wsf-schedule |
-| `terminalsAndMates` | Terminals and connections | wsf-schedule |
-| `terminalsAndMatesByRoute` | By route | wsf-schedule |
-| `timeAdjustments` | Time adjustments | wsf-schedule |
-| `timeAdjustmentsByRoute` | Adjustments by route | wsf-schedule |
-| `timeAdjustmentsBySchedRoute` | Adjustments by scheduled route | wsf-schedule |
+| `getActiveSeasons` | Active seasons | wsf-schedule |
+| `getSailingsBySchedRouteID` | All sailings | wsf-schedule |
+| `getRouteDetailsByTripDate` | Route details by trip date | wsf-schedule |
+| `getRouteDetailsByTripDateAndRouteId` | Route by trip date and route ID | wsf-schedule |
+| `getRouteDetailsByTripDateAndTerminals` | Route by trip date and terminals | wsf-schedule |
+| `getRoutesByTripDate` | Routes by trip date | wsf-schedule |
+| `getRoutesByTripDateAndTerminals` | Routes by terminals | wsf-schedule |
+| `getRoutesHavingServiceDisruptionsByTripDate` | Routes with disruptions | wsf-schedule |
+| `getSailingsBySchedRouteID` | Sailing information | wsf-schedule |
+| `getScheduleAlerts` | Schedule alerts | wsf-schedule |
+| `getScheduleByTripDateAndRouteId` | Schedule by route | wsf-schedule |
+| `getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds` | Schedule by terminals | wsf-schedule |
+| `getScheduleTodayByRoute` | Today's schedule by route | wsf-schedule |
+| `getScheduleTodayByTerminals` | Today's schedule | wsf-schedule |
+| `getScheduleValidDateRange` | Valid date range | wsf-schedule |
+| `getScheduledRoutes` | Scheduled routes | wsf-schedule |
+| `getScheduledRoutesById` | Routes by schedule ID | wsf-schedule |
+| `getTerminalMates` | Terminal connections | wsf-schedule |
+| `getTerminals` | Terminal list | wsf-schedule |
+| `getTerminalsAndMates` | Terminals and connections | wsf-schedule |
+| `getTerminalsAndMatesByRoute` | By route | wsf-schedule |
+| `getTimeAdjustments` | Time adjustments | wsf-schedule |
+| `getTimeAdjustmentsByRoute` | Adjustments by route | wsf-schedule |
+| `getTimeAdjustmentsBySchedRoute` | Adjustments by scheduled route | wsf-schedule |
 | `cacheFlushDate` | Cache flush date | wsf-schedule |
 
 #### 💰 **Fares**
 
 | Function | Description | API Group |
 |----------|-------------|-----------|
-| `fareLineItems` | Fare line items | wsf-fares |
-| `fareLineItemsBasic` | Basic fare items | wsf-fares |
-| `fareLineItemsVerbose` | Detailed fare items | wsf-fares |
-| `fareTotals` | Fare totals | wsf-fares |
-| `faresTerminals` | Fare terminals | wsf-fares |
-| `faresValidDateRange` | Valid fare date range | wsf-fares |
-| `terminalCombo` | Terminal combinations | wsf-fares |
-| `terminalComboVerbose` | Detailed combinations | wsf-fares |
-| `terminalMates` | Terminal fare connections | wsf-fares |
+| `getFareLineItemsByTripDateAndTerminals` | Fare line items | wsf-fares |
+| `getFareLineItemsBasic` | Basic fare items | wsf-fares |
+| `getFareLineItemsVerbose` | Detailed fare items | wsf-fares |
+| `getFareTotalsByTripDateAndRoute` | Fare totals | wsf-fares |
+| `getFaresTerminals` | Fare terminals | wsf-fares |
+| `getFaresValidDateRange` | Valid fare date range | wsf-fares |
+| `getTerminalCombo` | Terminal combinations | wsf-fares |
+| `getTerminalComboVerbose` | Detailed combinations | wsf-fares |
+| `getTerminalMates` | Terminal fare connections | wsf-fares |
 | `cacheFlushDate` | Cache flush date | wsf-fares |
 
 ## 📅 Date Handling
@@ -318,13 +318,13 @@ All date parameters in ws-dottie use the **YYYY-MM-DD** string format:
 
 ```bash
 # ✅ CORRECT - Use YYYY-MM-DD string format
-fetch-dottie scheduleByRoute '{"tripDate": "2025-10-01", "routeId": 1}'
-fetch-dottie fareLineItems '{"tripDate": "2025-12-25", "departingTerminalId": 7, "arrivingTerminalId": 3}'
+fetch-dottie getScheduleByTripDateAndRouteId '{"tripDate": "2025-10-01", "routeId": 1}'
+fetch-dottie getFareLineItemsByTripDateAndTerminals '{"tripDate": "2025-12-25", "departingTerminalId": 7, "arrivingTerminalId": 3}'
 fetch-dottie getTripRatesByDate '{"fromDate": "2025-01-01", "toDate": "2025-01-31"}'
 
 # ❌ INCORRECT - Will show validation error
-fetch-dottie scheduleByRoute '{"tripDate": "invalid-date", "routeId": 1}'
-fetch-dottie scheduleByRoute '{"tripDate": "10/01/2025", "routeId": 1}'
+fetch-dottie getScheduleByTripDateAndRouteId '{"tripDate": "invalid-date", "routeId": 1}'
+fetch-dottie getScheduleByTripDateAndRouteId '{"tripDate": "10/01/2025", "routeId": 1}'
 ```
 
 ### Date Validation
@@ -332,7 +332,7 @@ fetch-dottie scheduleByRoute '{"tripDate": "10/01/2025", "routeId": 1}'
 The CLI validates date format automatically:
 ```bash
 # Shows clear validation error for invalid dates
-fetch-dottie scheduleByRoute '{"tripDate": "invalid-date", "routeId": 1}'
+fetch-dottie getScheduleByTripDateAndRouteId '{"tripDate": "invalid-date", "routeId": 1}'
 # Output: ❌ Error: Date must be in YYYY-MM-DD format
 ```
 
@@ -361,25 +361,25 @@ The unified CLI tool supports four different fetch strategies:
 fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}'
 
 # ❌ Invalid parameters (shows validation error)
-fetch-dottie terminalWaitTimesByTerminalId '{"invalidParam": "value"}'
+fetch-dottie getTerminalWaitTimesByTerminalId '{"invalidParam": "value"}'
 ```
 
 **Raw data access (native fetch, no validation):**
 ```bash
 # Parameters passed directly to API (no validation)
-fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}' --no-validation
+fetch-dottie getTerminalWaitTimesByTerminalId '{"TerminalID": 7}' --no-validation
 ```
 
 **JSONP with validation (browser environments):**
 ```bash
 # JSONP request with validation
-fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}' --jsonp
+fetch-dottie getTerminalWaitTimesByTerminalId '{"TerminalID": 7}' --jsonp
 ```
 
 **JSONP without validation (browser environments, raw data):**
 ```bash
 # JSONP request without validation
-fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}' --jsonp --no-validation
+fetch-dottie getTerminalWaitTimesByTerminalId '{"TerminalID": 7}' --jsonp --no-validation
 ```
 
 ## 🤖 Agent Mode
@@ -425,13 +425,13 @@ fetch-dottie getBorderCrossings --pretty
 
 ```bash
 # Get clean ferry data for processing
-fetch-dottie vesselLocations --quiet
+fetch-dottie getVesselLocations --quiet
 
 # Get border crossing data for analysis
 fetch-dottie getBorderCrossings --quiet
 
 # Get raw JSON for programmatic use
-fetch-dottie terminalWaitTimes --silent
+fetch-dottie getTerminalWaitTimes --silent
 
 # Use in scripts or automation
 DATA=$(fetch-dottie getBorderCrossings --quiet)
@@ -517,16 +517,16 @@ fetch-dottie getAlerts
 ### 🚢 **Ferry Travel**
 ```bash
 # Find ferry schedules
-fetch-dottie routes '{"tripDate": "2025-10-01"}'
+fetch-dottie getRoutesByTripDateAndTerminals '{"tripDate": "2025-10-01"}'
 
 # Check terminal wait times
-fetch-dottie terminalWaitTimes
+fetch-dottie getTerminalWaitTimes
 
 # Get fare information
-fetch-dottie fareLineItems '{"departingTerminalId": 7, "arrivingTerminalId": 3, "tripDate": "2025-10-01"}'
+fetch-dottie getFareLineItemsByTripDateAndTerminals '{"departingTerminalId": 7, "arrivingTerminalId": 3, "tripDate": "2025-10-01"}'
 
 # Get vessel locations
-fetch-dottie vesselLocations
+fetch-dottie getVesselLocations
 ```
 
 ### 📷 **Traffic Monitoring**
@@ -566,7 +566,7 @@ fetch-dottie getAlerts --no-validation --quiet > raw.json
 fetch-dottie --list
 
 # Test with specific parameters
-fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}'
+fetch-dottie getTerminalWaitTimesByTerminalId '{"TerminalID": 7}'
 
 # Get raw response for debugging
 fetch-dottie getBorderCrossings --no-validation --silent
@@ -593,10 +593,10 @@ fetch-dottie --help
 # Check the expected parameter format
 fetch-dottie --help
 # Example: TerminalID should be a number, tripDate should be YYYY-MM-DD string
-fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": "7"}'  # ❌ String
-fetch-dottie terminalWaitTimesByTerminalId '{"TerminalID": 7}'    # ✅ Number
-fetch-dottie scheduleByRoute '{"tripDate": "invalid-date", "routeId": 1}'  # ❌ Invalid date format
-fetch-dottie scheduleByRoute '{"tripDate": "2025-10-01", "routeId": 1}'    # ✅ YYYY-MM-DD format
+fetch-dottie getTerminalWaitTimesByTerminalId '{"TerminalID": "7"}'  # ❌ String
+fetch-dottie getTerminalWaitTimesByTerminalId '{"TerminalID": 7}'    # ✅ Number
+fetch-dottie getScheduleByTripDateAndRouteId '{"tripDate": "invalid-date", "routeId": 1}'  # ❌ Invalid date format
+fetch-dottie getScheduleByTripDateAndRouteId '{"tripDate": "2025-10-01", "routeId": 1}'    # ✅ YYYY-MM-DD format
 ```
 
 **"Invalid JSON parameters" error:**
