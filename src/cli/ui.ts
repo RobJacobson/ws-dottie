@@ -215,19 +215,26 @@ export const displayFunctionNotFound = (functionName: string): void => {
  * @param options - CLI options controlling output format (pretty, head, etc.)
  */
 export const outputResult = (result: unknown, options: CliOptions): void => {
+  // Apply limit to array results if specified
+  let outputResult = result;
+  if (options.limit && options.limit > 0 && Array.isArray(result)) {
+    outputResult = result.slice(0, options.limit);
+  }
+
   // Handle concise output for arrays
-  if (options.concise && Array.isArray(result)) {
-    outputConciseArray(result, options);
+  if (options.concise && Array.isArray(outputResult)) {
+    outputConciseArray(outputResult, options);
     return;
   }
 
   const jsonString = JSON.stringify(
-    result,
+    outputResult,
     null,
     options.pretty ? 2 : undefined
   );
 
-  if (options.limit && options.limit > 0) {
+  if (options.limit && options.limit > 0 && !Array.isArray(result)) {
+    // For non-array results, limit by lines (original behavior)
     const lines = jsonString.split("\n");
     const truncatedLines = lines.slice(0, options.limit);
     console.log(truncatedLines.join("\n"));
