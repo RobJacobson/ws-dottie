@@ -26,7 +26,7 @@ export const wsfVesselsApi: ApiDefinition = {
      * VesselAccommodations response
      */
     {
-      function: "getVesselAccommodations",
+      function: "getAllVesselAccommodations",
       endpoint: "/vesselAccommodations",
       inputSchema: i.vesselAccommodationsSchema,
       outputSchema: z.array(o.vesselAccommodationsSchema),
@@ -53,7 +53,7 @@ export const wsfVesselsApi: ApiDefinition = {
      * VesselBasics response
      */
     {
-      function: "getVesselBasics",
+      function: "getAllVesselBasics",
       endpoint: "/vesselBasics",
       inputSchema: i.vesselBasicsSchema,
       outputSchema: z.array(o.vesselBasicSchema),
@@ -62,7 +62,7 @@ export const wsfVesselsApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.VesselBasicsInput, o.VesselBasic[]>,
     {
-      function: "getVesselBasicsById",
+      function: "getVesselBasicsByVesselId",
       endpoint: "/vesselBasics/{VesselID}",
       inputSchema: i.vesselBasicsByIdSchema,
       outputSchema: o.vesselBasicSchema,
@@ -74,7 +74,7 @@ export const wsfVesselsApi: ApiDefinition = {
      * VesselHistories response
      */
     {
-      function: "getVesselHistories",
+      function: "getAllVesselHistories",
       endpoint: "/vesselHistory",
       inputSchema: i.getAllVesselHistorySchema,
       outputSchema: z.array(o.vesselHistoryResponseSchema),
@@ -86,7 +86,7 @@ export const wsfVesselsApi: ApiDefinition = {
       o.VesselHistoryResponse[]
     >,
     {
-      function: "getVesselHistoriesByVesselAndDateRange",
+      function: "getVesselHistoriesByVesselNameAndDateRange",
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
       inputSchema: i.getVesselHistorySchema,
       outputSchema: z.array(o.vesselHistoryResponseSchema),
@@ -105,7 +105,7 @@ export const wsfVesselsApi: ApiDefinition = {
      * VesselLocations response
      */
     {
-      function: "getVesselLocations",
+      function: "getAllVesselLocations",
       endpoint: "/vesselLocations",
       inputSchema: i.vesselLocationsSchema,
       outputSchema: z.array(o.vesselLocationsSchema),
@@ -114,7 +114,7 @@ export const wsfVesselsApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.VesselLocationsInput, o.VesselLocations[]>,
     {
-      function: "getVesselLocationsById",
+      function: "getVesselLocationsByVesselId",
       endpoint: "/vesselLocations/{VesselID}",
       inputSchema: i.vesselLocationsByIdSchema,
       outputSchema: o.vesselLocationsSchema,
@@ -129,7 +129,7 @@ export const wsfVesselsApi: ApiDefinition = {
      * VesselStats response
      */
     {
-      function: "getVesselStats",
+      function: "getAllVesselStats",
       endpoint: "/vesselStats",
       inputSchema: i.vesselStatsSchema,
       outputSchema: z.array(o.vesselStatsSchema),
@@ -138,7 +138,7 @@ export const wsfVesselsApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.VesselStatsInput, o.VesselStats[]>,
     {
-      function: "getVesselStatsById",
+      function: "getVesselStatsByVesselId",
       endpoint: "/vesselStats/{VesselID}",
       inputSchema: i.vesselStatsByIdSchema,
       outputSchema: o.vesselStatsSchema,
@@ -150,7 +150,7 @@ export const wsfVesselsApi: ApiDefinition = {
      * VesselsVerbose response
      */
     {
-      function: "getVesselsVerbose",
+      function: "getAllVesselsVerbose",
       endpoint: "/vesselVerbose",
       inputSchema: i.vesselVerboseSchema,
       outputSchema: z.array(o.vesselVerboseSchema),
@@ -159,7 +159,7 @@ export const wsfVesselsApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.VesselVerboseInput, o.VesselVerbose[]>,
     {
-      function: "getVesselsVerboseById",
+      function: "getVesselsVerboseByVesselId",
       endpoint: "/vesselVerbose/{VesselID}",
       inputSchema: i.vesselVerboseByIdSchema,
       outputSchema: o.vesselVerboseSchema,

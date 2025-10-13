@@ -26,7 +26,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalBasic response
      */
     {
-      function: "getTerminalBasics",
+      function: "getAllTerminalBasics",
       endpoint: "/terminalBasics",
       inputSchema: i.terminalBasicsSchema,
       outputSchema: z.array(o.terminalBasicSchema),
@@ -47,7 +47,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalBulletin response
      */
     {
-      function: "getTerminalBulletins",
+      function: "getAllTerminalBulletins",
       endpoint: "/terminalBulletins",
       inputSchema: i.terminalBulletinsSchema,
       outputSchema: z.array(o.terminalBulletinSchema),
@@ -74,7 +74,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalLocation response
      */
     {
-      function: "getTerminalLocations",
+      function: "getAllTerminalLocations",
       endpoint: "/terminalLocations",
       inputSchema: i.terminalLocationsSchema,
       outputSchema: z.array(o.terminalLocationSchema),
@@ -101,7 +101,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalSailingSpace response
      */
     {
-      function: "getTerminalSailingSpace",
+      function: "getAllTerminalSailingSpace",
       endpoint: "/terminalSailingSpace",
       inputSchema: i.terminalSailingSpaceSchema,
       outputSchema: z.array(o.terminalSailingSpaceSchema),
@@ -128,7 +128,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalTransportationOption response
      */
     {
-      function: "getTerminalTransports",
+      function: "getAllTerminalTransports",
       endpoint: "/terminalTransports",
       inputSchema: i.terminalTransportsSchema,
       outputSchema: z.array(o.terminalTransportationOptionSchema),
@@ -155,7 +155,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalVerbose response
      */
     {
-      function: "getTerminalVerbose",
+      function: "getAllTerminalVerbose",
       endpoint: "/terminalVerbose",
       inputSchema: i.terminalVerboseSchema,
       outputSchema: z.array(o.terminalVerboseSchema),
@@ -179,7 +179,7 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalWaitTime response
      */
     {
-      function: "getTerminalWaitTimes",
+      function: "getAllTerminalWaitTimes",
       endpoint: "/terminalWaitTimes",
       inputSchema: i.terminalWaitTimesSchema,
       outputSchema: z.array(o.terminalWaitTimeSchema),

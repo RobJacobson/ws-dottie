@@ -27,7 +27,7 @@ export const wsfFaresApi: ApiDefinition = {
      * LineItemResponse response
      */
     {
-      function: "getFareLineItems",
+      function: "getFareLineItemsByTripDateAndTerminals",
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
       inputSchema: i.fareLineItemsSchema,
@@ -114,7 +114,7 @@ export const wsfFaresApi: ApiDefinition = {
      * FareTotalResponse response
      */
     {
-      function: "getFareTotals",
+      function: "getFareTotalsByTripDateAndRoute",
       endpoint:
         "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
       inputSchema: i.fareTotalsSchema,

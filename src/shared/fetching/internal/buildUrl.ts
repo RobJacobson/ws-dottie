@@ -107,7 +107,7 @@ const buildQueryString = (
 
   // Add new parameters that aren't already in the template
   for (const [key, value] of Object.entries(params)) {
-    if (value != null && !searchParams.has(key)) {
+    if (value !== null && !searchParams.has(key)) {
       searchParams.set(key, formatParamValue(value));
     }
   }

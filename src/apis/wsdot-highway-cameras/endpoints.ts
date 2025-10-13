@@ -21,7 +21,7 @@ export const wsdotHighwayCamerasApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
     {
-      function: "getHighwayCameras",
+      function: "getAllHighwayCameras",
       endpoint: "/getCamerasAsJson",
       inputSchema: i.getCamerasSchema,
       outputSchema: z.array(o.cameraSchema),

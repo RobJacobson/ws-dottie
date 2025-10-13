@@ -12,7 +12,7 @@ export const wsdotTravelTimesApi: ApiDefinition = {
      * TravelTimeRoute response
      */
     {
-      function: "getTravelTime",
+      function: "getTravelTimeById",
       endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
       inputSchema: i.getTravelTimeSchema,
       outputSchema: o.travelTimeRouteSchema,
@@ -21,7 +21,7 @@ export const wsdotTravelTimesApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
     {
-      function: "getTravelTimes",
+      function: "getAllTravelTimes",
       endpoint: "/getTravelTimesAsJson",
       inputSchema: i.getTravelTimesSchema,
       outputSchema: z.array(o.travelTimeRouteSchema),

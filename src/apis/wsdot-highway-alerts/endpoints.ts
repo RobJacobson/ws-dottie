@@ -13,7 +13,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
      * Alert response
      */
     {
-      function: "getAlerts",
+      function: "getAllAlerts",
       endpoint: "/getAlertsAsJson",
       inputSchema: i.getAlertsSchema,
       outputSchema: z.array(o.alertSchema),
@@ -22,7 +22,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.GetAlertsInput, o.Alert[]>,
     {
-      function: "getAlert",
+      function: "getAlertById",
       endpoint: "/getAlertAsJson?AlertID={AlertID}",
       inputSchema: i.getAlertSchema,
       outputSchema: o.alertSchema,
@@ -40,7 +40,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.GetAlertsByRegionIDInput, o.Alert[]>,
     {
-      function: "getAlertsForMapArea",
+      function: "getAlertsByMapArea",
       endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
       inputSchema: i.getAlertsForMapAreaSchema,
       outputSchema: z.array(o.alertSchema),
@@ -68,7 +68,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
      * String response
      */
     {
-      function: "getEventCategories",
+      function: "getAllEventCategories",
       endpoint: "/getEventCategoriesAsJson",
       inputSchema: i.getEventCategoriesSchema,
       outputSchema: z.array(z.string()),
@@ -80,7 +80,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
      * Area response
      */
     {
-      function: "getMapAreas",
+      function: "getAllMapAreas",
       endpoint: "/getMapAreasAsJson",
       inputSchema: i.getMapAreasSchema,
       outputSchema: z.array(o.areaSchema),
