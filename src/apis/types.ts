@@ -44,4 +44,6 @@ export interface EndpointDefinition<I, O> {
   sampleParams?: I | (() => Promise<I>);
   /** Cache strategy */
   cacheStrategy: CacheStrategy;
+  /** Description for MCP tool discovery */
+  description: string;
 }

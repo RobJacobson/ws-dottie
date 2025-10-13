@@ -17,6 +17,7 @@ export const wsdotWeatherReadingsApi: ApiDefinition = {
       outputSchema: z.array(o.weatherReadingSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetWeatherReadingsInput,
       o.WeatherReading[]

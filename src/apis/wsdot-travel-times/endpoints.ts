@@ -18,6 +18,7 @@ export const wsdotTravelTimesApi: ApiDefinition = {
       outputSchema: o.travelTimeRouteSchema,
       sampleParams: { TravelTimeID: 1 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
     {
       function: "getTravelTimes",
@@ -26,6 +27,7 @@ export const wsdotTravelTimesApi: ApiDefinition = {
       outputSchema: z.array(o.travelTimeRouteSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.GetTravelTimesInput, o.TravelTimeRoute[]>,
   ],
 };

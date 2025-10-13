@@ -19,6 +19,7 @@ export const wsdotWeatherInformationApi: ApiDefinition = {
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetCurrentWeatherInformationInput,
       o.WeatherInfo[]
@@ -31,6 +32,7 @@ export const wsdotWeatherInformationApi: ApiDefinition = {
       outputSchema: o.weatherInfoSchema,
       sampleParams: { StationID: 1909 },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetCurrentWeatherInformationByStationIDInput,
       o.WeatherInfo
@@ -42,6 +44,7 @@ export const wsdotWeatherInformationApi: ApiDefinition = {
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: { StationList: "1909,1966,1970" },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetCurrentWeatherForStationsInput,
       o.WeatherInfo[]
@@ -54,10 +57,11 @@ export const wsdotWeatherInformationApi: ApiDefinition = {
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: {
         StationID: 1980,
-        SearchStartTime: new Date(`${datesHelper.yesterday()}T00:00:00Z`),
+        SearchStartTime: new Date(`${datesHelper.yesterday()}T0:00:00Z`),
         SearchEndTime: new Date(`${datesHelper.today()}T23:59:59Z`),
       },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.SearchWeatherInformationInput,
       o.WeatherInfo[]

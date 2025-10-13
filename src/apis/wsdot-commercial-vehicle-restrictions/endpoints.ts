@@ -18,6 +18,7 @@ export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
       outputSchema: z.array(o.cVRestrictionDataSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetCommercialVehicleRestrictionsInput,
       o.CVRestrictionData[]
@@ -32,6 +33,7 @@ export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
       outputSchema: z.array(o.cVRestrictionDataWithIdSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetCommercialVehicleRestrictionsWithIdInput,
       o.CVRestrictionDataWithId[]

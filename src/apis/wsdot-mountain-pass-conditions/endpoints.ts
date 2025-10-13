@@ -19,6 +19,7 @@ export const wsdotMountainPassConditionsApi: ApiDefinition = {
       outputSchema: o.passConditionSchema,
       sampleParams: { PassConditionID: 12 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetMountainPassConditionInput,
       o.PassCondition
@@ -30,6 +31,7 @@ export const wsdotMountainPassConditionsApi: ApiDefinition = {
       outputSchema: z.array(o.passConditionSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetMountainPassConditionsInput,
       o.PassCondition[]

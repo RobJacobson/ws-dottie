@@ -18,6 +18,7 @@ export const wsdotTrafficFlowApi: ApiDefinition = {
       outputSchema: z.array(o.flowDataSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetTrafficFlowsInput, o.FlowData[]>,
     {
       function: "getTrafficFlowById",
@@ -26,6 +27,7 @@ export const wsdotTrafficFlowApi: ApiDefinition = {
       outputSchema: o.flowDataSchema,
       sampleParams: { FlowDataID: 2482 },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetTrafficFlowInput, o.FlowData>,
   ],
 };

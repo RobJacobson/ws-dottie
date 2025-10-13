@@ -12,12 +12,13 @@ export const wsdotHighwayCamerasApi: ApiDefinition = {
      * Camera response
      */
     {
-      function: "getHighwayCamera",
+      function: "getHighwayCameraByCameraId",
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
       inputSchema: i.getCameraSchema,
       outputSchema: o.cameraSchema,
       sampleParams: { CameraID: 9818 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
     {
       function: "getHighwayCameras",
@@ -26,14 +27,20 @@ export const wsdotHighwayCamerasApi: ApiDefinition = {
       outputSchema: z.array(o.cameraSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.GetCamerasInput, o.Camera[]>,
     {
-      function: "searchHighwayCameras",
+      function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
       inputSchema: i.searchCamerasSchema,
       outputSchema: z.array(o.cameraSchema),
-      sampleParams: {},
+      sampleParams: {
+        StateRoute: "I-5",
+        StartingMilepost: 10,
+        EndingMilepost: 20,
+      },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.SearchCamerasInput, o.Camera[]>,
   ],
 };

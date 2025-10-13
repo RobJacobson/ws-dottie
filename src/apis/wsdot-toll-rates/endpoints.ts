@@ -18,6 +18,7 @@ export const wsdotTollRatesApi: ApiDefinition = {
       outputSchema: z.array(o.tollRateSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetTollRatesInput, o.TollRate[]>,
     /**
      * TollTripInfo response
@@ -29,6 +30,7 @@ export const wsdotTollRatesApi: ApiDefinition = {
       outputSchema: z.array(o.tollTripInfoSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetTollTripInfoInput, o.TollTripInfo[]>,
     /**
      * TollTripsRates response
@@ -40,6 +42,7 @@ export const wsdotTollRatesApi: ApiDefinition = {
       outputSchema: o.tollTripsRatesSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetTollTripRatesInput, o.TollTripsRates>,
     {
       function: "getTripRatesByDate",
@@ -51,6 +54,7 @@ export const wsdotTollRatesApi: ApiDefinition = {
         ToDate: datesHelper.yesterday(),
       },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetTripRatesByDateInput,
       o.TollTripsRates[]
@@ -62,6 +66,7 @@ export const wsdotTollRatesApi: ApiDefinition = {
       outputSchema: o.tollTripsRatesSchema,
       sampleParams: { Version: 352417 },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetTripRatesByVersionInput,
       o.TollTripsRates
@@ -76,6 +81,7 @@ export const wsdotTollRatesApi: ApiDefinition = {
       outputSchema: o.tollTripVersionSchema,
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetTollTripVersionInput,
       o.TollTripVersion

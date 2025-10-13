@@ -19,6 +19,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       outputSchema: z.array(o.alertSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetAlertsInput, o.Alert[]>,
     {
       function: "getAlert",
@@ -27,6 +28,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       outputSchema: o.alertSchema,
       sampleParams: { AlertID: 468632 },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetAlertInput, o.Alert>,
     {
       function: "getAlertsByRegionId",
@@ -35,6 +37,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       outputSchema: z.array(o.alertSchema),
       sampleParams: { RegionID: 9 },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetAlertsByRegionIDInput, o.Alert[]>,
     {
       function: "getAlertsForMapArea",
@@ -43,6 +46,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       outputSchema: z.array(o.alertSchema),
       sampleParams: { MapArea: "Seattle" },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetAlertsForMapAreaInput, o.Alert[]>,
     {
       function: "searchAlerts",
@@ -58,6 +62,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
         SearchTimeEnd: datesHelper.today(),
       },
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.SearchAlertsInput, o.Alert[]>,
     /**
      * String response
@@ -69,6 +74,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       outputSchema: z.array(z.string()),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetEventCategoriesInput, string[]>,
     /**
      * Area response
@@ -80,6 +86,7 @@ export const wsdotHighwayAlertsApi: ApiDefinition = {
       outputSchema: z.array(o.areaSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<i.GetMapAreasInput, o.Area[]>,
   ],
 };

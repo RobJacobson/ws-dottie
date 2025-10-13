@@ -12,12 +12,13 @@ export const wsfFaresApi: ApiDefinition = {
      * CacheFlushDateResponse response
      */
     {
-      function: "cacheFlushDate",
+      function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
       inputSchema: i.cacheFlushDateSchema,
       outputSchema: o.cacheFlushDateResponseSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.FaresCacheFlushDateInput,
       o.FaresCacheFlushDateResponse
@@ -26,7 +27,7 @@ export const wsfFaresApi: ApiDefinition = {
      * LineItemResponse response
      */
     {
-      function: "fareLineItems",
+      function: "getFareLineItems",
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
       inputSchema: i.fareLineItemsSchema,
@@ -38,9 +39,10 @@ export const wsfFaresApi: ApiDefinition = {
         RoundTrip: false,
       },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.FareLineItemsInput, o.LineItemResponse[]>,
     {
-      function: "fareLineItemsBasic",
+      function: "getFareLineItemsBasic",
       endpoint:
         "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
       inputSchema: i.fareLineItemsBasicSchema,
@@ -52,6 +54,7 @@ export const wsfFaresApi: ApiDefinition = {
         RoundTrip: false,
       },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.FareLineItemsBasicInput,
       o.LineItemResponse[]
@@ -60,12 +63,13 @@ export const wsfFaresApi: ApiDefinition = {
      * LineItemVerboseResponse response
      */
     {
-      function: "fareLineItemsVerbose",
+      function: "getFareLineItemsVerbose",
       endpoint: "/fareLineItemsVerbose/{TripDate}",
       inputSchema: i.fareLineItemsVerboseSchema,
       outputSchema: o.lineItemVerboseResponseSchema,
       sampleParams: { TripDate: datesHelper.today() },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.FareLineItemsVerboseInput,
       o.LineItemVerboseResponse
@@ -74,31 +78,34 @@ export const wsfFaresApi: ApiDefinition = {
      * TerminalResponse response
      */
     {
-      function: "faresTerminals",
+      function: "getFaresTerminals",
       endpoint: "/terminals/{TripDate}",
       inputSchema: i.terminalsSchema,
       outputSchema: z.array(o.terminalResponseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.TerminalsInput, o.TerminalResponse[]>,
     {
-      function: "terminalMates",
+      function: "getTerminalMates",
       endpoint: "/terminalMates/{TripDate}/{TerminalID}",
       inputSchema: i.terminalMatesSchema,
       outputSchema: z.array(o.terminalResponseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.TerminalMatesInput, o.TerminalResponse[]>,
     /**
      * ValidDateRangeResponse response
      */
     {
-      function: "faresValidDateRange",
+      function: "getFaresValidDateRange",
       endpoint: "/validdaterange",
       inputSchema: i.validDateRangeSchema,
       outputSchema: o.validDateRangeResponseSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.ValidDateRangeInput,
       o.ValidDateRangeResponse
@@ -107,7 +114,7 @@ export const wsfFaresApi: ApiDefinition = {
      * FareTotalResponse response
      */
     {
-      function: "fareTotals",
+      function: "getFareTotals",
       endpoint:
         "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
       inputSchema: i.fareTotalsSchema,
@@ -121,12 +128,13 @@ export const wsfFaresApi: ApiDefinition = {
         Quantity: "3,1",
       },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.FareTotalsInput, o.FareTotalResponse[]>,
     /**
      * TerminalComboResponse response
      */
     {
-      function: "terminalCombo",
+      function: "getTerminalCombo",
       endpoint:
         "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: i.terminalComboSchema,
@@ -137,6 +145,7 @@ export const wsfFaresApi: ApiDefinition = {
         ArrivingTerminalID: 10,
       },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalComboInput,
       o.TerminalComboResponse
@@ -145,12 +154,13 @@ export const wsfFaresApi: ApiDefinition = {
      * TerminalComboVerboseResponse response
      */
     {
-      function: "terminalComboVerbose",
+      function: "getTerminalComboVerbose",
       endpoint: "/terminalComboVerbose/{TripDate}",
       inputSchema: i.terminalComboVerboseSchema,
       outputSchema: z.array(o.terminalComboVerboseResponseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalComboVerboseInput,
       o.TerminalComboVerboseResponse[]

@@ -11,12 +11,13 @@ export const wsfTerminalsApi: ApiDefinition = {
      * CacheFlushDate response
      */
     {
-      function: "cacheFlushDate",
+      function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
       inputSchema: i.cacheFlushDateSchema,
       outputSchema: o.cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalsCacheFlushDateInput,
       o.TerminalsCacheFlushDate
@@ -25,42 +26,46 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalBasic response
      */
     {
-      function: "terminalBasics",
+      function: "getTerminalBasics",
       endpoint: "/terminalBasics",
       inputSchema: i.terminalBasicsSchema,
       outputSchema: z.array(o.terminalBasicSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.TerminalBasicsInput, o.TerminalBasic[]>,
     {
-      function: "terminalBasicsByTerminalId",
+      function: "getTerminalBasicsByTerminalId",
       endpoint: "/terminalBasics/{TerminalID}",
       inputSchema: i.terminalBasicsByIdSchema,
       outputSchema: o.terminalBasicSchema,
       sampleParams: { TerminalID: 1 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.TerminalBasicsByIdInput, o.TerminalBasic>,
     /**
      * TerminalBulletin response
      */
     {
-      function: "terminalBulletins",
+      function: "getTerminalBulletins",
       endpoint: "/terminalBulletins",
       inputSchema: i.terminalBulletinsSchema,
       outputSchema: z.array(o.terminalBulletinSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalBulletinsInput,
       o.TerminalBulletin[]
     >,
     {
-      function: "terminalBulletinsByTerminalId",
+      function: "getTerminalBulletinsByTerminalId",
       endpoint: "/terminalBulletins/{TerminalID}",
       inputSchema: i.terminalBulletinsByIdSchema,
       outputSchema: o.terminalBulletinSchema,
       sampleParams: { TerminalID: 3 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalBulletinsByIdInput,
       o.TerminalBulletin
@@ -69,23 +74,25 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalLocation response
      */
     {
-      function: "terminalLocations",
+      function: "getTerminalLocations",
       endpoint: "/terminalLocations",
       inputSchema: i.terminalLocationsSchema,
       outputSchema: z.array(o.terminalLocationSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalLocationsInput,
       o.TerminalLocation[]
     >,
     {
-      function: "terminalLocationsByTerminalId",
+      function: "getTerminalLocationsByTerminalId",
       endpoint: "/terminalLocations/{TerminalID}",
       inputSchema: i.terminalLocationsByIdSchema,
       outputSchema: o.terminalLocationSchema,
       sampleParams: { TerminalID: 5 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalLocationsByIdInput,
       o.TerminalLocation
@@ -94,23 +101,25 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalSailingSpace response
      */
     {
-      function: "terminalSailingSpace",
+      function: "getTerminalSailingSpace",
       endpoint: "/terminalSailingSpace",
       inputSchema: i.terminalSailingSpaceSchema,
       outputSchema: z.array(o.terminalSailingSpaceSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalSailingSpaceInput,
       o.TerminalSailingSpace[]
     >,
     {
-      function: "terminalSailingSpaceByTerminalId",
+      function: "getTerminalSailingSpaceByTerminalId",
       endpoint: "/terminalSailingSpace/{TerminalID}",
       inputSchema: i.terminalSailingSpaceByIdSchema,
       outputSchema: o.terminalSailingSpaceSchema,
       sampleParams: { TerminalID: 7 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalSailingSpaceByIdInput,
       o.TerminalSailingSpace
@@ -119,23 +128,25 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalTransportationOption response
      */
     {
-      function: "terminalTransports",
+      function: "getTerminalTransports",
       endpoint: "/terminalTransports",
       inputSchema: i.terminalTransportsSchema,
       outputSchema: z.array(o.terminalTransportationOptionSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalTransportsInput,
       o.TerminalTransportationOption[]
     >,
     {
-      function: "terminalTransportsByTerminalId",
+      function: "getTerminalTransportsByTerminalId",
       endpoint: "/terminalTransports/{TerminalID}",
       inputSchema: i.terminalTransportsByIdSchema,
       outputSchema: o.terminalTransportationOptionSchema,
       sampleParams: { TerminalID: 10 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalTransportsByIdInput,
       o.TerminalTransportationOption
@@ -144,20 +155,22 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalVerbose response
      */
     {
-      function: "terminalVerbose",
+      function: "getTerminalVerbose",
       endpoint: "/terminalVerbose",
       inputSchema: i.terminalVerboseSchema,
       outputSchema: z.array(o.terminalVerboseSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.TerminalVerboseInput, o.TerminalVerbose[]>,
     {
-      function: "terminalVerboseByTerminalId",
+      function: "getTerminalVerboseByTerminalId",
       endpoint: "/terminalVerbose/{TerminalID}",
       inputSchema: i.terminalVerboseByIdSchema,
       outputSchema: o.terminalVerboseSchema,
       sampleParams: { TerminalID: 4 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalVerboseByIdInput,
       o.TerminalVerbose
@@ -166,23 +179,25 @@ export const wsfTerminalsApi: ApiDefinition = {
      * TerminalWaitTime response
      */
     {
-      function: "terminalWaitTimes",
+      function: "getTerminalWaitTimes",
       endpoint: "/terminalWaitTimes",
       inputSchema: i.terminalWaitTimesSchema,
       outputSchema: z.array(o.terminalWaitTimeSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalWaitTimesInput,
       o.TerminalWaitTime[]
     >,
     {
-      function: "terminalWaitTimesByTerminalId",
+      function: "getTerminalWaitTimesByTerminalId",
       endpoint: "/terminalWaitTimes/{TerminalID}",
       inputSchema: i.terminalWaitTimesByIdSchema,
       outputSchema: o.terminalWaitTimeSchema,
       sampleParams: { TerminalID: 11 },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.TerminalWaitTimesByIdInput,
       o.TerminalWaitTime

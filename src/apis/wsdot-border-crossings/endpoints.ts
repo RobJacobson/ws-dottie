@@ -18,6 +18,7 @@ export const wsdotBorderCrossingsApi: ApiDefinition = {
       outputSchema: z.array(o.borderCrossingDataSchema),
       sampleParams: {},
       cacheStrategy: "FREQUENT",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetBorderCrossingsInput,
       o.BorderCrossingData[]

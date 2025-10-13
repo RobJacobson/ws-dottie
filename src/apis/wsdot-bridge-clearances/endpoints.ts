@@ -17,6 +17,7 @@ export const wsdotBridgeClearancesApi: ApiDefinition = {
       outputSchema: z.array(o.bridgeDataGISSchema),
       sampleParams: {},
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<i.GetClearancesInput, o.BridgeDataGIS[]>,
     {
       function: "getBridgeClearancesByRoute",
@@ -25,6 +26,7 @@ export const wsdotBridgeClearancesApi: ApiDefinition = {
       outputSchema: z.array(o.bridgeDataGISSchema),
       sampleParams: { Route: "005" },
       cacheStrategy: "STATIC",
+      description: "",
     } satisfies EndpointDefinition<
       i.GetClearancesByRouteInput,
       o.BridgeDataGIS[]
