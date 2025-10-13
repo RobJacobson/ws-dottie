@@ -61,7 +61,9 @@ DateStart: z.string().describe(
 )
 ```
 
-### B. Output Schema Documentation
+### B. Endpoint description documentation
+
+Always follow these requirements for the textual description property for each endpoint definition under src/apis/*/endpoints.ts:
 
 #### Three Endpoint Categories with Standardized Lead Sentences:
 
@@ -112,22 +114,6 @@ export const vesselLocationsSchema = z.array(vesselLocationSchema).describe(
 Latitude: z.number().describe(
   "Current latitude coordinate for vessel position, as a decimal degree. Updates every 5 seconds when vessel is in transit."
 )
-```
-
-### C. Endpoint Description Documentation
-
-#### Template Pattern:
-```
-"[Primary purpose]. [Key data included]. [Common use cases]. [Integration opportunities with other APIs when relevant]."
-```
-
-#### Length: 200-800 characters (single narrative string)
-
-#### Example:
-```json
-{
-  "getVesselLocations": "Provides real-time location and status data for Washington State Ferry vessels, especially critical during weather delays or service disruptions. Returns vessel coordinates, ETA information, and operational status for passenger planning. Combine with wsf-schedule/getSchedules for planned vs actual departure times, or use with wsf-terminals/getTerminalConditions to understand dock availability."
-}
 ```
 
 ## Special Considerations
