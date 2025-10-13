@@ -5,10 +5,23 @@
 This guide provides consistent documentation patterns for describing API endpoints, input schemas, and output schemas across Washington State transportation APIs (WSDOT and WSF). The goal is to create discoverable, semantic documentation that serves both human developers and AI agents via Model Context Protocol (MCP).
 
 ## Required Sources and Context
-Before you create or revise any descriptions, you *must have* complete context. You must review:
-- The existing Zod schemas linked in the endpoints.ts files. THese are authoritative and correct concerning the shape of the data. The "describe" language is not authoritative.
-- The API documents under docs/references/api-specs. These provide narrative explanations of each endpoint that provide a useful starting point for descriptions and guidance about the business purpose of that endpoint, but are not cannonical here.
-- Achtual data samples from the API using the wsf-dottie CLI tool, as described in readme.md and docs/readme-cli. Agents must fetch data initially using this format, which uses default parameters and truncates the output:
+Before you create or revise any descriptions, you *must have* complete context. You must review ALL THREE of the following sources:
+
+### MANDATORY RESEARCH CHECKLIST
+Agents are FORBIDDEN from writing ANY descriptions until ALL three research steps are completed. Violation of this rule results in immediate task termination.
+
+□ **Step 1: Review the existing Zod schemas** - Read the schema files linked in the endpoints.ts files. These are authoritative and correct concerning the shape of the data. The "describe" language is not authoritative.
+
+□ **Step 2: Review API documentation** - Read the API documents under docs/references/api-specs. These provide narrative explanations of each endpoint that provide a useful starting point for descriptions and guidance about the business purpose of that endpoint, but are not canonical here.
+
+□ **Step 3: Fetch actual data samples** - Use the wsf-dottie CLI tool to get actual data from the API, as described in readme.md and docs/readme-cli. Agents must fetch data initially using this format, which uses default parameters and truncates the output:
+```
+npx fetch-dottie getVesselLocations --concise --limit 10
+```
+
+**IMPORTANT**: All three steps above must be completed before writing ANY descriptions. If you attempt to write descriptions without completing these three steps, you must stop immediately and complete the missing steps first.
+
+**CRITICAL**: When using fetch-dottie to get actual data samples, agents MUST follow the exact format specified and MUST NOT depart from these instructions or add custom parameters. The CLI tool is designed to insert preconfigured default parameters for endpoints that require parameters. Adding custom parameters will break the functionality. Use ONLY the format shown in the examples:
 ```
 npx fetch-dottie getVesselLocations --concise --limit 10
 ```
