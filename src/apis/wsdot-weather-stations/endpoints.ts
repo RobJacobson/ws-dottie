@@ -12,7 +12,7 @@ export const wsdotWeatherStationsApi: ApiDefinition = {
      * WeatherStation response
      */
     {
-      function: "getAllWeatherStations",
+      function: "getWeatherStations",
       endpoint: "/GetCurrentStationsAsJson",
       inputSchema: i.getCurrentStationsSchema,
       outputSchema: z.array(o.weatherStationSchema),

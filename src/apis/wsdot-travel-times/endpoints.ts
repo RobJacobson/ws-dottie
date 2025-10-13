@@ -21,7 +21,7 @@ export const wsdotTravelTimesApi: ApiDefinition = {
       description: "",
     } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
     {
-      function: "getAllTravelTimes",
+      function: "getTravelTimes",
       endpoint: "/getTravelTimesAsJson",
       inputSchema: i.getTravelTimesSchema,
       outputSchema: z.array(o.travelTimeRouteSchema),

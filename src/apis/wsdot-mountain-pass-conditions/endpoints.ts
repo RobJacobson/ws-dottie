@@ -25,7 +25,7 @@ export const wsdotMountainPassConditionsApi: ApiDefinition = {
       o.PassCondition
     >,
     {
-      function: "getAllMountainPassConditions",
+      function: "getMountainPassConditions",
       endpoint: "/getMountainPassConditionsAsJson",
       inputSchema: i.getMountainPassConditionsSchema,
       outputSchema: z.array(o.passConditionSchema),
