@@ -222,12 +222,6 @@ export const vesselHistoryResponseSchema = z.array(z.object({
 })).describe("Returns a list of VesselHistory data for all vessels, filtered by VesselName, start date, and end date. Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time). Data updates infrequently.")
 ```
 
-### Endpoint Description Example:
-```json
-{
-  "getVesselHistoriesByVesselNameAndDateRange": "Retrieves historical sailing records for a specific WSF vessel within a date range, especially useful for analyzing service patterns and performance. Returns departure/arrival times, terminals, and actual vs scheduled performance. Use with wsf-vessels/getAllVesselBasics to identify vessel IDs, or combine with wsf-schedule/getSchedules to compare planned vs actual operations."
-}
-```
 
 ## Quality Standards
 
