@@ -140,12 +140,8 @@ const injectApiKey = (url: URL): void => {
  * @param url - The URL string to analyze
  * @returns The detected service type
  */
-const getServiceType = (url: string): "wsdot" | "wsf" | "unknown" => {
-  const lowerUrl = url.toLowerCase();
-  if (lowerUrl.includes("/traffic/")) return "wsdot";
-  if (lowerUrl.includes("/ferries/")) return "wsf";
-  return "unknown";
-};
+const getServiceType = (url: string): "wsdot" | "wsf" | "unknown" =>
+  url.toLowerCase().includes("/traffic/") ? "wsdot" : "wsf";
 
 /**
  * Format parameter value for API (handles dates, encoding, etc.)
