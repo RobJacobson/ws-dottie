@@ -39,34 +39,30 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION = "Each VesselHistory item represents a historical record for a single sailing between terminals...";
-
 export const vesselHistoriesResource = {
   name: "vessel-histories",
-  description: DESCRIPTION,
+  resourceDescription: "Each VesselHistory item represents a historical record for a single sailing between terminals including departure/arrival times, vessel information, and route details.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    all: {
+    getVesselHistories: {
       function: "getVesselHistories",
       endpoint: "/vesselHistory",
-      inputSchema: i.getAllVesselHistorySchema,  // Using original schema
-      outputSchema: z.array(o.vesselHistoryResponseSchema),  // Using original schema
+      inputSchema: i.getAllVesselHistorySchema,
+      outputSchema: z.array(o.vesselHistoryResponseSchema),
       sampleParams: {},
-      cacheStrategy: "STATIC",  // Required field
-      description: `Returns a list of VesselHistory data for all vesselHistories. ${DESCRIPTION}`,  // Required field
+      endpointDescription: "Returns a list of VesselHistory data for all vesselHistories.",
     } satisfies EndpointDefinition,
-    filtered: {
+    getVesselHistoriesByVesselNameAndDateRange: {
       function: "getVesselHistoriesByVesselNameAndDateRange",
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-      inputSchema: i.getVesselHistorySchema,  // Using original schema
-      outputSchema: z.array(o.vesselHistoryResponseSchema),  // Using original schema
+      inputSchema: i.getVesselHistorySchema,
+      outputSchema: z.array(o.vesselHistoryResponseSchema),
       sampleParams: {
         VesselName: "Tacoma",
         DateStart: "2025-09-01",
         DateEnd: "2025-10-01",
       },
-      cacheStrategy: "STATIC", // Required field
-      description: `Returns a list of VesselHistory data for all vesselHistories, filtered by vessel name, start date, and end date. ${DESCRIPTION}`,  // Required field
+      endpointDescription: "Returns a list of VesselHistory data filtered by vessel name, start date, and end date.",
     } satisfies EndpointDefinition,
   }
 };
@@ -130,7 +126,7 @@ Each resource will follow these patterns:
 ```typescript
 export interface ResourceDefinition {
   name: string;
-  description: string;
+  resourceDescription: string;
   cacheStrategy: "STATIC" | "REALTIME";
   endpoints: Record<string, EndpointDefinition>;
 }
