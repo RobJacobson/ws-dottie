@@ -155,6 +155,48 @@ Latitude: z.number().describe(
 )
 ```
 
+#### Step-by-Step Process for Updating Endpoints
+
+**Step 1: Update endpoints.ts file (No creativity needed)**
+1. Identify the endpoint category by examining the endpoint pattern:
+   - **All Items**: Endpoints like `/vessels` (no parameters) or `/vessels/{TripDate}` (single date parameter)
+   - **Single Item**: Endpoints like `/vessels/{VesselID}` (specific identifier)
+   - **Filtered Items**: Endpoints with multiple filter parameters like `/vessels/{VesselName}/{DateStart}/{DateEnd}`
+
+2. Identify the entity name by examining the output schema:
+   - `z.array(o.vesselBasicSchema)` → Entity name is "VesselBasic"
+   - `o.vesselLocationSchema` → Entity name is "VesselLocation"
+
+3. Use the appropriate function:
+   - All Items: `allItems("EntityName", DESCRIPTIONS)`
+   - Single Item: `singleItem("EntityName", DESCRIPTIONS)`
+   - Filtered Items: `filteredItems("EntityName", DESCRIPTIONS, "filter criteria")`
+
+**Step 2: Update descriptions.ts file (Requires research)**
+1. Research each entity by reviewing:
+   - Zod schemas in `original/inputSchemas.original.ts` and `original/outputSchemas.original.ts`
+   - API documentation in `docs/references/api-specs/`
+   - Sample data using `npx fetch-dottie [function] --concise --limit 10`
+
+2. Write entity descriptions starting with "Each [EntityName] item represents..." and ending with data freshness information.
+
+For detailed step-by-step instructions, see [docs/agents/endpoint-description-simple-process.md](./endpoint-description-simple-process.md).
+
+#### Filter Criteria for filteredItems Function
+
+When using the `filteredItems()` function, the third parameter should clearly describe the filter criteria based on the input schema. To determine the appropriate filter description:
+
+1. **Examine the input schema** to identify all parameters used for filtering
+2. **Convert parameter names to human-readable form**:
+   - `{TripDate}` → "trip date"
+   - `{RouteID}` → "route ID"
+   - `{DepartingTerminalID}/{ArrivingTerminalID}` → "terminal combination"
+   - `{VesselName}/{DateStart}/{DateEnd}` → "vessel name, start date, and end date"
+   - `{SchedRouteID}` → "scheduled route ID"
+   - `{TerminalID}` → "terminal ID"
+
+3. **Use clear, descriptive language** that explains what the filter accomplishes
+
 ## Special Considerations
 
 ### 1. ID Fields
