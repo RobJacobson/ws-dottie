@@ -1,42 +1,20 @@
-import { z } from "zod";
-import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
-import * as i from "./original/inputSchemas.original";
-import * as o from "./original/outputSchemas.original";
+import type { ApiDefinition } from "@/apis/types";
 
+// Import all resources
+import { cvRestrictionDataResource } from "./cvRestrictionData";
+import { cvRestrictionDataWithIdResource } from "./cvRestrictionDataWithId";
+
+// Combine all resources into the legacy format for backward compatibility
 export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
   name: "wsdot-commercial-vehicle-restrictions",
   baseUrl:
     "http://www.wsdot.wa.gov/traffic/api/cvrestrictions/cvrestrictionsrest.svc",
   endpoints: [
-    /**
-     * CVRestrictionData response
-     */
-    {
-      function: "getCommercialVehicleRestrictions",
-      endpoint: "/getCommercialVehicleRestrictionsAsJson",
-      inputSchema: i.getCommercialVehicleRestrictionsSchema,
-      outputSchema: z.array(o.cVRestrictionDataSchema),
-      sampleParams: {},
-      cacheStrategy: "STATIC",
-      description: "",
-    } satisfies EndpointDefinition<
-      i.GetCommercialVehicleRestrictionsInput,
-      o.CVRestrictionData[]
-    >,
-    /**
-     * CVRestrictionDataWithId response
-     */
-    {
-      function: "getCommercialVehicleRestrictionsWithId",
-      endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
-      inputSchema: i.getCommercialVehicleRestrictionsWithIdSchema,
-      outputSchema: z.array(o.cVRestrictionDataWithIdSchema),
-      sampleParams: {},
-      cacheStrategy: "STATIC",
-      description: "",
-    } satisfies EndpointDefinition<
-      i.GetCommercialVehicleRestrictionsWithIdInput,
-      o.CVRestrictionDataWithId[]
-    >,
+    // Flatten all endpoints from all resources
+    ...Object.values(cvRestrictionDataResource.endpoints),
+    ...Object.values(cvRestrictionDataWithIdResource.endpoints),
   ],
 };
+
+// Export individual resources for direct use
+export { cvRestrictionDataResource, cvRestrictionDataWithIdResource };

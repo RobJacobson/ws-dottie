@@ -6,7 +6,12 @@
  */
 
 // Export the main API definition
-export { wsdotHighwayCamerasApi } from "./endpoints";
+// Export individual resources for direct use
+export {
+  cameraDetailsResource,
+  cameraListResource,
+  wsdotHighwayCamerasApi,
+} from "./endpoints";
 
 // Export all input types
 export type {

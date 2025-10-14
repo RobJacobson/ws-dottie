@@ -32,6 +32,8 @@ const scanwebSurfaceMeasurementsSchema = z
   })
   .describe("Measurements recorded by surface sensors.");
 
+export { scanwebSurfaceMeasurementsSchema };
+
 export type ScanwebSurfaceMeasurements = z.infer<
   typeof scanwebSurfaceMeasurementsSchema
 >;
@@ -52,6 +54,8 @@ const scanwebSubSurfaceMeasurementsSchema = z
       .describe("Sub-surface temperature."),
   })
   .describe("Measurements recorded by sub-surface sensors.");
+
+export { scanwebSubSurfaceMeasurementsSchema };
 
 export type ScanwebSubSurfaceMeasurements = z.infer<
   typeof scanwebSubSurfaceMeasurementsSchema

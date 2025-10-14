@@ -6,7 +6,13 @@
  */
 
 // Export the main API definition
-export { wsdotHighwayAlertsApi } from "./endpoints";
+// Export individual resources for direct use
+export {
+  alertsResource,
+  areasResource,
+  eventCategoriesResource,
+  wsdotHighwayAlertsApi,
+} from "./endpoints";
 
 // Export all input types
 export type {

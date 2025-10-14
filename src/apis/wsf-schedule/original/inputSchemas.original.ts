@@ -17,7 +17,7 @@ export const validDateRangeSchema = z
     "This operation retrieves a date range for which schedule data is currently published & available."
   );
 
-export type ValidDateRangeInput = z.infer<typeof validDateRangeSchema>;
+export type ScheduleValidDateRangeInput = z.infer<typeof validDateRangeSchema>;
 
 /**
  * Schema for Terminals input parameters
@@ -34,7 +34,7 @@ export const terminalsSchema = z
     "This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
   );
 
-export type TerminalsInput = z.infer<typeof terminalsSchema>;
+export type ScheduleTerminalsInput = z.infer<typeof terminalsSchema>;
 
 /**
  * Schema for TerminalsAndMates input parameters
@@ -91,7 +91,7 @@ export const terminalMatesSchema = z
     "This operation provides arriving terminals for a given departing terminal and trip date. A valid departing terminal may be found by using `/terminals`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
   );
 
-export type TerminalMatesInput = z.infer<typeof terminalMatesSchema>;
+export type ScheduleTerminalMatesInput = z.infer<typeof terminalMatesSchema>;
 
 /**
  * Schema for Routes input parameters

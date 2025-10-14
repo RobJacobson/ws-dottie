@@ -1,0 +1,27 @@
+import { z } from "zod";
+import type { EndpointDefinition } from "@/apis/types";
+import * as i from "./original/inputSchemas.original";
+import * as o from "./original/outputSchemas.original";
+
+const DESCRIPTION =
+  "Returns a date range for which fares data is currently published and available. This operation helps applications determine valid trip dates for fare queries. Data updates infrequently.";
+
+export const validDateRangeResource = {
+  name: "valid-date-range",
+  description: DESCRIPTION,
+  cacheStrategy: "STATIC" as const,
+  endpoints: {
+    getFaresValidDateRange: {
+      function: "getFaresValidDateRange",
+      endpoint: "/validdaterange",
+      inputSchema: i.validDateRangeSchema,
+      outputSchema: o.validDateRangeResponseSchema,
+      sampleParams: {},
+      cacheStrategy: "STATIC",
+      description: DESCRIPTION,
+    } satisfies EndpointDefinition<
+      i.ValidDateRangeInput,
+      o.ValidDateRangeResponse
+    >,
+  },
+};

@@ -16,3 +16,6 @@ export type {
 
 // Export all output types
 export type { TravelTimeRoute } from "./original/outputSchemas.original";
+
+// Export individual resources for direct use
+export { travelTimeRoutesResource } from "./travelTimeRoutes";

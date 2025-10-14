@@ -1,26 +1,24 @@
-import { z } from "zod";
-import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
-import * as i from "./original/inputSchemas.original";
-import * as o from "./original/outputSchemas.original";
+import type { ApiDefinition } from "@/apis/types";
+import { subSurfaceMeasurementsResource } from "./subSurfaceMeasurements";
+import { surfaceMeasurementsResource } from "./surfaceMeasurements";
+// Import all resources
+import { weatherReadingsResource } from "./weatherReadings";
 
+// Combine all resources into the legacy format for backward compatibility
 export const wsdotWeatherReadingsApi: ApiDefinition = {
   name: "wsdot-weather-readings",
   baseUrl: "http://www.wsdot.wa.gov/traffic/api/api",
   endpoints: [
-    /**
-     * WeatherReading response
-     */
-    {
-      function: "getWeatherReadings",
-      endpoint: "/Scanweb",
-      inputSchema: i.getWeatherReadingsSchema,
-      outputSchema: z.array(o.weatherReadingSchema),
-      sampleParams: {},
-      cacheStrategy: "FREQUENT",
-      description: "",
-    } satisfies EndpointDefinition<
-      i.GetWeatherReadingsInput,
-      o.WeatherReading[]
-    >,
+    // Flatten all endpoints from all resources
+    ...Object.values(weatherReadingsResource.endpoints),
+    ...Object.values(surfaceMeasurementsResource.endpoints),
+    ...Object.values(subSurfaceMeasurementsResource.endpoints),
   ],
+};
+
+// Export individual resources for direct use
+export {
+  weatherReadingsResource,
+  surfaceMeasurementsResource,
+  subSurfaceMeasurementsResource,
 };

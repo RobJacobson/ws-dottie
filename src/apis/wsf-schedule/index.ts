@@ -6,16 +6,66 @@
  */
 
 // Export the main API definition
-export { wsfScheduleApi } from "./endpoints";
+// Export all resources for direct use
+export {
+  activeSeasonsResource,
+  routeDetailsResource,
+  routesResource,
+  sailingsResource,
+  scheduleAlertsResource,
+  scheduleCacheFlushDateResource,
+  scheduledRoutesResource,
+  schedulesResource,
+  scheduleTerminalMatesResource,
+  scheduleTerminalsResource,
+  scheduleTodayResource,
+  scheduleValidDateRangeResource,
+  serviceDisruptionsResource,
+  timeAdjustmentsResource,
+  wsfScheduleApi,
+} from "./endpoints";
 
-// Note: Input types are defined inline in endpoints.ts since they use inline schemas
-// They can be accessed by importing the endpoint definitions directly
+// Export all input types
+export type {
+  ActiveScheduledSeasonsInput,
+  AllAlertsInput,
+  AllSchedSailingsBySchedRouteInput,
+  RouteDetailsByTripDateAndRouteIdInput,
+  RouteDetailsByTripDateAndTerminalsInput,
+  RouteDetailsByTripDateInput,
+  RoutesByTerminalsInput,
+  RoutesHavingServiceDisruptionsInput,
+  RoutesInput,
+  SailingsByRouteIdInput,
+  ScheduleByRouteInput,
+  ScheduleByTerminalComboInput,
+  ScheduledRoutesByScheduleIdInput,
+  ScheduledRoutesInput,
+  ScheduleTerminalMatesInput,
+  ScheduleTerminalsInput,
+  ScheduleTodayByRouteInput,
+  ScheduleValidDateRangeInput,
+  TerminalsAndMatesByRouteInput,
+  TerminalsAndMatesInput,
+  TimeAdjByRouteInput,
+  TimeAdjBySchedRouteInput,
+  TimeAdjInput,
+  TodaysScheduleByTerminalComboInput,
+} from "./original/inputSchemas.original";
 
 // Export all output types
 export type {
-  RouteBase as Route,
+  AlertDetail,
+  Route,
   RouteDetail,
   Sailing,
-  ScheduleBase as Schedule,
+  SchedRoute,
+  Schedule,
+  ScheduleBase,
   SchedulesCacheFlushDate,
+  ServiceDisruption,
+  Terminal,
+  TerminalMate,
+  TimeAdjustment,
+  ValidDateRange,
 } from "./original/outputSchemas.original";

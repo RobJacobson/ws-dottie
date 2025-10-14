@@ -2,11 +2,21 @@
  * @fileoverview WSF Fares API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Fares API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, the main API definition, and individual resources.
  */
 
 // Export the main API definition
-export { wsfFaresApi } from "./endpoints";
+// Export individual resources for direct use
+export {
+  cacheFlushDateResource,
+  fareLineItemsResource,
+  fareTotalsResource,
+  terminalComboResource,
+  terminalsResource,
+  validDateRangeResource,
+  wsfFaresApi,
+} from "./endpoints";
+
 // Export all input types
 export type {
   FareLineItemsBasicInput,
@@ -20,6 +30,7 @@ export type {
   TerminalsInput,
   ValidDateRangeInput,
 } from "./original/inputSchemas.original";
+
 // Export all output types
 export type {
   FaresCacheFlushDateResponse,
