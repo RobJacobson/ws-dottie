@@ -78,52 +78,78 @@ DateStart: z.string().describe(
 
 Always follow these requirements for the textual description property for each endpoint definition under src/apis/*/endpoints.ts:
 
-#### Three Endpoint Categories with Standardized Lead Sentences:
+#### New Functional Approach
 
-**1. All Items Category**: "Returns a list of [DataType] data for all [entities]."
-- Use when endpoint returns all items without filtering
-- Example: `getAllVesselBasics` returns all vessels
+We now use a functional approach to keep descriptions DRY (Don't Repeat Yourself) and ensure consistency. This approach separates entity descriptions from endpoint patterns.
 
-**2. Filtered Items Category**: "Returns a list of [DataType] data for all [entities], filtered by [criteria]."
-- Use when endpoint returns subset based on parameters
-- Example: `getVesselHistoriesByVesselNameAndDateRange` filters by vessel name and date range
+**1. Entity Descriptions**: Define reusable descriptions for each data entity in `src/apis/[api-name]/descriptions.ts`. These descriptions focus on what each entity represents and end with data freshness information.
 
-**3. Single Item Category**: "Returns [DataType] data for the [entity] with the given [identifier]."
-- Use when endpoint returns one specific item
-- Example: `getVesselLocationsByVesselId` returns data for one vessel by ID
+**2. Endpoint Categories**: Use utility functions from `src/apis/describe.ts` to create standardized endpoint descriptions:
+- `allItems()`: For endpoints returning all items without filtering
+- `singleItem()`: For endpoints returning one specific item
+- `filteredItems()`: For endpoints returning a subset based on parameters
 
 #### Template Pattern:
 ```
-[Top-level array]: "[Standardized lead sentence]. [Description of each item in the list, starting with 'Each [item] represents...']. [Data freshness]."
-[Field]: "[Purpose]. [Business meaning and context]."
+// In descriptions.ts - Entity descriptions
+EntityName: "Each EntityName item represents [business meaning and context]. [Data freshness]."
+
+// In endpoints.ts - Using utility functions
+description: allItems("EntityName", DESCRIPTIONS)
+description: singleItem("EntityName", DESCRIPTIONS)
+description: filteredItems("EntityName", DESCRIPTIONS, "filter criteria")
 ```
 
 #### Key Requirements:
-- **Standard Lead**: Use one of the three standardized patterns above, always starting with "Returns"
-- **Item Description**: For lists, describe each item using "Each [item] represents..." to clarify individual vs collection
-- **Business Meaning**: Explain what the field represents
+- **Entity Descriptions**: Create reusable entity descriptions in `descriptions.ts` files that start with "Each [item] represents..."
+- **Standard Lead**: Use utility functions to create standardized lead sentences that start with "Returns"
+- **Business Meaning**: Explain what the entity represents in business context
 - **No Date Examples**: Dates don't need examples - developers understand date formats
 - **Edge Cases**: Document -1 values, nulls, special codes
-- **Data Freshness**: Include "Data is real-time" or "Data updates frequently/infrequently"
+- **Data Freshness**: Include "Data is real-time", "Data updates frequently", or "Data updates infrequently" in entity descriptions
 
 #### Examples:
 ```typescript
-// All Items Category
-export const vesselBasicsSchema = z.array(vesselBasicSchema).describe(
-  "Returns a list of VesselBasic data for all vessels. Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information. Data updates infrequently."
-)
+// In src/apis/wsf-vessels/descriptions.ts - Entity descriptions
+export const VESSEL_DESCRIPTIONS = {
+  VesselBasic: "Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information. Data updates infrequently.",
+  VesselLocation: "Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude), speed and heading information, departure and arrival terminal details, and estimated time of arrival. Data is real time, updated every few seconds.",
+  CacheFlushDate: "Returns the date and time when the WSF vessel data was last updated. This operation helps applications coordinate caching of vessel data that changes infrequently. When the returned date changes, applications should refresh their cached data. Data updates infrequently."
+} as const;
 
-// Filtered Items Category  
-export const vesselHistoryResponseSchema = z.array(vesselHistoryResponseSchema).describe(
-  "Returns a list of VesselHistory data for all vessels, filtered by VesselName, start date, and end date. Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time). Data updates infrequently."
-)
+// In src/apis/wsf-vessels/endpoints.ts - Using utility functions
+import { allItems, singleItem, filteredItems } from "@/apis/describe";
+import { VESSEL_DESCRIPTIONS } from "./descriptions";
+
+// All Items Category
+{
+  function: "getVesselBasics",
+  endpoint: "/vesselBasics",
+  outputSchema: z.array(o.vesselBasicSchema),
+  description: allItems("VesselBasic", VESSEL_DESCRIPTIONS),
+}
 
 // Single Item Category
-export const vesselLocationsSchema = z.array(vesselLocationSchema).describe(
-  "Returns VesselLocation data for the vessel with the given VesselID. Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude), speed and heading information, departure and arrival terminal details, and estimated time of arrival. Data is real-time."
-)
+{
+  function: "getVesselBasicsByVesselId",
+  endpoint: "/vesselBasics/{VesselID}",
+  outputSchema: o.vesselBasicSchema,
+  description: singleItem("VesselBasic", VESSEL_DESCRIPTIONS),
+}
 
-// Field example
+// Filtered Items Category
+{
+  function: "getVesselHistoriesByVesselNameAndDateRange",
+  endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
+  outputSchema: z.array(o.vesselHistoryResponseSchema),
+  description: filteredItems(
+    "VesselHistory",
+    VESSEL_DESCRIPTIONS,
+    "VesselName, start date, and end date"
+  ),
+}
+
+// Field example (unchanged)
 Latitude: z.number().describe(
   "Current latitude coordinate for vessel position, as a decimal degree. Updates every 5 seconds when vessel is in transit."
 )
