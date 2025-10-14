@@ -4,39 +4,36 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.";
-
 export const routeDetailsResource = {
   name: "route-details",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    byTripDate: {
+    getRouteDetailsByTripDate: {
       function: "getRouteDetailsByTripDate",
       endpoint: "/routedetails/{TripDate}",
       inputSchema: i.routeDetailsByTripDateSchema,
       outputSchema: z.array(o.routeDetailSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
-      cacheStrategy: "STATIC",
-      description: `Returns route details for the specified trip date. ${DESCRIPTION}`,
+      endpointDescription: "Returns route details for the specified trip date.",
     } satisfies EndpointDefinition<
       i.RouteDetailsByTripDateInput,
       o.RouteDetail[]
     >,
-    byTripDateAndRouteId: {
+    getRouteDetailsByTripDateAndRouteId: {
       function: "getRouteDetailsByTripDateAndRouteId",
       endpoint: "/routedetails/{TripDate}/{RouteID}",
       inputSchema: i.routeDetailsByTripDateAndRouteIdSchema,
       outputSchema: o.routeDetailSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
-      cacheStrategy: "STATIC",
-      description: `Returns route details for the specified trip date and route ID. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns route details for the specified trip date and route ID.",
     } satisfies EndpointDefinition<
       i.RouteDetailsByTripDateAndRouteIdInput,
       o.RouteDetail
     >,
-    byTripDateAndTerminals: {
+    getRouteDetailsByTripDateAndTerminals: {
       function: "getRouteDetailsByTripDateAndTerminals",
       endpoint:
         "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
@@ -47,8 +44,8 @@ export const routeDetailsResource = {
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
-      cacheStrategy: "STATIC",
-      description: `Returns route details for the specified trip date and terminal pair. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns route details for the specified trip date and terminal pair.",
     } satisfies EndpointDefinition<
       i.RouteDetailsByTripDateAndTerminalsInput,
       o.RouteDetail[]

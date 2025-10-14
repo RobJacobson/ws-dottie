@@ -2,22 +2,20 @@ import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 
-const DESCRIPTION =
-  "Event categories classify different types of highway alerts such as collisions, maintenance work, construction, weather-related events, and other traffic incidents.";
-
 export const eventCategoriesResource = {
   name: "event-categories",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Event categories classify different types of highway alerts such as collisions, maintenance work, construction, weather-related events, and other traffic incidents.",
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    all: {
+    getEventCategories: {
       function: "getEventCategories",
       endpoint: "/getEventCategoriesAsJson",
       inputSchema: i.getEventCategoriesSchema,
       outputSchema: z.array(z.string()),
       sampleParams: {},
-      cacheStrategy: "FREQUENT",
-      description: `Returns a list of all available event category names used to classify highway alerts. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns a list of all available event category names used to classify highway alerts.",
     } satisfies EndpointDefinition<i.GetEventCategoriesInput, string[]>,
   },
 };

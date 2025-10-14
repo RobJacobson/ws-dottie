@@ -4,24 +4,22 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.";
-
 export const schedulesResource = {
   name: "schedules",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    byTripDateAndRouteId: {
+    getScheduleByTripDateAndRouteId: {
       function: "getScheduleByTripDateAndRouteId",
       endpoint: "/schedule/{TripDate}/{RouteID}",
       inputSchema: i.scheduleByRouteSchema,
       outputSchema: o.scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-      cacheStrategy: "STATIC",
-      description: `Returns the schedule for the specified trip date and route ID. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns the schedule for the specified trip date and route ID.",
     } satisfies EndpointDefinition<i.ScheduleByRouteInput, o.Schedule>,
-    byTripDateAndTerminals: {
+    getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
       function: "getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
@@ -32,8 +30,8 @@ export const schedulesResource = {
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
-      cacheStrategy: "STATIC",
-      description: `Returns the schedule for the specified trip date and terminal pair. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns the schedule for the specified trip date and terminal pair.",
     } satisfies EndpointDefinition<i.ScheduleByTerminalComboInput, o.Schedule>,
   },
 };

@@ -4,40 +4,37 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.";
-
 export const scheduleTerminalsResource = {
   name: "schedule-terminals",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    byTripDate: {
+    getTerminals: {
       function: "getTerminals",
       endpoint: "/terminals/{TripDate}",
       inputSchema: i.terminalsSchema,
       outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
-      cacheStrategy: "STATIC",
-      description: `Returns all terminals for the specified trip date. ${DESCRIPTION}`,
+      endpointDescription: "Returns all terminals for the specified trip date.",
     } satisfies EndpointDefinition<i.ScheduleTerminalsInput, o.Terminal[]>,
-    allWithMates: {
+    getTerminalsAndMates: {
       function: "getTerminalsAndMates",
       endpoint: "/terminalsandmates/{TripDate}",
       inputSchema: i.terminalsAndMatesSchema,
       outputSchema: z.array(o.terminalMateSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
-      cacheStrategy: "STATIC",
-      description: `Returns all terminals with their mates for the specified trip date. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns all terminals with their mates for the specified trip date.",
     } satisfies EndpointDefinition<i.TerminalsAndMatesInput, o.TerminalMate[]>,
-    matesByRoute: {
+    getTerminalsAndMatesByRoute: {
       function: "getTerminalsAndMatesByRoute",
       endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
       inputSchema: i.terminalsAndMatesByRouteSchema,
       outputSchema: z.array(o.terminalMateSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-      cacheStrategy: "STATIC",
-      description: `Returns terminals and their mates for the specified trip date and route. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns terminals and their mates for the specified trip date and route.",
     } satisfies EndpointDefinition<
       i.TerminalsAndMatesByRouteInput,
       o.TerminalMate[]

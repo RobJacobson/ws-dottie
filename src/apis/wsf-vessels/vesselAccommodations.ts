@@ -3,34 +3,32 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access. Data updates infrequently.";
-
 export const vesselAccommodationsResource = {
   name: "vessel-accommodations",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access. Data updates infrequently.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    all: {
+    getVesselAccommodations: {
       function: "getVesselAccommodations",
       endpoint: "/vesselAccommodations",
       inputSchema: i.vesselAccommodationsSchema,
       outputSchema: z.array(o.vesselAccommodationsSchema),
       sampleParams: {},
-      cacheStrategy: "STATIC",
-      description: `Returns a list of VesselAccommodation data for all vesselAccommodations. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns a list of VesselAccommodation data for all vesselAccommodations.",
     } satisfies EndpointDefinition<
       i.VesselAccommodationsInput,
       o.VesselAccommodations[]
     >,
-    byId: {
+    getVesselAccommodationsByVesselId: {
       function: "getVesselAccommodationsByVesselId",
       endpoint: "/vesselAccommodations/{VesselID}",
       inputSchema: i.vesselAccommodationsByIdSchema,
       outputSchema: o.vesselAccommodationsSchema,
       sampleParams: { VesselID: 65 },
-      cacheStrategy: "STATIC",
-      description: `Returns VesselAccommodation data for the vesselaccommodation with the given identifier. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
     } satisfies EndpointDefinition<
       i.VesselAccommodationsByIdInput,
       o.VesselAccommodations

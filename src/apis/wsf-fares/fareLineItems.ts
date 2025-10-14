@@ -4,15 +4,13 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information. Data updates infrequently.";
-
 export const fareLineItemsResource = {
   name: "fare-line-items",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information. Data updates infrequently.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    detailed: {
+    getFareLineItemsByTripDateAndTerminals: {
       function: "getFareLineItemsByTripDateAndTerminals",
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
@@ -24,10 +22,10 @@ export const fareLineItemsResource = {
         ArrivingTerminalID: 7,
         RoundTrip: false,
       },
-      cacheStrategy: "STATIC",
-      description: `Returns detailed fare line items for the specified terminal combination and trip type (round trip or one-way). ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns detailed fare line items for the specified terminal combination and trip type (round trip or one-way).",
     } satisfies EndpointDefinition<i.FareLineItemsInput, o.LineItemResponse[]>,
-    basic: {
+    getFareLineItemsBasic: {
       function: "getFareLineItemsBasic",
       endpoint:
         "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
@@ -39,20 +37,20 @@ export const fareLineItemsResource = {
         ArrivingTerminalID: 10,
         RoundTrip: false,
       },
-      cacheStrategy: "STATIC",
-      description: `Returns basic fare line items (most popular fares) for the specified terminal combination and trip type. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns basic fare line items (most popular fares) for the specified terminal combination and trip type.",
     } satisfies EndpointDefinition<
       i.FareLineItemsBasicInput,
       o.LineItemResponse[]
     >,
-    verbose: {
+    getFareLineItemsVerbose: {
       function: "getFareLineItemsVerbose",
       endpoint: "/fareLineItemsVerbose/{TripDate}",
       inputSchema: i.fareLineItemsVerboseSchema,
       outputSchema: o.lineItemVerboseResponseSchema,
       sampleParams: { TripDate: datesHelper.today() },
-      cacheStrategy: "STATIC",
-      description: `Returns comprehensive fare line items for all valid terminal combinations on the specified trip date, including both one-way and round trip options. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns comprehensive fare line items for all valid terminal combinations on the specified trip date, including both one-way and round trip options.",
     } satisfies EndpointDefinition<
       i.FareLineItemsVerboseInput,
       o.LineItemVerboseResponse

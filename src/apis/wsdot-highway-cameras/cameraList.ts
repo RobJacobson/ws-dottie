@@ -3,24 +3,21 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Camera list operations provide access to traffic camera information including search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.";
-
 export const cameraListResource = {
   name: "camera-list",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Camera list operations provide access to traffic camera information including search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    all: {
+    getHighwayCameras: {
       function: "getHighwayCameras",
       endpoint: "/getCamerasAsJson",
       inputSchema: i.getCamerasSchema,
       outputSchema: z.array(o.cameraSchema),
       sampleParams: {},
-      cacheStrategy: "STATIC",
-      description: `Returns a list of all traffic cameras. ${DESCRIPTION}`,
+      endpointDescription: "Returns a list of all traffic cameras.",
     } satisfies EndpointDefinition<i.GetCamerasInput, o.Camera[]>,
-    search: {
+    searchHighwayCamerasByRouteAndMilepost: {
       function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
       inputSchema: i.searchCamerasSchema,
@@ -30,8 +27,8 @@ export const cameraListResource = {
         StartingMilepost: 10,
         EndingMilepost: 20,
       },
-      cacheStrategy: "STATIC",
-      description: `Search for traffic cameras by route and milepost range. ${DESCRIPTION}`,
+      endpointDescription:
+        "Search for traffic cameras by route and milepost range.",
     } satisfies EndpointDefinition<i.SearchCamerasInput, o.Camera[]>,
   },
 };

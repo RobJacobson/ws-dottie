@@ -94,7 +94,7 @@ const defineApiEndpoint = <I, O>(
   inputSchema: endpointDefinition.inputSchema,
   outputSchema: endpointDefinition.outputSchema,
   sampleParams: endpointDefinition.sampleParams,
-  cacheStrategy: endpointDefinition.cacheStrategy,
+  cacheStrategy: endpointDefinition.cacheStrategy ?? "STATIC",
   functionName: endpointDefinition.function,
   urlTemplate: `${apiDefinition.baseUrl}${endpointDefinition.endpoint}`,
   id: `${apiDefinition.name}:${endpointDefinition.function}`,

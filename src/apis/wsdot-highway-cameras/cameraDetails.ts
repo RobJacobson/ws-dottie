@@ -3,22 +3,20 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Individual camera details provide specific information about a single traffic camera including location, image URL, and operational status. Data updates infrequently.";
-
 export const cameraDetailsResource = {
   name: "camera-details",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Individual camera details provide specific information about a single traffic camera including location, image URL, and operational status. Data updates infrequently.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    byId: {
+    getHighwayCameraByCameraId: {
       function: "getHighwayCameraByCameraId",
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
       inputSchema: i.getCameraSchema,
       outputSchema: o.cameraSchema,
       sampleParams: { CameraID: 9818 },
-      cacheStrategy: "STATIC",
-      description: `Returns detailed information for a specific traffic camera by its unique identifier. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns detailed information for a specific traffic camera by its unique identifier.",
     } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
   },
 };

@@ -3,27 +3,25 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time). Data updates infrequently.";
-
 export const vesselHistoriesResource = {
   name: "vessel-histories",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time). Data updates infrequently.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    all: {
+    getVesselHistories: {
       function: "getVesselHistories",
       endpoint: "/vesselHistory",
       inputSchema: i.getAllVesselHistorySchema,
       outputSchema: z.array(o.vesselHistoryResponseSchema),
       sampleParams: {},
-      cacheStrategy: "STATIC",
-      description: `Returns a list of VesselHistory data for all vesselHistories. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns a list of VesselHistory data for all vesselHistories.",
     } satisfies EndpointDefinition<
       i.GetAllVesselHistoryInput,
       o.VesselHistoryResponse[]
     >,
-    filtered: {
+    getVesselHistoriesByVesselNameAndDateRange: {
       function: "getVesselHistoriesByVesselNameAndDateRange",
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
       inputSchema: i.getVesselHistorySchema,
@@ -33,8 +31,8 @@ export const vesselHistoriesResource = {
         DateStart: "2025-09-01",
         DateEnd: "2025-10-01",
       },
-      cacheStrategy: "STATIC",
-      description: `Returns a list of VesselHistory data for all vesselHistories, filtered by vessel name, start date, and end date. ${DESCRIPTION}`,
+      endpointDescription:
+        "Returns a list of VesselHistory data for all vesselHistories, filtered by vessel name, start date, and end date.",
     } satisfies EndpointDefinition<
       i.GetVesselHistoryInput,
       o.VesselHistoryResponse[]

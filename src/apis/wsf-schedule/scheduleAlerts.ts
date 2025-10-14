@@ -3,22 +3,19 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./original/inputSchemas.original";
 import * as o from "./original/outputSchemas.original";
 
-const DESCRIPTION =
-  "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.";
-
 export const scheduleAlertsResource = {
   name: "schedule-alerts",
-  description: DESCRIPTION,
+  resourceDescription:
+    "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    all: {
+    getScheduleAlerts: {
       function: "getScheduleAlerts",
       endpoint: "/alerts",
       inputSchema: i.allAlertsSchema,
       outputSchema: z.array(o.alertDetailSchema),
       sampleParams: {},
-      cacheStrategy: "STATIC",
-      description: `Returns all current schedule alerts. ${DESCRIPTION}`,
+      endpointDescription: "Returns all current schedule alerts.",
     } satisfies EndpointDefinition<i.AllAlertsInput, o.AlertDetail[]>,
   },
 };
