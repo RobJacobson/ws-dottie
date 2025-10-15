@@ -1,41 +1,5 @@
 import { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
-
-/**
- * Schema for RoadwayLocation - represents location information for a roadway in WSDOT Highway Alerts
- *
- * Description of the location. This could be a cross street or a nearby landmark.
- */
-export const roadwayLocationSchema = z.object({
-  /**
-   * Description of the location. This could be a cross street or a nearby landmark.
-   */
-  Description: z
-    .string()
-    .nullable()
-    .describe(
-      "Description of the location. This could be a cross street or a nearby landmark."
-    ),
-  /**
-   * The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction.
-   */
-  Direction: z
-    .string()
-    .nullable()
-    .describe(
-      "The side of the road the location is on (Northbound, Southbound). This does not necessarily correspond to an actual compass direction."
-    ),
-  /** Latitude of the location. */
-  Latitude: z.number().describe("Latitude of the location."),
-  /** Longitude of the location. */
-  Longitude: z.number().describe("Longitude of the location."),
-  /** The milepost of the location. */
-  MilePost: z.number().describe("The milepost of the location."),
-  /** The name of the road. */
-  RoadName: z.string().nullable().describe("The name of the road."),
-});
-
-export type RoadwayLocation = z.infer<typeof roadwayLocationSchema>;
+import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for Alert - represents a Highway Alert
