@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { tollRatesResource } from "./tollRates";
+import { tollRatesResource } from "./tollRates/tollRates";
 import { tollTripInfoResource } from "./tollTripInfo";
 import { tollTripRatesResource } from "./tollTripRates";
 import { tollTripVersionResource } from "./tollTripVersion";

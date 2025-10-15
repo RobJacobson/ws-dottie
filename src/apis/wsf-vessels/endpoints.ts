@@ -1,13 +1,13 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateResource } from "./cacheFlushDate";
-import { vesselAccommodationsResource } from "./vesselAccommodations";
-import { vesselBasicsResource } from "./vesselBasics";
-import { vesselHistoriesResource } from "./vesselHistories";
-import { vesselLocationsResource } from "./vesselLocations";
-import { vesselStatsResource } from "./vesselStats";
-import { vesselVerboseResource } from "./vesselVerbose";
+import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate";
+import { vesselAccommodationsResource } from "./vesselAccommodations/vesselAccommodations";
+import { vesselBasicsResource } from "./vesselBasics/vesselBasics";
+import { vesselHistoriesResource } from "./vesselHistories/vesselHistories";
+import { vesselLocationsResource } from "./vesselLocations/vesselLocations";
+import { vesselStatsResource } from "./vesselStats/vesselStats";
+import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsfVesselsApi: ApiDefinition = {

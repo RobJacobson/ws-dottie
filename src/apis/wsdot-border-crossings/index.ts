@@ -6,7 +6,7 @@
  */
 
 // Export individual resources for direct use
-export { borderCrossingDataResource } from "./borderCrossingData";
+export { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
 // Export the main API definition
 export { wsdotBorderCrossingsApi } from "./endpoints";
 

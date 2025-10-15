@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { borderCrossingDataResource } from "./borderCrossingData";
+import { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotBorderCrossingsApi: ApiDefinition = {

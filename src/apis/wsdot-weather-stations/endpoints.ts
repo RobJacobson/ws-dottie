@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { weatherStationsResource } from "./weatherStations";
+import { weatherStationsResource } from "./weatherStations/weatherStations";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotWeatherStationsApi: ApiDefinition = {

@@ -20,13 +20,10 @@ export type {
   GetAlertsByRegionIDInput,
   GetAlertsForMapAreaInput,
   GetAlertsInput,
-  GetEventCategoriesInput,
-  GetMapAreasInput,
   SearchAlertsInput,
-} from "./original/inputSchemas.original";
-
+} from "./alerts/alerts.input";
 // Export all output types
 export type {
   Alert,
-  Area,
-} from "./original/outputSchemas.original";
+  RoadwayLocation,
+} from "./alerts/alerts.output";

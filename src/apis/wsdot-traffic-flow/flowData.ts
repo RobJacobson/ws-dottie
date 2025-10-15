@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
-import * as i from "./original/inputSchemas.original";
-import * as o from "./original/outputSchemas.original";
+import * as i from "./schemas/flowData.input";
+import * as o from "./schemas/flowData.output";
 
 export const flowDataResource = {
   name: "flow-data",

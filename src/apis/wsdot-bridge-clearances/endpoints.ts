@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { bridgeClearancesResource } from "./bridgeClearances";
+import { bridgeClearancesResource } from "./bridgeClearances/bridgeClearances";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotBridgeClearancesApi: ApiDefinition = {

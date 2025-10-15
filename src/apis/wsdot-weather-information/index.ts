@@ -20,4 +20,4 @@ export type {
 export type { WeatherInfo } from "./original/outputSchemas.original";
 
 // Export individual resources for direct use
-export { weatherInfoResource } from "./weatherInfo";
+export { weatherInfoResource } from "./weatherInfo/weatherInfo";

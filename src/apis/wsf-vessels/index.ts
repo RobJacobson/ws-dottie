@@ -5,28 +5,26 @@
  * all input/output types and the main API definition.
  */
 
+export type { VesselsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
+export type { VesselsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
 // Export the main API definition
 export { wsfVesselsApi } from "./endpoints";
-
-// Export all input types
 export type {
-  GetVesselHistoryInput,
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
+} from "./vesselAccommodations/vesselAccommodations.input";
+export type { VesselAccommodations } from "./vesselAccommodations/vesselAccommodations.output";
+export type {
   VesselBasicsByIdInput,
   VesselBasicsInput,
-  VesselLocationsInput,
-  VesselStatsInput,
-  VesselsCacheFlushDateInput,
-} from "./original/inputSchemas.original";
-
+} from "./vesselBasics/vesselBasics.input";
+export type { VesselBasic } from "./vesselBasics/vesselBasics.output";
+// Export all input types
+export type { GetVesselHistoryInput } from "./vesselHistories/vesselHistories.input";
 // Export all output types
-export type {
-  VesselAccommodations,
-  VesselBasic,
-  VesselHistoryResponse,
-  VesselLocations,
-  VesselStats,
-  VesselsCacheFlushDate,
-  VesselVerbose,
-} from "./original/outputSchemas.original";
+export type { VesselHistoryResponse } from "./vesselHistories/vesselHistories.output";
+export type { VesselLocationsInput } from "./vesselLocations/vesselLocations.input";
+export type { VesselLocations } from "./vesselLocations/vesselLocations.output";
+export type { VesselStatsInput } from "./vesselStats/vesselStats.input";
+export type { VesselStats } from "./vesselStats/vesselStats.output";
+export type { VesselVerbose } from "./vesselVerbose/vesselVerbose.output";

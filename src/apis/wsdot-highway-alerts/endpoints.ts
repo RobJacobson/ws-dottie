@@ -1,9 +1,9 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { alertsResource } from "./alerts";
-import { areasResource } from "./areas";
-import { eventCategoriesResource } from "./eventCategories";
+import { alertsResource } from "./alerts/alerts";
+import { areasResource } from "./areas/areas";
+import { eventCategoriesResource } from "./eventCategories/eventCategories";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotHighwayAlertsApi: ApiDefinition = {

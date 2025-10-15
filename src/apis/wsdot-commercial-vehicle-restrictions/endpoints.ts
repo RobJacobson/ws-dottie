@@ -1,8 +1,8 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cvRestrictionDataResource } from "./cvRestrictionData";
-import { cvRestrictionDataWithIdResource } from "./cvRestrictionDataWithId";
+import { cvRestrictionDataResource } from "./cvRestrictionData/cvRestrictionData";
+import { cvRestrictionDataWithIdResource } from "./cvRestrictionDataWithId/cvRestrictionDataWithId";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {

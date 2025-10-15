@@ -6,7 +6,7 @@
  */
 
 // Export individual resources for direct use
-export { bridgeClearancesResource } from "./bridgeClearances";
+export { bridgeClearancesResource } from "./bridgeClearances/bridgeClearances";
 // Export the main API definition (backward compatibility)
 export { wsdotBridgeClearancesApi } from "./endpoints";
 

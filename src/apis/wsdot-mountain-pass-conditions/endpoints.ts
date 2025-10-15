@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { passConditionsResource } from "./passConditions";
+import { passConditionsResource } from "./passConditions/passConditions";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotMountainPassConditionsApi: ApiDefinition = {

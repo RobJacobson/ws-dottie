@@ -1,8 +1,8 @@
 import type { ApiDefinition } from "@/apis/types";
-import { subSurfaceMeasurementsResource } from "./subSurfaceMeasurements";
-import { surfaceMeasurementsResource } from "./surfaceMeasurements";
+import { subSurfaceMeasurementsResource } from "./subSurfaceMeasurements/subSurfaceMeasurements";
+import { surfaceMeasurementsResource } from "./surfaceMeasurements/surfaceMeasurements";
 // Import all resources
-import { weatherReadingsResource } from "./weatherReadings";
+import { weatherReadingsResource } from "./weatherReadings/weatherReadings";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotWeatherReadingsApi: ApiDefinition = {

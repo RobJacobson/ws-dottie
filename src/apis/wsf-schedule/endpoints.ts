@@ -1,20 +1,20 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { activeSeasonsResource } from "./activeSeasons";
-import { scheduleCacheFlushDateResource } from "./cacheFlushDate";
-import { routeDetailsResource } from "./routeDetails";
-import { routesResource } from "./routes";
-import { sailingsResource } from "./sailings";
-import { scheduleAlertsResource } from "./scheduleAlerts";
-import { scheduledRoutesResource } from "./scheduledRoutes";
-import { schedulesResource } from "./schedules";
-import { scheduleTodayResource } from "./scheduleToday";
-import { serviceDisruptionsResource } from "./serviceDisruptions";
-import { scheduleTerminalMatesResource } from "./terminalMates";
-import { scheduleTerminalsResource } from "./terminals";
-import { timeAdjustmentsResource } from "./timeAdjustments";
-import { scheduleValidDateRangeResource } from "./validDateRange";
+import { activeSeasonsResource } from "./activeSeasons/activeSeasons";
+import { scheduleCacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate";
+import { routeDetailsResource } from "./routeDetails/routeDetails";
+import { routesResource } from "./routes/routes";
+import { sailingsResource } from "./sailings/sailings";
+import { scheduleAlertsResource } from "./scheduleAlerts/scheduleAlerts";
+import { scheduledRoutesResource } from "./scheduledRoutes/scheduledRoutes";
+import { schedulesResource } from "./schedules/schedules";
+import { scheduleTodayResource } from "./scheduleToday/scheduleToday";
+import { serviceDisruptionsResource } from "./serviceDisruptions/serviceDisruptions";
+import { scheduleTerminalMatesResource } from "./terminalMates/terminalMates";
+import { scheduleTerminalsResource } from "./terminals/terminals";
+import { timeAdjustmentsResource } from "./timeAdjustments/timeAdjustments";
+import { scheduleValidDateRangeResource } from "./validDateRange/validDateRange";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsfScheduleApi: ApiDefinition = {

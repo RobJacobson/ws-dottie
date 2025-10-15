@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 import { cameraDetailsResource } from "./cameraDetails";
 // Import all resources
-import { cameraListResource } from "./cameraList";
+import { cameraListResource } from "./cameraList/cameraList";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotHighwayCamerasApi: ApiDefinition = {

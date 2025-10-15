@@ -7,15 +7,15 @@
 
 // Export the main API definition (legacy format for backward compatibility)
 export { wsdotMountainPassConditionsApi } from "./endpoints";
+// Export individual resources for direct use
+export { passConditionsResource } from "./passConditions/passConditions";
 // Export all input types
 export type {
   GetMountainPassConditionInput,
   GetMountainPassConditionsInput,
-} from "./original/inputSchemas.original";
+} from "./passConditions/passConditions.input";
 // Export all output types
 export type {
   PassCondition,
   TravelRestriction,
-} from "./original/outputSchemas.original";
-// Export individual resources for direct use
-export { passConditionsResource } from "./passConditions";
+} from "./passConditions/passConditions.output";

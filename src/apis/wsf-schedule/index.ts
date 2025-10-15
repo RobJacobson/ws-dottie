@@ -24,7 +24,6 @@ export {
   timeAdjustmentsResource,
   wsfScheduleApi,
 } from "./endpoints";
-
 // Export all input types
 export type {
   ActiveScheduledSeasonsInput,
