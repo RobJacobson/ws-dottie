@@ -6,7 +6,7 @@ import { roadwayLocationSchema } from "@/apis/shared";
  *
  * Information about traffic camera.
  */
-export const cameraSchema = z
+export const cameraBaseSchema = z
   .object({
     /** Unique identifier for the camera. */
     CameraID: z.number().describe("Unique identifier for the camera."),
@@ -68,7 +68,7 @@ export const cameraSchema = z
   })
   .describe("Information about traffic camera.");
 
-export type Camera = z.infer<typeof cameraSchema>;
+export type CameraBase = z.infer<typeof cameraBaseSchema>;
 
 // Export types from shared
 export type { RoadwayLocation } from "@/apis/shared";

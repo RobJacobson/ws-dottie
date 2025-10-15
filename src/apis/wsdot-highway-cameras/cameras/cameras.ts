@@ -1,12 +1,12 @@
 import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
-import * as i from "./cameraList.input";
-import * as o from "./cameraList.output";
+import * as i from "./cameras.input";
+import * as o from "./cameras.output";
 
-export const cameraListResource = {
-  name: "camera-list",
+export const camerasResource = {
+  name: "cameras",
   resourceDescription:
-    "Camera list operations provide access to traffic camera information including search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.",
+    "Camera operations provide access to traffic camera information including individual camera details and search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.",
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getHighwayCameras: {
@@ -30,5 +30,14 @@ export const cameraListResource = {
       endpointDescription:
         "Search for traffic cameras by route and milepost range.",
     } satisfies EndpointDefinition<i.SearchCamerasInput, o.Camera[]>,
+    getHighwayCameraByCameraId: {
+      function: "getHighwayCameraByCameraId",
+      endpoint: "/getCameraAsJson?CameraID={CameraID}",
+      inputSchema: i.getCameraSchema,
+      outputSchema: o.cameraSchema,
+      sampleParams: { CameraID: 9818 },
+      endpointDescription:
+        "Returns detailed information for a specific traffic camera by its unique identifier.",
+    } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
   },
 };
