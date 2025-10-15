@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { flowDataResource } from "./flowData";
+import { flowDataResource } from "./flowData/flowData";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotTrafficFlowApi: ApiDefinition = {
