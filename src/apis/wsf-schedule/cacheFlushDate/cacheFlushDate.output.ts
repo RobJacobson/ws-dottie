@@ -7,7 +7,7 @@
 
 import type { z } from "zod";
 
-import { zDotnetDate } from "../shared/zDotnetDateSchema";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for CacheFlushDate - represents cache flush date information

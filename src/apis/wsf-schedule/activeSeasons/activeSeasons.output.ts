@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { zDotnetDate } from "../shared/zDotnetDateSchema";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Base schedule schema containing common schedule fields

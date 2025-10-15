@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { zDotnetDate } from "../shared/zDotnetDateSchema";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for ContingencyAdj - represents contingency adjustment information

@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { zDotnetDate } from "../shared/zDotnetDateSchema";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Base route schema containing common route fields

@@ -7,7 +7,7 @@
 
 import { z } from "zod";
 
-import { zDotnetDate } from "../shared/zDotnetDateSchema";
+import { zDotnetDate } from "@/apis/shared";
 
 // Schedule Today uses the same output schema as regular schedules
 // Import the terminal combo schema from the schedules output file
