@@ -1,8 +1,8 @@
 import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import * as i from "./schemas/tollTripRates.input";
-import * as o from "./schemas/tollTripRates.output";
+import * as i from "./tollTripRates.input";
+import * as o from "./tollTripRates.output";
 
 export const tollTripRatesResource = {
   name: "toll-trip-rates",

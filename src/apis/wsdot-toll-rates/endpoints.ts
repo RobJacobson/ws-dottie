@@ -2,9 +2,9 @@ import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
 import { tollRatesResource } from "./tollRates/tollRates";
-import { tollTripInfoResource } from "./tollTripInfo";
-import { tollTripRatesResource } from "./tollTripRates";
-import { tollTripVersionResource } from "./tollTripVersion";
+import { tollTripInfoResource } from "./tollTripInfo/tollTripInfo";
+import { tollTripRatesResource } from "./tollTripRates/tollTripRates";
+import { tollTripVersionResource } from "./tollTripVersion/tollTripVersion";
 
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotTollRatesApi: ApiDefinition = {

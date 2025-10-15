@@ -1,7 +1,6 @@
-import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
-import * as i from "./schemas/tollTripVersion.input";
-import * as o from "./schemas/tollTripVersion.output";
+import * as i from "./tollTripVersion.input";
+import * as o from "./tollTripVersion.output";
 
 export const tollTripVersionResource = {
   name: "toll-trip-version",

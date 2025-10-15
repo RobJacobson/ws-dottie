@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
-import * as i from "./schemas/tollTripInfo.input";
-import * as o from "./schemas/tollTripInfo.output";
+import * as i from "./tollTripInfo.input";
+import * as o from "./tollTripInfo.output";
 
 export const tollTripInfoResource = {
   name: "toll-trip-info",
