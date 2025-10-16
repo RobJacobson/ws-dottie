@@ -7,16 +7,9 @@
 
 // Export all input types
 export type { GetCommercialVehicleRestrictionsInput } from "./cvRestrictionData/cvRestrictionData.input";
+// Export all output types
+export type { CVRestrictionData } from "./cvRestrictionData/cvRestrictionData.output";
+export type { GetCommercialVehicleRestrictionsWithIdInput } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.input";
+export type { CVRestrictionDataWithId } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.output";
 // Export the main API definition
 export { wsdotCommercialVehicleRestrictionsApi } from "./endpoints";
-// Export all output types
-export type { CVRestrictionData } from "./schemas/cvRestrictionData.output";
-
-export type { GetCommercialVehicleRestri./cvRestrictionData/cvRestrictionData.outputs/cvRestrictionDataWithId.input";
-
-export type
-{
-  CVRestrictionDataWithId;
-}
-from;
-("./cvRestrictionDataWithId/cvRestrictionDataWithId.output");

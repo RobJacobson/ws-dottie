@@ -6,17 +6,16 @@
  */
 
 // Export all input types
-export type { GetCameraInput } from "./cameraDetails/cameraDetails.input";
-// Export all output types
-export type { Camera } from "./cameraDetails/cameraDetails.output";
 export type {
+  GetCameraInput,
   GetCamerasInput,
   SearchCamerasInput,
-} from "./cameraList/cameraList.input";
+} from "./cameras/cameras.input";
+// Export all output types
+export type { Camera } from "./cameras/cameras.output";
 // Export the main API definition
 // Export individual resources for direct use
 export {
-  cameraDetailsResource,
-  cameraListResource,
+  camerasResource,
   wsdotHighwayCamerasApi,
 } from "./endpoints";

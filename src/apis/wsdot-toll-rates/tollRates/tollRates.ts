@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./tollRates.input";
-import * as o from "../schemas/tollRates.output";
+import * as o from "./tollRates.output";
 
 export const tollRatesResource = {
   name: "toll-rates",

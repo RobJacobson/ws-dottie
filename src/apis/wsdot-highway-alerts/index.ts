@@ -5,14 +5,8 @@
  * all input/output types and the main API definition.
  */
 
-// Export the main API definition
-// Export individual resources for direct use
-export {
-  alertsResource,
-  areasResource,
-  eventCategoriesResource,
-  wsdotHighwayAlertsApi,
-} from "./endpoints";
+// Export shared types
+export type { RoadwayLocation } from "@/apis/shared";
 
 // Export all input types
 export type {
@@ -23,7 +17,12 @@ export type {
   SearchAlertsInput,
 } from "./alerts/alerts.input";
 // Export all output types
-export type {
-  Alert,
-  RoadwayLocation,
-} from "./alerts/alerts.output";
+export type { Alert } from "./alerts/alerts.output";
+// Export the main API definition
+// Export individual resources for direct use
+export {
+  alertsResource,
+  areasResource,
+  eventCategoriesResource,
+  wsdotHighwayAlertsApi,
+} from "./endpoints";

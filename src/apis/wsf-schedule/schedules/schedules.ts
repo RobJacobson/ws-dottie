@@ -1,8 +1,8 @@
 import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import * as i from "./schedules/schedules.input";
-import * as o from "./schedules/schedules.output";
+import * as i from "./schedules.input";
+import * as o from "./schedules.output";
 
 export const schedulesResource = {
   name: "schedules",
