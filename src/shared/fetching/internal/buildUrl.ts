@@ -103,7 +103,14 @@ const buildQueryString = (
   existingQuery: string,
   params: Record<string, unknown>
 ): string => {
-  const searchParams = new URLSearchParams(existingQuery);
+  // First replace template placeholders in the existing query string
+  let processedQuery = existingQuery;
+  for (const [key, value] of Object.entries(params)) {
+    const formattedValue = formatParamValue(value);
+    processedQuery = processedQuery.replace(`{${key}}`, formattedValue);
+  }
+
+  const searchParams = new URLSearchParams(processedQuery);
 
   // Add new parameters that aren't already in the template
   for (const [key, value] of Object.entries(params)) {

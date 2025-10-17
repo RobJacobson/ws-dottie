@@ -1,143 +1,70 @@
 /**
- * @fileoverview Independent Test Runner for E2E Tests
+ * @fileoverview API-Specific Test Runner
  *
- * Allows each test file to run independently with parallel execution across endpoints.
- * Supports CLI specification of API and test cases.
+ * This file demonstrates how to run tests for individual APIs as separate test cases,
+ * providing individual feedback for each API instead of a single monolithic test.
+ *
+ * Usage:
+ * - Run all APIs: npx vitest --config config/vitest.config.ts --run tests/e2e/tests/api-specific-tests.ts
+ * - Run specific API: npx vitest --config config/vitest.config.ts --run tests/e2e/tests/api-specific-tests.ts -- --api wsdot-highway-alerts
  */
 
-// Import expect from vitest for type compatibility
-import { beforeAll, describe, expect, it } from "vitest";
+import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { setupTestEndpoints } from "./setupUtils";
-import { PARALLEL_TEST_TIMEOUT } from "./testConfig";
-import { testLogger } from "./testLogger";
+import { getTargetModule } from "../testConfig";
+import { testLogger } from "../testLogger";
+import { runParallelTest } from "../testRunner";
 
 /**
- * Configuration for running individual tests
+ * Test result for API-specific validation
  */
-export interface TestConfig {
-  apiName?: string | null;
-  testName?: string;
+export interface ApiTestResult {
+  success: boolean;
+  message: string;
+  apiName: string;
+  endpointCount: number;
+  duration: number;
 }
 
 /**
- * Creates a test suite that runs each API as a separate test case
+ * Tests an endpoint with comprehensive validation and detailed error reporting
  */
-export function runParallelTest(
-  testFn: (
-    endpoint: Endpoint<unknown, unknown>
-  ) => Promise<{ success: boolean; message: string }>,
-  testDescription: string,
-  config: TestConfig = {}
-): void {
-  // Get configuration for filtering
-  const targetApi =
-    config.apiName && config.apiName !== "all" ? config.apiName : null;
+async function testEndpoint(
+  endpoint: Endpoint<unknown, unknown>
+): Promise<{ success: boolean; message: string }> {
+  const startTime = Date.now();
+  try {
+    const params = endpoint.sampleParams || {};
 
-  // Create a top-level describe block for the test suite
-  describe(`${testDescription} Tests`, () => {
-    // Create individual tests for each API
-    describe("API Tests", () => {
-      // Generate tests at module load time for proper vitest discovery
-      const setupResultPromise = setupTestEndpoints();
-
-      // Create a test that will be discovered by vitest
-      it(`should run ${testDescription} for all APIs`, async () => {
-        const setupResult = await setupResultPromise;
-
-        // Filter APIs based on configuration
-        let apiNames: string[];
-        if (targetApi) {
-          apiNames = [targetApi];
-        } else {
-          apiNames = [...Object.keys(setupResult.discoveredEndpoints)].sort();
-        }
-
-        // Run tests for each API sequentially, but each API's endpoints in parallel
-        for (const apiName of apiNames) {
-          const endpoints = (setupResult.discoveredEndpoints[apiName] || [])
-            .slice()
-            .sort((a, b) => a.functionName.localeCompare(b.functionName));
-
-          if (endpoints.length === 0) {
-            testLogger.warn(`No endpoints available for ${apiName}`);
-            continue;
-          }
-
-          // Run all endpoint tests in parallel for this API
-          const startTime = Date.now();
-          const endpointTests = endpoints.map(async (endpoint) => {
-            try {
-              const result = await testFn(endpoint);
-
-              if (result.success) {
-                testLogger.testResult(
-                  `${apiName}.${endpoint.functionName}`,
-                  true,
-                  Date.now() - startTime
-                );
-              } else {
-                testLogger.testResultWithError(
-                  `${apiName}.${endpoint.functionName}`,
-                  false,
-                  result.message,
-                  Date.now() - startTime
-                );
-              }
-
-              return {
-                endpoint: endpoint.functionName,
-                success: result.success,
-                message: result.message,
-              };
-            } catch (error) {
-              const duration = Date.now() - startTime;
-              const errorMessage = extractDetailedErrorMessage(error, endpoint);
-
-              testLogger.testResultWithError(
-                `${apiName}.${endpoint.functionName}`,
-                false,
-                errorMessage,
-                duration
-              );
-
-              return {
-                endpoint: endpoint.functionName,
-                success: false,
-                message: errorMessage,
-              };
-            }
-          });
-
-          // Wait for all endpoint tests to complete in parallel
-          const results = await Promise.all(endpointTests);
-
-          // Check results for this API
-          const failedTests = results.filter((r) => !r.success);
-          if (failedTests.length > 0) {
-            const failureMessages = failedTests
-              .map((f) => `❌ ${apiName}.${f.endpoint}: ${f.message}`)
-              .join("\n");
-
-            throw new Error(failureMessages);
-          }
-        }
-      });
+    const result = await fetchDottie({
+      endpoint,
+      params,
+      fetchMode: "native",
+      logMode: "none",
+      validate: true,
     });
-  });
-}
 
-/**
- * Creates a test suite for a specific test type that can run independently
- */
-export function createTestSuite(
-  testFn: (
-    endpoint: Endpoint<unknown, unknown>
-  ) => Promise<{ success: boolean; message: string }>,
-  testDescription: string,
-  config: TestConfig = {}
-): void {
-  runParallelTest(testFn, testDescription, config);
+    if (result === undefined) {
+      return {
+        success: false,
+        message:
+          "Endpoint returned undefined result - check if endpoint should return data",
+      };
+    }
+
+    return {
+      success: true,
+      message: `Endpoint ${endpoint.functionName} completed successfully`,
+    };
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    const errorMessage = extractDetailedErrorMessage(error, endpoint);
+
+    return {
+      success: false,
+      message: `Endpoint ${endpoint.functionName} failed: ${errorMessage}`,
+    };
+  }
 }
 
 /**
@@ -290,3 +217,27 @@ function extractDetailedErrorMessage(
 
   return `Unknown error type: ${typeof error} - ${String(error)}`;
 }
+
+/**
+ * Master test function that runs comprehensive endpoint validation for each API
+ */
+async function runApiSpecificTests(
+  endpoint: Endpoint<unknown, unknown>
+): Promise<{ success: boolean; message: string }> {
+  return await testEndpoint(endpoint);
+}
+
+// Configuration for this specific test
+const config = {
+  apiName: getTargetModule() || undefined,
+};
+
+// Run the API-specific test suite
+runParallelTest(
+  runApiSpecificTests,
+  "API-specific endpoint validation",
+  config
+);
+
+// Export individual test functions for potential use in other contexts
+export { runApiSpecificTests, testEndpoint };

@@ -12,9 +12,16 @@
  * Can run independently with parallel execution across all endpoints.
  */
 
+import { ZodError } from "zod";
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
 import { getTargetModule } from "../testConfig";
+import {
+  ErrorCategory,
+  type ErrorContext,
+  ErrorSeverity,
+  testLogger,
+} from "../testLogger";
 import { runParallelTest } from "../testRunner";
 
 /**
@@ -279,7 +286,7 @@ export const createDataIntegrityTest = <TParams, TOutput>(
   endpoint: Endpoint<TParams, TOutput>
 ) => ({
   name: `Data Integrity: ${endpoint.functionName} (${endpoint.api})`,
-  test: async (params: TParams) => {
+  test: async (params: TParams, startTime?: number) => {
     const context = `${endpoint.api}.${endpoint.functionName}`;
 
     try {
@@ -310,9 +317,54 @@ export const createDataIntegrityTest = <TParams, TOutput>(
         nativeResult,
       };
     } catch (error) {
+      const errorDuration = Date.now() - (startTime || Date.now());
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      const errorObj = error instanceof Error ? error : new Error(errorMessage);
+
+      // Use enhanced Zod error formatting if it's a Zod validation error
+      if (testLogger.isZodError(errorObj)) {
+        testLogger.zodValidationError(errorObj, {
+          endpoint: endpoint.endpoint,
+          apiName: endpoint.api,
+          functionName: endpoint.functionName,
+          testType: "data-integrity",
+          duration: errorDuration,
+          requestDetails: {
+            params: params as Record<string, unknown>,
+            url: endpoint.urlTemplate,
+          },
+        });
+      } else {
+        // Handle non-Zod errors with standard structured logging
+        const errorContext: ErrorContext = testLogger.createErrorContext(
+          errorObj,
+          ErrorCategory.VALIDATION,
+          ErrorSeverity.HIGH,
+          {
+            endpoint: endpoint.endpoint,
+            apiName: endpoint.api,
+            functionName: endpoint.functionName,
+            testType: "data-integrity",
+            duration: errorDuration,
+            requestDetails: {
+              params: params as Record<string, unknown>,
+              url: endpoint.urlTemplate,
+            },
+            suggestions: [
+              "Check if Zod schema matches the actual API response structure",
+              "Verify that ignored fields are properly configured",
+              "Check if API response format has changed recently",
+              "Review canonicalization logic for complex data types",
+            ],
+          }
+        );
+        testLogger.structuredError(errorContext);
+      }
+
       return {
         success: false,
-        message: `Data integrity validation failed for ${context}: ${error instanceof Error ? error.message : "Unknown error"}`,
+        message: `Data integrity validation failed for ${context}: ${errorMessage}`,
       };
     }
   },
@@ -321,9 +373,51 @@ export const createDataIntegrityTest = <TParams, TOutput>(
 async function runDataIntegrity(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
+  const startTime = Date.now();
   const params = endpoint.sampleParams || {};
+
+  testLogger.testStep(
+    `Running data integrity test for ${endpoint.api}.${endpoint.functionName}`
+  );
+  testLogger.apiRequest(endpoint, params);
+
   const integrity = createDataIntegrityTest(endpoint);
-  const result = await integrity.test(params);
+  const result = await integrity.test(params, startTime);
+
+  const duration = Date.now() - startTime;
+
+  if (!result.success) {
+    // Enhanced error logging for data integrity failures
+    const errorContext: ErrorContext = testLogger.createErrorContext(
+      new Error(result.message),
+      ErrorCategory.VALIDATION,
+      ErrorSeverity.HIGH,
+      {
+        endpoint: endpoint.endpoint,
+        apiName: endpoint.api,
+        functionName: endpoint.functionName,
+        testType: "data-integrity",
+        duration,
+        requestDetails: {
+          params,
+          url: endpoint.urlTemplate,
+        },
+        suggestions: [
+          "Check if Zod schema matches the actual API response structure",
+          "Verify that ignored fields are properly configured",
+          "Check if API response format has changed recently",
+          "Review canonicalization logic for complex data types",
+        ],
+      }
+    );
+    testLogger.structuredError(errorContext);
+  } else {
+    testLogger.performance(
+      `Data integrity test for ${endpoint.api}.${endpoint.functionName}`,
+      duration
+    );
+  }
+
   return { success: result.success, message: result.message };
 }
 

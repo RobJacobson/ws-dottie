@@ -41,6 +41,7 @@
     "test:module": "vitest --config config/vitest.config.ts --run tests/e2e/tests/",
     "tests": "node scripts/run-api-tests.js",
     "test:e2e": "vitest --config config/vitest.config.ts --run tests/e2e/tests/ --reporter=verbose",
+    "test:api": "vitest --config config/vitest.config.ts --run tests/e2e/tests/api-specific-tests.ts",
     "lint": "biome lint src/",
     "format": "biome check --write src/",
     "type-check": "tsc --noEmit",

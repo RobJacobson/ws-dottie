@@ -21,7 +21,9 @@
         "-y",
         "@upstash/context7-mcp"
       ],
-      "alwaysAllow": []
+      "alwaysAllow": [
+        "resolve-library-id"
+      ]
     }
   }
 }

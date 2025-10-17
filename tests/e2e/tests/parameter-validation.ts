@@ -14,6 +14,12 @@
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
 import { getTargetModule } from "../testConfig";
+import {
+  ErrorCategory,
+  type ErrorContext,
+  ErrorSeverity,
+  testLogger,
+} from "../testLogger";
 import { runParallelTest } from "../testRunner";
 
 /**
@@ -31,8 +37,15 @@ export interface ParameterValidationResult {
 async function testValidParameters(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<ParameterValidationResult> {
+  const startTime = Date.now();
   try {
+    testLogger.testStep(
+      `Testing valid parameters for ${endpoint.api}.${endpoint.functionName}`
+    );
+
     const params = endpoint.sampleParams || {};
+    testLogger.apiRequest(endpoint, params);
+
     const result = await fetchDottie({
       endpoint,
       params,
@@ -41,7 +54,40 @@ async function testValidParameters(
       validate: true,
     });
 
+    const duration = Date.now() - startTime;
+    testLogger.apiResponse(endpoint, result, duration);
+    testLogger.performance(
+      `Valid parameters test for ${endpoint.api}.${endpoint.functionName}`,
+      duration
+    );
+
     if (result === undefined) {
+      const errorContext: ErrorContext = testLogger.createErrorContext(
+        new Error("Valid parameters returned undefined result"),
+        ErrorCategory.VALIDATION,
+        ErrorSeverity.HIGH,
+        {
+          endpoint: endpoint.endpoint,
+          apiName: endpoint.api,
+          functionName: endpoint.functionName,
+          testType: "valid",
+          duration,
+          requestDetails: {
+            params,
+            url: endpoint.urlTemplate,
+          },
+          responseDetails: {
+            body: result,
+          },
+          suggestions: [
+            "Check if the endpoint is expected to return data",
+            "Verify the API endpoint is functioning correctly",
+            "Check if required parameters are missing",
+          ],
+        }
+      );
+      testLogger.structuredError(errorContext);
+
       return {
         success: false,
         message: "Valid parameters returned undefined result",
@@ -55,6 +101,34 @@ async function testValidParameters(
       testType: "valid",
     };
   } catch (error) {
+    const duration = Date.now() - startTime;
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+
+    // Create error context for debugging
+    const errorContext: ErrorContext = testLogger.createErrorContext(
+      error instanceof Error ? error : new Error(errorMessage),
+      ErrorCategory.VALIDATION,
+      ErrorSeverity.MEDIUM,
+      {
+        endpoint: endpoint.endpoint,
+        apiName: endpoint.api,
+        functionName: endpoint.functionName,
+        testType: "valid",
+        duration,
+        requestDetails: {
+          params: endpoint.sampleParams || {},
+          url: endpoint.urlTemplate,
+        },
+        suggestions: [
+          "This might be expected behavior for some endpoints",
+          "Check if the error is related to specific parameter values",
+          "Verify if the endpoint has special requirements",
+        ],
+      }
+    );
+    testLogger.structuredError(errorContext);
+
     return {
       success: true, // Some endpoints may reject certain params; that's acceptable
       message: "Valid parameters handled appropriately",
@@ -69,9 +143,14 @@ async function testValidParameters(
 async function testInvalidParameters(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<ParameterValidationResult> {
+  const startTime = Date.now();
+
   // Skip invalid parameter testing for endpoints with empty input schemas
   const schemaKeys = Object.keys((endpoint.inputSchema as any).shape || {});
   if (schemaKeys.length === 0) {
+    testLogger.testStep(
+      `Skipping invalid parameter test for ${endpoint.api}.${endpoint.functionName} (no input schema)`
+    );
     return {
       success: true,
       message: "Endpoint accepts any parameters (no validation required)",
@@ -80,10 +159,16 @@ async function testInvalidParameters(
   }
 
   try {
+    testLogger.testStep(
+      `Testing invalid parameters for ${endpoint.api}.${endpoint.functionName}`
+    );
+
     // Test with unexpected parameters that don't match the endpoint template
     const invalidParams = {
       unexpectedParam: "not-expected",
     } as unknown as Record<string, unknown>;
+
+    testLogger.apiRequest(endpoint, invalidParams);
 
     await fetchDottie({
       endpoint: endpoint as unknown as Endpoint<
@@ -96,24 +181,68 @@ async function testInvalidParameters(
       validate: true,
     });
 
+    const duration = Date.now() - startTime;
+
+    // If we get here, the endpoint accepted invalid parameters (which is bad)
+    const errorContext: ErrorContext = testLogger.createErrorContext(
+      new Error("No error thrown for unexpected parameters"),
+      ErrorCategory.VALIDATION,
+      ErrorSeverity.CRITICAL,
+      {
+        endpoint: endpoint.endpoint,
+        apiName: endpoint.api,
+        functionName: endpoint.functionName,
+        testType: "invalid",
+        duration,
+        requestDetails: {
+          params: invalidParams,
+          url: endpoint.urlTemplate,
+        },
+        suggestions: [
+          "This endpoint should validate input parameters",
+          "Check if input schema is properly defined",
+          "Verify that parameter validation is enabled",
+          "Consider if this endpoint should accept arbitrary parameters",
+        ],
+      }
+    );
+    testLogger.structuredError(errorContext);
+
     return {
       success: false,
       message: "No error thrown for unexpected parameters",
       testType: "invalid",
     };
   } catch (error) {
+    const duration = Date.now() - startTime;
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+
     // Check if the error is about unexpected parameters (which is what we want)
     if (
       error instanceof Error &&
       error.message.includes("Unexpected parameters provided")
     ) {
+      testLogger.performance(
+        `Invalid parameters test for ${endpoint.api}.${endpoint.functionName}`,
+        duration
+      );
       return {
         success: true,
         message: "Correctly rejected unexpected parameters",
         testType: "invalid",
       };
     }
+
     // Other errors (like validation errors) are also acceptable
+    testLogger.testStep(
+      `Invalid parameters test completed for ${endpoint.api}.${endpoint.functionName}`,
+      {
+        error: errorMessage,
+        duration,
+      }
+    );
+
     return {
       success: true,
       message: "Correctly handled invalid parameters",
