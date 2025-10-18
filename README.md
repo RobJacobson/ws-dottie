@@ -680,10 +680,6 @@ npm run test:e2e                    # E2E tests (Node.js)
 npm run test:module                 # Module-specific tests
 npm run test:direct                 # Direct vitest execution
 
-# Individual test files
-npx vitest --config config/vitest.config.ts --run tests/e2e/tests/parameter-validation.ts
-npx vitest --config config/vitest.config.ts --run tests/e2e/tests/data-integrity.ts
-npx vitest --config config/vitest.config.ts --run tests/e2e/tests/schema-and-consistency-validation.ts
 ```
 
 **JSONP Testing**: Use `--jsonp` flag or `JSONP=true` environment variable to test browser environment compatibility.                                           
