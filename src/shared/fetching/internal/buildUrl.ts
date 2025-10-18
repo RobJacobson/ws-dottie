@@ -38,7 +38,16 @@ export const buildCompleteUrl = <TInput = never>(
   urlTemplate: string,
   params?: TInput
 ): string => {
-  if (!params) return urlTemplate;
+  if (!params) {
+    // Check if the URL template has unfilled parameters
+    const templateParams = urlTemplate.match(/\{[^}]+\}/g);
+    if (templateParams && templateParams.length > 0) {
+      throw new Error(
+        `Missing required URL parameters: ${templateParams.join(", ")} in URL template: ${urlTemplate}`
+      );
+    }
+    return urlTemplate;
+  }
 
   const paramRecord = params as Record<string, unknown>;
   const { path, query } = splitUrlIntoParts(urlTemplate);
@@ -49,15 +58,21 @@ export const buildCompleteUrl = <TInput = never>(
   // Build query string
   const queryString = buildQueryString(query, paramRecord);
 
-  // Combine path and query, clean up unused templates
+  // Combine path and query
   const baseUrl = queryString
     ? `${processedPath}?${queryString}`
     : processedPath;
 
-  const cleanedUrl = removeUnusedTemplates(baseUrl);
+  // Check for any remaining unfilled template parameters
+  const remainingParams = baseUrl.match(/\{[^}]+\}/g);
+  if (remainingParams && remainingParams.length > 0) {
+    throw new Error(
+      `Missing required URL parameters: ${remainingParams.join(", ")} in URL: ${baseUrl}`
+    );
+  }
 
   // Inject API key
-  const url = new URL(cleanedUrl);
+  const url = new URL(baseUrl);
   injectApiKey(url);
 
   return url.toString();
