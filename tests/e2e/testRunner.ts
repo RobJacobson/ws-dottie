@@ -6,7 +6,7 @@
  */
 
 // Import expect from vitest for type compatibility
-import { beforeAll, describe, expect, it } from "vitest";
+import { describe, it } from "vitest";
 import type { Endpoint } from "@/shared/types";
 import { setupTestEndpoints } from "./setupUtils";
 import { PARALLEL_TEST_TIMEOUT } from "./testConfig";
@@ -128,22 +128,9 @@ export function runParallelTest(
 }
 
 /**
- * Creates a test suite for a specific test type that can run independently
- */
-export function createTestSuite(
-  testFn: (
-    endpoint: Endpoint<unknown, unknown>
-  ) => Promise<{ success: boolean; message: string }>,
-  testDescription: string,
-  config: TestConfig = {}
-): void {
-  runParallelTest(testFn, testDescription, config);
-}
-
-/**
  * Extracts detailed error messages from various error types
  */
-function extractDetailedErrorMessage(
+export function extractDetailedErrorMessage(
   error: unknown,
   endpoint: Endpoint<unknown, unknown>
 ): string {

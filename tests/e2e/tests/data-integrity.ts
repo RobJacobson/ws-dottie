@@ -12,7 +12,6 @@
  * Can run independently with parallel execution across all endpoints.
  */
 
-import { ZodError } from "zod";
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
 import { getTargetModule } from "../testConfig";
@@ -107,7 +106,7 @@ function canonicalize(
   return `X:${Object.prototype.toString.call(value)}`;
 }
 
-export function arraysEqualAsUnorderedMultisets(
+function arraysEqualAsUnorderedMultisets(
   a: unknown[],
   b: unknown[],
   opts: CanonOptions = defaultOptions
@@ -136,7 +135,7 @@ export function arraysEqualAsUnorderedMultisets(
  * Objects are compared by content, not field order
  * Timestamps are normalized to minute precision for comparison
  */
-export const deepEqual = (a: unknown, b: unknown): boolean => {
+const deepEqual = (a: unknown, b: unknown): boolean => {
   // Handle arrays with order-independent comparison
   if (Array.isArray(a) && Array.isArray(b)) {
     return arraysEqualAsUnorderedMultisets(a, b);
@@ -151,7 +150,7 @@ export const deepEqual = (a: unknown, b: unknown): boolean => {
  * Uses the same logic as deepEqual but returns the first difference found
  * Optimized for performance with depth limits and size constraints
  */
-export const findFirstDifference = (
+const findFirstDifference = (
   zodResult: unknown,
   nativeResult: unknown,
   path: string = "",
@@ -262,7 +261,7 @@ export const findFirstDifference = (
 /**
  * Compares data integrity between zodFetch and native fetch results
  */
-export const compareDataIntegrity = (
+const compareDataIntegrity = (
   zodResult: unknown,
   nativeResult: unknown,
   context: string,
@@ -282,7 +281,7 @@ export const compareDataIntegrity = (
  * Creates a comprehensive data integrity test for an endpoint
  * Optimized for performance by limiting comparison scope for large datasets
  */
-export const createDataIntegrityTest = <TParams, TOutput>(
+const createDataIntegrityTest = <TParams, TOutput>(
   endpoint: Endpoint<TParams, TOutput>
 ) => ({
   name: `Data Integrity: ${endpoint.functionName} (${endpoint.api})`,
@@ -428,6 +427,3 @@ const config = {
 
 // Run the test suite
 runParallelTest(runDataIntegrity, "data integrity", config);
-
-// Export the function for potential use in other contexts
-export { runDataIntegrity };

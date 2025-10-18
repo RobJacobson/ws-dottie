@@ -45,12 +45,10 @@ export async function setupTestEndpoints(): Promise<TestSetupResult> {
     shouldTestSpecificModule() && targetModule !== "all" && targetModule
       ? [targetModule]
       : Object.keys(discoveredEndpoints);
-
   // Filter endpoints based on configuration
-  const filteredEndpoints =
-    shouldTestSpecificModule() && targetModule !== "all" && targetModule
-      ? discoveredEndpoints[targetModule] || []
-      : allEndpoints;
+  const filteredEndpoints = shouldTestSpecificModule()
+    ? discoveredEndpoints[targetModule!] || []
+    : allEndpoints;
 
   return {
     discoveredEndpoints,
@@ -86,5 +84,5 @@ export function logTestSetup(
  * Logs test suite completion
  */
 export function logTestSuiteEnd(testSuiteName: string): void {
-  testLogger.suiteEnd(`${testSuiteName} completed`);
+  testLogger.info(`${testSuiteName} completed`);
 }
