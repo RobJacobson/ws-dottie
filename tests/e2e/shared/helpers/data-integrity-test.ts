@@ -19,12 +19,18 @@ const IGNORED_FIELDS = new Set([
 
 /**
  * Recursively normalizes data for order-invariant comparison
- * Sorts arrays to enable set-like comparison while preserving other structures
+ * For arrays, compares as sets (order-independent) without O(N^2) complexity
  */
 function normalizeForComparison(obj: unknown): unknown {
   if (Array.isArray(obj)) {
-    // Sort array elements for order-invariant comparison
-    return obj.map(normalizeForComparison).sort();
+    // For arrays, recursively normalize each element, then create a JSON representation
+    // for consistent comparison regardless of order
+    const normalizedArray = obj.map(normalizeForComparison);
+    // Convert to JSON strings and sort them for consistent ordering
+    const jsonElements = normalizedArray.map((item) => JSON.stringify(item));
+    jsonElements.sort(); // Sort the JSON strings
+    // Return a special marker object that will be handled in the comparison
+    return { __array_as_set: jsonElements };
   } else if (
     obj !== null &&
     typeof obj === "object" &&
@@ -49,8 +55,38 @@ function normalizeForComparison(obj: unknown): unknown {
  * Arrays are compared as sets (order-independent)
  * Objects are compared by content, ignoring specified fields
  */
-const deepEqual = (a: unknown, b: unknown): boolean =>
-  equal(normalizeForComparison(a), normalizeForComparison(b));
+const deepEqual = (a: unknown, b: unknown): boolean => {
+  const normalizedA = normalizeForComparison(a);
+  const normalizedB = normalizeForComparison(b);
+
+  // Handle special case for array-as-set comparison
+  if (
+    typeof normalizedA === "object" &&
+    normalizedA !== null &&
+    "__array_as_set" in normalizedA &&
+    typeof normalizedB === "object" &&
+    normalizedB !== null &&
+    "__array_as_set" in normalizedB
+  ) {
+    const arrayA = (normalizedA as { __array_as_set: string[] }).__array_as_set;
+    const arrayB = (normalizedB as { __array_as_set: string[] }).__array_as_set;
+
+    // Compare arrays as sets by checking if they have the same elements
+    if (arrayA.length !== arrayB.length) {
+      return false;
+    }
+
+    // Since they're already sorted, we can do a direct comparison
+    for (let i = 0; i < arrayA.length; i++) {
+      if (arrayA[i] !== arrayB[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  return equal(normalizedA, normalizedB);
+};
 
 /**
  * Creates a test that fetches the same data both with and without validation from an endpoint
