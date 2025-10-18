@@ -5,9 +5,9 @@ import type { Endpoint } from "../../../../src/shared/types";
 /**
  * Creates a test that fetches with default parameters from an endpoint
  */
-export function createDefaultParametersTest(
+export const createDefaultParametersTest = (
   endpoint: Endpoint<unknown, unknown>
-) {
+) => {
   it(`It should fetch with default parameters from ${endpoint.api}.${endpoint.functionName}`, async () => {
     const result = await fetchDottie({
       endpoint,
@@ -19,4 +19,4 @@ export function createDefaultParametersTest(
 
     expect(result).toBeDefined();
   });
-}
+};

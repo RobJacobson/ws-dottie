@@ -49,14 +49,15 @@ function normalizeForComparison(obj: unknown): unknown {
  * Arrays are compared as sets (order-independent)
  * Objects are compared by content, ignoring specified fields
  */
-const deepEqual = (a: unknown, b: unknown): boolean => {
-  return equal(normalizeForComparison(a), normalizeForComparison(b));
-};
+const deepEqual = (a: unknown, b: unknown): boolean =>
+  equal(normalizeForComparison(a), normalizeForComparison(b));
 
 /**
  * Creates a test that fetches the same data both with and without validation from an endpoint
  */
-export function createDataIntegrityTest(endpoint: Endpoint<unknown, unknown>) {
+export const createDataIntegrityTest = (
+  endpoint: Endpoint<unknown, unknown>
+) => {
   it(`It should fetch the same data both with and without validation from ${endpoint.api}.${endpoint.functionName}`, async () => {
     // Execute both fetches simultaneously to ensure consistent data
     const [validatedResult, unvalidatedResult] = await Promise.all([
@@ -82,4 +83,4 @@ export function createDataIntegrityTest(endpoint: Endpoint<unknown, unknown>) {
     // Compare that both results are deeply equal using normalized comparison
     expect(deepEqual(validatedResult, unvalidatedResult)).toBe(true);
   });
-}
+};

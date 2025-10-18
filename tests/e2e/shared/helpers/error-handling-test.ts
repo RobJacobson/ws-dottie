@@ -5,7 +5,9 @@ import type { Endpoint } from "../../../../src/shared/types";
 /**
  * Creates a test that handles invalid parameters appropriately
  */
-export function createErrorHandlingTest(endpoint: Endpoint<unknown, unknown>) {
+export const createErrorHandlingTest = (
+  endpoint: Endpoint<unknown, unknown>
+) => {
   it(`It should handle invalid parameters appropriately for ${endpoint.api}.${endpoint.functionName}`, async () => {
     // Test with invalid parameters
     const paramsWithInvalid = {
@@ -29,4 +31,4 @@ export function createErrorHandlingTest(endpoint: Endpoint<unknown, unknown>) {
       expect(error).toBeDefined();
     }
   });
-}
+};

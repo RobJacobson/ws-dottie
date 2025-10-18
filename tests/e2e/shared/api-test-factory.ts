@@ -15,7 +15,7 @@ import { createStandardEndpointTests } from "./test-templates";
  * @param apiName - The name of the API to test (e.g., "wsdot-toll-rates")
  * @param apiDescription - Human-readable description for the test suite
  */
-export function createApiTestSuite(apiName: string, apiDescription: string) {
+export const createApiTestSuite = (apiName: string, apiDescription: string) => {
   // Get all endpoints for the specified API
   const apiEndpoints = endpoints.filter(
     (ep: Endpoint<unknown, unknown>) => ep.api === apiName
@@ -29,4 +29,4 @@ export function createApiTestSuite(apiName: string, apiDescription: string) {
       });
     });
   });
-}
+};
