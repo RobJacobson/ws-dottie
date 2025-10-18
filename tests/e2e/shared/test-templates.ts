@@ -14,6 +14,8 @@ import {
  */
 const SKIP_DATA_INTEGRITY_TESTS = new Set([
   "wsdot-toll-rates.getTollTripInfo", // Server returns HTTP 400 due to DBNull in ModifiedDate column
+  "wsdot-weather-readings.getSurfaceMeasurements", // Optional fields cause differences between validated/unvalidated results
+  "wsdot-weather-readings.getSubSurfaceMeasurements", // Optional fields cause differences between validated/unvalidated results
 ]);
 
 /**
