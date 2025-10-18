@@ -8,8 +8,8 @@
  */
 
 import type { Endpoint } from "@/shared/types";
+import { createHierarchicalTestSuiteWrapper } from "../shared/hierarchicalSetup";
 import { testLogger } from "../shared/logger";
-import { createTestSuite } from "../shared/setup";
 import { executeCliTest } from "../shared/utils";
 
 /**
@@ -28,8 +28,8 @@ async function runFetchDataTest(
   };
 }
 
-// Run the test suite using the centralized setup
-createTestSuite({
+// Run the test suite using the hierarchical setup
+createHierarchicalTestSuiteWrapper({
   description: "data fetching",
   testFunction: runFetchDataTest,
 });

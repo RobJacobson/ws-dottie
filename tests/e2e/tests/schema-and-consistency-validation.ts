@@ -12,8 +12,8 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
+import { createHierarchicalTestSuiteWrapper } from "../shared/hierarchicalSetup";
 import { testLogger } from "../shared/logger";
-import { createTestSuite } from "../shared/setup";
 
 /**
  * Tests that API responses match expected Zod schemas
@@ -188,8 +188,8 @@ async function runSchemaAndConsistencyValidation(
   };
 }
 
-// Run the consolidated test suite using the centralized setup
-createTestSuite({
+// Run the consolidated test suite using the hierarchical setup
+createHierarchicalTestSuiteWrapper({
   description: "schema and consistency validation",
   testFunction: runSchemaAndConsistencyValidation,
 });

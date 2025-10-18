@@ -11,9 +11,14 @@ export const DEFAULT_TIMEOUT = 60000;
 /** Test timeout for parallel execution (60 seconds) - increased for external API variability */
 export const PARALLEL_TEST_TIMEOUT = 60000;
 
-/** Get the target module from command line arguments */
+/** Get the target module from environment variable or command line arguments */
 export const getTargetModule = (): string | null => {
-  // Check command line arguments
+  // First check for environment variable set by the test script
+  if (process.env.TARGET_API) {
+    return process.env.TARGET_API;
+  }
+
+  // Fallback to command line arguments
   // Start from index 2 to skip 'node' executable and script name
   const args = process.argv;
   for (let i = 2; i < args.length; i++) {

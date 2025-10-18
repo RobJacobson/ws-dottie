@@ -8,8 +8,8 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
+import { createHierarchicalTestSuiteWrapper } from "../shared/hierarchicalSetup";
 import { testLogger } from "../shared/logger";
-import { createTestSuite } from "../shared/setup";
 
 /**
  * Master test function that runs all parameter validation scenarios
@@ -21,11 +21,7 @@ async function runParameterValidationTest(
   // Test with valid parameters
   const params = endpoint.sampleParams || {};
 
-  testLogger.testStep(
-    `Testing valid parameters for ${endpoint.api}.${endpoint.functionName}`
-  );
-
-  testLogger.apiRequest(endpoint, params);
+  // Removed detailed logging to keep output concise - only showing final result
 
   try {
     const result = await fetchDottie({
@@ -37,12 +33,10 @@ async function runParameterValidationTest(
     });
 
     const duration = Date.now() - startTime;
-    testLogger.apiResponse(endpoint, result, duration);
 
     // Verify we got a meaningful response
     if (result === undefined || result === null) {
-      const message = `Parameter validation failed for ${endpoint.api}.${endpoint.functionName}: Valid parameters returned ${result}`;
-      testLogger.error(message);
+      const message = `Parameter validation failed: Valid parameters returned ${result}`;
       return {
         success: false,
         message,
@@ -57,12 +51,6 @@ async function runParameterValidationTest(
     const duration = Date.now() - startTime;
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
-    testLogger.testResultWithError(
-      `${endpoint.api}.${endpoint.functionName}`,
-      false,
-      `Parameter validation failed: ${errorMessage}`,
-      duration
-    );
 
     return {
       success: false,
@@ -71,8 +59,8 @@ async function runParameterValidationTest(
   }
 }
 
-// Run the consolidated test suite using the centralized setup
-createTestSuite({
+// Run the consolidated test suite using the hierarchical setup
+createHierarchicalTestSuiteWrapper({
   description: "parameter validation",
   testFunction: runParameterValidationTest,
 });

@@ -1,12 +1,12 @@
 /**
- * @fileoverview Simple Test Logger for E2E Tests
+ * @fileoverview Enhanced Test Logger for E2E Tests
  *
- * This module provides basic logging for E2E tests with simple output.
+ * This module provides enhanced logging for E2E tests with hierarchical output.
  * Includes methods for test steps, API requests, performance metrics, and error handling.
  */
 
 /**
- * Simple test logger with basic logging capabilities
+ * Enhanced test logger with hierarchical logging capabilities
  */
 export const testLogger = {
   /**
@@ -97,5 +97,47 @@ export const testLogger = {
    */
   performance: (message: string, duration: number): void => {
     console.log(`⏱️  ${message}: ${duration}ms`);
+  },
+
+  /**
+   * Log API start with hierarchical formatting
+   */
+  apiStart: (apiName: string, endpointCount: number): void => {
+    console.log(`\n🔍 Testing API: ${apiName} (${endpointCount} endpoints)`);
+  },
+
+  /**
+   * Log pending test with detailed information
+   */
+  pendingTest: (
+    apiName: string,
+    endpointName: string,
+    details?: Record<string, unknown>
+  ): void => {
+    console.log(`\n⏳ Testing ${apiName}.${endpointName}`);
+    if (details) {
+      console.log(`   Endpoint: ${details.endpoint || "N/A"}`);
+      console.log(`   Function: ${details.functionName || "N/A"}`);
+    }
+  },
+
+  /**
+   * Log roll-up summary
+   */
+  rollupSummary: (
+    passed: number,
+    total: number,
+    failedList?: Array<{ endpoint: string; error: string }>
+  ): void => {
+    console.log(`\n📊 Roll-up Summary: ${passed}/${total} tests passed`);
+
+    if (failedList && failedList.length > 0) {
+      console.log(`\n❌ ${failedList.length} tests failed:`);
+      failedList.forEach((failure) => {
+        console.log(`   • ${failure.endpoint}: ${failure.error}`);
+      });
+    } else if (total > 0) {
+      console.log(`✅ All ${total} tests passed!`);
+    }
   },
 };
