@@ -13,14 +13,13 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { getTargetModule } from "../testConfig";
 import {
   ErrorCategory,
   type ErrorContext,
   ErrorSeverity,
   testLogger,
 } from "../testLogger";
-import { runParallelTest } from "../testRunner";
+import { createTestSuite } from "../testSetup";
 
 /**
  * Test result for parameter validation
@@ -307,13 +306,11 @@ async function runParameterValidation(
   };
 }
 
-// Configuration for this specific test
-const config = {
-  apiName: getTargetModule() || undefined,
-};
-
-// Run the consolidated test suite
-runParallelTest(runParameterValidation, "parameter validation", config);
+// Run the consolidated test suite using the centralized setup
+createTestSuite({
+  description: "parameter validation",
+  testFunction: runParameterValidation,
+});
 
 // Export individual test functions for potential use in other contexts
 export {

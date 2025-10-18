@@ -11,9 +11,8 @@ import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import JSON5 from "json5";
 import type { Endpoint } from "@/shared/types";
-import { getTargetModule } from "../testConfig";
 import { testLogger } from "../testLogger";
-import { runParallelTest } from "../testRunner";
+import { createTestSuite } from "../testSetup";
 
 const execAsync = promisify(exec);
 
@@ -132,16 +131,10 @@ export async function runFetchData(
   return await testEndpointFetchData(endpoint);
 }
 
-// Configuration for this specific test
-const config = {
-  apiName: getTargetModule() || undefined,
-};
-
-// Run the test suite
-runParallelTest(
-  runFetchData as (
+// Run the test suite using the centralized setup
+createTestSuite({
+  description: "data fetching",
+  testFunction: runFetchData as (
     endpoint: Endpoint<unknown, unknown>
   ) => Promise<{ success: boolean; message: string }>,
-  "data fetching",
-  config
-);
+});

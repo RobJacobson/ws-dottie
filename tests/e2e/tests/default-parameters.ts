@@ -11,9 +11,8 @@ import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import JSON5 from "json5";
 import type { Endpoint } from "@/shared/types";
-import { getTargetModule } from "../testConfig";
 import { ErrorCategory, ErrorSeverity, testLogger } from "../testLogger";
-import { runParallelTest } from "../testRunner";
+import { createTestSuite } from "../testSetup";
 
 const execAsync = promisify(exec);
 
@@ -151,10 +150,8 @@ export async function runDefaultParametersTest(
   return await testDefaultParameters(endpoint);
 }
 
-// Configuration for this specific test
-const config = {
-  apiName: getTargetModule() || undefined,
-};
-
-// Run the test suite
-runParallelTest(runDefaultParametersTest, "default parameters", config);
+// Run the test suite using the centralized setup
+createTestSuite({
+  description: "default parameters",
+  testFunction: runDefaultParametersTest,
+});

@@ -12,8 +12,7 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { getTargetModule } from "../testConfig";
-import { runParallelTest } from "../testRunner";
+import { createTestSuite } from "../testSetup";
 
 /**
  * Test result for schema and consistency validation
@@ -156,17 +155,11 @@ async function runSchemaAndConsistencyValidation(
   };
 }
 
-// Configuration for this specific test
-const config = {
-  apiName: getTargetModule() || undefined,
-};
-
-// Run the consolidated test suite
-runParallelTest(
-  runSchemaAndConsistencyValidation,
-  "schema and consistency validation",
-  config
-);
+// Run the consolidated test suite using the centralized setup
+createTestSuite({
+  description: "schema and consistency validation",
+  testFunction: runSchemaAndConsistencyValidation,
+});
 
 // Export individual test functions for potential use in other contexts
 export {

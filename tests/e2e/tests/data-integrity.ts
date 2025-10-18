@@ -14,14 +14,13 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { getTargetModule } from "../testConfig";
 import {
   ErrorCategory,
   type ErrorContext,
   ErrorSeverity,
   testLogger,
 } from "../testLogger";
-import { runParallelTest } from "../testRunner";
+import { createTestSuite } from "../testSetup";
 
 /**
  * Fields that should be ignored during data integrity comparison
@@ -420,10 +419,8 @@ async function runDataIntegrity(
   return { success: result.success, message: result.message };
 }
 
-// Configuration for this specific test
-const config = {
-  apiName: getTargetModule() || undefined,
-};
-
-// Run the test suite
-runParallelTest(runDataIntegrity, "data integrity", config);
+// Run the test suite using the centralized setup
+createTestSuite({
+  description: "data integrity",
+  testFunction: runDataIntegrity,
+});

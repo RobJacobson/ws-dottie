@@ -11,9 +11,9 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { getTargetModule } from "../testConfig";
 import { testLogger } from "../testLogger";
-import { extractDetailedErrorMessage, runParallelTest } from "../testRunner";
+import { extractDetailedErrorMessage } from "../testRunner";
+import { createTestSuite } from "../testSetup";
 
 /**
  * Test result for API-specific validation
@@ -76,17 +76,11 @@ async function runApiSpecificTests(
   return await testEndpoint(endpoint);
 }
 
-// Configuration for this specific test
-const config = {
-  apiName: getTargetModule() || undefined,
-};
-
-// Run the API-specific test suite
-runParallelTest(
-  runApiSpecificTests,
-  "API-specific endpoint validation",
-  config
-);
+// Run the API-specific test suite using the centralized setup
+createTestSuite({
+  description: "API-specific endpoint validation",
+  testFunction: runApiSpecificTests,
+});
 
 // Export individual test functions for potential use in other contexts
 export { runApiSpecificTests, testEndpoint };
