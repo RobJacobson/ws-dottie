@@ -6,9 +6,9 @@
  */
 
 import type { Endpoint } from "@/shared/types";
-import { setupTestEndpoints } from "./setupUtils";
-import { getTargetModule } from "./testConfig";
-import { runParallelTest } from "./testRunner";
+import { setupTestEndpoints } from "../setupUtils";
+import { runParallelTest } from "../testRunner";
+import { getTargetModule } from "./config";
 
 export interface TestSetupOptions {
   description: string;

@@ -15,16 +15,18 @@ The E2E testing system is built on top of the unified endpoint system defined in
 
 ```
 tests/e2e/
-├── testConfig.ts                    # Test configuration and timeouts
-├── testLogger.ts                    # Logging utilities
+├── shared/
+│   ├── config.ts                    # Test configuration and timeouts
+│   ├── logger.ts                    # Logging utilities
+│   ├── setup.ts                     # Test setup utilities
+│   └── utils.ts                     # Shared utilities
 ├── testRunner.ts                    # Parallel test execution utilities
-├── shared/                          # Shared testing utilities
-│   ├── setup.ts                    # Common test setup and endpoint discovery
-│   └── dataIntegrity.ts            # Data comparison utilities
+├── setupUtils.ts                    # Common test setup and endpoint discovery
 └── tests/                          # Consolidated test concern modules
     ├── parameter-validation.ts         # Comprehensive parameter validation (valid/invalid/missing)
     ├── schema-and-consistency-validation.ts  # Schema compliance and temporal consistency
     ├── default-parameters.ts           # CLI functionality testing
+    ├── fetch-data.ts                 # Basic data fetching tests
     └── data-integrity.ts               # Fetch mode consistency (Zod vs native)
 ```
 
@@ -252,7 +254,7 @@ The system automatically tests all available APIs:
 
 ### Test Configuration
 
-Key settings in `testConfig.ts`:
+Key settings in `shared/config.ts`:
 - **`DEFAULT_TIMEOUT`**: 60 seconds for API requests (increased for external API variability)
 - **`PARALLEL_TEST_TIMEOUT`**: 60 seconds for test execution (increased for external API variability)
 - **Module filtering**: Automatic filtering based on CLI options
@@ -262,30 +264,28 @@ Key settings in `testConfig.ts`:
 - **Individual API call timeout**: 60 seconds - configured in test files
 - **Total execution time**: Varies based on number of APIs/endpoints being tested
 
-## Data Integrity Testing
+### Data Integrity Testing
 
-### Advanced Comparison Logic
+The data integrity testing system uses sophisticated comparison algorithms with the help of the `fast-deep-equal` library:
 
-The data integrity testing system uses sophisticated comparison algorithms:
-
-#### **Array Comparison as Sets**
+#### **Order-Independent Comparison**
 - Arrays are compared as sets rather than ordered lists
 - Order-independent comparison ensures stability for dynamic APIs
 - Recursive deep equality checking for nested structures
 
-#### **Field Whitelisting**
+#### **Field Filtering**
 - Known problematic fields are automatically ignored during comparison
-- Currently whitelisted fields:
+- Currently filtered fields:
  - `VesselWatchShutID`
  - `VesselWatchShutMsg`
-  - `VesselWatchShutFlag`
-  - `VesselWatchStatus`
-  - `VesselWatchMsg`
+ - `VesselWatchShutFlag`
+ - `VesselWatchStatus`
+ - `VesselWatchMsg`
+ - `TimeUpdated` (timestamps change between API calls)
 
-#### **Comprehensive Error Reporting**
-- Detailed difference detection with path information
-- Specific error messages for type mismatches, missing fields, and array differences
-- Context-aware error reporting for easier debugging
+#### **Simple Error Reporting**
+- Basic difference detection
+- Clear error messages for data integrity mismatches
 
 ### Data Integrity Test Flow
 
@@ -346,6 +346,26 @@ The data integrity testing system uses sophisticated comparison algorithms:
 
 ## Shared Utilities
 
+### **`shared/config.ts`**
+- Test configuration and timeouts
+- Module filtering logic
+- Configuration management for API targeting
+
+### **`shared/logger.ts`**
+- Centralized logging utilities
+- Test result formatting
+- Performance metrics logging
+
+### **`shared/setup.ts`**
+- Centralized test suite setup
+- Test function registration
+- Configuration integration
+
+### **`shared/utils.ts`**
+- CLI command execution utilities
+- Data validation and checking functions
+- Common utility functions
+
 ### **`setupUtils.ts`**
 - Common test setup and endpoint discovery
 - Module filtering logic
@@ -355,12 +375,5 @@ The data integrity testing system uses sophisticated comparison algorithms:
 - Parallel test execution utilities
 - Configuration handling for API/endpoint targeting
 - Asynchronous test execution within Vitest framework
-
-### **`shared/dataIntegrity.ts`**
-- Advanced data comparison utilities
-- Set-based array comparison
-- Field whitelisting for known issues
-- Zod vs native fetch validation
-- Response consistency checking
 
 This architecture provides a robust, maintainable, and comprehensive testing system that automatically adapts to changes in the API structure while ensuring complete coverage and data integrity. The system handles real-world API variability through intelligent comparison algorithms and graceful handling of known schema evolution issues. Each test file can run independently with sequential execution across all endpoints, providing reliable completion and proper vitest cleanup.

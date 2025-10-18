@@ -7,8 +7,8 @@
 
 import { apis, endpoints } from "@/shared/endpoints";
 import type { Api, Endpoint } from "@/shared/types";
-import { getTargetModule, shouldTestSpecificModule } from "./testConfig";
-import { testLogger } from "./testLogger";
+import { getTargetModule, shouldTestSpecificModule } from "./shared/config";
+import { testLogger } from "./shared/logger";
 
 /**
  * Result of test endpoint setup

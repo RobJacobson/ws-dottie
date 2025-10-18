@@ -9,8 +9,8 @@
 import { describe, it } from "vitest";
 import type { Endpoint } from "@/shared/types";
 import { setupTestEndpoints } from "./setupUtils";
-import { PARALLEL_TEST_TIMEOUT } from "./testConfig";
-import { testLogger } from "./testLogger";
+import { PARALLEL_TEST_TIMEOUT } from "./shared/config";
+import { testLogger } from "./shared/logger";
 
 /**
  * Configuration for running individual tests

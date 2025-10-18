@@ -8,7 +8,7 @@ import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import JSON5 from "json5";
 import type { Endpoint } from "@/shared/types";
-import { testLogger } from "./testLogger";
+import { testLogger } from "./logger";
 
 const execAsync = promisify(exec);
 
