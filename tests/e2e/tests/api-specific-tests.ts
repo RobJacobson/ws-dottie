@@ -22,9 +22,14 @@ async function testEndpoint(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   const startTime = Date.now();
-  try {
-    const params = endpoint.sampleParams || {};
+  const params = endpoint.sampleParams || {};
 
+  testLogger.testStep(
+    `Running API-specific test for ${endpoint.api}.${endpoint.functionName}`
+  );
+  testLogger.apiRequest(endpoint, params);
+
+  try {
     const result = await fetchDottie({
       endpoint,
       params,
@@ -33,25 +38,35 @@ async function testEndpoint(
       validate: true,
     });
 
-    if (result === undefined) {
+    const duration = Date.now() - startTime;
+    testLogger.apiResponse(endpoint, result, duration);
+
+    if (result === undefined || result === null) {
+      const message = `API-specific test failed for ${endpoint.api}.${endpoint.functionName}: Endpoint returned ${result} - check if endpoint should return data`;
+      testLogger.error(message);
       return {
         success: false,
-        message:
-          "Endpoint returned undefined result - check if endpoint should return data",
+        message,
       };
     }
 
     return {
       success: true,
-      message: `Endpoint ${endpoint.functionName} completed successfully`,
+      message: `API-specific test passed for ${endpoint.api}.${endpoint.functionName}: Endpoint completed successfully`,
     };
   } catch (error) {
     const duration = Date.now() - startTime;
     const errorMessage = extractSimpleErrorMessage(error, endpoint);
+    testLogger.testResultWithError(
+      `${endpoint.api}.${endpoint.functionName}`,
+      false,
+      `API-specific test failed: ${errorMessage}`,
+      duration
+    );
 
     return {
       success: false,
-      message: `Endpoint ${endpoint.functionName} failed: ${errorMessage}`,
+      message: `API-specific test failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`,
     };
   }
 }

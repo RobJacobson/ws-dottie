@@ -1,13 +1,9 @@
 /**
  * @fileoverview Parameter Validation Test
  *
- * Comprehensive parameter validation testing that covers:
- * - Valid parameter handling
- * - Invalid parameter rejection
- * - Missing parameter handling
- * - Edge cases and boundary conditions
- *
- * Simplified implementation with consolidated functionality.
+ * Tests valid parameter handling to ensure:
+ * - Valid parameters work correctly with each endpoint
+ * - Endpoints return meaningful responses when given valid parameters
  */
 
 import { fetchDottie } from "@/shared/fetching";
@@ -21,17 +17,17 @@ import { createTestSuite } from "../shared/setup";
 async function runParameterValidationTest(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
+  const startTime = Date.now();
+  // Test with valid parameters
+  const params = endpoint.sampleParams || {};
+
+  testLogger.testStep(
+    `Testing valid parameters for ${endpoint.api}.${endpoint.functionName}`
+  );
+
+  testLogger.apiRequest(endpoint, params);
+
   try {
-    // Test with valid parameters
-    const params = endpoint.sampleParams || {};
-
-    testLogger.testStep(
-      `Testing valid parameters for ${endpoint.api}.${endpoint.functionName}`
-    );
-
-    testLogger.apiRequest(endpoint, params);
-
-    const startTime = Date.now();
     const result = await fetchDottie({
       endpoint,
       params,
@@ -45,17 +41,11 @@ async function runParameterValidationTest(
 
     // Verify we got a meaningful response
     if (result === undefined || result === null) {
+      const message = `Parameter validation failed for ${endpoint.api}.${endpoint.functionName}: Valid parameters returned ${result}`;
+      testLogger.error(message);
       return {
         success: false,
-        message: `Valid parameters returned ${result} for ${endpoint.api}.${endpoint.functionName}`,
-      };
-    }
-
-    // Verify we got a meaningful response
-    if (result === undefined || result === null) {
-      return {
-        success: false,
-        message: `Valid parameters returned ${result} for ${endpoint.api}.${endpoint.functionName}`,
+        message,
       };
     }
 
@@ -64,10 +54,14 @@ async function runParameterValidationTest(
       message: `Parameter validation passed for ${endpoint.api}.${endpoint.functionName}`,
     };
   } catch (error) {
+    const duration = Date.now() - startTime;
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
-    testLogger.error(
-      `Parameter validation failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`
+    testLogger.testResultWithError(
+      `${endpoint.api}.${endpoint.functionName}`,
+      false,
+      `Parameter validation failed: ${errorMessage}`,
+      duration
     );
 
     return {

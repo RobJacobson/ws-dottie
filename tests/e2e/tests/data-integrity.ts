@@ -134,8 +134,11 @@ async function runDataIntegrityTest(
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
 
-    testLogger.error(
-      `Data integrity validation failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`
+    testLogger.testResultWithError(
+      `${endpoint.api}.${endpoint.functionName}`,
+      false,
+      `Data integrity validation failed: ${errorMessage}`,
+      duration
     );
 
     return {

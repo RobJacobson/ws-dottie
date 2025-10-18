@@ -28,6 +28,7 @@ export async function executeCliTest(
   commandSuffix: string = "",
   options: CliTestOptions = {}
 ): Promise<{ success: boolean; message: string; data?: unknown }> {
+  const startTime = Date.now();
   const { api, functionName } = endpoint;
   const qualifiedFunctionName = `${api}:${functionName}`;
 
@@ -60,17 +61,33 @@ export async function executeCliTest(
     try {
       data = JSON5.parse(stdout);
     } catch (parseError) {
+      const duration = Date.now() - startTime;
+      const errorMessage = `Failed to parse JSON output from CLI: ${parseError instanceof Error ? parseError.message : "Unknown error"}`;
+      testLogger.testResultWithError(
+        `${qualifiedFunctionName}`,
+        false,
+        `CLI test failed: ${parseError instanceof Error ? parseError.message : "Unknown error"}`,
+        duration
+      );
       return {
         success: false,
-        message: `Failed to parse JSON output from CLI: ${parseError instanceof Error ? parseError.message : "Unknown error"}`,
+        message: `CLI test failed for ${qualifiedFunctionName}: ${errorMessage}`,
       };
     }
 
     // Verify that we got meaningful data back
     if (data === null || data === undefined) {
+      const duration = Date.now() - startTime;
+      const message = `CLI test failed for ${qualifiedFunctionName}: CLI command returned null or undefined`;
+      testLogger.testResultWithError(
+        `${qualifiedFunctionName}`,
+        false,
+        `CLI test failed: CLI command returned null or undefined`,
+        duration
+      );
       return {
         success: false,
-        message: `CLI command returned null or undefined for ${qualifiedFunctionName}`,
+        message,
       };
     }
 
@@ -91,11 +108,8 @@ export async function executeCliTest(
       }
     }
 
-    testLogger.testStep(`CLI test passed for ${qualifiedFunctionName}`, {
-      resultType: typeof data,
-      isArray: Array.isArray(data),
-      hasData: Array.isArray(data) ? data.length > 0 : data !== null,
-    });
+    const duration = Date.now() - startTime;
+    testLogger.testResult(`${qualifiedFunctionName}`, true, duration);
 
     return {
       success: true,
@@ -103,10 +117,13 @@ export async function executeCliTest(
       data,
     };
   } catch (error) {
+    const duration = Date.now() - startTime;
     const errorMessage = error instanceof Error ? error.message : String(error);
-
-    testLogger.error(
-      `CLI test failed for ${qualifiedFunctionName}: ${errorMessage}`
+    testLogger.testResultWithError(
+      `${qualifiedFunctionName}`,
+      false,
+      `CLI test failed: ${errorMessage}`,
+      duration
     );
 
     return {
