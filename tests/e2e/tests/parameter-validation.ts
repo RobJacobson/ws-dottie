@@ -18,7 +18,7 @@ import { createTestSuite } from "../testSetup";
 /**
  * Master test function that runs all parameter validation scenarios
  */
-async function runParameterValidation(
+async function runParameterValidationTest(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   try {
@@ -100,8 +100,8 @@ async function runParameterValidation(
 // Run the consolidated test suite using the centralized setup
 createTestSuite({
   description: "parameter validation",
-  testFunction: runParameterValidation,
+  testFunction: runParameterValidationTest,
 });
 
 // Export the main test function for potential use in other contexts
-export { runParameterValidation };
+export { runParameterValidationTest };

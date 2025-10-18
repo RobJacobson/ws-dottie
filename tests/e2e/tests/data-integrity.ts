@@ -83,63 +83,7 @@ const compareDataIntegrity = (
   );
 };
 
-/**
- * Creates a comprehensive data integrity test for an endpoint
- * Optimized for performance by limiting comparison scope for large datasets
- */
-const createDataIntegrityTest = <TParams, TOutput>(
-  endpoint: Endpoint<TParams, TOutput>
-) => ({
-  name: `Data Integrity: ${endpoint.functionName} (${endpoint.api})`,
-  test: async (params: TParams, startTime?: number) => {
-    const context = `${endpoint.api}.${endpoint.functionName}`;
-
-    try {
-      // Execute both fetches simultaneously to ensure consistent data
-      const [zodResult, nativeResult] = await Promise.all([
-        fetchDottie({
-          endpoint,
-          params,
-          fetchMode: "native",
-          logMode: "none",
-          validate: true,
-        }),
-        fetchDottie({
-          endpoint,
-          params,
-          fetchMode: "native",
-          logMode: "none",
-          validate: false,
-        }),
-      ]);
-
-      compareDataIntegrity(zodResult, nativeResult, context);
-
-      return {
-        success: true,
-        message: `Data integrity validation passed for ${context}`,
-        zodResult,
-        nativeResult,
-      };
-    } catch (error) {
-      const errorDuration = Date.now() - (startTime || Date.now());
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      const errorObj = error instanceof Error ? error : new Error(errorMessage);
-
-      testLogger.error(
-        `Data integrity validation failed for ${context}: ${errorMessage}`
-      );
-
-      return {
-        success: false,
-        message: `Data integrity validation failed for ${context}: ${errorMessage}`,
-      };
-    }
-  },
-});
-
-async function runDataIntegrity(
+async function runDataIntegrityTest(
   endpoint: Endpoint<unknown, unknown>
 ): Promise<{ success: boolean; message: string }> {
   const startTime = Date.now();
@@ -150,28 +94,59 @@ async function runDataIntegrity(
   );
   testLogger.apiRequest(endpoint, params);
 
-  const integrity = createDataIntegrityTest(endpoint);
-  const result = await integrity.test(params, startTime);
+  try {
+    // Execute both fetches simultaneously to ensure consistent data
+    const [zodResult, nativeResult] = await Promise.all([
+      fetchDottie({
+        endpoint,
+        params,
+        fetchMode: "native",
+        logMode: "none",
+        validate: true,
+      }),
+      fetchDottie({
+        endpoint,
+        params,
+        fetchMode: "native",
+        logMode: "none",
+        validate: false,
+      }),
+    ]);
 
-  const duration = Date.now() - startTime;
-
-  if (!result.success) {
-    const context = `${endpoint.api}.${endpoint.functionName}`;
-    testLogger.error(
-      `Data integrity validation failed for ${context}: ${result.message}`
+    compareDataIntegrity(
+      zodResult,
+      nativeResult,
+      `${endpoint.api}.${endpoint.functionName}`
     );
-  } else {
+
+    const duration = Date.now() - startTime;
     testLogger.performance(
       `Data integrity test for ${endpoint.api}.${endpoint.functionName}`,
       duration
     );
-  }
 
-  return { success: result.success, message: result.message };
+    return {
+      success: true,
+      message: `Data integrity validation passed for ${endpoint.api}.${endpoint.functionName}`,
+    };
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+
+    testLogger.error(
+      `Data integrity validation failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`
+    );
+
+    return {
+      success: false,
+      message: `Data integrity validation failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`,
+    };
+  }
 }
 
 // Run the test suite using the centralized setup
 createTestSuite({
   description: "data integrity",
-  testFunction: runDataIntegrity,
+  testFunction: runDataIntegrityTest,
 });

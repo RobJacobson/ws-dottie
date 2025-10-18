@@ -12,23 +12,15 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
+import { testLogger } from "../testLogger";
 import { createTestSuite } from "../testSetup";
-
-/**
- * Test result for schema and consistency validation
- */
-export interface SchemaConsistencyResult {
-  success: boolean;
-  message: string;
-  testType: "schema" | "consistency";
-}
 
 /**
  * Tests that API responses match expected Zod schemas
  */
 async function testSchemaValidation(
   endpoint: Endpoint<unknown, unknown>
-): Promise<SchemaConsistencyResult> {
+): Promise<{ success: boolean; message: string }> {
   try {
     const params = endpoint.sampleParams || {};
     const result = await fetchDottie({
@@ -43,20 +35,23 @@ async function testSchemaValidation(
       return {
         success: false,
         message: "Schema validation failed: Result is undefined or null",
-        testType: "schema",
       };
     }
 
     return {
       success: true,
       message: "Schema validation passed: Response matches Zod schema",
-      testType: "schema",
     };
   } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    testLogger.error(
+      `Schema validation failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`
+    );
+
     return {
       success: false,
-      message: `Schema validation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
-      testType: "schema",
+      message: `Schema validation failed: ${errorMessage}`,
     };
   }
 }
@@ -66,7 +61,7 @@ async function testSchemaValidation(
  */
 async function testDataStructureConsistency(
   endpoint: Endpoint<unknown, unknown>
-): Promise<SchemaConsistencyResult> {
+): Promise<{ success: boolean; message: string }> {
   try {
     const params = endpoint.sampleParams || {};
 
@@ -84,7 +79,6 @@ async function testDataStructureConsistency(
       return {
         success: true,
         message: `Data structure consistency skipped for large dataset (${r1.length} items) - ${endpoint.functionName}`,
-        testType: "consistency",
       };
     }
 
@@ -100,7 +94,6 @@ async function testDataStructureConsistency(
       return {
         success: false,
         message: "Type consistency failed: Type mismatch between calls",
-        testType: "consistency",
       };
     }
 
@@ -110,7 +103,6 @@ async function testDataStructureConsistency(
         return {
           success: false,
           message: `Array length consistency failed: Variance too high (${diff} items)`,
-          testType: "consistency",
         };
       }
     }
@@ -119,13 +111,17 @@ async function testDataStructureConsistency(
       success: true,
       message:
         "Data structure consistency validated: Types and sizes consistent across calls",
-      testType: "consistency",
     };
   } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    testLogger.error(
+      `Data structure consistency test failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`
+    );
+
     return {
       success: false,
-      message: `Data structure consistency test failed: ${error instanceof Error ? error.message : "Unknown error"}`,
-      testType: "consistency",
+      message: `Data structure consistency test failed: ${errorMessage}`,
     };
   }
 }
@@ -163,7 +159,7 @@ createTestSuite({
 
 // Export individual test functions for potential use in other contexts
 export {
-  runSchemaAndConsistencyValidation,
+  runSchemaAndConsistencyValidation as runSchemaAndConsistencyValidationTest,
   testSchemaValidation,
   testDataStructureConsistency,
 };

@@ -16,17 +16,6 @@ import { extractSimpleErrorMessage } from "../testRunner";
 import { createTestSuite } from "../testSetup";
 
 /**
- * Test result for API-specific validation
- */
-export interface ApiTestResult {
-  success: boolean;
-  message: string;
-  apiName: string;
-  endpointCount: number;
-  duration: number;
-}
-
-/**
  * Tests an endpoint with comprehensive validation and detailed error reporting
  */
 async function testEndpoint(
@@ -83,4 +72,4 @@ createTestSuite({
 });
 
 // Export individual test functions for potential use in other contexts
-export { runApiSpecificTests, testEndpoint };
+export { runApiSpecificTests as runApiSpecificTestsTest, testEndpoint };
