@@ -11,7 +11,7 @@ import { exec } from "node:child_process";
 import { promisify } from "node:util";
 import JSON5 from "json5";
 import type { Endpoint } from "@/shared/types";
-import { ErrorCategory, ErrorSeverity, testLogger } from "../testLogger";
+import { testLogger } from "../testLogger";
 import { createTestSuite } from "../testSetup";
 
 const execAsync = promisify(exec);
@@ -109,31 +109,11 @@ async function testDefaultParameters(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
 
-    // Create detailed error context
-    const errorContext = testLogger.createErrorContext(
-      error instanceof Error ? error : new Error(errorMessage),
-      ErrorCategory.NETWORK,
-      ErrorSeverity.HIGH,
-      {
-        endpoint: endpoint.endpoint,
-        apiName: endpoint.api,
-        functionName: endpoint.functionName,
-        testType: "default-parameters",
-        requestDetails: {
-          url: endpoint.urlTemplate,
-        },
-        suggestions: [
-          "Check if the CLI command is properly formatted",
-          "Verify that the WSDOT_ACCESS_TOKEN environment variable is set",
-          "Ensure the dist/cli/fetch-dottie.mjs file exists and is executable",
-          "Confirm that the endpoint is accessible and working",
-        ],
-      }
+    const qualifiedFunctionName = `${endpoint.api}:${endpoint.functionName}`;
+    testLogger.error(
+      `Default parameters test failed for ${qualifiedFunctionName}: ${errorMessage}`
     );
 
-    testLogger.structuredError(errorContext);
-
-    const qualifiedFunctionName = `${endpoint.api}:${endpoint.functionName}`;
     return {
       success: false,
       message: `Default parameters test failed for ${qualifiedFunctionName}: ${errorMessage}`,

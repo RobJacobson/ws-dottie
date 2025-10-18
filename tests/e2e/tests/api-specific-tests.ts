@@ -12,7 +12,7 @@
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
 import { testLogger } from "../testLogger";
-import { extractDetailedErrorMessage } from "../testRunner";
+import { extractSimpleErrorMessage } from "../testRunner";
 import { createTestSuite } from "../testSetup";
 
 /**
@@ -58,7 +58,7 @@ async function testEndpoint(
     };
   } catch (error) {
     const duration = Date.now() - startTime;
-    const errorMessage = extractDetailedErrorMessage(error, endpoint);
+    const errorMessage = extractSimpleErrorMessage(error, endpoint);
 
     return {
       success: false,

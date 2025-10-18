@@ -13,12 +13,7 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import {
-  ErrorCategory,
-  type ErrorContext,
-  ErrorSeverity,
-  testLogger,
-} from "../testLogger";
+import { testLogger } from "../testLogger";
 import { createTestSuite } from "../testSetup";
 
 /**
@@ -61,31 +56,9 @@ async function testValidParameters(
     );
 
     if (result === undefined) {
-      const errorContext: ErrorContext = testLogger.createErrorContext(
-        new Error("Valid parameters returned undefined result"),
-        ErrorCategory.VALIDATION,
-        ErrorSeverity.HIGH,
-        {
-          endpoint: endpoint.endpoint,
-          apiName: endpoint.api,
-          functionName: endpoint.functionName,
-          testType: "valid",
-          duration,
-          requestDetails: {
-            params,
-            url: endpoint.urlTemplate,
-          },
-          responseDetails: {
-            body: result,
-          },
-          suggestions: [
-            "Check if the endpoint is expected to return data",
-            "Verify the API endpoint is functioning correctly",
-            "Check if required parameters are missing",
-          ],
-        }
+      testLogger.error(
+        `Valid parameters returned undefined result for ${endpoint.api}.${endpoint.functionName}`
       );
-      testLogger.structuredError(errorContext);
 
       return {
         success: false,
@@ -104,29 +77,9 @@ async function testValidParameters(
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
 
-    // Create error context for debugging
-    const errorContext: ErrorContext = testLogger.createErrorContext(
-      error instanceof Error ? error : new Error(errorMessage),
-      ErrorCategory.VALIDATION,
-      ErrorSeverity.MEDIUM,
-      {
-        endpoint: endpoint.endpoint,
-        apiName: endpoint.api,
-        functionName: endpoint.functionName,
-        testType: "valid",
-        duration,
-        requestDetails: {
-          params: endpoint.sampleParams || {},
-          url: endpoint.urlTemplate,
-        },
-        suggestions: [
-          "This might be expected behavior for some endpoints",
-          "Check if the error is related to specific parameter values",
-          "Verify if the endpoint has special requirements",
-        ],
-      }
+    testLogger.error(
+      `Valid parameters test failed for ${endpoint.api}.${endpoint.functionName}: ${errorMessage}`
     );
-    testLogger.structuredError(errorContext);
 
     return {
       success: true, // Some endpoints may reject certain params; that's acceptable
@@ -183,29 +136,9 @@ async function testInvalidParameters(
     const duration = Date.now() - startTime;
 
     // If we get here, the endpoint accepted invalid parameters (which is bad)
-    const errorContext: ErrorContext = testLogger.createErrorContext(
-      new Error("No error thrown for unexpected parameters"),
-      ErrorCategory.VALIDATION,
-      ErrorSeverity.CRITICAL,
-      {
-        endpoint: endpoint.endpoint,
-        apiName: endpoint.api,
-        functionName: endpoint.functionName,
-        testType: "invalid",
-        duration,
-        requestDetails: {
-          params: invalidParams,
-          url: endpoint.urlTemplate,
-        },
-        suggestions: [
-          "This endpoint should validate input parameters",
-          "Check if input schema is properly defined",
-          "Verify that parameter validation is enabled",
-          "Consider if this endpoint should accept arbitrary parameters",
-        ],
-      }
+    testLogger.error(
+      `Invalid parameters test failed for ${endpoint.api}.${endpoint.functionName}: No error thrown for unexpected parameters`
     );
-    testLogger.structuredError(errorContext);
 
     return {
       success: false,
