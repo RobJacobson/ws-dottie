@@ -8,11 +8,11 @@ import { z } from "zod";
 export const scanwebSubSurfaceMeasurementsSchema = z
   .object({
     /** Sensor ID. */
-    SensorId: z.int().describe("Sensor ID."),
+    SensorId: z.number().optional().describe("Sensor ID."),
     /** Sub-surface temperature. */
     SubSurfaceTemperature: z
       .number()
-      .nullable()
+      .optional()
       .describe("Sub-surface temperature."),
   })
   .describe("Measurements recorded by sub-surface sensors.");

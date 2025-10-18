@@ -8,13 +8,13 @@ import { z } from "zod";
 export const scanwebSurfaceMeasurementsSchema = z
   .object({
     /** Sensor ID. */
-    SensorId: z.int().describe("Sensor ID."),
+    SensorId: z.number().optional().describe("Sensor ID."),
     /** Surface temperature. */
-    SurfaceTemperature: z.number().nullable().describe("Surface temperature."),
+    SurfaceTemperature: z.number().optional().describe("Surface temperature."),
     /** Road freezing temperature. */
     RoadFreezingTemperature: z
       .number()
-      .nullable()
+      .optional()
       .describe("Road freezing temperature."),
     /** Road surface condition. */
     RoadSurfaceCondition: z
@@ -25,7 +25,7 @@ export const scanwebSurfaceMeasurementsSchema = z
         z.literal(104),
         z.literal(105),
       ])
-      .nullable()
+      .optional()
       .describe("Road surface condition."),
   })
   .describe("Measurements recorded by surface sensors.");
