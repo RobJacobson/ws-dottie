@@ -31,8 +31,7 @@ export function runParallelTest(
   config: TestConfig = {}
 ): void {
   // Get configuration for filtering
-  const targetApi =
-    config.apiName && config.apiName !== "all" ? config.apiName : null;
+  const targetApi = config.apiName || null;
 
   // Create a top-level describe block for the test suite
   describe(`${testDescription} Tests`, () => {

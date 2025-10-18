@@ -37,12 +37,12 @@ export async function setupTestEndpoints(): Promise<TestSetupResult> {
 
   const allEndpoints = endpoints;
 
-  // Check for module filtering via environment variable
+  // Check for module filtering via command line parameters
   const targetModule = getTargetModule();
 
   // Determine which APIs to test
   const apiNames =
-    shouldTestSpecificModule() && targetModule !== "all" && targetModule
+    shouldTestSpecificModule() && targetModule
       ? [targetModule]
       : Object.keys(discoveredEndpoints);
   // Filter endpoints based on configuration
@@ -69,7 +69,7 @@ export function logTestSetup(
   const { targetModule, filteredEndpoints, allEndpoints, discoveredEndpoints } =
     setupResult;
 
-  if (shouldTestSpecificModule() && targetModule !== "all" && targetModule) {
+  if (shouldTestSpecificModule() && targetModule) {
     testLogger.info(
       `Testing ${testType} for specific module: ${targetModule} (${filteredEndpoints.length} endpoints)`
     );
