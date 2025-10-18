@@ -36,6 +36,14 @@ tests/e2e/
 │   ├── test-templates.ts                         # Reusable test template functions
 │   ├── api-test-factory.ts                      # API test factory function
 │   ├── setup.ts                                 # Shared test setup
+│   ├── helpers/
+│   │   ├── data-integrity-test.ts               # Data integrity validation tests
+│   │   ├── default-parameters-test.ts           # Default parameters fetching tests
+│   │   ├── default-parameters-validation-test.ts # Default parameters Zod schema validation tests
+│   │   ├── error-handling-test.ts               # Error handling tests
+│   │   ├── fetch-real-data-test.ts              # Real data fetching tests (with/without validation)
+│   │   ├── missing-parameters-test.ts           # Missing parameters validation tests
+│   │   └── ...                                  # Additional test helpers
 │   └── utils.ts                                 # Shared utilities
 ├── vitest.config.ts                             # Test configuration
 └── README.md                                   # This documentation
@@ -81,10 +89,12 @@ This maintains the hierarchical structure in test reports while keeping the code
 ## Standard Test Coverage
 
 Each endpoint receives the following standard tests:
-- Basic fetch functionality
-- Parameter validation
-- Schema validation
-- Error handling
+- Basic fetch functionality with default parameters
+- Real data fetching (with and without validation)
+- Data integrity validation
+- Error handling with invalid parameters
+- Missing URL parameters validation
+- Default parameters Zod schema validation
 
 ## Benefits
 
