@@ -8,7 +8,7 @@ import { cvRestrictionDataWithIdResource } from "./cvRestrictionDataWithId/cvRes
 export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
   name: "wsdot-commercial-vehicle-restrictions",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/cvrestrictions/cvrestrictionsrest.svc",
+    "https://www.wsdot.wa.gov/traffic/api/cvrestrictions/cvrestrictionsrest.svc",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(cvRestrictionDataResource.endpoints),

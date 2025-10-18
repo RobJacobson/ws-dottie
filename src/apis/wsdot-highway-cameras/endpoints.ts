@@ -5,7 +5,7 @@ import { camerasResource } from "./cameras/cameras";
 export const wsdotHighwayCamerasApi: ApiDefinition = {
   name: "wsdot-highway-cameras",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/highwaycameras/highwaycamerasrest.svc",
+    "https://www.wsdot.wa.gov/traffic/api/highwaycameras/highwaycamerasrest.svc",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(camerasResource.endpoints),

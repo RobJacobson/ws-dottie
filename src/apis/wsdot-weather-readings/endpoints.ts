@@ -7,7 +7,7 @@ import { weatherReadingsResource } from "./weatherReadings/weatherReadings";
 // Combine all resources into the legacy format for backward compatibility
 export const wsdotWeatherReadingsApi: ApiDefinition = {
   name: "wsdot-weather-readings",
-  baseUrl: "http://www.wsdot.wa.gov/traffic/api/api",
+  baseUrl: "https://www.wsdot.wa.gov/traffic/api/api",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(weatherReadingsResource.endpoints),

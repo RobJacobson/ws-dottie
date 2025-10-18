@@ -7,7 +7,7 @@ import { passConditionsResource } from "./passConditions/passConditions";
 export const wsdotMountainPassConditionsApi: ApiDefinition = {
   name: "wsdot-mountain-pass-conditions",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/mountainpassconditions/mountainpassconditionsrest.svc",
+    "https://www.wsdot.wa.gov/traffic/api/mountainpassconditions/mountainpassconditionsrest.svc",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(passConditionsResource.endpoints),

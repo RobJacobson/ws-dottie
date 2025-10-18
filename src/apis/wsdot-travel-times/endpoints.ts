@@ -7,7 +7,7 @@ import { travelTimeRoutesResource } from "./travelTimeRoutes/travelTimeRoutes";
 export const wsdotTravelTimesApi: ApiDefinition = {
   name: "wsdot-travel-times",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/traveltimes/traveltimesrest.svc",
+    "https://www.wsdot.wa.gov/traffic/api/traveltimes/traveltimesrest.svc",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(travelTimeRoutesResource.endpoints),

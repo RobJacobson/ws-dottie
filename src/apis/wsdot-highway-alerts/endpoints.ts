@@ -9,7 +9,7 @@ import { eventCategoriesResource } from "./eventCategories/eventCategories";
 export const wsdotHighwayAlertsApi: ApiDefinition = {
   name: "wsdot-highway-alerts",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
+    "https://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(alertsResource.endpoints),

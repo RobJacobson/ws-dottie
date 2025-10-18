@@ -7,7 +7,7 @@ import { flowDataResource } from "./flowData/flowData";
 export const wsdotTrafficFlowApi: ApiDefinition = {
   name: "wsdot-traffic-flow",
   baseUrl:
-    "http://www.wsdot.wa.gov/traffic/api/trafficflow/trafficflowrest.svc",
+    "https://www.wsdot.wa.gov/traffic/api/trafficflow/trafficflowrest.svc",
   endpoints: [
     // Flatten all endpoints from all resources
     ...Object.values(flowDataResource.endpoints),
