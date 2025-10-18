@@ -55,8 +55,12 @@ export const weatherInfoResource = {
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: {
         StationID: 1980,
-        SearchStartTime: new Date(`${datesHelper.yesterday()}T0:00:00Z`),
-        SearchEndTime: new Date(`${datesHelper.today()}T23:59:59Z`),
+        SearchStartTime: new Date(
+          `${datesHelper.yesterday()}T00:00:00Z`
+        ).toISOString(),
+        SearchEndTime: new Date(
+          `${datesHelper.today()}T23:59:59Z`
+        ).toISOString(),
       },
       endpointDescription:
         "Returns historical weather information for a specific station within a given time range.",

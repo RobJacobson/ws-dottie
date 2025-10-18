@@ -42,10 +42,16 @@ export const searchWeatherInformationSchema = z
   .object({
     /** Station ID. */
     StationID: z.int().describe("Station ID."),
-    /** Search start time as a JavaScript Date object. */
-    SearchStartTime: z.date().describe("Search start time as Date object."),
-    /** Search end time as a JavaScript Date object. */
-    SearchEndTime: z.date().describe("Search end time as Date object."),
+    /** Search start time as an ISO date string. */
+    SearchStartTime: z
+      .string()
+      .datetime()
+      .describe("Search start time as ISO date string."),
+    /** Search end time as an ISO date string. */
+    SearchEndTime: z
+      .string()
+      .datetime()
+      .describe("Search end time as ISO date string."),
   })
   .describe(
     "Provides current information from weather stations. Coverage Area: Statewide."
