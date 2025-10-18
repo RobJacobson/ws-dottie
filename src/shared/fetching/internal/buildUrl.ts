@@ -125,6 +125,14 @@ const buildQueryString = (
     processedQuery = processedQuery.replace(`{${key}}`, formattedValue);
   }
 
+  // Check for any remaining unfilled template parameters before URLSearchParams processes them
+  const remainingTemplateParams = processedQuery.match(/\{[^}]+\}/g);
+  if (remainingTemplateParams && remainingTemplateParams.length > 0) {
+    throw new Error(
+      `Missing required URL parameters: ${remainingTemplateParams.join(", ")} in query string: ${processedQuery}`
+    );
+  }
+
   const searchParams = new URLSearchParams(processedQuery);
 
   // Add new parameters that aren't already in the template
