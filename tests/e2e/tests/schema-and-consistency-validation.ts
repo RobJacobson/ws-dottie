@@ -12,8 +12,8 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { testLogger } from "../testLogger";
-import { createTestSuite } from "../testSetup";
+import { testLogger } from "../shared/logger";
+import { createTestSuite } from "../shared/setup";
 
 /**
  * Tests that API responses match expected Zod schemas

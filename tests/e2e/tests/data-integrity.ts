@@ -15,8 +15,8 @@
 import equal from "fast-deep-equal";
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { testLogger } from "../testLogger";
-import { createTestSuite } from "../testSetup";
+import { testLogger } from "../shared/logger";
+import { createTestSuite } from "../shared/setup";
 
 /**
  * Fields that should be ignored during data integrity comparison

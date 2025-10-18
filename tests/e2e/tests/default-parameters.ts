@@ -8,9 +8,9 @@
  */
 
 import type { Endpoint } from "@/shared/types";
-import { testLogger } from "../testLogger";
-import { createTestSuite } from "../testSetup";
-import { executeCliTest } from "../testUtils";
+import { testLogger } from "../shared/logger";
+import { createTestSuite } from "../shared/setup";
+import { executeCliTest } from "../shared/utils";
 
 /**
  * Tests CLI functionality with default parameters

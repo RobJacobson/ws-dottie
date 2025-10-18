@@ -12,8 +12,8 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { testLogger } from "../testLogger";
-import { createTestSuite } from "../testSetup";
+import { testLogger } from "../shared/logger";
+import { createTestSuite } from "../shared/setup";
 
 /**
  * Master test function that runs all parameter validation scenarios
@@ -51,32 +51,12 @@ async function runParameterValidationTest(
       };
     }
 
-    // Test with invalid parameters (only if the endpoint has an input schema)
-    const schemaKeys = Object.keys((endpoint.inputSchema as any).shape || {});
-    if (schemaKeys.length > 0) {
-      testLogger.testStep(
-        `Testing invalid parameters for ${endpoint.api}.${endpoint.functionName}`
-      );
-
-      try {
-        await fetchDottie({
-          endpoint,
-          params: { unexpectedParam: "not-expected" },
-          fetchMode: "native",
-          logMode: "none",
-          validate: true,
-        });
-
-        // If we get here, the endpoint accepted invalid parameters
-        testLogger.warn(
-          `Endpoint ${endpoint.api}.${endpoint.functionName} accepted invalid parameters`
-        );
-      } catch (error) {
-        // This is expected behavior - the endpoint correctly rejected invalid parameters
-        testLogger.info(
-          `Endpoint ${endpoint.api}.${endpoint.functionName} correctly rejected invalid parameters`
-        );
-      }
+    // Verify we got a meaningful response
+    if (result === undefined || result === null) {
+      return {
+        success: false,
+        message: `Valid parameters returned ${result} for ${endpoint.api}.${endpoint.functionName}`,
+      };
     }
 
     return {

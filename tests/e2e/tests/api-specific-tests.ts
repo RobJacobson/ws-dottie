@@ -11,9 +11,9 @@
 
 import { fetchDottie } from "@/shared/fetching";
 import type { Endpoint } from "@/shared/types";
-import { testLogger } from "../testLogger";
+import { testLogger } from "../shared/logger";
+import { createTestSuite } from "../shared/setup";
 import { extractSimpleErrorMessage } from "../testRunner";
-import { createTestSuite } from "../testSetup";
 
 /**
  * Tests an endpoint with comprehensive validation and detailed error reporting
