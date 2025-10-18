@@ -39,8 +39,9 @@ export const buildCompleteUrl = <TInput = never>(
   params?: TInput
 ): string => {
   if (!params) {
-    // Check if the URL template has unfilled parameters
-    const templateParams = urlTemplate.match(/\{[^}]+\}/g);
+    // Check if the URL template has unfilled parameters in the PATH portion only (not query string)
+    const [pathOnly] = urlTemplate.split("?");
+    const templateParams = pathOnly.match(/\{[^}]+\}/g);
     if (templateParams && templateParams.length > 0) {
       throw new Error(
         `Missing required URL parameters: ${templateParams.join(", ")} in URL template: ${urlTemplate}`
@@ -63,11 +64,12 @@ export const buildCompleteUrl = <TInput = never>(
     ? `${processedPath}?${queryString}`
     : processedPath;
 
-  // Check for any remaining unfilled template parameters
-  const remainingParams = baseUrl.match(/\{[^}]+\}/g);
-  if (remainingParams && remainingParams.length > 0) {
+  // Check for any remaining unfilled template parameters in the PATH portion only (not query string)
+  const [pathOnly] = baseUrl.split("?");
+  const remainingPathParams = pathOnly.match(/\{[^}]+\}/g);
+  if (remainingPathParams && remainingPathParams.length > 0) {
     throw new Error(
-      `Missing required URL parameters: ${remainingParams.join(", ")} in URL: ${baseUrl}`
+      `Missing required URL parameters: ${remainingPathParams.join(", ")} in URL: ${baseUrl}`
     );
   }
 
@@ -121,23 +123,51 @@ const buildQueryString = (
   // First replace template placeholders in the existing query string
   let processedQuery = existingQuery;
   for (const [key, value] of Object.entries(params)) {
-    const formattedValue = formatParamValue(value);
-    processedQuery = processedQuery.replace(`{${key}}`, formattedValue);
+    if (value !== undefined && value !== null) {
+      const formattedValue = formatParamValue(value);
+      processedQuery = processedQuery.replace(
+        new RegExp(`\\{${key}\\}`, "g"),
+        formattedValue
+      );
+    }
   }
 
-  // Check for any remaining unfilled template parameters before URLSearchParams processes them
+  // For query parameters, remove any remaining unfilled template parameters (for optional parameters)
   const remainingTemplateParams = processedQuery.match(/\{[^}]+\}/g);
   if (remainingTemplateParams && remainingTemplateParams.length > 0) {
-    throw new Error(
-      `Missing required URL parameters: ${remainingTemplateParams.join(", ")} in query string: ${processedQuery}`
-    );
+    // Remove template placeholders and their associated key-value pairs if the value is missing
+    for (const templateParam of remainingTemplateParams) {
+      const paramName = templateParam.slice(1, -1); // Extract parameter name from {paramName}
+
+      // Remove the entire parameter assignment (paramName={paramName}& or &paramName={paramName} or ?paramName={paramName})
+      processedQuery = processedQuery.replace(
+        new RegExp(`[&?]${paramName}=${templateParam}`, "g"),
+        ""
+      );
+      processedQuery = processedQuery.replace(
+        new RegExp(`${templateParam}=[^&]*&?`, "g"),
+        ""
+      );
+      processedQuery = processedQuery.replace(
+        new RegExp(`&${templateParam}=[^&]*`, "g"),
+        ""
+      );
+    }
+
+    // Clean up any remaining template placeholders
+    processedQuery = processedQuery.replace(/\{[^}]+\}/g, "");
+
+    // Clean up any double ampersands or trailing characters
+    processedQuery = processedQuery.replace(/&&/g, "&");
+    processedQuery = processedQuery.replace(/[&?]$/, "");
+    processedQuery = processedQuery.replace(/\?&/, "?");
   }
 
   const searchParams = new URLSearchParams(processedQuery);
 
   // Add new parameters that aren't already in the template
   for (const [key, value] of Object.entries(params)) {
-    if (value !== null && !searchParams.has(key)) {
+    if (value !== undefined && value !== null && !searchParams.has(key)) {
       searchParams.set(key, formatParamValue(value));
     }
   }
