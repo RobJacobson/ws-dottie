@@ -4,7 +4,11 @@ import type { Endpoint } from "../../../../src/shared/types";
 
 // TODO: Define the whitelist of endpoints that are allowed to return any kind of data
 // For now, we'll implement the data validation logic, and the whitelist can be defined later
-const ENDPOINT_WHITELIST: string[] = [];
+const ENDPOINT_WHITELIST: string[] = [
+  "wsf-schedule.getTimeAdjustmentsByRoute",
+  "wsf-schedule.getTimeAdjustmentsBySchedRoute",
+  "wsf-schedule.getRoutesHavingServiceDisruptionsByTripDate",
+];
 
 /**
  * Checks if an endpoint is in the predefined whitelist
@@ -22,6 +26,11 @@ const isEndpointWhitelisted = (
 const hasMeaningfulData = (data: unknown): boolean => {
   if (data === null) return false;
   if (data === undefined) return false;
+
+  // Check for Date objects specifically
+  if (data instanceof Date) {
+    return !isNaN(data.getTime()); // Valid date objects with actual dates are meaningful
+  }
 
   if (Array.isArray(data)) {
     return data.length > 0;
