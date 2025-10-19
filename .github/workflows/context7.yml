@@ -1,37 +1,53 @@
-name: Context7 Docs
+name: Context7 Documentation Update
 
 on:
+  push:
+    branches: [ main ]
   release:
     types: [ published ]
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   update-context7:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      # First-time registration (manual run only). Safe to keep; does nothing unless manually dispatched.
-      - name: Add to Context7 (first run only)
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          curl -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.CONTEXT7_API_KEY }}" \
-            -d "{\"docsRepoUrl\":\"https://github.com/RobJacobson/ws-dottie\"}" \
-            https://context7.com/api/v1/add
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
 
-      # Refresh docs on every release tag
-      - name: Refresh Context7 docs on release
-        if: github.event_name == 'release'
-        run: |
-          curl -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.CONTEXT7_API_KEY }}" \
-            -d "{\"requestedLibrary\":\"/RobJacobson/ws-dottie\"}" \
-            https://context7.com/refresh-library
+    - name: Install dependencies
+      run: npm ci
 
-      - name: Show result
-        run: |
-          echo "Context7 operation completed"
+    - name: Build project
+      run: npm run build
 
+    # First-time registration (manual run only)
+    - name: Add to Context7 (first run only)
+      if: github.event_name == 'workflow_dispatch'
+      uses: rennf93/upsert-context7@1.0
+      with:
+        operation: add
+        library-name: "/RobJacobson/ws-dottie"
+        api-key: ${{ secrets.CONTEXT7_API_KEY }}
+
+    # Refresh docs on pushes to main branch and on releases
+    - name: Refresh Context7 docs on main branch push
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: rennf93/upsert-context7@1.0
+      with:
+        operation: refresh
+        library-name: "/RobJacobson/ws-dottie"
+        api-key: ${{ secrets.CONTEXT7_API_KEY }}
+
+    # Also refresh on releases
+    - name: Refresh Context7 docs on release
+      if: github.event_name == 'release'
+      uses: rennf93/upsert-context7@1.0
+      with:
+        operation: refresh
+        library-name: "/RobJacobson/ws-dottie"
+        api-key: ${{ secrets.CONTEXT7_API_KEY }}
