@@ -17,7 +17,8 @@ jobs:
         uses: rennf93/upsert-context7@1.0
         with:
           operation: add
-          library-name: "/RobJacobson/ws-dottie"
+          library-name: "/robjacobson/ws-dottie"
+          api-key: ${{ secrets.CONTEXT7_API_KEY }}
 
       # Refresh docs on every release tag
       - name: Refresh Context7 docs on release
@@ -25,7 +26,8 @@ jobs:
         uses: rennf93/upsert-context7@1.0
         with:
           operation: refresh
-          library-name: "/RobJacobson/ws-dottie"
+          library-name: "/robjacobson/ws-dottie"
+          api-key: ${{ secrets.CONTEXT7_API_KEY }}
 
       - name: Show result
         run: |
