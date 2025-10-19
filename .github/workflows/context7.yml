@@ -14,14 +14,14 @@ jobs:
       # First-time registration (manual run only). Safe to keep; does nothing unless manually dispatched.
       - name: Add to Context7 (first run only)
         if: github.event_name == 'workflow_dispatch'
-        uses: rennf93/upsert-context7@v1
+        uses: rennf93/upsert-context7@1.1
         with:
           operation: add
 
       # Refresh docs on every release tag
       - name: Refresh Context7 docs on release
         if: github.event_name == 'release'
-        uses: rennf93/upsert-context7@v1
+        uses: rennf93/upsert-context7@1.1
         with:
           operation: refresh
 
