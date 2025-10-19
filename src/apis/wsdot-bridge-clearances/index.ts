@@ -2,10 +2,12 @@
  * @fileoverview WSDOT Bridge Clearances API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSDOT Bridge Clearances API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, the main API definition, and individual resources.
  */
 
-// Export the main API definition
+// Export individual resources for direct use
+export { bridgeClearancesResource } from "./bridgeClearances/bridgeClearances";
+// Export the main API definition (backward compatibility)
 export { wsdotBridgeClearancesApi } from "./endpoints";
 
 // Export all input types

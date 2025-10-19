@@ -5,65 +5,48 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [0.9.0] - 2025-10-19
+
+- Features
+  - **Enhanced URL Parameter Validation**: Added comprehensive parameter validation to URL building functions for improved reliability
+  - **CLI Enhancements**: Added colorized output, date handling and limit functionality for CLI results
+  - **API Endpoint Descriptions**: Added descriptions to API endpoints for MCP tool discovery, enhancing AI agent integration
+  - **New E2E Testing Architecture**: Implemented hierarchical test orchestration system with comprehensive API test suites
+
+- Improvements
+  - **API Schema Refinements**: Changed Zod schema fields from nullable to optional in weather APIs and updated date input format
+  - **URL Building Logic**: Simplified URL building logic by splitting into focused functions and separating parameter handling
+  - **Resource-Based Architecture**: Restructured API modules into resource-based format with standardized endpoint names
+
+- Fixes
+  - **HTTPS Migration**: Updated WSDOT API endpoints from HTTP to HTTPS for improved security
+
 ## [0.8.1] - 2025-10-09
 
 - Improvements
-  - **Bundle Size Optimization**: Enabled code-splitting in build configuration to reduce initial bundle size and improve tree-shaking for consumers
-  - **Build Performance**: Automatic chunk splitting for shared code and CLI components, reducing main bundle from monolithic structure
+  - **Bundle Size Optimization**: Enabled code-splitting in build configuration to reduce initial bundle size and improve tree-shaking
 
-- Build/Chore
-  - **Code Splitting**: Updated tsup.config.ts to enable splitting for better bundle optimization
-  - **Version Bump**: Patch release for bundle size improvements
-
-## [0.8.0] - 2025-01-27
+## [0.8.0] - 2025-10-07
 
 - Features
-  - **CLI Tool Enhancement**: Added comprehensive `fetch-dottie` command-line tool with configurable transport options (`--jsonp`, `--no-validation`), output formatting (`--concise`, `--silent`, `--limit`), and improved parameter processing with automatic defaults
-  - **Agent Documentation**: Added extensive documentation and handoff guides for AI agents, including API integration guides, schema refactoring documentation, and WSDOT naming convention standards
-  - **README Overhaul**: Complete redesign of README with emphasis on production-ready features, comprehensive parameterized examples, and detailed TanStack Query integration documentation
+  - **CLI Tool Enhancement**: Added comprehensive `fetch-dottie` command-line tool with configurable transport options, output formatting, and improved parameter processing
+  - **README Overhaul**: Complete redesign with emphasis on production-ready features and detailed TanStack Query integration
 
 - Improvements
-  - **API Architecture Overhaul**: Complete restructuring from individual client/schema files to unified endpoint-based architecture, consolidating 90+ endpoints across 16 API modules for better maintainability and consistency
-  - **Enhanced Fetching System**: Refactored core fetching logic into modular components with improved error handling, URL building, transport selection, and logging coordination
-  - **E2E Testing Revolution**: Replaced individual endpoint test files with dynamic endpoint discovery system that automatically tests all endpoints in parallel, reducing maintenance overhead while improving coverage
-  - **Data Integrity Validation**: Added comprehensive testing to ensure Zod schema validation and native fetch return identical results, with improved error reporting and field filtering
-  - **Documentation Transformation**: Replaced 100+ HTML endpoint docs with 180+ structured Markdown files, including comprehensive API references, agent guides, and integration documentation
-
-- Fixes
-  - **URL Security**: Updated API base URLs to use HTTPS for improved security
-  - **Date Handling**: Enhanced ISO date string validation and .NET date schema support
-  - **Parameter Validation**: Improved handling of empty strings and undefined parameters in CLI tool
-  - **Test Performance**: Optimized data integrity tests with custom canonicalization replacing external dependencies
-
-- Docs
-  - **Agent Support**: Added comprehensive getting started guides for AI agents with multiple data fetching strategies
-  - **API Documentation**: Created structured endpoint specifications and cheat sheets for all 90+ endpoints
-  - **Quality Standards**: Added detailed documentation standards and validation requirements for schema descriptions
-  - **Integration Guides**: Enhanced documentation for Context7 integration and API usage patterns
-  - **README Enhancement**: Added comprehensive TanStack Query integration section, parameterized examples using real sampleParams, and production-ready implementation patterns
-
-- Build/Chore
-  - **Dependency Updates**: Updated package dependencies and removed unused development dependencies
-  - **File Organization**: Moved original schema files to `/original` subdirectories for better organization
-  - **Script Cleanup**: Removed deprecated analysis and test scripts, streamlining the development workflow
-  - **Repository Hygiene**: Consolidated documentation structure and removed obsolete files
+  - **API Architecture Overhaul**: Complete restructuring to unified endpoint-based architecture, consolidating 90+ endpoints across 16 API modules
+  - **Enhanced Fetching System**: Refactored core fetching logic into modular components with improved error handling
+  - **E2E Testing Revolution**: Dynamic endpoint discovery system that automatically tests all endpoints in parallel
 
 - Breaking Changes
-  - **API Import Paths**: Changed from individual client imports to unified endpoint imports (see migration guide)
-  - **Test Structure**: E2E tests now use dynamic discovery instead of individual test files
-  - **Schema Organization**: Original schemas moved to `/original` subdirectories within each API module
+  - **API Import Paths**: Changed from individual client imports to unified endpoint imports
 
-## [0.7.0] - 2025-09-20
+## [0.7.0] - 2025-09-30
 
 - Improvements
-  - Complete refactoring of fetch system to use Zod end-to-end, including strict schema validation of both inputs and outputs. Zod uses "regular fetch" for most use cases, such as on server, but switches automatically to our custom JSONP fetch code for browser environment, as a workaround for CORS issues.
-  - Overhaul of API codebase to a one-file-per-endpoint file structure, instead of separating fetch functions, input schemas, output schemas, and TanStack Query hooks into separate files. The new files are organized as Zod schemas that are connected through metadata files to generate fetch functions.
-  - Refactoring of TanStack Query real-time cache invalidation strategy for Washington State Ferry endpoints through its cacheFlushDate endpoint, in new useQueryWithAutoUpdate hook that wraps useQuery.
-  - Rigorously validate Zod schema for correctness against the official WSDOT and WSF API specifications, while using curl requests against each endpoint to ensure correctness and detect misalignments between the data and the official specs. In cases of mismatches, the Zod schema follows the type of the actual data returned, not the spec (e.g., numbers for enums, not strings).
-  - Enhanced Zod descriptions for endpoints and returned fields with supplemental information from WSDOT and WSF.
-  - Overhauled and simplified e2e testing through automatically-generated tests based on new endpoint detection registry.
+  - Complete refactoring of fetch system to use Zod end-to-end with strict schema validation
+  - Overhaul of API codebase to a one-file-per-endpoint file structure
+  - Enhanced Zod descriptions for endpoints and returned fields with supplemental information
 
-## [0.6.0] - 2025-08-12
 
 - Improvements
   - Created new system of Zod schemas for type definitions and testing, replacing hard-coded TypeScript types for greater consistency

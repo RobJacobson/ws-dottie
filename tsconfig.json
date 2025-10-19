@@ -22,6 +22,6 @@
     "types": ["node"],
     "lib": ["ES2024", "DOM"]
   },
-  "include": ["src/**/*", "tests/e2e/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "tests/archive/**/*"]
 }

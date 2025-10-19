@@ -2,9 +2,11 @@
  * @fileoverview WSDOT Border Crossings API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSDOT Border Crossings API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, the main API definition, and individual resources.
  */
 
+// Export individual resources for direct use
+export { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
 // Export the main API definition
 export { wsdotBorderCrossingsApi } from "./endpoints";
 

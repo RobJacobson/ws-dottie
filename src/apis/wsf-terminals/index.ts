@@ -5,36 +5,44 @@
  * all input/output types and the main API definition.
  */
 
+// Export all input types
+export type { TerminalsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
+// Export all output types
+export type { TerminalsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
 // Export the main API definition
 export { wsfTerminalsApi } from "./endpoints";
-
-// Export all input types
 export type {
   TerminalBasicsByIdInput,
   TerminalBasicsInput,
+} from "./terminalBasics/terminalBasics.input";
+export type { TerminalBasic } from "./terminalBasics/terminalBasics.output";
+export type {
   TerminalBulletinsByIdInput,
   TerminalBulletinsInput,
+} from "./terminalBulletins/terminalBulletins.input";
+export type { TerminalBulletin } from "./terminalBulletins/terminalBulletins.output";
+export type {
   TerminalLocationsByIdInput,
   TerminalLocationsInput,
+} from "./terminalLocations/terminalLocations.input";
+export type { TerminalLocation } from "./terminalLocations/terminalLocations.output";
+export type {
   TerminalSailingSpaceByIdInput,
   TerminalSailingSpaceInput,
-  TerminalsCacheFlushDateInput,
+} from "./terminalSailingSpace/terminalSailingSpace.input";
+export type { TerminalSailingSpace } from "./terminalSailingSpace/terminalSailingSpace.output";
+export type {
   TerminalTransportsByIdInput,
   TerminalTransportsInput,
+} from "./terminalTransports/terminalTransports.input";
+export type { TerminalTransportationOption } from "./terminalTransports/terminalTransports.output";
+export type {
   TerminalVerboseByIdInput,
   TerminalVerboseInput,
+} from "./terminalVerbose/terminalVerbose.input";
+export type { TerminalVerbose } from "./terminalVerbose/terminalVerbose.output";
+export type {
   TerminalWaitTimesByIdInput,
   TerminalWaitTimesInput,
-} from "./original/inputSchemas.original";
-
-// Export all output types
-export type {
-  TerminalBasic,
-  TerminalBulletin,
-  TerminalLocation,
-  TerminalSailingSpace,
-  TerminalsCacheFlushDate,
-  TerminalTransportationOption,
-  TerminalVerbose,
-  TerminalWaitTime,
-} from "./original/outputSchemas.original";
+} from "./terminalWaitTimes/terminalWaitTimes.input";
+export type { TerminalWaitTime } from "./terminalWaitTimes/terminalWaitTimes.output";

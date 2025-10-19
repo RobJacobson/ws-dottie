@@ -8,7 +8,7 @@
 export {
   type RoadwayLocation,
   roadwayLocationSchema,
-} from "./roadwayLocationSchema.original";
-export { zDotnetDate } from "./zDotnetDateSchema.original";
+} from "./roadwayLocationSchema";
+export { zDotnetDate } from "./zDotnetDateSchema";
 
-export { zIsoDateString } from "./zIsoDateStringSchema.original";
+export { zIsoDateString } from "./zIsoDateStringSchema";

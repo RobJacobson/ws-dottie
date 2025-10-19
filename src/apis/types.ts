@@ -26,15 +26,32 @@ export interface ApiDefinition {
 }
 
 /**
+ * Resource definition structure for resource-based architecture
+ *
+ * This interface defines the structure for resource files in the new
+ * resource-based architecture, organizing endpoints by business data domains.
+ */
+export interface ResourceDefinition {
+  /** The resource name (e.g., "vessel-basics") */
+  name: string;
+  /** Description of the resource data type and characteristics */
+  resourceDescription: string;
+  /** Cache strategy for the entire resource */
+  cacheStrategy: CacheStrategy;
+  /** Record of endpoint definitions keyed by function name */
+  endpoints: Record<string, EndpointDefinition<unknown, unknown>>;
+}
+
+/**
  * Endpoint definition structure for individual endpoints
  *
- * This interface defines the structure for individual endpoints in the API
- * definition format, with truncated URLs that exclude the base URL portion.
+ * This interface defines the structure for individual endpoints in both
+ * API definition and resource definition formats.
  */
 export interface EndpointDefinition<I, O> {
-  /** Function name (e.g., "activeSeasons") */
+  /** Function name (e.g., "getVesselBasics") */
   function: string;
-  /** HTTP endpoint URL template (truncated, e.g., "/allsailings/{SchedRouteID}") */
+  /** HTTP endpoint URL template (truncated, e.g., "/vesselBasics/{VesselID}") */
   endpoint: string;
   /** Zod schema for input validation */
   inputSchema: z.ZodSchema<I>;
@@ -42,6 +59,10 @@ export interface EndpointDefinition<I, O> {
   outputSchema: z.ZodSchema<O>;
   /** Optional sample parameters for testing - must match the input schema exactly */
   sampleParams?: I | (() => Promise<I>);
-  /** Cache strategy */
-  cacheStrategy: CacheStrategy;
+  /** Cache strategy (only present in legacy API definition format) */
+  cacheStrategy?: CacheStrategy;
+  /** Description for MCP tool discovery (legacy API definition format) */
+  description?: string;
+  /** One-sentence description of what this specific endpoint does (resource format) */
+  endpointDescription?: string;
 }

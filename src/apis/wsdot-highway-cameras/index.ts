@@ -5,15 +5,17 @@
  * all input/output types and the main API definition.
  */
 
-// Export the main API definition
-export { wsdotHighwayCamerasApi } from "./endpoints";
-
 // Export all input types
 export type {
   GetCameraInput,
   GetCamerasInput,
   SearchCamerasInput,
-} from "./original/inputSchemas.original";
-
+} from "./cameras/cameras.input";
 // Export all output types
-export type { Camera } from "./original/outputSchemas.original";
+export type { Camera } from "./cameras/cameras.output";
+// Export the main API definition
+// Export individual resources for direct use
+export {
+  camerasResource,
+  wsdotHighwayCamerasApi,
+} from "./endpoints";

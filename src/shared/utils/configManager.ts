@@ -8,7 +8,7 @@
  */
 
 /** Default base URL for WSDOT/WSF API requests */
-const DEFAULT_BASE_URL = "http://www.wsdot.wa.gov";
+const DEFAULT_BASE_URL = "https://www.wsdot.wa.gov";
 
 /**
  * Configuration interface for WS-Dottie

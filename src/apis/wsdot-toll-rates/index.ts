@@ -1,12 +1,19 @@
 /**
- * @fileoverview WSDOT Toll Rates API - Clean exports for types and API definition
+ * @fileoverview WSDOT Toll Rates API - Clean exports for types, API definition, and resources
  *
  * This module provides a clean interface for the WSDOT Toll Rates API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, the main API definition, and individual resource modules.
  */
 
-// Export the main API definition
-export { wsdotTollRatesApi } from "./endpoints";
+// Export the main API definition (legacy format for backward compatibility)
+// Export individual resources for direct use
+export {
+  tollRatesResource,
+  tollTripInfoResource,
+  tollTripRatesResource,
+  tollTripVersionResource,
+  wsdotTollRatesApi,
+} from "./endpoints";
 
 // Export all input types
 export type {

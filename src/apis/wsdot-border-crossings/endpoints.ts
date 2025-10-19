@@ -1,26 +1,18 @@
-import { z } from "zod";
-import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
-import * as i from "./original/inputSchemas.original";
-import * as o from "./original/outputSchemas.original";
+import type { ApiDefinition } from "@/apis/types";
 
+// Import all resources
+import { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
+
+// Combine all resources into the legacy format for backward compatibility
 export const wsdotBorderCrossingsApi: ApiDefinition = {
   name: "wsdot-border-crossings",
   baseUrl:
     "https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc",
   endpoints: [
-    /**
-     * BorderCrossingData response
-     */
-    {
-      function: "getBorderCrossings",
-      endpoint: "/GetBorderCrossingsAsJson",
-      inputSchema: i.getBorderCrossingsSchema,
-      outputSchema: z.array(o.borderCrossingDataSchema),
-      sampleParams: {},
-      cacheStrategy: "FREQUENT",
-    } satisfies EndpointDefinition<
-      i.GetBorderCrossingsInput,
-      o.BorderCrossingData[]
-    >,
+    // Flatten all endpoints from all resources
+    ...Object.values(borderCrossingDataResource.endpoints),
   ],
 };
+
+// Export individual resources for direct use
+export { borderCrossingDataResource };

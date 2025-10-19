@@ -210,29 +210,34 @@ export const displayFunctionNotFound = (functionName: string): void => {
  *
  * This function formats and outputs the API response data according to
  * the specified CLI options, including pretty-printing and truncation.
+ * Now uses colorized output by default in all cases.
  *
  * @param result - The result data to output
  * @param options - CLI options controlling output format (pretty, head, etc.)
  */
 export const outputResult = (result: unknown, options: CliOptions): void => {
+  // Apply limit to array results if specified
+  let outputResult = result;
+  if (options.limit && options.limit > 0 && Array.isArray(result)) {
+    outputResult = result.slice(0, options.limit);
+  }
+
   // Handle concise output for arrays
-  if (options.concise && Array.isArray(result)) {
-    outputConciseArray(result, options);
+  if (options.concise && Array.isArray(outputResult)) {
+    outputConciseArray(outputResult, options);
     return;
   }
 
-  const jsonString = JSON.stringify(
-    result,
-    null,
-    options.pretty ? 2 : undefined
-  );
+  // Use colorized output in all cases
+  const colorizedOutput = colorizeValue(outputResult);
 
-  if (options.limit && options.limit > 0) {
-    const lines = jsonString.split("\n");
+  if (options.limit && options.limit > 0 && !Array.isArray(result)) {
+    // For non-array results, limit by lines (original behavior)
+    const lines = colorizedOutput.split("\n");
     const truncatedLines = lines.slice(0, options.limit);
     console.log(truncatedLines.join("\n"));
   } else {
-    console.log(jsonString);
+    console.log(colorizedOutput);
   }
 };
 
@@ -261,7 +266,7 @@ const outputConciseArray = (result: unknown[], options: CliOptions): void => {
 
 /**
  * Recursively colorizes a JavaScript value using picocolors
- * Handles all JSON types: objects, arrays, strings, numbers, booleans, null
+ * Handles all JSON types: objects, arrays, strings, numbers, booleans, null, and dates
  *
  * @param value - Value to colorize
  * @returns Colorized string representation
@@ -269,6 +274,11 @@ const outputConciseArray = (result: unknown[], options: CliOptions): void => {
 const colorizeValue = (value: unknown): string => {
   // Handle null first (typeof null === 'object')
   if (value === null) return pc.yellow("null");
+
+  // Handle Date objects specifically
+  if (value instanceof Date) {
+    return pc.green(`"${value.toISOString()}"`);
+  }
 
   // Handle arrays before objects (Array.isArray needed since typeof array === 'object')
   if (Array.isArray(value)) {

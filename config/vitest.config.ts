@@ -5,7 +5,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    setupFiles: ["./tests/e2e/setupUtils.ts"],
     testTimeout: 600000, // 10 minutes timeout for unified test suite
     // reporters are provided via CLI (see package.json)
     // Note: fileParallelism disabled to avoid race conditions with external API calls
@@ -23,7 +22,6 @@ export default defineConfig({
       shuffle: false,
       hooks: "list",
     },
-    include: ["tests/e2e/tests/**/*.{test,spec}.ts", "tests/e2e/tests/*.ts"],
   },
   resolve: {
     alias: {

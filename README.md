@@ -125,11 +125,11 @@ function TransportationDashboard() {
 
 **Server-Side (Node.js)**
 ```javascript
-import { fetchDottie, vesselLocationsById, getAlert, fareLineItems } from 'ws-dottie';
+import { fetchDottie, getVesselLocationsByVesselId, getAlertById, getFareLineItemsByTripDateAndTerminals } from 'ws-dottie';
 
 // Get specific vessel location (VesselID: 18)
 const vessel = await fetchDottie({
-  endpoint: vesselLocationsById,
+  endpoint: getVesselLocationsByVesselId,
   params: { VesselID: 18 },
   fetchMode: 'native',
   validate: true
@@ -137,7 +137,7 @@ const vessel = await fetchDottie({
 
 // Get specific highway alert (AlertID: 468632)
 const alert = await fetchDottie({
-  endpoint: getAlert,
+  endpoint: getAlertById,
   params: { AlertID: 468632 },
   fetchMode: 'native',
   validate: true
@@ -145,7 +145,7 @@ const alert = await fetchDottie({
 
 // Get ferry fare information for tomorrow's trip
 const fares = await fetchDottie({
-  endpoint: fareLineItems,
+ endpoint: getFareLineItemsByTripDateAndTerminals,
   params: {
     TripDate: '2025-01-28',
     DepartingTerminalID: 3,
@@ -159,11 +159,11 @@ const fares = await fetchDottie({
 
 **Browser (CORS-Safe)**
 ```javascript
-import { fetchDottie, vesselBasicsById, getBridgeClearancesByRoute } from 'ws-dottie';
+import { fetchDottie, getVesselBasicsByVesselId, getBridgeClearancesByRoute } from 'ws-dottie';
 
 // Get specific vessel details (VesselID: 74)
 const vessel = await fetchDottie({
-  endpoint: vesselBasicsById,
+  endpoint: getVesselBasicsByVesselId,
   params: { VesselID: 74 },
   fetchMode: 'jsonp', // Bypasses CORS
   validate: true
@@ -184,13 +184,13 @@ const clearances = await fetchDottie({
 fetch-dottie --list
 
 # Test specific vessel location (VesselID: 18)
-fetch-dottie vesselLocationsById '{"VesselID": 18}'
+fetch-dottie getVesselLocationsByVesselId '{"VesselID": 18}'
 
 # Get ferry fares for specific trip
-fetch-dottie fareLineItems '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
+fetch-dottie getFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
 
 # Fast testing without validation (raw data)
-fetch-dottie vesselBasicsById '{"VesselID": 74}' --no-validation --pretty
+fetch-dottie getVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --pretty
 
 # Browser-compatible JSONP testing with parameters
 fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}' --jsonp
@@ -237,7 +237,7 @@ fetch-dottie --list
 fetch-dottie getBorderCrossings
 
 # Fast testing without validation (raw data)
-fetch-dottie vesselBasics --no-validation
+fetch-dottie getVesselBasics --no-validation
 ```
 
 **🌐 Environment Testing**
@@ -249,7 +249,7 @@ fetch-dottie getVesselLocations
 fetch-dottie getBorderCrossings --jsonp
 
 # Mixed: JSONP without validation (fastest)
-fetch-dottie vesselBasics --jsonp --no-validation
+fetch-dottie getVesselBasics --jsonp --no-validation
 ```
 
 **📊 Data Exploration**
@@ -258,19 +258,19 @@ fetch-dottie vesselBasics --jsonp --no-validation
 fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}'
 
 # Get ferry fare information for specific trip
-fetch-dottie fareLineItems '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
+fetch-dottie getFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
 
 # Get specific vessel location (VesselID: 18)
-fetch-dottie vesselLocationsById '{"VesselID": 18}'
+fetch-dottie getVesselLocationsByVesselId '{"VesselID": 18}'
 
 # Get specific highway alert (AlertID: 468632)
-fetch-dottie getAlert '{"AlertID": 468632}'
+fetch-dottie getAlertById '{"AlertID": 468632}'
 
 # Get weather from specific station (StationID: 1909)
 fetch-dottie getWeatherInformationByStationId '{"StationID": 1909}'
 
 # Get vessel history for specific date range
-fetch-dottie vesselHistoriesByVesselAndDateRange '{"VesselName": "Tacoma", "DateStart": "2025-09-01", "DateEnd": "2025-10-01"}'
+fetch-dottie getVesselHistoriesByVesselNameAndDateRange '{"VesselName": "Tacoma", "DateStart": "2025-09-01", "DateEnd": "2025-10-01"}'
 
 # Pretty-printed output
 fetch-dottie getBorderCrossings --pretty
@@ -526,11 +526,11 @@ function TransportationDashboard() {
 ### **Server-Side API Integration**
 ```javascript
 import { 
-  fetchDottie, 
-  getBorderCrossings, 
-  vesselLocationsById,
-  getAlert,
-  getBridgeClearancesByRoute 
+  fetchDottie,
+  getBorderCrossings,
+  getVesselLocationsByVesselId,
+  getAlertById,
+  getBridgeClearancesByRoute
 } from 'ws-dottie';
 
 // Express.js route handler with parameterized queries
@@ -549,7 +549,7 @@ app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
       
       // Specific vessel location
       fetchDottie({
-        endpoint: vesselLocationsById,
+        endpoint: getVesselLocationsByVesselId,
         params: { VesselID: parseInt(vesselId) },
         fetchMode: 'native',
         validate: true
@@ -557,7 +557,7 @@ app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
       
       // Specific highway alert
       fetchDottie({
-        endpoint: getAlert,
+        endpoint: getAlertById,
         params: { AlertID: parseInt(alertId) },
         fetchMode: 'native',
         validate: true
@@ -582,10 +582,10 @@ app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
 ### **Browser Application (CORS-Safe)**
 ```javascript
 import { 
-  fetchDottie, 
-  vesselBasicsById, 
+  fetchDottie,
+  getVesselBasicsByVesselId,
   getWeatherInformationByStationId,
-  getAlertsByRegionId 
+  getAlertsByRegionId
 } from 'ws-dottie';
 
 // Browser-safe data fetching with parameters
@@ -593,7 +593,7 @@ async function loadTransportationData(vesselId = 74, stationId = 1909, regionId 
   const [vessel, weather, regionalAlerts] = await Promise.all([
     // Specific vessel details
     fetchDottie({
-      endpoint: vesselBasicsById,
+      endpoint: getVesselBasicsByVesselId,
       params: { VesselID: vesselId },
       fetchMode: 'jsonp', // Bypasses CORS
       validate: true
@@ -627,7 +627,7 @@ async function loadTransportationData(vesselId = 74, stationId = 1909, regionId 
 
 # Check specific vessel status (VesselID: 18)
 echo "=== Vessel Status ==="
-fetch-dottie vesselLocationsById '{"VesselID": 18}' --concise
+fetch-dottie getVesselLocationsByVesselId '{"VesselID": 18}' --concise
 
 # Check highway alerts for specific region (RegionID: 9)
 echo "=== Regional Alerts ==="
@@ -639,11 +639,11 @@ fetch-dottie getWeatherInformationByStationId '{"StationID": 1909}'
 
 # Get ferry fares for tomorrow's trip
 echo "=== Ferry Fares ==="
-fetch-dottie fareLineItems '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}' --pretty
+fetch-dottie getFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}' --pretty
 
 # Fast testing without validation
 echo "=== Quick Test ==="
-fetch-dottie vesselBasicsById '{"VesselID": 74}' --no-validation --silent
+fetch-dottie getVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --silent
 
 # Check bridge clearances for I-5
 echo "=== Bridge Clearances ==="
@@ -680,10 +680,6 @@ npm run test:e2e                    # E2E tests (Node.js)
 npm run test:module                 # Module-specific tests
 npm run test:direct                 # Direct vitest execution
 
-# Individual test files
-npx vitest --config config/vitest.config.ts --run tests/e2e/tests/parameter-validation.ts
-npx vitest --config config/vitest.config.ts --run tests/e2e/tests/data-integrity.ts
-npx vitest --config config/vitest.config.ts --run tests/e2e/tests/schema-and-consistency-validation.ts
 ```
 
 **JSONP Testing**: Use `--jsonp` flag or `JSONP=true` environment variable to test browser environment compatibility.                                           
