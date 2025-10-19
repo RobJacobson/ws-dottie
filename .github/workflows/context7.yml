@@ -17,7 +17,7 @@ jobs:
         uses: rennf93/upsert-context7@1.0
         with:
           operation: add
-          library-name: "/RobJacobson/ws-dottie"
+          library-name: "/ferryjoy/ws-dottie"
 
       # Refresh docs on every release tag
       - name: Refresh Context7 docs on release
@@ -25,7 +25,7 @@ jobs:
         uses: rennf93/upsert-context7@1.0
         with:
           operation: refresh
-          library-name: "/RobJacobson/ws-dottie"
+          library-name: "/ferryjoy/ws-dottie"
 
       - name: Show result
         run: |
