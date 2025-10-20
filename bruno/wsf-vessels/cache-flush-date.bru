@@ -1,0 +1,13 @@
+get {
+  url: "{{wsf_vessels_base_url}}/cacheflushdate"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns the cache flush date for the vessels API."
+
+---

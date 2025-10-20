@@ -1,0 +1,13 @@
+get {
+  url: "{{wsf_schedule_base_url}}/alerts"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns all schedule alerts."
+
+---

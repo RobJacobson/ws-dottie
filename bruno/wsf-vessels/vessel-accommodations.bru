@@ -1,0 +1,27 @@
+get {
+  url: "{{wsf_vessels_base_url}}/vesselAccommodations"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of VesselAccommodation data for all vesselAccommodations."
+
+---
+
+get {
+  url: "{{wsf_vessels_base_url}}/vesselAccommodations/{{vessel_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns VesselAccommodation data for the vesselaccommodation with the given identifier."
+
+---

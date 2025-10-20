@@ -1,0 +1,41 @@
+get {
+ url: "{{wsf_schedule_base_url}}/routedetails/{{trip_date}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns route details for the specified trip date."
+
+---
+
+get {
+ url: "{{wsf_schedule_base_url}}/routedetails/{{trip_date}}/{{sched_route_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns route details for the specified trip date and route ID."
+
+---
+
+get {
+  url: "{{wsf_schedule_base_url}}/routedetails/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns route details for the specified trip date and terminal pair."
+
+---

@@ -1,0 +1,27 @@
+get {
+  url: "{{wsdot_commercial_vehicle_restrictions_base_url}}/getCommercialVehicleRestrictionsAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of commercial vehicle restriction data."
+
+---
+
+get {
+  url: "{{wsdot_commercial_vehicle_restrictions_base_url}}/getCommercialVehicleRestrictionsWithIdAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of commercial vehicle restriction data with unique identifiers."
+
+---

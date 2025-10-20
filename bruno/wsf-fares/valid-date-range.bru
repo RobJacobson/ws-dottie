@@ -1,0 +1,13 @@
+get {
+  url: "{{wsf_fares_base_url}}/validdaterange"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a date range for which fares data is currently published and available. This operation helps applications determine valid trip dates for fare queries."
+
+---

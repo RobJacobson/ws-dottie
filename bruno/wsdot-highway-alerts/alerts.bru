@@ -1,0 +1,77 @@
+get {
+  url: "{{wsdot_highway_alerts_base_url}}/getAlertsAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns all current highway alerts."
+
+---
+
+get {
+  url: "{{wsdot_highway_alerts_base_url}}/getAlertAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+      AlertID: "{{alert_id}}"
+    }
+  }
+}
+
+description: "Returns a specific highway alert by its unique identifier."
+
+---
+
+get {
+  url: "{{wsdot_highway_alerts_base_url}}/getAlertsByRegionIDAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+      RegionID: "{{region_id}}"
+    }
+  }
+}
+
+description: "Returns all highway alerts for a specific WSDOT region."
+
+---
+
+get {
+  url: "{{wsdot_highway_alerts_base_url}}/getAlertsByMapAreaAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+      MapArea: "{{map_area}}"
+    }
+  }
+}
+
+description: "Returns highway alerts for a specific map area."
+
+---
+
+get {
+  url: "{{wsdot_highway_alerts_base_url}}/searchAlertsAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+      StateRoute: "{{state_route}}"
+      StartingMilepost: "{{starting_milepost}}"
+      EndingMilepost: "{{ending_milepost}}"
+      SearchTimeStart: "{{search_time_start}}"
+      SearchTimeEnd: "{{search_time_end}}"
+    }
+  }
+}
+
+description: "Search for highway alerts using multiple criteria."
+
+---

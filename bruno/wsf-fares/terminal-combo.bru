@@ -1,0 +1,27 @@
+get {
+  url: "{{wsf_fares_base_url}}/terminalCombo/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns fare collection descriptions for the specified terminal combination and trip date."
+
+---
+
+get {
+  url: "{{wsf_fares_base_url}}/terminalComboVerbose/{{trip_date}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns fare collection descriptions for all terminal combinations available on the specified trip date."
+
+---

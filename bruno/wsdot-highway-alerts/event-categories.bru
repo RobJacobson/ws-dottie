@@ -1,0 +1,13 @@
+get {
+  url: "{{wsdot_highway_alerts_base_url}}/getEventCategoriesAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of event categories for highway alerts."
+
+---

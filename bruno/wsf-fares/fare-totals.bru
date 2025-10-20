@@ -1,0 +1,13 @@
+get {
+  url: "{{wsf_fares_base_url}}/fareTotals/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false/1,2/3,1"
+ auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities."
+
+---

@@ -1,0 +1,27 @@
+get {
+  url: "{{wsf_terminals_base_url}}/terminalWaitTimes"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of TerminalWaitTime data for all terminals."
+
+---
+
+get {
+  url: "{{wsf_terminals_base_url}}/terminalWaitTimes/{{terminal_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns TerminalWaitTime data for the terminal with the given identifier."
+
+---

@@ -1,0 +1,13 @@
+get {
+  url: "{{wsdot_weather_readings_base_url}}/Scanweb/SurfaceMeasurements"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns surface measurements from all weather stations."
+
+---

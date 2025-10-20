@@ -1,0 +1,28 @@
+get {
+  url: "{{wsdot_travel_times_base_url}}/getTravelTimeAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+      TravelTimeID: "{{travel_time_id}}"
+    }
+  }
+}
+
+description: "Returns travel time data for a specific route by ID."
+
+---
+
+get {
+  url: "{{wsdot_travel_times_base_url}}/getTravelTimesAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns travel time data for all available routes."
+
+---

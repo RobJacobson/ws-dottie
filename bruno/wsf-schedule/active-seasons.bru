@@ -1,0 +1,13 @@
+get {
+  url: "{{wsf_schedule_base_url}}/activeseasons"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns a list of all active scheduled seasons."
+
+---

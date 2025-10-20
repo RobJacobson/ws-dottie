@@ -1,0 +1,13 @@
+get {
+  url: "{{wsdot_toll_rates_base_url}}/getTollTripVersionAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns current version and timestamp information for toll trip data."
+
+---

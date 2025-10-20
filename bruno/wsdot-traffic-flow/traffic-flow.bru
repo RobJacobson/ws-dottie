@@ -1,0 +1,28 @@
+get {
+  url: "{{wsdot_traffic_flow_base_url}}/getTrafficFlowsAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns real-time traffic flow data for all stations across the state."
+
+---
+
+get {
+  url: "{{wsdot_traffic_flow_base_url}}/getTrafficFlowAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+      FlowDataID: "{{flow_data_id}}"
+    }
+  }
+}
+
+description: "Returns real-time traffic flow data for a specific station by FlowDataID."
+
+---

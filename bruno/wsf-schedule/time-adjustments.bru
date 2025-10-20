@@ -1,0 +1,41 @@
+get {
+  url: "{{wsf_schedule_base_url}}/timeadj"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns time adjustment information."
+
+---
+
+get {
+  url: "{{wsf_schedule_base_url}}/timeadjbyroute/{route_id}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns time adjustment information for the specified route."
+
+---
+
+get {
+  url: "{{wsf_schedule_base_url}}/timeadjbyschedroute/{sched_route_id}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns time adjustment information for the specified scheduled route."
+
+---

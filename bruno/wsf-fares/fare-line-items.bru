@@ -1,0 +1,41 @@
+get {
+  url: "{{wsf_fares_base_url}}/fareLineItems/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns detailed fare line items for the specified terminal combination and trip type (round trip or one-way)."
+
+---
+
+get {
+  url: "{{wsf_fares_base_url}}/fareLineItemsBasic/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns basic fare line items (most popular fares) for the specified terminal combination and trip type."
+
+---
+
+get {
+ url: "{{wsf_fares_base_url}}/fareLineItemsVerbose/{{trip_date}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns comprehensive fare line items for all valid terminal combinations on the specified trip date, including both one-way and round trip options."
+
+---

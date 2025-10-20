@@ -1,0 +1,27 @@
+get {
+  url: "{{wsf_terminals_base_url}}/terminalSailingSpace"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of TerminalSailingSpace data for all terminals."
+
+---
+
+get {
+  url: "{{wsf_terminals_base_url}}/terminalSailingSpace/{{terminal_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns TerminalSailingSpace data for the terminal with the given identifier."
+
+---

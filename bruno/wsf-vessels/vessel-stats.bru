@@ -1,0 +1,27 @@
+get {
+  url: "{{wsf_vessels_base_url}}/vesselStats"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns a list of VesselStat data for all vesselStats."
+
+---
+
+get {
+  url: "{{wsf_vessels_base_url}}/vesselStats/{{vessel_id}}"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns VesselStat data for the vesselstat with the given identifier."
+
+---

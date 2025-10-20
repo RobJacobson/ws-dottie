@@ -1,0 +1,13 @@
+get {
+  url: "{{wsf_fares_base_url}}/terminals"
+  auth {
+    type: query
+    params {
+      api_access_code: "{{api_access_token}}"
+    }
+ }
+}
+
+description: "Returns a list of all ferry terminals."
+
+---

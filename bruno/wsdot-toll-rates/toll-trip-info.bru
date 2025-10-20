@@ -1,0 +1,13 @@
+get {
+  url: "{{wsdot_toll_rates_base_url}}/getTollTripInfoAsJson"
+  auth {
+    type: query
+    params {
+      AccessCode: "{{api_access_token}}"
+    }
+  }
+}
+
+description: "Returns trip information for all toll trips."
+
+---
