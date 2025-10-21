@@ -1,13 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./weatherInfo.input";
 import * as o from "./weatherInfo.output";
 
-export const weatherInfoResource = {
+export const weatherInfoResource: EndpointGroup = {
   name: "weather-info",
-  resourceDescription:
-    "WeatherInfo provides current weather conditions from WSDOT weather stations including temperature, humidity, wind speed and direction, barometric pressure, precipitation, visibility, and sky coverage. Data is updated frequently and represents real-time weather observations.",
+  documentation: {
+    resourceDescription:
+      "WeatherInfo provides current weather conditions from WSDOT weather stations including temperature, humidity, wind speed and direction, barometric pressure, precipitation, visibility, and sky coverage. Data is updated frequently and represents real-time weather observations.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getWeatherInformation: {

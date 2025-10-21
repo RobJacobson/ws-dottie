@@ -4,11 +4,17 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./terminalMates.input";
 import * as o from "./terminalMates.output";
 
-export const scheduleTerminalMatesResource = {
+export const export const scheduleTerminalMatesResource = {: EndpointGroup 
   name: "schedule-terminal-mates",
   resourceDescription:
-    "Terminal mates represent terminals that can be used interchangeably or as alternatives for ferry departures and arrivals, providing flexibility in route planning.",
-  cacheStrategy: "STATIC" as const,
+    "Terminal mates represent terminals that can be used interchangeably or as alternatives for ferry departures and arrivals,
+  documentation: {
+    resourceDescription: "Terminal mates represent terminals that can be used interchangeably or as alternatives for ferry departures and arrivals, providing flexibility in route planning.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalMates: {
       function: "getTerminalMates",

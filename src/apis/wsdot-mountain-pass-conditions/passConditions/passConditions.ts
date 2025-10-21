@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./passConditions.input";
 import * as o from "./passConditions.output";
 
-export const passConditionsResource = {
+export const passConditionsResource: EndpointGroup = {
   name: "pass-conditions",
-  resourceDescription:
-    "Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by the Mountain Pass Entry system covering 15 passes.",
+  documentation: {
+    resourceDescription:
+      "Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by the Mountain Pass Entry system covering 15 passes.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getMountainPassConditionById: {

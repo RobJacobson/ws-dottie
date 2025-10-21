@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./vesselVerbose.input";
 import * as o from "./vesselVerbose.output";
 
-export const vesselVerboseResource = {
+export const export const vesselVerboseResource = {: EndpointGroup 
   name: "vessel-verbose",
   resourceDescription:
-    "Each VesselVerbose item represents comprehensive vessel information combining all available data from basic details, accommodations, and specifications in a single response. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Each VesselVerbose item represents comprehensive vessel information combining all available data from basic details,
+  documentation: {
+    resourceDescription: "Each VesselVerbose item represents comprehensive vessel information combining all available data from basic details, accommodations, and specifications in a single response. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getVesselsVerbose: {
       function: "getVesselsVerbose",

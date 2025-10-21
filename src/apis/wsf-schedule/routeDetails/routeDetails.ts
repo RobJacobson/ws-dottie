@@ -4,11 +4,17 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./routeDetails.input";
 import * as o from "./routeDetails.output";
 
-export const routeDetailsResource = {
+export const export const routeDetailsResource = {: EndpointGroup 
   name: "route-details",
   resourceDescription:
-    "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.",
-  cacheStrategy: "STATIC" as const,
+    "Route details provide comprehensive information about ferry routes including departure and arrival terminals,
+  documentation: {
+    resourceDescription: "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getRouteDetailsByTripDate: {
       function: "getRouteDetailsByTripDate",

@@ -1,13 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./fareLineItems.input";
 import * as o from "./fareLineItems.output";
 
-export const fareLineItemsResource = {
+export const fareLineItemsResource: EndpointGroup = {
   name: "fare-line-items",
-  resourceDescription:
-    "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information. Data updates infrequently.",
+  documentation: {
+    resourceDescription:
+      "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information. Data updates infrequently.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getFareLineItemsByTripDateAndTerminals: {

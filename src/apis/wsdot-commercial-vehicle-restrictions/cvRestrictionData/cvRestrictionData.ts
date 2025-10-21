@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cvRestrictionData.input";
 import * as o from "./cvRestrictionData.output";
 
-export const cvRestrictionDataResource = {
+export const cvRestrictionDataResource: EndpointGroup = {
   name: "cv-restriction-data",
-  resourceDescription:
-    "Commercial Vehicle Restriction data representing current restrictions for commercial vehicles including bridge and road restrictions with details such as maximum weights, heights, lengths, and widths. Coverage Area: Statewide.",
+  documentation: {
+    resourceDescription:
+      "Commercial Vehicle Restriction data representing current restrictions for commercial vehicles including bridge and road restrictions with details such as maximum weights, heights, lengths, and widths. Coverage Area: Statewide.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getCommercialVehicleRestrictions: {

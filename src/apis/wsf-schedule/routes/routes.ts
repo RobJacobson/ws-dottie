@@ -1,13 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./routes.input";
 import * as o from "./routes.output";
 
-export const routesResource = {
+export const routesResource: EndpointGroup = {
   name: "routes",
-  resourceDescription:
-    "Routes represent the ferry paths between terminals, including route identification, terminal connections, and route-specific scheduling information.",
+  documentation: {
+    resourceDescription:
+      "Routes represent the ferry paths between terminals, including route identification, terminal connections, and route-specific scheduling information.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getRoutesByTripDate: {

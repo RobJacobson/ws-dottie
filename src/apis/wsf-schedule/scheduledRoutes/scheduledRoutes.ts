@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./scheduledRoutes.input";
 import * as o from "./scheduledRoutes.output";
 
-export const scheduledRoutesResource = {
+export const export const scheduledRoutesResource = {: EndpointGroup 
   name: "scheduled-routes",
   resourceDescription:
-    "Scheduled routes represent the predefined ferry routes with their associated schedule identifiers, used for organizing and retrieving sailing schedules.",
-  cacheStrategy: "STATIC" as const,
+    "Scheduled routes represent the predefined ferry routes with their associated schedule identifiers,
+  documentation: {
+    resourceDescription: "Scheduled routes represent the predefined ferry routes with their associated schedule identifiers, used for organizing and retrieving sailing schedules.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduledRoutes: {
       function: "getScheduledRoutes",

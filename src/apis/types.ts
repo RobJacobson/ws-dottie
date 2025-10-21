@@ -34,14 +34,31 @@ export interface ApiDefinition {
 export interface EndpointGroup {
   /** The endpoint group name (e.g., "vessel-basics") */
   name: string;
-  /** Description of the endpoint group data type and characteristics (new name) */
-  resourceDescription?: string;
-  /** Description of the resource data type and characteristics (legacy name) */
-  description?: string;
+  /** Documentation for the resource */
+  documentation: ResourceDocumentation;
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
   /** Record of endpoint definitions keyed by function name */
   endpoints: Record<string, EndpointDefinition<unknown, unknown>>;
+}
+
+/**
+ * Documentation structure for API resources
+ *
+ * This interface defines the documentation fields for API resources,
+ * providing comprehensive information about the resource and its usage.
+ */
+export interface ResourceDocumentation {
+  /** Description of the resource being returned */
+  resourceDescription: string;
+  /** Business context for the resource */
+  businessContext: string;
+  /** Update frequency for the resource */
+  updateFrequency: string;
+  /** Related endpoints for the resource */
+  relatedEndpoints: string[];
+  /** Usage examples for the resource */
+  usageExamples: string[];
 }
 
 /**

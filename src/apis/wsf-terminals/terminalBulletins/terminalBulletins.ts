@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./terminalBulletins.input";
 import * as o from "./terminalBulletins.output";
 
-export const terminalBulletinsResource = {
+export const export const terminalBulletinsResource = {: EndpointGroup 
   name: "terminal-bulletins",
   resourceDescription:
-    "Contains terminal information with associated bulletins and alerts. Each terminal may have zero or more bulletins assigned to it, providing important notices, updates, and announcements for terminal users. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Contains terminal information with associated bulletins and alerts. Each terminal may have zero or more bulletins assigned to it,
+  documentation: {
+    resourceDescription: "Contains terminal information with associated bulletins and alerts. Each terminal may have zero or more bulletins assigned to it, providing important notices, updates, and announcements for terminal users. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalBulletins: {
       function: "getTerminalBulletins",

@@ -4,11 +4,17 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./tollTripRates.input";
 import * as o from "./tollTripRates.output";
 
-export const tollTripRatesResource = {
+export const export const tollTripRatesResource = {: EndpointGroup 
   name: "toll-trip-rates",
   resourceDescription:
-    "TollTripRates provides current toll rates for specific trips with detailed pricing information, messages, and version tracking. Supports retrieval by current data, date ranges, and specific versions.",
-  cacheStrategy: "FREQUENT" as const,
+    "TollTripRates provides current toll rates for specific trips with detailed pricing information,
+  documentation: {
+    resourceDescription: "TollTripRates provides current toll rates for specific trips with detailed pricing information, messages, and version tracking. Supports retrieval by current data, date ranges, and specific versions.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getTollTripRates: {
       function: "getTollTripRates",

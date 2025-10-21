@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./vesselBasics.input";
 import * as o from "./vesselBasics.output";
 
-export const vesselBasicsResource = {
+export const vesselBasicsResource: EndpointGroup = {
   name: "vessel-basics",
-  resourceDescription:
-    "Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information. Data updates infrequently.",
+  documentation: {
+    resourceDescription:
+      "Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information. Data updates infrequently.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getVesselBasics: {

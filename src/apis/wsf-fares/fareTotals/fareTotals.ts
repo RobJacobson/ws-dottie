@@ -1,13 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./fareTotals.input";
 import * as o from "./fareTotals.output";
 
-export const fareTotalsResource = {
+export const fareTotalsResource: EndpointGroup = {
   name: "fare-totals",
-  resourceDescription:
-    "Calculates fare totals for WSF routes based on selected fare line items and quantities. Supports both one-way and round trip calculations with detailed breakdown by direction and fare type. Data updates infrequently.",
+  documentation: {
+    resourceDescription:
+      "Calculates fare totals for WSF routes based on selected fare line items and quantities. Supports both one-way and round trip calculations with detailed breakdown by direction and fare type. Data updates infrequently.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getFareTotalsByTripDateAndRoute: {

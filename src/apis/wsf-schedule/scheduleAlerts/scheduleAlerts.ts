@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./scheduleAlerts.input";
 import * as o from "./scheduleAlerts.output";
 
-export const scheduleAlertsResource = {
+export const export const scheduleAlertsResource = {: EndpointGroup 
   name: "schedule-alerts",
   resourceDescription:
-    "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
-  cacheStrategy: "STATIC" as const,
+    "Schedule alerts provide important notifications about ferry service including delays,
+  documentation: {
+    resourceDescription: "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduleAlerts: {
       function: "getScheduleAlerts",

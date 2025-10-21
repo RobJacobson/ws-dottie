@@ -1,13 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./alerts.input";
 import * as o from "./alerts.output";
 
-export const alertsResource = {
+export const alertsResource: EndpointGroup = {
   name: "alerts",
-  resourceDescription:
-    "Highway alerts provide real-time information about traffic incidents, road conditions, construction, and other events affecting Washington State highways. Alerts include location details, impact levels, and estimated duration.",
+  documentation: {
+    resourceDescription:
+      "Highway alerts provide real-time information about traffic incidents, road conditions, construction, and other events affecting Washington State highways. Alerts include location details, impact levels, and estimated duration.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getAlerts: {

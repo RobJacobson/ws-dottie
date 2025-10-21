@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./timeAdjustments.input";
 import * as o from "./timeAdjustments.output";
 
-export const timeAdjustmentsResource = {
+export const export const timeAdjustmentsResource = {: EndpointGroup 
   name: "time-adjustments",
   resourceDescription:
-    "Time adjustments represent modifications to scheduled sailing times, including delays, early departures, and other timing changes that affect the published schedule.",
-  cacheStrategy: "STATIC" as const,
+    "Time adjustments represent modifications to scheduled sailing times,
+  documentation: {
+    resourceDescription: "Time adjustments represent modifications to scheduled sailing times, including delays, early departures, and other timing changes that affect the published schedule.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTimeAdjustments: {
       function: "getTimeAdjustments",

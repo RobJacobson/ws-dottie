@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./vesselAccommodations.input";
 import * as o from "./vesselAccommodations.output";
 
-export const vesselAccommodationsResource = {
+export const export const vesselAccommodationsResource = {: EndpointGroup 
   name: "vessel-accommodations",
   resourceDescription:
-    "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms,
+  documentation: {
+    resourceDescription: "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getVesselAccommodations: {
       function: "getVesselAccommodations",

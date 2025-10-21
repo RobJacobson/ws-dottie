@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cvRestrictionDataWithId.input";
 import * as o from "./cvRestrictionDataWithId.output";
 
-export const cvRestrictionDataWithIdResource = {
+export const cvRestrictionDataWithIdResource: EndpointGroup = {
   name: "cv-restriction-data-with-id",
-  resourceDescription:
-    "Commercial Vehicle Restriction data with unique identifiers representing current restrictions for commercial vehicles including bridge and road restrictions with details such as maximum weights, heights, lengths, and widths. Each record includes a UniqueID field for tracking purposes. Coverage Area: Statewide.",
+  documentation: {
+    resourceDescription:
+      "Commercial Vehicle Restriction data with unique identifiers representing current restrictions for commercial vehicles including bridge and road restrictions with details such as maximum weights, heights, lengths, and widths. Each record includes a UniqueID field for tracking purposes. Coverage Area: Statewide.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getCommercialVehicleRestrictionsWithId: {

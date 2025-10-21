@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./terminalLocations.input";
 import * as o from "./terminalLocations.output";
 
-export const terminalLocationsResource = {
+export const export const terminalLocationsResource = {: EndpointGroup 
   name: "terminal-locations",
   resourceDescription:
-    "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Contains detailed location information for terminals including geographical coordinates,
+  documentation: {
+    resourceDescription: "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalLocations: {
       function: "getTerminalLocations",

@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./flowData.input";
 import * as o from "./flowData.output";
 
-export const flowDataResource = {
+export const export const flowDataResource = {: EndpointGroup 
   name: "flow-data",
   resourceDescription:
-    "FlowData represents real-time traffic flow information from sensors across the state. Data includes traffic conditions (WideOpen, Moderate, Heavy, StopAndGo), station locations, and timestamps. Data is updated every 90 seconds.",
-  cacheStrategy: "FREQUENT" as const,
+    "FlowData represents real-time traffic flow information from sensors across the state. Data includes traffic conditions (WideOpen,
+  documentation: {
+    resourceDescription: "FlowData represents real-time traffic flow information from sensors across the state. Data includes traffic conditions (WideOpen, Moderate, Heavy, StopAndGo), station locations, and timestamps. Data is updated every 90 seconds.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getTrafficFlows: {
       function: "getTrafficFlows",

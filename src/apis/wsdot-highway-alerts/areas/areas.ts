@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./areas.input";
 import * as o from "./areas.output";
 
-export const areasResource = {
+export const areasResource: EndpointGroup = {
   name: "areas",
-  resourceDescription:
-    "Map areas define geographic regions used for organizing and filtering highway alerts. Each area has a unique identifier and descriptive name to help users locate relevant traffic information.",
+  documentation: {
+    resourceDescription:
+      "Map areas define geographic regions used for organizing and filtering highway alerts. Each area has a unique identifier and descriptive name to help users locate relevant traffic information.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getMapAreas: {

@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./bridgeClearances.input";
 import * as o from "./bridgeClearances.output";
 
-export const bridgeClearancesResource = {
+export const bridgeClearancesResource: EndpointGroup = {
   name: "bridge-clearances",
-  resourceDescription:
-    "Bridge clearance data provides information about vertical clearances for bridges along state routes. Each record includes bridge identification, location details (latitude/longitude, route, milepost), and clearance measurements in both feet-inches and inches formats. Data is sourced from WSDOT's bridge inventory system.",
+  documentation: {
+    resourceDescription:
+      "Bridge clearance data provides information about vertical clearances for bridges along state routes. Each record includes bridge identification, location details (latitude/longitude, route, milepost), and clearance measurements in both feet-inches and inches formats. Data is sourced from WSDOT's bridge inventory system.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getBridgeClearances: {

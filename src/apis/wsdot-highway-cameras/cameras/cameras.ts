@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cameras.input";
 import * as o from "./cameras.output";
 
-export const camerasResource = {
+export const camerasResource: EndpointGroup = {
   name: "cameras",
-  resourceDescription:
-    "Camera operations provide access to traffic camera information including individual camera details and search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.",
+  documentation: {
+    resourceDescription:
+      "Camera operations provide access to traffic camera information including individual camera details and search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getHighwayCameras: {

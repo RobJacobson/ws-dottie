@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./terminalBasics.input";
 import * as o from "./terminalBasics.output";
 
-export const terminalBasicsResource = {
+export const export const terminalBasicsResource = {: EndpointGroup 
   name: "terminal-basics",
   resourceDescription:
-    "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID), operational status (amenities like elevators, waiting rooms, food service, restrooms), and basic facility information. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID),
+  documentation: {
+    resourceDescription: "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID), operational status (amenities like elevators, waiting rooms, food service, restrooms), and basic facility information. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalBasics: {
       function: "getTerminalBasics",

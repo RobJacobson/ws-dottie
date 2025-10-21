@@ -4,11 +4,17 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./terminals.input";
 import * as o from "./terminals.output";
 
-export const scheduleTerminalsResource = {
+export const export const scheduleTerminalsResource = {: EndpointGroup 
   name: "schedule-terminals",
   resourceDescription:
-    "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.",
-  cacheStrategy: "STATIC" as const,
+    "Terminals represent the ferry dock locations where passengers board and disembark,
+  documentation: {
+    resourceDescription: "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminals: {
       function: "getTerminals",

@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./activeSeasons.input";
 import * as o from "./activeSeasons.output";
 
-export const activeSeasonsResource = {
+export const export const activeSeasonsResource = {: EndpointGroup 
   name: "active-seasons",
   resourceDescription:
     "Active scheduled seasons represent the current and available scheduling periods for Washington State Ferry routes. Each season defines the time period when specific schedules are active.",
-  cacheStrategy: "STATIC" as const,
+  documentation: {
+    resourceDescription: "Active scheduled seasons represent the current and available scheduling periods for Washington State Ferry routes. Each season defines the time period when specific schedules are active.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getActiveSeasons: {
       function: "getActiveSeasons",

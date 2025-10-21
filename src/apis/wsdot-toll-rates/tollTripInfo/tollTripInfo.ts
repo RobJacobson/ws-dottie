@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./tollTripInfo.input";
 import * as o from "./tollTripInfo.output";
 
-export const tollTripInfoResource = {
+export const export const tollTripInfoResource = {: EndpointGroup 
   name: "toll-trip-info",
   resourceDescription:
-    "TollTripInfo provides detailed trip information including geographical data, location names, mileposts, and geometry information for toll trips across statewide coverage areas.",
-  cacheStrategy: "FREQUENT" as const,
+    "TollTripInfo provides detailed trip information including geographical data,
+  documentation: {
+    resourceDescription: "TollTripInfo provides detailed trip information including geographical data, location names, mileposts, and geometry information for toll trips across statewide coverage areas.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getTollTripInfo: {
       function: "getTollTripInfo",

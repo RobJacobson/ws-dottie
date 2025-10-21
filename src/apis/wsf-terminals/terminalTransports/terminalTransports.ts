@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./terminalTransports.input";
 import * as o from "./terminalTransports.output";
 
-export const terminalTransportsResource = {
+export const export const terminalTransportsResource = {: EndpointGroup 
   name: "terminal-transports",
   resourceDescription:
-    "Provides helpful information for terminal commuters including parking notes, vehicle-specific tips, transit links, and transportation options. This information assists travelers in planning their journey to and from ferry terminals. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Provides helpful information for terminal commuters including parking notes,
+  documentation: {
+    resourceDescription: "Provides helpful information for terminal commuters including parking notes, vehicle-specific tips, transit links, and transportation options. This information assists travelers in planning their journey to and from ferry terminals. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalTransports: {
       function: "getTerminalTransports",

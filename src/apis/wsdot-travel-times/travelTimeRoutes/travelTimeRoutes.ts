@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./travelTimeRoutes.input";
 import * as o from "./travelTimeRoutes.output";
 
-export const travelTimeRoutesResource = {
+export const travelTimeRoutesResource: EndpointGroup = {
   name: "travel-time-routes",
-  resourceDescription:
-    "Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas.",
+  documentation: {
+    resourceDescription:
+      "Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getTravelTimeById: {

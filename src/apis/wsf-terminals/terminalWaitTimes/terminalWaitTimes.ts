@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./terminalWaitTimes.input";
 import * as o from "./terminalWaitTimes.output";
 
-export const terminalWaitTimesResource = {
+export const export const terminalWaitTimesResource = {: EndpointGroup 
   name: "terminal-wait-times",
   resourceDescription:
     "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+  documentation: {
+    resourceDescription: "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalWaitTimes: {
       function: "getTerminalWaitTimes",

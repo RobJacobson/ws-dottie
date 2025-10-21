@@ -1,13 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./terminals.input";
 import * as o from "./terminals.output";
 
-export const terminalsResource = {
+export const terminalsResource: EndpointGroup = {
   name: "terminals",
-  resourceDescription:
-    "Provides terminal information for WSF fares including valid departing terminals and terminal mate relationships. Terminal data includes unique identifiers, names, and operational details. Data updates infrequently.",
+  documentation: {
+    resourceDescription:
+      "Provides terminal information for WSF fares including valid departing terminals and terminal mate relationships. Terminal data includes unique identifiers, names, and operational details. Data updates infrequently.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getFaresTerminals: {

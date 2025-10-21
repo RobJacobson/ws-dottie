@@ -1,11 +1,17 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./eventCategories.input";
 
-export const eventCategoriesResource = {
+export const eventCategoriesResource: EndpointGroup = {
   name: "event-categories",
-  resourceDescription:
-    "Event categories classify different types of highway alerts such as collisions, maintenance work, construction, weather-related events, and other traffic incidents.",
+  documentation: {
+    resourceDescription:
+      "Event categories classify different types of highway alerts such as collisions, maintenance work, construction, weather-related events, and other traffic incidents.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getEventCategories: {

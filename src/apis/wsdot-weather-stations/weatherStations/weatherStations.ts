@@ -1,12 +1,18 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./weatherStations.input";
 import * as o from "./weatherStations.output";
 
-export const weatherStationsResource = {
+export const weatherStationsResource: EndpointGroup = {
   name: "weather-stations",
-  resourceDescription:
-    "Weather station data provides current information from weather stations across the state. Each station includes location coordinates, station code, and station name. Coverage Area: Statewide. Data updates frequently.",
+  documentation: {
+    resourceDescription:
+      "Weather station data provides current information from weather stations across the state. Each station includes location coordinates, station code, and station name. Coverage Area: Statewide. Data updates frequently.",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getWeatherStations: {

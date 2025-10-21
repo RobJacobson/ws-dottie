@@ -3,11 +3,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./vesselStats.input";
 import * as o from "./vesselStats.output";
 
-export const vesselStatsResource = {
+export const export const vesselStatsResource = {: EndpointGroup 
   name: "vessel-stats",
   resourceDescription:
-    "Each VesselStat item represents detailed vessel specifications including physical dimensions (length, beam, draft), engine specifications (count, horsepower, propulsion type), capacity information (passenger count, vehicle space), and historical details (year built, vessel history). Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+    "Each VesselStat item represents detailed vessel specifications including physical dimensions (length,
+  documentation: {
+    resourceDescription: "Each VesselStat item represents detailed vessel specifications including physical dimensions (length, beam, draft), engine specifications (count, horsepower, propulsion type), capacity information (passenger count, vehicle space), and historical details (year built, vessel history). Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getVesselStats: {
       function: "getVesselStats",

@@ -3,11 +3,17 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./schedules.input";
 import * as o from "./schedules.output";
 
-export const schedulesResource = {
+export const export const schedulesResource = {: EndpointGroup 
   name: "schedules",
   resourceDescription:
-    "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.",
-  cacheStrategy: "STATIC" as const,
+    "Schedules provide comprehensive sailing timetables for ferry routes,
+  documentation: {
+    resourceDescription: "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduleByTripDateAndRouteId: {
       function: "getScheduleByTripDateAndRouteId",

@@ -2,11 +2,17 @@ import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./scheduleToday.input";
 import * as o from "./scheduleToday.output";
 
-export const scheduleTodayResource = {
+export const export const scheduleTodayResource = {: EndpointGroup 
   name: "schedule-today",
   resourceDescription:
-    "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.",
-  cacheStrategy: "STATIC" as const,
+    "Today's schedule provides current day sailing information for ferry routes,
+  documentation: {
+    resourceDescription: "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduleTodayByRoute: {
       function: "getScheduleTodayByRoute",

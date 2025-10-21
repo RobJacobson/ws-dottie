@@ -4,11 +4,17 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./terminalCombo.input";
 import * as o from "./terminalCombo.output";
 
-export const terminalComboResource = {
+export const export const terminalComboResource = {: EndpointGroup 
   name: "terminal-combo",
   resourceDescription:
     "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date. Data updates infrequently.",
-  cacheStrategy: "STATIC" as const,
+  documentation: {
+    resourceDescription: "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date. Data updates infrequently.\"",
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: []
+  }cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalCombo: {
       function: "getTerminalCombo",
