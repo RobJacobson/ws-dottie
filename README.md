@@ -58,6 +58,10 @@ Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) a
 
 ```bash
 npm install ws-dottie
+# or
+yarn add ws-dottie
+# or
+pnpm add ws-dottie
 ```
 
 ### 3. Configure Your API Key
@@ -103,15 +107,42 @@ const { useVesselLocations, useHighwayAlerts, configManager } = require('ws-dott
 
 Modern bundlers and Node.js will choose the optimal format automatically. Deep subpath imports are not currently exposed; prefer named imports.                 
 
-### 5. Start Building
+### 5. TanStack Query Setup (React Applications)
 
-**React Application (Recommended)**
+**For React applications, WS-Dottie provides TanStack Query hooks with built-in caching. First, set up TanStack Query in your application:**
+
 ```javascript
-import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TransportationDashboard />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  );
+}
+```
+
+**Then use the hooks in your components:**
+
+```javascript
+import {
+  useVesselLocations,
+  useHighwayAlerts,
+  WsdotApiError
+} from 'ws-dottie';
 
 function TransportationDashboard() {
-  const { data: vessels, isLoading } = useVesselLocations();
+  const { data: vessels, isLoading, error } = useVesselLocations();
   const { data: alerts } = useHighwayAlerts();
+
+  if (error instanceof WsdotApiError) {
+    return <div>API Error: {error.message}</div>;
+  }
 
   return (
     <div>
@@ -119,7 +150,7 @@ function TransportationDashboard() {
       <h2>Highway Alerts: {alerts?.length || 0}</h2>
       {isLoading && <div>Loading...</div>}
     </div>
-  );
+ );
 }
 ```
 
@@ -355,14 +386,37 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 - **Command-line debugging tool** with all endpoints accessible via CLI
 - **Comprehensive error handling** with detailed context and helpful messages
 - **Environment-aware logging** with performance metrics
-- **Automatic .NET datetime conversion** (handles WSDOT's `/Date(timestamp)/` format)
+- **Automatic .NET datetime conversion** handles WSDOT's `/Date(timestamp)/` format
 - **Type-safe configuration** via environment variables or runtime setup
+
+### **🔧 Consistent Parameter Object Pattern**
 
 ### **🎯 Developer-Friendly Design**
 - **Strong TypeScript types** inferred from Zod schemas
 - **Consistent parameter patterns** across all APIs
 - **Tree-shaking support** — only import what you need
-- **Sample parameters** provided for every endpoint                 
+- **Sample parameters** provided for every endpoint
+
+All WS-Dottie fetch functions and React hooks use a **single, optional, strongly-typed options parameter**. This pattern ensures consistency, type safety, and extensibility across the entire library.
+
+**Example:**
+
+```typescript
+// Fetch function
+const camera = await fetchDottie({
+  endpoint: getHighwayCamera,
+  params: { cameraID: 1001 },
+  fetchMode: 'native',
+  validate: true
+});
+
+// React hook
+const { data: camera } = useHighwayCamera({ cameraID: 1001 });
+```
+
+- If no parameters are required, you may call the function with no arguments or with an empty object: `useVesselLocations()` or `useVesselLocations({})`.
+- All parameters are passed as named properties of the options object.
+- All options are fully type-checked with TypeScript.
 
 ## 🔄 TanStack Query Integration
 
@@ -462,12 +516,48 @@ function CustomQueryExample() {
 
 ## 📚 Documentation
 
+### Date/Time Properties
+WS‑Dottie converts upstream date strings to JavaScript Date objects via a lean parser; Zod 4 schemas validate structures at runtime:
+
+```javascript
+// WSDOT returns: "/Date(1703123456789)/"
+// WS-Dottie converts to: new Date(1703123456789)
+
+const vessels = await fetchDottie({
+  endpoint: getVesselLocations,
+  fetchMode: 'native',
+ validate: true
+});
+console.log(vessels[0].TimeStamp); // JavaScript Date object (validated with Zod)
+```
+
+### Error Handling
+All API functions and hooks can throw `WsdotApiError`:
+
+```javascript
+import { WsdotApiError } from 'ws-dottie';
+
+try {
+  const data = await fetchDottie({
+    endpoint: getVesselLocations,
+    fetchMode: 'native',
+    validate: true
+  });
+} catch (error) {
+  if (error instanceof WsdotApiError) {
+    console.log('API Error:', error.message);
+    console.log('Status:', error.status);
+    console.log('Details:', error.details);
+  }
+}
+```
+
 - **[API Index](./docs/api-index.md)** - Complete overview of all available endpoints
 - **[Getting Started Guide](./docs/readme-cli.md)** - CLI usage and examples
 - **[Agent Documentation](./docs/agents/getting-started-for-agents.md)** - AI agent integration guide
 
 ### Doc Map
-- Start here: **[Documentation Index](./docs/old%20docs/INDEX.md)** — canonical entry point with links to all API docs and guides                                          
+- Start here: **[Documentation Index](./docs/old%20docs/INDEX.md)** — canonical entry point with links to all API docs and guides
 
 ## 🎯 Implementation Examples
 
