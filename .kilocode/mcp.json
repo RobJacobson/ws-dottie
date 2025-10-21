@@ -31,6 +31,9 @@
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "~/"
+      ],
+      "alwaysAllow": [
+        "write_file"
       ]
     },
     "sequentialthinking": {
