@@ -9,19 +9,17 @@ import { vesselLocationsResource } from "./vesselLocations/vesselLocations";
 import { vesselStatsResource } from "./vesselStats/vesselStats";
 import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose";
 
-// Combine all resources into the legacy format for backward compatibility
 export const wsfVesselsApi: ApiDefinition = {
   name: "wsf-vessels",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/vessels/rest",
-  endpoints: [
-    // Flatten all endpoints from all resources
-    ...Object.values(cacheFlushDateResource.endpoints),
-    ...Object.values(vesselAccommodationsResource.endpoints),
-    ...Object.values(vesselBasicsResource.endpoints),
-    ...Object.values(vesselHistoriesResource.endpoints),
-    ...Object.values(vesselLocationsResource.endpoints),
-    ...Object.values(vesselStatsResource.endpoints),
-    ...Object.values(vesselVerboseResource.endpoints),
+  endpointGroups: [
+    cacheFlushDateResource,
+    vesselAccommodationsResource,
+    vesselBasicsResource,
+    vesselHistoriesResource,
+    vesselLocationsResource,
+    vesselStatsResource,
+    vesselVerboseResource,
   ],
 };
 

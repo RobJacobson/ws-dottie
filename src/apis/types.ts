@@ -13,7 +13,7 @@ import type { CacheStrategy } from "@/shared/types";
  * API definition structure for endpoint files
  *
  * This interface defines the structure that endpoint files return as POJOs,
- * containing the API name, base URL, and array of endpoint definitions with
+ * containing the API name, base URL, and array of endpoint group definitions with
  * truncated URLs that can be combined with the base URL.
  */
 export interface ApiDefinition {
@@ -21,22 +21,24 @@ export interface ApiDefinition {
   name: string;
   /** The base URL for the API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
   baseUrl: string;
-  /** Array of endpoint definitions with truncated URLs */
-  endpoints: EndpointDefinition<unknown, unknown>[];
+  /** Array of endpoint group definitions */
+  endpointGroups: EndpointGroup[];
 }
 
 /**
- * Resource definition structure for resource-based architecture
+ * Endpoint group definition structure for resource-based architecture
  *
- * This interface defines the structure for resource files in the new
+ * This interface defines the structure for endpoint group files in the new
  * resource-based architecture, organizing endpoints by business data domains.
  */
-export interface ResourceDefinition {
-  /** The resource name (e.g., "vessel-basics") */
+export interface EndpointGroup {
+  /** The endpoint group name (e.g., "vessel-basics") */
   name: string;
-  /** Description of the resource data type and characteristics */
-  resourceDescription: string;
-  /** Cache strategy for the entire resource */
+  /** Description of the endpoint group data type and characteristics (new name) */
+  resourceDescription?: string;
+  /** Description of the resource data type and characteristics (legacy name) */
+  description?: string;
+  /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
   /** Record of endpoint definitions keyed by function name */
   endpoints: Record<string, EndpointDefinition<unknown, unknown>>;

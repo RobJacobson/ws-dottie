@@ -16,26 +16,24 @@ import { scheduleTerminalsResource } from "./terminals/terminals";
 import { timeAdjustmentsResource } from "./timeAdjustments/timeAdjustments";
 import { scheduleValidDateRangeResource } from "./validDateRange/validDateRange";
 
-// Combine all resources into the legacy format for backward compatibility
 export const wsfScheduleApi: ApiDefinition = {
   name: "wsf-schedule",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
-  endpoints: [
-    // Flatten all endpoints from all resources
-    ...Object.values(activeSeasonsResource.endpoints),
-    ...Object.values(sailingsResource.endpoints),
-    ...Object.values(scheduleCacheFlushDateResource.endpoints),
-    ...Object.values(routeDetailsResource.endpoints),
-    ...Object.values(routesResource.endpoints),
-    ...Object.values(serviceDisruptionsResource.endpoints),
-    ...Object.values(scheduleAlertsResource.endpoints),
-    ...Object.values(schedulesResource.endpoints),
-    ...Object.values(scheduledRoutesResource.endpoints),
-    ...Object.values(scheduleTodayResource.endpoints),
-    ...Object.values(scheduleValidDateRangeResource.endpoints),
-    ...Object.values(scheduleTerminalMatesResource.endpoints),
-    ...Object.values(scheduleTerminalsResource.endpoints),
-    ...Object.values(timeAdjustmentsResource.endpoints),
+  endpointGroups: [
+    activeSeasonsResource,
+    sailingsResource,
+    scheduleCacheFlushDateResource,
+    routeDetailsResource,
+    routesResource,
+    serviceDisruptionsResource,
+    scheduleAlertsResource,
+    schedulesResource,
+    scheduledRoutesResource,
+    scheduleTodayResource,
+    scheduleValidDateRangeResource,
+    scheduleTerminalMatesResource,
+    scheduleTerminalsResource,
+    timeAdjustmentsResource,
   ],
 };
 

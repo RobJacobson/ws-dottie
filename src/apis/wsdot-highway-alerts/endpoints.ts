@@ -5,17 +5,11 @@ import { alertsResource } from "./alerts/alerts";
 import { areasResource } from "./areas/areas";
 import { eventCategoriesResource } from "./eventCategories/eventCategories";
 
-// Combine all resources into the legacy format for backward compatibility
 export const wsdotHighwayAlertsApi: ApiDefinition = {
   name: "wsdot-highway-alerts",
   baseUrl:
     "https://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
-  endpoints: [
-    // Flatten all endpoints from all resources
-    ...Object.values(alertsResource.endpoints),
-    ...Object.values(areasResource.endpoints),
-    ...Object.values(eventCategoriesResource.endpoints),
-  ],
+  endpointGroups: [alertsResource, areasResource, eventCategoriesResource],
 };
 
 // Export individual resources for direct use

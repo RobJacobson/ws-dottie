@@ -8,18 +8,16 @@ import { terminalComboResource } from "./terminalCombo/terminalCombo";
 import { terminalsResource } from "./terminals/terminals";
 import { validDateRangeResource } from "./validDateRange/validDateRange";
 
-// Combine all resources into the legacy format for backward compatibility
 export const wsfFaresApi: ApiDefinition = {
   name: "wsf-fares",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/fares/rest",
-  endpoints: [
-    // Flatten all endpoints from all resources
-    ...Object.values(cacheFlushDateResource.endpoints),
-    ...Object.values(validDateRangeResource.endpoints),
-    ...Object.values(terminalsResource.endpoints),
-    ...Object.values(terminalComboResource.endpoints),
-    ...Object.values(fareLineItemsResource.endpoints),
-    ...Object.values(fareTotalsResource.endpoints),
+  endpointGroups: [
+    cacheFlushDateResource,
+    validDateRangeResource,
+    terminalsResource,
+    terminalComboResource,
+    fareLineItemsResource,
+    fareTotalsResource,
   ],
 };
 

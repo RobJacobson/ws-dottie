@@ -65,8 +65,10 @@ const loadApis = (): Api[] =>
   API_MODULES.map((apiDefinition) => ({
     name: apiDefinition.name,
     baseUrl: apiDefinition.baseUrl,
-    endpoints: apiDefinition.endpoints.map((endpointDefinition) =>
-      defineApiEndpoint(apiDefinition, endpointDefinition)
+    endpoints: apiDefinition.endpointGroups.flatMap((endpointGroup) =>
+      Object.values(endpointGroup.endpoints).map((endpointDefinition) =>
+        defineApiEndpoint(apiDefinition, endpointDefinition)
+      )
     ),
   }));
 
