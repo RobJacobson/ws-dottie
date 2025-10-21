@@ -224,13 +224,13 @@ meta {
 }
 
 get {
-  url: {{wsf_fares_base_url}}/fareLineItems/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false?api_access_code={{api_access_token}}
+  url: {{wsf_fares_base_url}}/fareLineItems/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
   body: none
   auth: inherit
 }
 
 params:query {
- api_access_code: {{api_access_token}}
+ apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }
 ```
 
@@ -243,13 +243,13 @@ meta {
 }
 
 get {
-  url: {{wsf_fares_base_url}}/fareLineItemsBasic/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false?api_access_code={{api_access_token}}
+  url: {{wsf_fares_base_url}}/fareLineItemsBasic/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
   body: none
   auth: inherit
 }
 
 params:query {
-  api_access_code: {{api_access_token}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }
 ```
 
@@ -262,13 +262,13 @@ meta {
 }
 
 get {
-  url: {{wsf_fares_base_url}}/fareLineItemsVerbose/{{trip_date}}?api_access_code={{api_access_token}}
+  url: {{wsf_fares_base_url}}/fareLineItemsVerbose/{{trip_date}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
   body: none
   auth: inherit
 }
 
 params:query {
-  api_access_code: {{api_access_token}}
+  apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }
 ```
 
