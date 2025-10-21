@@ -1,0 +1,15 @@
+meta {
+  name: GetRoutesByDateAndTerminals
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsf_schedule_base_url}}/routes/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

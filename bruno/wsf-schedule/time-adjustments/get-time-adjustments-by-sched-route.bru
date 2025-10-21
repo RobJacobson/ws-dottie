@@ -1,0 +1,15 @@
+meta {
+  name: GetTimeAdjustmentsBySchedRoute
+ type: http
+ seq: 3
+}
+
+get {
+  url: {{wsf_schedule_base_url}}/timeAdjustments/sched/{{sched_route_id}}?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

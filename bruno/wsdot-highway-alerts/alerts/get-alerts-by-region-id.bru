@@ -1,0 +1,16 @@
+meta {
+  name: GetAlertsByRegionId
+ type: http
+ seq: 3
+}
+
+get {
+  url: {{wsdot_highway_alerts_base_url}}/GetAlertsByRegionIDAsJson?AccessCode={{access_code}}&RegionID={{region_id}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ RegionID: {{region_id}}
+}

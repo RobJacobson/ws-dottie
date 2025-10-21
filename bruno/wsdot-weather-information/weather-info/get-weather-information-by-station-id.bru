@@ -1,0 +1,16 @@
+meta {
+  name: GetWeatherInformationByStationId
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsdot_weather_information_base_url}}/GetCurrentWeatherInformationAsJson?AccessCode={{access_code}}&StationID={{station_id}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ StationID: {{station_id}}
+}

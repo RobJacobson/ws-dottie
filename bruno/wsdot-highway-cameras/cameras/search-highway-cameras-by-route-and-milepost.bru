@@ -1,0 +1,18 @@
+meta {
+  name: SearchHighwayCamerasByRouteAndMilepost
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsdot_highway_cameras_base_url}}/GetCamerasByRouteAndMilepostAsJson?AccessCode={{access_code}}&Route={{route}}&StartingMilepost={{starting_milepost}}&EndingMilepost={{ending_milepost}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ Route: {{route}}
+ StartingMilepost: {{starting_milepost}}
+ EndingMilepost: {{ending_milepost}}
+}

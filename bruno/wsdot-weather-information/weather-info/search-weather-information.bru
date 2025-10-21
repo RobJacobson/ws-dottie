@@ -1,0 +1,16 @@
+meta {
+  name: SearchWeatherInformation
+ type: http
+ seq: 4
+}
+
+get {
+  url: {{wsdot_weather_information_base_url}}/SearchWeatherInformationAsJson?AccessCode={{access_code}}&SearchText={{search_text}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ SearchText: {{search_text}}
+}

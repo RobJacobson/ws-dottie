@@ -1,0 +1,16 @@
+meta {
+  name: SearchAlerts
+ type: http
+ seq: 5
+}
+
+get {
+  url: {{wsdot_highway_alerts_base_url}}/SearchAlertsAsJson?AccessCode={{access_code}}&SearchText={{search_text}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ SearchText: {{search_text}}
+}

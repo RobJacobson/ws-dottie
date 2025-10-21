@@ -1,0 +1,16 @@
+meta {
+  name: GetHighwayCameraByCameraId
+ type: http
+ seq: 3
+}
+
+get {
+  url: {{wsdot_highway_cameras_base_url}}/GetCameraAsJson?AccessCode={{access_code}}&CameraID={{camera_id}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ CameraID: {{camera_id}}
+}

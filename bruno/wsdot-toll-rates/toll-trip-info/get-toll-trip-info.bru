@@ -1,0 +1,15 @@
+meta {
+  name: GetTollTripInfo
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsdot_toll_rates_base_url}}/GetTollTripInfoAsJson?AccessCode={{access_code}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+}

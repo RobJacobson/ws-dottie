@@ -1,0 +1,16 @@
+meta {
+  name: GetTripRatesByVersion
+ type: http
+ seq: 3
+}
+
+get {
+  url: {{wsdot_toll_rates_base_url}}/GetTripRatesByVersionAsJson?AccessCode={{access_code}}&Version={{version}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ Version: {{version}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: GetFareLineItemsVerbose
+ type: http
+ seq: 3
+}
+
+get {
+  url: {{wsf_fares_base_url}}/fareLineItemsVerbose/{{trip_date}}?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

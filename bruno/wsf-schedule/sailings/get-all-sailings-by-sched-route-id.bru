@@ -1,0 +1,15 @@
+meta {
+  name: GetAllSailingsBySchedRouteId
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsf_schedule_base_url}}/sailings/{{sched_route_id}}?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: GetWeatherStations
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsdot_weather_stations_base_url}}/GetWeatherStationsAsJson?AccessCode={{access_code}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+}

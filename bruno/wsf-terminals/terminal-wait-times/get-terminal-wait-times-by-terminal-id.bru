@@ -1,0 +1,15 @@
+meta {
+  name: GetTerminalWaitTimesByTerminalId
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsf_terminals_base_url}}/terminalWaitTimes/{{terminal_id}}?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

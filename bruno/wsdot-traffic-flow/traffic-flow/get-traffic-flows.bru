@@ -1,0 +1,15 @@
+meta {
+  name: GetTrafficFlows
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsdot_traffic_flow_base_url}}/GetTrafficFlowsAsJson?AccessCode={{access_code}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: GetTerminalVerbose
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsf_terminals_base_url}}/terminalsVerbose?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

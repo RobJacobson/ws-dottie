@@ -1,0 +1,15 @@
+meta {
+  name: GetTerminalsAndMates
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsf_schedule_base_url}}/terminalsAndMates?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

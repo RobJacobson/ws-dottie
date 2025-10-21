@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "WS-DOTTIE API Collection",
+  "name": "ws-dottie",
   "type": "collection",
   "ignore": ["node_modules", ".git"]
 }

@@ -1,0 +1,15 @@
+meta {
+  name: GetVesselAccommodations
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsf_vessels_base_url}}/vesselAccommodations?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

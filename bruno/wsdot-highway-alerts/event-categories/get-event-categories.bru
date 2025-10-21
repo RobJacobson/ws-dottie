@@ -1,0 +1,15 @@
+meta {
+  name: GetEventCategories
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsdot_highway_alerts_base_url}}/GetEventCategoriesAsJson?AccessCode={{access_code}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+}

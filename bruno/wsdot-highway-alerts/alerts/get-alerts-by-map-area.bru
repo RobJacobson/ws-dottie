@@ -1,0 +1,16 @@
+meta {
+  name: GetAlertsByMapArea
+ type: http
+ seq: 4
+}
+
+get {
+  url: {{wsdot_highway_alerts_base_url}}/GetAlertsByMapAreaAsJson?AccessCode={{access_code}}&MapArea={{map_area}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ MapArea: {{map_area}}
+}

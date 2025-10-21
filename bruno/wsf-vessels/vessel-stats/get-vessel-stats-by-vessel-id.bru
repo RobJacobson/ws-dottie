@@ -1,0 +1,15 @@
+meta {
+  name: GetVesselStatsByVesselId
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsf_vessels_base_url}}/vesselStats/{{vessel_id}}?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

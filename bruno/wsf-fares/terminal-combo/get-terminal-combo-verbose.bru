@@ -1,0 +1,15 @@
+meta {
+  name: GetTerminalComboVerbose
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsf_fares_base_url}}/terminalComboVerbose?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

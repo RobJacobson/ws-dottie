@@ -1,0 +1,15 @@
+meta {
+  name: GetFareLineItemsBasic
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsf_fares_base_url}}/fareLineItemsBasic/{{trip_date}}/{{departing_terminal_id}}/{{arriving_terminal_id}}/false?api_access_code={{api_access_token}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ api_access_code: {{api_access_token}}
+}

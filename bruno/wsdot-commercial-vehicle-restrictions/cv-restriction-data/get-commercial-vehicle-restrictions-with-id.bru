@@ -1,0 +1,16 @@
+meta {
+  name: GetCommercialVehicleRestrictionsWithId
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsdot_commercial_vehicle_restrictions_base_url}}/GetCommercialVehicleRestrictionsWithIdAsJson?AccessCode={{access_code}}&Id={{cv_restriction_id}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ Id: {{cv_restriction_id}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: GetTravelTimes
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsdot_travel_times_base_url}}/GetTravelTimesAsJson?AccessCode={{access_code}}
+ body: none
+ auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+}

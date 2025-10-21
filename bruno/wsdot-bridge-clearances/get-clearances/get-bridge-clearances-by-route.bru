@@ -1,0 +1,16 @@
+meta {
+  name: GetBridgeClearancesByRoute
+ type: http
+ seq: 2
+}
+
+get {
+  url: {{wsdot_bridge_clearances_base_url}}/GetClearancesByRouteAsJson?AccessCode={{access_code}}&Route={{route}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+ Route: {{route}}
+}

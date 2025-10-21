@@ -1,0 +1,15 @@
+meta {
+  name: GetBorderCrossings
+ type: http
+ seq: 1
+}
+
+get {
+  url: {{wsdot_border_crossings_base_url}}/GetBorderCrossingsAsJson?AccessCode={{access_code}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+ AccessCode: {{access_code}}
+}
