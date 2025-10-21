@@ -10,45 +10,25 @@
     },
     "memory": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
     },
     "context7": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ],
-      "alwaysAllow": [
-        "resolve-library-id"
-      ]
+      "args": ["-y", "@upstash/context7-mcp"],
+      "alwaysAllow": ["resolve-library-id"]
     },
     "filesystem": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "~/"
-      ],
-      "alwaysAllow": [
-        "write_file"
-      ]
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "~/"],
+      "alwaysAllow": ["write_file"]
     },
     "sequentialthinking": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ]
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     },
     "puppeteer": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-puppeteer"
-      ]
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
     }
   }
 }

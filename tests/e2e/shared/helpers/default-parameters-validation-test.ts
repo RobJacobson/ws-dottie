@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { it } from "vitest";
 import type { z } from "zod";
 import type { Endpoint } from "../../../../src/shared/types";
 

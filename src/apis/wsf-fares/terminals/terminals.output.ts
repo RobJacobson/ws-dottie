@@ -5,7 +5,6 @@
  */
 
 import { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Base terminal schema for fares API

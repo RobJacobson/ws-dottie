@@ -29,7 +29,7 @@ const hasMeaningfulData = (data: unknown): boolean => {
 
   // Check for Date objects specifically
   if (data instanceof Date) {
-    return !isNaN(data.getTime()); // Valid date objects with actual dates are meaningful
+    return !Number.isNaN(data.getTime()); // Valid date objects with actual dates are meaningful
   }
 
   if (Array.isArray(data)) {

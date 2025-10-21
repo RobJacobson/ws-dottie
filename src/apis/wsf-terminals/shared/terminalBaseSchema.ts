@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Base terminal schema containing common fields shared across all terminal schemas

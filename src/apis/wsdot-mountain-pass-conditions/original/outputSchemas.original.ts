@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for TravelRestriction - represents travel restrictions for mountain passes

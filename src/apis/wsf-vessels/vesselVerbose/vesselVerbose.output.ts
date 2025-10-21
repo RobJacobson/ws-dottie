@@ -1,6 +1,4 @@
 import type { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
-import { vesselBaseSchema, vesselClassSchema } from "../shared/vesselBase";
 import { vesselAccommodationsSchema } from "../vesselAccommodations/vesselAccommodations.output";
 import { vesselBasicSchema } from "../vesselBasics/vesselBasics.output";
 import { vesselStatsSchema } from "../vesselStats/vesselStats.output";

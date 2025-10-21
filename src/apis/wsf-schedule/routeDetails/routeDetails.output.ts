@@ -5,8 +5,6 @@
  * Schedule API route details operations.
  */
 
-import { z } from "zod";
-
 // Route Details uses the same output schemas as routes
 // Import the route detail schema from the routes output file
 export {

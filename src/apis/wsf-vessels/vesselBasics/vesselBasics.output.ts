@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
-import { vesselBaseSchema, vesselClassSchema } from "../shared/vesselBase";
+import { vesselBaseSchema } from "../shared/vesselBase";
 
 /**
  * VesselBasic schema

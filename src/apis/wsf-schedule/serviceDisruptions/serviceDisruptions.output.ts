@@ -5,10 +5,6 @@
  * Schedule API service disruption operations.
  */
 
-import { z } from "zod";
-
-import { zDotnetDate } from "@/apis/shared";
-
 // Service Disruptions uses the same output schema as routes
 // Import the service disruption schema from the routes output file
 export {

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Schema for BridgeDataGIS - represents bridge clearance data

@@ -1,4 +1,3 @@
-import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
 import * as i from "./scheduleToday.input";
 import * as o from "./scheduleToday.output";

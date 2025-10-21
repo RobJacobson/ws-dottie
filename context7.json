@@ -4,12 +4,24 @@
   "description": "Type‑safe client for fetching Washington State transportation data (WSDOT + WSF).",
   "folders": ["docs"],
   "includeFiles": ["README.md"],
-  "excludeFolders": ["src", "tests", "config", "scripts", ".github", "test-results", "node_modules"],
-  "excludeFiles": ["package-lock.json", "tsconfig.json", "tsup.config.ts", "biome.json"],
+  "excludeFolders": [
+    "src",
+    "tests",
+    "config",
+    "scripts",
+    ".github",
+    "test-results",
+    "node_modules"
+  ],
+  "excludeFiles": [
+    "package-lock.json",
+    "tsconfig.json",
+    "tsup.config.ts",
+    "biome.json"
+  ],
   "rules": [
     "Prefer docs/INDEX.md as the entry point.",
     "Match API names and headings used across docs/apis/*.md."
   ],
   "previousVersions": []
 }
-

@@ -5,8 +5,6 @@
  * Schedule API terminal mates operations.
  */
 
-import { z } from "zod";
-
 // Terminal Mates uses the same output schema as terminals
 // Import the terminal mate schema from the terminals output file
 export {

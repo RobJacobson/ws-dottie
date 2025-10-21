@@ -597,7 +597,9 @@ export const vesselHistoryResponseSchema = z
       .nullable()
       .describe("The actual departure time."),
     /** The estimated arrival time. */
-    EstArrival: zDotnetDate().nullable().describe("The estimated arrival time."),
+    EstArrival: zDotnetDate()
+      .nullable()
+      .describe("The estimated arrival time."),
     /** The date of the voyage. */
     Date: zDotnetDate().nullable().describe("The date of the voyage."),
   })

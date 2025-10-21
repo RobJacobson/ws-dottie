@@ -7,8 +7,6 @@
 
 import { z } from "zod";
 
-import { zDotnetDate } from "@/apis/shared";
-
 /**
  * Schema for Terminal - represents terminal information
  */

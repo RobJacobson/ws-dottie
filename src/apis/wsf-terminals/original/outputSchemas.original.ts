@@ -6,7 +6,7 @@
  */
 
 import { z } from "zod";
-import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { zDotnetDate } from "@/apis/shared";
 
 /**
  * CacheFlushDate schema

@@ -5,7 +5,6 @@
  */
 
 import { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Terminal combo response schema for GetTerminalComboDetail endpoint

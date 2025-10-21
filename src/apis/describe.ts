@@ -33,11 +33,11 @@ function getEntityPlural(entityName: string): string {
     entityName.endsWith("x") ||
     entityName.endsWith("z")
   ) {
-    return entityName + "es";
+    return `${entityName}es`;
   } else if (entityName.endsWith("y")) {
-    return entityName.slice(0, -1) + "ies";
+    return `${entityName.slice(0, -1)}ies`;
   } else {
-    return entityName + "s";
+    return `${entityName}s`;
   }
 }
 

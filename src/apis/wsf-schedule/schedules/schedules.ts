@@ -1,4 +1,3 @@
-import { z } from "zod";
 import type { EndpointDefinition } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./schedules.input";

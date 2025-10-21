@@ -5,7 +5,6 @@
  */
 
 import { z } from "zod";
-import { zDotnetDate } from "@/apis/shared";
 
 /**
  * Fare total type enum for GetFareTotals endpoint
