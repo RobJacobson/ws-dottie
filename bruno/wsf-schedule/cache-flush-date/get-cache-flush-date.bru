@@ -5,11 +5,11 @@ meta {
 }
 
 get {
-  url: {{wsf_schedule_base_url}}/cacheFlushDate?api_access_code={{api_access_token}}
+  url: {{wsf_schedule_base_url}}/cacheFlushDate?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
  body: none
  auth: inherit
 }
 
 params:query {
- api_access_code: {{api_access_token}}
+ apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }

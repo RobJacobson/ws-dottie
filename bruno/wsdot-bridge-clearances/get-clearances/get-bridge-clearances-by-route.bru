@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: {{wsdot_bridge_clearances_base_url}}/GetClearancesByRouteAsJson?AccessCode={{access_code}}&Route={{route}}
+  url: {{wsdot_bridge_clearances_base_url}}/GetClearancesByRouteAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&Route={{route}}
   body: none
   auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
  Route: {{route}}
 }

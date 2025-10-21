@@ -5,11 +5,11 @@ meta {
 }
 
 get {
-  url: {{wsf_schedule_base_url}}/timeAdjustments/{{sched_route_id}}?api_access_code={{api_access_token}}
+  url: {{wsf_schedule_base_url}}/timeAdjustments/{{sched_route_id}}?apiaccesscode={{WSDOT_ACCESS_TOKEN}}
  body: none
  auth: inherit
 }
 
 params:query {
- api_access_code: {{api_access_token}}
+ apiaccesscode: {{WSDOT_ACCESS_TOKEN}}
 }

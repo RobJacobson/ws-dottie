@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: {{wsdot_traffic_flow_base_url}}/GetTrafficFlowAsJson?AccessCode={{access_code}}&FlowDataID={{flow_data_id}}
+  url: {{wsdot_traffic_flow_base_url}}/GetTrafficFlowAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&FlowDataID={{flow_data_id}}
  body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
  FlowDataID: {{flow_data_id}}
 }

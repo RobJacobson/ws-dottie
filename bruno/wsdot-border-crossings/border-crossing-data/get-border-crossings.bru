@@ -5,11 +5,11 @@ meta {
 }
 
 get {
-  url: {{wsdot_border_crossings_base_url}}/GetBorderCrossingsAsJson?AccessCode={{access_code}}
+  url: {{wsdot_border_crossings_base_url}}/GetBorderCrossingsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}
   body: none
   auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
 }

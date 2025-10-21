@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: {{wsdot_weather_information_base_url}}/GetCurrentWeatherInformationAsJson?AccessCode={{access_code}}&StationID={{station_id}}
+  url: {{wsdot_weather_information_base_url}}/GetCurrentWeatherInformationAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&StationID={{station_id}}
  body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
  StationID: {{station_id}}
 }

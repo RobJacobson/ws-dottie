@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: {{wsdot_highway_cameras_base_url}}/GetCameraAsJson?AccessCode={{access_code}}&CameraID={{camera_id}}
+  url: {{wsdot_highway_cameras_base_url}}/GetCameraAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&CameraID={{camera_id}}
  body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
  CameraID: {{camera_id}}
 }

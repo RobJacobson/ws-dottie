@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: {{wsdot_highway_alerts_base_url}}/SearchAlertsAsJson?AccessCode={{access_code}}&SearchText={{search_text}}
+  url: {{wsdot_highway_alerts_base_url}}/SearchAlertsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&SearchText={{search_text}}
  body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
  SearchText: {{search_text}}
 }

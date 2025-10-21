@@ -5,13 +5,13 @@ meta {
 }
 
 get {
-  url: {{wsdot_highway_cameras_base_url}}/GetCamerasByRouteAndMilepostAsJson?AccessCode={{access_code}}&Route={{route}}&StartingMilepost={{starting_milepost}}&EndingMilepost={{ending_milepost}}
+  url: {{wsdot_highway_cameras_base_url}}/GetCamerasByRouteAndMilepostAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}&Route={{route}}&StartingMilepost={{starting_milepost}}&EndingMilepost={{ending_milepost}}
  body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
  Route: {{route}}
  StartingMilepost: {{starting_milepost}}
  EndingMilepost: {{ending_milepost}}

@@ -5,11 +5,11 @@ meta {
 }
 
 get {
-  url: {{wsdot_mountain_pass_conditions_base_url}}/GetMountainPassConditionsAsJson?AccessCode={{access_code}}
+  url: {{wsdot_mountain_pass_conditions_base_url}}/GetMountainPassConditionsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}
  body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
 }

@@ -5,11 +5,11 @@ meta {
 }
 
 get {
-  url: {{wsdot_commercial_vehicle_restrictions_base_url}}/GetCommercialVehicleRestrictionsAsJson?AccessCode={{access_code}}
+  url: {{wsdot_commercial_vehicle_restrictions_base_url}}/GetCommercialVehicleRestrictionsAsJson?AccessCode={{WSDOT_ACCESS_TOKEN}}
   body: none
  auth: inherit
 }
 
 params:query {
- AccessCode: {{access_code}}
+ AccessCode: {{WSDOT_ACCESS_TOKEN}}
 }
