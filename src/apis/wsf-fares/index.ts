@@ -5,9 +5,6 @@
  * all input/output types, the main API definition, and individual resources.
  */
 
-export type { FaresCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
-// Export all output types
-export type { FaresCacheFlushDateResponse } from "./cacheFlushDate/cacheFlushDate.output";
 // Export the main API definition and individual resources for direct use
 export {
   cacheFlushDateResource,
@@ -17,7 +14,10 @@ export {
   terminalsResource,
   validDateRangeResource,
   wsfFaresApi,
-} from "./endpoints";
+} from "./apiDefinition";
+export type { FaresCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
+// Export all output types
+export type { FaresCacheFlushDateResponse } from "./cacheFlushDate/cacheFlushDate.output";
 // Export all input types
 export type {
   FareLineItemsBasicInput,

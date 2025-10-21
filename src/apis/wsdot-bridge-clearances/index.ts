@@ -5,10 +5,10 @@
  * all input/output types, the main API definition, and individual resources.
  */
 
+// Export the main API definition (backward compatibility)
+export { wsdotBridgeClearancesApi } from "./apiDefinition";
 // Export individual resources for direct use
 export { bridgeClearancesResource } from "./bridgeClearances/bridgeClearances";
-// Export the main API definition (backward compatibility)
-export { wsdotBridgeClearancesApi } from "./endpoints";
 
 // Export all input types
 export type {

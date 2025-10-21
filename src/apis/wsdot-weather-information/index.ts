@@ -6,7 +6,7 @@
  */
 
 // Export the main API definition
-export { wsdotWeatherInformationApi } from "./endpoints";
+export { wsdotWeatherInformationApi } from "./apiDefinition";
 
 // Export all input types
 export type {

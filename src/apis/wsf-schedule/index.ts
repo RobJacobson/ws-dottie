@@ -23,7 +23,7 @@ export {
   serviceDisruptionsResource,
   timeAdjustmentsResource,
   wsfScheduleApi,
-} from "./endpoints";
+} from "./apiDefinition";
 // Export all input types
 export type {
   ActiveScheduledSeasonsInput,

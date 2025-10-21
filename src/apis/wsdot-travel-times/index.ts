@@ -6,7 +6,7 @@
  */
 
 // Export the main API definition
-export { wsdotTravelTimesApi } from "./endpoints";
+export { wsdotTravelTimesApi } from "./apiDefinition";
 
 // Export all input types
 export type {

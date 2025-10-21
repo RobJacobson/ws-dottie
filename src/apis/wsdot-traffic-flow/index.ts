@@ -6,7 +6,7 @@
  */
 
 // Export the main API definition
-export { wsdotTrafficFlowApi } from "./endpoints";
+export { wsdotTrafficFlowApi } from "./apiDefinition";
 // Export individual resources for direct use
 export { flowDataResource } from "./flowData/flowData";
 // Export all input types

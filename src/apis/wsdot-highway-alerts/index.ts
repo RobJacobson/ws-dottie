@@ -25,4 +25,4 @@ export {
   areasResource,
   eventCategoriesResource,
   wsdotHighwayAlertsApi,
-} from "./endpoints";
+} from "./apiDefinition";

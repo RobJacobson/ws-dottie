@@ -12,7 +12,7 @@ export {
   surfaceMeasurementsResource,
   weatherReadingsResource,
   wsdotWeatherReadingsApi,
-} from "./endpoints";
+} from "./apiDefinition";
 // Export all input types
 export type { GetWeatherReadingsInput } from "./original/inputSchemas.original";
 // Export all output types

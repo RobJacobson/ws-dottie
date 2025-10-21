@@ -6,7 +6,7 @@
  */
 
 // Export the main API definition
-export { wsdotWeatherStationsApi } from "./endpoints";
+export { wsdotWeatherStationsApi } from "./apiDefinition";
 
 // Export all input types
 export type { GetCurrentStationsInput } from "./original/inputSchemas.original";

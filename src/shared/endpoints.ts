@@ -8,21 +8,21 @@
 
 import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 // Import all API modules statically
-import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/endpoints";
-import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/endpoints";
-import { wsdotCommercialVehicleRestrictionsApi } from "@/apis/wsdot-commercial-vehicle-restrictions/endpoints";
-import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/endpoints";
-import { wsdotHighwayCamerasApi } from "@/apis/wsdot-highway-cameras/endpoints";
-import { wsdotMountainPassConditionsApi } from "@/apis/wsdot-mountain-pass-conditions/endpoints";
-import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/endpoints";
-import { wsdotTrafficFlowApi } from "@/apis/wsdot-traffic-flow/endpoints";
-import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/endpoints";
-import { wsdotWeatherInformationApi } from "@/apis/wsdot-weather-information/endpoints";
-import { wsdotWeatherReadingsApi } from "@/apis/wsdot-weather-readings/endpoints";
-import { wsdotWeatherStationsApi } from "@/apis/wsdot-weather-stations/endpoints";
-import { wsfFaresApi } from "@/apis/wsf-fares/endpoints";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/endpoints";
-import { wsfTerminalsApi } from "@/apis/wsf-terminals/endpoints";
+import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
+import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/apiDefinition";
+import { wsdotCommercialVehicleRestrictionsApi } from "@/apis/wsdot-commercial-vehicle-restrictions/apiDefinition";
+import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/apiDefinition";
+import { wsdotHighwayCamerasApi } from "@/apis/wsdot-highway-cameras/apiDefinition";
+import { wsdotMountainPassConditionsApi } from "@/apis/wsdot-mountain-pass-conditions/apiDefinition";
+import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
+import { wsdotTrafficFlowApi } from "@/apis/wsdot-traffic-flow/apiDefinition";
+import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/apiDefinition";
+import { wsdotWeatherInformationApi } from "@/apis/wsdot-weather-information/apiDefinition";
+import { wsdotWeatherReadingsApi } from "@/apis/wsdot-weather-readings/apiDefinition";
+import { wsdotWeatherStationsApi } from "@/apis/wsdot-weather-stations/apiDefinition";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
 import { wsfVesselsApi } from "@/apis/wsf-vessels/endpoints";
 import type { Api, Endpoint } from "./types";
 

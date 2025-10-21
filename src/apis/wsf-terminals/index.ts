@@ -5,12 +5,12 @@
  * all input/output types and the main API definition.
  */
 
+// Export the main API definition
+export { wsfTerminalsApi } from "./apiDefinition";
 // Export all input types
 export type { TerminalsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 // Export all output types
 export type { TerminalsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
-// Export the main API definition
-export { wsfTerminalsApi } from "./endpoints";
 export type {
   TerminalBasicsByIdInput,
   TerminalBasicsInput,

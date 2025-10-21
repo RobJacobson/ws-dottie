@@ -5,10 +5,10 @@
  * all input/output types, the main API definition, and individual resources.
  */
 
+// Export the main API definition
+export { wsdotBorderCrossingsApi } from "./apiDefinition";
 // Export individual resources for direct use
 export { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
-// Export the main API definition
-export { wsdotBorderCrossingsApi } from "./endpoints";
 
 // Export all input types
 export type { GetBorderCrossingsInput } from "./original/inputSchemas.original";
