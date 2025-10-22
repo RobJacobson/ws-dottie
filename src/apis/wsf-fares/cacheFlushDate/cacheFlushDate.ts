@@ -1,13 +1,19 @@
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cacheFlushDate.input";
 import * as o from "./cacheFlushDate.output";
 
 const DESCRIPTION =
   "Returns the date and time when the WSF fares data was last updated. This operation helps applications coordinate caching of fares data that changes infrequently. When the returned date changes, applications should refresh their cached data. Data updates infrequently.";
 
-export const cacheFlushDateResource = {
+export const cacheFlushDateResource: EndpointGroup = {
   name: "cache-flush-date",
-  description: DESCRIPTION,
+  documentation: {
+    resourceDescription: DESCRIPTION,
+    businessContext: "",
+    updateFrequency: "",
+    relatedEndpoints: [],
+    usageExamples: [],
+  },
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getCacheFlushDate: {

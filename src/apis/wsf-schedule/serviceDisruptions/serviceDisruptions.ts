@@ -1,20 +1,20 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./serviceDisruptions.input";
 import * as o from "./serviceDisruptions.output";
 
-export const export const serviceDisruptionsResource = {: EndpointGroup 
+export const serviceDisruptionsResource: EndpointGroup = {
   name: "service-disruptions",
-  resourceDescription:
-    "Service disruptions represent planned or unplanned interruptions to normal ferry service,
   documentation: {
-    resourceDescription: "Service disruptions represent planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes.\"",
+    resourceDescription:
+      "Service disruptions represent planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getRoutesHavingServiceDisruptionsByTripDate: {
       function: "getRoutesHavingServiceDisruptionsByTripDate",

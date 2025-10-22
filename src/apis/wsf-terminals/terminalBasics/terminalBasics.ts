@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./terminalBasics.input";
 import * as o from "./terminalBasics.output";
 
-export const export const terminalBasicsResource = {: EndpointGroup 
+export const terminalBasicsResource: EndpointGroup = {
   name: "terminal-basics",
-  resourceDescription:
-    "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID),
   documentation: {
-    resourceDescription: "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID), operational status (amenities like elevators, waiting rooms, food service, restrooms), and basic facility information. Data updates infrequently.\"",
+    resourceDescription:
+      "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID), operational status (amenities like elevators, waiting rooms, food service, restrooms), and basic facility information. Data updates infrequently.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalBasics: {
       function: "getTerminalBasics",

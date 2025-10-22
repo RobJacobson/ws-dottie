@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./borderCrossingData.input";
 import * as o from "./borderCrossingData.output";
 
-export const export const borderCrossingDataResource = {: EndpointGroup 
+export const borderCrossingDataResource: EndpointGroup = {
   name: "border-crossing-data",
-  resourceDescription:
-    "BorderCrossingData provides real-time information about Canadian border crossing wait times,
   documentation: {
-    resourceDescription: "BorderCrossingData provides real-time information about Canadian border crossing wait times, including location details, crossing names, timestamps, and current wait times in minutes. Data updates frequently based on border conditions.\"",
+    resourceDescription:
+      "BorderCrossingData provides real-time information about Canadian border crossing wait times, including location details, crossing names, timestamps, and current wait times in minutes.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "FREQUENT" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getBorderCrossings: {
       function: "getBorderCrossings",

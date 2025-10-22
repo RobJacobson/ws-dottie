@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./terminalVerbose.input";
 import * as o from "./terminalVerbose.output";
 
-export const export const terminalVerboseResource = {: EndpointGroup 
+export const terminalVerboseResource: EndpointGroup = {
   name: "terminal-verbose",
-  resourceDescription:
-    "Contains highly detailed information about terminals including basic details,
   documentation: {
-    resourceDescription: "Contains highly detailed information about terminals including basic details, bulletins, location data, sailing space information, transportation options, wait times, and comprehensive facility information. This endpoint should be used when you need comprehensive terminal data and don't mind receiving a larger payload. Data updates infrequently.\"",
+    resourceDescription:
+      "Contains highly detailed information about terminals including basic details, bulletins, location data, sailing space information, transportation options, wait times, and comprehensive facility information. This endpoint should be used when you need comprehensive terminal data and don't mind receiving a larger payload. Data updates infrequently.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalVerbose: {
       function: "getTerminalVerbose",

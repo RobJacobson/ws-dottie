@@ -1,18 +1,18 @@
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./validDateRange.input";
 import * as o from "./validDateRange.output";
 
-export const export const scheduleValidDateRangeResource = {: EndpointGroup 
+export const scheduleValidDateRangeResource: EndpointGroup = {
   name: "schedule-valid-date-range",
-  resourceDescription:
-    "Valid date range specifies the period for which schedule data is available and valid,
   documentation: {
-    resourceDescription: "Valid date range specifies the period for which schedule data is available and valid, helping clients understand the coverage of schedule information.\"",
+    resourceDescription:
+      "Valid date range specifies the period for which schedule data is available and valid, helping clients understand the coverage of schedule information.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduleValidDateRange: {
       function: "getScheduleValidDateRange",

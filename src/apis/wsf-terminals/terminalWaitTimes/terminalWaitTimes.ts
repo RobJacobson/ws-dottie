@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./terminalWaitTimes.input";
 import * as o from "./terminalWaitTimes.output";
 
-export const export const terminalWaitTimesResource = {: EndpointGroup 
+export const terminalWaitTimesResource: EndpointGroup = {
   name: "terminal-wait-times",
-  resourceDescription:
-    "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals. Data updates infrequently.",
   documentation: {
-    resourceDescription: "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals. Data updates infrequently.\"",
+    resourceDescription:
+      "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals. Data updates infrequently.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalWaitTimes: {
       function: "getTerminalWaitTimes",

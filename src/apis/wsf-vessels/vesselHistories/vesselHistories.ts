@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./vesselHistories.input";
 import * as o from "./vesselHistories.output";
 
-export const export const vesselHistoriesResource = {: EndpointGroup 
+export const vesselHistoriesResource: EndpointGroup = {
   name: "vessel-histories",
-  resourceDescription:
-    "Each VesselHistory item represents a historical record for a single sailing between terminals,
   documentation: {
-    resourceDescription: "Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time). Data updates infrequently.\"",
+    resourceDescription:
+      "Each VesselHistory item represents a historical record for a single sailing between terminals, including the vessel, the departure details (including departure terminal, scheduled departure time, and actual departure time), and the arrival details (including arrival terminal and estimated arrival time). Data updates infrequently.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getVesselHistories: {
       function: "getVesselHistories",

@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./terminalLocations.input";
 import * as o from "./terminalLocations.output";
 
-export const export const terminalLocationsResource = {: EndpointGroup 
+export const terminalLocationsResource: EndpointGroup = {
   name: "terminal-locations",
-  resourceDescription:
-    "Contains detailed location information for terminals including geographical coordinates,
   documentation: {
-    resourceDescription: "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes. Data updates infrequently.\"",
+    resourceDescription:
+      "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes. Data updates infrequently.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalLocations: {
       function: "getTerminalLocations",

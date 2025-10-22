@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./scheduleAlerts.input";
 import * as o from "./scheduleAlerts.output";
 
-export const export const scheduleAlertsResource = {: EndpointGroup 
+export const scheduleAlertsResource: EndpointGroup = {
   name: "schedule-alerts",
-  resourceDescription:
-    "Schedule alerts provide important notifications about ferry service including delays,
   documentation: {
-    resourceDescription: "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.\"",
+    resourceDescription:
+      "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduleAlerts: {
       function: "getScheduleAlerts",

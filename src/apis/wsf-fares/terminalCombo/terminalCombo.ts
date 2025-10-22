@@ -1,20 +1,20 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./terminalCombo.input";
 import * as o from "./terminalCombo.output";
 
-export const export const terminalComboResource = {: EndpointGroup 
+export const terminalComboResource: EndpointGroup = {
   name: "terminal-combo",
-  resourceDescription:
-    "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date. Data updates infrequently.",
   documentation: {
-    resourceDescription: "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date. Data updates infrequently.\"",
+    resourceDescription:
+      "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date. Data updates infrequently.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalCombo: {
       function: "getTerminalCombo",

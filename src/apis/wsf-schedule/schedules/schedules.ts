@@ -1,19 +1,19 @@
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./schedules.input";
 import * as o from "./schedules.output";
 
-export const export const schedulesResource = {: EndpointGroup 
+export const schedulesResource: EndpointGroup = {
   name: "schedules",
-  resourceDescription:
-    "Schedules provide comprehensive sailing timetables for ferry routes,
   documentation: {
-    resourceDescription: "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.\"",
+    resourceDescription:
+      "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduleByTripDateAndRouteId: {
       function: "getScheduleByTripDateAndRouteId",

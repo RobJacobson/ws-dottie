@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./scheduledRoutes.input";
 import * as o from "./scheduledRoutes.output";
 
-export const export const scheduledRoutesResource = {: EndpointGroup 
+export const scheduledRoutesResource: EndpointGroup = {
   name: "scheduled-routes",
-  resourceDescription:
-    "Scheduled routes represent the predefined ferry routes with their associated schedule identifiers,
   documentation: {
-    resourceDescription: "Scheduled routes represent the predefined ferry routes with their associated schedule identifiers, used for organizing and retrieving sailing schedules.\"",
+    resourceDescription:
+      "Scheduled routes represent the predefined ferry routes with their associated schedule identifiers, used for organizing and retrieving sailing schedules.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getScheduledRoutes: {
       function: "getScheduledRoutes",

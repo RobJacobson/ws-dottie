@@ -1,20 +1,20 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import * as i from "./routeDetails.input";
 import * as o from "./routeDetails.output";
 
-export const export const routeDetailsResource = {: EndpointGroup 
+export const routeDetailsResource: EndpointGroup = {
   name: "route-details",
-  resourceDescription:
-    "Route details provide comprehensive information about ferry routes including departure and arrival terminals,
   documentation: {
-    resourceDescription: "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.\"",
+    resourceDescription:
+      "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getRouteDetailsByTripDate: {
       function: "getRouteDetailsByTripDate",

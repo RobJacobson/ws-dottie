@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./tollRates.input";
 import * as o from "./tollRates.output";
 
-export const export const tollRatesResource = {: EndpointGroup 
+export const tollRatesResource: EndpointGroup = {
   name: "toll-rates",
-  resourceDescription:
-    "TollRate information provides current toll rates for high occupancy lanes across statewide coverage areas. Each rate includes trip details,
   documentation: {
-    resourceDescription: "TollRate information provides current toll rates for high occupancy lanes across statewide coverage areas. Each rate includes trip details, current toll amounts in cents, location information, and last update timestamps.\"",
+    resourceDescription:
+      "TollRate information provides current toll rates for high occupancy lanes across statewide coverage areas. Each rate includes trip details, current toll amounts in cents, location information, and last update timestamps.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "FREQUENT" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getTollRates: {
       function: "getTollRates",

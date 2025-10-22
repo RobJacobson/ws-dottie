@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./vesselLocations.input";
 import * as o from "./vesselLocations.output";
 
-export const export const vesselLocationsResource = {: EndpointGroup 
+export const vesselLocationsResource: EndpointGroup = {
   name: "vessel-locations",
-  resourceDescription:
-    "Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude),
   documentation: {
-    resourceDescription: "Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude), speed and heading information, whether or not the vessel is at dock, departure and arrival terminal details, and estimated time of arrival. Data is real time, updated every few seconds.\"",
+    resourceDescription:
+      "Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude), speed and heading information, whether or not the vessel is at dock, departure and arrival terminal details, and estimated time of arrival. Data is real time, updated every few seconds.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "REALTIME" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "REALTIME" as const,
   endpoints: {
     getVesselLocations: {
       function: "getVesselLocations",

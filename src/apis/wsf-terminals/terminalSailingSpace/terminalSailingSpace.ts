@@ -1,19 +1,19 @@
 import { z } from "zod";
-import type { EndpointDefinition } from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./terminalSailingSpace.input";
 import * as o from "./terminalSailingSpace.output";
 
-export const export const terminalSailingSpaceResource = {: EndpointGroup 
+export const terminalSailingSpaceResource: EndpointGroup = {
   name: "terminal-sailing-space",
-  resourceDescription:
-    "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability. Data updates frequently during operational hours.",
   documentation: {
-    resourceDescription: "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability. Data updates frequently during operational hours.\"",
+    resourceDescription:
+      "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability. Data updates frequently during operational hours.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
-    usageExamples: []
-  }cacheStrategy: "STATIC" as const,
+    usageExamples: [],
+  },
+  cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalSailingSpace: {
       function: "getTerminalSailingSpace",
