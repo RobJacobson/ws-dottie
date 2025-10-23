@@ -29,6 +29,46 @@
     "puppeteer": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.38",
+        "--browser=chromium",
+        "--headless",
+        "--viewport-size=1280,720"
+      ],
+      "alwaysAllow": [
+        "browser_navigate",
+        "browser_snapshot",
+        "browser_take_screenshot",
+        "browser_click",
+        "browser_fill",
+        "browser_evaluate",
+        "browser_install"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp",
+        "--headless",
+        "--executablePath",
+        "/snap/bin/chromium",
+        "--isolated"
+      ]
+    },
+    "web-search": {
+      "command": "npx",
+      "args": ["-y", "open-websearch"],
+      "env": {
+        "DEFAULT_SEARCH_ENGINE": "google",
+        "ENABLE_CORS": "true",
+        "CORS_ORIGIN": "*",
+        "MODE": "stdio"
+      }
     }
   }
 }
