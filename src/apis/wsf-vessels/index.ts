@@ -5,10 +5,10 @@
  * all input/output types and the main API definition.
  */
 
+// Export the main API definition
+export { wsfVesselsApi } from "./apiDefinition";
 export type { VesselsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 export type { VesselsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
-// Export the main API definition
-export { wsfVesselsApi } from "./endpoints";
 export type {
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,

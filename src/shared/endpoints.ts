@@ -23,7 +23,7 @@ import { wsdotWeatherStationsApi } from "@/apis/wsdot-weather-stations/apiDefini
 import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
-import { wsfVesselsApi } from "@/apis/wsf-vessels/endpoints";
+import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
 import type { Api, Endpoint } from "./types";
 
 /**
