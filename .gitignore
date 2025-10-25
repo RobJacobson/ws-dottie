@@ -262,3 +262,6 @@ example/
 
 # Exclude our working directory
 working/
+
+.kilocode
+.mcp-tools
