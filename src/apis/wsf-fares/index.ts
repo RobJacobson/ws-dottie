@@ -7,12 +7,12 @@
 
 // Export the main API definition and individual resources for direct use
 export {
-  cacheFlushDateResource,
-  fareLineItemsResource,
-  fareTotalsResource,
-  terminalComboResource,
-  terminalsResource,
-  validDateRangeResource,
+  cacheFlushDateGroup,
+  fareLineItemsGroup,
+  fareTotalsGroup,
+  terminalComboGroup,
+  terminalsGroup,
+  validDateRangeGroup,
   wsfFaresApi,
 } from "./apiDefinition";
 export type { FaresCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";

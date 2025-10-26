@@ -4,7 +4,7 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./alerts.input";
 import * as o from "./alerts.output";
 
-export const alertsResource: EndpointGroup = {
+export const alertsGroup: EndpointGroup = {
   name: "alerts",
   documentation: {
     resourceDescription:

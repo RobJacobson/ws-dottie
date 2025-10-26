@@ -4,7 +4,7 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./fareTotals.input";
 import * as o from "./fareTotals.output";
 
-export const fareTotalsResource: EndpointGroup = {
+export const fareTotalsGroup: EndpointGroup = {
   name: "fare-totals",
   documentation: {
     resourceDescription:

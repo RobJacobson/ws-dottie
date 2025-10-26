@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./areas.input";
 import * as o from "./areas.output";
 
-export const areasResource: EndpointGroup = {
+export const areasGroup: EndpointGroup = {
   name: "areas",
   documentation: {
     resourceDescription:

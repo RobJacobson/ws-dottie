@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./eventCategories.input";
 
-export const eventCategoriesResource: EndpointGroup = {
+export const eventCategoriesGroup: EndpointGroup = {
   name: "event-categories",
   documentation: {
     resourceDescription:

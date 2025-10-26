@@ -2,7 +2,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./validDateRange.input";
 import * as o from "./validDateRange.output";
 
-export const validDateRangeResource: EndpointGroup = {
+export const validDateRangeGroup: EndpointGroup = {
   name: "valid-date-range",
   documentation: {
     resourceDescription:

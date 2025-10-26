@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./passConditions.input";
 import * as o from "./passConditions.output";
 
-export const passConditionsResource: EndpointGroup = {
+export const passConditionsGroup: EndpointGroup = {
   name: "pass-conditions",
   documentation: {
     resourceDescription:

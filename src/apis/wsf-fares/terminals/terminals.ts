@@ -4,7 +4,7 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./terminals.input";
 import * as o from "./terminals.output";
 
-export const terminalsResource: EndpointGroup = {
+export const terminalsGroup: EndpointGroup = {
   name: "terminals",
   documentation: {
     resourceDescription:

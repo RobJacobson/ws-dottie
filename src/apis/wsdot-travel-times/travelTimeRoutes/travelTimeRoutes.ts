@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./travelTimeRoutes.input";
 import * as o from "./travelTimeRoutes.output";
 
-export const travelTimeRoutesResource: EndpointGroup = {
+export const travelTimeRoutesGroup: EndpointGroup = {
   name: "travel-time-routes",
   documentation: {
     resourceDescription:

@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cameras.input";
 import * as o from "./cameras.output";
 
-export const camerasResource: EndpointGroup = {
+export const camerasGroup: EndpointGroup = {
   name: "cameras",
   documentation: {
     resourceDescription:

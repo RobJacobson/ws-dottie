@@ -8,7 +8,7 @@
 // Export the main API definition
 // Export individual resources for direct use
 export {
-  camerasResource,
+  camerasGroup,
   wsdotHighwayCamerasApi,
 } from "./apiDefinition";
 // Export all input types

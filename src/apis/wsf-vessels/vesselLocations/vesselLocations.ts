@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./vesselLocations.input";
 import * as o from "./vesselLocations.output";
 
-export const vesselLocationsResource: EndpointGroup = {
+export const vesselLocationsGroup: EndpointGroup = {
   name: "vessel-locations",
   documentation: {
     resourceDescription:

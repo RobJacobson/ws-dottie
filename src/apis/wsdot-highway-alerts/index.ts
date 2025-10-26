@@ -21,8 +21,8 @@ export type { Alert } from "./alerts/alerts.output";
 // Export the main API definition
 // Export individual resources for direct use
 export {
-  alertsResource,
-  areasResource,
-  eventCategoriesResource,
+  alertsGroup,
+  areasGroup,
+  eventCategoriesGroup,
   wsdotHighwayAlertsApi,
 } from "./apiDefinition";

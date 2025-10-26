@@ -8,7 +8,7 @@
 // Export the main API definition (backward compatibility)
 export { wsdotBridgeClearancesApi } from "./apiDefinition";
 // Export individual resources for direct use
-export { bridgeClearancesResource } from "./bridgeClearances/bridgeClearances";
+export { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances";
 
 // Export all input types
 export type {

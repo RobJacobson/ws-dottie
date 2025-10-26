@@ -5,7 +5,7 @@ import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate";
 import { vesselAccommodationsResource } from "./vesselAccommodations/vesselAccommodations";
 import { vesselBasicsResource } from "./vesselBasics/vesselBasics";
 import { vesselHistoriesResource } from "./vesselHistories/vesselHistories";
-import { vesselLocationsResource } from "./vesselLocations/vesselLocations";
+import { vesselLocationsGroup } from "./vesselLocations/vesselLocations";
 import { vesselStatsResource } from "./vesselStats/vesselStats";
 import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose";
 
@@ -17,7 +17,7 @@ export const wsfVesselsApi: ApiDefinition = {
     vesselAccommodationsResource,
     vesselBasicsResource,
     vesselHistoriesResource,
-    vesselLocationsResource,
+    vesselLocationsGroup,
     vesselStatsResource,
     vesselVerboseResource,
   ],
@@ -29,7 +29,7 @@ export {
   vesselAccommodationsResource,
   vesselBasicsResource,
   vesselHistoriesResource,
-  vesselLocationsResource,
+  vesselLocationsGroup,
   vesselStatsResource,
   vesselVerboseResource,
 };

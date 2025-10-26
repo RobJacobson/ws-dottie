@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cvRestrictionDataWithId.input";
 import * as o from "./cvRestrictionDataWithId.output";
 
-export const cvRestrictionDataWithIdResource: EndpointGroup = {
+export const cvRestrictionDataWithIdGroup: EndpointGroup = {
   name: "cv-restriction-data-with-id",
   documentation: {
     resourceDescription:

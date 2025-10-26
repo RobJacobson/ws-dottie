@@ -4,7 +4,7 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./terminalCombo.input";
 import * as o from "./terminalCombo.output";
 
-export const terminalComboResource: EndpointGroup = {
+export const terminalComboGroup: EndpointGroup = {
   name: "terminal-combo",
   documentation: {
     resourceDescription:

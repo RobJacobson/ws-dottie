@@ -3,7 +3,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./bridgeClearances.input";
 import * as o from "./bridgeClearances.output";
 
-export const bridgeClearancesResource: EndpointGroup = {
+export const bridgeClearancesGroup: EndpointGroup = {
   name: "bridge-clearances",
   documentation: {
     resourceDescription:
