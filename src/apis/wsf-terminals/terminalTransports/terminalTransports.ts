@@ -7,7 +7,7 @@ export const terminalTransportsResource: EndpointGroup = {
   name: "terminal-transports",
   documentation: {
     resourceDescription:
-      "Provides helpful information for terminal commuters including parking notes, vehicle-specific tips, transit links, and transportation options. This information assists travelers in planning their journey to and from ferry terminals. Data updates infrequently.",
+      "Provides helpful information for terminal commuters including parking notes, vehicle-specific tips, transit links, and transportation options. This information assists travelers in planning their journey to and from ferry terminals.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

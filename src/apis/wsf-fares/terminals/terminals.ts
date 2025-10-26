@@ -8,7 +8,7 @@ export const terminalsResource: EndpointGroup = {
   name: "terminals",
   documentation: {
     resourceDescription:
-      "Provides terminal information for WSF fares including valid departing terminals and terminal mate relationships. Terminal data includes unique identifiers, names, and operational details. Data updates infrequently.",
+      "Provides terminal information for WSF fares including valid departing terminals and terminal mate relationships. Terminal data includes unique identifiers, names, and operational details.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

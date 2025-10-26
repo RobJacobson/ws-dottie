@@ -7,7 +7,7 @@ export const terminalSailingSpaceResource: EndpointGroup = {
   name: "terminal-sailing-space",
   documentation: {
     resourceDescription:
-      "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability. Data updates frequently during operational hours.",
+      "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

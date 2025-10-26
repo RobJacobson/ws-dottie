@@ -7,7 +7,7 @@ export const terminalBasicsResource: EndpointGroup = {
   name: "terminal-basics",
   documentation: {
     resourceDescription:
-      "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID), operational status (amenities like elevators, waiting rooms, food service, restrooms), and basic facility information. Data updates infrequently.",
+      "Each TerminalBasic item represents essential terminal details including terminal identification (name and ID), operational status (amenities like elevators, waiting rooms, food service, restrooms), and basic facility information.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

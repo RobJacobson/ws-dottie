@@ -7,7 +7,7 @@ export const terminalBulletinsResource: EndpointGroup = {
   name: "terminal-bulletins",
   documentation: {
     resourceDescription:
-      "Contains terminal information with associated bulletins and alerts. Each terminal may have zero or more bulletins assigned to it, providing important notices, updates, and announcements for terminal users. Data updates infrequently.",
+      "Contains terminal information with associated bulletins and alerts. Each terminal may have zero or more bulletins assigned to it, providing important notices, updates, and announcements for terminal users.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

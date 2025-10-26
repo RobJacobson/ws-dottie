@@ -7,7 +7,7 @@ export const vesselLocationsResource: EndpointGroup = {
   name: "vessel-locations",
   documentation: {
     resourceDescription:
-      "Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude), speed and heading information, whether or not the vessel is at dock, departure and arrival terminal details, and estimated time of arrival. Data is real time, updated every few seconds.",
+      "Each VesselLocation item represents real-time vessel tracking data including current position (latitude and longitude), speed and heading information, whether or not the vessel is at dock, departure and arrival terminal details, and estimated time of arrival.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

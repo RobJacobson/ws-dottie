@@ -8,7 +8,7 @@ export const fareTotalsResource: EndpointGroup = {
   name: "fare-totals",
   documentation: {
     resourceDescription:
-      "Calculates fare totals for WSF routes based on selected fare line items and quantities. Supports both one-way and round trip calculations with detailed breakdown by direction and fare type. Data updates infrequently.",
+      "Calculates fare totals for WSF routes based on selected fare line items and quantities. Supports both one-way and round trip calculations with detailed breakdown by direction and fare type.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

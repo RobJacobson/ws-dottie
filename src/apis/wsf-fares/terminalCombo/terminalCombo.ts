@@ -8,7 +8,7 @@ export const terminalComboResource: EndpointGroup = {
   name: "terminal-combo",
   documentation: {
     resourceDescription:
-      "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date. Data updates infrequently.",
+      "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

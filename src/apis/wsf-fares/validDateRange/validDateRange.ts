@@ -6,7 +6,7 @@ export const validDateRangeResource: EndpointGroup = {
   name: "valid-date-range",
   documentation: {
     resourceDescription:
-      "Returns a date range for which fares data is currently published and available. This operation helps applications determine valid trip dates for fare queries. Data updates infrequently.",
+      "Returns a date range for which fares data is currently published and available. This operation helps applications determine valid trip dates for fare queries.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

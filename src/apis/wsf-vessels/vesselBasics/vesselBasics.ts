@@ -7,7 +7,7 @@ export const vesselBasicsResource: EndpointGroup = {
   name: "vessel-basics",
   documentation: {
     resourceDescription:
-      "Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information. Data updates infrequently.",
+      "Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
@@ -22,7 +22,7 @@ export const vesselBasicsResource: EndpointGroup = {
       outputSchema: z.array(o.vesselBasicSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of VesselBasic data for all vesselBasics.",
+        "Returns a list of VesselBasic data for all Washington State Ferry vessels.",
     } satisfies EndpointDefinition<i.VesselBasicsInput, o.VesselBasic[]>,
     getVesselBasicsByVesselId: {
       function: "getVesselBasicsByVesselId",

@@ -7,7 +7,7 @@ export const flowDataResource: EndpointGroup = {
   name: "flow-data",
   documentation: {
     resourceDescription:
-      "FlowData represents real-time traffic flow information from sensors across the state. Data includes traffic conditions (WideOpen, Moderate, Heavy, StopAndGo), station locations, and timestamps. Data is updated every 90 seconds.",
+      "FlowData represents real-time traffic flow information from sensors across the state. Data includes traffic conditions (WideOpen, Moderate, Heavy, StopAndGo), station locations, and timestamps.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

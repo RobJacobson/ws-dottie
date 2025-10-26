@@ -7,7 +7,7 @@ export const terminalLocationsResource: EndpointGroup = {
   name: "terminal-locations",
   documentation: {
     resourceDescription:
-      "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes. Data updates infrequently.",
+      "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

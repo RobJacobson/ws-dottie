@@ -8,7 +8,7 @@ export const fareLineItemsResource: EndpointGroup = {
   name: "fare-line-items",
   documentation: {
     resourceDescription:
-      "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information. Data updates infrequently.",
+      "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

@@ -7,7 +7,7 @@ export const vesselStatsResource: EndpointGroup = {
   name: "vessel-stats",
   documentation: {
     resourceDescription:
-      "Each VesselStat item represents detailed vessel specifications including physical dimensions (length, beam, draft), engine specifications (count, horsepower, propulsion type), capacity information (passenger count, vehicle space), and historical details (year built, vessel history). Data updates infrequently.",
+      "Each VesselStat item represents detailed vessel specifications including physical dimensions (length, beam, draft), engine specifications (count, horsepower, propulsion type), capacity information (passenger count, vehicle space), and historical details (year built, vessel history).",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

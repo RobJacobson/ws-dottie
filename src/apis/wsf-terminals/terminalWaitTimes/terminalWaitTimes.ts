@@ -7,7 +7,7 @@ export const terminalWaitTimesResource: EndpointGroup = {
   name: "terminal-wait-times",
   documentation: {
     resourceDescription:
-      "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals. Data updates infrequently.",
+      "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

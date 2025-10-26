@@ -7,7 +7,7 @@ export const vesselVerboseResource: EndpointGroup = {
   name: "vessel-verbose",
   documentation: {
     resourceDescription:
-      "Each VesselVerbose item represents comprehensive vessel information combining all available data from basic details, accommodations, and specifications in a single response. Data updates infrequently.",
+      "Each VesselVerbose item represents comprehensive vessel information combining all available data from basic details, accommodations, and specifications in a single response.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

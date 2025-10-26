@@ -7,7 +7,7 @@ export const camerasResource: EndpointGroup = {
   name: "cameras",
   documentation: {
     resourceDescription:
-      "Camera operations provide access to traffic camera information including individual camera details and search functionality by route and milepost. Data updates infrequently and represents the current state of traffic cameras across the state.",
+      "Camera operations provide access to traffic camera information including individual camera details and search functionality by route and milepost.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

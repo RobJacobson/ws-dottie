@@ -7,7 +7,7 @@ export const weatherStationsResource: EndpointGroup = {
   name: "weather-stations",
   documentation: {
     resourceDescription:
-      "Weather station data provides current information from weather stations across the state. Each station includes location coordinates, station code, and station name. Coverage Area: Statewide. Data updates frequently.",
+      "Weather station data provides current information from weather stations across the state. Each station includes location coordinates, station code, and station name. Coverage Area: Statewide.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

@@ -8,7 +8,7 @@ export const weatherInfoResource: EndpointGroup = {
   name: "weather-info",
   documentation: {
     resourceDescription:
-      "WeatherInfo provides current weather conditions from WSDOT weather stations including temperature, humidity, wind speed and direction, barometric pressure, precipitation, visibility, and sky coverage. Data is updated frequently and represents real-time weather observations.",
+      "WeatherInfo provides current weather conditions from WSDOT weather stations including temperature, humidity, wind speed and direction, barometric pressure, precipitation, visibility, and sky coverage.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

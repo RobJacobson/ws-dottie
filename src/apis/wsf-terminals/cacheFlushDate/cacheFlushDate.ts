@@ -3,7 +3,7 @@ import * as i from "./cacheFlushDate.input";
 import * as o from "./cacheFlushDate.output";
 
 const DESCRIPTION =
-  "Returns the date and time when the WSF terminals data was last updated. This operation helps applications coordinate caching of terminals data that changes infrequently. When the returned date changes, applications should refresh their cached data. Data updates infrequently.";
+  "Returns the date and time when the WSF terminals data was last updated. This operation helps applications coordinate caching of terminals data that changes infrequently. When the returned date changes, applications should refresh their cached data.";
 
 export const cacheFlushDateResource: EndpointGroup = {
   name: "cache-flush-date",

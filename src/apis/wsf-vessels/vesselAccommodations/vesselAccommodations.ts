@@ -7,7 +7,7 @@ export const vesselAccommodationsResource: EndpointGroup = {
   name: "vessel-accommodations",
   documentation: {
     resourceDescription:
-      "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access. Data updates infrequently.",
+      "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],

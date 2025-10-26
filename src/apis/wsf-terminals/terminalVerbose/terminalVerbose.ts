@@ -7,7 +7,7 @@ export const terminalVerboseResource: EndpointGroup = {
   name: "terminal-verbose",
   documentation: {
     resourceDescription:
-      "Contains highly detailed information about terminals including basic details, bulletins, location data, sailing space information, transportation options, wait times, and comprehensive facility information. This endpoint should be used when you need comprehensive terminal data and don't mind receiving a larger payload. Data updates infrequently.",
+      "Contains highly detailed information about terminals including basic details, bulletins, location data, sailing space information, transportation options, wait times, and comprehensive facility information. This endpoint should be used when you need comprehensive terminal data and don't mind receiving a larger payload.",
     businessContext: "",
     updateFrequency: "",
     relatedEndpoints: [],
