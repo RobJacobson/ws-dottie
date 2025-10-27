@@ -7,8 +7,9 @@ export const tollRatesResource: EndpointGroup = {
   name: "toll-rates",
   documentation: {
     resourceDescription:
-      "TollRate information provides current toll rates for high occupancy lanes across statewide coverage areas. Each rate includes trip details, current toll amounts in cents, location information, and last update timestamps.",
-    businessContext: "",
+      "Each TollRate item represents current toll pricing information for high occupancy toll lanes across Washington state. Each rate contains dynamic pricing data, trip location details, and real-time update timestamps for congestion management.",
+    businessContext:
+      "Use to calculate travel costs and make informed routing decisions by providing current toll amounts and trip details for high occupancy lane usage across Washington state highways.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const tollRatesResource: EndpointGroup = {
       outputSchema: z.array(o.tollRateSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns current toll rate information for all toll trips.",
+        "Returns multiple TollRate items for all high occupancy toll lanes statewide.",
     } satisfies EndpointDefinition<i.GetTollRatesInput, o.TollRate[]>,
   },
 };

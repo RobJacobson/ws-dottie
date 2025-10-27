@@ -7,8 +7,9 @@ export const terminalTransportsResource: EndpointGroup = {
   name: "terminal-transports",
   documentation: {
     resourceDescription:
-      "Provides helpful information for terminal commuters including parking notes, vehicle-specific tips, transit links, and transportation options. This information assists travelers in planning their journey to and from ferry terminals.",
-    businessContext: "",
+      "Each TerminalTransportationOption item represents transportation options and parking information for Washington State Ferry terminals. These items include parking notes, vehicle-specific tips, transit links, and alternative transportation methods.",
+    businessContext:
+      "Use to plan terminal access by providing parking availability and transportation options for ferry terminal commuters.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const terminalTransportsResource: EndpointGroup = {
       outputSchema: z.array(o.terminalTransportationOptionSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of TerminalTransportationOption data for all terminals.",
+        "Returns multiple TerminalTransportationOption objects for all terminals.",
     } satisfies EndpointDefinition<
       i.TerminalTransportsInput,
       o.TerminalTransportationOption[]
@@ -34,7 +35,7 @@ export const terminalTransportsResource: EndpointGroup = {
       outputSchema: o.terminalTransportationOptionSchema,
       sampleParams: { TerminalID: 10 },
       endpointDescription:
-        "Returns TerminalTransportationOption data for the terminal with the given identifier.",
+        "Returns TerminalTransportationOption data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
       i.TerminalTransportsByIdInput,
       o.TerminalTransportationOption

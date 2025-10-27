@@ -8,8 +8,9 @@ export const fareTotalsGroup: EndpointGroup = {
   name: "fare-totals",
   documentation: {
     resourceDescription:
-      "Calculates fare totals for WSF routes based on selected fare line items and quantities. Supports both one-way and round trip calculations with detailed breakdown by direction and fare type.",
-    businessContext: "",
+      "Each FareTotal item represents calculated fare costs for Washington State Ferries journeys based on selected fare line items and passenger quantities. These totals combine individual fare components to provide complete pricing for specific routes and travel scenarios.",
+    businessContext:
+      "Use to calculate complete journey costs by providing fare totals based on selected line items, quantities, and trip parameters for accurate ticket pricing and payment processing.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],

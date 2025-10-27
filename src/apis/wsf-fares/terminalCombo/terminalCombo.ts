@@ -8,8 +8,9 @@ export const terminalComboGroup: EndpointGroup = {
   name: "terminal-combo",
   documentation: {
     resourceDescription:
-      "Provides terminal combination information for WSF fares including fare collection descriptions for specific terminal pairs and all terminal combinations for a given date.",
-    businessContext: "",
+      "Each TerminalCombo item represents valid route pairings between Washington State Ferries terminals with associated fare collection methods and scheduling details. These combinations define which terminals are connected and how fares are collected for specific routes.",
+    businessContext:
+      "Use to determine route availability and fare collection requirements by providing terminal pairing information for journey planning and ticket purchasing systems.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],

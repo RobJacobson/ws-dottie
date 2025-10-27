@@ -7,8 +7,9 @@ export const cvRestrictionDataGroup: EndpointGroup = {
   name: "cv-restriction-data",
   documentation: {
     resourceDescription:
-      "Commercial Vehicle Restriction data representing current restrictions for commercial vehicles including bridge and road restrictions with details such as maximum weights, heights, lengths, and widths. Coverage Area: Statewide.",
-    businessContext: "",
+      "Each CVRestrictionData item represents current commercial vehicle restrictions for Washington State highways, including weight limits, height clearances, axle restrictions, and location details. These items provide essential regulatory information for bridge and road restrictions needed for commercial vehicle routing and permit processing.",
+    businessContext:
+      "Use to check vehicle restrictions and plan commercial routes by providing weight limits, height clearances, and axle restrictions for Washington State highways. Determine route feasibility and permit requirements for trucking companies and logistics providers.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const cvRestrictionDataGroup: EndpointGroup = {
       outputSchema: z.array(o.cVRestrictionDataSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of commercial vehicle restriction data.",
+        "Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.",
     } satisfies EndpointDefinition<
       i.GetCommercialVehicleRestrictionsInput,
       o.CVRestrictionData[]

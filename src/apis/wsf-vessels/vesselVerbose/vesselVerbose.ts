@@ -7,8 +7,9 @@ export const vesselVerboseResource: EndpointGroup = {
   name: "vessel-verbose",
   documentation: {
     resourceDescription:
-      "Each VesselVerbose item represents comprehensive vessel information combining all available data from basic details, accommodations, and specifications in a single response.",
-    businessContext: "",
+      "Each VesselVerbose item represents complete vessel information combining basic details, technical specifications, and accommodation data. These items provide comprehensive vessel profiles in a single response for Washington State Ferries fleet.",
+    businessContext:
+      "Use to display complete vessel information by providing comprehensive vessel data for passenger information applications. Supports trip planning tools and fleet management systems for Washington State Ferry services.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const vesselVerboseResource: EndpointGroup = {
       outputSchema: z.array(o.vesselVerboseSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of VesselVerbose data for all vesselVerboses.",
+        "Returns multiple VesselVerbose objects for all vessels in fleet.",
     } satisfies EndpointDefinition<i.VesselVerboseInput, o.VesselVerbose[]>,
     getVesselsVerboseByVesselId: {
       function: "getVesselsVerboseByVesselId",
@@ -31,7 +32,7 @@ export const vesselVerboseResource: EndpointGroup = {
       outputSchema: o.vesselVerboseSchema,
       sampleParams: { VesselID: 68 },
       endpointDescription:
-        "Returns VesselVerbose data for the vesselverbose with the given identifier.",
+        "Returns a single VesselVerbose object for the specified vessel identifier.",
     } satisfies EndpointDefinition<i.VesselVerboseByIdInput, o.VesselVerbose>,
   },
 };

@@ -7,8 +7,9 @@ export const activeSeasonsResource: EndpointGroup = {
   name: "active-seasons",
   documentation: {
     resourceDescription:
-      "Active scheduled seasons represent the current and available scheduling periods for Washington State Ferry routes. Each season defines the time period when specific schedules are active.",
-    businessContext: "",
+      "Each ActiveSeasons item represents a scheduling period for Washington State Ferry routes. Each season defines the time period when specific schedules are active and available for passenger travel planning.",
+    businessContext:
+      "Use to identify current scheduling periods by providing season dates and availability status for ferry service planning and schedule selection.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -21,7 +22,8 @@ export const activeSeasonsResource: EndpointGroup = {
       inputSchema: i.activeScheduledSeasonsSchema,
       outputSchema: z.array(o.scheduleBaseSchema),
       sampleParams: {},
-      endpointDescription: "Returns a list of all active scheduled seasons.",
+      endpointDescription:
+        "Returns multiple of ActiveSeasons for all scheduling periods.",
     } satisfies EndpointDefinition<
       i.ActiveScheduledSeasonsInput,
       o.ScheduleBase[]

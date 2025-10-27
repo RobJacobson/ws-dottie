@@ -8,8 +8,9 @@ export const serviceDisruptionsResource: EndpointGroup = {
   name: "service-disruptions",
   documentation: {
     resourceDescription:
-      "Service disruptions represent planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes.",
-    businessContext: "",
+      "Each ServiceDisruption item represents planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes that affect passenger travel plans.",
+    businessContext:
+      "Use to identify service disruptions by providing route and date information for planning alternative travel arrangements.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -23,7 +24,7 @@ export const serviceDisruptionsResource: EndpointGroup = {
       outputSchema: z.array(o.serviceDisruptionSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
-        "Returns service disruptions for routes on the specified trip date.",
+        "Returns multiple of ServiceDisruption for specified trip date.",
     } satisfies EndpointDefinition<
       i.RoutesHavingServiceDisruptionsInput,
       o.ServiceDisruption[]

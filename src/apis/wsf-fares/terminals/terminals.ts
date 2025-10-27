@@ -8,8 +8,9 @@ export const terminalsGroup: EndpointGroup = {
   name: "terminals",
   documentation: {
     resourceDescription:
-      "Provides terminal information for WSF fares including valid departing terminals and terminal mate relationships. Terminal data includes unique identifiers, names, and operational details.",
-    businessContext: "",
+      "Each Terminal item represents a Washington State Ferries port facility with unique identification, location details, and operational status. These terminals serve as departure and arrival points for ferry routes throughout the Puget Sound and San Juan Islands.",
+    businessContext:
+      "Use to display terminal options and route connections by providing terminal details and mate relationships for trip planning and schedule navigation.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],

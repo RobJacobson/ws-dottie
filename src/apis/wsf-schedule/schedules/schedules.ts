@@ -7,8 +7,9 @@ export const schedulesResource: EndpointGroup = {
   name: "schedules",
   documentation: {
     resourceDescription:
-      "Schedules provide comprehensive sailing timetables for ferry routes, including departure times, arrival times, vessel assignments, and route-specific scheduling information.",
-    businessContext: "",
+      "Each Schedules item represents a complete sailing timetable for ferry routes. Each schedule includes departure times, arrival times, vessel assignments, and route-specific scheduling information for travel planning.",
+    businessContext:
+      "Use to plan ferry travel by providing complete sailing timetables including departure times, arrival times, and vessel assignments for trip planning.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -21,8 +22,7 @@ export const schedulesResource: EndpointGroup = {
       inputSchema: i.scheduleByRouteSchema,
       outputSchema: o.scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-      endpointDescription:
-        "Returns the schedule for the specified trip date and route ID.",
+      endpointDescription: "Returns single of Schedules for specified route.",
     } satisfies EndpointDefinition<i.ScheduleByRouteInput, o.Schedule>,
     getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
       function: "getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
@@ -35,8 +35,7 @@ export const schedulesResource: EndpointGroup = {
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
-      endpointDescription:
-        "Returns the schedule for the specified trip date and terminal pair.",
+      endpointDescription: "Returns single of Schedules for terminal pair.",
     } satisfies EndpointDefinition<i.ScheduleByTerminalComboInput, o.Schedule>,
   },
 };

@@ -8,8 +8,9 @@ export const routeDetailsResource: EndpointGroup = {
   name: "route-details",
   documentation: {
     resourceDescription:
-      "Route details provide comprehensive information about ferry routes including departure and arrival terminals, sailing times, vessel assignments, and route-specific information.",
-    businessContext: "",
+      "Each RouteDetails item represents a ferry route with complete service information. Each route includes departure and arrival terminals, sailing times, vessel assignments, and route-specific details for travel planning.",
+    businessContext:
+      "Use to plan ferry travel by providing comprehensive route information including terminals, schedules, and vessel details for trip planning and navigation.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,8 @@ export const routeDetailsResource: EndpointGroup = {
       inputSchema: i.routeDetailsByTripDateSchema,
       outputSchema: z.array(o.routeDetailSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription: "Returns route details for the specified trip date.",
+      endpointDescription:
+        "Returns multiple of RouteDetails for specified date.",
     } satisfies EndpointDefinition<
       i.RouteDetailsByTripDateInput,
       o.RouteDetail[]
@@ -34,7 +36,7 @@ export const routeDetailsResource: EndpointGroup = {
       outputSchema: o.routeDetailSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
       endpointDescription:
-        "Returns route details for the specified trip date and route ID.",
+        "Returns single of RouteDetails for specified route.",
     } satisfies EndpointDefinition<
       i.RouteDetailsByTripDateAndRouteIdInput,
       o.RouteDetail
@@ -51,7 +53,7 @@ export const routeDetailsResource: EndpointGroup = {
         ArrivingTerminalID: 10,
       },
       endpointDescription:
-        "Returns route details for the specified trip date and terminal pair.",
+        "Returns multiple of RouteDetails for terminal pair.",
     } satisfies EndpointDefinition<
       i.RouteDetailsByTripDateAndTerminalsInput,
       o.RouteDetail[]

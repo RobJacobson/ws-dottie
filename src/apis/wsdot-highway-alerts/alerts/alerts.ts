@@ -8,8 +8,9 @@ export const alertsGroup: EndpointGroup = {
   name: "alerts",
   documentation: {
     resourceDescription:
-      "Highway alerts provide real-time information about traffic incidents, road conditions, construction, and other events affecting Washington State highways. Alerts include location details, impact levels, and estimated duration.",
-    businessContext: "",
+      "Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.",
+    businessContext:
+      "Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,8 @@ export const alertsGroup: EndpointGroup = {
       inputSchema: i.getAlertsSchema,
       outputSchema: z.array(o.alertSchema),
       sampleParams: {},
-      endpointDescription: "Returns all current highway alerts.",
+      endpointDescription:
+        "Returns an array of Alert objects for all current highway incidents.",
     } satisfies EndpointDefinition<i.GetAlertsInput, o.Alert[]>,
     getAlertById: {
       function: "getAlertById",
@@ -31,7 +33,7 @@ export const alertsGroup: EndpointGroup = {
       outputSchema: o.alertSchema,
       sampleParams: { AlertID: 468632 },
       endpointDescription:
-        "Returns a specific highway alert by its unique identifier.",
+        "Returns a single Alert object for specified AlertID.",
     } satisfies EndpointDefinition<i.GetAlertInput, o.Alert>,
     getAlertsByRegionId: {
       function: "getAlertsByRegionId",
@@ -40,7 +42,7 @@ export const alertsGroup: EndpointGroup = {
       outputSchema: z.array(o.alertSchema),
       sampleParams: { RegionID: 9 },
       endpointDescription:
-        "Returns all highway alerts for a specific WSDOT region (EA, NC, NW, OL, SC, SW).",
+        "Returns an array of Alert objects for specified WSDOT region.",
     } satisfies EndpointDefinition<i.GetAlertsByRegionIDInput, o.Alert[]>,
     getAlertsByMapArea: {
       function: "getAlertsByMapArea",
@@ -49,7 +51,7 @@ export const alertsGroup: EndpointGroup = {
       outputSchema: z.array(o.alertSchema),
       sampleParams: { MapArea: "Seattle" },
       endpointDescription:
-        "Returns highway alerts for a specific map area (e.g., Seattle, Tacoma, Spokane).",
+        "Returns an array of Alert objects for specified geographic area.",
     } satisfies EndpointDefinition<i.GetAlertsForMapAreaInput, o.Alert[]>,
     searchAlerts: {
       function: "searchAlerts",
@@ -65,7 +67,7 @@ export const alertsGroup: EndpointGroup = {
         SearchTimeEnd: datesHelper.today(),
       },
       endpointDescription:
-        "Search for highway alerts using multiple criteria including state route, region, time range, and milepost range.",
+        "Returns an array of Alert objects matching specified search criteria.",
     } satisfies EndpointDefinition<i.SearchAlertsInput, o.Alert[]>,
   },
 };

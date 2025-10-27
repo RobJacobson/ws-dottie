@@ -7,8 +7,9 @@ export const areasGroup: EndpointGroup = {
   name: "areas",
   documentation: {
     resourceDescription:
-      "Map areas define geographic regions used for organizing and filtering highway alerts. Each area has a unique identifier and descriptive name to help users locate relevant traffic information.",
-    businessContext: "",
+      "Each Area item represents a geographic region used for organizing and filtering highway alerts across Washington State. These include unique area codes and descriptive names for different regions.",
+    businessContext:
+      "Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const areasGroup: EndpointGroup = {
       outputSchema: z.array(o.areaSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of all available map areas with their identifiers and descriptions.",
+        "Returns an array of Area objects for all available geographic regions.",
     } satisfies EndpointDefinition<i.GetMapAreasInput, o.Area[]>,
   },
 };

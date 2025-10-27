@@ -7,8 +7,9 @@ export const weatherStationsResource: EndpointGroup = {
   name: "weather-stations",
   documentation: {
     resourceDescription:
-      "Weather station data provides current information from weather stations across the state. Each station includes location coordinates, station code, and station name. Coverage Area: Statewide.",
-    businessContext: "",
+      "Each WeatherStation item represents a road weather information system station location across Washington state. These stations collect atmospheric and pavement condition data to support transportation operations and traveler safety.",
+    businessContext:
+      "Use to monitor weather conditions by providing location coordinates, station identifiers, and names for road weather monitoring and maintenance decision support.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const weatherStationsResource: EndpointGroup = {
       outputSchema: z.array(o.weatherStationSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns current weather station data for all stations.",
+        "Returns multiple WeatherStation items for statewide coverage.",
     } satisfies EndpointDefinition<
       i.GetCurrentStationsInput,
       o.WeatherStation[]

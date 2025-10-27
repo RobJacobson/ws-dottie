@@ -7,8 +7,9 @@ export const flowDataResource: EndpointGroup = {
   name: "flow-data",
   documentation: {
     resourceDescription:
-      "FlowData represents real-time traffic flow information from sensors across the state. Data includes traffic conditions (WideOpen, Moderate, Heavy, StopAndGo), station locations, and timestamps.",
-    businessContext: "",
+      "Each FlowData item represents real-time traffic flow information from sensor stations across Washington state. Data includes traffic conditions, station locations, timestamps, and regional maintenance information for traffic monitoring.",
+    businessContext:
+      "Use to monitor current traffic conditions by providing real-time flow data and station information for traffic management and traveler information systems.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const flowDataResource: EndpointGroup = {
       outputSchema: z.array(o.flowDataSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns real-time traffic flow data for all stations across the state.",
+        "Returns multiple FlowData items for all traffic flow stations across Washington state.",
     } satisfies EndpointDefinition<i.GetTrafficFlowsInput, o.FlowData[]>,
     getTrafficFlowById: {
       function: "getTrafficFlowById",
@@ -31,7 +32,7 @@ export const flowDataResource: EndpointGroup = {
       outputSchema: o.flowDataSchema,
       sampleParams: { FlowDataID: 2482 },
       endpointDescription:
-        "Returns real-time traffic flow data for a specific station by FlowDataID.",
+        "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
     } satisfies EndpointDefinition<i.GetTrafficFlowInput, o.FlowData>,
   },
 };

@@ -6,8 +6,9 @@ export const eventCategoriesGroup: EndpointGroup = {
   name: "event-categories",
   documentation: {
     resourceDescription:
-      "Event categories classify different types of highway alerts such as collisions, maintenance work, construction, weather-related events, and other traffic incidents.",
-    businessContext: "",
+      "Each EventCategory item represents a classification type for highway alerts including collisions, maintenance work, construction, weather-related events, and other traffic incidents. These categories help organize and filter alerts by incident type.",
+    businessContext:
+      "Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -21,7 +22,7 @@ export const eventCategoriesGroup: EndpointGroup = {
       outputSchema: z.array(z.string()),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of all available event category names used to classify highway alerts.",
+        "Returns an array of strings for all available event categories.",
     } satisfies EndpointDefinition<i.GetEventCategoriesInput, string[]>,
   },
 };

@@ -8,8 +8,9 @@ export const tollTripRatesResource: EndpointGroup = {
   name: "toll-trip-rates",
   documentation: {
     resourceDescription:
-      "TollTripRates provides current toll rates for specific trips with detailed pricing information, messages, and version tracking. Supports retrieval by current data, date ranges, and specific versions.",
-    businessContext: "",
+      "Each TollTripRates item represents comprehensive toll rate data for specific trips including pricing details, informational messages, and version tracking. Each container supports current data retrieval, historical date ranges, and version-specific queries.",
+    businessContext:
+      "Use to analyze toll pricing trends and retrieve historical rate data by providing detailed trip information, version tracking, and date range filtering for transportation planning.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -23,7 +24,7 @@ export const tollTripRatesResource: EndpointGroup = {
       outputSchema: o.tollTripsRatesSchema,
       sampleParams: {},
       endpointDescription:
-        "Returns current toll trip rates with pricing and message information.",
+        "Returns single TollTripRates item with current pricing and message data.",
     } satisfies EndpointDefinition<i.GetTollTripRatesInput, o.TollTripsRates>,
     getTripRatesByDate: {
       function: "getTripRatesByDate",
@@ -34,7 +35,8 @@ export const tollTripRatesResource: EndpointGroup = {
         FromDate: datesHelper.startOfMonth(),
         ToDate: datesHelper.yesterday(),
       },
-      endpointDescription: "Returns toll trip rates for a specific date range.",
+      endpointDescription:
+        "Returns multiple TollTripRates items for specified date range.",
     } satisfies EndpointDefinition<
       i.GetTripRatesByDateInput,
       o.TollTripsRates[]
@@ -45,7 +47,8 @@ export const tollTripRatesResource: EndpointGroup = {
       inputSchema: i.getTripRatesByVersionSchema,
       outputSchema: o.tollTripsRatesSchema,
       sampleParams: { Version: 352417 },
-      endpointDescription: "Returns toll trip rates for a specific version.",
+      endpointDescription:
+        "Returns single TollTripRates item for specific version.",
     } satisfies EndpointDefinition<
       i.GetTripRatesByVersionInput,
       o.TollTripsRates

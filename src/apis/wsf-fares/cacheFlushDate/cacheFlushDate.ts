@@ -2,14 +2,20 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./cacheFlushDate.input";
 import * as o from "./cacheFlushDate.output";
 
-const DESCRIPTION =
-  "Returns the date and time when the WSF fares data was last updated. This operation helps applications coordinate caching of fares data that changes infrequently. When the returned date changes, applications should refresh their cached data.";
+const RESOURCE_DESCRIPTION =
+  "Each CacheFlushDate item represents the timestamp when Washington State Ferries fare data was last updated in the system. This information helps applications determine when to refresh cached fare information.";
+
+const BUSINESS_CONTEXT =
+  "Use to synchronize fare data caching by providing the last update timestamp for efficient data management and ensuring fare accuracy across applications.";
+
+const ENDPOINT_DESCRIPTION =
+  "Returns a single CacheFlushDate for the WSF fares system.";
 
 export const cacheFlushDateGroup: EndpointGroup = {
   name: "cache-flush-date",
   documentation: {
-    resourceDescription: DESCRIPTION,
-    businessContext: "",
+    resourceDescription: RESOURCE_DESCRIPTION,
+    businessContext: BUSINESS_CONTEXT,
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -23,7 +29,7 @@ export const cacheFlushDateGroup: EndpointGroup = {
       outputSchema: o.cacheFlushDateResponseSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-      description: DESCRIPTION,
+      description: ENDPOINT_DESCRIPTION,
     } satisfies EndpointDefinition<
       i.FaresCacheFlushDateInput,
       o.FaresCacheFlushDateResponse

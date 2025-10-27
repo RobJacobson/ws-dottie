@@ -22,7 +22,7 @@ export const terminalSailingSpaceResource: EndpointGroup = {
       outputSchema: z.array(o.terminalSailingSpaceSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of TerminalSailingSpace data for all terminals.",
+        "Returns multiple TerminalSailingSpace objects for all terminals.",
     } satisfies EndpointDefinition<
       i.TerminalSailingSpaceInput,
       o.TerminalSailingSpace[]

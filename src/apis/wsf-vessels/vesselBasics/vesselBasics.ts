@@ -7,8 +7,9 @@ export const vesselBasicsResource: EndpointGroup = {
   name: "vessel-basics",
   documentation: {
     resourceDescription:
-      "Each VesselBasic item represents essential vessel details including vessel identification (name and ID), operational status (in service, maintenance, out of service), and ownership information.",
-    businessContext: "",
+      "Each VesselBasic item represents essential identification and operational status data for Washington State Ferries vessels. These items include vessel names, identification numbers, vessel classifications, and current operational status including service availability and maintenance schedules.",
+    businessContext:
+      "Use to display vessel information and track fleet status by providing identification details and operational status for passenger information systems. Supports trip planning applications and fleet management tools for Washington State Ferry services.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const vesselBasicsResource: EndpointGroup = {
       outputSchema: z.array(o.vesselBasicSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of VesselBasic data for all Washington State Ferry vessels.",
+        "Returns multiple VesselBasic objects for all vessels in the fleet.",
     } satisfies EndpointDefinition<i.VesselBasicsInput, o.VesselBasic[]>,
     getVesselBasicsByVesselId: {
       function: "getVesselBasicsByVesselId",
@@ -31,7 +32,7 @@ export const vesselBasicsResource: EndpointGroup = {
       outputSchema: o.vesselBasicSchema,
       sampleParams: { VesselID: 74 },
       endpointDescription:
-        "Returns VesselBasic data for the vesselbasic with the given identifier.",
+        "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
     } satisfies EndpointDefinition<i.VesselBasicsByIdInput, o.VesselBasic>,
   },
 };

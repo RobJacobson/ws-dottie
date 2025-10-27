@@ -7,8 +7,9 @@ export const travelTimeRoutesGroup: EndpointGroup = {
   name: "travel-time-routes",
   documentation: {
     resourceDescription:
-      "Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas.",
-    businessContext: "",
+      "Each TravelTimeRoute item represents current travel time data for a specific route in Washington State, including average and current travel times, distance information, and start/end point locations. These routes cover major corridors in Seattle, Tacoma, and Snoqualmie Pass areas, helping travelers make informed routing decisions.",
+    businessContext:
+      "Use to plan travel routes and estimate arrival times by providing current travel times, average times, distance, and route location information for Washington State highways. Compare current conditions against historical averages to identify traffic delays and optimize departure times.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const travelTimeRoutesGroup: EndpointGroup = {
       outputSchema: o.travelTimeRouteSchema,
       sampleParams: { TravelTimeID: 1 },
       endpointDescription:
-        "Returns travel time data for a specific route by ID.",
+        "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
     } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
     getTravelTimes: {
       function: "getTravelTimes",
@@ -30,7 +31,8 @@ export const travelTimeRoutesGroup: EndpointGroup = {
       inputSchema: i.getTravelTimesSchema,
       outputSchema: z.array(o.travelTimeRouteSchema),
       sampleParams: {},
-      endpointDescription: "Returns travel time data for all available routes.",
+      endpointDescription:
+        "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
     } satisfies EndpointDefinition<i.GetTravelTimesInput, o.TravelTimeRoute[]>,
   },
 };

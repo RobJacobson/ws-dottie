@@ -8,8 +8,9 @@ export const scheduleTerminalMatesResource: EndpointGroup = {
   name: "schedule-terminal-mates",
   documentation: {
     resourceDescription:
-      "Terminal mates represent terminals that can be used interchangeably or as alternatives for ferry departures and arrivals, providing flexibility in route planning.",
-    businessContext: "",
+      "Each TerminalMate item represents terminals that can be used interchangeably or as alternatives for ferry departures and arrivals, providing flexibility in route planning.",
+    businessContext:
+      "Use to find alternative terminal options by providing terminal ID and date information for flexible route selection.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -23,7 +24,7 @@ export const scheduleTerminalMatesResource: EndpointGroup = {
       outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
-        "Returns terminal mates for the specified trip date and terminal ID.",
+        "Returns multiple of Terminal for specified trip date and terminal ID.",
     } satisfies EndpointDefinition<i.ScheduleTerminalMatesInput, o.Terminal[]>,
   },
 };

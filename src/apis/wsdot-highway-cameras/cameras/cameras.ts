@@ -7,8 +7,9 @@ export const camerasGroup: EndpointGroup = {
   name: "cameras",
   documentation: {
     resourceDescription:
-      "Camera operations provide access to traffic camera information including individual camera details and search functionality by route and milepost.",
-    businessContext: "",
+      "Each Camera item represents a traffic monitoring camera located on Washington state highways. Cameras provide real-time visual information about current traffic conditions, weather impacts, and roadway status for travelers and traffic management centers.",
+    businessContext:
+      "Use to monitor real-time traffic conditions by providing camera locations, images, and metadata for route planning and traffic management decisions.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -21,7 +22,8 @@ export const camerasGroup: EndpointGroup = {
       inputSchema: i.getCamerasSchema,
       outputSchema: z.array(o.cameraSchema),
       sampleParams: {},
-      endpointDescription: "Returns a list of all traffic cameras.",
+      endpointDescription:
+        "Returns multiple Camera items for statewide coverage.",
     } satisfies EndpointDefinition<i.GetCamerasInput, o.Camera[]>,
     searchHighwayCamerasByRouteAndMilepost: {
       function: "searchHighwayCamerasByRouteAndMilepost",
@@ -34,7 +36,7 @@ export const camerasGroup: EndpointGroup = {
         EndingMilepost: 20,
       },
       endpointDescription:
-        "Search for traffic cameras by route and milepost range.",
+        "Returns multiple Camera items for specified route and milepost range.",
     } satisfies EndpointDefinition<i.SearchCamerasInput, o.Camera[]>,
     getHighwayCameraByCameraId: {
       function: "getHighwayCameraByCameraId",
@@ -43,7 +45,7 @@ export const camerasGroup: EndpointGroup = {
       outputSchema: o.cameraSchema,
       sampleParams: { CameraID: 9818 },
       endpointDescription:
-        "Returns detailed information for a specific traffic camera by its unique identifier.",
+        "Returns single Camera item for specific camera identifier.",
     } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
   },
 };

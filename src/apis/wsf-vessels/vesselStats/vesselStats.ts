@@ -7,8 +7,9 @@ export const vesselStatsResource: EndpointGroup = {
   name: "vessel-stats",
   documentation: {
     resourceDescription:
-      "Each VesselStat item represents detailed vessel specifications including physical dimensions (length, beam, draft), engine specifications (count, horsepower, propulsion type), capacity information (passenger count, vehicle space), and historical details (year built, vessel history).",
-    businessContext: "",
+      "Each VesselStat item represents technical specifications and capacity data for Washington State Ferries vessels. These items include physical dimensions, engine details, passenger and vehicle capacity, and construction information for each vessel in the fleet.",
+    businessContext:
+      "Use to compare vessel capabilities and plan capacity by providing technical specifications and capacity data for fleet management applications. Supports vessel selection tools and maintenance planning systems for Washington State Ferry services.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const vesselStatsResource: EndpointGroup = {
       outputSchema: z.array(o.vesselStatsSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of VesselStat data for all vesselStats.",
+        "Returns multiple VesselStat objects for all vessels in the fleet.",
     } satisfies EndpointDefinition<i.VesselStatsInput, o.VesselStats[]>,
     getVesselStatsByVesselId: {
       function: "getVesselStatsByVesselId",
@@ -31,7 +32,7 @@ export const vesselStatsResource: EndpointGroup = {
       outputSchema: o.vesselStatsSchema,
       sampleParams: { VesselID: 32 },
       endpointDescription:
-        "Returns VesselStat data for the vesselstat with the given identifier.",
+        "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
     } satisfies EndpointDefinition<i.VesselStatsByIdInput, o.VesselStats>,
   },
 };

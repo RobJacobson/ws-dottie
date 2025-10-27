@@ -7,8 +7,9 @@ export const vesselAccommodationsResource: EndpointGroup = {
   name: "vessel-accommodations",
   documentation: {
     resourceDescription:
-      "Each VesselAccommodation item represents detailed information about vessel amenities including accessibility features (ADA restrooms, elevators), galley availability, restroom locations, and WiFi access.",
-    businessContext: "",
+      "Each VesselAccommodation item represents passenger amenity and accessibility information for Washington State Ferries vessels. These items include ADA compliance features, restroom facilities, food service availability, and connectivity options for each vessel.",
+    businessContext:
+      "Use to plan accessible travel by providing amenity and accessibility information for passenger information applications. Supports trip planning tools and accessibility compliance systems for Washington State Ferry services.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const vesselAccommodationsResource: EndpointGroup = {
       outputSchema: z.array(o.vesselAccommodationsSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of VesselAccommodation data for all vesselAccommodations.",
+        "Returns multiple VesselAccommodation objects for all vessels in fleet.",
     } satisfies EndpointDefinition<
       i.VesselAccommodationsInput,
       o.VesselAccommodations[]

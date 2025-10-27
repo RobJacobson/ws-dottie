@@ -8,7 +8,8 @@ export const passConditionsGroup: EndpointGroup = {
   documentation: {
     resourceDescription:
       "Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by the Mountain Pass Entry system covering 15 passes.",
-    businessContext: "",
+    businessContext:
+      "Use to assess mountain pass travel safety by providing current weather, road conditions, and travel restrictions for informed route planning decisions.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -23,7 +24,7 @@ export const passConditionsGroup: EndpointGroup = {
       outputSchema: o.passConditionSchema,
       sampleParams: { PassConditionID: 12 },
       endpointDescription:
-        "Returns PassCondition data for the mountain pass with the given identifier.",
+        "Returns a single PassCondition for the specified mountain pass identifier.",
     } satisfies EndpointDefinition<
       i.GetMountainPassConditionInput,
       o.PassCondition
@@ -35,7 +36,7 @@ export const passConditionsGroup: EndpointGroup = {
       outputSchema: z.array(o.passConditionSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of PassCondition data for all mountain passes.",
+        "Returns multiple PassCondition items for all monitored mountain passes.",
     } satisfies EndpointDefinition<
       i.GetMountainPassConditionsInput,
       o.PassCondition[]

@@ -7,8 +7,9 @@ export const terminalBulletinsResource: EndpointGroup = {
   name: "terminal-bulletins",
   documentation: {
     resourceDescription:
-      "Contains terminal information with associated bulletins and alerts. Each terminal may have zero or more bulletins assigned to it, providing important notices, updates, and announcements for terminal users.",
-    businessContext: "",
+      "Each TerminalBulletin item represents important notices and alerts associated with Washington State Ferry terminals. These items include service updates, travel advisories, and critical announcements for terminal users.",
+    businessContext:
+      "Use to inform travelers of terminal conditions by providing current alerts and service notices for ferry terminal planning.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const terminalBulletinsResource: EndpointGroup = {
       outputSchema: z.array(o.terminalBulletinSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of TerminalBulletin data for all terminals.",
+        "Returns multiple TerminalBulletin objects for all terminals.",
     } satisfies EndpointDefinition<
       i.TerminalBulletinsInput,
       o.TerminalBulletin[]
@@ -34,7 +35,7 @@ export const terminalBulletinsResource: EndpointGroup = {
       outputSchema: o.terminalBulletinSchema,
       sampleParams: { TerminalID: 3 },
       endpointDescription:
-        "Returns TerminalBulletin data for the terminal with the given identifier.",
+        "Returns TerminalBulletin data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
       i.TerminalBulletinsByIdInput,
       o.TerminalBulletin

@@ -7,8 +7,9 @@ export const terminalLocationsResource: EndpointGroup = {
   name: "terminal-locations",
   documentation: {
     resourceDescription:
-      "Contains detailed location information for terminals including geographical coordinates, address details, driving directions, and GIS mapping data. This information helps users locate terminals and plan their travel routes.",
-    businessContext: "",
+      "Each TerminalLocation item represents geographical location data for Washington State Ferry terminals, including coordinates, address details, and mapping information. These items enable precise terminal identification and navigation for travelers.",
+    businessContext:
+      "Use to locate ferry terminals and plan travel routes by providing geographical coordinates, address details, and GIS mapping data for navigation systems.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const terminalLocationsResource: EndpointGroup = {
       outputSchema: z.array(o.terminalLocationSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of TerminalLocation data for all terminals.",
+        "Returns multiple TerminalLocation objects for all terminals.",
     } satisfies EndpointDefinition<
       i.TerminalLocationsInput,
       o.TerminalLocation[]
@@ -34,7 +35,7 @@ export const terminalLocationsResource: EndpointGroup = {
       outputSchema: o.terminalLocationSchema,
       sampleParams: { TerminalID: 5 },
       endpointDescription:
-        "Returns TerminalLocation data for the terminal with the given identifier.",
+        "Returns a single TerminalLocation object for specified terminal.",
     } satisfies EndpointDefinition<
       i.TerminalLocationsByIdInput,
       o.TerminalLocation

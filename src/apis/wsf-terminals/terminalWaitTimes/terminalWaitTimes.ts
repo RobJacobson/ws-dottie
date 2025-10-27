@@ -7,8 +7,9 @@ export const terminalWaitTimesResource: EndpointGroup = {
   name: "terminal-wait-times",
   documentation: {
     resourceDescription:
-      "Contains tips and wait time conditions for both vehicles and walk-on passengers at terminals. This information helps travelers understand current conditions and wait times at specific terminals.",
-    businessContext: "",
+      "Each TerminalWaitTime item represents current wait conditions and travel tips for both vehicles and walk-on passengers at Washington State Ferry terminals. These items include estimated wait times for different vehicle types, capacity constraints, and travel recommendations.",
+    businessContext:
+      "Use to plan ferry terminal arrivals by providing current terminal conditions and vehicle capacity information for optimal departure timing.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const terminalWaitTimesResource: EndpointGroup = {
       outputSchema: z.array(o.terminalWaitTimeSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of TerminalWaitTime data for all terminals.",
+        "Returns multiple TerminalWaitTime objects for all terminals.",
     } satisfies EndpointDefinition<
       i.TerminalWaitTimesInput,
       o.TerminalWaitTime[]
@@ -34,7 +35,7 @@ export const terminalWaitTimesResource: EndpointGroup = {
       outputSchema: o.terminalWaitTimeSchema,
       sampleParams: { TerminalID: 11 },
       endpointDescription:
-        "Returns TerminalWaitTime data for the terminal with the given identifier.",
+        "Returns a single TerminalWaitTime object for specified terminal.",
     } satisfies EndpointDefinition<
       i.TerminalWaitTimesByIdInput,
       o.TerminalWaitTime

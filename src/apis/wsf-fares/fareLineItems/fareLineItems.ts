@@ -8,8 +8,9 @@ export const fareLineItemsGroup: EndpointGroup = {
   name: "fare-line-items",
   documentation: {
     resourceDescription:
-      "Provides fare line item information for WSF routes including basic fare listings, detailed fare listings, and comprehensive fare data for all terminal combinations. Fare data includes pricing, categories, and directional information.",
-    businessContext: "",
+      "Each FareLineItem item represents individual fare components for Washington State Ferries routes, including passenger categories, vehicle types, and pricing structures. These items form the building blocks for calculating total journey costs based on route, vehicle dimensions, and passenger demographics.",
+    businessContext:
+      "Use to display fare options and enable price calculations by providing detailed fare breakdowns for different passenger types, vehicle categories, and route combinations for accurate ticket pricing.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -29,7 +30,7 @@ export const fareLineItemsGroup: EndpointGroup = {
         RoundTrip: false,
       },
       endpointDescription:
-        "Returns detailed fare line items for the specified terminal combination and trip type (round trip or one-way).",
+        "Returns multiple of FareLineItem for specific terminal combination.",
     } satisfies EndpointDefinition<i.FareLineItemsInput, o.LineItemResponse[]>,
     getFareLineItemsBasic: {
       function: "getFareLineItemsBasic",
@@ -44,7 +45,7 @@ export const fareLineItemsGroup: EndpointGroup = {
         RoundTrip: false,
       },
       endpointDescription:
-        "Returns basic fare line items (most popular fares) for the specified terminal combination and trip type.",
+        "Returns multiple of FareLineItem for popular fare options.",
     } satisfies EndpointDefinition<
       i.FareLineItemsBasicInput,
       o.LineItemResponse[]
@@ -56,7 +57,7 @@ export const fareLineItemsGroup: EndpointGroup = {
       outputSchema: o.lineItemVerboseResponseSchema,
       sampleParams: { TripDate: datesHelper.today() },
       endpointDescription:
-        "Returns comprehensive fare line items for all valid terminal combinations on the specified trip date, including both one-way and round trip options.",
+        "Returns multiple of FareLineItem for all terminal combinations.",
     } satisfies EndpointDefinition<
       i.FareLineItemsVerboseInput,
       o.LineItemVerboseResponse

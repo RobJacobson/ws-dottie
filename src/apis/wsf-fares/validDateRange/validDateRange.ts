@@ -6,8 +6,9 @@ export const validDateRangeGroup: EndpointGroup = {
   name: "valid-date-range",
   documentation: {
     resourceDescription:
-      "Returns a date range for which fares data is currently published and available. This operation helps applications determine valid trip dates for fare queries.",
-    businessContext: "",
+      "Each ValidDateRange item represents the current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.",
+    businessContext:
+      "Use to determine valid fare calculation periods by providing DateFrom and DateThru dates for accurate fare queries and booking systems.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -21,7 +22,7 @@ export const validDateRangeGroup: EndpointGroup = {
       outputSchema: o.validDateRangeResponseSchema,
       sampleParams: {},
       endpointDescription:
-        "Returns a date range for which fares data is currently published and available. This operation helps applications determine valid trip dates for fare queries.",
+        "Returns a single ValidDateRange object for the current fares data validity period.",
     } satisfies EndpointDefinition<
       i.ValidDateRangeInput,
       o.ValidDateRangeResponse

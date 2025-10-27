@@ -6,8 +6,9 @@ export const scheduleValidDateRangeResource: EndpointGroup = {
   name: "schedule-valid-date-range",
   documentation: {
     resourceDescription:
-      "Valid date range specifies the period for which schedule data is available and valid, helping clients understand the coverage of schedule information.",
-    businessContext: "",
+      "Each ValidDateRange item specifies the period for which schedule data is available and valid, helping clients understand the coverage of schedule information.",
+    businessContext:
+      "Use to determine schedule data availability by providing date range information for planning ferry travel.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -20,7 +21,8 @@ export const scheduleValidDateRangeResource: EndpointGroup = {
       inputSchema: i.validDateRangeSchema,
       outputSchema: o.validDateRangeSchema,
       sampleParams: {},
-      endpointDescription: "Returns the valid date range for schedule data.",
+      endpointDescription:
+        "Returns single of ValidDateRange for schedule data.",
     } satisfies EndpointDefinition<
       i.ScheduleValidDateRangeInput,
       o.ValidDateRange

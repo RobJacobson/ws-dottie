@@ -22,7 +22,7 @@ export const vesselHistoriesResource: EndpointGroup = {
       outputSchema: z.array(o.vesselHistoryResponseSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of VesselHistory data for all vesselHistories.",
+        "Returns multiple VesselHistory objects for all vessels in fleet.",
     } satisfies EndpointDefinition<
       i.GetAllVesselHistoryInput,
       o.VesselHistoryResponse[]
@@ -38,7 +38,7 @@ export const vesselHistoriesResource: EndpointGroup = {
         DateEnd: "2025-10-01",
       },
       endpointDescription:
-        "Returns a list of VesselHistory data for all vesselHistories, filtered by vessel name, start date, and end date.",
+        "Returns multiple VesselHistory objects for the specified vessel and date range.",
     } satisfies EndpointDefinition<
       i.GetVesselHistoryInput,
       o.VesselHistoryResponse[]

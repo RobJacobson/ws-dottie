@@ -7,8 +7,9 @@ export const terminalVerboseResource: EndpointGroup = {
   name: "terminal-verbose",
   documentation: {
     resourceDescription:
-      "Contains highly detailed information about terminals including basic details, bulletins, location data, sailing space information, transportation options, wait times, and comprehensive facility information. This endpoint should be used when you need comprehensive terminal data and don't mind receiving a larger payload.",
-    businessContext: "",
+      "Each TerminalVerbose item represents comprehensive terminal information for Washington State Ferry terminals. These items include basic details, bulletins, location data, sailing space information, transportation options, wait times, and facility information.",
+    businessContext:
+      "Use to retrieve comprehensive terminal information by providing complete facility details for integrated ferry terminal planning.",
     updateFrequency: "",
     relatedEndpoints: [],
     usageExamples: [],
@@ -22,7 +23,7 @@ export const terminalVerboseResource: EndpointGroup = {
       outputSchema: z.array(o.terminalVerboseSchema),
       sampleParams: {},
       endpointDescription:
-        "Returns a list of TerminalVerbose data for all terminals.",
+        "Returns multiple TerminalVerbose objects for all terminals.",
     } satisfies EndpointDefinition<i.TerminalVerboseInput, o.TerminalVerbose[]>,
     getTerminalVerboseByTerminalId: {
       function: "getTerminalVerboseByTerminalId",
@@ -31,7 +32,7 @@ export const terminalVerboseResource: EndpointGroup = {
       outputSchema: o.terminalVerboseSchema,
       sampleParams: { TerminalID: 4 },
       endpointDescription:
-        "Returns TerminalVerbose data for the terminal with the given identifier.",
+        "Returns TerminalVerbose data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
       i.TerminalVerboseByIdInput,
       o.TerminalVerbose
