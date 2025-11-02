@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances";
+import { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances.endpoints";
 
 export const wsdotBridgeClearancesApi: ApiDefinition = {
   name: "wsdot-bridge-clearances",

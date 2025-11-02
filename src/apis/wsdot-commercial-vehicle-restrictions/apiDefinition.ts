@@ -1,8 +1,8 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cvRestrictionDataGroup } from "./cvRestrictionData/cvRestrictionData";
-import { cvRestrictionDataWithIdGroup } from "./cvRestrictionDataWithId/cvRestrictionDataWithId";
+import { cvRestrictionDataGroup } from "./cvRestrictionData/cvRestrictionData.endpoints";
+import { cvRestrictionDataWithIdGroup } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.endpoints";
 
 export const wsdotCommercialVehicleRestrictionsApi: ApiDefinition = {
   name: "wsdot-commercial-vehicle-restrictions",

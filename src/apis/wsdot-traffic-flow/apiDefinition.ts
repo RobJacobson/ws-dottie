@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { flowDataResource } from "./flowData/flowData";
+import { flowDataResource } from "./flowData/flowData.endpoints";
 
 export const wsdotTrafficFlowApi: ApiDefinition = {
   name: "wsdot-traffic-flow",

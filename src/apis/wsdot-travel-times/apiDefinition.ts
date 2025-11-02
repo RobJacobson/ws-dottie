@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes";
+import { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";
 
 export const wsdotTravelTimesApi: ApiDefinition = {
   name: "wsdot-travel-times",

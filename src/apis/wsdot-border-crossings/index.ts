@@ -8,7 +8,7 @@
 // Export the main API definition
 export { wsdotBorderCrossingsApi } from "./apiDefinition";
 // Export individual resources for direct use
-export { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
+export { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData.endpoints";
 
 // Export all input types
 export type { GetBorderCrossingsInput } from "./original/inputSchemas.original";

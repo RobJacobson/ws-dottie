@@ -18,4 +18,4 @@ export type {
 export type { TravelTimeRoute } from "./original/outputSchemas.original";
 
 // Export individual resources for direct use
-export { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes";
+export { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";

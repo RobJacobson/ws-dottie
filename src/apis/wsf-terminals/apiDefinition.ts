@@ -1,14 +1,14 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate";
-import { terminalBasicsResource } from "./terminalBasics/terminalBasics";
-import { terminalBulletinsResource } from "./terminalBulletins/terminalBulletins";
-import { terminalLocationsResource } from "./terminalLocations/terminalLocations";
-import { terminalSailingSpaceResource } from "./terminalSailingSpace/terminalSailingSpace";
-import { terminalTransportsResource } from "./terminalTransports/terminalTransports";
-import { terminalVerboseResource } from "./terminalVerbose/terminalVerbose";
-import { terminalWaitTimesResource } from "./terminalWaitTimes/terminalWaitTimes";
+import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { terminalBasicsResource } from "./terminalBasics/terminalBasics.endpoints";
+import { terminalBulletinsResource } from "./terminalBulletins/terminalBulletins.endpoints";
+import { terminalLocationsResource } from "./terminalLocations/terminalLocations.endpoints";
+import { terminalSailingSpaceResource } from "./terminalSailingSpace/terminalSailingSpace.endpoints";
+import { terminalTransportsResource } from "./terminalTransports/terminalTransports.endpoints";
+import { terminalVerboseResource } from "./terminalVerbose/terminalVerbose.endpoints";
+import { terminalWaitTimesResource } from "./terminalWaitTimes/terminalWaitTimes.endpoints";
 
 export const wsfTerminalsApi: ApiDefinition = {
   name: "wsf-terminals",

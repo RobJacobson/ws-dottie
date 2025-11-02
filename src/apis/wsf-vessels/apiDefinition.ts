@@ -1,13 +1,13 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate";
-import { vesselAccommodationsResource } from "./vesselAccommodations/vesselAccommodations";
-import { vesselBasicsResource } from "./vesselBasics/vesselBasics";
-import { vesselHistoriesResource } from "./vesselHistories/vesselHistories";
-import { vesselLocationsGroup } from "./vesselLocations/vesselLocations";
-import { vesselStatsResource } from "./vesselStats/vesselStats";
-import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose";
+import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { vesselAccommodationsResource } from "./vesselAccommodations/vesselAccommodations.endpoints";
+import { vesselBasicsResource } from "./vesselBasics/vesselBasics.endpoints";
+import { vesselHistoriesResource } from "./vesselHistories/vesselHistories.endpoints";
+import { vesselLocationsGroup } from "./vesselLocations/vesselLocations.endpoints";
+import { vesselStatsResource } from "./vesselStats/vesselStats.endpoints";
+import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose.endpoints";
 
 export const wsfVesselsApi: ApiDefinition = {
   name: "wsf-vessels",

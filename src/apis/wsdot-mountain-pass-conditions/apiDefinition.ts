@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { passConditionsGroup } from "./passConditions/passConditions";
+import { passConditionsGroup } from "./passConditions/passConditions.endpoints";
 
 export const wsdotMountainPassConditionsApi: ApiDefinition = {
   name: "wsdot-mountain-pass-conditions",

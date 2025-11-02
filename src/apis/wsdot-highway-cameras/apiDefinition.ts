@@ -1,5 +1,5 @@
 import type { ApiDefinition } from "@/apis/types";
-import { camerasGroup } from "./cameras/cameras";
+import { camerasGroup } from "./cameras/cameras.endpoints";
 
 export const wsdotHighwayCamerasApi: ApiDefinition = {
   name: "wsdot-highway-cameras",

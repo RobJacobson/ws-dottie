@@ -18,4 +18,4 @@ export type {
 } from "./original/outputSchemas.original";
 
 // Export individual resources for direct use
-export { weatherStationsResource } from "./weatherStations/weatherStations";
+export { weatherStationsResource } from "./weatherStations/weatherStations.endpoints";

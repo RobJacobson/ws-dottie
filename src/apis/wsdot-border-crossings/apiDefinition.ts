@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData";
+import { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData.endpoints";
 
 export const wsdotBorderCrossingsApi: ApiDefinition = {
   name: "wsdot-border-crossings",

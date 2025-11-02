@@ -1,12 +1,12 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateGroup } from "./cacheFlushDate/cacheFlushDate";
-import { fareLineItemsGroup } from "./fareLineItems/fareLineItems";
-import { fareTotalsGroup } from "./fareTotals/fareTotals";
-import { terminalComboGroup } from "./terminalCombo/terminalCombo";
-import { terminalsGroup } from "./terminals/terminals";
-import { validDateRangeGroup } from "./validDateRange/validDateRange";
+import { cacheFlushDateGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { fareLineItemsGroup } from "./fareLineItems/fareLineItems.endpoints";
+import { fareTotalsGroup } from "./fareTotals/fareTotals.endpoints";
+import { terminalComboGroup } from "./terminalCombo/terminalCombo.endpoints";
+import { terminalsGroup } from "./terminals/terminals.endpoints";
+import { validDateRangeGroup } from "./validDateRange/validDateRange.endpoints";
 
 export const wsfFaresApi: ApiDefinition = {
   name: "wsf-fares",
