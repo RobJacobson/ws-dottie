@@ -17,7 +17,7 @@ export const vesselBasicSchema = vesselBaseSchema
     OwnedByWSF: z
       .boolean()
       .describe(
-        "Vessel ownership indicator, as a boolean flag. E.g., true for WSF-owned vessels like Chimacum and Chelan, false for chartered or leased vessels. Determines vessel management responsibility and operational control."
+        "Vessel ownership indicator, as a boolean. E.g., true for WSF-owned vessels like Chimacum and Chelan, false for chartered or leased vessels. Determines vessel management responsibility and operational control."
       ),
   })
   .describe(

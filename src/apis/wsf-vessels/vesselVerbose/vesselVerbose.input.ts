@@ -17,13 +17,17 @@ export type VesselVerboseInput = z.infer<typeof vesselVerboseSchema>;
 /**
  * VesselVerboseById input schema
  */
-export const vesselVerboseByIdSchema = z.object({
-  VesselID: z
-    .number()
-    .int()
-    .describe(
-      "Unique vessel identifier, as an integer ID. E.g., '68' for vessel Tokitae, '74' for vessel Chimacum. Required to retrieve comprehensive information for a specific vessel."
-    ),
-});
+export const vesselVerboseByIdSchema = z
+  .object({
+    VesselID: z
+      .number()
+      .int()
+      .describe(
+        "Unique vessel identifier, as an integer ID. E.g., '68' for vessel Tokitae, '74' for vessel Chimacum. Required to retrieve comprehensive information for a specific vessel."
+      ),
+  })
+  .describe(
+    "Retrieves comprehensive vessel information for a specific vessel by VesselID, combining basic details, accommodations, and technical specifications in a single response. E.g., vessel Tokitae with status, amenities, dimensions, capacity data, build year, and vessel history. Use when you need complete vessel information for a single vessel in one API call to reduce multiple requests. Combines data from vesselBasics, vesselAccommodations, and vesselStats endpoints."
+  );
 
 export type VesselVerboseByIdInput = z.infer<typeof vesselVerboseByIdSchema>;

@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getTollTripVersionSchema = z
   .object({})
   .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
+    "Retrieves current version information for toll trip rates data, returning version number and timestamp. Use for checking data freshness and version tracking."
   );
 
 export type GetTollTripVersionInput = z.infer<typeof getTollTripVersionSchema>;

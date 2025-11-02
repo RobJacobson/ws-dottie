@@ -13,7 +13,7 @@ import { zDotnetDate } from "@/apis/shared";
  * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
 export const cacheFlushDateResponseSchema = zDotnetDate().describe(
-  "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
+  "Cache flush timestamp indicating when fares data was last updated, as a UTC datetime. E.g., '2025-10-31T22:19:34.600Z' when fare metadata was refreshed. Use to determine when cached fare information should be invalidated and refreshed. Poll this endpoint periodically to detect when fare data changes."
 );
 
 export type FaresCacheFlushDateResponse = z.infer<

@@ -14,13 +14,14 @@ import { z } from "zod";
  */
 export const getTrafficFlowSchema = z
   .object({
-    /** The ID of the station you wish to retrieve. */
     FlowDataID: z
       .number()
-      .describe("The ID of the station you wish to retrieve."),
+      .describe(
+        "Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station. Used to retrieve specific flow station data."
+      ),
   })
   .describe(
-    "Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide."
+    "Retrieves real-time traffic flow data for specific station by ID, returning flow reading value, station location, region, and timestamp. Data updated every 90 seconds. Use for individual station monitoring."
   );
 
 export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowSchema>;
@@ -33,7 +34,7 @@ export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowSchema>;
 export const getTrafficFlowsSchema = z
   .object({})
   .describe(
-    "Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide."
+    "Retrieves real-time traffic flow data for all stations statewide, returning flow reading values, station locations, regions, and timestamps. Data updated every 90 seconds. Use for traffic monitoring and flow analysis across all stations."
   );
 
 export type GetTrafficFlowsInput = z.infer<typeof getTrafficFlowsSchema>;

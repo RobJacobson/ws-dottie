@@ -11,37 +11,37 @@ export const vesselAccommodationsSchema = vesselBaseSchema
     CarDeckRestroom: z
       .boolean()
       .describe(
-        "ADA-accessible restroom availability on car deck, as a boolean flag. E.g., true for vessels like Chimacum and Cathlamet, false for vessels like Chetzemoka. Used to inform passengers with accessibility needs about restroom facilities without leaving the vehicle deck."
+        "ADA-accessible restroom availability on car deck, as a boolean. E.g., true for vessels like Chimacum and Cathlamet, false for vessels like Chetzemoka. Used to inform passengers with accessibility needs about restroom facilities without leaving the vehicle deck."
       ),
     CarDeckShelter: z
       .boolean()
       .describe(
-        "ADA-accessible shelter availability on car deck, as a boolean flag. E.g., true for Olympic-class vessels like Chimacum, false for most Issaquah-class vessels. Provides covered waiting area for passengers remaining on vehicle deck during crossing."
+        "ADA-accessible shelter availability on car deck, as a boolean. E.g., true for Olympic-class vessels like Chimacum, false for most Issaquah-class vessels. Provides covered waiting area for passengers remaining on vehicle deck during crossing."
       ),
     Elevator: z
       .boolean()
       .describe(
-        "Elevator availability for passenger deck access, as a boolean flag. E.g., true for vessels like Chimacum, Cathlamet, and Chetzemoka, false when elevator is unavailable. Enables accessibility between car deck and passenger deck levels."
+        "Elevator availability for passenger deck access, as a boolean. E.g., true for vessels like Chimacum, Cathlamet, and Chetzemoka, false when elevator is unavailable. Enables accessibility between car deck and passenger deck levels."
       ),
     ADAAccessible: z
       .boolean()
       .describe(
-        "Overall ADA accessibility indicator, as a boolean flag. E.g., true for vessels with comprehensive accessibility features like Chimacum, false when vessel lacks required accessibility accommodations. Indicates vessel meets Americans with Disabilities Act accessibility standards."
+        "Overall ADA accessibility indicator, as a boolean. E.g., true for vessels with comprehensive accessibility features like Chimacum, false when vessel lacks required accessibility accommodations. Indicates vessel meets Americans with Disabilities Act accessibility standards."
       ),
     MainCabinGalley: z
       .boolean()
       .describe(
-        "Food service galley availability in main passenger cabin, as a boolean flag. E.g., true for vessels like Chimacum and Cathlamet, false when galley is unavailable. Indicates food and beverage service availability during crossing."
+        "Food service galley availability in main passenger cabin, as a boolean. E.g., true for vessels like Chimacum and Cathlamet, false when galley is unavailable. Indicates food and beverage service availability during crossing."
       ),
     MainCabinRestroom: z
       .boolean()
       .describe(
-        "Restroom availability in main passenger cabin, as a boolean flag. E.g., true for all vessels in sample data, false when restroom is unavailable. Indicates restroom facilities accessible from main passenger deck."
+        "Restroom availability in main passenger cabin, as a boolean. E.g., true for all vessels in sample data, false when restroom is unavailable. Indicates restroom facilities accessible from main passenger deck."
       ),
     PublicWifi: z
       .boolean()
       .describe(
-        "Public WiFi availability on vessel, as a boolean flag. E.g., false for all vessels in sample data, true when WiFi service is available. Indicates internet connectivity for passengers during crossing."
+        "Public WiFi availability on vessel, as a boolean. E.g., false for all vessels in sample data, true when WiFi service is available. Indicates internet connectivity for passengers during crossing."
       ),
     ADAInfo: z
       .string()

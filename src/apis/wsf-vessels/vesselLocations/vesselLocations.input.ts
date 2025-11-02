@@ -17,14 +17,18 @@ export type VesselLocationsInput = z.infer<typeof vesselLocationsSchema>;
 /**
  * VesselLocationsById input schema
  */
-export const vesselLocationsByIdSchema = z.object({
-  VesselID: z
-    .number()
-    .int()
-    .describe(
-      "Unique vessel identifier, as an integer ID. E.g., '2' for vessel Chelan, '38' for vessel Yakima. Required to retrieve real-time location data for a specific vessel."
-    ),
-});
+export const vesselLocationsByIdSchema = z
+  .object({
+    VesselID: z
+      .number()
+      .int()
+      .describe(
+        "Unique vessel identifier, as an integer ID. E.g., '2' for vessel Chelan, '38' for vessel Yakima. Required to retrieve real-time location data for a specific vessel."
+      ),
+  })
+  .describe(
+    "Retrieves real-time vessel location data for a specific vessel by VesselID, returning GPS coordinates, terminal assignments, speed/heading, and ETA information. E.g., vessel Kitsap at position 47.981485, -122.222075 at Everett Harbor terminal. Use for vessel monitoring, passenger information systems, and real-time vessel tracking when you need location data for a single vessel. Updates every 5 seconds."
+  );
 
 export type VesselLocationsByIdInput = z.infer<
   typeof vesselLocationsByIdSchema

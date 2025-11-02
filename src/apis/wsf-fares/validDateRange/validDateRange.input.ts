@@ -15,7 +15,7 @@ import { z } from "zod";
 export const validDateRangeSchema = z
   .object({})
   .describe(
-    "This operation retrieves a date range for which fares data is currently published & available."
+    "Retrieves date range for which fares data is currently published and available, returning start and end dates. Use to determine valid trip dates for fare queries before calling other endpoints."
   );
 
 export type ValidDateRangeInput = z.infer<typeof validDateRangeSchema>;

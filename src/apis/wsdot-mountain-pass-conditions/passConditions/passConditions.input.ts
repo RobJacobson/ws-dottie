@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getMountainPassConditionsSchema = z
   .object({})
   .describe(
-    "Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/)."
+    "Retrieves real-time mountain pass condition data for all passes, returning weather conditions, road conditions, temperature, elevation, travel restrictions, and advisory status. Coverage includes 15 mountain passes statewide. Use for winter travel planning and pass condition monitoring."
   );
 
 export type GetMountainPassConditionsInput = z.infer<
@@ -22,13 +22,14 @@ export type GetMountainPassConditionsInput = z.infer<
  */
 export const getMountainPassConditionSchema = z
   .object({
-    /** A PassConditionID for a specific pass condition report. */
     PassConditionID: z
       .int()
-      .describe("A PassConditionID for a specific pass condition report."),
+      .describe(
+        "Unique mountain pass identifier, as an integer ID. E.g., '12' for White Pass US 12. Used to retrieve specific pass condition information."
+      ),
   })
   .describe(
-    "Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/)."
+    "Retrieves real-time mountain pass condition data for specific pass by ID, returning weather conditions, road conditions, temperature, elevation, travel restrictions, and advisory status. Use for individual pass condition lookups."
   );
 
 export type GetMountainPassConditionInput = z.infer<

@@ -70,12 +70,12 @@ export const vesselStatsSchema = vesselBaseSchema
     PassengerOnly: z
       .boolean()
       .describe(
-        "Vehicle support indicator, as a boolean flag. E.g., false for vehicles and passengers like all WSF vessels, true for passenger-only vessels. Indicates whether vessel carries vehicles or only passengers."
+        "Vehicle support indicator, as a boolean. E.g., false for vehicles and passengers like all WSF vessels, true for passenger-only vessels. Indicates whether vessel carries vehicles or only passengers."
       ),
     FastFerry: z
       .boolean()
       .describe(
-        "Fast ferry classification indicator, as a boolean flag. E.g., false for standard ferries like Chimacum and Cathlamet, true for high-speed passenger ferries. Indicates vessel speed classification and service type."
+        "Fast ferry classification indicator, as a boolean. E.g., false for standard ferries like Chimacum and Cathlamet, true for high-speed passenger ferries. Indicates vessel speed classification and service type."
       ),
     PropulsionInfo: z
       .string()
@@ -140,7 +140,7 @@ export const vesselStatsSchema = vesselBaseSchema
     SolasCertified: z
       .boolean()
       .describe(
-        "International travel certification indicator, as a boolean flag. E.g., true for SOLAS-certified vessels like Chelan, false for domestic-only vessels like Chimacum. Indicates vessel meets Safety of Life at Sea international standards."
+        "International travel certification indicator, as a boolean. E.g., true for SOLAS-certified vessels like Chelan, false for domestic-only vessels like Chimacum. Indicates vessel meets Safety of Life at Sea international standards."
       ),
     MaxPassengerCountForInternational: z
       .number()

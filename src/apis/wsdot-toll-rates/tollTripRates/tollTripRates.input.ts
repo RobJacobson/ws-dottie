@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getTollTripRatesSchema = z
   .object({})
   .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
+    "Retrieves current toll trip rates for all trips, returning trip names, toll amounts, rate messages, update timestamps, and version information. Use for real-time toll rate monitoring across all trips."
   );
 
 export type GetTollTripRatesInput = z.infer<typeof getTollTripRatesSchema>;
@@ -20,13 +20,19 @@ export type GetTollTripRatesInput = z.infer<typeof getTollTripRatesSchema>;
  */
 export const getTripRatesByDateSchema = z
   .object({
-    /** Start date for the trip rates query. */
-    FromDate: z.string().describe("Start date for the trip rates query."),
-    /** End date for the trip rates query. */
-    ToDate: z.string().describe("End date for the trip rates query."),
+    FromDate: z
+      .string()
+      .describe(
+        "Start date for historical trip rates query, as a date string. E.g., '2025-11-01' for November 1, 2025. Used to define beginning of date range for historical toll rate queries."
+      ),
+    ToDate: z
+      .string()
+      .describe(
+        "End date for historical trip rates query, as a date string. E.g., '2025-11-02' for November 2, 2025. Used to define end of date range for historical toll rate queries."
+      ),
   })
   .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
+    "Retrieves historical toll trip rates within specified date range, returning trip rates, toll amounts, and timestamps for the time period. Use for historical toll rate analysis and trend tracking."
   );
 
 export type GetTripRatesByDateInput = z.infer<typeof getTripRatesByDateSchema>;
@@ -38,11 +44,14 @@ export type GetTripRatesByDateInput = z.infer<typeof getTripRatesByDateSchema>;
  */
 export const getTripRatesByVersionSchema = z
   .object({
-    /** Version number for the trip rates query. */
-    Version: z.number().describe("Version number for the trip rates query."),
+    Version: z
+      .number()
+      .describe(
+        "Version number for toll trip rates query, as an integer. E.g., '371529' for version 371529. Used to retrieve specific version of toll trip rates data."
+      ),
   })
   .describe(
-    "Provides current toll rates for high occupancy lanes. Coverage Area: Statewide."
+    "Retrieves toll trip rates for specific version number, returning trip rates, toll amounts, and timestamps for that version. Use for version-specific toll rate lookups and data versioning."
   );
 
 export type GetTripRatesByVersionInput = z.infer<

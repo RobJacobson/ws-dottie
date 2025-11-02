@@ -14,7 +14,7 @@ import { z } from "zod";
 export const timeAdjSchema = z
   .object({})
   .describe(
-    "This operation provides a listing of all additions and cancellations that deviate on specific dates from the scheduled times found in the `/sailings` resultset (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014)."
+    "Retrieves all time adjustments including additions and cancellations that deviate from scheduled times on specific dates, returning adjustment details with route, sailing, vessel, terminal, and timing information. Includes tidal adjustments and event-based modifications. Use for identifying schedule deviations and special date modifications."
   );
 
 export type TimeAdjInput = z.infer<typeof timeAdjSchema>;
@@ -25,11 +25,14 @@ export type TimeAdjInput = z.infer<typeof timeAdjSchema>;
  * This operation provides a listing of all additions and cancellations for a route that deviate on specific dates from the scheduled times found in the `/sailings` resultset (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid route may be determined using `/routes`. */
 export const timeAdjByRouteSchema = z
   .object({
-    /** Unique identifier for a route. */
-    RouteID: z.number().describe("Unique identifier for a route."),
+    RouteID: z
+      .number()
+      .describe(
+        "Unique identifier for route, as an integer ID. E.g., '8' for Port Townsend/Coupeville route. Use GetRoutes to retrieve valid routes. Used to filter time adjustments by specific route."
+      ),
   })
   .describe(
-    "This operation provides a listing of all additions and cancellations for a route that deviate on specific dates from the scheduled times found in the `/sailings` resultset (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid route may be determined using `/routes`."
+    "Retrieves time adjustments for specified route including additions and cancellations that deviate from scheduled times on specific dates, returning adjustment details with sailing, vessel, terminal, and timing information. Includes tidal adjustments and event-based modifications. Use GetRoutes to find valid routes. Use for route-specific schedule deviation identification."
   );
 
 export type TimeAdjByRouteInput = z.infer<typeof timeAdjByRouteSchema>;
@@ -40,13 +43,14 @@ export type TimeAdjByRouteInput = z.infer<typeof timeAdjByRouteSchema>;
  * This operation provides a listing of all additions and cancellations for a scheduled route that deviate on specific dates from the scheduled times found in the `/sailings` resultset (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid scheduled route may be determined using `/schedroutes`. */
 export const timeAdjBySchedRouteSchema = z
   .object({
-    /** Unique identifier for a scheduled route. */
     SchedRouteID: z
       .number()
-      .describe("Unique identifier for a scheduled route."),
+      .describe(
+        "Unique identifier for scheduled route, as an integer ID. E.g., '2383' for Port Townsend/Coupeville route in Fall 2025. Use GetScheduledRoutes to retrieve valid scheduled route IDs. Used to filter time adjustments by specific scheduled route."
+      ),
   })
   .describe(
-    "This operation provides a listing of all additions and cancellations for a scheduled route that deviate on specific dates from the scheduled times found in the `/sailings` resultset (eg. tidal cancellations affecting Port Townsend departures on 9/9/2014). A valid scheduled route may be determined using `/schedroutes`."
+    "Retrieves time adjustments for specified scheduled route including additions and cancellations that deviate from scheduled times on specific dates, returning adjustment details with sailing, vessel, terminal, and timing information. Includes tidal adjustments and event-based modifications. Use GetScheduledRoutes to find valid scheduled route IDs. Use for scheduled route-specific schedule deviation identification."
   );
 
 export type TimeAdjBySchedRouteInput = z.infer<

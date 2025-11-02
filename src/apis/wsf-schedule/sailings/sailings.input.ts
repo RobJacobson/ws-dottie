@@ -13,13 +13,14 @@ import { z } from "zod";
  * This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`. */
 export const sailingsByRouteIdSchema = z
   .object({
-    /** Unique identifier for a scheduled route. */
     SchedRouteID: z
       .number()
-      .describe("Unique identifier for a scheduled route."),
+      .describe(
+        "Unique identifier for scheduled route, as an integer ID. E.g., '2401' for Anacortes/San Juan Islands route in Fall 2025, '2383' for Port Townsend/Coupeville route. Use GetScheduledRoutes to retrieve valid scheduled route IDs. Used to identify which scheduled route to retrieve sailings for."
+      ),
   })
   .describe(
-    "This operation provides sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+    "Retrieves sailings for specified scheduled route, returning departure times organized by direction, days of operation, and date ranges. Sailings mirror the groupings found in printed PDF schedules. Use GetScheduledRoutes to find valid scheduled route IDs. Use for displaying schedule structure and sailing groups."
   );
 
 export type SailingsByRouteIdInput = z.infer<typeof sailingsByRouteIdSchema>;
@@ -30,13 +31,14 @@ export type SailingsByRouteIdInput = z.infer<typeof sailingsByRouteIdSchema>;
  * This operation provides all sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`. */
 export const allSchedSailingsBySchedRouteSchema = z
   .object({
-    /** Unique identifier for a scheduled route. */
     SchedRouteID: z
       .number()
-      .describe("Unique identifier for a scheduled route."),
+      .describe(
+        "Unique identifier for scheduled route, as an integer ID. E.g., '2401' for Anacortes/San Juan Islands route in Fall 2025. Use GetScheduledRoutes to retrieve valid scheduled route IDs. Used to identify which scheduled route to retrieve all sailings for."
+      ),
   })
   .describe(
-    "This operation provides all sailings for a particular scheduled route. Sailings are departure times organized by direction of travel (eastbound / westbound), days of operation groups (daily, weekday, weekend, etc) and, in some cases, date ranges (eg. Early Fall / Late Fall). Sailings largely mimic the groupings of departures found on the printed PDF version of the schedule. Scheduled routes may be determined using `/schedroutes`."
+    "Retrieves all sailings for specified scheduled route including inactive sailings, returning departure times organized by direction, days of operation, and date ranges. Includes all sailing groups including those not currently active. Use GetScheduledRoutes to find valid scheduled route IDs. Use for comprehensive schedule structure access."
   );
 
 export type AllSchedSailingsBySchedRouteInput = z.infer<

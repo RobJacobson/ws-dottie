@@ -21,13 +21,13 @@ export const scheduleCacheFlushDateResource: EndpointGroup = {
     get: {
       function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: i.validDateRangeSchema,
+      inputSchema: i.cacheFlushDateSchema,
       outputSchema: o.cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
       description: `Returns single of ScheduleCacheFlushDate for data freshness.`,
     } satisfies EndpointDefinition<
-      i.ScheduleValidDateRangeInput,
+      i.SchedulesCacheFlushDateInput,
       o.SchedulesCacheFlushDate
     >,
   },

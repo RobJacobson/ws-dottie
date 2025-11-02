@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getWeatherReadingsSchema = z
   .object({})
   .describe(
-    "Provides current information from weather stations. Coverage Area: Statewide."
+    "Retrieves comprehensive weather readings from all stations including air temperature, humidity, wind conditions, visibility, precipitation, barometric pressure, and surface/subsurface measurements. Use for complete weather station data access and comprehensive weather analysis."
   );
 
 export type GetWeatherReadingsInput = z.infer<typeof getWeatherReadingsSchema>;

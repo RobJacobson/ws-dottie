@@ -8,13 +8,14 @@
 import { z } from "zod";
 
 /**
- * Schema for ValidDateRange input parameters
+ * Schema for CacheFlushDate input parameters
  *
- * This operation retrieves a date range for which schedule data is currently published & available. */
-export const validDateRangeSchema = z
+ * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
+ */
+export const cacheFlushDateSchema = z
   .object({})
   .describe(
-    "This operation retrieves a date range for which schedule data is currently published & available."
+    "Retrieves cache flush timestamp indicating when schedule data was last updated. Use to determine when cached schedule information should be invalidated and refreshed. Poll this endpoint periodically to detect when schedule data changes."
   );
 
-export type ScheduleValidDateRangeInput = z.infer<typeof validDateRangeSchema>;
+export type SchedulesCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;

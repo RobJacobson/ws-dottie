@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getBorderCrossingsSchema = z
   .object({})
   .describe(
-    "Provides current wait times for the various border crossings into Canada. Coverage Area: I-5, SR-543, SR-539, and SR-9 crossings."
+    "Retrieves current wait times for all border crossings into Canada, returning crossing names, locations, wait times, and timestamp data. Coverage includes I-5, SR-543, SR-539, and SR-9 crossings. Use for border crossing planning and wait time monitoring applications."
   );
 
 export type GetBorderCrossingsInput = z.infer<typeof getBorderCrossingsSchema>;

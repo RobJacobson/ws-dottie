@@ -7,6 +7,8 @@ import { z } from "zod";
  */
 export const getMapAreasSchema = z
   .object({})
-  .describe("Return list of areas and associated IDs");
+  .describe(
+    "Retrieves list of available map areas with identifiers and descriptions. Use to obtain valid map area codes for filtering alerts by geographic area."
+  );
 
 export type GetMapAreasInput = z.infer<typeof getMapAreasSchema>;

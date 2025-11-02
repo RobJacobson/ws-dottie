@@ -15,7 +15,7 @@ import { z } from "zod";
 export const cacheFlushDateSchema = z
   .object({})
   .describe(
-    "Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service."
+    "Retrieves cache flush timestamp indicating when fares data was last updated. Use to determine when cached fare information should be invalidated and refreshed. Poll this endpoint periodically to detect when fare data changes."
   );
 
 export type FaresCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;

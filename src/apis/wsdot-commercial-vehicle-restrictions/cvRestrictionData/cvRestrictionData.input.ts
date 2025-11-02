@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getCommercialVehicleRestrictionsSchema = z
   .object({})
   .describe(
-    "Provides list of restrictions for commercial vehicles. Coverage Area: Statewide."
+    "Retrieves all commercial vehicle restrictions statewide, returning bridge and road restrictions including weight limits, height restrictions, location data, and effective dates. Use for commercial vehicle route planning and compliance checking."
   );
 
 export type GetCommercialVehicleRestrictionsInput = z.infer<

@@ -14,7 +14,7 @@ import { z } from "zod";
 export const allAlertsSchema = z
   .object({})
   .describe(
-    "This operation provides alert information tailored for routes, bulletins, service disruptions, etc."
+    "Retrieves all schedule alerts including bulletins, route alerts, service disruptions, and communications announcements. Returns alert details with multiple text formats (bulletin, route alert, homepage, IVR) and affected route information. Use for comprehensive alert monitoring and display."
   );
 
 export type AllAlertsInput = z.infer<typeof allAlertsSchema>;

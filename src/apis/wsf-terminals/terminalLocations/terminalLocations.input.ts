@@ -15,7 +15,7 @@ import { z } from "zod";
 export const terminalLocationsSchema = z
   .object({})
   .describe(
-    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Retrieves detailed location information for terminals including addresses, coordinates, map links, driving directions, and GIS zoom level locations. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal location mapping and navigation."
   );
 
 export type TerminalLocationsInput = z.infer<typeof terminalLocationsSchema>;
@@ -27,11 +27,15 @@ export type TerminalLocationsInput = z.infer<typeof terminalLocationsSchema>;
  */
 export const terminalLocationsByIdSchema = z
   .object({
-    /** Unique identifier for a terminal. */
-    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+    TerminalID: z
+      .number()
+      .int()
+      .describe(
+        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for location lookup."
+      ),
   })
   .describe(
-    "This operation retrieves detailed location information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Retrieves detailed location information for specified terminal including address, coordinates, map link, driving directions, and GIS zoom level locations. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific location mapping and navigation."
   );
 
 export type TerminalLocationsByIdInput = z.infer<

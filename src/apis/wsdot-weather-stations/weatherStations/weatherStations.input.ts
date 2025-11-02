@@ -8,7 +8,7 @@ import { z } from "zod";
 export const getCurrentStationsSchema = z
   .object({})
   .describe(
-    "Provides current information from weather stations. Coverage Area: Statewide."
+    "Retrieves metadata for all weather stations statewide, returning station identifiers, names, and location coordinates. Use for weather station discovery and location-based station queries."
   );
 
 export type GetCurrentStationsInput = z.infer<typeof getCurrentStationsSchema>;

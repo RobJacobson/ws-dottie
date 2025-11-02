@@ -17,7 +17,7 @@ import { z } from "zod";
 export const terminalSailingSpaceSchema = z
   .object({})
   .describe(
-    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Retrieves real-time terminal condition data including drive-up and reservation spaces available for upcoming departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Returns all terminals or specific terminal if TerminalID is provided. Use for real-time space availability display. Do not cache results for extended periods."
   );
 
 export type TerminalSailingSpaceInput = z.infer<
@@ -33,11 +33,15 @@ export type TerminalSailingSpaceInput = z.infer<
  */
 export const terminalSailingSpaceByIdSchema = z
   .object({
-    /** Unique identifier for a terminal. */
-    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+    TerminalID: z
+      .number()
+      .int()
+      .describe(
+        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for sailing space lookup."
+      ),
   })
   .describe(
-    "This operation reflects terminal condition data (the number of drive-up and reservation spaces available for select departures). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Retrieves real-time terminal condition data for specified terminal including drive-up and reservation spaces available for upcoming departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific real-time space availability display. Do not cache results for extended periods."
   );
 
 export type TerminalSailingSpaceByIdInput = z.infer<

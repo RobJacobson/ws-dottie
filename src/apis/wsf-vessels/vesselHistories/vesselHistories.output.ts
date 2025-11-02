@@ -35,22 +35,22 @@ export const vesselHistoryResponseSchema = z
     ScheduledDepart: zDotnetDate()
       .nullable()
       .describe(
-        "Scheduled departure time from origin terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for scheduled 7:00 AM departure, null when scheduled departure time is unavailable. Used to compare actual vs. scheduled departure times for on-time performance analysis."
+        "Scheduled departure time from origin terminal, as a UTC datetime. E.g., '2025-09-08T14:00:00.000Z' for scheduled 7:00 AM departure, null when scheduled departure time is unavailable. Used to compare actual vs. scheduled departure times for on-time performance analysis."
       ),
     ActualDepart: zDotnetDate()
       .nullable()
       .describe(
-        "Actual departure time from origin terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for actual 7:24 AM departure, null when actual departure time is unavailable. Used for on-time performance analysis and historical voyage tracking."
+        "Actual departure time from origin terminal, as a UTC datetime. E.g., '2025-09-08T14:24:00.000Z' for actual 7:24 AM departure, null when actual departure time is unavailable. Used for on-time performance analysis and historical voyage tracking."
       ),
     EstArrival: zDotnetDate()
       .nullable()
       .describe(
-        "Estimated arrival time at destination terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for estimated 7:56 AM arrival, null when estimated arrival time is unavailable. Provides expected arrival time calculated during voyage for historical tracking."
+        "Estimated arrival time at destination terminal, as a UTC datetime. E.g., '2025-09-08T14:56:00.000Z' for estimated 7:56 AM arrival, null when estimated arrival time is unavailable. Provides expected arrival time calculated during voyage for historical tracking."
       ),
     Date: zDotnetDate()
       .nullable()
       .describe(
-        "Voyage date, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for voyage on September 1, 2025, null when voyage date is unavailable. Indicates the calendar date when this voyage occurred, used for date-based filtering and historical analysis."
+        "Voyage date, as a UTC datetime. E.g., '2025-09-08T07:00:00.000Z' for voyage on September 1, 2025, null when voyage date is unavailable. Indicates the calendar date when this voyage occurred, used for date-based filtering and historical analysis."
       ),
   })
   .describe(

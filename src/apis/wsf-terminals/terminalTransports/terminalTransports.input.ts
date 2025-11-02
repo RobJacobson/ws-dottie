@@ -15,7 +15,7 @@ import { z } from "zod";
 export const terminalTransportsSchema = z
   .object({})
   .describe(
-    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Retrieves transportation and commuter information for terminals including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal commuter information and transportation planning."
   );
 
 export type TerminalTransportsInput = z.infer<typeof terminalTransportsSchema>;
@@ -27,11 +27,15 @@ export type TerminalTransportsInput = z.infer<typeof terminalTransportsSchema>;
  */
 export const terminalTransportsByIdSchema = z
   .object({
-    /** Unique identifier for a terminal. */
-    TerminalID: z.number().int().describe("Unique identifier for a terminal."),
+    TerminalID: z
+      .number()
+      .int()
+      .describe(
+        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for transportation information lookup."
+      ),
   })
   .describe(
-    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Retrieves transportation and commuter information for specified terminal including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific commuter information and transportation planning."
   );
 
 export type TerminalTransportsByIdInput = z.infer<

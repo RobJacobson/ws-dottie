@@ -5,10 +5,12 @@ import { z } from "zod";
  *
  * Input parameters for getting weather readings.
  */
-export const getWeatherReadingsSchema = z
+export const getSubSurfaceMeasurementsSchema = z
   .object({})
   .describe(
-    "Provides current information from weather stations. Coverage Area: Statewide."
+    "Retrieves subsurface sensor measurements from all weather stations statewide, returning subsurface temperature data from sensors embedded below road pavement. Use for ground temperature monitoring and winter maintenance operations."
   );
 
-export type GetWeatherReadingsInput = z.infer<typeof getWeatherReadingsSchema>;
+export type GetSubSurfaceMeasurementsInput = z.infer<
+  typeof getSubSurfaceMeasurementsSchema
+>;

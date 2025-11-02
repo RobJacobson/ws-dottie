@@ -14,13 +14,14 @@ import { z } from "zod";
  */
 export const getTravelTimeSchema = z
   .object({
-    /** ID of a specific Travel Time Route to retrieve. */
     TravelTimeID: z
       .number()
-      .describe("ID of a specific Travel Time Route to retrieve."),
+      .describe(
+        "Unique travel time route identifier, as an integer ID. E.g., '1' for Everett-Seattle route, '2' for Everett-Seattle HOV route, '5' for Bellevue-Issaquah route. Used to retrieve specific route travel time data."
+      ),
   })
   .describe(
-    "Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas."
+    "Retrieves current travel time data for specific route by ID, returning current and average travel times, route distance, start/end points, and update timestamp. Coverage includes Seattle, Tacoma, and Snoqualmie Pass areas. Use for individual route travel time lookups."
   );
 
 export type GetTravelTimeInput = z.infer<typeof getTravelTimeSchema>;
@@ -33,7 +34,7 @@ export type GetTravelTimeInput = z.infer<typeof getTravelTimeSchema>;
 export const getTravelTimesSchema = z
   .object({})
   .describe(
-    "Provides current travel times for many popular travel routes around Washington State. Coverage Area: Seattle, Tacoma, and Snoqualmie Pass areas."
+    "Retrieves current travel time data for all routes, returning current and average travel times, route distances, start/end points, and update timestamps. Coverage includes Seattle, Tacoma, and Snoqualmie Pass areas. Use for route planning and travel time monitoring."
   );
 
 export type GetTravelTimesInput = z.infer<typeof getTravelTimesSchema>;

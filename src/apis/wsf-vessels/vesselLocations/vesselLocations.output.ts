@@ -67,12 +67,12 @@ export const vesselLocationsSchema = z
     Latitude: z
       .number()
       .describe(
-        "Vessel GPS latitude coordinate, as decimal degrees. E.g., '48.529468' for vessel Chelan near Friday Harbor, '48.548502' for vessel Yakima near Anacortes. WGS84 coordinate system used for mapping and location tracking."
+        "Vessel GPS latitude coordinate, in decimal degrees. E.g., '48.529468' for vessel Chelan near Friday Harbor, '48.548502' for vessel Yakima near Anacortes."
       ),
     Longitude: z
       .number()
       .describe(
-        "Vessel GPS longitude coordinate, as decimal degrees. E.g., '-122.818977' for vessel Chelan near Friday Harbor, '-122.83794' for vessel Yakima near Anacortes. WGS84 coordinate system used for mapping and location tracking."
+        "Vessel GPS longitude coordinate, in decimal degrees. E.g., '-122.818977' for vessel Chelan near Friday Harbor, '-122.83794' for vessel Yakima near Anacortes."
       ),
     Speed: z
       .number()
@@ -87,22 +87,22 @@ export const vesselLocationsSchema = z
     InService: z
       .boolean()
       .describe(
-        "Vessel operational service status, as a boolean flag. E.g., true for active vessels like Chelan and Yakima, false when vessel is out of service. Indicates whether vessel is available for passenger operations."
+        "Vessel operational service status, as a boolean. E.g., true for active vessels like Chelan and Yakima, false when vessel is out of service. Indicates whether vessel is available for passenger operations."
       ),
     AtDock: z
       .boolean()
       .describe(
-        "Vessel docked status, as a boolean flag. E.g., true for docked vessels like Suquamish and Puyallup, false for vessels in transit like Chelan and Yakima. Determines whether vessel is currently at terminal or underway."
+        "Vessel docked status, as a boolean. E.g., true for docked vessels like Suquamish and Puyallup, false for vessels in transit like Chelan and Yakima. Determines whether vessel is currently at terminal or underway."
       ),
     LeftDock: zDotnetDate()
       .nullable()
       .describe(
-        "Timestamp when vessel last departed from dock, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for vessel Chelan that left Friday Harbor at 6:20 PM, null when vessel is currently docked. Used to calculate voyage duration and departure delay tracking."
+        "Timestamp when vessel last departed from dock, as a UTC datetime. E.g., '2025-09-08T01:20:00.000Z' for vessel Chelan that left Friday Harbor at 6:20 PM, null when vessel is currently docked. Used to calculate voyage duration and departure delay tracking."
       ),
     Eta: zDotnetDate()
       .nullable()
       .describe(
-        "Estimated arrival time at destination terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for vessel Chelan arriving Anacortes at 7:30 PM, null when vessel is docked or ETA unavailable. Used for arrival time predictions and passenger information displays."
+        "Estimated arrival time at destination terminal, as a UTC datetime. E.g., '2025-09-08T02:30:00.000Z' for vessel Chelan arriving Anacortes at 7:30 PM, null when vessel is docked or ETA unavailable. Used for arrival time predictions and passenger information displays."
       ),
     EtaBasis: z
       .string()
@@ -113,7 +113,7 @@ export const vesselLocationsSchema = z
     ScheduledDeparture: zDotnetDate()
       .nullable()
       .describe(
-        "Scheduled departure time from origin terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for vessel Chelan scheduled to depart Friday Harbor at 6:20 PM, null when scheduled departure is undetermined. Used to compare actual vs. scheduled departure times."
+        "Scheduled departure time from origin terminal, as a UTC datetime. E.g., '2025-09-08T01:20:00.000Z' for vessel Chelan scheduled to depart Friday Harbor at 6:20 PM, null when scheduled departure is undetermined. Used to compare actual vs. scheduled departure times."
       ),
     OpRouteAbbrev: z
       .array(z.string())
@@ -140,7 +140,7 @@ export const vesselLocationsSchema = z
         "Vessel management organization, as a status code. Valid values: 1 (WSF), 2 (KCM). E.g., '1' indicates vessel is managed by Washington State Ferries, '2' indicates vessel is managed by King County Metro. Determines operational control and management responsibility."
       ),
     TimeStamp: zDotnetDate().describe(
-      "Timestamp when vessel location data was last updated, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for location update at 7:02 PM. Indicates data freshness and update frequency for real-time tracking systems."
+      "Timestamp when vessel location data was last updated, as a UTC datetime. E.g., '2025-09-08T02:02:00.000Z' for location update at 7:02 PM. Indicates data freshness and update frequency for real-time tracking systems."
     ),
     VesselWatchShutID: z
       .number()

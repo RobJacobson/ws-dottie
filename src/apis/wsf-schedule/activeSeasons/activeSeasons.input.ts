@@ -13,7 +13,9 @@ import { z } from "zod";
  * This operation retrieves a summary of active seasons. */
 export const activeScheduledSeasonsSchema = z
   .object({})
-  .describe("This operation retrieves a summary of active seasons.");
+  .describe(
+    "Retrieves summary of active schedule seasons, returning season IDs, names, PDF URLs, and date ranges. Use to identify which schedule seasons are currently active and their date ranges."
+  );
 
 export type ActiveScheduledSeasonsInput = z.infer<
   typeof activeScheduledSeasonsSchema

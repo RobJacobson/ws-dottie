@@ -13,22 +13,31 @@ import { terminalBaseSchema } from "../shared/terminalBaseSchema";
  *
  * Contains transit link information.
  */
-export const transitLinkSchema = z.object({
-  /** The URL of the transit link. */
-  LinkURL: z.string().nullable().describe("The URL of the transit link."),
-  /** The name of the transit agency. */
-  LinkName: z.string().nullable().describe("The name of the transit agency."),
-  /**
-   * A preferred sort order (sort-ascending with respect to other transit links in this list).
-   */
-  SortSeq: z
-    .number()
-    .int()
-    .nullable()
-    .describe(
-      "A preferred sort order (sort-ascending with respect to other transit links in this list)."
-    ),
-});
+export const transitLinkSchema = z
+  .object({
+    LinkURL: z
+      .string()
+      .nullable()
+      .describe(
+        "URL to transit agency website or service page, as a transit URL. E.g., 'http://www.skagittransit.org/' for Skagit Transit, 'http://www.kitsaptransit.com/service/routed-buses' for Kitsap Transit, null when transit link is unavailable. Used for accessing transit agency information."
+      ),
+    LinkName: z
+      .string()
+      .nullable()
+      .describe(
+        "Human-readable name of transit agency, as a transit agency name. E.g., 'Skagit Transit' for Skagit Transit agency, 'Kitsap Transit' for Kitsap Transit agency, null when transit name is unavailable. Provides transit agency identification for display."
+      ),
+    SortSeq: z
+      .number()
+      .int()
+      .nullable()
+      .describe(
+        "Preferred sort order for transit link display, as an integer. E.g., null when sort order is not specified. Lower values appear first when sorting transit links in ascending order. Used for transit link display ordering."
+      ),
+  })
+  .describe(
+    "Represents transit link information including transit agency URL, name, and sort order. E.g., Skagit Transit link (http://www.skagittransit.org/). Used for displaying transit agency connections and links."
+  );
 
 export type TransitLink = z.infer<typeof transitLinkSchema>;
 
@@ -37,93 +46,78 @@ export type TransitLink = z.infer<typeof transitLinkSchema>;
  *
  * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalTransportationOptionSchema = terminalBaseSchema.extend({
-  /** Parking information for this terminal. */
-  ParkingInfo: z
-    .string()
-    .nullable()
-    .describe("Parking information for this terminal."),
-  /**
-   * Information about parking-related shuttles that service this terminal.
-   */
-  ParkingShuttleInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information about parking-related shuttles that service this terminal."
-    ),
-  /**
-   * Tips for commuting to this terminal from the airport.
-   */
-  AirportInfo: z
-    .string()
-    .nullable()
-    .describe("Tips for commuting to this terminal from the airport."),
-  /**
-   * Information about parking shuttles that go between the airport and this terminal.
-   */
-  AirportShuttleInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information about parking shuttles that go between the airport and this terminal."
-    ),
-  /**
-   * Information for travelers who plan on taking a motorcycle to this terminal.
-   */
-  MotorcycleInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information for travelers who plan on taking a motorcycle to this terminal."
-    ),
-  /**
-   * Information for travelers who plan on taking a truck to this terminal.
-   */
-  TruckInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information for travelers who plan on taking a truck to this terminal."
-    ),
-  /**
-   * Information for travelers who plan on taking their bicycle to this terminal.
-   */
-  BikeInfo: z
-    .string()
-    .nullable()
-    .describe(
-      "Information for travelers who plan on taking their bicycle to this terminal."
-    ),
-  /**
-   * Information about trains that service this terminal.
-   */
-  TrainInfo: z
-    .string()
-    .nullable()
-    .describe("Information about trains that service this terminal."),
-  /**
-   * Information about taxis that service this terminal.
-   */
-  TaxiInfo: z
-    .string()
-    .nullable()
-    .describe("Information about taxis that service this terminal."),
-  /**
-   * Tips for carpool/vanpools commuting to this terminal.
-   */
-  HovInfo: z
-    .string()
-    .nullable()
-    .describe("Tips for carpool/vanpools commuting to this terminal."),
-  /**
-   * Links to transit agencies that service this terminal.
-   */
-  TransitLinks: z
-    .array(transitLinkSchema)
-    .nullable()
-    .describe("Links to transit agencies that service this terminal."),
-});
+export const terminalTransportationOptionSchema = terminalBaseSchema
+  .extend({
+    ParkingInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted parking information for terminal, as parking details. E.g., 'Off-Peak rates effective October 1 through April 30, 2026...' for Anacortes parking rates, null when parking information is unavailable. HTML-formatted text for parking information display."
+      ),
+    ParkingShuttleInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information about parking-related shuttles servicing terminal, as shuttle information. E.g., null when no parking shuttles, shuttle details when available. Used for parking shuttle information display."
+      ),
+    AirportInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted tips for commuting to terminal from airport, as airport directions. E.g., 'From the Seattle-Tacoma International Airport, allow a minimum of 2 1/2 hours...' for Anacortes airport directions, null when airport information is unavailable. HTML-formatted text for airport commuter information."
+      ),
+    AirportShuttleInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information about airport shuttles servicing terminal, as shuttle information. E.g., 'When traveling from Sea-Tac Airport to Anacortes there is a shuttle...' for Anacortes airport shuttle, null when airport shuttle information is unavailable. HTML-formatted text for airport shuttle information."
+      ),
+    MotorcycleInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information for motorcycle travelers, as motorcycle tips. E.g., 'While motorcycles are not, by Washington Administrative Code...' for motorcycle staging and loading information, null when motorcycle information is unavailable. HTML-formatted text for motorcycle commuter information."
+      ),
+    TruckInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information for truck travelers, as truck tips. E.g., 'Expect heavy truck traffic on the first 3 sailings in the morning...' for truck travel information, null when truck information is unavailable. HTML-formatted text for truck commuter information."
+      ),
+    BikeInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information for bicycle travelers, as bicycle tips. E.g., 'Approaching the Anacortes Terminal, you will arrive at the vehicle tollbooths...' for bicycle staging information, null when bicycle information is unavailable. HTML-formatted text for bicycle commuter information."
+      ),
+    TrainInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information about trains servicing terminal, as train information. E.g., null when no train service, train details when available. Used for train commuter information display."
+      ),
+    TaxiInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted information about taxis servicing terminal, as taxi information. E.g., null when no taxi information, taxi details when available. Used for taxi commuter information display."
+      ),
+    HovInfo: z
+      .string()
+      .nullable()
+      .describe(
+        "HTML-formatted tips for carpool/vanpool commuters, as HOV information. E.g., 'Carpool/Vanpools must be ticketed and in line 10 minutes before...' for Bainbridge Island HOV information, null when HOV information is unavailable. HTML-formatted text for carpool/vanpool commuter information."
+      ),
+    TransitLinks: z
+      .array(transitLinkSchema)
+      .nullable()
+      .describe(
+        "Array of transit agency links servicing terminal, as transit link objects. E.g., array containing Skagit Transit link for Anacortes terminal, array containing Kitsap Transit link for Bainbridge Island terminal, null when transit links are unavailable. Used for displaying transit agency connections."
+      ),
+  })
+  .describe(
+    "Represents terminal transportation and commuter information including terminal identification, parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. E.g., Anacortes terminal (ID 1) with parking rates, airport directions, and Skagit Transit link. Used for terminal commuter information and transportation planning."
+  );
 
 export type TerminalTransportationOption = z.infer<
   typeof terminalTransportationOptionSchema
@@ -137,7 +131,7 @@ export type TerminalTransportationOption = z.infer<
 export const getAllTerminalTransportationOptionsSchema = z
   .array(terminalTransportationOptionSchema)
   .describe(
-    "This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal."
+    "Array of terminal transportation and commuter information including terminal IDs, parking details, vehicle-specific tips, airport information, and transit links. E.g., array containing all terminals with their transportation information. Used for terminal commuter information across all terminals."
   );
 
 export type GetAllTerminalTransportationOptions = z.infer<

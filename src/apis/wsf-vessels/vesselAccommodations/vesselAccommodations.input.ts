@@ -19,14 +19,18 @@ export type VesselAccommodationsInput = z.infer<
 /**
  * VesselAccommodationsById input schema
  */
-export const vesselAccommodationsByIdSchema = z.object({
-  VesselID: z
-    .number()
-    .int()
-    .describe(
-      "Unique vessel identifier, as an integer ID. E.g., '74' for vessel Chimacum, '1' for vessel Cathlamet. Required to retrieve accommodation details for a specific vessel."
-    ),
-});
+export const vesselAccommodationsByIdSchema = z
+  .object({
+    VesselID: z
+      .number()
+      .int()
+      .describe(
+        "Unique vessel identifier, as an integer ID. E.g., '74' for vessel Chimacum, '1' for vessel Cathlamet. Required to retrieve accommodation details for a specific vessel."
+      ),
+  })
+  .describe(
+    "Retrieves vessel accommodation details for a specific vessel by VesselID, returning amenities, accessibility features, and passenger facilities. E.g., vessel Chetzemoka with elevator access, ADA accessible restrooms, and main cabin galley. Use for passenger information displays, accessibility planning, and vessel feature comparison when you need details for a single vessel."
+  );
 
 export type VesselAccommodationsByIdInput = z.infer<
   typeof vesselAccommodationsByIdSchema

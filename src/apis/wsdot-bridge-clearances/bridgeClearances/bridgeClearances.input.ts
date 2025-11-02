@@ -7,7 +7,9 @@ import { z } from "zod";
  */
 export const getClearancesSchema = z
   .object({})
-  .describe("Bridge clearance information, see disclaimer");
+  .describe(
+    "Retrieves bridge clearance information for all bridges in the system, returning location data, vertical clearance measurements, route associations, and structure identification. Use for route planning and height-restricted vehicle navigation."
+  );
 
 export type GetClearancesInput = z.infer<typeof getClearancesSchema>;
 
@@ -18,14 +20,15 @@ export type GetClearancesInput = z.infer<typeof getClearancesSchema>;
  */
 export const getClearancesByRouteSchema = z
   .object({
-    /** A State Route formatted as a three digit number. I-5 would be 005. */
     Route: z
       .string()
       .describe(
-        "A State Route formatted as a three digit number. I-5 would be 005."
+        "State route identifier formatted as three-digit number, as a route identifier. E.g., '005' for I-5, '167' for SR-167, '520' for SR-520. Used to filter bridge clearances for specific highway routes."
       ),
   })
-  .describe("Bridge clearance information, see disclaimer");
+  .describe(
+    "Filters bridge clearance information by specific state route, returning location data, vertical clearance measurements, and structure identification for bridges on that route. Use for route-specific height clearance planning."
+  );
 
 export type GetClearancesByRouteInput = z.infer<
   typeof getClearancesByRouteSchema

@@ -13,21 +13,15 @@ import { zDotnetDate } from "@/apis/shared";
  * This operation retrieves a date range for which fares data is currently published & available. */
 export const validDateRangeResponseSchema = z
   .object({
-    /**
-     * Fares information is available from this date onward.
-     */
     DateFrom: zDotnetDate().describe(
-      "Fares information is available from this date onward."
+      "Start date when fares information becomes available, as a UTC datetime. E.g., '2025-11-02T07:00:00.000Z' for fares available from November 2, 2025. Indicates earliest trip date for which fare data is published."
     ),
-    /**
-     * Fares information is not available after this date.
-     */
     DateThru: zDotnetDate().describe(
-      "Fares information is not available after this date."
+      "End date when fares information stops being available, as a UTC datetime. E.g., '2026-03-21T07:00:00.000Z' for fares available through March 21, 2026. Indicates latest trip date for which fare data is published."
     ),
   })
   .describe(
-    "This operation retrieves a date range for which fares data is currently published & available."
+    "Represents date range for which fares data is currently published and available, including start and end dates. E.g., fares available from November 2, 2025 through March 21, 2026. Use to determine valid trip dates for fare queries before calling other endpoints."
   );
 
 export type ValidDateRangeResponse = z.infer<
