@@ -8,31 +8,53 @@ import { zDotnetDate } from "@/apis/shared";
  */
 export const vesselHistoryResponseSchema = z
   .object({
-    /** Unique identifier for a vessel. */
-    VesselId: z.number().int().describe("Unique identifier for a vessel."),
-    /** The name of the vessel. */
-    Vessel: z.string().nullable().describe("The name of the vessel."),
-    /** The departing terminal name. */
-    Departing: z.string().nullable().describe("The departing terminal name."),
-    /** The arriving terminal name. */
-    Arriving: z.string().nullable().describe("The arriving terminal name."),
-    /** The scheduled departure time. */
+    VesselId: z
+      .number()
+      .int()
+      .describe(
+        "Unique vessel identifier, as an integer ID. E.g., '1077' for vessel Tacoma. Used to identify which vessel this history record belongs to."
+      ),
+    Vessel: z
+      .string()
+      .nullable()
+      .describe(
+        "Vessel name, as a human-readable description. E.g., 'Tacoma' for vessel 1077, null when vessel name is unavailable. Provides vessel identification for history record display."
+      ),
+    Departing: z
+      .string()
+      .nullable()
+      .describe(
+        "Departing terminal name, as a human-readable description. E.g., 'Bainbridge' for Bainbridge Island terminal, 'Colman' for Colman Dock terminal, null when departing terminal is unavailable. Indicates origin terminal for this voyage leg."
+      ),
+    Arriving: z
+      .string()
+      .nullable()
+      .describe(
+        "Arriving terminal name, as a human-readable description. E.g., 'Colman' for Colman Dock terminal, 'Bainbridge' for Bainbridge Island terminal, null when arriving terminal is unavailable. Indicates destination terminal for this voyage leg."
+      ),
     ScheduledDepart: zDotnetDate()
       .nullable()
-      .describe("The scheduled departure time."),
-    /** The actual departure time. */
+      .describe(
+        "Scheduled departure time from origin terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for scheduled 7:00 AM departure, null when scheduled departure time is unavailable. Used to compare actual vs. scheduled departure times for on-time performance analysis."
+      ),
     ActualDepart: zDotnetDate()
       .nullable()
-      .describe("The actual departure time."),
-    /** The estimated arrival time. */
+      .describe(
+        "Actual departure time from origin terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for actual 7:24 AM departure, null when actual departure time is unavailable. Used for on-time performance analysis and historical voyage tracking."
+      ),
     EstArrival: zDotnetDate()
       .nullable()
-      .describe("The estimated arrival time."),
-    /** The date of the voyage. */
-    Date: zDotnetDate().nullable().describe("The date of the voyage."),
+      .describe(
+        "Estimated arrival time at destination terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for estimated 7:56 AM arrival, null when estimated arrival time is unavailable. Provides expected arrival time calculated during voyage for historical tracking."
+      ),
+    Date: zDotnetDate()
+      .nullable()
+      .describe(
+        "Voyage date, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for voyage on September 1, 2025, null when voyage date is unavailable. Indicates the calendar date when this voyage occurred, used for date-based filtering and historical analysis."
+      ),
   })
   .describe(
-    "Contains vessel history information including departure and arrival details."
+    "Represents historical vessel voyage information including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times. E.g., vessel Tacoma departing Bainbridge Island at 7:00 AM scheduled (7:24 AM actual) arriving Colman Dock at 7:56 AM on September 1, 2025. Used for historical voyage tracking, on-time performance analysis, and route pattern analysis. Updates as historical data is recorded."
   );
 
 export type VesselHistoryResponse = z.infer<typeof vesselHistoryResponseSchema>;

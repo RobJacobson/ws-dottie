@@ -9,7 +9,7 @@ export const vesselBasicsSchema = z
   .object({})
   .strict()
   .describe(
-    "This operation retrieves the most basic / brief information pertaining to vessels. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+    "Retrieves basic vessel information for all vessels in the fleet, returning vessel identification, operational status, and ownership. E.g., vessel Chimacum (VesselID 74) with Status 1 (In Service). Use for vessel selection lists, status displays, and as foundation for more detailed vessel queries."
   );
 
 export type VesselBasicsInput = z.infer<typeof vesselBasicsSchema>;
@@ -19,11 +19,15 @@ export type VesselBasicsInput = z.infer<typeof vesselBasicsSchema>;
  */
 export const vesselBasicsByIdSchema = z
   .object({
-    /** Unique identifier for a vessel. */
-    VesselID: z.number().int().describe("Unique identifier for a vessel."),
+    VesselID: z
+      .number()
+      .int()
+      .describe(
+        "Unique vessel identifier, as an integer ID. E.g., '74' for vessel Chimacum, '2' for vessel Chelan. Required to retrieve basic information for a specific vessel."
+      ),
   })
   .describe(
-    "This operation retrieves the most basic / brief information pertaining to vessels. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+    "Retrieves basic vessel information for a specific vessel by VesselID, returning vessel identification, operational status, and ownership. E.g., vessel Chimacum (VesselID 74) with Status 1 (In Service). Use when you need basic information for a single known vessel."
   );
 
 export type VesselBasicsByIdInput = z.infer<typeof vesselBasicsByIdSchema>;

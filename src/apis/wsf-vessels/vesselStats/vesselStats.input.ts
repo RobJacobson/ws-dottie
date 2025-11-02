@@ -9,7 +9,7 @@ export const vesselStatsSchema = z
   .object({})
   .strict()
   .describe(
-    "This operation retrieves details regarding vessel specifications (engine count, length of vessel, year built, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel."
+    "Retrieves vessel technical specifications for all vessels, returning dimensions, capacity, speed, propulsion, and build details. E.g., vessel Chimacum built 2017, 362 feet long, 1500 passenger capacity, 17 knots speed. Use for vessel comparison, capacity planning, and technical reference information."
   );
 
 export type VesselStatsInput = z.infer<typeof vesselStatsSchema>;
@@ -18,8 +18,12 @@ export type VesselStatsInput = z.infer<typeof vesselStatsSchema>;
  * VesselStatsById input schema
  */
 export const vesselStatsByIdSchema = z.object({
-  /** Unique identifier for a vessel. */
-  VesselID: z.number().int().describe("Unique identifier for a vessel."),
+  VesselID: z
+    .number()
+    .int()
+    .describe(
+      "Unique vessel identifier, as an integer ID. E.g., '74' for vessel Chimacum, '1' for vessel Cathlamet. Required to retrieve technical specifications for a specific vessel."
+    ),
 });
 
 export type VesselStatsByIdInput = z.infer<typeof vesselStatsByIdSchema>;

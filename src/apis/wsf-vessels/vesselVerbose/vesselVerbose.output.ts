@@ -12,7 +12,7 @@ export const vesselVerboseSchema = vesselBasicSchema
   .and(vesselAccommodationsSchema)
   .and(vesselStatsSchema)
   .describe(
-    "Contains highly detailed information pertaining to vessels, combining data from basic details, accommodations, and stats endpoints."
+    "Represents comprehensive vessel information combining identification, operational status, accommodations, accessibility features, and technical specifications in a single schema. E.g., vessel Tokitae (VesselID 68) in Olympic class with Status 1 (In Service), elevator and ADA accessible restrooms, 362 feet 5 inches long, 1500 passenger capacity, built 2014. Used when complete vessel information is needed in one response, reducing multiple API calls. Combines fields from vesselBasics, vesselAccommodations, and vesselStats schemas."
   );
 
 export type VesselVerbose = z.infer<typeof vesselVerboseSchema>;

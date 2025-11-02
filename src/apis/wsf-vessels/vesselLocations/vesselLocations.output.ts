@@ -8,198 +8,173 @@ import { zDotnetDate } from "@/apis/shared";
  */
 export const vesselLocationsSchema = z
   .object({
-    /** Unique identifier for a vessel. */
-    VesselID: z.number().int().describe("Unique identifier for a vessel."),
-    /** The name of the vessel. */
-    VesselName: z.string().nullable().describe("The name of the vessel."),
-    /**
-     * The vessel's Maritime Mobile Service Identity.
-     */
+    VesselID: z
+      .number()
+      .int()
+      .describe(
+        "Unique vessel identifier, as an integer ID. E.g., '2' for vessel Chelan, '38' for vessel Yakima. Used as primary key for vessel location tracking."
+      ),
+    VesselName: z
+      .string()
+      .nullable()
+      .describe(
+        "Vessel name, as a human-readable description. E.g., 'Chelan' for vessel 2, 'Yakima' for vessel 38, null when vessel name is unavailable. Provides vessel identification for location display."
+      ),
     Mmsi: z
       .number()
       .int()
       .nullable()
-      .describe("The vessel's Maritime Mobile Service Identity."),
-    /**
-     * Unique identifier pertaining to the terminal where this vessel is docked or was last docked.
-     */
+      .describe(
+        "Maritime Mobile Service Identity number, as an integer ID. E.g., '366709770' for vessel Chelan, '366772750' for vessel Yakima, null when MMSI is unavailable. Used for AIS tracking and maritime communication systems."
+      ),
     DepartingTerminalID: z
       .number()
       .int()
       .describe(
-        "Unique identifier pertaining to the terminal where this vessel is docked or was last docked."
+        "Unique identifier for departing terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '1' for Anacortes terminal. Indicates origin terminal where vessel is docked or was last docked."
       ),
-    /**
-     * The name of the terminal where this vessel is docked or was last docked.
-     */
     DepartingTerminalName: z
       .string()
       .nullable()
       .describe(
-        "The name of the terminal where this vessel is docked or was last docked."
+        "Departing terminal name, as a human-readable description. E.g., 'Friday Harbor' for terminal 10, 'Anacortes' for terminal 1, null when terminal name is unavailable. Provides origin terminal identification for display."
       ),
-    /**
-     * The abbreviated terminal name where this vessel is docked or was last docked.
-     */
     DepartingTerminalAbbrev: z
       .string()
       .nullable()
       .describe(
-        "The abbreviated terminal name where this vessel is docked or was last docked."
+        "Departing terminal abbreviation code, as a terminal abbreviation. E.g., 'FRH' for Friday Harbor, 'ANA' for Anacortes, null when abbreviation is unavailable. Used for compact terminal identification in displays and route information."
       ),
-    /**
-     * Unique identifier pertaining to the terminal that represents the vessel's next destination. Might not be present if the next scheduled destination is still being determined.
-     */
     ArrivingTerminalID: z
       .number()
       .int()
       .nullable()
       .describe(
-        "Unique identifier pertaining to the terminal that represents the vessel's next destination. Might not be present if the next scheduled destination is still being determined."
+        "Unique identifier for arriving terminal, as an integer ID. E.g., '1' for Anacortes terminal, '10' for Friday Harbor terminal, null when next destination is undetermined. Indicates destination terminal for vessel's current voyage."
       ),
-    /**
-     * The name of the terminal that represents the vessel's next destination. Might not be present if the next scheduled destination is still being determined.
-     */
     ArrivingTerminalName: z
       .string()
       .nullable()
       .describe(
-        "The name of the terminal that represents the vessel's next destination. Might not be present if the next scheduled destination is still being determined."
+        "Arriving terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Friday Harbor' for terminal 10, null when next destination is undetermined. Provides destination terminal identification for display."
       ),
-    /**
-     * The abbreviated terminal name that represent's the vessel's next destination. Might not be present if the next scheduled destination is still being determined.
-     */
     ArrivingTerminalAbbrev: z
       .string()
       .nullable()
       .describe(
-        "The abbreviated terminal name that represent's the vessel's next destination. Might not be present if the next scheduled destination is still being determined."
+        "Arriving terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'FRH' for Friday Harbor, null when next destination is undetermined. Used for compact destination terminal identification."
       ),
-    /** The latitude of the vessel. */
-    Latitude: z.number().describe("The latitude of the vessel."),
-    /** The longitude of the vessel. */
-    Longitude: z.number().describe("The longitude of the vessel."),
-    /** The speed of the vessel (in Knots). */
-    Speed: z.number().describe("The speed of the vessel (in Knots)."),
-    /** The heading of the vessel (in degrees). */
-    Heading: z.number().describe("The heading of the vessel (in degrees)."),
-    /**
-     * Indicates whether or not the vessel is in service.
-     */
+    Latitude: z
+      .number()
+      .describe(
+        "Vessel GPS latitude coordinate, as decimal degrees. E.g., '48.529468' for vessel Chelan near Friday Harbor, '48.548502' for vessel Yakima near Anacortes. WGS84 coordinate system used for mapping and location tracking."
+      ),
+    Longitude: z
+      .number()
+      .describe(
+        "Vessel GPS longitude coordinate, as decimal degrees. E.g., '-122.818977' for vessel Chelan near Friday Harbor, '-122.83794' for vessel Yakima near Anacortes. WGS84 coordinate system used for mapping and location tracking."
+      ),
+    Speed: z
+      .number()
+      .describe(
+        "Vessel speed over ground, as knots. E.g., '15.7' for vessel Chelan in transit, '0' when vessel is docked like Suquamish. Used for voyage progress tracking and arrival time calculations."
+      ),
+    Heading: z
+      .number()
+      .describe(
+        "Vessel heading direction, as degrees. E.g., '102' for vessel Chelan heading east, '324' for vessel Yakima heading northwest, '159' for docked vessel Suquamish. Measured clockwise from north (0-359 degrees)."
+      ),
     InService: z
       .boolean()
-      .describe("Indicates whether or not the vessel is in service."),
-    /**
-     * Indicates whether or not the vessel is docked.
-     */
+      .describe(
+        "Vessel operational service status, as a boolean flag. E.g., true for active vessels like Chelan and Yakima, false when vessel is out of service. Indicates whether vessel is available for passenger operations."
+      ),
     AtDock: z
       .boolean()
-      .describe("Indicates whether or not the vessel is docked."),
-    /**
-     * The date and time that the vessel last left the dock. This value is not present when docked.
-     */
+      .describe(
+        "Vessel docked status, as a boolean flag. E.g., true for docked vessels like Suquamish and Puyallup, false for vessels in transit like Chelan and Yakima. Determines whether vessel is currently at terminal or underway."
+      ),
     LeftDock: zDotnetDate()
       .nullable()
       .describe(
-        "The date and time that the vessel last left the dock. This value is not present when docked."
+        "Timestamp when vessel last departed from dock, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for vessel Chelan that left Friday Harbor at 6:20 PM, null when vessel is currently docked. Used to calculate voyage duration and departure delay tracking."
       ),
-    /**
-     * The estimated date and time that the vessel will arrive at its destination. This value is not present when docked.
-     */
     Eta: zDotnetDate()
       .nullable()
       .describe(
-        "The estimated date and time that the vessel will arrive at its destination. This value is not present when docked."
+        "Estimated arrival time at destination terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for vessel Chelan arriving Anacortes at 7:30 PM, null when vessel is docked or ETA unavailable. Used for arrival time predictions and passenger information displays."
       ),
-    /**
-     * A brief description summarizing how the Eta is being calculated. This value is not present when docked.
-     */
     EtaBasis: z
       .string()
       .nullable()
       .describe(
-        "A brief description summarizing how the Eta is being calculated. This value is not present when docked."
+        "Description of ETA calculation method, as a human-readable description. E.g., 'Vessel Chelan departed Friday Harbor going to Anacortes and using vessel Chelan closest location data from Nov 1 2025 10:59AM' for calculated ETA, 'Vessel is Docked. ETA is only available when underway.' when docked, null when ETA basis is unavailable. Explains how arrival time estimate was derived."
       ),
-    /**
-     * The date and time when this vessel was or is scheduled to leave its departing terminal. Might not be present if the next scheduled destination is still being determined.
-     */
     ScheduledDeparture: zDotnetDate()
       .nullable()
       .describe(
-        "The date and time when this vessel was or is scheduled to leave its departing terminal. Might not be present if the next scheduled destination is still being determined."
+        "Scheduled departure time from origin terminal, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for vessel Chelan scheduled to depart Friday Harbor at 6:20 PM, null when scheduled departure is undetermined. Used to compare actual vs. scheduled departure times."
       ),
-    /**
-     * An list of strings that contain 0 or more abbreviated route names currently being serviced by this vessel.
-     */
     OpRouteAbbrev: z
       .array(z.string())
       .nullable()
       .describe(
-        "An list of strings that contain 0 or more abbreviated route names currently being serviced by this vessel."
+        "Abbreviated route names currently serviced by vessel, as an array of route codes. E.g., ['ana-sj'] for Anacortes-San Juan route, ['muk-cl'] for Mukilteo-Clinton route, null or empty array when vessel is not in service. Used to identify which routes vessel is currently operating."
       ),
-    /**
-     * For a given route, the number used to identify the scheduled departures being serviced by this vessel. Not present if vessel is not in service.
-     */
     VesselPositionNum: z
       .number()
       .int()
       .nullable()
       .describe(
-        "For a given route, the number used to identify the scheduled departures being serviced by this vessel. Not present if vessel is not in service."
+        "Vessel position number for route scheduling, as an integer. E.g., '1' for first vessel on route, '2' for second vessel, null when vessel is not in service. Identifies which scheduled departure slot vessel is servicing on route."
       ),
-    /**
-     * A preferred sort order (sort-ascending with respect to other vessels).
-     */
     SortSeq: z
       .number()
       .int()
       .describe(
-        "A preferred sort order (sort-ascending with respect to other vessels)."
+        "Preferred sort order for display purposes, as an integer. E.g., '20' for San Juan Islands routes, '30' for Port Townsend-Coupeville route, '40' for Mukilteo-Clinton route. Lower values appear first when sorting vessels in ascending order."
       ),
-    /**
-     * Indicates who manages this vessel. 1 for WSF, 2 for KCM. (1 = WSF, 2 = KCM).
-     */
     ManagedBy: z
       .union([z.literal(1), z.literal(2)])
       .describe(
-        "Indicates who manages this vessel. 1 for WSF, 2 for KCM. (1 = WSF, 2 = KCM)."
+        "Vessel management organization, as a status code. Valid values: 1 (WSF), 2 (KCM). E.g., '1' indicates vessel is managed by Washington State Ferries, '2' indicates vessel is managed by King County Metro. Determines operational control and management responsibility."
       ),
-    /**
-     * The date and time when this vessel location was last updated.
-     */
     TimeStamp: zDotnetDate().describe(
-      "The date and time when this vessel location was last updated."
+      "Timestamp when vessel location data was last updated, as a UTC datetime. E.g., '/Date(1757451301100-0700)/' for location update at 7:02 PM. Indicates data freshness and update frequency for real-time tracking systems."
     ),
-    /**
-     * Vessel watch shutdown identifier.
-     */
     VesselWatchShutID: z
       .number()
       .int()
-      .describe("Vessel watch shutdown identifier."),
-    /**
-     * Vessel watch shutdown message.
-     */
+      .describe(
+        "VesselWatch shutdown identifier, as an integer ID. E.g., '2' for vessel information unavailable, '3' for vessel in service. Used to identify specific VesselWatch system status conditions."
+      ),
     VesselWatchShutMsg: z
       .string()
       .nullable()
-      .describe("Vessel watch shutdown message."),
-    /**
-     * Vessel watch shutdown flag.
-     */
+      .describe(
+        "VesselWatch shutdown message, as a human-readable description. E.g., 'Vessel information unavailable' for status ID 2, 'Vessel in Service' for status ID 3, null when shutdown message is unavailable. Provides user-facing status message for VesselWatch system."
+      ),
     VesselWatchShutFlag: z
       .string()
       .nullable()
-      .describe("Vessel watch shutdown flag."),
-    /**
-     * Vessel watch status.
-     */
-    VesselWatchStatus: z.string().nullable().describe("Vessel watch status."),
-    /**
-     * Vessel watch message.
-     */
-    VesselWatchMsg: z.string().nullable().describe("Vessel watch message."),
+      .describe(
+        "VesselWatch shutdown flag, as a status code. E.g., '0' for normal operation, null when flag is unavailable. Indicates whether VesselWatch system shutdown conditions are active."
+      ),
+    VesselWatchStatus: z
+      .string()
+      .nullable()
+      .describe(
+        "VesselWatch system status, as a status code. E.g., '0' for normal operation, null when status is unavailable. Indicates current operational state of VesselWatch tracking system."
+      ),
+    VesselWatchMsg: z
+      .string()
+      .nullable()
+      .describe(
+        "VesselWatch system message, as a human-readable description. E.g., 'WSF's VesselWatch page is currently not responding and is out of service...' for system issues, null when message is unavailable. Provides user-facing information about VesselWatch system status."
+      ),
   })
-  .describe("Provides vessel locations and associated ETA data.");
+  .describe(
+    "Represents real-time vessel location data including GPS coordinates, terminal assignments, speed/heading, and ETA information. E.g., vessel Chelan at position 48.529468, -122.818977 departing Friday Harbor going to Anacortes at 15.7 knots with ETA 7:30 PM. Used for real-time vessel tracking, arrival time calculations, and passenger information systems. Updates every 5 seconds."
+  );
 
 export type VesselLocations = z.infer<typeof vesselLocationsSchema>;

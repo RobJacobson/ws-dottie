@@ -9,7 +9,7 @@ export const vesselVerboseSchema = z
   .object({})
   .strict()
   .describe(
-    'This operation retrieves highly detailed information pertaining to vessels. It should be used if you need to reduce the "chattiness" of your application and don\'t mind receiving a larger payload of data. VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.'
+    "Retrieves comprehensive vessel information combining basic details, accommodations, and technical specifications in a single response. E.g., vessel Tokitae with status, amenities, dimensions, and capacity data. Use when you need complete vessel information in one API call to reduce multiple requests. Combines data from vesselBasics, vesselAccommodations, and vesselStats endpoints."
   );
 
 export type VesselVerboseInput = z.infer<typeof vesselVerboseSchema>;
@@ -18,8 +18,12 @@ export type VesselVerboseInput = z.infer<typeof vesselVerboseSchema>;
  * VesselVerboseById input schema
  */
 export const vesselVerboseByIdSchema = z.object({
-  /** Unique identifier for a vessel. */
-  VesselID: z.number().int().describe("Unique identifier for a vessel."),
+  VesselID: z
+    .number()
+    .int()
+    .describe(
+      "Unique vessel identifier, as an integer ID. E.g., '68' for vessel Tokitae, '74' for vessel Chimacum. Required to retrieve comprehensive information for a specific vessel."
+    ),
 });
 
 export type VesselVerboseByIdInput = z.infer<typeof vesselVerboseByIdSchema>;
