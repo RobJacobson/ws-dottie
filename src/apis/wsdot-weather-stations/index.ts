@@ -7,15 +7,12 @@
 
 // Export the main API definition
 export { wsdotWeatherStationsApi } from "./apiDefinition";
-
+// Export individual resources for direct use
+export { weatherStationsResource } from "./weatherStations/weatherStations.endpoints";
 // Export all input types
-export type { GetCurrentStationsInput } from "./original/inputSchemas.original";
-
+export type { GetCurrentStationsInput } from "./weatherStations/weatherStations.input";
 // Export all output types
 export type {
   WeatherStation,
   WeatherStationData,
-} from "./original/outputSchemas.original";
-
-// Export individual resources for direct use
-export { weatherStationsResource } from "./weatherStations/weatherStations.endpoints";
+} from "./weatherStations/weatherStations.output";

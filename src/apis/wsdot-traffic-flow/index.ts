@@ -13,6 +13,6 @@ export { flowDataResource } from "./flowData/flowData.endpoints";
 export type {
   GetTrafficFlowInput,
   GetTrafficFlowsInput,
-} from "./original/inputSchemas.original";
+} from "./flowData/flowData.input";
 // Export all output types
-export type { FlowData } from "./original/outputSchemas.original";
+export type { FlowData } from "./flowData/flowData.output";

@@ -11,7 +11,7 @@ export { wsdotBorderCrossingsApi } from "./apiDefinition";
 export { borderCrossingDataResource } from "./borderCrossingData/borderCrossingData.endpoints";
 
 // Export all input types
-export type { GetBorderCrossingsInput } from "./original/inputSchemas.original";
+export type { GetBorderCrossingsInput } from "./borderCrossingData/borderCrossingData.input";
 
 // Export all output types
-export type { BorderCrossingData } from "./original/outputSchemas.original";
+export type { BorderCrossingData } from "./borderCrossingData/borderCrossingData.output";

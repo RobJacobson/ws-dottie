@@ -13,11 +13,9 @@ export {
   weatherReadingsResource,
   wsdotWeatherReadingsApi,
 } from "./apiDefinition";
-// Export all input types
-export type { GetWeatherReadingsInput } from "./original/inputSchemas.original";
 // Export all output types
-export type {
-  ScanwebSubSurfaceMeasurements,
-  ScanwebSurfaceMeasurements,
-  WeatherReading,
-} from "./original/outputSchemas.original";
+export type { ScanwebSubSurfaceMeasurements } from "./subSurfaceMeasurements/subSurfaceMeasurements.output";
+export type { ScanwebSurfaceMeasurements } from "./surfaceMeasurements/surfaceMeasurements.output";
+// Export all input types
+export type { GetWeatherReadingsInput } from "./weatherReadings/weatherReadings.input";
+export type { WeatherReading } from "./weatherReadings/weatherReadings.output";

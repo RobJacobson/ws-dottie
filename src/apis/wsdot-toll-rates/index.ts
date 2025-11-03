@@ -16,20 +16,19 @@ export {
 } from "./apiDefinition";
 
 // Export all input types
+export type { GetTollRatesInput } from "./tollRates/tollRates.input";
+// Export all output types
+export type { TollRate } from "./tollRates/tollRates.output";
+export type { GetTollTripInfoInput } from "./tollTripInfo/tollTripInfo.input";
+export type { TollTripInfo } from "./tollTripInfo/tollTripInfo.output";
 export type {
-  GetTollRatesInput,
-  GetTollTripInfoInput,
   GetTollTripRatesInput,
-  GetTollTripVersionInput,
   GetTripRatesByDateInput,
   GetTripRatesByVersionInput,
-} from "./original/inputSchemas.original";
-
-// Export all output types
+} from "./tollTripRates/tollTripRates.input";
 export type {
-  TollRate,
-  TollTripInfo,
   TollTripsRates as TollTrips,
-  TollTripVersion,
   TripRate,
-} from "./original/outputSchemas.original";
+} from "./tollTripRates/tollTripRates.output";
+export type { GetTollTripVersionInput } from "./tollTripVersion/tollTripVersion.input";
+export type { TollTripVersion } from "./tollTripVersion/tollTripVersion.output";

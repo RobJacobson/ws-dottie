@@ -14,7 +14,7 @@ export { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances.endpo
 export type {
   GetClearancesByRouteInput,
   GetClearancesInput,
-} from "./original/inputSchemas.original";
+} from "./bridgeClearances/bridgeClearances.input";
 
 // Export all output types
-export type { BridgeDataGIS } from "./original/outputSchemas.original";
+export type { BridgeDataGIS } from "./bridgeClearances/bridgeClearances.output";

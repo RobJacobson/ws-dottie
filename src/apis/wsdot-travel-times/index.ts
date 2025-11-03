@@ -7,15 +7,12 @@
 
 // Export the main API definition
 export { wsdotTravelTimesApi } from "./apiDefinition";
-
+// Export individual resources for direct use
+export { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";
 // Export all input types
 export type {
   GetTravelTimeInput,
   GetTravelTimesInput,
-} from "./original/inputSchemas.original";
-
+} from "./travelTimeRoutes/travelTimeRoutes.input";
 // Export all output types
-export type { TravelTimeRoute } from "./original/outputSchemas.original";
-
-// Export individual resources for direct use
-export { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";
+export type { TravelTimeRoute } from "./travelTimeRoutes/travelTimeRoutes.output";

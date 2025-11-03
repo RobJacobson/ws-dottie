@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./surfaceMeasurements.input";
 import * as o from "./surfaceMeasurements.output";
 
@@ -18,13 +18,13 @@ export const surfaceMeasurementsResource: EndpointGroup = {
     getSurfaceMeasurements: {
       function: "getSurfaceMeasurements",
       endpoint: "/Scanweb/SurfaceMeasurements",
-      inputSchema: i.getWeatherReadingsSchema,
+      inputSchema: i.getSurfaceMeasurementsSchema,
       outputSchema: z.array(o.scanwebSurfaceMeasurementsSchema),
       sampleParams: {},
       endpointDescription:
         "Returns surface measurements from all weather stations.",
     } satisfies EndpointDefinition<
-      i.GetWeatherReadingsInput,
+      i.GetSurfaceMeasurementsInput,
       o.ScanwebSurfaceMeasurements[]
     >,
   },

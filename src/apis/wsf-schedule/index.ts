@@ -5,6 +5,9 @@
  * all input/output types and the main API definition.
  */
 
+// Export all input types
+export type { ActiveScheduledSeasonsInput } from "./activeSeasons/activeSeasons.input";
+export type { ScheduleBase } from "./activeSeasons/activeSeasons.output";
 // Export the main API definition
 // Export all resources for direct use
 export {
@@ -24,47 +27,57 @@ export {
   timeAdjustmentsResource,
   wsfScheduleApi,
 } from "./apiDefinition";
-// Export all input types
+export type { SchedulesCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
 export type {
-  ActiveScheduledSeasonsInput,
-  AllAlertsInput,
-  AllSchedSailingsBySchedRouteInput,
   RouteDetailsByTripDateAndRouteIdInput,
   RouteDetailsByTripDateAndTerminalsInput,
   RouteDetailsByTripDateInput,
   RoutesByTerminalsInput,
   RoutesHavingServiceDisruptionsInput,
   RoutesInput,
+} from "./routes/routes.input";
+export type {
+  Route,
+  RouteDetail,
+  ServiceDisruption,
+} from "./routes/routes.output";
+export type {
+  AllSchedSailingsBySchedRouteInput,
   SailingsByRouteIdInput,
-  ScheduleByRouteInput,
-  ScheduleByTerminalComboInput,
+} from "./sailings/sailings.input";
+export type { Sailing } from "./sailings/sailings.output";
+export type { AllAlertsInput } from "./scheduleAlerts/scheduleAlerts.input";
+// Export all output types
+export type { AlertDetail } from "./scheduleAlerts/scheduleAlerts.output";
+export type {
   ScheduledRoutesByScheduleIdInput,
   ScheduledRoutesInput,
+} from "./scheduledRoutes/scheduledRoutes.input";
+export type { SchedRoute } from "./scheduledRoutes/scheduledRoutes.output";
+export type {
+  ScheduleByRouteInput,
+  ScheduleByTerminalComboInput,
+} from "./schedules/schedules.input";
+export type { Schedule } from "./schedules/schedules.output";
+export type {
+  ScheduleTodayByRouteInput,
+  TodaysScheduleByTerminalComboInput,
+} from "./scheduleToday/scheduleToday.input";
+export type {
   ScheduleTerminalMatesInput,
   ScheduleTerminalsInput,
-  ScheduleTodayByRouteInput,
-  ScheduleValidDateRangeInput,
   TerminalsAndMatesByRouteInput,
   TerminalsAndMatesInput,
+} from "./terminals/terminals.input";
+export type {
+  Terminal,
+  TerminalMate,
+} from "./terminals/terminals.output";
+export type {
   TimeAdjByRouteInput,
   TimeAdjBySchedRouteInput,
   TimeAdjInput,
-  TodaysScheduleByTerminalComboInput,
-} from "./original/inputSchemas.original";
-
-// Export all output types
-export type {
-  AlertDetail,
-  Route,
-  RouteDetail,
-  Sailing,
-  SchedRoute,
-  Schedule,
-  ScheduleBase,
-  SchedulesCacheFlushDate,
-  ServiceDisruption,
-  Terminal,
-  TerminalMate,
-  TimeAdjustment,
-  ValidDateRange,
-} from "./original/outputSchemas.original";
+} from "./timeAdjustments/timeAdjustments.input";
+export type { TimeAdjustment } from "./timeAdjustments/timeAdjustments.output";
+export type { ScheduleValidDateRangeInput } from "./validDateRange/validDateRange.input";
+export type { ValidDateRange } from "./validDateRange/validDateRange.output";

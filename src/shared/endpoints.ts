@@ -4,7 +4,14 @@
  * This module provides the core endpoint system for the WS-Dottie API library.
  * It includes type definitions, factory functions, and utilities that work together
  * to create a consistent endpoint management system across all API modules.
+ *
+ * IMPORTANT: This module imports zod-openapi-init FIRST to ensure Zod schemas
+ * have the `.openapi()` method available before any API modules are imported.
  */
+
+// Import Zod OpenAPI initialization FIRST, before any schema creation
+// This ensures all schemas imported from API modules have .openapi() method
+import "@/shared/zod-openapi-init";
 
 import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 // Import all API modules statically
@@ -33,7 +40,7 @@ import type { Api, Endpoint } from "./types";
  * from the various API modules. It's used by the loadApis function to
  * create the complete API structure.
  */
-const API_MODULES = [
+export const API_MODULES = [
   wsdotBorderCrossingsApi,
   wsdotBridgeClearancesApi,
   wsdotCommercialVehicleRestrictionsApi,

@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./tollTripRates.input";
 import * as o from "./tollTripRates.output";
 
@@ -32,8 +32,8 @@ export const tollTripRatesResource: EndpointGroup = {
       inputSchema: i.getTripRatesByDateSchema,
       outputSchema: z.array(o.tollTripsRatesSchema),
       sampleParams: {
-        FromDate: datesHelper.startOfMonth(),
-        ToDate: datesHelper.yesterday(),
+        FromDate: datesHelper.yesterday(),
+        ToDate: datesHelper.today(),
       },
       endpointDescription:
         "Returns multiple TollTripRates items for specified date range.",
