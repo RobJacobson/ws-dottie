@@ -13,5 +13,7 @@ export {
   datesHelper,
   jsDateToYyyyMmDd,
 } from "./dateUtils";
+// JSON parsing utilities
+export { parseJsonWithFallback } from "./jsonParser";
 // Logging utilities
 export { logApiCall, logApiResults, logger } from "./logger";

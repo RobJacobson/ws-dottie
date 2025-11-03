@@ -7,6 +7,7 @@
  */
 
 import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
+import { parseJsonWithFallback } from "@/shared/utils/jsonParser";
 import { logApiCall, logApiResults } from "@/shared/utils/logger";
 import { buildCompleteUrl } from "./buildUrl";
 import { createApiError } from "./handleError";
@@ -55,7 +56,7 @@ export const fetchCore = async <TInput = never, TOutput = unknown>(
     const responseData = await handleFetch(completeUrl);
 
     // 3. Parse response JSON
-    const jsonData = JSON.parse(responseData);
+    const jsonData = parseJsonWithFallback(responseData);
 
     // 4. Log results with performance metrics
     if (logMode !== "none") {
