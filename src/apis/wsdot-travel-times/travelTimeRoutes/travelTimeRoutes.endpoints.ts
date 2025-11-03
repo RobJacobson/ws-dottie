@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./travelTimeRoutes.input";
 import * as o from "./travelTimeRoutes.output";

@@ -4,7 +4,7 @@
  * These schemas define the response structures for WSF Fares API Terminals endpoints.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Base terminal schema for fares API

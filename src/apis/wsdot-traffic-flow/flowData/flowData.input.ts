@@ -5,7 +5,7 @@
  * Traffic Flow API endpoints.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for GetTrafficFlow input parameters

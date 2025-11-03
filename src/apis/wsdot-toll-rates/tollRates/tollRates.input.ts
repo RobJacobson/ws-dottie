@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Input schema for GetTollRates endpoint (void input - only AccessCode)

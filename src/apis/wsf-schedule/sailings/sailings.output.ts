@@ -5,7 +5,7 @@
  * Schedule API sailing operations.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 import { zDotnetDate } from "@/apis/shared";
 

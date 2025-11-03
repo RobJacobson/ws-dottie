@@ -5,7 +5,7 @@
  * Schedule API endpoints related to terminal operations.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for Terminals input parameters

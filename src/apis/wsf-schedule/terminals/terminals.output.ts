@@ -5,7 +5,7 @@
  * Schedule API terminal operations.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for Terminal - represents terminal information

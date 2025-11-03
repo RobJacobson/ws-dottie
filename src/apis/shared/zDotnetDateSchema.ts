@@ -6,9 +6,8 @@
  * APIs. It handles validation and transformation to JavaScript Date objects.
  */
 
-import { z } from "zod";
-
 import { wsdotDateTimeToJSDate } from "@/shared/utils/dateUtils";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * .NET date validation and transformation schema

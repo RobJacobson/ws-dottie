@@ -5,7 +5,7 @@
  * Terminals API endpoints.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for TerminalBasics input parameters

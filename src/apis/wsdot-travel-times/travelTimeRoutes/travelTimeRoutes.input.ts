@@ -5,7 +5,7 @@
  * Travel Times API endpoints.
  */
 
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for GetTravelTime input parameters

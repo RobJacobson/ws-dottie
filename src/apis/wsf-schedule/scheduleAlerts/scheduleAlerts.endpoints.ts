@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./scheduleAlerts.input";
 import * as o from "./scheduleAlerts.output";
