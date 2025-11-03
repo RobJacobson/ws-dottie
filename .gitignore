@@ -265,3 +265,6 @@ working/
 
 .kilocode
 .mcp-tools
+
+# OpenAPI sample cache (local, non-committed)
+openapi-docs/samples/

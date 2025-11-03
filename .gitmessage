@@ -1,0 +1,15 @@
+# <type>(<scope>): <subject>
+#
+# <body>
+#
+# <footer>
+#
+# Types: feat, fix, build, chore, ci, docs, style, test, perf, refactor, revert
+# Subject: lowercase, present tense, max 60 characters
+# Scope: optional, indicates what part of the codebase is affected
+#
+# Examples:
+# feat(api): add new endpoint for weather readings
+# fix(types): correct return type for vessel stats
+# docs(readme): update installation instructions
+

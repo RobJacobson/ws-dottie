@@ -1,0 +1,14 @@
+# Conventional Commits Rule
+
+When generating commit messages, always follow the Conventional Commits specification:
+- Use one of these types: feat, fix, build, chore, ci, docs, style, test, perf, refactor, revert
+- Format: `<type>(<scope>): <subject>`
+- Subject should be lowercase, under 60 characters, and written in present tense
+- Optional body and footer sections for detailed explanations
+
+Examples:
+- `feat(api): add new endpoint for weather readings`
+- `fix(types): correct return type for vessel stats`
+- `docs(readme): update installation instructions`
+- `refactor(utils): simplify error handling logic`
+
