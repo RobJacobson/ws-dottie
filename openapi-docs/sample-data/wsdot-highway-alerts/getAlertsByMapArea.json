@@ -1,0 +1,31 @@
+[
+  {
+    "AlertID": 473325,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "005"
+    },
+    "EndTime": null,
+    "EventCategory": "Rest Area",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.",
+    "LastUpdatedTime": "2023-07-24T22:25:55.483Z",
+    "Priority": "High",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "SB Scale 39/Silver Lake Rest Area",
+      "Direction": "B",
+      "Latitude": 47.907026048,
+      "Longitude": -122.210954765,
+      "MilePost": 188.5,
+      "RoadName": "005"
+    },
+    "StartTime": "2021-09-24T13:00:00.000Z"
+  }
+]

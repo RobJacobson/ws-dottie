@@ -1,0 +1,206 @@
+[
+  {
+    "MapArea": "L2CE",
+    "MapAreaDescription": "Eastern"
+  },
+  {
+    "MapArea": "L2CL",
+    "MapAreaDescription": "Central"
+  },
+  {
+    "MapArea": "L2LO",
+    "MapAreaDescription": "Western"
+  },
+  {
+    "MapArea": "L2NE",
+    "MapAreaDescription": "Northeast"
+  },
+  {
+    "MapArea": "L2NN",
+    "MapAreaDescription": "Northwest"
+  },
+  {
+    "MapArea": "L2NW",
+    "MapAreaDescription": "North Central"
+  },
+  {
+    "MapArea": "L2PS",
+    "MapAreaDescription": "Puget Sound"
+  },
+  {
+    "MapArea": "L2SC",
+    "MapAreaDescription": "South Central"
+  },
+  {
+    "MapArea": "L2SE",
+    "MapAreaDescription": "Southeast"
+  },
+  {
+    "MapArea": "L2SW",
+    "MapAreaDescription": "Southwest"
+  },
+  {
+    "MapArea": "L3BELCAM",
+    "MapAreaDescription": "Bellingham Cameras"
+  },
+  {
+    "MapArea": "L3BORDER",
+    "MapAreaDescription": "Canadian Border"
+  },
+  {
+    "MapArea": "L3CENCHE",
+    "MapAreaDescription": "Centralia/Chehalis"
+  },
+  {
+    "MapArea": "L3CENCHECAM",
+    "MapAreaDescription": "Centralia / Chehalis Camera"
+  },
+  {
+    "MapArea": "L3EASTCLARKCAM",
+    "MapAreaDescription": "East Vancouver Camera"
+  },
+  {
+    "MapArea": "L3HOOD",
+    "MapAreaDescription": "Hood Canal"
+  },
+  {
+    "MapArea": "L3JBLMCAM",
+    "MapAreaDescription": "Nisqually to Tacoma including JBLM Camera"
+  },
+  {
+    "MapArea": "L3JBLMLOCCAM",
+    "MapAreaDescription": "JBLM Local Camera map"
+  },
+  {
+    "MapArea": "L3LVKCAM",
+    "MapAreaDescription": "Longview / Kelso"
+  },
+  {
+    "MapArea": "L3MONSULT",
+    "MapAreaDescription": "Monroe / Sultan"
+  },
+  {
+    "MapArea": "L3MTV",
+    "MapAreaDescription": "Mount Vernon/Stanwood"
+  },
+  {
+    "MapArea": "L3OAK",
+    "MapAreaDescription": "Oak Harbor"
+  },
+  {
+    "MapArea": "L3OLY",
+    "MapAreaDescription": "Olympia"
+  },
+  {
+    "MapArea": "L3OLYCAM",
+    "MapAreaDescription": "Olympia Camera page with flow"
+  },
+  {
+    "MapArea": "L3SNO",
+    "MapAreaDescription": "Snoqualmie"
+  },
+  {
+    "MapArea": "L3SPOEAST",
+    "MapAreaDescription": "Spokane Valley"
+  },
+  {
+    "MapArea": "L3SPOWEST",
+    "MapAreaDescription": "Spokane City"
+  },
+  {
+    "MapArea": "L3STE",
+    "MapAreaDescription": "Stevens Pass"
+  },
+  {
+    "MapArea": "L3SZC",
+    "MapAreaDescription": "N.Central Seattle"
+  },
+  {
+    "MapArea": "L3SZN",
+    "MapAreaDescription": "North Seattle"
+  },
+  {
+    "MapArea": "L3SZS",
+    "MapAreaDescription": "South Seattle"
+  },
+  {
+    "MapArea": "L3SZZ",
+    "MapAreaDescription": "S.Central Seattle"
+  },
+  {
+    "MapArea": "L3TAC",
+    "MapAreaDescription": "Tacoma"
+  },
+  {
+    "MapArea": "L3TACCAM",
+    "MapAreaDescription": "Tacoma Cameras"
+  },
+  {
+    "MapArea": "L3TRICAM",
+    "MapAreaDescription": "Tri-Cities cameras"
+  },
+  {
+    "MapArea": "L3TRICAM-B",
+    "MapAreaDescription": "Tri-Cities Border Inset"
+  },
+  {
+    "MapArea": "L3TRICAM-H",
+    "MapAreaDescription": "Tri-Cities Hanford Inset"
+  },
+  {
+    "MapArea": "L3US97",
+    "MapAreaDescription": "US 97 Border"
+  },
+  {
+    "MapArea": "L3VAN",
+    "MapAreaDescription": "Vancouver/Portland Cameras"
+  },
+  {
+    "MapArea": "L3VANALERT",
+    "MapAreaDescription": "Vancouver Alerts"
+  },
+  {
+    "MapArea": "L3VNT",
+    "MapAreaDescription": "Vantage"
+  },
+  {
+    "MapArea": "L3VPN",
+    "MapAreaDescription": "Portland North"
+  },
+  {
+    "MapArea": "L3VPS",
+    "MapAreaDescription": "Portland South"
+  },
+  {
+    "MapArea": "L3VPT",
+    "MapAreaDescription": "Portland Traffic"
+  },
+  {
+    "MapArea": "L3VTR",
+    "MapAreaDescription": "Vancouver Traffic Cameras"
+  },
+  {
+    "MapArea": "L3WEN",
+    "MapAreaDescription": "Wenatchee"
+  },
+  {
+    "MapArea": "L4LVKCAM-I",
+    "MapAreaDescription": "Longview / Kelso Inset"
+  },
+  {
+    "MapArea": "L4MTVCITY",
+    "MapAreaDescription": "Mt Vernon"
+  },
+  {
+    "MapArea": "MAIN",
+    "MapAreaDescription": "Washington State"
+  },
+  {
+    "MapArea": "MAINWEATHER",
+    "MapAreaDescription": "Washington State Weather map"
+  },
+  {
+    "MapArea": "SEATTLE",
+    "MapAreaDescription": "Seattle Traffic Page"
+  }
+]

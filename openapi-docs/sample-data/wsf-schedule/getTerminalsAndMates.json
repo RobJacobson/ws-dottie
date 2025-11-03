@@ -1,0 +1,230 @@
+[
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 3,
+    "DepartingDescription": "Bainbridge Island",
+    "ArrivingTerminalID": 7,
+    "ArrivingDescription": "Seattle"
+  },
+  {
+    "DepartingTerminalID": 4,
+    "DepartingDescription": "Bremerton",
+    "ArrivingTerminalID": 7,
+    "ArrivingDescription": "Seattle"
+  },
+  {
+    "DepartingTerminalID": 5,
+    "DepartingDescription": "Clinton",
+    "ArrivingTerminalID": 14,
+    "ArrivingDescription": "Mukilteo"
+  },
+  {
+    "DepartingTerminalID": 11,
+    "DepartingDescription": "Coupeville ",
+    "ArrivingTerminalID": 17,
+    "ArrivingDescription": "Port Townsend"
+  },
+  {
+    "DepartingTerminalID": 8,
+    "DepartingDescription": "Edmonds",
+    "ArrivingTerminalID": 12,
+    "ArrivingDescription": "Kingston"
+  },
+  {
+    "DepartingTerminalID": 9,
+    "DepartingDescription": "Fauntleroy",
+    "ArrivingTerminalID": 20,
+    "ArrivingDescription": "Southworth"
+  },
+  {
+    "DepartingTerminalID": 9,
+    "DepartingDescription": "Fauntleroy",
+    "ArrivingTerminalID": 22,
+    "ArrivingDescription": "Vashon Island"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 12,
+    "DepartingDescription": "Kingston",
+    "ArrivingTerminalID": 8,
+    "ArrivingDescription": "Edmonds"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 14,
+    "DepartingDescription": "Mukilteo",
+    "ArrivingTerminalID": 5,
+    "ArrivingDescription": "Clinton"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 16,
+    "DepartingDescription": "Point Defiance",
+    "ArrivingTerminalID": 21,
+    "ArrivingDescription": "Tahlequah"
+  },
+  {
+    "DepartingTerminalID": 17,
+    "DepartingDescription": "Port Townsend",
+    "ArrivingTerminalID": 11,
+    "ArrivingDescription": "Coupeville "
+  },
+  {
+    "DepartingTerminalID": 7,
+    "DepartingDescription": "Seattle",
+    "ArrivingTerminalID": 3,
+    "ArrivingDescription": "Bainbridge Island"
+  },
+  {
+    "DepartingTerminalID": 7,
+    "DepartingDescription": "Seattle",
+    "ArrivingTerminalID": 4,
+    "ArrivingDescription": "Bremerton"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 20,
+    "DepartingDescription": "Southworth",
+    "ArrivingTerminalID": 9,
+    "ArrivingDescription": "Fauntleroy"
+  },
+  {
+    "DepartingTerminalID": 20,
+    "DepartingDescription": "Southworth",
+    "ArrivingTerminalID": 22,
+    "ArrivingDescription": "Vashon Island"
+  },
+  {
+    "DepartingTerminalID": 21,
+    "DepartingDescription": "Tahlequah",
+    "ArrivingTerminalID": 16,
+    "ArrivingDescription": "Point Defiance"
+  },
+  {
+    "DepartingTerminalID": 22,
+    "DepartingDescription": "Vashon Island",
+    "ArrivingTerminalID": 9,
+    "ArrivingDescription": "Fauntleroy"
+  },
+  {
+    "DepartingTerminalID": 22,
+    "DepartingDescription": "Vashon Island",
+    "ArrivingTerminalID": 20,
+    "ArrivingDescription": "Southworth"
+  }
+]

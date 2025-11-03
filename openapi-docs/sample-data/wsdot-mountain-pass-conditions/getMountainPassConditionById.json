@@ -1,0 +1,20 @@
+{
+  "DateUpdated": "2025-11-03T15:44:25.743Z",
+  "ElevationInFeet": 4500,
+  "Latitude": 46.638333,
+  "Longitude": -121.39,
+  "MountainPassId": 12,
+  "MountainPassName": "White Pass  US 12",
+  "RestrictionOne": {
+    "RestrictionText": "Traction Tires Advised, Oversize Vehicles Prohibited.",
+    "TravelDirection": "Eastbound"
+  },
+  "RestrictionTwo": {
+    "RestrictionText": "Traction Tires Advised, Oversize Vehicles Prohibited.",
+    "TravelDirection": "Westbound"
+  },
+  "RoadCondition": "Snow and slush",
+  "TemperatureInFahrenheit": 30,
+  "TravelAdvisoryActive": true,
+  "WeatherCondition": "Snowing"
+}

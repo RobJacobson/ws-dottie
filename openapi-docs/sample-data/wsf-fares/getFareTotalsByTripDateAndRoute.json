@@ -1,0 +1,20 @@
+[
+  {
+    "TotalType": 1,
+    "Description": "Anacortes to Friday Harbor",
+    "BriefDescription": "Depart",
+    "Amount": 61.25
+  },
+  {
+    "TotalType": 3,
+    "Description": "Either",
+    "BriefDescription": "Either",
+    "Amount": 0
+  },
+  {
+    "TotalType": 4,
+    "Description": "Grand Total",
+    "BriefDescription": "Total",
+    "Amount": 61.25
+  }
+]
