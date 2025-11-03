@@ -47,15 +47,21 @@
     "prepublishOnly": "npm run build",
     "fetch-dottie": "node dist/cli/fetch-dottie.mjs",
     "cli:help": "node dist/cli/fetch-dottie.mjs --help",
-    "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20"
+    "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20",
+    "docs:generate": "npm run docs:openapi && npm run docs:html",
+    "docs:openapi": "npx tsx openapi-docs/scripts/generate-openapi.ts",
+    "docs:html": "npx tsx openapi-docs/scripts/generate-docs.ts",
+    "docs:samples:fetch": "npx tsx openapi-docs/scripts/fetch-samples.ts"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
     "react": ">=18.0.0"
   },
   "devDependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.1.0",
     "@biomejs/biome": "^2.2.4",
     "@happy-dom/global-registrator": "^18.0.1",
+    "@redocly/cli": "^2.10.0",
     "@tanstack/react-query": "^5.0.0",
     "@testing-library/react": "^16.3.0",
     "@types/jsdom": "^21.1.7",
@@ -66,7 +72,9 @@
     "commander": "^14.0.0",
     "dotenv": "^17.2.0",
     "fast-deep-equal": "^3.1.3",
+    "js-yaml": "^4.1.0",
     "jsdom": "^26.1.0",
+    "jsonrepair": "^3.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tsup": "^8.0.0",
