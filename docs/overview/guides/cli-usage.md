@@ -51,9 +51,7 @@ ws-dottie weather
 ws-dottie passes
 ```
 
-## 🏗️ Architecture
-
-### CLI Structure
+## 🏗️ CLI Structure
 
 WS-Dottie CLI provides a command-line interface for accessing Washington State transportation data:
 
@@ -347,6 +345,7 @@ ws-dottie stations
 # Filter by region
 ws-dottie stations --region=western
 ws-dottie stations --region=eastern
+ws-dottie stations --region=central
 
 # Get station metadata
 ws-dottie stations --metadata
@@ -455,7 +454,7 @@ ws-dottie vessels --format=template --template="{{VesselName}}: {{Speed}} knots"
 ws-dottie alerts --priority=high --category=construction --region=seattle
 
 # Use regular expressions
-ws-dotte vessels --filter=".*Jumbo.*" --filter-field=VesselName
+ws-dottie vessels --filter=".*Jumbo.*" --filter-field=VesselName
 
 # Exclude specific fields
 ws-dottie vessels --exclude=LastUpdated,Heading
@@ -605,8 +604,7 @@ ws-dottie vessels --format=table --max-width=20
 
 ## 📚 Next Steps
 
-- **[React Integration Guide](./react-integration.md)** - React patterns with TanStack Query
-- **[Node.js Integration Guide](./nodejs-integration.md)** - Server-side usage patterns
-- **[Caching Reference](../reference/caching.md)** - Performance optimization strategies
-- **[Error Handling Reference](../reference/error-handling.md)** - Error recovery patterns
-- **[Type Safety Reference](../reference/type-safety.md)** - TypeScript integration and Zod validation
+- **[TanStack Query Guide](./tanstack-query.md)** - TanStack Query integration and caching
+- **[React Integration Guide](./react.md)** - React patterns with WS-Dottie hooks
+- **[Node.js Integration Guide](./nodejs.md)** - Server-side usage patterns
+- **[Error Handling Reference](../reference/error-handling.md)** - WS-Dottie error types and recovery

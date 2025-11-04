@@ -17,7 +17,7 @@ interface WsdotApiError extends Error {
   context?: {             // Additional error context
     endpoint: string;      // API endpoint that was called
     url: string;          // Full request URL
-    timestamp: Date;      // When the error occurred
+    timestamp: Date;      // When error occurred
     requestId?: string;    // Request identifier for tracking
   };
 }
@@ -33,7 +33,7 @@ interface NetworkError extends Error {
   code?: string;            // Error code (TIMEOUT, DNS_ERROR, etc.)
   context?: {             // Additional context
     url: string;          // URL that failed to load
-    timestamp: Date;      // When the error occurred
+    timestamp: Date;      // When error occurred
   };
 }
 ```
@@ -217,7 +217,7 @@ class RetryableFetch {
           throw error;
         }
         
-        // If this is the last attempt, throw the error
+        // If this is last attempt, throw error
         if (attempt === this.maxRetries) {
           throw error;
         }
@@ -324,7 +324,7 @@ class GracefulDegradation {
   
   getCachedOrFallbackData(endpoint) {
     // Implementation depends on your caching strategy
-    // This is a placeholder for the actual implementation
+    // This is a placeholder for actual implementation
     return [];
   }
 }
@@ -532,8 +532,6 @@ console.log('Current metrics:', errorMetrics.getMetrics());
 
 ## 📚 Next Steps
 
-- **[React Integration Guide](../guides/react-integration.md)** - React patterns with TanStack Query
-- **[Node.js Integration Guide](../guides/nodejs-integration.md)** - Server-side usage patterns
-- **[CLI Usage Guide](../guides/cli-usage.md)** - Command-line interface and debugging
-- **[Caching Reference](../reference/caching.md)** - Performance optimization strategies
-- **[Type Safety Reference](../reference/type-safety.md)** - TypeScript integration and Zod validation
+- **[TanStack Query Guide](./tanstack-query.md)** - TanStack Query integration and caching
+- **[Fetching Data Guide](./fetching-data.md)** - Basic fetch-dottie usage patterns
+- **[CLI Usage Guide](./cli-usage.md)** - Command-line interface and debugging

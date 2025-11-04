@@ -103,13 +103,12 @@ async function getTransportationData() {
 
 ### Implementation Guides
 - **[TanStack Query](./guides/tanstack-query.md)** - TanStack Query integration and caching
-- **[React Integration](./guides/react.md)** - React patterns with WS-Dottie hooks
-- **[Node.js Integration](./guides/nodejs.md)** - Server-side usage patterns
-- **[CLI Usage](./guides/cli.md)** - Command-line interface and debugging
+- **[Fetching Data](./guides/fetching-data.md)** - Basic fetch-dottie usage patterns
+- **[CLI Usage](./guides/cli-usage.md)** - Command-line interface and debugging
+- **[Error Handling](./guides/error-handling.md)** - Error recovery patterns
 
 ### Reference Materials
-- **[Error Handling](./reference/error-handling.md)** - Error recovery patterns
-- **[Type Safety](./reference/type-safety.md)** - TypeScript integration and Zod validation
+- **[Endpoints](./endpoints.md)** - Complete endpoint reference table
 
 ### Detailed API Documentation
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:

@@ -33,53 +33,14 @@ Ferry APIs provide comprehensive access to Washington State Ferries operations, 
 ### Common Ferry Use Cases
 
 #### Real-time Ferry Tracking
-```javascript
-import { useVesselLocations, useTerminalWaitTimes } from 'ws-dottie';
+Build applications that track ferry locations in real-time, showing current positions, speeds, and headings.
 
-function FerryTracker() {
-  const { data: vessels } = useVesselLocations();
-  const { data: waitTimes } = useTerminalWaitTimes();
-  
-  return (
-    <div>
-      <h1>Washington State Ferries</h1>
-      {vessels?.map(vessel => (
-        <div key={vessel.VesselID}>
-          <h3>{vessel.VesselName}</h3>
-          <p>Location: {vessel.Latitude}, {vessel.Longitude}</p>
-          <p>Speed: {vessel.Speed} knots</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSF Vessels
 
 #### Ferry Trip Planning
-```javascript
-import { useSchedules, useFares, useTerminals } from 'ws-dottie';
+Create tools for planning ferry trips with schedule information, terminal wait times, and fare calculations.
 
-function TripPlanner() {
-  const { data: schedules } = useSchedules({ 
-    departingTerminalId: 3, 
-    arrivingTerminalId: 7, 
-    tripDate: new Date() 
-  });
-  
-  const { data: fares } = useFares({ 
-    tripDate: new Date(), 
-    departingTerminalId: 3, 
-    arrivingTerminalId: 7 
-  });
-  
-  return (
-    <div>
-      <h1>Ferry Trip Planner</h1>
-      {/* Display schedules and fares */}
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSF Schedule, WSF Terminals, WSF Fares
 
 ## 🚗 Traffic APIs
 
@@ -101,52 +62,14 @@ Traffic APIs provide real-time information about highway conditions, incidents, 
 ### Common Traffic Use Cases
 
 #### Traffic Monitoring Dashboard
-```javascript
-import { useHighwayAlerts, useTrafficFlow, useTravelTimes } from 'ws-dottie';
+Create dashboards for highway conditions, traffic flow, and travel time estimates.
 
-function TrafficDashboard() {
-  const { data: alerts } = useHighwayAlerts();
-  const { data: flow } = useTrafficFlow();
-  const { data: travelTimes } = useTravelTimes();
-  
-  return (
-    <div>
-      <h1>Washington Traffic</h1>
-      <h2>Active Alerts ({alerts?.length || 0})</h2>
-      {alerts?.map(alert => (
-        <div key={alert.AlertID}>
-          <h3>{alert.HeadlineDescription}</h3>
-          <p>Category: {alert.EventCategory}</p>
-          <p>Priority: {alert.Priority}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSDOT Highway Alerts, WSDOT Traffic Flow, WSDOT Travel Times
 
 #### Route Planning with Traffic Data
-```javascript
-import { useTravelTimes, useTollRates, useHighwayAlerts } from 'ws-dottie';
+Build tools for optimal route planning based on current traffic conditions and toll rates.
 
-function RoutePlanner() {
-  const { data: travelTimes } = useTravelTimes();
-  const { data: tollRates } = useTollRates();
-  const { data: alerts } = useHighwayAlerts();
-  
-  // Calculate optimal route based on current conditions
-  const optimalRoute = calculateOptimalRoute(travelTimes, tollRates, alerts);
-  
-  return (
-    <div>
-      <h1>Route Planner</h1>
-      <p>Recommended route: {optimalRoute.name}</p>
-      <p>Estimated time: {optimalRoute.time} minutes</p>
-      <p>Toll cost: ${optimalRoute.toll}</p>
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSDOT Travel Times, WSDOT Toll Rates, WSDOT Highway Alerts
 
 ## 🌤️ Weather APIs
 
@@ -166,37 +89,9 @@ Weather APIs provide access to weather information, road conditions, and mountai
 ### Common Weather Use Cases
 
 #### Weather Conditions Dashboard
-```javascript
-import { useWeatherInformation, useMountainPassConditions } from 'ws-dottie';
+Display weather conditions, road conditions, and mountain pass status for travel planning.
 
-function WeatherDashboard() {
-  const { data: weather } = useWeatherInformation();
-  const { data: passes } = useMountainPassConditions();
-  
-  return (
-    <div>
-      <h1>Washington Weather</h1>
-      <h2>Weather Stations</h2>
-      {weather?.map(station => (
-        <div key={station.StationID}>
-          <h3>{station.StationName}</h3>
-          <p>Temperature: {station.Temperature}°F</p>
-          <p>Conditions: {station.RoadCondition}</p>
-        </div>
-      ))}
-      
-      <h2>Mountain Passes</h2>
-      {passes?.map(pass => (
-        <div key={pass.MountainPassId}>
-          <h3>{pass.MountainPassName}</h3>
-          <p>Status: {pass.WeatherCondition}</p>
-          <p>Restrictions: {pass.RestrictionOne}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSDOT Weather Information, WSDOT Mountain Pass Conditions
 
 ## 🏗️ Infrastructure APIs
 
@@ -215,26 +110,9 @@ Infrastructure APIs provide information about physical transportation infrastruc
 ### Common Infrastructure Use Cases
 
 #### Commercial Vehicle Route Planning
-```javascript
-import { useBridgeClearances, useCommercialVehicleRestrictions } from 'ws-dottie';
+Build tools for route planning with bridge clearances, toll rates, and vehicle restrictions.
 
-function TruckRoutePlanner() {
-  const { data: clearances } = useBridgeClearances();
-  const { data: restrictions } = useCommercialVehicleRestrictions();
-  
-  // Calculate route based on vehicle dimensions and restrictions
-  const safeRoute = calculateSafeRoute(clearances, restrictions, vehicleSpecs);
-  
-  return (
-    <div>
-      <h1>Truck Route Planner</h1>
-      <p>Recommended route: {safeRoute.name}</p>
-      <p>Lowest clearance: {safeRoute.minClearance} feet</p>
-      <p>Weight restrictions: {safeRoute.restrictions}</p>
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSDOT Bridge Clearances, WSDOT Commercial Vehicle Restrictions, WSDOT Border Crossings
 
 ## 🔄 Data Update Frequencies
 
@@ -253,48 +131,14 @@ WS-Dottie optimizes caching strategies based on how frequently different data ty
 Many WS-Dottie APIs work together to provide comprehensive transportation solutions:
 
 ### Ferry + Traffic Integration
-```javascript
-import { useVesselLocations, useHighwayAlerts, useTravelTimes } from 'ws-dottie';
+Combine ferry data with highway information for complete commute planning.
 
-function CommuterDashboard() {
-  const { data: vessels } = useVesselLocations();
-  const { data: alerts } = useHighwayAlerts();
-  const { data: travelTimes } = useTravelTimes();
-  
-  // Combine ferry and highway data for complete commute picture
-  return (
-    <div>
-      <h1>Seattle Commute Dashboard</h1>
-      <FerryStatus vessels={vessels} />
-      <HighwayStatus alerts={alerts} travelTimes={travelTimes} />
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSF Vessels, WSF Terminals, WSDOT Highway Alerts, WSDOT Travel Times
 
 ### Weather + Traffic Integration
-```javascript
-import { useWeatherInformation, useHighwayAlerts, useMountainPassConditions } from 'ws-dottie';
+Correlate weather conditions with traffic incidents for weather-aware travel planning.
 
-function WeatherAwareTrafficApp() {
-  const { data: weather } = useWeatherInformation();
-  const { data: alerts } = useHighwayAlerts();
-  const { data: passes } = useMountainPassConditions();
-  
-  // Correlate weather conditions with traffic incidents
-  const weatherRelatedAlerts = alerts.filter(alert => 
-    isWeatherRelated(alert, weather)
-  );
-  
-  return (
-    <div>
-      <h1>Weather-Aware Traffic</h1>
-      <TrafficAlerts alerts={weatherRelatedAlerts} />
-      <MountainPassStatus passes={passes} />
-    </div>
-  );
-}
-```
+**Relevant APIs**: WSDOT Weather Information, WSDOT Mountain Pass Conditions, WSDOT Highway Alerts
 
 ## 🎯 Choosing Right APIs
 
@@ -320,18 +164,6 @@ function WeatherAwareTrafficApp() {
 - **Caching Strategy**: `WEEKLY_UPDATES`
 - **Update Frequency**: Weekly or manual refresh
 
-## 📊 Performance Considerations
-
-### Request Optimization
-- **Batch Requests**: Use multiple API calls in parallel when possible
-- **Conditional Fetching**: Only fetch data when needed
-- **Background Updates**: Use appropriate caching strategies
-
-### Data Volume
-- **Large Datasets**: Consider pagination or filtering for large responses
-- **Real-time Data**: Use appropriate caching to avoid excessive requests
-- **Historical Data**: Use date range filtering to limit response size
-
 ## 🔗 Detailed Documentation
 
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
@@ -342,4 +174,4 @@ For detailed endpoint documentation, interactive examples, and schema definition
 
 - **[Category Documentation](./categories/)** - Detailed information by use case
 - **[Implementation Guides](./guides/)** - Platform-specific integration patterns
-- **[Reference Materials](./reference/)** - Advanced configuration and patterns
+- **[Endpoints Reference](./endpoints.md)** - Complete endpoint reference table

@@ -48,6 +48,47 @@ function App() {
 }
 ```
 
+### 3. Use WS-Dottie Hooks
+
+```jsx
+import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+
+function TransportationDashboard() {
+  const { data: vessels, isLoading, error } = useVesselLocations();
+  const { data: alerts } = useHighwayAlerts();
+  
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return (
+    <div>
+      <h1>Washington Transportation</h1>
+      {isLoading && <div>Loading...</div>}
+      
+      <section>
+        <h2>Ferries ({vessels?.length || 0})</h2>
+        {vessels?.map(vessel => (
+          <div key={vessel.VesselID}>
+            <h3>{vessel.VesselName}</h3>
+            <p>Location: {vessel.Latitude}, {vessel.Longitude}</p>
+            <p>Speed: {vessel.Speed} knots</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h2>Highway Alerts ({alerts?.length || 0})</h2>
+        {alerts?.map(alert => (
+          <div key={alert.AlertID}>
+            <h3>{alert.HeadlineDescription}</h3>
+            <p>Priority: {alert.Priority}</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
+
 ## 🔄 Cache Strategies
 
 WS-Dottie provides four cache strategies optimized for different types of transportation data:
@@ -83,9 +124,9 @@ WSF APIs provide cache flush dates to help determine when data has been updated.
 
 ### Understanding Cache Flush Endpoints
 
-WSF APIs include special `cacheFlushDate` endpoints that return timestamps indicating when the underlying data was last updated. These endpoints serve a critical purpose:
+WSF APIs include special `cacheFlushDate` endpoints that return timestamps indicating when underlying data was last updated. These endpoints serve a critical purpose:
 
-- **Data Freshness**: They tell you exactly when the source data was last modified
+- **Data Freshness**: They tell you exactly when source data was last modified
 - **Efficient Updates**: Instead of polling frequently, you can check if data has changed
 - **Bandwidth Savings**: Prevents unnecessary data transfers when nothing has changed
 - **User Experience**: Ensures users see fresh data without long loading times
@@ -95,8 +136,8 @@ WSF APIs include special `cacheFlushDate` endpoints that return timestamps indic
 The `createHook` factory function automatically:
 - Detects WSF APIs with STATIC cache strategy (wsf-fares, wsf-schedule, wsf-terminals, wsf-vessels)
 - Polls relevant cacheFlushDate endpoint every 5 minutes
-- Compares flush date with the last known value
-- Invalidates cache when the flush date changes
+- Compares flush date with last known value
+- Invalidates cache when flush date changes
 - Persists flush date in localStorage for tracking
 
 ### Using Hooks with Automatic Cache Invalidation
@@ -177,7 +218,7 @@ function VesselTracker() {
       
       // Show user-friendly message
       if (error.status === 401) {
-        showNotification('Please check your API configuration');
+        showNotification('Please check your API key configuration');
       } else if (error.status >= 500) {
         showNotification('Server error. Please try again later.');
       }
@@ -232,23 +273,174 @@ function FerryDashboard() {
   
   return (
     <div>
+      <h1>Ferry Dashboard</h1>
+      
       <button onClick={() => setShowDetails(!showDetails)}>
         {showDetails ? 'Hide Details' : 'Show Details'}
       </button>
       
-      {vessels?.map(vessel => (
-        <div key={vessel.VesselID}>
-          <h3>{vessel.VesselName}</h3>
-          
-          {showDetails && waitTimes && (
-            <div className="vessel-details">
-              <p>Terminal Wait: {
-                waitTimes.find(t => t.TerminalID === vessel.DestinationTerminalID)?.WaitTime || 'Unknown'
-              } minutes</p>
-            </div>
-          )}
-        </div>
-      ))}
+      <div className="vessel-list">
+        {vessels?.map(vessel => (
+          <div key={vessel.VesselID}>
+            <h3>{vessel.VesselName}</h3>
+            <p>Location: {vessel.Latitude}, {vessel.Longitude}</p>
+            
+            {showDetails && waitTimes && (
+              <div className="vessel-details">
+                <p>Terminal Wait: {
+                  waitTimes.find(t => t.TerminalID === vessel.DestinationTerminalID)?.WaitTime || 'Unknown'
+                } minutes</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## 🎯 React Patterns
+
+### Data Fetching with Parameters
+
+```jsx
+import { useSchedules, useFares } from 'ws-dottie';
+
+function FerrySchedule() {
+  const [route, setRoute] = useState({ 
+    departing: 3, 
+    arriving: 7, 
+    date: new Date() 
+  });
+  
+  const { data: schedules } = useSchedules({ 
+    departingTerminalId: route.departing, 
+    arrivingTerminalId: route.arriving, 
+    tripDate: route.date 
+  });
+  
+  const { data: fares } = useFares({ 
+    tripDate: route.date, 
+    departingTerminalId: route.departing, 
+    arrivingTerminalId: route.arriving 
+  });
+  
+  return (
+    <div>
+      <div className="route-selector">
+        <label>From: 
+          <select 
+            value={route.departing} 
+            onChange={e => setRoute({...route, departing: Number(e.target.value)})}
+          >
+            {/* Terminal options */}
+          </select>
+        </label>
+        
+        <label>To: 
+          <select 
+            value={route.arriving} 
+            onChange={e => setRoute({...route, arriving: Number(e.target.value)})}
+          >
+            {/* Terminal options */}
+          </select>
+        </label>
+        
+        <label>Date: 
+          <input 
+            type="date" 
+            value={route.date.toISOString().split('T')[0]} 
+            onChange={e => setRoute({...route, date: new Date(e.target.value)})}
+          />
+        </label>
+      </div>
+      
+      <div className="schedule-display">
+        {/* Render schedules and fares */}
+      </div>
+    </div>
+  );
+}
+```
+
+### Component Structure
+
+Recommended component structure for WS-Dottie data:
+
+```jsx
+// Container component - handles data fetching
+function VesselMapContainer() {
+  const { data: vessels, isLoading, error, refetch } = useVesselLocations();
+  
+  return (
+    <VesselMap 
+      vessels={vessels || []}
+      isLoading={isLoading}
+      error={error}
+      onRefresh={refetch}
+    />
+  );
+}
+
+// Presentational component - handles UI rendering
+function VesselMap({ vessels, isLoading, error, onRefresh }) {
+  if (error) return <ErrorDisplay error={error} />;
+  if (isLoading) return <LoadingDisplay />;
+  
+  return (
+    <div>
+      <button onClick={onRefresh}>Refresh</button>
+      {/* Map rendering logic */}
+    </div>
+  );
+}
+```
+
+### Data Transformation
+
+```jsx
+import { useWeatherInformation } from 'ws-dottie';
+
+function WeatherDashboard() {
+  const { data: weather } = useWeatherInformation();
+  
+  // Transform data for visualization
+  const weatherByRegion = useMemo(() => {
+    if (!weather) return {};
+    
+    return weather.reduce((acc, station) => {
+      const region = station.Region || 'Unknown';
+      if (!acc[region]) acc[region] = [];
+      acc[region].push(station);
+      return acc;
+    }, {});
+  }, [weather]);
+  
+  const regionStats = useMemo(() => {
+    return Object.entries(weatherByRegion).map(([region, stations]) => ({
+      region,
+      count: stations.length,
+      avgTemp: stations.reduce((sum, s) => sum + (s.Temperature || 0), 0) / stations.length,
+      maxTemp: Math.max(...stations.map(s => s.Temperature || 0)),
+      minTemp: Math.min(...stations.map(s => s.Temperature || 0)),
+    }));
+  }, [weatherByRegion]);
+  
+  return (
+    <div>
+      <h1>Weather Dashboard</h1>
+      
+      <div className="region-stats">
+        {regionStats.map(stat => (
+          <div key={stat.region}>
+            <h3>{stat.region}</h3>
+            <p>Stations: {stat.count}</p>
+            <p>Avg Temp: {stat.avgTemp.toFixed(1)}°F</p>
+            <p>Range: {stat.minTemp}°F - {stat.maxTemp}°F</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -343,7 +535,6 @@ function ScheduleComponent() {
 
 ## 📚 Next Steps
 
-- **[React Integration Guide](./react.md)** - React patterns with WS-Dottie hooks
-- **[Node.js Integration Guide](./nodejs.md)** - Server-side usage patterns
-- **[CLI Usage Guide](./cli.md)** - Command-line interface and debugging
-- **[Error Handling Reference](../reference/error-handling.md)** - WS-Dottie error types and recovery
+- **[Fetching Data Guide](./fetching-data.md)** - Basic fetch-dottie usage patterns
+- **[CLI Usage Guide](./cli-usage.md)** - Command-line interface and debugging
+- **[Error Handling Reference](./error-handling.md)** - WS-Dottie error types and recovery

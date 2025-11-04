@@ -2,6 +2,8 @@
 
 This document provides an overview of WS-Dottie's architecture, design principles, and technical implementation details.
 
+> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](./getting-started.md) • [API Guide](./api-guide.md)
+
 ## 🏗️ System Overview
 
 WS-Dottie is a TypeScript library that provides unified access to Washington State transportation data from WSDOT and WSF APIs. It abstracts away the complexity of working with multiple government APIs while providing type safety, performance optimization, and environment-agnostic operation.
@@ -200,20 +202,6 @@ interface ApiErrorContext {
   statusCode?: number;    // HTTP status code
 }
 ```
-
-## 🧪 Testing Architecture
-
-### Test Categories
-- **Unit Tests**: Individual function validation
-- **Integration Tests**: API interaction testing
-- **E2E Tests**: Full workflow validation
-- **Performance Tests**: Load and timing validation
-
-### Test Environments
-- **Node.js**: Native fetch testing
-- **Browser**: JSONP simulation
-- **CLI**: Command-line interface testing
-- **Mock**: Local development with sample data
 
 ## 🔄 Data Transformation
 

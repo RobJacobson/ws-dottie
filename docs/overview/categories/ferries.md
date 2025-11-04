@@ -10,18 +10,536 @@ WS-Dottie provides access to four ferry APIs that cover all aspects of Washingto
 
 | API | Description | Key Features | Update Frequency |
 |------|-------------|---------------|------------------|
-| **WSF Vessels** | Real-time vessel locations, specifications, and history | Real-time (5s) |
-| **WSF Terminals** | Terminal wait times, sailing space, and locations | Frequent (1-5m) |
-| **WSF Schedule** | Ferry schedules, routes, and sailing times | Daily |
-| **WSF Fares** | Fare information, pricing, and terminal combinations | Weekly |
+| **WSF Fares** | Fare information, pricing, and terminal combinations | Cost calculation, fare planning, price comparison | Weekly |
+| **WSF Schedule** | Ferry schedules, routes, and sailing times | Trip planning, route information, time tables | Daily |
+| **WSF Terminals** | Terminal wait times, sailing space, and locations | Wait monitoring, terminal capacity, location data | Frequent (1-5m) |
+| **WSF Vessels** | Real-time vessel locations, specifications, and history | Real-time tracking, vessel details, historical data | Real-time (5s) |
+
+## 💰 WSF Fares API
+
+### API Overview
+The WSF Fares API provides comprehensive fare information for ferry routes, including detailed pricing for different passenger types, vehicle categories, and route combinations.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **fare-line-items** | Detailed fare breakdowns by passenger and vehicle type | STATIC |
+| **fare-totals** | Total fare calculations for common scenarios | STATIC |
+| **terminals** | Terminal information specific to fare system | STATIC |
+| **terminal-combo** | Valid terminal combinations for fare calculations | STATIC |
+| **valid-date-range** | Valid date range for fare queries | WEEKLY |
+| **cache-flush-date** | Timestamp of last fare data refresh | STATIC |
+
+### Key Endpoints
+
+#### Fare Line Items
+- **getFareLineItemsByTripDateAndTerminals**: Returns detailed fare breakdown for a specific trip
+  - **Input**: 
+    - `TripDate` (date) - Date of travel
+    - `DepartingTerminalID` (integer) - Origin terminal identifier
+    - `ArrivingTerminalID` (integer) - Destination terminal identifier
+    - `RoundTrip` (boolean) - Whether this is a round trip
+  - **Output**: Array of fare line items
+  - **Key Fields**:
+    - `FareDescription`: Description of fare type
+    - `PassengerType`: Passenger category (Adult, Senior, Youth, etc.)
+    - `VehicleType`: Vehicle category (Standard, Oversize, etc.)
+    - `FareAmount`: Cost for this fare component
+    - `Currency`: Currency code (USD)
+
+#### Fare Totals
+- **getFareTotalsByTripDateAndTerminals**: Returns total fare for common scenarios
+  - **Input**: Same parameters as fare line items
+  - **Output**: Total fare information
+  - **Key Fields**:
+    - `PassengerFare`: Total passenger fare
+    - `VehicleFare`: Total vehicle fare
+    - `TotalFare`: Combined total fare
+    - `Currency`: Currency code (USD)
+
+### Common Use Cases
+
+#### Fare Calculator
+```javascript
+import { useFareLineItemsByTripDateAndTerminals, useTerminals } from 'ws-dottie';
+
+function FareCalculator() {
+  const [tripDate, setTripDate] = useState(new Date());
+  const [departingTerminal, setDepartingTerminal] = useState(3);
+  const [arrivingTerminal, setArrivingTerminal] = useState(7);
+  const [isRoundTrip, setIsRoundTrip] = useState(false);
+  const [passengers, setPassengers] = useState({ adult: 1, senior: 0, youth: 0 });
+  const [vehicleType, setVehicleType] = useState('standard');
+  
+  const { data: terminals } = useTerminals();
+  const { data: fares, isLoading } = useFareLineItemsByTripDateAndTerminals({
+    TripDate: tripDate,
+    DepartingTerminalID: departingTerminal,
+    ArrivingTerminalID: arrivingTerminal,
+    RoundTrip: isRoundTrip
+  });
+  
+  // Calculate total fare based on passenger and vehicle selection
+  const calculateTotalFare = () => {
+    if (!fares) return 0;
+    
+    let total = 0;
+    
+    // Add passenger fares
+    total += (fares.find(f => f.PassengerType === 'Adult')?.FareAmount || 0) * passengers.adult;
+    total += (fares.find(f => f.PassengerType === 'Senior')?.FareAmount || 0) * passengers.senior;
+    total += (fares.find(f => f.PassengerType === 'Youth')?.FareAmount || 0) * passengers.youth;
+    
+    // Add vehicle fare
+    const vehicleFare = fares.find(f => 
+      f.VehicleType === vehicleType && f.FareDescription.includes('Vehicle')
+    )?.FareAmount || 0;
+    total += vehicleFare;
+    
+    // Double for round trip
+    return isRoundTrip ? total * 2 : total;
+  };
+  
+  const totalFare = calculateTotalFare();
+  
+  return (
+    <div>
+      <h1>Fare Calculator</h1>
+      
+      <div className="trip-form">
+        <div className="form-row">
+          <label>
+            Date of Travel:
+            <input 
+              type="date" 
+              value={tripDate.toISOString().split('T')[0]} 
+              onChange={(e) => setTripDate(new Date(e.target.value))}
+            />
+          </label>
+        </div>
+        
+        <div className="form-row">
+          <label>
+            From:
+            <select 
+              value={departingTerminal} 
+              onChange={(e) => setDepartingTerminal(Number(e.target.value))}
+            >
+              {terminals?.map(terminal => (
+                <option key={terminal.TerminalID} value={terminal.TerminalID}>
+                  {terminal.TerminalName}
+                </option>
+              ))}
+            </select>
+          </label>
+          
+          <label>
+            To:
+            <select 
+              value={arrivingTerminal} 
+              onChange={(e) => setArrivingTerminal(Number(e.target.value))}
+            >
+              {terminals?.map(terminal => (
+                <option key={terminal.TerminalID} value={terminal.TerminalID}>
+                  {terminal.TerminalName}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        
+        <div className="form-row">
+          <label>
+            <input 
+              type="checkbox" 
+              checked={isRoundTrip} 
+              onChange={(e) => setIsRoundTrip(e.target.checked)}
+            />
+            Round Trip
+          </label>
+        </div>
+        
+        <div className="form-row">
+          <h3>Passengers</h3>
+          <label>
+            Adults:
+            <input 
+              type="number" 
+              min="0" 
+              value={passengers.adult} 
+              onChange={(e) => setPassengers({...passengers, adult: Number(e.target.value)})}
+            />
+          </label>
+          <label>
+            Seniors:
+            <input 
+              type="number" 
+              min="0" 
+              value={passengers.senior} 
+              onChange={(e) => setPassengers({...passengers, senior: Number(e.target.value)})}
+            />
+          </label>
+          <label>
+            Youth:
+            <input 
+              type="number" 
+              min="0" 
+              value={passengers.youth} 
+              onChange={(e) => setPassengers({...passengers, youth: Number(e.target.value)})}
+            />
+          </label>
+        </div>
+        
+        <div className="form-row">
+          <label>
+            Vehicle Type:
+            <select 
+              value={vehicleType} 
+              onChange={(e) => setVehicleType(e.target.value)}
+            >
+              <option value="standard">Standard Vehicle</option>
+              <option value="oversize">Oversize Vehicle</option>
+              <option value="motorcycle">Motorcycle</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      
+      <div className="fare-result">
+        <h2>Total Fare: ${totalFare.toFixed(2)}</h2>
+        {isLoading && <div>Calculating fare...</div>}
+      </div>
+    </div>
+  );
+}
+```
+
+## 📅 WSF Schedule API
+
+### API Overview
+The WSF Schedule API provides comprehensive schedule information for ferry routes, including sailing times, route details, and service alerts.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **schedules** | Complete schedule information for all routes | DAILY |
+| **routes** | Basic route information between terminal pairs | DAILY |
+| **route-details** | Detailed route information with terminal details | DAILY |
+| **sailings** | Individual sailing times and vessel assignments | FREQUENT |
+| **terminals** | Terminal information specific to schedule system | DAILY |
+| **terminal-mates** | Terminal pairings and route connections | DAILY |
+| **schedule-alerts** | Service disruptions and schedule changes | FREQUENT |
+| **service-disruptions** | Current service disruptions and alternative arrangements | FREQUENT |
+| **active-seasons** | Schedule season dates and validity periods | WEEKLY |
+| **time-adjustments** | Schedule adjustments and time changes | DAILY |
+| **cache-flush-date** | Timestamp of last schedule data refresh | STATIC |
+| **valid-date-range** | Valid date range for schedule queries | WEEKLY |
+
+### Key Endpoints
+
+#### Sailings
+- **getSailingsBySchedRouteID**: Returns sailing times for a specific route
+  - **Input**: `SchedRouteID` (integer) - Unique route identifier
+  - **Output**: Array of sailing information
+  - **Key Fields**:
+    - `SailingID`: Unique sailing identifier
+    - `DepartingTerminalID`: Origin terminal identifier
+    - `ArrivingTerminalID`: Destination terminal identifier
+    - `DepartTime`: Scheduled departure time
+    - `ArriveTime`: Scheduled arrival time
+    - `VesselID`: Assigned vessel identifier
+    - `VesselName`: Human-readable vessel name
+
+#### Routes
+- **getRoutes**: Returns basic information for all ferry routes
+  - **Input**: No parameters required
+  - **Output**: Array of route information
+  - **Key Fields**:
+    - `RouteID`: Unique route identifier
+    - `RouteDescription`: Human-readable route description
+    - `DepartingTerminalID`: Origin terminal identifier
+    - `DepartingTerminalName`: Origin terminal name
+    - `ArrivingTerminalID`: Destination terminal identifier
+    - `ArrivingTerminalName`: Destination terminal name
+    - `CrossingTime`: Typical crossing time in minutes
+
+### Common Use Cases
+
+#### Schedule Display
+```javascript
+import { useSailingsBySchedRouteID, useRoutes } from 'ws-dottie';
+
+function FerrySchedule() {
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const { data: routes } = useRoutes();
+  const { data: sailings, isLoading } = useSailingsBySchedRouteID(
+    selectedRoute ? { SchedRouteID: selectedRoute } : null
+  );
+  
+  return (
+    <div>
+      <h1>Ferry Schedule</h1>
+      
+      <div className="route-selector">
+        <h2>Select Route</h2>
+        <select 
+          value={selectedRoute || ''} 
+          onChange={(e) => setSelectedRoute(Number(e.target.value))}
+        >
+          <option value="">Choose a route...</option>
+          {routes?.map(route => (
+            <option key={route.RouteID} value={route.RouteID}>
+              {route.RouteDescription}
+            </option>
+          ))}
+        </select>
+      </div>
+      
+      {selectedRoute && (
+        <div className="schedule-display">
+          <h2>Schedule</h2>
+          {isLoading ? (
+            <div>Loading schedule...</div>
+          ) : (
+            <div className="sailings-list">
+              {sailings?.map(sailing => (
+                <div key={sailing.SailingID} className="sailing-item">
+                  <div className="sailing-times">
+                    <span className="depart-time">
+                      Departs: {new Date(sailing.DepartTime).toLocaleTimeString()}
+                    </span>
+                    <span className="arrive-time">
+                      Arrives: {new Date(sailing.ArriveTime).toLocaleTimeString()}
+                    </span>
+                  </div>
+                  <div className="sailing-vessel">
+                    Vessel: {sailing.VesselName}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## 🏗️ WSF Terminals API
+
+### API Overview
+The WSF Terminals API provides comprehensive information about ferry terminals, including locations, amenities, wait times, and sailing space availability.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **terminal-basics** | Basic terminal information including names and identifiers | STATIC |
+| **terminal-locations** | Geographic coordinates and address information for terminals | STATIC |
+| **terminal-wait-times** | Current wait times for vehicles and passengers | FREQUENT |
+| **terminal-sailing-space** | Real-time sailing space availability for current departures | FREQUENT |
+| **terminal-bulletins** | Terminal alerts and service notifications | FREQUENT |
+| **terminal-transports** | Public transportation connections to terminals | STATIC |
+| **terminal-verbose** | Comprehensive terminal details combining all other data | STATIC |
+| **cache-flush-date** | Timestamp of last data refresh for terminal information | STATIC |
+
+### Key Endpoints
+
+#### Terminal Wait Times
+- **getTerminalWaitTimes**: Returns current wait times for all terminals
+  - **Input**: No parameters required
+  - **Output**: Array of terminal wait time information
+  - **Key Fields**:
+    - `TerminalID`: Unique terminal identifier
+    - `TerminalName`: Human-readable terminal name
+    - `VehicleWaitTime`: Current wait time for vehicles in minutes
+    - `PassengerWaitTime`: Current wait time for passengers in minutes
+    - `MaxVehicleWaitTime`: Maximum vehicle wait time today
+    - `SailingSpaceAvailable`: Boolean indicating if space is available
+    - `LastUpdated`: Timestamp of last wait time update
+
+- **getTerminalWaitTimesByTerminalId**: Returns wait time information for a specific terminal
+  - **Input**: `TerminalID` (integer) - Unique terminal identifier
+  - **Output**: Single terminal wait time object with all fields above
+
+#### Terminal Locations
+- **getTerminalLocations**: Returns geographic information for all terminals
+  - **Input**: No parameters required
+  - **Output**: Array of terminal location information
+  - **Key Fields**:
+    - `TerminalID`: Unique terminal identifier
+    - `TerminalName`: Human-readable terminal name
+    - `Latitude`, `Longitude`: GPS coordinates
+    - `Address`: Street address
+    - `City`: City name
+    - `State`: State abbreviation
+    - `ZipCode`: Postal code
+    - `DrivingDirections`: Text directions to terminal
+
+### Common Use Cases
+
+#### Terminal Wait Times Display
+```javascript
+import { useTerminalWaitTimes } from 'ws-dottie';
+
+function TerminalWaitTimes() {
+  const { data: terminals, isLoading, error } = useTerminalWaitTimes();
+  
+  if (isLoading) return <div>Loading wait times...</div>;
+  if (error) return <div>Error loading terminal data: {error.message}</div>;
+  
+  // Sort terminals by wait time (longest first)
+  const sortedTerminals = [...(terminals || [])].sort((a, b) => 
+    (b.VehicleWaitTime || 0) - (a.VehicleWaitTime || 0)
+  );
+  
+  return (
+    <div>
+      <h1>Terminal Wait Times</h1>
+      <div className="terminal-grid">
+        {sortedTerminals.map(terminal => (
+          <div key={terminal.TerminalID} className="terminal-card">
+            <h3>{terminal.TerminalName}</h3>
+            <div className="wait-times">
+              <div className="wait-time">
+                <span className="label">Vehicles:</span>
+                <span className={`time ${terminal.VehicleWaitTime > 30 ? 'long' : 'normal'}`}>
+                  {terminal.VehicleWaitTime || 0} min
+                </span>
+              </div>
+              <div className="wait-time">
+                <span className="label">Passengers:</span>
+                <span className={`time ${terminal.PassengerWaitTime > 15 ? 'long' : 'normal'}`}>
+                  {terminal.PassengerWaitTime || 0} min
+                </span>
+              </div>
+            </div>
+            <div className="space-status">
+              <span className={`status ${terminal.SailingSpaceAvailable ? 'available' : 'full'}`}>
+                {terminal.SailingSpaceAvailable ? 'Space Available' : 'Full'}
+              </span>
+            </div>
+            <div className="last-updated">
+              Last updated: {new Date(terminal.LastUpdated).toLocaleTimeString()}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+#### Terminal Information Display
+```javascript
+import { useTerminalBasics, useTerminalLocations } from 'ws-dottie';
+
+function TerminalInfo() {
+  const { data: terminals, isLoading: terminalsLoading } = useTerminalBasics();
+  const { data: locations, isLoading: locationsLoading } = useTerminalLocations();
+  
+  if (terminalsLoading || locationsLoading) return <div>Loading terminal information...</div>;
+  
+  // Combine terminal basic info with locations
+  const terminalsWithDetails = terminals?.map(terminal => {
+    const location = locations?.find(l => l.TerminalID === terminal.TerminalID);
+    return {
+      ...terminal,
+      ...location
+    };
+  }) || [];
+  
+  return (
+    <div>
+      <h1>Terminal Information</h1>
+      <div className="terminal-list">
+        {terminalsWithDetails.map(terminal => (
+          <div key={terminal.TerminalID} className="terminal-detail-card">
+            <h3>{terminal.TerminalName}</h3>
+            <div className="terminal-address">
+              <p>{terminal.Address}</p>
+              <p>{terminal.City}, {terminal.State} {terminal.ZipCode}</p>
+            </div>
+            <div className="terminal-coords">
+              <p>Location: {terminal.Latitude.toFixed(4)}, {terminal.Longitude.toFixed(4)}</p>
+            </div>
+            <div className="terminal-amenities">
+              <p>Restrooms: {terminal.Restrooms ? 'Available' : 'Not Available'}</p>
+              <p>Food Service: {terminal.FoodService ? 'Available' : 'Not Available'}</p>
+              <p>Parking: {terminal.Parking ? 'Available' : 'Not Available'}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
 
 ## 🚢 WSF Vessels API
 
-### Key Features
-- **Real-time vessel tracking** with GPS coordinates and speed
-- **Vessel specifications** including capacity and accommodations
-- **Historical data** for performance analysis
-- **Vessel statistics** for operational insights
+### API Overview
+The WSF Vessels API provides comprehensive information about Washington State Ferries fleet, including real-time vessel tracking, specifications, accommodations, and historical data.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **vessel-locations** | Real-time vessel GPS positions, speed, heading, and ETA information | REALTIME |
+| **vessel-basics** | Basic vessel information including names, classes, and identifiers | STATIC |
+| **vessel-accommodations** | Passenger amenities and accessibility features for each vessel | STATIC |
+| **vessel-histories** | Historical vessel position and status data | STATIC |
+| **vessel-stats** | Performance statistics and operational metrics for vessels | STATIC |
+| **vessel-verbose** | Comprehensive vessel details combining all other endpoint data | STATIC |
+| **cache-flush-date** | Timestamp of last data refresh for vessel information | STATIC |
+
+### Key Endpoints
+
+#### Vessel Locations
+- **getVesselLocations**: Returns real-time position data for all vessels in the fleet
+  - **Input**: No parameters required
+  - **Output**: Array of vessel locations with GPS coordinates, speed, heading, terminal assignments, and ETA
+  - **Key Fields**: 
+    - `VesselID`: Unique vessel identifier
+    - `VesselName`: Human-readable vessel name
+    - `Latitude`, `Longitude`: GPS coordinates
+    - `Speed`: Current speed in knots
+    - `Heading`: Direction in degrees (0-359)
+    - `DepartingTerminalID/Name`: Origin terminal information
+    - `ArrivingTerminalID/Name`: Destination terminal information
+    - `Eta`: Estimated arrival time at destination
+    - `AtDock`: Boolean indicating if vessel is currently docked
+
+- **getVesselLocationsByVesselId**: Returns real-time position data for a specific vessel
+  - **Input**: `VesselID` (integer) - Unique vessel identifier
+  - **Output**: Single vessel location object with all fields above
+
+#### Vessel Basics
+- **getVesselBasics**: Returns basic information for all vessels
+  - **Input**: No parameters required
+  - **Output**: Array of vessel basic information
+  - **Key Fields**:
+    - `VesselID`: Unique vessel identifier
+    - `VesselName`: Human-readable vessel name
+    - `VesselClass`: Vessel class categorization
+    - `YearBuilt`: Year vessel was constructed
+    - `Length`: Vessel length in feet
+    - `Tonage`: Vessel tonnage
+
+#### Vessel Accommodations
+- **getVesselAccommodations**: Returns amenity and accessibility information for all vessels
+  - **Input**: No parameters required
+  - **Output**: Array of vessel accommodation details
+  - **Key Fields**:
+    - `VesselID`: Unique vessel identifier
+    - `PassengerCapacity`: Maximum passenger capacity
+    - `VehicleCapacity`: Maximum vehicle capacity
+    - `ADACompliant`: ADA accessibility compliance status
+    - `FoodService`: Food service availability
+    - `Restrooms`: Restroom facilities information
 
 ### Common Use Cases
 
@@ -30,18 +548,40 @@ WS-Dottie provides access to four ferry APIs that cover all aspects of Washingto
 import { useVesselLocations } from 'ws-dottie';
 
 function VesselMap() {
-  const { data: vessels, isLoading } = useVesselLocations();
+  const { data: vessels, isLoading, error } = useVesselLocations();
+  
+  if (isLoading) return <div>Loading vessels...</div>;
+  if (error) return <div>Error loading vessel data: {error.message}</div>;
   
   return (
     <div>
       <h1>Washington State Ferries</h1>
-      {isLoading && <div>Loading vessels...</div>}
+      <div className="vessel-count">
+        Active Vessels: {vessels?.filter(v => v.InService).length || 0}
+      </div>
       {vessels?.map(vessel => (
-        <div key={vessel.VesselID}>
+        <div key={vessel.VesselID} className="vessel-card">
           <h3>{vessel.VesselName}</h3>
-          <p>Location: {vessel.Latitude}, {vessel.Longitude}</p>
-          <p>Speed: {vessel.Speed} knots</p>
-          <p>Heading: {vessel.Heading}°</p>
+          <div className="vessel-status">
+            <span className={`status ${vessel.AtDock ? 'docked' : 'underway'}`}>
+              {vessel.AtDock ? 'At Dock' : 'Underway'}
+            </span>
+            <span className="service-status">
+              {vessel.InService ? 'In Service' : 'Out of Service'}
+            </span>
+          </div>
+          <div className="vessel-location">
+            <p>Position: {vessel.Latitude.toFixed(4)}, {vessel.Longitude.toFixed(4)}</p>
+            <p>Speed: {vessel.Speed} knots</p>
+            <p>Heading: {vessel.Heading}°</p>
+          </div>
+          <div className="vessel-route">
+            <p>From: {vessel.DepartingTerminalName}</p>
+            <p>To: {vessel.ArrivingTerminalName}</p>
+            {vessel.Eta && (
+              <p>ETA: {new Date(vessel.Eta).toLocaleTimeString()}</p>
+            )}
+          </div>
         </div>
       ))}
     </div>
@@ -54,206 +594,44 @@ function VesselMap() {
 import { useVesselBasics, useVesselAccommodations } from 'ws-dottie';
 
 function VesselInfo() {
-  const { data: vessels } = useVesselBasics();
-  const { data: accommodations } = useVesselAccommodations();
+  const { data: vessels, isLoading: vesselsLoading } = useVesselBasics();
+  const { data: accommodations, isLoading: accommodationsLoading } = useVesselAccommodations();
+  
+  if (vesselsLoading || accommodationsLoading) return <div>Loading vessel information...</div>;
+  
+  // Combine vessel basic info with accommodations
+  const vesselsWithDetails = vessels?.map(vessel => {
+    const vesselAccommodations = accommodations?.find(a => a.VesselID === vessel.VesselID);
+    return {
+      ...vessel,
+      ...vesselAccommodations
+    };
+  }) || [];
   
   return (
     <div>
       <h1>Fleet Information</h1>
-      {vessels?.map(vessel => {
-        const vesselAccommodations = accommodations?.find(a => a.VesselID === vessel.VesselID);
-        return (
-          <div key={vessel.VesselID}>
+      <div className="vessel-grid">
+        {vesselsWithDetails.map(vessel => (
+          <div key={vessel.VesselID} className="vessel-detail-card">
             <h3>{vessel.VesselName}</h3>
-            <p>Class: {vessel.VesselClass}</p>
-            <p>Capacity: {vesselAccommodations?.PassengerCapacity} passengers</p>
-            <p>Vehicle Space: {vesselAccommodations?.VehicleCapacity} vehicles</p>
+            <div className="vessel-specs">
+              <p>Class: {vessel.VesselClass}</p>
+              <p>Year Built: {vessel.YearBuilt}</p>
+              <p>Length: {vessel.Length} feet</p>
+              <p>Tonnage: {vessel.Tonage}</p>
+            </div>
+            <div className="vessel-capacities">
+              <p>Passengers: {vessel.PassengerCapacity}</p>
+              <p>Vehicles: {vessel.VehicleCapacity}</p>
+            </div>
+            <div className="vessel-features">
+              <p>ADA Compliant: {vessel.ADACompliant ? 'Yes' : 'No'}</p>
+              <p>Food Service: {vessel.FoodService ? 'Available' : 'Not Available'}</p>
+            </div>
           </div>
-        );
-      })}
-    </div>
-  );
-}
-```
-
-## 🏗️ WSF Terminals API
-
-### Key Features
-- **Real-time wait times** for all ferry terminals
-- **Sailing space availability** for current sailings
-- **Terminal locations** and contact information
-- **Terminal amenities** and services
-
-### Common Use Cases
-
-#### Terminal Wait Times Display
-```javascript
-import { useTerminalWaitTimes } from 'ws-dottie';
-
-function TerminalWaitTimes() {
-  const { data: terminals, isLoading } = useTerminalWaitTimes();
-  
-  return (
-    <div>
-      <h1>Terminal Wait Times</h1>
-      {isLoading && <div>Loading wait times...</div>}
-      {terminals?.map(terminal => (
-        <div key={terminal.TerminalID}>
-          <h3>{terminal.TerminalName}</h3>
-          <p>Current Wait: {terminal.WaitTime} minutes</p>
-          <p>Next Sailing: {terminal.NextDeparture}</p>
-          <p>Space Available: {terminal.SailingSpace ? 'Yes' : 'No'}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
-#### Terminal Information Display
-```javascript
-import { useTerminalBasics, useTerminalLocations } from 'ws-dottie';
-
-function TerminalInfo() {
-  const { data: terminals } = useTerminalBasics();
-  const { data: locations } = useTerminalLocations();
-  
-  return (
-    <div>
-      <h1>Terminal Information</h1>
-      {terminals?.map(terminal => {
-        const location = locations?.find(l => l.TerminalID === terminal.TerminalID);
-        return (
-          <div key={terminal.TerminalID}>
-            <h3>{terminal.TerminalName}</h3>
-            <p>Address: {terminal.Address}</p>
-            <p>Phone: {terminal.Phone}</p>
-            {location && (
-              <div>
-                <p>Location: {location.Latitude}, {location.Longitude}</p>
-                <p>Driving Directions: {terminal.DrivingDirections}</p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-```
-
-## 📅 WSF Schedule API
-
-### Key Features
-- **Ferry schedules** with departure and arrival times
-- **Route information** between terminal pairs
-- **Seasonal schedules** and service adjustments
-- **Real-time updates** for schedule changes
-
-### Common Use Cases
-
-#### Schedule Display
-```javascript
-import { useSchedules } from 'ws-dottie';
-
-function FerrySchedule() {
-  const { data: schedules, isLoading } = useSchedules({ 
-    departingTerminalId: 3, 
-    arrivingTerminalId: 7, 
-    tripDate: new Date() 
-  });
-  
-  return (
-    <div>
-      <h1>Seattle to Bainbridge Schedule</h1>
-      {isLoading && <div>Loading schedule...</div>}
-      {schedules?.Sailings?.map(sailing => (
-        <div key={sailing.SailingID}>
-          <h3>{sailing.DepartTime}</h3>
-          <p>Arrives: {sailing.ArriveTime}</p>
-          <p>Vessel: {sailing.VesselName}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
-#### Route Planning
-```javascript
-import { useRoutes, useTerminals } from 'ws-dottie';
-
-function RoutePlanner() {
-  const { data: routes } = useRoutes({ tripDate: new Date() });
-  const { data: terminals } = useTerminals({ tripDate: new Date() });
-  
-  return (
-    <div>
-      <h1>Available Routes</h1>
-      {routes?.map(route => (
-        <div key={route.RouteID}>
-          <h3>{route.RouteDescription}</h3>
-          <p>From: {route.DepartingTerminalName}</p>
-          <p>To: {route.ArrivingTerminalName}</p>
-          <p>Duration: {route.CrossingTime} minutes</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
-## 💰 WSF Fares API
-
-### Key Features
-- **Fare calculation** for different passenger and vehicle types
-- **Terminal combinations** with pricing information
-- **Seasonal pricing** and special fare adjustments
-- **Discount information** for eligible passengers
-
-### Common Use Cases
-
-#### Fare Calculator
-```javascript
-import { useFareLineItems } from 'ws-dottie';
-
-function FareCalculator() {
-  const [departingTerminal, setDepartingTerminal] = useState(3);
-  const [arrivingTerminal, setArrivingTerminal] = useState(7);
-  const [passengers, setPassengers] = useState(1);
-  const [vehicles, setVehicles] = useState(0);
-  
-  const { data: fares } = useFareLineItems({
-    tripDate: new Date(),
-    departingTerminalId: departingTerminal,
-    arrivingTerminalId: arrivingTerminal
-  });
-  
-  // Calculate total fare based on passenger and vehicle count
-  const totalFare = calculateTotalFare(fares, passengers, vehicles);
-  
-  return (
-    <div>
-      <h1>Fare Calculator</h1>
-      <div>
-        <label>From: 
-          <select value={departingTerminal} onChange={e => setDepartingTerminal(Number(e.target.value))}>
-            {/* Terminal options */}
-          </select>
-        </label>
-        <label>To: 
-          <select value={arrivingTerminal} onChange={e => setArrivingTerminal(Number(e.target.value))}>
-            {/* Terminal options */}
-          </select>
-        </label>
-        <label>Passengers: 
-          <input type="number" value={passengers} onChange={e => setPassengers(Number(e.target.value))} />
-        </label>
-        <label>Vehicles: 
-          <input type="number" value={vehicles} onChange={e => setVehicles(Number(e.target.value))} />
-        </label>
+        ))}
       </div>
-      <h2>Total Fare: ${totalFare}</h2>
     </div>
   );
 }
@@ -273,23 +651,38 @@ function FerryDashboard() {
   
   // Combine vessel locations with terminal wait times
   const vesselsWithWaitTimes = vessels?.map(vessel => {
-    const terminalWaitTime = waitTimes?.find(t => t.TerminalID === vessel.DestinationTerminalID);
+    const terminalWaitTime = waitTimes?.find(t => t.TerminalID === vessel.ArrivingTerminalID);
     return {
       ...vessel,
-      destinationWaitTime: terminalWaitTime?.WaitTime || 0
+      destinationWaitTime: terminalWaitTime?.VehicleWaitTime || 0
     };
-  });
+  }) || [];
   
   return (
     <div>
       <h1>Ferry Dashboard</h1>
-      {vesselsWithWaitTimes?.map(vessel => (
-        <div key={vessel.VesselID}>
-          <h3>{vessel.VesselName}</h3>
-          <p>ETA: {vessel.ETA}</p>
-          <p>Terminal Wait: {vessel.destinationWaitTime} minutes</p>
-        </div>
-      ))}
+      <div className="vessel-status-grid">
+        {vesselsWithWaitTimes.map(vessel => (
+          <div key={vessel.VesselID} className="vessel-status-card">
+            <h3>{vessel.VesselName}</h3>
+            <div className="vessel-position">
+              <p>Position: {vessel.Latitude.toFixed(4)}, {vessel.Longitude.toFixed(4)}</p>
+              <p>Speed: {vessel.Speed} knots</p>
+              <p>Heading: {vessel.Heading}°</p>
+            </div>
+            <div className="vessel-route">
+              <p>From: {vessel.DepartingTerminalName}</p>
+              <p>To: {vessel.ArrivingTerminalName}</p>
+              {vessel.Eta && (
+                <p>ETA: {new Date(vessel.Eta).toLocaleTimeString()}</p>
+              )}
+            </div>
+            <div className="terminal-wait">
+              <p>Terminal Wait: {vessel.destinationWaitTime} minutes</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -297,34 +690,126 @@ function FerryDashboard() {
 
 ### Schedule + Fare Integration
 ```javascript
-import { useSchedules, useFares } from 'ws-dottie';
+import { useSailingsBySchedRouteID, useFareLineItemsByTripDateAndTerminals } from 'ws-dottie';
 
 function TripPlanner() {
-  const [route, setRoute] = useState({ departing: 3, arriving: 7 });
-  const { data: schedules } = useSchedules({ 
-    departingTerminalId: route.departing, 
-    arrivingTerminalId: route.arriving, 
-    tripDate: new Date() 
-  });
-  const { data: fares } = useFares({ 
-    tripDate: new Date(), 
-    departingTerminalId: route.departing, 
-    arrivingTerminalId: route.arriving 
-  });
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [tripDate, setTripDate] = useState(new Date());
+  const [passengers, setPassengers] = useState({ adult: 1, senior: 0 });
+  
+  // Get route information
+  const { data: routes } = useRoutes();
+  const selectedRouteInfo = routes?.find(r => r.RouteID === selectedRoute);
+  
+  // Get sailings for selected route
+  const { data: sailings } = useSailingsBySchedRouteID(
+    selectedRoute ? { SchedRouteID: selectedRoute } : null
+  );
+  
+  // Get fare information for selected route
+  const { data: fares } = useFareLineItemsByTripDateAndTerminals(
+    selectedRouteInfo ? {
+      TripDate: tripDate,
+      DepartingTerminalID: selectedRouteInfo.DepartingTerminalID,
+      ArrivingTerminalID: selectedRouteInfo.ArrivingTerminalID,
+      RoundTrip: false
+    } : null
+  );
+  
+  // Calculate fare for selected passenger count
+  const calculateFare = () => {
+    if (!fares) return 0;
+    
+    const adultFare = fares.find(f => f.PassengerType === 'Adult')?.FareAmount || 0;
+    const seniorFare = fares.find(f => f.PassengerType === 'Senior')?.FareAmount || 0;
+    
+    return (adultFare * passengers.adult) + (seniorFare * passengers.senior);
+  };
   
   return (
     <div>
       <h1>Trip Planner</h1>
-      {schedules?.Sailings?.map(sailing => {
-        const fare = fares?.find(f => f.SailingID === sailing.SailingID);
-        return (
-          <div key={sailing.SailingID}>
-            <h3>{sailing.DepartTime}</h3>
-            <p>Arrives: {sailing.ArriveTime}</p>
-            <p>Fare: ${fare?.Amount || 'N/A'}</p>
+      
+      <div className="trip-planner">
+        <div className="route-selection">
+          <h2>Select Route</h2>
+          <select 
+            value={selectedRoute || ''} 
+            onChange={(e) => setSelectedRoute(Number(e.target.value))}
+          >
+            <option value="">Choose a route...</option>
+            {routes?.map(route => (
+              <option key={route.RouteID} value={route.RouteID}>
+                {route.RouteDescription}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div className="trip-details">
+          <div className="date-selection">
+            <label>
+              Date:
+              <input 
+                type="date" 
+                value={tripDate.toISOString().split('T')[0]} 
+                onChange={(e) => setTripDate(new Date(e.target.value))}
+              />
+            </label>
           </div>
-        );
-      })}
+          
+          <div className="passenger-selection">
+            <h3>Passengers</h3>
+            <label>
+              Adults:
+              <input 
+                type="number" 
+                min="0" 
+                value={passengers.adult} 
+                onChange={(e) => setPassengers({...passengers, adult: Number(e.target.value)})}
+              />
+            </label>
+            <label>
+              Seniors:
+              <input 
+                type="number" 
+                min="0" 
+                value={passengers.senior} 
+                onChange={(e) => setPassengers({...passengers, senior: Number(e.target.value)})}
+              />
+            </label>
+          </div>
+        </div>
+        
+        {selectedRouteInfo && (
+          <div className="route-info">
+            <h2>Route Information</h2>
+            <p>From: {selectedRouteInfo.DepartingTerminalName}</p>
+            <p>To: {selectedRouteInfo.ArrivingTerminalName}</p>
+            <p>Crossing Time: {selectedRouteInfo.CrossingTime} minutes</p>
+            <p>Fare: ${calculateFare().toFixed(2)}</p>
+          </div>
+        )}
+        
+        {sailings && (
+          <div className="schedule-display">
+            <h2>Available Sailings</h2>
+            <div className="sailings-list">
+              {sailings.map(sailing => (
+                <div key={sailing.SailingID} className="sailing-option">
+                  <div className="sailing-times">
+                    <span>Departs: {new Date(sailing.DepartTime).toLocaleTimeString()}</span>
+                    <span>Arrives: {new Date(sailing.ArriveTime).toLocaleTimeString()}</span>
+                  </div>
+                  <div className="sailing-vessel">
+                    Vessel: {sailing.VesselName}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -334,22 +819,24 @@ function TripPlanner() {
 
 ### Caching Strategies
 - **Vessel Locations**: `REALTIME_UPDATES` (5-second refresh)
-- **Terminal Wait Times**: `MINUTE_UPDATES` (1-minute refresh)
+- **Terminal Wait Times**: `MINUTE_UPDATES` (1-5 minute refresh)
 - **Schedules**: `DAILY_UPDATES` (daily refresh)
 - **Fares**: `WEEKLY_UPDATES` (weekly refresh)
+- **Vessel/Terminal Information**: `STATIC_UPDATES` (weekly refresh)
 
 ### Optimization Tips
 - **Vessel Tracking**: Use selective updates for vessels in view
 - **Schedule Data**: Cache schedule data for specific routes
 - **Fare Calculations**: Pre-calculate common fare combinations
+- **Terminal Information**: Store terminal details locally to reduce API calls
 
 ## 🔗 Detailed Documentation
 
 For detailed endpoint documentation, interactive examples, and schema definitions, see our generated documentation:
-- **[WSF Vessels HTML](../../../redoc/wsf-vessels.html)** - Interactive vessel documentation
-- **[WSF Terminals HTML](../../../redoc/wsf-terminals.html)** - Interactive terminal documentation
-- **[WSF Schedule HTML](../../../redoc/wsf-schedule.html)** - Interactive schedule documentation
 - **[WSF Fares HTML](../../../redoc/wsf-fares.html)** - Interactive fare documentation
+- **[WSF Schedule HTML](../../../redoc/wsf-schedule.html)** - Interactive schedule documentation
+- **[WSF Terminals HTML](../../../redoc/wsf-terminals.html)** - Interactive terminal documentation
+- **[WSF Vessels HTML](../../../redoc/wsf-vessels.html)** - Interactive vessel documentation
 
 ## 📚 Next Steps
 

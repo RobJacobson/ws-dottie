@@ -6,22 +6,59 @@ This guide covers all weather-related APIs in WS-Dottie, providing comprehensive
 
 ## 🌤️ Overview
 
-WS-Dottie provides access to four weather APIs that cover all aspects of Washington State weather and road condition information:
+WS-Dottie provides access to three weather APIs that cover all aspects of Washington State weather and road condition information:
 
 | API | Description | Key Features | Update Frequency |
 |------|-------------|---------------|------------------|
-| **WSDOT Weather Information** | Current weather conditions at monitoring stations | Frequent (15m) |
-| **WSDOT Weather Extended** | Detailed weather with surface/subsurface measurements | Frequent (15m) |
-| **WSDOT Weather Stations** | Weather station locations and metadata | Static (weekly) |
-| **WSDOT Mountain Pass Conditions** | Pass status, restrictions, and road conditions | Frequent (15-30m) |
+| **WSDOT Weather Information** | Current weather conditions at monitoring stations | Temperature, precipitation, road conditions | Frequent (15m) |
+| **WSDOT Weather Extended** | Detailed weather with surface/subsurface measurements | Advanced weather data, scientific measurements | Frequent (15m) |
+| **WSDOT Weather Stations** | Weather station locations and metadata | Station locations, equipment information, coverage map | Static (weekly) |
 
 ## 🌡️ WSDOT Weather Information API
 
-### Key Features
-- **Current weather conditions** at monitoring stations throughout Washington
-- **Road surface conditions** and travel impact information
-- **Temperature and precipitation** data
-- **Visibility and wind** information for travel planning
+### API Overview
+The WSDOT Weather Information API provides current weather conditions from monitoring stations throughout Washington State, including temperature, precipitation, visibility, and road conditions.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **weather-info** | Current atmospheric conditions from road weather stations | FREQUENT |
+
+### Key Endpoints
+
+#### Weather Information
+- **getWeatherInformation**: Returns current weather conditions for all stations
+  - **Input**: No parameters required
+  - **Output**: Array of weather station information
+  - **Key Fields**:
+    - `StationID`: Unique station identifier
+    - `StationName`: Human-readable station name
+    - `Latitude`, `Longitude`: GPS coordinates
+    - `Temperature`: Current temperature in Fahrenheit
+    - `RelativeHumidity`: Humidity percentage
+    - `WindSpeed`: Wind speed in mph
+    - `WindDirection`: Wind direction in degrees
+    - `BarometricPressure`: Atmospheric pressure
+    - `Precipitation`: Precipitation measurement
+    - `Visibility`: Visibility distance in miles
+    - `RoadCondition`: Current road condition status
+    - `LastUpdated`: Timestamp of last update
+
+- **getWeatherInformationByStationId**: Returns weather information for a specific station
+  - **Input**: `StationID` (integer) - Unique station identifier
+  - **Output**: Single weather station object with all fields above
+
+- **getCurrentWeatherForStations**: Returns weather information for multiple specified stations
+  - **Input**: `StationList` (string) - Comma-separated list of station IDs
+  - **Output**: Array of weather station information for specified stations
+
+- **searchWeatherInformation**: Returns historical weather information for a time range
+  - **Input**: 
+    - `StationID` (integer) - Station identifier
+    - `SearchStartTime` (datetime) - Start of search range
+    - `SearchEndTime` (datetime) - End of search range
+  - **Output**: Array of historical weather information
 
 ### Common Use Cases
 
@@ -30,16 +67,47 @@ WS-Dottie provides access to four weather APIs that cover all aspects of Washing
 import { useWeatherInformation } from 'ws-dottie';
 
 function WeatherDashboard() {
-  const { data: weather, isLoading } = useWeatherInformation();
+  const { data: weather, isLoading, error } = useWeatherInformation();
   
   // Group weather stations by region
-  const westernStations = weather?.filter(s => s.Region === 'Western');
-  const easternStations = weather?.filter(s => s.Region === 'Eastern');
+  const westernStations = weather?.filter(s => s.Latitude < 47.5);
+  const easternStations = weather?.filter(s => s.Latitude >= 47.5);
+  
+  // Find stations with adverse conditions
+  const adverseConditions = weather?.filter(s => 
+    s.RoadCondition !== 'Clear' || s.Temperature < 32 || s.Visibility < 1
+  ) || [];
   
   return (
     <div>
       <h1>Washington Weather Conditions</h1>
       {isLoading && <div>Loading weather data...</div>}
+      {error && <div>Error loading weather data: {error.message}</div>}
+      
+      <div className="weather-summary">
+        <div className="region-summary">
+          <h2>Western Washington</h2>
+          <p>Stations: {westernStations?.length || 0}</p>
+          <p>Avg Temperature: {calculateAverage(westernStations, 'Temperature')?.toFixed(1)}°F</p>
+        </div>
+        <div className="region-summary">
+          <h2>Eastern Washington</h2>
+          <p>Stations: {easternStations?.length || 0}</p>
+          <p>Avg Temperature: {calculateAverage(easternStations, 'Temperature')?.toFixed(1)}°F</p>
+        </div>
+      </div>
+      
+      <div className="adverse-conditions">
+        <h2>Adverse Conditions ({adverseConditions.length || 0})</h2>
+        {adverseConditions.map(station => (
+          <div key={station.StationID} className="adverse-station">
+            <h3>{station.StationName}</h3>
+            <p>Temperature: {station.Temperature}°F</p>
+            <p>Condition: {station.RoadCondition}</p>
+            <p>Visibility: {station.Visibility} miles</p>
+          </div>
+        ))}
+      </div>
       
       <div className="weather-regions">
         <div className="weather-region">
@@ -69,6 +137,13 @@ function WeatherDashboard() {
     </div>
   );
 }
+
+// Helper function to calculate average values
+function calculateAverage(stations, field) {
+  if (!stations || stations.length === 0) return 0;
+  const sum = stations.reduce((acc, station) => acc + (station[field] || 0), 0);
+  return sum / stations.length;
+}
 ```
 
 #### Travel Weather Map
@@ -76,7 +151,7 @@ function WeatherDashboard() {
 import { useWeatherInformation } from 'ws-dottie';
 
 function TravelWeatherMap() {
-  const { data: weather } = useWeatherInformation();
+  const { data: weather, isLoading, error } = useWeatherInformation();
   
   // Process data for map visualization
   const weatherMapData = weather?.map(station => ({
@@ -86,14 +161,35 @@ function TravelWeatherMap() {
     temperature: station.Temperature,
     conditions: station.RoadCondition,
     icon: getWeatherIcon(station.RoadCondition)
-  }));
+  })) || [];
+  
+  // Group stations by road condition for map layers
+  const conditionGroups = weatherMapData.reduce((acc, station) => {
+    const condition = station.conditions;
+    if (!acc[condition]) acc[condition] = [];
+    acc[condition].push(station);
+    return acc;
+  }, {});
   
   return (
     <div>
       <h1>Washington Weather Map</h1>
+      {isLoading && <div>Loading weather data...</div>}
+      {error && <div>Error loading weather data: {error.message}</div>}
+      
+      <div className="weather-legend">
+        <h2>Road Conditions</h2>
+        {Object.keys(conditionGroups).map(condition => (
+          <div key={condition} className="legend-item">
+            <span className={`icon ${condition}`}></span>
+            <span>{condition}</span>
+          </div>
+        ))}
+      </div>
+      
       <div className="weather-map">
         {/* Render map with weather station markers */}
-        {weatherMapData?.map(station => (
+        {weatherMapData.map(station => (
           <div key={station.id} className="weather-marker">
             <h3>{station.name}</h3>
             <p>{station.temperature}°F</p>
@@ -104,32 +200,85 @@ function TravelWeatherMap() {
     </div>
   );
 }
+
+// Helper function to get weather icon based on condition
+function getWeatherIcon(condition) {
+  const iconMap = {
+    'Clear': '☀️',
+    'Wet': '🌧',
+    'Snow': '❄️',
+    'Ice': '🧊',
+    'Fog': '🌫'
+  };
+  return iconMap[condition] || '🌡️';
+}
 ```
 
 ## 🌡️ WSDOT Weather Extended API
 
-### Key Features
-- **Detailed weather measurements** including surface and subsurface data
-- **Scientific weather data** for professional applications
-- **Atmospheric conditions** including pressure and humidity
-- **Advanced weather metrics** for specialized use cases
+### API Overview
+The WSDOT Weather Extended API provides detailed weather measurements including surface and subsurface data from monitoring stations throughout Washington State.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **surface-measurements** | Pavement and surface weather measurements | FREQUENT |
+| **subsurface-measurements** | Subsurface temperature and moisture measurements | FREQUENT |
+| **weather-readings** | Combined surface and subsurface measurements | FREQUENT |
+
+### Key Endpoints
+
+#### Surface Measurements
+- **getSurfaceMeasurements**: Returns surface weather measurements for all stations
+  - **Input**: No parameters required
+  - **Output**: Array of surface measurement data
+  - **Key Fields**:
+    - `StationID`: Unique station identifier
+    - `StationName`: Human-readable station name
+    - `PavementTemperature`: Road surface temperature in Fahrenheit
+    - `SurfaceCondition`: Road surface condition status
+    - `Friction`: Surface friction measurement
+    - `LastUpdated`: Timestamp of last update
+
+#### Subsurface Measurements
+- **getSubsurfaceMeasurements**: Returns subsurface measurements for all stations
+  - **Input**: No parameters required
+  - **Output**: Array of subsurface measurement data
+  - **Key Fields**:
+    - `StationID`: Unique station identifier
+    - `StationName`: Human-readable station name
+    - `SubsurfaceTemperature`: Temperature below road surface in Fahrenheit
+    - `SubsurfaceCondition`: Subsurface condition status
+    - `MoistureContent`: Moisture content percentage
+    - `LastUpdated`: Timestamp of last update
 
 ### Common Use Cases
 
 #### Scientific Weather Dashboard
 ```javascript
-import { useWeatherInformationExtended } from 'ws-dottie';
+import { useSurfaceMeasurements, useSubsurfaceMeasurements } from 'ws-dottie';
 
 function ScientificWeatherDashboard() {
-  const { data: weather, isLoading } = useWeatherInformationExtended();
+  const { data: surfaceData, isLoading: surfaceLoading } = useSurfaceMeasurements();
+  const { data: subsurfaceData, isLoading: subsurfaceLoading } = useSubsurfaceMeasurements();
+  
+  // Combine surface and subsurface data by station
+  const combinedData = surfaceData?.map(surface => {
+    const subsurface = subsurfaceData?.find(s => s.StationID === surface.StationID);
+    return {
+      ...surface,
+      subsurface
+    };
+  }) || [];
   
   return (
     <div>
       <h1>Advanced Weather Information</h1>
-      {isLoading && <div>Loading weather data...</div>}
+      {surfaceLoading && subsurfaceLoading && <div>Loading weather data...</div>}
       
       <div className="weather-grid">
-        {weather?.map(station => (
+        {combinedData.map(station => (
           <div key={station.StationID} className="weather-station">
             <h3>{station.StationName}</h3>
             
@@ -146,11 +295,14 @@ function ScientificWeatherDashboard() {
               <p>Friction: {station.Friction}</p>
             </div>
             
-            <div className="weather-advanced">
-              <h4>Subsurface Conditions</h4>
-              <p>Subsurface Temperature: {station.SubsurfaceTemperature}°F</p>
-              <p>Subsurface Condition: {station.SubsurfaceCondition}</p>
-            </div>
+            {station.subsurface && (
+              <div className="weather-advanced">
+                <h4>Subsurface Conditions</h4>
+                <p>Subsurface Temperature: {station.subsurface.SubsurfaceTemperature}°F</p>
+                <p>Subsurface Condition: {station.subsurface.SubsurfaceCondition}</p>
+                <p>Moisture Content: {station.subsurface.MoistureContent}%</p>
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -161,34 +313,63 @@ function ScientificWeatherDashboard() {
 
 ## 🏔️ WSDOT Weather Stations API
 
-### Key Features
-- **Weather station locations** throughout Washington State
-- **Station metadata** including elevation, equipment, and services
-- **Coverage information** for weather data availability
-- **Station status** and operational information
+### API Overview
+The WSDOT Weather Stations API provides information about weather station locations throughout Washington State, including coordinates, equipment, and coverage information.
+
+### Endpoint Groups
+
+| Endpoint Group | Description | Cache Strategy |
+|----------------|-------------|----------------|
+| **weather-stations** | Weather station locations and metadata | FREQUENT |
+
+### Key Endpoints
+
+#### Weather Stations
+- **getWeatherStations**: Returns location information for all weather stations
+  - **Input**: No parameters required
+  - **Output**: Array of weather station location information
+  - **Key Fields**:
+    - `StationID`: Unique station identifier
+    - `StationName`: Human-readable station name
+    - `Latitude`, `Longitude`: GPS coordinates
+    - `Elevation`: Station elevation in feet
+    - `County`: County where station is located
+    - `Equipment`: Equipment information
+    - `Coverage`: Coverage area description
 
 ### Common Use Cases
 
 #### Weather Station Locator
 ```javascript
-import { useWeatherStations } from 'ws-dottie';
+import { useWeatherStations, useWeatherInformation } from 'ws-dottie';
 
 function WeatherStationLocator() {
-  const { data: stations, isLoading } = useWeatherStations();
+  const { data: stations, isLoading: stationsLoading } = useWeatherStations();
+  const { data: weather, isLoading: weatherLoading } = useWeatherInformation();
   const [selectedStation, setSelectedStation] = useState(null);
   
   // Group stations by region
   const stationsByRegion = stations?.reduce((acc, station) => {
-    const region = station.Region || 'Unknown';
+    const region = station.County || 'Unknown';
     if (!acc[region]) acc[region] = [];
     acc[region].push(station);
     return acc;
   }, {});
   
+  // Find closest station to user location (simulated)
+  const findClosestStation = (userLat, userLon) => {
+    return stations?.reduce((closest, station) => {
+      const distance = calculateDistance(userLat, userLon, station.Latitude, station.Longitude);
+      const closestDistance = calculateDistance(userLat, userLon, closest.Latitude, closest.Longitude);
+      return distance < closestDistance ? station : closest;
+    });
+  };
+  
   return (
     <div>
       <h1>Washington Weather Stations</h1>
-      {isLoading && <div>Loading weather stations...</div>}
+      {stationsLoading && <div>Loading weather stations...</div>}
+      {weatherLoading && <div>Loading weather data...</div>}
       
       <div className="station-locator">
         <div className="station-list">
@@ -203,7 +384,8 @@ function WeatherStationLocator() {
                 >
                   <h4>{station.StationName}</h4>
                   <p>Elevation: {station.Elevation} feet</p>
-                  <p>Location: {station.Latitude}, {station.Longitude}</p>
+                  <p>Location: {station.Latitude.toFixed(4)}, {station.Longitude.toFixed(4)}</p>
+                  <p>Equipment: {station.Equipment}</p>
                 </div>
               ))}
             </div>
@@ -215,83 +397,46 @@ function WeatherStationLocator() {
             <h2>{selectedStation.StationName}</h2>
             <p>Station ID: {selectedStation.StationID}</p>
             <p>Elevation: {selectedStation.Elevation} feet</p>
-            <p>Location: {selectedStation.Latitude}, {selectedStation.Longitude}</p>
+            <p>Location: {selectedStation.Latitude.toFixed(4)}, {selectedStation.Longitude.toFixed(4)}</p>
+            <p>County: {selectedStation.County}</p>
             <p>Equipment: {selectedStation.Equipment}</p>
+            <p>Coverage: {selectedStation.Coverage}</p>
+            
+            {/* Display current weather for selected station */}
+            {weather && (
+              <div className="current-weather">
+                <h3>Current Conditions</h3>
+                {(() => {
+                  const stationWeather = weather.find(w => w.StationID === selectedStation.StationID);
+                  return stationWeather ? (
+                    <div>
+                      <p>Temperature: {stationWeather.Temperature}°F</p>
+                      <p>Humidity: {stationWeather.RelativeHumidity}%</p>
+                      <p>Wind Speed: {stationWeather.WindSpeed} mph</p>
+                      <p>Road Condition: {stationWeather.RoadCondition}</p>
+                    </div>
+                  ) : <p>No weather data available</p>;
+                })()}
+              </div>
+            )}
           </div>
         )}
       </div>
     </div>
   );
 }
-```
 
-## 🏔️ WSDOT Mountain Pass Conditions API
-
-### Key Features
-- **Mountain pass status** for all major Washington passes
-- **Road condition information** including restrictions and closures
-- **Weather conditions** specific to mountain elevations
-- **Travel restrictions** and chain requirements
-
-### Common Use Cases
-
-#### Mountain Pass Dashboard
-```javascript
-import { useMountainPassConditions } from 'ws-dottie';
-
-function MountainPassDashboard() {
-  const { data: passes, isLoading } = useMountainPassConditions();
-  
-  // Group passes by status
-  const openPasses = passes?.filter(p => p.RestrictionOne === 'Open' || p.RestrictionOne === 'No Restrictions');
-  const restrictedPasses = passes?.filter(p => p.RestrictionOne !== 'Open' && p.RestrictionOne !== 'No Restrictions');
-  
-  return (
-    <div>
-      <h1>Washington Mountain Passes</h1>
-      {isLoading && <div>Loading mountain pass data...</div>}
-      
-      <div className="pass-status-summary">
-        <div className="pass-group">
-          <h2>Open Passes ({openPasses?.length || 0})</h2>
-          {openPasses?.map(pass => (
-            <div key={pass.MountainPassId} className="pass-item open">
-              <h3>{pass.MountainPassName}</h3>
-              <p>Conditions: {pass.WeatherCondition}</p>
-              <p>Temperature: {pass.TemperatureInFahrenheit}°F</p>
-            </div>
-          ))}
-        </div>
-        
-        <div className="pass-group">
-          <h2>Restricted Passes ({restrictedPasses?.length || 0})</h2>
-          {restrictedPasses?.map(pass => (
-            <div key={pass.MountainPassId} className="pass-item restricted">
-              <h3>{pass.MountainPassName}</h3>
-              <p>Restriction: {pass.RestrictionOne}</p>
-              <p>Additional: {pass.RestrictionTwo}</p>
-              <p>Conditions: {pass.WeatherCondition}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      <div className="pass-details">
-        <h2>All Pass Conditions</h2>
-        {passes?.map(pass => (
-          <div key={pass.MountainPassId} className="pass-details-item">
-            <h3>{pass.MountainPassName}</h3>
-            <p>Weather: {pass.WeatherCondition}</p>
-            <p>Temperature: {pass.TemperatureInFahrenheit}°F</p>
-            <p>Elevation: {pass.ElevationInFeet} feet</p>
-            <p>Restriction 1: {pass.RestrictionOne}</p>
-            <p>Restriction 2: {pass.RestrictionTwo}</p>
-            <p>Last Updated: {new Date(pass.LastUpdated).toLocaleString()}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+// Helper function to calculate distance between two points
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 3959; // Earth's radius in miles
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
 }
 ```
 
@@ -299,58 +444,13 @@ function MountainPassDashboard() {
 
 Weather APIs work together to provide comprehensive weather and road condition information:
 
-### Weather Information + Mountain Pass Integration
-```javascript
-import { useWeatherInformation, useMountainPassConditions } from 'ws-dottie';
-
-function WeatherAwareTravelPlanner() {
-  const { data: weather } = useWeatherInformation();
-  const { data: passes } = useMountainPassConditions();
-  
-  // Correlate weather with mountain pass conditions
-  const passesWithWeather = passes?.map(pass => {
-    const nearbyWeather = weather?.find(w => 
-      isNearby(w, pass) // Function to check proximity
-    );
-    
-    return {
-      ...pass,
-      nearbyWeather,
-      travelAdvisory: getTravelAdvisory(pass, nearbyWeather)
-    };
-  });
-  
-  return (
-    <div>
-      <h1>Weather-Aware Travel Planner</h1>
-      <h2>Mountain Pass Conditions</h2>
-      {passesWithWeather?.map(pass => (
-        <div key={pass.MountainPassId}>
-          <h3>{pass.MountainPassName}</h3>
-          <p>Pass Status: {pass.RestrictionOne}</p>
-          <p>Travel Advisory: {pass.travelAdvisory}</p>
-          {pass.nearbyWeather && (
-            <div>
-              <h4>Nearby Weather</h4>
-              <p>Station: {pass.nearbyWeather.StationName}</p>
-              <p>Temperature: {pass.nearbyWeather.Temperature}°F</p>
-              <p>Conditions: {pass.nearbyWeather.RoadCondition}</p>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
 ### Weather Stations + Weather Information Integration
 ```javascript
 import { useWeatherInformation, useWeatherStations } from 'ws-dottie';
 
 function ComprehensiveWeatherDashboard() {
-  const { data: weather } = useWeatherInformation();
-  const { data: stations } = useWeatherStations();
+  const { data: weather, isLoading: weatherLoading } = useWeatherInformation();
+  const { data: stations, isLoading: stationsLoading } = useWeatherStations();
   
   // Combine station metadata with current weather
   const stationsWithWeather = stations?.map(station => {
@@ -361,17 +461,50 @@ function ComprehensiveWeatherDashboard() {
       currentWeather,
       lastUpdated: currentWeather?.LastUpdated || null
     };
-  });
+  }) || [];
+  
+  // Group stations by temperature range for visualization
+  const tempGroups = stationsWithWeather.reduce((acc, station) => {
+    if (!station.currentWeather) return acc;
+    
+    const temp = station.currentWeather.Temperature;
+    if (temp < 32) acc.freezing = [...(acc.freezing || []), station];
+    else if (temp < 50) acc.cold = [...(acc.cold || []), station];
+    else if (temp < 70) acc.mild = [...(acc.mild || []), station];
+    else acc.warm = [...(acc.warm || []), station];
+    return acc;
+  }, {});
   
   return (
     <div>
       <h1>Comprehensive Weather Dashboard</h1>
+      {weatherLoading && stationsLoading && <div>Loading weather data...</div>}
+      
+      <div className="weather-summary">
+        <div className="temp-group">
+          <h3>Freezing (&lt; 32°F)</h3>
+          <p>{tempGroups.freezing?.length || 0} stations</p>
+        </div>
+        <div className="temp-group">
+          <h3>Cold (32-50°F)</h3>
+          <p>{tempGroups.cold?.length || 0} stations</p>
+        </div>
+        <div className="temp-group">
+          <h3>Mild (50-70°F)</h3>
+          <p>{tempGroups.mild?.length || 0} stations</p>
+        </div>
+        <div className="temp-group">
+          <h3>Warm (&gt; 70°F)</h3>
+          <p>{tempGroups.warm?.length || 0} stations</p>
+        </div>
+      </div>
+      
       <div className="weather-grid">
-        {stationsWithWeather?.map(station => (
+        {stationsWithWeather.map(station => (
           <div key={station.StationID} className="weather-station">
             <h3>{station.StationName}</h3>
             <p>Elevation: {station.Elevation} feet</p>
-            <p>Location: {station.Latitude}, {station.Longitude}</p>
+            <p>Location: {station.Latitude.toFixed(4)}, {station.Longitude.toFixed(4)}</p>
             
             {station.currentWeather ? (
               <div className="current-weather">
@@ -398,13 +531,10 @@ function ComprehensiveWeatherDashboard() {
 - **Weather Information**: `HOURLY_UPDATES` (15-minute refresh)
 - **Weather Extended**: `HOURLY_UPDATES` (15-minute refresh)
 - **Weather Stations**: `WEEKLY_UPDATES` (weekly refresh)
-- **Mountain Pass Conditions**: `HOURLY_UPDATES` (15-30 minute refresh)
 
 ### Optimization Tips
 - **Regional Filtering**: Use geographic filtering to reduce data volume
 - **Station Selection**: Prioritize stations closest to user location
-- **Pass Monitoring**: Focus on passes relevant to travel routes
-- **Weather Correlation**: Combine weather data with pass conditions
 
 ## 🔗 Detailed Documentation
 
@@ -412,7 +542,6 @@ For detailed endpoint documentation, interactive examples, and schema definition
 - **[WSDOT Weather Information HTML](../../../redoc/wsdot-weather-information.html)** - Interactive weather documentation
 - **[WSDOT Weather Extended HTML](../../../redoc/wsdot-weather-information-extended.html)** - Interactive extended weather documentation
 - **[WSDOT Weather Stations HTML](../../../redoc/wsdot-weather-stations.html)** - Interactive station documentation
-- **[WSDOT Mountain Pass Conditions HTML](../../../redoc/wsdot-mountain-pass-conditions.html)** - Interactive pass documentation
 
 ## 📚 Next Steps
 

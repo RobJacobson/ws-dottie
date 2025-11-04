@@ -1,8 +1,8 @@
-# Node.js Integration Guide
+# Fetching Data Guide
 
-This guide covers best practices for integrating WS-Dottie with Node.js applications, including setup, patterns, and performance optimization.
+This guide covers how to fetch data using WS-Dottie's basic fetch-dottie functionality, including different options for fetching and validating data.
 
-> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](./getting-started.md) • [API Guide](./api-guide.md)
+> **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
 
 ## 🚀 Quick Start
 
@@ -67,125 +67,29 @@ async function getTransportationData() {
 getTransportationData();
 ```
 
-## 🏗️ Architecture
+## 🏗️ Fetch Modes
 
-### Server-Side Data Fetching
+WS-Dottie supports different fetch modes for different environments:
 
-WS-Dottie uses native fetch for server-side applications:
+### Native Fetch (Server-side)
 
 ```javascript
-// WS-Dottie server-side fetch implementation
-const fetchDottie = async ({ endpoint, fetchMode = 'native', validate = true }) => {
-  // Build URL with parameters
-  const url = buildUrl(endpoint, parameters);
-  
-  // Set up headers
-  const headers = {
-    'Content-Type': 'application/json',
-  };
-  
-  // Add API key if configured
-  if (configManager.getApiKey()) {
-    headers['Authorization'] = `Bearer ${configManager.getApiKey()}`;
-  }
-  
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers,
-    });
-    
-    if (!response.ok) {
-      throw new WsdotApiError(
-        `HTTP error: ${response.status} ${response.statusText}`,
-        response.status,
-        { url, endpoint }
-      );
-    }
-    
-    let data = await response.json();
-    
-    // Validate data if requested
-    if (validate && endpoint.schema) {
-      data = endpoint.schema.parse(data);
-    }
-    
-    return data;
-  } catch (error) {
-    if (error instanceof WsdotApiError) {
-      throw error;
-    }
-    
-    throw new WsdotApiError(
-      `Fetch error: ${error.message}`,
-      0,
-      { url, endpoint }
-    );
-  }
-};
+// Native fetch for server-side applications
+const vessels = await fetchDottie({
+  endpoint: getVesselLocations,
+  fetchMode: 'native',  // Default for Node.js
+  validate: true
+});
 ```
 
-### Express.js Integration
+### JSONP (Browser)
 
 ```javascript
-import express from 'express';
-import { fetchDottie, getVesselLocations } from 'ws-dottie';
-
-const app = express();
-const port = process.env.PORT || 3000;
-
-// Configure WS-Dottie
-configManager.setApiKey(process.env.WSDOT_ACCESS_TOKEN);
-
-// Middleware to set up CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  next();
-});
-
-// API endpoint for vessel locations
-app.get('/api/vessels', async (req, res) => {
-  try {
-    const vessels = await fetchDottie({
-      endpoint: getVesselLocations,
-      fetchMode: 'native',
-      validate: true
-    });
-    
-    res.json(vessels);
-  } catch (error) {
-    console.error('Error fetching vessels:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// API endpoint for filtered vessel data
-app.get('/api/vessels/:id', async (req, res) => {
-  try {
-    const vessels = await fetchDottie({
-      endpoint: getVesselLocations,
-      fetchMode: 'native',
-      validate: true
-    });
-    
-    const vessel = vessels.find(v => v.VesselID === parseInt(req.params.id));
-    
-    if (!vessel) {
-      return res.status(404).json({ error: 'Vessel not found' });
-    }
-    
-    res.json(vessel);
-  } catch (error) {
-    console.error('Error fetching vessel:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// JSONP for browser applications (CORS compatibility)
+const vessels = await fetchDottie({
+  endpoint: getVesselLocations,
+  fetchMode: 'jsonp',   // Default for browser
+  validate: true
 });
 ```
 
@@ -332,6 +236,61 @@ async function main() {
 main();
 ```
 
+## 🔧 Validation Options
+
+### Schema Validation
+
+```javascript
+import { fetchDottie, getVesselLocations } from 'ws-dottie';
+
+// Enable automatic validation
+const vessels = await fetchDottie({
+  endpoint: getVesselLocations,
+  fetchMode: 'native',
+  validate: true  // Validates response against Zod schema
+});
+
+// Disable validation (faster but less safe)
+const vessels = await fetchDottie({
+  endpoint: getVesselLocations,
+  fetchMode: 'native',
+  validate: false
+});
+```
+
+### Custom Validation
+
+```javascript
+import { fetchDottie, getVesselLocations } from 'ws-dottie';
+
+async function fetchWithCustomValidation() {
+  try {
+    const vessels = await fetchDottie({
+      endpoint: getVesselLocations,
+      fetchMode: 'native',
+      validate: false  // Disable automatic validation
+    });
+    
+    // Custom validation logic
+    const validVessels = vessels.filter(vessel => 
+      vessel.VesselID && 
+      vessel.VesselName && 
+      typeof vessel.Latitude === 'number' && 
+      typeof vessel.Longitude === 'number'
+    );
+    
+    if (validVessels.length !== vessels.length) {
+      console.warn(`Filtered out ${vessels.length - validVessels.length} invalid vessels`);
+    }
+    
+    return validVessels;
+  } catch (error) {
+    console.error('Error fetching vessels:', error.message);
+    throw error;
+  }
+}
+```
+
 ## 🚨 Error Handling
 
 ### Structured Error Handling
@@ -375,7 +334,7 @@ class TransportationService {
           throw error;
         }
         
-        // If this is the last attempt, throw error
+        // If this is last attempt, throw error
         if (attempt === this.retryConfig.maxRetries) {
           throw error;
         }
@@ -430,9 +389,88 @@ async function main() {
 main();
 ```
 
+## 📊 Data Transformation
+
+### Date/Time Handling
+
+```javascript
+import { fetchDottie, getVesselLocations } from 'ws-dottie';
+
+async function fetchWithDateTransformation() {
+  try {
+    const vessels = await fetchDottie({
+      endpoint: getVesselLocations,
+      fetchMode: 'native',
+      validate: true
+    });
+    
+    // Transform data for easier use
+    const transformedVessels = vessels.map(vessel => ({
+      ...vessel,
+      // WS-Dottie automatically converts .NET dates to JavaScript Date objects
+      // But you can add additional transformations if needed
+      lastUpdatedFormatted: vessel.LastUpdated 
+        ? new Date(vessel.LastUpdated).toLocaleString() 
+        : 'Unknown',
+      speedKnots: vessel.Speed || 0,
+      location: {
+        lat: vessel.Latitude,
+        lng: vessel.Longitude
+      }
+    }));
+    
+    return transformedVessels;
+  } catch (error) {
+    console.error('Error fetching vessels:', error.message);
+    throw error;
+  }
+}
+```
+
+### Field Filtering
+
+```javascript
+import { fetchDottie, getVesselLocations } from 'ws-dottie';
+
+async function fetchWithFieldFiltering(fields = []) {
+  try {
+    const vessels = await fetchDottie({
+      endpoint: getVesselLocations,
+      fetchMode: 'native',
+      validate: true
+    });
+    
+    // Filter to only requested fields
+    if (fields.length > 0) {
+      return vessels.map(vessel => {
+        const filtered = {};
+        fields.forEach(field => {
+          if (vessel[field] !== undefined) {
+            filtered[field] = vessel[field];
+          }
+        });
+        return filtered;
+      });
+    }
+    
+    return vessels;
+  } catch (error) {
+    console.error('Error fetching vessels:', error.message);
+    throw error;
+  }
+}
+
+// Usage
+const minimalVessels = await fetchWithFieldFiltering([
+  'VesselID', 
+  'VesselName', 
+  'Latitude', 
+  'Longitude'
+]);
+```
+
 ## 📚 Next Steps
 
 - **[TanStack Query Guide](./tanstack-query.md)** - TanStack Query integration and caching
-- **[React Integration Guide](./react.md)** - React patterns with WS-Dottie hooks
-- **[CLI Usage Guide](./cli.md)** - Command-line interface and debugging
-- **[Error Handling Reference](../reference/error-handling.md)** - WS-Dottie error types and recovery
+- **[CLI Usage Guide](./cli-usage.md)** - Command-line interface and debugging
+- **[Error Handling Reference](./error-handling.md)** - WS-Dottie error types and recovery
