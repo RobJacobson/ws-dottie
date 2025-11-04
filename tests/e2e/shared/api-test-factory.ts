@@ -7,7 +7,7 @@
 import { describe } from "vitest";
 import { endpoints } from "@/shared/endpoints";
 import type { Endpoint } from "@/shared/types";
-import { createStandardEndpointTests } from "./test-templates";
+import { createStandardEndpointTests, SKIP_ALL_TESTS } from "./test-templates";
 
 /**
  * Creates a complete test suite for a specific API
@@ -23,6 +23,13 @@ export const createApiTestSuite = (apiName: string, apiDescription: string) => {
 
   describe(apiDescription, () => {
     apiEndpoints.forEach((endpoint: Endpoint<unknown, unknown>) => {
+      const endpointIdentifier = `${endpoint.api}.${endpoint.functionName}`;
+
+      // Skip creating describe block for endpoints that skip all tests
+      if (SKIP_ALL_TESTS.has(endpointIdentifier)) {
+        return;
+      }
+
       describe(`${endpoint.functionName}`, () => {
         // Apply all standard tests to this endpoint
         createStandardEndpointTests(endpoint);

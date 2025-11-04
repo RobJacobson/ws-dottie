@@ -30,7 +30,7 @@ const SKIP_DATA_INTEGRITY_TESTS = new Set([
   *
   Format: "apiName.functionName"
   */
-const SKIP_ALL_TESTS = new Set([
+export const SKIP_ALL_TESTS = new Set([
   "wsdot-toll-rates.getTollTripInfo", // Server returns HTTP 400 due to DBNull in ModifiedDate column
 ]);
 
