@@ -254,7 +254,7 @@ export function createHooksForEndpoints(
     hooks[hookName] = (params?: unknown) => {
       // For endpoints with empty input schema, make params optional
       const finalParams = hasEmptyInput ? undefined : params;
-      
+
       return createHook(endpoint, finalParams, {
         useCacheInvalidation: options?.useCacheInvalidation,
         queryOptions: options?.queryOptions,

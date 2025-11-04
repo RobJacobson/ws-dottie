@@ -7,7 +7,7 @@
  */
 
 import { endpoints } from "@/shared/endpoints";
-import { createHooksForEndpoints } from "../createHooks";
+import { createHooksForEndpoints } from "./createHooks";
 
 // Create hooks for all endpoints with appropriate cache invalidation
 export const apiHooks = createHooksForEndpoints(endpoints, {
