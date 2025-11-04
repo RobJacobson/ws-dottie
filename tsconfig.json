@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "downlevelIteration": true,
     "noImplicitAny": false,
+    "jsx": "react-jsx",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -22,6 +23,6 @@
     "types": ["node"],
     "lib": ["ES2024", "DOM"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist", "tests/archive/**/*"]
 }

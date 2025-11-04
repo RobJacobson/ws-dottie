@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
-import { fetchDottie } from "../../../../src/shared/fetching";
-import type { Endpoint } from "../../../../src/shared/types";
+import { fetchDottie } from "@/shared/fetching";
+import type { Endpoint } from "@/shared/types";
 
 /**
  * Creates a test that handles invalid parameters appropriately

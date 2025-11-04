@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
-import { fetchDottie } from "../../../../src/shared/fetching";
-import type { Endpoint } from "../../../../src/shared/types";
+import { fetchDottie } from "@/shared/fetching";
+import type { Endpoint } from "@/shared/types";
 
 // TODO: Define the whitelist of endpoints that are allowed to return any kind of data
 // For now, we'll implement the data validation logic, and the whitelist can be defined later

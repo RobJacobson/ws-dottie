@@ -5,8 +5,8 @@
  */
 
 import { describe } from "vitest";
-import { endpoints } from "../../../src/shared/endpoints";
-import type { Endpoint } from "../../../src/shared/types";
+import { endpoints } from "@/shared/endpoints";
+import type { Endpoint } from "@/shared/types";
 import { createStandardEndpointTests } from "./test-templates";
 
 /**

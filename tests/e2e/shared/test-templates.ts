@@ -1,4 +1,4 @@
-import type { Endpoint } from "../../../src/shared/types";
+import type { Endpoint } from "@/shared/types";
 import { createDataIntegrityTest } from "./helpers/data-integrity-test";
 import { createDefaultParametersTest } from "./helpers/default-parameters-test";
 import { createDefaultParametersValidationTest } from "./helpers/default-parameters-validation-test";

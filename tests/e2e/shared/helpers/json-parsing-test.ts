@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseJsonWithFallback } from "../../../../src/shared/utils/jsonParser";
+import { parseJsonWithFallback } from "@/shared/utils/jsonParser";
 
 describe("JSON Parsing with Fallback", () => {
   describe("Valid JSON", () => {
