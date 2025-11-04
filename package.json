@@ -49,9 +49,9 @@
     "cli:help": "node dist/cli/fetch-dottie.mjs --help",
     "cli:list": "node dist/cli/fetch-dottie.mjs --help | grep -A 100 'Available functions:' | head -20",
     "docs:generate": "npm run docs:openapi && npm run docs:html",
-    "docs:openapi": "npx tsx openapi-docs/scripts/generate-openapi.ts",
-    "docs:html": "npx tsx openapi-docs/scripts/generate-docs.ts",
-    "docs:samples:fetch": "npx tsx openapi-docs/scripts/fetch-samples.ts"
+    "docs:openapi": "npx tsx scripts/generate-docs/generate-openapi.ts",
+    "docs:html": "npx tsx scripts/generate-docs/generate-docs.ts",
+    "docs:samples:fetch": "npx tsx scripts/generate-docs/fetch-sample-data.ts"
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
