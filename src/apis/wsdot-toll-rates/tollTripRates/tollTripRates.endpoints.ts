@@ -11,9 +11,6 @@ export const tollTripRatesResource: EndpointGroup = {
       "Each TollTripRates item represents comprehensive toll rate data for specific trips including pricing details, informational messages, and version tracking. Each container supports current data retrieval, historical date ranges, and version-specific queries.",
     businessContext:
       "Use to analyze toll pricing trends and retrieve historical rate data by providing detailed trip information, version tracking, and date range filtering for transportation planning.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {

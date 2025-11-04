@@ -10,9 +10,6 @@ export const schedulesResource: EndpointGroup = {
       "Each Schedules item represents a complete sailing timetable for ferry routes. Each schedule includes departure times, arrival times, vessel assignments, and route-specific scheduling information for travel planning.",
     businessContext:
       "Use to plan ferry travel by providing complete sailing timetables including departure times, arrival times, and vessel assignments for trip planning.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

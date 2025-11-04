@@ -3,19 +3,15 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./passConditions.input";
 import * as o from "./passConditions.output";
 
-export const passConditionsResource: EndpointGroup = {
+export const passConditionsGroup: EndpointGroup = {
   name: "pass-conditions",
   documentation: {
     resourceDescription:
-      "Each PassCondition item represents current weather and road conditions for Washington State mountain passes. These include temperature, precipitation, wind conditions, visibility, and any travel restrictions or warnings.",
+      "Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by the Mountain Pass Entry system covering 15 passes.",
     businessContext:
       "Use to assess mountain pass conditions for travel planning by providing current weather, road status, and restriction information for safe mountain travel.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
-  // Using MODERATE strategy because mountain pass conditions typically update hourly as weather changes
-  cacheStrategy: "MODERATE" as const,
+  cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getMountainPassConditionById: {
       function: "getMountainPassConditionById",

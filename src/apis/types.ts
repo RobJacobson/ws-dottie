@@ -54,11 +54,11 @@ export interface ResourceDocumentation {
   /** Business context for the resource */
   businessContext: string;
   /** Update frequency for the resource */
-  updateFrequency: string;
+  // updateFrequency: string;
   /** Related endpoints for the resource */
-  relatedEndpoints: string[];
+  // relatedEndpoints: string[];
   /** Usage examples for the resource */
-  usageExamples: string[];
+  // usageExamples: string[];
 }
 
 /**

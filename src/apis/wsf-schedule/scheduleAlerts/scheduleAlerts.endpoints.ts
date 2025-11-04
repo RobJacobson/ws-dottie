@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./scheduleAlerts.input";
 import * as o from "./scheduleAlerts.output";
 
@@ -9,9 +9,6 @@ export const scheduleAlertsResource: EndpointGroup = {
     resourceDescription:
       "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
     businessContext: "",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

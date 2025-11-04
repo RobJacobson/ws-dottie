@@ -5,9 +5,8 @@
  * Traffic Flow API, which provides real-time traffic flow data for the entire state.
  */
 
-import { z } from "@/shared/zod-openapi-init";
-
 import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for FlowData - represents a traffic flow station

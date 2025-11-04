@@ -4,8 +4,8 @@
  * These schemas define the response structures for WSF Fares API ValidDateRange endpoint.
  */
 
-import { z } from "@/shared/zod-openapi-init";
 import { zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Valid date range response schema for GetValidDateRange endpoint

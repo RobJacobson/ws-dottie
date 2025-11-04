@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./cameras.input";
 import * as o from "./cameras.output";
 
@@ -10,9 +10,6 @@ export const camerasGroup: EndpointGroup = {
       "Each Camera item represents a traffic monitoring camera located on Washington state highways. Cameras provide real-time visual information about current traffic conditions, weather impacts, and roadway status for travelers and traffic management centers.",
     businessContext:
       "Use to monitor real-time traffic conditions by providing camera locations, images, and metadata for route planning and traffic management decisions.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

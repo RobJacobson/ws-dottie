@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselAccommodations.input";
 import * as o from "./vesselAccommodations.output";
 
@@ -10,9 +10,6 @@ export const vesselAccommodationsResource: EndpointGroup = {
       "Each VesselAccommodation item represents passenger amenity and accessibility information for Washington State Ferries vessels. These items include ADA compliance features, restroom facilities, food service availability, and connectivity options for each vessel.",
     businessContext:
       "Use to plan accessible travel by providing amenity and accessibility information for passenger information applications. Supports trip planning tools and accessibility compliance systems for Washington State Ferry services.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

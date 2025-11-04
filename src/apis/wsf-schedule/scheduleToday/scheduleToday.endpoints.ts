@@ -8,9 +8,6 @@ export const scheduleTodayResource: EndpointGroup = {
     resourceDescription:
       "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.",
     businessContext: "",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

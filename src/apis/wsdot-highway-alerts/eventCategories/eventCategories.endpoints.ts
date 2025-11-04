@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./eventCategories.input";
 
 export const eventCategoriesGroup: EndpointGroup = {
@@ -9,9 +9,6 @@ export const eventCategoriesGroup: EndpointGroup = {
       "Each EventCategory item represents a classification type for highway alerts including collisions, maintenance work, construction, weather-related events, and other traffic incidents. These categories help organize and filter alerts by incident type.",
     businessContext:
       "Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {

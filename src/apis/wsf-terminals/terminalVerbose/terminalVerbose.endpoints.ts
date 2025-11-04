@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalVerbose.input";
 import * as o from "./terminalVerbose.output";
 
@@ -10,9 +10,6 @@ export const terminalVerboseResource: EndpointGroup = {
       "Each TerminalVerbose item represents comprehensive terminal information for Washington State Ferry terminals. These items include basic details, bulletins, location data, sailing space information, transportation options, wait times, and facility information.",
     businessContext:
       "Use to retrieve comprehensive terminal information by providing complete facility details for integrated ferry terminal planning.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

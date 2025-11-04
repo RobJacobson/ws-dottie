@@ -1,14 +1,14 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { flowDataResource } from "./flowData/flowData.endpoints";
+import { flowDataGroup } from "./flowData/flowData.endpoints";
 
 export const wsdotTrafficFlowApi: ApiDefinition = {
   name: "wsdot-traffic-flow",
   baseUrl:
     "https://www.wsdot.wa.gov/traffic/api/trafficflow/trafficflowrest.svc",
-  endpointGroups: [flowDataResource],
+  endpointGroups: [flowDataGroup],
 };
 
 // Export individual resources for direct use
-export { flowDataResource };
+export { flowDataGroup as flowDataResource };

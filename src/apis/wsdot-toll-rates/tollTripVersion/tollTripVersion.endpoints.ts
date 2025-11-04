@@ -8,9 +8,6 @@ export const tollTripVersionResource: EndpointGroup = {
     resourceDescription:
       "TollTripVersion provides version and timestamp information for toll trip data, enabling cache management and data freshness tracking.",
     businessContext: "",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {

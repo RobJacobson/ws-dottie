@@ -12,9 +12,6 @@ export const scheduleCacheFlushDateResource: EndpointGroup = {
       "Each ScheduleCacheFlushDate item represents last update timestamp for schedule data. This timestamp indicates when ferry schedule information was last refreshed in system.",
     businessContext:
       "Use to determine data freshness by providing last update timestamp for schedule cache management and data synchronization.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

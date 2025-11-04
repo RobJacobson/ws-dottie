@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./serviceDisruptions.input";
 import * as o from "./serviceDisruptions.output";
 
@@ -11,9 +11,6 @@ export const serviceDisruptionsResource: EndpointGroup = {
       "Each ServiceDisruption item represents planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes that affect passenger travel plans.",
     businessContext:
       "Use to identify service disruptions by providing route and date information for planning alternative travel arrangements.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

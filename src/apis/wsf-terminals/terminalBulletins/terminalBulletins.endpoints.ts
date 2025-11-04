@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalBulletins.input";
 import * as o from "./terminalBulletins.output";
 
@@ -10,9 +10,6 @@ export const terminalBulletinsResource: EndpointGroup = {
       "Each TerminalBulletin item represents important notices and alerts associated with Washington State Ferry terminals. These items include service updates, travel advisories, and critical announcements for terminal users.",
     businessContext:
       "Use to inform travelers of terminal conditions by providing current alerts and service notices for ferry terminal planning.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

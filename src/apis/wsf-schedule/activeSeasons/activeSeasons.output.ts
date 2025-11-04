@@ -5,9 +5,8 @@
  * Schedule API active seasons operations.
  */
 
-import { z } from "@/shared/zod-openapi-init";
-
 import { zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Base schedule schema containing common schedule fields

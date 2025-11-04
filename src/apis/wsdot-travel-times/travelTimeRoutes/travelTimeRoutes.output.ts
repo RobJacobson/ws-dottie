@@ -6,9 +6,8 @@
  * in Seattle, Tacoma, and Snoqualmie Pass areas.
  */
 
-import { z } from "@/shared/zod-openapi-init";
-
 import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for TravelTimeRoute - represents a travel time route

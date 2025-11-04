@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalCombo.input";
 import * as o from "./terminalCombo.output";
 
@@ -11,9 +11,6 @@ export const terminalComboGroup: EndpointGroup = {
       "Each TerminalCombo item represents valid route pairings between Washington State Ferries terminals with associated fare collection methods and scheduling details. These combinations define which terminals are connected and how fares are collected for specific routes.",
     businessContext:
       "Use to determine route availability and fare collection requirements by providing terminal pairing information for journey planning and ticket purchasing systems.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

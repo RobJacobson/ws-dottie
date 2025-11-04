@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for BorderCrossingData - represents border crossing wait time data

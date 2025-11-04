@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./routeDetails.input";
 import * as o from "./routeDetails.output";
 
@@ -11,9 +11,6 @@ export const routeDetailsResource: EndpointGroup = {
       "Each RouteDetails item represents a ferry route with complete service information. Each route includes departure and arrival terminals, sailing times, vessel assignments, and route-specific details for travel planning.",
     businessContext:
       "Use to plan ferry travel by providing comprehensive route information including terminals, schedules, and vessel details for trip planning and navigation.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

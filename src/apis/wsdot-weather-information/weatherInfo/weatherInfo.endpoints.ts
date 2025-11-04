@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./weatherInfo.input";
 import * as o from "./weatherInfo.output";
 
@@ -11,9 +11,6 @@ export const weatherInfoResource: EndpointGroup = {
       "Each WeatherInfo item represents current atmospheric conditions from a WSDOT Road Weather Information System station. These stations measure temperature, humidity, wind speed and direction, barometric pressure, precipitation, visibility, and sky coverage to support transportation operations.",
     businessContext:
       "Use to assess road weather conditions by providing real-time atmospheric data for transportation management and traveler safety decisions.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {

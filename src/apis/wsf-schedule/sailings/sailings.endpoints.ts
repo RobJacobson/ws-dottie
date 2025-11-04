@@ -9,9 +9,6 @@ export const sailingsResource: EndpointGroup = {
     resourceDescription:
       "Sailing information represents individual ferry trips with departure and arrival times, vessel assignments, and route details for scheduled ferry services.",
     businessContext: "",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   // Using FREQUENT strategy because sailings can change throughout the day as schedules are adjusted
   cacheStrategy: "FREQUENT" as const,

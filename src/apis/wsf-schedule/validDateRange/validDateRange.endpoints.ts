@@ -9,9 +9,6 @@ export const scheduleValidDateRangeResource: EndpointGroup = {
       "Each ValidDateRange item specifies the period for which schedule data is available and valid, helping clients understand the coverage of schedule information.",
     businessContext:
       "Use to determine schedule data availability by providing date range information for planning ferry travel.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

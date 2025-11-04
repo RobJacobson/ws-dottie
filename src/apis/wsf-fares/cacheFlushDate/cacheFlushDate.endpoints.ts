@@ -16,9 +16,6 @@ export const cacheFlushDateGroup: EndpointGroup = {
   documentation: {
     resourceDescription: RESOURCE_DESCRIPTION,
     businessContext: BUSINESS_CONTEXT,
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {

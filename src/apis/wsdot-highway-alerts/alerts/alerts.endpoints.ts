@@ -11,9 +11,6 @@ export const alertsGroup: EndpointGroup = {
       "Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.",
     businessContext:
       "Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
   cacheStrategy: "FREQUENT" as const,

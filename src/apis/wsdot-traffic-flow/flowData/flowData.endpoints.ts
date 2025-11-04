@@ -1,18 +1,15 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./flowData.input";
 import * as o from "./flowData.output";
 
-export const flowDataResource: EndpointGroup = {
+export const flowDataGroup: EndpointGroup = {
   name: "flow-data",
   documentation: {
     resourceDescription:
       "Each FlowData item represents real-time traffic flow information from sensor stations across Washington state. Data includes traffic conditions, station locations, timestamps, and regional maintenance information for traffic monitoring.",
     businessContext:
       "Use to monitor current traffic conditions by providing real-time flow data and station information for traffic management and traveler information systems.",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {

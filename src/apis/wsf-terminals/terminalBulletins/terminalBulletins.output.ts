@@ -5,8 +5,8 @@
  * Terminals API endpoints.
  */
 
-import { z } from "@/shared/zod-openapi-init";
 import { zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 import { terminalBaseSchema } from "../shared/terminalBaseSchema";
 
 /**

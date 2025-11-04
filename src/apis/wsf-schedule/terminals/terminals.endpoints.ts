@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminals.input";
 import * as o from "./terminals.output";
 
@@ -10,9 +10,6 @@ export const scheduleTerminalsResource: EndpointGroup = {
     resourceDescription:
       "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.",
     businessContext: "",
-    updateFrequency: "",
-    relatedEndpoints: [],
-    usageExamples: [],
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
