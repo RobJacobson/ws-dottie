@@ -1,11 +1,10 @@
 /**
- * @fileoverview Simplified TanStack Query utilities for WS-Dottie
+ * @fileoverview TanStack Query Hooks - Main Export
  *
- * This module provides simplified TanStack Query configuration with
- * straightforward query options creation and cache strategies.
+ * This module provides a centralized export point for all TanStack Query hooks
+ * generated for the WS-Dottie API. It exports hooks from the hooks module
+ * in the same directory for better organization.
  */
 
-// Date validation utilities
-export { zDotnetDate } from "../../apis/shared";
-// Query options creation
-export { cacheStrategies, createQueryOptions } from "./queryOptions";
+// Export all hooks from the hooks module
+export * from "./hooks";

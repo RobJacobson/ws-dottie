@@ -15,14 +15,14 @@ import type { CacheStrategy } from "@/shared/types";
  * Cache strategy configurations for different data update frequencies
  *
  * These strategies define how frequently data should be refreshed based on
- * the nature of the transportation data. Each strategy includes appropriate
+ * nature of the transportation data. Each strategy includes appropriate
  * stale time, garbage collection time, refetch intervals, and retry settings.
  *
  * The four core strategies cover all transportation API use cases:
- * - REALTIME: For frequently updating data (5-second updates)
- * - FREQUENT: For data that updates every few minutes (5-minute updates)
- * - MODERATE: For data that updates hourly
- * - STATIC: For rarely changing data (daily updates)
+ * - REALTIME: For real-time data (5-second updates) - vessel locations, traffic flow
+ * - FREQUENT: For frequently updated data (5-minute updates) - alerts, weather
+ * - MODERATE: For moderately updated data (hourly updates) - mountain passes, travel times
+ * - STATIC: For rarely changing data (daily updates) - terminals, schedules, fares
  */
 export const cacheStrategies = {
   REALTIME: {
