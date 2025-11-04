@@ -1,0 +1,122 @@
+[
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 1,
+    "DepartingDescription": "Anacortes",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 10,
+    "DepartingDescription": "Friday Harbor",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  },
+  {
+    "DepartingTerminalID": 13,
+    "DepartingDescription": "Lopez Island",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 15,
+    "DepartingDescription": "Orcas Island",
+    "ArrivingTerminalID": 18,
+    "ArrivingDescription": "Shaw Island"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 1,
+    "ArrivingDescription": "Anacortes"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 10,
+    "ArrivingDescription": "Friday Harbor"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 13,
+    "ArrivingDescription": "Lopez Island"
+  },
+  {
+    "DepartingTerminalID": 18,
+    "DepartingDescription": "Shaw Island",
+    "ArrivingTerminalID": 15,
+    "ArrivingDescription": "Orcas Island"
+  }
+]
