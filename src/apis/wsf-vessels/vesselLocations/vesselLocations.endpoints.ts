@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselLocations.input";
 import * as o from "./vesselLocations.output";
 
@@ -14,6 +14,7 @@ export const vesselLocationsGroup: EndpointGroup = {
     relatedEndpoints: [],
     usageExamples: [],
   },
+  // Using REALTIME strategy because vessel locations update every few seconds as vessels move
   cacheStrategy: "REALTIME" as const,
   endpoints: {
     getVesselLocations: {

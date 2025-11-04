@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalLocations.input";
 import * as o from "./terminalLocations.output";
 
@@ -14,6 +14,7 @@ export const terminalLocationsResource: EndpointGroup = {
     relatedEndpoints: [],
     usageExamples: [],
   },
+  // Using STATIC strategy because terminal locations rarely change (only when terminals are added/removed)
   cacheStrategy: "STATIC" as const,
   endpoints: {
     getTerminalLocations: {

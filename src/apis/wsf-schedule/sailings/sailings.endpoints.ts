@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./sailings.input";
 import * as o from "./sailings.output";
 
@@ -13,7 +13,8 @@ export const sailingsResource: EndpointGroup = {
     relatedEndpoints: [],
     usageExamples: [],
   },
-  cacheStrategy: "STATIC" as const,
+  // Using FREQUENT strategy because sailings can change throughout the day as schedules are adjusted
+  cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getAllSailingsBySchedRouteID: {
       function: "getSailingsBySchedRouteID",

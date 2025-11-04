@@ -1,6 +1,6 @@
-import { z } from "@/shared/zod-openapi-init";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
+import { z } from "@/shared/zod-openapi-init";
 import * as i from "./alerts.input";
 import * as o from "./alerts.output";
 
@@ -15,6 +15,7 @@ export const alertsGroup: EndpointGroup = {
     relatedEndpoints: [],
     usageExamples: [],
   },
+  // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
     getAlerts: {
