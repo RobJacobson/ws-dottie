@@ -37,7 +37,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "node scripts/testRunner.js",
-    "test:direct": "vitest --config config/vitest.config.ts --run",
+    "test:direct": "vitest --config tests/vitest.config.ts --run",
     "tests": "node scripts/run-api-tests.js",
     "test:e2e": "vitest --config tests/e2e/vitest.config.ts --run tests/e2e/ --reporter=verbose",
     "lint": "biome lint src/",
