@@ -7,7 +7,6 @@
   "excludeFolders": [
     "src",
     "tests",
-    "config",
     "scripts",
     ".github",
     "test-results",
