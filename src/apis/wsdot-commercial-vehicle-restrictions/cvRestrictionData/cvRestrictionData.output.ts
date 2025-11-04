@@ -1,5 +1,5 @@
-import { z } from "@/shared/zod-openapi-init";
 import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
+import { z } from "@/shared/zod-openapi-init";
 
 /**
  * Schema for CVRestrictionData - represents a Commercial Vehicle Restriction
@@ -113,7 +113,7 @@ export const cVRestrictionDataSchema = z
         "Maximum load length restriction in inches, as inches. E.g., null when length restriction is not specified. Used for length-restricted vehicle routing."
       ),
     RestrictionType: z
-      .union([z.literal(0), z.literal(1)])
+      .number()
       .describe(
         "Type of commercial vehicle restriction, as a restriction type code. Valid values: 0 (BridgeRestriction), 1 (RoadRestriction). E.g., '0' indicates bridge-specific restriction like Teanaway River bridge, '1' indicates roadway restriction like SR-10 height restriction. Determines whether restriction applies to bridge structure or roadway segment."
       ),

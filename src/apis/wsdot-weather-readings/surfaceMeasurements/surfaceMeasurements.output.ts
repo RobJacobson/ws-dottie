@@ -26,16 +26,10 @@ export const scanwebSurfaceMeasurementsSchema = z
         "Freezing point of moisture on pavement based on chemical treatment, as degrees Celsius. E.g., '-5.0' for freezing point at -5°C with de-icing chemicals, '-10.0' for lower freezing point with stronger treatment. Calculated based on specific chemical in use at sensor location. Used for winter maintenance decision-making."
       ),
     RoadSurfaceCondition: z
-      .union([
-        z.literal(101),
-        z.literal(102),
-        z.literal(103),
-        z.literal(104),
-        z.literal(105),
-      ])
+      .number()
       .optional()
       .describe(
-        "Road surface condition code detected by sensor, as a condition code. Valid values: 101 (Dry), 102 (Wet), 103 (Moist), 104 (Ice), 105 (Snow). E.g., '101' indicates dry pavement, '102' indicates wet pavement, '104' indicates icy conditions. Used for road condition assessment and travel safety evaluation."
+        "Road surface condition code detected by sensor, as a condition code. Valid values: 101 (Dry), 102 (Wet), 103 (Moist), 104 (Ice), 105 (Snow), 108 (Unknown/Other). E.g., '101' indicates dry pavement, '102' indicates wet pavement, '104' indicates icy conditions. Used for road condition assessment and travel safety evaluation."
       ),
   })
   .describe(
