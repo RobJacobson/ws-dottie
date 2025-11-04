@@ -13,7 +13,11 @@
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod-openapi-init";
 
-import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
+import type {
+  ApiDefinition,
+  EndpointDefinition,
+  EndpointGroup,
+} from "@/apis/types";
 // Import all API modules statically
 import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
 import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/apiDefinition";
@@ -31,7 +35,7 @@ import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
 import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
-import type { Api, Endpoint } from "./types";
+import type { Api, CacheStrategy, Endpoint } from "./types";
 
 /**
  * All API modules in a constant array
@@ -72,11 +76,16 @@ const loadApis = (): Api[] =>
   API_MODULES.map((apiDefinition) => ({
     name: apiDefinition.name,
     baseUrl: apiDefinition.baseUrl,
-    endpoints: apiDefinition.endpointGroups.flatMap((endpointGroup) =>
-      Object.values(endpointGroup.endpoints).map((endpointDefinition) =>
-        defineApiEndpoint(apiDefinition, endpointDefinition)
+    endpoints: apiDefinition.endpointGroups
+      .filter(
+        (endpointGroup): endpointGroup is NonNullable<typeof endpointGroup> =>
+          endpointGroup != null
       )
-    ),
+      .flatMap((endpointGroup) =>
+        Object.values(endpointGroup.endpoints).map((endpointDefinition) =>
+          defineApiEndpoint(apiDefinition, endpointGroup, endpointDefinition)
+        )
+      ),
   }));
 
 /**
@@ -90,11 +99,13 @@ const loadApis = (): Api[] =>
  * @template I - The input parameters type for the endpoint
  * @template O - The output response type for the endpoint
  * @param apiDefinition - The API definition containing baseUrl and metadata
+ * @param endpointGroup - The endpoint group containing cache strategy
  * @param endpointDefinition - The endpoint definition with truncated URL
  * @returns Complete endpoint object with all computed properties
  */
 const defineApiEndpoint = <I, O>(
   apiDefinition: ApiDefinition,
+  endpointGroup: EndpointGroup,
   endpointDefinition: EndpointDefinition<I, O>
 ): Endpoint<I, O> => ({
   api: apiDefinition.name,
@@ -103,7 +114,8 @@ const defineApiEndpoint = <I, O>(
   inputSchema: endpointDefinition.inputSchema,
   outputSchema: endpointDefinition.outputSchema,
   sampleParams: endpointDefinition.sampleParams,
-  cacheStrategy: endpointDefinition.cacheStrategy ?? "STATIC",
+  cacheStrategy: (endpointDefinition.cacheStrategy ??
+    endpointGroup.cacheStrategy) as CacheStrategy,
   functionName: endpointDefinition.function,
   urlTemplate: `${apiDefinition.baseUrl}${endpointDefinition.endpoint}`,
   id: `${apiDefinition.name}:${endpointDefinition.function}`,
