@@ -1,0 +1,727 @@
+#!/usr/bin/env node
+
+/**
+ * Generate OpenAPI 3.1 specifications from all API definitions
+ *
+ * This script converts Zod schemas to OpenAPI format and generates
+ * complete OpenAPI specifications for all APIs in the ws-dottie project.
+ */
+
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import {
+  OpenAPIRegistry,
+  OpenApiGeneratorV31,
+} from "@asteasolutions/zod-to-openapi";
+import yaml from "js-yaml";
+// Import shared schemas for canonical registration
+import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
+import type {
+  ApiDefinition,
+  EndpointDefinition,
+} from "../../src/apis/types.ts";
+import { API_MODULES, endpoints } from "../../src/shared/endpoints.ts";
+import { fetchDottie } from "../../src/shared/fetching/fetchDottie.ts";
+import { z } from "../../src/shared/zod-openapi-init.ts";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const projectRoot = join(__dirname, "../..");
+
+/**
+ * Schema registry to track registered schemas per OpenAPI registry
+ * This enables deduplication within each API specification
+ */
+const schemaRegistries = new WeakMap<
+  OpenAPIRegistry,
+  WeakMap<z.ZodSchema, string>
+>();
+
+/**
+ * Format JSON data for display in code examples with truncation indicators
+ *
+ * For arrays, returns first item + a truncation indicator object showing how many
+ * items were omitted. For objects, returns the full response.
+ * Returns actual JavaScript objects/arrays (not strings) so OpenAPI
+ * can properly serialize them as JSON/YAML with syntax highlighting.
+ *
+ * @param data - The JSON data to format
+ * @returns Object containing truncated data and metadata about truncation
+ */
+const formatSampleData = (
+  data: unknown
+): {
+  data: unknown;
+  isTruncated: boolean;
+  totalItems?: number;
+} => {
+  const isArray = Array.isArray(data);
+
+  if (isArray && data.length > 1) {
+    // For arrays with multiple items, return first item + truncation indicator
+    const truncatedArray = [
+      data[0],
+      {
+        _note: `... ${data.length - 1} more item${data.length - 1 === 1 ? "" : "s"}`,
+      },
+    ];
+    return {
+      data: truncatedArray,
+      isTruncated: true,
+      totalItems: data.length,
+    };
+  } else if (isArray && data.length === 1) {
+    // Single item array - no truncation needed
+    return {
+      data: [data[0]],
+      isTruncated: false,
+      totalItems: 1,
+    };
+  } else if (isArray) {
+    // Empty array
+    return {
+      data: [],
+      isTruncated: false,
+      totalItems: 0,
+    };
+  } else {
+    // Single object - return full response
+    return {
+      data,
+      isTruncated: false,
+    };
+  }
+};
+
+/**
+ * Fetch actual API response data using fetchDottie and save to sample-data directory
+ *
+ * Downloads real API responses for all endpoints and saves them to the
+ * openapi-docs/sample-data directory for use in documentation generation.
+ *
+ * @param api - The API definition containing endpoint groups
+ * @param endpoint - The endpoint definition containing function name and sample parameters
+ * @returns Promise resolving to formatted sample data with truncation metadata
+ */
+const fetchAndSaveSampleData = async (
+  api: ApiDefinition,
+  endpoint: EndpointDefinition<unknown, unknown>
+): Promise<{
+  data: unknown;
+  isTruncated: boolean;
+  totalItems?: number;
+}> => {
+  const functionName = endpoint.function;
+  const samplesPath = join(
+    projectRoot,
+    "openapi-docs",
+    "sample-data",
+    api.name,
+    `${functionName}.json`
+  );
+
+  try {
+    // Find the endpoint object from the endpoints array
+    const endpointObj = endpoints.find(
+      (e) => e.api === api.name && e.function === functionName
+    );
+
+    if (!endpointObj) {
+      throw new Error(`Endpoint not found: ${api.name}:${functionName}`);
+    }
+
+    // Fetch fresh data using fetchDottie with the endpoint object
+    const data = await fetchDottie({
+      endpoint: endpointObj,
+      params: endpoint.sampleParams || {},
+      fetchMode: "native",
+      validate: true,
+    });
+
+    // Ensure directory exists
+    const dirPath = dirname(samplesPath);
+    if (!existsSync(dirPath)) {
+      mkdirSync(dirPath, { recursive: true });
+    }
+
+    // Save the sample data
+    writeFileSync(samplesPath, JSON.stringify(data, null, 2), "utf-8");
+    process.stderr.write(`  [sample] fetched and saved for ${functionName}\r`);
+
+    // Return formatted data for use in documentation
+    return formatSampleData(data);
+  } catch (error) {
+    process.stderr.write(
+      `  [sample] fetch error for ${functionName}: ${JSON.stringify(error)}\r`
+    );
+    throw new Error(
+      `Failed to fetch sample data for ${functionName}: ${JSON.stringify(error)}`
+    );
+  }
+};
+
+/**
+ * Generate fetchDottie code example as a template string
+ *
+ * Creates a complete, executable code example showing how to use the endpoint
+ * with fetchDottie, including imports, function call, and proper formatting.
+ *
+ * @param api - The API definition (needed for sample cache lookup)
+ * @param endpoint - The endpoint definition containing function name and sample parameters
+ * @returns A formatted string containing the complete code example
+ */
+const generateCodeExample = (
+  _api: ApiDefinition,
+  endpoint: EndpointDefinition<unknown, unknown>
+): string => {
+  const functionName = endpoint.function;
+  const sampleParams = endpoint.sampleParams;
+  const hasParams =
+    sampleParams &&
+    typeof sampleParams !== "function" &&
+    Object.keys(sampleParams).length > 0;
+
+  const paramsLine = hasParams
+    ? `  params: ${JSON.stringify(sampleParams, null, 2)
+        .split("\n")
+        .map((line, i) => (i === 0 ? line : `  ${line}`))
+        .join("\n")},\n`
+    : "";
+
+  return `import { fetchDottie, ${functionName} } from 'ws-dottie';
+
+const data = await fetchDottie({
+  endpoint: ${functionName},
+${paramsLine}  fetchMode: 'native',
+  validate: true
+});
+
+console.log(data);`;
+};
+
+/**
+ * Separate input schema fields into path and query parameters
+ *
+ * Analyzes the endpoint path and input schema to determine which parameters
+ * belong in the URL path vs query string, returning them as separate objects.
+ *
+ * @param inputSchema - The Zod object schema containing input parameters
+ * @param endpointPath - The endpoint path template (e.g., "/api/{id}/items")
+ * @returns An object containing `pathParams` and `queryParams` as separate Zod object schemas
+ */
+const separateParams = (
+  inputSchema: z.ZodObject<Record<string, z.ZodTypeAny>>,
+  endpointPath: string
+): {
+  pathParams: Record<string, z.ZodTypeAny>;
+  queryParams: Record<string, z.ZodTypeAny>;
+} => {
+  const shapeDef = (
+    inputSchema._def as { shape?: Record<string, z.ZodTypeAny> }
+  ).shape;
+
+  if (!shapeDef || Object.keys(shapeDef).length === 0) {
+    return { pathParams: {}, queryParams: {} };
+  }
+
+  return Object.entries(shapeDef).reduce(
+    (acc, [key, fieldSchema]) => {
+      if (endpointPath.includes(`{${key}}`)) {
+        acc.pathParams[key] = fieldSchema;
+      } else {
+        acc.queryParams[key] = fieldSchema;
+      }
+      return acc;
+    },
+    {
+      pathParams: {} as Record<string, z.ZodTypeAny>,
+      queryParams: {} as Record<string, z.ZodTypeAny>,
+    }
+  );
+};
+
+/**
+ * Generate a schema name from endpoint function name and type
+ *
+ * @param functionName - The endpoint function name (e.g., "getVesselLocations")
+ * @param type - The schema type ("Input" or "Output")
+ * @returns Formatted schema name (e.g., "GetVesselLocationsOutput")
+ */
+const generateSchemaName = (
+  functionName: string,
+  type: "Input" | "Output"
+): string => {
+  // Convert function name like "getVesselLocationsByVesselId" to "VesselLocationsByVesselId"
+  const baseName =
+    functionName.startsWith("get") &&
+    functionName.length > 3 &&
+    functionName[3] === functionName[3].toUpperCase()
+      ? functionName.slice(3)
+      : functionName.charAt(0).toUpperCase() + functionName.slice(1);
+
+  return `${baseName}${type}`;
+};
+
+/**
+ * Get canonical name for a shared schema if it's a known shared schema
+ *
+ * @param schema - The Zod schema to check
+ * @returns Canonical name if it's a shared schema, null otherwise
+ */
+const getSharedSchemaName = (schema: z.ZodSchema): string | null => {
+  // Check if this is roadwayLocationSchema (shared across WSDOT APIs)
+  if (schema === roadwayLocationSchema) {
+    return "RoadwayLocation";
+  }
+  // Add more shared schema checks here as needed
+  return null;
+};
+
+/**
+ * Register a schema in components/schemas by applying .openapi() method
+ *
+ * Implements schema deduplication by tracking registered schema instances
+ * and reusing them when encountered again. Shared schemas get canonical names.
+ *
+ * @param registry - The OpenAPI registry
+ * @param schema - The Zod schema to register
+ * @param schemaName - The name to register it under (may be overridden for shared schemas)
+ * @returns The schema with .openapi() applied if available, otherwise original schema
+ */
+const registerSchema = (
+  registry: OpenAPIRegistry,
+  schema: z.ZodSchema,
+  schemaName: string
+): z.ZodSchema => {
+  // Get or create schema registry for this OpenAPI registry
+  let schemaRegistry = schemaRegistries.get(registry);
+  if (!schemaRegistry) {
+    schemaRegistry = new WeakMap<z.ZodSchema, string>();
+    schemaRegistries.set(registry, schemaRegistry);
+  }
+
+  // Check if this schema is already registered in this API's registry
+  const existingName = schemaRegistry.get(schema);
+  if (existingName) {
+    // Schema already registered - return a reference to it
+    // The library will handle $ref automatically when using .openapi() with same name
+    const schemaAny = schema as z.ZodTypeAny & {
+      openapi?: (name: string) => z.ZodTypeAny;
+    };
+    if (typeof schemaAny.openapi === "function") {
+      return schemaAny.openapi(existingName) as z.ZodSchema;
+    }
+    return schema;
+  }
+
+  // Check if this is a shared schema that should use a canonical name
+  const sharedSchemaName = getSharedSchemaName(schema);
+  const finalSchemaName = sharedSchemaName || schemaName;
+
+  const schemaAny = schema as z.ZodTypeAny & {
+    openapi?: (name: string) => z.ZodTypeAny;
+  };
+
+  if (typeof schemaAny.openapi === "function") {
+    try {
+      // Apply .openapi() to register the schema name
+      const registeredSchema = schemaAny.openapi(finalSchemaName);
+      // Explicitly register with the registry to ensure it appears in components/schemas
+      registry.register(finalSchemaName, registeredSchema);
+      // Track this schema instance as registered in this API's registry
+      schemaRegistry.set(schema, finalSchemaName);
+      return registeredSchema as z.ZodSchema;
+    } catch {
+      // If registration fails, return schema as-is (will be inline)
+      return schema;
+    }
+  }
+
+  // Schema doesn't have .openapi() - return as-is (will be inline)
+  // This happens when schemas were created before extendZodWithOpenApi was called
+  return schema;
+};
+
+/**
+ * Convert endpoint to OpenAPI path using registry
+ *
+ * Registers an endpoint definition with the OpenAPI registry, converting
+ * Zod schemas to OpenAPI format automatically. Handles path/query parameter
+ * separation, registers schemas in components/schemas, and generates code examples.
+ *
+ * @param registry - The OpenAPI registry to register the endpoint with
+ * @param api - The API definition (needed for sample cache lookup)
+ * @param endpoint - The endpoint definition containing schemas, function name, and metadata
+ * @param endpointPath - The endpoint path template (e.g., "/api/{id}/items")
+ * @param groupName - The tag/group name for organizing endpoints
+ */
+const registerEndpoint = async (
+  registry: OpenAPIRegistry,
+  api: ApiDefinition,
+  endpoint: EndpointDefinition<unknown, unknown>,
+  endpointPath: string,
+  groupName: string
+): Promise<void> => {
+  const operationId = endpoint.function;
+  const summary = endpoint.endpointDescription || endpoint.description || "";
+
+  // Register output schema in components/schemas
+  let responseSchema: z.ZodSchema = endpoint.outputSchema;
+
+  // Handle array schemas - register the item schema
+  if (endpoint.outputSchema instanceof z.ZodArray) {
+    const arrayDef = endpoint.outputSchema._def as unknown as {
+      element?: z.ZodTypeAny;
+    };
+    const itemSchema = arrayDef.element;
+
+    if (itemSchema) {
+      const itemSchemaName = generateSchemaName(operationId, "Output");
+      const registeredItemSchema = registerSchema(
+        registry,
+        itemSchema as z.ZodSchema,
+        itemSchemaName
+      );
+      // Create array schema using the registered item schema
+      responseSchema = z.array(registeredItemSchema) as z.ZodSchema;
+    }
+  } else {
+    // Register single object schema
+    const outputSchemaName = generateSchemaName(operationId, "Output");
+    responseSchema = registerSchema(
+      registry,
+      endpoint.outputSchema,
+      outputSchemaName
+    );
+  }
+
+  // Build request - register parameters so they appear under components/parameters
+  const request: Record<string, unknown> = {};
+  if (endpoint.inputSchema instanceof z.ZodObject) {
+    const { pathParams, queryParams } = separateParams(
+      endpoint.inputSchema,
+      endpointPath
+    );
+
+    const toParamRef = (
+      key: string,
+      fieldSchema: z.ZodTypeAny,
+      location: "path" | "query"
+    ): z.ZodTypeAny => {
+      const isOptional = fieldSchema instanceof z.ZodOptional;
+      const paramName = `${generateSchemaName(operationId, "Input")}${
+        key.charAt(0).toUpperCase() + key.slice(1)
+      }Param`;
+      const schemaAny = fieldSchema as z.ZodTypeAny & {
+        openapi?: (meta: unknown) => z.ZodTypeAny;
+      };
+      const withMeta =
+        typeof schemaAny.openapi === "function"
+          ? schemaAny.openapi({
+              param: {
+                name: key,
+                in: location,
+                required: location === "path" ? true : !isOptional,
+              },
+            })
+          : fieldSchema;
+      // Register parameter component
+      const paramRef = (
+        registry as unknown as {
+          registerParameter: (
+            name: string,
+            schema: z.ZodTypeAny
+          ) => z.ZodTypeAny;
+        }
+      ).registerParameter(paramName, withMeta as z.ZodTypeAny);
+      return paramRef as z.ZodTypeAny;
+    };
+
+    if (Object.keys(pathParams).length > 0) {
+      const pathParamRefs = Object.fromEntries(
+        Object.entries(pathParams).map(([k, s]) => [
+          k,
+          toParamRef(k, s, "path"),
+        ])
+      );
+      request.params = z.object(pathParamRefs);
+    }
+
+    if (Object.keys(queryParams).length > 0) {
+      const queryParamRefs = Object.fromEntries(
+        Object.entries(queryParams).map(([k, s]) => [
+          k,
+          toParamRef(k, s, "query"),
+        ])
+      );
+      request.query = z.object(queryParamRefs);
+    }
+  }
+
+  // Generate code example (may use cached samples or fetch live)
+  process.stderr.write(`  Fetching sample data for ${operationId}...\r`);
+  const codeExample = generateCodeExample(api, endpoint);
+  process.stderr.write(`  Fetched sample data for ${operationId}      \r`);
+
+  // Get sample data for response examples
+  process.stderr.write(`  Preparing sample data for ${operationId}...\r`);
+  const sampleDataResult = await fetchAndSaveSampleData(api, endpoint);
+  process.stderr.write(`  Prepared sample data for ${operationId}\r`);
+
+  // Build example description with truncation info if applicable
+  let exampleDescription = "Example of a successful response from the API";
+  if (
+    sampleDataResult.isTruncated &&
+    sampleDataResult.totalItems !== undefined
+  ) {
+    exampleDescription += ` (showing first item of ${sampleDataResult.totalItems} total)`;
+  }
+
+  // Register the path - library handles schema conversion automatically
+  registry.registerPath({
+    method: "get",
+    path: endpointPath,
+    summary,
+    operationId,
+    tags: [groupName],
+    ...(Object.keys(request).length > 0 && { request }),
+    responses: {
+      200: {
+        description: "Success",
+        content: {
+          "application/json": {
+            schema: responseSchema,
+            examples: {
+              sampleResponse: {
+                summary: "Sample response",
+                description: exampleDescription,
+                value: sampleDataResult.data,
+              },
+            },
+          },
+        },
+      },
+    },
+    "x-codeSamples": [
+      {
+        lang: "JavaScript",
+        source: codeExample,
+      },
+    ],
+  });
+};
+
+/**
+ * All API modules to process
+ *
+ * Uses the shared API_MODULES array from src/shared/endpoints.ts
+ * to ensure consistency with the rest of the codebase.
+ */
+const ALL_APIS: readonly ApiDefinition[] = API_MODULES;
+
+/**
+ * Generate OpenAPI specification for a single API
+ *
+ * Creates a complete OpenAPI 3.1 specification document from an API definition,
+ * including all endpoints, schemas, tags, and metadata. The zod-to-openapi library
+ * handles automatic schema conversion.
+ *
+ * @param api - The API definition containing endpoint groups and metadata
+ * @returns The complete OpenAPI specification object
+ */
+const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
+  process.stderr.write(`Processing ${api.name}...\r`);
+  const registry = new OpenAPIRegistry();
+
+  // Pre-register shared schemas with canonical names to enable deduplication
+  // This ensures shared schemas are registered once and reused via $ref
+  if (roadwayLocationSchema) {
+    registerSchema(registry, roadwayLocationSchema, "RoadwayLocation");
+  }
+
+  // Register all endpoints from all groups
+  let endpointCount = 0;
+  const totalEndpoints = api.endpointGroups.reduce(
+    (sum, group) => sum + Object.keys(group.endpoints).length,
+    0
+  );
+
+  // Register all endpoints and wait for completion
+  const endpointPromises = api.endpointGroups.map(async (group) => {
+    const groupEndpoints = Object.values(group.endpoints) as EndpointDefinition<
+      unknown,
+      unknown
+    >[];
+
+    // Register all endpoints in this group
+    await Promise.all(
+      groupEndpoints.map(async (endpoint) => {
+        endpointCount++;
+        process.stderr.write(
+          `  [${endpointCount}/${totalEndpoints}] Registering ${endpoint.function}...\r`
+        );
+        await registerEndpoint(
+          registry,
+          api,
+          endpoint,
+          endpoint.endpoint,
+          group.name
+        );
+      })
+    );
+  });
+
+  // Wait for all endpoints to be registered
+  await Promise.all(endpointPromises);
+
+  process.stderr.write(`  Generating OpenAPI spec for ${api.name}...\r`);
+  const generator = new OpenApiGeneratorV31(registry.definitions);
+
+  // Create a title from the API name (e.g., "wsf-vessels" -> "WSF Vessels API")
+  const title =
+    // biome-ignore lint/style/useTemplate: OK here
+    api.name
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ") + " API";
+
+  const openApiDoc = generator.generateDocument({
+    openapi: "3.1.0",
+    info: {
+      title,
+      version: "1.0.0",
+      description: `${title} - Washington State Department of Transportation APIs`,
+    },
+    servers: [
+      {
+        url: api.baseUrl,
+        description: "Production server",
+      },
+    ],
+  });
+
+  // Add tags with descriptions
+  const tags = api.endpointGroups.map((group) => ({
+    name: group.name,
+    description: group.documentation.resourceDescription,
+    ...(group.documentation.businessContext && {
+      externalDocs: {
+        description: group.documentation.businessContext,
+      },
+    }),
+  }));
+
+  return {
+    ...openApiDoc,
+    tags,
+  };
+};
+
+/**
+ * Generate OpenAPI spec for a single API and save to YAML file
+ *
+ * Generates the OpenAPI specification, writes it to a YAML file in the
+ * generated directory, and logs statistics about paths, tags, and schemas.
+ *
+ * @param api - The API definition to generate and save
+ */
+const generateAndSaveOpenApiSpec = async (
+  api: ApiDefinition
+): Promise<void> => {
+  process.stderr.write(`Generating spec for ${api.name}...\r`);
+  const spec = await generateOpenApiSpec(api);
+  const outputDir = join(projectRoot, "openapi-docs", "generated", "openapi");
+  mkdirSync(outputDir, { recursive: true });
+
+  const outputPath = join(outputDir, `${api.name}.yaml`);
+  process.stderr.write(`  Writing ${api.name}.yaml...\r`);
+  writeFileSync(
+    outputPath,
+    yaml.dump(spec, { indent: 2, lineWidth: -1, noRefs: false }),
+    "utf-8"
+  );
+
+  const pathsCount = Object.keys(
+    (spec as { paths?: Record<string, unknown> }).paths || {}
+  ).length;
+  const tagsCount = ((spec as { tags?: unknown[] }).tags || []).length;
+  const schemasCount = Object.keys(
+    (spec as { components?: { schemas?: Record<string, unknown> } }).components
+      ?.schemas || {}
+  ).length;
+
+  console.log(`✓ ${api.name}: ${outputPath}`);
+  console.log(
+    `  - ${pathsCount} paths, ${tagsCount} tags, ${schemasCount} schemas`
+  );
+};
+
+/**
+ * Main execution function
+ *
+ * Processes all API definitions, generates OpenAPI specifications,
+ * saves them to files, and reports success/failure statistics.
+ */
+const main = async (): Promise<void> => {
+  console.log(
+    `Generating OpenAPI specifications for ${ALL_APIS.length} APIs...\n`
+  );
+
+  const results = await Promise.all(
+    ALL_APIS.map(async (api, index) => {
+      try {
+        process.stderr.write(
+          `[${index + 1}/${ALL_APIS.length}] Processing ${api.name}...\n`
+        );
+        await generateAndSaveOpenApiSpec(api);
+        const spec = await generateOpenApiSpec(api);
+        return {
+          totals: {
+            paths: Object.keys(
+              (spec as { paths?: Record<string, unknown> }).paths || {}
+            ).length,
+            tags: ((spec as { tags?: unknown[] }).tags || []).length,
+            schemas: Object.keys(
+              (spec as { components?: { schemas?: Record<string, unknown> } })
+                .components?.schemas || {}
+            ).length,
+          },
+          errors: [] as Array<{ api: string; error: unknown }>,
+        };
+      } catch (error) {
+        process.stderr.write(`  ✗ Error in ${api.name}\n`);
+        console.error(`✗ Error generating spec for ${api.name}:`, error);
+        return {
+          totals: { paths: 0, tags: 0, schemas: 0 },
+          errors: [{ api: api.name, error }],
+        };
+      }
+    })
+  );
+
+  // Combine all results
+  const { totals, errors } = results.reduce(
+    (acc, result) => ({
+      totals: {
+        paths: acc.totals.paths + result.totals.paths,
+        tags: acc.totals.tags + result.totals.tags,
+        schemas: acc.totals.schemas + result.totals.schemas,
+      },
+      errors: [...acc.errors, ...result.errors],
+    }),
+    {
+      totals: { paths: 0, tags: 0, schemas: 0 },
+      errors: [] as Array<{ api: string; error: unknown }>,
+    }
+  );
+
+  if (errors.length > 0) {
+    console.error(`\n✗ Failed to generate ${errors.length} specification(s):`);
+    errors.forEach(({ api }) => {
+      console.error(`  - ${api}`);
+    });
+  }
+};
+
+main();
