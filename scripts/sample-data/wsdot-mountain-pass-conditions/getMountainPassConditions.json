@@ -1,0 +1,322 @@
+[
+  {
+    "DateUpdated": "2025-11-04T19:33:46.503Z",
+    "ElevationInFeet": 4102,
+    "Latitude": 47.335298205,
+    "Longitude": -120.581068216,
+    "MountainPassId": 1,
+    "MountainPassName": "Blewett Pass US 97",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Northbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Southbound"
+    },
+    "RoadCondition": "Bare and wet",
+    "TemperatureInFahrenheit": 33,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Overcast"
+  },
+  {
+    "DateUpdated": "2025-10-24T17:42:53.107Z",
+    "ElevationInFeet": 4675,
+    "Latitude": 46.865575,
+    "Longitude": -121.53611,
+    "MountainPassId": 2,
+    "MountainPassName": "Cayuse Pass SR 123",
+    "RestrictionOne": {
+      "RestrictionText": "Closed for the season",
+      "TravelDirection": "Northbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "Closed for the season",
+      "TravelDirection": "Southbound"
+    },
+    "RoadCondition": "SR 123 Cayuse Pass is closed due to adverse road conditions and increased avalanche risk. The road is closed at milepost 57 on SR 410, Crystal Mountain Blvd, 8 miles north of the summit. SR 123 northbound is closed at milepost 5, Stevens Canyon Rd, 11 miles south of the summit.",
+    "TemperatureInFahrenheit": null,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": ""
+  },
+  {
+    "DateUpdated": "2025-10-28T17:27:53.030Z",
+    "ElevationInFeet": 5430,
+    "Latitude": 46.8717,
+    "Longitude": -121.515483,
+    "MountainPassId": 3,
+    "MountainPassName": "Chinook Pass SR 410",
+    "RestrictionOne": {
+      "RestrictionText": "Closed for the season",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "Closed for the season",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "SR 410 Chinook is closed for the season due to adverse road conditions and high avalanche risk. The eastbound closure is at milepost 57, Crystal Mountain Boulevard, 12 miles west of the summit. The westbound closure is at milepost 74 Morse Creek, 5 miles east of the summit.",
+    "TemperatureInFahrenheit": null,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": ""
+  },
+  {
+    "DateUpdated": "2025-11-04T16:34:23.677Z",
+    "ElevationInFeet": 2600,
+    "Latitude": 47.073008417,
+    "Longitude": -121.577912874,
+    "MountainPassId": 5,
+    "MountainPassName": "Crystal to Greenwater SR 410",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "No current information available",
+    "TemperatureInFahrenheit": null,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": ""
+  },
+  {
+    "DateUpdated": "2025-11-04T14:52:19.120Z",
+    "ElevationInFeet": 3252,
+    "Latitude": 48.281757946,
+    "Longitude": -119.143406439,
+    "MountainPassId": 15,
+    "MountainPassName": "Disautel Pass SR 155",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Northbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Southbound"
+    },
+    "RoadCondition": "Mostly bare and wet, with frost in places.",
+    "TemperatureInFahrenheit": 32,
+    "TravelAdvisoryActive": false,
+    "WeatherCondition": "Overcast"
+  },
+  {
+    "DateUpdated": "2025-11-04T20:29:32.030Z",
+    "ElevationInFeet": 4020,
+    "Latitude": 48.387763059,
+    "Longitude": -119.889745723,
+    "MountainPassId": 14,
+    "MountainPassName": "Loup Loup Pass SR 20",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Mostly bare and wet",
+    "TemperatureInFahrenheit": 41,
+    "TravelAdvisoryActive": false,
+    "WeatherCondition": "Overcast."
+  },
+  {
+    "DateUpdated": "2025-11-04T09:25:42.503Z",
+    "ElevationInFeet": 2672,
+    "Latitude": 46.881665326,
+    "Longitude": -120.424877484,
+    "MountainPassId": 13,
+    "MountainPassName": "Manastash Ridge I-82",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Bare and wet",
+    "TemperatureInFahrenheit": 40,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Raining"
+  },
+  {
+    "DateUpdated": "2025-11-04T16:39:50.850Z",
+    "ElevationInFeet": 4250,
+    "Latitude": 48.864609918,
+    "Longitude": -121.668538475,
+    "MountainPassId": 6,
+    "MountainPassName": "Mt. Baker Hwy SR 542",
+    "RestrictionOne": {
+      "RestrictionText": "Traction Tires Advised, Oversize Vehicles Prohibited.",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "Traction Tires Advised, Oversize Vehicles Prohibited.",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Roads are bare and wet with slush and snow in places.",
+    "TemperatureInFahrenheit": 29,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Overcast"
+  },
+  {
+    "DateUpdated": "2025-11-04T21:23:50.353Z",
+    "ElevationInFeet": 5477,
+    "Latitude": 48.503490448,
+    "Longitude": -120.711911906,
+    "MountainPassId": 7,
+    "MountainPassName": "North Cascade Hwy SR 20",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "roadway bare and wet",
+    "TemperatureInFahrenheit": 33,
+    "TravelAdvisoryActive": false,
+    "WeatherCondition": "partly cloudy"
+  },
+  {
+    "DateUpdated": "2025-11-04T21:36:11.580Z",
+    "ElevationInFeet": 3107,
+    "Latitude": 45.984722,
+    "Longitude": -120.653611,
+    "MountainPassId": 8,
+    "MountainPassName": "Satus Pass US 97",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Northbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Southbound"
+    },
+    "RoadCondition": "Bare and wet",
+    "TemperatureInFahrenheit": 39,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Cloudy with fog"
+  },
+  {
+    "DateUpdated": "2025-11-04T21:08:57.833Z",
+    "ElevationInFeet": 5575,
+    "Latitude": 48.606667,
+    "Longitude": -118.48,
+    "MountainPassId": 9,
+    "MountainPassName": "Sherman Pass SR 20",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "overcast",
+    "TemperatureInFahrenheit": 34,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "bare and wet with compact snow and ice in places"
+  },
+  {
+    "DateUpdated": "2025-11-04T23:05:12.873Z",
+    "ElevationInFeet": 3022,
+    "Latitude": 47.41,
+    "Longitude": -121.405833,
+    "MountainPassId": 11,
+    "MountainPassName": "Snoqualmie Pass I-90",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Bare and dry, wet in places",
+    "TemperatureInFahrenheit": 39,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Overcast "
+  },
+  {
+    "DateUpdated": "2025-11-04T19:33:46.550Z",
+    "ElevationInFeet": 4061,
+    "Latitude": 47.745,
+    "Longitude": -121.093333,
+    "MountainPassId": 10,
+    "MountainPassName": "Stevens Pass US 2",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Mostly bare and wet, with slush and ice in places.",
+    "TemperatureInFahrenheit": 34,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Overcast. "
+  },
+  {
+    "DateUpdated": "2025-11-04T16:41:50.770Z",
+    "ElevationInFeet": 1377,
+    "Latitude": 47.465743292,
+    "Longitude": -121.926995269,
+    "MountainPassId": 17,
+    "MountainPassName": "Tiger Mountain SR18",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "No current information available. Travelers should be prepared for changing road and weather conditions. This page will be updated when information is available.",
+    "TemperatureInFahrenheit": null,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": ""
+  },
+  {
+    "DateUpdated": "2025-11-04T15:18:23.200Z",
+    "ElevationInFeet": 4310,
+    "Latitude": 48.726184869,
+    "Longitude": -118.959520117,
+    "MountainPassId": 16,
+    "MountainPassName": "Wauconda Pass SR 20",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Mostly bare and wet, with snow and ice in places. ",
+    "TemperatureInFahrenheit": 30,
+    "TravelAdvisoryActive": false,
+    "WeatherCondition": "Overcast."
+  },
+  {
+    "DateUpdated": "2025-11-04T19:53:32.523Z",
+    "ElevationInFeet": 4500,
+    "Latitude": 46.638333,
+    "Longitude": -121.39,
+    "MountainPassId": 12,
+    "MountainPassName": "White Pass  US 12",
+    "RestrictionOne": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Eastbound"
+    },
+    "RestrictionTwo": {
+      "RestrictionText": "No restrictions",
+      "TravelDirection": "Westbound"
+    },
+    "RoadCondition": "Bare and wet",
+    "TemperatureInFahrenheit": 33,
+    "TravelAdvisoryActive": true,
+    "WeatherCondition": "Overcast"
+  }
+]

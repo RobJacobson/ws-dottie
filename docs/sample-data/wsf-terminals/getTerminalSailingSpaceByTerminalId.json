@@ -7,7 +7,7 @@
   "SortSeq": 20,
   "DepartingSpaces": [
     {
-      "Departure": "2025-11-04T00:15:00.000Z",
+      "Departure": "2025-11-05T00:15:00.000Z",
       "IsCancelled": false,
       "VesselID": 28,
       "VesselName": "Sealth",
@@ -22,59 +22,9 @@
           "ReservableSpaceCount": null,
           "ReservableSpaceHexColor": null,
           "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 2,
-          "DriveUpSpaceHexColor": "#FF0000",
-          "MaxSpaceCount": 89,
-          "ArrivalTerminalIDs": [
-            4
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T00:45:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 17,
-      "VesselName": "Kaleetan",
-      "MaxSpaceCount": 139,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 3,
-          "TerminalName": "Bainbridge Island",
-          "VesselID": 17,
-          "VesselName": "Kaleetan",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 76,
+          "DriveUpSpaceCount": 27,
           "DriveUpSpaceHexColor": "#FFFF00",
-          "MaxSpaceCount": 139,
-          "ArrivalTerminalIDs": [
-            3
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T01:30:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 36,
-      "VesselName": "Walla Walla",
-      "MaxSpaceCount": 186,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 4,
-          "TerminalName": "Bremerton",
-          "VesselID": 36,
-          "VesselName": "Walla Walla",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 186,
-          "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 186,
+          "MaxSpaceCount": 89,
           "ArrivalTerminalIDs": [
             4
           ]
@@ -82,7 +32,57 @@
       ]
     },
     {
-      "Departure": "2025-11-04T01:45:00.000Z",
+      "Departure": "2025-11-05T00:45:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 36,
+      "VesselName": "Walla Walla",
+      "MaxSpaceCount": 186,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 36,
+          "VesselName": "Walla Walla",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 153,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 186,
+          "ArrivalTerminalIDs": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-05T01:30:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 17,
+      "VesselName": "Kaleetan",
+      "MaxSpaceCount": 139,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 4,
+          "TerminalName": "Bremerton",
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 139,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 139,
+          "ArrivalTerminalIDs": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-05T01:45:00.000Z",
       "IsCancelled": false,
       "VesselID": 32,
       "VesselName": "Tacoma",
@@ -107,24 +107,24 @@
       ]
     },
     {
-      "Departure": "2025-11-04T02:30:00.000Z",
+      "Departure": "2025-11-05T02:30:00.000Z",
       "IsCancelled": false,
-      "VesselID": 17,
-      "VesselName": "Kaleetan",
-      "MaxSpaceCount": 139,
+      "VesselID": 36,
+      "VesselName": "Walla Walla",
+      "MaxSpaceCount": 186,
       "SpaceForArrivalTerminals": [
         {
           "TerminalID": 3,
           "TerminalName": "Bainbridge Island",
-          "VesselID": 17,
-          "VesselName": "Kaleetan",
+          "VesselID": 36,
+          "VesselName": "Walla Walla",
           "DisplayReservableSpace": false,
           "ReservableSpaceCount": null,
           "ReservableSpaceHexColor": null,
           "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 139,
+          "DriveUpSpaceCount": 186,
           "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 139,
+          "MaxSpaceCount": 186,
           "ArrivalTerminalIDs": [
             3
           ]
@@ -132,7 +132,7 @@
       ]
     },
     {
-      "Departure": "2025-11-04T02:45:00.000Z",
+      "Departure": "2025-11-05T02:45:00.000Z",
       "IsCancelled": false,
       "VesselID": 28,
       "VesselName": "Sealth",
@@ -157,7 +157,7 @@
       ]
     },
     {
-      "Departure": "2025-11-04T03:30:00.000Z",
+      "Departure": "2025-11-05T03:30:00.000Z",
       "IsCancelled": false,
       "VesselID": 32,
       "VesselName": "Tacoma",
@@ -182,40 +182,15 @@
       ]
     },
     {
-      "Departure": "2025-11-04T03:50:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 36,
-      "VesselName": "Walla Walla",
-      "MaxSpaceCount": 186,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 4,
-          "TerminalName": "Bremerton",
-          "VesselID": 36,
-          "VesselName": "Walla Walla",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 186,
-          "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 186,
-          "ArrivalTerminalIDs": [
-            4
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T04:15:00.000Z",
+      "Departure": "2025-11-05T03:50:00.000Z",
       "IsCancelled": false,
       "VesselID": 17,
       "VesselName": "Kaleetan",
       "MaxSpaceCount": 139,
       "SpaceForArrivalTerminals": [
         {
-          "TerminalID": 3,
-          "TerminalName": "Bainbridge Island",
+          "TerminalID": 4,
+          "TerminalName": "Bremerton",
           "VesselID": 17,
           "VesselName": "Kaleetan",
           "DisplayReservableSpace": false,
@@ -226,13 +201,38 @@
           "DriveUpSpaceHexColor": "#00FF00",
           "MaxSpaceCount": 139,
           "ArrivalTerminalIDs": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-05T04:15:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 36,
+      "VesselName": "Walla Walla",
+      "MaxSpaceCount": 186,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 36,
+          "VesselName": "Walla Walla",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 186,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 186,
+          "ArrivalTerminalIDs": [
             3
           ]
         }
       ]
     },
     {
-      "Departure": "2025-11-04T05:05:00.000Z",
+      "Departure": "2025-11-05T05:05:00.000Z",
       "IsCancelled": false,
       "VesselID": 28,
       "VesselName": "Sealth",
@@ -257,7 +257,7 @@
       ]
     },
     {
-      "Departure": "2025-11-04T05:20:00.000Z",
+      "Departure": "2025-11-05T05:20:00.000Z",
       "IsCancelled": false,
       "VesselID": 32,
       "VesselName": "Tacoma",
@@ -282,15 +282,40 @@
       ]
     },
     {
-      "Departure": "2025-11-04T06:05:00.000Z",
+      "Departure": "2025-11-05T06:05:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 36,
+      "VesselName": "Walla Walla",
+      "MaxSpaceCount": 186,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 36,
+          "VesselName": "Walla Walla",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 186,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 186,
+          "ArrivalTerminalIDs": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-05T06:30:00.000Z",
       "IsCancelled": false,
       "VesselID": 17,
       "VesselName": "Kaleetan",
       "MaxSpaceCount": 139,
       "SpaceForArrivalTerminals": [
         {
-          "TerminalID": 3,
-          "TerminalName": "Bainbridge Island",
+          "TerminalID": 4,
+          "TerminalName": "Bremerton",
           "VesselID": 17,
           "VesselName": "Kaleetan",
           "DisplayReservableSpace": false,
@@ -301,113 +326,13 @@
           "DriveUpSpaceHexColor": "#00FF00",
           "MaxSpaceCount": 139,
           "ArrivalTerminalIDs": [
-            3
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T06:30:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 36,
-      "VesselName": "Walla Walla",
-      "MaxSpaceCount": 186,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 4,
-          "TerminalName": "Bremerton",
-          "VesselID": 36,
-          "VesselName": "Walla Walla",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 186,
-          "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 186,
-          "ArrivalTerminalIDs": [
             4
           ]
         }
       ]
     },
     {
-      "Departure": "2025-11-04T06:50:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 32,
-      "VesselName": "Tacoma",
-      "MaxSpaceCount": 197,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 3,
-          "TerminalName": "Bainbridge Island",
-          "VesselID": 32,
-          "VesselName": "Tacoma",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 197,
-          "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 197,
-          "ArrivalTerminalIDs": [
-            3
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T08:15:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 32,
-      "VesselName": "Tacoma",
-      "MaxSpaceCount": 197,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 3,
-          "TerminalName": "Bainbridge Island",
-          "VesselID": 32,
-          "VesselName": "Tacoma",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 197,
-          "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 197,
-          "ArrivalTerminalIDs": [
-            3
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T08:50:00.000Z",
-      "IsCancelled": false,
-      "VesselID": 36,
-      "VesselName": "Walla Walla",
-      "MaxSpaceCount": 186,
-      "SpaceForArrivalTerminals": [
-        {
-          "TerminalID": 4,
-          "TerminalName": "Bremerton",
-          "VesselID": 36,
-          "VesselName": "Walla Walla",
-          "DisplayReservableSpace": false,
-          "ReservableSpaceCount": null,
-          "ReservableSpaceHexColor": null,
-          "DisplayDriveUpSpace": true,
-          "DriveUpSpaceCount": 186,
-          "DriveUpSpaceHexColor": "#00FF00",
-          "MaxSpaceCount": 186,
-          "ArrivalTerminalIDs": [
-            4
-          ]
-        }
-      ]
-    },
-    {
-      "Departure": "2025-11-04T09:35:00.000Z",
+      "Departure": "2025-11-05T06:50:00.000Z",
       "IsCancelled": false,
       "VesselID": 32,
       "VesselName": "Tacoma",

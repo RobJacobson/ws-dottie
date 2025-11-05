@@ -1,0 +1,163 @@
+[
+  {
+    "FareLineItemID": 1,
+    "FareLineItem": "Adult (age 19 - 64)",
+    "Category": "Passenger",
+    "DirectionIndependent": false,
+    "Amount": 0
+  },
+  {
+    "FareLineItemID": 2,
+    "FareLineItem": "Senior (age 65 & over) / <a href=https://wsdot.wa.gov/ferries/rider-information/ada#Reduced%20fare%20passenger%20tickets target=\"_blank\" title=\"Disability\">Disability</a>",
+    "Category": "Passenger",
+    "DirectionIndependent": false,
+    "Amount": 0
+  },
+  {
+    "FareLineItemID": 3,
+    "FareLineItem": "Youth (age 18 and under)",
+    "Category": "Passenger",
+    "DirectionIndependent": false,
+    "Amount": 0
+  },
+  {
+    "FareLineItemID": 4,
+    "FareLineItem": "Multi-Ride Commuter Card 10 Ride",
+    "Category": "Passenger",
+    "DirectionIndependent": true,
+    "Amount": 90.4
+  },
+  {
+    "FareLineItemID": 37,
+    "FareLineItem": "WSF Monthly Pass 31 Ride",
+    "Category": "Passenger",
+    "DirectionIndependent": true,
+    "Amount": 144.65
+  },
+  {
+    "FareLineItemID": 6,
+    "FareLineItem": "Bicycle Surcharge Only (19 and over)",
+    "Category": "Passenger",
+    "DirectionIndependent": false,
+    "Amount": 0
+  },
+  {
+    "FareLineItemID": 168,
+    "FareLineItem": "Vehicle Under 14' (less than 168”) & Driver",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": false,
+    "Amount": 15.6
+  },
+  {
+    "FareLineItemID": 178,
+    "FareLineItem": "Vehicle Under 22' (standard veh) & Driver",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": false,
+    "Amount": 19.7
+  },
+  {
+    "FareLineItemID": 188,
+    "FareLineItem": "Vehicle U14' (less than 168\") & Sr/Disability Driver",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": false,
+    "Amount": 12.8
+  },
+  {
+    "FareLineItemID": 189,
+    "FareLineItem": "Vehicle U22' (standard veh) & Sr/Disability Driver",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": false,
+    "Amount": 16.9
+  },
+  {
+    "FareLineItemID": 170,
+    "FareLineItem": "Multi-Ride Commuter Card - Vehicle U14' & Driver 20 Ride",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": true,
+    "Amount": 253.6
+  },
+  {
+    "FareLineItemID": 180,
+    "FareLineItem": "Multi-Ride Commuter Card - Vehicle U22' & Driver 20 Ride",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": true,
+    "Amount": 319.2
+  },
+  {
+    "FareLineItemID": 13,
+    "FareLineItem": "Motorcycle & Driver / Stowage Fare",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": false,
+    "Amount": 8.75
+  },
+  {
+    "FareLineItemID": 14,
+    "FareLineItem": "Motorcycle & Senior/Disability Driver / Stowage Fare",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": false,
+    "Amount": 5.95
+  },
+  {
+    "FareLineItemID": 16,
+    "FareLineItem": "Multi-Ride Commuter Card - Motorcycle & Driver 20 Ride",
+    "Category": "Vehicle, Motorcycle, and Stowage Fares",
+    "DirectionIndependent": true,
+    "Amount": 144
+  },
+  {
+    "FareLineItemID": 19,
+    "FareLineItem": "Vehicle Under 30' Under 7'2 in.",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 29.05
+  },
+  {
+    "FareLineItemID": 20,
+    "FareLineItem": "Vehicle Under 30' Over 7'2 in.",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 57.1
+  },
+  {
+    "FareLineItemID": 21,
+    "FareLineItem": "Vehicle Under 40'",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 75.8
+  },
+  {
+    "FareLineItemID": 22,
+    "FareLineItem": "Vehicle Under 50'",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 94.5
+  },
+  {
+    "FareLineItemID": 23,
+    "FareLineItem": "Vehicle Under 60'",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 113.2
+  },
+  {
+    "FareLineItemID": 24,
+    "FareLineItem": "Vehicle Under 70'",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 131.9
+  },
+  {
+    "FareLineItemID": 25,
+    "FareLineItem": "Vehicle Under 80'",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 150.6
+  },
+  {
+    "FareLineItemID": 26,
+    "FareLineItem": "Cost per foot over 80'",
+    "Category": "Vehicle Length-Based",
+    "DirectionIndependent": false,
+    "Amount": 1.85
+  }
+]

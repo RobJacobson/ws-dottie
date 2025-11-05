@@ -98,7 +98,7 @@ const formatSampleData = (
  * Fetch actual API response data using fetchDottie and save to sample-data directory
  *
  * Downloads real API responses for all endpoints and saves them to the
- * openapi-docs/sample-data directory for use in documentation generation.
+ * docs/sample-data directory for use in documentation generation.
  *
  * @param api - The API definition containing endpoint groups
  * @param endpoint - The endpoint definition containing function name and sample parameters
@@ -115,7 +115,7 @@ const fetchAndSaveSampleData = async (
   const functionName = endpoint.function;
   const samplesPath = join(
     projectRoot,
-    "openapi-docs",
+    "docs",
     "sample-data",
     api.name,
     `${functionName}.json`
@@ -631,7 +631,7 @@ const generateAndSaveOpenApiSpec = async (
 ): Promise<void> => {
   process.stderr.write(`Generating spec for ${api.name}...\r`);
   const spec = await generateOpenApiSpec(api);
-  const outputDir = join(projectRoot, "openapi-docs", "generated", "openapi");
+  const outputDir = join(projectRoot, "docs", "openapi");
   mkdirSync(outputDir, { recursive: true });
 
   const outputPath = join(outputDir, `${api.name}.yaml`);

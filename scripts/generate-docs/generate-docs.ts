@@ -17,11 +17,10 @@ const projectRoot = join(__dirname, "../..");
 
 const openApiSpecDir = join(
   projectRoot,
-  "openapi-docs",
-  "generated",
+  "docs",
   "openapi"
 );
-const outputDir = join(projectRoot, "openapi-docs", "generated", "redoc");
+const outputDir = join(projectRoot, "docs", "redoc");
 
 /**
  * Generate HTML documentation for a single OpenAPI spec

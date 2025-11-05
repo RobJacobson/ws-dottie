@@ -1,0 +1,131 @@
+[
+  {
+    "BorderCrossingLocation": {
+      "Description": "I-5 General Purpose",
+      "Direction": null,
+      "Latitude": 49.004776,
+      "Longitude": -122.756964,
+      "MilePost": 0,
+      "RoadName": "005"
+    },
+    "CrossingName": "I5",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "I-5 Nexus Lane",
+      "Direction": null,
+      "Latitude": 49.004776,
+      "Longitude": -122.756964,
+      "MilePost": 0,
+      "RoadName": "005"
+    },
+    "CrossingName": "I5Nexus",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 539 General Purpose",
+      "Direction": null,
+      "Latitude": 49.002344,
+      "Longitude": -122.484937,
+      "MilePost": 0,
+      "RoadName": "539"
+    },
+    "CrossingName": "SR539",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": null,
+    "CrossingName": "SR539Nexus",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": null,
+    "CrossingName": "SR539Trucks",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 543 General Purpose",
+      "Direction": null,
+      "Latitude": 49.002948,
+      "Longitude": -122.734682,
+      "MilePost": 0,
+      "RoadName": "543"
+    },
+    "CrossingName": "SR543",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 543 Nexus Lane",
+      "Direction": null,
+      "Latitude": 49.002948,
+      "Longitude": -122.734682,
+      "MilePost": 0,
+      "RoadName": "543"
+    },
+    "CrossingName": "SR543Nexus",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 543 Trucks",
+      "Direction": null,
+      "Latitude": 49.002941,
+      "Longitude": -122.733655,
+      "MilePost": 0,
+      "RoadName": "543"
+    },
+    "CrossingName": "SR543Trucks",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 543 Trucks FAST Lane",
+      "Direction": null,
+      "Latitude": 49.002941,
+      "Longitude": -122.733655,
+      "MilePost": 0,
+      "RoadName": "543"
+    },
+    "CrossingName": "SR543TrucksFast",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 9 General Purpose",
+      "Direction": null,
+      "Latitude": 49.002471,
+      "Longitude": -122.265068,
+      "MilePost": 0,
+      "RoadName": "009"
+    },
+    "CrossingName": "SR9",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  },
+  {
+    "BorderCrossingLocation": {
+      "Description": "SR 9 Nexus",
+      "Direction": null,
+      "Latitude": 49.001932,
+      "Longitude": -122.265762,
+      "MilePost": 0,
+      "RoadName": "009"
+    },
+    "CrossingName": "SR9Nexus",
+    "Time": "2025-11-04T23:25:00.000Z",
+    "WaitTime": 5
+  }
+]

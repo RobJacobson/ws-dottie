@@ -1,0 +1,4077 @@
+[
+  {
+    "AverageTime": 37,
+    "CurrentTime": 32,
+    "Description": "Everett to Downtown Seattle using HOV lanes",
+    "Distance": 26.72,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Everett-Seattle HOV",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 2
+  },
+  {
+    "AverageTime": 35,
+    "CurrentTime": 28,
+    "Description": "Downtown Seattle to Everett using HOV lanes",
+    "Distance": 26.94,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Everett HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 3
+  },
+  {
+    "AverageTime": 48,
+    "CurrentTime": 41,
+    "Description": "Downtown Seattle to Everett",
+    "Distance": 26.94,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Everett",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 4
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 13,
+    "Description": "Downtown Bellevue to Issaquah",
+    "Distance": 9.28,
+    "EndPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "E",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "Name": "Bellevue-Issaquah",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 5
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 10,
+    "Description": "Downtown Bellevue to Issaquah using HOV lanes",
+    "Distance": 9.28,
+    "EndPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "E",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "Name": "Bellevue-Issaquah HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 6
+  },
+  {
+    "AverageTime": 10,
+    "CurrentTime": 10,
+    "Description": "Issaquah to Downtown Bellevue using HOV lanes",
+    "Distance": 9.25,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Issaquah-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "W",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 7
+  },
+  {
+    "AverageTime": 10,
+    "CurrentTime": 9,
+    "Description": "Issaquah to Downtown Bellevue",
+    "Distance": 9.25,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Issaquah-Bellevue",
+    "StartPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "W",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 8
+  },
+  {
+    "AverageTime": 48,
+    "CurrentTime": 41,
+    "Description": "Downtown Bellevue to Everett",
+    "Distance": 26.76,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Everett",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 9
+  },
+  {
+    "AverageTime": 32,
+    "CurrentTime": 28,
+    "Description": "Everett to Downtown Bellevue",
+    "Distance": 26.86,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.617307,
+      "Longitude": -122.188738,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Everett-Bellevue",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 10
+  },
+  {
+    "AverageTime": 32,
+    "CurrentTime": 27,
+    "Description": "Downtown Bellevue to Everett using HOV lanes",
+    "Distance": 26.76,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Everett HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 11
+  },
+  {
+    "AverageTime": 26,
+    "CurrentTime": 26,
+    "Description": "Everett to Downtown Bellevue using HOV lanes",
+    "Distance": 27.84,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.617331,
+      "Longitude": -122.188782,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Everett-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 12
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 8,
+    "Description": "Federal Way to SeaTac",
+    "Distance": 8.82,
+    "EndPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "N",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "Name": "Federal Way-SeaTac",
+    "StartPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 13
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 8,
+    "Description": "Federal Way to SeaTac using HOV lanes",
+    "Distance": 8.82,
+    "EndPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "N",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "Name": "Federal Way-SeaTac HOV",
+    "StartPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 14
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 24,
+    "Description": "SeaTac to Federal Way using HOV lanes",
+    "Distance": 9.16,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "S",
+      "Latitude": 47.31384,
+      "Longitude": -122.298609,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "Name": "SeaTac-Federal Way HOV",
+    "StartPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "S",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 15
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 26,
+    "Description": "SeaTac to Federal Way",
+    "Distance": 9.16,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "S",
+      "Latitude": 47.31384,
+      "Longitude": -122.298609,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "Name": "SeaTac-Federal Way",
+    "StartPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "S",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 16
+  },
+  {
+    "AverageTime": 27,
+    "CurrentTime": 31,
+    "Description": "Federal Way to Downtown Seattle",
+    "Distance": 21.85,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Federal Way-Seattle",
+    "StartPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 17
+  },
+  {
+    "AverageTime": 24,
+    "CurrentTime": 22,
+    "Description": "Federal Way to Downtown Seattle using HOV lanes",
+    "Distance": 21.85,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Federal Way-Seattle HOV",
+    "StartPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 18
+  },
+  {
+    "AverageTime": 34,
+    "CurrentTime": 42,
+    "Description": "Downtown Seattle to Federal Way using HOV lanes",
+    "Distance": 22.19,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "S",
+      "Latitude": 47.31384,
+      "Longitude": -122.298609,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Federal Way HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 19
+  },
+  {
+    "AverageTime": 43,
+    "CurrentTime": 47,
+    "Description": "Downtown Seattle to Federal Way",
+    "Distance": 22.19,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "S",
+      "Latitude": 47.31384,
+      "Longitude": -122.298609,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Federal Way",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 20
+  },
+  {
+    "AverageTime": 60,
+    "CurrentTime": 55,
+    "Description": "Downtown Bellevue to Federal Way",
+    "Distance": 24.47,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "S",
+      "Latitude": 47.31384,
+      "Longitude": -122.298609,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Federal Way",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 21
+  },
+  {
+    "AverageTime": 31,
+    "CurrentTime": 28,
+    "Description": "Federal Way to Downtown Bellevue",
+    "Distance": 24.13,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Federal Way-Bellevue",
+    "StartPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 22
+  },
+  {
+    "AverageTime": 44,
+    "CurrentTime": 46,
+    "Description": "Downtown Bellevue to Federal Way using HOV lanes",
+    "Distance": 24.62,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "S",
+      "Latitude": 47.31384,
+      "Longitude": -122.298609,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Federal Way HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 23
+  },
+  {
+    "AverageTime": 27,
+    "CurrentTime": 26,
+    "Description": "Federal Way to Downtown Bellevue using HOV lanes",
+    "Distance": 24.13,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Federal Way-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 24
+  },
+  {
+    "AverageTime": 22,
+    "CurrentTime": 17,
+    "Description": "Downtown Seattle to Lynnwood using HOV lanes",
+    "Distance": 15.73,
+    "EndPoint": {
+      "Description": "I-5 @ 196th St SW in Lynnwood",
+      "Direction": "N",
+      "Latitude": 47.819545,
+      "Longitude": -122.279109,
+      "MilePost": 181.56,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Lynnwood HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 25
+  },
+  {
+    "AverageTime": 28,
+    "CurrentTime": 21,
+    "Description": "Lynnwood to Downtown Seattle",
+    "Distance": 15.23,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Lynnwood-Seattle",
+    "StartPoint": {
+      "Description": "I-5 @ 196th St SW in Lynnwood",
+      "Direction": "S",
+      "Latitude": 47.820954,
+      "Longitude": -122.279633,
+      "MilePost": 181.06,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 26
+  },
+  {
+    "AverageTime": 30,
+    "CurrentTime": 23,
+    "Description": "Downtown Seattle to Lynnwood",
+    "Distance": 15.73,
+    "EndPoint": {
+      "Description": "I-5 @ 196th St SW in Lynnwood",
+      "Direction": "N",
+      "Latitude": 47.819545,
+      "Longitude": -122.279109,
+      "MilePost": 181.56,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Lynnwood",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 27
+  },
+  {
+    "AverageTime": 17,
+    "CurrentTime": 15,
+    "Description": "Renton to Downtown Seattle using HOV lanes",
+    "Distance": 13.5,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Renton-Seattle HOV",
+    "StartPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "S",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 2.21,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 30
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 17,
+    "Description": "Downtown Seattle to Renton using HOV lanes",
+    "Distance": 13.59,
+    "EndPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "N",
+      "Latitude": 47.467434,
+      "Longitude": -122.219631,
+      "MilePost": 2.21,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Renton HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 31
+  },
+  {
+    "AverageTime": 21,
+    "CurrentTime": 23,
+    "Description": "Renton to Downtown Seattle",
+    "Distance": 13.67,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Renton-Seattle",
+    "StartPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "S",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 2.21,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 32
+  },
+  {
+    "AverageTime": 18,
+    "CurrentTime": 19,
+    "Description": "Downtown Seattle to Renton",
+    "Distance": 13.63,
+    "EndPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "N",
+      "Latitude": 47.467434,
+      "Longitude": -122.219631,
+      "MilePost": 2.21,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Renton",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 33
+  },
+  {
+    "AverageTime": 29,
+    "CurrentTime": 25,
+    "Description": "Downtown Bellevue to Lynnwood",
+    "Distance": 16.46,
+    "EndPoint": {
+      "Description": "I-405 @ I-5 in Lynnwood",
+      "Direction": "N",
+      "Latitude": 47.8237,
+      "Longitude": -122.2517,
+      "MilePost": 30.06,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-Lynnwood",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 35
+  },
+  {
+    "AverageTime": 15,
+    "CurrentTime": 16,
+    "Description": "Downtown Bellevue to Lynnwood using HOV lanes",
+    "Distance": 15.93,
+    "EndPoint": {
+      "Description": "I-5 @ SR 526 in Lynnwood",
+      "Direction": "N",
+      "Latitude": 47.920431,
+      "Longitude": -122.206552,
+      "MilePost": 29.53,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-Lynnwood HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 36
+  },
+  {
+    "AverageTime": 15,
+    "CurrentTime": 15,
+    "Description": "Lynnwood to Downtown Bellevue using HOV lanes",
+    "Distance": 16.73,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Lynnwood-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-5 @ SR 526 in Lynnwood",
+      "Direction": "S",
+      "Latitude": 47.831743,
+      "Longitude": -122.262488,
+      "MilePost": 30.06,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 37
+  },
+  {
+    "AverageTime": 20,
+    "CurrentTime": 17,
+    "Description": "Lynnwood to Downtown Bellevue",
+    "Distance": 16.73,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Lynnwood-Bellevue",
+    "StartPoint": {
+      "Description": "I-405 @ I-5 in Lynnwood",
+      "Direction": "S",
+      "Latitude": 47.831743,
+      "Longitude": -122.262488,
+      "MilePost": 30.06,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 38
+  },
+  {
+    "AverageTime": 0,
+    "CurrentTime": 0,
+    "Description": "Everett to Downtown Seattle using express lanes",
+    "Distance": 26.72,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Everett-Seattle EL",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 39
+  },
+  {
+    "AverageTime": 0,
+    "CurrentTime": 0,
+    "Description": "Everett to Downtown Seattle using express lanes and HOV lanes",
+    "Distance": 26.72,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Everett-Seattle EL HOV",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 40
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 14,
+    "Description": "SeaTac to Downtown Seattle using HOV lanes",
+    "Distance": 13.03,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "SeaTac-Seattle HOV",
+    "StartPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "N",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 41
+  },
+  {
+    "AverageTime": 18,
+    "CurrentTime": 16,
+    "Description": "Downtown Seattle to SeaTac using HOV lanes",
+    "Distance": 13.03,
+    "EndPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "S",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-SeaTac HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 42
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 23,
+    "Description": "SeaTac to Downtown Seattle",
+    "Distance": 13.03,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "SeaTac-Seattle",
+    "StartPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "N",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 43
+  },
+  {
+    "AverageTime": 22,
+    "CurrentTime": 20,
+    "Description": "Downtown Seattle to SeaTac",
+    "Distance": 13.03,
+    "EndPoint": {
+      "Description": "I-5 @ S 188th St in SeaTac",
+      "Direction": "S",
+      "Latitude": 47.43876,
+      "Longitude": -122.26947,
+      "MilePost": 152.8,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-SeaTac",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 44
+  },
+  {
+    "AverageTime": 54,
+    "CurrentTime": 44,
+    "Description": "Alderwood to Southcenter via I-405",
+    "Distance": 29.95,
+    "EndPoint": {
+      "Description": "I-405 @ I-5 in Tukwila",
+      "Direction": "S",
+      "Latitude": 47.463303,
+      "Longitude": -122.262701,
+      "MilePost": 0.11,
+      "RoadName": "405"
+    },
+    "Name": "Alderwood-Southcenter via 405",
+    "StartPoint": {
+      "Description": "I-405 @ SR 525 in Lynnwood",
+      "Direction": "S",
+      "Latitude": 47.8308,
+      "Longitude": -122.2636,
+      "MilePost": 30.06,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 51
+  },
+  {
+    "AverageTime": 48,
+    "CurrentTime": 41,
+    "Description": "Alderwood to Southcenter via I-5",
+    "Distance": 27.97,
+    "EndPoint": {
+      "Description": "I-5 @ I-405 in Tukwila",
+      "Direction": "S",
+      "Latitude": 47.4648,
+      "Longitude": -122.2657,
+      "MilePost": 154.65,
+      "RoadName": "005"
+    },
+    "Name": "Alderwood-Southcenter via 5",
+    "StartPoint": {
+      "Description": "I-5 @ I-405 in Lynnwood",
+      "Direction": "S",
+      "Latitude": 47.8308,
+      "Longitude": -122.2636,
+      "MilePost": 182.62,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 52
+  },
+  {
+    "AverageTime": 55,
+    "CurrentTime": 44,
+    "Description": "Southcenter to Alderwood via I-405",
+    "Distance": 29.62,
+    "EndPoint": {
+      "Description": "I-5 @ I-405 in Lynnwood",
+      "Direction": "N",
+      "Latitude": 47.8308,
+      "Longitude": -122.2636,
+      "MilePost": 30.06,
+      "RoadName": "405"
+    },
+    "Name": "Southcenter-Alderwood via 405",
+    "StartPoint": {
+      "Description": "I-405 @ I-5 in Tukwila",
+      "Direction": "N",
+      "Latitude": 47.4648,
+      "Longitude": -122.2657,
+      "MilePost": 0.44,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 53
+  },
+  {
+    "AverageTime": 55,
+    "CurrentTime": 48,
+    "Description": "I-5 NB from I-5 @ I-405 in Tukwila (MP 155) to I-5 @ I-405 in L",
+    "Distance": 27.39,
+    "EndPoint": {
+      "Description": "I-5 @ I-405 in Lynnwood",
+      "Direction": "N",
+      "Latitude": 47.8308,
+      "Longitude": -122.2636,
+      "MilePost": 182.04,
+      "RoadName": "005"
+    },
+    "Name": "Southcenter-Alderwood via 5",
+    "StartPoint": {
+      "Description": "I-5 @ I-405 in Tukwila",
+      "Direction": "N",
+      "Latitude": 47.4648,
+      "Longitude": -122.2657,
+      "MilePost": 154.65,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 54
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 9,
+    "Description": "Downtown Bellevue to SR 522 in Bothell using HOV lanes",
+    "Distance": 9.41,
+    "EndPoint": {
+      "Description": "I-405 @ SR 522 in Bothell",
+      "Direction": "N",
+      "Latitude": 47.751518,
+      "Longitude": -122.187178,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-SR 522 HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 56
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 9,
+    "Description": "SR 522 in Bothell to Downtown Bellevue using HOV lanes",
+    "Distance": 9.68,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "SR 522-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-405 @ SR 522 in Bothell",
+      "Direction": "S",
+      "Latitude": 47.751518,
+      "Longitude": -122.187178,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 57
+  },
+  {
+    "AverageTime": 12,
+    "CurrentTime": 10,
+    "Description": "SR 522 in Bothell to Downtown Bellevue",
+    "Distance": 9.68,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "SR 522-Bellevue",
+    "StartPoint": {
+      "Description": "I-405 @ SR 522 in Bothell",
+      "Direction": "S",
+      "Latitude": 47.751518,
+      "Longitude": -122.187178,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 58
+  },
+  {
+    "AverageTime": 32,
+    "CurrentTime": 28,
+    "Description": "Woodinville to Downtown Seattle",
+    "Distance": 20.76,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Woodinville-Seattle via 90",
+    "StartPoint": {
+      "Description": "SR 522 @ SR 202 in Woodinville",
+      "Direction": "S",
+      "Latitude": 47.75818,
+      "Longitude": -122.16402,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 59
+  },
+  {
+    "AverageTime": 20,
+    "CurrentTime": 20,
+    "Description": "Woodinville to Downtown Seattle",
+    "Distance": 17.25,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Woodinville-Seattle via 520",
+    "StartPoint": {
+      "Description": "SR 522 @ SR 202 in Woodinville",
+      "Direction": "W",
+      "Latitude": 47.75818,
+      "Longitude": -122.16402,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 60
+  },
+  {
+    "AverageTime": 33,
+    "CurrentTime": 26,
+    "Description": "Downtown Bellevue to Tukwila",
+    "Distance": 13.22,
+    "EndPoint": {
+      "Description": "I-405 @ I-5 in Tukwila",
+      "Direction": "S",
+      "Latitude": 47.463303,
+      "Longitude": -122.262701,
+      "MilePost": 0.11,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-Tukwila",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 63
+  },
+  {
+    "AverageTime": 21,
+    "CurrentTime": 20,
+    "Description": "Downtown Bellevue to Tukwila using HOV lanes",
+    "Distance": 13.22,
+    "EndPoint": {
+      "Description": "I-405 @ I-5 in Tukwila",
+      "Direction": "S",
+      "Latitude": 47.463303,
+      "Longitude": -122.262701,
+      "MilePost": 0.11,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-Tukwila HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 64
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 15,
+    "Description": "Tukwila to Downtown Bellevue using HOV lanes",
+    "Distance": 13.49,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Tukwila-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-405 @ I-5 in Tukwila",
+      "Direction": "N",
+      "Latitude": 47.4648,
+      "Longitude": -122.2657,
+      "MilePost": 0.11,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 65
+  },
+  {
+    "AverageTime": 10,
+    "CurrentTime": 10,
+    "Description": "Auburn to Renton",
+    "Distance": 10.28,
+    "EndPoint": {
+      "Description": "SR 167 @ I-405 in Renton",
+      "Direction": "N",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 26.14,
+      "RoadName": "167"
+    },
+    "Name": "Auburn-Renton",
+    "StartPoint": {
+      "Description": "SR 167 @ 15th St NW in Auburn",
+      "Direction": "N",
+      "Latitude": 47.323,
+      "Longitude": -122.244,
+      "MilePost": 15.86,
+      "RoadName": "167"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 67
+  },
+  {
+    "AverageTime": 10,
+    "CurrentTime": 10,
+    "Description": "Auburn to Renton using HOV lanes",
+    "Distance": 10.28,
+    "EndPoint": {
+      "Description": "SR 167 @ I-405 in Renton",
+      "Direction": "N",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 26.14,
+      "RoadName": "167"
+    },
+    "Name": "Auburn-Renton HOV",
+    "StartPoint": {
+      "Description": "SR 167 @ 15th St NW in Auburn",
+      "Direction": "N",
+      "Latitude": 47.323,
+      "Longitude": -122.244,
+      "MilePost": 15.86,
+      "RoadName": "167"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 68
+  },
+  {
+    "AverageTime": 13,
+    "CurrentTime": 12,
+    "Description": "Renton to Auburn using HOV lanes",
+    "Distance": 10.28,
+    "EndPoint": {
+      "Description": "SR 167 @ 15th St NW in Auburn",
+      "Direction": "S",
+      "Latitude": 47.323,
+      "Longitude": -122.244,
+      "MilePost": 15.86,
+      "RoadName": "167"
+    },
+    "Name": "Renton-Auburn HOV",
+    "StartPoint": {
+      "Description": "SR 167 @ I-405 in Renton",
+      "Direction": "S",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 26.14,
+      "RoadName": "167"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 69
+  },
+  {
+    "AverageTime": 21,
+    "CurrentTime": 26,
+    "Description": "Renton to Auburn",
+    "Distance": 10.28,
+    "EndPoint": {
+      "Description": "SR 167 @ 15th St NW in Auburn",
+      "Direction": "S",
+      "Latitude": 47.323,
+      "Longitude": -122.244,
+      "MilePost": 15.86,
+      "RoadName": "167"
+    },
+    "Name": "Renton-Auburn",
+    "StartPoint": {
+      "Description": "SR 167 @ I-405 in Renton",
+      "Direction": "S",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 26.14,
+      "RoadName": "167"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 70
+  },
+  {
+    "AverageTime": 15,
+    "CurrentTime": 15,
+    "Description": "Issaquah to Downtown Seattle using HOV lanes",
+    "Distance": 15.56,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Issaquah-Seattle HOV",
+    "StartPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "W",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 71
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 14,
+    "Description": "Downtown Seattle to Issaquah using HOV lanes",
+    "Distance": 14.98,
+    "EndPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "E",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "Name": "Seattle-Issaquah HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.13,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 72
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 16,
+    "Description": "Issaquah to Downtown Seattle",
+    "Distance": 15.56,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Issaquah-Seattle",
+    "StartPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "W",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 73
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 16,
+    "Description": "Downtown Seattle to Issaquah",
+    "Distance": 15.68,
+    "EndPoint": {
+      "Description": "I-90 @ Front St in Issaquah",
+      "Direction": "E",
+      "Latitude": 47.541799,
+      "Longitude": -122.037396,
+      "MilePost": 16.96,
+      "RoadName": "090"
+    },
+    "Name": "Seattle-Issaquah",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 74
+  },
+  {
+    "AverageTime": 17,
+    "CurrentTime": 16,
+    "Description": "Redmond to Downtown Seattle using HOV lanes",
+    "Distance": 14.81,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Redmond-Seattle HOV",
+    "StartPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "W",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.65,
+      "RoadName": "520"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 77
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 14,
+    "Description": "Downtown Seattle to Redmond using HOV lanes",
+    "Distance": 14.56,
+    "EndPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "E",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.66,
+      "RoadName": "520"
+    },
+    "Name": "Seattle-Redmond HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 78
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 17,
+    "Description": "Redmond to Downtown Seattle",
+    "Distance": 14.81,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Redmond-Seattle",
+    "StartPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "W",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.65,
+      "RoadName": "520"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 79
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 14,
+    "Description": "I-5 NB at I-5 @ University St in Seattle (MP 166) to SR 520 EB",
+    "Distance": 14.56,
+    "EndPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "E",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.66,
+      "RoadName": "520"
+    },
+    "Name": "Seattle-Redmond",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 80
+  },
+  {
+    "AverageTime": 22,
+    "CurrentTime": 20,
+    "Description": "Redmond to Downtown Seattle using HOV lanes via I-90",
+    "Distance": 18.34,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Redmond-Seattle via 90 HOV",
+    "StartPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "W",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.65,
+      "RoadName": "520"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 81
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 18,
+    "Description": "Downtown Seattle to Redmond via I-90 using HOV lanes",
+    "Distance": 17.36,
+    "EndPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "E",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.66,
+      "RoadName": "520"
+    },
+    "Name": "Seattle-Redmond via 90 HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.13,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 82
+  },
+  {
+    "AverageTime": 31,
+    "CurrentTime": 26,
+    "Description": "Redmond to Downtown Seattle via I-90",
+    "Distance": 18.05,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Redmond-Seattle via 90",
+    "StartPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "W",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.65,
+      "RoadName": "520"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 83
+  },
+  {
+    "AverageTime": 23,
+    "CurrentTime": 21,
+    "Description": "Downtown Seattle to Redmond via I-90",
+    "Distance": 17.36,
+    "EndPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "E",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.66,
+      "RoadName": "520"
+    },
+    "Name": "Seattle-Redmond via 90",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.13,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 84
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 13,
+    "Description": "Downtown Bellevue to Downtown Seattle using SR 520",
+    "Distance": 10.53,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Seattle via 520",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 89
+  },
+  {
+    "AverageTime": 12,
+    "CurrentTime": 12,
+    "Description": "Downtown Bellevue to Downtown Seattle via SR 520 using HOV lane",
+    "Distance": 9.75,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 166.61,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Seattle via 520 HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 90
+  },
+  {
+    "AverageTime": 13,
+    "CurrentTime": 12,
+    "Description": "Downtown Seattle to Downtown Bellevue via SR 520 using HOV lane",
+    "Distance": 10.46,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Bellevue via 520 HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 91
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 12,
+    "Description": "Downtown Seattle to Downtown Bellevue via SR 520",
+    "Distance": 10.31,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Bellevue via 520",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 92
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 16,
+    "Description": "Downtown Bellevue to Downtown Seattle using I-90",
+    "Distance": 10.56,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Seattle via 90",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 93
+  },
+  {
+    "AverageTime": 13,
+    "CurrentTime": 13,
+    "Description": "Downtown Bellevue to Downtown Seattle via I-90 using HOV lanes",
+    "Distance": 10.57,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Bellevue-Seattle via 90 HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 94
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 11,
+    "Description": "Downtown Seattle to Downtown Bellevue via I-90 using HOV lanes",
+    "Distance": 10.45,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Bellevue via 90 HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.13,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 95
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 14,
+    "Description": "Downtown Seattle to Downtown Bellevue via I-90",
+    "Distance": 10.45,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Bellevue via 90",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.13,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 96
+  },
+  {
+    "AverageTime": 7,
+    "CurrentTime": 7,
+    "Description": "Downtown Bellevue to Redmond",
+    "Distance": 6.91,
+    "EndPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "E",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.66,
+      "RoadName": "520"
+    },
+    "Name": "Bellevue-Redmond",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 99
+  },
+  {
+    "AverageTime": 7,
+    "CurrentTime": 7,
+    "Description": "Downtown Bellevue to Redmond using HOV lanes",
+    "Distance": 6.91,
+    "EndPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "E",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.66,
+      "RoadName": "520"
+    },
+    "Name": "Bellevue-Redmond HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 100
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 8,
+    "Description": "Redmond to Downtown Bellevue using HOV lanes",
+    "Distance": 7.49,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Redmond-Bellevue HOV",
+    "StartPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "W",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.65,
+      "RoadName": "520"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 101
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 9,
+    "Description": "Redmond to Downtown Bellevue",
+    "Distance": 7.49,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "Name": "Redmond-Bellevue",
+    "StartPoint": {
+      "Description": "SR 520 @ Redmond Way in Redmond",
+      "Direction": "W",
+      "Latitude": 47.668087,
+      "Longitude": -122.110145,
+      "MilePost": 12.65,
+      "RoadName": "520"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 102
+  },
+  {
+    "AverageTime": 7,
+    "CurrentTime": 7,
+    "Description": "I-5 SB from Marvin Rd  (MP 112) to 14th Ave  (MP 105)",
+    "Distance": 6.62,
+    "EndPoint": {
+      "Description": "14th Ave",
+      "Direction": "S",
+      "Latitude": 47.032492,
+      "Longitude": -122.891484,
+      "MilePost": 105.38,
+      "RoadName": "005"
+    },
+    "Name": "1A Lacey-Olympia (SB)",
+    "StartPoint": {
+      "Description": "Marvin Rd",
+      "Direction": "S",
+      "Latitude": 47.063148,
+      "Longitude": -122.762735,
+      "MilePost": 112,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 116
+  },
+  {
+    "AverageTime": 7,
+    "CurrentTime": 7,
+    "Description": "I-5 NB from JBLM Main Gate  (MP 121) to SR512 (MP 127)",
+    "Distance": 6.25,
+    "EndPoint": {
+      "Description": "SR512",
+      "Direction": "N",
+      "Latitude": 47.162742,
+      "Longitude": -122.480759,
+      "MilePost": 127.35,
+      "RoadName": "005"
+    },
+    "Name": "3A JBLM Main Gate-Lakewood SR512 (NB)",
+    "StartPoint": {
+      "Description": "JBLM Main Gate",
+      "Direction": "N",
+      "Latitude": 47.10409,
+      "Longitude": -122.588362,
+      "MilePost": 121.1,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 120
+  },
+  {
+    "AverageTime": 7,
+    "CurrentTime": 6,
+    "Description": "I-5 SB from SR 512 (MP 127) to JLBM Main Gate (MP 121)",
+    "Distance": 6.25,
+    "EndPoint": {
+      "Description": "JLBM Main Gate",
+      "Direction": "S",
+      "Latitude": 47.10409,
+      "Longitude": -122.588362,
+      "MilePost": 121.1,
+      "RoadName": "005"
+    },
+    "Name": "3A Lakewood SR512-JBLM Main Gate (SB)",
+    "StartPoint": {
+      "Description": "SR 512",
+      "Direction": "S",
+      "Latitude": 47.162742,
+      "Longitude": -122.480759,
+      "MilePost": 127.35,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 121
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 7,
+    "Description": "I-5 NB from SR512  (MP 127) to Tacoma Dome  (MP 134)",
+    "Distance": 6.63,
+    "EndPoint": {
+      "Description": "Tacoma Dome",
+      "Direction": "N",
+      "Latitude": 47.234492,
+      "Longitude": -122.427958,
+      "MilePost": 133.98,
+      "RoadName": "005"
+    },
+    "Name": "4A Lakewood SR512-Tacoma (NB)",
+    "StartPoint": {
+      "Description": "SR512",
+      "Direction": "N",
+      "Latitude": 47.162742,
+      "Longitude": -122.480759,
+      "MilePost": 127.35,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 122
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 11,
+    "Description": "I-5 SB from Tacoma (MP 133) to SR512  (MP 127)",
+    "Distance": 5.47,
+    "EndPoint": {
+      "Description": "SR512",
+      "Direction": "S",
+      "Latitude": 47.162742,
+      "Longitude": -122.480759,
+      "MilePost": 127.35,
+      "RoadName": "005"
+    },
+    "Name": "4A Tacoma-Lakewood SR512 (SB)",
+    "StartPoint": {
+      "Description": "Tacoma",
+      "Direction": "S",
+      "Latitude": 47.21300345,
+      "Longitude": -122.462325,
+      "MilePost": 132.82,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 123
+  },
+  {
+    "AverageTime": 7,
+    "CurrentTime": 7,
+    "Description": "I-5 NB from Tacoma (MP 133) to Pierce King County Line (MP 139)",
+    "Distance": 6.56,
+    "EndPoint": {
+      "Description": "Pierce King County Line",
+      "Direction": "N",
+      "Latitude": 47.25571003,
+      "Longitude": -122.330791,
+      "MilePost": 139.38,
+      "RoadName": "005"
+    },
+    "Name": "5A Tacoma-Pierce King Co Line (NB)",
+    "StartPoint": {
+      "Description": "Tacoma",
+      "Direction": "N",
+      "Latitude": 47.21300345,
+      "Longitude": -122.462325,
+      "MilePost": 132.82,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 125
+  },
+  {
+    "AverageTime": 32,
+    "CurrentTime": 30,
+    "Description": "I-5 NB from 14th Ave in Olympia (MP 105) to Tacoma Dome in Taco",
+    "Distance": 28.6,
+    "EndPoint": {
+      "Description": "Tacoma Dome in Tacoma",
+      "Direction": "N",
+      "Latitude": 47.23417561,
+      "Longitude": -122.427425,
+      "MilePost": 133.98,
+      "RoadName": "005"
+    },
+    "Name": "6A Olympia-Tacoma (NB)",
+    "StartPoint": {
+      "Description": "14th Ave in Olympia",
+      "Direction": "N",
+      "Latitude": 47.03277793,
+      "Longitude": -122.891927,
+      "MilePost": 105.38,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 126
+  },
+  {
+    "AverageTime": 31,
+    "CurrentTime": 27,
+    "Description": "Downtown Seattle to Everett using express lanes and HOV lanes",
+    "Distance": 26.94,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Everett EL HOV",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 131
+  },
+  {
+    "AverageTime": 45,
+    "CurrentTime": 41,
+    "Description": "Downtown Seattle to Everett using express lanes",
+    "Distance": 26.94,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "Name": "Seattle-Everett EL",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 132
+  },
+  {
+    "AverageTime": 40,
+    "CurrentTime": 33,
+    "Description": "Everett to Downtown Seattle",
+    "Distance": 26.72,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Everett-Seattle",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 1
+  },
+  {
+    "AverageTime": 24,
+    "CurrentTime": 20,
+    "Description": "Lynnwood to Downtown Seattle using HOV lanes",
+    "Distance": 15.23,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Lynnwood-Seattle HOV",
+    "StartPoint": {
+      "Description": "I-5 @ 196th St SW in Lynnwood",
+      "Direction": "S",
+      "Latitude": 47.820954,
+      "Longitude": -122.279633,
+      "MilePost": 181.06,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 275
+  },
+  {
+    "AverageTime": 30,
+    "CurrentTime": 24,
+    "Description": "Downtown Bellevue to Renton",
+    "Distance": 11.12,
+    "EndPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "S",
+      "Latitude": 47.467434,
+      "Longitude": -122.219631,
+      "MilePost": 2.21,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-Renton",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 45
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 18,
+    "Description": "Downtown Bellevue to Renton using HOV lanes",
+    "Distance": 11.12,
+    "EndPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "S",
+      "Latitude": 47.467434,
+      "Longitude": -122.219631,
+      "MilePost": 2.21,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-Renton HOV",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "S",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.33,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 46
+  },
+  {
+    "AverageTime": 13,
+    "CurrentTime": 12,
+    "Description": "Renton to Downtown Bellevue using HOV lanes",
+    "Distance": 10.92,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Renton-Bellevue HOV",
+    "StartPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "N",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 2.68,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 278
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 14,
+    "Description": "Renton to Downtown Bellevue",
+    "Distance": 10.92,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Renton-Bellevue",
+    "StartPoint": {
+      "Description": "I-405 @ SR 167 in Renton",
+      "Direction": "N",
+      "Latitude": 47.458,
+      "Longitude": -122.217,
+      "MilePost": 2.68,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 279
+  },
+  {
+    "AverageTime": 20,
+    "CurrentTime": 17,
+    "Description": "Downtown Bellevue to SR 522 in Bothell",
+    "Distance": 9.41,
+    "EndPoint": {
+      "Description": "I-405 @ SR 522 in Bothell",
+      "Direction": "N",
+      "Latitude": 47.751518,
+      "Longitude": -122.187178,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "Name": "Bellevue-SR 522",
+    "StartPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.6138,
+      "Longitude": -122.18892,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 55
+  },
+  {
+    "AverageTime": 12,
+    "CurrentTime": 12,
+    "Description": "SR 531 in Arlington to 41st St in Everett",
+    "Distance": 13.32,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "Name": "Arlington-Everett",
+    "StartPoint": {
+      "Description": "I-5 @ EB 172nd St in Arlington",
+      "Direction": "S",
+      "Latitude": 48.152323,
+      "Longitude": -122.188847,
+      "MilePost": 205.87,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 266
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 14,
+    "Description": "41st St in Everett to SR 531 in Arlington",
+    "Distance": 13.1,
+    "EndPoint": {
+      "Description": "I-5 @ EB 172nd St in Arlington",
+      "Direction": "N",
+      "Latitude": 48.152212,
+      "Longitude": -122.188847,
+      "MilePost": 205.87,
+      "RoadName": "005"
+    },
+    "Name": "Everett-Arlington",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 267
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 9,
+    "Description": "41st St in Everett to 88th St NE in Marysville",
+    "Distance": 7.89,
+    "EndPoint": {
+      "Description": "I-5 @ 88th St NE-SB in Marysville",
+      "Direction": "N",
+      "Latitude": 48.075728,
+      "Longitude": -122.184877,
+      "MilePost": 200.66,
+      "RoadName": "005"
+    },
+    "Name": "Everett-Marysville",
+    "StartPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "N",
+      "Latitude": 47.964146,
+      "Longitude": -122.199237,
+      "MilePost": 192.77,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 268
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 8,
+    "Description": "88th St NE in Marysville to 41st St in Everett",
+    "Distance": 8.11,
+    "EndPoint": {
+      "Description": "I-5 @ 41st St in Everett",
+      "Direction": "S",
+      "Latitude": 47.92428,
+      "Longitude": -122.26548,
+      "MilePost": 192.55,
+      "RoadName": "005"
+    },
+    "Name": "Marysville-Everett",
+    "StartPoint": {
+      "Description": "I-5 @ 88th St NE-SB in Marysville",
+      "Direction": "S",
+      "Latitude": 48.075728,
+      "Longitude": -122.184877,
+      "MilePost": 200.66,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 269
+  },
+  {
+    "AverageTime": 0,
+    "CurrentTime": 0,
+    "Description": "SR 522 WB at SR 522 @ SR 202 in Woodinville (MP 11) to I-5 SB a",
+    "Distance": 23.87,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Woodinville-Seattle via 522 and 5 EL",
+    "StartPoint": {
+      "Description": "SR 522 @ SR 202 in Woodinville",
+      "Direction": "W",
+      "Latitude": 47.75818,
+      "Longitude": -122.16402,
+      "MilePost": 10.56,
+      "RoadName": "522"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 287
+  },
+  {
+    "AverageTime": 39,
+    "CurrentTime": 34,
+    "Description": "SR 522 WB at SR 522 @ SR 202 in Woodinville (MP 11) to I-5 SB a",
+    "Distance": 15.32,
+    "EndPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "Name": "Woodinville-Seattle via 522",
+    "StartPoint": {
+      "Description": "SR 522 @ SR 202 in Woodinville",
+      "Direction": "W",
+      "Latitude": 47.75818,
+      "Longitude": -122.16402,
+      "MilePost": 10.56,
+      "RoadName": "522"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 288
+  },
+  {
+    "AverageTime": 21,
+    "CurrentTime": 18,
+    "Description": "Tukwila to Downtown Bellevue",
+    "Distance": 13.49,
+    "EndPoint": {
+      "Description": "I-405 @ NE 8th St in Bellevue",
+      "Direction": "N",
+      "Latitude": 47.61361,
+      "Longitude": -122.18797,
+      "MilePost": 13.6,
+      "RoadName": "405"
+    },
+    "Name": "Tukwila-Bellevue",
+    "StartPoint": {
+      "Description": "I-405 @ I-5 in Tukwila",
+      "Direction": "N",
+      "Latitude": 47.4648,
+      "Longitude": -122.2657,
+      "MilePost": 0.11,
+      "RoadName": "405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 291
+  },
+  {
+    "AverageTime": 5,
+    "CurrentTime": 4,
+    "Description": "Region boundary to Federal Way",
+    "Distance": 4.29,
+    "EndPoint": {
+      "Description": "I-5 @ So. 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "Name": "King County Line to Federal Way",
+    "StartPoint": {
+      "Description": "I-5 @ King County Line MP 139.38",
+      "Direction": "N",
+      "Latitude": 47.334789,
+      "Longitude": -122.293778,
+      "MilePost": 139.69,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 293
+  },
+  {
+    "AverageTime": 39,
+    "CurrentTime": 30,
+    "Description": "Downtown Seattle to Woodinville",
+    "Distance": 20.56,
+    "EndPoint": {
+      "Description": "SR 522 @ SR 202 in Woodinville",
+      "Direction": "N",
+      "Latitude": 47.75818,
+      "Longitude": -122.16402,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Woodinville via 90",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "S",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 294
+  },
+  {
+    "AverageTime": 33,
+    "CurrentTime": 29,
+    "Description": "Downtown Seattle to Woodinville",
+    "Distance": 17.2,
+    "EndPoint": {
+      "Description": "SR 522 @ SR 202 in Woodinville",
+      "Direction": "N",
+      "Latitude": 47.75818,
+      "Longitude": -122.16402,
+      "MilePost": 23.01,
+      "RoadName": "405"
+    },
+    "Name": "Seattle-Woodinville via 520",
+    "StartPoint": {
+      "Description": "I-5 @ University St in Seattle",
+      "Direction": "N",
+      "Latitude": 47.609294,
+      "Longitude": -122.331759,
+      "MilePost": 165.83,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 295
+  },
+  {
+    "AverageTime": 13,
+    "CurrentTime": 12,
+    "Description": "I-5 NB from Tacoma (MP 133) to S 320th St (MP 144)",
+    "Distance": 11.16,
+    "EndPoint": {
+      "Description": "S 320th St",
+      "Direction": "N",
+      "Latitude": 47.3172,
+      "Longitude": -122.2964,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "Name": "5A Tacoma-Federal Way (NB)",
+    "StartPoint": {
+      "Description": "Tacoma",
+      "Direction": "N",
+      "Latitude": 47.21300345,
+      "Longitude": -122.462325,
+      "MilePost": 132.82,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 303
+  },
+  {
+    "AverageTime": 6,
+    "CurrentTime": 7,
+    "Description": "I-5 NB from 14th Ave  (MP 105) to Marvin Rd  (MP 112)",
+    "Distance": 6.62,
+    "EndPoint": {
+      "Description": "Marvin Rd",
+      "Direction": "N",
+      "Latitude": 47.063333,
+      "Longitude": -122.765327,
+      "MilePost": 112,
+      "RoadName": "005"
+    },
+    "Name": "1A Olympia-Lacey (NB)",
+    "StartPoint": {
+      "Description": "14th Ave",
+      "Direction": "N",
+      "Latitude": 47.032492,
+      "Longitude": -122.891484,
+      "MilePost": 105.38,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 310
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 9,
+    "Description": "I-5 SB from JBLM Main Gate (MP 121) to Marvin Rd / SR510 (MP 11",
+    "Distance": 9.1,
+    "EndPoint": {
+      "Description": "Marvin Rd / SR510",
+      "Direction": "S",
+      "Latitude": 47.063333,
+      "Longitude": -122.765327,
+      "MilePost": 112,
+      "RoadName": "005"
+    },
+    "Name": "2A JBLM Main Gate-Lacey (SB)",
+    "StartPoint": {
+      "Description": "JBLM Main Gate",
+      "Direction": "S",
+      "Latitude": 47.10409,
+      "Longitude": -122.588362,
+      "MilePost": 121.1,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 311
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 9,
+    "Description": "I-5 NB from I-5 @ Marvin Rd IC in Lacey (MP 112) I-5 to I-5 @ J",
+    "Distance": 9.1,
+    "EndPoint": {
+      "Description": "I-5 @ JBLM Main Gate",
+      "Direction": "N",
+      "Latitude": 47.10409,
+      "Longitude": -122.588362,
+      "MilePost": 121.1,
+      "RoadName": "005"
+    },
+    "Name": "2A Lacey-JBLM Main Gate (NB)",
+    "StartPoint": {
+      "Description": "I-5 @ Marvin Rd IC in Lacey",
+      "Direction": "N",
+      "Latitude": 47.063333,
+      "Longitude": -122.765327,
+      "MilePost": 112,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 312
+  },
+  {
+    "AverageTime": 39,
+    "CurrentTime": 36,
+    "Description": "I-5 SB from Tacoma Dome  (MP 134) to 14th Ave in Olympia (MP 10",
+    "Distance": 28.3,
+    "EndPoint": {
+      "Description": "14th Ave in Olympia",
+      "Direction": "S",
+      "Latitude": 47.03277793,
+      "Longitude": -122.891927,
+      "MilePost": 105.67,
+      "RoadName": "005"
+    },
+    "Name": "6A Tacoma-Olympia (SB)",
+    "StartPoint": {
+      "Description": "Tacoma Dome",
+      "Direction": "S",
+      "Latitude": 47.1544768,
+      "Longitude": -122.492049,
+      "MilePost": 133.97,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 313
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 9,
+    "Description": "I-5 SB from Pierce King County Line (MP 139) to Tacoma (MP 133)",
+    "Distance": 6.56,
+    "EndPoint": {
+      "Description": "Tacoma",
+      "Direction": "S",
+      "Latitude": 47.21300345,
+      "Longitude": -122.462325,
+      "MilePost": 132.82,
+      "RoadName": "005"
+    },
+    "Name": "5A Pierce King Co Line-Tacoma (SB)",
+    "StartPoint": {
+      "Description": "Pierce King County Line",
+      "Direction": "S",
+      "Latitude": 47.255624,
+      "Longitude": -122.33113,
+      "MilePost": 139.38,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 314
+  },
+  {
+    "AverageTime": 4,
+    "CurrentTime": 4,
+    "Description": "Region boundary to Federal Way via HOV lanes",
+    "Distance": 4.29,
+    "EndPoint": {
+      "Description": "I-5 @ S 320th St in Federal Way",
+      "Direction": "N",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.98,
+      "RoadName": "005"
+    },
+    "Name": "King County Line to Federal Way HOV",
+    "StartPoint": {
+      "Description": "I-5 @ King County Line MP 139.38",
+      "Direction": "N",
+      "Latitude": 47.334789,
+      "Longitude": -122.293778,
+      "MilePost": 139.69,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 326
+  },
+  {
+    "AverageTime": 45,
+    "CurrentTime": 53,
+    "Description": "I-5 SB and 199th to I-5 and I-205JCT",
+    "Distance": 32.92,
+    "EndPoint": {
+      "Description": "I-5 - I-205JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.35355,
+      "Longitude": -122.76467,
+      "MilePost": 287.46,
+      "RoadName": "I-5"
+    },
+    "Name": "I-5 SB Corridor",
+    "StartPoint": {
+      "Description": "I-5 SB and 199th in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.7691082,
+      "Longitude": -122.668256,
+      "MilePost": 11.75,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 333
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 15,
+    "Description": "159th St. to Delta Park",
+    "Distance": 10.11,
+    "EndPoint": {
+      "Description": "I-5 Delta Park in Portland",
+      "Direction": "S",
+      "Latitude": 45.60328,
+      "Longitude": -122.68352,
+      "MilePost": 307.35,
+      "RoadName": "I-5"
+    },
+    "Name": "I-5 SB and 159th to Delta Park",
+    "StartPoint": {
+      "Description": "I-5 SB and 159th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.740536,
+      "Longitude": -122.659721,
+      "MilePost": 8.83,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 334
+  },
+  {
+    "AverageTime": 17,
+    "CurrentTime": 27,
+    "Description": "159th St. to I-84",
+    "Distance": 15.29,
+    "EndPoint": {
+      "Description": "I-5 and I-84JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.54485,
+      "Longitude": -122.67707,
+      "MilePost": 302.17,
+      "RoadName": "I-5"
+    },
+    "Name": "I-5 SB and 159th to I-84JCT",
+    "StartPoint": {
+      "Description": "I-5 and 159th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.740536,
+      "Longitude": -122.659721,
+      "MilePost": 8.83,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 335
+  },
+  {
+    "AverageTime": 27,
+    "CurrentTime": 40,
+    "Description": "I-5/SR-500 Jct. to I-205/I-84 Jct. via I-5 and I-84",
+    "Distance": 15.27,
+    "EndPoint": {
+      "Description": "I-84 to I-205 JCT in Portland",
+      "Direction": "E",
+      "Latitude": 45.53367,
+      "Longitude": -122.56231,
+      "MilePost": 5.82,
+      "RoadName": "I-84"
+    },
+    "Name": "I-5 SB and SR500 to I-84 to I-205 JCT",
+    "StartPoint": {
+      "Description": "I-5 and SR500 in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.642222,
+      "Longitude": -122.661944,
+      "MilePost": 2.09,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 338
+  },
+  {
+    "AverageTime": 12,
+    "CurrentTime": 13,
+    "Description": "I-5/SR-500 Jct. to I-205/I-84 Jct. via SR-14 and I-205",
+    "Distance": 11.08,
+    "EndPoint": {
+      "Description": "I-205 to I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.55579,
+      "Longitude": -122.56758,
+      "MilePost": 23.27,
+      "RoadName": "I-205"
+    },
+    "Name": "I-5 SB and SR500 to SR14 to I-205 to I-84 JCT",
+    "StartPoint": {
+      "Description": "I-5 SB and SR500 in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.646387,
+      "Longitude": -122.662332,
+      "MilePost": 2.09,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 339
+  },
+  {
+    "AverageTime": 20,
+    "CurrentTime": 22,
+    "Description": "192nd Ave to I-5/I-84 Jct. via I-205 and I-84",
+    "Distance": 14.57,
+    "EndPoint": {
+      "Description": "I-205 and I-84 JCT in Portland",
+      "Direction": "W",
+      "Latitude": 45.55579,
+      "Longitude": -122.56758,
+      "MilePost": 0.45,
+      "RoadName": "I-84"
+    },
+    "Name": "SR14 and 171st Ave to I-205 and I-84 JCT",
+    "StartPoint": {
+      "Description": "SR14 and 171st Ave in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.587222,
+      "Longitude": -122.484722,
+      "MilePost": 9.52,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 340
+  },
+  {
+    "AverageTime": 23,
+    "CurrentTime": 30,
+    "Description": "192nd Ave to I-5/I-84 Jct. via SR-14 and I-5",
+    "Distance": 16.8,
+    "EndPoint": {
+      "Description": "I-5 and I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.54485,
+      "Longitude": -122.67707,
+      "MilePost": 302.17,
+      "RoadName": "I-5"
+    },
+    "Name": "SR14 and 171st Ave to I-5 and I-84 JCT",
+    "StartPoint": {
+      "Description": "SR14 and 171st Ave in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.587223,
+      "Longitude": -122.484723,
+      "MilePost": 9.52,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 341
+  },
+  {
+    "AverageTime": 44,
+    "CurrentTime": 80,
+    "Description": "SR-502 to I-5/I-205 Jct. (Oregon) via I-205",
+    "Distance": 39.64,
+    "EndPoint": {
+      "Description": "I-5 SB Corridor via I-205 SB to Wilsonville",
+      "Direction": "S",
+      "Latitude": 45.624696,
+      "Longitude": -122.670881,
+      "MilePost": 1.96,
+      "RoadName": "I-205"
+    },
+    "Name": "I-5 SB Corridor via I-205 SB",
+    "StartPoint": {
+      "Description": "I-5 SB Corridor via I-205 SB",
+      "Direction": "S",
+      "Latitude": 45.753766,
+      "Longitude": -122.663865,
+      "MilePost": 11.75,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 342
+  },
+  {
+    "AverageTime": 13,
+    "CurrentTime": 17,
+    "Description": "179th St. to Airport Way via I-205",
+    "Distance": 13.3,
+    "EndPoint": {
+      "Description": "I-205 and Airport Way in Portland",
+      "Direction": "S",
+      "Latitude": 45.57188,
+      "Longitude": -122.55094,
+      "MilePost": 24.77,
+      "RoadName": "I-205"
+    },
+    "Name": "I-5 SB Corridor via I-205 SB to Airportway",
+    "StartPoint": {
+      "Description": "I-5 and 179th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.732778,
+      "Longitude": -122.656944,
+      "MilePost": 8.24,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 343
+  },
+  {
+    "AverageTime": 5,
+    "CurrentTime": 6,
+    "Description": "Mill Plain to I-84",
+    "Distance": 5.13,
+    "EndPoint": {
+      "Description": "I-205 and I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.55579,
+      "Longitude": -122.56758,
+      "MilePost": 23.27,
+      "RoadName": "I-205"
+    },
+    "Name": "I-205 SB and Mill Plain to I-205 and I-84 JCT",
+    "StartPoint": {
+      "Description": "I-205 and Mill Plain in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.61651,
+      "Longitude": -122.55675,
+      "MilePost": 28.36,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 344
+  },
+  {
+    "AverageTime": 22,
+    "CurrentTime": 46,
+    "Description": "Mill Plain to Oregon City",
+    "Distance": 18.18,
+    "EndPoint": {
+      "Description": "Oregon City in Portland",
+      "Direction": "S",
+      "Latitude": 45.37451,
+      "Longitude": -122.58894,
+      "MilePost": 10.24,
+      "RoadName": "I-205"
+    },
+    "Name": "I-205 SB and Mill Plain to I-5 JCT",
+    "StartPoint": {
+      "Description": "I-205 SB and Mill Plain in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.61651,
+      "Longitude": -122.55675,
+      "MilePost": 28.36,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 345
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 10,
+    "Description": "Cascade Park to Vancouver via SR14",
+    "Distance": 8.92,
+    "EndPoint": {
+      "Description": "SR14 and I-5 JCT in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.623361,
+      "Longitude": -122.671437,
+      "MilePost": 0.42,
+      "RoadName": "I-5"
+    },
+    "Name": "Cascade Park to Vancouver",
+    "StartPoint": {
+      "Description": "SR14 and Cascade Park in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.5917415,
+      "Longitude": -122.50423,
+      "MilePost": 8.52,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 347
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 17,
+    "Description": "Hazel Dell to Fremont Bridge via I-5",
+    "Distance": 9.41,
+    "EndPoint": {
+      "Description": "I-5 and I-405 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.54731,
+      "Longitude": -122.67889,
+      "MilePost": 303.47,
+      "RoadName": "I-5"
+    },
+    "Name": "Hazel Dell to Fremont Bridge",
+    "StartPoint": {
+      "Description": "I-5 and 78th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.676544,
+      "Longitude": -122.664559,
+      "MilePost": 4.25,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 348
+  },
+  {
+    "AverageTime": 22,
+    "CurrentTime": 23,
+    "Description": "Hazel Dell to I-405-US26 via I-5",
+    "Distance": 13.46,
+    "EndPoint": {
+      "Description": "US26 in Portland",
+      "Direction": "S",
+      "Latitude": 45.51688,
+      "Longitude": -122.688,
+      "MilePost": 1.77,
+      "RoadName": "I-405"
+    },
+    "Name": "Hazel Dell to I-405-US26",
+    "StartPoint": {
+      "Description": "I-5 SB and 78th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.676544,
+      "Longitude": -122.664559,
+      "MilePost": 4.25,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 349
+  },
+  {
+    "AverageTime": 27,
+    "CurrentTime": 59,
+    "Description": "Mill Plain to Oregon City via I-205",
+    "Distance": 19.13,
+    "EndPoint": {
+      "Description": "Oregon City in Portland",
+      "Direction": "S",
+      "Latitude": 45.36662,
+      "Longitude": -122.60033,
+      "MilePost": 9.29,
+      "RoadName": "I-205"
+    },
+    "Name": "Mill Plain to Oregon City",
+    "StartPoint": {
+      "Description": "I-205 SB and Mill Plain in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.621409,
+      "Longitude": -122.559835,
+      "MilePost": 28.36,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 350
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 11,
+    "Description": "Mill Plain Vancouver to I-84 via I-205",
+    "Distance": 6.72,
+    "EndPoint": {
+      "Description": "I-205 and I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.53488,
+      "Longitude": -122.56457,
+      "MilePost": 21.68,
+      "RoadName": "I-205"
+    },
+    "Name": "Mill Plain Vancouver to I-84",
+    "StartPoint": {
+      "Description": "I-205 and Mill Plain in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.621409,
+      "Longitude": -122.559835,
+      "MilePost": 28.36,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 351
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 6,
+    "Description": "Vancouver to Cascade Park via SR14",
+    "Distance": 6.13,
+    "EndPoint": {
+      "Description": "SR14 and Cascade Park in Vancouver",
+      "Direction": "E",
+      "Latitude": 45.59597,
+      "Longitude": -122.519657,
+      "MilePost": 6.3,
+      "RoadName": "SR 14"
+    },
+    "Name": "Vancouver to Cascade Park",
+    "StartPoint": {
+      "Description": "SR14 and I-5 JCT in Vancouver",
+      "Direction": "E",
+      "Latitude": 45.61944,
+      "Longitude": -122.661586,
+      "MilePost": 0.17,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 354
+  },
+  {
+    "AverageTime": 45,
+    "CurrentTime": 81,
+    "Description": "Salmon Creek WA to Tualatin OR via I-205",
+    "Distance": 34.75,
+    "EndPoint": {
+      "Description": "I-5 SB at Tualatin",
+      "Direction": "S",
+      "Latitude": 45.37297,
+      "Longitude": -122.72952,
+      "MilePost": 1.96,
+      "RoadName": "I-205"
+    },
+    "Name": "Salmon Creek WA to Tualatin OR I-205",
+    "StartPoint": {
+      "Description": "134th and 205 via I-205 SB",
+      "Direction": "S",
+      "Latitude": 45.707495,
+      "Longitude": -122.631733,
+      "MilePost": 36.67,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 358
+  },
+  {
+    "AverageTime": 46,
+    "CurrentTime": 50,
+    "Description": "Salmon Creek WA to Tualatin OR via I-5",
+    "Distance": 28.47,
+    "EndPoint": {
+      "Description": "I-5 - I-205JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.35355,
+      "Longitude": -122.76467,
+      "MilePost": 287.46,
+      "RoadName": "I-5"
+    },
+    "Name": "Salmon Creek WA to Tualatin OR I-5",
+    "StartPoint": {
+      "Description": "I-5 SB and 134 St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.716985,
+      "Longitude": -122.654515,
+      "MilePost": 7.3,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 359
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 17,
+    "Description": "Clark County Fairgrounds to Delta Park via I-5",
+    "Distance": 11.05,
+    "EndPoint": {
+      "Description": "I-5 Delta Park in Portland",
+      "Direction": "S",
+      "Latitude": 45.60328,
+      "Longitude": -122.68352,
+      "MilePost": 307.35,
+      "RoadName": "I-5"
+    },
+    "Name": "Clark County Fairgrounds to Delta Park",
+    "StartPoint": {
+      "Description": "I-5 SB and 179th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.754301,
+      "Longitude": -122.663841,
+      "MilePost": 9.77,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 362
+  },
+  {
+    "AverageTime": 14,
+    "CurrentTime": 18,
+    "Description": "Clark County Fairgrounds to Portland International Airport Exit via I-205",
+    "Distance": 14.83,
+    "EndPoint": {
+      "Description": "I-205 and Airport Way in Portland",
+      "Direction": "S",
+      "Latitude": 45.57188,
+      "Longitude": -122.55094,
+      "MilePost": 24.77,
+      "RoadName": "I-205"
+    },
+    "Name": "Clark County Fairgrounds to Portland International Airport Exit",
+    "StartPoint": {
+      "Description": "I-5 and 179th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.754301,
+      "Longitude": -122.663841,
+      "MilePost": 9.77,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 363
+  },
+  {
+    "AverageTime": 25,
+    "CurrentTime": 26,
+    "Description": "Clark County Fairgrounds to Rose Quarter via I-5",
+    "Distance": 15.89,
+    "EndPoint": {
+      "Description": "I-5 and Rose Quarter in Portland",
+      "Direction": "S",
+      "Latitude": 45.53625,
+      "Longitude": -122.66727,
+      "MilePost": 302.51,
+      "RoadName": "I-5"
+    },
+    "Name": "Clark County Fairgrounds to Rose Quarter",
+    "StartPoint": {
+      "Description": "I-5 and 179th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.754301,
+      "Longitude": -122.663841,
+      "MilePost": 9.77,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 364
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 11,
+    "Description": "Delta Park to Clark County Fairgrounds via I-5",
+    "Distance": 9.34,
+    "EndPoint": {
+      "Description": "I-5 and 179th St in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.754301,
+      "Longitude": -122.663841,
+      "MilePost": 9.76,
+      "RoadName": "I-5"
+    },
+    "Name": "Delta Park to Clark County Fairgrounds",
+    "StartPoint": {
+      "Description": "Delta Park in Portland",
+      "Direction": "N",
+      "Latitude": 45.61146,
+      "Longitude": -122.679,
+      "MilePost": 307.9,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 365
+  },
+  {
+    "AverageTime": 24,
+    "CurrentTime": 21,
+    "Description": "Fremont Bridge to Hazel Dell via I-5",
+    "Distance": 8.26,
+    "EndPoint": {
+      "Description": "I-5 and 78th St Hazel Dell in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.676544,
+      "Longitude": -122.664559,
+      "MilePost": 4.25,
+      "RoadName": "I-5"
+    },
+    "Name": "Fremont Bridge to Hazel Dell",
+    "StartPoint": {
+      "Description": "Fremont Bridge in Portland",
+      "Direction": "N",
+      "Latitude": 45.54731,
+      "Longitude": -122.6789,
+      "MilePost": 303.47,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 366
+  },
+  {
+    "AverageTime": 43,
+    "CurrentTime": 34,
+    "Description": "I-405-US 26 to Hazel Dell via I-405 to I-5",
+    "Distance": 11.69,
+    "EndPoint": {
+      "Description": "I-5 and 78th St Hazel Dell in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.676544,
+      "Longitude": -122.664559,
+      "MilePost": 4.25,
+      "RoadName": "I-5"
+    },
+    "Name": "I-405-US 26 to Hazel Dell",
+    "StartPoint": {
+      "Description": "I-405/US26 in Portland",
+      "Direction": "N",
+      "Latitude": 45.51688,
+      "Longitude": -122.688,
+      "MilePost": 1.77,
+      "RoadName": "I-405"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 367
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 17,
+    "Description": "63rd St to I-5/I-405 Jct.",
+    "Distance": 8.94,
+    "EndPoint": {
+      "Description": "I-5 and I-405 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.55632,
+      "Longitude": -122.67901,
+      "MilePost": 303.47,
+      "RoadName": "I-5"
+    },
+    "Name": "I-5 SB and 63rd to I-405 JCT North",
+    "StartPoint": {
+      "Description": "I-5 and 63rd in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.668141,
+      "Longitude": -122.666701,
+      "MilePost": 3.78,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 375
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 24,
+    "Description": "63rd to US-26 West",
+    "Distance": 12.99,
+    "EndPoint": {
+      "Description": "US26 in Portland",
+      "Direction": "S",
+      "Latitude": 45.51348,
+      "Longitude": -122.66793,
+      "MilePost": 1.77,
+      "RoadName": "I-405"
+    },
+    "Name": "I-5 SB and 63rd to US26",
+    "StartPoint": {
+      "Description": "I-5 SB and 63rd in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.668141,
+      "Longitude": -122.666701,
+      "MilePost": 3.78,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 376
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 11,
+    "Description": "I-5 and Fourth Plain to SR 502",
+    "Distance": 10.26,
+    "EndPoint": {
+      "Description": "I-5 and SR 502",
+      "Direction": "N",
+      "Latitude": 45.78126569,
+      "Longitude": -122.672017,
+      "MilePost": 11.67,
+      "RoadName": "I-5"
+    },
+    "Name": "I-5 and Fourth Plain to SR 502",
+    "StartPoint": {
+      "Description": "I-5 and Fourth Plain",
+      "Direction": "N",
+      "Latitude": 45.63633996,
+      "Longitude": -122.662113,
+      "MilePost": 1.41,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 377
+  },
+  {
+    "AverageTime": 28,
+    "CurrentTime": 25,
+    "Description": "I-205 SB and 18th St to SR14 to I-5 to I-84 JCT",
+    "Distance": 15.81,
+    "EndPoint": {
+      "Description": "I-5 and I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.54485,
+      "Longitude": -122.67707,
+      "MilePost": 302.17,
+      "RoadName": "I-5"
+    },
+    "Name": "I-205 SB and 18th St to SR14 to I-5 to I-84 JCT",
+    "StartPoint": {
+      "Description": "I-205 SB and 18th St to SR14 to I-5 in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.628406,
+      "Longitude": -122.559927,
+      "MilePost": 29.84,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 378
+  },
+  {
+    "AverageTime": 24,
+    "CurrentTime": 21,
+    "Description": "I-205 SB and 18th St to I-84 to I-5 JCT",
+    "Distance": 14.48,
+    "EndPoint": {
+      "Description": "I-84 to I-5 JCT",
+      "Direction": "W",
+      "Latitude": 45.52976,
+      "Longitude": -122.64923,
+      "MilePost": 0.45,
+      "RoadName": "I-84"
+    },
+    "Name": "I-205 SB and 18th St to I-84 to I-5 JCT",
+    "StartPoint": {
+      "Description": "I-205 SB and 18th St in Vancouver",
+      "Direction": "S",
+      "Latitude": 45.640957,
+      "Longitude": -122.563394,
+      "MilePost": 29.84,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 379
+  },
+  {
+    "AverageTime": 17,
+    "CurrentTime": 12,
+    "Description": "Federal Way (320th) to Tacoma Dome",
+    "Distance": 8.77,
+    "EndPoint": {
+      "Description": "I-5 @ Tacoma Dome MP 134",
+      "Direction": "S",
+      "Latitude": 47.234857,
+      "Longitude": -122.426813,
+      "MilePost": 134.87,
+      "RoadName": "005"
+    },
+    "Name": "Federal Way-Tacoma",
+    "StartPoint": {
+      "Description": "I-5 @ Federal Way VMS MP 145.22",
+      "Direction": "S",
+      "Latitude": 47.315446,
+      "Longitude": -122.296702,
+      "MilePost": 143.64,
+      "RoadName": "005"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 382
+  },
+  {
+    "AverageTime": 25,
+    "CurrentTime": 28,
+    "Description": "SR14 and Cascade Pk to I-5 and I-84 JCT",
+    "Distance": 15.18,
+    "EndPoint": {
+      "Description": "I-5 and I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.53295,
+      "Longitude": -122.66641,
+      "MilePost": 302.17,
+      "RoadName": "I-5"
+    },
+    "Name": "019 SR14 and Cascade Pk to I-5 and I-84 JCT",
+    "StartPoint": {
+      "Description": "SR14 and Cascade Park in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.596111,
+      "Longitude": -122.519722,
+      "MilePost": 7.9,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 384
+  },
+  {
+    "AverageTime": 22,
+    "CurrentTime": 20,
+    "Description": "SR14 and Cascade Pk to I-205 to I-5 and I-84 JCT",
+    "Distance": 12.95,
+    "EndPoint": {
+      "Description": "I-5 and I-84 JCT in Portland",
+      "Direction": "W",
+      "Latitude": 45.5256,
+      "Longitude": -122.66046,
+      "MilePost": 0.45,
+      "RoadName": "I-84"
+    },
+    "Name": "020 SR14 and Cascade Pk to I-205 to I-5 and I-84 JCT",
+    "StartPoint": {
+      "Description": "SR14 and Cascade Park in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.596111,
+      "Longitude": -122.519722,
+      "MilePost": 7.9,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 385
+  },
+  {
+    "AverageTime": 73,
+    "CurrentTime": 71,
+    "Description": "North Bend to Ellensburg Eastbound",
+    "Distance": 74.9,
+    "EndPoint": {
+      "Description": "I-90 @ Ellensburg Exit 109",
+      "Direction": "E",
+      "Latitude": 47.011288,
+      "Longitude": -120.59914,
+      "MilePost": 109.45,
+      "RoadName": "I-90"
+    },
+    "Name": "Snoqualmie Pass EB",
+    "StartPoint": {
+      "Description": "I-90 @ 436th Ave / Exit 34",
+      "Direction": "E",
+      "Latitude": 47.473234,
+      "Longitude": -121.751422,
+      "MilePost": 35.02,
+      "RoadName": "I-90"
+    },
+    "TimeUpdated": "2025-11-04T23:21:00.000Z",
+    "TravelTimeID": 114
+  },
+  {
+    "AverageTime": 73,
+    "CurrentTime": 73,
+    "Description": "Ellensburg to North Bend Westbound",
+    "Distance": 78.56,
+    "EndPoint": {
+      "Description": "I-90 @ North Bend Exit 31",
+      "Direction": "W",
+      "Latitude": 47.484935,
+      "Longitude": -121.792834,
+      "MilePost": 30.9,
+      "RoadName": "I-90"
+    },
+    "Name": "Snoqualmie Pass WB",
+    "StartPoint": {
+      "Description": "I-90 @ Ellensburg Exit 109",
+      "Direction": "W",
+      "Latitude": 46.97387,
+      "Longitude": -120.540695,
+      "MilePost": 109,
+      "RoadName": "I-90"
+    },
+    "TimeUpdated": "2025-11-04T23:21:00.000Z",
+    "TravelTimeID": 115
+  },
+  {
+    "AverageTime": 27,
+    "CurrentTime": 24,
+    "Description": "Camas to Rose Quarter via I-205 and I-84",
+    "Distance": 18.03,
+    "EndPoint": {
+      "Description": "I-5 and I-84 JCT in Portland",
+      "Direction": "W",
+      "Latitude": 45.5256,
+      "Longitude": -122.66046,
+      "MilePost": 0.45,
+      "RoadName": "I-84"
+    },
+    "Name": "Camas to Rose Quarter via I-205 and I-84",
+    "StartPoint": {
+      "Description": "SR14 and Union St in Camas",
+      "Direction": "W",
+      "Latitude": 45.5803,
+      "Longitude": -122.385324,
+      "MilePost": 14.65,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 413
+  },
+  {
+    "AverageTime": 34,
+    "CurrentTime": 32,
+    "Description": "Camas to Rose Quarter via I-5",
+    "Distance": 21.93,
+    "EndPoint": {
+      "Description": "Rose Quarter Exit I-5 in Portland",
+      "Direction": "S",
+      "Latitude": 45.53295,
+      "Longitude": -122.66641,
+      "MilePost": 302.17,
+      "RoadName": "I-5"
+    },
+    "Name": "Camas to Rose Quarter via I-5",
+    "StartPoint": {
+      "Description": "SR14 and Union St in Camas",
+      "Direction": "W",
+      "Latitude": 45.5803,
+      "Longitude": -122.385324,
+      "MilePost": 14.65,
+      "RoadName": "SR 14"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 414
+  },
+  {
+    "AverageTime": 9,
+    "CurrentTime": 11,
+    "Description": "I-84 to Mill Plain via I-205",
+    "Distance": 5.41,
+    "EndPoint": {
+      "Description": "Mill Plain in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.621409,
+      "Longitude": -122.559835,
+      "MilePost": 28.36,
+      "RoadName": "I-205"
+    },
+    "Name": "I-84 to Mill Plain via I-205",
+    "StartPoint": {
+      "Description": "I-84 in Portland",
+      "Direction": "N",
+      "Latitude": 45.53488,
+      "Longitude": -122.565,
+      "MilePost": 21.68,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 415
+  },
+  {
+    "AverageTime": 31,
+    "CurrentTime": 42,
+    "Description": "Oregon City to Mill Plain via I-205",
+    "Distance": 18.06,
+    "EndPoint": {
+      "Description": "I-205 and Mill Plain in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.621409,
+      "Longitude": -122.559835,
+      "MilePost": 28.36,
+      "RoadName": "I-205"
+    },
+    "Name": "Oregon City to Mill Plain via I-205",
+    "StartPoint": {
+      "Description": "Oregon City in Portland",
+      "Direction": "N",
+      "Latitude": 45.362,
+      "Longitude": -122.609,
+      "MilePost": 9.03,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 416
+  },
+  {
+    "AverageTime": 16,
+    "CurrentTime": 15,
+    "Description": "Portland International Airport Exit to Clark County Fairgrounds via I-205",
+    "Distance": 13.25,
+    "EndPoint": {
+      "Description": "Clark County Fairgrounds",
+      "Direction": "N",
+      "Latitude": 45.754301,
+      "Longitude": -122.663841,
+      "MilePost": 9.76,
+      "RoadName": "I-5"
+    },
+    "Name": "Portland International Airport Exit to Clark County Fairgrounds via I-205",
+    "StartPoint": {
+      "Description": "Portland International Airport Exit",
+      "Direction": "N",
+      "Latitude": 45.5721,
+      "Longitude": -122.548,
+      "MilePost": 24.92,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 417
+  },
+  {
+    "AverageTime": 38,
+    "CurrentTime": 34,
+    "Description": "Rose Quarter to Camas via I-5",
+    "Distance": 19.88,
+    "EndPoint": {
+      "Description": "Camas",
+      "Direction": "E",
+      "Latitude": 45.5803,
+      "Longitude": -122.385324,
+      "MilePost": 14.65,
+      "RoadName": "SR 14"
+    },
+    "Name": "Rose Quarter to Camas via I-5",
+    "StartPoint": {
+      "Description": "Rose Quarter in Portland",
+      "Direction": "N",
+      "Latitude": 45.53625,
+      "Longitude": -122.667,
+      "MilePost": 302.5,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 418
+  },
+  {
+    "AverageTime": 31,
+    "CurrentTime": 37,
+    "Description": "Rose Quarter to Camas via I-84",
+    "Distance": 16.76,
+    "EndPoint": {
+      "Description": "Camas",
+      "Direction": "E",
+      "Latitude": 45.5803,
+      "Longitude": -122.385324,
+      "MilePost": 14.65,
+      "RoadName": "SR 14"
+    },
+    "Name": "Rose Quarter to Camas via I-84",
+    "StartPoint": {
+      "Description": "Rose Quarter in Portland",
+      "Direction": "E",
+      "Latitude": 45.52048,
+      "Longitude": -122.665,
+      "MilePost": 0.1,
+      "RoadName": "I-84"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 419
+  },
+  {
+    "AverageTime": 32,
+    "CurrentTime": 28,
+    "Description": "Rose Quarter to Clark County Fairgrounds via I-5",
+    "Distance": 14.74,
+    "EndPoint": {
+      "Description": "I-5 and 179th St in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.754301,
+      "Longitude": -122.663841,
+      "MilePost": 9.76,
+      "RoadName": "I-5"
+    },
+    "Name": "Rose Quarter to Clark County Fairgrounds via I-5",
+    "StartPoint": {
+      "Description": "Rose Quarter in Portland",
+      "Direction": "N",
+      "Latitude": 45.53625,
+      "Longitude": -122.667,
+      "MilePost": 302.5,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 420
+  },
+  {
+    "AverageTime": 52,
+    "CurrentTime": 79,
+    "Description": "Tualatin OR to Salmon Creek WA via I-205",
+    "Distance": 33.44,
+    "EndPoint": {
+      "Description": "Salmon Creek WA",
+      "Direction": "N",
+      "Latitude": 45.707495,
+      "Longitude": -122.631733,
+      "MilePost": 36.67,
+      "RoadName": "I-205"
+    },
+    "Name": "Tualatin OR to Salmon Creek WA - via I-205",
+    "StartPoint": {
+      "Description": "Tualatin OR",
+      "Direction": "N",
+      "Latitude": 45.37297,
+      "Longitude": -122.73,
+      "MilePost": 1.96,
+      "RoadName": "I-205"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 421
+  },
+  {
+    "AverageTime": 54,
+    "CurrentTime": 62,
+    "Description": "Tualatin OR to Salmon Creek WA via I-5",
+    "Distance": 27.32,
+    "EndPoint": {
+      "Description": "I-5 and 134th St in Vancouver",
+      "Direction": "N",
+      "Latitude": 45.716985,
+      "Longitude": -122.654515,
+      "MilePost": 7.3,
+      "RoadName": "I-5"
+    },
+    "Name": "Tualatin OR to Salmon Creek WA via I-5",
+    "StartPoint": {
+      "Description": "Tualatin OR in Portland",
+      "Direction": "N",
+      "Latitude": 45.35355,
+      "Longitude": -122.765,
+      "MilePost": 287.46,
+      "RoadName": "I-5"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 422
+  },
+  {
+    "AverageTime": 8,
+    "CurrentTime": 5,
+    "Description": "SR500 WB and 112th Ave to SR500 and I-5 JCT",
+    "Distance": 4.8,
+    "EndPoint": {
+      "Description": "SR500 and I-5 JCT in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.650552,
+      "Longitude": -122.649979,
+      "MilePost": 0.66,
+      "RoadName": "SR 500"
+    },
+    "Name": "021 SR500 WB and 112th Ave to SR500 and I-5 JCT",
+    "StartPoint": {
+      "Description": "SR500 WB and 112th Ave in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.66206,
+      "Longitude": -122.558442,
+      "MilePost": 5.46,
+      "RoadName": "SR 500"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 528
+  },
+  {
+    "AverageTime": 19,
+    "CurrentTime": 22,
+    "Description": "SR500 WB and 112th Ave to I-5 to I-5 at I-84 JCT",
+    "Distance": 14.29,
+    "EndPoint": {
+      "Description": "I-5 at I-84 JCT in Portland",
+      "Direction": "S",
+      "Latitude": 45.54485,
+      "Longitude": -122.67707,
+      "MilePost": 302.17,
+      "RoadName": "I-5"
+    },
+    "Name": "021 SR500 WB and 112th Ave to I-5 to I-5 at I-84 JCT",
+    "StartPoint": {
+      "Description": "SR500 WB and 112th Ave in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.66206,
+      "Longitude": -122.558442,
+      "MilePost": 5.46,
+      "RoadName": "SR 500"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 529
+  },
+  {
+    "AverageTime": 20,
+    "CurrentTime": 25,
+    "Description": "SR500 WB and 112th Ave to I-205 to I-84 to I-5 at I-84 JCT",
+    "Distance": 17.27,
+    "EndPoint": {
+      "Description": "I-84 to I-5 JCT in Portland",
+      "Direction": "W",
+      "Latitude": 45.52976,
+      "Longitude": -122.64923,
+      "MilePost": 0.45,
+      "RoadName": "I-84"
+    },
+    "Name": "022 SR500 WB and 112th Ave to I-205 to I-84 to I-5 at I-84 JCT",
+    "StartPoint": {
+      "Description": "SR500 WB and 112th Ave in Vancouver",
+      "Direction": "W",
+      "Latitude": 45.66206,
+      "Longitude": -122.558442,
+      "MilePost": 5.46,
+      "RoadName": "SR 500"
+    },
+    "TimeUpdated": "2025-11-04T23:25:00.000Z",
+    "TravelTimeID": 530
+  },
+  {
+    "AverageTime": 6,
+    "CurrentTime": 8,
+    "Description": "Silica Rd to Vantage Westbound",
+    "Distance": 7.04,
+    "EndPoint": {
+      "Description": "I-90 @ Vantage Exit 136",
+      "Direction": "W",
+      "Latitude": 46.940312,
+      "Longitude": -119.989336,
+      "MilePost": 136.4,
+      "RoadName": "I-90"
+    },
+    "Name": "Vantage Bridge WB",
+    "StartPoint": {
+      "Description": "I-90 @ Silica Rd Exit 143",
+      "Direction": "W",
+      "Latitude": 47.018284,
+      "Longitude": -119.947209,
+      "MilePost": 143.5,
+      "RoadName": "I-90"
+    },
+    "TimeUpdated": "2025-11-04T23:21:00.000Z",
+    "TravelTimeID": 533
+  },
+  {
+    "AverageTime": 11,
+    "CurrentTime": 12,
+    "Description": "Ryegrass Rest Area to Vantage Eastbound",
+    "Distance": 12.2,
+    "EndPoint": {
+      "Description": "I-90 @ Hwy 26 Exit 137",
+      "Direction": "E",
+      "Latitude": 46.944302,
+      "Longitude": -119.963574,
+      "MilePost": 137.7,
+      "RoadName": "I-90"
+    },
+    "Name": "Vantage Bridge EB",
+    "StartPoint": {
+      "Description": "I-90 @ Ryegrass Safety Rest Area",
+      "Direction": "E",
+      "Latitude": 46.944606,
+      "Longitude": -120.19673,
+      "MilePost": 126.2,
+      "RoadName": "I-90"
+    },
+    "TimeUpdated": "2025-11-04T23:21:00.000Z",
+    "TravelTimeID": 534
+  }
+]

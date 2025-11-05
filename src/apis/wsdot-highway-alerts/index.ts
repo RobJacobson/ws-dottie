@@ -15,14 +15,14 @@ export type {
   GetAlertsForMapAreaInput,
   GetAlertsInput,
   SearchAlertsInput,
-} from "./alerts/alerts.input";
+} from "./highwayAlerts/highwayAlerts.input";
 // Export all output types
-export type { Alert } from "./alerts/alerts.output";
+export type { Alert } from "./highwayAlerts/highwayAlerts.output";
 // Export the main API definition
 // Export individual resources for direct use
 export {
-  alertsGroup,
-  areasGroup,
+  highwayAlertsGroup,
+  alertAreasGroup,
   eventCategoriesGroup,
   wsdotHighwayAlertsApi,
 } from "./apiDefinition";

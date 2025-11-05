@@ -1,0 +1,13 @@
+{
+  "TerminalID": 1,
+  "TerminalSubjectID": 111,
+  "RegionID": 1,
+  "TerminalName": "Anacortes",
+  "TerminalAbbrev": "ANA",
+  "SortSeq": 10,
+  "OverheadPassengerLoading": true,
+  "Elevator": false,
+  "WaitingRoom": true,
+  "FoodService": true,
+  "Restroom": true
+}

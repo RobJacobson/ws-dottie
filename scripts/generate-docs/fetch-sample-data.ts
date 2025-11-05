@@ -4,7 +4,7 @@
  * Fetch sample API responses for all endpoints
  *
  * This script iterates through all API endpoints and fetches sample responses
- * using the fetchDottie function, then saves them as JSON files in the openapi-docs/sample-data directory
+ * using the fetchDottie function, then saves them as JSON files in the docs/sample-data directory
  * organized by API name and function name.
  *
  * Usage:
@@ -22,8 +22,8 @@ import type { Endpoint } from "../../src/shared/types.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const projectRoot = join(__dirname, "..");
-const docsRoot = join(projectRoot, "sample-data");
+const projectRoot = join(__dirname, "../..");
+const docsRoot = join(projectRoot, "docs", "sample-data");
 
 /**
  * Endpoints that should be skipped due to known server-side issues

@@ -1,10 +1,10 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./areas.input";
-import * as o from "./areas.output";
+import * as i from "./alertAreas.input";
+import * as o from "./alertAreas.output";
 
-export const areasGroup: EndpointGroup = {
-  name: "areas",
+export const alertAreasGroup: EndpointGroup = {
+  name: "alertAreas",
   documentation: {
     resourceDescription:
       "Each Area item represents a geographic region used for organizing and filtering highway alerts across Washington State. These include unique area codes and descriptive names for different regions.",

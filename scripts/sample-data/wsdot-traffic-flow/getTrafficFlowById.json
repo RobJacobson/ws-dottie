@@ -1,0 +1,15 @@
+{
+  "FlowDataID": 2482,
+  "FlowReadingValue": 1,
+  "FlowStationLocation": {
+    "Description": "Homeacres Rd",
+    "Direction": "EB",
+    "Latitude": 47.978415632,
+    "Longitude": -122.174701738,
+    "MilePost": 0.68,
+    "RoadName": "002"
+  },
+  "Region": "Northwest",
+  "StationName": "002es00068",
+  "Time": "2025-11-04T23:25:22.000Z"
+}

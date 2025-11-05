@@ -13,7 +13,7 @@
     "CurrentToll": 280,
     "CurrentMessage": null,
     "StateRoute": "099",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.626665944,
@@ -29,7 +29,7 @@
     "CurrentToll": 480,
     "CurrentMessage": null,
     "StateRoute": "099",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.704184664,
@@ -42,10 +42,10 @@
     "StartMilepost": 28.96,
     "TravelDirection": "S",
     "TripName": "405tp02896",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.678796345,
@@ -58,10 +58,10 @@
     "StartMilepost": 28.96,
     "TravelDirection": "S",
     "TripName": "405tp02897",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -74,10 +74,10 @@
     "StartMilepost": 28.96,
     "TravelDirection": "S",
     "TripName": "405tp02898",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.704184664,
@@ -90,10 +90,10 @@
     "StartMilepost": 27.82,
     "TravelDirection": "S",
     "TripName": "405tp02782",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.678796345,
@@ -106,10 +106,10 @@
     "StartMilepost": 27.82,
     "TravelDirection": "S",
     "TripName": "405tp02783",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -122,10 +122,10 @@
     "StartMilepost": 27.82,
     "TravelDirection": "S",
     "TripName": "405tp02784",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -138,10 +138,10 @@
     "StartMilepost": 27.52,
     "TravelDirection": "N",
     "TripName": "405tp02752",
-    "CurrentToll": 425,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.405611347,
@@ -154,10 +154,10 @@
     "StartMilepost": 25.65,
     "TravelDirection": "S",
     "TripName": "Tmptp02565",
-    "CurrentToll": 500,
+    "CurrentToll": 900,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.345427005,
@@ -170,10 +170,10 @@
     "StartMilepost": 25.65,
     "TravelDirection": "S",
     "TripName": "Tmptp02566",
-    "CurrentToll": 725,
+    "CurrentToll": 950,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -186,10 +186,10 @@
     "StartMilepost": 25.65,
     "TravelDirection": "S",
     "TripName": "Tmptp02567",
-    "CurrentToll": 725,
+    "CurrentToll": 1025,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -202,10 +202,10 @@
     "StartMilepost": 25.64,
     "TravelDirection": "S",
     "TripName": "167tp02564",
-    "CurrentToll": 950,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -218,10 +218,10 @@
     "StartMilepost": 25.26,
     "TravelDirection": "N",
     "TripName": "405tp02526",
-    "CurrentToll": 650,
+    "CurrentToll": 275,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.704184664,
@@ -234,10 +234,10 @@
     "StartMilepost": 25.26,
     "TravelDirection": "S",
     "TripName": "405tp02612",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.678796345,
@@ -250,10 +250,10 @@
     "StartMilepost": 25.26,
     "TravelDirection": "S",
     "TripName": "405tp02613",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -266,10 +266,10 @@
     "StartMilepost": 25.26,
     "TravelDirection": "S",
     "TripName": "405tp02614",
-    "CurrentToll": 125,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -282,10 +282,10 @@
     "StartMilepost": 23.69,
     "TravelDirection": "S",
     "TripName": "167tp02369",
-    "CurrentToll": 950,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.405611347,
@@ -298,10 +298,10 @@
     "StartMilepost": 23.48,
     "TravelDirection": "S",
     "TripName": "Tmptp02348",
-    "CurrentToll": 475,
+    "CurrentToll": 800,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.345427005,
@@ -314,10 +314,10 @@
     "StartMilepost": 23.48,
     "TravelDirection": "S",
     "TripName": "Tmptp02349",
-    "CurrentToll": 725,
+    "CurrentToll": 950,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -330,10 +330,10 @@
     "StartMilepost": 23.48,
     "TravelDirection": "S",
     "TripName": "Tmptp02350",
-    "CurrentToll": 725,
+    "CurrentToll": 950,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.450395962,
@@ -346,10 +346,10 @@
     "StartMilepost": 22.89,
     "TravelDirection": "N",
     "TripName": "167tp02289",
-    "CurrentToll": 100,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -365,7 +365,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.704184664,
@@ -381,7 +381,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.678796345,
@@ -397,7 +397,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -413,7 +413,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.405611347,
@@ -426,10 +426,10 @@
     "StartMilepost": 21.94,
     "TravelDirection": "S",
     "TripName": "167tp02194",
-    "CurrentToll": 375,
+    "CurrentToll": 700,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.345427005,
@@ -442,10 +442,10 @@
     "StartMilepost": 21.94,
     "TravelDirection": "S",
     "TripName": "167tp02195",
-    "CurrentToll": 700,
+    "CurrentToll": 900,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -458,10 +458,10 @@
     "StartMilepost": 21.94,
     "TravelDirection": "S",
     "TripName": "167tp02196",
-    "CurrentToll": 725,
+    "CurrentToll": 900,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -477,7 +477,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.678796345,
@@ -493,7 +493,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -509,7 +509,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.40855284,
@@ -525,7 +525,7 @@
     "CurrentToll": 440,
     "CurrentMessage": null,
     "StateRoute": "509",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.40855284,
@@ -541,7 +541,7 @@
     "CurrentToll": 240,
     "CurrentMessage": null,
     "StateRoute": "509",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -554,10 +554,10 @@
     "StartMilepost": 20.67,
     "TravelDirection": "N",
     "TripName": "405tp02067",
-    "CurrentToll": 950,
+    "CurrentToll": 1500,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -570,10 +570,10 @@
     "StartMilepost": 20.54,
     "TravelDirection": "S",
     "TripName": "167tp02054",
-    "CurrentToll": 625,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.410771804,
@@ -589,7 +589,7 @@
     "CurrentToll": 380,
     "CurrentMessage": null,
     "StateRoute": "509",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.410771804,
@@ -605,7 +605,7 @@
     "CurrentToll": 180,
     "CurrentMessage": null,
     "StateRoute": "509",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.450395962,
@@ -618,10 +618,10 @@
     "StartMilepost": 20.3,
     "TravelDirection": "N",
     "TripName": "167tp02030",
-    "CurrentToll": 100,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.345427005,
@@ -634,10 +634,10 @@
     "StartMilepost": 20.27,
     "TravelDirection": "S",
     "TripName": "167tp02027",
-    "CurrentToll": 350,
+    "CurrentToll": 500,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -650,10 +650,10 @@
     "StartMilepost": 20.27,
     "TravelDirection": "S",
     "TripName": "167tp02028",
-    "CurrentToll": 500,
+    "CurrentToll": 625,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -669,7 +669,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -685,7 +685,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -698,10 +698,10 @@
     "StartMilepost": 18.98,
     "TravelDirection": "S",
     "TripName": "167tp01898",
-    "CurrentToll": 350,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.345427005,
@@ -714,10 +714,10 @@
     "StartMilepost": 18.86,
     "TravelDirection": "S",
     "TripName": "167tp01886",
-    "CurrentToll": 175,
+    "CurrentToll": 325,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -730,10 +730,10 @@
     "StartMilepost": 18.86,
     "TravelDirection": "S",
     "TripName": "167tp01887",
-    "CurrentToll": 300,
+    "CurrentToll": 475,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -749,7 +749,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -762,10 +762,10 @@
     "StartMilepost": 18.79,
     "TravelDirection": "N",
     "TripName": "405tp01880",
-    "CurrentToll": 1050,
+    "CurrentToll": 1500,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.741107869,
@@ -778,10 +778,10 @@
     "StartMilepost": 18.79,
     "TravelDirection": "N",
     "TripName": "405tp01879",
-    "CurrentToll": 550,
+    "CurrentToll": 700,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.450395962,
@@ -794,10 +794,10 @@
     "StartMilepost": 18.63,
     "TravelDirection": "N",
     "TripName": "167tp01863",
-    "CurrentToll": 100,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.345427005,
@@ -813,7 +813,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -826,10 +826,10 @@
     "StartMilepost": 17.36,
     "TravelDirection": "S",
     "TripName": "167tp01737",
-    "CurrentToll": 100,
+    "CurrentToll": 125,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -842,10 +842,10 @@
     "StartMilepost": 17.01,
     "TravelDirection": "S",
     "TripName": "167tp01701",
-    "CurrentToll": 150,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.450395962,
@@ -858,10 +858,10 @@
     "StartMilepost": 16.6,
     "TravelDirection": "N",
     "TripName": "167tp01660",
-    "CurrentToll": 100,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -877,7 +877,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.333436142,
@@ -893,7 +893,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.615598346,
@@ -909,7 +909,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -922,10 +922,10 @@
     "StartMilepost": 15.85,
     "TravelDirection": "N",
     "TripName": "405tp01587",
-    "CurrentToll": 1200,
+    "CurrentToll": 1500,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.741107869,
@@ -938,10 +938,10 @@
     "StartMilepost": 15.85,
     "TravelDirection": "N",
     "TripName": "405tp01586",
-    "CurrentToll": 700,
+    "CurrentToll": 725,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.716381918,
@@ -957,7 +957,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -973,7 +973,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -986,10 +986,10 @@
     "StartMilepost": 15.47,
     "TravelDirection": "S",
     "TripName": "167tp01547",
-    "CurrentToll": 150,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.450395962,
@@ -1002,10 +1002,10 @@
     "StartMilepost": 15.12,
     "TravelDirection": "N",
     "TripName": "167tp01512",
-    "CurrentToll": 100,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -1021,7 +1021,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.333436142,
@@ -1037,7 +1037,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.450395962,
@@ -1050,10 +1050,10 @@
     "StartMilepost": 13.85,
     "TravelDirection": "N",
     "TripName": "167tp01385",
-    "CurrentToll": 100,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -1066,10 +1066,10 @@
     "StartMilepost": 13.7,
     "TravelDirection": "N",
     "TripName": "405tp01371",
-    "CurrentToll": 1175,
+    "CurrentToll": 1500,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.741107869,
@@ -1082,10 +1082,10 @@
     "StartMilepost": 13.7,
     "TravelDirection": "N",
     "TripName": "405tp01370",
-    "CurrentToll": 725,
+    "CurrentToll": 775,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.715123972,
@@ -1101,7 +1101,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.822719726,
@@ -1114,10 +1114,10 @@
     "StartMilepost": 13.51,
     "TravelDirection": "N",
     "TripName": "405tp01353",
-    "CurrentToll": 1200,
+    "CurrentToll": 1500,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.741107869,
@@ -1130,10 +1130,10 @@
     "StartMilepost": 13.51,
     "TravelDirection": "N",
     "TripName": "405tp01352",
-    "CurrentToll": 700,
+    "CurrentToll": 725,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.716381918,
@@ -1149,7 +1149,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "405",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.271955719,
@@ -1162,10 +1162,10 @@
     "StartMilepost": 13.21,
     "TravelDirection": "S",
     "TripName": "167tp01321",
-    "CurrentToll": 150,
+    "CurrentToll": 0,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "0001-01-01T08:00:00.000Z"
   },
   {
     "EndLatitude": 47.211139886,
@@ -1181,7 +1181,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -1197,7 +1197,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.333436142,
@@ -1213,7 +1213,7 @@
     "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -1226,10 +1226,10 @@
     "StartMilepost": 11,
     "TravelDirection": "N",
     "TripName": "167tp01102",
-    "CurrentToll": 200,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.333436142,
@@ -1242,10 +1242,10 @@
     "StartMilepost": 11,
     "TravelDirection": "N",
     "TripName": "167tp01101",
-    "CurrentToll": 200,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.25492584,
@@ -1258,10 +1258,10 @@
     "StartMilepost": 11,
     "TravelDirection": "N",
     "TripName": "167tp01100",
-    "CurrentToll": 200,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.458726717,
@@ -1274,10 +1274,10 @@
     "StartMilepost": 7.91,
     "TravelDirection": "N",
     "TripName": "167tp00793",
-    "CurrentToll": 175,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.333436142,
@@ -1290,10 +1290,10 @@
     "StartMilepost": 7.91,
     "TravelDirection": "N",
     "TripName": "167tp00792",
-    "CurrentToll": 175,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.25492584,
@@ -1306,10 +1306,10 @@
     "StartMilepost": 7.91,
     "TravelDirection": "N",
     "TripName": "167tp00791",
-    "CurrentToll": 150,
+    "CurrentToll": 100,
     "CurrentMessage": null,
     "StateRoute": "167",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.644892737,
@@ -1325,7 +1325,7 @@
     "CurrentToll": 690,
     "CurrentMessage": null,
     "StateRoute": "520",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   },
   {
     "EndLatitude": 47.636650361,
@@ -1341,6 +1341,6 @@
     "CurrentToll": 490,
     "CurrentMessage": null,
     "StateRoute": "520",
-    "TimeUpdated": "2025-11-04T01:58:43.490Z"
+    "TimeUpdated": "2025-11-05T00:02:00.775Z"
   }
 ]

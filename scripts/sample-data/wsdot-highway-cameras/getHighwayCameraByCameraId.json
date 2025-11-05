@@ -1,0 +1,23 @@
+{
+  "CameraID": 9818,
+  "CameraLocation": {
+    "Description": null,
+    "Direction": "W",
+    "Latitude": 48.498333,
+    "Longitude": -122.6625,
+    "MilePost": 1,
+    "RoadName": "Airports"
+  },
+  "CameraOwner": "WSDOT Aviation",
+  "Description": null,
+  "DisplayLatitude": 48.498333,
+  "DisplayLongitude": -122.6625,
+  "ImageHeight": 208,
+  "ImageURL": "https://images.wsdot.wa.gov/airports/anafuel.jpg",
+  "ImageWidth": 352,
+  "IsActive": true,
+  "OwnerURL": "https://wsdot.wa.gov/travel/aviation/airports-list/anacortes",
+  "Region": "WA",
+  "SortOrder": 5300,
+  "Title": "Anacortes Airport Fuel Pump"
+}

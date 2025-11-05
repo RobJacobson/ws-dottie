@@ -1,0 +1,5 @@
+{
+  "message": "This endpoint is skipped due to known server-side issues. See fetch-sample-data.ts SKIP_ENDPOINTS list for details.",
+  "endpoint": "wsdot-toll-rates.getTollTripInfo",
+  "reason": "Server-side issues prevent reliable data fetching"
+}

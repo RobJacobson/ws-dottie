@@ -1,0 +1,349 @@
+[
+  {
+    "TerminalID": 1,
+    "TerminalSubjectID": 111,
+    "RegionID": 1,
+    "TerminalName": "Anacortes",
+    "TerminalAbbrev": "ANA",
+    "SortSeq": 10,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Vehicle reservations to the San Juan Islands are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk-on passengers should arrive at least 15 minutes prior to departure sailing. ",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk on passengers should arrive at least 15 minutes prior to departure.  To speak with an information agent please press zero."
+      }
+    ]
+  },
+  {
+    "TerminalID": 3,
+    "TerminalSubjectID": 103,
+    "RegionID": 4,
+    "TerminalName": "Bainbridge Island",
+    "TerminalAbbrev": "BBI",
+    "SortSeq": 40,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "The morning departures are extremely heavy for vehicle traffic with a 45 to 60 minute advance arrival suggested, through the 8 45 AM sailing. For non peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "The morning departures are extremely heavy for vehicle traffic with a 45 to 60 minute advance arrival suggested, through the 8 45 AM sailing. For non peak travel, a 20 minute advance arrival is suggested. Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 4,
+    "TerminalSubjectID": 102,
+    "RegionID": 4,
+    "TerminalName": "Bremerton",
+    "TerminalAbbrev": "BRE",
+    "SortSeq": 30,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "The morning departures through the 7:20am sailing are the most heavily traveled with vehicle traffic. Vehicle drivers are advised to arrive 45-60 minutes prior to sailing. In the afternoon the 3:00 p.m. sailing may be busy with a 30 minute advance arrival suggested. For non-peak travel, a 20 minute advance arrival is suggested.  Walk-on passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "The morning departures through the 7 20 AM sailing are the most heavily traveled with vehicle traffic. Vehicle drivers are advised to arrive 45 to 60 minutes prior to sailing. In the afternoon the 3 PM sailing may be busy with a 30 minute advance arrival suggested. For non peak travel, a 20 minute advance arrival is suggested.  Walk on Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 5,
+    "TerminalSubjectID": 112,
+    "RegionID": 2,
+    "TerminalName": "Clinton",
+    "TerminalAbbrev": "CLI",
+    "SortSeq": 20,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Peak traffic volumes begin with the first morning departure through about the 10:00 am sailing. For this time period, an advance arrival of 30-45 minutes ahead is recommended for vehicle traffic. For non-peak travel, a minimum of 20 minutes in advance is suggested.<br><p>Walk-on passengers should arrive at least 10 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Peak traffic volumes begin with the first morning departure through about the 10 AM sailing. For this time period, an advance arrival of 30 to 45 minutes ahead is recommended for vehicle traffic. For non-peak travel, a minimum of 20 minutes in advance is suggested. Walk-on passengers should arrive at least 10 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 11,
+    "TerminalSubjectID": 116,
+    "RegionID": 2,
+    "TerminalName": "Coupeville ",
+    "TerminalAbbrev": "COU",
+    "SortSeq": 40,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "WSF recommends reservation holders arrive 30-45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made at www.takeaferry.com or by calling 5-1-1 at least two hours prior to departure. Walk-on passengers should arrive at least 15 minutes prior to departure.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "W S F recommends reservation holders arrive 30 to 45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made online or by speaking to an information agent at least two hours prior to departure. Walk on passengers should arrive at least 15 minutes prior to departure."
+      }
+    ]
+  },
+  {
+    "TerminalID": 8,
+    "TerminalSubjectID": 113,
+    "RegionID": 3,
+    "TerminalName": "Edmonds",
+    "TerminalAbbrev": "EDM",
+    "SortSeq": 10,
+    "WaitTimes": [
+      {
+        "RouteID": 6,
+        "RouteName": "Edmonds / Kingston",
+        "WaitTimeNotes": "From 3:15pm through the 7:00pm sailings, peak traffic volumes occur. For this time period a 30-60 minute advance arrival is recommended. For non-peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "From 3 15 PM through the 7 PM sailings, peak traffic volumes occur. For this time period a 30 to 60 minute advance arrival is recommended. For non-peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 9,
+    "TerminalSubjectID": 114,
+    "RegionID": 5,
+    "TerminalName": "Fauntleroy",
+    "TerminalAbbrev": "FAU",
+    "SortSeq": 10,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Traffic builds from 3:00 p.m. until 7:30 p.m.. During this time a 45-60 minute advance arrival is advised. For non-peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Traffic builds from 3 PM until 7 30 PM. During this time a 45 to 60 minute advance arrival is advised. For non-peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 10,
+    "TerminalSubjectID": 115,
+    "RegionID": 1,
+    "TerminalName": "Friday Harbor",
+    "TerminalAbbrev": "FRH",
+    "SortSeq": 50,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Vehicle reservations to Anacortes are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. A 45 to 60 minute advance arrival is advised for reservation holders.  A one hour advance arrival is suggested for inter-island vehicle traffic. Walk-on passengers should arrive at least 15 minutes prior to departure.  ",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Vehicle reservations to Anacortes are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. A one hour advance arrival is suggested for inter-island vehicle traffic. Walk on passengers should arrive at least 15 minutes prior to departure."
+      }
+    ]
+  },
+  {
+    "TerminalID": 12,
+    "TerminalSubjectID": 110,
+    "RegionID": 3,
+    "TerminalName": "Kingston",
+    "TerminalAbbrev": "KIN",
+    "SortSeq": 20,
+    "WaitTimes": [
+      {
+        "RouteID": 6,
+        "RouteName": "Edmonds / Kingston",
+        "WaitTimeNotes": "Peak traffic volumes occur from the first morning departure until 10 AM. For this time period, a 60 minute advance arrival is recommended for vehicle traffic. For non-peak travel, a 20 minute advance arrival is recommended.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Peak traffic volumes occur from the first morning departure until 10 AM. For this time period, a 60 minute advance arrival is recommended for vehicle traffic. For non-peak travel, a 20 minute advance arrival is recommended.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 13,
+    "TerminalSubjectID": 117,
+    "RegionID": 1,
+    "TerminalName": "Lopez Island",
+    "TerminalAbbrev": "LOP",
+    "SortSeq": 20,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "A one hour advance arrival is recommended for vehicle traffic.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "A 1 hour advance arrival is recommended for vehicle traffic.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 14,
+    "TerminalSubjectID": 109,
+    "RegionID": 2,
+    "TerminalName": "Mukilteo",
+    "TerminalAbbrev": "MUK",
+    "SortSeq": 10,
+    "WaitTimes": [
+      {
+        "RouteID": 7,
+        "RouteName": "Mukilteo / Clinton",
+        "WaitTimeNotes": "Peak traffic volumes occur during the afternoon commute between the hours of 3:00 pm and 8:00 pm. For this time period, vehicles are advised to arrive 30-45 minutes ahead of the scheduled departure. For non-peak travel, a minimum of 20 minutes in advance is suggested.<br><p>Walk-on passengers should arrive at least 10 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Peak traffic volumes occur during the afternoon commute between the hours of 3 PM and 8 PM. For this time period, vehicles are advised to arrive 30 to 45 minutes ahead of the scheduled departure. For non-peak travel, a minimum of 20 minutes in advance is suggested. Walk-on passengers should arrive at least 10 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 15,
+    "TerminalSubjectID": 119,
+    "RegionID": 1,
+    "TerminalName": "Orcas Island",
+    "TerminalAbbrev": "ORI",
+    "SortSeq": 40,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Vehicle reservations to Anacortes are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. A one hour advance arrival is suggested for inter-island vehicle traffic. Walk-on passengers should arrive at least 15 minutes prior to departure.  ",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Vehicle reservations to Anacortes are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. A one hour advance arrival is suggested for inter-island vehicle traffic. Walk on passengers should arrive at least 15 minutes prior to departure."
+      }
+    ]
+  },
+  {
+    "TerminalID": 16,
+    "TerminalSubjectID": 108,
+    "RegionID": 5,
+    "TerminalName": "Point Defiance",
+    "TerminalAbbrev": "PTD",
+    "SortSeq": 60,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "The peak commute hours on this route are between 3:00 p.m. and 7:00 p.m. with a 20-30 minute advance arrival suggested for vehicle traffic. For non-peak departures, a 20 minute advance arrival is suggested.  Walk-on passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "The peak commute hours on this route are between 3 PM and 7 PM with a 20 to 30 minute advance arrival suggested for vehicle traffic. For non peak departures, a 20 minute advance arrival is suggested. Walk-on passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 17,
+    "TerminalSubjectID": 107,
+    "RegionID": 2,
+    "TerminalName": "Port Townsend",
+    "TerminalAbbrev": "POT",
+    "SortSeq": 30,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "WSF recommends reservation holders arrive 30-45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made at www.takeaferry.com or by calling 5-1-1 at least two hours prior to departure. Walk-on passengers should arrive at least 15 minutes prior to departure.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "W S F recommends reservation holders arrive 30 to 45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made online or by speaking to an information agent at least two hours prior to departure. Walk on passengers should arrive at least 15 minutes prior to departure."
+      }
+    ]
+  },
+  {
+    "TerminalID": 7,
+    "TerminalSubjectID": 101,
+    "RegionID": 4,
+    "TerminalName": "Seattle",
+    "TerminalAbbrev": "P52",
+    "SortSeq": 20,
+    "WaitTimes": [
+      {
+        "RouteID": 3,
+        "RouteName": "Seattle / Bremerton",
+        "WaitTimeNotes": "Peak traffic volumes occur between 3:00 p.m. and 6:30 p.m. It is advisable for vehicle traffic to arrive 30-45 minutes prior to sailing. For non-peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Peak traffic volumes occur between 3 PM and 6 30 PM. It is advisable for vehicle traffic to arrive 30 to 45 minutes prior to sailing. For non-peak travel, a 20 minute advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing."
+      },
+      {
+        "RouteID": 5,
+        "RouteName": "Seattle / Bainbridge Island",
+        "WaitTimeNotes": "Peak commute hours usually begin at 3:00 p.m. through 7:30 p.m.. The suggested advance arrival time is 30-60 minutes. For non-peak travel, a 20 minute advance arrival is recommended.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Peak commute hours usually begin at 3 PM through 7 30 PM. The suggested advance arrival time is 30 to 60 minutes. For non-peak travel, a 20 minute advance arrival is recommended.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 18,
+    "TerminalSubjectID": 118,
+    "RegionID": 1,
+    "TerminalName": "Shaw Island",
+    "TerminalAbbrev": "SHI",
+    "SortSeq": 30,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "A 60 minute advance arrival is recommended for the first two departures leaving Shaw with a 30 minute advance arrival advised for all other sailings.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "A 60 minute advance arrival is recommended for the first two departures leaving Shaw with a 30 minute advance arrival advised for all other sailings.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 19,
+    "TerminalSubjectID": 120,
+    "RegionID": 1,
+    "TerminalName": "Sidney B.C.",
+    "TerminalAbbrev": "SID",
+    "SortSeq": 60,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "The international route to and from Sidney B.C. is out of service until Further Notice because of COVID-19 concerns. To speak with an information agent, please call 1 888 808 7977.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "The international route to and from Sidney B.C. is out of service until April 28, 2020 because of COVID-19 concerns. To speak with an information agent please press zero."
+      }
+    ]
+  },
+  {
+    "TerminalID": 20,
+    "TerminalSubjectID": 105,
+    "RegionID": 5,
+    "TerminalName": "Southworth",
+    "TerminalAbbrev": "SOU",
+    "SortSeq": 35,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Commuters may anticipate heavy traffic through the 8:20am sailing. It is advisable for vehicles to arrive 30-45 minutes ahead of the scheduled departure time. For non-peak travel, a 20 minute advance arrival is recommended. Loading for Vashon Island will stop 3 minutes prior to sailing.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Commuters may anticipate heavy traffic through the 8 20 AM sailing. It is advisable for vehicles to arrive 30 to 45 minutes ahead of the scheduled departure time. For non peak travel, a 20 minutes advance arrival is recommended. Loading for Vashon Island will stop 3 minutes prior to sailing.  Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 21,
+    "TerminalSubjectID": 121,
+    "RegionID": 5,
+    "TerminalName": "Tahlequah",
+    "TerminalAbbrev": "TAH",
+    "SortSeq": 55,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Morning departures are busiest leaving Tahlequah with vehicles advised to arrive 20-30 minutes ahead of the scheduled sailing. For non-peak departures, a 20 minute advance arrival is suggested.  Passengers should arrive at least 10 minutes prior to sailing.\r\n",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Morning departures are busiest leaving Tahlequah with vehicles advised to arrive 20 to 30 minutes ahead of the scheduled sailing. For non peak departures, a 20 minute advance arrival is suggested.  Passengers should arrive at least 10 minutes prior to sailing."
+      }
+    ]
+  },
+  {
+    "TerminalID": 22,
+    "TerminalSubjectID": 106,
+    "RegionID": 5,
+    "TerminalName": "Vashon Island",
+    "TerminalAbbrev": "VAI",
+    "SortSeq": 20,
+    "WaitTimes": [
+      {
+        "RouteID": null,
+        "RouteName": null,
+        "WaitTimeNotes": "Leaving Vashon, the peak commute hours are between 5:00 a.m. and 10:00 a.m. with a suggested advance arrival time for vehicle traffic of 45-60 minutes. For non-peak travel, a 20 minutes advance arrival is suggested.  Passengers should arrive at least 15 minutes prior to sailing.",
+        "WaitTimeLastUpdated": "2020-08-18T19:31:10.000Z",
+        "WaitTimeIVRNotes": "Leaving Vashon, the peak commute hours are between 5 AM and 10 AM with a suggested advance arrival time for vehicle traffic of 45 to 60 minutes. For non-peak travel, a 20 minute advance arrival is suggested. Passengers should arrive at least 15 minutes prior to sailing."
+      }
+    ]
+  }
+]

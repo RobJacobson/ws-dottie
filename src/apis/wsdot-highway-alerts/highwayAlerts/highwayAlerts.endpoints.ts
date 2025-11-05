@@ -1,11 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./alerts.input";
-import * as o from "./alerts.output";
+import * as i from "./highwayAlerts.input";
+import * as o from "./highwayAlerts.output";
 
-export const alertsGroup: EndpointGroup = {
-  name: "alerts",
+export const highwayAlertsGroup: EndpointGroup = {
+  name: "highwayAlerts",
   documentation: {
     resourceDescription:
       "Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.",

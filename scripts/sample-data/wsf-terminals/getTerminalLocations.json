@@ -1,0 +1,2202 @@
+[
+  {
+    "TerminalID": 1,
+    "TerminalSubjectID": 111,
+    "RegionID": 1,
+    "TerminalName": "Anacortes",
+    "TerminalAbbrev": "ANA",
+    "SortSeq": 10,
+    "Latitude": 48.507351,
+    "Longitude": -122.677,
+    "AddressLineOne": "2100 Ferry Terminal Road",
+    "AddressLineTwo": null,
+    "City": "Anacortes",
+    "State": "WA",
+    "ZipCode": "98221",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Anacortes+Ferry+Terminal,+Anacortes,+WA+98221/@48.5060112,-122.6776819,15z/data=!4m2!3m1!1s0x5485790ea2748ed5:0x5c9a071494b5411f</p>",
+    "Directions": "From Interstate 5 take exit 230 and follow SR 20 westbound to Anacortes. After arriving in Anacortes continue north on Commercial Ave. Turn left on 12th St, which becomes Oakes Ave, and then continue to the ferry terminal.<p>\r\n<b>Dropping off or picking up?</b><p>\r\nWhen approaching the ferry terminal to pick up or drop off and not disabled, follow Ferry Terminal Road to the left of the auto toll booths to the parking lot near the terminal. There should be parking near the sidewalk where the buses turn around for a quick pick up/drop off.</p>",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.507351,
+        "Longitude": -122.677
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.499482,
+        "Longitude": -122.664992
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.501302,
+        "Longitude": -122.668425
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.500619,
+        "Longitude": -122.678038
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.504032,
+        "Longitude": -122.679068
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.506022,
+        "Longitude": -122.678725
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.506591,
+        "Longitude": -122.678124
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.506591,
+        "Longitude": -122.677995
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.506612,
+        "Longitude": -122.678006
+      }
+    ]
+  },
+  {
+    "TerminalID": 3,
+    "TerminalSubjectID": 103,
+    "RegionID": 4,
+    "TerminalName": "Bainbridge Island",
+    "TerminalAbbrev": "BBI",
+    "SortSeq": 40,
+    "Latitude": 47.622339,
+    "Longitude": -122.509617,
+    "AddressLineOne": "270 Olympic Drive SE",
+    "AddressLineTwo": null,
+    "City": "Bainbridge Island",
+    "State": "WA",
+    "ZipCode": "98110",
+    "Country": "USA",
+    "MapLink": "http://maps.google.com/maps?f=d&saddr=47.622339,-122.509617&daddr=&hl=en&geocode=FcOo1gIdz6ay-A%3B&mra=ls&sll=47.622339,-122.509617&sspn=0.010529,0.019226&ie=UTF8&z=16",
+    "Directions": "Northbound on Highway 3: Take the \"Poulsbo, Bainbridge Island\" exit. You must turn right off the exit ramp. Continue to follow this road for approximately 13 miles; it will take you straight to the ferry dock.<p> \r\nSouthbound from the Hood Canal Bridge: Make a right turn coming off the bridge. After driving approximately 6 miles, you will come to the \"Poulsbo, Bainbridge Island\" exit. Exit at that point and follow the road for aproximately 13 miles.<p> \r\nSouthbound from the Kingston area: Follow the road from Kingston for about 5 miles until you come to a stoplight. (Valley Nursery and a Kitsap Transit bus parking lot will be off to the left.) Turn left and follow the road for about 12.5 miles to the ferry terminal.<p>\r\n<b>Dropping off or picking up?</b>\r\nThe pick up or drop off spot is located up front by the terminal building. ",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.622339,
+        "Longitude": -122.509617
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.625784,
+        "Longitude": -122.516214
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.624396,
+        "Longitude": -122.512437
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.623586,
+        "Longitude": -122.511407
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.623065,
+        "Longitude": -122.511063
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.622892,
+        "Longitude": -122.510634
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.622747,
+        "Longitude": -122.510463
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.622682,
+        "Longitude": -122.510387
+      }
+    ]
+  },
+  {
+    "TerminalID": 4,
+    "TerminalSubjectID": 102,
+    "RegionID": 4,
+    "TerminalName": "Bremerton",
+    "TerminalAbbrev": "BRE",
+    "SortSeq": 30,
+    "Latitude": 47.561847,
+    "Longitude": -122.624089,
+    "AddressLineOne": "211 1st Street",
+    "AddressLineTwo": null,
+    "City": "Bremerton",
+    "State": "WA",
+    "ZipCode": "98337",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Bremerton+Ferry+Terminal/@47.563433,-122.625944,17z/data=!3m1!4b1!4m2!3m1!1s0x549037829490e63f:0x69f8efd7ef8a5a9f",
+    "Directions": "Northbound on Highway 3:  Exit SR 3 onto SR 304 which is marked Bremerton and features a ferry icon. Follow SR 304 (which becomes Callow) to Burwell (still SR 304)and follow signs to terminal.<p>\r\nSouthbound on Highway 3:  Exit SR 3 at Kitsap Way (SR 310). Continue on SR 310 as it becomes 6th street. Turn right onto Pacific Ave, then left to 1st street which leads directly to tollbooths.<p>\r\nPost-Tunnel Construction: The 959-foot-long tunnel routes off-loading vehicle traffic from the ferry terminal to Burwell Street, resulting in improved pedestrian safety and reduced congestion in Bremerton's waterfront area.<p>\r\n<b>Exiting from the Bremerton Ferry</b><p>\r\nTo Downtown Bremerton: exit the tunnel, go right on Park ave., and go right on 4th Ave.<p>\r\nTo SR 3 Silverdale/Port Orchard: exit the tunnel, continue west on SR304/Burwell St., follow signs to SR 3/Silverdale/Port Orchard.<p>\r\nTo East Bremerton: exit the tunnel, go right on Warren Ave.<p>\r\n<b>No pedestrians or bicycles allowed in tunnel.</b><p>\r\n<b>Dropping off or picking up?</b><br>\r\nThe pick up or drop off points are located on 1st street and 2nd street just north of the terminal. ",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.561847,
+        "Longitude": -122.624089
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.561418,
+        "Longitude": -122.632943
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.56165,
+        "Longitude": -122.629167
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.56304,
+        "Longitude": -122.625219
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.562345,
+        "Longitude": -122.624875
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.562026,
+        "Longitude": -122.624789
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.5622,
+        "Longitude": -122.624854
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.562207,
+        "Longitude": -122.624843
+      }
+    ]
+  },
+  {
+    "TerminalID": 5,
+    "TerminalSubjectID": 112,
+    "RegionID": 2,
+    "TerminalName": "Clinton",
+    "TerminalAbbrev": "CLI",
+    "SortSeq": 20,
+    "Latitude": 47.9754,
+    "Longitude": -122.349581,
+    "AddressLineOne": "64 South Ferrydock Road",
+    "AddressLineTwo": null,
+    "City": "Clinton",
+    "State": "WA",
+    "ZipCode": "98236",
+    "Country": "USA",
+    "MapLink": "http://maps.yahoo.com/#mvt=m&lat=47.97483&lon=-122.352299&zoom=18&q1=64%20S.%20Ferrydock%20Rd.%20Clinton%2C%20WA%2098236",
+    "Directions": "Highway 20 on Whidbey Island turns into Highway 525 S which leads directly to the Clinton terminal.<br><p>\r\n<b>Dropping off or picking up?</b><br>\r\nThe ferry terminal pick up or drop off point is prior to the toll booth on Ferry Dock Road.<p>   ",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.9754,
+        "Longitude": -122.349581
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.975465,
+        "Longitude": -122.352097
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.974948,
+        "Longitude": -122.351496
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.974948,
+        "Longitude": -122.351367
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.975034,
+        "Longitude": -122.351324
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.975027,
+        "Longitude": -122.351335
+      }
+    ]
+  },
+  {
+    "TerminalID": 11,
+    "TerminalSubjectID": 116,
+    "RegionID": 2,
+    "TerminalName": "Coupeville ",
+    "TerminalAbbrev": "COU",
+    "SortSeq": 40,
+    "Latitude": 48.159008,
+    "Longitude": -122.672603,
+    "AddressLineOne": "1400 South State Route 20",
+    "AddressLineTwo": null,
+    "City": "Coupeville",
+    "State": "WA",
+    "ZipCode": "98239",
+    "Country": "USA",
+    "MapLink": "https://maps.google.com/maps?q=Coupeville+Ferry+Dock&hl=en&sll=47.272986,-120.882277&sspn=5.576312,9.832764&oq=coupeville+ferr&hq=Coupeville+Ferry+Dock&t=m&z=13",
+    "Directions": "Northbound/from Clinton ferry terminal - follow Highway 525 north, turn left onto Highway 20 and then follow the signs to the Coupeville ferry terminal.<p>\r\nSouthbound/from Oak Harbor - follow Highway 20 southbound going past the town of Coupeville. Then continue to follow signage on Highway 20 to the Coupeville ferry terminal.<p>\r\nUpon arriving at terminal use the vehicle turn-around to change direction from north to south prior to your approach to the tollbooth.\r\n\r\n ",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.159008,
+        "Longitude": -122.672603
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.161217,
+        "Longitude": -122.672564
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.160645,
+        "Longitude": -122.672564
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.159786,
+        "Longitude": -122.672735
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.159414,
+        "Longitude": -122.672607
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.159242,
+        "Longitude": -122.672671
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.159206,
+        "Longitude": -122.672671
+      }
+    ]
+  },
+  {
+    "TerminalID": 8,
+    "TerminalSubjectID": 113,
+    "RegionID": 3,
+    "TerminalName": "Edmonds",
+    "TerminalAbbrev": "EDM",
+    "SortSeq": 10,
+    "Latitude": 47.813378,
+    "Longitude": -122.385378,
+    "AddressLineOne": "199 Sunset Ave. S.",
+    "AddressLineTwo": null,
+    "City": "Edmonds",
+    "State": "WA",
+    "ZipCode": "98020",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Edmonds+-+Kingston+Ferry+Toll+Booth/@47.810424,-122.382967,17z/data=!3m1!4b1!4m2!3m1!1s0x54901af968b9ee7d:0x179aeeace217b062?hl=en",
+    "Directions": "From Seattle and Points South: Drive NORTH on Interstate 5 to State Route (SR) 104, taking Exit 177. Continue WEST on SR 104 for 4 miles and follow the signs to the Edmonds Ferry Terminal.  Vehicles must enter the toll booths at SR 104 & Dayton Av via SR 104 northbound, but not from Dayton St.<p>\r\nFrom Everett and Points North and East: Drive SOUTH on Interstate 5 to State Route (SR) 104, taking Exit 177. Continue WEST on SR 104 for 4 miles and follow the signs to the Edmonds Ferry Terminal.<p>\r\nFor passenger assistance use the online <a href=\"http://www.commtrans.org/BusService/TripPlanner.cfm?TRIPEND=%20EDMONDS%20FERRY%20TERMINAL\" class=\"content_text\">Trip Planner</a> for Community Transit. ",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.813378,
+        "Longitude": -122.385378
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.812182,
+        "Longitude": -122.381287
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.812758,
+        "Longitude": -122.383176
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.812931,
+        "Longitude": -122.383948
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.813017,
+        "Longitude": -122.384077
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.812974,
+        "Longitude": -122.384098
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.81301,
+        "Longitude": -122.38412
+      }
+    ]
+  },
+  {
+    "TerminalID": 9,
+    "TerminalSubjectID": 114,
+    "RegionID": 5,
+    "TerminalName": "Fauntleroy",
+    "TerminalAbbrev": "FAU",
+    "SortSeq": 10,
+    "Latitude": 47.5232,
+    "Longitude": -122.3967,
+    "AddressLineOne": "4829 SW Barton",
+    "AddressLineTwo": null,
+    "City": "Seattle",
+    "State": "WA",
+    "ZipCode": "98136",
+    "Country": "USA",
+    "MapLink": "http://maps.google.com/maps?q=Fauntleroy+Ferry+Terminal,+Seattle,+WA&hl=en&sll=47.512592,-122.496271&sspn=0.010841,0.019205&oq=Fauntleroy+ferr&hnear=Fauntleroy+Ferry+Terminal,+Seattle,+King,+Washington+98136&t=m&z=16",
+    "Directions": "Located in the community of W. Seattle. Follow Fauntleroy Way SW for about 3 miles to the terminal, just past Lincoln Park.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.5232,
+        "Longitude": -122.3967
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.522946,
+        "Longitude": -122.388498
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.523178,
+        "Longitude": -122.392617
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.523062,
+        "Longitude": -122.393476
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.52312,
+        "Longitude": -122.39442
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.523207,
+        "Longitude": -122.394677
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.523207,
+        "Longitude": -122.394806
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.523222,
+        "Longitude": -122.394849
+      }
+    ]
+  },
+  {
+    "TerminalID": 10,
+    "TerminalSubjectID": 115,
+    "RegionID": 1,
+    "TerminalName": "Friday Harbor",
+    "TerminalAbbrev": "FRH",
+    "SortSeq": 50,
+    "Latitude": 48.535783,
+    "Longitude": -123.013844,
+    "AddressLineOne": "91 Front Street S.  ",
+    "AddressLineTwo": null,
+    "City": "Friday Harbor",
+    "State": "WA",
+    "ZipCode": "98250",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Ferry+Dock,+Friday+Harbor,+WA+98250/@48.5353353,-123.014314,17z/data=!3m1!4b1!4m2!3m1!1s0x548f7e62590517c9:0x7a355f3432f656a7",
+    "Directions": "From Roche Harbor on Roche Harbor Road, follow Roche Harbor Road into town, the terminal is located on Front Street.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.535783,
+        "Longitude": -123.013844
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.534959,
+        "Longitude": -123.034407
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.535413,
+        "Longitude": -123.021361
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.536095,
+        "Longitude": -123.018271
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.534504,
+        "Longitude": -123.01501
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.535072,
+        "Longitude": -123.01458
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.535186,
+        "Longitude": -123.014495
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.535186,
+        "Longitude": -123.014495
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.535172,
+        "Longitude": -123.014452
+      }
+    ]
+  },
+  {
+    "TerminalID": 12,
+    "TerminalSubjectID": 110,
+    "RegionID": 3,
+    "TerminalName": "Kingston",
+    "TerminalAbbrev": "KIN",
+    "SortSeq": 20,
+    "Latitude": 47.794606,
+    "Longitude": -122.494328,
+    "AddressLineOne": "11264 State Route 104",
+    "AddressLineTwo": null,
+    "City": "Kingston",
+    "State": "WA",
+    "ZipCode": "98346",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Kingston/@47.796299,-122.496454,17z/data=!3m1!4b1!4m2!3m1!1s0x54901913d115ec6f:0xfbaf0a713a110b66",
+    "Directions": "From Port Angeles / Olympic Peninsula Points: Drive EAST on U.S. 101 to State Route (SR) 104, crossing the Hood Canal Floating Bridge. Continue EAST on SR 104 for 8 more miles (through Port Gamble) to the Kingston Ferry Terminal.<p> \r\nFrom Bremerton:  Drive north on WA-3 N and take the WA-305 exit toward Poulsbo/Bainbridge Island. Turn right onto WA-305 S and take the 2nd left onto WA-307 N/Bond Rd NE.  Continue on WA-307 N for 6 miles and continue straight onto NE State Highway 104 to the Kingston Ferry Terminal.<p>\r\n\r\n<b>Waiting area:</b> Outdoor heated and sheltered seating area.<p>\r\n<b>Dropping off or picking up?</b><br>\r\n\r\nWhen approaching the ferry terminal to pick up or drop off and NOT disabled, please enter the right hand lane (local line) and make a right turn at Washington St. right in front of the toll booths. There should be parking there for a quick pick up – drop off.<p>\r\nIf you are disabled and picking up or dropping off, cut into the line down by the toll booths and let the ticket seller know that you will be dropping off or picking up.\r\n  ",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.794606,
+        "Longitude": -122.494328
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.7971,
+        "Longitude": -122.49674
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.796062,
+        "Longitude": -122.495538
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.795543,
+        "Longitude": -122.495795
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.795514,
+        "Longitude": -122.495881
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.795572,
+        "Longitude": -122.495838
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.795572,
+        "Longitude": -122.495871
+      }
+    ]
+  },
+  {
+    "TerminalID": 13,
+    "TerminalSubjectID": 117,
+    "RegionID": 1,
+    "TerminalName": "Lopez Island",
+    "TerminalAbbrev": "LOP",
+    "SortSeq": 20,
+    "Latitude": 48.570928,
+    "Longitude": -122.882764,
+    "AddressLineOne": "PO Box 356 (Mailing)",
+    "AddressLineTwo": "1 Ferry Road (Physical)",
+    "City": "Lopez Island",
+    "State": "WA",
+    "ZipCode": "98261",
+    "Country": "USA",
+    "MapLink": null,
+    "Directions": null,
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.570928,
+        "Longitude": -122.882764
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.568821,
+        "Longitude": -122.884032
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.569389,
+        "Longitude": -122.88386
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.570184,
+        "Longitude": -122.88386
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.570581,
+        "Longitude": -122.883517
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.570567,
+        "Longitude": -122.883431
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.570588,
+        "Longitude": -122.883409
+      }
+    ]
+  },
+  {
+    "TerminalID": 14,
+    "TerminalSubjectID": 109,
+    "RegionID": 2,
+    "TerminalName": "Mukilteo",
+    "TerminalAbbrev": "MUK",
+    "SortSeq": 10,
+    "Latitude": 47.9506,
+    "Longitude": -122.297,
+    "AddressLineOne": "910 First Street",
+    "AddressLineTwo": null,
+    "City": "Mukilteo",
+    "State": "WA",
+    "ZipCode": "98204",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Mukilteo,+WA+98275/@47.948826,-122.304313,17z/data=!3m1!4b1!4m2!3m1!1s0x54900195b3777399:0xb7703325099fca4                     ",
+    "Directions": "<b>Northbound:</b> From I-5 N, take exit 182 for SR 525 N (Mukilteo Speedway) and follow for 18 miles. </p>\r\n\r\n<p><b>Southbound:</b> From I-5 S, take exit 189 for SR 526 and follow for 4.5 miles. Turn right onto 84th St SW for .4 miles. Turn right onto SR 525 N (Mukilteo Speedway) for 2 miles. </p>\r\n\r\n<p>Vehicles coming from the north and south will be travelling north on SR 525. Proceed in the lane marked for ferry traffic on the right. </p>\r\n\r\n<p><b>Accessing the Terminal:</b> Vehicles travel north on SR 525 in the lane marked for ferry traffic and turn right at the intersection with First Street. Approaching the entrance to the holidng lanes, the two lanes are marked for general ferry traffic lane (right lane) and priority ferry traffic and through lane (left lane). Each lane has its own green light, and you may only proceed into the holding lanes when the light turns green for your lane. </p>",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.9506,
+        "Longitude": -122.297
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.9499,
+        "Longitude": -122.296969
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.9501,
+        "Longitude": -122.2968
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.9502,
+        "Longitude": -122.2967
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.9502,
+        "Longitude": -122.2966
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.9502,
+        "Longitude": -122.2965
+      }
+    ]
+  },
+  {
+    "TerminalID": 15,
+    "TerminalSubjectID": 119,
+    "RegionID": 1,
+    "TerminalName": "Orcas Island",
+    "TerminalAbbrev": "ORI",
+    "SortSeq": 40,
+    "Latitude": 48.597333,
+    "Longitude": -122.943494,
+    "AddressLineOne": "8368 Orcas Road",
+    "AddressLineTwo": null,
+    "City": "Orcas Island",
+    "State": "WA",
+    "ZipCode": "98280",
+    "Country": "USA",
+    "MapLink": null,
+    "Directions": null,
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.597333,
+        "Longitude": -122.943494
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.599481,
+        "Longitude": -122.943427
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.598232,
+        "Longitude": -122.943255
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.597778,
+        "Longitude": -122.943942
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.597693,
+        "Longitude": -122.943856
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.597651,
+        "Longitude": -122.94392
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.597636,
+        "Longitude": -122.943952
+      }
+    ]
+  },
+  {
+    "TerminalID": 16,
+    "TerminalSubjectID": 108,
+    "RegionID": 5,
+    "TerminalName": "Point Defiance",
+    "TerminalAbbrev": "PTD",
+    "SortSeq": 60,
+    "Latitude": 47.306519,
+    "Longitude": -122.514053,
+    "AddressLineOne": "5810 North Pearl Street",
+    "AddressLineTwo": null,
+    "City": "Tacoma",
+    "State": "WA",
+    "ZipCode": "98405",
+    "Country": "USA",
+    "MapLink": "http://maps.google.com/maps?q=Point+Defiance+Ferry+Terminal&hl=en&sll=47.272986,-120.882277&sspn=5.576312,9.832764&hnear=Point+Defiance&t=m&z=16",
+    "Directions": "From I-5: Take exit 132 (Hwy 16). Proceed west on Hwy 16 approximately 3 miles and exit on the 6th Avenue exit (signed Vashon ferry). Turn left onto 6th Avenue at the stop light. Turn right at the next stop light onto Hwy 163 (Pearl Street). Proceed north, approximately 3.5 miles, to the stop sign at the entrance to Point Defiance Park. Stay in the right lane and bear to the right. Do not enter the park. Auto toll plaza one block on right. Ferry terminal located at end of street. Parking to the left of terminal.<p>\r\n<b>Passenger Pick-Up/Drop-Off</b><br>\r\nContinue past tollbooth in left lane to Marina Parking area. There is a bus stop to your right adjacent to the dock that offers a temporary drop-off point.\r\n\r\n\r\n\r\n \r\n\r\n",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.306519,
+        "Longitude": -122.514053
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.30356,
+        "Longitude": -122.514667
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.304899,
+        "Longitude": -122.514237
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.305743,
+        "Longitude": -122.514194
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.305917,
+        "Longitude": -122.514194
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.305917,
+        "Longitude": -122.514184
+      }
+    ]
+  },
+  {
+    "TerminalID": 17,
+    "TerminalSubjectID": 107,
+    "RegionID": 2,
+    "TerminalName": "Port Townsend",
+    "TerminalAbbrev": "POT",
+    "SortSeq": 30,
+    "Latitude": 48.110847,
+    "Longitude": -122.759039,
+    "AddressLineOne": "1301 Water Street",
+    "AddressLineTwo": null,
+    "City": "Port Townsend",
+    "State": "WA",
+    "ZipCode": "98368",
+    "Country": "USA",
+    "MapLink": "http://maps.yahoo.com/maps_result?newFL=Use+Address+Below&addr=1301+water+st&csz=Port+Townsend%2C+WA+98368&.intl=us&name=&lat=&lon=&srchtype=a&qty=&new=1&trf=0&getmap=Get+Map",
+    "Directions": "Traveling from the Edmonds/Kingston ferry or Poulsbo area, cross over the Hood Canal Bridge on Highway 104, then take the Port Ludlow/Chimacum/Highway 19 exit and follow the highway all the way to the Port Townsend dock.<p>\r\nFrom the Olympic Peninsula region, take Highway 101 east, then take the exit onto State Route (SR) 20 east. Follow SR 20 into town. The highway becomes Sims Way, then Water St. to the Port Townsend/Coupeville ferry dock.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.110847,
+        "Longitude": -122.759039
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.112645,
+        "Longitude": -122.762171
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.112415,
+        "Longitude": -122.760454
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.112014,
+        "Longitude": -122.760197
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.111986,
+        "Longitude": -122.760154
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.111957,
+        "Longitude": -122.760154
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.111957,
+        "Longitude": -122.760132
+      }
+    ]
+  },
+  {
+    "TerminalID": 7,
+    "TerminalSubjectID": 101,
+    "RegionID": 4,
+    "TerminalName": "Seattle",
+    "TerminalAbbrev": "P52",
+    "SortSeq": 20,
+    "Latitude": 47.602501,
+    "Longitude": -122.340472,
+    "AddressLineOne": "801 Alaskan Way Pier 52",
+    "AddressLineTwo": null,
+    "City": "Seattle",
+    "State": "WA",
+    "ZipCode": "98104",
+    "Country": "USA",
+    "MapLink": "https://www.google.com/maps/place/Seattle+Ferry+Terminal,+Seattle,+WA+98104/@47.6024947,-122.3379935,17z/data=!3m1!4b1!4m2!3m1!1s0x54906aafeb00215f:0xa65ee9f3967fdb4e\r\n\r\n</p>",
+    "Directions": "</p><b>Driving</b><br>\r\n\r\nFrom I-5 northbound (SeaTac Airport)<br>\r\n• Take I-5 N <br>\r\n• Take exit 164B for Edgar Martinez Drive South<br>\r\n• Turn right onto Edgar Martinez Drive South<br>\r\n• Turn right onto 1st Avenue South<br> \r\n• Veer to the left onto South Dearborn Street<br>\r\n• Turn right onto Alaskan Way to enter the two left turn lanes into Colman Dock from I-5 Southbound (Everett area)<br></p>\r\n<br>\r\nFrom I-5 southbound (Everett area)<br>\r\n• Take I-5 South <br>\r\n• Take exit 164 to I-90 East/Bellevue<br>\r\n• Keep left, heading toward Bellevue/Portland<br>\r\n• Keep right<br>\r\n• Take exit for 4th Avenue South/Ferries<br>\r\n• Take right onto ramp for Edgar Martinez Drive South<br>\r\n• Take right onto Edgar Martinez Drive South<br>\r\n• Take First Avenue South<br>\r\n• Turn left onto South Dearborn Street<br>\r\n• Turn right onto Alaskan Way to enter the two left turn lanes into Colman Dock<br></p>\r\n<br>\r\n<b>Entering Colman Dock and the ferries in a vehicle</b><br>\r\n• Enter terminal from two northbound lanes on Alaskan Way at Yesler Way. Please watch for signage to queue for Bainbridge Island or Bremerton.<br>\r\n• Drivers will be directed to the toll booth for ticketing before loading onto the vessels.<br>\r\n• There is significant congestion along the busy Seattle waterfront, especially with the <a href=\"https://waterfrontseattle.org/\" class=\"content_text\">Waterfront Seattle Project</a>. Check traffic conditions and be prepared to add up to 30 minutes of additional travel time to reach Colman Dock.<br></p>\r\n\r\n<br>\r\n<b>Leaving Colman Dock after disembarking a ferry in a vehicle</b><br>\r\n• Depending on construction activities, vehicles may be able to use both the Marion Street and Yesler Way exits.<br>\r\n• From the Yesler Way exit you can turn left, right or go straight to reach other local streets.<br>\r\n• From the Marion Street exit you can turn left, go straight or turn right – with the exception of large trucks – which must exit by Yesler Way.<br></p>\r\n\r\n<br>\r\n<li><b>Walking</b><br>\r\n<b>Colman Dock Location:</b> on Pier 52, at 801 Alaskan Way between Marion and Columbia Streets.<br>\r\n<b>Access to terminal building:</b> Customers have several options to enter and exit the new passenger building:<br>\r\n1. A temporary pedestrian bridge begins over Alaskan Way begins at First Avenue and Marion Street and continues to the new elevated pedestrian connector and ticketing. From the elevated level you can reach the passenger building.<br>\r\n2. There are three stairways at the south, center and north areas of the new entry building along Alaskan Way. All of these stairs lead to the elevated pedestrian connector for ticketing and access to the terminal building.<br>\r\n3. There are two elevators at Colman Dock:<br>\r\n<br>\r\n• One is at the entry building along Alaskan Way<br>\r\n• The second is adjacent to the Passenger Only Ferry where the King County Water Taxi and Kitsap Fast Ferry terminal are located<br>\r\n• Passenger Pick-Up/Drop Off: The temporary passenger pick-up/drop-off area is located on northbound Alaskan Way between Marion and Madison streets. To view a graphic of the pick-up drop-off area, visit the <a href=\"https://wsdot.wa.gov/construction-planning/search-projects/ferries-seattle-multimodal-terminal-colman-dock-project\">Seattle Multimodal Terminal at Colman Dock Project</a> page and select the “maps & drawings” tab.<br></p>\r\n\r\n<br>\r\n<b>Tickets</b><br>\r\n• To save time, you may purchase tickets in advance <a href=\"https://wave2go.wsdot.com/webstore/landingPage?cg=21&c=76\">online</a><br>\r\n• A staffed ticket booth and self-serve kiosks are located in the enclosed walkway that leads into the passenger building. There is an additional self-serve kiosk within the passenger building.<br>\r\n• The staffed ticket booth is the only place to purchase tickets with cash.<br></p>\r\n\r\n<br>\r\n<b>Tips for walk-on passengers</b><br>\r\n• There are now over 350 seats available in the completed terminal building. Please arrive about 15 minutes before your scheduled sailing. You’ll also find plenty of seating on the ferry, with accommodations of 1,500 to 2,500 passengers depending on the vessel.<br>\r\n• The only time we approach full walk-on capacity is during major events such as a sports team playoff or series championship games. <br></p>\r\n\r\n<br>\r\n<b>Leaving Colman Dock after disembarking a ferry as a walk-on passenger</b><br>\r\n• There are several ways to travel upon leaving the ferries:<br> \r\n<br>\r\n1. Passengers can cross the elevated pedestrian connector to take stairs or elevators to Alaskan Way.<br>\r\n2. Passengers can travel through the temporary walkway that travels over Alaskan Way to reach Marion Street.<br>\r\n3. Passengers can also travel across the pedestrian bridge that connects to the passenger only ferry that leads to Alaskan Way and Yesler Way. Both stairs and elevators are available to reach ground level.<br></p>\r\n\r\n<br>\r\n<li><b>Bicycles</b><br>\r\n<b>Getting to Colman Dock and onto the ferries</b><br>\r\n• There are designated holding lanes for bicycles going to either Bainbridge Island or Bremerton. Please watch for signs or speak with staff to ensure that you queue in the correct holding lane.<br>\r\n• Bremerton cyclists will enter at the regular vehicle toll booths and queue for slip 1—same as previously.<br>\r\n• Bainbridge cyclists will enter via two options depending on time of day:<br> \r\n<br>\r\n1. There is a dedicated bike entrance with turnstile and covered waiting area that leads to slip 3. This dedicated lane is accessed from Alaskan Way to the north of the Marion Street ext. The bike tollbooth will be open from 3 pm to 7 pm weekdays. There will be an attendant to scan Orca cards or tickets during these hours.<br> \r\n2. Bainbridge bikes will be able to enter from the regular toll booth and ride across the trestle lanes to enter the bike holding lane on the north end of the trestle.<br> \r\n<br>\r\n• For your safety, it is critical that bicycle riders follow all signs and stay in designated holding lanes and bicycle pathways when traveling to and from the ferry. We appreciate your cooperation and patience.<br>\r\n• Bicycles receive priority access to all sailings, and pay the round-trip passenger fare on the Seattle-side at Colman Dock only.<br>\r\n• For general bicycle route information, you can check out the city of Seattle’s <a href=\"https://www.seattle.gov/transportation/projects-and-programs/programs/bike-program/bike-web-map\">bicycle routes map</a>.<br></p>\r\n\r\n<br>\r\n<b>Leaving Colman Dock after disembarking a ferry on a bicycle</b><br>\r\n• Disembark ferry in three separate groups, depending on preference: at the beginning, middle or end of the vehicle offloading process.<br>\r\n• All bicycles will be directed to either the Yesler Way or Marion Street exits depending on construction activities.<br>\r\n• You can access the <a href=\"https://waterfrontseattle.org/waterfront-projects/park-promenade-bike-path\">Waterfront Seattle bike path</a> from either of the Colman Dock exits.<br>  \r\n• Please do not cut across the holding lanes or exit through the toll plaza.<br></p>",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.602501,
+        "Longitude": -122.340472
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.603103,
+        "Longitude": -122.335626
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.602409,
+        "Longitude": -122.335626
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.602293,
+        "Longitude": -122.337686
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.602409,
+        "Longitude": -122.338458
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.601801,
+        "Longitude": -122.336999
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.601743,
+        "Longitude": -122.33672
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.601765,
+        "Longitude": -122.336742
+      }
+    ]
+  },
+  {
+    "TerminalID": 18,
+    "TerminalSubjectID": 118,
+    "RegionID": 1,
+    "TerminalName": "Shaw Island",
+    "TerminalAbbrev": "SHI",
+    "SortSeq": 30,
+    "Latitude": 48.584792,
+    "Longitude": -122.92965,
+    "AddressLineOne": "PO Box 455 (Mailing)",
+    "AddressLineTwo": "12 Blind Bay Rd.",
+    "City": "Shaw Island",
+    "State": "WA",
+    "ZipCode": "98286",
+    "Country": "USA",
+    "MapLink": "http://maps.yahoo.com/py/maps.py?Pyt=Tmap&addr=blind+bay+rd&city=Shaw+Island&state=WA&slt=48.584000&sln=-122.928100&name=&zip=98286&country=us&BFCat=&BFClient=&mag=7&desc=&cs=7&newmag=6",
+    "Directions": "From Shaw Island County Park on Squaw Bay Road. From the park take a right onto Squaw Bay Road and follow until you reach Blind Bay Road take a right. The Shaw terminal is located at the end of Blind Bay Road.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.584792,
+        "Longitude": -122.92965
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.58245,
+        "Longitude": -122.929007
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.583585,
+        "Longitude": -122.929694
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.584267,
+        "Longitude": -122.929608
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.584466,
+        "Longitude": -122.929865
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.584451,
+        "Longitude": -122.929865
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.58448,
+        "Longitude": -122.929844
+      }
+    ]
+  },
+  {
+    "TerminalID": 19,
+    "TerminalSubjectID": 120,
+    "RegionID": 1,
+    "TerminalName": "Sidney B.C.",
+    "TerminalAbbrev": "SID",
+    "SortSeq": 60,
+    "Latitude": 48.643114,
+    "Longitude": -123.396739,
+    "AddressLineOne": "PO Box 2248 Mailing",
+    "AddressLineTwo": "2499 Ocean Avenue (Physical)",
+    "City": "Sidney",
+    "State": "BC",
+    "ZipCode": "V8L1T3",
+    "Country": "Canada",
+    "MapLink": "\nhttp://maps.google.com/maps?f=d&saddr=&daddr=48.643114,-123.396739&hl=en&geocode=&mra=ls&sll=37.0625,-95.677068&sspn=44.879582,71.279297&ie=UTF8&ll=48.643114,-123.396739&spn=0.073499,0.139217&z=13",
+    "Directions": "<b>Sidney/Anacortes ferry Terminal from Victoria.</b>\n<br> The Sidney/Anacortes Terminal is located 18 miles north of downtown Victoria. There are two exits off Highway 17 Northbound to the Sidney/Anacortes Ferry Terminal: Amity Drive and Beacon Avenue. When taking the Amity Drive exit, turn left at Lochside Drive. After 2 miles turn right at Ocean Avenue. The ferry terminal entrance will be on the right. For the Beacon exit, take a right off the highway on to Beacon Ave and then turn right at Fifth Street. Turn left at Ocean Avenue, and the ferry terminal entrance is located on the right.<p>\n<b>Southbound on Highway 17 from Swartz Bay</b>\n<br>\nTurn left at Beacon Avenue. Turn right at Fifth Street and then turn left at Ocean Avenue. The Sidney/Anacortes Terminal will be located on the right. \n<p>\n<b>Sidney/Anacortes Ferry Terminal from north/mid-Vancouver Island</b><br>\nTravel southbound towards Victoria on Island Highway 1 (Trans Canada Hwy). \nFollow the (Ferries/Airport/Sidney) exit signs. Turn left at McKenzie Avenue. Follow McKenzie Avenue 1.4 miles, and then take the (Sidney/Ferries/Airport) exit right onto Pat Bay Highway 17 North. Travel 11 miles towards Sidney. Follow the Anacortes/San Juan Island highway signs.</p>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 48.643114,
+        "Longitude": -123.396739
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 48.643962,
+        "Longitude": -123.412062
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 48.648045,
+        "Longitude": -123.396956
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 48.645323,
+        "Longitude": -123.399703
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 48.644302,
+        "Longitude": -123.398329
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 48.643735,
+        "Longitude": -123.397557
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 48.643594,
+        "Longitude": -123.397385
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 48.643636,
+        "Longitude": -123.397364
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 48.643608,
+        "Longitude": -123.397385
+      }
+    ]
+  },
+  {
+    "TerminalID": 20,
+    "TerminalSubjectID": 105,
+    "RegionID": 5,
+    "TerminalName": "Southworth",
+    "TerminalAbbrev": "SOU",
+    "SortSeq": 35,
+    "Latitude": 47.513064,
+    "Longitude": -122.495742,
+    "AddressLineOne": "11700 SE SEDGWICK RD",
+    "AddressLineTwo": null,
+    "City": "Southworth",
+    "State": "WA",
+    "ZipCode": "98386",
+    "Country": "USA",
+    "MapLink": "http://maps.google.com/maps?q=Southworth+Ferry+Lot,+Kitsap,+WA&hl=en&ll=47.512592,-122.496271&spn=0.010841,0.019205&sll=47.511925,-122.499543&sspn=0.010841,0.019205&oq=Southworth+Ferry+&hnear=Southworth+Ferry+Lot&t=m&z=16",
+    "Directions": "From I-5: Take exit 132 and proceed west on Hwy 16 approximately 23 miles to Hwy 160 exit. Take Hwy 160 (Sedgwick road) exit, turn right onto Hwy 160 at stop sign and proceed approximately 7 miles to yet another stop sign. Turn right; ferry dock straight ahead. Parking is located to the right of terminal.<p>From Bremerton, go east on Hwy. 16 to the Sedgewick Rd. (Hwy 160) exit.  Turn left onto SE Sedgwick Rd and proceed 7.3 miles to SE Southworth Dr.  Turn right onto SE Southworth Dr. and proceed to the toll booth.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.513064,
+        "Longitude": -122.495742
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.512744,
+        "Longitude": -122.502481
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.512976,
+        "Longitude": -122.501451
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.512118,
+        "Longitude": -122.496825
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.51199,
+        "Longitude": -122.497416
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.512309,
+        "Longitude": -122.496687
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.51273,
+        "Longitude": -122.496108
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.512954,
+        "Longitude": -122.495893
+      }
+    ]
+  },
+  {
+    "TerminalID": 21,
+    "TerminalSubjectID": 121,
+    "RegionID": 5,
+    "TerminalName": "Tahlequah",
+    "TerminalAbbrev": "TAH",
+    "SortSeq": 55,
+    "Latitude": 47.331961,
+    "Longitude": -122.507786,
+    "AddressLineOne": "Vashon Hwy SW and SW Tahlequah Rd",
+    "AddressLineTwo": null,
+    "City": "Vashon",
+    "State": "WA",
+    "ZipCode": "98070",
+    "Country": "USA",
+    "MapLink": "http://maps.google.com/maps?q=Tahlequah+Ferry+Terminal&hl=en&sll=47.272986,-120.882277&sspn=5.576312,9.832764&hnear=Tahlequah&t=m&z=16",
+    "Directions": "The Tahlequah terminal is located at the south end of Vashon Island. Follow Vashon Highway South. The highway ends at the terminal.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.331961,
+        "Longitude": -122.507786
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.333701,
+        "Longitude": -122.507628
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.33277,
+        "Longitude": -122.507199
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.332712,
+        "Longitude": -122.507285
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.332712,
+        "Longitude": -122.507307
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.332705,
+        "Longitude": -122.507328
+      }
+    ]
+  },
+  {
+    "TerminalID": 22,
+    "TerminalSubjectID": 106,
+    "RegionID": 5,
+    "TerminalName": "Vashon Island",
+    "TerminalAbbrev": "VAI",
+    "SortSeq": 20,
+    "Latitude": 47.51095,
+    "Longitude": -122.463639,
+    "AddressLineOne": "10800 North Vashon Highway",
+    "AddressLineTwo": null,
+    "City": "Vashon",
+    "State": "WA",
+    "ZipCode": "98070",
+    "Country": "USA",
+    "MapLink": "http://maps.google.com/maps?q=Vashon+Ferry+Dock+%26+Terminal+Building&hl=en&sll=47.523215,-122.394029&sspn=0.010839,0.019205&oq=Vashon+ferry+&hq=%26+Terminal+Building&hnear=Ferry+Dock,+Vashon,+King,+Washington+98070&t=m&z=16",
+    "Directions": "Head north on Vashon Highway South, the main road on Vashon Island. This road ends at the Vashon terminal.",
+    "DispGISZoomLoc": [
+      {
+        "ZoomLevel": 0,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 1,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 2,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 3,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 4,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 5,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 6,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 7,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 8,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 9,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 10,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      },
+      {
+        "ZoomLevel": 11,
+        "Latitude": 47.504396,
+        "Longitude": -122.463342
+      },
+      {
+        "ZoomLevel": 12,
+        "Latitude": 47.508048,
+        "Longitude": -122.467891
+      },
+      {
+        "ZoomLevel": 13,
+        "Latitude": 47.507614,
+        "Longitude": -122.462441
+      },
+      {
+        "ZoomLevel": 14,
+        "Latitude": 47.50799,
+        "Longitude": -122.4642
+      },
+      {
+        "ZoomLevel": 15,
+        "Latitude": 47.509179,
+        "Longitude": -122.464211
+      },
+      {
+        "ZoomLevel": 16,
+        "Latitude": 47.508998,
+        "Longitude": -122.464232
+      },
+      {
+        "ZoomLevel": 17,
+        "Latitude": 47.51095,
+        "Longitude": -122.463639
+      }
+    ]
+  }
+]
