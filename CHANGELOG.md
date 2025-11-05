@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.0.0] - 2025-11-05
+
+- Features
+  - **TanStack Query Hooks Factory**: Implemented comprehensive hooks factory for all WS-Dottie API endpoints with automatic cache strategy selection
+  - **Enhanced Documentation System**: Added automated OpenAPI specification generation and interactive HTML documentation with Redoc
+  - **Comprehensive Testing Framework**: Implemented E2E testing architecture with factory pattern for all API endpoints
+  - **Sample Data Management**: Added automated sample data fetching and management for documentation examples
+  - **JSON Parsing Utility**: Added robust JSON parsing utility with fallback for improved error handling
+  - **MCP Integrations**: Added Model Context Protocol integrations for Playwright, Chrome DevTools, and web search
+
+- Improvements
+  - **API Architecture Refactoring**: Migrated to endpoint group structure with improved documentation interface
+  - **Enhanced CLI Experience**: Added colorized output, date handling, and limit functionality for CLI results
+  - **Testing Configuration**: Added dedicated TypeScript configuration for tests and improved path resolution
+  - **Documentation Guides**: Added detailed guides for CLI, Node.js, and React integration with comprehensive examples
+
+- Docs
+  - **Comprehensive API Documentation**: Added complete documentation for all WS-Dottie APIs with examples
+  - **Interactive HTML Documentation**: Generated interactive documentation with Redoc for all 16 APIs
+  - **Implementation Guides**: Added detailed guides for TanStack Query integration, CLI usage, and error handling
+  - **API Best Practices**: Added comprehensive documentation guidelines and best practices
+
 ## [0.9.0] - 2025-10-19
 
 - Features
