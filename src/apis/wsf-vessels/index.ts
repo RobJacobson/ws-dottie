@@ -2,13 +2,45 @@
  * @fileoverview WSF Vessels API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Vessels API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, core functions, React hooks, and main API definition.
  */
 
 // Export the main API definition
 export { wsfVesselsApi } from "./apiDefinition";
+
+// Export all input/output types
 export type { VesselsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 export type { VesselsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
+// Export all core functions
+export {
+  getVesselAccommodations,
+  getVesselAccommodationsByVesselId,
+  getVesselBasics,
+  getVesselBasicsByVesselId,
+  getVesselHistories,
+  getVesselHistoriesByVesselNameAndDateRange,
+  getVesselLocations,
+  getVesselLocationsByVesselId,
+  getVesselStats,
+  getVesselStatsByVesselId,
+  getVesselsVerbose,
+  getVesselsVerboseByVesselId,
+} from "./core";
+// Export all React hooks
+export {
+  useGetVesselAccommodations,
+  useGetVesselAccommodationsByVesselId,
+  useGetVesselBasics,
+  useGetVesselBasicsByVesselId,
+  useGetVesselHistories,
+  useGetVesselHistoriesByVesselNameAndDateRange,
+  useGetVesselLocations,
+  useGetVesselLocationsByVesselId,
+  useGetVesselStats,
+  useGetVesselStatsByVesselId,
+  useGetVesselsVerbose,
+  useGetVesselsVerboseByVesselId,
+} from "./hooks";
 export type {
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
@@ -19,9 +51,7 @@ export type {
   VesselBasicsInput,
 } from "./vesselBasics/vesselBasics.input";
 export type { VesselBasic } from "./vesselBasics/vesselBasics.output";
-// Export all input types
 export type { GetVesselHistoryInput } from "./vesselHistories/vesselHistories.input";
-// Export all output types
 export type { VesselHistoryResponse } from "./vesselHistories/vesselHistories.output";
 export type { VesselLocationsInput } from "./vesselLocations/vesselLocations.input";
 export type { VesselLocations } from "./vesselLocations/vesselLocations.output";

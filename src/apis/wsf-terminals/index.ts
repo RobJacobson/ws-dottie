@@ -2,7 +2,7 @@
  * @fileoverview WSF Terminals API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Terminals API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, core functions, React hooks, and main API definition.
  */
 
 // Export the main API definition
@@ -11,6 +11,41 @@ export { wsfTerminalsApi } from "./apiDefinition";
 export type { TerminalsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 // Export all output types
 export type { TerminalsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
+// Export all core functions
+export {
+  getTerminalBasics,
+  getTerminalBasicsByTerminalId,
+  getTerminalBulletins,
+  getTerminalBulletinsByTerminalId,
+  getTerminalLocations,
+  getTerminalLocationsByTerminalId,
+  getTerminalSailingSpace,
+  getTerminalSailingSpaceByTerminalId,
+  getTerminalsCacheFlushDate,
+  getTerminalTransports,
+  getTerminalTransportsByTerminalId,
+  getTerminalVerbose,
+  getTerminalVerboseByTerminalId,
+  getTerminalWaitTimes,
+  getTerminalWaitTimesByTerminalId,
+} from "./core";
+// Export all React hooks
+export {
+  useGetTerminalBasics,
+  useGetTerminalBasicsByTerminalId,
+  useGetTerminalBulletins,
+  useGetTerminalBulletinsByTerminalId,
+  useGetTerminalLocations,
+  useGetTerminalLocationsByTerminalId,
+  useGetTerminalSailingSpace,
+  useGetTerminalSailingSpaceByTerminalId,
+  useGetTerminalTransports,
+  useGetTerminalTransportsByTerminalId,
+  useGetTerminalVerbose,
+  useGetTerminalVerboseByTerminalId,
+  useGetTerminalWaitTimes,
+  useGetTerminalWaitTimesByTerminalId,
+} from "./hooks";
 export type {
   TerminalBasicsByIdInput,
   TerminalBasicsInput,
@@ -35,7 +70,7 @@ export type {
   TerminalTransportsByIdInput,
   TerminalTransportsInput,
 } from "./terminalTransports/terminalTransports.input";
-export type { TerminalTransportationOption } from "./terminalTransports/terminalTransports.output";
+export type { TerminalTransport } from "./terminalTransports/terminalTransports.output";
 export type {
   TerminalVerboseByIdInput,
   TerminalVerboseInput,

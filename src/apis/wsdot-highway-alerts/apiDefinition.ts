@@ -1,9 +1,8 @@
 import type { ApiDefinition } from "@/apis/types";
-
-// Import all resources
-import { highwayAlertsGroup } from "./highwayAlerts/highwayAlerts.endpoints";
 import { alertAreasGroup } from "./alertAreas/alertAreas.endpoints";
 import { eventCategoriesGroup } from "./eventCategories/eventCategories.endpoints";
+// Import all resources
+import { highwayAlertsGroup } from "./highwayAlerts/highwayAlerts.endpoints";
 
 export const wsdotHighwayAlertsApi: ApiDefinition = {
   name: "wsdot-highway-alerts",

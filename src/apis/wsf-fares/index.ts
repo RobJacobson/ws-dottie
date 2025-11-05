@@ -2,10 +2,10 @@
  * @fileoverview WSF Fares API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Fares API, exporting
- * all input/output types, the main API definition, and individual resources.
+ * all input/output types, core functions, React hooks, and main API definition.
  */
 
-// Export the main API definition and individual resources for direct use
+// Export main API definition and individual resources for direct use
 export {
   cacheFlushDateGroup,
   fareLineItemsGroup,
@@ -18,6 +18,18 @@ export {
 export type { FaresCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 // Export all output types
 export type { FaresCacheFlushDateResponse } from "./cacheFlushDate/cacheFlushDate.output";
+// Export all core functions
+export {
+  getFareLineItemsBasic,
+  getFareLineItemsByTripDateAndTerminals,
+  getFareLineItemsVerbose,
+  getFaresCacheFlushDate,
+  getFaresTerminals,
+  getFaresValidDateRange,
+  getFareTotalsByTripDateAndRoute,
+  getTerminalCombo,
+  getTerminalMates,
+} from "./core";
 // Export all input types
 export type {
   FareLineItemsBasicInput,
@@ -34,6 +46,18 @@ export type {
   FareTotalResponse,
   FareTotalType,
 } from "./fareTotals/fareTotals.output";
+// Export all React hooks
+export {
+  useGetFareLineItemsBasic,
+  useGetFareLineItemsByTripDateAndTerminals,
+  useGetFareLineItemsVerbose,
+  useGetFaresTerminals,
+  useGetFaresValidDateRange,
+  useGetFareTotalsByTripDateAndRoute,
+  useGetTerminalCombo,
+  useGetTerminalComboVerbose,
+  useGetTerminalMates,
+} from "./hooks";
 export type {
   TerminalComboInput,
   TerminalComboVerboseInput,

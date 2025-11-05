@@ -2,7 +2,7 @@
  * @fileoverview WSF Schedule API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Schedule API, exporting
- * all input/output types and the main API definition.
+ * all input/output types, core functions, React hooks, and main API definition.
  */
 
 // Export all input types
@@ -28,6 +28,56 @@ export {
   wsfScheduleApi,
 } from "./apiDefinition";
 export type { SchedulesCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
+// Export all core functions
+export {
+  getActiveSeasons,
+  getAllSailingsBySchedRouteID,
+  getRouteDetailsByTripDate,
+  getRouteDetailsByTripDateAndRouteId,
+  getRouteDetailsByTripDateAndTerminals,
+  getRoutesByTripDate,
+  getRoutesByTripDateAndTerminals,
+  getRoutesHavingServiceDisruptionsByTripDate,
+  getSailingsByRouteID,
+  getScheduleAlerts,
+  getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+  getScheduleByTripDateAndRouteId,
+  getScheduleCacheFlushDate,
+  getScheduledRoutes,
+  getScheduleTodayByRoute,
+  getScheduleTodayByTerminals,
+  getScheduleValidDateRange,
+  getTerminalMates,
+  getTerminals,
+  getTimeAdjustments,
+  getTimeAdjustmentsByRoute,
+  getTimeAdjustmentsBySchedRoute,
+} from "./core";
+// Export all React hooks
+export {
+  useGetActiveSeasons,
+  useGetAllSailingsBySchedRouteID,
+  useGetRouteDetailsByTripDate,
+  useGetRouteDetailsByTripDateAndRouteId,
+  useGetRouteDetailsByTripDateAndTerminals,
+  useGetRoutesByTripDate,
+  useGetRoutesByTripDateAndTerminals,
+  useGetRoutesHavingServiceDisruptionsByTripDate,
+  useGetSailingsByRouteID,
+  useGetScheduleAlerts,
+  useGetScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+  useGetScheduleByTripDateAndRouteId,
+  useGetScheduledRoutes,
+  useGetScheduledRoutesById,
+  useGetScheduleTodayByRoute,
+  useGetScheduleTodayByTerminals,
+  useGetScheduleValidDateRange,
+  useGetTerminalMates,
+  useGetTerminals,
+  useGetTimeAdjustments,
+  useGetTimeAdjustmentsByRoute,
+  useGetTimeAdjustmentsBySchedRoute,
+} from "./hooks";
 export type {
   RouteDetailsByTripDateAndRouteIdInput,
   RouteDetailsByTripDateAndTerminalsInput,
