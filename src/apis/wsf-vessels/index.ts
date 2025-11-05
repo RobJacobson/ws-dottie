@@ -2,11 +2,8 @@
  * @fileoverview WSF Vessels API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Vessels API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * all input/output types, core functions, and React hooks.
  */
-
-// Export the main API definition
-export { wsfVesselsApi } from "./apiDefinition";
 
 // Export all input/output types
 export type { VesselsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";

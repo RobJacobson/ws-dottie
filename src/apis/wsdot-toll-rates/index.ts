@@ -1,19 +1,10 @@
 /**
  * @fileoverview WSDOT Toll Rates API - Clean exports for types, API definition, and resources
  *
- * This module provides a clean interface for the WSDOT Toll Rates API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * This module provides a clean interface for WSDOT Toll Rates API, exporting
+ * all input/output types, core functions, and React hooks.
  */
 
-// Export main API definition (legacy format for backward compatibility)
-// Export individual resources for direct use
-export {
-  tollRatesResource,
-  tollTripInfoResource,
-  tollTripRatesResource,
-  tollTripVersionResource,
-  wsdotTollRatesApi,
-} from "./apiDefinition";
 // Export all core functions
 export {
   getTollRates,

@@ -2,31 +2,12 @@
  * @fileoverview WSF Schedule API - Clean exports for types and API definition
  *
  * This module provides a clean interface for the WSF Schedule API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * all input/output types, core functions, and React hooks.
  */
 
 // Export all input types
 export type { ActiveScheduledSeasonsInput } from "./activeSeasons/activeSeasons.input";
 export type { ScheduleBase } from "./activeSeasons/activeSeasons.output";
-// Export the main API definition
-// Export all resources for direct use
-export {
-  activeSeasonsResource,
-  routeDetailsResource,
-  routesResource,
-  sailingsResource,
-  scheduleAlertsResource,
-  scheduleCacheFlushDateResource,
-  scheduledRoutesResource,
-  schedulesResource,
-  scheduleTerminalMatesResource,
-  scheduleTerminalsResource,
-  scheduleTodayResource,
-  scheduleValidDateRangeResource,
-  serviceDisruptionsResource,
-  timeAdjustmentsResource,
-  wsfScheduleApi,
-} from "./apiDefinition";
 export type { SchedulesCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
 // Export all core functions
 export {
@@ -42,16 +23,17 @@ export {
   getScheduleAlerts,
   getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
   getScheduleByTripDateAndRouteId,
-  getScheduleCacheFlushDate,
   getScheduledRoutes,
+  getSchedulesCacheFlushDate,
   getScheduleTodayByRoute,
   getScheduleTodayByTerminals,
-  getScheduleValidDateRange,
   getTerminalMates,
   getTerminals,
   getTimeAdjustments,
+  getTimeAdjustments,
   getTimeAdjustmentsByRoute,
   getTimeAdjustmentsBySchedRoute,
+  getValidDateRange,
 } from "./core";
 // Export all React hooks
 export {

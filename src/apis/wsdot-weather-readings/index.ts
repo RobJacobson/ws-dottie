@@ -2,17 +2,9 @@
  * @fileoverview WSDOT Weather Readings API - Clean exports for types and API definition
  *
  * This module provides a clean interface for WSDOT Weather Readings API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * all input/output types, core functions, and React hooks.
  */
 
-// Export the main API definition
-// Export all resources for direct use
-export {
-  subSurfaceMeasurementsResource,
-  surfaceMeasurementsResource,
-  weatherReadingsResource,
-  wsdotWeatherReadingsApi,
-} from "./apiDefinition";
 // Export all core functions
 export {
   getSubSurfaceMeasurements,

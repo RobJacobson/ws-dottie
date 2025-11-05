@@ -1,22 +1,14 @@
 /**
  * @fileoverview WSDOT Highway Alerts API - Clean exports for types and API definition
  *
- * This module provides a clean interface for the WSDOT Highway Alerts API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * This module provides a clean interface for WSDOT Highway Alerts API, exporting
+ * all input/output types, core functions, and React hooks.
  */
 
 // Export shared types
 export type { RoadwayLocation } from "@/apis/shared";
-export type { GetMapAreasInput } from "./alertAreas/alertAreas.input";
+export type { AlertAreasInput } from "./alertAreas/alertAreas.input";
 export type { Area } from "./alertAreas/alertAreas.output";
-// Export the main API definition
-// Export individual resources for direct use
-export {
-  alertAreasGroup,
-  eventCategoriesGroup,
-  highwayAlertsGroup,
-  wsdotHighwayAlertsApi,
-} from "./apiDefinition";
 // Export all core functions
 export {
   getAlertById,
@@ -27,14 +19,14 @@ export {
   getMapAreas,
   searchAlerts,
 } from "./core";
-export type { GetEventCategoriesInput } from "./eventCategories/eventCategories.input";
+export type { EventCategoriesInput } from "./eventCategories/eventCategories.input";
 // Export all input types
 export type {
-  GetAlertInput,
-  GetAlertsByRegionIDInput,
-  GetAlertsForMapAreaInput,
-  GetAlertsInput,
-  SearchAlertsInput,
+  HighwayAlertInput,
+  HighwayAlertsByMapAreaInput,
+  HighwayAlertsByRegionIDInput,
+  HighwayAlertsInput,
+  HighwayAlertsSearchInput,
 } from "./highwayAlerts/highwayAlerts.input";
 // Export all output types
 export type { Alert } from "./highwayAlerts/highwayAlerts.output";

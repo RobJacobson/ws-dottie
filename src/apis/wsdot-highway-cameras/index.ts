@@ -1,21 +1,15 @@
 /**
  * @fileoverview WSDOT Highway Cameras API - Clean exports for types and API definition
  *
- * This module provides a clean interface for the WSDOT Highway Cameras API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * This module provides a clean interface for WSDOT Highway Cameras API, exporting
+ * all input/output types, core functions, and React hooks.
  */
 
-// Export the main API definition
-// Export individual resources for direct use
-export {
-  camerasGroup,
-  wsdotHighwayCamerasApi,
-} from "./apiDefinition";
 // Export all input types
 export type {
-  GetCameraInput,
-  GetCamerasInput,
-  SearchCamerasInput,
+  CameraInput,
+  CamerasInput,
+  CamerasSearchInput,
 } from "./cameras/cameras.input";
 // Export all output types
 export type { Camera } from "./cameras/cameras.output";

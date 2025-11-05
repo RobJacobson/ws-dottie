@@ -1,20 +1,10 @@
 /**
  * @fileoverview WSF Fares API - Clean exports for types and API definition
  *
- * This module provides a clean interface for the WSF Fares API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * This module provides a clean interface for WSF Fares API, exporting
+ * all input/output types, core functions, and React hooks.
  */
 
-// Export main API definition and individual resources for direct use
-export {
-  cacheFlushDateGroup,
-  fareLineItemsGroup,
-  fareTotalsGroup,
-  terminalComboGroup,
-  terminalsGroup,
-  validDateRangeGroup,
-  wsfFaresApi,
-} from "./apiDefinition";
 export type { FaresCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 // Export all output types
 export type { FaresCacheFlushDateResponse } from "./cacheFlushDate/cacheFlushDate.output";

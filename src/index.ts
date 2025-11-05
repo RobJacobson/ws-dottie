@@ -14,13 +14,6 @@
  */
 
 // ============================================================================
-// SHARED UTILITIES
-// ============================================================================
-
-// Core shared functionality
-export * from "./shared";
-
-// ============================================================================
 // ALL APIs (WSDOT & WSF)
 // ============================================================================
 
@@ -28,9 +21,17 @@ export * from "./shared";
 export * from "./apis";
 
 // ============================================================================
-// ============================================================================
-// TYPES
+// ESSENTIAL SHARED UTILITIES
 // ============================================================================
 
-// Note: Common types are now exported through shared utilities
-// The types.ts file previously contained unused schema generation types
+// Export only essential shared utilities needed by consumers
+export {
+  datesHelper,
+  jsDateToYyyyMmDd,
+} from "./shared";
+
+// Export error types for error handling
+export type {
+  ApiError,
+  ErrorContext,
+} from "./shared";

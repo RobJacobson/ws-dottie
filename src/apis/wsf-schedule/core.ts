@@ -6,17 +6,17 @@
  */
 
 import { createApiFunction } from "@/shared/utils/apiFunctionFactory";
-import type { ActiveSeasonsInput } from "./activeSeasons/activeSeasons.input";
+import type { ActiveScheduledSeasonsInput } from "./activeSeasons/activeSeasons.input";
 import type { ActiveSeason } from "./activeSeasons/activeSeasons.output";
-import type { ScheduleCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
-import type { ScheduleCacheFlushDateResponse } from "./cacheFlushDate/cacheFlushDate.output";
+import type { SchedulesCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
+import type { SchedulesCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
 import type {
   RouteDetailsByTripDateAndRouteIdInput,
   RouteDetailsByTripDateAndTerminalsInput,
   RouteDetailsByTripDateInput,
 } from "./routeDetails/routeDetails.input";
 import type { RouteDetail } from "./routeDetails/routeDetails.output";
-import type { ScheduleAlertsInput } from "./scheduleAlerts/scheduleAlerts.input";
+import type { AllAlertsInput } from "./scheduleAlerts/scheduleAlerts.input";
 import type { ScheduleAlert } from "./scheduleAlerts/scheduleAlerts.output";
 import type { ScheduledRoutesInput } from "./scheduledRoutes/scheduledRoutes.input";
 import type { ScheduledRoute } from "./scheduledRoutes/scheduledRoutes.output";
@@ -42,30 +42,31 @@ import type { ValidDateRangeResponse } from "./validDateRange/validDateRange.out
 
 // Create strongly-typed functions using the factory
 export const getScheduleByTripDateAndRouteId = createApiFunction<
-  ScheduleByRouteInput,
-  Schedule
+  RouteDetailsByTripDateAndRouteIdInput,
+  RouteDetail
 >("wsf-schedule:getScheduleByTripDateAndRouteId");
 export const getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
-  createApiFunction<ScheduleByTerminalComboInput, Schedule>(
+  createApiFunction<RouteDetailsByTripDateAndTerminalsInput, RouteDetail>(
     "wsf-schedule:getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds"
   );
-export const getRoutesByTripDate = createApiFunction<RoutesInput, Route[]>(
-  "wsf-schedule:getRoutesByTripDate"
-);
+export const getRoutesByTripDate = createApiFunction<
+  TerminalsInput,
+  Terminal[]
+>("wsf-schedule:getRoutesByTripDate");
 export const getRoutesByTripDateAndTerminals = createApiFunction<
-  RoutesByTerminalsInput,
-  Route[]
+  TerminalsInput,
+  Terminal[]
 >("wsf-schedule:getRoutesByTripDateAndTerminals");
 export const getAllSailingsBySchedRouteID = createApiFunction<
-  AllSchedSailingsBySchedRouteInput,
-  Sailing[]
+  ScheduledRoutesByScheduleIdInput,
+  ScheduledRoute[]
 >("wsf-schedule:getAllSailingsBySchedRouteID");
 export const getSailingsByRouteID = createApiFunction<
-  SailingsByRouteIdInput,
-  Sailing[]
+  { RouteID: number },
+  ScheduledRoute[]
 >("wsf-schedule:getSailingsByRouteID");
 export const getActiveSeasons = createApiFunction<
-  ActiveSeasonsInput,
+  ActiveScheduledSeasonsInput,
   ActiveSeason[]
 >("wsf-schedule:getActiveSeasons");
 export const getRouteDetailsByTripDate = createApiFunction<
@@ -85,7 +86,7 @@ export const getScheduledRoutes = createApiFunction<
   ScheduledRoute[]
 >("wsf-schedule:getScheduledRoutes");
 export const getScheduleAlerts = createApiFunction<
-  ScheduleAlertsInput,
+  AllAlertsInput,
   ScheduleAlert[]
 >("wsf-schedule:getScheduleAlerts");
 export const getScheduleTodayByRoute = createApiFunction<
@@ -100,10 +101,13 @@ export const getRoutesHavingServiceDisruptionsByTripDate = createApiFunction<
   ServiceDisruptionsInput,
   ServiceDisruption[]
 >("wsf-schedule:getRoutesHavingServiceDisruptionsByTripDate");
-export const getTimeAdjustments = createApiFunction<
-  TimeAdjustmentsInput,
-  TimeAdjustment[]
->("wsf-schedule:getTimeAdjustments");
+export const getTerminalMates = createApiFunction<
+  TerminalMatesInput,
+  TerminalMate[]
+>("wsf-schedule:getTerminalMates");
+export const getTerminals = createApiFunction<TerminalsInput, Terminal[]>(
+  "wsf-schedule:getTerminals"
+);
 export const getTimeAdjustmentsByRoute = createApiFunction<
   TimeAdjByRouteInput,
   TimeAdjustment[]
@@ -112,18 +116,15 @@ export const getTimeAdjustmentsBySchedRoute = createApiFunction<
   TimeAdjBySchedRouteInput,
   TimeAdjustment[]
 >("wsf-schedule:getTimeAdjustmentsBySchedRoute");
-export const getTerminalMates = createApiFunction<
-  TerminalMatesInput,
-  TerminalMate[]
->("wsf-schedule:getTerminalMates");
-export const getTerminals = createApiFunction<TerminalsInput, Terminal[]>(
-  "wsf-schedule:getTerminals"
-);
-export const getScheduleValidDateRange = createApiFunction<
+export const getTimeAdjustments = createApiFunction<
+  TimeAdjustmentsInput,
+  TimeAdjustment[]
+>("wsf-schedule:getTimeAdjustments");
+export const getValidDateRange = createApiFunction<
   ValidDateRangeInput,
   ValidDateRangeResponse
->("wsf-schedule:getScheduleValidDateRange");
-export const getScheduleCacheFlushDate = createApiFunction<
-  ScheduleCacheFlushDateInput,
-  ScheduleCacheFlushDateResponse
->("wsf-schedule:getScheduleCacheFlushDate");
+>("wsf-schedule:getValidDateRange");
+export const getSchedulesCacheFlushDate = createApiFunction<
+  SchedulesCacheFlushDateInput,
+  SchedulesCacheFlushDate
+>("wsf-schedule:getSchedulesCacheFlushDate");

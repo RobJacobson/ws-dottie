@@ -1,12 +1,10 @@
 /**
  * @fileoverview WSF Terminals API - Clean exports for types and API definition
  *
- * This module provides a clean interface for the WSF Terminals API, exporting
- * all input/output types, core functions, React hooks, and main API definition.
+ * This module provides a clean interface for WSF Terminals API, exporting
+ * all input/output types, core functions, and React hooks.
  */
 
-// Export the main API definition
-export { wsfTerminalsApi } from "./apiDefinition";
 // Export all input types
 export type { TerminalsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
 // Export all output types
