@@ -16,13 +16,13 @@ export const borderCrossingDataResource: EndpointGroup = {
     getBorderCrossings: {
       function: "getBorderCrossings",
       endpoint: "/GetBorderCrossingsAsJson",
-      inputSchema: i.getBorderCrossingsSchema,
+      inputSchema: i.borderCrossingDataSchema,
       outputSchema: z.array(o.borderCrossingDataSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
     } satisfies EndpointDefinition<
-      i.GetBorderCrossingsInput,
+      i.BorderCrossingDataInput,
       o.BorderCrossingData[]
     >,
   },

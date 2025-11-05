@@ -16,16 +16,16 @@ export const camerasGroup: EndpointGroup = {
     getHighwayCameras: {
       function: "getHighwayCameras",
       endpoint: "/getCamerasAsJson",
-      inputSchema: i.getCamerasSchema,
+      inputSchema: i.camerasSchema,
       outputSchema: z.array(o.cameraSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple Camera items for statewide coverage.",
-    } satisfies EndpointDefinition<i.GetCamerasInput, o.Camera[]>,
+    } satisfies EndpointDefinition<i.CamerasInput, o.Camera[]>,
     searchHighwayCamerasByRouteAndMilepost: {
       function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
-      inputSchema: i.searchCamerasSchema,
+      inputSchema: i.camerasSearchSchema,
       outputSchema: z.array(o.cameraSchema),
       sampleParams: {
         StateRoute: "I-5",
@@ -34,15 +34,15 @@ export const camerasGroup: EndpointGroup = {
       },
       endpointDescription:
         "Returns multiple Camera items for specified route and milepost range.",
-    } satisfies EndpointDefinition<i.SearchCamerasInput, o.Camera[]>,
+    } satisfies EndpointDefinition<i.CamerasSearchInput, o.Camera[]>,
     getHighwayCameraByCameraId: {
       function: "getHighwayCameraByCameraId",
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
-      inputSchema: i.getCameraSchema,
+      inputSchema: i.cameraSchema,
       outputSchema: o.cameraSchema,
       sampleParams: { CameraID: 9818 },
       endpointDescription:
         "Returns single Camera item for specific camera identifier.",
-    } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
+    } satisfies EndpointDefinition<i.CameraInput, o.Camera>,
   },
 };

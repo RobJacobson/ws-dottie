@@ -6,11 +6,11 @@
  */
 
 import { createApiFunction } from "@/shared/utils/apiFunctionFactory";
-import type { GetBorderCrossingsInput } from "./borderCrossingData/borderCrossingData.input";
+import type { BorderCrossingDataInput } from "./borderCrossingData/borderCrossingData.input";
 import type { BorderCrossingData } from "./borderCrossingData/borderCrossingData.output";
 
 // Create strongly-typed functions using the factory
 export const getBorderCrossings = createApiFunction<
-  GetBorderCrossingsInput,
+  BorderCrossingDataInput,
   BorderCrossingData[]
 >("wsdot-border-crossings:getBorderCrossings");

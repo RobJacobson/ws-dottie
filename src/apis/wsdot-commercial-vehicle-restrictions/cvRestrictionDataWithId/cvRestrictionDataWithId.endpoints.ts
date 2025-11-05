@@ -16,13 +16,13 @@ export const cvRestrictionDataWithIdGroup: EndpointGroup = {
     getCommercialVehicleRestrictionsWithId: {
       function: "getCommercialVehicleRestrictionsWithId",
       endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
-      inputSchema: i.getCommercialVehicleRestrictionsWithIdSchema,
+      inputSchema: i.cvRestrictionDataWithIdSchema,
       outputSchema: z.array(o.cVRestrictionDataWithIdSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.",
     } satisfies EndpointDefinition<
-      i.GetCommercialVehicleRestrictionsWithIdInput,
+      i.CVRestrictionDataWithIdInput,
       o.CVRestrictionDataWithId[]
     >,
   },

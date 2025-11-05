@@ -15,11 +15,11 @@ export const eventCategoriesGroup: EndpointGroup = {
     getEventCategories: {
       function: "getEventCategories",
       endpoint: "/getEventCategoriesAsJson",
-      inputSchema: i.getEventCategoriesSchema,
+      inputSchema: i.eventCategoriesSchema,
       outputSchema: z.array(z.string()),
       sampleParams: {},
       endpointDescription:
         "Returns an array of strings for all available event categories.",
-    } satisfies EndpointDefinition<i.GetEventCategoriesInput, string[]>,
+    } satisfies EndpointDefinition<i.EventCategoriesInput, string[]>,
   },
 };

@@ -7,17 +7,17 @@
 
 import { createApiFunction } from "@/shared/utils/apiFunctionFactory";
 import type {
-  GetClearancesByRouteInput,
-  GetClearancesInput,
+  BridgeClearancesByRouteInput,
+  BridgeClearancesInput,
 } from "./bridgeClearances/bridgeClearances.input";
 import type { BridgeDataGIS } from "./bridgeClearances/bridgeClearances.output";
 
 // Create strongly-typed functions using the factory
 export const getBridgeClearances = createApiFunction<
-  GetClearancesInput,
+  BridgeClearancesInput,
   BridgeDataGIS[]
 >("wsdot-bridge-clearances:getBridgeClearances");
 export const getBridgeClearancesByRoute = createApiFunction<
-  GetClearancesByRouteInput,
+  BridgeClearancesByRouteInput,
   BridgeDataGIS[]
 >("wsdot-bridge-clearances:getBridgeClearancesByRoute");

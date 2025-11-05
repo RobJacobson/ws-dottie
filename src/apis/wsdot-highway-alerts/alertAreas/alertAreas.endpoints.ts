@@ -16,11 +16,11 @@ export const alertAreasGroup: EndpointGroup = {
     getMapAreas: {
       function: "getMapAreas",
       endpoint: "/getMapAreasAsJson",
-      inputSchema: i.getMapAreasSchema,
+      inputSchema: i.alertAreasSchema,
       outputSchema: z.array(o.areaSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of Area objects for all available geographic regions.",
-    } satisfies EndpointDefinition<i.GetMapAreasInput, o.Area[]>,
+    } satisfies EndpointDefinition<i.AlertAreasInput, o.Area[]>,
   },
 };

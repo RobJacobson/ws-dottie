@@ -16,14 +16,11 @@ export const weatherStationsResource: EndpointGroup = {
     getWeatherStations: {
       function: "getWeatherStations",
       endpoint: "/GetCurrentStationsAsJson",
-      inputSchema: i.getCurrentStationsSchema,
+      inputSchema: i.weatherStationsSchema,
       outputSchema: z.array(o.weatherStationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple WeatherStation items for statewide coverage.",
-    } satisfies EndpointDefinition<
-      i.GetCurrentStationsInput,
-      o.WeatherStation[]
-    >,
+    } satisfies EndpointDefinition<i.WeatherStationsInput, o.WeatherStation[]>,
   },
 };

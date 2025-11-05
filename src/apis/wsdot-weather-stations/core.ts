@@ -6,11 +6,11 @@
  */
 
 import { createApiFunction } from "@/shared/utils/apiFunctionFactory";
-import type { GetCurrentStationsInput } from "./weatherStations/weatherStations.input";
+import type { WeatherStationsInput } from "./weatherStations/weatherStations.input";
 import type { WeatherStation } from "./weatherStations/weatherStations.output";
 
 // Create strongly-typed functions using the factory
 export const getWeatherStations = createApiFunction<
-  GetCurrentStationsInput,
+  WeatherStationsInput,
   WeatherStation[]
 >("wsdot-weather-stations:getWeatherStations");

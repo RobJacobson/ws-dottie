@@ -1,24 +1,24 @@
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * Schema for GetClearances input parameters (all routes)
+ * Schema for BridgeClearances input parameters (all routes)
  *
  * Bridge clearance information, see disclaimer
  */
-export const getClearancesSchema = z
+export const bridgeClearancesSchema = z
   .object({})
   .describe(
     "Retrieves bridge clearance information for all bridges in the system, returning location data, vertical clearance measurements, route associations, and structure identification. Use for route planning and height-restricted vehicle navigation."
   );
 
-export type GetClearancesInput = z.infer<typeof getClearancesSchema>;
+export type BridgeClearancesInput = z.infer<typeof bridgeClearancesSchema>;
 
 /**
- * Schema for GetClearancesByRoute input parameters
+ * Schema for BridgeClearancesByRoute input parameters
  *
  * Bridge clearance information, see disclaimer
  */
-export const getClearancesByRouteSchema = z
+export const bridgeClearancesByRouteSchema = z
   .object({
     Route: z
       .string()
@@ -30,6 +30,6 @@ export const getClearancesByRouteSchema = z
     "Filters bridge clearance information by specific state route, returning location data, vertical clearance measurements, and structure identification for bridges on that route. Use for route-specific height clearance planning."
   );
 
-export type GetClearancesByRouteInput = z.infer<
-  typeof getClearancesByRouteSchema
+export type BridgeClearancesByRouteInput = z.infer<
+  typeof bridgeClearancesByRouteSchema
 >;

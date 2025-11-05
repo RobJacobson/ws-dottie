@@ -7,21 +7,21 @@
 
 import { createApiFunction } from "@/shared/utils/apiFunctionFactory";
 import type {
-  GetCameraInput,
-  GetCamerasInput,
-  SearchCamerasInput,
+  CameraInput,
+  CamerasInput,
+  CamerasSearchInput,
 } from "./cameras/cameras.input";
 import type { Camera } from "./cameras/cameras.output";
 
 // Create strongly-typed functions using the factory
-export const getHighwayCameras = createApiFunction<GetCamerasInput, Camera[]>(
+export const getHighwayCameras = createApiFunction<CamerasInput, Camera[]>(
   "wsdot-highway-cameras:getHighwayCameras"
 );
 export const searchHighwayCamerasByRouteAndMilepost = createApiFunction<
-  SearchCamerasInput,
+  CamerasSearchInput,
   Camera[]
 >("wsdot-highway-cameras:searchHighwayCamerasByRouteAndMilepost");
 export const getHighwayCameraByCameraId = createApiFunction<
-  GetCameraInput,
+  CameraInput,
   Camera
 >("wsdot-highway-cameras:getHighwayCameraByCameraId");

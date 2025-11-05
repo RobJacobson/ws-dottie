@@ -6,18 +6,18 @@
  */
 
 import { createApiFunction } from "@/shared/utils/apiFunctionFactory";
-import type { GetCommercialVehicleRestrictionsInput } from "./cvRestrictionData/cvRestrictionData.input";
+import type { CVRestrictionDataInput } from "./cvRestrictionData/cvRestrictionData.input";
 import type { CVRestrictionData } from "./cvRestrictionData/cvRestrictionData.output";
-import type { GetCommercialVehicleRestrictionsWithIdInput } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.input";
+import type { CVRestrictionDataWithIdInput } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.input";
 import type { CVRestrictionDataWithId } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.output";
 
 // Create strongly-typed functions using the factory
 export const getCommercialVehicleRestrictions = createApiFunction<
-  GetCommercialVehicleRestrictionsInput,
+  CVRestrictionDataInput,
   CVRestrictionData[]
 >("wsdot-commercial-vehicle-restrictions:getCommercialVehicleRestrictions");
 export const getCommercialVehicleRestrictionsWithId = createApiFunction<
-  GetCommercialVehicleRestrictionsWithIdInput,
+  CVRestrictionDataWithIdInput,
   CVRestrictionDataWithId[]
 >(
   "wsdot-commercial-vehicle-restrictions:getCommercialVehicleRestrictionsWithId"
