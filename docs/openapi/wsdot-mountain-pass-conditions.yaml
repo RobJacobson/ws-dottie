@@ -186,17 +186,17 @@ paths:
                     MountainPassName: White Pass  US 12
                     Latitude: 46.638333
                     Longitude: -121.39
-                    DateUpdated: 2025-11-04T01:31:37.157Z
-                    TemperatureInFahrenheit: 30
+                    DateUpdated: 2025-11-04T19:53:32.523Z
+                    TemperatureInFahrenheit: 33
                     ElevationInFeet: 4500
-                    WeatherCondition: Snowing
-                    RoadCondition: Compact snow and ice
+                    WeatherCondition: Overcast
+                    RoadCondition: Bare and wet
                     TravelAdvisoryActive: true
                     RestrictionOne:
-                      RestrictionText: Traction Tires Required, Chains required on Vehicles over 10,000 gross vehicle weight.  Oversize Vehicles Prohibited.
+                      RestrictionText: No restrictions
                       TravelDirection: Eastbound
                     RestrictionTwo:
-                      RestrictionText: Traction Tires Required, Chains required on Vehicles over 10,000 gross vehicle weight.  Oversize Vehicles Prohibited.
+                      RestrictionText: No restrictions
                       TravelDirection: Westbound
   /getMountainPassConditionsAsJson:
     get:
@@ -234,10 +234,10 @@ paths:
                       MountainPassName: Blewett Pass US 97
                       Latitude: 47.335298205
                       Longitude: -120.581068216
-                      DateUpdated: 2025-11-03T23:20:19.237Z
-                      TemperatureInFahrenheit: 34
+                      DateUpdated: 2025-11-04T19:33:46.503Z
+                      TemperatureInFahrenheit: 33
                       ElevationInFeet: 4102
-                      WeatherCondition: Snowing Lightly
+                      WeatherCondition: Overcast
                       RoadCondition: Bare and wet
                       TravelAdvisoryActive: true
                       RestrictionOne:
@@ -252,4 +252,4 @@ tags:
   - name: pass-conditions
     description: Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by the Mountain Pass Entry system covering 15 passes.
     externalDocs:
-      description: Use to assess mountain pass travel safety by providing current weather, road conditions, and travel restrictions for informed route planning decisions.
+      description: Use to assess mountain pass conditions for travel planning by providing current weather, road status, and restriction information for safe mountain travel.

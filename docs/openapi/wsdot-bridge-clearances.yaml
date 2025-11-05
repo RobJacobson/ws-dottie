@@ -183,7 +183,7 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 2992 total)
                   value:
-                    - APILastUpdate: 2025-11-03T11:30:02.723Z
+                    - APILastUpdate: 2025-11-04T11:30:02.230Z
                       BridgeNumber: 519/101FTP
                       ControlEntityGuid: e589eb93-c01b-4498-8243-89f48bf5c43d
                       CrossingDescription: SEATTLE SLIP 1 PASS. OHL
@@ -240,7 +240,7 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 972 total)
                   value:
-                    - APILastUpdate: 2025-11-03T11:30:02.723Z
+                    - APILastUpdate: 2025-11-04T11:30:02.230Z
                       BridgeNumber: 5/629A
                       ControlEntityGuid: 88ba5341-b39c-43c9-95a5-bc9584b2d798
                       CrossingDescription: I-5 S-S RAMP UNDER BROADWAY

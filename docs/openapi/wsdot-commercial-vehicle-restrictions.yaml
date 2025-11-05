@@ -526,7 +526,7 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 348 total)
+                  description: Example of a successful response from the API (showing first item of 351 total)
                   value:
                     - BLMaxAxle: 20000
                       BridgeName: Teanaway River
@@ -570,7 +570,7 @@ paths:
                       TDMaxAxle: null
                       VehicleType: ''
                       UniqueID: B-WA-010-1
-                    - _note: ... 347 more items
+                    - _note: ... 350 more items
   /getCommercialVehicleRestrictionsAsJson:
     get:
       summary: Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.
@@ -601,7 +601,7 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 348 total)
+                  description: Example of a successful response from the API (showing first item of 351 total)
                   value:
                     - BLMaxAxle: 20000
                       BridgeName: Teanaway River
@@ -644,7 +644,7 @@ paths:
                       StateRouteID: '10'
                       TDMaxAxle: null
                       VehicleType: ''
-                    - _note: ... 347 more items
+                    - _note: ... 350 more items
 webhooks: {}
 tags:
   - name: cv-restriction-data

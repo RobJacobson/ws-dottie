@@ -205,61 +205,6 @@ components:
       name: CameraID
       in: path
 paths:
-  /getCameraAsJson?CameraID={CameraID}:
-    get:
-      summary: Returns single Camera item for specific camera identifier.
-      operationId: getHighwayCameraByCameraId
-      tags:
-        - cameras
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getHighwayCameraByCameraId } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getHighwayCameraByCameraId,
-              params: {
-                "CameraID": 9818
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/HighwayCameraByCameraIdInputCameraIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HighwayCamerasOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    CameraID: 9818
-                    CameraLocation:
-                      Description: null
-                      Direction: W
-                      Latitude: 48.498333
-                      Longitude: -122.6625
-                      MilePost: 1
-                      RoadName: Airports
-                    CameraOwner: WSDOT Aviation
-                    Description: null
-                    DisplayLatitude: 48.498333
-                    DisplayLongitude: -122.6625
-                    ImageHeight: 208
-                    ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
-                    ImageWidth: 352
-                    IsActive: true
-                    OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
-                    Region: WA
-                    SortOrder: 5300
-                    Title: Anacortes Airport Fuel Pump
   /searchCamerasAsJson:
     get:
       summary: Returns multiple Camera items for specified route and milepost range.
@@ -323,6 +268,61 @@ paths:
                       SortOrder: 1000
                       Title: 'I-5 at MP 9.7: N of 179th St'
                     - _note: ... 11 more items
+  /getCameraAsJson?CameraID={CameraID}:
+    get:
+      summary: Returns single Camera item for specific camera identifier.
+      operationId: getHighwayCameraByCameraId
+      tags:
+        - cameras
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getHighwayCameraByCameraId } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getHighwayCameraByCameraId,
+              params: {
+                "CameraID": 9818
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/HighwayCameraByCameraIdInputCameraIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HighwayCamerasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    CameraID: 9818
+                    CameraLocation:
+                      Description: null
+                      Direction: W
+                      Latitude: 48.498333
+                      Longitude: -122.6625
+                      MilePost: 1
+                      RoadName: Airports
+                    CameraOwner: WSDOT Aviation
+                    Description: null
+                    DisplayLatitude: 48.498333
+                    DisplayLongitude: -122.6625
+                    ImageHeight: 208
+                    ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
+                    ImageWidth: 352
+                    IsActive: true
+                    OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
+                    Region: WA
+                    SortOrder: 5300
+                    Title: Anacortes Airport Fuel Pump
   /getCamerasAsJson:
     get:
       summary: Returns multiple Camera items for statewide coverage.

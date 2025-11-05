@@ -286,35 +286,35 @@ paths:
                       Latitude: 47.427
                       Longitude: -121.418
                       Elevation: 876
-                      ReadingTime: 2025-11-04T09:58:33.000Z
-                      AirTemperature: 0.3
-                      RelativeHumidty: 99
-                      AverageWindSpeed: 1
-                      AverageWindDirection: 45
-                      WindGust: 6
+                      ReadingTime: 2025-11-05T07:48:33.000Z
+                      AirTemperature: 4
+                      RelativeHumidty: 86
+                      AverageWindSpeed: 2
+                      AverageWindDirection: 155
+                      WindGust: 26
                       Visibility: 2000
-                      PrecipitationIntensity: 10
-                      PrecipitationType: 3
-                      PrecipitationPast1Hour: 0.4
-                      PrecipitationPast3Hours: 1.4
-                      PrecipitationPast6Hours: 3.7
-                      PrecipitationPast12Hours: 4.2
-                      PrecipitationPast24Hours: 4.2
+                      PrecipitationIntensity: 0
+                      PrecipitationType: 0
+                      PrecipitationPast1Hour: null
+                      PrecipitationPast3Hours: null
+                      PrecipitationPast6Hours: null
+                      PrecipitationPast12Hours: 1.3
+                      PrecipitationPast24Hours: 4.8
                       PrecipitationAccumulation: null
                       BarometricPressure: null
                       SnowDepth: null
                       SurfaceMeasurements:
                         - SensorId: 0
-                          SurfaceTemperature: 1.3
+                          SurfaceTemperature: 6.8
                           RoadFreezingTemperature: null
-                          RoadSurfaceCondition: 104
+                          RoadSurfaceCondition: 103
                         - SensorId: 1
-                          SurfaceTemperature: 0.5
+                          SurfaceTemperature: 5.2
                           RoadFreezingTemperature: null
-                          RoadSurfaceCondition: 108
+                          RoadSurfaceCondition: 103
                       SubSurfaceMeasurements:
                         - SensorId: 0
-                          SubSurfaceTemperature: 2.8
+                          SubSurfaceTemperature: 3.8
                     - _note: ... 130 more items
   /Scanweb/SubSurfaceMeasurements:
     get:

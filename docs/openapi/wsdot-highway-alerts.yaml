@@ -298,24 +298,89 @@ components:
       name: EndingMilepost
       in: path
 paths:
-  /getEventCategoriesAsJson:
+  /getAlertAsJson?AlertID={AlertID}:
     get:
-      summary: Returns an array of strings for all available event categories.
-      operationId: getEventCategories
+      summary: Returns a single Alert object for specified AlertID.
+      operationId: getAlertById
       tags:
-        - event-categories
+        - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getEventCategories } from 'ws-dottie';
+            import { fetchDottie, getAlertById } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getEventCategories,
+              endpoint: getAlertById,
+              params: {
+                "AlertID": 468632
+              },
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/AlertByIdInputAlertIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    AlertID: 468632
+                    County: null
+                    EndRoadwayLocation:
+                      Description: null
+                      Direction: B
+                      Latitude: 47.6390387
+                      Longitude: -122.220590099
+                      MilePost: 5
+                      RoadName: '520'
+                    EndTime: null
+                    EventCategory: Flammable Cargo Restriction
+                    EventStatus: Closed
+                    ExtendedDescription: ''
+                    HeadlineDescription: Flammable cargo is prohibited on SR 520 eastbound & westbound from Montlake Blvd (MP 1) to 84th Ave NE (MP 5).
+                    LastUpdatedTime: 2025-09-03T04:40:03.430Z
+                    Priority: High
+                    Region: Northwest
+                    StartRoadwayLocation:
+                      Description: null
+                      Direction: B
+                      Latitude: 47.644373883
+                      Longitude: -122.303082155
+                      MilePost: 1
+                      RoadName: '520'
+                    StartTime: 2021-09-13T13:59:00.000Z
+  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
+    get:
+      summary: Returns an array of Alert objects for specified WSDOT region.
+      operationId: getAlertsByRegionId
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getAlertsByRegionId } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getAlertsByRegionId,
+              params: {
+                "RegionID": 9
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/AlertsByRegionIdInputRegionIDParam'
       responses:
         '200':
           description: Success
@@ -324,55 +389,44 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventCategoriesOutput'
+                  $ref: '#/components/schemas/AlertsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 123 total)
+                  description: Example of a successful response from the API (showing first item of 85 total)
                   value:
-                    - ''
-                    - _note: ... 122 more items
-  /getMapAreasAsJson:
-    get:
-      summary: Returns an array of Area objects for all available geographic regions.
-      operationId: getMapAreas
-      tags:
-        - areas
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getMapAreas } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getMapAreas,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MapAreasOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 51 total)
-                  value:
-                    - MapArea: L2CE
-                      MapAreaDescription: Eastern
-                    - _note: ... 50 more items
+                    - AlertID: 473325
+                      County: null
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: B
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: '005'
+                      EndTime: null
+                      EventCategory: Rest Area
+                      EventStatus: Open
+                      ExtendedDescription: ''
+                      HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
+                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
+                      Priority: High
+                      Region: Northwest
+                      StartRoadwayLocation:
+                        Description: SB Scale 39/Silver Lake Rest Area
+                        Direction: B
+                        Latitude: 47.907026048
+                        Longitude: -122.210954765
+                        MilePost: 188.5
+                        RoadName: '005'
+                      StartTime: 2021-09-24T13:00:00.000Z
+                    - _note: ... 84 more items
   /getAlertsByMapAreaAsJson?MapArea={MapArea}:
     get:
       summary: Returns an array of Alert objects for specified geographic area.
       operationId: getAlertsByMapArea
       tags:
-        - alerts
+        - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -429,29 +483,24 @@ paths:
                         MilePost: 188.5
                         RoadName: '005'
                       StartTime: 2021-09-24T13:00:00.000Z
-  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
+  /getEventCategoriesAsJson:
     get:
-      summary: Returns an array of Alert objects for specified WSDOT region.
-      operationId: getAlertsByRegionId
+      summary: Returns an array of strings for all available event categories.
+      operationId: getEventCategories
       tags:
-        - alerts
+        - event-categories
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getAlertsByRegionId } from 'ws-dottie';
+            import { fetchDottie, getEventCategories } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getAlertsByRegionId,
-              params: {
-                "RegionID": 9
-              },
+              endpoint: getEventCategories,
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/AlertsByRegionIdInputRegionIDParam'
       responses:
         '200':
           description: Success
@@ -460,44 +509,55 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AlertsOutput'
+                  $ref: '#/components/schemas/EventCategoriesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 92 total)
+                  description: Example of a successful response from the API (showing first item of 123 total)
                   value:
-                    - AlertID: 473325
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: B
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: '005'
-                      EndTime: null
-                      EventCategory: Rest Area
-                      EventStatus: Open
-                      ExtendedDescription: ''
-                      HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
-                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
-                      Priority: High
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: SB Scale 39/Silver Lake Rest Area
-                        Direction: B
-                        Latitude: 47.907026048
-                        Longitude: -122.210954765
-                        MilePost: 188.5
-                        RoadName: '005'
-                      StartTime: 2021-09-24T13:00:00.000Z
-                    - _note: ... 91 more items
+                    - ''
+                    - _note: ... 122 more items
+  /getMapAreasAsJson:
+    get:
+      summary: Returns an array of Area objects for all available geographic regions.
+      operationId: getMapAreas
+      tags:
+        - alertAreas
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getMapAreas } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getMapAreas,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MapAreasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 51 total)
+                  value:
+                    - MapArea: L2CE
+                      MapAreaDescription: Eastern
+                    - _note: ... 50 more items
   /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
     get:
       summary: Returns an array of Alert objects matching specified search criteria.
       operationId: searchAlerts
       tags:
-        - alerts
+        - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -509,8 +569,8 @@ paths:
                 "StateRoute": "405",
                 "StartingMilepost": 10,
                 "EndingMilepost": 20,
-                "SearchTimeStart": "2025-11-03",
-                "SearchTimeEnd": "2025-11-04"
+                "SearchTimeStart": "2025-11-04",
+                "SearchTimeEnd": "2025-11-05"
               },
               fetchMode: 'native',
               validate: true
@@ -536,100 +596,40 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 16 total)
+                  description: Example of a successful response from the API (showing first item of 4 total)
                   value:
-                    - AlertID: 669508
+                    - AlertID: 669913
                       County: null
                       EndRoadwayLocation:
                         Description: null
-                        Direction: S
+                        Direction: 'N'
                         Latitude: 0
                         Longitude: 0
                         MilePost: 0
                         RoadName: '405'
-                      EndTime: 2025-11-07T13:00:00.000Z
-                      EventCategory: Construction
-                      EventStatus: Open
+                      EndTime: 2025-11-04T18:58:18.000Z
+                      EventCategory: Disabled vehicle
+                      EventStatus: Closed
                       ExtendedDescription: ''
-                      HeadlineDescription: The southbound I-405 HOV on-ramp from Northeast Sixth Street will be closed nightly, 9 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.
-                      LastUpdatedTime: 2025-10-31T22:14:11.807Z
-                      Priority: Low
+                      HeadlineDescription: 'Cleared 10:58 AM : On I-405 northbound just south of NE 85th St (MP 18) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.'
+                      LastUpdatedTime: 2025-11-04T18:58:18.587Z
+                      Priority: Highest
                       Region: Northwest
                       StartRoadwayLocation:
-                        Description: NE 6th St
-                        Direction: S
-                        Latitude: 47.615326464
-                        Longitude: -122.18891608
-                        MilePost: 13.68
+                        Description: null
+                        Direction: 'N'
+                        Latitude: 47.677393108
+                        Longitude: -122.184339333
+                        MilePost: 17.99
                         RoadName: '405'
-                      StartTime: 2025-11-03T08:00:00.000Z
-                    - _note: ... 15 more items
-  /getAlertAsJson?AlertID={AlertID}:
-    get:
-      summary: Returns a single Alert object for specified AlertID.
-      operationId: getAlertById
-      tags:
-        - alerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getAlertById } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getAlertById,
-              params: {
-                "AlertID": 468632
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/AlertByIdInputAlertIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AlertsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    AlertID: 468632
-                    County: null
-                    EndRoadwayLocation:
-                      Description: null
-                      Direction: B
-                      Latitude: 47.6390387
-                      Longitude: -122.220590099
-                      MilePost: 5
-                      RoadName: '520'
-                    EndTime: null
-                    EventCategory: Flammable Cargo Restriction
-                    EventStatus: Closed
-                    ExtendedDescription: ''
-                    HeadlineDescription: Flammable cargo is prohibited on SR 520 eastbound & westbound from Montlake Blvd (MP 1) to 84th Ave NE (MP 5).
-                    LastUpdatedTime: 2025-09-03T04:40:03.430Z
-                    Priority: High
-                    Region: Northwest
-                    StartRoadwayLocation:
-                      Description: null
-                      Direction: B
-                      Latitude: 47.644373883
-                      Longitude: -122.303082155
-                      MilePost: 1
-                      RoadName: '520'
-                    StartTime: 2021-09-13T13:59:00.000Z
+                      StartTime: 2025-11-04T18:35:00.000Z
+                    - _note: ... 3 more items
   /getAlertsAsJson:
     get:
       summary: Returns an array of Alert objects for all current highway incidents.
       operationId: getAlerts
       tags:
-        - alerts
+        - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -654,7 +654,7 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 151 total)
+                  description: Example of a successful response from the API (showing first item of 152 total)
                   value:
                     - AlertID: 667568
                       County: null
@@ -681,14 +681,14 @@ paths:
                         MilePost: 9.5
                         RoadName: '090'
                       StartTime: 2025-10-24T17:32:00.000Z
-                    - _note: ... 150 more items
+                    - _note: ... 151 more items
 webhooks: {}
 tags:
-  - name: alerts
+  - name: highwayAlerts
     description: Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.
     externalDocs:
       description: Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.
-  - name: areas
+  - name: alertAreas
     description: Each Area item represents a geographic region used for organizing and filtering highway alerts across Washington State. These include unique area codes and descriptive names for different regions.
     externalDocs:
       description: Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.
