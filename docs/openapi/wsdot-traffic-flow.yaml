@@ -175,7 +175,7 @@ paths:
                   description: Example of a successful response from the API
                   value:
                     FlowDataID: 2482
-                    FlowReadingValue: 1
+                    FlowReadingValue: 4
                     FlowStationLocation:
                       Description: Homeacres Rd
                       Direction: EB
@@ -185,7 +185,7 @@ paths:
                       RoadName: '002'
                     Region: Northwest
                     StationName: 002es00068
-                    Time: 2025-11-04T23:59:22.000Z
+                    Time: 2025-11-05T22:51:22.000Z
   /getTrafficFlowsAsJson:
     get:
       summary: Returns multiple FlowData items for all traffic flow stations across Washington state.
@@ -216,10 +216,10 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 1467 total)
+                  description: Example of a successful response from the API (showing first item of 1471 total)
                   value:
                     - FlowDataID: 2482
-                      FlowReadingValue: 1
+                      FlowReadingValue: 4
                       FlowStationLocation:
                         Description: Homeacres Rd
                         Direction: EB
@@ -229,8 +229,8 @@ paths:
                         RoadName: '002'
                       Region: Northwest
                       StationName: 002es00068
-                      Time: 2025-11-04T23:59:22.000Z
-                    - _note: ... 1466 more items
+                      Time: 2025-11-05T22:51:22.000Z
+                    - _note: ... 1470 more items
 webhooks: {}
 tags:
   - name: flow-data

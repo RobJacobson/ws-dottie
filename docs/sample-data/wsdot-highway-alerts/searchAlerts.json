@@ -1,61 +1,61 @@
 [
   {
-    "AlertID": 669516,
+    "AlertID": 669966,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "W",
-      "Latitude": 47.593704073,
-      "Longitude": -122.181389825,
-      "MilePost": 12.1,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
       "RoadName": "405"
     },
-    "EndTime": "2025-11-08T12:30:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
+    "EndTime": "2025-11-05T01:23:57.000Z",
+    "EventCategory": "Collision",
+    "EventStatus": "Closed",
     "ExtendedDescription": "",
-    "HeadlineDescription": "The right general-purpose lane of westbound SR 522 between Campus Way Northeast (milepost 10.85) and 131st Avenue Northeast (milepost 12.1) will be closed nightly from 11 p.m. Wednesday, Nov. 5 to 4:30 a.m. Sat. Nov. 8.",
-    "LastUpdatedTime": "2025-10-31T23:24:19.933Z",
-    "Priority": "Low",
+    "HeadlineDescription": "Cleared 5:23 PM : On the I-405 northbound off-ramp to NE 8th St (MP 13) there is a collision blocking the ramp.  The Incident Response Team, Tow Assistance, and the State Patrol have arrived on the scene.",
+    "LastUpdatedTime": "2025-11-05T01:23:57.723Z",
+    "Priority": "Highest",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "W",
-      "Latitude": 47.576163703,
-      "Longitude": -122.175027878,
-      "MilePost": 10.85,
+      "Direction": "N",
+      "Latitude": 47.610050463,
+      "Longitude": -122.188362041,
+      "MilePost": 13.31,
       "RoadName": "405"
     },
-    "StartTime": "2025-11-05T08:00:00.000Z"
+    "StartTime": "2025-11-05T01:07:00.000Z"
   },
   {
-    "AlertID": 669499,
+    "AlertID": 669913,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "S",
-      "Latitude": 47.65317873,
-      "Longitude": -122.187158296,
-      "MilePost": 16.3,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
       "RoadName": "405"
     },
-    "EndTime": "2025-11-07T12:30:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
+    "EndTime": "2025-11-04T18:58:18.000Z",
+    "EventCategory": "Disabled vehicle",
+    "EventStatus": "Closed",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Tuesday, Nov. 4 to the morning of Friday, Nov. 7: Two express toll lanes (ETLs) of southbound I-405 between milepost 19.46 and milepost 16.3 will be closed, nightly from 8:00 p.m. – 4:30 a.m.",
-    "LastUpdatedTime": "2025-10-31T22:03:40.540Z",
-    "Priority": "Low",
+    "HeadlineDescription": "Cleared 10:58 AM : On I-405 northbound just south of NE 85th St (MP 18) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.",
+    "LastUpdatedTime": "2025-11-04T18:58:18.587Z",
+    "Priority": "Highest",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "S",
-      "Latitude": 47.698402414,
-      "Longitude": -122.180237566,
-      "MilePost": 19.46,
+      "Direction": "N",
+      "Latitude": 47.677393108,
+      "Longitude": -122.184339333,
+      "MilePost": 17.99,
       "RoadName": "405"
     },
-    "StartTime": "2025-11-04T08:00:00.000Z"
+    "StartTime": "2025-11-04T18:35:00.000Z"
   },
   {
     "AlertID": 669847,
@@ -87,32 +87,61 @@
     "StartTime": "2025-11-04T08:23:00.000Z"
   },
   {
-    "AlertID": 669913,
+    "AlertID": 669499,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
+      "Direction": "S",
+      "Latitude": 47.65317873,
+      "Longitude": -122.187158296,
+      "MilePost": 16.3,
       "RoadName": "405"
     },
-    "EndTime": "2025-11-04T18:58:18.000Z",
-    "EventCategory": "Disabled vehicle",
-    "EventStatus": "Closed",
+    "EndTime": "2025-11-07T12:30:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Cleared 10:58 AM : On I-405 northbound just south of NE 85th St (MP 18) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.",
-    "LastUpdatedTime": "2025-11-04T18:58:18.587Z",
-    "Priority": "Highest",
+    "HeadlineDescription": "Tuesday, Nov. 4 to the morning of Friday, Nov. 7: Two express toll lanes (ETLs) of southbound I-405 between milepost 19.46 and milepost 16.3 will be closed, nightly from 8:00 p.m. – 4:30 a.m.",
+    "LastUpdatedTime": "2025-10-31T22:03:40.540Z",
+    "Priority": "Low",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
-      "Latitude": 47.677393108,
-      "Longitude": -122.184339333,
-      "MilePost": 17.99,
+      "Direction": "S",
+      "Latitude": 47.698402414,
+      "Longitude": -122.180237566,
+      "MilePost": 19.46,
       "RoadName": "405"
     },
-    "StartTime": "2025-11-04T18:35:00.000Z"
+    "StartTime": "2025-11-04T08:00:00.000Z"
+  },
+  {
+    "AlertID": 669516,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "W",
+      "Latitude": 47.593704073,
+      "Longitude": -122.181389825,
+      "MilePost": 12.1,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-08T12:30:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The right general-purpose lane of westbound SR 522 between Campus Way Northeast (milepost 10.85) and 131st Avenue Northeast (milepost 12.1) will be closed nightly from 11 p.m. Wednesday, Nov. 5 to 4:30 a.m. Sat. Nov. 8.",
+    "LastUpdatedTime": "2025-10-31T23:24:19.933Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "W",
+      "Latitude": 47.576163703,
+      "Longitude": -122.175027878,
+      "MilePost": 10.85,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-05T08:00:00.000Z"
   }
 ]

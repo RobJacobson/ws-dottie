@@ -1,32 +1,61 @@
 [
   {
-    "AlertID": 667568,
+    "AlertID": 669379,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "E",
-      "Latitude": 47.578523508,
-      "Longitude": -122.135691785,
-      "MilePost": 11.75,
-      "RoadName": "090"
+      "Direction": "S",
+      "Latitude": 46.32318804,
+      "Longitude": -122.913296736,
+      "MilePost": 52.6,
+      "RoadName": "005"
     },
-    "EndTime": "2025-11-05T12:00:00.000Z",
-    "EventCategory": "Construction",
+    "EndTime": "2025-11-06T14:30:00.000Z",
+    "EventCategory": "Maintenance",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "From 11:59 p.m. Tuesday, Nov. 4, to 4 a.m. Wednesday, Nov. 5, eastbound I-90 will close at Factoria Boulevard SE for sign bridge installation. \r\n\r\nI-405 ramps to eastbound I-90 also will close during the same times. \r\n\r\nSigned detours will guide people around the closures.",
-    "LastUpdatedTime": "2025-10-24T17:34:06.387Z",
-    "Priority": "High",
-    "Region": "Northwest",
+    "HeadlineDescription": "From 8 p.m., Wednesday, Nov. 5 to 6:30 a.m., Thursday, Nov. 6: The left lane along southbound I-5 between Avery Road at milepost 68.5 and Barnes Drive at milepost 52.6 will close overnight for work to clear drains and remove debris from the shoulder. \r\n\r\nTravelers are reminded to slow down and use caution through the work zone.",
+    "LastUpdatedTime": "2025-10-30T22:26:13.010Z",
+    "Priority": "Medium",
+    "Region": "Southwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "E",
-      "Latitude": 47.579523838,
-      "Longitude": -122.183771497,
-      "MilePost": 9.5,
-      "RoadName": "090"
+      "Direction": "S",
+      "Latitude": 46.548661572,
+      "Longitude": -122.876750432,
+      "MilePost": 68.5,
+      "RoadName": "005"
     },
-    "StartTime": "2025-10-24T17:32:00.000Z"
+    "StartTime": "2025-11-05T20:00:00.000Z"
+  },
+  {
+    "AlertID": 670002,
+    "County": "Pierce",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.004409829,
+      "Longitude": -122.542702773,
+      "MilePost": 35.78,
+      "RoadName": "507"
+    },
+    "EndTime": "2025-11-06T03:00:00.000Z",
+    "EventCategory": "Road work",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Road work on SR 507 northbound from milepost 35.72 near Second St to milepost 35.78 near First St beginning at 4:31 am on November 5, 2025 until about 7:00 pm. Closing before railroad crossing at Warren St.  Detour SR 507 to East Gate Rd. ",
+    "LastUpdatedTime": "2025-11-05T12:44:28.590Z",
+    "Priority": "High",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.003588658,
+      "Longitude": -122.543140078,
+      "MilePost": 35.72,
+      "RoadName": "507"
+    },
+    "StartTime": "2025-11-05T12:31:00.000Z"
   },
   {
     "AlertID": 669428,
@@ -85,35 +114,6 @@
       "RoadName": "Greene"
     },
     "StartTime": "2023-06-05T14:00:00.000Z"
-  },
-  {
-    "AlertID": 669784,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.244816514,
-      "Longitude": -122.336828504,
-      "MilePost": 1.16,
-      "RoadName": "099"
-    },
-    "EndTime": "2025-11-14T23:05:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "One lane of the SR 99 Wapato Way roundabout will be closed around the clock from 4 a.m. Friday, Nov. 7 to 3 p.m. Friday, Nov. 14 while crews pour concrete on the southbound side of the roundabout.",
-    "LastUpdatedTime": "2025-11-03T18:32:18.470Z",
-    "Priority": "Medium",
-    "Region": "Olympic",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.242887705,
-      "Longitude": -122.340425607,
-      "MilePost": 0.94,
-      "RoadName": "099"
-    },
-    "StartTime": "2025-11-03T18:35:00.000Z"
   },
   {
     "AlertID": 656366,
@@ -248,7 +248,7 @@
     "ExtendedDescription": "",
     "HeadlineDescription": "Daily, from 8 a.m. to 3:30 p.m. Monday, Nov. 3 to Thursday, Nov. 6, maintenance crews will alternate traffic on State Route 11/Chuckanut Drive in Bow between Blanchard Drive and the Skagit/Whatcom County line (milepost 9-14) for shoulder maintenance.",
     "LastUpdatedTime": "2025-10-31T17:32:05.367Z",
-    "Priority": "Low",
+    "Priority": "Medium",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
@@ -435,6 +435,93 @@
     "StartTime": "2023-06-16T17:19:00.000Z"
   },
   {
+    "AlertID": 669935,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 46.508741463,
+      "Longitude": -122.192538154,
+      "MilePost": 102.9,
+      "RoadName": "012"
+    },
+    "EndTime": "2025-11-05T23:30:00.000Z",
+    "EventCategory": "Maintenance",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Wednesday, Nov. 5: Travelers in both directions of US 12 between Davis Lake Road and Kosmos Road, will take turns moving through one lane at a time from 7 a.m. to 3:30 p.m., for guardrail repair work. \r\n\r\nFlaggers will direct travelers through the area. Plan ahead and expect delays.",
+    "LastUpdatedTime": "2025-11-04T20:50:03.717Z",
+    "Priority": "Medium",
+    "Region": "Southwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 46.516606369,
+      "Longitude": -122.215566475,
+      "MilePost": 101.6,
+      "RoadName": "012"
+    },
+    "StartTime": "2025-11-05T13:00:00.000Z"
+  },
+  {
+    "AlertID": 670005,
+    "County": "Thurston",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.040640724,
+      "Longitude": -123.059102606,
+      "MilePost": 18,
+      "RoadName": "008"
+    },
+    "EndTime": "2025-11-06T01:00:00.000Z",
+    "EventCategory": "Road work",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Road work on SR 8 both directions from milepost 16 near Summit Lk Rd NW [East-End] to milepost 18 near Wilson Rd NW beginning at 5:44 am on November 5, 2025 until about 5:00 pm. ",
+    "LastUpdatedTime": "2025-11-05T13:45:31.773Z",
+    "Priority": "High",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.033332969,
+      "Longitude": -123.099009041,
+      "MilePost": 16,
+      "RoadName": "008"
+    },
+    "StartTime": "2025-11-05T13:44:00.000Z"
+  },
+  {
+    "AlertID": 670009,
+    "County": "Pierce",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.245277398,
+      "Longitude": -122.33631042,
+      "MilePost": 1.2,
+      "RoadName": "099"
+    },
+    "EndTime": "2025-11-05T23:00:00.000Z",
+    "EventCategory": "Road work",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Road work on SR 99 southbound from milepost 1.3 near Milton South City Limits to milepost 1.2 near Milton South City Limits beginning at 7:12 am on November 5, 2025 until about 3:00 pm. ",
+    "LastUpdatedTime": "2025-11-05T15:14:42.213Z",
+    "Priority": "High",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.246583572,
+      "Longitude": -122.335368565,
+      "MilePost": 1.3,
+      "RoadName": "099"
+    },
+    "StartTime": "2025-11-05T15:12:00.000Z"
+  },
+  {
     "AlertID": 669433,
     "County": null,
     "EndRoadwayLocation": {
@@ -451,7 +538,7 @@
     "ExtendedDescription": "",
     "HeadlineDescription": "Daily, from 7:30 a.m. to 3 p.m. Monday, Nov. 3 to Wednesday, Nov. 5, maintenance crews will shift traffic and narrow lanes on US 2 in Monroe between Old Owen Road/Main Street and Calhoun Road/Sofie Road (milepost 15-17) for guardrail repairs.",
     "LastUpdatedTime": "2025-10-31T17:12:16.630Z",
-    "Priority": "Low",
+    "Priority": "Medium",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
@@ -609,6 +696,35 @@
     "StartTime": "2025-04-28T15:28:00.000Z"
   },
   {
+    "AlertID": 663440,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.801179968,
+      "Longitude": -122.499789275,
+      "MilePost": 24.1,
+      "RoadName": "104"
+    },
+    "EndTime": "2026-01-06T01:07:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Expect congestion and alternating traffic on SR 104 in Kingston 8 a.m. to 6 p.m. Tuesday through Friday starting Sept. 23, until further notice. Contractors working for Kitsap County are building a new ferry holding lane. <a href=\"https://storymaps.arcgis.com/stories/b499caa03d8542389a9cee85b27fa320\">Read more.</a>",
+    "LastUpdatedTime": "2025-09-19T00:27:28.950Z",
+    "Priority": "Medium",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.804147978,
+      "Longitude": -122.507163143,
+      "MilePost": 23.7,
+      "RoadName": "104"
+    },
+    "StartTime": "2025-09-19T00:07:00.000Z"
+  },
+  {
     "AlertID": 667366,
     "County": null,
     "EndRoadwayLocation": {
@@ -654,7 +770,7 @@
     "ExtendedDescription": "",
     "HeadlineDescription": "From 7:30 a.m. to 3 p.m. Wednesday, Nov. 5, maintenance crews will alternate traffic on US 2 in Gold Bar between Reiter Road and Green Water Meadow Road (milepost 30) shoulder maintenance.",
     "LastUpdatedTime": "2025-10-31T18:23:58.360Z",
-    "Priority": "Low",
+    "Priority": "Medium",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
@@ -986,35 +1102,6 @@
     "StartTime": "2025-10-01T23:29:00.000Z"
   },
   {
-    "AlertID": 669683,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.257862159,
-      "Longitude": -121.213305524,
-      "MilePost": 69,
-      "RoadName": "090"
-    },
-    "EndTime": "2025-11-05T02:00:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Both directions milepost 64 to 69 near Easton. Tuesday, Nov. 4 from 6 a.m. to 6 p.m. there will be a single lane closure and 9-foot width restriction for roadwork.",
-    "LastUpdatedTime": "2025-11-02T05:02:05.707Z",
-    "Priority": "Medium",
-    "Region": "South Central",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.297075543,
-      "Longitude": -121.288153611,
-      "MilePost": 64,
-      "RoadName": "090"
-    },
-    "StartTime": "2025-11-02T05:01:00.000Z"
-  },
-  {
     "AlertID": 656675,
     "County": null,
     "EndRoadwayLocation": {
@@ -1089,7 +1176,7 @@
     "ExtendedDescription": "",
     "HeadlineDescription": "From 7:30 a.m. to 3 p.m. Tuesday, Nov. 4, maintenance crews will alternate traffic on State Route 203/Carnation Duvall Road Northeast in Carnation between Northeast 87th Street and Southeast Stillwater Hill Road/Lake Joy Road (milepost 8-9) for guardrail repairs. This work is contingent and may need happen Wednesday, Nov. 5 or Thursday, Nov. 6.",
     "LastUpdatedTime": "2025-10-31T18:09:07.233Z",
-    "Priority": "Low",
+    "Priority": "Medium",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
@@ -1276,35 +1363,6 @@
     "StartTime": "2025-05-02T21:53:00.000Z"
   },
   {
-    "AlertID": 642513,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.12749222,
-      "Longitude": -122.434757337,
-      "MilePost": 50.42,
-      "RoadName": "007"
-    },
-    "EndTime": "2025-11-30T22:16:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "From 6 a.m. to noon, weekdays, expect single-lane closures on SR 7 in Spanaway. Work will occur in both directions between 188th Street South and 143rd Street South. Pedestrians and cyclists will see signed detours. More info on the <a href=\"https://wsdot.wa.gov/construction-planning/search-projects/sr-7-pacific-highway-crossing-and-signalization\">project webpage</a>.",
-    "LastUpdatedTime": "2025-10-08T20:20:50.360Z",
-    "Priority": "Medium",
-    "Region": "Olympic",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.085847356,
-      "Longitude": -122.435071474,
-      "MilePost": 47.55,
-      "RoadName": "007"
-    },
-    "StartTime": "2025-04-01T21:16:00.000Z"
-  },
-  {
     "AlertID": 669471,
     "County": null,
     "EndRoadwayLocation": {
@@ -1477,35 +1535,6 @@
       "RoadName": "009"
     },
     "StartTime": "2025-11-03T21:26:00.000Z"
-  },
-  {
-    "AlertID": 669378,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 46.548661572,
-      "Longitude": -122.876750432,
-      "MilePost": 68.5,
-      "RoadName": "005"
-    },
-    "EndTime": "2025-11-05T14:30:00.000Z",
-    "EventCategory": "Maintenance",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "From 8 p.m., Tuesday, Nov. 4 to 6:30 a.m., Wednesday, Nov. 5: The left lane along southbound I-5 between the Lewis/Thurston County lines at milepost 85.5 and Avery Road at milepost 68.5 will close for work to clear drains and remove debris from the shoulder. \r\n\r\nTravelers are reminded to slow down and use caution through the work zone.",
-    "LastUpdatedTime": "2025-10-30T22:22:43.260Z",
-    "Priority": "Medium",
-    "Region": "Southwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 46.764412514,
-      "Longitude": -122.992434319,
-      "MilePost": 85.5,
-      "RoadName": "005"
-    },
-    "StartTime": "2025-11-04T20:00:00.000Z"
   },
   {
     "AlertID": 669261,
@@ -1682,6 +1711,35 @@
     "StartTime": "2025-10-17T21:28:00.000Z"
   },
   {
+    "AlertID": 669516,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "W",
+      "Latitude": 47.593704073,
+      "Longitude": -122.181389825,
+      "MilePost": 12.1,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-08T12:30:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The right general-purpose lane of westbound SR 522 between Campus Way Northeast (milepost 10.85) and 131st Avenue Northeast (milepost 12.1) will be closed nightly from 11 p.m. Wednesday, Nov. 5 to 4:30 a.m. Sat. Nov. 8.",
+    "LastUpdatedTime": "2025-10-31T23:24:19.933Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "W",
+      "Latitude": 47.576163703,
+      "Longitude": -122.175027878,
+      "MilePost": 10.85,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-05T08:00:00.000Z"
+  },
+  {
     "AlertID": 669518,
     "County": null,
     "EndRoadwayLocation": {
@@ -1856,91 +1914,33 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669878,
-    "County": "Clallam",
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "101"
-    },
-    "EndTime": "2025-11-05T01:30:00.000Z",
-    "EventCategory": "Road work",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Road work on US 101 both directions at milepost 246.07 near SR 117 [S Tumwater Truck Rte] beginning at 7:55 am on November 4, 2025 until about 5:30 pm. ",
-    "LastUpdatedTime": "2025-11-04T15:57:15.570Z",
-    "Priority": "High",
-    "Region": "Olympic",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 48.106370901,
-      "Longitude": -123.466623177,
-      "MilePost": 246.07,
-      "RoadName": "101"
-    },
-    "StartTime": "2025-11-04T15:55:00.000Z"
-  },
-  {
-    "AlertID": 669895,
-    "County": "Kitsap",
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "104"
-    },
-    "EndTime": "2025-11-05T01:00:00.000Z",
-    "EventCategory": "Road work",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Road work on SR 104 eastbound at milepost 24.44 near Kingston Ferry Terminal beginning at 8:49 am on November 4, 2025 until about 5:00 pm. ",
-    "LastUpdatedTime": "2025-11-04T16:54:55.340Z",
-    "Priority": "High",
-    "Region": "Olympic",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.796915263,
-      "Longitude": -122.496772699,
-      "MilePost": 24.44,
-      "RoadName": "104"
-    },
-    "StartTime": "2025-11-04T16:49:00.000Z"
-  },
-  {
-    "AlertID": 669892,
+    "AlertID": 669507,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "B",
+      "Direction": "N",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "503"
+      "RoadName": "405"
     },
-    "EndTime": null,
-    "EventCategory": "Maintenance",
+    "EndTime": "2025-11-07T13:00:00.000Z",
+    "EventCategory": "Construction",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Maintenance on SR 503 both directions at milepost 56 will be alternating traffic with flaggers, use caution and expect delays beginning at 8:51 am on November 4, 2025 until further notice. ",
-    "LastUpdatedTime": "2025-11-04T16:52:25.630Z",
-    "Priority": "Medium",
-    "Region": "Southwest",
+    "HeadlineDescription": "The northbound I-405 HOV off-ramp to Northeast Sixth Street will be closed nightly, 9 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-10-31T22:13:22.733Z",
+    "Priority": "Low",
+    "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "B",
-      "Latitude": 45.90565723,
-      "Longitude": -122.742486509,
-      "MilePost": 54.38,
-      "RoadName": "503"
+      "Direction": "N",
+      "Latitude": 47.615361074,
+      "Longitude": -122.188480907,
+      "MilePost": 13.68,
+      "RoadName": "405"
     },
-    "StartTime": "2025-11-04T16:51:00.000Z"
+    "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
     "AlertID": 669512,
@@ -1970,35 +1970,6 @@
       "RoadName": "405"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
-  },
-  {
-    "AlertID": 669468,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "531"
-    },
-    "EndTime": "2025-11-10T13:00:00.000Z",
-    "EventCategory": "Maintenance",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "From 9 p.m. Sunday, Nov. 9 to 5 a.m. Monday, Nov. 10, State Route 531 will alternate traffic with flaggers on site at 159th Place Northwest (milepost 0) for SnoPUD utilities work.",
-    "LastUpdatedTime": "2025-10-31T21:22:12.490Z",
-    "Priority": "Low",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 48.140821436,
-      "Longitude": -122.28143714,
-      "MilePost": 0.3,
-      "RoadName": "531"
-    },
-    "StartTime": "2025-10-31T21:20:00.000Z"
   },
   {
     "AlertID": 669484,
@@ -2059,6 +2030,64 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
+    "AlertID": 669468,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "531"
+    },
+    "EndTime": "2025-11-10T13:00:00.000Z",
+    "EventCategory": "Maintenance",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "From 9 p.m. Sunday, Nov. 9 to 5 a.m. Monday, Nov. 10, State Route 531 will alternate traffic with flaggers on site at 159th Place Northwest (milepost 0) for SnoPUD utilities work.",
+    "LastUpdatedTime": "2025-10-31T21:22:12.490Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 48.140821436,
+      "Longitude": -122.28143714,
+      "MilePost": 0.3,
+      "RoadName": "531"
+    },
+    "StartTime": "2025-10-31T21:20:00.000Z"
+  },
+  {
+    "AlertID": 669481,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "167"
+    },
+    "EndTime": "2025-11-08T13:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Monday, Nov. 3 to the morning of Saturday, Nov. 8: The SR 516 on-ramp to southbound SR 167 will be closed nightly, from 10:30 p.m. – 5:00 a.m.",
+    "LastUpdatedTime": "2025-10-31T21:43:53.330Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.381185542,
+      "Longitude": -122.244714118,
+      "MilePost": 19.83,
+      "RoadName": "167"
+    },
+    "StartTime": "2025-11-03T08:00:00.000Z"
+  },
+  {
     "AlertID": 510675,
     "County": null,
     "EndRoadwayLocation": {
@@ -2088,60 +2117,60 @@
     "StartTime": "2022-07-28T19:57:00.000Z"
   },
   {
-    "AlertID": 669454,
+    "AlertID": 670085,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "B",
+      "Direction": "W",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "096"
+      "RoadName": "090"
     },
-    "EndTime": "2025-11-05T13:00:00.000Z",
-    "EventCategory": "Maintenance",
+    "EndTime": null,
+    "EventCategory": "Disabled vehicle",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Nightly from 9 p.m. to 5 a.m. the next day beginning Monday, Nov. 3 until 5 a.m. Wednesday, Nov. 5, utility crews will alternate traffic on State Route 96 at Lark Dairy Farm (milepost 5) with flaggers on site for Ziply utility work.",
-    "LastUpdatedTime": "2025-10-31T20:28:32.813Z",
-    "Priority": "High",
+    "HeadlineDescription": "On I-90 westbound just east of Rainier Ave S (MP 4) there is a disabled vehicle blocking the right lane.",
+    "LastUpdatedTime": "2025-11-05T22:52:05.573Z",
+    "Priority": "Highest",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "B",
-      "Latitude": 47.880718545,
-      "Longitude": -122.125119457,
-      "MilePost": 6,
-      "RoadName": "096"
+      "Direction": "W",
+      "Latitude": 47.590295683,
+      "Longitude": -122.283255487,
+      "MilePost": 4.48,
+      "RoadName": "090"
     },
-    "StartTime": "2025-10-31T20:22:00.000Z"
+    "StartTime": "2025-11-05T22:51:00.000Z"
   },
   {
-    "AlertID": 669481,
+    "AlertID": 669531,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "S",
+      "Direction": "N",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "167"
+      "RoadName": "405"
     },
-    "EndTime": "2025-11-08T13:00:00.000Z",
+    "EndTime": "2025-11-07T13:00:00.000Z",
     "EventCategory": "Construction",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Monday, Nov. 3 to the morning of Saturday, Nov. 8: The SR 516 on-ramp to southbound SR 167 will be closed nightly, from 10:30 p.m. – 5:00 a.m.",
-    "LastUpdatedTime": "2025-10-31T21:43:53.330Z",
+    "HeadlineDescription": "The northbound I-405 to SR 522 off-ramp will be closed nightly from 11:59 p.m. Monday, Nov. 3 to 5 a.m. Friday, Nov. 7.",
+    "LastUpdatedTime": "2025-10-31T23:39:55.790Z",
     "Priority": "Low",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "S",
-      "Latitude": 47.381185542,
-      "Longitude": -122.244714118,
-      "MilePost": 19.83,
-      "RoadName": "167"
+      "Direction": "N",
+      "Latitude": 47.75777286,
+      "Longitude": -122.184242587,
+      "MilePost": 23.67,
+      "RoadName": "405"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
@@ -2175,33 +2204,33 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669531,
-    "County": null,
+    "AlertID": 670076,
+    "County": "Pierce",
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
+      "Direction": "W",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "405"
+      "RoadName": "512"
     },
-    "EndTime": "2025-11-07T13:00:00.000Z",
-    "EventCategory": "Construction",
+    "EndTime": null,
+    "EventCategory": "Collision",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "The northbound I-405 to SR 522 off-ramp will be closed nightly from 11:59 p.m. Monday, Nov. 3 to 5 a.m. Friday, Nov. 7.",
-    "LastUpdatedTime": "2025-10-31T23:39:55.790Z",
-    "Priority": "Low",
-    "Region": "Northwest",
+    "HeadlineDescription": "Collision reported on SR 512 westbound at milepost 10.9 near E Pioneer beginning at 1:35 pm on November 5, 2025 until further notice. ",
+    "LastUpdatedTime": "2025-11-05T21:38:09.873Z",
+    "Priority": "Highest",
+    "Region": "Olympic",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
-      "Latitude": 47.75777286,
-      "Longitude": -122.184242587,
-      "MilePost": 23.67,
-      "RoadName": "405"
+      "Direction": "W",
+      "Latitude": 47.186787824,
+      "Longitude": -122.28310467,
+      "MilePost": 10.9,
+      "RoadName": "512"
     },
-    "StartTime": "2025-11-03T08:00:00.000Z"
+    "StartTime": "2025-11-05T21:35:00.000Z"
   },
   {
     "AlertID": 669503,
@@ -2231,6 +2260,35 @@
       "RoadName": "405"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670041,
+    "County": "Mason",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "101"
+    },
+    "EndTime": "2025-11-06T01:00:00.000Z",
+    "EventCategory": "Road work",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Road work on US 101 both directions at milepost 336.05 near N Valley Dr beginning at 9:21 am on November 5, 2025 until about 5:00 pm. ",
+    "LastUpdatedTime": "2025-11-05T17:22:09.810Z",
+    "Priority": "High",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 47.347593193,
+      "Longitude": -123.16124099,
+      "MilePost": 336.05,
+      "RoadName": "101"
+    },
+    "StartTime": "2025-11-05T17:21:00.000Z"
   },
   {
     "AlertID": 669480,
@@ -2436,62 +2494,33 @@
     "StartTime": "2025-11-03T18:45:00.000Z"
   },
   {
-    "AlertID": 669960,
-    "County": "Clark",
+    "AlertID": 670063,
+    "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
+      "Direction": "W",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "005"
+      "RoadName": "002"
     },
     "EndTime": null,
-    "EventCategory": "Collision",
+    "EventCategory": "Incident",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Collision has the left shoulder blocked on I-5 northbound at milepost 0.4 near SR 14 beginning at 3:53 pm on November 4, 2025 until further notice. Please use caution ",
-    "LastUpdatedTime": "2025-11-04T23:55:35.300Z",
-    "Priority": "Medium",
-    "Region": "Southwest",
+    "HeadlineDescription": "Update 12:23 PM : On US 2 westbound at SR 204 (MP 2) there is an incident blocking all lanes.  The US 2 eastbound ramp to SR 204 eastbound is closed. Medical Aid, Fire Assistance, the Incident Response Team, the State Patrol, and Snohomish County Sheriff are on the scene.",
+    "LastUpdatedTime": "2025-11-05T21:22:19.507Z",
+    "Priority": "Highest",
+    "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
-      "Latitude": 45.623070255,
-      "Longitude": -122.671475026,
-      "MilePost": 0.4,
-      "RoadName": "005"
+      "Direction": "W",
+      "Latitude": 47.977859462,
+      "Longitude": -122.137961005,
+      "MilePost": 2.4,
+      "RoadName": "002"
     },
-    "StartTime": "2025-11-04T23:53:00.000Z"
-  },
-  {
-    "AlertID": 669894,
-    "County": "Cowlitz",
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "503"
-    },
-    "EndTime": null,
-    "EventCategory": "Maintenance",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Maintenance on SR 503 both directions at milepost 53 near Gun Club Road will be alternating traffic with flaggers, use caution beginning at 8:52 am on November 4, 2025 until further notice. ",
-    "LastUpdatedTime": "2025-11-04T16:54:07.980Z",
-    "Priority": "Medium",
-    "Region": "Southwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 45.919423877,
-      "Longitude": -122.730077484,
-      "MilePost": 53,
-      "RoadName": "503"
-    },
-    "StartTime": "2025-11-04T16:52:00.000Z"
+    "StartTime": "2025-11-05T20:20:00.000Z"
   },
   {
     "AlertID": 669497,
@@ -2581,35 +2610,6 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669908,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "525"
-    },
-    "EndTime": null,
-    "EventCategory": "Maintenance",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "From SR 525 northbound & southbound from Beverly Park Rd (MP 4) to Alderwood Mall Pkwy (MP 0) there is a slow-moving maintenance operation affecting the right lane.",
-    "LastUpdatedTime": "2025-11-04T18:12:55.550Z",
-    "Priority": "Medium",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.881914689,
-      "Longitude": -122.279423937,
-      "MilePost": 3.5,
-      "RoadName": "525"
-    },
-    "StartTime": "2025-11-04T18:11:00.000Z"
-  },
-  {
     "AlertID": 669539,
     "County": null,
     "EndRoadwayLocation": {
@@ -2668,64 +2668,6 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669853,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "W",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "018"
-    },
-    "EndTime": null,
-    "EventCategory": "Collision",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Update 12:57 PM : On SR 18 westbound just west of I-90 (MP 25) there is a collision blocking the right lane.  The Incident Response Team, Tow Assistance, and the State Patrol have arrived on the scene.",
-    "LastUpdatedTime": "2025-11-04T20:57:39.520Z",
-    "Priority": "Highest",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "W",
-      "Latitude": 47.473180685,
-      "Longitude": -121.904713416,
-      "MilePost": 25,
-      "RoadName": "018"
-    },
-    "StartTime": "2025-11-04T11:52:00.000Z"
-  },
-  {
-    "AlertID": 669918,
-    "County": "Clark",
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "005"
-    },
-    "EndTime": null,
-    "EventCategory": "Maintenance",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Maintenance on I-5 northbound at milepost 15.4 near Port Of Entry will have the left lane closed intermittently, use caution beginning at 10:52 am on November 4, 2025 until further notice. ",
-    "LastUpdatedTime": "2025-11-04T18:53:41.323Z",
-    "Priority": "Medium",
-    "Region": "Southwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 45.832753127,
-      "Longitude": -122.69359915,
-      "MilePost": 15.4,
-      "RoadName": "005"
-    },
-    "StartTime": "2025-11-04T18:52:00.000Z"
-  },
-  {
     "AlertID": 669044,
     "County": "Pierce",
     "EndRoadwayLocation": {
@@ -2753,64 +2695,6 @@
       "RoadName": "005"
     },
     "StartTime": "2025-10-28T10:30:00.000Z"
-  },
-  {
-    "AlertID": 669463,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "020"
-    },
-    "EndTime": "2025-11-05T13:00:00.000Z",
-    "EventCategory": "Maintenance",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "From 9 p.m. Tuesday, Nov. 4 to 5 a.m. Wednesday, Nov. 5, State Route 20 will alternate traffic at North Skagit Street (milepost 61) with flaggers on site for city of Burlington utilities work.",
-    "LastUpdatedTime": "2025-10-31T21:08:35.013Z",
-    "Priority": "Medium",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 48.478841652,
-      "Longitude": -122.319116198,
-      "MilePost": 61.04,
-      "RoadName": "020"
-    },
-    "StartTime": "2025-10-31T21:05:00.000Z"
-  },
-  {
-    "AlertID": 669530,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "405"
-    },
-    "EndTime": "2025-11-06T13:00:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "The southbound I-405 off-ramp to Northeast 160th Street will be closed overnight from 10:30 p.m. Monday, Nov. 3 to 4 a.m. Tuesday, Nov. 4 and from 10:30 p.m. Wednesday, Nov. 5 to 4 a.m. Thursday, Nov. 6.",
-    "LastUpdatedTime": "2025-10-31T23:39:07.000Z",
-    "Priority": "Low",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 47.74253745,
-      "Longitude": -122.187195459,
-      "MilePost": 22.61,
-      "RoadName": "405"
-    },
-    "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
     "AlertID": 669508,
@@ -2842,7 +2726,7 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669511,
+    "AlertID": 669530,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
@@ -2852,20 +2736,20 @@
       "MilePost": 0,
       "RoadName": "405"
     },
-    "EndTime": "2025-11-07T13:00:00.000Z",
+    "EndTime": "2025-11-06T13:00:00.000Z",
     "EventCategory": "Construction",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "The southbound I-405 on-ramp from Northeast 44th Street will be closed nightly, 9 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.",
-    "LastUpdatedTime": "2025-10-31T22:17:03.173Z",
+    "HeadlineDescription": "The southbound I-405 off-ramp to Northeast 160th Street will be closed overnight from 10:30 p.m. Monday, Nov. 3 to 4 a.m. Tuesday, Nov. 4 and from 10:30 p.m. Wednesday, Nov. 5 to 4 a.m. Thursday, Nov. 6.",
+    "LastUpdatedTime": "2025-10-31T23:39:07.000Z",
     "Priority": "Low",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
       "Direction": "S",
-      "Latitude": 47.532209452,
-      "Longitude": -122.197649896,
-      "MilePost": 7.47,
+      "Latitude": 47.74253745,
+      "Longitude": -122.187195459,
+      "MilePost": 22.61,
       "RoadName": "405"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
@@ -2900,6 +2784,35 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
+    "AlertID": 669511,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-07T13:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The southbound I-405 on-ramp from Northeast 44th Street will be closed nightly, 9 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-10-31T22:17:03.173Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.532209452,
+      "Longitude": -122.197649896,
+      "MilePost": 7.47,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-03T08:00:00.000Z"
+  },
+  {
     "AlertID": 669483,
     "County": null,
     "EndRoadwayLocation": {
@@ -2927,6 +2840,35 @@
       "RoadName": "167"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670050,
+    "County": "Spokane",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "W",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "090"
+    },
+    "EndTime": "2025-11-06T00:30:00.000Z",
+    "EventCategory": "Lane Closure",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Right Lane Closure on I-90 westbound at milepost 270 near SR 904 Four Lakes Cheney beginning at 10:24 am on November 5, 2025 until approximately 4:30 pm. Expect delays and use alternate route. ",
+    "LastUpdatedTime": "2025-11-05T22:44:02.643Z",
+    "Priority": "Medium",
+    "Region": "Eastern",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "W",
+      "Latitude": 47.565864087,
+      "Longitude": -117.593600691,
+      "MilePost": 270.55,
+      "RoadName": "090"
+    },
+    "StartTime": "2025-11-05T18:24:00.000Z"
   },
   {
     "AlertID": 669467,
@@ -2958,33 +2900,33 @@
     "StartTime": "2025-10-31T21:18:00.000Z"
   },
   {
-    "AlertID": 669867,
-    "County": null,
+    "AlertID": 670059,
+    "County": "Pacific",
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "E",
+      "Direction": "B",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "104"
+      "RoadName": "004"
     },
     "EndTime": null,
-    "EventCategory": "Maintenance",
+    "EventCategory": "Water over Roadway",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "On SR 104 eastbound just west of Paradise Ln (MP 26) the right lane is closed due to maintenance.",
-    "LastUpdatedTime": "2025-11-04T15:31:16.390Z",
+    "HeadlineDescription": "Water over Roadway, use caution and pass carefully on SR 4 both directions at milepost 10.45 near Lassala beginning at 11:56 am on November 5, 2025 until further notice. ",
+    "LastUpdatedTime": "2025-11-05T19:57:20.443Z",
     "Priority": "Medium",
-    "Region": "Northwest",
+    "Region": "Southwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "E",
-      "Latitude": 47.794820956,
-      "Longitude": -122.37299672,
-      "MilePost": 26,
-      "RoadName": "104"
+      "Direction": "B",
+      "Latitude": 46.337949412,
+      "Longitude": -123.706942366,
+      "MilePost": 10.45,
+      "RoadName": "004"
     },
-    "StartTime": "2025-11-04T15:27:00.000Z"
+    "StartTime": "2025-11-05T19:56:00.000Z"
   },
   {
     "AlertID": 669816,
@@ -3016,35 +2958,6 @@
     "StartTime": "2025-11-03T21:20:00.000Z"
   },
   {
-    "AlertID": 669500,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "405"
-    },
-    "EndTime": "2025-11-07T12:30:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "The northbound I-405 on-ramp from Talbot Road South will be closed nightly, 10 p.m. Monday, Nov. 3 – 4:30 a.m. Friday, Nov. 7. A signed detour will be in place.",
-    "LastUpdatedTime": "2025-10-31T22:04:03.033Z",
-    "Priority": "Low",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "N",
-      "Latitude": 47.468789988,
-      "Longitude": -122.208325906,
-      "MilePost": 2.77,
-      "RoadName": "405"
-    },
-    "StartTime": "2025-11-03T08:00:00.000Z"
-  },
-  {
     "AlertID": 640019,
     "County": null,
     "EndRoadwayLocation": {
@@ -3074,62 +2987,62 @@
     "StartTime": "2025-03-18T21:47:00.000Z"
   },
   {
-    "AlertID": 669460,
+    "AlertID": 669500,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "B",
+      "Direction": "N",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "525"
+      "RoadName": "405"
     },
-    "EndTime": "2025-11-06T23:00:00.000Z",
-    "EventCategory": "Maintenance",
+    "EndTime": "2025-11-07T12:30:00.000Z",
+    "EventCategory": "Construction",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "From 9 a.m. to 3 p.m. on Thursday, Nov. 6, State Route 525 will alternate traffic with flaggers on site at Mutiny Bay Road (milepost 20) for PSE utilities work.",
-    "LastUpdatedTime": "2025-10-31T21:03:41.187Z",
+    "HeadlineDescription": "The northbound I-405 on-ramp from Talbot Road South will be closed nightly, 10 p.m. Monday, Nov. 3 – 4:30 a.m. Friday, Nov. 7. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-10-31T22:04:03.033Z",
     "Priority": "Low",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "B",
-      "Latitude": 48.035540025,
-      "Longitude": -122.564035934,
-      "MilePost": 20.65,
-      "RoadName": "525"
+      "Direction": "N",
+      "Latitude": 47.468789988,
+      "Longitude": -122.208325906,
+      "MilePost": 2.77,
+      "RoadName": "405"
     },
-    "StartTime": "2025-10-31T21:00:00.000Z"
+    "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669880,
-    "County": "Kitsap",
+    "AlertID": 670008,
+    "County": "Pierce",
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "E",
+      "Direction": "B",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "104"
+      "RoadName": "007"
     },
-    "EndTime": "2025-11-05T01:00:00.000Z",
+    "EndTime": "2025-11-05T23:30:00.000Z",
     "EventCategory": "Road work",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "Road work on SR 104 eastbound at milepost 23.0 near Parcells Rd NE beginning at 8:05 am on November 4, 2025 until about 5:00 pm. ",
-    "LastUpdatedTime": "2025-11-04T16:07:06.797Z",
+    "HeadlineDescription": "Road work on SR 7 both directions at milepost 47.58 near 188th St S beginning at 7:08 am on November 5, 2025 until about 3:30 pm. ",
+    "LastUpdatedTime": "2025-11-05T15:11:47.417Z",
     "Priority": "High",
     "Region": "Olympic",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "E",
-      "Latitude": 47.809287055,
-      "Longitude": -122.520114154,
-      "MilePost": 23,
-      "RoadName": "104"
+      "Direction": "B",
+      "Latitude": 47.086288226,
+      "Longitude": -122.435065523,
+      "MilePost": 47.58,
+      "RoadName": "007"
     },
-    "StartTime": "2025-11-04T16:05:00.000Z"
+    "StartTime": "2025-11-05T15:08:00.000Z"
   },
   {
     "AlertID": 669456,
@@ -3159,6 +3072,35 @@
       "RoadName": "011"
     },
     "StartTime": "2025-10-31T20:31:00.000Z"
+  },
+  {
+    "AlertID": 669460,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "525"
+    },
+    "EndTime": "2025-11-06T23:00:00.000Z",
+    "EventCategory": "Maintenance",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "From 9 a.m. to 3 p.m. on Thursday, Nov. 6, State Route 525 will alternate traffic with flaggers on site at Mutiny Bay Road (milepost 20) for PSE utilities work.",
+    "LastUpdatedTime": "2025-10-31T21:03:41.187Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 48.035540025,
+      "Longitude": -122.564035934,
+      "MilePost": 20.65,
+      "RoadName": "525"
+    },
+    "StartTime": "2025-10-31T21:00:00.000Z"
   },
   {
     "AlertID": 669478,
@@ -3219,6 +3161,35 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
+    "AlertID": 664700,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "101"
+    },
+    "EndTime": "2026-01-01T01:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Travelers on US 101 between South Pine Street Cut Off and Tumwater Truck Route (SR 117) will see daytime one-way alternating traffic on weekdays as needed. Crews are working to finish construction at <a href=\"https://wsdot.wa.gov/construction-planning/search-projects/us-101-sr-116-north-olympic-peninsula-remove-fish-barriers\">Tumwater Creek</a> this fall.",
+    "LastUpdatedTime": "2025-10-16T15:41:47.687Z",
+    "Priority": "High",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 48.107103918,
+      "Longitude": -123.45935079,
+      "MilePost": 246.4,
+      "RoadName": "101"
+    },
+    "StartTime": "2025-09-29T16:55:00.000Z"
+  },
+  {
     "AlertID": 669475,
     "County": null,
     "EndRoadwayLocation": {
@@ -3244,6 +3215,35 @@
       "Longitude": -122.257725125,
       "MilePost": 7,
       "RoadName": "167"
+    },
+    "StartTime": "2025-11-03T08:00:00.000Z"
+  },
+  {
+    "AlertID": 669532,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-07T13:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The Northeast 160th Street on-ramp to northbound I-405 will be closed nightly from 11:59 p.m. Monday, Nov. 3 to 5 a.m. Friday, Nov. 7.",
+    "LastUpdatedTime": "2025-10-31T23:40:48.910Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.742729246,
+      "Longitude": -122.186905802,
+      "MilePost": 22.61,
+      "RoadName": "405"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
@@ -3277,11 +3277,11 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
-    "AlertID": 669532,
+    "AlertID": 669513,
     "County": null,
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
+      "Direction": "S",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
@@ -3291,16 +3291,16 @@
     "EventCategory": "Construction",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "The Northeast 160th Street on-ramp to northbound I-405 will be closed nightly from 11:59 p.m. Monday, Nov. 3 to 5 a.m. Friday, Nov. 7.",
-    "LastUpdatedTime": "2025-10-31T23:40:48.910Z",
+    "HeadlineDescription": "The southbound I-405 off-ramp to SR 515 / Talbot Road South will be closed nightly, 10:30 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-10-31T22:18:58.573Z",
     "Priority": "Low",
     "Region": "Northwest",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
-      "Latitude": 47.742729246,
-      "Longitude": -122.186905802,
-      "MilePost": 22.61,
+      "Direction": "S",
+      "Latitude": 47.469051319,
+      "Longitude": -122.208319213,
+      "MilePost": 2.77,
       "RoadName": "405"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
@@ -3335,62 +3335,33 @@
     "StartTime": "2023-06-15T22:55:00.000Z"
   },
   {
-    "AlertID": 669513,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 0,
-      "Longitude": 0,
-      "MilePost": 0,
-      "RoadName": "405"
-    },
-    "EndTime": "2025-11-07T13:00:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "The southbound I-405 off-ramp to SR 515 / Talbot Road South will be closed nightly, 10:30 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.",
-    "LastUpdatedTime": "2025-10-31T22:18:58.573Z",
-    "Priority": "Low",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "S",
-      "Latitude": 47.469051319,
-      "Longitude": -122.208319213,
-      "MilePost": 2.77,
-      "RoadName": "405"
-    },
-    "StartTime": "2025-11-03T08:00:00.000Z"
-  },
-  {
-    "AlertID": 669442,
-    "County": null,
+    "AlertID": 670026,
+    "County": "Clallam",
     "EndRoadwayLocation": {
       "Description": null,
       "Direction": "B",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "020"
+      "RoadName": "112"
     },
-    "EndTime": null,
-    "EventCategory": "Construction",
+    "EndTime": "2025-11-05T22:30:00.000Z",
+    "EventCategory": "Road work",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "A continuous single lane closure on Cascade Road in Marblemount may impact traffic on State Route 20 near Cascade Road (milepost 106).",
-    "LastUpdatedTime": "2025-10-31T18:30:21.593Z",
-    "Priority": "Low",
-    "Region": "Northwest",
+    "HeadlineDescription": "Road work on SR 112 both directions at milepost 38.55 near West Twin River beginning at 8:13 am on November 5, 2025 until about 2:30 pm. ",
+    "LastUpdatedTime": "2025-11-05T16:15:08.050Z",
+    "Priority": "High",
+    "Region": "Olympic",
     "StartRoadwayLocation": {
       "Description": null,
       "Direction": "B",
-      "Latitude": 48.526743854,
-      "Longitude": -121.431185531,
-      "MilePost": 106.11,
-      "RoadName": "020"
+      "Latitude": 48.165115463,
+      "Longitude": -123.952790829,
+      "MilePost": 38.55,
+      "RoadName": "112"
     },
-    "StartTime": "2025-10-31T18:28:00.000Z"
+    "StartTime": "2025-11-05T16:13:00.000Z"
   },
   {
     "AlertID": 631745,
@@ -3451,6 +3422,35 @@
     "StartTime": "2025-11-03T08:00:00.000Z"
   },
   {
+    "AlertID": 669442,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "020"
+    },
+    "EndTime": null,
+    "EventCategory": "Construction",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "A continuous single lane closure on Cascade Road in Marblemount may impact traffic on State Route 20 near Cascade Road (milepost 106).",
+    "LastUpdatedTime": "2025-10-31T18:30:21.593Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "B",
+      "Latitude": 48.526743854,
+      "Longitude": -121.431185531,
+      "MilePost": 106.11,
+      "RoadName": "020"
+    },
+    "StartTime": "2025-10-31T18:28:00.000Z"
+  },
+  {
     "AlertID": 669482,
     "County": null,
     "EndRoadwayLocation": {
@@ -3478,6 +3478,64 @@
       "RoadName": "167"
     },
     "StartTime": "2025-11-03T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670025,
+    "County": "Mason",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "119"
+    },
+    "EndTime": "2025-11-05T23:00:00.000Z",
+    "EventCategory": "Road work",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Road work on SR 119 northbound at milepost 4 near Dow Mt Rd beginning at 7:58 am on November 5, 2025 until about 3:00 pm. ",
+    "LastUpdatedTime": "2025-11-05T16:12:43.130Z",
+    "Priority": "High",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.423493826,
+      "Longitude": -123.208124091,
+      "MilePost": 4,
+      "RoadName": "119"
+    },
+    "StartTime": "2025-11-05T15:58:00.000Z"
+  },
+  {
+    "AlertID": 670084,
+    "County": "Thurston",
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "101"
+    },
+    "EndTime": null,
+    "EventCategory": "Water over Roadway",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Water over Roadway on US 101 southbound at milepost 367.4 exit ramp to I-5 southbound beginning at 2:38 pm on November 5, 2025 until further notice. ",
+    "LastUpdatedTime": "2025-11-05T22:43:13.780Z",
+    "Priority": "Highest",
+    "Region": "Olympic",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.021745307,
+      "Longitude": -122.907125853,
+      "MilePost": 367.33,
+      "RoadName": "101"
+    },
+    "StartTime": "2025-11-05T22:38:00.000Z"
   },
   {
     "AlertID": 669685,
@@ -3567,62 +3625,62 @@
     "StartTime": "2021-09-24T13:00:00.000Z"
   },
   {
-    "AlertID": 669507,
-    "County": null,
+    "AlertID": 670020,
+    "County": "Ferry",
     "EndRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
+      "Direction": "B",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "405"
+      "RoadName": "020"
     },
-    "EndTime": "2025-11-07T13:00:00.000Z",
-    "EventCategory": "Construction",
+    "EndTime": "2025-11-06T00:01:00.000Z",
+    "EventCategory": "Pass Report",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "The northbound I-405 HOV off-ramp to Northeast Sixth Street will be closed nightly, 9 p.m. Monday, Nov. 3 – 5 a.m. Friday, Nov. 7. A signed detour will be in place.",
-    "LastUpdatedTime": "2025-10-31T22:13:22.733Z",
-    "Priority": "Low",
-    "Region": "Northwest",
+    "HeadlineDescription": "Pass Report on SR 20 - Sherman Pass: The road is bare and wet with compact snow and ice in places.  There are no restrictions at this time.\n",
+    "LastUpdatedTime": "2025-11-05T16:01:28.187Z",
+    "Priority": "Medium",
+    "Region": "Eastern",
     "StartRoadwayLocation": {
       "Description": null,
-      "Direction": "N",
-      "Latitude": 47.615361074,
-      "Longitude": -122.188480907,
-      "MilePost": 13.68,
-      "RoadName": "405"
+      "Direction": "B",
+      "Latitude": 48.607128186,
+      "Longitude": -118.47980373,
+      "MilePost": 319.45,
+      "RoadName": "020"
     },
-    "StartTime": "2025-11-03T08:00:00.000Z"
+    "StartTime": "2025-11-05T15:53:00.000Z"
   },
   {
-    "AlertID": 669806,
-    "County": null,
+    "AlertID": 670070,
+    "County": "Pacific",
     "EndRoadwayLocation": {
       "Description": null,
       "Direction": "B",
       "Latitude": 0,
       "Longitude": 0,
       "MilePost": 0,
-      "RoadName": "405"
+      "RoadName": "101"
     },
-    "EndTime": "2025-11-05T12:00:00.000Z",
-    "EventCategory": "Construction",
+    "EndTime": null,
+    "EventCategory": "Water over Roadway",
     "EventStatus": "Open",
     "ExtendedDescription": "",
-    "HeadlineDescription": "From 11:59 p.m. Tuesday, Nov. 4, to 4 a.m. Wednesday, Nov. 5, the northbound and southbound ramps to eastbound I-90 will close as part of a full closure on eastbound I-90 during the same hours. \r\n\r\nSigned detours will guide people back to eastbound I-90.",
-    "LastUpdatedTime": "2025-11-03T20:46:25.897Z",
-    "Priority": "High",
-    "Region": "Northwest",
+    "HeadlineDescription": "Water over Roadway, use caution and prepare alternate route if conditions require it on US 101 both directions at milepost 58.5 near Railroad Crossing beginning at 1:06 pm on November 5, 2025 until further notice. ",
+    "LastUpdatedTime": "2025-11-05T21:07:24.113Z",
+    "Priority": "Medium",
+    "Region": "Southwest",
     "StartRoadwayLocation": {
       "Description": null,
       "Direction": "B",
-      "Latitude": 47.570482679,
-      "Longitude": -122.177807904,
-      "MilePost": 10.4,
-      "RoadName": "405"
+      "Latitude": 46.682487003,
+      "Longitude": -123.730259017,
+      "MilePost": 58.5,
+      "RoadName": "101"
     },
-    "StartTime": "2025-11-03T20:44:00.000Z"
+    "StartTime": "2025-11-05T21:06:00.000Z"
   },
   {
     "AlertID": 669228,
@@ -3652,35 +3710,6 @@
       "RoadName": "002"
     },
     "StartTime": "2025-10-29T15:51:00.000Z"
-  },
-  {
-    "AlertID": 666732,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.303055132,
-      "Longitude": -122.176708147,
-      "MilePost": 6.67,
-      "RoadName": "018"
-    },
-    "EndTime": "2025-11-05T13:00:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "The right lane of eastbound SR 18 will close from Auburn-Black Diamond Road to the Green River from 8 p.m. Thursday, Oct. 30, to 5 a.m. Friday, Oct. 31, for a pavement repair project. The Auburn-Black Diamond Road on- and off-ramps also will close at the same time, and signed detours will be available. The work requires dry weather and may be rescheduled to Monday or Tuesday nights, Oct. 3-4.",
-    "LastUpdatedTime": "2025-10-17T19:21:38.587Z",
-    "Priority": "Low",
-    "Region": "Northwest",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "E",
-      "Latitude": 47.298769598,
-      "Longitude": -122.189128295,
-      "MilePost": 5.95,
-      "RoadName": "018"
-    },
-    "StartTime": "2025-10-24T19:00:00.000Z"
   },
   {
     "AlertID": 669499,
@@ -3884,64 +3913,6 @@
       "RoadName": "097AR"
     },
     "StartTime": "2025-11-04T21:51:00.000Z"
-  },
-  {
-    "AlertID": 669857,
-    "County": "Thurston",
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.040640724,
-      "Longitude": -123.059102606,
-      "MilePost": 18,
-      "RoadName": "008"
-    },
-    "EndTime": "2025-11-05T01:00:00.000Z",
-    "EventCategory": "Road work",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Road work on SR 8 both directions from milepost 16 near Summit Lk Rd NW [East-End] to milepost 18 near Wilson Rd NW beginning at 5:39 am on November 4, 2025 until about 5:00 pm. ",
-    "LastUpdatedTime": "2025-11-04T13:42:31.793Z",
-    "Priority": "High",
-    "Region": "Olympic",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 47.033332969,
-      "Longitude": -123.099009041,
-      "MilePost": 16,
-      "RoadName": "008"
-    },
-    "StartTime": "2025-11-04T13:39:00.000Z"
-  },
-  {
-    "AlertID": 669686,
-    "County": null,
-    "EndRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 46.501967068,
-      "Longitude": -119.61572176,
-      "MilePost": 8,
-      "RoadName": "240"
-    },
-    "EndTime": "2025-11-05T01:00:00.000Z",
-    "EventCategory": "Construction",
-    "EventStatus": "Open",
-    "ExtendedDescription": "",
-    "HeadlineDescription": "Both directions milepost 0 to 8 near the junction of SR-24 at Hanford West Gate. Tuesday, Nov. 4 from 7 a.m. until 5 p.m. there will be alternating one-way flagged, pilot vehicle-controlled traffic for roadwork.",
-    "LastUpdatedTime": "2025-11-02T05:07:11.697Z",
-    "Priority": "Medium",
-    "Region": "South Central",
-    "StartRoadwayLocation": {
-      "Description": null,
-      "Direction": "B",
-      "Latitude": 46.577323938,
-      "Longitude": -119.728271924,
-      "MilePost": 0,
-      "RoadName": "240"
-    },
-    "StartTime": "2025-11-02T05:05:00.000Z"
   },
   {
     "AlertID": 619765,

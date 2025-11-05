@@ -539,24 +539,52 @@ components:
       name: Quantity
       in: path
 paths:
-  /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
+  /cacheflushdate:
     get:
-      summary: Returns multiple of FareLineItem for popular fare options.
-      operationId: getFareLineItemsBasic
+      summary: Returns a single CacheFlushDate for the WSF fares system.
+      operationId: getCacheFlushDate
       tags:
-        - fare-line-items
+        - cache-flush-date
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getFareLineItemsBasic } from 'ws-dottie';
+            import { fetchDottie, getCacheFlushDate } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getFareLineItemsBasic,
+              endpoint: getCacheFlushDate,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CacheFlushDateOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value: 2025-11-05T12:19:57.117Z
+  /terminalMates/{TripDate}/{TerminalID}:
+    get:
+      summary: Returns arriving terminals for the given departing terminal and trip date.
+      operationId: getTerminalMates
+      tags:
+        - terminals
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getTerminalMates } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getTerminalMates,
               params: {
                 "TripDate": "2025-11-06",
-                "DepartingTerminalID": 1,
-                "ArrivingTerminalID": 10,
-                "RoundTrip": false
+                "TerminalID": 1
               },
               fetchMode: 'native',
               validate: true
@@ -564,10 +592,8 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FareLineItemsBasicInputTripDateParam'
-        - $ref: '#/components/parameters/FareLineItemsBasicInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FareLineItemsBasicInputArrivingTerminalIDParam'
-        - $ref: '#/components/parameters/FareLineItemsBasicInputRoundTripParam'
+        - $ref: '#/components/parameters/TerminalMatesInputTripDateParam'
+        - $ref: '#/components/parameters/TerminalMatesInputTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -576,50 +602,15 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsOutput'
+                  $ref: '#/components/schemas/FaresTerminalsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 12 total)
+                  description: Example of a successful response from the API (showing first item of 4 total)
                   value:
-                    - FareLineItemID: 1
-                      FareLineItem: Adult (age 19 - 64)
-                      Category: Passenger
-                      DirectionIndependent: false
-                      Amount: 17.5
-                    - _note: ... 11 more items
-  /validdaterange:
-    get:
-      summary: Returns a single ValidDateRange object for the current fares data validity period.
-      operationId: getFaresValidDateRange
-      tags:
-        - valid-date-range
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getFaresValidDateRange } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getFaresValidDateRange,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FaresValidDateRangeOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    DateFrom: 2025-11-04T08:00:00.000Z
-                    DateThru: 2026-03-21T07:00:00.000Z
+                    - TerminalID: 10
+                      Description: Friday Harbor
+                    - _note: ... 3 more items
   /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
     get:
       summary: Returns multiple of FareLineItem for specific terminal combination.
@@ -669,95 +660,24 @@ paths:
                       DirectionIndependent: false
                       Amount: 0
                     - _note: ... 22 more items
-  /cacheflushdate:
+  /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
     get:
-      summary: Returns a single CacheFlushDate for the WSF fares system.
-      operationId: getCacheFlushDate
+      summary: Returns multiple of FareLineItem for popular fare options.
+      operationId: getFareLineItemsBasic
       tags:
-        - cache-flush-date
+        - fare-line-items
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getCacheFlushDate } from 'ws-dottie';
+            import { fetchDottie, getFareLineItemsBasic } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getCacheFlushDate,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CacheFlushDateOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value: 2025-11-04T19:37:56.870Z
-  /terminalComboVerbose/{TripDate}:
-    get:
-      summary: Returns fare collection descriptions for all terminal combinations available on the specified trip date.
-      operationId: getTerminalComboVerbose
-      tags:
-        - terminal-combo
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getTerminalComboVerbose } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getTerminalComboVerbose,
-              params: {
-                "TripDate": "2025-11-06"
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/TerminalComboVerboseInputTripDateParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TerminalComboVerboseOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 38 total)
-                  value:
-                    - DepartingTerminalID: 1
-                      DepartingDescription: Anacortes
-                      ArrivingTerminalID: 10
-                      ArrivingDescription: Friday Harbor
-                      CollectionDescription: Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor.
-                    - _note: ... 37 more items
-  /terminalMates/{TripDate}/{TerminalID}:
-    get:
-      summary: Returns arriving terminals for the given departing terminal and trip date.
-      operationId: getTerminalMates
-      tags:
-        - terminals
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getTerminalMates } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getTerminalMates,
+              endpoint: getFareLineItemsBasic,
               params: {
                 "TripDate": "2025-11-06",
-                "TerminalID": 1
+                "DepartingTerminalID": 1,
+                "ArrivingTerminalID": 10,
+                "RoundTrip": false
               },
               fetchMode: 'native',
               validate: true
@@ -765,8 +685,10 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/TerminalMatesInputTripDateParam'
-        - $ref: '#/components/parameters/TerminalMatesInputTerminalIDParam'
+        - $ref: '#/components/parameters/FareLineItemsBasicInputTripDateParam'
+        - $ref: '#/components/parameters/FareLineItemsBasicInputDepartingTerminalIDParam'
+        - $ref: '#/components/parameters/FareLineItemsBasicInputArrivingTerminalIDParam'
+        - $ref: '#/components/parameters/FareLineItemsBasicInputRoundTripParam'
       responses:
         '200':
           description: Success
@@ -775,15 +697,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FaresTerminalsOutput'
+                  $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 4 total)
+                  description: Example of a successful response from the API (showing first item of 12 total)
                   value:
-                    - TerminalID: 10
-                      Description: Friday Harbor
-                    - _note: ... 3 more items
+                    - FareLineItemID: 1
+                      FareLineItem: Adult (age 19 - 64)
+                      Category: Passenger
+                      DirectionIndependent: false
+                      Amount: 17.5
+                    - _note: ... 11 more items
   /terminals/{TripDate}:
     get:
       summary: Returns a list of valid departing terminals for the specified trip date.
@@ -824,6 +749,38 @@ paths:
                     - TerminalID: 1
                       Description: Anacortes
                     - _note: ... 18 more items
+  /validdaterange:
+    get:
+      summary: Returns a single ValidDateRange object for the current fares data validity period.
+      operationId: getFaresValidDateRange
+      tags:
+        - valid-date-range
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getFaresValidDateRange } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getFaresValidDateRange,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaresValidDateRangeOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    DateFrom: 2025-11-05T08:00:00.000Z
+                    DateThru: 2026-03-21T07:00:00.000Z
   /terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}:
     get:
       summary: Returns fare collection descriptions for the specified terminal combination and trip date.
@@ -918,6 +875,49 @@ paths:
                       BriefDescription: Depart
                       Amount: 61.25
                     - _note: ... 2 more items
+  /terminalComboVerbose/{TripDate}:
+    get:
+      summary: Returns fare collection descriptions for all terminal combinations available on the specified trip date.
+      operationId: getTerminalComboVerbose
+      tags:
+        - terminal-combo
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getTerminalComboVerbose } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getTerminalComboVerbose,
+              params: {
+                "TripDate": "2025-11-06"
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/TerminalComboVerboseInputTripDateParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TerminalComboVerboseOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 38 total)
+                  value:
+                    - DepartingTerminalID: 1
+                      DepartingDescription: Anacortes
+                      ArrivingTerminalID: 10
+                      ArrivingDescription: Friday Harbor
+                      CollectionDescription: Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor.
+                    - _note: ... 37 more items
   /fareLineItemsVerbose/{TripDate}:
     get:
       summary: Returns multiple of FareLineItem for all terminal combinations.

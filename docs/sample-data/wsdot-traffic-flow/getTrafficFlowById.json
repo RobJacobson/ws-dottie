@@ -1,6 +1,6 @@
 {
   "FlowDataID": 2482,
-  "FlowReadingValue": 1,
+  "FlowReadingValue": 4,
   "FlowStationLocation": {
     "Description": "Homeacres Rd",
     "Direction": "EB",
@@ -11,5 +11,5 @@
   },
   "Region": "Northwest",
   "StationName": "002es00068",
-  "Time": "2025-11-04T23:59:22.000Z"
+  "Time": "2025-11-05T22:51:22.000Z"
 }

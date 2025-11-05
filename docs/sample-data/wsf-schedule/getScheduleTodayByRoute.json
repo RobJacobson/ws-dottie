@@ -18,8 +18,8 @@
       "Annotations": [],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:15:00.000Z",
-          "ArrivingTime": "2025-11-04T15:10:00.000Z",
+          "DepartingTime": "2025-11-05T14:15:00.000Z",
+          "ArrivingTime": "2025-11-05T15:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -31,8 +31,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T18:05:00.000Z",
-          "ArrivingTime": "2025-11-04T19:00:00.000Z",
+          "DepartingTime": "2025-11-05T18:05:00.000Z",
+          "ArrivingTime": "2025-11-05T19:00:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -44,8 +44,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T21:35:00.000Z",
-          "ArrivingTime": "2025-11-04T22:25:00.000Z",
+          "DepartingTime": "2025-11-05T21:35:00.000Z",
+          "ArrivingTime": "2025-11-05T22:25:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -57,8 +57,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:20:00.000Z",
-          "ArrivingTime": "2025-11-05T01:15:00.000Z",
+          "DepartingTime": "2025-11-06T00:20:00.000Z",
+          "ArrivingTime": "2025-11-06T01:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -70,8 +70,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T01:35:00.000Z",
-          "ArrivingTime": "2025-11-05T02:30:00.000Z",
+          "DepartingTime": "2025-11-06T01:35:00.000Z",
+          "ArrivingTime": "2025-11-06T02:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -83,8 +83,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T04:15:00.000Z",
-          "ArrivingTime": "2025-11-05T05:10:00.000Z",
+          "DepartingTime": "2025-11-06T04:15:00.000Z",
+          "ArrivingTime": "2025-11-06T05:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -107,8 +107,8 @@
       "Annotations": [],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T13:30:00.000Z",
-          "ArrivingTime": "2025-11-04T15:05:00.000Z",
+          "DepartingTime": "2025-11-05T13:30:00.000Z",
+          "ArrivingTime": "2025-11-05T15:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -120,8 +120,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T15:30:00.000Z",
-          "ArrivingTime": "2025-11-04T17:10:00.000Z",
+          "DepartingTime": "2025-11-05T15:30:00.000Z",
+          "ArrivingTime": "2025-11-05T17:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -133,8 +133,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T19:55:00.000Z",
-          "ArrivingTime": "2025-11-04T20:55:00.000Z",
+          "DepartingTime": "2025-11-05T19:55:00.000Z",
+          "ArrivingTime": "2025-11-05T20:55:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -146,8 +146,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T23:20:00.000Z",
-          "ArrivingTime": "2025-11-05T00:50:00.000Z",
+          "DepartingTime": "2025-11-05T23:20:00.000Z",
+          "ArrivingTime": "2025-11-06T00:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -159,8 +159,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T02:05:00.000Z",
-          "ArrivingTime": "2025-11-05T03:05:00.000Z",
+          "DepartingTime": "2025-11-06T02:05:00.000Z",
+          "ArrivingTime": "2025-11-06T03:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -172,8 +172,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T04:40:00.000Z",
-          "ArrivingTime": "2025-11-05T05:35:00.000Z",
+          "DepartingTime": "2025-11-06T04:40:00.000Z",
+          "ArrivingTime": "2025-11-06T05:35:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -196,8 +196,8 @@
       "Annotations": [],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T13:30:00.000Z",
-          "ArrivingTime": "2025-11-04T14:25:00.000Z",
+          "DepartingTime": "2025-11-05T13:30:00.000Z",
+          "ArrivingTime": "2025-11-05T14:25:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -209,8 +209,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T15:30:00.000Z",
-          "ArrivingTime": "2025-11-04T16:30:00.000Z",
+          "DepartingTime": "2025-11-05T15:30:00.000Z",
+          "ArrivingTime": "2025-11-05T16:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -222,8 +222,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T18:05:00.000Z",
-          "ArrivingTime": "2025-11-04T19:20:00.000Z",
+          "DepartingTime": "2025-11-05T18:05:00.000Z",
+          "ArrivingTime": "2025-11-05T19:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -235,8 +235,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T19:55:00.000Z",
-          "ArrivingTime": "2025-11-04T21:05:00.000Z",
+          "DepartingTime": "2025-11-05T19:55:00.000Z",
+          "ArrivingTime": "2025-11-05T21:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -248,8 +248,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T23:20:00.000Z",
-          "ArrivingTime": "2025-11-05T00:15:00.000Z",
+          "DepartingTime": "2025-11-05T23:20:00.000Z",
+          "ArrivingTime": "2025-11-06T00:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -261,8 +261,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T02:05:00.000Z",
-          "ArrivingTime": "2025-11-05T03:15:00.000Z",
+          "DepartingTime": "2025-11-06T02:05:00.000Z",
+          "ArrivingTime": "2025-11-06T03:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -274,8 +274,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T04:40:00.000Z",
-          "ArrivingTime": "2025-11-05T05:45:00.000Z",
+          "DepartingTime": "2025-11-06T04:40:00.000Z",
+          "ArrivingTime": "2025-11-06T05:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -298,8 +298,8 @@
       "Annotations": [],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T12:05:00.000Z",
-          "ArrivingTime": "2025-11-04T13:15:00.000Z",
+          "DepartingTime": "2025-11-05T12:05:00.000Z",
+          "ArrivingTime": "2025-11-05T13:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -311,8 +311,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T14:15:00.000Z",
-          "ArrivingTime": "2025-11-04T15:45:00.000Z",
+          "DepartingTime": "2025-11-05T14:15:00.000Z",
+          "ArrivingTime": "2025-11-05T15:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -324,8 +324,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T16:40:00.000Z",
-          "ArrivingTime": "2025-11-04T17:50:00.000Z",
+          "DepartingTime": "2025-11-05T16:40:00.000Z",
+          "ArrivingTime": "2025-11-05T17:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -337,8 +337,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T18:30:00.000Z",
-          "ArrivingTime": "2025-11-04T19:40:00.000Z",
+          "DepartingTime": "2025-11-05T18:30:00.000Z",
+          "ArrivingTime": "2025-11-05T19:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -350,8 +350,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T21:35:00.000Z",
-          "ArrivingTime": "2025-11-04T23:00:00.000Z",
+          "DepartingTime": "2025-11-05T21:35:00.000Z",
+          "ArrivingTime": "2025-11-05T23:00:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -363,8 +363,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:20:00.000Z",
-          "ArrivingTime": "2025-11-05T01:50:00.000Z",
+          "DepartingTime": "2025-11-06T00:20:00.000Z",
+          "ArrivingTime": "2025-11-06T01:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -376,8 +376,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T01:35:00.000Z",
-          "ArrivingTime": "2025-11-05T03:05:00.000Z",
+          "DepartingTime": "2025-11-06T01:35:00.000Z",
+          "ArrivingTime": "2025-11-06T03:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -389,8 +389,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T04:15:00.000Z",
-          "ArrivingTime": "2025-11-05T05:45:00.000Z",
+          "DepartingTime": "2025-11-06T04:15:00.000Z",
+          "ArrivingTime": "2025-11-06T05:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -415,8 +415,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:50:00.000Z",
-          "ArrivingTime": "2025-11-04T15:20:00.000Z",
+          "DepartingTime": "2025-11-05T14:50:00.000Z",
+          "ArrivingTime": "2025-11-05T15:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -428,8 +428,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T23:20:00.000Z",
-          "ArrivingTime": "2025-11-04T23:45:00.000Z",
+          "DepartingTime": "2025-11-05T23:20:00.000Z",
+          "ArrivingTime": "2025-11-05T23:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -443,8 +443,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:45:00.000Z",
-          "ArrivingTime": "2025-11-05T04:10:00.000Z",
+          "DepartingTime": "2025-11-06T03:45:00.000Z",
+          "ArrivingTime": "2025-11-06T04:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -471,8 +471,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:50:00.000Z",
-          "ArrivingTime": "2025-11-04T15:40:00.000Z",
+          "DepartingTime": "2025-11-05T14:50:00.000Z",
+          "ArrivingTime": "2025-11-05T15:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -484,8 +484,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T19:00:00.000Z",
-          "ArrivingTime": "2025-11-04T19:20:00.000Z",
+          "DepartingTime": "2025-11-05T19:00:00.000Z",
+          "ArrivingTime": "2025-11-05T19:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -497,8 +497,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T23:20:00.000Z",
-          "ArrivingTime": "2025-11-04T23:55:00.000Z",
+          "DepartingTime": "2025-11-05T23:20:00.000Z",
+          "ArrivingTime": "2025-11-05T23:55:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -512,8 +512,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:45:00.000Z",
-          "ArrivingTime": "2025-11-05T04:30:00.000Z",
+          "DepartingTime": "2025-11-06T03:45:00.000Z",
+          "ArrivingTime": "2025-11-06T04:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -541,8 +541,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:50:00.000Z",
-          "ArrivingTime": "2025-11-04T16:30:00.000Z",
+          "DepartingTime": "2025-11-05T14:50:00.000Z",
+          "ArrivingTime": "2025-11-05T16:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -554,8 +554,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T15:10:00.000Z",
-          "ArrivingTime": "2025-11-04T15:45:00.000Z",
+          "DepartingTime": "2025-11-05T15:10:00.000Z",
+          "ArrivingTime": "2025-11-05T15:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -567,8 +567,34 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T22:25:00.000Z",
-          "ArrivingTime": "2025-11-04T23:00:00.000Z",
+          "DepartingTime": "2025-11-05T18:30:00.000Z",
+          "ArrivingTime": "2025-11-05T19:10:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T21:35:00.000Z",
+          "ArrivingTime": "2025-11-05T22:15:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T22:25:00.000Z",
+          "ArrivingTime": "2025-11-05T23:00:00.000Z",
           "LoadingRule": 1,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -582,8 +608,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T00:50:00.000Z",
-          "ArrivingTime": "2025-11-05T01:30:00.000Z",
+          "DepartingTime": "2025-11-06T00:50:00.000Z",
+          "ArrivingTime": "2025-11-06T01:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -597,8 +623,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T01:15:00.000Z",
-          "ArrivingTime": "2025-11-05T01:50:00.000Z",
+          "DepartingTime": "2025-11-06T01:15:00.000Z",
+          "ArrivingTime": "2025-11-06T01:50:00.000Z",
           "LoadingRule": 1,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -612,8 +638,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T02:30:00.000Z",
-          "ArrivingTime": "2025-11-05T03:05:00.000Z",
+          "DepartingTime": "2025-11-06T02:30:00.000Z",
+          "ArrivingTime": "2025-11-06T03:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -625,8 +651,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T03:45:00.000Z",
-          "ArrivingTime": "2025-11-05T05:20:00.000Z",
+          "DepartingTime": "2025-11-06T03:45:00.000Z",
+          "ArrivingTime": "2025-11-06T05:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -638,8 +664,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T05:10:00.000Z",
-          "ArrivingTime": "2025-11-05T05:45:00.000Z",
+          "DepartingTime": "2025-11-06T05:10:00.000Z",
+          "ArrivingTime": "2025-11-06T05:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -667,8 +693,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T15:20:00.000Z",
-          "ArrivingTime": "2025-11-04T15:40:00.000Z",
+          "DepartingTime": "2025-11-05T15:20:00.000Z",
+          "ArrivingTime": "2025-11-05T15:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -680,8 +706,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T20:55:00.000Z",
-          "ArrivingTime": "2025-11-04T21:05:00.000Z",
+          "DepartingTime": "2025-11-05T20:55:00.000Z",
+          "ArrivingTime": "2025-11-05T21:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -693,8 +719,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T23:45:00.000Z",
-          "ArrivingTime": "2025-11-04T23:55:00.000Z",
+          "DepartingTime": "2025-11-05T23:45:00.000Z",
+          "ArrivingTime": "2025-11-05T23:55:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -708,8 +734,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:05:00.000Z",
-          "ArrivingTime": "2025-11-05T03:15:00.000Z",
+          "DepartingTime": "2025-11-06T03:05:00.000Z",
+          "ArrivingTime": "2025-11-06T03:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -721,8 +747,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T04:10:00.000Z",
-          "ArrivingTime": "2025-11-05T04:30:00.000Z",
+          "DepartingTime": "2025-11-06T04:10:00.000Z",
+          "ArrivingTime": "2025-11-06T04:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -734,8 +760,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T05:35:00.000Z",
-          "ArrivingTime": "2025-11-05T05:45:00.000Z",
+          "DepartingTime": "2025-11-06T05:35:00.000Z",
+          "ArrivingTime": "2025-11-06T05:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -763,8 +789,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T15:20:00.000Z",
-          "ArrivingTime": "2025-11-04T16:30:00.000Z",
+          "DepartingTime": "2025-11-05T15:20:00.000Z",
+          "ArrivingTime": "2025-11-05T16:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -776,8 +802,38 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:20:00.000Z",
-          "ArrivingTime": "2025-11-05T01:30:00.000Z",
+          "DepartingTime": "2025-11-05T18:00:00.000Z",
+          "ArrivingTime": "2025-11-05T19:10:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            0
+          ]
+        },
+        {
+          "DepartingTime": "2025-11-05T21:05:00.000Z",
+          "ArrivingTime": "2025-11-05T22:15:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            0
+          ]
+        },
+        {
+          "DepartingTime": "2025-11-06T00:20:00.000Z",
+          "ArrivingTime": "2025-11-06T01:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -792,8 +848,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T04:10:00.000Z",
-          "ArrivingTime": "2025-11-05T05:20:00.000Z",
+          "DepartingTime": "2025-11-06T04:10:00.000Z",
+          "ArrivingTime": "2025-11-06T05:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -822,8 +878,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T15:40:00.000Z",
-          "ArrivingTime": "2025-11-04T16:30:00.000Z",
+          "DepartingTime": "2025-11-05T15:40:00.000Z",
+          "ArrivingTime": "2025-11-05T16:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -835,8 +891,38 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:05:00.000Z",
-          "ArrivingTime": "2025-11-05T01:30:00.000Z",
+          "DepartingTime": "2025-11-05T17:45:00.000Z",
+          "ArrivingTime": "2025-11-05T19:10:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            0
+          ]
+        },
+        {
+          "DepartingTime": "2025-11-05T20:50:00.000Z",
+          "ArrivingTime": "2025-11-05T22:15:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            0
+          ]
+        },
+        {
+          "DepartingTime": "2025-11-06T00:05:00.000Z",
+          "ArrivingTime": "2025-11-06T01:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -851,8 +937,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T04:30:00.000Z",
-          "ArrivingTime": "2025-11-05T05:20:00.000Z",
+          "DepartingTime": "2025-11-06T04:30:00.000Z",
+          "ArrivingTime": "2025-11-06T05:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -876,13 +962,13 @@
       "ArrivingTerminalName": "Orcas Island",
       "SailingNotes": "",
       "Annotations": [
-        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
-        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas."
+        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH."
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:05:00.000Z",
-          "ArrivingTime": "2025-11-04T15:40:00.000Z",
+          "DepartingTime": "2025-11-05T14:05:00.000Z",
+          "ArrivingTime": "2025-11-05T15:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -894,8 +980,21 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T22:30:00.000Z",
-          "ArrivingTime": "2025-11-04T23:55:00.000Z",
+          "DepartingTime": "2025-11-05T16:45:00.000Z",
+          "ArrivingTime": "2025-11-05T17:45:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T19:30:00.000Z",
+          "ArrivingTime": "2025-11-05T20:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -909,8 +1008,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T01:40:00.000Z",
-          "ArrivingTime": "2025-11-05T03:00:00.000Z",
+          "DepartingTime": "2025-11-05T22:30:00.000Z",
+          "ArrivingTime": "2025-11-05T23:55:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -922,11 +1021,26 @@
           "AnnotationIndexes": [
             1
           ]
+        },
+        {
+          "DepartingTime": "2025-11-06T01:40:00.000Z",
+          "ArrivingTime": "2025-11-06T03:00:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            0
+          ]
         }
       ],
       "AnnotationsIVR": [
-        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
-        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas."
+        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH."
       ]
     },
     {
@@ -936,13 +1050,13 @@
       "ArrivingTerminalName": "Shaw Island",
       "SailingNotes": "",
       "Annotations": [
-        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
-        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas."
+        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH."
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:05:00.000Z",
-          "ArrivingTime": "2025-11-04T15:20:00.000Z",
+          "DepartingTime": "2025-11-05T14:05:00.000Z",
+          "ArrivingTime": "2025-11-05T15:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -954,8 +1068,21 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T22:30:00.000Z",
-          "ArrivingTime": "2025-11-04T23:45:00.000Z",
+          "DepartingTime": "2025-11-05T16:45:00.000Z",
+          "ArrivingTime": "2025-11-05T18:00:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T19:30:00.000Z",
+          "ArrivingTime": "2025-11-05T21:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -969,8 +1096,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T01:40:00.000Z",
-          "ArrivingTime": "2025-11-05T03:15:00.000Z",
+          "DepartingTime": "2025-11-05T22:30:00.000Z",
+          "ArrivingTime": "2025-11-05T23:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -982,11 +1109,26 @@
           "AnnotationIndexes": [
             1
           ]
+        },
+        {
+          "DepartingTime": "2025-11-06T01:40:00.000Z",
+          "ArrivingTime": "2025-11-06T03:15:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            0
+          ]
         }
       ],
       "AnnotationsIVR": [
-        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
-        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas."
+        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH."
       ]
     },
     {
@@ -997,13 +1139,13 @@
       "SailingNotes": "",
       "Annotations": [
         "No interisland vehicles. Foot passenger and bikes okay.",
-        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
-        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas."
+        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH."
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T13:40:00.000Z",
-          "ArrivingTime": "2025-11-04T14:25:00.000Z",
+          "DepartingTime": "2025-11-05T13:40:00.000Z",
+          "ArrivingTime": "2025-11-05T14:25:00.000Z",
           "LoadingRule": 1,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1017,8 +1159,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-04T14:05:00.000Z",
-          "ArrivingTime": "2025-11-04T14:45:00.000Z",
+          "DepartingTime": "2025-11-05T14:05:00.000Z",
+          "ArrivingTime": "2025-11-05T14:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1030,8 +1172,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T16:10:00.000Z",
-          "ArrivingTime": "2025-11-04T16:55:00.000Z",
+          "DepartingTime": "2025-11-05T16:10:00.000Z",
+          "ArrivingTime": "2025-11-05T16:55:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1043,8 +1185,21 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T22:30:00.000Z",
-          "ArrivingTime": "2025-11-04T23:10:00.000Z",
+          "DepartingTime": "2025-11-05T16:45:00.000Z",
+          "ArrivingTime": "2025-11-05T18:20:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T19:30:00.000Z",
+          "ArrivingTime": "2025-11-05T21:25:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1058,21 +1213,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-04T23:35:00.000Z",
-          "ArrivingTime": "2025-11-05T00:20:00.000Z",
-          "LoadingRule": 3,
-          "VesselID": 69,
-          "VesselName": "Samish",
-          "VesselHandicapAccessible": true,
-          "VesselPositionNum": 3,
-          "Routes": [
-            9
-          ],
-          "AnnotationIndexes": []
-        },
-        {
-          "DepartingTime": "2025-11-05T01:40:00.000Z",
-          "ArrivingTime": "2025-11-05T03:35:00.000Z",
+          "DepartingTime": "2025-11-05T22:30:00.000Z",
+          "ArrivingTime": "2025-11-05T23:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1086,8 +1228,36 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T02:20:00.000Z",
-          "ArrivingTime": "2025-11-05T03:05:00.000Z",
+          "DepartingTime": "2025-11-05T23:35:00.000Z",
+          "ArrivingTime": "2025-11-06T00:20:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 69,
+          "VesselName": "Samish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 3,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-06T01:40:00.000Z",
+          "ArrivingTime": "2025-11-06T03:35:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": [
+            1
+          ]
+        },
+        {
+          "DepartingTime": "2025-11-06T02:20:00.000Z",
+          "ArrivingTime": "2025-11-06T03:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1099,8 +1269,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T03:35:00.000Z",
-          "ArrivingTime": "2025-11-05T04:20:00.000Z",
+          "DepartingTime": "2025-11-06T03:35:00.000Z",
+          "ArrivingTime": "2025-11-06T04:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1114,8 +1284,8 @@
       ],
       "AnnotationsIVR": [
         "No interisland vehicles. Foot passengers and bikes okay.",
-        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
-        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas."
+        "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+        "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH."
       ]
     },
     {
@@ -1129,8 +1299,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T13:40:00.000Z",
-          "ArrivingTime": "2025-11-04T15:10:00.000Z",
+          "DepartingTime": "2025-11-05T13:40:00.000Z",
+          "ArrivingTime": "2025-11-05T15:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1144,8 +1314,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-04T16:10:00.000Z",
-          "ArrivingTime": "2025-11-04T17:40:00.000Z",
+          "DepartingTime": "2025-11-05T16:10:00.000Z",
+          "ArrivingTime": "2025-11-05T17:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1157,8 +1327,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T18:20:00.000Z",
-          "ArrivingTime": "2025-11-04T19:30:00.000Z",
+          "DepartingTime": "2025-11-05T18:20:00.000Z",
+          "ArrivingTime": "2025-11-05T19:30:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1170,8 +1340,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T20:25:00.000Z",
-          "ArrivingTime": "2025-11-04T21:35:00.000Z",
+          "DepartingTime": "2025-11-05T20:25:00.000Z",
+          "ArrivingTime": "2025-11-05T21:35:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1183,8 +1353,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T23:35:00.000Z",
-          "ArrivingTime": "2025-11-05T01:05:00.000Z",
+          "DepartingTime": "2025-11-05T23:35:00.000Z",
+          "ArrivingTime": "2025-11-06T01:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1196,8 +1366,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T02:20:00.000Z",
-          "ArrivingTime": "2025-11-05T03:50:00.000Z",
+          "DepartingTime": "2025-11-06T02:20:00.000Z",
+          "ArrivingTime": "2025-11-06T03:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1209,8 +1379,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T03:35:00.000Z",
-          "ArrivingTime": "2025-11-05T05:05:00.000Z",
+          "DepartingTime": "2025-11-06T03:35:00.000Z",
+          "ArrivingTime": "2025-11-06T05:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1222,8 +1392,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T06:05:00.000Z",
-          "ArrivingTime": "2025-11-05T07:15:00.000Z",
+          "DepartingTime": "2025-11-06T06:05:00.000Z",
+          "ArrivingTime": "2025-11-06T07:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1251,8 +1421,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:50:00.000Z",
-          "ArrivingTime": "2025-11-04T15:05:00.000Z",
+          "DepartingTime": "2025-11-05T14:50:00.000Z",
+          "ArrivingTime": "2025-11-05T15:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1264,8 +1434,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T16:55:00.000Z",
-          "ArrivingTime": "2025-11-04T17:10:00.000Z",
+          "DepartingTime": "2025-11-05T16:55:00.000Z",
+          "ArrivingTime": "2025-11-05T17:10:00.000Z",
           "LoadingRule": 1,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1279,8 +1449,34 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T00:05:00.000Z",
-          "ArrivingTime": "2025-11-05T00:20:00.000Z",
+          "DepartingTime": "2025-11-05T17:45:00.000Z",
+          "ArrivingTime": "2025-11-05T18:00:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T20:50:00.000Z",
+          "ArrivingTime": "2025-11-05T21:05:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-06T00:05:00.000Z",
+          "ArrivingTime": "2025-11-06T00:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1294,8 +1490,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T00:35:00.000Z",
-          "ArrivingTime": "2025-11-05T00:50:00.000Z",
+          "DepartingTime": "2025-11-06T00:35:00.000Z",
+          "ArrivingTime": "2025-11-06T00:50:00.000Z",
           "LoadingRule": 1,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1309,8 +1505,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:00:00.000Z",
-          "ArrivingTime": "2025-11-05T03:15:00.000Z",
+          "DepartingTime": "2025-11-06T03:00:00.000Z",
+          "ArrivingTime": "2025-11-06T03:15:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1339,8 +1535,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:50:00.000Z",
-          "ArrivingTime": "2025-11-04T15:35:00.000Z",
+          "DepartingTime": "2025-11-05T14:50:00.000Z",
+          "ArrivingTime": "2025-11-05T15:35:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1352,8 +1548,21 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T19:50:00.000Z",
-          "ArrivingTime": "2025-11-04T20:20:00.000Z",
+          "DepartingTime": "2025-11-05T17:45:00.000Z",
+          "ArrivingTime": "2025-11-05T18:20:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T19:50:00.000Z",
+          "ArrivingTime": "2025-11-05T20:20:00.000Z",
           "LoadingRule": 1,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1367,8 +1576,21 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-04T21:30:00.000Z",
-          "ArrivingTime": "2025-11-04T22:00:00.000Z",
+          "DepartingTime": "2025-11-05T20:50:00.000Z",
+          "ArrivingTime": "2025-11-05T21:25:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T21:30:00.000Z",
+          "ArrivingTime": "2025-11-05T22:00:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1380,8 +1602,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:05:00.000Z",
-          "ArrivingTime": "2025-11-05T00:40:00.000Z",
+          "DepartingTime": "2025-11-06T00:05:00.000Z",
+          "ArrivingTime": "2025-11-06T00:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1395,8 +1617,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:00:00.000Z",
-          "ArrivingTime": "2025-11-05T03:35:00.000Z",
+          "DepartingTime": "2025-11-06T03:00:00.000Z",
+          "ArrivingTime": "2025-11-06T03:35:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1424,8 +1646,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:50:00.000Z",
-          "ArrivingTime": "2025-11-04T16:20:00.000Z",
+          "DepartingTime": "2025-11-05T14:50:00.000Z",
+          "ArrivingTime": "2025-11-05T16:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1437,8 +1659,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T16:55:00.000Z",
-          "ArrivingTime": "2025-11-04T18:05:00.000Z",
+          "DepartingTime": "2025-11-05T16:55:00.000Z",
+          "ArrivingTime": "2025-11-05T18:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1452,8 +1674,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-04T19:50:00.000Z",
-          "ArrivingTime": "2025-11-04T21:05:00.000Z",
+          "DepartingTime": "2025-11-05T19:50:00.000Z",
+          "ArrivingTime": "2025-11-05T21:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1467,8 +1689,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-04T21:30:00.000Z",
-          "ArrivingTime": "2025-11-04T22:45:00.000Z",
+          "DepartingTime": "2025-11-05T21:30:00.000Z",
+          "ArrivingTime": "2025-11-05T22:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1480,8 +1702,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:35:00.000Z",
-          "ArrivingTime": "2025-11-05T01:45:00.000Z",
+          "DepartingTime": "2025-11-06T00:35:00.000Z",
+          "ArrivingTime": "2025-11-06T01:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1495,8 +1717,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:30:00.000Z",
-          "ArrivingTime": "2025-11-05T04:25:00.000Z",
+          "DepartingTime": "2025-11-06T03:30:00.000Z",
+          "ArrivingTime": "2025-11-06T04:25:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1508,8 +1730,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T05:55:00.000Z",
-          "ArrivingTime": "2025-11-05T06:50:00.000Z",
+          "DepartingTime": "2025-11-06T05:55:00.000Z",
+          "ArrivingTime": "2025-11-06T06:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1537,8 +1759,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T15:05:00.000Z",
-          "ArrivingTime": "2025-11-04T15:35:00.000Z",
+          "DepartingTime": "2025-11-05T15:05:00.000Z",
+          "ArrivingTime": "2025-11-05T15:35:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1550,8 +1772,21 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T20:55:00.000Z",
-          "ArrivingTime": "2025-11-04T22:00:00.000Z",
+          "DepartingTime": "2025-11-05T18:00:00.000Z",
+          "ArrivingTime": "2025-11-05T18:20:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-05T20:55:00.000Z",
+          "ArrivingTime": "2025-11-05T22:00:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1565,8 +1800,21 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T00:20:00.000Z",
-          "ArrivingTime": "2025-11-05T00:40:00.000Z",
+          "DepartingTime": "2025-11-05T21:05:00.000Z",
+          "ArrivingTime": "2025-11-05T21:25:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 66,
+          "VesselName": "Salish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 4,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-06T00:20:00.000Z",
+          "ArrivingTime": "2025-11-06T00:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1580,8 +1828,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T03:15:00.000Z",
-          "ArrivingTime": "2025-11-05T03:35:00.000Z",
+          "DepartingTime": "2025-11-06T03:15:00.000Z",
+          "ArrivingTime": "2025-11-06T03:35:00.000Z",
           "LoadingRule": 3,
           "VesselID": 66,
           "VesselName": "Salish",
@@ -1609,8 +1857,8 @@
       ],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T15:05:00.000Z",
-          "ArrivingTime": "2025-11-04T16:20:00.000Z",
+          "DepartingTime": "2025-11-05T15:05:00.000Z",
+          "ArrivingTime": "2025-11-05T16:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1622,8 +1870,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T17:10:00.000Z",
-          "ArrivingTime": "2025-11-04T18:05:00.000Z",
+          "DepartingTime": "2025-11-05T17:10:00.000Z",
+          "ArrivingTime": "2025-11-05T18:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1635,8 +1883,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T20:55:00.000Z",
-          "ArrivingTime": "2025-11-04T22:45:00.000Z",
+          "DepartingTime": "2025-11-05T20:55:00.000Z",
+          "ArrivingTime": "2025-11-05T22:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1650,8 +1898,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T00:50:00.000Z",
-          "ArrivingTime": "2025-11-05T01:45:00.000Z",
+          "DepartingTime": "2025-11-06T00:50:00.000Z",
+          "ArrivingTime": "2025-11-06T01:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1663,8 +1911,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T03:05:00.000Z",
-          "ArrivingTime": "2025-11-05T04:25:00.000Z",
+          "DepartingTime": "2025-11-06T03:05:00.000Z",
+          "ArrivingTime": "2025-11-06T04:25:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1678,8 +1926,8 @@
           ]
         },
         {
-          "DepartingTime": "2025-11-05T05:35:00.000Z",
-          "ArrivingTime": "2025-11-05T06:50:00.000Z",
+          "DepartingTime": "2025-11-06T05:35:00.000Z",
+          "ArrivingTime": "2025-11-06T06:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1706,8 +1954,8 @@
       "Annotations": [],
       "Times": [
         {
-          "DepartingTime": "2025-11-04T14:25:00.000Z",
-          "ArrivingTime": "2025-11-04T15:10:00.000Z",
+          "DepartingTime": "2025-11-05T14:25:00.000Z",
+          "ArrivingTime": "2025-11-05T15:10:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1719,8 +1967,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T15:35:00.000Z",
-          "ArrivingTime": "2025-11-04T16:20:00.000Z",
+          "DepartingTime": "2025-11-05T15:35:00.000Z",
+          "ArrivingTime": "2025-11-05T16:20:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1732,8 +1980,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T16:55:00.000Z",
-          "ArrivingTime": "2025-11-04T17:40:00.000Z",
+          "DepartingTime": "2025-11-05T16:55:00.000Z",
+          "ArrivingTime": "2025-11-05T17:40:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1745,8 +1993,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T20:20:00.000Z",
-          "ArrivingTime": "2025-11-04T21:05:00.000Z",
+          "DepartingTime": "2025-11-05T20:20:00.000Z",
+          "ArrivingTime": "2025-11-05T21:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1758,8 +2006,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-04T22:00:00.000Z",
-          "ArrivingTime": "2025-11-04T22:45:00.000Z",
+          "DepartingTime": "2025-11-05T22:00:00.000Z",
+          "ArrivingTime": "2025-11-05T22:45:00.000Z",
           "LoadingRule": 3,
           "VesselID": 2,
           "VesselName": "Chelan",
@@ -1771,8 +2019,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T00:20:00.000Z",
-          "ArrivingTime": "2025-11-05T01:05:00.000Z",
+          "DepartingTime": "2025-11-06T00:20:00.000Z",
+          "ArrivingTime": "2025-11-06T01:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",
@@ -1784,8 +2032,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T03:05:00.000Z",
-          "ArrivingTime": "2025-11-05T03:50:00.000Z",
+          "DepartingTime": "2025-11-06T03:05:00.000Z",
+          "ArrivingTime": "2025-11-06T03:50:00.000Z",
           "LoadingRule": 3,
           "VesselID": 38,
           "VesselName": "Yakima",
@@ -1797,8 +2045,8 @@
           "AnnotationIndexes": []
         },
         {
-          "DepartingTime": "2025-11-05T04:20:00.000Z",
-          "ArrivingTime": "2025-11-05T05:05:00.000Z",
+          "DepartingTime": "2025-11-06T04:20:00.000Z",
+          "ArrivingTime": "2025-11-06T05:05:00.000Z",
           "LoadingRule": 3,
           "VesselID": 69,
           "VesselName": "Samish",

@@ -1123,111 +1123,36 @@ components:
       name: VesselID
       in: path
 paths:
-  /vesselAccommodations/{VesselID}:
+  /cacheflushdate:
     get:
-      summary: Returns VesselAccommodation data for the vesselaccommodation with the given identifier.
-      operationId: getVesselAccommodationsByVesselId
+      summary: Returns the date and time when the WSF vessel data was last updated. This operation helps applications coordinate caching of vessel data that changes infrequently. When the returned date changes, applications should refresh their cached data.
+      operationId: getCacheFlushDate
       tags:
-        - vessel-accommodations
+        - cache-flush-date
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getVesselAccommodationsByVesselId } from 'ws-dottie';
+            import { fetchDottie, getCacheFlushDate } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getVesselAccommodationsByVesselId,
-              params: {
-                "VesselID": 65
-              },
+              endpoint: getCacheFlushDate,
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/VesselAccommodationsByVesselIdInputVesselIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VesselAccommodationsOutput'
+                $ref: '#/components/schemas/CacheFlushDateOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
-                  value:
-                    VesselID: 65
-                    VesselSubjectID: 428
-                    VesselName: Chetzemoka
-                    VesselAbbrev: CHZ
-                    Class:
-                      ClassID: 162
-                      ClassSubjectID: 427
-                      ClassName: Kwa-di Tabil
-                      SortSeq: 75
-                      DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/13-kwaditabil.gif
-                      SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/13-kwaditabil-silouette_sml.gif
-                      PublicDisplayName: Kwa-di Tabil
-                    CarDeckRestroom: false
-                    CarDeckShelter: false
-                    Elevator: true
-                    ADAAccessible: true
-                    MainCabinGalley: true
-                    MainCabinRestroom: true
-                    PublicWifi: false
-                    ADAInfo: "The M/V Chetzemoka has elevator access from the auto deck to all passenger deck levels. In the event of an elevator closure, a crew member can assist passengers with mobility disabilities to the passenger deck by way of a small freight elevator, though it is not ADA accessible. When you arrive at the terminal, notify the ticket seller if you need to park near the elevator. The main passenger deck has accessible restrooms, vending machines and a galley.\r\n"
-                    AdditionalInfo: null
-  /vesselBasics/{VesselID}:
-    get:
-      summary: Returns a VesselBasic object containing essential identification and status information for the specified vessel.
-      operationId: getVesselBasicsByVesselId
-      tags:
-        - vessel-basics
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getVesselBasicsByVesselId } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getVesselBasicsByVesselId,
-              params: {
-                "VesselID": 74
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/VesselBasicsByVesselIdInputVesselIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/VesselBasicsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    VesselID: 74
-                    VesselSubjectID: 487
-                    VesselName: Chimacum
-                    VesselAbbrev: CHM
-                    Class:
-                      ClassID: 100
-                      ClassSubjectID: 319
-                      ClassName: Olympic
-                      SortSeq: 35
-                      DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/8-olympic-2014.gif
-                      SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/3-issaquah-sillouette_sml.gif
-                      PublicDisplayName: Olympic
-                    Status: 1
-                    OwnedByWSF: true
+                  value: 2025-11-05T12:19:57.087Z
   /vesselStats/{VesselID}:
     get:
       summary: Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.
@@ -1298,19 +1223,19 @@ paths:
                     VesselDrawingImg: null
                     SolasCertified: false
                     MaxPassengerCountForInternational: null
-  /vesselLocations:
+  /vesselBasics:
     get:
-      summary: Returns multiple VesselLocation objects for all vessels in the fleet.
-      operationId: getVesselLocations
+      summary: Returns multiple VesselBasic objects for all vessels in the fleet.
+      operationId: getVesselBasics
       tags:
-        - vessel-locations
+        - vessel-basics
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getVesselLocations } from 'ws-dottie';
+            import { fetchDottie, getVesselBasics } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getVesselLocations,
+              endpoint: getVesselBasics,
               fetchMode: 'native',
               validate: true
             });
@@ -1324,70 +1249,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/VesselLocationsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 21 total)
-                  value:
-                    - VesselID: 2
-                      VesselName: Chelan
-                      Mmsi: 366709770
-                      DepartingTerminalID: 1
-                      DepartingTerminalName: Anacortes
-                      DepartingTerminalAbbrev: ANA
-                      ArrivingTerminalID: 15
-                      ArrivingTerminalName: Orcas Island
-                      ArrivingTerminalAbbrev: ORI
-                      Latitude: 48.58503
-                      Longitude: -122.89771
-                      Speed: 16.7
-                      Heading: 287
-                      InService: true
-                      AtDock: false
-                      LeftDock: 2025-11-04T23:20:14.000Z
-                      Eta: 2025-11-05T00:21:00.000Z
-                      EtaBasis: Vessel Chelan departed Anacortes going to Orcas and using vessel Chelan closest location data from Nov  4 2025  6:00AM
-                      ScheduledDeparture: 2025-11-04T23:20:00.000Z
-                      OpRouteAbbrev:
-                        - ana-sj
-                      VesselPositionNum: 1
-                      SortSeq: 20
-                      ManagedBy: 1
-                      TimeStamp: 2025-11-05T00:01:28.000Z
-                      VesselWatchShutID: 2
-                      VesselWatchShutMsg: Vessel information unavailable
-                      VesselWatchShutFlag: '0'
-                      VesselWatchStatus: '0'
-                      VesselWatchMsg: 'WSF''s VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. '
-                    - _note: ... 20 more items
-  /vesselStats:
-    get:
-      summary: Returns multiple VesselStat objects for all vessels in the fleet.
-      operationId: getVesselStats
-      tags:
-        - vessel-stats
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getVesselStats } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getVesselStats,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VesselStatsOutput'
+                  $ref: '#/components/schemas/VesselBasicsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1405,29 +1267,8 @@ paths:
                         DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif
                         SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif
                         PublicDisplayName: Issaquah
-                      VesselNameDesc: "From the Kathlamet tribe, the Chinook word calamet  meaning \"stone,\" was given to the tribe because its members lived along a rocky stretch of the Columbia River. A city also bears its name. \r\n\r\n"
-                      VesselHistory: ' '
-                      Beam: 78' 8"
-                      CityBuilt: Seattle
-                      SpeedInKnots: 16
-                      Draft: 16' 7"
-                      EngineCount: 2
-                      Horsepower: 5100
-                      Length: 328' 2"
-                      MaxPassengerCount: 1196
-                      PassengerOnly: false
-                      FastFerry: false
-                      PropulsionInfo: DIESEL
-                      TallDeckClearance: 186
-                      RegDeckSpace: 124
-                      TallDeckSpace: 25
-                      Tonnage: 2477
-                      Displacement: 3310
-                      YearBuilt: 1981
-                      YearRebuilt: 1993
-                      VesselDrawingImg: null
-                      SolasCertified: false
-                      MaxPassengerCountForInternational: null
+                      Status: 1
+                      OwnedByWSF: true
                     - _note: ... 20 more items
   /vesselAccommodations:
     get:
@@ -1483,226 +1324,6 @@ paths:
                       ADAInfo: The M/V Cathlamet has elevator access from the car deck to the passenger deck. The vessel has accessible restrooms located on both the main passenger deck and the car deck. Notify a ticket seller if you are traveling by car and need to park near an elevator or car deck restroom. The main passenger deck also has vending and newspaper machines and a galley. This vessel is equipped with our visual paging system.
                       AdditionalInfo: ' '
                     - _note: ... 20 more items
-  /vesselBasics:
-    get:
-      summary: Returns multiple VesselBasic objects for all vessels in the fleet.
-      operationId: getVesselBasics
-      tags:
-        - vessel-basics
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getVesselBasics } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getVesselBasics,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VesselBasicsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 21 total)
-                  value:
-                    - VesselID: 1
-                      VesselSubjectID: 1
-                      VesselName: Cathlamet
-                      VesselAbbrev: CAT
-                      Class:
-                        ClassID: 10
-                        ClassSubjectID: 310
-                        ClassName: Issaquah 130
-                        SortSeq: 40
-                        DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif
-                        SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif
-                        PublicDisplayName: Issaquah
-                      Status: 1
-                      OwnedByWSF: true
-                    - _note: ... 20 more items
-  /cacheflushdate:
-    get:
-      summary: Returns the date and time when the WSF vessel data was last updated. This operation helps applications coordinate caching of vessel data that changes infrequently. When the returned date changes, applications should refresh their cached data.
-      operationId: getCacheFlushDate
-      tags:
-        - cache-flush-date
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getCacheFlushDate } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getCacheFlushDate,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CacheFlushDateOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value: 2025-11-04T19:37:56.840Z
-  /vesselVerbose:
-    get:
-      summary: Returns multiple VesselVerbose objects for all vessels in fleet.
-      operationId: getVesselsVerbose
-      tags:
-        - vessel-verbose
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getVesselsVerbose } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getVesselsVerbose,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VesselsVerboseOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 21 total)
-                  value:
-                    - VesselID: 1
-                      VesselSubjectID: 1
-                      VesselName: Cathlamet
-                      VesselAbbrev: CAT
-                      Class:
-                        ClassID: 10
-                        ClassSubjectID: 310
-                        ClassName: Issaquah 130
-                        SortSeq: 40
-                        DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif
-                        SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif
-                        PublicDisplayName: Issaquah
-                      Status: 1
-                      OwnedByWSF: true
-                      CarDeckRestroom: true
-                      CarDeckShelter: false
-                      Elevator: true
-                      ADAAccessible: true
-                      MainCabinGalley: true
-                      MainCabinRestroom: true
-                      PublicWifi: false
-                      ADAInfo: The M/V Cathlamet has elevator access from the car deck to the passenger deck. The vessel has accessible restrooms located on both the main passenger deck and the car deck. Notify a ticket seller if you are traveling by car and need to park near an elevator or car deck restroom. The main passenger deck also has vending and newspaper machines and a galley. This vessel is equipped with our visual paging system.
-                      AdditionalInfo: ' '
-                      VesselNameDesc: "From the Kathlamet tribe, the Chinook word calamet  meaning \"stone,\" was given to the tribe because its members lived along a rocky stretch of the Columbia River. A city also bears its name. \r\n\r\n"
-                      VesselHistory: ' '
-                      Beam: 78' 8"
-                      CityBuilt: Seattle
-                      SpeedInKnots: 16
-                      Draft: 16' 7"
-                      EngineCount: 2
-                      Horsepower: 5100
-                      Length: 328' 2"
-                      MaxPassengerCount: 1196
-                      PassengerOnly: false
-                      FastFerry: false
-                      PropulsionInfo: DIESEL
-                      TallDeckClearance: 186
-                      RegDeckSpace: 124
-                      TallDeckSpace: 25
-                      Tonnage: 2477
-                      Displacement: 3310
-                      YearBuilt: 1981
-                      YearRebuilt: 1993
-                      VesselDrawingImg: null
-                      SolasCertified: false
-                      MaxPassengerCountForInternational: null
-                    - _note: ... 20 more items
-  /vesselLocations/{VesselID}:
-    get:
-      summary: Returns a VesselLocation object containing real-time position and status information for the specified vessel.
-      operationId: getVesselLocationsByVesselId
-      tags:
-        - vessel-locations
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getVesselLocationsByVesselId } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getVesselLocationsByVesselId,
-              params: {
-                "VesselID": 18
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/VesselLocationsByVesselIdInputVesselIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/VesselLocationsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    VesselID: 18
-                    VesselName: Kitsap
-                    Mmsi: 366772980
-                    DepartingTerminalID: 138
-                    DepartingTerminalName: Everett Harbor
-                    DepartingTerminalAbbrev: EVH
-                    ArrivingTerminalID: null
-                    ArrivingTerminalName: null
-                    ArrivingTerminalAbbrev: null
-                    Latitude: 47.981485
-                    Longitude: -122.222075
-                    Speed: 0
-                    Heading: 285
-                    InService: false
-                    AtDock: true
-                    LeftDock: null
-                    Eta: null
-                    EtaBasis: null
-                    ScheduledDeparture: null
-                    OpRouteAbbrev: []
-                    VesselPositionNum: null
-                    SortSeq: 9999
-                    ManagedBy: 1
-                    TimeStamp: 2025-10-22T16:15:39.000Z
-                    VesselWatchShutID: 6
-                    VesselWatchShutMsg: Vessel temporarily out of service
-                    VesselWatchShutFlag: '0'
-                    VesselWatchStatus: '0'
-                    VesselWatchMsg: 'WSF''s VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. '
   /vesselVerbose/{VesselID}:
     get:
       summary: Returns a single VesselVerbose object for the specified vessel identifier.
@@ -1784,6 +1405,426 @@ paths:
                     VesselDrawingImg: null
                     SolasCertified: false
                     MaxPassengerCountForInternational: null
+  /vesselHistory:
+    get:
+      summary: Returns multiple VesselHistory objects for all vessels in fleet.
+      operationId: getVesselHistories
+      tags:
+        - vessel-histories
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselHistories } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselHistories,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VesselHistoriesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 21 total)
+                  value:
+                    - VesselId: 21
+                      Vessel: Spokane
+                      Departing: null
+                      Arriving: null
+                      ScheduledDepart: null
+                      ActualDepart: null
+                      EstArrival: null
+                      Date: null
+                    - _note: ... 20 more items
+  /vesselLocations/{VesselID}:
+    get:
+      summary: Returns a VesselLocation object containing real-time position and status information for the specified vessel.
+      operationId: getVesselLocationsByVesselId
+      tags:
+        - vessel-locations
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselLocationsByVesselId } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselLocationsByVesselId,
+              params: {
+                "VesselID": 18
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/VesselLocationsByVesselIdInputVesselIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VesselLocationsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    VesselID: 18
+                    VesselName: Kitsap
+                    Mmsi: 366772980
+                    DepartingTerminalID: 138
+                    DepartingTerminalName: Everett Harbor
+                    DepartingTerminalAbbrev: EVH
+                    ArrivingTerminalID: null
+                    ArrivingTerminalName: null
+                    ArrivingTerminalAbbrev: null
+                    Latitude: 47.981485
+                    Longitude: -122.222075
+                    Speed: 0
+                    Heading: 285
+                    InService: false
+                    AtDock: true
+                    LeftDock: null
+                    Eta: null
+                    EtaBasis: null
+                    ScheduledDeparture: null
+                    OpRouteAbbrev: []
+                    VesselPositionNum: null
+                    SortSeq: 9999
+                    ManagedBy: 1
+                    TimeStamp: 2025-10-22T16:15:39.000Z
+                    VesselWatchShutID: 6
+                    VesselWatchShutMsg: Vessel temporarily out of service
+                    VesselWatchShutFlag: '0'
+                    VesselWatchStatus: '0'
+                    VesselWatchMsg: 'WSF''s VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. '
+  /vesselBasics/{VesselID}:
+    get:
+      summary: Returns a VesselBasic object containing essential identification and status information for the specified vessel.
+      operationId: getVesselBasicsByVesselId
+      tags:
+        - vessel-basics
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselBasicsByVesselId } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselBasicsByVesselId,
+              params: {
+                "VesselID": 74
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/VesselBasicsByVesselIdInputVesselIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VesselBasicsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    VesselID: 74
+                    VesselSubjectID: 487
+                    VesselName: Chimacum
+                    VesselAbbrev: CHM
+                    Class:
+                      ClassID: 100
+                      ClassSubjectID: 319
+                      ClassName: Olympic
+                      SortSeq: 35
+                      DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/8-olympic-2014.gif
+                      SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/3-issaquah-sillouette_sml.gif
+                      PublicDisplayName: Olympic
+                    Status: 1
+                    OwnedByWSF: true
+  /vesselVerbose:
+    get:
+      summary: Returns multiple VesselVerbose objects for all vessels in fleet.
+      operationId: getVesselsVerbose
+      tags:
+        - vessel-verbose
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselsVerbose } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselsVerbose,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VesselsVerboseOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 21 total)
+                  value:
+                    - VesselID: 1
+                      VesselSubjectID: 1
+                      VesselName: Cathlamet
+                      VesselAbbrev: CAT
+                      Class:
+                        ClassID: 10
+                        ClassSubjectID: 310
+                        ClassName: Issaquah 130
+                        SortSeq: 40
+                        DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif
+                        SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif
+                        PublicDisplayName: Issaquah
+                      Status: 1
+                      OwnedByWSF: true
+                      CarDeckRestroom: true
+                      CarDeckShelter: false
+                      Elevator: true
+                      ADAAccessible: true
+                      MainCabinGalley: true
+                      MainCabinRestroom: true
+                      PublicWifi: false
+                      ADAInfo: The M/V Cathlamet has elevator access from the car deck to the passenger deck. The vessel has accessible restrooms located on both the main passenger deck and the car deck. Notify a ticket seller if you are traveling by car and need to park near an elevator or car deck restroom. The main passenger deck also has vending and newspaper machines and a galley. This vessel is equipped with our visual paging system.
+                      AdditionalInfo: ' '
+                      VesselNameDesc: "From the Kathlamet tribe, the Chinook word calamet  meaning \"stone,\" was given to the tribe because its members lived along a rocky stretch of the Columbia River. A city also bears its name. \r\n\r\n"
+                      VesselHistory: ' '
+                      Beam: 78' 8"
+                      CityBuilt: Seattle
+                      SpeedInKnots: 16
+                      Draft: 16' 7"
+                      EngineCount: 2
+                      Horsepower: 5100
+                      Length: 328' 2"
+                      MaxPassengerCount: 1196
+                      PassengerOnly: false
+                      FastFerry: false
+                      PropulsionInfo: DIESEL
+                      TallDeckClearance: 186
+                      RegDeckSpace: 124
+                      TallDeckSpace: 25
+                      Tonnage: 2477
+                      Displacement: 3310
+                      YearBuilt: 1981
+                      YearRebuilt: 1993
+                      VesselDrawingImg: null
+                      SolasCertified: false
+                      MaxPassengerCountForInternational: null
+                    - _note: ... 20 more items
+  /vesselStats:
+    get:
+      summary: Returns multiple VesselStat objects for all vessels in the fleet.
+      operationId: getVesselStats
+      tags:
+        - vessel-stats
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselStats } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselStats,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VesselStatsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 21 total)
+                  value:
+                    - VesselID: 1
+                      VesselSubjectID: 1
+                      VesselName: Cathlamet
+                      VesselAbbrev: CAT
+                      Class:
+                        ClassID: 10
+                        ClassSubjectID: 310
+                        ClassName: Issaquah 130
+                        SortSeq: 40
+                        DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130.gif
+                        SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/4-issaquah130-sillouette_sml.gif
+                        PublicDisplayName: Issaquah
+                      VesselNameDesc: "From the Kathlamet tribe, the Chinook word calamet  meaning \"stone,\" was given to the tribe because its members lived along a rocky stretch of the Columbia River. A city also bears its name. \r\n\r\n"
+                      VesselHistory: ' '
+                      Beam: 78' 8"
+                      CityBuilt: Seattle
+                      SpeedInKnots: 16
+                      Draft: 16' 7"
+                      EngineCount: 2
+                      Horsepower: 5100
+                      Length: 328' 2"
+                      MaxPassengerCount: 1196
+                      PassengerOnly: false
+                      FastFerry: false
+                      PropulsionInfo: DIESEL
+                      TallDeckClearance: 186
+                      RegDeckSpace: 124
+                      TallDeckSpace: 25
+                      Tonnage: 2477
+                      Displacement: 3310
+                      YearBuilt: 1981
+                      YearRebuilt: 1993
+                      VesselDrawingImg: null
+                      SolasCertified: false
+                      MaxPassengerCountForInternational: null
+                    - _note: ... 20 more items
+  /vesselAccommodations/{VesselID}:
+    get:
+      summary: Returns VesselAccommodation data for the vesselaccommodation with the given identifier.
+      operationId: getVesselAccommodationsByVesselId
+      tags:
+        - vessel-accommodations
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselAccommodationsByVesselId } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselAccommodationsByVesselId,
+              params: {
+                "VesselID": 65
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/VesselAccommodationsByVesselIdInputVesselIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VesselAccommodationsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    VesselID: 65
+                    VesselSubjectID: 428
+                    VesselName: Chetzemoka
+                    VesselAbbrev: CHZ
+                    Class:
+                      ClassID: 162
+                      ClassSubjectID: 427
+                      ClassName: Kwa-di Tabil
+                      SortSeq: 75
+                      DrawingImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/13-kwaditabil.gif
+                      SilhouetteImg: https://www.wsdot.wa.gov/ferries/images/pages/boat_drawings/13-kwaditabil-silouette_sml.gif
+                      PublicDisplayName: Kwa-di Tabil
+                    CarDeckRestroom: false
+                    CarDeckShelter: false
+                    Elevator: true
+                    ADAAccessible: true
+                    MainCabinGalley: true
+                    MainCabinRestroom: true
+                    PublicWifi: false
+                    ADAInfo: "The M/V Chetzemoka has elevator access from the auto deck to all passenger deck levels. In the event of an elevator closure, a crew member can assist passengers with mobility disabilities to the passenger deck by way of a small freight elevator, though it is not ADA accessible. When you arrive at the terminal, notify the ticket seller if you need to park near the elevator. The main passenger deck has accessible restrooms, vending machines and a galley.\r\n"
+                    AdditionalInfo: null
+  /vesselLocations:
+    get:
+      summary: Returns multiple VesselLocation objects for all vessels in the fleet.
+      operationId: getVesselLocations
+      tags:
+        - vessel-locations
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getVesselLocations } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getVesselLocations,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VesselLocationsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 21 total)
+                  value:
+                    - VesselID: 2
+                      VesselName: Chelan
+                      Mmsi: 366709770
+                      DepartingTerminalID: 1
+                      DepartingTerminalName: Anacortes
+                      DepartingTerminalAbbrev: ANA
+                      ArrivingTerminalID: null
+                      ArrivingTerminalName: null
+                      ArrivingTerminalAbbrev: null
+                      Latitude: 48.50735
+                      Longitude: -122.67697
+                      Speed: 0.2
+                      Heading: 205
+                      InService: true
+                      AtDock: true
+                      LeftDock: null
+                      Eta: null
+                      EtaBasis: null
+                      ScheduledDeparture: 2025-11-05T23:20:00.000Z
+                      OpRouteAbbrev:
+                        - ana-sj
+                      VesselPositionNum: 1
+                      SortSeq: 20
+                      ManagedBy: 1
+                      TimeStamp: 2025-11-05T22:53:09.000Z
+                      VesselWatchShutID: 2
+                      VesselWatchShutMsg: Vessel information unavailable
+                      VesselWatchShutFlag: '0'
+                      VesselWatchStatus: '0'
+                      VesselWatchMsg: 'WSF''s VesselWatch page is currently not responding and is out of service. Thank you for your patience while we work to restore this page. '
+                    - _note: ... 20 more items
   /vesselHistory/{VesselName}/{DateStart}/{DateEnd}:
     get:
       summary: Returns multiple VesselHistory objects for the specified vessel and date range.
@@ -1834,47 +1875,6 @@ paths:
                       EstArrival: 2025-09-01T07:56:54.000Z
                       Date: 2025-09-01T07:00:00.000Z
                     - _note: ... 680 more items
-  /vesselHistory:
-    get:
-      summary: Returns multiple VesselHistory objects for all vessels in fleet.
-      operationId: getVesselHistories
-      tags:
-        - vessel-histories
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getVesselHistories } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getVesselHistories,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/VesselHistoriesOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 21 total)
-                  value:
-                    - VesselId: 21
-                      Vessel: Spokane
-                      Departing: null
-                      Arriving: null
-                      ScheduledDepart: null
-                      ActualDepart: null
-                      EstArrival: null
-                      Date: null
-                    - _note: ... 20 more items
 webhooks: {}
 tags:
   - name: cache-flush-date

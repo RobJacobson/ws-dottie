@@ -358,29 +358,24 @@ paths:
                       MilePost: 1
                       RoadName: '520'
                     StartTime: 2021-09-13T13:59:00.000Z
-  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
+  /getEventCategoriesAsJson:
     get:
-      summary: Returns an array of Alert objects for specified WSDOT region.
-      operationId: getAlertsByRegionId
+      summary: Returns an array of strings for all available event categories.
+      operationId: getEventCategories
       tags:
-        - highwayAlerts
+        - event-categories
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getAlertsByRegionId } from 'ws-dottie';
+            import { fetchDottie, getEventCategories } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getAlertsByRegionId,
-              params: {
-                "RegionID": 9
-              },
+              endpoint: getEventCategories,
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/AlertsByRegionIdInputRegionIDParam'
       responses:
         '200':
           description: Success
@@ -389,38 +384,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AlertsOutput'
+                  $ref: '#/components/schemas/EventCategoriesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 85 total)
+                  description: Example of a successful response from the API (showing first item of 123 total)
                   value:
-                    - AlertID: 473325
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: B
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: '005'
-                      EndTime: null
-                      EventCategory: Rest Area
-                      EventStatus: Open
-                      ExtendedDescription: ''
-                      HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
-                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
-                      Priority: High
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: SB Scale 39/Silver Lake Rest Area
-                        Direction: B
-                        Latitude: 47.907026048
-                        Longitude: -122.210954765
-                        MilePost: 188.5
-                        RoadName: '005'
-                      StartTime: 2021-09-24T13:00:00.000Z
-                    - _note: ... 84 more items
+                    - ''
+                    - _note: ... 122 more items
   /getAlertsByMapAreaAsJson?MapArea={MapArea}:
     get:
       summary: Returns an array of Alert objects for specified geographic area.
@@ -483,19 +454,19 @@ paths:
                         MilePost: 188.5
                         RoadName: '005'
                       StartTime: 2021-09-24T13:00:00.000Z
-  /getEventCategoriesAsJson:
+  /getAlertsAsJson:
     get:
-      summary: Returns an array of strings for all available event categories.
-      operationId: getEventCategories
+      summary: Returns an array of Alert objects for all current highway incidents.
+      operationId: getAlerts
       tags:
-        - event-categories
+        - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getEventCategories } from 'ws-dottie';
+            import { fetchDottie, getAlerts } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getEventCategories,
+              endpoint: getAlerts,
               fetchMode: 'native',
               validate: true
             });
@@ -509,49 +480,38 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventCategoriesOutput'
+                  $ref: '#/components/schemas/AlertsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 123 total)
+                  description: Example of a successful response from the API (showing first item of 151 total)
                   value:
-                    - ''
-                    - _note: ... 122 more items
-  /getMapAreasAsJson:
-    get:
-      summary: Returns an array of Area objects for all available geographic regions.
-      operationId: getMapAreas
-      tags:
-        - alertAreas
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getMapAreas } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getMapAreas,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/MapAreasOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 51 total)
-                  value:
-                    - MapArea: L2CE
-                      MapAreaDescription: Eastern
-                    - _note: ... 50 more items
+                    - AlertID: 669379
+                      County: null
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: S
+                        Latitude: 46.32318804
+                        Longitude: -122.913296736
+                        MilePost: 52.6
+                        RoadName: '005'
+                      EndTime: 2025-11-06T14:30:00.000Z
+                      EventCategory: Maintenance
+                      EventStatus: Open
+                      ExtendedDescription: ''
+                      HeadlineDescription: "From 8 p.m., Wednesday, Nov. 5 to 6:30 a.m., Thursday, Nov. 6: The left lane along southbound I-5 between Avery Road at milepost 68.5 and Barnes Drive at milepost 52.6 will close overnight for work to clear drains and remove debris from the shoulder. \r\n\r\nTravelers are reminded to slow down and use caution through the work zone."
+                      LastUpdatedTime: 2025-10-30T22:26:13.010Z
+                      Priority: Medium
+                      Region: Southwest
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: S
+                        Latitude: 46.548661572
+                        Longitude: -122.876750432
+                        MilePost: 68.5
+                        RoadName: '005'
+                      StartTime: 2025-11-05T20:00:00.000Z
+                    - _note: ... 150 more items
   /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
     get:
       summary: Returns an array of Alert objects matching specified search criteria.
@@ -596,9 +556,9 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 4 total)
+                  description: Example of a successful response from the API (showing first item of 5 total)
                   value:
-                    - AlertID: 669913
+                    - AlertID: 669966
                       County: null
                       EndRoadwayLocation:
                         Description: null
@@ -607,36 +567,36 @@ paths:
                         Longitude: 0
                         MilePost: 0
                         RoadName: '405'
-                      EndTime: 2025-11-04T18:58:18.000Z
-                      EventCategory: Disabled vehicle
+                      EndTime: 2025-11-05T01:23:57.000Z
+                      EventCategory: Collision
                       EventStatus: Closed
                       ExtendedDescription: ''
-                      HeadlineDescription: 'Cleared 10:58 AM : On I-405 northbound just south of NE 85th St (MP 18) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.'
-                      LastUpdatedTime: 2025-11-04T18:58:18.587Z
+                      HeadlineDescription: 'Cleared 5:23 PM : On the I-405 northbound off-ramp to NE 8th St (MP 13) there is a collision blocking the ramp.  The Incident Response Team, Tow Assistance, and the State Patrol have arrived on the scene.'
+                      LastUpdatedTime: 2025-11-05T01:23:57.723Z
                       Priority: Highest
                       Region: Northwest
                       StartRoadwayLocation:
                         Description: null
                         Direction: 'N'
-                        Latitude: 47.677393108
-                        Longitude: -122.184339333
-                        MilePost: 17.99
+                        Latitude: 47.610050463
+                        Longitude: -122.188362041
+                        MilePost: 13.31
                         RoadName: '405'
-                      StartTime: 2025-11-04T18:35:00.000Z
-                    - _note: ... 3 more items
-  /getAlertsAsJson:
+                      StartTime: 2025-11-05T01:07:00.000Z
+                    - _note: ... 4 more items
+  /getMapAreasAsJson:
     get:
-      summary: Returns an array of Alert objects for all current highway incidents.
-      operationId: getAlerts
+      summary: Returns an array of Area objects for all available geographic regions.
+      operationId: getMapAreas
       tags:
-        - highwayAlerts
+        - alertAreas
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getAlerts } from 'ws-dottie';
+            import { fetchDottie, getMapAreas } from 'ws-dottie';
 
             const data = await fetchDottie({
-              endpoint: getAlerts,
+              endpoint: getMapAreas,
               fetchMode: 'native',
               validate: true
             });
@@ -650,38 +610,78 @@ paths:
               schema:
                 type: array
                 items:
+                  $ref: '#/components/schemas/MapAreasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 51 total)
+                  value:
+                    - MapArea: L2CE
+                      MapAreaDescription: Eastern
+                    - _note: ... 50 more items
+  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
+    get:
+      summary: Returns an array of Alert objects for specified WSDOT region.
+      operationId: getAlertsByRegionId
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getAlertsByRegionId } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getAlertsByRegionId,
+              params: {
+                "RegionID": 9
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/AlertsByRegionIdInputRegionIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
                   $ref: '#/components/schemas/AlertsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 152 total)
+                  description: Example of a successful response from the API (showing first item of 80 total)
                   value:
-                    - AlertID: 667568
+                    - AlertID: 638228
                       County: null
                       EndRoadwayLocation:
-                        Description: null
-                        Direction: E
-                        Latitude: 47.578523508
-                        Longitude: -122.135691785
-                        MilePost: 11.75
-                        RoadName: '090'
-                      EndTime: 2025-11-05T12:00:00.000Z
+                        Description: 300th St NW/Freeborn Rd
+                        Direction: B
+                        Latitude: 48.26714664
+                        Longitude: -122.267880673
+                        MilePost: 215
+                        RoadName: '005'
+                      EndTime: null
                       EventCategory: Construction
                       EventStatus: Open
                       ExtendedDescription: ''
-                      HeadlineDescription: "From 11:59 p.m. Tuesday, Nov. 4, to 4 a.m. Wednesday, Nov. 5, eastbound I-90 will close at Factoria Boulevard SE for sign bridge installation. \r\n\r\nI-405 ramps to eastbound I-90 also will close during the same times. \r\n\r\nSigned detours will guide people around the closures."
-                      LastUpdatedTime: 2025-10-24T17:34:06.387Z
-                      Priority: High
+                      HeadlineDescription: "There is construction between 236th St NE (MP 210) & 300th St NW (MP 214) in Stanwood for I-5 Secret Creek Fish Passage work.\r\n\r\nNorthbound I-5 traffic is on a two-lane bypass road, west of the mainline. Oversized loads are advised of 26-ft lane width limitations on the northbound bypass.\r\n\r\nSouthbound I-5 traffic is on a two-lane bypass road, west of the mainline. Oversized loads are advised of 26-ft lane width limitations on the southbound bypass.\r\n\r\nExpect speed reductions in the work zone."
+                      LastUpdatedTime: 2025-07-12T18:42:16.103Z
+                      Priority: Medium
                       Region: Northwest
                       StartRoadwayLocation:
-                        Description: null
-                        Direction: E
-                        Latitude: 47.579523838
-                        Longitude: -122.183771497
-                        MilePost: 9.5
-                        RoadName: '090'
-                      StartTime: 2025-10-24T17:32:00.000Z
-                    - _note: ... 151 more items
+                        Description: 236th St NE/Kackman Rd
+                        Direction: B
+                        Latitude: 48.205627293
+                        Longitude: -122.213993693
+                        MilePost: 210
+                        RoadName: '005'
+                      StartTime: 2025-02-28T21:55:00.000Z
+                    - _note: ... 79 more items
 webhooks: {}
 tags:
   - name: highwayAlerts

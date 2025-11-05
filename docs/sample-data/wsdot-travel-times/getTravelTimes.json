@@ -1,6 +1,6 @@
 [
   {
-    "AverageTime": 41,
+    "AverageTime": 36,
     "CurrentTime": 32,
     "Description": "Everett to Downtown Seattle using HOV lanes",
     "Distance": 26.72,
@@ -21,11 +21,11 @@
       "MilePost": 192.55,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 2
   },
   {
-    "AverageTime": 40,
+    "AverageTime": 30,
     "CurrentTime": 33,
     "Description": "Downtown Seattle to Everett using HOV lanes",
     "Distance": 26.94,
@@ -46,12 +46,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 3
   },
   {
-    "AverageTime": 57,
-    "CurrentTime": 48,
+    "AverageTime": 41,
+    "CurrentTime": 50,
     "Description": "Downtown Seattle to Everett",
     "Distance": 26.94,
     "EndPoint": {
@@ -71,12 +71,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 4
   },
   {
-    "AverageTime": 15,
-    "CurrentTime": 16,
+    "AverageTime": 14,
+    "CurrentTime": 14,
     "Description": "Downtown Bellevue to Issaquah",
     "Distance": 9.28,
     "EndPoint": {
@@ -96,7 +96,7 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 5
   },
   {
@@ -121,7 +121,7 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 6
   },
   {
@@ -146,12 +146,12 @@
       "MilePost": 16.96,
       "RoadName": "090"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 7
   },
   {
-    "AverageTime": 11,
-    "CurrentTime": 10,
+    "AverageTime": 10,
+    "CurrentTime": 11,
     "Description": "Issaquah to Downtown Bellevue",
     "Distance": 9.25,
     "EndPoint": {
@@ -171,12 +171,12 @@
       "MilePost": 16.96,
       "RoadName": "090"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 8
   },
   {
-    "AverageTime": 55,
-    "CurrentTime": 53,
+    "AverageTime": 46,
+    "CurrentTime": 50,
     "Description": "Downtown Bellevue to Everett",
     "Distance": 26.76,
     "EndPoint": {
@@ -196,12 +196,12 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 9
   },
   {
-    "AverageTime": 34,
-    "CurrentTime": 32,
+    "AverageTime": 30,
+    "CurrentTime": 31,
     "Description": "Everett to Downtown Bellevue",
     "Distance": 26.86,
     "EndPoint": {
@@ -221,12 +221,12 @@
       "MilePost": 192.55,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 10
   },
   {
-    "AverageTime": 33,
-    "CurrentTime": 31,
+    "AverageTime": 31,
+    "CurrentTime": 30,
     "Description": "Downtown Bellevue to Everett using HOV lanes",
     "Distance": 26.76,
     "EndPoint": {
@@ -246,7 +246,7 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 11
   },
   {
@@ -271,7 +271,7 @@
       "MilePost": 192.55,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 12
   },
   {
@@ -296,7 +296,7 @@
       "MilePost": 143.98,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 13
   },
   {
@@ -321,12 +321,12 @@
       "MilePost": 143.98,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 14
   },
   {
-    "AverageTime": 16,
-    "CurrentTime": 17,
+    "AverageTime": 15,
+    "CurrentTime": 14,
     "Description": "SeaTac to Federal Way using HOV lanes",
     "Distance": 9.16,
     "EndPoint": {
@@ -346,12 +346,12 @@
       "MilePost": 152.8,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 15
   },
   {
-    "AverageTime": 20,
-    "CurrentTime": 19,
+    "AverageTime": 17,
+    "CurrentTime": 17,
     "Description": "SeaTac to Federal Way",
     "Distance": 9.16,
     "EndPoint": {
@@ -371,12 +371,12 @@
       "MilePost": 152.8,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 16
   },
   {
     "AverageTime": 28,
-    "CurrentTime": 25,
+    "CurrentTime": 27,
     "Description": "Federal Way to Downtown Seattle",
     "Distance": 21.85,
     "EndPoint": {
@@ -396,7 +396,7 @@
       "MilePost": 143.98,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 17
   },
   {
@@ -421,12 +421,12 @@
       "MilePost": 143.98,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 18
   },
   {
-    "AverageTime": 34,
-    "CurrentTime": 36,
+    "AverageTime": 33,
+    "CurrentTime": 34,
     "Description": "Downtown Seattle to Federal Way using HOV lanes",
     "Distance": 22.19,
     "EndPoint": {
@@ -446,11 +446,11 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 19
   },
   {
-    "AverageTime": 41,
+    "AverageTime": 39,
     "CurrentTime": 42,
     "Description": "Downtown Seattle to Federal Way",
     "Distance": 22.19,
@@ -471,12 +471,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 20
   },
   {
-    "AverageTime": 61,
-    "CurrentTime": 64,
+    "AverageTime": 59,
+    "CurrentTime": 59,
     "Description": "Downtown Bellevue to Federal Way",
     "Distance": 24.47,
     "EndPoint": {
@@ -496,11 +496,11 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 21
   },
   {
-    "AverageTime": 31,
+    "AverageTime": 27,
     "CurrentTime": 28,
     "Description": "Federal Way to Downtown Bellevue",
     "Distance": 24.13,
@@ -521,7 +521,7 @@
       "MilePost": 143.98,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 22
   },
   {
@@ -546,11 +546,11 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 23
   },
   {
-    "AverageTime": 25,
+    "AverageTime": 24,
     "CurrentTime": 24,
     "Description": "Federal Way to Downtown Bellevue using HOV lanes",
     "Distance": 24.13,
@@ -571,12 +571,12 @@
       "MilePost": 143.98,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 24
   },
   {
-    "AverageTime": 26,
-    "CurrentTime": 22,
+    "AverageTime": 18,
+    "CurrentTime": 23,
     "Description": "Downtown Seattle to Lynnwood using HOV lanes",
     "Distance": 15.73,
     "EndPoint": {
@@ -596,12 +596,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 25
   },
   {
-    "AverageTime": 30,
-    "CurrentTime": 21,
+    "AverageTime": 28,
+    "CurrentTime": 22,
     "Description": "Lynnwood to Downtown Seattle",
     "Distance": 15.23,
     "EndPoint": {
@@ -621,11 +621,11 @@
       "MilePost": 181.06,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 26
   },
   {
-    "AverageTime": 37,
+    "AverageTime": 24,
     "CurrentTime": 32,
     "Description": "Downtown Seattle to Lynnwood",
     "Distance": 15.73,
@@ -646,12 +646,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 27
   },
   {
-    "AverageTime": 17,
-    "CurrentTime": 19,
+    "AverageTime": 18,
+    "CurrentTime": 22,
     "Description": "Renton to Downtown Seattle using HOV lanes",
     "Distance": 13.5,
     "EndPoint": {
@@ -671,12 +671,12 @@
       "MilePost": 2.21,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 30
   },
   {
-    "AverageTime": 17,
-    "CurrentTime": 16,
+    "AverageTime": 16,
+    "CurrentTime": 17,
     "Description": "Downtown Seattle to Renton using HOV lanes",
     "Distance": 13.59,
     "EndPoint": {
@@ -696,12 +696,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 31
   },
   {
-    "AverageTime": 19,
-    "CurrentTime": 17,
+    "AverageTime": 21,
+    "CurrentTime": 21,
     "Description": "Renton to Downtown Seattle",
     "Distance": 13.67,
     "EndPoint": {
@@ -721,12 +721,12 @@
       "MilePost": 2.21,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 32
   },
   {
-    "AverageTime": 20,
-    "CurrentTime": 18,
+    "AverageTime": 19,
+    "CurrentTime": 22,
     "Description": "Downtown Seattle to Renton",
     "Distance": 13.63,
     "EndPoint": {
@@ -746,12 +746,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 33
   },
   {
-    "AverageTime": 36,
-    "CurrentTime": 37,
+    "AverageTime": 27,
+    "CurrentTime": 31,
     "Description": "Downtown Bellevue to Lynnwood",
     "Distance": 16.46,
     "EndPoint": {
@@ -771,12 +771,12 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 35
   },
   {
     "AverageTime": 16,
-    "CurrentTime": 18,
+    "CurrentTime": 16,
     "Description": "Downtown Bellevue to Lynnwood using HOV lanes",
     "Distance": 15.93,
     "EndPoint": {
@@ -796,7 +796,7 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 36
   },
   {
@@ -821,12 +821,12 @@
       "MilePost": 30.06,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 37
   },
   {
-    "AverageTime": 20,
-    "CurrentTime": 19,
+    "AverageTime": 19,
+    "CurrentTime": 20,
     "Description": "Lynnwood to Downtown Bellevue",
     "Distance": 16.73,
     "EndPoint": {
@@ -846,7 +846,7 @@
       "MilePost": 30.06,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 38
   },
   {
@@ -871,7 +871,7 @@
       "MilePost": 192.55,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 39
   },
   {
@@ -896,7 +896,7 @@
       "MilePost": 192.55,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 40
   },
   {
@@ -921,12 +921,12 @@
       "MilePost": 152.8,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 41
   },
   {
-    "AverageTime": 19,
-    "CurrentTime": 21,
+    "AverageTime": 18,
+    "CurrentTime": 20,
     "Description": "Downtown Seattle to SeaTac using HOV lanes",
     "Distance": 13.03,
     "EndPoint": {
@@ -946,12 +946,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 42
   },
   {
-    "AverageTime": 19,
-    "CurrentTime": 16,
+    "AverageTime": 20,
+    "CurrentTime": 20,
     "Description": "SeaTac to Downtown Seattle",
     "Distance": 13.03,
     "EndPoint": {
@@ -971,12 +971,12 @@
       "MilePost": 152.8,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 43
   },
   {
     "AverageTime": 22,
-    "CurrentTime": 23,
+    "CurrentTime": 24,
     "Description": "Downtown Seattle to SeaTac",
     "Distance": 13.03,
     "EndPoint": {
@@ -996,12 +996,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 44
   },
   {
-    "AverageTime": 55,
-    "CurrentTime": 54,
+    "AverageTime": 53,
+    "CurrentTime": 55,
     "Description": "Alderwood to Southcenter via I-405",
     "Distance": 29.95,
     "EndPoint": {
@@ -1021,12 +1021,12 @@
       "MilePost": 30.06,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 51
   },
   {
-    "AverageTime": 47,
-    "CurrentTime": 35,
+    "AverageTime": 46,
+    "CurrentTime": 42,
     "Description": "Alderwood to Southcenter via I-5",
     "Distance": 27.97,
     "EndPoint": {
@@ -1046,12 +1046,12 @@
       "MilePost": 182.62,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 52
   },
   {
-    "AverageTime": 63,
-    "CurrentTime": 60,
+    "AverageTime": 45,
+    "CurrentTime": 50,
     "Description": "Southcenter to Alderwood via I-405",
     "Distance": 29.62,
     "EndPoint": {
@@ -1071,12 +1071,12 @@
       "MilePost": 0.44,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 53
   },
   {
-    "AverageTime": 64,
-    "CurrentTime": 54,
+    "AverageTime": 51,
+    "CurrentTime": 59,
     "Description": "I-5 NB from I-5 @ I-405 in Tukwila (MP 155) to I-5 @ I-405 in L",
     "Distance": 27.39,
     "EndPoint": {
@@ -1096,12 +1096,12 @@
       "MilePost": 154.65,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 54
   },
   {
-    "AverageTime": 10,
-    "CurrentTime": 10,
+    "AverageTime": 9,
+    "CurrentTime": 9,
     "Description": "Downtown Bellevue to SR 522 in Bothell using HOV lanes",
     "Distance": 9.41,
     "EndPoint": {
@@ -1121,7 +1121,7 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 56
   },
   {
@@ -1146,12 +1146,12 @@
       "MilePost": 23.01,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 57
   },
   {
-    "AverageTime": 13,
-    "CurrentTime": 10,
+    "AverageTime": 11,
+    "CurrentTime": 12,
     "Description": "SR 522 in Bothell to Downtown Bellevue",
     "Distance": 9.68,
     "EndPoint": {
@@ -1171,12 +1171,12 @@
       "MilePost": 23.01,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 58
   },
   {
-    "AverageTime": 35,
-    "CurrentTime": 33,
+    "AverageTime": 28,
+    "CurrentTime": 32,
     "Description": "Woodinville to Downtown Seattle",
     "Distance": 20.76,
     "EndPoint": {
@@ -1196,12 +1196,12 @@
       "MilePost": 23.01,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 59
   },
   {
-    "AverageTime": 22,
-    "CurrentTime": 21,
+    "AverageTime": 20,
+    "CurrentTime": 20,
     "Description": "Woodinville to Downtown Seattle",
     "Distance": 17.25,
     "EndPoint": {
@@ -1221,12 +1221,12 @@
       "MilePost": 23.01,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 60
   },
   {
-    "AverageTime": 32,
-    "CurrentTime": 33,
+    "AverageTime": 31,
+    "CurrentTime": 32,
     "Description": "Downtown Bellevue to Tukwila",
     "Distance": 13.22,
     "EndPoint": {
@@ -1246,12 +1246,12 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 63
   },
   {
-    "AverageTime": 24,
-    "CurrentTime": 26,
+    "AverageTime": 23,
+    "CurrentTime": 28,
     "Description": "Downtown Bellevue to Tukwila using HOV lanes",
     "Distance": 13.22,
     "EndPoint": {
@@ -1271,11 +1271,11 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 64
   },
   {
-    "AverageTime": 15,
+    "AverageTime": 14,
     "CurrentTime": 14,
     "Description": "Tukwila to Downtown Bellevue using HOV lanes",
     "Distance": 13.49,
@@ -1296,7 +1296,7 @@
       "MilePost": 0.11,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 65
   },
   {
@@ -1321,12 +1321,12 @@
       "MilePost": 15.86,
       "RoadName": "167"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 67
   },
   {
-    "AverageTime": 10,
-    "CurrentTime": 10,
+    "AverageTime": 9,
+    "CurrentTime": 9,
     "Description": "Auburn to Renton using HOV lanes",
     "Distance": 10.28,
     "EndPoint": {
@@ -1346,12 +1346,12 @@
       "MilePost": 15.86,
       "RoadName": "167"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 68
   },
   {
-    "AverageTime": 13,
-    "CurrentTime": 13,
+    "AverageTime": 12,
+    "CurrentTime": 12,
     "Description": "Renton to Auburn using HOV lanes",
     "Distance": 10.28,
     "EndPoint": {
@@ -1371,12 +1371,12 @@
       "MilePost": 26.14,
       "RoadName": "167"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 69
   },
   {
-    "AverageTime": 24,
-    "CurrentTime": 35,
+    "AverageTime": 22,
+    "CurrentTime": 29,
     "Description": "Renton to Auburn",
     "Distance": 10.28,
     "EndPoint": {
@@ -1396,12 +1396,12 @@
       "MilePost": 26.14,
       "RoadName": "167"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 70
   },
   {
     "AverageTime": 15,
-    "CurrentTime": 15,
+    "CurrentTime": 18,
     "Description": "Issaquah to Downtown Seattle using HOV lanes",
     "Distance": 15.56,
     "EndPoint": {
@@ -1421,12 +1421,12 @@
       "MilePost": 16.96,
       "RoadName": "090"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 71
   },
   {
     "AverageTime": 14,
-    "CurrentTime": 14,
+    "CurrentTime": 15,
     "Description": "Downtown Seattle to Issaquah using HOV lanes",
     "Distance": 14.98,
     "EndPoint": {
@@ -1446,12 +1446,12 @@
       "MilePost": 165.13,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 72
   },
   {
-    "AverageTime": 18,
-    "CurrentTime": 17,
+    "AverageTime": 16,
+    "CurrentTime": 19,
     "Description": "Issaquah to Downtown Seattle",
     "Distance": 15.56,
     "EndPoint": {
@@ -1471,11 +1471,11 @@
       "MilePost": 16.96,
       "RoadName": "090"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 73
   },
   {
-    "AverageTime": 16,
+    "AverageTime": 15,
     "CurrentTime": 16,
     "Description": "Downtown Seattle to Issaquah",
     "Distance": 15.68,
@@ -1496,12 +1496,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 74
   },
   {
-    "AverageTime": 20,
-    "CurrentTime": 20,
+    "AverageTime": 14,
+    "CurrentTime": 15,
     "Description": "Redmond to Downtown Seattle using HOV lanes",
     "Distance": 14.81,
     "EndPoint": {
@@ -1521,12 +1521,12 @@
       "MilePost": 12.65,
       "RoadName": "520"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 77
   },
   {
     "AverageTime": 14,
-    "CurrentTime": 15,
+    "CurrentTime": 14,
     "Description": "Downtown Seattle to Redmond using HOV lanes",
     "Distance": 14.56,
     "EndPoint": {
@@ -1546,12 +1546,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 78
   },
   {
-    "AverageTime": 21,
-    "CurrentTime": 20,
+    "AverageTime": 16,
+    "CurrentTime": 16,
     "Description": "Redmond to Downtown Seattle",
     "Distance": 14.81,
     "EndPoint": {
@@ -1571,12 +1571,12 @@
       "MilePost": 12.65,
       "RoadName": "520"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 79
   },
   {
     "AverageTime": 14,
-    "CurrentTime": 15,
+    "CurrentTime": 14,
     "Description": "I-5 NB at I-5 @ University St in Seattle (MP 166) to SR 520 EB",
     "Distance": 14.56,
     "EndPoint": {
@@ -1596,12 +1596,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 80
   },
   {
-    "AverageTime": 25,
-    "CurrentTime": 22,
+    "AverageTime": 22,
+    "CurrentTime": 25,
     "Description": "Redmond to Downtown Seattle using HOV lanes via I-90",
     "Distance": 18.34,
     "EndPoint": {
@@ -1621,12 +1621,12 @@
       "MilePost": 12.65,
       "RoadName": "520"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 81
   },
   {
-    "AverageTime": 19,
-    "CurrentTime": 19,
+    "AverageTime": 18,
+    "CurrentTime": 18,
     "Description": "Downtown Seattle to Redmond via I-90 using HOV lanes",
     "Distance": 17.36,
     "EndPoint": {
@@ -1646,12 +1646,12 @@
       "MilePost": 165.13,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 82
   },
   {
-    "AverageTime": 34,
-    "CurrentTime": 31,
+    "AverageTime": 25,
+    "CurrentTime": 29,
     "Description": "Redmond to Downtown Seattle via I-90",
     "Distance": 18.05,
     "EndPoint": {
@@ -1671,12 +1671,12 @@
       "MilePost": 12.65,
       "RoadName": "520"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 83
   },
   {
-    "AverageTime": 24,
-    "CurrentTime": 23,
+    "AverageTime": 19,
+    "CurrentTime": 22,
     "Description": "Downtown Seattle to Redmond via I-90",
     "Distance": 17.36,
     "EndPoint": {
@@ -1696,12 +1696,12 @@
       "MilePost": 165.13,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 84
   },
   {
-    "AverageTime": 16,
-    "CurrentTime": 16,
+    "AverageTime": 14,
+    "CurrentTime": 14,
     "Description": "Downtown Bellevue to Downtown Seattle using SR 520",
     "Distance": 10.53,
     "EndPoint": {
@@ -1721,12 +1721,12 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 89
   },
   {
-    "AverageTime": 13,
-    "CurrentTime": 13,
+    "AverageTime": 12,
+    "CurrentTime": 12,
     "Description": "Downtown Bellevue to Downtown Seattle via SR 520 using HOV lane",
     "Distance": 9.75,
     "EndPoint": {
@@ -1746,12 +1746,12 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 90
   },
   {
-    "AverageTime": 14,
-    "CurrentTime": 13,
+    "AverageTime": 11,
+    "CurrentTime": 11,
     "Description": "Downtown Seattle to Downtown Bellevue via SR 520 using HOV lane",
     "Distance": 10.46,
     "EndPoint": {
@@ -1771,12 +1771,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 91
   },
   {
-    "AverageTime": 14,
-    "CurrentTime": 13,
+    "AverageTime": 11,
+    "CurrentTime": 11,
     "Description": "Downtown Seattle to Downtown Bellevue via SR 520",
     "Distance": 10.31,
     "EndPoint": {
@@ -1796,11 +1796,11 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 92
   },
   {
-    "AverageTime": 20,
+    "AverageTime": 16,
     "CurrentTime": 20,
     "Description": "Downtown Bellevue to Downtown Seattle using I-90",
     "Distance": 10.56,
@@ -1821,12 +1821,12 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 93
   },
   {
-    "AverageTime": 14,
-    "CurrentTime": 14,
+    "AverageTime": 15,
+    "CurrentTime": 18,
     "Description": "Downtown Bellevue to Downtown Seattle via I-90 using HOV lanes",
     "Distance": 10.57,
     "EndPoint": {
@@ -1846,11 +1846,11 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 94
   },
   {
-    "AverageTime": 12,
+    "AverageTime": 11,
     "CurrentTime": 11,
     "Description": "Downtown Seattle to Downtown Bellevue via I-90 using HOV lanes",
     "Distance": 10.45,
@@ -1871,12 +1871,12 @@
       "MilePost": 165.13,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 95
   },
   {
-    "AverageTime": 15,
-    "CurrentTime": 14,
+    "AverageTime": 12,
+    "CurrentTime": 15,
     "Description": "Downtown Seattle to Downtown Bellevue via I-90",
     "Distance": 10.45,
     "EndPoint": {
@@ -1896,12 +1896,12 @@
       "MilePost": 165.13,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 96
   },
   {
     "AverageTime": 7,
-    "CurrentTime": 8,
+    "CurrentTime": 7,
     "Description": "Downtown Bellevue to Redmond",
     "Distance": 6.91,
     "EndPoint": {
@@ -1921,7 +1921,7 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 99
   },
   {
@@ -1946,12 +1946,12 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 100
   },
   {
-    "AverageTime": 10,
-    "CurrentTime": 8,
+    "AverageTime": 8,
+    "CurrentTime": 9,
     "Description": "Redmond to Downtown Bellevue using HOV lanes",
     "Distance": 7.49,
     "EndPoint": {
@@ -1971,11 +1971,11 @@
       "MilePost": 12.65,
       "RoadName": "520"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 101
   },
   {
-    "AverageTime": 11,
+    "AverageTime": 8,
     "CurrentTime": 9,
     "Description": "Redmond to Downtown Bellevue",
     "Distance": 7.49,
@@ -1996,12 +1996,12 @@
       "MilePost": 12.65,
       "RoadName": "520"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 102
   },
   {
     "AverageTime": 7,
-    "CurrentTime": 7,
+    "CurrentTime": 11,
     "Description": "I-5 SB from Marvin Rd  (MP 112) to 14th Ave  (MP 105)",
     "Distance": 6.62,
     "EndPoint": {
@@ -2021,7 +2021,7 @@
       "MilePost": 112,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 116
   },
   {
@@ -2046,12 +2046,12 @@
       "MilePost": 121.1,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 120
   },
   {
-    "AverageTime": 9,
-    "CurrentTime": 6,
+    "AverageTime": 7,
+    "CurrentTime": 8,
     "Description": "I-5 SB from SR 512 (MP 127) to JLBM Main Gate (MP 121)",
     "Distance": 6.25,
     "EndPoint": {
@@ -2071,12 +2071,12 @@
       "MilePost": 127.35,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 121
   },
   {
-    "AverageTime": 9,
-    "CurrentTime": 7,
+    "AverageTime": 8,
+    "CurrentTime": 11,
     "Description": "I-5 NB from SR512  (MP 127) to Tacoma Dome  (MP 134)",
     "Distance": 6.63,
     "EndPoint": {
@@ -2096,12 +2096,12 @@
       "MilePost": 127.35,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 122
   },
   {
-    "AverageTime": 9,
-    "CurrentTime": 14,
+    "AverageTime": 8,
+    "CurrentTime": 8,
     "Description": "I-5 SB from Tacoma (MP 133) to SR512  (MP 127)",
     "Distance": 5.47,
     "EndPoint": {
@@ -2121,7 +2121,7 @@
       "MilePost": 132.82,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 123
   },
   {
@@ -2146,12 +2146,12 @@
       "MilePost": 132.82,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 125
   },
   {
-    "AverageTime": 32,
-    "CurrentTime": 29,
+    "AverageTime": 33,
+    "CurrentTime": 36,
     "Description": "I-5 NB from 14th Ave in Olympia (MP 105) to Tacoma Dome in Taco",
     "Distance": 28.6,
     "EndPoint": {
@@ -2171,12 +2171,12 @@
       "MilePost": 105.38,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 126
   },
   {
-    "AverageTime": 35,
-    "CurrentTime": 29,
+    "AverageTime": 29,
+    "CurrentTime": 32,
     "Description": "Downtown Seattle to Everett using express lanes and HOV lanes",
     "Distance": 26.94,
     "EndPoint": {
@@ -2196,12 +2196,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 131
   },
   {
-    "AverageTime": 50,
-    "CurrentTime": 44,
+    "AverageTime": 40,
+    "CurrentTime": 51,
     "Description": "Downtown Seattle to Everett using express lanes",
     "Distance": 26.94,
     "EndPoint": {
@@ -2221,12 +2221,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 132
   },
   {
-    "AverageTime": 45,
-    "CurrentTime": 34,
+    "AverageTime": 41,
+    "CurrentTime": 35,
     "Description": "Everett to Downtown Seattle",
     "Distance": 26.72,
     "EndPoint": {
@@ -2246,12 +2246,12 @@
       "MilePost": 192.55,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 1
   },
   {
-    "AverageTime": 28,
-    "CurrentTime": 20,
+    "AverageTime": 26,
+    "CurrentTime": 21,
     "Description": "Lynnwood to Downtown Seattle using HOV lanes",
     "Distance": 15.23,
     "EndPoint": {
@@ -2271,11 +2271,11 @@
       "MilePost": 181.06,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 275
   },
   {
-    "AverageTime": 30,
+    "AverageTime": 28,
     "CurrentTime": 30,
     "Description": "Downtown Bellevue to Renton",
     "Distance": 11.12,
@@ -2296,12 +2296,12 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 45
   },
   {
-    "AverageTime": 22,
-    "CurrentTime": 25,
+    "AverageTime": 21,
+    "CurrentTime": 26,
     "Description": "Downtown Bellevue to Renton using HOV lanes",
     "Distance": 11.12,
     "EndPoint": {
@@ -2321,7 +2321,7 @@
       "MilePost": 13.33,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 46
   },
   {
@@ -2346,12 +2346,12 @@
       "MilePost": 2.68,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 278
   },
   {
-    "AverageTime": 15,
-    "CurrentTime": 13,
+    "AverageTime": 14,
+    "CurrentTime": 16,
     "Description": "Renton to Downtown Bellevue",
     "Distance": 10.92,
     "EndPoint": {
@@ -2371,12 +2371,12 @@
       "MilePost": 2.68,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 279
   },
   {
-    "AverageTime": 27,
-    "CurrentTime": 28,
+    "AverageTime": 18,
+    "CurrentTime": 23,
     "Description": "Downtown Bellevue to SR 522 in Bothell",
     "Distance": 9.41,
     "EndPoint": {
@@ -2396,7 +2396,7 @@
       "MilePost": 13.6,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 55
   },
   {
@@ -2421,12 +2421,12 @@
       "MilePost": 205.87,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 266
   },
   {
-    "AverageTime": 16,
-    "CurrentTime": 14,
+    "AverageTime": 17,
+    "CurrentTime": 15,
     "Description": "41st St in Everett to SR 531 in Arlington",
     "Distance": 13.1,
     "EndPoint": {
@@ -2446,12 +2446,12 @@
       "MilePost": 192.77,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 267
   },
   {
-    "AverageTime": 10,
-    "CurrentTime": 8,
+    "AverageTime": 11,
+    "CurrentTime": 10,
     "Description": "41st St in Everett to 88th St NE in Marysville",
     "Distance": 7.89,
     "EndPoint": {
@@ -2471,7 +2471,7 @@
       "MilePost": 192.77,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 268
   },
   {
@@ -2496,7 +2496,7 @@
       "MilePost": 200.66,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 269
   },
   {
@@ -2521,12 +2521,12 @@
       "MilePost": 10.56,
       "RoadName": "522"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 287
   },
   {
-    "AverageTime": 42,
-    "CurrentTime": 35,
+    "AverageTime": 41,
+    "CurrentTime": 38,
     "Description": "SR 522 WB at SR 522 @ SR 202 in Woodinville (MP 11) to I-5 SB a",
     "Distance": 15.32,
     "EndPoint": {
@@ -2546,12 +2546,12 @@
       "MilePost": 10.56,
       "RoadName": "522"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 288
   },
   {
-    "AverageTime": 20,
-    "CurrentTime": 17,
+    "AverageTime": 18,
+    "CurrentTime": 20,
     "Description": "Tukwila to Downtown Bellevue",
     "Distance": 13.49,
     "EndPoint": {
@@ -2571,12 +2571,12 @@
       "MilePost": 0.11,
       "RoadName": "405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 291
   },
   {
-    "AverageTime": 7,
-    "CurrentTime": 5,
+    "AverageTime": 5,
+    "CurrentTime": 6,
     "Description": "Region boundary to Federal Way",
     "Distance": 4.29,
     "EndPoint": {
@@ -2596,12 +2596,12 @@
       "MilePost": 139.69,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 293
   },
   {
-    "AverageTime": 47,
-    "CurrentTime": 44,
+    "AverageTime": 31,
+    "CurrentTime": 39,
     "Description": "Downtown Seattle to Woodinville",
     "Distance": 20.56,
     "EndPoint": {
@@ -2621,12 +2621,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 294
   },
   {
-    "AverageTime": 39,
-    "CurrentTime": 38,
+    "AverageTime": 27,
+    "CurrentTime": 34,
     "Description": "Downtown Seattle to Woodinville",
     "Distance": 17.2,
     "EndPoint": {
@@ -2646,12 +2646,12 @@
       "MilePost": 165.83,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 295
   },
   {
-    "AverageTime": 14,
-    "CurrentTime": 12,
+    "AverageTime": 13,
+    "CurrentTime": 13,
     "Description": "I-5 NB from Tacoma (MP 133) to S 320th St (MP 144)",
     "Distance": 11.16,
     "EndPoint": {
@@ -2671,7 +2671,7 @@
       "MilePost": 132.82,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 303
   },
   {
@@ -2696,12 +2696,12 @@
       "MilePost": 105.38,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 310
   },
   {
-    "AverageTime": 11,
-    "CurrentTime": 9,
+    "AverageTime": 12,
+    "CurrentTime": 13,
     "Description": "I-5 SB from JBLM Main Gate (MP 121) to Marvin Rd / SR510 (MP 11",
     "Distance": 9.1,
     "EndPoint": {
@@ -2721,12 +2721,12 @@
       "MilePost": 121.1,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 311
   },
   {
-    "AverageTime": 9,
-    "CurrentTime": 9,
+    "AverageTime": 10,
+    "CurrentTime": 10,
     "Description": "I-5 NB from I-5 @ Marvin Rd IC in Lacey (MP 112) I-5 to I-5 @ J",
     "Distance": 9.1,
     "EndPoint": {
@@ -2746,12 +2746,12 @@
       "MilePost": 112,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 312
   },
   {
-    "AverageTime": 45,
-    "CurrentTime": 42,
+    "AverageTime": 37,
+    "CurrentTime": 43,
     "Description": "I-5 SB from Tacoma Dome  (MP 134) to 14th Ave in Olympia (MP 10",
     "Distance": 28.3,
     "EndPoint": {
@@ -2771,12 +2771,12 @@
       "MilePost": 133.97,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 313
   },
   {
     "AverageTime": 12,
-    "CurrentTime": 16,
+    "CurrentTime": 11,
     "Description": "I-5 SB from Pierce King County Line (MP 139) to Tacoma (MP 133)",
     "Distance": 6.56,
     "EndPoint": {
@@ -2796,7 +2796,7 @@
       "MilePost": 139.38,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 314
   },
   {
@@ -2821,12 +2821,12 @@
       "MilePost": 139.69,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 326
   },
   {
-    "AverageTime": 49,
-    "CurrentTime": 50,
+    "AverageTime": 44,
+    "CurrentTime": 47,
     "Description": "I-5 SB and 199th to I-5 and I-205JCT",
     "Distance": 32.92,
     "EndPoint": {
@@ -2846,7 +2846,7 @@
       "MilePost": 11.75,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 333
   },
   {
@@ -2871,12 +2871,12 @@
       "MilePost": 8.83,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 334
   },
   {
     "AverageTime": 21,
-    "CurrentTime": 21,
+    "CurrentTime": 22,
     "Description": "159th St. to I-84",
     "Distance": 15.29,
     "EndPoint": {
@@ -2896,12 +2896,12 @@
       "MilePost": 8.83,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 335
   },
   {
-    "AverageTime": 34,
-    "CurrentTime": 33,
+    "AverageTime": 24,
+    "CurrentTime": 34,
     "Description": "I-5/SR-500 Jct. to I-205/I-84 Jct. via I-5 and I-84",
     "Distance": 15.27,
     "EndPoint": {
@@ -2921,7 +2921,7 @@
       "MilePost": 2.09,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 338
   },
   {
@@ -2946,12 +2946,12 @@
       "MilePost": 2.09,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 339
   },
   {
-    "AverageTime": 22,
-    "CurrentTime": 23,
+    "AverageTime": 21,
+    "CurrentTime": 26,
     "Description": "192nd Ave to I-5/I-84 Jct. via I-205 and I-84",
     "Distance": 14.57,
     "EndPoint": {
@@ -2971,12 +2971,12 @@
       "MilePost": 9.52,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 340
   },
   {
-    "AverageTime": 28,
-    "CurrentTime": 24,
+    "AverageTime": 23,
+    "CurrentTime": 23,
     "Description": "192nd Ave to I-5/I-84 Jct. via SR-14 and I-5",
     "Distance": 16.8,
     "EndPoint": {
@@ -2996,12 +2996,12 @@
       "MilePost": 9.52,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 341
   },
   {
-    "AverageTime": 46,
-    "CurrentTime": 51,
+    "AverageTime": 43,
+    "CurrentTime": 55,
     "Description": "SR-502 to I-5/I-205 Jct. (Oregon) via I-205",
     "Distance": 39.64,
     "EndPoint": {
@@ -3021,12 +3021,12 @@
       "MilePost": 11.75,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 342
   },
   {
     "AverageTime": 13,
-    "CurrentTime": 14,
+    "CurrentTime": 15,
     "Description": "179th St. to Airport Way via I-205",
     "Distance": 13.3,
     "EndPoint": {
@@ -3046,12 +3046,12 @@
       "MilePost": 8.24,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 343
   },
   {
     "AverageTime": 5,
-    "CurrentTime": 6,
+    "CurrentTime": 7,
     "Description": "Mill Plain to I-84",
     "Distance": 5.13,
     "EndPoint": {
@@ -3071,12 +3071,12 @@
       "MilePost": 28.36,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 344
   },
   {
-    "AverageTime": 24,
-    "CurrentTime": 25,
+    "AverageTime": 20,
+    "CurrentTime": 27,
     "Description": "Mill Plain to Oregon City",
     "Distance": 18.18,
     "EndPoint": {
@@ -3096,7 +3096,7 @@
       "MilePost": 28.36,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 345
   },
   {
@@ -3121,12 +3121,12 @@
       "MilePost": 8.52,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 347
   },
   {
-    "AverageTime": 17,
-    "CurrentTime": 15,
+    "AverageTime": 15,
+    "CurrentTime": 18,
     "Description": "Hazel Dell to Fremont Bridge via I-5",
     "Distance": 9.41,
     "EndPoint": {
@@ -3146,12 +3146,12 @@
       "MilePost": 4.25,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 348
   },
   {
-    "AverageTime": 28,
-    "CurrentTime": 25,
+    "AverageTime": 21,
+    "CurrentTime": 24,
     "Description": "Hazel Dell to I-405-US26 via I-5",
     "Distance": 13.46,
     "EndPoint": {
@@ -3171,12 +3171,12 @@
       "MilePost": 4.25,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 349
   },
   {
-    "AverageTime": 34,
-    "CurrentTime": 30,
+    "AverageTime": 22,
+    "CurrentTime": 27,
     "Description": "Mill Plain to Oregon City via I-205",
     "Distance": 19.13,
     "EndPoint": {
@@ -3196,11 +3196,11 @@
       "MilePost": 28.36,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 350
   },
   {
-    "AverageTime": 14,
+    "AverageTime": 7,
     "CurrentTime": 11,
     "Description": "Mill Plain Vancouver to I-84 via I-205",
     "Distance": 6.72,
@@ -3221,11 +3221,11 @@
       "MilePost": 28.36,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 351
   },
   {
-    "AverageTime": 8,
+    "AverageTime": 7,
     "CurrentTime": 7,
     "Description": "Vancouver to Cascade Park via SR14",
     "Distance": 6.13,
@@ -3246,12 +3246,12 @@
       "MilePost": 0.17,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 354
   },
   {
-    "AverageTime": 51,
-    "CurrentTime": 46,
+    "AverageTime": 39,
+    "CurrentTime": 50,
     "Description": "Salmon Creek WA to Tualatin OR via I-205",
     "Distance": 34.75,
     "EndPoint": {
@@ -3271,12 +3271,12 @@
       "MilePost": 36.67,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 358
   },
   {
-    "AverageTime": 53,
-    "CurrentTime": 52,
+    "AverageTime": 42,
+    "CurrentTime": 48,
     "Description": "Salmon Creek WA to Tualatin OR via I-5",
     "Distance": 28.47,
     "EndPoint": {
@@ -3296,11 +3296,11 @@
       "MilePost": 7.3,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 359
   },
   {
-    "AverageTime": 11,
+    "AverageTime": 14,
     "CurrentTime": 16,
     "Description": "Clark County Fairgrounds to Delta Park via I-5",
     "Distance": 11.05,
@@ -3321,12 +3321,12 @@
       "MilePost": 9.77,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 362
   },
   {
     "AverageTime": 14,
-    "CurrentTime": 16,
+    "CurrentTime": 17,
     "Description": "Clark County Fairgrounds to Portland International Airport Exit via I-205",
     "Distance": 14.83,
     "EndPoint": {
@@ -3346,12 +3346,12 @@
       "MilePost": 9.77,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 363
   },
   {
-    "AverageTime": 26,
-    "CurrentTime": 22,
+    "AverageTime": 25,
+    "CurrentTime": 23,
     "Description": "Clark County Fairgrounds to Rose Quarter via I-5",
     "Distance": 15.89,
     "EndPoint": {
@@ -3371,12 +3371,12 @@
       "MilePost": 9.77,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 364
   },
   {
     "AverageTime": 15,
-    "CurrentTime": 10,
+    "CurrentTime": 11,
     "Description": "Delta Park to Clark County Fairgrounds via I-5",
     "Distance": 9.34,
     "EndPoint": {
@@ -3396,12 +3396,12 @@
       "MilePost": 307.9,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 365
   },
   {
     "AverageTime": 29,
-    "CurrentTime": 22,
+    "CurrentTime": 23,
     "Description": "Fremont Bridge to Hazel Dell via I-5",
     "Distance": 8.26,
     "EndPoint": {
@@ -3421,12 +3421,12 @@
       "MilePost": 303.47,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 366
   },
   {
-    "AverageTime": 43,
-    "CurrentTime": 39,
+    "AverageTime": 39,
+    "CurrentTime": 25,
     "Description": "I-405-US 26 to Hazel Dell via I-405 to I-5",
     "Distance": 11.69,
     "EndPoint": {
@@ -3446,11 +3446,11 @@
       "MilePost": 1.77,
       "RoadName": "I-405"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 367
   },
   {
-    "AverageTime": 11,
+    "AverageTime": 10,
     "CurrentTime": 16,
     "Description": "63rd St to I-5/I-405 Jct.",
     "Distance": 8.94,
@@ -3471,12 +3471,12 @@
       "MilePost": 3.78,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 375
   },
   {
-    "AverageTime": 23,
-    "CurrentTime": 24,
+    "AverageTime": 19,
+    "CurrentTime": 21,
     "Description": "63rd to US-26 West",
     "Distance": 12.99,
     "EndPoint": {
@@ -3496,12 +3496,12 @@
       "MilePost": 3.78,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 376
   },
   {
     "AverageTime": 10,
-    "CurrentTime": 12,
+    "CurrentTime": 11,
     "Description": "I-5 and Fourth Plain to SR 502",
     "Distance": 10.26,
     "EndPoint": {
@@ -3521,12 +3521,12 @@
       "MilePost": 1.41,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 377
   },
   {
-    "AverageTime": 27,
-    "CurrentTime": 25,
+    "AverageTime": 30,
+    "CurrentTime": 23,
     "Description": "I-205 SB and 18th St to SR14 to I-5 to I-84 JCT",
     "Distance": 15.81,
     "EndPoint": {
@@ -3546,12 +3546,12 @@
       "MilePost": 29.84,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 378
   },
   {
     "AverageTime": 19,
-    "CurrentTime": 20,
+    "CurrentTime": 26,
     "Description": "I-205 SB and 18th St to I-84 to I-5 JCT",
     "Distance": 14.48,
     "EndPoint": {
@@ -3571,12 +3571,12 @@
       "MilePost": 29.84,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 379
   },
   {
-    "AverageTime": 17,
-    "CurrentTime": 18,
+    "AverageTime": 15,
+    "CurrentTime": 13,
     "Description": "Federal Way (320th) to Tacoma Dome",
     "Distance": 8.77,
     "EndPoint": {
@@ -3596,12 +3596,12 @@
       "MilePost": 143.64,
       "RoadName": "005"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 382
   },
   {
-    "AverageTime": 31,
-    "CurrentTime": 22,
+    "AverageTime": 24,
+    "CurrentTime": 27,
     "Description": "SR14 and Cascade Pk to I-5 and I-84 JCT",
     "Distance": 15.18,
     "EndPoint": {
@@ -3621,12 +3621,12 @@
       "MilePost": 7.9,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 384
   },
   {
-    "AverageTime": 23,
-    "CurrentTime": 19,
+    "AverageTime": 19,
+    "CurrentTime": 24,
     "Description": "SR14 and Cascade Pk to I-205 to I-5 and I-84 JCT",
     "Distance": 12.95,
     "EndPoint": {
@@ -3646,7 +3646,7 @@
       "MilePost": 7.9,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 385
   },
   {
@@ -3671,7 +3671,7 @@
       "MilePost": 35.02,
       "RoadName": "I-90"
     },
-    "TimeUpdated": "2025-11-04T23:56:00.000Z",
+    "TimeUpdated": "2025-11-05T22:46:00.000Z",
     "TravelTimeID": 114
   },
   {
@@ -3696,12 +3696,12 @@
       "MilePost": 109,
       "RoadName": "I-90"
     },
-    "TimeUpdated": "2025-11-04T23:56:00.000Z",
+    "TimeUpdated": "2025-11-05T22:46:00.000Z",
     "TravelTimeID": 115
   },
   {
-    "AverageTime": 30,
-    "CurrentTime": 27,
+    "AverageTime": 26,
+    "CurrentTime": 31,
     "Description": "Camas to Rose Quarter via I-205 and I-84",
     "Distance": 18.03,
     "EndPoint": {
@@ -3721,12 +3721,12 @@
       "MilePost": 14.65,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 413
   },
   {
-    "AverageTime": 35,
-    "CurrentTime": 29,
+    "AverageTime": 34,
+    "CurrentTime": 37,
     "Description": "Camas to Rose Quarter via I-5",
     "Distance": 21.93,
     "EndPoint": {
@@ -3746,12 +3746,12 @@
       "MilePost": 14.65,
       "RoadName": "SR 14"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 414
   },
   {
-    "AverageTime": 18,
-    "CurrentTime": 11,
+    "AverageTime": 9,
+    "CurrentTime": 8,
     "Description": "I-84 to Mill Plain via I-205",
     "Distance": 5.41,
     "EndPoint": {
@@ -3771,12 +3771,12 @@
       "MilePost": 21.68,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 415
   },
   {
-    "AverageTime": 44,
-    "CurrentTime": 33,
+    "AverageTime": 24,
+    "CurrentTime": 39,
     "Description": "Oregon City to Mill Plain via I-205",
     "Distance": 18.06,
     "EndPoint": {
@@ -3796,12 +3796,12 @@
       "MilePost": 9.03,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 416
   },
   {
-    "AverageTime": 18,
-    "CurrentTime": 14,
+    "AverageTime": 16,
+    "CurrentTime": 20,
     "Description": "Portland International Airport Exit to Clark County Fairgrounds via I-205",
     "Distance": 13.25,
     "EndPoint": {
@@ -3821,11 +3821,11 @@
       "MilePost": 24.92,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 417
   },
   {
-    "AverageTime": 43,
+    "AverageTime": 42,
     "CurrentTime": 38,
     "Description": "Rose Quarter to Camas via I-5",
     "Distance": 19.88,
@@ -3846,12 +3846,12 @@
       "MilePost": 302.5,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 418
   },
   {
-    "AverageTime": 43,
-    "CurrentTime": 29,
+    "AverageTime": 29,
+    "CurrentTime": 28,
     "Description": "Rose Quarter to Camas via I-84",
     "Distance": 16.76,
     "EndPoint": {
@@ -3871,12 +3871,12 @@
       "MilePost": 0.1,
       "RoadName": "I-84"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 419
   },
   {
-    "AverageTime": 36,
-    "CurrentTime": 33,
+    "AverageTime": 37,
+    "CurrentTime": 30,
     "Description": "Rose Quarter to Clark County Fairgrounds via I-5",
     "Distance": 14.74,
     "EndPoint": {
@@ -3896,12 +3896,12 @@
       "MilePost": 302.5,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 420
   },
   {
-    "AverageTime": 76,
-    "CurrentTime": 57,
+    "AverageTime": 43,
+    "CurrentTime": 80,
     "Description": "Tualatin OR to Salmon Creek WA via I-205",
     "Distance": 33.44,
     "EndPoint": {
@@ -3921,12 +3921,12 @@
       "MilePost": 1.96,
       "RoadName": "I-205"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 421
   },
   {
-    "AverageTime": 63,
-    "CurrentTime": 55,
+    "AverageTime": 58,
+    "CurrentTime": 51,
     "Description": "Tualatin OR to Salmon Creek WA via I-5",
     "Distance": 27.32,
     "EndPoint": {
@@ -3946,7 +3946,7 @@
       "MilePost": 287.46,
       "RoadName": "I-5"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 422
   },
   {
@@ -3971,7 +3971,7 @@
       "MilePost": 5.46,
       "RoadName": "SR 500"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 528
   },
   {
@@ -3996,12 +3996,12 @@
       "MilePost": 5.46,
       "RoadName": "SR 500"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 529
   },
   {
     "AverageTime": 20,
-    "CurrentTime": 24,
+    "CurrentTime": 30,
     "Description": "SR500 WB and 112th Ave to I-205 to I-84 to I-5 at I-84 JCT",
     "Distance": 17.27,
     "EndPoint": {
@@ -4021,7 +4021,7 @@
       "MilePost": 5.46,
       "RoadName": "SR 500"
     },
-    "TimeUpdated": "2025-11-05T00:00:00.000Z",
+    "TimeUpdated": "2025-11-05T22:50:00.000Z",
     "TravelTimeID": 530
   },
   {
@@ -4046,7 +4046,7 @@
       "MilePost": 143.5,
       "RoadName": "I-90"
     },
-    "TimeUpdated": "2025-11-04T23:56:00.000Z",
+    "TimeUpdated": "2025-11-05T22:46:00.000Z",
     "TravelTimeID": 533
   },
   {
@@ -4071,7 +4071,7 @@
       "MilePost": 126.2,
       "RoadName": "I-90"
     },
-    "TimeUpdated": "2025-11-04T23:56:00.000Z",
+    "TimeUpdated": "2025-11-05T22:46:00.000Z",
     "TravelTimeID": 534
   }
 ]

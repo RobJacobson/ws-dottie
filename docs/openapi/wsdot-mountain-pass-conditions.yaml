@@ -186,10 +186,10 @@ paths:
                     MountainPassName: White Pass  US 12
                     Latitude: 46.638333
                     Longitude: -121.39
-                    DateUpdated: 2025-11-04T19:53:32.523Z
-                    TemperatureInFahrenheit: 33
+                    DateUpdated: 2025-11-05T15:42:05.060Z
+                    TemperatureInFahrenheit: 41
                     ElevationInFeet: 4500
-                    WeatherCondition: Overcast
+                    WeatherCondition: Light rain
                     RoadCondition: Bare and wet
                     TravelAdvisoryActive: true
                     RestrictionOne:
@@ -234,10 +234,10 @@ paths:
                       MountainPassName: Blewett Pass US 97
                       Latitude: 47.335298205
                       Longitude: -120.581068216
-                      DateUpdated: 2025-11-04T19:33:46.503Z
-                      TemperatureInFahrenheit: 33
+                      DateUpdated: 2025-11-05T22:52:53.120Z
+                      TemperatureInFahrenheit: 42
                       ElevationInFeet: 4102
-                      WeatherCondition: Overcast
+                      WeatherCondition: Rain
                       RoadCondition: Bare and wet
                       TravelAdvisoryActive: true
                       RestrictionOne:

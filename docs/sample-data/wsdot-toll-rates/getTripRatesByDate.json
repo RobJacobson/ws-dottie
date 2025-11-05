@@ -3,6 +3,30 @@
     "LastUpdated": "2025-11-04T08:58:34.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:58:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:58:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:58:09.000Z",
         "Toll": 0,
@@ -79,6 +103,12 @@
         "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -183,36 +213,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:58:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:58:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
         "Toll": 3.2,
@@ -235,72 +235,6 @@
         "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -391,6 +325,72 @@
         "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:58:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372022
@@ -398,6 +398,30 @@
   {
     "LastUpdated": "2025-11-04T08:53:34.000Z",
     "Trips": [
+      {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:53:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:53:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:53:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
       {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:53:09.000Z",
@@ -475,6 +499,12 @@
         "MessageUpdateTime": "2025-11-04T08:53:10.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -579,36 +609,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:53:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:53:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:53:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
         "Toll": 3.2,
@@ -631,6 +631,96 @@
         "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
+      },
+      {
+        "Message": "",
+        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
+        "Toll": 0,
+        "TripName": "167tp00791"
+      },
+      {
+        "Message": "",
+        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
+        "Toll": 0,
+        "TripName": "167tp00792"
+      },
+      {
+        "Message": "",
+        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
+        "Toll": 0,
+        "TripName": "167tp00793"
+      },
+      {
+        "Message": "",
+        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
+        "Toll": 0,
+        "TripName": "167tp01100"
+      },
+      {
+        "Message": "",
+        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
+        "Toll": 0,
+        "TripName": "167tp01101"
+      },
+      {
+        "Message": "",
+        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
+        "Toll": 0,
+        "TripName": "167tp01102"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01283"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01284"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01475"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01476"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01653"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01654"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01885"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02174"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02260"
       },
       {
         "Message": "FREE",
@@ -697,96 +787,6 @@
         "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
         "Toll": 0,
         "TripName": "167tp01320"
-      },
-      {
-        "Message": "",
-        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
-        "Toll": 0,
-        "TripName": "167tp00791"
-      },
-      {
-        "Message": "",
-        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
-        "Toll": 0,
-        "TripName": "167tp00792"
-      },
-      {
-        "Message": "",
-        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
-        "Toll": 0,
-        "TripName": "167tp00793"
-      },
-      {
-        "Message": "",
-        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
-        "Toll": 0,
-        "TripName": "167tp01100"
-      },
-      {
-        "Message": "",
-        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
-        "Toll": 0,
-        "TripName": "167tp01101"
-      },
-      {
-        "Message": "",
-        "MessageUpdateTime": "2025-11-04T08:55:46.687Z",
-        "Toll": 0,
-        "TripName": "167tp01102"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01283"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01284"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01475"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01476"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01653"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01654"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01885"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02174"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:53:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02260"
       }
     ],
     "Version": 372021
@@ -795,6 +795,30 @@
     "LastUpdated": "2025-11-04T08:48:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:48:09.000Z",
         "Toll": 0,
@@ -871,6 +895,12 @@
         "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -975,36 +1005,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:48:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
         "Toll": 3.2,
@@ -1027,72 +1027,6 @@
         "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -1183,6 +1117,72 @@
         "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:48:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372020
@@ -1191,6 +1191,30 @@
     "LastUpdated": "2025-11-04T08:43:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:43:09.000Z",
         "Toll": 0,
@@ -1267,6 +1291,12 @@
         "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -1371,36 +1401,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
         "Toll": 3.2,
@@ -1423,72 +1423,6 @@
         "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -1579,6 +1513,72 @@
         "MessageUpdateTime": "2025-11-04T08:43:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:43:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372019
@@ -1586,6 +1586,30 @@
   {
     "LastUpdated": "2025-11-04T08:38:33.000Z",
     "Trips": [
+      {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
       {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:38:09.000Z",
@@ -1663,6 +1687,12 @@
         "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -1767,36 +1797,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
         "Toll": 3.2,
@@ -1819,72 +1819,6 @@
         "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -1975,6 +1909,72 @@
         "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:38:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372018
@@ -1982,6 +1982,30 @@
   {
     "LastUpdated": "2025-11-04T08:33:33.000Z",
     "Trips": [
+      {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
       {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:33:09.000Z",
@@ -2059,6 +2083,12 @@
         "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -2163,36 +2193,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
         "Toll": 3.2,
@@ -2215,72 +2215,6 @@
         "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -2371,6 +2305,72 @@
         "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:33:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372017
@@ -2379,6 +2379,30 @@
     "LastUpdated": "2025-11-04T08:28:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:28:09.000Z",
         "Toll": 0,
@@ -2455,6 +2479,12 @@
         "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -2559,36 +2589,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
         "Toll": 3.2,
@@ -2611,72 +2611,6 @@
         "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -2767,6 +2701,72 @@
         "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:08.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:28:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372016
@@ -2775,6 +2775,30 @@
     "LastUpdated": "2025-11-04T08:23:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:23:08.000Z",
         "Toll": 0,
@@ -2851,6 +2875,12 @@
         "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -2955,36 +2985,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
         "Toll": 3.2,
@@ -3007,72 +3007,6 @@
         "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -3163,6 +3097,72 @@
         "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:23:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372015
@@ -3171,6 +3171,30 @@
     "LastUpdated": "2025-11-04T08:18:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:18:08.000Z",
         "Toll": 0,
@@ -3247,6 +3271,12 @@
         "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -3351,36 +3381,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
         "Toll": 3.2,
@@ -3403,72 +3403,6 @@
         "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -3559,6 +3493,72 @@
         "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:18:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372014
@@ -3567,6 +3567,30 @@
     "LastUpdated": "2025-11-04T08:13:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:13:06.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:13:06.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:13:08.000Z",
         "Toll": 0,
@@ -3643,6 +3667,12 @@
         "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -3747,36 +3777,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:13:06.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:13:06.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
         "Toll": 3.2,
@@ -3799,72 +3799,6 @@
         "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:15.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -3955,6 +3889,72 @@
         "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:15.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:13:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372013
@@ -3963,6 +3963,30 @@
     "LastUpdated": "2025-11-04T08:08:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:08:06.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:08:06.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:08:08.000Z",
         "Toll": 0,
@@ -4039,6 +4063,12 @@
         "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:09.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -4143,36 +4173,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:09.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:08:06.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:08:06.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
         "Toll": 3.2,
@@ -4195,72 +4195,6 @@
         "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -4351,6 +4285,72 @@
         "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:08:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372012
@@ -4359,6 +4359,30 @@
     "LastUpdated": "2025-11-04T08:03:33.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:03:06.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:03:06.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:03:08.000Z",
         "Toll": 0,
@@ -4435,6 +4459,12 @@
         "MessageUpdateTime": "2025-11-04T08:03:09.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:08.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -4539,36 +4569,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:08.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:03:06.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:03:06.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
         "Toll": 3.2,
@@ -4591,72 +4591,6 @@
         "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -4747,6 +4681,72 @@
         "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:03:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372011
@@ -4755,6 +4755,30 @@
     "LastUpdated": "2025-11-04T08:00:31.000Z",
     "Trips": [
       {
+        "Message": "$3.35",
+        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
+        "Toll": 3.35,
+        "TripName": "520tp00422"
+      },
+      {
+        "Message": "$1.35",
+        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
+        "Toll": 1.35,
+        "TripName": "520tp00421"
+      },
+      {
+        "Message": "$3.25",
+        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
+        "Toll": 3.25,
+        "TripName": "099tp03060"
+      },
+      {
+        "Message": "$1.25",
+        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
+        "Toll": 1.25,
+        "TripName": "099tp03268"
+      },
+      {
         "Message": "FREE",
         "MessageUpdateTime": "2025-11-04T08:00:08.000Z",
         "Toll": 0,
@@ -4831,6 +4855,12 @@
         "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
         "Toll": 0,
         "TripName": "405tp02752"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:08.000Z",
+        "Toll": 0,
+        "TripName": "405tp01369"
       },
       {
         "Message": "FREE",
@@ -4935,36 +4965,6 @@
         "TripName": "405tp01641"
       },
       {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:08.000Z",
-        "Toll": 0,
-        "TripName": "405tp01369"
-      },
-      {
-        "Message": "$3.35",
-        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
-        "Toll": 3.35,
-        "TripName": "520tp00422"
-      },
-      {
-        "Message": "$1.35",
-        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
-        "Toll": 1.35,
-        "TripName": "520tp00421"
-      },
-      {
-        "Message": "$3.25",
-        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
-        "Toll": 3.25,
-        "TripName": "099tp03060"
-      },
-      {
-        "Message": "$1.25",
-        "MessageUpdateTime": "2025-11-04T08:00:06.000Z",
-        "Toll": 1.25,
-        "TripName": "099tp03268"
-      },
-      {
         "Message": "$3.20",
         "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
         "Toll": 3.2,
@@ -4987,72 +4987,6 @@
         "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
         "Toll": 1.2,
         "TripName": "509tp02092"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02194"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02195"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02196"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02027"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp02028"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01886"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01887"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01736"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01737"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01559"
-      },
-      {
-        "Message": "FREE",
-        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
-        "Toll": 0,
-        "TripName": "167tp01320"
       },
       {
         "Message": "",
@@ -5143,6 +5077,72 @@
         "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
         "Toll": 0,
         "TripName": "167tp02260"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02194"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02195"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02196"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02027"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp02028"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01886"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01887"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01736"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01737"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01559"
+      },
+      {
+        "Message": "FREE",
+        "MessageUpdateTime": "2025-11-04T08:00:07.000Z",
+        "Toll": 0,
+        "TripName": "167tp01320"
       }
     ],
     "Version": 372010

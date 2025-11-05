@@ -5,13 +5,5 @@
   "TerminalName": "Bainbridge Island",
   "TerminalAbbrev": "BBI",
   "SortSeq": 40,
-  "Bulletins": [
-    {
-      "BulletinTitle": "Sea/BI - Walla Walla to replace Kaleetan this afternoon",
-      "BulletinText": "<p><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\">This afternoon, the 188-vehicle </span></span><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\">Walla Walla</span></span><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\"> will replace the 144-vehicle </span></span><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\">Kaleetan</span><span class=\"NormalTextRun SCXW2958306 BCX8\"> </span></span><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\">to</span><span class=\"NormalTextRun SCXW2958306 BCX8\"> </span><span class=\"NormalTextRun SCXW2958306 BCX8\">restore some vehicle capacity on the route. </span></span><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\">We do not expect service impacts during this vessel swap. </span></span><span data-contrast=\"none\" xml:lang=\"EN-US\" lang=\"EN-US\" class=\"TextRun SCXW2958306 BCX8\"><span class=\"NormalTextRun SCXW2958306 BCX8\">Thank you for your patience as we </span><span class=\"NormalTextRun SCXW2958306 BCX8\">maintain</span><span class=\"NormalTextRun SCXW2958306 BCX8\">, repair, and inspect our vessels.</span></span></p>",
-      "BulletinSortSeq": 5,
-      "BulletinLastUpdated": "2025-11-04T16:54:19.357Z",
-      "BulletinLastUpdatedSortable": "20251104085419"
-    }
-  ]
+  "Bulletins": []
 }
