@@ -15,14 +15,14 @@ export const validDateRangeGroup = {
     getFaresValidDateRange: {
       function: "getFaresValidDateRange",
       endpoint: "/validdaterange",
-      inputSchema: i.validDateRangeSchema,
-      outputSchema: o.validDateRangeResponseSchema,
+      inputSchema: i.faresValidDateRangeInputSchema,
+      outputSchema: o.validDateRangeSchema,
       sampleParams: {},
       endpointDescription:
         "Returns a single ValidDateRange object for the current fares data validity period.",
     } satisfies EndpointDefinition<
-      i.ValidDateRangeInput,
-      o.ValidDateRangeResponse
+      i.FaresValidDateRangeInput,
+      o.ValidDateRange
     >,
   },
 } satisfies EndpointGroup;

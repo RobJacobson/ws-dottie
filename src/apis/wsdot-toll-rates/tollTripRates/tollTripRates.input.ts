@@ -5,20 +5,20 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
  */
-export const getTollTripRatesSchema = z
+export const tollTripRatesInputSchema = z
   .object({})
   .describe(
     "Retrieves current toll trip rates for all trips, returning trip names, toll amounts, rate messages, update timestamps, and version information. Use for real-time toll rate monitoring across all trips."
   );
 
-export type GetTollTripRatesInput = z.infer<typeof getTollTripRatesSchema>;
+export type TollTripRatesInput = z.infer<typeof tollTripRatesInputSchema>;
 
 /**
  * Input schema for GetTripRatesByDate endpoint
  *
  * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
  */
-export const getTripRatesByDateSchema = z
+export const tripRatesByDateInputSchema = z
   .object({
     FromDate: z
       .string()
@@ -35,14 +35,14 @@ export const getTripRatesByDateSchema = z
     "Retrieves historical toll trip rates within specified date range, returning trip rates, toll amounts, and timestamps for the time period. Use for historical toll rate analysis and trend tracking."
   );
 
-export type GetTripRatesByDateInput = z.infer<typeof getTripRatesByDateSchema>;
+export type TripRatesByDateInput = z.infer<typeof tripRatesByDateInputSchema>;
 
 /**
  * Input schema for GetTripRatesByVersion endpoint
  *
  * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
  */
-export const getTripRatesByVersionSchema = z
+export const tripRatesByVersionInputSchema = z
   .object({
     Version: z
       .number()
@@ -54,6 +54,6 @@ export const getTripRatesByVersionSchema = z
     "Retrieves toll trip rates for specific version number, returning trip rates, toll amounts, and timestamps for that version. Use for version-specific toll rate lookups and data versioning."
   );
 
-export type GetTripRatesByVersionInput = z.infer<
-  typeof getTripRatesByVersionSchema
+export type TripRatesByVersionInput = z.infer<
+  typeof tripRatesByVersionInputSchema
 >;

@@ -11,7 +11,7 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for Routes input parameters
  *
  * This operation retrieves the most basic / brief information pertaining to routes. If only a trip date is included in the URL string, all routes available for that date of travel are returned. If a trip date, departing terminal and arriving terminal are included then routes in the resultset are filtered to match accordingly. Valid departing and arriving terminals may be found using `/terminalsandmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const routesSchema = z
+export const routesByTripDateInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -35,13 +35,13 @@ export const routesSchema = z
     "Retrieves basic route information for specified trip date, optionally filtered by terminal combination. Returns route IDs, abbreviations, descriptions, region IDs, and service disruptions. Use GetScheduleValidDateRange to determine valid trip dates. Use for route discovery and route identification."
   );
 
-export type RoutesInput = z.infer<typeof routesSchema>;
+export type RoutesByTripDateInput = z.infer<typeof routesByTripDateInputSchema>;
 
 /**
  * Schema for RoutesHavingServiceDisruptions input parameters
  *
  * This operation retrieves the most basic / brief information for routes currently associated with service disruptions. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const routesHavingServiceDisruptionsSchema = z
+export const routesHavingServiceDisruptionsByTripDateInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -53,8 +53,8 @@ export const routesHavingServiceDisruptionsSchema = z
     "Retrieves basic route information for routes currently experiencing service disruptions on specified trip date. Returns route IDs, abbreviations, descriptions, and disruption details. Use GetScheduleValidDateRange to determine valid trip dates. Use for identifying routes affected by service disruptions."
   );
 
-export type RoutesHavingServiceDisruptionsInput = z.infer<
-  typeof routesHavingServiceDisruptionsSchema
+export type RoutesHavingServiceDisruptionsByTripDateInput = z.infer<
+  typeof routesHavingServiceDisruptionsByTripDateInputSchema
 >;
 
 /**
@@ -102,7 +102,7 @@ export type RouteDetailsInput = z.infer<typeof routeDetailsSchema>;
  *
  * This operation retrieves highly detailed information pertaining to routes for a specific trip date.
  */
-export const routeDetailsByTripDateSchema = z
+export const routeDetailsByTripDateInputSchema = z
   .object({
     /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
@@ -116,7 +116,7 @@ export const routeDetailsByTripDateSchema = z
   );
 
 export type RouteDetailsByTripDateInput = z.infer<
-  typeof routeDetailsByTripDateSchema
+  typeof routeDetailsByTripDateInputSchema
 >;
 
 /**
@@ -124,7 +124,7 @@ export type RouteDetailsByTripDateInput = z.infer<
  *
  * This operation retrieves highly detailed information pertaining to a specific route for a specific trip date.
  */
-export const routeDetailsByTripDateAndRouteIdSchema = z
+export const routeDetailsByTripDateAndRouteIdInputSchema = z
   .object({
     /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
@@ -144,7 +144,7 @@ export const routeDetailsByTripDateAndRouteIdSchema = z
   );
 
 export type RouteDetailsByTripDateAndRouteIdInput = z.infer<
-  typeof routeDetailsByTripDateAndRouteIdSchema
+  typeof routeDetailsByTripDateAndRouteIdInputSchema
 >;
 
 /**
@@ -152,7 +152,7 @@ export type RouteDetailsByTripDateAndRouteIdInput = z.infer<
  *
  * This operation retrieves highly detailed information pertaining to routes for a specific trip date and terminal combination.
  */
-export const routeDetailsByTripDateAndTerminalsSchema = z
+export const routeDetailsByTripDateAndTerminalsInputSchema = z
   .object({
     /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
@@ -178,7 +178,7 @@ export const routeDetailsByTripDateAndTerminalsSchema = z
   );
 
 export type RouteDetailsByTripDateAndTerminalsInput = z.infer<
-  typeof routeDetailsByTripDateAndTerminalsSchema
+  typeof routeDetailsByTripDateAndTerminalsInputSchema
 >;
 
 /**
@@ -186,7 +186,7 @@ export type RouteDetailsByTripDateAndTerminalsInput = z.infer<
  *
  * This operation retrieves routes for a specific trip date and terminal combination.
  */
-export const routesByTerminalsSchema = z
+export const routesByTripDateAndTerminalsInputSchema = z
   .object({
     /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
@@ -211,4 +211,6 @@ export const routesByTerminalsSchema = z
     "Retrieves basic route information for routes matching specific trip date and terminal combination, returning route IDs, abbreviations, descriptions, and service disruptions. Use GetTerminalsAndMates to find valid terminal combinations and GetScheduleValidDateRange for valid trip dates. Use for terminal-specific route discovery."
   );
 
-export type RoutesByTerminalsInput = z.infer<typeof routesByTerminalsSchema>;
+export type RoutesByTripDateAndTerminalsInput = z.infer<
+  typeof routesByTripDateAndTerminalsInputSchema
+>;

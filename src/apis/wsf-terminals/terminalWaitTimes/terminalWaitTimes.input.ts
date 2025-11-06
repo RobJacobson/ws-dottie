@@ -12,20 +12,22 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalWaitTimesSchema = z
+export const terminalWaitTimesInputSchema = z
   .object({})
   .describe(
     "Retrieves wait time conditions and tips for vehicles and walk-on passengers including wait time notes, IVR notes, route information, and update dates. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal wait time information and passenger guidance."
   );
 
-export type TerminalWaitTimesInput = z.infer<typeof terminalWaitTimesSchema>;
+export type TerminalWaitTimesInput = z.infer<
+  typeof terminalWaitTimesInputSchema
+>;
 
 /**
  * Schema for TerminalWaitTimesById input parameters
  *
  * This operation retrieves tips and wait time conditions for both vehicles and walk-on passengers. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalWaitTimesByIdSchema = z
+export const terminalWaitTimesByIdInputSchema = z
   .object({
     TerminalID: z
       .number()
@@ -39,5 +41,5 @@ export const terminalWaitTimesByIdSchema = z
   );
 
 export type TerminalWaitTimesByIdInput = z.infer<
-  typeof terminalWaitTimesByIdSchema
+  typeof terminalWaitTimesByIdInputSchema
 >;

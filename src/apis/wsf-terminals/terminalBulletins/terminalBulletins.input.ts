@@ -12,20 +12,22 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBulletinsSchema = z
+export const terminalBulletinsInputSchema = z
   .object({})
   .describe(
     "Retrieves alerts and bulletins associated with terminals including bulletin titles, content, update dates, and sort order. Each terminal may have zero or more bulletins. Returns all terminals with their bulletins or specific terminal if TerminalID is provided. Use for terminal alert and bulletin display."
   );
 
-export type TerminalBulletinsInput = z.infer<typeof terminalBulletinsSchema>;
+export type TerminalBulletinsInput = z.infer<
+  typeof terminalBulletinsInputSchema
+>;
 
 /**
  * Schema for TerminalBulletinsById input parameters
  *
  * This operation retrieves alerts and bulletins associated with terminals. Each terminal may have zero or more bulletins assigned to it. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBulletinsByIdSchema = z
+export const terminalBulletinsByIdInputSchema = z
   .object({
     TerminalID: z
       .number()
@@ -39,5 +41,5 @@ export const terminalBulletinsByIdSchema = z
   );
 
 export type TerminalBulletinsByIdInput = z.infer<
-  typeof terminalBulletinsByIdSchema
+  typeof terminalBulletinsByIdInputSchema
 >;

@@ -5,7 +5,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation provides details regarding vessel accommodations (bathrooms, galley, elevator, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
-export const vesselAccommodationsSchema = z
+export const vesselAccommodationsInputSchema = z
   .object({})
   .strict()
   .describe(
@@ -13,13 +13,13 @@ export const vesselAccommodationsSchema = z
   );
 
 export type VesselAccommodationsInput = z.infer<
-  typeof vesselAccommodationsSchema
+  typeof vesselAccommodationsInputSchema
 >;
 
 /**
  * VesselAccommodationsById input schema
  */
-export const vesselAccommodationsByIdSchema = z
+export const vesselAccommodationsByIdInputSchema = z
   .object({
     VesselID: z
       .number()
@@ -33,5 +33,5 @@ export const vesselAccommodationsByIdSchema = z
   );
 
 export type VesselAccommodationsByIdInput = z.infer<
-  typeof vesselAccommodationsByIdSchema
+  typeof vesselAccommodationsByIdInputSchema
 >;

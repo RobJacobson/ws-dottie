@@ -15,10 +15,10 @@ export const scheduleAlertsResource = {
     getScheduleAlerts: {
       function: "getScheduleAlerts",
       endpoint: "/alerts",
-      inputSchema: i.allAlertsSchema,
+      inputSchema: i.scheduleAlertsInputSchema,
       outputSchema: z.array(o.alertDetailSchema),
       sampleParams: {},
       endpointDescription: "Returns all current schedule alerts.",
-    } satisfies EndpointDefinition<i.AllAlertsInput, o.AlertDetail[]>,
+    } satisfies EndpointDefinition<i.ScheduleAlertsInput, o.AlertDetail[]>,
   },
 } satisfies EndpointGroup;

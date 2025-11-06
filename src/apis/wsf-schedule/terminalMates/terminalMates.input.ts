@@ -8,6 +8,6 @@
 // Terminal Mates uses the same input schema as terminals
 // Import the terminal mates schema from the terminals input file
 export {
-  ScheduleTerminalMatesInput,
-  terminalMatesSchema,
+  TerminalMatesInput,
+  terminalMatesInputSchema,
 } from "../terminals/terminals.input";

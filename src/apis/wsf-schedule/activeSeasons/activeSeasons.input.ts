@@ -11,12 +11,10 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for ActiveScheduledSeasons input parameters
  *
  * This operation retrieves a summary of active seasons. */
-export const activeScheduledSeasonsSchema = z
+export const activeSeasonsInputSchema = z
   .object({})
   .describe(
     "Retrieves summary of active schedule seasons, returning season IDs, names, PDF URLs, and date ranges. Use to identify which schedule seasons are currently active and their date ranges."
   );
 
-export type ActiveScheduledSeasonsInput = z.infer<
-  typeof activeScheduledSeasonsSchema
->;
+export type ActiveSeasonsInput = z.infer<typeof activeSeasonsInputSchema>;

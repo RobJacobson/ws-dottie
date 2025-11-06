@@ -11,7 +11,7 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for Terminals input parameters
  *
  * This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalsSchema = z
+export const terminalsInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -23,13 +23,13 @@ export const terminalsSchema = z
     "Retrieves valid departing terminals for specified trip date, returning terminal IDs and names. Use GetScheduleValidDateRange to determine valid trip dates. Use for schedule workflows to identify available origin terminals."
   );
 
-export type ScheduleTerminalsInput = z.infer<typeof terminalsSchema>;
+export type TerminalsInput = z.infer<typeof terminalsInputSchema>;
 
 /**
  * Schema for TerminalsAndMates input parameters
  *
  * This operation retrieves all valid departing and arriving terminal combinations for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalsAndMatesSchema = z
+export const terminalsAndMatesInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -41,13 +41,15 @@ export const terminalsAndMatesSchema = z
     "Retrieves all valid departing and arriving terminal combinations for specified trip date, returning all terminal pairs with IDs and names. Use GetScheduleValidDateRange to determine valid trip dates. Use for comprehensive terminal combination lookup."
   );
 
-export type TerminalsAndMatesInput = z.infer<typeof terminalsAndMatesSchema>;
+export type TerminalsAndMatesInput = z.infer<
+  typeof terminalsAndMatesInputSchema
+>;
 
 /**
  * Schema for TerminalsAndMatesByRoute input parameters
  *
  * This operation provides valid departing and arriving terminal combinations for a given trip date and route. Valid routes may be found by using `/routes`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalsAndMatesByRouteSchema = z
+export const terminalsAndMatesByRouteInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -65,14 +67,14 @@ export const terminalsAndMatesByRouteSchema = z
   );
 
 export type TerminalsAndMatesByRouteInput = z.infer<
-  typeof terminalsAndMatesByRouteSchema
+  typeof terminalsAndMatesByRouteInputSchema
 >;
 
 /**
  * Schema for TerminalMates input parameters
  *
  * This operation provides arriving terminals for a given departing terminal and trip date. A valid departing terminal may be found by using `/terminals`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalMatesSchema = z
+export const terminalMatesInputSchema = z
   .object({
     /** The trip date in 'YYYY-MM-DD' format (e.g., '2014-04-01'). */
     TripDate: z
@@ -91,4 +93,4 @@ export const terminalMatesSchema = z
     "Retrieves arriving terminals (terminal mates) available from specified departing terminal on specified trip date, returning terminal IDs and names. Use GetTerminals to find valid departing terminals and GetScheduleValidDateRange for valid trip dates. Use for discovering available destination terminals from a specific origin."
   );
 
-export type ScheduleTerminalMatesInput = z.infer<typeof terminalMatesSchema>;
+export type TerminalMatesInput = z.infer<typeof terminalMatesInputSchema>;

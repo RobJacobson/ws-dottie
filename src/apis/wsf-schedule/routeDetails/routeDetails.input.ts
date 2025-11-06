@@ -11,9 +11,7 @@ export {
   RouteDetailsByTripDateAndRouteIdInput,
   RouteDetailsByTripDateAndTerminalsInput,
   RouteDetailsByTripDateInput,
-  RouteDetailsInput,
-  routeDetailsByTripDateAndRouteIdSchema,
-  routeDetailsByTripDateAndTerminalsSchema,
-  routeDetailsByTripDateSchema,
-  routeDetailsSchema,
+  routeDetailsByTripDateAndRouteIdInputSchema,
+  routeDetailsByTripDateAndTerminalsInputSchema,
+  routeDetailsByTripDateInputSchema,
 } from "../routes/routes.input";

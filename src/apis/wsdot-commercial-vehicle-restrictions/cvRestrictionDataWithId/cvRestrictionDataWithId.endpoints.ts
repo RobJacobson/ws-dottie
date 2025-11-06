@@ -1,12 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
 import {
-  type CVRestrictionDataWithIdInput,
-  cvRestrictionDataWithIdInputSchema,
+  type CommercialVehicleRestrictionsWithIdInput,
+  commercialVehicleRestrictionsWithIdInputSchema,
 } from "./cvRestrictionDataWithId.input";
 import {
-  type CVRestrictionDataWithId,
-  cvRestrictionDataWithIdOutputSchema,
+  type CVRestrictionWithId,
+  cvRestrictionWithIdSchema,
 } from "./cvRestrictionDataWithId.output";
 
 export const cvRestrictionDataWithIdGroup = {
@@ -22,14 +22,14 @@ export const cvRestrictionDataWithIdGroup = {
     getCommercialVehicleRestrictionsWithId: {
       function: "getCommercialVehicleRestrictionsWithId",
       endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
-      inputSchema: cvRestrictionDataWithIdInputSchema,
-      outputSchema: z.array(cvRestrictionDataWithIdOutputSchema),
+      inputSchema: commercialVehicleRestrictionsWithIdInputSchema,
+      outputSchema: z.array(cvRestrictionWithIdSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.",
     } satisfies EndpointDefinition<
-      CVRestrictionDataWithIdInput,
-      CVRestrictionDataWithId[]
+      CommercialVehicleRestrictionsWithIdInput,
+      CVRestrictionWithId[]
     >,
   },
 } satisfies EndpointGroup;

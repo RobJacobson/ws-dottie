@@ -17,7 +17,7 @@ export const terminalLocationsResource = {
     getTerminalLocations: {
       function: "getTerminalLocations",
       endpoint: "/terminalLocations",
-      inputSchema: i.terminalLocationsSchema,
+      inputSchema: i.terminalLocationsInputSchema,
       outputSchema: z.array(o.terminalLocationSchema),
       sampleParams: {},
       endpointDescription:
@@ -29,7 +29,7 @@ export const terminalLocationsResource = {
     getTerminalLocationsByTerminalId: {
       function: "getTerminalLocationsByTerminalId",
       endpoint: "/terminalLocations/{TerminalID}",
-      inputSchema: i.terminalLocationsByIdSchema,
+      inputSchema: i.terminalLocationsByIdInputSchema,
       outputSchema: o.terminalLocationSchema,
       sampleParams: { TerminalID: 5 },
       endpointDescription:

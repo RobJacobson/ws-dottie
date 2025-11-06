@@ -11,7 +11,7 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for SchedRoutes input parameters
  *
  * This operation provides a listing of routes that are active for a season. For example, "Anacortes / Sidney B.C." may be a valid route, but if it's not scheduled to run during Winter 2014, it won't be returned as part of the Winter 2014 scheduled routes resultset. Results will include all known scheduled routes spanning current and upcoming seasons or, alternatively, results can be filtered to only include scheduled routes for a specific season (when the season is specified with a ScheduleID value). Seasons may be determined using `/activeseasons`. */
-export const scheduledRoutesSchema = z
+export const scheduledRoutesInputSchema = z
   .object({
     ScheduleID: z
       .number()
@@ -24,13 +24,13 @@ export const scheduledRoutesSchema = z
     "Retrieves listing of routes that are active for specified season or all current/upcoming seasons, returning scheduled route IDs, route information, contingency adjustments, and service disruptions. Routes must be scheduled to run during season to be included. Use GetActiveSeasons to find valid schedule IDs. Use for route discovery and season-based route filtering."
   );
 
-export type ScheduledRoutesInput = z.infer<typeof scheduledRoutesSchema>;
+export type ScheduledRoutesInput = z.infer<typeof scheduledRoutesInputSchema>;
 
 /**
  * Schema for SchedRoutes input parameters
  *
  * This operation provides a listing of routes that are active for a season. For example, "Anacortes / Sidney B.C." may be a valid route, but if it's not scheduled to run during Winter 2014, it won't be returned as part of the Winter 2014 scheduled routes resultset. Results will include all known scheduled routes spanning current and upcoming seasons or, alternatively, results can be filtered to only include scheduled routes for a specific season (when the season is specified with a ScheduleID value). Seasons may be determined using `/activeseasons`. */
-export const scheduledRoutesByScheduleIdSchema = z
+export const scheduledRoutesByIdInputSchema = z
   .object({
     ScheduleID: z
       .number()
@@ -43,6 +43,6 @@ export const scheduledRoutesByScheduleIdSchema = z
     "Retrieves listing of routes that are active for specified season or all current/upcoming seasons by schedule ID, returning scheduled route IDs, route information, contingency adjustments, and service disruptions. Routes must be scheduled to run during season to be included. Use GetActiveSeasons to find valid schedule IDs. Use for route discovery and season-based route filtering."
   );
 
-export type ScheduledRoutesByScheduleIdInput = z.infer<
-  typeof scheduledRoutesByScheduleIdSchema
+export type ScheduledRoutesByIdInput = z.infer<
+  typeof scheduledRoutesByIdInputSchema
 >;

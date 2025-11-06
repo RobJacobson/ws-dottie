@@ -23,7 +23,7 @@ export const scheduleTodayResource = {
       function: "getScheduleTodayByTerminals",
       endpoint:
         "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
-      inputSchema: i.todaysScheduleByTerminalComboSchema,
+      inputSchema: i.scheduleTodayByTerminalsInputSchema,
       outputSchema: o.scheduleSchema,
       sampleParams: {
         DepartingTerminalID: 1,
@@ -32,9 +32,6 @@ export const scheduleTodayResource = {
       },
       endpointDescription:
         "Returns today's schedule for the specified terminal pair.",
-    } satisfies EndpointDefinition<
-      i.TodaysScheduleByTerminalComboInput,
-      o.Schedule
-    >,
+    } satisfies EndpointDefinition<i.ScheduleTodayByTerminalsInput, o.Schedule>,
   },
 } satisfies EndpointGroup;

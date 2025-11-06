@@ -12,20 +12,20 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBasicsSchema = z
+export const terminalBasicsInputSchema = z
   .object({})
   .describe(
     "Retrieves basic terminal information including terminal IDs, names, abbreviations, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal discovery and basic terminal information display."
   );
 
-export type TerminalBasicsInput = z.infer<typeof terminalBasicsSchema>;
+export type TerminalBasicsInput = z.infer<typeof terminalBasicsInputSchema>;
 
 /**
  * Schema for TerminalBasicsById input parameters
  *
  * This operation retrieves the most basic / brief information pertaining to terminals. A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalBasicsByIdSchema = z
+export const terminalBasicsByIdInputSchema = z
   .object({
     TerminalID: z
       .number()
@@ -38,4 +38,6 @@ export const terminalBasicsByIdSchema = z
     "Retrieves basic terminal information for specified terminal including terminal ID, name, abbreviation, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific basic information display."
   );
 
-export type TerminalBasicsByIdInput = z.infer<typeof terminalBasicsByIdSchema>;
+export type TerminalBasicsByIdInput = z.infer<
+  typeof terminalBasicsByIdInputSchema
+>;

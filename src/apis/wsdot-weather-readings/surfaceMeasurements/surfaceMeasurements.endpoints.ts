@@ -15,14 +15,14 @@ export const surfaceMeasurementsResource = {
     getSurfaceMeasurements: {
       function: "getSurfaceMeasurements",
       endpoint: "/Scanweb/SurfaceMeasurements",
-      inputSchema: i.getSurfaceMeasurementsSchema,
-      outputSchema: z.array(o.scanwebSurfaceMeasurementsSchema),
+      inputSchema: i.surfaceMeasurementsInputSchema,
+      outputSchema: z.array(o.surfaceMeasurementSchema),
       sampleParams: {},
       endpointDescription:
         "Returns surface measurements from all weather stations.",
     } satisfies EndpointDefinition<
-      i.GetSurfaceMeasurementsInput,
-      o.ScanwebSurfaceMeasurements[]
+      i.SurfaceMeasurementsInput,
+      o.SurfaceMeasurement[]
     >,
   },
 } satisfies EndpointGroup;

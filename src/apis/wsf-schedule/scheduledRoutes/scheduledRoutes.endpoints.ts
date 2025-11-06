@@ -15,7 +15,7 @@ export const scheduledRoutesResource = {
     getScheduledRoutes: {
       function: "getScheduledRoutes",
       endpoint: "/schedroutes",
-      inputSchema: i.scheduledRoutesSchema,
+      inputSchema: i.scheduledRoutesInputSchema,
       outputSchema: z.array(o.schedRouteSchema),
       sampleParams: {},
       endpointDescription: "Returns all scheduled routes.",
@@ -23,14 +23,11 @@ export const scheduledRoutesResource = {
     getScheduledRoutesById: {
       function: "getScheduledRoutesById",
       endpoint: "/schedroutes/{ScheduleID}",
-      inputSchema: i.scheduledRoutesByScheduleIdSchema,
+      inputSchema: i.scheduledRoutesByIdInputSchema,
       outputSchema: z.array(o.schedRouteSchema),
       sampleParams: { ScheduleID: 193 },
       endpointDescription:
         "Returns scheduled routes for the specified schedule ID.",
-    } satisfies EndpointDefinition<
-      i.ScheduledRoutesByScheduleIdInput,
-      o.SchedRoute[]
-    >,
+    } satisfies EndpointDefinition<i.ScheduledRoutesByIdInput, o.SchedRoute[]>,
   },
 } satisfies EndpointGroup;

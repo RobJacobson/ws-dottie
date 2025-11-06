@@ -15,7 +15,7 @@ export const terminalSailingSpaceResource = {
     getTerminalSailingSpace: {
       function: "getTerminalSailingSpace",
       endpoint: "/terminalSailingSpace",
-      inputSchema: i.terminalSailingSpaceSchema,
+      inputSchema: i.terminalSailingSpaceInputSchema,
       outputSchema: z.array(o.terminalSailingSpaceSchema),
       sampleParams: {},
       endpointDescription:
@@ -27,13 +27,13 @@ export const terminalSailingSpaceResource = {
     getTerminalSailingSpaceByTerminalId: {
       function: "getTerminalSailingSpaceByTerminalId",
       endpoint: "/terminalSailingSpace/{TerminalID}",
-      inputSchema: i.terminalSailingSpaceByIdSchema,
+      inputSchema: i.terminalSailingSpaceByTerminalIdInputSchema,
       outputSchema: o.terminalSailingSpaceSchema,
       sampleParams: { TerminalID: 7 },
       endpointDescription:
         "Returns TerminalSailingSpace data for the terminal with the given identifier.",
     } satisfies EndpointDefinition<
-      i.TerminalSailingSpaceByIdInput,
+      i.TerminalSailingSpaceByTerminalIdInput,
       o.TerminalSailingSpace
     >,
   },

@@ -16,23 +16,23 @@ export const sailingsResource = {
     getAllSailingsBySchedRouteID: {
       function: "getSailingsBySchedRouteID",
       endpoint: "/allsailings/{SchedRouteID}",
-      inputSchema: i.allSchedSailingsBySchedRouteSchema,
+      inputSchema: i.allSailingsBySchedRouteIDInputSchema,
       outputSchema: z.array(o.sailingSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns all sailing data for the specified scheduled route ID.",
     } satisfies EndpointDefinition<
-      i.AllSchedSailingsBySchedRouteInput,
+      i.AllSailingsBySchedRouteIDInput,
       o.Sailing[]
     >,
     getSailingsByRouteID: {
       function: "getSailingsBySchedRouteID",
       endpoint: "/sailings/{SchedRouteID}",
-      inputSchema: i.sailingsByRouteIdSchema,
+      inputSchema: i.sailingsByRouteIDInputSchema,
       outputSchema: z.array(o.sailingSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<i.SailingsByRouteIdInput, o.Sailing[]>,
+    } satisfies EndpointDefinition<i.SailingsByRouteIDInput, o.Sailing[]>,
   },
 } satisfies EndpointGroup;

@@ -16,7 +16,7 @@ export const vesselVerboseResource = {
     getVesselsVerbose: {
       function: "getVesselsVerbose",
       endpoint: "/vesselVerbose",
-      inputSchema: i.vesselVerboseSchema,
+      inputSchema: i.vesselVerboseInputSchema,
       outputSchema: z.array(o.vesselVerboseSchema),
       sampleParams: {},
       endpointDescription:
@@ -25,7 +25,7 @@ export const vesselVerboseResource = {
     getVesselsVerboseByVesselId: {
       function: "getVesselsVerboseByVesselId",
       endpoint: "/vesselVerbose/{VesselID}",
-      inputSchema: i.vesselVerboseByIdSchema,
+      inputSchema: i.vesselVerboseByIdInputSchema,
       outputSchema: o.vesselVerboseSchema,
       sampleParams: { VesselID: 68 },
       endpointDescription:

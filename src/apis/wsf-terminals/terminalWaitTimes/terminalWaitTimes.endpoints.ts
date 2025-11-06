@@ -16,7 +16,7 @@ export const terminalWaitTimesResource = {
     getTerminalWaitTimes: {
       function: "getTerminalWaitTimes",
       endpoint: "/terminalWaitTimes",
-      inputSchema: i.terminalWaitTimesSchema,
+      inputSchema: i.terminalWaitTimesInputSchema,
       outputSchema: z.array(o.terminalWaitTimeSchema),
       sampleParams: {},
       endpointDescription:
@@ -28,7 +28,7 @@ export const terminalWaitTimesResource = {
     getTerminalWaitTimesByTerminalId: {
       function: "getTerminalWaitTimesByTerminalId",
       endpoint: "/terminalWaitTimes/{TerminalID}",
-      inputSchema: i.terminalWaitTimesByIdSchema,
+      inputSchema: i.terminalWaitTimesByIdInputSchema,
       outputSchema: o.terminalWaitTimeSchema,
       sampleParams: { TerminalID: 11 },
       endpointDescription:

@@ -1,10 +1,7 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import {
-  type GetTollRatesInput,
-  getTollRatesInputSchema,
-} from "./tollRates.input";
-import { type TollRate, tollRatesOutputSchema } from "./tollRates.output";
+import { type TollRatesInput, tollRatesInputSchema } from "./tollRates.input";
+import { type TollRate, tollRateSchema } from "./tollRates.output";
 
 export const tollRatesResource = {
   name: "toll-rates",
@@ -19,11 +16,11 @@ export const tollRatesResource = {
     getTollRates: {
       function: "getTollRates",
       endpoint: "/getTollRatesAsJson",
-      inputSchema: getTollRatesInputSchema,
-      outputSchema: z.array(tollRatesOutputSchema),
+      inputSchema: tollRatesInputSchema,
+      outputSchema: z.array(tollRateSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TollRate items for all high occupancy toll lanes statewide.",
-    } satisfies EndpointDefinition<GetTollRatesInput, TollRate[]>,
+    } satisfies EndpointDefinition<TollRatesInput, TollRate[]>,
   },
 } satisfies EndpointGroup;

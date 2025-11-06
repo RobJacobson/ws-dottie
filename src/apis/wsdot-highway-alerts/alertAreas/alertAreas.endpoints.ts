@@ -1,10 +1,7 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import {
-  type AlertAreasInput,
-  alertAreasInputSchema,
-} from "./alertAreas.input";
-import { type Area, alertAreasOutputSchema } from "./alertAreas.output";
+import { type MapAreasInput, mapAreasInputSchema } from "./alertAreas.input";
+import { type Area, areaSchema } from "./alertAreas.output";
 
 export const alertAreasGroup = {
   name: "alertAreas",
@@ -19,11 +16,11 @@ export const alertAreasGroup = {
     getMapAreas: {
       function: "getMapAreas",
       endpoint: "/getMapAreasAsJson",
-      inputSchema: alertAreasInputSchema,
-      outputSchema: z.array(alertAreasOutputSchema),
+      inputSchema: mapAreasInputSchema,
+      outputSchema: z.array(areaSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of Area objects for all available geographic regions.",
-    } satisfies EndpointDefinition<AlertAreasInput, Area[]>,
+    } satisfies EndpointDefinition<MapAreasInput, Area[]>,
   },
 } satisfies EndpointGroup;

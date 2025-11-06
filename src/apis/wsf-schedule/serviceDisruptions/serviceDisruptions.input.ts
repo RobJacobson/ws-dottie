@@ -8,6 +8,6 @@
 // Service Disruptions uses the same input schema as routes
 // This is because it's typically filtered by trip date like routes
 export {
-  RoutesHavingServiceDisruptionsInput,
-  routesHavingServiceDisruptionsSchema,
+  RoutesHavingServiceDisruptionsByTripDateInput,
+  routesHavingServiceDisruptionsByTripDateInputSchema,
 } from "../routes/routes.input";

@@ -16,20 +16,20 @@ export const vesselStatsResource = {
     getVesselStats: {
       function: "getVesselStats",
       endpoint: "/vesselStats",
-      inputSchema: i.vesselStatsSchema,
-      outputSchema: z.array(o.vesselStatsSchema),
+      inputSchema: i.vesselStatsInputSchema,
+      outputSchema: z.array(o.vesselStatSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselStat objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselStatsInput, o.VesselStats[]>,
+    } satisfies EndpointDefinition<i.VesselStatsInput, o.VesselStat[]>,
     getVesselStatsByVesselId: {
       function: "getVesselStatsByVesselId",
       endpoint: "/vesselStats/{VesselID}",
-      inputSchema: i.vesselStatsByIdSchema,
-      outputSchema: o.vesselStatsSchema,
+      inputSchema: i.vesselStatsByIdInputSchema,
+      outputSchema: o.vesselStatSchema,
       sampleParams: { VesselID: 32 },
       endpointDescription:
         "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
-    } satisfies EndpointDefinition<i.VesselStatsByIdInput, o.VesselStats>,
+    } satisfies EndpointDefinition<i.VesselStatsByIdInput, o.VesselStat>,
   },
 } satisfies EndpointGroup;

@@ -16,20 +16,20 @@ export const flowDataGroup = {
     getTrafficFlows: {
       function: "getTrafficFlows",
       endpoint: "/getTrafficFlowsAsJson",
-      inputSchema: i.getTrafficFlowsSchema,
+      inputSchema: i.trafficFlowsInputSchema,
       outputSchema: z.array(o.flowDataSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple FlowData items for all traffic flow stations across Washington state.",
-    } satisfies EndpointDefinition<i.GetTrafficFlowsInput, o.FlowData[]>,
+    } satisfies EndpointDefinition<i.TrafficFlowsInput, o.FlowData[]>,
     getTrafficFlowById: {
       function: "getTrafficFlowById",
       endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",
-      inputSchema: i.getTrafficFlowSchema,
+      inputSchema: i.trafficFlowByIdInputSchema,
       outputSchema: o.flowDataSchema,
       sampleParams: { FlowDataID: 2482 },
       endpointDescription:
         "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
-    } satisfies EndpointDefinition<i.GetTrafficFlowInput, o.FlowData>,
+    } satisfies EndpointDefinition<i.TrafficFlowByIdInput, o.FlowData>,
   },
 } satisfies EndpointGroup;

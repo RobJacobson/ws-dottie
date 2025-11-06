@@ -16,7 +16,7 @@ export const terminalBasicsResource = {
     getTerminalBasics: {
       function: "getTerminalBasics",
       endpoint: "/terminalBasics",
-      inputSchema: i.terminalBasicsSchema,
+      inputSchema: i.terminalBasicsInputSchema,
       outputSchema: z.array(o.terminalBasicSchema),
       sampleParams: {},
       endpointDescription:
@@ -25,7 +25,7 @@ export const terminalBasicsResource = {
     getTerminalBasicsByTerminalId: {
       function: "getTerminalBasicsByTerminalId",
       endpoint: "/terminalBasics/{TerminalID}",
-      inputSchema: i.terminalBasicsByIdSchema,
+      inputSchema: i.terminalBasicsByIdInputSchema,
       outputSchema: o.terminalBasicSchema,
       sampleParams: { TerminalID: 1 },
       endpointDescription:

@@ -17,7 +17,7 @@ export const routeDetailsResource = {
     getRouteDetailsByTripDate: {
       function: "getRouteDetailsByTripDate",
       endpoint: "/routedetails/{TripDate}",
-      inputSchema: i.routeDetailsByTripDateSchema,
+      inputSchema: i.routeDetailsByTripDateInputSchema,
       outputSchema: z.array(o.routeDetailSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
@@ -29,7 +29,7 @@ export const routeDetailsResource = {
     getRouteDetailsByTripDateAndRouteId: {
       function: "getRouteDetailsByTripDateAndRouteId",
       endpoint: "/routedetails/{TripDate}/{RouteID}",
-      inputSchema: i.routeDetailsByTripDateAndRouteIdSchema,
+      inputSchema: i.routeDetailsByTripDateAndRouteIdInputSchema,
       outputSchema: o.routeDetailSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
       endpointDescription:
@@ -42,7 +42,7 @@ export const routeDetailsResource = {
       function: "getRouteDetailsByTripDateAndTerminals",
       endpoint:
         "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.routeDetailsByTripDateAndTerminalsSchema,
+      inputSchema: i.routeDetailsByTripDateAndTerminalsInputSchema,
       outputSchema: z.array(o.routeDetailSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),

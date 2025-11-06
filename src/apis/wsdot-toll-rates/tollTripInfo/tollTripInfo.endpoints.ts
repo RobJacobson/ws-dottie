@@ -15,10 +15,10 @@ export const tollTripInfoResource = {
     getTollTripInfo: {
       function: "getTollTripInfo",
       endpoint: "/getTollTripInfoAsJson",
-      inputSchema: i.getTollTripInfoSchema,
+      inputSchema: i.tollTripInfoInputSchema,
       outputSchema: z.array(o.tollTripInfoSchema),
       sampleParams: {},
       endpointDescription: "Returns trip information for all toll trips.",
-    } satisfies EndpointDefinition<i.GetTollTripInfoInput, o.TollTripInfo[]>,
+    } satisfies EndpointDefinition<i.TollTripInfoInput, o.TollTripInfo[]>,
   },
 } satisfies EndpointGroup;

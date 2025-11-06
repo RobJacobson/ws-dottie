@@ -1,12 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
 import {
-  type BorderCrossingDataInput,
-  borderCrossingInputSchema,
+  type BorderCrossingsInput,
+  borderCrossingsInputSchema,
 } from "./borderCrossingData.input";
 import {
-  type BorderCrossingData,
-  borderCrossingOutputSchema,
+  type BorderCrossing,
+  borderCrossingSchema,
 } from "./borderCrossingData.output";
 
 export const borderCrossingDataResource = {
@@ -22,14 +22,11 @@ export const borderCrossingDataResource = {
     getBorderCrossings: {
       function: "getBorderCrossings",
       endpoint: "/GetBorderCrossingsAsJson",
-      inputSchema: borderCrossingInputSchema,
-      outputSchema: z.array(borderCrossingOutputSchema),
+      inputSchema: borderCrossingsInputSchema,
+      outputSchema: z.array(borderCrossingSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
-    } satisfies EndpointDefinition<
-      BorderCrossingDataInput,
-      BorderCrossingData[]
-    >,
+    } satisfies EndpointDefinition<BorderCrossingsInput, BorderCrossing[]>,
   },
 } satisfies EndpointGroup;

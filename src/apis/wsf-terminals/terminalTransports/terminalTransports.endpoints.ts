@@ -16,7 +16,7 @@ export const terminalTransportsResource = {
     getTerminalTransports: {
       function: "getTerminalTransports",
       endpoint: "/terminalTransports",
-      inputSchema: i.terminalTransportsSchema,
+      inputSchema: i.terminalTransportsInputSchema,
       outputSchema: z.array(o.terminalTransportSchema),
       sampleParams: {},
       endpointDescription:
@@ -28,13 +28,13 @@ export const terminalTransportsResource = {
     getTerminalTransportsByTerminalId: {
       function: "getTerminalTransportsByTerminalId",
       endpoint: "/terminalTransports/{TerminalID}",
-      inputSchema: i.terminalTransportsByIdSchema,
+      inputSchema: i.terminalTransportsByTerminalIdInputSchema,
       outputSchema: o.terminalTransportSchema,
       sampleParams: { TerminalID: 10 },
       endpointDescription:
         "Returns TerminalTransport data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalTransportsByIdInput,
+      i.TerminalTransportsByTerminalIdInput,
       o.TerminalTransport
     >,
   },

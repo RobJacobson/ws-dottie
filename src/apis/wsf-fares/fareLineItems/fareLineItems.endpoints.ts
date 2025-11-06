@@ -18,8 +18,8 @@ export const fareLineItemsGroup = {
       function: "getFareLineItemsByTripDateAndTerminals",
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: i.fareLineItemsSchema,
-      outputSchema: z.array(o.lineItemResponseSchema),
+      inputSchema: i.fareLineItemsByTripDateAndTerminalsInputSchema,
+      outputSchema: z.array(o.lineItemSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 3,
@@ -28,13 +28,16 @@ export const fareLineItemsGroup = {
       },
       endpointDescription:
         "Returns multiple of FareLineItem for specific terminal combination.",
-    } satisfies EndpointDefinition<i.FareLineItemsInput, o.LineItemResponse[]>,
+    } satisfies EndpointDefinition<
+      i.FareLineItemsByTripDateAndTerminalsInput,
+      o.LineItem[]
+    >,
     getFareLineItemsBasic: {
       function: "getFareLineItemsBasic",
       endpoint:
         "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: i.fareLineItemsBasicSchema,
-      outputSchema: z.array(o.lineItemResponseSchema),
+      inputSchema: i.fareLineItemsBasicInputSchema,
+      outputSchema: z.array(o.lineItemSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -43,21 +46,18 @@ export const fareLineItemsGroup = {
       },
       endpointDescription:
         "Returns multiple of FareLineItem for popular fare options.",
-    } satisfies EndpointDefinition<
-      i.FareLineItemsBasicInput,
-      o.LineItemResponse[]
-    >,
+    } satisfies EndpointDefinition<i.FareLineItemsBasicInput, o.LineItem[]>,
     getFareLineItemsVerbose: {
       function: "getFareLineItemsVerbose",
       endpoint: "/fareLineItemsVerbose/{TripDate}",
-      inputSchema: i.fareLineItemsVerboseSchema,
-      outputSchema: o.lineItemVerboseResponseSchema,
+      inputSchema: i.fareLineItemsVerboseInputSchema,
+      outputSchema: o.lineItemVerboseSchema,
       sampleParams: { TripDate: datesHelper.today() },
       endpointDescription:
         "Returns multiple of FareLineItem for all terminal combinations.",
     } satisfies EndpointDefinition<
       i.FareLineItemsVerboseInput,
-      o.LineItemVerboseResponse
+      o.LineItemVerbose
     >,
   },
 } satisfies EndpointGroup;

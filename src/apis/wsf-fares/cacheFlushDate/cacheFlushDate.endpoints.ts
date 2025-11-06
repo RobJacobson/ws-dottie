@@ -22,14 +22,14 @@ export const cacheFlushDateGroup = {
     getCacheFlushDate: {
       function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: i.cacheFlushDateSchema,
-      outputSchema: o.cacheFlushDateResponseSchema,
+      inputSchema: i.cacheFlushDateInputSchema,
+      outputSchema: o.cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
       description: ENDPOINT_DESCRIPTION,
     } satisfies EndpointDefinition<
-      i.FaresCacheFlushDateInput,
-      o.FaresCacheFlushDateResponse
+      i.CacheFlushDateInput,
+      o.FaresCacheFlushDate
     >,
   },
 } satisfies EndpointGroup;

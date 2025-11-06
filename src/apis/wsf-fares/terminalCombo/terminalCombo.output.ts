@@ -10,7 +10,7 @@ import { z } from "@/shared/zod-openapi-init";
  * Terminal combo response schema for GetTerminalComboDetail endpoint
  *
  * This operation describes what fares are collected for a given departing terminal, arriving terminal and trip date. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalComboResponseSchema = z
+export const terminalComboSchema = z
   .object({
     DepartingDescription: z
       .string()
@@ -35,13 +35,13 @@ export const terminalComboResponseSchema = z
     "Represents fare collection description for specific terminal combination including departing/arriving terminal names and collection details. E.g., Anacortes to Friday Harbor with fares collected at Anacortes only. Used for understanding fare collection procedures and determining where fares are paid for specific routes."
   );
 
-export type TerminalComboResponse = z.infer<typeof terminalComboResponseSchema>;
+export type TerminalCombo = z.infer<typeof terminalComboSchema>;
 
 /**
  * Terminal combo verbose response schema for GetTerminalComboVerboseDetail endpoint
  *
  * This operation retrieves fare collection descriptions for all terminal combinations available on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalComboVerboseResponseSchema = z
+export const terminalComboVerboseSchema = z
   .object({
     DepartingTerminalID: z
       .number()
@@ -76,6 +76,6 @@ export const terminalComboVerboseResponseSchema = z
     "Represents fare collection description for terminal combination including terminal IDs, names, and collection details. E.g., Anacortes (ID 1) to Friday Harbor (ID 10) with fares collected at Anacortes only. Used for comprehensive fare collection information lookup and understanding collection procedures for all available routes."
   );
 
-export type TerminalComboVerboseResponse = z.infer<
-  typeof terminalComboVerboseResponseSchema
+export type TerminalComboVerbose = z.infer<
+  typeof terminalComboVerboseSchema
 >;

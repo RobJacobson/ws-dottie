@@ -17,13 +17,13 @@ export const serviceDisruptionsResource = {
     getRoutesHavingServiceDisruptionsByTripDate: {
       function: "getRoutesHavingServiceDisruptionsByTripDate",
       endpoint: "/routeshavingservicedisruptions/{TripDate}",
-      inputSchema: i.routesHavingServiceDisruptionsSchema,
+      inputSchema: i.routesHavingServiceDisruptionsByTripDateInputSchema,
       outputSchema: z.array(o.serviceDisruptionSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns multiple of ServiceDisruption for specified trip date.",
     } satisfies EndpointDefinition<
-      i.RoutesHavingServiceDisruptionsInput,
+      i.RoutesHavingServiceDisruptionsByTripDateInput,
       o.ServiceDisruption[]
     >,
   },

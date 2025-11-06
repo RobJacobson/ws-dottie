@@ -7,8 +7,8 @@ import {
   bridgeClearancesInputSchema,
 } from "./bridgeClearances.input";
 import {
-  type BridgeDataGIS,
-  bridgeClearancesOutputSchema,
+  type BridgeClearance,
+  bridgeClearanceSchema,
 } from "./bridgeClearances.output";
 
 export const bridgeClearancesGroup = {
@@ -25,22 +25,22 @@ export const bridgeClearancesGroup = {
       function: "getBridgeClearances",
       endpoint: "/getClearancesAsJson",
       inputSchema: bridgeClearancesInputSchema,
-      outputSchema: z.array(bridgeClearancesOutputSchema),
+      outputSchema: z.array(bridgeClearanceSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
-    } satisfies EndpointDefinition<BridgeClearancesInput, BridgeDataGIS[]>,
+    } satisfies EndpointDefinition<BridgeClearancesInput, BridgeClearance[]>,
     getBridgeClearancesByRoute: {
       function: "getBridgeClearancesByRoute",
       endpoint: "/getClearancesAsJson?Route={Route}",
       inputSchema: bridgeClearancesByRouteInputSchema,
-      outputSchema: z.array(bridgeClearancesOutputSchema),
+      outputSchema: z.array(bridgeClearanceSchema),
       sampleParams: { Route: "005" },
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
     } satisfies EndpointDefinition<
       BridgeClearancesByRouteInput,
-      BridgeDataGIS[]
+      BridgeClearance[]
     >,
   },
 } satisfies EndpointGroup;

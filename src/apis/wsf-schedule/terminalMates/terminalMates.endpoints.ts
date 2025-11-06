@@ -17,11 +17,11 @@ export const scheduleTerminalMatesResource = {
     getTerminalMates: {
       function: "getTerminalMates",
       endpoint: "/terminalmates/{TripDate}/{TerminalID}",
-      inputSchema: i.terminalMatesSchema,
+      inputSchema: i.terminalMatesInputSchema,
       outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
         "Returns multiple of Terminal for specified trip date and terminal ID.",
-    } satisfies EndpointDefinition<i.ScheduleTerminalMatesInput, o.Terminal[]>,
+    } satisfies EndpointDefinition<i.TerminalMatesInput, o.Terminal[]>,
   },
 } satisfies EndpointGroup;

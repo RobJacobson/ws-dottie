@@ -6,7 +6,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * A record containing the location and clearance information of a bridge structure.
  */
-export const bridgeDataGISSchema = z
+export const bridgeClearanceSchema = z
   .object({
     APILastUpdate: zDotnetDate().describe(
       "Timestamp when bridge clearance record was last updated, as a UTC datetime. E.g., '2025-10-31T17:30:02.390Z' for update on October 31, 2025 at 10:30 AM. Indicates data freshness and when clearance information was last modified."
@@ -112,4 +112,4 @@ export const bridgeDataGISSchema = z
     "Represents bridge clearance information including location coordinates, route associations, vertical clearance measurements, and structure identification. E.g., bridge 519/101FTP at location 47.602165, -122.339587 with clearance 14 ft 3 in (171 inches) on route 519. Used for route planning, height-restricted vehicle navigation, and bridge inventory management. Data updated periodically as bridge measurements change."
   );
 
-export type BridgeDataGIS = z.infer<typeof bridgeDataGISSchema>;
+export type BridgeClearance = z.infer<typeof bridgeClearanceSchema>;

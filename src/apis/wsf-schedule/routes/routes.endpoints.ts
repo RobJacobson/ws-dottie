@@ -17,15 +17,15 @@ export const routesResource = {
     getRoutesByTripDate: {
       function: "getRoutesByTripDate",
       endpoint: "/routes/{TripDate}",
-      inputSchema: i.routesSchema,
+      inputSchema: i.routesByTripDateInputSchema,
       outputSchema: z.array(o.routeSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription: "Returns multiple of Routes for specified date.",
-    } satisfies EndpointDefinition<i.RoutesInput, o.Route[]>,
+    } satisfies EndpointDefinition<i.RoutesByTripDateInput, o.Route[]>,
     getRoutesByTripDateAndTerminals: {
       function: "getRoutesByTripDateAndTerminals",
       endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.routesByTerminalsSchema,
+      inputSchema: i.routesByTripDateAndTerminalsInputSchema,
       outputSchema: z.array(o.routeSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
@@ -33,6 +33,9 @@ export const routesResource = {
         ArrivingTerminalID: 10,
       },
       endpointDescription: "Returns multiple of Routes for terminal pair.",
-    } satisfies EndpointDefinition<i.RoutesByTerminalsInput, o.Route[]>,
+    } satisfies EndpointDefinition<
+      i.RoutesByTripDateAndTerminalsInput,
+      o.Route[]
+    >,
   },
 } satisfies EndpointGroup;

@@ -14,14 +14,11 @@ export const tollTripVersionResource = {
     getTollTripVersion: {
       function: "getTollTripVersion",
       endpoint: "/getTollTripVersionAsJson",
-      inputSchema: i.getTollTripVersionSchema,
+      inputSchema: i.tollTripVersionInputSchema,
       outputSchema: o.tollTripVersionSchema,
       sampleParams: {},
       endpointDescription:
         "Returns current version and timestamp information for toll trip data.",
-    } satisfies EndpointDefinition<
-      i.GetTollTripVersionInput,
-      o.TollTripVersion
-    >,
+    } satisfies EndpointDefinition<i.TollTripVersionInput, o.TollTripVersion>,
   },
 } satisfies EndpointGroup;

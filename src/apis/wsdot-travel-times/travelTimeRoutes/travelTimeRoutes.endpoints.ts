@@ -16,20 +16,20 @@ export const travelTimeRoutesGroup = {
     getTravelTimeById: {
       function: "getTravelTimeById",
       endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
-      inputSchema: i.getTravelTimeSchema,
+      inputSchema: i.travelTimeByIdInputSchema,
       outputSchema: o.travelTimeRouteSchema,
       sampleParams: { TravelTimeID: 1 },
       endpointDescription:
         "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
-    } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
+    } satisfies EndpointDefinition<i.TravelTimeByIdInput, o.TravelTimeRoute>,
     getTravelTimes: {
       function: "getTravelTimes",
       endpoint: "/getTravelTimesAsJson",
-      inputSchema: i.getTravelTimesSchema,
+      inputSchema: i.travelTimesInputSchema,
       outputSchema: z.array(o.travelTimeRouteSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
-    } satisfies EndpointDefinition<i.GetTravelTimesInput, o.TravelTimeRoute[]>,
+    } satisfies EndpointDefinition<i.TravelTimesInput, o.TravelTimeRoute[]>,
   },
 } satisfies EndpointGroup;

@@ -17,44 +17,41 @@ export const weatherInfoResource = {
     getWeatherInformation: {
       function: "getWeatherInformation",
       endpoint: "/GetCurrentWeatherInformationAsJson",
-      inputSchema: i.getCurrentWeatherInformationSchema,
+      inputSchema: i.weatherInformationInputSchema,
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple WeatherInfo items for all stations.",
-    } satisfies EndpointDefinition<
-      i.GetCurrentWeatherInformationInput,
-      o.WeatherInfo[]
-    >,
+    } satisfies EndpointDefinition<i.WeatherInformationInput, o.WeatherInfo[]>,
     getWeatherInformationByStationId: {
       function: "getWeatherInformationByStationId",
       endpoint:
         "/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
-      inputSchema: i.getCurrentWeatherInformationByStationIDSchema,
+      inputSchema: i.weatherInformationByStationIdInputSchema,
       outputSchema: o.weatherInfoSchema,
       sampleParams: { StationID: 1909 },
       endpointDescription: "Returns single WeatherInfo for specific station.",
     } satisfies EndpointDefinition<
-      i.GetCurrentWeatherInformationByStationIDInput,
+      i.WeatherInformationByStationIdInput,
       o.WeatherInfo
     >,
     getCurrentWeatherForStations: {
       function: "getCurrentWeatherForStations",
       endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
-      inputSchema: i.getCurrentWeatherForStationsSchema,
+      inputSchema: i.currentWeatherForStationsInputSchema,
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: { StationList: "1909,1966,1970" },
       endpointDescription:
         "Returns multiple WeatherInfo for specified stations.",
     } satisfies EndpointDefinition<
-      i.GetCurrentWeatherForStationsInput,
+      i.CurrentWeatherForStationsInput,
       o.WeatherInfo[]
     >,
     searchWeatherInformation: {
       function: "searchWeatherInformation",
       endpoint:
         "/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}",
-      inputSchema: i.searchWeatherInformationSchema,
+      inputSchema: i.searchWeatherInformationInputSchema,
       outputSchema: z.array(o.weatherInfoSchema),
       sampleParams: {
         StationID: 1980,

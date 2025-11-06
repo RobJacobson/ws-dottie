@@ -15,30 +15,33 @@ export const timeAdjustmentsResource = {
     getTimeAdjustments: {
       function: "getTimeAdjustments",
       endpoint: "/timeadj",
-      inputSchema: i.timeAdjSchema,
+      inputSchema: i.timeAdjustmentsInputSchema,
       outputSchema: z.array(o.timeAdjustmentSchema),
       sampleParams: {},
       endpointDescription: "Returns all time adjustments.",
-    } satisfies EndpointDefinition<i.TimeAdjInput, o.TimeAdjustment[]>,
+    } satisfies EndpointDefinition<i.TimeAdjustmentsInput, o.TimeAdjustment[]>,
     getTimeAdjustmentsByRoute: {
       function: "getTimeAdjustmentsByRoute",
       endpoint: "/timeadjbyroute/{RouteID}",
-      inputSchema: i.timeAdjByRouteSchema,
+      inputSchema: i.timeAdjustmentsByRouteInputSchema,
       outputSchema: z.array(o.timeAdjustmentSchema),
       sampleParams: { RouteID: 1 },
       endpointDescription:
         "Returns time adjustments for the specified route ID.",
-    } satisfies EndpointDefinition<i.TimeAdjByRouteInput, o.TimeAdjustment[]>,
+    } satisfies EndpointDefinition<
+      i.TimeAdjustmentsByRouteInput,
+      o.TimeAdjustment[]
+    >,
     getTimeAdjustmentsBySchedRoute: {
       function: "getTimeAdjustmentsBySchedRoute",
       endpoint: "/timeadjbyschedroute/{SchedRouteID}",
-      inputSchema: i.timeAdjBySchedRouteSchema,
+      inputSchema: i.timeAdjustmentsBySchedRouteInputSchema,
       outputSchema: z.array(o.timeAdjustmentSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns time adjustments for the specified scheduled route ID.",
     } satisfies EndpointDefinition<
-      i.TimeAdjBySchedRouteInput,
+      i.TimeAdjustmentsBySchedRouteInput,
       o.TimeAdjustment[]
     >,
   },

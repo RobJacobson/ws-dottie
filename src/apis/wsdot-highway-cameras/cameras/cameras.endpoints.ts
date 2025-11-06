@@ -1,14 +1,14 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
 import {
-  type CameraInput,
-  type CamerasInput,
-  type CamerasSearchInput,
-  cameraInputSchema,
-  camerasInputSchema,
-  camerasSearchInputSchema,
+  type HighwayCameraByCameraIdInput,
+  type HighwayCamerasByRouteAndMilepostInput,
+  type HighwayCamerasInput,
+  highwayCameraByCameraIdInputSchema,
+  highwayCamerasByRouteAndMilepostInputSchema,
+  highwayCamerasInputSchema,
 } from "./cameras.input";
-import { type Camera, camerasOutputSchema } from "./cameras.output";
+import { type Camera, cameraSchema } from "./cameras.output";
 
 export const camerasGroup = {
   name: "cameras",
@@ -23,17 +23,17 @@ export const camerasGroup = {
     getHighwayCameras: {
       function: "getHighwayCameras",
       endpoint: "/getCamerasAsJson",
-      inputSchema: camerasInputSchema,
-      outputSchema: z.array(camerasOutputSchema),
+      inputSchema: highwayCamerasInputSchema,
+      outputSchema: z.array(cameraSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple Camera items for statewide coverage.",
-    } satisfies EndpointDefinition<CamerasInput, Camera[]>,
+    } satisfies EndpointDefinition<HighwayCamerasInput, Camera[]>,
     searchHighwayCamerasByRouteAndMilepost: {
       function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
-      inputSchema: camerasSearchInputSchema,
-      outputSchema: z.array(camerasOutputSchema),
+      inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
+      outputSchema: z.array(cameraSchema),
       sampleParams: {
         StateRoute: "I-5",
         StartingMilepost: 10,
@@ -41,15 +41,15 @@ export const camerasGroup = {
       },
       endpointDescription:
         "Returns multiple Camera items for specified route and milepost range.",
-    } satisfies EndpointDefinition<CamerasSearchInput, Camera[]>,
+    } satisfies EndpointDefinition<HighwayCamerasByRouteAndMilepostInput, Camera[]>,
     getHighwayCameraByCameraId: {
       function: "getHighwayCameraByCameraId",
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
-      inputSchema: cameraInputSchema,
-      outputSchema: camerasOutputSchema,
+      inputSchema: highwayCameraByCameraIdInputSchema,
+      outputSchema: cameraSchema,
       sampleParams: { CameraID: 9818 },
       endpointDescription:
         "Returns single Camera item for specific camera identifier.",
-    } satisfies EndpointDefinition<CameraInput, Camera>,
+    } satisfies EndpointDefinition<HighwayCameraByCameraIdInput, Camera>,
   },
 } satisfies EndpointGroup;

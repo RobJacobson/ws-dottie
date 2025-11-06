@@ -5,7 +5,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const scanwebSubSurfaceMeasurementsSchema = z
+export const subsurfaceMeasurementSchema = z
   .object({
     SensorId: z
       .number()
@@ -24,6 +24,4 @@ export const scanwebSubSurfaceMeasurementsSchema = z
     "Represents subsurface sensor measurements including ground temperature from sensors embedded below road pavement. E.g., sensor 1 with subsurface temperature 8.5°C. Used for ground temperature monitoring, winter maintenance operations, and travel safety assessments. Measurements recorded by sensors embedded 12-18 inches below road pavement surfaces."
   );
 
-export type ScanwebSubSurfaceMeasurements = z.infer<
-  typeof scanwebSubSurfaceMeasurementsSchema
->;
+export type SubsurfaceMeasurement = z.infer<typeof subsurfaceMeasurementSchema>;

@@ -17,20 +17,20 @@ export const terminalsGroup = {
     getFaresTerminals: {
       function: "getFaresTerminals",
       endpoint: "/terminals/{TripDate}",
-      inputSchema: i.terminalsSchema,
-      outputSchema: z.array(o.terminalResponseSchema),
+      inputSchema: i.faresTerminalsInputSchema,
+      outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns a list of valid departing terminals for the specified trip date.",
-    } satisfies EndpointDefinition<i.TerminalsInput, o.TerminalResponse[]>,
+    } satisfies EndpointDefinition<i.FaresTerminalsInput, o.Terminal[]>,
     getTerminalMates: {
       function: "getTerminalMates",
       endpoint: "/terminalMates/{TripDate}/{TerminalID}",
-      inputSchema: i.terminalMatesSchema,
-      outputSchema: z.array(o.terminalResponseSchema),
+      inputSchema: i.terminalMatesInputSchema,
+      outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
         "Returns arriving terminals for the given departing terminal and trip date.",
-    } satisfies EndpointDefinition<i.TerminalMatesInput, o.TerminalResponse[]>,
+    } satisfies EndpointDefinition<i.TerminalMatesInput, o.Terminal[]>,
   },
 } satisfies EndpointGroup;

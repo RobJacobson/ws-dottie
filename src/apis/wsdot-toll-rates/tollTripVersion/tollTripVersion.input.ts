@@ -5,10 +5,10 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides current toll rates for high occupancy lanes. Coverage Area: Statewide.
  */
-export const getTollTripVersionSchema = z
+export const tollTripVersionInputSchema = z
   .object({})
   .describe(
     "Retrieves current version information for toll trip rates data, returning version number and timestamp. Use for checking data freshness and version tracking."
   );
 
-export type GetTollTripVersionInput = z.infer<typeof getTollTripVersionSchema>;
+export type TollTripVersionInput = z.infer<typeof tollTripVersionInputSchema>;

@@ -16,7 +16,7 @@ export const terminalBulletinsResource = {
     getTerminalBulletins: {
       function: "getTerminalBulletins",
       endpoint: "/terminalBulletins",
-      inputSchema: i.terminalBulletinsSchema,
+      inputSchema: i.terminalBulletinsInputSchema,
       outputSchema: z.array(o.terminalBulletinSchema),
       sampleParams: {},
       endpointDescription:
@@ -28,7 +28,7 @@ export const terminalBulletinsResource = {
     getTerminalBulletinsByTerminalId: {
       function: "getTerminalBulletinsByTerminalId",
       endpoint: "/terminalBulletins/{TerminalID}",
-      inputSchema: i.terminalBulletinsByIdSchema,
+      inputSchema: i.terminalBulletinsByIdInputSchema,
       outputSchema: o.terminalBulletinSchema,
       sampleParams: { TerminalID: 3 },
       endpointDescription:

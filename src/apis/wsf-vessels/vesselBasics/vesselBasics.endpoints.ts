@@ -16,7 +16,7 @@ export const vesselBasicsResource = {
     getVesselBasics: {
       function: "getVesselBasics",
       endpoint: "/vesselBasics",
-      inputSchema: i.vesselBasicsSchema,
+      inputSchema: i.vesselBasicsInputSchema,
       outputSchema: z.array(o.vesselBasicSchema),
       sampleParams: {},
       endpointDescription:
@@ -25,7 +25,7 @@ export const vesselBasicsResource = {
     getVesselBasicsByVesselId: {
       function: "getVesselBasicsByVesselId",
       endpoint: "/vesselBasics/{VesselID}",
-      inputSchema: i.vesselBasicsByIdSchema,
+      inputSchema: i.vesselBasicsByIdInputSchema,
       outputSchema: o.vesselBasicSchema,
       sampleParams: { VesselID: 74 },
       endpointDescription:

@@ -15,7 +15,7 @@ export const scheduleValidDateRangeResource = {
     getScheduleValidDateRange: {
       function: "getScheduleValidDateRange",
       endpoint: "/validdaterange",
-      inputSchema: i.validDateRangeSchema,
+      inputSchema: i.scheduleValidDateRangeInputSchema,
       outputSchema: o.validDateRangeSchema,
       sampleParams: {},
       endpointDescription:

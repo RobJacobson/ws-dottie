@@ -5,20 +5,20 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides list of traffic cameras. Coverage Area: Statewide.
  */
-export const camerasSchema = z
+export const highwayCamerasInputSchema = z
   .object({})
   .describe(
     "Retrieves all highway cameras statewide, returning camera locations, image URLs, status information, and display metadata. Use for traffic monitoring, road condition visibility, and camera feed access."
   );
 
-export type CamerasInput = z.infer<typeof camerasSchema>;
+export type HighwayCamerasInput = z.infer<typeof highwayCamerasInputSchema>;
 
 /**
  * Input schema for CamerasSearch endpoint
  *
  * Provides list of traffic cameras. Coverage Area: Statewide.
  */
-export const camerasSearchSchema = z
+export const highwayCamerasByRouteAndMilepostInputSchema = z
   .object({
     StateRoute: z
       .string()
@@ -51,14 +51,14 @@ export const camerasSearchSchema = z
     "Filters highway cameras by route, region, or milepost range, returning matching camera locations, image URLs, and status information. Use for route-specific or location-specific camera queries."
   );
 
-export type CamerasSearchInput = z.infer<typeof camerasSearchSchema>;
+export type HighwayCamerasByRouteAndMilepostInput = z.infer<typeof highwayCamerasByRouteAndMilepostInputSchema>;
 
 /**
  * Input schema for Camera endpoint
  *
  * Provides list of traffic cameras. Coverage Area: Statewide.
  */
-export const cameraSchema = z
+export const highwayCameraByCameraIdInputSchema = z
   .object({
     CameraID: z
       .number()
@@ -70,4 +70,4 @@ export const cameraSchema = z
     "Retrieves specific camera by ID, returning camera location, image URL, status, and display metadata. Use for individual camera lookups and camera detail displays."
   );
 
-export type CameraInput = z.infer<typeof cameraSchema>;
+export type HighwayCameraByCameraIdInput = z.infer<typeof highwayCameraByCameraIdInputSchema>;

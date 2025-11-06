@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 /**
  * GetVesselHistory input schema
  */
-export const getVesselHistorySchema = z
+export const vesselHistoriesByVesselNameAndDateRangeInputSchema = z
   .object({
     VesselName: z
       .string()
@@ -25,14 +25,14 @@ export const getVesselHistorySchema = z
     "Filters vessel history records by vessel name and date range, returning departure and arrival details for matching voyages. E.g., vessel Tacoma from September 1-30, 2025 showing departures from Bainbridge and Colman terminals. Use for analyzing vessel operational history, on-time performance, and route patterns."
   );
 
-export type GetVesselHistoryInput = z.infer<typeof getVesselHistorySchema>;
+export type VesselHistoriesByVesselNameAndDateRangeInput = z.infer<
+  typeof vesselHistoriesByVesselNameAndDateRangeInputSchema
+>;
 
-export const getAllVesselHistorySchema = z
+export const vesselHistoriesInputSchema = z
   .object({})
   .describe(
     "Retrieves vessel history records for all vessels without filtering, returning departure and arrival details. Use when you need complete historical vessel data across all vessels in the fleet."
   );
 
-export type GetAllVesselHistoryInput = z.infer<
-  typeof getAllVesselHistorySchema
->;
+export type VesselHistoriesInput = z.infer<typeof vesselHistoriesInputSchema>;

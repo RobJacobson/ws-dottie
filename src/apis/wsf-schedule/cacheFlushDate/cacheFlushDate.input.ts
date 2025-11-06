@@ -12,10 +12,10 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateSchema = z
+export const cacheFlushDateInputSchema = z
   .object({})
   .describe(
     "Retrieves cache flush timestamp indicating when schedule data was last updated. Use to determine when cached schedule information should be invalidated and refreshed. Poll this endpoint periodically to detect when schedule data changes."
   );
 
-export type SchedulesCacheFlushDateInput = z.infer<typeof cacheFlushDateSchema>;
+export type CacheFlushDateInput = z.infer<typeof cacheFlushDateInputSchema>;

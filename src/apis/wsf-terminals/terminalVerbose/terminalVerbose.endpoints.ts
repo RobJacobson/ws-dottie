@@ -16,7 +16,7 @@ export const terminalVerboseResource = {
     getTerminalVerbose: {
       function: "getTerminalVerbose",
       endpoint: "/terminalVerbose",
-      inputSchema: i.terminalVerboseSchema,
+      inputSchema: i.terminalVerboseInputSchema,
       outputSchema: z.array(o.terminalVerboseSchema),
       sampleParams: {},
       endpointDescription:
@@ -25,13 +25,13 @@ export const terminalVerboseResource = {
     getTerminalVerboseByTerminalId: {
       function: "getTerminalVerboseByTerminalId",
       endpoint: "/terminalVerbose/{TerminalID}",
-      inputSchema: i.terminalVerboseByIdSchema,
+      inputSchema: i.terminalVerboseByTerminalIdInputSchema,
       outputSchema: o.terminalVerboseSchema,
       sampleParams: { TerminalID: 4 },
       endpointDescription:
         "Returns TerminalVerbose data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalVerboseByIdInput,
+      i.TerminalVerboseByTerminalIdInput,
       o.TerminalVerbose
     >,
   },

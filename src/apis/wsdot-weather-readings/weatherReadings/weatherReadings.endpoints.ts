@@ -15,13 +15,13 @@ export const weatherReadingsResource = {
     getWeatherReadings: {
       function: "getWeatherReadings",
       endpoint: "/Scanweb",
-      inputSchema: i.getWeatherReadingsSchema,
+      inputSchema: i.weatherReadingsInputSchema,
       outputSchema: z.array(o.weatherReadingSchema),
       sampleParams: {},
       endpointDescription:
         "Returns current weather readings from all weather stations.",
     } satisfies EndpointDefinition<
-      i.GetWeatherReadingsInput,
+      i.WeatherReadingsInput,
       o.WeatherReading[]
     >,
   },

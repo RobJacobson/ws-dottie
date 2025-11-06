@@ -11,10 +11,10 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for AllAlerts input parameters
  *
  * This operation provides alert information tailored for routes, bulletins, service disruptions, etc. */
-export const allAlertsSchema = z
+export const scheduleAlertsInputSchema = z
   .object({})
   .describe(
     "Retrieves all schedule alerts including bulletins, route alerts, service disruptions, and communications announcements. Returns alert details with multiple text formats (bulletin, route alert, homepage, IVR) and affected route information. Use for comprehensive alert monitoring and display."
   );
 
-export type AllAlertsInput = z.infer<typeof allAlertsSchema>;
+export type ScheduleAlertsInput = z.infer<typeof scheduleAlertsInputSchema>;

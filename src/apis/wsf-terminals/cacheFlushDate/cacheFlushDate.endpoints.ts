@@ -16,7 +16,7 @@ export const cacheFlushDateResource = {
     getCacheFlushDate: {
       function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: i.cacheFlushDateSchema,
+      inputSchema: i.cacheFlushDateInputSchema,
       outputSchema: o.cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",

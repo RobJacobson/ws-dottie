@@ -12,20 +12,22 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalTransportsSchema = z
+export const terminalTransportsInputSchema = z
   .object({})
   .describe(
     "Retrieves transportation and commuter information for terminals including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal commuter information and transportation planning."
   );
 
-export type TerminalTransportsInput = z.infer<typeof terminalTransportsSchema>;
+export type TerminalTransportsInput = z.infer<
+  typeof terminalTransportsInputSchema
+>;
 
 /**
  * Schema for TerminalTransportsById input parameters
  *
  * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalTransportsByIdSchema = z
+export const terminalTransportsByTerminalIdInputSchema = z
   .object({
     TerminalID: z
       .number()
@@ -38,6 +40,6 @@ export const terminalTransportsByIdSchema = z
     "Retrieves transportation and commuter information for specified terminal including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific commuter information and transportation planning."
   );
 
-export type TerminalTransportsByIdInput = z.infer<
-  typeof terminalTransportsByIdSchema
+export type TerminalTransportsByTerminalIdInput = z.infer<
+  typeof terminalTransportsByTerminalIdInputSchema
 >;

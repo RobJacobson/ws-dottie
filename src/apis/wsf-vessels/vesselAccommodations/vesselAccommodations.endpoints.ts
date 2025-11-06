@@ -16,20 +16,20 @@ export const vesselAccommodationsResource = {
     getVesselAccommodations: {
       function: "getVesselAccommodations",
       endpoint: "/vesselAccommodations",
-      inputSchema: i.vesselAccommodationsSchema,
-      outputSchema: z.array(o.vesselAccommodationsSchema),
+      inputSchema: i.vesselAccommodationsInputSchema,
+      outputSchema: z.array(o.vesselAccommodationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselAccommodation objects for all vessels in fleet.",
     } satisfies EndpointDefinition<
       i.VesselAccommodationsInput,
-      o.VesselAccommodations[]
+      o.VesselAccommodation[]
     >,
     getVesselAccommodationsByVesselId: {
       function: "getVesselAccommodationsByVesselId",
       endpoint: "/vesselAccommodations/{VesselID}",
-      inputSchema: i.vesselAccommodationsByIdSchema,
-      outputSchema: o.vesselAccommodationsSchema,
+      inputSchema: i.vesselAccommodationsByIdInputSchema,
+      outputSchema: o.vesselAccommodationSchema,
       sampleParams: { VesselID: 65 },
       endpointDescription:
         "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",

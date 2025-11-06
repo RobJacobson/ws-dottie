@@ -16,15 +16,15 @@ export const scheduleTerminalsResource = {
     getTerminals: {
       function: "getTerminals",
       endpoint: "/terminals/{TripDate}",
-      inputSchema: i.terminalsSchema,
+      inputSchema: i.terminalsInputSchema,
       outputSchema: z.array(o.terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription: "Returns all terminals for the specified trip date.",
-    } satisfies EndpointDefinition<i.ScheduleTerminalsInput, o.Terminal[]>,
+    } satisfies EndpointDefinition<i.TerminalsInput, o.Terminal[]>,
     getTerminalsAndMates: {
       function: "getTerminalsAndMates",
       endpoint: "/terminalsandmates/{TripDate}",
-      inputSchema: i.terminalsAndMatesSchema,
+      inputSchema: i.terminalsAndMatesInputSchema,
       outputSchema: z.array(o.terminalMateSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
@@ -33,7 +33,7 @@ export const scheduleTerminalsResource = {
     getTerminalsAndMatesByRoute: {
       function: "getTerminalsAndMatesByRoute",
       endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
-      inputSchema: i.terminalsAndMatesByRouteSchema,
+      inputSchema: i.terminalsAndMatesByRouteInputSchema,
       outputSchema: z.array(o.terminalMateSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
       endpointDescription:

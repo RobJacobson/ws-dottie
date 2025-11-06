@@ -18,8 +18,8 @@ export const terminalComboGroup = {
       function: "getTerminalCombo",
       endpoint:
         "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.terminalComboSchema,
-      outputSchema: o.terminalComboResponseSchema,
+      inputSchema: i.terminalComboInputSchema,
+      outputSchema: o.terminalComboSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -27,21 +27,18 @@ export const terminalComboGroup = {
       },
       endpointDescription:
         "Returns fare collection descriptions for the specified terminal combination and trip date.",
-    } satisfies EndpointDefinition<
-      i.TerminalComboInput,
-      o.TerminalComboResponse
-    >,
+    } satisfies EndpointDefinition<i.TerminalComboInput, o.TerminalCombo>,
     getTerminalComboVerbose: {
       function: "getTerminalComboVerbose",
       endpoint: "/terminalComboVerbose/{TripDate}",
-      inputSchema: i.terminalComboVerboseSchema,
-      outputSchema: z.array(o.terminalComboVerboseResponseSchema),
+      inputSchema: i.terminalComboVerboseInputSchema,
+      outputSchema: z.array(o.terminalComboVerboseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
     } satisfies EndpointDefinition<
       i.TerminalComboVerboseInput,
-      o.TerminalComboVerboseResponse[]
+      o.TerminalComboVerbose[]
     >,
   },
 } satisfies EndpointGroup;

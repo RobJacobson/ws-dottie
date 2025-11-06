@@ -5,10 +5,10 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Input parameters for getting current weather stations.
  */
-export const weatherStationsSchema = z
+export const weatherStationsInputSchema = z
   .object({})
   .describe(
     "Retrieves metadata for all weather stations statewide, returning station identifiers, names, and location coordinates. Use for weather station discovery and location-based station queries."
   );
 
-export type WeatherStationsInput = z.infer<typeof weatherStationsSchema>;
+export type WeatherStationsInput = z.infer<typeof weatherStationsInputSchema>;

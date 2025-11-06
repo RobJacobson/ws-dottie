@@ -16,16 +16,20 @@ export const schedulesResource = {
     getScheduleByTripDateAndRouteId: {
       function: "getScheduleByTripDateAndRouteId",
       endpoint: "/schedule/{TripDate}/{RouteID}",
-      inputSchema: i.scheduleByRouteSchema,
+      inputSchema: i.scheduleByTripDateAndRouteIdInputSchema,
       outputSchema: o.scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
       endpointDescription: "Returns single of Schedules for specified route.",
-    } satisfies EndpointDefinition<i.ScheduleByRouteInput, o.Schedule>,
+    } satisfies EndpointDefinition<
+      i.ScheduleByTripDateAndRouteIdInput,
+      o.Schedule
+    >,
     getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
       function: "getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.scheduleByTerminalComboSchema,
+      inputSchema:
+        i.scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputSchema,
       outputSchema: o.scheduleSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
@@ -33,6 +37,9 @@ export const schedulesResource = {
         ArrivingTerminalID: 10,
       },
       endpointDescription: "Returns single of Schedules for terminal pair.",
-    } satisfies EndpointDefinition<i.ScheduleByTerminalComboInput, o.Schedule>,
+    } satisfies EndpointDefinition<
+      i.ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
+      o.Schedule
+    >,
   },
 } satisfies EndpointGroup;

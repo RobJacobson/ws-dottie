@@ -11,7 +11,7 @@ import { z } from "@/shared/zod-openapi-init";
  * Valid date range response schema for GetValidDateRange endpoint
  *
  * This operation retrieves a date range for which fares data is currently published & available. */
-export const validDateRangeResponseSchema = z
+export const validDateRangeSchema = z
   .object({
     DateFrom: zDotnetDate().describe(
       "Start date when fares information becomes available, as a UTC datetime. E.g., '2025-11-02T07:00:00.000Z' for fares available from November 2, 2025. Indicates earliest trip date for which fare data is published."
@@ -24,6 +24,6 @@ export const validDateRangeResponseSchema = z
     "Represents date range for which fares data is currently published and available, including start and end dates. E.g., fares available from November 2, 2025 through March 21, 2026. Use to determine valid trip dates for fare queries before calling other endpoints."
   );
 
-export type ValidDateRangeResponse = z.infer<
-  typeof validDateRangeResponseSchema
+export type ValidDateRange = z.infer<
+  typeof validDateRangeSchema
 >;

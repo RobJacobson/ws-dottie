@@ -16,14 +16,11 @@ export const activeSeasonsResource = {
     getActiveSeasons: {
       function: "getActiveSeasons",
       endpoint: "/activeseasons",
-      inputSchema: i.activeScheduledSeasonsSchema,
+      inputSchema: i.activeSeasonsInputSchema,
       outputSchema: z.array(o.scheduleBaseSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple of ActiveSeasons for all scheduling periods.",
-    } satisfies EndpointDefinition<
-      i.ActiveScheduledSeasonsInput,
-      o.ScheduleBase[]
-    >,
+    } satisfies EndpointDefinition<i.ActiveSeasonsInput, o.ScheduleBase[]>,
   },
 } satisfies EndpointGroup;

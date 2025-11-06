@@ -6,7 +6,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation retrieves vessel locations and associated ETA data. A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
-export const vesselLocationsSchema = z
+export const vesselLocationSchema = z
   .object({
     VesselID: z
       .number()
@@ -177,4 +177,4 @@ export const vesselLocationsSchema = z
     "Represents real-time vessel location data including GPS coordinates, terminal assignments, speed/heading, and ETA information. E.g., vessel Chelan at position 48.529468, -122.818977 departing Friday Harbor going to Anacortes at 15.7 knots with ETA 7:30 PM. Used for real-time vessel tracking, arrival time calculations, and passenger information systems. Updates every 5 seconds."
   );
 
-export type VesselLocations = z.infer<typeof vesselLocationsSchema>;
+export type VesselLocation = z.infer<typeof vesselLocationSchema>;

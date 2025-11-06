@@ -16,14 +16,14 @@ export const subSurfaceMeasurementsResource = {
     getSubSurfaceMeasurements: {
       function: "getSubSurfaceMeasurements",
       endpoint: "/Scanweb/SubSurfaceMeasurements",
-      inputSchema: i.getSubSurfaceMeasurementsSchema,
-      outputSchema: z.array(o.scanwebSubSurfaceMeasurementsSchema),
+      inputSchema: i.subSurfaceMeasurementsInputSchema,
+      outputSchema: z.array(o.subsurfaceMeasurementSchema),
       sampleParams: {},
       endpointDescription:
         "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
     } satisfies EndpointDefinition<
-      i.GetSubSurfaceMeasurementsInput,
-      o.ScanwebSubSurfaceMeasurements[]
+      i.SubSurfaceMeasurementsInput,
+      o.SubsurfaceMeasurement[]
     >,
   },
 } satisfies EndpointGroup;

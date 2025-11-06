@@ -1,16 +1,14 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
 import {
-  type GetMountainPassConditionInput,
-  type GetMountainPassConditionsInput,
-  getMountainPassConditionInputSchema,
-  getMountainPassConditionsInputSchema,
+  type MountainPassConditionByIdInput,
+  type MountainPassConditionsInput,
+  mountainPassConditionByIdInputSchema,
+  mountainPassConditionsInputSchema,
 } from "./passConditions.input";
 import {
   type PassCondition,
-  passConditionOutputSchema,
-  type TravelRestriction,
-  travelRestrictionOutputSchema,
+  passConditionSchema,
 } from "./passConditions.output";
 
 export const passConditionsGroup = {
@@ -27,25 +25,25 @@ export const passConditionsGroup = {
       function: "getMountainPassConditionById",
       endpoint:
         "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
-      inputSchema: getMountainPassConditionInputSchema,
-      outputSchema: passConditionOutputSchema,
+      inputSchema: mountainPassConditionByIdInputSchema,
+      outputSchema: passConditionSchema,
       sampleParams: { PassConditionID: 12 },
       endpointDescription:
         "Returns a single PassCondition for specified mountain pass identifier.",
     } satisfies EndpointDefinition<
-      GetMountainPassConditionInput,
+      MountainPassConditionByIdInput,
       PassCondition
     >,
     getMountainPassConditions: {
       function: "getMountainPassConditions",
       endpoint: "/getMountainPassConditionsAsJson",
-      inputSchema: getMountainPassConditionsInputSchema,
-      outputSchema: z.array(passConditionOutputSchema),
+      inputSchema: mountainPassConditionsInputSchema,
+      outputSchema: z.array(passConditionSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple PassCondition items for all monitored mountain passes.",
     } satisfies EndpointDefinition<
-      GetMountainPassConditionsInput,
+      MountainPassConditionsInput,
       PassCondition[]
     >,
   },

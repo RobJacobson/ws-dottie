@@ -32,6 +32,6 @@ export type TerminalBase = z.infer<typeof terminalBaseSchema>;
 /**
  * Terminal response schema used by multiple endpoints
  */
-export const terminalResponseSchema = terminalBaseSchema;
+export const terminalSchema = terminalBaseSchema;
 
-export type TerminalResponse = z.infer<typeof terminalResponseSchema>;
+export type Terminal = z.infer<typeof terminalSchema>;

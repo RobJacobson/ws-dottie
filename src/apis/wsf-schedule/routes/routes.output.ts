@@ -106,8 +106,10 @@ export type Route = z.infer<typeof routeSchema>;
 
 /**
  * Schema for Alert - represents alert information
+ *
+ * A Highway Alert.
  */
-export const alertSchema = z
+export const routeAlertSchema = z
   .object({
     BulletinID: z
       .number()
@@ -117,7 +119,7 @@ export const alertSchema = z
     BulletinFlag: z
       .boolean()
       .describe(
-        "Indicator whether alert is also used as bulletin, as a boolean. E.g., true when alert serves dual purpose as bulletin, false when alert is alert-only. Used to determine if alert should be displayed as bulletin."
+        "Indicator whether alert is also used as bulletin, as a boolean. E.g., true when alert serves dual purpose as bulletin, false when alert is disruption-only. Used to determine if disruption should be displayed as bulletin."
       ),
     CommunicationFlag: z
       .boolean()
@@ -163,13 +165,13 @@ export const alertSchema = z
     "Represents alert information including bulletin ID, bulletin/communication flags, publish date, alert descriptions (brief and full), disruption description, and IVR text. E.g., alert with bulletin flag true, published November 2, 2025, with route announcement and full HTML text. Used for alert display, notification systems, and route-specific alert filtering."
   );
 
-export type Alert = z.infer<typeof alertSchema>;
+export type RouteAlert = z.infer<typeof routeAlertSchema>;
 
 /**
  * Alerts List Schema - represents an list of alerts
  */
 export const alertsListSchema = z
-  .array(alertSchema)
+  .array(routeAlertSchema)
   .describe(
     "Array of alert information including bulletin IDs, flags, publish dates, alert descriptions, and IVR text. E.g., array containing multiple alerts for route with different types and publication dates. Used for alert display and route-specific alert filtering."
   );

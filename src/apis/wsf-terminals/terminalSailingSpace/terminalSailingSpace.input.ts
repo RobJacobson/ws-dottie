@@ -14,14 +14,14 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * **⚠️ Important:** This data changes very frequently (potentially every 5 seconds). Please do not cache results in your application for an extended period of time.
  */
-export const terminalSailingSpaceSchema = z
+export const terminalSailingSpaceInputSchema = z
   .object({})
   .describe(
     "Retrieves real-time terminal condition data including drive-up and reservation spaces available for upcoming departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Returns all terminals or specific terminal if TerminalID is provided. Use for real-time space availability display. Do not cache results for extended periods."
   );
 
 export type TerminalSailingSpaceInput = z.infer<
-  typeof terminalSailingSpaceSchema
+  typeof terminalSailingSpaceInputSchema
 >;
 
 /**
@@ -31,7 +31,7 @@ export type TerminalSailingSpaceInput = z.infer<
  *
  * **⚠️ Important:** This data changes very frequently (potentially every 5 seconds). Please do not cache results in your application for an extended period of time.
  */
-export const terminalSailingSpaceByIdSchema = z
+export const terminalSailingSpaceByTerminalIdInputSchema = z
   .object({
     TerminalID: z
       .number()
@@ -44,6 +44,6 @@ export const terminalSailingSpaceByIdSchema = z
     "Retrieves real-time terminal condition data for specified terminal including drive-up and reservation spaces available for upcoming departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific real-time space availability display. Do not cache results for extended periods."
   );
 
-export type TerminalSailingSpaceByIdInput = z.infer<
-  typeof terminalSailingSpaceByIdSchema
+export type TerminalSailingSpaceByTerminalIdInput = z.infer<
+  typeof terminalSailingSpaceByTerminalIdInputSchema
 >;

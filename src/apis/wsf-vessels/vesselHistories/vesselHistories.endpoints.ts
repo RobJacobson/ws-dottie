@@ -15,20 +15,17 @@ export const vesselHistoriesResource = {
     getVesselHistories: {
       function: "getVesselHistories",
       endpoint: "/vesselHistory",
-      inputSchema: i.getAllVesselHistorySchema,
-      outputSchema: z.array(o.vesselHistoryResponseSchema),
+      inputSchema: i.vesselHistoriesInputSchema,
+      outputSchema: z.array(o.vesselHistorySchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselHistory objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<
-      i.GetAllVesselHistoryInput,
-      o.VesselHistoryResponse[]
-    >,
+    } satisfies EndpointDefinition<i.VesselHistoriesInput, o.VesselHistory[]>,
     getVesselHistoriesByVesselNameAndDateRange: {
       function: "getVesselHistoriesByVesselNameAndDateRange",
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-      inputSchema: i.getVesselHistorySchema,
-      outputSchema: z.array(o.vesselHistoryResponseSchema),
+      inputSchema: i.vesselHistoriesByVesselNameAndDateRangeInputSchema,
+      outputSchema: z.array(o.vesselHistorySchema),
       sampleParams: {
         VesselName: "Tacoma",
         DateStart: "2025-09-01",
@@ -37,8 +34,8 @@ export const vesselHistoriesResource = {
       endpointDescription:
         "Returns multiple VesselHistory objects for the specified vessel and date range.",
     } satisfies EndpointDefinition<
-      i.GetVesselHistoryInput,
-      o.VesselHistoryResponse[]
+      i.VesselHistoriesByVesselNameAndDateRangeInput,
+      o.VesselHistory[]
     >,
   },
 } satisfies EndpointGroup;

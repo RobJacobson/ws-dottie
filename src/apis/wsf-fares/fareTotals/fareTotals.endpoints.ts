@@ -18,8 +18,8 @@ export const fareTotalsGroup = {
       function: "getFareTotalsByTripDateAndRoute",
       endpoint:
         "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
-      inputSchema: i.fareTotalsSchema,
-      outputSchema: z.array(o.fareTotalResponseSchema),
+      inputSchema: i.fareTotalsByTripDateAndRouteInputSchema,
+      outputSchema: z.array(o.fareTotalSchema),
       sampleParams: {
         TripDate: datesHelper.today(),
         DepartingTerminalID: 1,
@@ -30,6 +30,9 @@ export const fareTotalsGroup = {
       },
       endpointDescription:
         "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
-    } satisfies EndpointDefinition<i.FareTotalsInput, o.FareTotalResponse[]>,
+    } satisfies EndpointDefinition<
+      i.FareTotalsByTripDateAndRouteInput,
+      o.FareTotal[]
+    >,
   },
 } satisfies EndpointGroup;

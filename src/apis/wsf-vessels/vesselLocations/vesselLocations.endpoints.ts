@@ -17,17 +17,17 @@ export const vesselLocationsGroup = {
     getVesselLocations: {
       function: "getVesselLocations",
       endpoint: "/vesselLocations",
-      inputSchema: i.vesselLocationsSchema,
-      outputSchema: z.array(o.vesselLocationsSchema),
+      inputSchema: i.vesselLocationsInputSchema,
+      outputSchema: z.array(o.vesselLocationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselLocation objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselLocationsInput, o.VesselLocations[]>,
+    } satisfies EndpointDefinition<i.VesselLocationsInput, o.VesselLocation[]>,
     getVesselLocationsByVesselId: {
       function: "getVesselLocationsByVesselId",
       endpoint: "/vesselLocations/{VesselID}",
-      inputSchema: i.vesselLocationsByIdSchema,
-      outputSchema: o.vesselLocationsSchema,
+      inputSchema: i.vesselLocationsByIdInputSchema,
+      outputSchema: o.vesselLocationSchema,
       sampleParams: { VesselID: 18 },
       endpointDescription:
         "Returns a VesselLocation object containing real-time position and status information for the specified vessel.",

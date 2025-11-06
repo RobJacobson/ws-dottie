@@ -12,7 +12,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation describes what fares are collected for a given departing terminal, arriving terminal and trip date. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const terminalComboSchema = z
+export const terminalComboInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -34,14 +34,14 @@ export const terminalComboSchema = z
     "Retrieves fare collection description for specific terminal combination and trip date, returning departing/arriving terminal names and collection details. Use GetTerminals, GetTerminalMates, and GetValidDateRange to determine valid parameters. Use for understanding fare collection procedures for specific routes."
   );
 
-export type TerminalComboInput = z.infer<typeof terminalComboSchema>;
+export type TerminalComboInput = z.infer<typeof terminalComboInputSchema>;
 
 /**
  * Input schema for TerminalComboVerbose endpoint
  *
  * This operation retrieves fare collection descriptions for all terminal combinations available on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const terminalComboVerboseSchema = z
+export const terminalComboVerboseInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -54,5 +54,5 @@ export const terminalComboVerboseSchema = z
   );
 
 export type TerminalComboVerboseInput = z.infer<
-  typeof terminalComboVerboseSchema
+  typeof terminalComboVerboseInputSchema
 >;

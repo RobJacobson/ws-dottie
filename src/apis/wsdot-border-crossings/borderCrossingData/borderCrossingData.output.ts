@@ -6,7 +6,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Information about Canadian border crossing wait times.
  */
-export const borderCrossingDataSchema = z
+export const borderCrossingSchema = z
   .object({
     BorderCrossingLocation: roadwayLocationSchema
       .nullable()
@@ -32,4 +32,4 @@ export const borderCrossingDataSchema = z
     "Represents border crossing wait time data including crossing identification, location information, current wait times, and measurement timestamp. E.g., I-5 General Purpose crossing (I5) at location 49.004776, -122.756964 with 15 minute wait time measured at 7:10 PM. Used for border crossing planning, route selection, and wait time monitoring. Updates approximately every minute."
   );
 
-export type BorderCrossingData = z.infer<typeof borderCrossingDataSchema>;
+export type BorderCrossing = z.infer<typeof borderCrossingSchema>;

@@ -16,7 +16,7 @@ export const weatherStationsResource = {
     getWeatherStations: {
       function: "getWeatherStations",
       endpoint: "/GetCurrentStationsAsJson",
-      inputSchema: i.weatherStationsSchema,
+      inputSchema: i.weatherStationsInputSchema,
       outputSchema: z.array(o.weatherStationSchema),
       sampleParams: {},
       endpointDescription:

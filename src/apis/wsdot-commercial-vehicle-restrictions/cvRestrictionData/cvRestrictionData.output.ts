@@ -6,7 +6,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Represents a Commercial Vehicle Restriction.
  */
-export const cVRestrictionDataSchema = z
+export const cvRestrictionSchema = z
   .object({
     BLMaxAxle: z
       .number()
@@ -169,7 +169,7 @@ export const cVRestrictionDataSchema = z
     "Represents commercial vehicle restriction information including weight limits by classification, height/width/length restrictions, location data, effective dates, and restriction type. E.g., Teanaway River bridge (10/142) on SR-10 with 20,000 lb BL and CL-8 axle limits effective October 2011 through December 2075. Used for commercial vehicle route planning, compliance checking, and restriction awareness. Covers bridge and roadway restrictions statewide."
   );
 
-export type CVRestrictionData = z.infer<typeof cVRestrictionDataSchema>;
+export type CVRestriction = z.infer<typeof cvRestrictionSchema>;
 
 // Re-export shared types
 export type { RoadwayLocation } from "@/apis/shared";
