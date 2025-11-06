@@ -13,6 +13,10 @@ export {
   datesHelper,
   jsDateToYyyyMmDd,
 } from "./dateUtils";
+// Factory functions
+export type { FetchFunctionParams } from "./fetchFunctionFactory";
+export { createFetchFunction } from "./fetchFunctionFactory";
+export type { HookOptions, HookParams } from "./hookFactory";
 // JSON parsing utilities
 export { parseJsonWithFallback } from "./jsonParser";
 // Logging utilities
