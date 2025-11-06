@@ -1,6 +1,6 @@
 # Fetching Data Guide
 
-This guide covers how to fetch data using WS-Dottie's basic fetch-dottie functionality, including different options for fetching and validating data.
+This guide covers how to fetch data using WS-Dottie's basic fetch functionality, including different options for fetching and validating data.
 
 > **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
 
@@ -34,13 +34,13 @@ configManager.setLogLevel(process.env.LOG_LEVEL || 'info');
 ### 3. Basic Usage
 
 ```javascript
-import { fetchDottie, getVesselLocations, getHighwayAlerts } from 'ws-dottie';
+import { getVesselLocations, getHighwayAlerts } from 'ws-dottie/wsf-vessels/fetchFunctions';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings/fetchFunctions';
 
 async function getTransportationData() {
   try {
     // Fetch vessel locations
-    const vessels = await fetchDottie({
-      endpoint: getVesselLocations,
+    const vessels = await getVesselLocations({
       fetchMode: 'native',
       validate: true
     });
@@ -48,15 +48,22 @@ async function getTransportationData() {
     console.log(`Found ${vessels.length} vessels`);
     
     // Fetch highway alerts
-    const alerts = await fetchDottie({
-      endpoint: getHighwayAlerts,
+    const alerts = await getHighwayAlerts({
       fetchMode: 'native',
       validate: true
     });
     
     console.log(`Found ${alerts.length} alerts`);
     
-    return { vessels, alerts };
+    // Fetch border crossings
+    const crossings = await getBorderCrossings({
+      fetchMode: 'native',
+      validate: true
+    });
+    
+    console.log(`Found ${crossings.length} border crossings`);
+    
+    return { vessels, alerts, crossings };
   } catch (error) {
     console.error('Error fetching transportation data:', error.message);
     throw error;
@@ -75,8 +82,7 @@ WS-Dottie supports different fetch modes for different environments:
 
 ```javascript
 // Native fetch for server-side applications
-const vessels = await fetchDottie({
-  endpoint: getVesselLocations,
+const vessels = await getVesselLocations({
   fetchMode: 'native',  // Default for Node.js
   validate: true
 });
@@ -86,8 +92,7 @@ const vessels = await fetchDottie({
 
 ```javascript
 // JSONP for browser applications (CORS compatibility)
-const vessels = await fetchDottie({
-  endpoint: getVesselLocations,
+const vessels = await getVesselLocations({
   fetchMode: 'jsonp',   // Default for browser
   validate: true
 });
@@ -98,29 +103,29 @@ const vessels = await fetchDottie({
 ### Data Fetching with Parameters
 
 ```javascript
-import { fetchDottie, getSchedules, getFares } from 'ws-dottie';
+import { 
+  getSchedulesByTripDateAndRouteId,
+  getFareLineItemsByTripDateAndTerminals
+} from 'ws-dottie/wsf-schedule/core';
 
 async function getFerrySchedule(departingTerminalId, arrivingTerminalId, tripDate) {
   try {
     // Fetch schedules
-    const schedules = await fetchDottie({
-      endpoint: getSchedules,
-      parameters: {
-        departingTerminalId,
-        arrivingTerminalId,
-        tripDate: tripDate.toISOString().split('T')[0] // Format as YYYY-MM-DD
+    const schedules = await getSchedulesByTripDateAndRouteId({
+      params: {
+        TripDate: tripDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
+        RouteID: departingTerminalId
       },
       fetchMode: 'native',
       validate: true
     });
     
     // Fetch fares
-    const fares = await fetchDottie({
-      endpoint: getFares,
-      parameters: {
-        tripDate: tripDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
-        departingTerminalId,
-        arrivingTerminalId
+    const fares = await getFareLineItemsByTripDateAndTerminals({
+      params: {
+        TripDate: tripDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
+        DepartingTerminalID: departingTerminalId,
+        ArrivingTerminalID: arrivingTerminalId
       },
       fetchMode: 'native',
       validate: true
@@ -161,24 +166,30 @@ main();
 ### Batch Data Fetching
 
 ```javascript
-import { fetchDottie, getVesselLocations, getTerminalWaitTimes, getHighwayAlerts } from 'ws-dottie';
+import { 
+  getVesselLocations,
+  getTerminalWaitTimes,
+  getHighwayAlerts
+} from 'ws-dottie/wsf-vessels/core';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
 
 async function fetchBatchData() {
   try {
     // Fetch multiple data sources in parallel
-    const [vessels, waitTimes, alerts] = await Promise.all([
-      fetchDottie({
-        endpoint: getVesselLocations,
+    const [vessels, waitTimes, alerts, crossings] = await Promise.all([
+      getVesselLocations({
         fetchMode: 'native',
         validate: true
       }),
-      fetchDottie({
-        endpoint: getTerminalWaitTimes,
+      getTerminalWaitTimes({
         fetchMode: 'native',
         validate: true
       }),
-      fetchDottie({
-        endpoint: getHighwayAlerts,
+      getHighwayAlerts({
+        fetchMode: 'native',
+        validate: true
+      }),
+      getBorderCrossings({
         fetchMode: 'native',
         validate: true
       })
@@ -188,6 +199,7 @@ async function fetchBatchData() {
       vessels,
       waitTimes,
       alerts,
+      crossings,
       lastUpdated: new Date()
     };
   } catch (error) {
@@ -230,6 +242,7 @@ async function main() {
   console.log(`Vessels: ${data.vessels.length}`);
   console.log(`Terminal Wait Times: ${data.waitTimes.length}`);
   console.log(`Highway Alerts: ${data.alerts.length}`);
+  console.log(`Border Crossings: ${data.crossings.length}`);
   console.log(`Last Updated: ${data.lastUpdated.toLocaleString()}`);
 }
 
@@ -241,18 +254,16 @@ main();
 ### Schema Validation
 
 ```javascript
-import { fetchDottie, getVesselLocations } from 'ws-dottie';
+import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 // Enable automatic validation
-const vessels = await fetchDottie({
-  endpoint: getVesselLocations,
+const vessels = await getVesselLocations({
   fetchMode: 'native',
   validate: true  // Validates response against Zod schema
 });
 
 // Disable validation (faster but less safe)
-const vessels = await fetchDottie({
-  endpoint: getVesselLocations,
+const vessels = await getVesselLocations({
   fetchMode: 'native',
   validate: false
 });
@@ -261,12 +272,11 @@ const vessels = await fetchDottie({
 ### Custom Validation
 
 ```javascript
-import { fetchDottie, getVesselLocations } from 'ws-dottie';
+import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 async function fetchWithCustomValidation() {
   try {
-    const vessels = await fetchDottie({
-      endpoint: getVesselLocations,
+    const vessels = await getVesselLocations({
       fetchMode: 'native',
       validate: false  // Disable automatic validation
     });
@@ -296,7 +306,8 @@ async function fetchWithCustomValidation() {
 ### Structured Error Handling
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { getVesselLocations, getBorderCrossings } from 'ws-dottie/wsf-vessels/core';
+import { ApiError } from 'ws-dottie';
 
 class TransportationService {
   constructor() {
@@ -308,14 +319,13 @@ class TransportationService {
     };
   }
   
-  async fetchWithRetry(endpoint, parameters = {}) {
+  async fetchWithRetry(fetchFunction, params = {}) {
     let lastError;
     
     for (let attempt = 0; attempt <= this.retryConfig.maxRetries; attempt++) {
       try {
-        const data = await fetchDottie({
-          endpoint,
-          parameters,
+        const data = await fetchFunction({
+          ...params,
           fetchMode: 'native',
           validate: true
         });
@@ -325,12 +335,12 @@ class TransportationService {
         lastError = error;
         
         // Don't retry on authentication errors
-        if (error instanceof WsdotApiError && error.status === 401) {
+        if (error instanceof ApiError && error.status === 401) {
           throw error;
         }
         
         // Don't retry on client errors (4xx)
-        if (error instanceof WsdotApiError && error.status >= 400 && error.status < 500) {
+        if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
           throw error;
         }
         
@@ -376,7 +386,7 @@ async function main() {
     console.error('Application error:', error.message);
     
     // Handle application-level error
-    if (error instanceof WsdotApiError) {
+    if (error instanceof ApiError) {
       console.error('API Error Details:', {
         status: error.status,
         message: error.message,
@@ -394,12 +404,11 @@ main();
 ### Date/Time Handling
 
 ```javascript
-import { fetchDottie, getVesselLocations } from 'ws-dottie';
+import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 async function fetchWithDateTransformation() {
   try {
-    const vessels = await fetchDottie({
-      endpoint: getVesselLocations,
+    const vessels = await getVesselLocations({
       fetchMode: 'native',
       validate: true
     });
@@ -430,12 +439,11 @@ async function fetchWithDateTransformation() {
 ### Field Filtering
 
 ```javascript
-import { fetchDottie, getVesselLocations } from 'ws-dottie';
+import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 async function fetchWithFieldFiltering(fields = []) {
   try {
-    const vessels = await fetchDottie({
-      endpoint: getVesselLocations,
+    const vessels = await getVesselLocations({
       fetchMode: 'native',
       validate: true
     });

@@ -1,6 +1,6 @@
 # CLI Usage Guide
 
-This guide covers using WS-Dottie from the command line, including installation, configuration, and common commands.
+This guide covers using WS-Dottie from command line, including installation, configuration, and common commands.
 
 > **📚 Documentation Navigation**: [../README.md](../README.md) • [Getting Started](../getting-started.md) • [API Guide](../api-guide.md)
 
@@ -25,7 +25,7 @@ export WSDOT_ACCESS_TOKEN=your_api_key_here
 # Or create a .env file
 echo "WSDOT_ACCESS_TOKEN=your_api_key_here" >> .env
 
-# Or use the --key flag with each command
+# Or use --key flag with each command
 ws-dottie --key=your_api_key_here [command]
 ```
 
@@ -39,16 +39,16 @@ ws-dottie --help
 ws-dottie --help
 
 # Get vessel locations
-ws-dottie vessels
+ws-dottie getVesselLocations
 
 # Get highway alerts
-ws-dottie alerts
+ws-dottie getHighwayAlerts
 
 # Get weather information
-ws-dottie weather
+ws-dottie getWeatherInformation
 
 # Get mountain pass conditions
-ws-dottie passes
+ws-dottie getMountainPassConditions
 ```
 
 ## 🏗️ CLI Structure
@@ -57,13 +57,13 @@ WS-Dottie CLI provides a command-line interface for accessing Washington State t
 
 ```bash
 # Basic command structure
-ws-dottie [command] [options]
+ws-dottie [function-name] [options]
 
 # Examples
-ws-dottie vessels --limit=10 --format=json
-ws-dottie alerts --priority=high --region=seattle
-ws-dottie weather --region=western
-ws-dottie passes --status=restricted
+ws-dottie getVesselLocations --limit=10 --format=json
+ws-dottie getHighwayAlerts --priority=high --region=seattle
+ws-dottie getWeatherInformation --region=western
+ws-dottie getMountainPassConditions --status=restricted
 ```
 
 ### Command Categories
@@ -81,75 +81,75 @@ ws-dottie passes --status=restricted
 
 ```bash
 # Get all vessel locations
-ws-dottie vessels
+ws-dottie getVesselLocations
 
 # Get specific vessel
-ws-dottie vessels --vessel-id=18
+ws-dottie getVesselLocationsByVesselId --vessel-id=18
 
 # Limit results
-ws-dottie vessels --limit=5
+ws-dottie getVesselLocations --limit=5
 
 # Output in specific format
-ws-dottie vessels --format=json
-ws-dottie vessels --format=table
+ws-dottie getVesselLocations --format=json
+ws-dottie getVesselLocations --format=table
 
 # Filter by vessel class
-ws-dottie vessels --class=jumbo
-ws-dottie vessels --class=issaquah
+ws-dottie getVesselLocations --class=jumbo
+ws-dottie getVesselLocations --class=issaquah
 ```
 
 ### Terminal Information
 
 ```bash
 # Get all terminal wait times
-ws-dottie terminals
+ws-dottie getTerminalWaitTimes
 
 # Get specific terminal
-ws-dottie terminals --terminal-id=3
+ws-dottie getTerminalWaitTimesByTerminalId --terminal-id=3
 
 # Filter by terminal name
-ws-dottie terminals --terminal-name=seattle
-ws-dottie terminals --terminal-name=bainbridge
+ws-dottie getTerminalWaitTimes --terminal-name=seattle
+ws-dottie getTerminalWaitTimes --terminal-name=bainbridge
 
 # Get terminal locations
-ws-dottie terminals --locations
+ws-dottie getTerminalLocations
 
 # Get terminal amenities
-ws-dottie terminals --amenities
+ws-dottie getTerminalLocations --amenities
 ```
 
 ### Schedule Information
 
 ```bash
 # Get schedules for specific route
-ws-dottie schedules --from=3 --to=7
+ws-dottie getSchedulesByTripDateAndRouteId --from=3 --to=7
 
 # Get schedules for specific date
-ws-dottie schedules --date=2024-12-25
+ws-dottie getSchedulesByTripDateAndRouteId --date=2024-12-25
 
 # Get all routes
-ws-dottie schedules --routes
+ws-dottie getRoutesByTripDate --routes
 
 # Get schedules for specific vessel
-ws-dottie schedules --vessel-id=18
+ws-dottie getSchedules --vessel-id=18
 ```
 
 ### Fare Information
 
 ```bash
 # Get fares for specific route
-ws-dottie fares --from=3 --to=7
+ws-dottie getFareLineItemsByTripDateAndTerminals --from=3 --to=7
 
 # Get fares for specific date
-ws-dottie fares --date=2024-12-25
+ws-dottie getFareLineItemsByTripDateAndTerminals --date=2024-12-25
 
 # Get all fare combinations
-ws-dottie fares --all
+ws-dottie getFareLineItemsByTripDateAndTerminals --all
 
 # Filter by passenger type
-ws-dottie fares --passenger-type=adult
-ws-dottie fares --passenger-type=senior
-ws-dottie fares --passenger-type=youth
+ws-dottie getFareLineItemsByTripDateAndTerminals --passenger-type=adult
+ws-dottie getFareLineItemsByTripDateAndTerminals --passenger-type=senior
+ws-dottie getFareLineItemsByTripDateAndTerminals --passenger-type=youth
 ```
 
 ## 🚗 Traffic Commands
@@ -158,135 +158,135 @@ ws-dottie fares --passenger-type=youth
 
 ```bash
 # Get all highway alerts
-ws-dottie alerts
+ws-dottie getHighwayAlerts
 
 # Filter by priority
-ws-dottie alerts --priority=high
-ws-dottie alerts --priority=medium
-ws-dottie alerts --priority=low
+ws-dottie getHighwayAlerts --priority=high
+ws-dottie getHighwayAlerts --priority=medium
+ws-dottie getHighwayAlerts --priority=low
 
 # Filter by category
-ws-dottie alerts --category=construction
-ws-dottie alerts --category=incident
-ws-dottie alerts --category=weather
+ws-dottie getHighwayAlerts --category=construction
+ws-dottie getHighwayAlerts --category=incident
+ws-dottie getHighwayAlerts --category=weather
 
 # Filter by region
-ws-dottie alerts --region=seattle
-ws-dottie alerts --region=spokane
-ws-dottie alerts --region=olympic
+ws-dottie getHighwayAlerts --region=seattle
+ws-dottie getHighwayAlerts --region=spokane
+ws-dottie getHighwayAlerts --region=olympic
 
 # Get alerts for specific time range
-ws-dottie alerts --start-time=2024-12-25T08:00:00
-ws-dottie alerts --end-time=2024-12-25T17:00:00
+ws-dottie getHighwayAlerts --start-time=2024-12-25T08:00:00
+ws-dottie getHighwayAlerts --end-time=2024-12-25T17:00:00
 ```
 
 ### Traffic Flow
 
 ```bash
 # Get all traffic flow data
-ws-dottie flow
+ws-dottie getTrafficFlows
 
 # Filter by highway
-ws-dottie flow --highway=i5
-ws-dottie flow --highway=i90
-ws-dottie flow --highway=i405
+ws-dottie getTrafficFlows --highway=i5
+ws-dottie getTrafficFlows --highway=i90
+ws-dottie getTrafficFlows --highway=i405
 
 # Filter by congestion level
-ws-dottie flow --congestion=high
-ws-dottie flow --congestion=medium
-ws-dottie flow --congestion=low
+ws-dottie getTrafficFlows --congestion=high
+ws-dottie getTrafficFlows --congestion=medium
+ws-dottie getTrafficFlows --congestion=low
 
 # Get flow for specific region
-ws-dottie flow --region=king-county
-ws-dottie flow --region=pierce-county
-ws-dottie flow --region=snohomish-county
+ws-dottie getTrafficFlows --region=king-county
+ws-dottie getTrafficFlows --region=pierce-county
+ws-dottie getTrafficFlows --region=snohomish-county
 ```
 
 ### Travel Times
 
 ```bash
 # Get all travel times
-ws-dottie travel-times
+ws-dottie getTravelTimes
 
 # Filter by route name
-ws-dottie travel-times --route="I-5 Northbound"
-ws-dottie travel-times --route="I-90 Eastbound"
+ws-dottie getTravelTimes --route="I-5 Northbound"
+ws-dottie getTravelTimes --route="I-90 Eastbound"
 
 # Filter by travel time range
-ws-dottie travel-times --min-time=10
-ws-dottie travel-times --max-time=60
+ws-dottie getTravelTimes --min-time=10
+ws-dottie getTravelTimes --max-time=60
 
 # Sort by travel time
-ws-dottie travel-times --sort=asc
-ws-dottie travel-times --sort=desc
+ws-dottie getTravelTimes --sort=asc
+ws-dottie getTravelTimes --sort=desc
 ```
 
 ### Highway Cameras
 
 ```bash
 # Get all highway cameras
-ws-dottie cameras
+ws-dottie getHighwayCameras
 
 # Filter by highway
-ws-dottie cameras --highway=i5
-ws-dottie cameras --highway=i90
+ws-dottie getHighwayCameras --highway=i5
+ws-dottie getHighwayCameras --highway=i90
 
 # Filter by direction
-ws-dottie cameras --direction=north
-ws-dottie cameras --direction=south
-ws-dottie cameras --direction=east
-ws-dottie cameras --direction=west
+ws-dottie getHighwayCameras --direction=north
+ws-dottie getHighwayCameras --direction=south
+ws-dottie getHighwayCameras --direction=east
+ws-dottie getHighwayCameras --direction=west
 
 # Get camera image URLs
-ws-dottie cameras --image-urls
+ws-dottie getHighwayCameras --image-urls
 
 # Download camera images
-ws-dottie cameras --download-images --output-dir=./camera-images
+ws-dottie getHighwayCameras --download-images --output-dir=./camera-images
 ```
 
 ### Toll Rates
 
 ```bash
 # Get all toll rates
-ws-dottie tolls
+ws-dottie getTollRates
 
 # Filter by toll facility
-ws-dottie tolls --facility=sr-167
-ws-dottie tolls --facility=i-405-express-lanes
+ws-dottie getTollRates --facility=sr-167
+ws-dottie getTollRates --facility=i-405-express-lanes
 
 # Filter by vehicle type
-ws-dottie tolls --vehicle-type=2axle
-ws-dottie tolls --vehicle-type=3axle
-ws-dottie tolls --vehicle-type=motorcycle
+ws-dottie getTollRates --vehicle-type=2axle
+ws-dottie getTollRates --vehicle-type=3axle
+ws-dottie getTollRates --vehicle-type=motorcycle
 
 # Get current time-based rates
-ws-dottie tolls --time-based
+ws-dottie getTollRates --time-based
 
 # Get historical toll data
-ws-dottie tolls --historical --date=2024-12-25
+ws-dottie getTollRates --historical --date=2024-12-25
 ```
 
 ### Border Crossings
 
 ```bash
 # Get all border crossings
-ws-dottie border
+ws-dottie getBorderCrossings
 
 # Filter by crossing name
-ws-dottie border --crossing=peace-arch
-ws-dottie border --crossing=lynden
+ws-dottie getBorderCrossings --crossing=peace-arch
+ws-dottie getBorderCrossings --crossing=lynden
 
 # Filter by direction
-ws-dottie border --direction=north
-ws-dottie border --direction=south
+ws-dottie getBorderCrossings --direction=north
+ws-dottie getBorderCrossings --direction=south
 
 # Filter by crossing type
-ws-dottie border --type=passenger
-ws-dottie border --type=commercial
-ws-dottie border --type=nexus
+ws-dottie getBorderCrossings --type=passenger
+ws-dottie getBorderCrossings --type=commercial
+ws-dottie getBorderCrossings --type=nexus
 
 # Get wait time history
-ws-dottie border --history --days=7
+ws-dottie getBorderCrossings --history --days=7
 ```
 
 ## 🌤️ Weather Commands
@@ -295,88 +295,88 @@ ws-dottie border --history --days=7
 
 ```bash
 # Get all weather information
-ws-dottie weather
+ws-dottie getWeatherInformation
 
 # Filter by region
-ws-dottie weather --region=western
-ws-dottie weather --region=eastern
-ws-dottie weather --region=central
+ws-dottie getWeatherInformation --region=western
+ws-dottie getWeatherInformation --region=eastern
+ws-dottie getWeatherInformation --region=central
 
 # Filter by road condition
-ws-dottie weather --condition=dry
-ws-dottie weather --condition=wet
-ws-dottie weather --condition=snow
-ws-dottie weather --condition=ice
+ws-dottie getWeatherInformation --condition=dry
+ws-dottie getWeatherInformation --condition=wet
+ws-dottie getWeatherInformation --condition=snow
+ws-dottie getWeatherInformation --condition=ice
 
 # Filter by temperature range
-ws-dottie weather --min-temp=20
-ws-dottie weather --max-temp=80
+ws-dottie getWeatherInformation --min-temp=20
+ws-dottie getWeatherInformation --max-temp=80
 
 # Get weather for specific stations
-ws-dottie weather --stations=SEA01,SEA02,SEA03
+ws-dottie getWeatherInformation --stations=SEA01,SEA02,SEA03
 ```
 
 ### Weather Extended
 
 ```bash
 # Get extended weather information
-ws-dottie weather-extended
+ws-dottie getWeatherReadings
 
 # Filter by surface condition
-ws-dottie weather-extended --surface=dry
-ws-dottie weather-extended --surface=wet
-ws-dottie weather-extended --surface=snow
-ws-dottie weather-extended --surface=ice
+ws-dottie getWeatherReadings --surface=dry
+ws-dottie getWeatherReadings --surface=wet
+ws-dottie getWeatherReadings --surface=snow
+ws-dottie getWeatherReadings --surface=ice
 
 # Filter by visibility range
-ws-dottie weather-extended --min-visibility=1
-ws-dottie weather-extended --max-visibility=10
+ws-dottie getWeatherReadings --min-visibility=1
+ws-dottie getWeatherReadings --max-visibility=10
 
 # Get scientific weather data
-ws-dottie weather-extended --scientific
+ws-dottie getWeatherReadings --scientific
 ```
 
 ### Weather Stations
 
 ```bash
 # Get all weather stations
-ws-dottie stations
+ws-dottie getWeatherStations
 
 # Filter by region
-ws-dottie stations --region=western
-ws-dottie stations --region=eastern
-ws-dottie stations --region=central
+ws-dottie getWeatherStations --region=western
+ws-dottie getWeatherStations --region=eastern
+ws-dottie getWeatherStations --region=central
 
 # Get station metadata
-ws-dottie stations --metadata
+ws-dottie getWeatherStations --metadata
 
 # Find nearest station
-ws-dottie stations --nearest --latitude=47.6062 --longitude=-122.3321
+ws-dottie getWeatherStations --nearest --latitude=47.6062 --longitude=-122.3321
 ```
 
 ### Mountain Pass Conditions
 
 ```bash
 # Get all mountain pass conditions
-ws-dottie passes
+ws-dottie getMountainPassConditions
 
 # Filter by pass name
-ws-dottie passes --pass=snoqualmie
-ws-dottie passes --pass=stevens
-ws-dottie passes --pass=white
+ws-dottie getMountainPassConditions --pass=snoqualmie
+ws-dottie getMountainPassConditions --pass=stevens
+ws-dottie getMountainPassConditions --pass=white
 
 # Filter by restriction level
-ws-dottie passes --restriction=open
-ws-dottie passes --restriction=chains-required
-ws-dottie passes --restriction=closed
+ws-dottie getMountainPassConditions --restriction=open
+ws-dottie getMountainPassConditions --restriction=chains-required
+ws-dottie getMountainPassConditions --restriction=closed
 
 # Filter by weather condition
-ws-dottie passes --weather=clear
-ws-dottie passes --weather=snow
-ws-dottie passes --weather=freezing-rain
+ws-dottie getMountainPassConditions --weather=clear
+ws-dottie getMountainPassConditions --weather=snow
+ws-dottie getMountainPassConditions --weather=freezing-rain
 
 # Get elevation data
-ws-dottie passes --elevation
+ws-dottie getMountainPassConditions --elevation
 ```
 
 ## 🏗️ Infrastructure Commands
@@ -385,45 +385,45 @@ ws-dottie passes --elevation
 
 ```bash
 # Get all bridge clearances
-ws-dottie bridges
+ws-dottie getBridgeClearances
 
 # Filter by route
-ws-dottie bridges --route=i5
-ws-dottie bridges --route=i90
-ws-dottie bridges --route=us-2
+ws-dottie getBridgeClearances --route=i5
+ws-dottie getBridgeClearances --route=i90
+ws-dottie getBridgeClearances --route=us-2
 
 # Filter by clearance height
-ws-dottie bridges --min-clearance=14
-ws-dottie bridges --max-clearance=16
+ws-dottie getBridgeClearances --min-clearance=14
+ws-dottie getBridgeClearances --max-clearance=16
 
 # Find safe routes for vehicle
-ws-dottie bridges --vehicle-height=13.5 --find-safe-routes
+ws-dottie getBridgeClearances --vehicle-height=13.5 --find-safe-routes
 
 # Export clearance data
-ws-dottie bridges --export=csv --output-file=bridge-clearances.csv
+ws-dottie getBridgeClearances --export=csv --output-file=bridge-clearances.csv
 ```
 
 ### Commercial Vehicle Restrictions
 
 ```bash
 # Get all commercial vehicle restrictions
-ws-dottie restrictions
+ws-dottie getCommercialVehicleRestrictions
 
 # Filter by route
-ws-dottie restrictions --route=i5
-ws-dottie restrictions --route=i90
+ws-dottie getCommercialVehicleRestrictions --route=i5
+ws-dottie getCommercialVehicleRestrictions --route=i90
 
 # Filter by vehicle type
-ws-dottie restrictions --vehicle-type=truck
-ws-dottie restrictions --vehicle-type=bus
-ws-dottie restrictions --vehicle-type=combination
+ws-dottie getCommercialVehicleRestrictions --vehicle-type=truck
+ws-dottie getCommercialVehicleRestrictions --vehicle-type=bus
+ws-dottie getCommercialVehicleRestrictions --vehicle-type=combination
 
 # Filter by weight limit
-ws-dottie restrictions --max-weight=80000
-ws-dottie restrictions --min-weight=10000
+ws-dottie getCommercialVehicleRestrictions --max-weight=80000
+ws-dottie getCommercialVehicleRestrictions --min-weight=10000
 
 # Get seasonal restrictions
-ws-dottie restrictions --seasonal
+ws-dottie getCommercialVehicleRestrictions --seasonal
 ```
 
 ## 🔧 Advanced Usage
@@ -432,53 +432,53 @@ ws-dottie restrictions --seasonal
 
 ```bash
 # Output as JSON
-ws-dottie vessels --format=json
+ws-dottie getVesselLocations --format=json
 
 # Output as CSV
-ws-dottie vessels --format=csv
+ws-dottie getVesselLocations --format=csv
 
 # Output as table
-ws-dottie vessels --format=table
+ws-dottie getVesselLocations --format=table
 
 # Output as pretty-printed JSON
-ws-dottie vessels --format=pretty
+ws-dottie getVesselLocations --format=pretty
 
 # Custom template
-ws-dottie vessels --format=template --template="{{VesselName}}: {{Speed}} knots"
+ws-dottie getVesselLocations --format=template --template="{{VesselName}}: {{Speed}} knots"
 ```
 
 ### Data Filtering
 
 ```bash
 # Combine multiple filters
-ws-dottie alerts --priority=high --category=construction --region=seattle
+ws-dottie getHighwayAlerts --priority=high --category=construction --region=seattle
 
 # Use regular expressions
-ws-dottie vessels --filter=".*Jumbo.*" --filter-field=VesselName
+ws-dottie getVesselLocations --filter=".*Jumbo.*" --filter-field=VesselName
 
 # Exclude specific fields
-ws-dottie vessels --exclude=LastUpdated,Heading
+ws-dottie getVesselLocations --exclude=LastUpdated,Heading
 
 # Sort results
-ws-dottie alerts --sort=StartTime --sort-order=desc
-ws-dottie alerts --sort=Priority --sort-order=asc
+ws-dottie getHighwayAlerts --sort=StartTime --sort-order=desc
+ws-dottie getHighwayAlerts --sort=Priority --sort-order=asc
 ```
 
 ### Batch Operations
 
 ```bash
 # Run multiple commands in sequence
-ws-dottie vessels; alerts; weather
+ws-dottie getVesselLocations; getHighwayAlerts; getWeatherInformation
 
 # Save output to file
-ws-dottie vessels --output=vessels.json
-ws-dottie alerts --output=alerts.csv
+ws-dottie getVesselLocations --output=vessels.json
+ws-dottie getHighwayAlerts --output=alerts.csv
 
 # Process with shell commands
-ws-dottie vessels --format=json | jq '.[] | select(.VesselName, .Speed)'
+ws-dottie getVesselLocations --format=json | jq '.[] | select(.VesselName, .Speed)'
 
 # Generate report
-ws-dottie vessels --format=markdown --output-report=vessel-report.md
+ws-dottie getVesselLocations --format=markdown --output-report=vessel-report.md
 ```
 
 ### Configuration Management
@@ -511,7 +511,7 @@ ws-dottie config --load=./ws-dottie-config.json
 API_KEY="your_api_key_here"
 
 # Get current vessel locations
-VESSELS=$(ws-dottie --key=$API_KEY vessels --format=json | jq -r '.[] | "\(.VesselName): \(.Latitude),\(.Longitude)"')
+VESSELS=$(ws-dottie --key=$API_KEY getVesselLocations --format=json | jq -r '.[] | "\(.VesselName): \(.Latitude),\(.Longitude)"')
 
 echo "Current vessel locations:"
 echo "$VESSELS"
@@ -525,7 +525,7 @@ if [ -n "$SEATTLE_VESSELS" ]; then
 fi
 
 # Get terminal wait times
-WAIT_TIMES=$(ws-dottie --key=$API_KEY terminals --format=json | jq -r '.[] | "\(.TerminalName): \(.WaitTime) minutes"')
+WAIT_TIMES=$(ws-dottie --key=$API_KEY getTerminalWaitTimes --format=json | jq -r '.[] | "\(.TerminalName): \(.WaitTime) minutes"')
 
 echo "Terminal wait times:"
 echo "$WAIT_TIMES"
@@ -536,29 +536,29 @@ echo "$WAIT_TIMES"
 ```bash
 # Crontab entry for weather monitoring
 # Every 15 minutes
-*/15 * * * * /usr/local/bin/ws-dottie --key=$API_KEY weather --region=western >> /var/log/weather-monitor.log 2>&1
+*/15 * * * * /usr/local/bin/ws-dottie --key=$API_KEY getWeatherInformation --region=western >> /var/log/weather-monitor.log 2>&1
 
 # Hourly ferry schedule check
-0 * * * * /usr/local/bin/ws-dottie --key=$API_KEY schedules --date=$(date +\%Y-\%m-\%d) >> /var/log/ferry-schedule.log 2>&1
+0 * * * * /usr/local/bin/ws-dottie --key=$API_KEY getSchedulesByTripDateAndRouteId --date=$(date +\%Y-\%m-\%d) >> /var/log/ferry-schedule.log 2>&1
 
 # Daily morning traffic report
-0 6 * * * /usr/local/bin/ws-dottie --key=$API_KEY alerts --priority=high --format=markdown | mail -s "Morning Traffic Report" your-email@example.com
+0 6 * * * /usr/local/bin/ws-dottie --key=$API_KEY getHighwayAlerts --priority=high --format=markdown | mail -s "Morning Traffic Report" your-email@example.com
 ```
 
 ### Integration with Other Tools
 
 ```bash
 # Pipe to grep for filtering
-ws-dottie vessels --format=json | jq '.[] | select(.Speed > 15)'
+ws-dottie getVesselLocations --format=json | jq '.[] | select(.Speed > 15)'
 
 # Pipe to awk for formatting
-ws-dottie alerts --format=csv | awk -F, 'NR>1 {print $1,$2,$3}'
+ws-dottie getHighwayAlerts --format=csv | awk -F, 'NR>1 {print $1,$2,$3}'
 
 # Combine with curl for custom processing
-ws-dottie vessels --format=json | curl -X POST -H "Content-Type: application/json" -d @- https://your-api.example.com/ferry-data
+ws-dottie getVesselLocations --format=json | curl -X POST -H "Content-Type: application/json" -d @- https://your-api.example.com/ferry-data
 
 # Use with xargs for batch processing
-echo "3\n7\n11" | xargs -I {} -n 1 ws-dottie --key=$API_KEY schedules --from={} --to={}
+echo "3\n7\n11" | xargs -I {} -n 1 ws-dottie --key=$API_KEY getSchedulesByTripDateAndRouteId --from={} --to={}
 ```
 
 ## 📊 Output Formats
@@ -567,39 +567,39 @@ echo "3\n7\n11" | xargs -I {} -n 1 ws-dottie --key=$API_KEY schedules --from={} 
 
 ```bash
 # Pretty-printed JSON
-ws-dottie vessels --format=json
+ws-dottie getVesselLocations --format=json
 
 # Compact JSON
-ws-dottie vessels --format=json --compact
+ws-dottie getVesselLocations --format=json --compact
 
 # JSON with specific fields
-ws-dottie vessels --format=json --fields=VesselName,Speed,Heading
+ws-dottie getVesselLocations --format=json --fields=VesselName,Speed,Heading
 ```
 
 ### CSV Output
 
 ```bash
 # Standard CSV
-ws-dottie vessels --format=csv
+ws-dottie getVesselLocations --format=csv
 
 # Custom delimiter
-ws-dottie vessels --format=csv --delimiter=;
+ws-dottie getVesselLocations --format=csv --delimiter=;
 
 # Custom headers
-ws-dottie vessels --format=csv --headers=ID,Name,Speed,Heading
+ws-dottie getVesselLocations --format=csv --headers=ID,Name,Speed,Heading
 ```
 
 ### Table Output
 
 ```bash
 # Default table
-ws-dottie vessels --format=table
+ws-dottie getVesselLocations --format=table
 
 # Wide table
-ws-dottie vessels --format=table --wide
+ws-dottie getVesselLocations --format=table --wide
 
 # Custom column width
-ws-dottie vessels --format=table --max-width=20
+ws-dottie getVesselLocations --format=table --max-width=20
 ```
 
 ## 📚 Next Steps

@@ -37,10 +37,65 @@ Build applications that track ferry locations in real-time, showing current posi
 
 **Relevant APIs**: WSF Vessels
 
+```javascript
+import { useFetchVesselLocations } from 'ws-dottie';
+
+function FerryTracker() {
+  const { data: vessels, isLoading } = useFetchVesselLocations();
+  
+  return (
+    <div>
+      <h2>Active Ferries: {vessels?.length || 0}</h2>
+      {isLoading && <div>Loading...</div>}
+      {vessels?.map(vessel => (
+        <div key={vessel.VesselID}>
+          <h3>{vessel.VesselName}</h3>
+          <p>Location: {vessel.Latitude}, {vessel.Longitude}</p>
+          <p>Speed: {vessel.Speed} knots</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
 #### Ferry Trip Planning
 Create tools for planning ferry trips with schedule information, terminal wait times, and fare calculations.
 
 **Relevant APIs**: WSF Schedule, WSF Terminals, WSF Fares
+
+```javascript
+import { 
+  useFetchSchedulesByTripDateAndRouteId,
+  useFetchTerminalWaitTimes,
+  useFetchFareLineItemsByTripDateAndTerminals
+} from 'ws-dottie';
+
+function FerryTripPlanner() {
+  const [route, setRoute] = useState({ departing: 3, arriving: 7, date: new Date() });
+  
+  const { data: schedules } = useFetchSchedulesByTripDateAndRouteId({
+    TripDate: route.date.toISOString().split('T')[0],
+    RouteID: route.departing
+  });
+  
+  const { data: waitTimes } = useFetchTerminalWaitTimes();
+  
+  const { data: fares } = useFetchFareLineItemsByTripDateAndTerminals({
+    TripDate: route.date.toISOString().split('T')[0],
+    DepartingTerminalID: route.departing,
+    ArrivingTerminalID: route.arriving,
+    RoundTrip: false
+  });
+  
+  return (
+    <div>
+      <h2>Ferry Trip Planning</h2>
+      {/* Render schedules, wait times, and fares */}
+    </div>
+  );
+}
+```
 
 ## 🚗 Traffic APIs
 
@@ -66,10 +121,109 @@ Create dashboards for highway conditions, traffic flow, and travel time estimate
 
 **Relevant APIs**: WSDOT Highway Alerts, WSDOT Traffic Flow, WSDOT Travel Times
 
+```javascript
+import { 
+  useGetHighwayAlerts,
+  useGetTrafficFlows,
+  useGetTravelTimes
+} from 'ws-dottie';
+
+function TrafficDashboard() {
+  const { data: alerts } = useGetHighwayAlerts();
+  const { data: trafficFlow } = useGetTrafficFlows();
+  const { data: travelTimes } = useGetTravelTimes();
+  
+  return (
+    <div>
+      <h2>Traffic Dashboard</h2>
+      
+      <section>
+        <h3>Highway Alerts ({alerts?.length || 0})</h3>
+        {alerts?.map(alert => (
+          <div key={alert.AlertID}>
+            <h4>{alert.Headline}</h4>
+            <p>Priority: {alert.Priority}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Traffic Flow</h3>
+        {trafficFlow?.map(flow => (
+          <div key={flow.FlowDataID}>
+            <p>Location: {flow.Location}</p>
+            <p>Speed: {flow.AverageSpeed} mph</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Travel Times</h3>
+        {travelTimes?.map(time => (
+          <div key={time.TravelTimeID}>
+            <p>Route: {time.RouteName}</p>
+            <p>Time: {time.AverageTime} minutes</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
+
 #### Route Planning with Traffic Data
 Build tools for optimal route planning based on current traffic conditions and toll rates.
 
 **Relevant APIs**: WSDOT Travel Times, WSDOT Toll Rates, WSDOT Highway Alerts
+
+```javascript
+import { 
+  useGetTravelTimes,
+  useGetTollRates,
+  useGetHighwayAlerts
+} from 'ws-dottie';
+
+function RoutePlanner() {
+  const { data: travelTimes } = useGetTravelTimes();
+  const { data: tollRates } = useGetTollRates();
+  const { data: alerts } = useGetHighwayAlerts();
+  
+  return (
+    <div>
+      <h2>Route Planner</h2>
+      
+      <section>
+        <h3>Current Travel Times</h3>
+        {travelTimes?.map(time => (
+          <div key={time.TravelTimeID}>
+            <p>Route: {time.RouteName}</p>
+            <p>Time: {time.AverageTime} minutes</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Toll Rates</h3>
+        {tollRates?.map(rate => (
+          <div key={rate.TollRateID}>
+            <p>Location: {rate.TollLocationName}</p>
+            <p>Rate: ${rate.TollRate}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Active Alerts</h3>
+        {alerts?.map(alert => (
+          <div key={alert.AlertID}>
+            <p>{alert.Headline}</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
 
 ## 🌤️ Weather APIs
 
@@ -93,6 +247,46 @@ Display weather conditions, road conditions, and mountain pass status for travel
 
 **Relevant APIs**: WSDOT Weather Information, WSDOT Mountain Pass Conditions
 
+```javascript
+import { 
+  useGetWeatherInformation,
+  useGetMountainPassConditions
+} from 'ws-dottie';
+
+function WeatherDashboard() {
+  const { data: weather } = useGetWeatherInformation();
+  const { data: passConditions } = useGetMountainPassConditions();
+  
+  return (
+    <div>
+      <h2>Weather Dashboard</h2>
+      
+      <section>
+        <h3>Weather Conditions</h3>
+        {weather?.map(station => (
+          <div key={station.StationID}>
+            <p>Station: {station.StationName}</p>
+            <p>Temperature: {station.Temperature}°F</p>
+            <p>Conditions: {station.RoadCondition}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Mountain Pass Conditions</h3>
+        {passConditions?.map(pass => (
+          <div key={pass.PassConditionID}>
+            <p>Pass: {pass.MountainPassName}</p>
+            <p>Status: {pass.WeatherCondition}</p>
+            <p>Restrictions: {pass.RestrictionText}</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
+
 ## 🏗️ Infrastructure APIs
 
 ### Overview
@@ -113,6 +307,56 @@ Infrastructure APIs provide information about physical transportation infrastruc
 Build tools for route planning with bridge clearances, toll rates, and vehicle restrictions.
 
 **Relevant APIs**: WSDOT Bridge Clearances, WSDOT Commercial Vehicle Restrictions, WSDOT Border Crossings
+
+```javascript
+import { 
+  useGetBridgeClearances,
+  useGetCommercialVehicleRestrictions,
+  useGetBorderCrossings
+} from 'ws-dottie';
+
+function CommercialVehicleRoutePlanner() {
+  const { data: clearances } = useGetBridgeClearances();
+  const { data: restrictions } = useGetCommercialVehicleRestrictions();
+  const { data: crossings } = useGetBorderCrossings();
+  
+  return (
+    <div>
+      <h2>Commercial Vehicle Route Planner</h2>
+      
+      <section>
+        <h3>Bridge Clearances</h3>
+        {clearances?.map(clearance => (
+          <div key={clearance.ClearanceID}>
+            <p>Route: {clearance.Route}</p>
+            <p>Clearance: {clearance.VerticalClearance} feet</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Vehicle Restrictions</h3>
+        {restrictions?.map(restriction => (
+          <div key={restriction.RestrictionID}>
+            <p>Route: {restriction.Route}</p>
+            <p>Restriction: {restriction.RestrictionText}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Border Crossings</h3>
+        {crossings?.map(crossing => (
+          <div key={crossing.CrossingID}>
+            <p>Crossing: {crossing.CrossingName}</p>
+            <p>Wait Time: {crossing.WaitTime} minutes</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
 
 ## 🔄 Data Update Frequencies
 
@@ -135,10 +379,94 @@ Combine ferry data with highway information for complete commute planning.
 
 **Relevant APIs**: WSF Vessels, WSF Terminals, WSDOT Highway Alerts, WSDOT Travel Times
 
+```javascript
+import { 
+  useGetVesselLocations,
+  useGetTerminalWaitTimes,
+  useGetHighwayAlerts,
+  useGetTravelTimes
+} from 'ws-dottie';
+
+function CommutePlanner() {
+  const { data: vessels } = useGetVesselLocations();
+  const { data: waitTimes } = useGetTerminalWaitTimes();
+  const { data: alerts } = useGetHighwayAlerts();
+  const { data: travelTimes } = useGetTravelTimes();
+  
+  return (
+    <div>
+      <h2>Commute Planner</h2>
+      
+      <section>
+        <h3>Ferry Information</h3>
+        <p>Active Vessels: {vessels?.length || 0}</p>
+        <p>Terminal Wait Times: {waitTimes?.length || 0} terminals</p>
+      </section>
+      
+      <section>
+        <h3>Traffic Conditions</h3>
+        <p>Active Alerts: {alerts?.length || 0}</p>
+        <p>Travel Times Available: {travelTimes?.length || 0} routes</p>
+      </section>
+    </div>
+  );
+}
+```
+
 ### Weather + Traffic Integration
 Correlate weather conditions with traffic incidents for weather-aware travel planning.
 
 **Relevant APIs**: WSDOT Weather Information, WSDOT Mountain Pass Conditions, WSDOT Highway Alerts
+
+```javascript
+import { 
+  useGetWeatherInformation,
+  useGetMountainPassConditions,
+  useGetHighwayAlerts
+} from 'ws-dottie';
+
+function WeatherAwareTravelPlanner() {
+  const { data: weather } = useGetWeatherInformation();
+  const { data: passConditions } = useGetMountainPassConditions();
+  const { data: alerts } = useGetHighwayAlerts();
+  
+  return (
+    <div>
+      <h2>Weather-Aware Travel Planner</h2>
+      
+      <section>
+        <h3>Weather Conditions</h3>
+        {weather?.map(station => (
+          <div key={station.StationID}>
+            <p>Station: {station.StationName}</p>
+            <p>Temperature: {station.Temperature}°F</p>
+            <p>Conditions: {station.RoadCondition}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Mountain Pass Conditions</h3>
+        {passConditions?.map(pass => (
+          <div key={pass.PassConditionID}>
+            <p>Pass: {pass.MountainPassName}</p>
+            <p>Status: {pass.WeatherCondition}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Weather-Related Alerts</h3>
+        {alerts?.map(alert => (
+          <div key={alert.AlertID}>
+            <p>{alert.Headline}</p>
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
 
 ## 🎯 Choosing Right APIs
 
@@ -149,20 +477,119 @@ Correlate weather conditions with traffic incidents for weather-aware travel pla
 - **Caching Strategy**: `REALTIME_UPDATES`
 - **Update Frequency**: 5-10 seconds
 
+```javascript
+import { useGetVesselLocations, useGetHighwayAlerts } from 'ws-dottie';
+
+function RealTimeTracker() {
+  const { data: vessels } = useGetVesselLocations();
+  const { data: alerts } = useGetHighwayAlerts();
+  
+  return (
+    <div>
+      <h2>Real-time Transportation</h2>
+      <p>Active Vessels: {vessels?.length || 0}</p>
+      <p>Active Alerts: {alerts?.length || 0}</p>
+    </div>
+  );
+}
+```
+
 #### Trip Planning Applications
 - **Primary APIs**: Schedules, Fares, Travel Times, Toll Rates
 - **Caching Strategy**: `DAILY_UPDATES` or `WEEKLY_UPDATES`
 - **Update Frequency**: Daily to weekly
+
+```javascript
+import { 
+  useGetSchedulesByTripDateAndRouteId,
+  useGetFareLineItemsByTripDateAndTerminals,
+  useGetTravelTimes,
+  useGetTollRates
+} from 'ws-dottie';
+
+function TripPlanner() {
+  const [trip, setTrip] = useState({
+    departing: 3,
+    arriving: 7,
+    date: new Date()
+  });
+  
+  const { data: schedules } = useGetSchedulesByTripDateAndRouteId({
+    TripDate: trip.date.toISOString().split('T')[0],
+    RouteID: trip.departing
+  });
+  
+  const { data: fares } = useGetFareLineItemsByTripDateAndTerminals({
+    TripDate: trip.date.toISOString().split('T')[0],
+    DepartingTerminalID: trip.departing,
+    ArrivingTerminalID: trip.arriving,
+    RoundTrip: false
+  });
+  
+  const { data: travelTimes } = useGetTravelTimes();
+  const { data: tollRates } = useGetTollRates();
+  
+  return (
+    <div>
+      <h2>Trip Planner</h2>
+      {/* Render trip planning interface */}
+    </div>
+  );
+}
+```
 
 #### Monitoring Applications
 - **Primary APIs**: Weather Information, Mountain Pass Conditions, Highway Cameras
 - **Caching Strategy**: `HOURLY_UPDATES`
 - **Update Frequency**: 15-60 minutes
 
-#### Analytics Applications
-- **Primary APIs**: Vessel History, Commercial Vehicle Restrictions, Border Crossings
-- **Caching Strategy**: `WEEKLY_UPDATES`
-- **Update Frequency**: Weekly or manual refresh
+```javascript
+import { 
+  useGetWeatherInformation,
+  useGetMountainPassConditions,
+  useGetHighwayCameras
+} from 'ws-dottie';
+
+function MonitoringDashboard() {
+  const { data: weather } = useGetWeatherInformation();
+  const { data: passConditions } = useGetMountainPassConditions();
+  const { data: cameras } = useGetHighwayCameras();
+  
+  return (
+    <div>
+      <h2>Transportation Monitoring</h2>
+      
+      <section>
+        <h3>Weather Conditions</h3>
+        {weather?.map(station => (
+          <div key={station.StationID}>
+            <p>{station.StationName}: {station.Temperature}°F</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Mountain Pass Conditions</h3>
+        {passConditions?.map(pass => (
+          <div key={pass.PassConditionID}>
+            <p>{pass.MountainPassName}: {pass.WeatherCondition}</p>
+          </div>
+        ))}
+      </section>
+      
+      <section>
+        <h3>Highway Cameras</h3>
+        {cameras?.map(camera => (
+          <div key={camera.CameraID}>
+            <p>{camera.CameraTitle}</p>
+            <img src={camera.ImageURL} alt={camera.CameraTitle} />
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+```
 
 ## 🔗 Detailed Documentation
 
