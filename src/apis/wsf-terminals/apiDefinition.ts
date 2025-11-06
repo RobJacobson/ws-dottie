@@ -10,7 +10,7 @@ import { terminalTransportsResource } from "./terminalTransports/terminalTranspo
 import { terminalVerboseResource } from "./terminalVerbose/terminalVerbose.endpoints";
 import { terminalWaitTimesResource } from "./terminalWaitTimes/terminalWaitTimes.endpoints";
 
-export const wsfTerminalsApi: ApiDefinition = {
+export const wsfTerminalsApi = {
   name: "wsf-terminals",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/terminals/rest",
   endpointGroups: [
@@ -23,16 +23,4 @@ export const wsfTerminalsApi: ApiDefinition = {
     terminalVerboseResource,
     terminalWaitTimesResource,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  cacheFlushDateResource,
-  terminalBasicsResource,
-  terminalBulletinsResource,
-  terminalLocationsResource,
-  terminalSailingSpaceResource,
-  terminalTransportsResource,
-  terminalVerboseResource,
-  terminalWaitTimesResource,
-};
+} satisfies ApiDefinition;

@@ -8,7 +8,7 @@ import { terminalComboGroup } from "./terminalCombo/terminalCombo.endpoints";
 import { terminalsGroup } from "./terminals/terminals.endpoints";
 import { validDateRangeGroup } from "./validDateRange/validDateRange.endpoints";
 
-export const wsfFaresApi: ApiDefinition = {
+export const wsfFaresApi = {
   name: "wsf-fares",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/fares/rest",
   endpointGroups: [
@@ -19,14 +19,4 @@ export const wsfFaresApi: ApiDefinition = {
     fareLineItemsGroup,
     fareTotalsGroup,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  cacheFlushDateGroup,
-  validDateRangeGroup,
-  terminalsGroup,
-  terminalComboGroup,
-  fareLineItemsGroup,
-  fareTotalsGroup,
-};
+} satisfies ApiDefinition;

@@ -9,7 +9,7 @@ import { vesselLocationsGroup } from "./vesselLocations/vesselLocations.endpoint
 import { vesselStatsResource } from "./vesselStats/vesselStats.endpoints";
 import { vesselVerboseResource } from "./vesselVerbose/vesselVerbose.endpoints";
 
-export const wsfVesselsApi: ApiDefinition = {
+export const wsfVesselsApi = {
   name: "wsf-vessels",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/vessels/rest",
   endpointGroups: [
@@ -21,15 +21,4 @@ export const wsfVesselsApi: ApiDefinition = {
     vesselStatsResource,
     vesselVerboseResource,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  cacheFlushDateResource,
-  vesselAccommodationsResource,
-  vesselBasicsResource,
-  vesselHistoriesResource,
-  vesselLocationsGroup,
-  vesselStatsResource,
-  vesselVerboseResource,
-};
+} satisfies ApiDefinition;

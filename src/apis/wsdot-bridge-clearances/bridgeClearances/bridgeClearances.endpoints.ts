@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./bridgeClearances.input";
 import * as o from "./bridgeClearances.output";
 
-export const bridgeClearancesGroup: EndpointGroup = {
+export const bridgeClearancesGroup = {
   name: "bridge-clearances",
   documentation: {
     resourceDescription:
@@ -35,4 +35,4 @@ export const bridgeClearancesGroup: EndpointGroup = {
       o.BridgeDataGIS[]
     >,
   },
-};
+} satisfies EndpointGroup;

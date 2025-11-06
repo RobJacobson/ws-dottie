@@ -4,12 +4,9 @@ import { eventCategoriesGroup } from "./eventCategories/eventCategories.endpoint
 // Import all resources
 import { highwayAlertsGroup } from "./highwayAlerts/highwayAlerts.endpoints";
 
-export const wsdotHighwayAlertsApi: ApiDefinition = {
+export const wsdotHighwayAlertsApi = {
   name: "wsdot-highway-alerts",
   baseUrl:
     "https://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
   endpointGroups: [highwayAlertsGroup, alertAreasGroup, eventCategoriesGroup],
-};
-
-// Export individual resources for direct use
-export { highwayAlertsGroup, alertAreasGroup, eventCategoriesGroup };
+} satisfies ApiDefinition;
