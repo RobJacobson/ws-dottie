@@ -60,6 +60,4 @@ export const vesselAccommodationSchema = vesselBaseSchema
     "Represents vessel accommodation information including amenities, accessibility features, and passenger facilities. E.g., vessel Chimacum with elevator, ADA accessible restrooms on car deck and main cabin, galley, and detailed ADA information. Used for passenger information displays, accessibility planning, and determining vessel amenities. Extends vesselBaseSchema with accommodation and accessibility fields."
   );
 
-export type VesselAccommodation = z.infer<
-  typeof vesselAccommodationSchema
->;
+export type VesselAccommodation = z.infer<typeof vesselAccommodationSchema>;

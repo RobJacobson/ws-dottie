@@ -24,6 +24,4 @@ export const validDateRangeSchema = z
     "Represents date range for which fares data is currently published and available, including start and end dates. E.g., fares available from November 2, 2025 through March 21, 2026. Use to determine valid trip dates for fare queries before calling other endpoints."
   );
 
-export type ValidDateRange = z.infer<
-  typeof validDateRangeSchema
->;
+export type ValidDateRange = z.infer<typeof validDateRangeSchema>;

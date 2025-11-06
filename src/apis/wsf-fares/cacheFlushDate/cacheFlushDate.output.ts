@@ -16,6 +16,4 @@ export const cacheFlushDateSchema = zDotnetDate().describe(
   "Cache flush timestamp indicating when fares data was last updated, as a UTC datetime. E.g., '2025-10-31T22:19:34.600Z' when fare metadata was refreshed. Use to determine when cached fare information should be invalidated and refreshed. Poll this endpoint periodically to detect when fare data changes."
 );
 
-export type FaresCacheFlushDate = z.infer<
-  typeof cacheFlushDateSchema
->;
+export type FaresCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;

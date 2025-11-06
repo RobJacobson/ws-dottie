@@ -19,6 +19,4 @@ export const cvRestrictionWithIdSchema = cvRestrictionSchema
     "Represents commercial vehicle restriction information with unique identifier, including weight limits by classification, height/width/length restrictions, location data, effective dates, restriction type, and unique restriction ID. E.g., Teanaway River bridge restriction (ID: B-WA-010-1) on SR-10 with 20,000 lb axle limits. Used for commercial vehicle route planning, compliance checking, and restriction tracking with ID-based operations. Covers bridge and roadway restrictions statewide."
   );
 
-export type CVRestrictionWithId = z.infer<
-  typeof cvRestrictionWithIdSchema
->;
+export type CVRestrictionWithId = z.infer<typeof cvRestrictionWithIdSchema>;

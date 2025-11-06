@@ -11,4 +11,6 @@ export const commercialVehicleRestrictionsInputSchema = z
     "Retrieves all commercial vehicle restrictions statewide, returning bridge and road restrictions including weight limits, height restrictions, location data, and effective dates. Use for commercial vehicle route planning and compliance checking."
   );
 
-export type CommercialVehicleRestrictionsInput = z.infer<typeof commercialVehicleRestrictionsInputSchema>;
+export type CommercialVehicleRestrictionsInput = z.infer<
+  typeof commercialVehicleRestrictionsInputSchema
+>;

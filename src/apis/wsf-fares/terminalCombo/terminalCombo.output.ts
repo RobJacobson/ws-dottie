@@ -76,6 +76,4 @@ export const terminalComboVerboseSchema = z
     "Represents fare collection description for terminal combination including terminal IDs, names, and collection details. E.g., Anacortes (ID 1) to Friday Harbor (ID 10) with fares collected at Anacortes only. Used for comprehensive fare collection information lookup and understanding collection procedures for all available routes."
   );
 
-export type TerminalComboVerbose = z.infer<
-  typeof terminalComboVerboseSchema
->;
+export type TerminalComboVerbose = z.infer<typeof terminalComboVerboseSchema>;

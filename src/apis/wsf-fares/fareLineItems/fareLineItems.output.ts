@@ -110,6 +110,4 @@ export const lineItemVerboseSchema = z
     "Represents comprehensive fare line item data for all terminal combinations including terminal combo information, cross-reference mappings, one-way fares, and round trip fares. E.g., complete fare data for all routes on November 2, 2025. Used for bulk fare lookups across all routes and comprehensive fare data access."
   );
 
-export type LineItemVerbose = z.infer<
-  typeof lineItemVerboseSchema
->;
+export type LineItemVerbose = z.infer<typeof lineItemVerboseSchema>;

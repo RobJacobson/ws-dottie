@@ -51,7 +51,9 @@ export const highwayCamerasByRouteAndMilepostInputSchema = z
     "Filters highway cameras by route, region, or milepost range, returning matching camera locations, image URLs, and status information. Use for route-specific or location-specific camera queries."
   );
 
-export type HighwayCamerasByRouteAndMilepostInput = z.infer<typeof highwayCamerasByRouteAndMilepostInputSchema>;
+export type HighwayCamerasByRouteAndMilepostInput = z.infer<
+  typeof highwayCamerasByRouteAndMilepostInputSchema
+>;
 
 /**
  * Input schema for Camera endpoint
@@ -70,4 +72,6 @@ export const highwayCameraByCameraIdInputSchema = z
     "Retrieves specific camera by ID, returning camera location, image URL, status, and display metadata. Use for individual camera lookups and camera detail displays."
   );
 
-export type HighwayCameraByCameraIdInput = z.infer<typeof highwayCameraByCameraIdInputSchema>;
+export type HighwayCameraByCameraIdInput = z.infer<
+  typeof highwayCameraByCameraIdInputSchema
+>;
