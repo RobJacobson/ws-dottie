@@ -249,6 +249,74 @@ components:
       description: Represents subsurface sensor measurements including ground temperature from sensors embedded below road pavement. E.g., sensor 1 with subsurface temperature 8.5°C. Used for ground temperature monitoring, winter maintenance operations, and travel safety assessments. Measurements recorded by sensors embedded 12-18 inches below road pavement surfaces.
   parameters: {}
 paths:
+  /Scanweb/SurfaceMeasurements:
+    get:
+      summary: Returns surface measurements from all weather stations.
+      operationId: getSurfaceMeasurements
+      tags:
+        - surface-measurements
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getSurfaceMeasurements } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getSurfaceMeasurements,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurfaceMeasurementsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 131 total)
+                  value:
+                    - {}
+                    - _note: ... 130 more items
+  /Scanweb/SubSurfaceMeasurements:
+    get:
+      summary: Returns array of SubSurfaceMeasurements for all weather stations statewide.
+      operationId: getSubSurfaceMeasurements
+      tags:
+        - sub-surface-measurements
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getSubSurfaceMeasurements } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getSubSurfaceMeasurements,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubSurfaceMeasurementsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 131 total)
+                  value:
+                    - {}
+                    - _note: ... 130 more items
   /Scanweb:
     get:
       summary: Returns current weather readings from all weather stations.
@@ -286,103 +354,35 @@ paths:
                       Latitude: 47.427
                       Longitude: -121.418
                       Elevation: 876
-                      ReadingTime: 2025-11-06T06:48:33.000Z
-                      AirTemperature: 5.7
+                      ReadingTime: 2025-11-06T07:58:33.000Z
+                      AirTemperature: 5.6
                       RelativeHumidty: 98
-                      AverageWindSpeed: 10
+                      AverageWindSpeed: 9
                       AverageWindDirection: 140
                       WindGust: 16
                       Visibility: 2000
-                      PrecipitationIntensity: 10
+                      PrecipitationIntensity: 3
                       PrecipitationType: 2
-                      PrecipitationPast1Hour: null
-                      PrecipitationPast3Hours: 1.9
-                      PrecipitationPast6Hours: 3.4
-                      PrecipitationPast12Hours: 5.4
-                      PrecipitationPast24Hours: 10
+                      PrecipitationPast1Hour: 0.9
+                      PrecipitationPast3Hours: 1.8
+                      PrecipitationPast6Hours: 4.1
+                      PrecipitationPast12Hours: 5
+                      PrecipitationPast24Hours: 11
                       PrecipitationAccumulation: null
                       BarometricPressure: null
                       SnowDepth: null
                       SurfaceMeasurements:
                         - SensorId: 0
-                          SurfaceTemperature: 7.2
+                          SurfaceTemperature: 6.5
                           RoadFreezingTemperature: null
                           RoadSurfaceCondition: 104
                         - SensorId: 1
-                          SurfaceTemperature: 6.2
+                          SurfaceTemperature: 5.9
                           RoadFreezingTemperature: null
                           RoadSurfaceCondition: 105
                       SubSurfaceMeasurements:
                         - SensorId: 0
                           SubSurfaceTemperature: 5.2
-                    - _note: ... 130 more items
-  /Scanweb/SubSurfaceMeasurements:
-    get:
-      summary: Returns array of SubSurfaceMeasurements for all weather stations statewide.
-      operationId: getSubSurfaceMeasurements
-      tags:
-        - sub-surface-measurements
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getSubSurfaceMeasurements } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getSubSurfaceMeasurements,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SubSurfaceMeasurementsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 131 total)
-                  value:
-                    - {}
-                    - _note: ... 130 more items
-  /Scanweb/SurfaceMeasurements:
-    get:
-      summary: Returns surface measurements from all weather stations.
-      operationId: getSurfaceMeasurements
-      tags:
-        - surface-measurements
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getSurfaceMeasurements } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getSurfaceMeasurements,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SurfaceMeasurementsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 131 total)
-                  value:
-                    - {}
                     - _note: ... 130 more items
 webhooks: {}
 tags:

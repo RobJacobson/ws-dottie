@@ -267,6 +267,44 @@ components:
       name: Version
       in: path
 paths:
+  /getTripRatesByVersionAsJson?Version={Version}:
+    get:
+      summary: Returns single TollTripRates item for specific version.
+      operationId: getTripRatesByVersion
+      tags:
+        - toll-trip-rates
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie, getTripRatesByVersion } from 'ws-dottie';
+
+            const data = await fetchDottie({
+              endpoint: getTripRatesByVersion,
+              params: {
+                "Version": 352417
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/TripRatesByVersionInputVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TollTripRatesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    LastUpdated: 0001-01-01T08:00:00.000Z
+                    Trips: null
+                    Version: 0
   /getTollRatesAsJson:
     get:
       summary: Returns multiple TollRate items for all high occupancy toll lanes statewide.
@@ -309,10 +347,10 @@ paths:
                       StartMilepost: 33
                       TravelDirection: S
                       TripName: 099tp03268
-                      CurrentToll: 155
+                      CurrentToll: 280
                       CurrentMessage: null
                       StateRoute: '099'
-                      TimeUpdated: 2025-11-05T22:53:25.764Z
+                      TimeUpdated: 2025-11-06T00:09:53.568Z
                     - _note: ... 83 more items
   /getTollTripInfoAsJson:
     get:
@@ -389,8 +427,8 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    TimeStamp: 2025-11-05T22:47:19.000Z
-                    Version: 372549
+                    TimeStamp: 2025-11-06T00:02:21.000Z
+                    Version: 372567
   /getTollTripRatesAsJson:
     get:
       summary: Returns single TollTripRates item with current pricing and message data.
@@ -421,269 +459,269 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    LastUpdated: 2025-11-05T22:47:22.000Z
+                    LastUpdated: 2025-11-06T00:02:21.000Z
                     Trips:
-                      - Message: $1.50
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 1.5
+                      - Message: $6.90
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.9
+                        TripName: 520tp00422
+                      - Message: $4.90
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 4.9
+                        TripName: 520tp00421
+                      - Message: $4.80
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 4.8
+                        TripName: 099tp03060
+                      - Message: $2.80
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 2.8
+                        TripName: 099tp03268
+                      - Message: $8.50
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 8.5
                         TripName: 405tp02752
-                      - Message: $6.25
-                        MessageUpdateTime: 2025-11-05T22:47:21.000Z
-                        Toll: 6.25
+                      - Message: $9.50
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 9.5
                         TripName: 405tp02526
-                      - Message: $6.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 6
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 15
                         TripName: 405tp02067
-                      - Message: $7.75
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 7.75
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:24.000Z
+                        Toll: 15
                         TripName: 405tp01880
-                      - Message: $5.25
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 5.25
+                      - Message: $14.50
+                        MessageUpdateTime: 2025-11-06T00:02:24.000Z
+                        Toll: 14.5
                         TripName: 405tp01879
-                      - Message: $7.75
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 7.75
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 15
                         TripName: 405tp01587
-                      - Message: $5.75
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 5.75
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 15
                         TripName: 405tp01586
-                      - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 1
+                      - Message: $11.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 11
                         TripName: 405tp01585
-                      - Message: $8.00
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 8
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 15
                         TripName: 405tp01371
-                      - Message: $6.00
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 6
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 15
                         TripName: 405tp01370
-                      - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 1
+                      - Message: $10.00
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 10
                         TripName: 405tp01369
-                      - Message: $8.00
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 8
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 15
                         TripName: 405tp01353
-                      - Message: $5.75
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 5.75
+                      - Message: $15.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 15
                         TripName: 405tp01352
-                      - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 1
+                      - Message: $11.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 11
                         TripName: 405tp01351
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:22.000Z
                         Toll: 1
                         TripName: 405tp01641
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:22.000Z
                         Toll: 1
                         TripName: 405tp01926
-                      - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 1
+                      - Message: $1.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 1.25
                         TripName: 405tp02066
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:21.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
                         Toll: 1
                         TripName: 405tp02161
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:21.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
                         Toll: 1
                         TripName: 405tp02162
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 405tp02250
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 405tp02251
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 405tp02252
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:21.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 6.25
                         TripName: 405tp02612
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:21.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 6.25
                         TripName: 405tp02613
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:21.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:23.000Z
+                        Toll: 6.25
                         TripName: 405tp02614
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.25
                         TripName: 405tp02782
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.25
                         TripName: 405tp02783
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:22.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.25
                         TripName: 405tp02784
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.25
                         TripName: 405tp02896
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.25
                         TripName: 405tp02897
-                      - Message: $2.25
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 2.25
+                      - Message: $6.25
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 6.25
                         TripName: 405tp02898
-                      - Message: $5.95
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 5.95
-                        TripName: 520tp00422
-                      - Message: $3.95
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 3.95
-                        TripName: 520tp00421
-                      - Message: $3.55
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 3.55
-                        TripName: 099tp03060
-                      - Message: $1.55
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
-                        Toll: 1.55
-                        TripName: 099tp03268
                       - Message: $3.80
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 3.8
                         TripName: 509tp02050
                       - Message: $1.80
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1.8
                         TripName: 509tp02051
-                      - Message: $3.80
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 3.8
+                      - Message: $4.40
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 4.4
                         TripName: 509tp02093
-                      - Message: $1.80
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 1.8
+                      - Message: $2.40
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 2.4
                         TripName: 509tp02092
-                      - Message: $4.50
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 4.5
-                        TripName: 167tp01320
-                      - Message: $4.50
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 4.5
-                        TripName: 167tp01559
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 1
-                        TripName: 167tp01736
-                      - Message: $4.50
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 4.5
-                        TripName: 167tp01737
-                      - Message: $1.50
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 1.5
-                        TripName: 167tp01886
-                      - Message: $6.25
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 6.25
-                        TripName: 167tp01887
-                      - Message: $3.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 3
-                        TripName: 167tp02027
-                      - Message: $7.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 7
-                        TripName: 167tp02028
-                      - Message: $6.75
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 6.75
-                        TripName: 167tp02194
-                      - Message: $7.25
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 7.25
-                        TripName: 167tp02195
-                      - Message: $7.75
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
-                        Toll: 7.75
-                        TripName: 167tp02196
-                      - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp02260
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp02174
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:19.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01885
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01654
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01653
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01476
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01475
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01284
                       - Message: $1.00
-                        MessageUpdateTime: 2025-11-05T22:47:20.000Z
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
                         Toll: 1
                         TripName: 167tp01283
                       - Message: ''
-                        MessageUpdateTime: 2025-11-05T22:50:47.277Z
+                        MessageUpdateTime: 2025-11-06T00:05:45.453Z
                         Toll: 0
                         TripName: 167tp01102
                       - Message: ''
-                        MessageUpdateTime: 2025-11-05T22:50:47.277Z
+                        MessageUpdateTime: 2025-11-06T00:05:45.453Z
                         Toll: 0
                         TripName: 167tp01101
                       - Message: ''
-                        MessageUpdateTime: 2025-11-05T22:50:47.277Z
+                        MessageUpdateTime: 2025-11-06T00:05:45.453Z
                         Toll: 0
                         TripName: 167tp01100
                       - Message: ''
-                        MessageUpdateTime: 2025-11-05T22:50:47.277Z
+                        MessageUpdateTime: 2025-11-06T00:05:45.453Z
                         Toll: 0
                         TripName: 167tp00793
                       - Message: ''
-                        MessageUpdateTime: 2025-11-05T22:50:47.277Z
+                        MessageUpdateTime: 2025-11-06T00:05:45.453Z
                         Toll: 0
                         TripName: 167tp00792
                       - Message: ''
-                        MessageUpdateTime: 2025-11-05T22:50:47.277Z
+                        MessageUpdateTime: 2025-11-06T00:05:45.453Z
                         Toll: 0
                         TripName: 167tp00791
-                    Version: 372549
+                      - Message: $1.50
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 1.5
+                        TripName: 167tp01320
+                      - Message: $1.75
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 1.75
+                        TripName: 167tp01559
+                      - Message: $1.50
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 1.5
+                        TripName: 167tp01736
+                      - Message: $3.75
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 3.75
+                        TripName: 167tp01737
+                      - Message: $4.50
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 4.5
+                        TripName: 167tp01886
+                      - Message: $7.00
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 7
+                        TripName: 167tp01887
+                      - Message: $6.75
+                        MessageUpdateTime: 2025-11-06T00:02:22.000Z
+                        Toll: 6.75
+                        TripName: 167tp02027
+                      - Message: $7.75
+                        MessageUpdateTime: 2025-11-06T00:02:22.000Z
+                        Toll: 7.75
+                        TripName: 167tp02028
+                      - Message: $9.50
+                        MessageUpdateTime: 2025-11-06T00:02:21.000Z
+                        Toll: 9.5
+                        TripName: 167tp02194
+                      - Message: $10.75
+                        MessageUpdateTime: 2025-11-06T00:02:22.000Z
+                        Toll: 10.75
+                        TripName: 167tp02195
+                      - Message: $10.75
+                        MessageUpdateTime: 2025-11-06T00:02:22.000Z
+                        Toll: 10.75
+                        TripName: 167tp02196
+                    Version: 372567
   /getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}:
     get:
       summary: Returns multiple TollTripRates items for specified date range.
@@ -698,8 +736,8 @@ paths:
             const data = await fetchDottie({
               endpoint: getTripRatesByDate,
               params: {
-                "FromDate": "2025-11-04",
-                "ToDate": "2025-11-05"
+                "FromDate": "2025-11-05",
+                "ToDate": "2025-11-06"
               },
               fetchMode: 'native',
               validate: true
@@ -723,308 +761,270 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 13 total)
                   value:
-                    - LastUpdated: 2025-11-04T08:58:34.000Z
+                    - LastUpdated: 2025-11-05T08:58:05.000Z
                       Trips:
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01351
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01352
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01353
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01370
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01371
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp01585
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp01586
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp01587
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp01879
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp01880
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp02067
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02526
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02752
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02898
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02897
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02896
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:10.000Z
-                          Toll: 0
-                          TripName: 405tp02784
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:10.000Z
-                          Toll: 0
-                          TripName: 405tp02783
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:10.000Z
-                          Toll: 0
-                          TripName: 405tp02782
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02614
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02613
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 405tp02612
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp02252
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp02251
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp02250
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:10.000Z
-                          Toll: 0
-                          TripName: 405tp02162
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:10.000Z
-                          Toll: 0
-                          TripName: 405tp02161
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp02066
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01926
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01641
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:09.000Z
-                          Toll: 0
-                          TripName: 405tp01369
                         - Message: $3.35
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 3.35
                           TripName: 520tp00422
                         - Message: $1.35
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 1.35
                           TripName: 520tp00421
                         - Message: $3.25
-                          MessageUpdateTime: 2025-11-04T08:58:07.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 3.25
                           TripName: 099tp03060
                         - Message: $1.25
-                          MessageUpdateTime: 2025-11-04T08:58:07.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 1.25
                           TripName: 099tp03268
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp01351
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp01352
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp01353
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp01370
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp01371
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 405tp01585
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 405tp01586
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 405tp01587
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp01879
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp01880
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp02067
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp02526
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02752
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp01369
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 405tp02898
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 405tp02897
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 405tp02896
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp02784
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp02783
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:42.000Z
+                          Toll: 0
+                          TripName: 405tp02782
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02614
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02613
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02612
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:41.000Z
+                          Toll: 0
+                          TripName: 405tp02252
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:41.000Z
+                          Toll: 0
+                          TripName: 405tp02251
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:41.000Z
+                          Toll: 0
+                          TripName: 405tp02250
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02162
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02161
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp02066
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:41.000Z
+                          Toll: 0
+                          TripName: 405tp01926
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 405tp01641
                         - Message: $3.20
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 3.2
                           TripName: 509tp02050
                         - Message: $1.20
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 1.2
                           TripName: 509tp02051
                         - Message: $3.20
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 3.2
                           TripName: 509tp02093
                         - Message: $1.20
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 1.2
                           TripName: 509tp02092
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp02194
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp02195
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp02196
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp02027
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp02028
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp01886
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp01887
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp01736
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp01737
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp01559
-                        - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
-                          Toll: 0
-                          TripName: 167tp01320
                         - Message: ''
-                          MessageUpdateTime: 2025-11-04T09:00:47.670Z
+                          MessageUpdateTime: 2025-11-05T09:00:46.747Z
                           Toll: 0
                           TripName: 167tp00791
                         - Message: ''
-                          MessageUpdateTime: 2025-11-04T09:00:47.670Z
+                          MessageUpdateTime: 2025-11-05T09:00:46.747Z
                           Toll: 0
                           TripName: 167tp00792
                         - Message: ''
-                          MessageUpdateTime: 2025-11-04T09:00:47.670Z
+                          MessageUpdateTime: 2025-11-05T09:00:46.747Z
                           Toll: 0
                           TripName: 167tp00793
                         - Message: ''
-                          MessageUpdateTime: 2025-11-04T09:00:47.670Z
+                          MessageUpdateTime: 2025-11-05T09:00:46.747Z
                           Toll: 0
                           TripName: 167tp01100
                         - Message: ''
-                          MessageUpdateTime: 2025-11-04T09:00:47.670Z
+                          MessageUpdateTime: 2025-11-05T09:00:46.747Z
                           Toll: 0
                           TripName: 167tp01101
                         - Message: ''
-                          MessageUpdateTime: 2025-11-04T09:00:47.670Z
+                          MessageUpdateTime: 2025-11-05T09:00:46.747Z
                           Toll: 0
                           TripName: 167tp01102
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp01283
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp01284
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp01475
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:16.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp01476
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp01653
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp01654
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 0
                           TripName: 167tp01885
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
                           Toll: 0
                           TripName: 167tp02174
                         - Message: FREE
-                          MessageUpdateTime: 2025-11-04T08:58:08.000Z
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
                           Toll: 0
                           TripName: 167tp02260
-                      Version: 372022
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp02194
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:48.000Z
+                          Toll: 0
+                          TripName: 167tp02195
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 167tp02196
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp02027
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp02028
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp01886
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp01887
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 167tp01736
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:40.000Z
+                          Toll: 0
+                          TripName: 167tp01737
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp01559
+                        - Message: FREE
+                          MessageUpdateTime: 2025-11-05T08:57:39.000Z
+                          Toll: 0
+                          TripName: 167tp01320
+                      Version: 372357
                     - _note: ... 12 more items
-  /getTripRatesByVersionAsJson?Version={Version}:
-    get:
-      summary: Returns single TollTripRates item for specific version.
-      operationId: getTripRatesByVersion
-      tags:
-        - toll-trip-rates
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getTripRatesByVersion } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getTripRatesByVersion,
-              params: {
-                "Version": 352417
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/TripRatesByVersionInputVersionParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TollTripRatesOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    LastUpdated: 0001-01-01T08:00:00.000Z
-                    Trips: null
-                    Version: 0
 webhooks: {}
 tags:
   - name: toll-rates

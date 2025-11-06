@@ -218,21 +218,21 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    BarometricPressure: 947.1
+                    BarometricPressure: 947.9
                     Latitude: 47.4748
                     Longitude: -122.2704
                     PrecipitationInInches: null
-                    ReadingTime: 2025-11-05T22:45:00.000Z
-                    RelativeHumidity: 87
+                    ReadingTime: 2025-11-05T23:45:00.000Z
+                    RelativeHumidity: 99
                     SkyCoverage: N/A
                     StationID: 1909
                     StationName: S 144th St on SB I-5 at mp 155.32
-                    TemperatureInFahrenheit: 57.92
+                    TemperatureInFahrenheit: 52.16
                     Visibility: 1
                     WindDirection: 180
                     WindDirectionCardinal: S
-                    WindGustSpeedInMPH: 11
-                    WindSpeedInMPH: 2
+                    WindGustSpeedInMPH: 13
+                    WindSpeedInMPH: 4
   /GetCurrentWeatherForStationsAsJson?StationList={StationList}:
     get:
       summary: Returns multiple WeatherInfo for specified stations.
@@ -270,21 +270,21 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 3 total)
                   value:
-                    - BarometricPressure: 947.1
+                    - BarometricPressure: 947.9
                       Latitude: 47.4748
                       Longitude: -122.2704
                       PrecipitationInInches: null
-                      ReadingTime: 2025-11-05T22:45:00.000Z
-                      RelativeHumidity: 87
+                      ReadingTime: 2025-11-05T23:45:00.000Z
+                      RelativeHumidity: 99
                       SkyCoverage: N/A
                       StationID: 1909
                       StationName: S 144th St on SB I-5 at mp 155.32
-                      TemperatureInFahrenheit: 57.92
+                      TemperatureInFahrenheit: 52.16
                       Visibility: 1
                       WindDirection: 180
                       WindDirectionCardinal: S
-                      WindGustSpeedInMPH: 11
-                      WindSpeedInMPH: 2
+                      WindGustSpeedInMPH: 13
+                      WindSpeedInMPH: 4
                     - _note: ... 2 more items
   /SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}:
     get:
@@ -301,8 +301,8 @@ paths:
               endpoint: searchWeatherInformation,
               params: {
                 "StationID": 1980,
-                "SearchStartTime": "2025-11-04T00:00:00.000Z",
-                "SearchEndTime": "2025-11-05T23:59:59.000Z"
+                "SearchStartTime": "2025-11-05T00:00:00.000Z",
+                "SearchEndTime": "2025-11-06T23:59:59.000Z"
               },
               fetchMode: 'native',
               validate: true
@@ -325,24 +325,24 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 96 total)
+                  description: Example of a successful response from the API (showing first item of 63 total)
                   value:
                     - BarometricPressure: null
                       Latitude: 47.078
                       Longitude: -120.724
                       PrecipitationInInches: null
-                      ReadingTime: 2025-11-04T23:00:00.000Z
-                      RelativeHumidity: 83
+                      ReadingTime: 2025-11-05T08:15:00.000Z
+                      RelativeHumidity: 95
                       SkyCoverage: N/A
                       StationID: 1980
                       StationName: Rocky Canyon on I-90 at mp 95.74
-                      TemperatureInFahrenheit: 42.08
+                      TemperatureInFahrenheit: 40.1
                       Visibility: 1
-                      WindDirection: 65
-                      WindDirectionCardinal: ENE
-                      WindGustSpeedInMPH: 8
-                      WindSpeedInMPH: 6
-                    - _note: ... 95 more items
+                      WindDirection: 260
+                      WindDirectionCardinal: W
+                      WindGustSpeedInMPH: 6
+                      WindSpeedInMPH: 2
+                    - _note: ... 62 more items
   /GetCurrentWeatherInformationAsJson:
     get:
       summary: Returns multiple WeatherInfo items for all stations.
@@ -373,24 +373,24 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 99 total)
+                  description: Example of a successful response from the API (showing first item of 98 total)
                   value:
-                    - BarometricPressure: 947.1
+                    - BarometricPressure: 947.9
                       Latitude: 47.4748
                       Longitude: -122.2704
                       PrecipitationInInches: null
-                      ReadingTime: 2025-11-05T22:45:00.000Z
-                      RelativeHumidity: 87
+                      ReadingTime: 2025-11-05T23:45:00.000Z
+                      RelativeHumidity: 99
                       SkyCoverage: N/A
                       StationID: 1909
                       StationName: S 144th St on SB I-5 at mp 155.32
-                      TemperatureInFahrenheit: 57.92
+                      TemperatureInFahrenheit: 52.16
                       Visibility: 1
                       WindDirection: 180
                       WindDirectionCardinal: S
-                      WindGustSpeedInMPH: 11
-                      WindSpeedInMPH: 2
-                    - _note: ... 98 more items
+                      WindGustSpeedInMPH: 13
+                      WindSpeedInMPH: 4
+                    - _note: ... 97 more items
 webhooks: {}
 tags:
   - name: weather-info

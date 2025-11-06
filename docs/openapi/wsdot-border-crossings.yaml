@@ -141,7 +141,7 @@ paths:
                         MilePost: 0
                         RoadName: '005'
                       CrossingName: I5
-                      Time: 2025-11-05T22:50:00.000Z
+                      Time: 2025-11-06T00:05:00.000Z
                       WaitTime: 5
                     - _note: ... 10 more items
 webhooks: {}
