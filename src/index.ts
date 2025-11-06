@@ -24,14 +24,13 @@ export * from "./apis";
 // ESSENTIAL SHARED UTILITIES
 // ============================================================================
 
-// Export only essential shared utilities needed by consumers
-export {
-  datesHelper,
-  jsDateToYyyyMmDd,
-} from "./shared";
-
 // Export error types for error handling
 export type {
   ApiError,
   ErrorContext,
+} from "./shared";
+// Export only essential shared utilities needed by consumers
+export {
+  datesHelper,
+  jsDateToYyyyMmDd,
 } from "./shared";
