@@ -1,6 +1,8 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import * as i from "./cacheFlushDate.input";
-import * as o from "./cacheFlushDate.output";
+import type { CacheFlushDateInput } from "./cacheFlushDate.input";
+import { cacheFlushDateInputSchema } from "./cacheFlushDate.input";
+import type { FaresCacheFlushDate } from "./cacheFlushDate.output";
+import { cacheFlushDateSchema } from "./cacheFlushDate.output";
 
 const RESOURCE_DESCRIPTION =
   "Each CacheFlushDate item represents the timestamp when Washington State Ferries fare data was last updated in the system. This information helps applications determine when to refresh cached fare information.";
@@ -22,14 +24,11 @@ export const cacheFlushDateGroup = {
     getCacheFlushDate: {
       function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: i.cacheFlushDateInputSchema,
-      outputSchema: o.cacheFlushDateSchema,
+      inputSchema: cacheFlushDateInputSchema,
+      outputSchema: cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
       description: ENDPOINT_DESCRIPTION,
-    } satisfies EndpointDefinition<
-      i.CacheFlushDateInput,
-      o.FaresCacheFlushDate
-    >,
+    } satisfies EndpointDefinition<CacheFlushDateInput, FaresCacheFlushDate>,
   },
 } satisfies EndpointGroup;

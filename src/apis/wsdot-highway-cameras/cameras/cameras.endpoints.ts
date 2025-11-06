@@ -1,14 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
+import type {
+  HighwayCameraByCameraIdInput,
+  HighwayCamerasByRouteAndMilepostInput,
+  HighwayCamerasInput,
+} from "./cameras.input";
 import {
-  type HighwayCameraByCameraIdInput,
-  type HighwayCamerasByRouteAndMilepostInput,
-  type HighwayCamerasInput,
   highwayCameraByCameraIdInputSchema,
   highwayCamerasByRouteAndMilepostInputSchema,
   highwayCamerasInputSchema,
 } from "./cameras.input";
-import { type Camera, cameraSchema } from "./cameras.output";
+import type { Camera } from "./cameras.output";
+import { cameraSchema } from "./cameras.output";
 
 export const camerasGroup = {
   name: "cameras",
@@ -41,7 +44,10 @@ export const camerasGroup = {
       },
       endpointDescription:
         "Returns multiple Camera items for specified route and milepost range.",
-    } satisfies EndpointDefinition<HighwayCamerasByRouteAndMilepostInput, Camera[]>,
+    } satisfies EndpointDefinition<
+      HighwayCamerasByRouteAndMilepostInput,
+      Camera[]
+    >,
     getHighwayCameraByCameraId: {
       function: "getHighwayCameraByCameraId",
       endpoint: "/getCameraAsJson?CameraID={CameraID}",

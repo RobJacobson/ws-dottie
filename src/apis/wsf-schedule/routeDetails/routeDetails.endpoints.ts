@@ -1,8 +1,18 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./routeDetails.input";
-import * as o from "./routeDetails.output";
+import type {
+  RouteDetailsByTripDateAndRouteIdInput,
+  RouteDetailsByTripDateAndTerminalsInput,
+  RouteDetailsByTripDateInput,
+} from "./routeDetails.input";
+import {
+  routeDetailsByTripDateAndRouteIdInputSchema,
+  routeDetailsByTripDateAndTerminalsInputSchema,
+  routeDetailsByTripDateInputSchema,
+} from "./routeDetails.input";
+import type { RouteDetail } from "./routeDetails.output";
+import { routeDetailSchema } from "./routeDetails.output";
 
 export const routeDetailsResource = {
   name: "route-details",
@@ -17,33 +27,30 @@ export const routeDetailsResource = {
     getRouteDetailsByTripDate: {
       function: "getRouteDetailsByTripDate",
       endpoint: "/routedetails/{TripDate}",
-      inputSchema: i.routeDetailsByTripDateInputSchema,
-      outputSchema: z.array(o.routeDetailSchema),
+      inputSchema: routeDetailsByTripDateInputSchema,
+      outputSchema: z.array(routeDetailSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns multiple of RouteDetails for specified date.",
-    } satisfies EndpointDefinition<
-      i.RouteDetailsByTripDateInput,
-      o.RouteDetail[]
-    >,
+    } satisfies EndpointDefinition<RouteDetailsByTripDateInput, RouteDetail[]>,
     getRouteDetailsByTripDateAndRouteId: {
       function: "getRouteDetailsByTripDateAndRouteId",
       endpoint: "/routedetails/{TripDate}/{RouteID}",
-      inputSchema: i.routeDetailsByTripDateAndRouteIdInputSchema,
-      outputSchema: o.routeDetailSchema,
+      inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
+      outputSchema: routeDetailSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
       endpointDescription:
         "Returns single of RouteDetails for specified route.",
     } satisfies EndpointDefinition<
-      i.RouteDetailsByTripDateAndRouteIdInput,
-      o.RouteDetail
+      RouteDetailsByTripDateAndRouteIdInput,
+      RouteDetail
     >,
     getRouteDetailsByTripDateAndTerminals: {
       function: "getRouteDetailsByTripDateAndTerminals",
       endpoint:
         "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.routeDetailsByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(o.routeDetailSchema),
+      inputSchema: routeDetailsByTripDateAndTerminalsInputSchema,
+      outputSchema: z.array(routeDetailSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -52,8 +59,8 @@ export const routeDetailsResource = {
       endpointDescription:
         "Returns multiple of RouteDetails for terminal pair.",
     } satisfies EndpointDefinition<
-      i.RouteDetailsByTripDateAndTerminalsInput,
-      o.RouteDetail[]
+      RouteDetailsByTripDateAndTerminalsInput,
+      RouteDetail[]
     >,
   },
 } satisfies EndpointGroup;

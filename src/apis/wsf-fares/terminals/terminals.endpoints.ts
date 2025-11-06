@@ -1,8 +1,16 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminals.input";
-import * as o from "./terminals.output";
+import type {
+  FaresTerminalsInput,
+  TerminalMatesInput,
+} from "./terminals.input";
+import {
+  faresTerminalsInputSchema,
+  terminalMatesInputSchema,
+} from "./terminals.input";
+import type { Terminal } from "./terminals.output";
+import { terminalSchema } from "./terminals.output";
 
 export const terminalsGroup = {
   name: "terminals",
@@ -17,20 +25,20 @@ export const terminalsGroup = {
     getFaresTerminals: {
       function: "getFaresTerminals",
       endpoint: "/terminals/{TripDate}",
-      inputSchema: i.faresTerminalsInputSchema,
-      outputSchema: z.array(o.terminalSchema),
+      inputSchema: faresTerminalsInputSchema,
+      outputSchema: z.array(terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns a list of valid departing terminals for the specified trip date.",
-    } satisfies EndpointDefinition<i.FaresTerminalsInput, o.Terminal[]>,
+    } satisfies EndpointDefinition<FaresTerminalsInput, Terminal[]>,
     getTerminalMates: {
       function: "getTerminalMates",
       endpoint: "/terminalMates/{TripDate}/{TerminalID}",
-      inputSchema: i.terminalMatesInputSchema,
-      outputSchema: z.array(o.terminalSchema),
+      inputSchema: terminalMatesInputSchema,
+      outputSchema: z.array(terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
         "Returns arriving terminals for the given departing terminal and trip date.",
-    } satisfies EndpointDefinition<i.TerminalMatesInput, o.Terminal[]>,
+    } satisfies EndpointDefinition<TerminalMatesInput, Terminal[]>,
   },
 } satisfies EndpointGroup;

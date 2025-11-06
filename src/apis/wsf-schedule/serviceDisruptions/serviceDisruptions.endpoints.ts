@@ -1,8 +1,10 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./serviceDisruptions.input";
-import * as o from "./serviceDisruptions.output";
+import type { RoutesHavingServiceDisruptionsByTripDateInput } from "./serviceDisruptions.input";
+import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
+import type { ServiceDisruption } from "./serviceDisruptions.output";
+import { serviceDisruptionSchema } from "./serviceDisruptions.output";
 
 export const serviceDisruptionsResource = {
   name: "service-disruptions",
@@ -17,14 +19,14 @@ export const serviceDisruptionsResource = {
     getRoutesHavingServiceDisruptionsByTripDate: {
       function: "getRoutesHavingServiceDisruptionsByTripDate",
       endpoint: "/routeshavingservicedisruptions/{TripDate}",
-      inputSchema: i.routesHavingServiceDisruptionsByTripDateInputSchema,
-      outputSchema: z.array(o.serviceDisruptionSchema),
+      inputSchema: routesHavingServiceDisruptionsByTripDateInputSchema,
+      outputSchema: z.array(serviceDisruptionSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns multiple of ServiceDisruption for specified trip date.",
     } satisfies EndpointDefinition<
-      i.RoutesHavingServiceDisruptionsByTripDateInput,
-      o.ServiceDisruption[]
+      RoutesHavingServiceDisruptionsByTripDateInput,
+      ServiceDisruption[]
     >,
   },
 } satisfies EndpointGroup;

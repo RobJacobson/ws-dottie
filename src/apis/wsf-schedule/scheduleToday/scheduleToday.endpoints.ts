@@ -1,6 +1,14 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import * as i from "./scheduleToday.input";
-import * as o from "./scheduleToday.output";
+import type {
+  ScheduleTodayByRouteInput,
+  ScheduleTodayByTerminalsInput,
+} from "./scheduleToday.input";
+import {
+  scheduleTodayByRouteSchema,
+  scheduleTodayByTerminalsInputSchema,
+} from "./scheduleToday.input";
+import type { Schedule } from "./scheduleToday.output";
+import { scheduleSchema } from "./scheduleToday.output";
 
 export const scheduleTodayResource = {
   name: "schedule-today",
@@ -14,17 +22,17 @@ export const scheduleTodayResource = {
     getScheduleTodayByRoute: {
       function: "getScheduleTodayByRoute",
       endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
-      inputSchema: i.scheduleTodayByRouteSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleTodayByRouteSchema,
+      outputSchema: scheduleSchema,
       sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
       endpointDescription: "Returns today's schedule for the specified route.",
-    } satisfies EndpointDefinition<i.ScheduleTodayByRouteInput, o.Schedule>,
+    } satisfies EndpointDefinition<ScheduleTodayByRouteInput, Schedule>,
     getScheduleTodayByTerminals: {
       function: "getScheduleTodayByTerminals",
       endpoint:
         "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
-      inputSchema: i.scheduleTodayByTerminalsInputSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleTodayByTerminalsInputSchema,
+      outputSchema: scheduleSchema,
       sampleParams: {
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
@@ -32,6 +40,6 @@ export const scheduleTodayResource = {
       },
       endpointDescription:
         "Returns today's schedule for the specified terminal pair.",
-    } satisfies EndpointDefinition<i.ScheduleTodayByTerminalsInput, o.Schedule>,
+    } satisfies EndpointDefinition<ScheduleTodayByTerminalsInput, Schedule>,
   },
 } satisfies EndpointGroup;

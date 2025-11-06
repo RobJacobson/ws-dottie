@@ -1,7 +1,9 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./tollTripInfo.input";
-import * as o from "./tollTripInfo.output";
+import type { TollTripInfoInput } from "./tollTripInfo.input";
+import { tollTripInfoInputSchema } from "./tollTripInfo.input";
+import type { TollTripInfo } from "./tollTripInfo.output";
+import { tollTripInfoSchema } from "./tollTripInfo.output";
 
 export const tollTripInfoResource = {
   name: "toll-trip-info",
@@ -15,10 +17,10 @@ export const tollTripInfoResource = {
     getTollTripInfo: {
       function: "getTollTripInfo",
       endpoint: "/getTollTripInfoAsJson",
-      inputSchema: i.tollTripInfoInputSchema,
-      outputSchema: z.array(o.tollTripInfoSchema),
+      inputSchema: tollTripInfoInputSchema,
+      outputSchema: z.array(tollTripInfoSchema),
       sampleParams: {},
       endpointDescription: "Returns trip information for all toll trips.",
-    } satisfies EndpointDefinition<i.TollTripInfoInput, o.TollTripInfo[]>,
+    } satisfies EndpointDefinition<TollTripInfoInput, TollTripInfo[]>,
   },
 } satisfies EndpointGroup;

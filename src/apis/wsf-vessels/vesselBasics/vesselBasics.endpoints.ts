@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselBasics.input";
-import * as o from "./vesselBasics.output";
+import type {
+  VesselBasicsByIdInput,
+  VesselBasicsInput,
+} from "./vesselBasics.input";
+import {
+  vesselBasicsByIdInputSchema,
+  vesselBasicsInputSchema,
+} from "./vesselBasics.input";
+import type { VesselBasic } from "./vesselBasics.output";
+import { vesselBasicSchema } from "./vesselBasics.output";
 
 export const vesselBasicsResource = {
   name: "vessel-basics",
@@ -16,20 +24,20 @@ export const vesselBasicsResource = {
     getVesselBasics: {
       function: "getVesselBasics",
       endpoint: "/vesselBasics",
-      inputSchema: i.vesselBasicsInputSchema,
-      outputSchema: z.array(o.vesselBasicSchema),
+      inputSchema: vesselBasicsInputSchema,
+      outputSchema: z.array(vesselBasicSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselBasic objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselBasicsInput, o.VesselBasic[]>,
+    } satisfies EndpointDefinition<VesselBasicsInput, VesselBasic[]>,
     getVesselBasicsByVesselId: {
       function: "getVesselBasicsByVesselId",
       endpoint: "/vesselBasics/{VesselID}",
-      inputSchema: i.vesselBasicsByIdInputSchema,
-      outputSchema: o.vesselBasicSchema,
+      inputSchema: vesselBasicsByIdInputSchema,
+      outputSchema: vesselBasicSchema,
       sampleParams: { VesselID: 74 },
       endpointDescription:
         "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
-    } satisfies EndpointDefinition<i.VesselBasicsByIdInput, o.VesselBasic>,
+    } satisfies EndpointDefinition<VesselBasicsByIdInput, VesselBasic>,
   },
 } satisfies EndpointGroup;

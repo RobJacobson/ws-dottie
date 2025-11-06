@@ -1,13 +1,9 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import {
-  type BorderCrossingsInput,
-  borderCrossingsInputSchema,
-} from "./borderCrossingData.input";
-import {
-  type BorderCrossing,
-  borderCrossingSchema,
-} from "./borderCrossingData.output";
+import type { BorderCrossingsInput } from "./borderCrossingData.input";
+import { borderCrossingsInputSchema } from "./borderCrossingData.input";
+import type { BorderCrossing } from "./borderCrossingData.output";
+import { borderCrossingSchema } from "./borderCrossingData.output";
 
 export const borderCrossingDataResource = {
   name: "border-crossing-data",

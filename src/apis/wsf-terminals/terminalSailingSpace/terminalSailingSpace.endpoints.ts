@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalSailingSpace.input";
-import * as o from "./terminalSailingSpace.output";
+import type {
+  TerminalSailingSpaceByTerminalIdInput,
+  TerminalSailingSpaceInput,
+} from "./terminalSailingSpace.input";
+import {
+  terminalSailingSpaceByTerminalIdInputSchema,
+  terminalSailingSpaceInputSchema,
+} from "./terminalSailingSpace.input";
+import type { TerminalSailingSpace } from "./terminalSailingSpace.output";
+import { terminalSailingSpaceSchema } from "./terminalSailingSpace.output";
 
 export const terminalSailingSpaceResource = {
   name: "terminal-sailing-space",
@@ -15,26 +23,26 @@ export const terminalSailingSpaceResource = {
     getTerminalSailingSpace: {
       function: "getTerminalSailingSpace",
       endpoint: "/terminalSailingSpace",
-      inputSchema: i.terminalSailingSpaceInputSchema,
-      outputSchema: z.array(o.terminalSailingSpaceSchema),
+      inputSchema: terminalSailingSpaceInputSchema,
+      outputSchema: z.array(terminalSailingSpaceSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalSailingSpace objects for all terminals.",
     } satisfies EndpointDefinition<
-      i.TerminalSailingSpaceInput,
-      o.TerminalSailingSpace[]
+      TerminalSailingSpaceInput,
+      TerminalSailingSpace[]
     >,
     getTerminalSailingSpaceByTerminalId: {
       function: "getTerminalSailingSpaceByTerminalId",
       endpoint: "/terminalSailingSpace/{TerminalID}",
-      inputSchema: i.terminalSailingSpaceByTerminalIdInputSchema,
-      outputSchema: o.terminalSailingSpaceSchema,
+      inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
+      outputSchema: terminalSailingSpaceSchema,
       sampleParams: { TerminalID: 7 },
       endpointDescription:
         "Returns TerminalSailingSpace data for the terminal with the given identifier.",
     } satisfies EndpointDefinition<
-      i.TerminalSailingSpaceByTerminalIdInput,
-      o.TerminalSailingSpace
+      TerminalSailingSpaceByTerminalIdInput,
+      TerminalSailingSpace
     >,
   },
 } satisfies EndpointGroup;

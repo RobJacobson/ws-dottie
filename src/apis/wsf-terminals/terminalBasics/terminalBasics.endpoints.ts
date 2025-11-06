@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalBasics.input";
-import * as o from "./terminalBasics.output";
+import type {
+  TerminalBasicsByIdInput,
+  TerminalBasicsInput,
+} from "./terminalBasics.input";
+import {
+  terminalBasicsByIdInputSchema,
+  terminalBasicsInputSchema,
+} from "./terminalBasics.input";
+import type { TerminalBasic } from "./terminalBasics.output";
+import { terminalBasicSchema } from "./terminalBasics.output";
 
 export const terminalBasicsResource = {
   name: "terminal-basics",
@@ -16,20 +24,20 @@ export const terminalBasicsResource = {
     getTerminalBasics: {
       function: "getTerminalBasics",
       endpoint: "/terminalBasics",
-      inputSchema: i.terminalBasicsInputSchema,
-      outputSchema: z.array(o.terminalBasicSchema),
+      inputSchema: terminalBasicsInputSchema,
+      outputSchema: z.array(terminalBasicSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalBasic objects for all terminals.",
-    } satisfies EndpointDefinition<i.TerminalBasicsInput, o.TerminalBasic[]>,
+    } satisfies EndpointDefinition<TerminalBasicsInput, TerminalBasic[]>,
     getTerminalBasicsByTerminalId: {
       function: "getTerminalBasicsByTerminalId",
       endpoint: "/terminalBasics/{TerminalID}",
-      inputSchema: i.terminalBasicsByIdInputSchema,
-      outputSchema: o.terminalBasicSchema,
+      inputSchema: terminalBasicsByIdInputSchema,
+      outputSchema: terminalBasicSchema,
       sampleParams: { TerminalID: 1 },
       endpointDescription:
         "Returns a TerminalBasic object containing essential identification and status information for the specified terminal.",
-    } satisfies EndpointDefinition<i.TerminalBasicsByIdInput, o.TerminalBasic>,
+    } satisfies EndpointDefinition<TerminalBasicsByIdInput, TerminalBasic>,
   },
 } satisfies EndpointGroup;

@@ -1,7 +1,9 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./scheduleAlerts.input";
-import * as o from "./scheduleAlerts.output";
+import type { ScheduleAlertsInput } from "./scheduleAlerts.input";
+import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
+import type { AlertDetail } from "./scheduleAlerts.output";
+import { alertDetailSchema } from "./scheduleAlerts.output";
 
 export const scheduleAlertsResource = {
   name: "schedule-alerts",
@@ -15,10 +17,10 @@ export const scheduleAlertsResource = {
     getScheduleAlerts: {
       function: "getScheduleAlerts",
       endpoint: "/alerts",
-      inputSchema: i.scheduleAlertsInputSchema,
-      outputSchema: z.array(o.alertDetailSchema),
+      inputSchema: scheduleAlertsInputSchema,
+      outputSchema: z.array(alertDetailSchema),
       sampleParams: {},
       endpointDescription: "Returns all current schedule alerts.",
-    } satisfies EndpointDefinition<i.ScheduleAlertsInput, o.AlertDetail[]>,
+    } satisfies EndpointDefinition<ScheduleAlertsInput, AlertDetail[]>,
   },
 } satisfies EndpointGroup;

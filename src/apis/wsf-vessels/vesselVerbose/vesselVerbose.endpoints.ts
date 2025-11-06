@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselVerbose.input";
-import * as o from "./vesselVerbose.output";
+import type {
+  VesselVerboseByIdInput,
+  VesselVerboseInput,
+} from "./vesselVerbose.input";
+import {
+  vesselVerboseByIdInputSchema,
+  vesselVerboseInputSchema,
+} from "./vesselVerbose.input";
+import type { VesselVerbose } from "./vesselVerbose.output";
+import { vesselVerboseSchema } from "./vesselVerbose.output";
 
 export const vesselVerboseResource = {
   name: "vessel-verbose",
@@ -16,20 +24,20 @@ export const vesselVerboseResource = {
     getVesselsVerbose: {
       function: "getVesselsVerbose",
       endpoint: "/vesselVerbose",
-      inputSchema: i.vesselVerboseInputSchema,
-      outputSchema: z.array(o.vesselVerboseSchema),
+      inputSchema: vesselVerboseInputSchema,
+      outputSchema: z.array(vesselVerboseSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselVerbose objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<i.VesselVerboseInput, o.VesselVerbose[]>,
+    } satisfies EndpointDefinition<VesselVerboseInput, VesselVerbose[]>,
     getVesselsVerboseByVesselId: {
       function: "getVesselsVerboseByVesselId",
       endpoint: "/vesselVerbose/{VesselID}",
-      inputSchema: i.vesselVerboseByIdInputSchema,
-      outputSchema: o.vesselVerboseSchema,
+      inputSchema: vesselVerboseByIdInputSchema,
+      outputSchema: vesselVerboseSchema,
       sampleParams: { VesselID: 68 },
       endpointDescription:
         "Returns a single VesselVerbose object for the specified vessel identifier.",
-    } satisfies EndpointDefinition<i.VesselVerboseByIdInput, o.VesselVerbose>,
+    } satisfies EndpointDefinition<VesselVerboseByIdInput, VesselVerbose>,
   },
 } satisfies EndpointGroup;

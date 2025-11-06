@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
+import type {
+  MountainPassConditionByIdInput,
+  MountainPassConditionsInput,
+} from "./passConditions.input";
 import {
-  type MountainPassConditionByIdInput,
-  type MountainPassConditionsInput,
   mountainPassConditionByIdInputSchema,
   mountainPassConditionsInputSchema,
 } from "./passConditions.input";
-import {
-  type PassCondition,
-  passConditionSchema,
-} from "./passConditions.output";
+import type { PassCondition } from "./passConditions.output";
+import { passConditionSchema } from "./passConditions.output";
 
 export const passConditionsGroup = {
   name: "pass-conditions",

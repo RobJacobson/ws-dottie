@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import * as i from "./schedules.input";
-import * as o from "./schedules.output";
+import type {
+  ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
+  ScheduleByTripDateAndRouteIdInput,
+} from "./schedules.input";
+import {
+  scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputSchema,
+  scheduleByTripDateAndRouteIdInputSchema,
+} from "./schedules.input";
+import type { Schedule } from "./schedules.output";
+import { scheduleSchema } from "./schedules.output";
 
 export const schedulesResource = {
   name: "schedules",
@@ -16,21 +24,18 @@ export const schedulesResource = {
     getScheduleByTripDateAndRouteId: {
       function: "getScheduleByTripDateAndRouteId",
       endpoint: "/schedule/{TripDate}/{RouteID}",
-      inputSchema: i.scheduleByTripDateAndRouteIdInputSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleByTripDateAndRouteIdInputSchema,
+      outputSchema: scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
       endpointDescription: "Returns single of Schedules for specified route.",
-    } satisfies EndpointDefinition<
-      i.ScheduleByTripDateAndRouteIdInput,
-      o.Schedule
-    >,
+    } satisfies EndpointDefinition<ScheduleByTripDateAndRouteIdInput, Schedule>,
     getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
       function: "getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema:
-        i.scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputSchema,
-      outputSchema: o.scheduleSchema,
+        scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputSchema,
+      outputSchema: scheduleSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -38,8 +43,8 @@ export const schedulesResource = {
       },
       endpointDescription: "Returns single of Schedules for terminal pair.",
     } satisfies EndpointDefinition<
-      i.ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
-      o.Schedule
+      ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
+      Schedule
     >,
   },
 } satisfies EndpointGroup;

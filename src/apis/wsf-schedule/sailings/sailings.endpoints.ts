@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./sailings.input";
-import * as o from "./sailings.output";
+import type {
+  AllSailingsBySchedRouteIDInput,
+  SailingsByRouteIDInput,
+} from "./sailings.input";
+import {
+  allSailingsBySchedRouteIDInputSchema,
+  sailingsByRouteIDInputSchema,
+} from "./sailings.input";
+import type { Sailing } from "./sailings.output";
+import { sailingSchema } from "./sailings.output";
 
 export const sailingsResource = {
   name: "sailings",
@@ -16,23 +24,20 @@ export const sailingsResource = {
     getAllSailingsBySchedRouteID: {
       function: "getSailingsBySchedRouteID",
       endpoint: "/allsailings/{SchedRouteID}",
-      inputSchema: i.allSailingsBySchedRouteIDInputSchema,
-      outputSchema: z.array(o.sailingSchema),
+      inputSchema: allSailingsBySchedRouteIDInputSchema,
+      outputSchema: z.array(sailingSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns all sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<
-      i.AllSailingsBySchedRouteIDInput,
-      o.Sailing[]
-    >,
+    } satisfies EndpointDefinition<AllSailingsBySchedRouteIDInput, Sailing[]>,
     getSailingsByRouteID: {
       function: "getSailingsBySchedRouteID",
       endpoint: "/sailings/{SchedRouteID}",
-      inputSchema: i.sailingsByRouteIDInputSchema,
-      outputSchema: z.array(o.sailingSchema),
+      inputSchema: sailingsByRouteIDInputSchema,
+      outputSchema: z.array(sailingSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<i.SailingsByRouteIDInput, o.Sailing[]>,
+    } satisfies EndpointDefinition<SailingsByRouteIDInput, Sailing[]>,
   },
 } satisfies EndpointGroup;

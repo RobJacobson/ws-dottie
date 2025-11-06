@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./travelTimeRoutes.input";
-import * as o from "./travelTimeRoutes.output";
+import type {
+  TravelTimeByIdInput,
+  TravelTimesInput,
+} from "./travelTimeRoutes.input";
+import {
+  travelTimeByIdInputSchema,
+  travelTimesInputSchema,
+} from "./travelTimeRoutes.input";
+import type { TravelTimeRoute } from "./travelTimeRoutes.output";
+import { travelTimeRouteSchema } from "./travelTimeRoutes.output";
 
 export const travelTimeRoutesGroup = {
   name: "travel-time-routes",
@@ -16,20 +24,20 @@ export const travelTimeRoutesGroup = {
     getTravelTimeById: {
       function: "getTravelTimeById",
       endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
-      inputSchema: i.travelTimeByIdInputSchema,
-      outputSchema: o.travelTimeRouteSchema,
+      inputSchema: travelTimeByIdInputSchema,
+      outputSchema: travelTimeRouteSchema,
       sampleParams: { TravelTimeID: 1 },
       endpointDescription:
         "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
-    } satisfies EndpointDefinition<i.TravelTimeByIdInput, o.TravelTimeRoute>,
+    } satisfies EndpointDefinition<TravelTimeByIdInput, TravelTimeRoute>,
     getTravelTimes: {
       function: "getTravelTimes",
       endpoint: "/getTravelTimesAsJson",
-      inputSchema: i.travelTimesInputSchema,
-      outputSchema: z.array(o.travelTimeRouteSchema),
+      inputSchema: travelTimesInputSchema,
+      outputSchema: z.array(travelTimeRouteSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
-    } satisfies EndpointDefinition<i.TravelTimesInput, o.TravelTimeRoute[]>,
+    } satisfies EndpointDefinition<TravelTimesInput, TravelTimeRoute[]>,
   },
 } satisfies EndpointGroup;

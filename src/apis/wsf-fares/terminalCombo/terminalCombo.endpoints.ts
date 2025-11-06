@@ -1,8 +1,22 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalCombo.input";
-import * as o from "./terminalCombo.output";
+import type {
+  TerminalComboInput,
+  TerminalComboVerboseInput,
+} from "./terminalCombo.input";
+import {
+  terminalComboInputSchema,
+  terminalComboVerboseInputSchema,
+} from "./terminalCombo.input";
+import type {
+  TerminalCombo,
+  TerminalComboVerbose,
+} from "./terminalCombo.output";
+import {
+  terminalComboSchema,
+  terminalComboVerboseSchema,
+} from "./terminalCombo.output";
 
 export const terminalComboGroup = {
   name: "terminal-combo",
@@ -18,8 +32,8 @@ export const terminalComboGroup = {
       function: "getTerminalCombo",
       endpoint:
         "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.terminalComboInputSchema,
-      outputSchema: o.terminalComboSchema,
+      inputSchema: terminalComboInputSchema,
+      outputSchema: terminalComboSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -27,18 +41,18 @@ export const terminalComboGroup = {
       },
       endpointDescription:
         "Returns fare collection descriptions for the specified terminal combination and trip date.",
-    } satisfies EndpointDefinition<i.TerminalComboInput, o.TerminalCombo>,
+    } satisfies EndpointDefinition<TerminalComboInput, TerminalCombo>,
     getTerminalComboVerbose: {
       function: "getTerminalComboVerbose",
       endpoint: "/terminalComboVerbose/{TripDate}",
-      inputSchema: i.terminalComboVerboseInputSchema,
-      outputSchema: z.array(o.terminalComboVerboseSchema),
+      inputSchema: terminalComboVerboseInputSchema,
+      outputSchema: z.array(terminalComboVerboseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
     } satisfies EndpointDefinition<
-      i.TerminalComboVerboseInput,
-      o.TerminalComboVerbose[]
+      TerminalComboVerboseInput,
+      TerminalComboVerbose[]
     >,
   },
 } satisfies EndpointGroup;

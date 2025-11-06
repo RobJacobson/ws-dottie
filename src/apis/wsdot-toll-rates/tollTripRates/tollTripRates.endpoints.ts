@@ -1,8 +1,18 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./tollTripRates.input";
-import * as o from "./tollTripRates.output";
+import type {
+  TollTripRatesInput,
+  TripRatesByDateInput,
+  TripRatesByVersionInput,
+} from "./tollTripRates.input";
+import {
+  tollTripRatesInputSchema,
+  tripRatesByDateInputSchema,
+  tripRatesByVersionInputSchema,
+} from "./tollTripRates.input";
+import type { TollTripsRates } from "./tollTripRates.output";
+import { tollTripsRatesSchema } from "./tollTripRates.output";
 
 export const tollTripRatesResource = {
   name: "toll-trip-rates",
@@ -17,32 +27,32 @@ export const tollTripRatesResource = {
     getTollTripRates: {
       function: "getTollTripRates",
       endpoint: "/getTollTripRatesAsJson",
-      inputSchema: i.tollTripRatesInputSchema,
-      outputSchema: o.tollTripsRatesSchema,
+      inputSchema: tollTripRatesInputSchema,
+      outputSchema: tollTripsRatesSchema,
       sampleParams: {},
       endpointDescription:
         "Returns single TollTripRates item with current pricing and message data.",
-    } satisfies EndpointDefinition<i.TollTripRatesInput, o.TollTripsRates>,
+    } satisfies EndpointDefinition<TollTripRatesInput, TollTripsRates>,
     getTripRatesByDate: {
       function: "getTripRatesByDate",
       endpoint: "/getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
-      inputSchema: i.tripRatesByDateInputSchema,
-      outputSchema: z.array(o.tollTripsRatesSchema),
+      inputSchema: tripRatesByDateInputSchema,
+      outputSchema: z.array(tollTripsRatesSchema),
       sampleParams: {
         FromDate: datesHelper.yesterday(),
         ToDate: datesHelper.today(),
       },
       endpointDescription:
         "Returns multiple TollTripRates items for specified date range.",
-    } satisfies EndpointDefinition<i.TripRatesByDateInput, o.TollTripsRates[]>,
+    } satisfies EndpointDefinition<TripRatesByDateInput, TollTripsRates[]>,
     getTripRatesByVersion: {
       function: "getTripRatesByVersion",
       endpoint: "/getTripRatesByVersionAsJson?Version={Version}",
-      inputSchema: i.tripRatesByVersionInputSchema,
-      outputSchema: o.tollTripsRatesSchema,
+      inputSchema: tripRatesByVersionInputSchema,
+      outputSchema: tollTripsRatesSchema,
       sampleParams: { Version: 352417 },
       endpointDescription:
         "Returns single TollTripRates item for specific version.",
-    } satisfies EndpointDefinition<i.TripRatesByVersionInput, o.TollTripsRates>,
+    } satisfies EndpointDefinition<TripRatesByVersionInput, TollTripsRates>,
   },
 } satisfies EndpointGroup;

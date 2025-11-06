@@ -1,6 +1,8 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import * as i from "./cacheFlushDate.input";
-import * as o from "./cacheFlushDate.output";
+import type { CacheFlushDateInput } from "./cacheFlushDate.input";
+import { cacheFlushDateInputSchema } from "./cacheFlushDate.input";
+import type { SchedulesCacheFlushDate } from "./cacheFlushDate.output";
+import { cacheFlushDateSchema } from "./cacheFlushDate.output";
 
 const DESCRIPTION =
   "Cache flush date indicates when schedule data was last updated, helping clients determine if they need to refresh their cached schedule information.";
@@ -18,14 +20,14 @@ export const scheduleCacheFlushDateResource = {
     get: {
       function: "getCacheFlushDate",
       endpoint: "/cacheflushdate",
-      inputSchema: i.cacheFlushDateInputSchema,
-      outputSchema: o.cacheFlushDateSchema,
+      inputSchema: cacheFlushDateInputSchema,
+      outputSchema: cacheFlushDateSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
       description: `Returns single of ScheduleCacheFlushDate for data freshness.`,
     } satisfies EndpointDefinition<
-      i.CacheFlushDateInput,
-      o.SchedulesCacheFlushDate
+      CacheFlushDateInput,
+      SchedulesCacheFlushDate
     >,
   },
 } satisfies EndpointGroup;

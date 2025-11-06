@@ -1,7 +1,9 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./weatherStations.input";
-import * as o from "./weatherStations.output";
+import type { WeatherStationsInput } from "./weatherStations.input";
+import { weatherStationsInputSchema } from "./weatherStations.input";
+import type { WeatherStation } from "./weatherStations.output";
+import { weatherStationSchema } from "./weatherStations.output";
 
 export const weatherStationsResource = {
   name: "weather-stations",
@@ -16,11 +18,11 @@ export const weatherStationsResource = {
     getWeatherStations: {
       function: "getWeatherStations",
       endpoint: "/GetCurrentStationsAsJson",
-      inputSchema: i.weatherStationsInputSchema,
-      outputSchema: z.array(o.weatherStationSchema),
+      inputSchema: weatherStationsInputSchema,
+      outputSchema: z.array(weatherStationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple WeatherStation items for statewide coverage.",
-    } satisfies EndpointDefinition<i.WeatherStationsInput, o.WeatherStation[]>,
+    } satisfies EndpointDefinition<WeatherStationsInput, WeatherStation[]>,
   },
 } satisfies EndpointGroup;

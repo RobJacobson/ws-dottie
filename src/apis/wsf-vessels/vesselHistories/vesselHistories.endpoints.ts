@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselHistories.input";
-import * as o from "./vesselHistories.output";
+import type {
+  VesselHistoriesByVesselNameAndDateRangeInput,
+  VesselHistoriesInput,
+} from "./vesselHistories.input";
+import {
+  vesselHistoriesByVesselNameAndDateRangeInputSchema,
+  vesselHistoriesInputSchema,
+} from "./vesselHistories.input";
+import type { VesselHistory } from "./vesselHistories.output";
+import { vesselHistorySchema } from "./vesselHistories.output";
 
 export const vesselHistoriesResource = {
   name: "vessel-histories",
@@ -15,17 +23,17 @@ export const vesselHistoriesResource = {
     getVesselHistories: {
       function: "getVesselHistories",
       endpoint: "/vesselHistory",
-      inputSchema: i.vesselHistoriesInputSchema,
-      outputSchema: z.array(o.vesselHistorySchema),
+      inputSchema: vesselHistoriesInputSchema,
+      outputSchema: z.array(vesselHistorySchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselHistory objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<i.VesselHistoriesInput, o.VesselHistory[]>,
+    } satisfies EndpointDefinition<VesselHistoriesInput, VesselHistory[]>,
     getVesselHistoriesByVesselNameAndDateRange: {
       function: "getVesselHistoriesByVesselNameAndDateRange",
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-      inputSchema: i.vesselHistoriesByVesselNameAndDateRangeInputSchema,
-      outputSchema: z.array(o.vesselHistorySchema),
+      inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
+      outputSchema: z.array(vesselHistorySchema),
       sampleParams: {
         VesselName: "Tacoma",
         DateStart: "2025-09-01",
@@ -34,8 +42,8 @@ export const vesselHistoriesResource = {
       endpointDescription:
         "Returns multiple VesselHistory objects for the specified vessel and date range.",
     } satisfies EndpointDefinition<
-      i.VesselHistoriesByVesselNameAndDateRangeInput,
-      o.VesselHistory[]
+      VesselHistoriesByVesselNameAndDateRangeInput,
+      VesselHistory[]
     >,
   },
 } satisfies EndpointGroup;

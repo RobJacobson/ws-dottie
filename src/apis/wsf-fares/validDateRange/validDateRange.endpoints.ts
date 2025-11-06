@@ -1,6 +1,8 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import * as i from "./validDateRange.input";
-import * as o from "./validDateRange.output";
+import type { FaresValidDateRangeInput } from "./validDateRange.input";
+import { faresValidDateRangeInputSchema } from "./validDateRange.input";
+import type { ValidDateRange } from "./validDateRange.output";
+import { validDateRangeSchema } from "./validDateRange.output";
 
 export const validDateRangeGroup = {
   name: "valid-date-range",
@@ -15,14 +17,11 @@ export const validDateRangeGroup = {
     getFaresValidDateRange: {
       function: "getFaresValidDateRange",
       endpoint: "/validdaterange",
-      inputSchema: i.faresValidDateRangeInputSchema,
-      outputSchema: o.validDateRangeSchema,
+      inputSchema: faresValidDateRangeInputSchema,
+      outputSchema: validDateRangeSchema,
       sampleParams: {},
       endpointDescription:
         "Returns a single ValidDateRange object for the current fares data validity period.",
-    } satisfies EndpointDefinition<
-      i.FaresValidDateRangeInput,
-      o.ValidDateRange
-    >,
+    } satisfies EndpointDefinition<FaresValidDateRangeInput, ValidDateRange>,
   },
 } satisfies EndpointGroup;

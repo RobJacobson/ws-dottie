@@ -1,19 +1,22 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
+import type {
+  AlertByIdInput,
+  AlertsByMapAreaInput,
+  AlertsByRegionIDInput,
+  AlertsInput,
+  SearchAlertsInput,
+} from "./highwayAlerts.input";
 import {
-  type AlertByIdInput,
-  type AlertsByMapAreaInput,
-  type AlertsByRegionIDInput,
-  type AlertsInput,
   alertByIdInputSchema,
   alertsByMapAreaInputSchema,
   alertsByRegionIDInputSchema,
   alertsInputSchema,
-  type SearchAlertsInput,
   searchAlertsInputSchema,
 } from "./highwayAlerts.input";
-import { type Alert, alertSchema } from "./highwayAlerts.output";
+import type { Alert } from "./highwayAlerts.output";
+import { alertSchema } from "./highwayAlerts.output";
 
 export const highwayAlertsGroup = {
   name: "highwayAlerts",

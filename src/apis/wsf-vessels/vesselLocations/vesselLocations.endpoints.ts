@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselLocations.input";
-import * as o from "./vesselLocations.output";
+import type {
+  VesselLocationsByIdInput,
+  VesselLocationsInput,
+} from "./vesselLocations.input";
+import {
+  vesselLocationsByIdInputSchema,
+  vesselLocationsInputSchema,
+} from "./vesselLocations.input";
+import type { VesselLocation } from "./vesselLocations.output";
+import { vesselLocationSchema } from "./vesselLocations.output";
 
 export const vesselLocationsGroup = {
   name: "vessel-locations",
@@ -17,23 +25,20 @@ export const vesselLocationsGroup = {
     getVesselLocations: {
       function: "getVesselLocations",
       endpoint: "/vesselLocations",
-      inputSchema: i.vesselLocationsInputSchema,
-      outputSchema: z.array(o.vesselLocationSchema),
+      inputSchema: vesselLocationsInputSchema,
+      outputSchema: z.array(vesselLocationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselLocation objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselLocationsInput, o.VesselLocation[]>,
+    } satisfies EndpointDefinition<VesselLocationsInput, VesselLocation[]>,
     getVesselLocationsByVesselId: {
       function: "getVesselLocationsByVesselId",
       endpoint: "/vesselLocations/{VesselID}",
-      inputSchema: i.vesselLocationsByIdInputSchema,
-      outputSchema: o.vesselLocationSchema,
+      inputSchema: vesselLocationsByIdInputSchema,
+      outputSchema: vesselLocationSchema,
       sampleParams: { VesselID: 18 },
       endpointDescription:
         "Returns a VesselLocation object containing real-time position and status information for the specified vessel.",
-    } satisfies EndpointDefinition<
-      i.VesselLocationsByIdInput,
-      o.VesselLocations
-    >,
+    } satisfies EndpointDefinition<VesselLocationsByIdInput, VesselLocation>,
   },
 } satisfies EndpointGroup;

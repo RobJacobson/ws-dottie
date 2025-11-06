@@ -1,8 +1,18 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./fareLineItems.input";
-import * as o from "./fareLineItems.output";
+import type {
+  FareLineItemsBasicInput,
+  FareLineItemsByTripDateAndTerminalsInput,
+  FareLineItemsVerboseInput,
+} from "./fareLineItems.input";
+import {
+  fareLineItemsBasicInputSchema,
+  fareLineItemsByTripDateAndTerminalsInputSchema,
+  fareLineItemsVerboseInputSchema,
+} from "./fareLineItems.input";
+import type { LineItem, LineItemVerbose } from "./fareLineItems.output";
+import { lineItemSchema, lineItemVerboseSchema } from "./fareLineItems.output";
 
 export const fareLineItemsGroup = {
   name: "fare-line-items",
@@ -18,8 +28,8 @@ export const fareLineItemsGroup = {
       function: "getFareLineItemsByTripDateAndTerminals",
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: i.fareLineItemsByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(o.lineItemSchema),
+      inputSchema: fareLineItemsByTripDateAndTerminalsInputSchema,
+      outputSchema: z.array(lineItemSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 3,
@@ -29,15 +39,15 @@ export const fareLineItemsGroup = {
       endpointDescription:
         "Returns multiple of FareLineItem for specific terminal combination.",
     } satisfies EndpointDefinition<
-      i.FareLineItemsByTripDateAndTerminalsInput,
-      o.LineItem[]
+      FareLineItemsByTripDateAndTerminalsInput,
+      LineItem[]
     >,
     getFareLineItemsBasic: {
       function: "getFareLineItemsBasic",
       endpoint:
         "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: i.fareLineItemsBasicInputSchema,
-      outputSchema: z.array(o.lineItemSchema),
+      inputSchema: fareLineItemsBasicInputSchema,
+      outputSchema: z.array(lineItemSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -46,18 +56,15 @@ export const fareLineItemsGroup = {
       },
       endpointDescription:
         "Returns multiple of FareLineItem for popular fare options.",
-    } satisfies EndpointDefinition<i.FareLineItemsBasicInput, o.LineItem[]>,
+    } satisfies EndpointDefinition<FareLineItemsBasicInput, LineItem[]>,
     getFareLineItemsVerbose: {
       function: "getFareLineItemsVerbose",
       endpoint: "/fareLineItemsVerbose/{TripDate}",
-      inputSchema: i.fareLineItemsVerboseInputSchema,
-      outputSchema: o.lineItemVerboseSchema,
+      inputSchema: fareLineItemsVerboseInputSchema,
+      outputSchema: lineItemVerboseSchema,
       sampleParams: { TripDate: datesHelper.today() },
       endpointDescription:
         "Returns multiple of FareLineItem for all terminal combinations.",
-    } satisfies EndpointDefinition<
-      i.FareLineItemsVerboseInput,
-      o.LineItemVerbose
-    >,
+    } satisfies EndpointDefinition<FareLineItemsVerboseInput, LineItemVerbose>,
   },
 } satisfies EndpointGroup;

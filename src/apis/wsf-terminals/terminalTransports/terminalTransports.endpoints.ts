@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalTransports.input";
-import * as o from "./terminalTransports.output";
+import type {
+  TerminalTransportsByTerminalIdInput,
+  TerminalTransportsInput,
+} from "./terminalTransports.input";
+import {
+  terminalTransportsByTerminalIdInputSchema,
+  terminalTransportsInputSchema,
+} from "./terminalTransports.input";
+import type { TerminalTransport } from "./terminalTransports.output";
+import { terminalTransportSchema } from "./terminalTransports.output";
 
 export const terminalTransportsResource = {
   name: "terminal-transports",
@@ -16,26 +24,26 @@ export const terminalTransportsResource = {
     getTerminalTransports: {
       function: "getTerminalTransports",
       endpoint: "/terminalTransports",
-      inputSchema: i.terminalTransportsInputSchema,
-      outputSchema: z.array(o.terminalTransportSchema),
+      inputSchema: terminalTransportsInputSchema,
+      outputSchema: z.array(terminalTransportSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalTransport objects for all terminals.",
     } satisfies EndpointDefinition<
-      i.TerminalTransportsInput,
-      o.TerminalTransport[]
+      TerminalTransportsInput,
+      TerminalTransport[]
     >,
     getTerminalTransportsByTerminalId: {
       function: "getTerminalTransportsByTerminalId",
       endpoint: "/terminalTransports/{TerminalID}",
-      inputSchema: i.terminalTransportsByTerminalIdInputSchema,
-      outputSchema: o.terminalTransportSchema,
+      inputSchema: terminalTransportsByTerminalIdInputSchema,
+      outputSchema: terminalTransportSchema,
       sampleParams: { TerminalID: 10 },
       endpointDescription:
         "Returns TerminalTransport data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalTransportsByTerminalIdInput,
-      o.TerminalTransport
+      TerminalTransportsByTerminalIdInput,
+      TerminalTransport
     >,
   },
 } satisfies EndpointGroup;

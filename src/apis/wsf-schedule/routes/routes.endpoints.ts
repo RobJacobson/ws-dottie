@@ -1,8 +1,16 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./routes.input";
-import * as o from "./routes.output";
+import type {
+  RoutesByTripDateAndTerminalsInput,
+  RoutesByTripDateInput,
+} from "./routes.input";
+import {
+  routesByTripDateAndTerminalsInputSchema,
+  routesByTripDateInputSchema,
+} from "./routes.input";
+import type { Route } from "./routes.output";
+import { routeSchema } from "./routes.output";
 
 export const routesResource = {
   name: "routes",
@@ -17,25 +25,22 @@ export const routesResource = {
     getRoutesByTripDate: {
       function: "getRoutesByTripDate",
       endpoint: "/routes/{TripDate}",
-      inputSchema: i.routesByTripDateInputSchema,
-      outputSchema: z.array(o.routeSchema),
+      inputSchema: routesByTripDateInputSchema,
+      outputSchema: z.array(routeSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription: "Returns multiple of Routes for specified date.",
-    } satisfies EndpointDefinition<i.RoutesByTripDateInput, o.Route[]>,
+    } satisfies EndpointDefinition<RoutesByTripDateInput, Route[]>,
     getRoutesByTripDateAndTerminals: {
       function: "getRoutesByTripDateAndTerminals",
       endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.routesByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(o.routeSchema),
+      inputSchema: routesByTripDateAndTerminalsInputSchema,
+      outputSchema: z.array(routeSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
       endpointDescription: "Returns multiple of Routes for terminal pair.",
-    } satisfies EndpointDefinition<
-      i.RoutesByTripDateAndTerminalsInput,
-      o.Route[]
-    >,
+    } satisfies EndpointDefinition<RoutesByTripDateAndTerminalsInput, Route[]>,
   },
 } satisfies EndpointGroup;

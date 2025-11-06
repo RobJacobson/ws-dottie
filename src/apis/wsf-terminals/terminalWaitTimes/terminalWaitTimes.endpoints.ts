@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalWaitTimes.input";
-import * as o from "./terminalWaitTimes.output";
+import type {
+  TerminalWaitTimesByIdInput,
+  TerminalWaitTimesInput,
+} from "./terminalWaitTimes.input";
+import {
+  terminalWaitTimesByIdInputSchema,
+  terminalWaitTimesInputSchema,
+} from "./terminalWaitTimes.input";
+import type { TerminalWaitTime } from "./terminalWaitTimes.output";
+import { terminalWaitTimeSchema } from "./terminalWaitTimes.output";
 
 export const terminalWaitTimesResource = {
   name: "terminal-wait-times",
@@ -16,26 +24,23 @@ export const terminalWaitTimesResource = {
     getTerminalWaitTimes: {
       function: "getTerminalWaitTimes",
       endpoint: "/terminalWaitTimes",
-      inputSchema: i.terminalWaitTimesInputSchema,
-      outputSchema: z.array(o.terminalWaitTimeSchema),
+      inputSchema: terminalWaitTimesInputSchema,
+      outputSchema: z.array(terminalWaitTimeSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalWaitTime objects for all terminals.",
-    } satisfies EndpointDefinition<
-      i.TerminalWaitTimesInput,
-      o.TerminalWaitTime[]
-    >,
+    } satisfies EndpointDefinition<TerminalWaitTimesInput, TerminalWaitTime[]>,
     getTerminalWaitTimesByTerminalId: {
       function: "getTerminalWaitTimesByTerminalId",
       endpoint: "/terminalWaitTimes/{TerminalID}",
-      inputSchema: i.terminalWaitTimesByIdInputSchema,
-      outputSchema: o.terminalWaitTimeSchema,
+      inputSchema: terminalWaitTimesByIdInputSchema,
+      outputSchema: terminalWaitTimeSchema,
       sampleParams: { TerminalID: 11 },
       endpointDescription:
         "Returns a single TerminalWaitTime object for specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalWaitTimesByIdInput,
-      o.TerminalWaitTime
+      TerminalWaitTimesByIdInput,
+      TerminalWaitTime
     >,
   },
 } satisfies EndpointGroup;

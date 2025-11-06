@@ -1,8 +1,20 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./weatherInfo.input";
-import * as o from "./weatherInfo.output";
+import type {
+  CurrentWeatherForStationsInput,
+  SearchWeatherInformationInput,
+  WeatherInformationByStationIdInput,
+  WeatherInformationInput,
+} from "./weatherInfo.input";
+import {
+  currentWeatherForStationsInputSchema,
+  searchWeatherInformationInputSchema,
+  weatherInformationByStationIdInputSchema,
+  weatherInformationInputSchema,
+} from "./weatherInfo.input";
+import type { WeatherInfo } from "./weatherInfo.output";
+import { weatherInfoSchema } from "./weatherInfo.output";
 
 export const weatherInfoResource = {
   name: "weather-info",
@@ -17,42 +29,42 @@ export const weatherInfoResource = {
     getWeatherInformation: {
       function: "getWeatherInformation",
       endpoint: "/GetCurrentWeatherInformationAsJson",
-      inputSchema: i.weatherInformationInputSchema,
-      outputSchema: z.array(o.weatherInfoSchema),
+      inputSchema: weatherInformationInputSchema,
+      outputSchema: z.array(weatherInfoSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple WeatherInfo items for all stations.",
-    } satisfies EndpointDefinition<i.WeatherInformationInput, o.WeatherInfo[]>,
+    } satisfies EndpointDefinition<WeatherInformationInput, WeatherInfo[]>,
     getWeatherInformationByStationId: {
       function: "getWeatherInformationByStationId",
       endpoint:
         "/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
-      inputSchema: i.weatherInformationByStationIdInputSchema,
-      outputSchema: o.weatherInfoSchema,
+      inputSchema: weatherInformationByStationIdInputSchema,
+      outputSchema: weatherInfoSchema,
       sampleParams: { StationID: 1909 },
       endpointDescription: "Returns single WeatherInfo for specific station.",
     } satisfies EndpointDefinition<
-      i.WeatherInformationByStationIdInput,
-      o.WeatherInfo
+      WeatherInformationByStationIdInput,
+      WeatherInfo
     >,
     getCurrentWeatherForStations: {
       function: "getCurrentWeatherForStations",
       endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
-      inputSchema: i.currentWeatherForStationsInputSchema,
-      outputSchema: z.array(o.weatherInfoSchema),
+      inputSchema: currentWeatherForStationsInputSchema,
+      outputSchema: z.array(weatherInfoSchema),
       sampleParams: { StationList: "1909,1966,1970" },
       endpointDescription:
         "Returns multiple WeatherInfo for specified stations.",
     } satisfies EndpointDefinition<
-      i.CurrentWeatherForStationsInput,
-      o.WeatherInfo[]
+      CurrentWeatherForStationsInput,
+      WeatherInfo[]
     >,
     searchWeatherInformation: {
       function: "searchWeatherInformation",
       endpoint:
         "/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}",
-      inputSchema: i.searchWeatherInformationInputSchema,
-      outputSchema: z.array(o.weatherInfoSchema),
+      inputSchema: searchWeatherInformationInputSchema,
+      outputSchema: z.array(weatherInfoSchema),
       sampleParams: {
         StationID: 1980,
         SearchStartTime: new Date(
@@ -65,8 +77,8 @@ export const weatherInfoResource = {
       endpointDescription:
         "Returns multiple WeatherInfo for historical time range.",
     } satisfies EndpointDefinition<
-      i.SearchWeatherInformationInput,
-      o.WeatherInfo[]
+      SearchWeatherInformationInput,
+      WeatherInfo[]
     >,
   },
 } satisfies EndpointGroup;

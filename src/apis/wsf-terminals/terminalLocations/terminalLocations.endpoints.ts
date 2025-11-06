@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalLocations.input";
-import * as o from "./terminalLocations.output";
+import type {
+  TerminalLocationsByIdInput,
+  TerminalLocationsInput,
+} from "./terminalLocations.input";
+import {
+  terminalLocationsByIdInputSchema,
+  terminalLocationsInputSchema,
+} from "./terminalLocations.input";
+import type { TerminalLocation } from "./terminalLocations.output";
+import { terminalLocationSchema } from "./terminalLocations.output";
 
 export const terminalLocationsResource = {
   name: "terminal-locations",
@@ -17,26 +25,23 @@ export const terminalLocationsResource = {
     getTerminalLocations: {
       function: "getTerminalLocations",
       endpoint: "/terminalLocations",
-      inputSchema: i.terminalLocationsInputSchema,
-      outputSchema: z.array(o.terminalLocationSchema),
+      inputSchema: terminalLocationsInputSchema,
+      outputSchema: z.array(terminalLocationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalLocation objects for all terminals.",
-    } satisfies EndpointDefinition<
-      i.TerminalLocationsInput,
-      o.TerminalLocation[]
-    >,
+    } satisfies EndpointDefinition<TerminalLocationsInput, TerminalLocation[]>,
     getTerminalLocationsByTerminalId: {
       function: "getTerminalLocationsByTerminalId",
       endpoint: "/terminalLocations/{TerminalID}",
-      inputSchema: i.terminalLocationsByIdInputSchema,
-      outputSchema: o.terminalLocationSchema,
+      inputSchema: terminalLocationsByIdInputSchema,
+      outputSchema: terminalLocationSchema,
       sampleParams: { TerminalID: 5 },
       endpointDescription:
         "Returns a single TerminalLocation object for specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalLocationsByIdInput,
-      o.TerminalLocation
+      TerminalLocationsByIdInput,
+      TerminalLocation
     >,
   },
 } satisfies EndpointGroup;
