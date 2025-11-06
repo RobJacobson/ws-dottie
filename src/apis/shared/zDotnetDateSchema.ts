@@ -6,7 +6,7 @@
  * APIs. It handles validation and transformation to JavaScript Date objects.
  */
 
-import { wsdotDateTimeToJSDate } from "@/shared/utils/dateUtils";
+import { wsdotDateTimeToJSDate } from "@/shared/factories/dateUtils";
 import { z } from "@/shared/zod-openapi-init";
 
 /**

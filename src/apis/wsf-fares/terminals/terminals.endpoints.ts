@@ -1,5 +1,5 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { datesHelper } from "@/shared/utils";
+import { datesHelper } from "@/shared/factories";
 import { z } from "@/shared/zod-openapi-init";
 import type {
   FaresTerminalsInput,
