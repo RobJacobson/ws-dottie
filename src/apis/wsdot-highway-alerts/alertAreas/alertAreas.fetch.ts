@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/utils/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/utils/fetchFunctionFactory";
+import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
+import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
 import { wsdotHighwayAlertsApi } from "../apiDefinition";
 import { alertAreasGroup } from "./alertAreas.endpoints";
 import type { MapAreasInput } from "./alertAreas.input";

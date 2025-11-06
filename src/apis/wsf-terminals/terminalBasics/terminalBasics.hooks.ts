@@ -1,6 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/utils/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/utils/createEndpointGroupHooks";
+import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
+import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
 import { wsfTerminalsApi } from "../apiDefinition";
 import { terminalBasicsResource } from "./terminalBasics.endpoints";
 import * as fetchFunctions from "./terminalBasics.fetch";
