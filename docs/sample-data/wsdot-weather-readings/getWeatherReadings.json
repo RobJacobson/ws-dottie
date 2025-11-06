@@ -5,33 +5,33 @@
     "Latitude": 47.427,
     "Longitude": -121.418,
     "Elevation": 876,
-    "ReadingTime": "2025-11-06T06:48:33.000Z",
-    "AirTemperature": 5.7,
+    "ReadingTime": "2025-11-06T07:58:33.000Z",
+    "AirTemperature": 5.6,
     "RelativeHumidty": 98,
-    "AverageWindSpeed": 10,
+    "AverageWindSpeed": 9,
     "AverageWindDirection": 140,
     "WindGust": 16,
     "Visibility": 2000,
-    "PrecipitationIntensity": 10,
+    "PrecipitationIntensity": 3,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 1.9,
-    "PrecipitationPast6Hours": 3.4,
-    "PrecipitationPast12Hours": 5.4,
-    "PrecipitationPast24Hours": 10,
+    "PrecipitationPast1Hour": 0.9,
+    "PrecipitationPast3Hours": 1.8,
+    "PrecipitationPast6Hours": 4.1,
+    "PrecipitationPast12Hours": 5,
+    "PrecipitationPast24Hours": 11,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 7.2,
+        "SurfaceTemperature": 6.5,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 6.2,
+        "SurfaceTemperature": 5.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -49,33 +49,33 @@
     "Latitude": 47.426,
     "Longitude": -121.432,
     "Elevation": 910,
-    "ReadingTime": "2025-11-06T06:48:41.000Z",
-    "AirTemperature": 5.9,
-    "RelativeHumidty": 99,
-    "AverageWindSpeed": 0,
-    "AverageWindDirection": 305,
-    "WindGust": 2,
+    "ReadingTime": "2025-11-06T07:58:41.000Z",
+    "AirTemperature": 5.8,
+    "RelativeHumidty": 100,
+    "AverageWindSpeed": 2,
+    "AverageWindDirection": 10,
+    "WindGust": 7,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": 0.4,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 1.2,
     "PrecipitationPast3Hours": 2.5,
-    "PrecipitationPast6Hours": 4.4,
-    "PrecipitationPast12Hours": 6.8,
-    "PrecipitationPast24Hours": 11.7,
+    "PrecipitationPast6Hours": 5,
+    "PrecipitationPast12Hours": 6.5,
+    "PrecipitationPast24Hours": 13,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 7.4,
+        "SurfaceTemperature": 7.5,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 7.2,
+        "SurfaceTemperature": 7.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 102
       },
@@ -99,8 +99,8 @@
     "Latitude": 47.4187,
     "Longitude": -121.4439,
     "Elevation": 630,
-    "ReadingTime": "2025-11-06T06:48:49.000Z",
-    "AirTemperature": 6.3,
+    "ReadingTime": "2025-11-06T07:58:49.000Z",
+    "AirTemperature": 6.2,
     "RelativeHumidty": 98,
     "AverageWindSpeed": null,
     "AverageWindDirection": null,
@@ -108,11 +108,11 @@
     "Visibility": 2000,
     "PrecipitationIntensity": 10,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 2.1,
-    "PrecipitationPast6Hours": 4,
-    "PrecipitationPast12Hours": 5.9,
-    "PrecipitationPast24Hours": 10.5,
+    "PrecipitationPast1Hour": 0.8,
+    "PrecipitationPast3Hours": 2.2,
+    "PrecipitationPast6Hours": 4.2,
+    "PrecipitationPast12Hours": 5.5,
+    "PrecipitationPast24Hours": 11.5,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
@@ -125,15 +125,15 @@
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 6.5,
+        "SurfaceTemperature": 6.8,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       },
       {
         "SensorId": 2,
-        "SurfaceTemperature": 7.2,
+        "SurfaceTemperature": 6.6,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 105
+        "RoadSurfaceCondition": 102
       }
     ],
     "SubSurfaceMeasurements": [
@@ -149,33 +149,33 @@
     "Latitude": 47.4435,
     "Longitude": -121.6694,
     "Elevation": 399,
-    "ReadingTime": "2025-11-06T06:48:57.000Z",
+    "ReadingTime": "2025-11-06T07:58:57.000Z",
     "AirTemperature": null,
     "RelativeHumidty": 101,
-    "AverageWindSpeed": 9,
-    "AverageWindDirection": 115,
-    "WindGust": 12,
+    "AverageWindSpeed": 7,
+    "AverageWindDirection": 100,
+    "WindGust": 13,
     "Visibility": 2000,
-    "PrecipitationIntensity": 10,
+    "PrecipitationIntensity": 3,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.8,
-    "PrecipitationPast6Hours": 2.5,
-    "PrecipitationPast12Hours": 6.1,
-    "PrecipitationPast24Hours": 9.3,
+    "PrecipitationPast1Hour": 2.8,
+    "PrecipitationPast3Hours": 3.4,
+    "PrecipitationPast6Hours": 5,
+    "PrecipitationPast12Hours": 6,
+    "PrecipitationPast24Hours": 12.1,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.3,
+        "SurfaceTemperature": 9.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 10.4,
+        "SurfaceTemperature": 10,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -183,7 +183,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 10
+        "SubSurfaceTemperature": 10.1
       }
     ]
   },
@@ -193,27 +193,27 @@
     "Latitude": 47.3933,
     "Longitude": -121.4734,
     "Elevation": 632,
-    "ReadingTime": "2025-11-06T06:49:05.000Z",
-    "AirTemperature": 8,
-    "RelativeHumidty": 96,
-    "AverageWindSpeed": 0,
-    "AverageWindDirection": 45,
-    "WindGust": 6,
+    "ReadingTime": "2025-11-06T07:59:04.000Z",
+    "AirTemperature": 7.5,
+    "RelativeHumidty": 98,
+    "AverageWindSpeed": 1,
+    "AverageWindDirection": 5,
+    "WindGust": 3,
     "Visibility": 2000,
     "PrecipitationIntensity": 10,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 2.5,
-    "PrecipitationPast6Hours": 5.4,
-    "PrecipitationPast12Hours": 8.9,
-    "PrecipitationPast24Hours": 13.1,
+    "PrecipitationPast1Hour": 1.2,
+    "PrecipitationPast3Hours": 3.1,
+    "PrecipitationPast6Hours": 5.8,
+    "PrecipitationPast12Hours": 9.3,
+    "PrecipitationPast24Hours": 14.4,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 6.6,
+        "SurfaceTemperature": 6.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -221,7 +221,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 7.5
+        "SubSurfaceTemperature": 7.7
       }
     ]
   },
@@ -231,27 +231,27 @@
     "Latitude": 47.328299,
     "Longitude": -121.335766,
     "Elevation": 0,
-    "ReadingTime": "2025-11-06T06:49:11.000Z",
-    "AirTemperature": 6.6,
+    "ReadingTime": "2025-11-06T07:59:10.000Z",
+    "AirTemperature": 6.5,
     "RelativeHumidty": 98,
-    "AverageWindSpeed": 2,
-    "AverageWindDirection": 169,
-    "WindGust": 9,
+    "AverageWindSpeed": 5,
+    "AverageWindDirection": 162,
+    "WindGust": 11,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 1.3,
-    "PrecipitationPast6Hours": 1.4,
-    "PrecipitationPast12Hours": 2.2,
-    "PrecipitationPast24Hours": 4.9,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 0.3,
+    "PrecipitationPast3Hours": 0.6,
+    "PrecipitationPast6Hours": 1.6,
+    "PrecipitationPast12Hours": 1.8,
+    "PrecipitationPast24Hours": 5.2,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 7.1,
+        "SurfaceTemperature": 7,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -264,9 +264,9 @@
     "Latitude": 47.355868,
     "Longitude": -121.366476,
     "Elevation": 0,
-    "ReadingTime": "2025-11-06T06:49:12.000Z",
-    "AirTemperature": 6.6,
-    "RelativeHumidty": 89,
+    "ReadingTime": "2025-11-06T07:59:11.000Z",
+    "AirTemperature": 6.4,
+    "RelativeHumidty": 92,
     "AverageWindSpeed": null,
     "AverageWindDirection": null,
     "WindGust": null,
@@ -407,27 +407,27 @@
     "Latitude": 47.6703,
     "Longitude": -117.1108,
     "Elevation": 624,
-    "ReadingTime": "2025-11-06T06:43:22.000Z",
-    "AirTemperature": 7.1,
+    "ReadingTime": "2025-11-06T08:02:36.000Z",
+    "AirTemperature": 8.1,
     "RelativeHumidty": 95,
-    "AverageWindSpeed": 10,
-    "AverageWindDirection": 60,
-    "WindGust": 15,
+    "AverageWindSpeed": 5,
+    "AverageWindDirection": 10,
+    "WindGust": 9,
     "Visibility": 1770,
     "PrecipitationIntensity": 10,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 1,
-    "PrecipitationPast3Hours": 2.2,
-    "PrecipitationPast6Hours": 2.4,
-    "PrecipitationPast12Hours": 2.4,
-    "PrecipitationPast24Hours": 2.4,
+    "PrecipitationPast1Hour": 0.8,
+    "PrecipitationPast3Hours": 3,
+    "PrecipitationPast6Hours": 3.6,
+    "PrecipitationPast12Hours": 3.6,
+    "PrecipitationPast24Hours": 3.6,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 7.1,
+        "SurfaceTemperature": 8.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -435,7 +435,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 9.1
+        "SubSurfaceTemperature": 9.2
       }
     ]
   },
@@ -497,20 +497,20 @@
     "Latitude": 47.7871,
     "Longitude": -117.4067,
     "Elevation": 609,
-    "ReadingTime": "2025-11-06T06:47:36.000Z",
-    "AirTemperature": 7.9,
+    "ReadingTime": "2025-11-06T08:07:30.000Z",
+    "AirTemperature": 7.8,
     "RelativeHumidty": 99,
     "AverageWindSpeed": 0,
     "AverageWindDirection": 0,
     "WindGust": 0,
-    "Visibility": 761,
-    "PrecipitationIntensity": 10,
-    "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 1.8,
-    "PrecipitationPast3Hours": 2.4,
-    "PrecipitationPast6Hours": 2.4,
-    "PrecipitationPast12Hours": 2.4,
-    "PrecipitationPast24Hours": 2.4,
+    "Visibility": 1770,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
+    "PrecipitationPast1Hour": 1.1,
+    "PrecipitationPast3Hours": 4.5,
+    "PrecipitationPast6Hours": 4.7,
+    "PrecipitationPast12Hours": 4.7,
+    "PrecipitationPast24Hours": 4.7,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
@@ -529,7 +529,7 @@
       },
       {
         "SensorId": 2,
-        "SurfaceTemperature": 8,
+        "SurfaceTemperature": 7.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -537,7 +537,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 8.7
+        "SubSurfaceTemperature": 8.6
       }
     ]
   },
@@ -547,12 +547,12 @@
     "Latitude": 47.4384,
     "Longitude": -117.7883,
     "Elevation": 609,
-    "ReadingTime": "2025-11-06T06:48:58.000Z",
-    "AirTemperature": 9.2,
-    "RelativeHumidty": 92,
-    "AverageWindSpeed": 6,
-    "AverageWindDirection": 165,
-    "WindGust": 10,
+    "ReadingTime": "2025-11-06T07:47:48.000Z",
+    "AirTemperature": 8.8,
+    "RelativeHumidty": 94,
+    "AverageWindSpeed": 10,
+    "AverageWindDirection": 175,
+    "WindGust": 18,
     "Visibility": null,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
@@ -567,13 +567,13 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 8.5,
+        "SurfaceTemperature": 8.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 102
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 8.5,
+        "SurfaceTemperature": 8.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -643,20 +643,20 @@
     "Latitude": 46.51726,
     "Longitude": -117.0811251,
     "Elevation": 802,
-    "ReadingTime": "2025-11-06T06:51:54.000Z",
-    "AirTemperature": 10.2,
-    "RelativeHumidty": 66,
-    "AverageWindSpeed": 30,
-    "AverageWindDirection": 285,
-    "WindGust": 45,
-    "Visibility": 807,
+    "ReadingTime": "2025-11-06T07:50:47.000Z",
+    "AirTemperature": 9.4,
+    "RelativeHumidty": 80,
+    "AverageWindSpeed": 10,
+    "AverageWindDirection": 185,
+    "WindGust": 15,
+    "Visibility": 1770,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": null,
-    "PrecipitationPast12Hours": null,
-    "PrecipitationPast24Hours": 0.9,
+    "PrecipitationPast1Hour": 2.7,
+    "PrecipitationPast3Hours": 2.7,
+    "PrecipitationPast6Hours": 2.7,
+    "PrecipitationPast12Hours": 2.7,
+    "PrecipitationPast24Hours": 3.5,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
@@ -669,9 +669,9 @@
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 9.1,
+        "SurfaceTemperature": 9.4,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 105
       }
     ],
     "SubSurfaceMeasurements": [
@@ -687,27 +687,27 @@
     "Latitude": 47.4492,
     "Longitude": -117.3853,
     "Elevation": 745,
-    "ReadingTime": "2025-11-06T06:52:00.000Z",
-    "AirTemperature": 9.4,
-    "RelativeHumidty": 72,
-    "AverageWindSpeed": 15,
-    "AverageWindDirection": 180,
-    "WindGust": 21,
+    "ReadingTime": "2025-11-06T07:50:51.000Z",
+    "AirTemperature": 8.8,
+    "RelativeHumidty": 75,
+    "AverageWindSpeed": 22,
+    "AverageWindDirection": 175,
+    "WindGust": 33,
     "Visibility": 1770,
-    "PrecipitationIntensity": 10,
-    "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 2,
-    "PrecipitationPast3Hours": 3.2,
-    "PrecipitationPast6Hours": 3.5,
-    "PrecipitationPast12Hours": 3.5,
-    "PrecipitationPast24Hours": 3.7,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
+    "PrecipitationPast1Hour": 1.6,
+    "PrecipitationPast3Hours": 4.5,
+    "PrecipitationPast6Hours": 5.2,
+    "PrecipitationPast12Hours": 5.2,
+    "PrecipitationPast24Hours": 5.4,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 8.8,
+        "SurfaceTemperature": 8.4,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       },
@@ -721,7 +721,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 8.9
+        "SubSurfaceTemperature": 9
       }
     ]
   },
@@ -731,27 +731,27 @@
     "Latitude": 48.876,
     "Longitude": -117.3483,
     "Elevation": 773,
-    "ReadingTime": "2025-11-06T06:34:29.000Z",
-    "AirTemperature": 4.1,
-    "RelativeHumidty": 50,
-    "AverageWindSpeed": 1,
-    "AverageWindDirection": 145,
-    "WindGust": 3,
-    "Visibility": 746,
-    "PrecipitationIntensity": 10,
+    "ReadingTime": "2025-11-06T07:53:00.000Z",
+    "AirTemperature": 4,
+    "RelativeHumidty": 46,
+    "AverageWindSpeed": 0,
+    "AverageWindDirection": 150,
+    "WindGust": 2,
+    "Visibility": 265,
+    "PrecipitationIntensity": 3,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 0.5,
-    "PrecipitationPast3Hours": 2.2,
-    "PrecipitationPast6Hours": 2.8,
-    "PrecipitationPast12Hours": 2.8,
-    "PrecipitationPast24Hours": 2.8,
+    "PrecipitationPast1Hour": 3.4,
+    "PrecipitationPast3Hours": 5.1,
+    "PrecipitationPast6Hours": 7.1,
+    "PrecipitationPast12Hours": 7.1,
+    "PrecipitationPast24Hours": 7.1,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 5.8,
+        "SurfaceTemperature": 5.6,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -759,7 +759,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 6.3
+        "SubSurfaceTemperature": 6.2
       }
     ]
   },
@@ -769,27 +769,27 @@
     "Latitude": 46.8093026,
     "Longitude": -117.6554371,
     "Elevation": 512,
-    "ReadingTime": "2025-11-06T06:34:44.000Z",
-    "AirTemperature": 9.7,
-    "RelativeHumidty": 100,
-    "AverageWindSpeed": 17,
-    "AverageWindDirection": 200,
-    "WindGust": 25,
+    "ReadingTime": "2025-11-06T07:53:14.000Z",
+    "AirTemperature": 10.1,
+    "RelativeHumidty": 98,
+    "AverageWindSpeed": 7,
+    "AverageWindDirection": 202,
+    "WindGust": 12,
     "Visibility": 2000,
-    "PrecipitationIntensity": 10,
-    "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 0.3,
-    "PrecipitationPast3Hours": 0.3,
-    "PrecipitationPast6Hours": 0.3,
-    "PrecipitationPast12Hours": 0.3,
-    "PrecipitationPast24Hours": 0.3,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
+    "PrecipitationPast1Hour": null,
+    "PrecipitationPast3Hours": 0.5,
+    "PrecipitationPast6Hours": 0.5,
+    "PrecipitationPast12Hours": 0.5,
+    "PrecipitationPast24Hours": 0.5,
     "PrecipitationAccumulation": null,
     "BarometricPressure": 948,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 9.8,
+        "SurfaceTemperature": 9.6,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -797,7 +797,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 10.7
+        "SubSurfaceTemperature": 10.9
       }
     ]
   },
@@ -807,12 +807,12 @@
     "Latitude": 46.758461,
     "Longitude": -118.309057,
     "Elevation": 312,
-    "ReadingTime": "2025-11-06T06:35:46.000Z",
-    "AirTemperature": 9.6,
-    "RelativeHumidty": 95,
-    "AverageWindSpeed": 5,
-    "AverageWindDirection": 233,
-    "WindGust": 7,
+    "ReadingTime": "2025-11-06T07:55:07.000Z",
+    "AirTemperature": 10.1,
+    "RelativeHumidty": 89,
+    "AverageWindSpeed": 3,
+    "AverageWindDirection": 169,
+    "WindGust": 6,
     "Visibility": 2000,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
@@ -827,7 +827,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.6,
+        "SurfaceTemperature": 8.8,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -835,7 +835,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.9
+        "SubSurfaceTemperature": 12
       }
     ]
   },
@@ -845,9 +845,9 @@
     "Latitude": 0,
     "Longitude": 0,
     "Elevation": 0,
-    "ReadingTime": "2025-11-06T06:35:20.000Z",
+    "ReadingTime": "2025-11-06T07:54:49.000Z",
     "AirTemperature": null,
-    "RelativeHumidty": 94,
+    "RelativeHumidty": 96,
     "AverageWindSpeed": null,
     "AverageWindDirection": null,
     "WindGust": null,
@@ -930,12 +930,12 @@
     "Latitude": 47.726,
     "Longitude": -122.324,
     "Elevation": 108,
-    "ReadingTime": "2025-11-06T06:45:03.000Z",
-    "AirTemperature": 13.1,
-    "RelativeHumidty": 88,
-    "AverageWindSpeed": 7,
-    "AverageWindDirection": 105,
-    "WindGust": 15,
+    "ReadingTime": "2025-11-06T08:00:10.000Z",
+    "AirTemperature": 11.3,
+    "RelativeHumidty": 91,
+    "AverageWindSpeed": 16,
+    "AverageWindDirection": 100,
+    "WindGust": 27,
     "Visibility": 2000,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
@@ -945,12 +945,12 @@
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 987,
+    "BarometricPressure": 988,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13,
+        "SurfaceTemperature": 11.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -958,7 +958,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.8
+        "SubSurfaceTemperature": 12
       }
     ]
   },
@@ -968,11 +968,11 @@
     "Latitude": 47.4748,
     "Longitude": -122.2704,
     "Elevation": 106,
-    "ReadingTime": "2025-11-06T06:45:06.000Z",
-    "AirTemperature": 14.4,
-    "RelativeHumidty": 87,
-    "AverageWindSpeed": 2,
-    "AverageWindDirection": 180,
+    "ReadingTime": "2025-11-06T08:00:30.000Z",
+    "AirTemperature": 11.4,
+    "RelativeHumidty": 99,
+    "AverageWindSpeed": 5,
+    "AverageWindDirection": 175,
     "WindGust": 16,
     "Visibility": 1770,
     "PrecipitationIntensity": 0,
@@ -988,7 +988,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12.8,
+        "SurfaceTemperature": 12.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -1036,35 +1036,35 @@
     "Latitude": 47.473,
     "Longitude": -121.742,
     "Elevation": 248,
-    "ReadingTime": "2025-11-06T06:46:13.000Z",
-    "AirTemperature": 13.1,
-    "RelativeHumidty": 72,
-    "AverageWindSpeed": 9,
-    "AverageWindDirection": 62,
-    "WindGust": 17,
+    "ReadingTime": "2025-11-06T08:01:39.000Z",
+    "AirTemperature": 10.6,
+    "RelativeHumidty": 97,
+    "AverageWindSpeed": 5,
+    "AverageWindDirection": 106,
+    "WindGust": 10,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.2,
-    "PrecipitationPast6Hours": 1.5,
-    "PrecipitationPast12Hours": 1.5,
-    "PrecipitationPast24Hours": 1.5,
+    "PrecipitationIntensity": 4,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 2.9,
+    "PrecipitationPast3Hours": 2.9,
+    "PrecipitationPast6Hours": 4.4,
+    "PrecipitationPast12Hours": 4.4,
+    "PrecipitationPast24Hours": 4.4,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 981,
+    "BarometricPressure": 983,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12.2,
+        "SurfaceTemperature": 10.7,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 105
       }
     ],
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 10.2
+        "SubSurfaceTemperature": 10.4
       }
     ]
   },
@@ -1074,27 +1074,27 @@
     "Latitude": 48.688,
     "Longitude": -122.4,
     "Elevation": 177,
-    "ReadingTime": "2025-11-06T06:46:17.000Z",
-    "AirTemperature": 13,
-    "RelativeHumidty": 78,
-    "AverageWindSpeed": 13,
-    "AverageWindDirection": 280,
-    "WindGust": 36,
+    "ReadingTime": "2025-11-06T08:01:44.000Z",
+    "AirTemperature": 11.5,
+    "RelativeHumidty": 90,
+    "AverageWindSpeed": 3,
+    "AverageWindDirection": 235,
+    "WindGust": 11,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": null,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 0.9,
+    "PrecipitationPast3Hours": 0.9,
     "PrecipitationPast6Hours": 1.6,
-    "PrecipitationPast12Hours": 1.9,
-    "PrecipitationPast24Hours": 2.1,
+    "PrecipitationPast12Hours": 2.6,
+    "PrecipitationPast24Hours": 2.9,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 954,
+    "BarometricPressure": 950,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.4,
+        "SurfaceTemperature": 12.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -1102,7 +1102,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 10.3
+        "SubSurfaceTemperature": 10.4
       }
     ]
   },
@@ -1112,27 +1112,27 @@
     "Latitude": 47.7606325,
     "Longitude": -122.1840478,
     "Elevation": 7,
-    "ReadingTime": "2025-11-06T06:46:20.000Z",
+    "ReadingTime": "2025-11-06T08:01:46.000Z",
     "AirTemperature": null,
     "RelativeHumidty": 101,
-    "AverageWindSpeed": 0,
+    "AverageWindSpeed": 1,
     "AverageWindDirection": 5,
-    "WindGust": 5,
+    "WindGust": 9,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.3,
-    "PrecipitationPast6Hours": 0.7,
-    "PrecipitationPast12Hours": 1.9,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 0.6,
+    "PrecipitationPast3Hours": 0.8,
+    "PrecipitationPast6Hours": 1.1,
+    "PrecipitationPast12Hours": 2.3,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 914,
+    "BarometricPressure": 979,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.3,
+        "SurfaceTemperature": 12.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -1140,7 +1140,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 12.5
+        "SubSurfaceTemperature": 12.4
       }
     ]
   },
@@ -1150,19 +1150,19 @@
     "Latitude": 48.992,
     "Longitude": -122.272,
     "Elevation": 11,
-    "ReadingTime": "2025-11-06T06:46:22.000Z",
-    "AirTemperature": 15.4,
-    "RelativeHumidty": 62,
-    "AverageWindSpeed": 21,
-    "AverageWindDirection": 170,
-    "WindGust": 41,
+    "ReadingTime": "2025-11-06T08:01:49.000Z",
+    "AirTemperature": 14.8,
+    "RelativeHumidty": 63,
+    "AverageWindSpeed": 10,
+    "AverageWindDirection": 220,
+    "WindGust": 18,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 1.1,
-    "PrecipitationPast12Hours": 6,
+    "PrecipitationPast12Hours": 4.3,
     "PrecipitationPast24Hours": 7.1,
     "PrecipitationAccumulation": null,
     "BarometricPressure": 998,
@@ -1170,7 +1170,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12,
+        "SurfaceTemperature": 11.6,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -1188,22 +1188,22 @@
     "Latitude": 49,
     "Longitude": -122.7352,
     "Elevation": 13,
-    "ReadingTime": "2025-11-06T06:46:23.000Z",
-    "AirTemperature": 14.6,
-    "RelativeHumidty": 74,
-    "AverageWindSpeed": 12,
-    "AverageWindDirection": 149,
-    "WindGust": 40,
+    "ReadingTime": "2025-11-06T08:01:49.000Z",
+    "AirTemperature": 13.3,
+    "RelativeHumidty": 81,
+    "AverageWindSpeed": 24,
+    "AverageWindDirection": 127,
+    "WindGust": 41,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.2,
-    "PrecipitationPast6Hours": 0.7,
-    "PrecipitationPast12Hours": 3,
-    "PrecipitationPast24Hours": 4.1,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 0.3,
+    "PrecipitationPast3Hours": 0.3,
+    "PrecipitationPast6Hours": 0.9,
+    "PrecipitationPast12Hours": 2.4,
+    "PrecipitationPast24Hours": 4.4,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 996,
+    "BarometricPressure": 997,
     "SnowDepth": null,
     "SurfaceMeasurements": [],
     "SubSurfaceMeasurements": []
@@ -1214,12 +1214,12 @@
     "Latitude": 47.531644,
     "Longitude": -121.987001,
     "Elevation": 13,
-    "ReadingTime": "2025-11-06T06:46:35.000Z",
-    "AirTemperature": 12,
-    "RelativeHumidty": 95,
-    "AverageWindSpeed": 2,
-    "AverageWindDirection": 35,
-    "WindGust": 5,
+    "ReadingTime": "2025-11-06T08:01:51.000Z",
+    "AirTemperature": 10.2,
+    "RelativeHumidty": 97,
+    "AverageWindSpeed": 3,
+    "AverageWindDirection": 25,
+    "WindGust": 9,
     "Visibility": 2000,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
@@ -1229,7 +1229,7 @@
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 984,
+    "BarometricPressure": 986,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
@@ -1252,12 +1252,12 @@
     "Latitude": 48.446,
     "Longitude": -122.432,
     "Elevation": 9,
-    "ReadingTime": "2025-11-06T06:46:37.000Z",
-    "AirTemperature": 14.7,
-    "RelativeHumidty": 82,
-    "AverageWindSpeed": 21,
-    "AverageWindDirection": 170,
-    "WindGust": 38,
+    "ReadingTime": "2025-11-06T08:01:53.000Z",
+    "AirTemperature": 14,
+    "RelativeHumidty": 83,
+    "AverageWindSpeed": 38,
+    "AverageWindDirection": 175,
+    "WindGust": 63,
     "Visibility": null,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
@@ -1272,7 +1272,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 14.1,
+        "SurfaceTemperature": 12.6,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -1280,7 +1280,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.6
+        "SubSurfaceTemperature": 11.7
       }
     ]
   },
@@ -1290,8 +1290,8 @@
     "Latitude": 47.9163,
     "Longitude": -122.2072,
     "Elevation": 121,
-    "ReadingTime": "2025-11-06T06:46:39.000Z",
-    "AirTemperature": 14.1,
+    "ReadingTime": "2025-11-06T08:01:56.000Z",
+    "AirTemperature": 12.1,
     "RelativeHumidty": 1,
     "AverageWindSpeed": null,
     "AverageWindDirection": null,
@@ -1305,12 +1305,12 @@
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 984,
+    "BarometricPressure": 985,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.5,
+        "SurfaceTemperature": 11.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -1318,7 +1318,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.4
+        "SubSurfaceTemperature": 11.5
       }
     ]
   },
@@ -1328,11 +1328,11 @@
     "Latitude": 47.9803,
     "Longitude": -122.188,
     "Elevation": 10,
-    "ReadingTime": "2025-11-06T06:46:42.000Z",
-    "AirTemperature": 16.3,
-    "RelativeHumidty": 93,
+    "ReadingTime": "2025-11-06T08:02:07.000Z",
+    "AirTemperature": 13.4,
+    "RelativeHumidty": 101,
     "AverageWindSpeed": 0,
-    "AverageWindDirection": 60,
+    "AverageWindDirection": 30,
     "WindGust": 0,
     "Visibility": null,
     "PrecipitationIntensity": 11,
@@ -1343,12 +1343,12 @@
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 907,
+    "BarometricPressure": 902,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 14.1,
+        "SurfaceTemperature": 12.5,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -1356,7 +1356,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 12.5
+        "SubSurfaceTemperature": 12.6
       }
     ]
   },
@@ -1392,29 +1392,29 @@
     "Latitude": 47.8139,
     "Longitude": -121.5709,
     "Elevation": 167,
-    "ReadingTime": "2025-11-06T06:47:50.000Z",
-    "AirTemperature": 10.1,
+    "ReadingTime": "2025-11-06T08:03:57.000Z",
+    "AirTemperature": 9.6,
     "RelativeHumidty": 99,
-    "AverageWindSpeed": 2,
-    "AverageWindDirection": 317,
-    "WindGust": 5,
-    "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 1.1,
-    "PrecipitationPast6Hours": 2.3,
-    "PrecipitationPast12Hours": 5,
-    "PrecipitationPast24Hours": 6.3,
+    "AverageWindSpeed": 3,
+    "AverageWindDirection": 125,
+    "WindGust": 6,
+    "Visibility": 1197,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 0.9,
+    "PrecipitationPast3Hours": 1,
+    "PrecipitationPast6Hours": 3.1,
+    "PrecipitationPast12Hours": 4.7,
+    "PrecipitationPast24Hours": 7.2,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 983,
+    "BarometricPressure": 984,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.2,
+        "SurfaceTemperature": 9.5,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 105
+        "RoadSurfaceCondition": 108
       }
     ],
     "SubSurfaceMeasurements": [
@@ -1430,13 +1430,13 @@
     "Latitude": 47.303516,
     "Longitude": -122.232946,
     "Elevation": 81,
-    "ReadingTime": "2025-11-06T06:48:04.000Z",
-    "AirTemperature": 15,
-    "RelativeHumidty": 54,
+    "ReadingTime": "2025-11-06T08:04:06.000Z",
+    "AirTemperature": 12.2,
+    "RelativeHumidty": 51,
     "AverageWindSpeed": 6,
-    "AverageWindDirection": 180,
-    "WindGust": 12,
-    "Visibility": 34,
+    "AverageWindDirection": 165,
+    "WindGust": 33,
+    "Visibility": 6,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
     "PrecipitationPast1Hour": null,
@@ -1445,12 +1445,12 @@
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 997,
+    "BarometricPressure": 998,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.3,
+        "SurfaceTemperature": 12.4,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -1468,12 +1468,12 @@
     "Latitude": 47.8309668,
     "Longitude": -122.2623592,
     "Elevation": 129,
-    "ReadingTime": "2025-11-06T06:48:06.000Z",
-    "AirTemperature": 13.2,
-    "RelativeHumidty": 83,
-    "AverageWindSpeed": 6,
-    "AverageWindDirection": 235,
-    "WindGust": 20,
+    "ReadingTime": "2025-11-06T08:04:09.000Z",
+    "AirTemperature": 10.9,
+    "RelativeHumidty": 94,
+    "AverageWindSpeed": 15,
+    "AverageWindDirection": 240,
+    "WindGust": 30,
     "Visibility": null,
     "PrecipitationIntensity": 11,
     "PrecipitationType": 41,
@@ -1483,12 +1483,12 @@
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 987,
+    "BarometricPressure": 988,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.4,
+        "SurfaceTemperature": 11.7,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -1496,7 +1496,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.5
+        "SubSurfaceTemperature": 11.7
       }
     ]
   },
@@ -1506,35 +1506,35 @@
     "Latitude": 48.963854,
     "Longitude": -122.484913,
     "Elevation": 115,
-    "ReadingTime": "2025-11-06T06:48:08.000Z",
-    "AirTemperature": 15.2,
-    "RelativeHumidty": 65,
-    "AverageWindSpeed": 21,
-    "AverageWindDirection": 160,
-    "WindGust": 30,
+    "ReadingTime": "2025-11-06T08:04:12.000Z",
+    "AirTemperature": 12.5,
+    "RelativeHumidty": 87,
+    "AverageWindSpeed": 18,
+    "AverageWindDirection": 200,
+    "WindGust": 29,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.3,
-    "PrecipitationPast12Hours": 4.9,
-    "PrecipitationPast24Hours": 6,
+    "PrecipitationIntensity": 3,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 1.1,
+    "PrecipitationPast3Hours": 1.1,
+    "PrecipitationPast6Hours": 1.3,
+    "PrecipitationPast12Hours": 4.6,
+    "PrecipitationPast24Hours": 7.1,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 995,
+    "BarometricPressure": 996,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12.7,
+        "SurfaceTemperature": 11.7,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 104
       }
     ],
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 10.1
+        "SubSurfaceTemperature": 10.4
       }
     ]
   },
@@ -1544,35 +1544,35 @@
     "Latitude": 48.891981,
     "Longitude": -122.48569,
     "Elevation": 90,
-    "ReadingTime": "2025-11-06T06:48:11.000Z",
-    "AirTemperature": 15.3,
-    "RelativeHumidty": 66,
-    "AverageWindSpeed": 22,
-    "AverageWindDirection": 155,
-    "WindGust": 38,
+    "ReadingTime": "2025-11-06T08:04:15.000Z",
+    "AirTemperature": 11.9,
+    "RelativeHumidty": 101,
+    "AverageWindSpeed": 17,
+    "AverageWindDirection": 165,
+    "WindGust": 25,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.7,
-    "PrecipitationPast12Hours": 5.8,
-    "PrecipitationPast24Hours": 7.6,
+    "PrecipitationIntensity": 3,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 2.2,
+    "PrecipitationPast3Hours": 2.2,
+    "PrecipitationPast6Hours": 2.6,
+    "PrecipitationPast12Hours": 5.6,
+    "PrecipitationPast24Hours": 9.7,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 995,
+    "BarometricPressure": 997,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 15.2,
+        "SurfaceTemperature": 12.8,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 104
       }
     ],
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 10.8
+        "SubSurfaceTemperature": 11
       }
     ]
   },
@@ -1582,27 +1582,27 @@
     "Latitude": 47.8474088,
     "Longitude": -122.0097597,
     "Elevation": 27,
-    "ReadingTime": "2025-11-06T06:48:45.000Z",
-    "AirTemperature": 14.5,
-    "RelativeHumidty": 84,
-    "AverageWindSpeed": 0,
-    "AverageWindDirection": 130,
-    "WindGust": 0,
+    "ReadingTime": "2025-11-06T08:04:48.000Z",
+    "AirTemperature": 11.5,
+    "RelativeHumidty": 101,
+    "AverageWindSpeed": 1,
+    "AverageWindDirection": 215,
+    "WindGust": 15,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.1,
-    "PrecipitationPast6Hours": 2.1,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
+    "PrecipitationPast1Hour": 3,
+    "PrecipitationPast3Hours": 3.1,
+    "PrecipitationPast6Hours": 4.8,
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 997,
+    "BarometricPressure": 999,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 14.1,
+        "SurfaceTemperature": 12.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -1610,7 +1610,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.2
+        "SubSurfaceTemperature": 11.4
       }
     ]
   },
@@ -1620,27 +1620,27 @@
     "Latitude": 47.353395,
     "Longitude": -122.2445671,
     "Elevation": 45,
-    "ReadingTime": "2025-11-06T06:48:55.000Z",
-    "AirTemperature": 14.4,
-    "RelativeHumidty": 79,
-    "AverageWindSpeed": 11,
-    "AverageWindDirection": 165,
-    "WindGust": 20,
+    "ReadingTime": "2025-11-06T08:04:58.000Z",
+    "AirTemperature": 11.9,
+    "RelativeHumidty": 96,
+    "AverageWindSpeed": 9,
+    "AverageWindDirection": 140,
+    "WindGust": 16,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
-    "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.1,
-    "PrecipitationPast12Hours": 0.1,
-    "PrecipitationPast24Hours": 0.2,
+    "PrecipitationPast1Hour": 0.3,
+    "PrecipitationPast3Hours": 0.4,
+    "PrecipitationPast6Hours": 0.4,
+    "PrecipitationPast12Hours": 0.5,
+    "PrecipitationPast24Hours": 0.6,
     "PrecipitationAccumulation": null,
     "BarometricPressure": 800,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 14.1,
+        "SurfaceTemperature": 12.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -1648,7 +1648,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 13.3
+        "SubSurfaceTemperature": 13.4
       }
     ]
   },
@@ -3036,17 +3036,17 @@
     "Latitude": 48.9983,
     "Longitude": -118.2245,
     "Elevation": 500,
-    "ReadingTime": "2025-11-06T06:37:18.000Z",
-    "AirTemperature": 5.5,
+    "ReadingTime": "2025-11-06T07:56:47.000Z",
+    "AirTemperature": 5.6,
     "RelativeHumidty": 96,
-    "AverageWindSpeed": 3,
-    "AverageWindDirection": 170,
-    "WindGust": 9,
+    "AverageWindSpeed": 1,
+    "AverageWindDirection": 130,
+    "WindGust": 8,
     "Visibility": 1770,
-    "PrecipitationIntensity": 10,
-    "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 0.1,
-    "PrecipitationPast3Hours": 0.2,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
+    "PrecipitationPast1Hour": 0.3,
+    "PrecipitationPast3Hours": 0.8,
     "PrecipitationPast6Hours": null,
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
@@ -3056,7 +3056,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 6.2,
+        "SurfaceTemperature": 5.8,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -3074,22 +3074,22 @@
     "Latitude": 48.607619,
     "Longitude": -118.47961,
     "Elevation": 1700,
-    "ReadingTime": "2025-11-06T06:39:32.000Z",
-    "AirTemperature": 2.2,
+    "ReadingTime": "2025-11-06T07:58:32.000Z",
+    "AirTemperature": 2.3,
     "RelativeHumidty": 91,
-    "AverageWindSpeed": 3,
-    "AverageWindDirection": 90,
-    "WindGust": 12,
-    "Visibility": 481,
-    "PrecipitationIntensity": 3,
-    "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 1.4,
-    "PrecipitationPast3Hours": 4.4,
-    "PrecipitationPast6Hours": 6.8,
-    "PrecipitationPast12Hours": 9.1,
-    "PrecipitationPast24Hours": 9.5,
+    "AverageWindSpeed": 17,
+    "AverageWindDirection": 240,
+    "WindGust": 30,
+    "Visibility": 661,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
+    "PrecipitationPast1Hour": 0.1,
+    "PrecipitationPast3Hours": 3.4,
+    "PrecipitationPast6Hours": 5.9,
+    "PrecipitationPast12Hours": 7.9,
+    "PrecipitationPast24Hours": 10.1,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 920,
+    "BarometricPressure": 928,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
@@ -3102,7 +3102,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 0.7
+        "SubSurfaceTemperature": 0.9
       }
     ]
   },
@@ -3112,19 +3112,19 @@
     "Latitude": 47.20381,
     "Longitude": -120.7074,
     "Elevation": 680,
-    "ReadingTime": "2025-11-06T06:48:37.000Z",
-    "AirTemperature": 8.8,
+    "ReadingTime": "2025-11-06T08:04:28.000Z",
+    "AirTemperature": 8.2,
     "RelativeHumidty": 88,
-    "AverageWindSpeed": 3,
-    "AverageWindDirection": 227,
-    "WindGust": 10,
+    "AverageWindSpeed": 2,
+    "AverageWindDirection": 287,
+    "WindGust": 7,
     "Visibility": 20000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.7,
-    "PrecipitationPast12Hours": 2.4,
+    "PrecipitationPast6Hours": 0.6,
+    "PrecipitationPast12Hours": 1.2,
     "PrecipitationPast24Hours": 5.9,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3132,9 +3132,9 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 9.7,
+        "SurfaceTemperature": 9.6,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 104
+        "RoadSurfaceCondition": 103
       }
     ],
     "SubSurfaceMeasurements": null
@@ -3171,19 +3171,19 @@
     "Latitude": 46.0456,
     "Longitude": -120.5671,
     "Elevation": 491,
-    "ReadingTime": "2025-11-06T06:39:04.000Z",
-    "AirTemperature": 12.6,
-    "RelativeHumidty": 66,
-    "AverageWindSpeed": 24,
+    "ReadingTime": "2025-11-06T07:39:04.000Z",
+    "AirTemperature": 11.2,
+    "RelativeHumidty": 74,
+    "AverageWindSpeed": 3,
     "AverageWindDirection": 5,
-    "WindGust": 36,
+    "WindGust": 10,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.6,
-    "PrecipitationPast12Hours": 1.7,
+    "PrecipitationPast6Hours": 0.2,
+    "PrecipitationPast12Hours": 1.6,
     "PrecipitationPast24Hours": 5.8,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3191,7 +3191,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12.7,
+        "SurfaceTemperature": 10.7,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3204,20 +3204,20 @@
     "Latitude": 46.638,
     "Longitude": -121.39,
     "Elevation": 1372,
-    "ReadingTime": "2025-11-06T06:48:31.000Z",
-    "AirTemperature": 4.6,
-    "RelativeHumidty": 90,
-    "AverageWindSpeed": 5,
-    "AverageWindDirection": 165,
-    "WindGust": 22,
+    "ReadingTime": "2025-11-06T08:04:22.000Z",
+    "AirTemperature": 3.5,
+    "RelativeHumidty": 100,
+    "AverageWindSpeed": 2,
+    "AverageWindDirection": 320,
+    "WindGust": 5,
     "Visibility": 2000,
     "PrecipitationIntensity": 10,
     "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 0.1,
-    "PrecipitationPast3Hours": 0.3,
-    "PrecipitationPast6Hours": 2.7,
-    "PrecipitationPast12Hours": 4.4,
-    "PrecipitationPast24Hours": 8.7,
+    "PrecipitationPast1Hour": 0.8,
+    "PrecipitationPast3Hours": 1.1,
+    "PrecipitationPast6Hours": 1.5,
+    "PrecipitationPast12Hours": 4.1,
+    "PrecipitationPast24Hours": 9.6,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
@@ -3237,19 +3237,19 @@
     "Latitude": 46.7137,
     "Longitude": -120.414,
     "Elevation": 628,
-    "ReadingTime": "2025-11-06T06:45:26.000Z",
-    "AirTemperature": 10,
-    "RelativeHumidty": 79,
-    "AverageWindSpeed": 12,
-    "AverageWindDirection": 225,
-    "WindGust": 22,
+    "ReadingTime": "2025-11-06T08:00:32.000Z",
+    "AirTemperature": 9.5,
+    "RelativeHumidty": 82,
+    "AverageWindSpeed": 8,
+    "AverageWindDirection": 255,
+    "WindGust": 11,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 1.8,
-    "PrecipitationPast12Hours": 3,
+    "PrecipitationPast6Hours": 0.8,
+    "PrecipitationPast12Hours": 2.6,
     "PrecipitationPast24Hours": 5.8,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3257,7 +3257,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 14.9,
+        "SurfaceTemperature": 13,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3275,19 +3275,19 @@
     "Latitude": 46.943,
     "Longitude": -120.165,
     "Elevation": 690,
-    "ReadingTime": "2025-11-06T06:45:35.000Z",
+    "ReadingTime": "2025-11-06T08:00:45.000Z",
     "AirTemperature": 7.6,
-    "RelativeHumidty": 87,
-    "AverageWindSpeed": 19,
+    "RelativeHumidty": 89,
+    "AverageWindSpeed": 17,
     "AverageWindDirection": 115,
-    "WindGust": 30,
+    "WindGust": 23,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.9,
-    "PrecipitationPast12Hours": 2.1,
+    "PrecipitationPast6Hours": 0.5,
+    "PrecipitationPast12Hours": 1.7,
     "PrecipitationPast24Hours": 4.9,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3295,7 +3295,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 9.6,
+        "SurfaceTemperature": 8.2,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 104
       }
@@ -3308,27 +3308,27 @@
     "Latitude": 46.436,
     "Longitude": -117.35,
     "Elevation": 541,
-    "ReadingTime": "2025-11-06T06:52:33.000Z",
-    "AirTemperature": 10.1,
-    "RelativeHumidty": 76,
-    "AverageWindSpeed": 24,
-    "AverageWindDirection": 265,
-    "WindGust": 42,
+    "ReadingTime": "2025-11-06T08:07:33.000Z",
+    "AirTemperature": 12,
+    "RelativeHumidty": 59,
+    "AverageWindSpeed": 13,
+    "AverageWindDirection": 251,
+    "WindGust": 22,
     "Visibility": 20000,
-    "PrecipitationIntensity": 10,
-    "PrecipitationType": 2,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": null,
-    "PrecipitationPast12Hours": null,
-    "PrecipitationPast24Hours": 0.4,
+    "PrecipitationPast3Hours": 0.1,
+    "PrecipitationPast6Hours": 0.1,
+    "PrecipitationPast12Hours": 0.1,
+    "PrecipitationPast24Hours": 0.5,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 9.2,
+        "SurfaceTemperature": 8.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -3341,19 +3341,19 @@
     "Latitude": 46.887,
     "Longitude": -120.427,
     "Elevation": 768,
-    "ReadingTime": "2025-11-06T06:45:43.000Z",
-    "AirTemperature": 6.5,
-    "RelativeHumidty": 99,
-    "AverageWindSpeed": 7,
-    "AverageWindDirection": 175,
-    "WindGust": 16,
+    "ReadingTime": "2025-11-06T08:00:54.000Z",
+    "AirTemperature": 7.1,
+    "RelativeHumidty": 95,
+    "AverageWindSpeed": 10,
+    "AverageWindDirection": 185,
+    "WindGust": 15,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 1,
-    "PrecipitationPast12Hours": 2.4,
+    "PrecipitationPast6Hours": 0.5,
+    "PrecipitationPast12Hours": 1.5,
     "PrecipitationPast24Hours": 7.5,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3361,13 +3361,13 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 9.2,
+        "SurfaceTemperature": 8,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 7.6,
+        "SurfaceTemperature": 7.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 102
       }
@@ -3385,19 +3385,19 @@
     "Latitude": 46.928,
     "Longitude": -120.5,
     "Elevation": 768,
-    "ReadingTime": "2025-11-06T06:45:49.000Z",
-    "AirTemperature": 10.1,
-    "RelativeHumidty": 78,
-    "AverageWindSpeed": 5,
-    "AverageWindDirection": 70,
-    "WindGust": 10,
+    "ReadingTime": "2025-11-06T08:01:01.000Z",
+    "AirTemperature": 9.6,
+    "RelativeHumidty": 79,
+    "AverageWindSpeed": 11,
+    "AverageWindDirection": 140,
+    "WindGust": 18,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.9,
-    "PrecipitationPast12Hours": 2.3,
+    "PrecipitationPast6Hours": 0.5,
+    "PrecipitationPast12Hours": 1.5,
     "PrecipitationPast24Hours": 5.7,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3405,7 +3405,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.7,
+        "SurfaceTemperature": 10.2,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3418,19 +3418,19 @@
     "Latitude": 47.078,
     "Longitude": -120.724,
     "Elevation": 566,
-    "ReadingTime": "2025-11-06T06:45:58.000Z",
+    "ReadingTime": "2025-11-06T08:01:10.000Z",
     "AirTemperature": 8.1,
     "RelativeHumidty": 88,
-    "AverageWindSpeed": 5,
-    "AverageWindDirection": 125,
-    "WindGust": 7,
+    "AverageWindSpeed": 13,
+    "AverageWindDirection": 110,
+    "WindGust": 15,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 1.4,
-    "PrecipitationPast12Hours": 4.5,
+    "PrecipitationPast6Hours": 1,
+    "PrecipitationPast12Hours": 2.1,
     "PrecipitationPast24Hours": 10.8,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3438,33 +3438,33 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 11.2,
+        "SurfaceTemperature": 9.6,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 104
       },
       {
         "SensorId": 1,
-        "SurfaceTemperature": 11.1,
+        "SurfaceTemperature": 9.3,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 104
       },
       {
         "SensorId": 2,
-        "SurfaceTemperature": 10.9,
+        "SurfaceTemperature": 9.4,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       },
       {
         "SensorId": 3,
-        "SurfaceTemperature": 11.3,
+        "SurfaceTemperature": 9.8,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 104
       }
     ],
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": -17.5
+        "SubSurfaceTemperature": -17.4
       }
     ]
   },
@@ -3474,19 +3474,19 @@
     "Latitude": 47.113,
     "Longitude": -120.786,
     "Elevation": 677,
-    "ReadingTime": "2025-11-06T06:46:59.000Z",
-    "AirTemperature": 7.2,
-    "RelativeHumidty": 95,
-    "AverageWindSpeed": 5,
-    "AverageWindDirection": 70,
-    "WindGust": 9,
+    "ReadingTime": "2025-11-06T08:02:47.000Z",
+    "AirTemperature": 7.3,
+    "RelativeHumidty": 94,
+    "AverageWindSpeed": 1,
+    "AverageWindDirection": 65,
+    "WindGust": 10,
     "Visibility": 2000,
-    "PrecipitationIntensity": 0,
-    "PrecipitationType": 0,
+    "PrecipitationIntensity": 10,
+    "PrecipitationType": 2,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 1.1,
-    "PrecipitationPast12Hours": 4.2,
+    "PrecipitationPast6Hours": 0.6,
+    "PrecipitationPast12Hours": 2.1,
     "PrecipitationPast24Hours": 11,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3494,7 +3494,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 11.1,
+        "SurfaceTemperature": 9.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       },
@@ -3506,9 +3506,9 @@
       },
       {
         "SensorId": 2,
-        "SurfaceTemperature": 9.7,
+        "SurfaceTemperature": 8.3,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 103
+        "RoadSurfaceCondition": 104
       },
       {
         "SensorId": 3,
@@ -3525,17 +3525,17 @@
     "Latitude": 46.1314,
     "Longitude": -119.6017,
     "Elevation": 329,
-    "ReadingTime": "2025-11-06T06:52:34.000Z",
+    "ReadingTime": "2025-11-06T08:07:34.000Z",
     "AirTemperature": 9.8,
-    "RelativeHumidty": 94,
-    "AverageWindSpeed": 19,
-    "AverageWindDirection": 127,
-    "WindGust": 22,
+    "RelativeHumidty": 92,
+    "AverageWindSpeed": 7,
+    "AverageWindDirection": 84,
+    "WindGust": 9,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.1,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 0.2,
     "PrecipitationPast12Hours": 0.3,
     "PrecipitationPast24Hours": 0.7,
@@ -3545,7 +3545,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.9,
+        "SurfaceTemperature": 11.3,
         "RoadFreezingTemperature": 0,
         "RoadSurfaceCondition": 103
       }
@@ -3563,16 +3563,16 @@
     "Latitude": 46.4964,
     "Longitude": -117.9716,
     "Elevation": 280,
-    "ReadingTime": "2025-11-06T06:38:52.000Z",
-    "AirTemperature": 11,
-    "RelativeHumidty": 85,
-    "AverageWindSpeed": 21,
-    "AverageWindDirection": 66,
-    "WindGust": 30,
+    "ReadingTime": "2025-11-06T07:38:53.000Z",
+    "AirTemperature": 11.9,
+    "RelativeHumidty": 83,
+    "AverageWindSpeed": 11,
+    "AverageWindDirection": 64,
+    "WindGust": 17,
     "Visibility": 2000,
-    "PrecipitationIntensity": 10,
-    "PrecipitationType": 2,
-    "PrecipitationPast1Hour": 0.5,
+    "PrecipitationIntensity": 0,
+    "PrecipitationType": 0,
+    "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": 0.7,
     "PrecipitationPast6Hours": 0.7,
     "PrecipitationPast12Hours": 0.7,
@@ -3583,7 +3583,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.9,
+        "SurfaceTemperature": 10.5,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
@@ -3596,17 +3596,17 @@
     "Latitude": 46.0446,
     "Longitude": -119.2246,
     "Elevation": 375,
-    "ReadingTime": "2025-11-06T06:52:36.000Z",
-    "AirTemperature": 8.3,
-    "RelativeHumidty": 97,
-    "AverageWindSpeed": 9,
-    "AverageWindDirection": 129,
-    "WindGust": 11,
+    "ReadingTime": "2025-11-06T08:07:36.000Z",
+    "AirTemperature": 8.7,
+    "RelativeHumidty": 94,
+    "AverageWindSpeed": 7,
+    "AverageWindDirection": 36,
+    "WindGust": 9,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.5,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 0.7,
     "PrecipitationPast12Hours": 0.7,
     "PrecipitationPast24Hours": 0.8,
@@ -3616,7 +3616,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 9.6,
+        "SurfaceTemperature": 8.5,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3629,12 +3629,12 @@
     "Latitude": 46.2504,
     "Longitude": -119.3695,
     "Elevation": 252,
-    "ReadingTime": "2025-11-06T06:52:38.000Z",
-    "AirTemperature": 11.3,
-    "RelativeHumidty": 86,
-    "AverageWindSpeed": 10,
-    "AverageWindDirection": 130,
-    "WindGust": 17,
+    "ReadingTime": "2025-11-06T08:07:37.000Z",
+    "AirTemperature": 11.2,
+    "RelativeHumidty": 82,
+    "AverageWindSpeed": 6,
+    "AverageWindDirection": 54,
+    "WindGust": 8,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
@@ -3649,7 +3649,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12,
+        "SurfaceTemperature": 11.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3688,17 +3688,17 @@
     "Latitude": 46.2176,
     "Longitude": -119.7489,
     "Elevation": 192,
-    "ReadingTime": "2025-11-06T06:52:41.000Z",
-    "AirTemperature": 10.9,
-    "RelativeHumidty": 83,
-    "AverageWindSpeed": 7,
-    "AverageWindDirection": 280,
+    "ReadingTime": "2025-11-06T08:07:40.000Z",
+    "AirTemperature": 11,
+    "RelativeHumidty": 82,
+    "AverageWindSpeed": 11,
+    "AverageWindDirection": 25,
     "WindGust": 15,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.7,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 2.9,
     "PrecipitationPast12Hours": 4,
     "PrecipitationPast24Hours": 6.1,
@@ -3708,7 +3708,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 14.7,
+        "SurfaceTemperature": 13.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3716,7 +3716,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 12.3
+        "SubSurfaceTemperature": 12.2
       }
     ]
   },
@@ -3726,18 +3726,18 @@
     "Latitude": 46.5385,
     "Longitude": -120.4718,
     "Elevation": 292,
-    "ReadingTime": "2025-11-06T06:39:10.000Z",
-    "AirTemperature": 11.3,
-    "RelativeHumidty": 82,
-    "AverageWindSpeed": 7,
-    "AverageWindDirection": 169,
-    "WindGust": 16,
+    "ReadingTime": "2025-11-06T07:39:12.000Z",
+    "AirTemperature": 12.7,
+    "RelativeHumidty": 73,
+    "AverageWindSpeed": 4,
+    "AverageWindDirection": 171,
+    "WindGust": 10,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.2,
+    "PrecipitationPast6Hours": 0.1,
     "PrecipitationPast12Hours": 0.4,
     "PrecipitationPast24Hours": 1.1,
     "PrecipitationAccumulation": null,
@@ -3746,7 +3746,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.5,
+        "SurfaceTemperature": 11.8,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3759,27 +3759,27 @@
     "Latitude": 46.5384,
     "Longitude": -120.472,
     "Elevation": 292,
-    "ReadingTime": "2025-11-06T06:48:16.000Z",
-    "AirTemperature": 11.5,
-    "RelativeHumidty": 80,
-    "AverageWindSpeed": 6,
-    "AverageWindDirection": 124,
+    "ReadingTime": "2025-11-06T08:04:07.000Z",
+    "AirTemperature": 11.2,
+    "RelativeHumidty": 82,
+    "AverageWindSpeed": 9,
+    "AverageWindDirection": 139,
     "WindGust": 12,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.4,
-    "PrecipitationPast12Hours": 0.9,
+    "PrecipitationPast6Hours": 0.2,
+    "PrecipitationPast12Hours": 0.7,
     "PrecipitationPast24Hours": 2.6,
     "PrecipitationAccumulation": null,
-    "BarometricPressure": 971,
+    "BarometricPressure": 972,
     "SnowDepth": null,
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12.9,
+        "SurfaceTemperature": 11.9,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3792,19 +3792,19 @@
     "Latitude": 46.393,
     "Longitude": -120.2411,
     "Elevation": 250,
-    "ReadingTime": "2025-11-06T06:48:17.000Z",
-    "AirTemperature": 11.7,
-    "RelativeHumidty": 78,
-    "AverageWindSpeed": 16,
-    "AverageWindDirection": 45,
-    "WindGust": 23,
+    "ReadingTime": "2025-11-06T08:04:08.000Z",
+    "AirTemperature": 12.2,
+    "RelativeHumidty": 82,
+    "AverageWindSpeed": 10,
+    "AverageWindDirection": 64,
+    "WindGust": 13,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.3,
-    "PrecipitationPast12Hours": 1,
+    "PrecipitationPast6Hours": null,
+    "PrecipitationPast12Hours": 0.8,
     "PrecipitationPast24Hours": 2.2,
     "PrecipitationAccumulation": null,
     "BarometricPressure": null,
@@ -3812,7 +3812,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13.2,
+        "SurfaceTemperature": 12.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3825,18 +3825,18 @@
     "Latitude": 46.3266,
     "Longitude": -120.0779,
     "Elevation": 236,
-    "ReadingTime": "2025-11-06T06:48:24.000Z",
-    "AirTemperature": 10.9,
-    "RelativeHumidty": 86,
-    "AverageWindSpeed": 10,
-    "AverageWindDirection": 35,
-    "WindGust": 14,
+    "ReadingTime": "2025-11-06T08:04:14.000Z",
+    "AirTemperature": 12.1,
+    "RelativeHumidty": 82,
+    "AverageWindSpeed": 18,
+    "AverageWindDirection": 94,
+    "WindGust": 30,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
     "PrecipitationPast3Hours": null,
-    "PrecipitationPast6Hours": 0.4,
+    "PrecipitationPast6Hours": 0.3,
     "PrecipitationPast12Hours": 1.5,
     "PrecipitationPast24Hours": 2.7,
     "PrecipitationAccumulation": null,
@@ -3845,7 +3845,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 12.7,
+        "SurfaceTemperature": 12.3,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3858,17 +3858,17 @@
     "Latitude": 46.5341,
     "Longitude": -119.8798,
     "Elevation": 385,
-    "ReadingTime": "2025-11-06T06:40:42.000Z",
-    "AirTemperature": 11.3,
-    "RelativeHumidty": 73,
-    "AverageWindSpeed": 2,
+    "ReadingTime": "2025-11-06T07:39:24.000Z",
+    "AirTemperature": 12.3,
+    "RelativeHumidty": 69,
+    "AverageWindSpeed": 1,
     "AverageWindDirection": 205,
-    "WindGust": 4,
+    "WindGust": 2,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.3,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 1.4,
     "PrecipitationPast12Hours": 2.7,
     "PrecipitationPast24Hours": 4.5,
@@ -3878,7 +3878,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 13,
+        "SurfaceTemperature": 12.6,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3929,17 +3929,17 @@
     "Latitude": 46.467063,
     "Longitude": -119.541111,
     "Elevation": 511,
-    "ReadingTime": "2025-11-06T06:37:46.000Z",
-    "AirTemperature": 12.1,
-    "RelativeHumidty": 76,
-    "AverageWindSpeed": 19,
-    "AverageWindDirection": 120,
-    "WindGust": 38,
+    "ReadingTime": "2025-11-06T07:53:50.000Z",
+    "AirTemperature": 11.1,
+    "RelativeHumidty": 84,
+    "AverageWindSpeed": 12,
+    "AverageWindDirection": 165,
+    "WindGust": 25,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 1.3,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 1.5,
     "PrecipitationPast12Hours": 2.2,
     "PrecipitationPast24Hours": 3.7,
@@ -3949,7 +3949,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 8.8,
+        "SurfaceTemperature": 8,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 103
       }
@@ -3957,7 +3957,7 @@
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 5.2
+        "SubSurfaceTemperature": -1.5
       }
     ]
   },
@@ -3967,17 +3967,17 @@
     "Latitude": 46.383155,
     "Longitude": -119.422786,
     "Elevation": 474,
-    "ReadingTime": "2025-11-06T06:37:49.000Z",
-    "AirTemperature": 11,
-    "RelativeHumidty": 91,
-    "AverageWindSpeed": 12,
-    "AverageWindDirection": 150,
-    "WindGust": 18,
+    "ReadingTime": "2025-11-06T07:53:53.000Z",
+    "AirTemperature": 11.6,
+    "RelativeHumidty": 87,
+    "AverageWindSpeed": 11,
+    "AverageWindDirection": 125,
+    "WindGust": 16,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.8,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": null,
     "PrecipitationPast12Hours": null,
     "PrecipitationPast24Hours": null,
@@ -3987,9 +3987,9 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.6,
+        "SurfaceTemperature": 10.5,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 105
+        "RoadSurfaceCondition": 104
       }
     ],
     "SubSurfaceMeasurements": []
@@ -4000,17 +4000,17 @@
     "Latitude": 46.325574,
     "Longitude": -119.316126,
     "Elevation": 424,
-    "ReadingTime": "2025-11-06T06:37:52.000Z",
-    "AirTemperature": 10.8,
-    "RelativeHumidty": 84,
-    "AverageWindSpeed": 6,
-    "AverageWindDirection": 100,
-    "WindGust": 11,
+    "ReadingTime": "2025-11-06T07:53:56.000Z",
+    "AirTemperature": 11.3,
+    "RelativeHumidty": 79,
+    "AverageWindSpeed": 9,
+    "AverageWindDirection": 135,
+    "WindGust": 13,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.3,
+    "PrecipitationPast3Hours": null,
     "PrecipitationPast6Hours": 0.4,
     "PrecipitationPast12Hours": 0.5,
     "PrecipitationPast24Hours": 1,
@@ -4020,15 +4020,15 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 11.7,
+        "SurfaceTemperature": 10.5,
         "RoadFreezingTemperature": null,
-        "RoadSurfaceCondition": 104
+        "RoadSurfaceCondition": 103
       }
     ],
     "SubSurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SubSurfaceTemperature": 11.1
+        "SubSurfaceTemperature": 11.3
       }
     ]
   },
@@ -4038,18 +4038,18 @@
     "Latitude": 46.049483,
     "Longitude": -118.495917,
     "Elevation": 181,
-    "ReadingTime": "2025-11-06T06:37:55.000Z",
-    "AirTemperature": 9.8,
-    "RelativeHumidty": 93,
-    "AverageWindSpeed": 8,
-    "AverageWindDirection": 345,
-    "WindGust": 15,
+    "ReadingTime": "2025-11-06T07:53:59.000Z",
+    "AirTemperature": 11.3,
+    "RelativeHumidty": 86,
+    "AverageWindSpeed": 0,
+    "AverageWindDirection": 50,
+    "WindGust": 0,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.4,
-    "PrecipitationPast6Hours": 0.7,
+    "PrecipitationPast3Hours": 0.1,
+    "PrecipitationPast6Hours": 0.6,
     "PrecipitationPast12Hours": 0.8,
     "PrecipitationPast24Hours": 1.1,
     "PrecipitationAccumulation": null,
@@ -4076,17 +4076,17 @@
     "Latitude": 46.57141,
     "Longitude": -118.98851,
     "Elevation": 262,
-    "ReadingTime": "2025-11-06T06:40:49.000Z",
-    "AirTemperature": 9,
-    "RelativeHumidty": 96,
-    "AverageWindSpeed": 14,
-    "AverageWindDirection": 149,
-    "WindGust": 22,
+    "ReadingTime": "2025-11-06T07:39:31.000Z",
+    "AirTemperature": 10.2,
+    "RelativeHumidty": 86,
+    "AverageWindSpeed": 16,
+    "AverageWindDirection": 157,
+    "WindGust": 23,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.4,
+    "PrecipitationPast3Hours": 0.2,
     "PrecipitationPast6Hours": 0.5,
     "PrecipitationPast12Hours": 0.5,
     "PrecipitationPast24Hours": 1.2,
@@ -4096,7 +4096,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.3,
+        "SurfaceTemperature": 11,
         "RoadFreezingTemperature": -0.1,
         "RoadSurfaceCondition": 104
       }
@@ -4114,17 +4114,17 @@
     "Latitude": 46.05456,
     "Longitude": -118.66769,
     "Elevation": 141,
-    "ReadingTime": "2025-11-06T06:37:56.000Z",
-    "AirTemperature": 10.2,
-    "RelativeHumidty": 91,
-    "AverageWindSpeed": 11,
-    "AverageWindDirection": 14,
-    "WindGust": 18,
+    "ReadingTime": "2025-11-06T07:54:00.000Z",
+    "AirTemperature": 10.4,
+    "RelativeHumidty": 89,
+    "AverageWindSpeed": 6,
+    "AverageWindDirection": 94,
+    "WindGust": 11,
     "Visibility": 2000,
     "PrecipitationIntensity": 0,
     "PrecipitationType": 0,
     "PrecipitationPast1Hour": null,
-    "PrecipitationPast3Hours": 0.4,
+    "PrecipitationPast3Hours": 0.2,
     "PrecipitationPast6Hours": 0.5,
     "PrecipitationPast12Hours": 0.5,
     "PrecipitationPast24Hours": 0.6,
@@ -4134,7 +4134,7 @@
     "SurfaceMeasurements": [
       {
         "SensorId": 0,
-        "SurfaceTemperature": 10.6,
+        "SurfaceTemperature": 9.1,
         "RoadFreezingTemperature": null,
         "RoadSurfaceCondition": 105
       }
