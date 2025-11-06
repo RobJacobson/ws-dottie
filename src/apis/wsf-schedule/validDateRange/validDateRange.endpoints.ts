@@ -2,7 +2,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./validDateRange.input";
 import * as o from "./validDateRange.output";
 
-export const scheduleValidDateRangeResource: EndpointGroup = {
+export const scheduleValidDateRangeResource = {
   name: "schedule-valid-date-range",
   documentation: {
     resourceDescription:
@@ -25,4 +25,4 @@ export const scheduleValidDateRangeResource: EndpointGroup = {
       o.ValidDateRange
     >,
   },
-};
+} satisfies EndpointGroup;

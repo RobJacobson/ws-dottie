@@ -2,7 +2,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./tollTripVersion.input";
 import * as o from "./tollTripVersion.output";
 
-export const tollTripVersionResource: EndpointGroup = {
+export const tollTripVersionResource = {
   name: "toll-trip-version",
   documentation: {
     resourceDescription:
@@ -24,4 +24,4 @@ export const tollTripVersionResource: EndpointGroup = {
       o.TollTripVersion
     >,
   },
-};
+} satisfies EndpointGroup;

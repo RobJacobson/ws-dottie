@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./routes.input";
 import * as o from "./routes.output";
 
-export const routesResource: EndpointGroup = {
+export const routesResource = {
   name: "routes",
   documentation: {
     resourceDescription:
@@ -35,4 +35,4 @@ export const routesResource: EndpointGroup = {
       endpointDescription: "Returns multiple of Routes for terminal pair.",
     } satisfies EndpointDefinition<i.RoutesByTerminalsInput, o.Route[]>,
   },
-};
+} satisfies EndpointGroup;

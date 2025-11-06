@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselBasics.input";
 import * as o from "./vesselBasics.output";
 
-export const vesselBasicsResource: EndpointGroup = {
+export const vesselBasicsResource = {
   name: "vessel-basics",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const vesselBasicsResource: EndpointGroup = {
         "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
     } satisfies EndpointDefinition<i.VesselBasicsByIdInput, o.VesselBasic>,
   },
-};
+} satisfies EndpointGroup;

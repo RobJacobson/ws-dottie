@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./activeSeasons.input";
 import * as o from "./activeSeasons.output";
 
-export const activeSeasonsResource: EndpointGroup = {
+export const activeSeasonsResource = {
   name: "active-seasons",
   documentation: {
     resourceDescription:
@@ -26,4 +26,4 @@ export const activeSeasonsResource: EndpointGroup = {
       o.ScheduleBase[]
     >,
   },
-};
+} satisfies EndpointGroup;

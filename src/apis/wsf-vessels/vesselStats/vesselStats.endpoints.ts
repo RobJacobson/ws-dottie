@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselStats.input";
 import * as o from "./vesselStats.output";
 
-export const vesselStatsResource: EndpointGroup = {
+export const vesselStatsResource = {
   name: "vessel-stats",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const vesselStatsResource: EndpointGroup = {
         "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
     } satisfies EndpointDefinition<i.VesselStatsByIdInput, o.VesselStats>,
   },
-};
+} satisfies EndpointGroup;

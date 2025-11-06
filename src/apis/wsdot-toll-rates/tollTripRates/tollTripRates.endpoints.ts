@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./tollTripRates.input";
 import * as o from "./tollTripRates.output";
 
-export const tollTripRatesResource: EndpointGroup = {
+export const tollTripRatesResource = {
   name: "toll-trip-rates",
   documentation: {
     resourceDescription:
@@ -51,4 +51,4 @@ export const tollTripRatesResource: EndpointGroup = {
       o.TollTripsRates
     >,
   },
-};
+} satisfies EndpointGroup;

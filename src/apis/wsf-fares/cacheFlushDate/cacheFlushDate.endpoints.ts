@@ -11,7 +11,7 @@ const BUSINESS_CONTEXT =
 const ENDPOINT_DESCRIPTION =
   "Returns a single CacheFlushDate for the WSF fares system.";
 
-export const cacheFlushDateGroup: EndpointGroup = {
+export const cacheFlushDateGroup = {
   name: "cache-flush-date",
   documentation: {
     resourceDescription: RESOURCE_DESCRIPTION,
@@ -32,4 +32,4 @@ export const cacheFlushDateGroup: EndpointGroup = {
       o.FaresCacheFlushDateResponse
     >,
   },
-};
+} satisfies EndpointGroup;

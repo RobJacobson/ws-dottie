@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalLocations.input";
 import * as o from "./terminalLocations.output";
 
-export const terminalLocationsResource: EndpointGroup = {
+export const terminalLocationsResource = {
   name: "terminal-locations",
   documentation: {
     resourceDescription:
@@ -39,4 +39,4 @@ export const terminalLocationsResource: EndpointGroup = {
       o.TerminalLocation
     >,
   },
-};
+} satisfies EndpointGroup;

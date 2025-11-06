@@ -1,9 +1,16 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./cameras.input";
-import * as o from "./cameras.output";
+import {
+  type CameraInput,
+  type CamerasInput,
+  type CamerasSearchInput,
+  cameraInputSchema,
+  camerasInputSchema,
+  camerasSearchInputSchema,
+} from "./cameras.input";
+import { type Camera, camerasOutputSchema } from "./cameras.output";
 
-export const camerasGroup: EndpointGroup = {
+export const camerasGroup = {
   name: "cameras",
   documentation: {
     resourceDescription:
@@ -16,17 +23,17 @@ export const camerasGroup: EndpointGroup = {
     getHighwayCameras: {
       function: "getHighwayCameras",
       endpoint: "/getCamerasAsJson",
-      inputSchema: i.camerasSchema,
-      outputSchema: z.array(o.cameraSchema),
+      inputSchema: camerasInputSchema,
+      outputSchema: z.array(camerasOutputSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple Camera items for statewide coverage.",
-    } satisfies EndpointDefinition<i.CamerasInput, o.Camera[]>,
+    } satisfies EndpointDefinition<CamerasInput, Camera[]>,
     searchHighwayCamerasByRouteAndMilepost: {
       function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
-      inputSchema: i.camerasSearchSchema,
-      outputSchema: z.array(o.cameraSchema),
+      inputSchema: camerasSearchInputSchema,
+      outputSchema: z.array(camerasOutputSchema),
       sampleParams: {
         StateRoute: "I-5",
         StartingMilepost: 10,
@@ -34,15 +41,15 @@ export const camerasGroup: EndpointGroup = {
       },
       endpointDescription:
         "Returns multiple Camera items for specified route and milepost range.",
-    } satisfies EndpointDefinition<i.CamerasSearchInput, o.Camera[]>,
+    } satisfies EndpointDefinition<CamerasSearchInput, Camera[]>,
     getHighwayCameraByCameraId: {
       function: "getHighwayCameraByCameraId",
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
-      inputSchema: i.cameraSchema,
-      outputSchema: o.cameraSchema,
+      inputSchema: cameraInputSchema,
+      outputSchema: camerasOutputSchema,
       sampleParams: { CameraID: 9818 },
       endpointDescription:
         "Returns single Camera item for specific camera identifier.",
-    } satisfies EndpointDefinition<i.CameraInput, o.Camera>,
+    } satisfies EndpointDefinition<CameraInput, Camera>,
   },
-};
+} satisfies EndpointGroup;

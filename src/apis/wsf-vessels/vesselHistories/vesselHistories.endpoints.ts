@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselHistories.input";
 import * as o from "./vesselHistories.output";
 
-export const vesselHistoriesResource: EndpointGroup = {
+export const vesselHistoriesResource = {
   name: "vessel-histories",
   documentation: {
     resourceDescription:
@@ -41,4 +41,4 @@ export const vesselHistoriesResource: EndpointGroup = {
       o.VesselHistoryResponse[]
     >,
   },
-};
+} satisfies EndpointGroup;

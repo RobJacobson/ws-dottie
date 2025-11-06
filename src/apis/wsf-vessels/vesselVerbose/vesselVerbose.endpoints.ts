@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselVerbose.input";
 import * as o from "./vesselVerbose.output";
 
-export const vesselVerboseResource: EndpointGroup = {
+export const vesselVerboseResource = {
   name: "vessel-verbose",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const vesselVerboseResource: EndpointGroup = {
         "Returns a single VesselVerbose object for the specified vessel identifier.",
     } satisfies EndpointDefinition<i.VesselVerboseByIdInput, o.VesselVerbose>,
   },
-};
+} satisfies EndpointGroup;

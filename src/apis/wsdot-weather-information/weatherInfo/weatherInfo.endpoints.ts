@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./weatherInfo.input";
 import * as o from "./weatherInfo.output";
 
-export const weatherInfoResource: EndpointGroup = {
+export const weatherInfoResource = {
   name: "weather-info",
   documentation: {
     resourceDescription:
@@ -72,4 +72,4 @@ export const weatherInfoResource: EndpointGroup = {
       o.WeatherInfo[]
     >,
   },
-};
+} satisfies EndpointGroup;

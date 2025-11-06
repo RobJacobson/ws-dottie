@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./fareTotals.input";
 import * as o from "./fareTotals.output";
 
-export const fareTotalsGroup: EndpointGroup = {
+export const fareTotalsGroup = {
   name: "fare-totals",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const fareTotalsGroup: EndpointGroup = {
         "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
     } satisfies EndpointDefinition<i.FareTotalsInput, o.FareTotalResponse[]>,
   },
-};
+} satisfies EndpointGroup;

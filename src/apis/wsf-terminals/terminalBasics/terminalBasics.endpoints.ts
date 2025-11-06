@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalBasics.input";
 import * as o from "./terminalBasics.output";
 
-export const terminalBasicsResource: EndpointGroup = {
+export const terminalBasicsResource = {
   name: "terminal-basics",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const terminalBasicsResource: EndpointGroup = {
         "Returns a TerminalBasic object containing essential identification and status information for the specified terminal.",
     } satisfies EndpointDefinition<i.TerminalBasicsByIdInput, o.TerminalBasic>,
   },
-};
+} satisfies EndpointGroup;

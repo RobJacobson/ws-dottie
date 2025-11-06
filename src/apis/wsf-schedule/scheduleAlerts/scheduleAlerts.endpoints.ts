@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./scheduleAlerts.input";
 import * as o from "./scheduleAlerts.output";
 
-export const scheduleAlertsResource: EndpointGroup = {
+export const scheduleAlertsResource = {
   name: "schedule-alerts",
   documentation: {
     resourceDescription:
@@ -21,4 +21,4 @@ export const scheduleAlertsResource: EndpointGroup = {
       endpointDescription: "Returns all current schedule alerts.",
     } satisfies EndpointDefinition<i.AllAlertsInput, o.AlertDetail[]>,
   },
-};
+} satisfies EndpointGroup;

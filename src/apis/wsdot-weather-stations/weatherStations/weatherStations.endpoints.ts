@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./weatherStations.input";
 import * as o from "./weatherStations.output";
 
-export const weatherStationsResource: EndpointGroup = {
+export const weatherStationsResource = {
   name: "weather-stations",
   documentation: {
     resourceDescription:
@@ -23,4 +23,4 @@ export const weatherStationsResource: EndpointGroup = {
         "Returns multiple WeatherStation items for statewide coverage.",
     } satisfies EndpointDefinition<i.WeatherStationsInput, o.WeatherStation[]>,
   },
-};
+} satisfies EndpointGroup;

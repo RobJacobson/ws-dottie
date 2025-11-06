@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./serviceDisruptions.input";
 import * as o from "./serviceDisruptions.output";
 
-export const serviceDisruptionsResource: EndpointGroup = {
+export const serviceDisruptionsResource = {
   name: "service-disruptions",
   documentation: {
     resourceDescription:
@@ -27,4 +27,4 @@ export const serviceDisruptionsResource: EndpointGroup = {
       o.ServiceDisruption[]
     >,
   },
-};
+} satisfies EndpointGroup;

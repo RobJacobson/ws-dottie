@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./subSurfaceMeasurements.input";
 import * as o from "./subSurfaceMeasurements.output";
 
-export const subSurfaceMeasurementsResource: EndpointGroup = {
+export const subSurfaceMeasurementsResource = {
   name: "sub-surface-measurements",
   documentation: {
     resourceDescription:
@@ -26,4 +26,4 @@ export const subSurfaceMeasurementsResource: EndpointGroup = {
       o.ScanwebSubSurfaceMeasurements[]
     >,
   },
-};
+} satisfies EndpointGroup;

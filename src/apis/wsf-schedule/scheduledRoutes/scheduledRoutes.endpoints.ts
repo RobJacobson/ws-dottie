@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./scheduledRoutes.input";
 import * as o from "./scheduledRoutes.output";
 
-export const scheduledRoutesResource: EndpointGroup = {
+export const scheduledRoutesResource = {
   name: "scheduled-routes",
   documentation: {
     resourceDescription:
@@ -33,4 +33,4 @@ export const scheduledRoutesResource: EndpointGroup = {
       o.SchedRoute[]
     >,
   },
-};
+} satisfies EndpointGroup;

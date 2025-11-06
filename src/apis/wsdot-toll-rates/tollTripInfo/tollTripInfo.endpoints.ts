@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./tollTripInfo.input";
 import * as o from "./tollTripInfo.output";
 
-export const tollTripInfoResource: EndpointGroup = {
+export const tollTripInfoResource = {
   name: "toll-trip-info",
   documentation: {
     resourceDescription:
@@ -21,4 +21,4 @@ export const tollTripInfoResource: EndpointGroup = {
       endpointDescription: "Returns trip information for all toll trips.",
     } satisfies EndpointDefinition<i.GetTollTripInfoInput, o.TollTripInfo[]>,
   },
-};
+} satisfies EndpointGroup;

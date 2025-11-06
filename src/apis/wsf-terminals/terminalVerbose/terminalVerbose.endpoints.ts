@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalVerbose.input";
 import * as o from "./terminalVerbose.output";
 
-export const terminalVerboseResource: EndpointGroup = {
+export const terminalVerboseResource = {
   name: "terminal-verbose",
   documentation: {
     resourceDescription:
@@ -35,4 +35,4 @@ export const terminalVerboseResource: EndpointGroup = {
       o.TerminalVerbose
     >,
   },
-};
+} satisfies EndpointGroup;

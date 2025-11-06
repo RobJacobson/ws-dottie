@@ -5,7 +5,7 @@ import * as o from "./cacheFlushDate.output";
 const DESCRIPTION =
   "Cache flush date indicates when schedule data was last updated, helping clients determine if they need to refresh their cached schedule information.";
 
-export const scheduleCacheFlushDateResource: EndpointGroup = {
+export const scheduleCacheFlushDateResource = {
   name: "schedule-cache-flush-date",
   documentation: {
     resourceDescription:
@@ -28,4 +28,4 @@ export const scheduleCacheFlushDateResource: EndpointGroup = {
       o.SchedulesCacheFlushDate
     >,
   },
-};
+} satisfies EndpointGroup;

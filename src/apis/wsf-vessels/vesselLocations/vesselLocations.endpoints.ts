@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./vesselLocations.input";
 import * as o from "./vesselLocations.output";
 
-export const vesselLocationsGroup: EndpointGroup = {
+export const vesselLocationsGroup = {
   name: "vessel-locations",
   documentation: {
     resourceDescription:
@@ -36,4 +36,4 @@ export const vesselLocationsGroup: EndpointGroup = {
       o.VesselLocations
     >,
   },
-};
+} satisfies EndpointGroup;

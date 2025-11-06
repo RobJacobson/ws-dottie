@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminals.input";
 import * as o from "./terminals.output";
 
-export const scheduleTerminalsResource: EndpointGroup = {
+export const scheduleTerminalsResource = {
   name: "schedule-terminals",
   documentation: {
     resourceDescription:
@@ -43,4 +43,4 @@ export const scheduleTerminalsResource: EndpointGroup = {
       o.TerminalMate[]
     >,
   },
-};
+} satisfies EndpointGroup;

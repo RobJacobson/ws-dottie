@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./flowData.input";
 import * as o from "./flowData.output";
 
-export const flowDataGroup: EndpointGroup = {
+export const flowDataGroup = {
   name: "flow-data",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const flowDataGroup: EndpointGroup = {
         "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
     } satisfies EndpointDefinition<i.GetTrafficFlowInput, o.FlowData>,
   },
-};
+} satisfies EndpointGroup;

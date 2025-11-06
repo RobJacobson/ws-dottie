@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./sailings.input";
 import * as o from "./sailings.output";
 
-export const sailingsResource: EndpointGroup = {
+export const sailingsResource = {
   name: "sailings",
   documentation: {
     resourceDescription:
@@ -35,4 +35,4 @@ export const sailingsResource: EndpointGroup = {
         "Returns sailing data for the specified scheduled route ID.",
     } satisfies EndpointDefinition<i.SailingsByRouteIdInput, o.Sailing[]>,
   },
-};
+} satisfies EndpointGroup;

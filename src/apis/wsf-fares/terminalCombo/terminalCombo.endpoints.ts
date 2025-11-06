@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalCombo.input";
 import * as o from "./terminalCombo.output";
 
-export const terminalComboGroup: EndpointGroup = {
+export const terminalComboGroup = {
   name: "terminal-combo",
   documentation: {
     resourceDescription:
@@ -44,4 +44,4 @@ export const terminalComboGroup: EndpointGroup = {
       o.TerminalComboVerboseResponse[]
     >,
   },
-};
+} satisfies EndpointGroup;

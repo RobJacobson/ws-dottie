@@ -1,7 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./bridgeClearances.input";
-import * as o from "./bridgeClearances.output";
+import {
+  type BridgeClearancesByRouteInput,
+  type BridgeClearancesInput,
+  bridgeClearancesByRouteInputSchema,
+  bridgeClearancesInputSchema,
+} from "./bridgeClearances.input";
+import {
+  type BridgeDataGIS,
+  bridgeClearancesOutputSchema,
+} from "./bridgeClearances.output";
 
 export const bridgeClearancesGroup = {
   name: "bridge-clearances",
@@ -16,23 +24,23 @@ export const bridgeClearancesGroup = {
     getBridgeClearances: {
       function: "getBridgeClearances",
       endpoint: "/getClearancesAsJson",
-      inputSchema: i.bridgeClearancesSchema,
-      outputSchema: z.array(o.bridgeDataGISSchema),
+      inputSchema: bridgeClearancesInputSchema,
+      outputSchema: z.array(bridgeClearancesOutputSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
-    } satisfies EndpointDefinition<i.BridgeClearancesInput, o.BridgeDataGIS[]>,
+    } satisfies EndpointDefinition<BridgeClearancesInput, BridgeDataGIS[]>,
     getBridgeClearancesByRoute: {
       function: "getBridgeClearancesByRoute",
       endpoint: "/getClearancesAsJson?Route={Route}",
-      inputSchema: i.bridgeClearancesByRouteSchema,
-      outputSchema: z.array(o.bridgeDataGISSchema),
+      inputSchema: bridgeClearancesByRouteInputSchema,
+      outputSchema: z.array(bridgeClearancesOutputSchema),
       sampleParams: { Route: "005" },
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
     } satisfies EndpointDefinition<
-      i.BridgeClearancesByRouteInput,
-      o.BridgeDataGIS[]
+      BridgeClearancesByRouteInput,
+      BridgeDataGIS[]
     >,
   },
 } satisfies EndpointGroup;

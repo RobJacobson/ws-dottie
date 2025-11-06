@@ -2,7 +2,7 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import * as i from "./scheduleToday.input";
 import * as o from "./scheduleToday.output";
 
-export const scheduleTodayResource: EndpointGroup = {
+export const scheduleTodayResource = {
   name: "schedule-today",
   documentation: {
     resourceDescription:
@@ -37,4 +37,4 @@ export const scheduleTodayResource: EndpointGroup = {
       o.Schedule
     >,
   },
-};
+} satisfies EndpointGroup;

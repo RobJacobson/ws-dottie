@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalWaitTimes.input";
 import * as o from "./terminalWaitTimes.output";
 
-export const terminalWaitTimesResource: EndpointGroup = {
+export const terminalWaitTimesResource = {
   name: "terminal-wait-times",
   documentation: {
     resourceDescription:
@@ -38,4 +38,4 @@ export const terminalWaitTimesResource: EndpointGroup = {
       o.TerminalWaitTime
     >,
   },
-};
+} satisfies EndpointGroup;

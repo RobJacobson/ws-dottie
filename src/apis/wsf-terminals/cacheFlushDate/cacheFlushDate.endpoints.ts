@@ -5,7 +5,7 @@ import * as o from "./cacheFlushDate.output";
 const DESCRIPTION =
   "Returns the date and time when the WSF terminals data was last updated. This operation helps applications coordinate caching of terminals data that changes infrequently. When the returned date changes, applications should refresh their cached data.";
 
-export const cacheFlushDateResource: EndpointGroup = {
+export const cacheFlushDateResource = {
   name: "cache-flush-date",
   documentation: {
     resourceDescription: DESCRIPTION,
@@ -26,4 +26,4 @@ export const cacheFlushDateResource: EndpointGroup = {
       o.TerminalsCacheFlushDate
     >,
   },
-};
+} satisfies EndpointGroup;

@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./routeDetails.input";
 import * as o from "./routeDetails.output";
 
-export const routeDetailsResource: EndpointGroup = {
+export const routeDetailsResource = {
   name: "route-details",
   documentation: {
     resourceDescription:
@@ -56,4 +56,4 @@ export const routeDetailsResource: EndpointGroup = {
       o.RouteDetail[]
     >,
   },
-};
+} satisfies EndpointGroup;

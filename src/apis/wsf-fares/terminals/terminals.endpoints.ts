@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminals.input";
 import * as o from "./terminals.output";
 
-export const terminalsGroup: EndpointGroup = {
+export const terminalsGroup = {
   name: "terminals",
   documentation: {
     resourceDescription:
@@ -33,4 +33,4 @@ export const terminalsGroup: EndpointGroup = {
         "Returns arriving terminals for the given departing terminal and trip date.",
     } satisfies EndpointDefinition<i.TerminalMatesInput, o.TerminalResponse[]>,
   },
-};
+} satisfies EndpointGroup;

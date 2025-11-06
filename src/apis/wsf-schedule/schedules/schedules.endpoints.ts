@@ -3,7 +3,7 @@ import { datesHelper } from "@/shared/utils";
 import * as i from "./schedules.input";
 import * as o from "./schedules.output";
 
-export const schedulesResource: EndpointGroup = {
+export const schedulesResource = {
   name: "schedules",
   documentation: {
     resourceDescription:
@@ -35,4 +35,4 @@ export const schedulesResource: EndpointGroup = {
       endpointDescription: "Returns single of Schedules for terminal pair.",
     } satisfies EndpointDefinition<i.ScheduleByTerminalComboInput, o.Schedule>,
   },
-};
+} satisfies EndpointGroup;

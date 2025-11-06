@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./travelTimeRoutes.input";
 import * as o from "./travelTimeRoutes.output";
 
-export const travelTimeRoutesGroup: EndpointGroup = {
+export const travelTimeRoutesGroup = {
   name: "travel-time-routes",
   documentation: {
     resourceDescription:
@@ -32,4 +32,4 @@ export const travelTimeRoutesGroup: EndpointGroup = {
         "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
     } satisfies EndpointDefinition<i.GetTravelTimesInput, o.TravelTimeRoute[]>,
   },
-};
+} satisfies EndpointGroup;

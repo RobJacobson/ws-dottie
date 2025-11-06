@@ -1,9 +1,19 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./passConditions.input";
-import * as o from "./passConditions.output";
+import {
+  type GetMountainPassConditionInput,
+  type GetMountainPassConditionsInput,
+  getMountainPassConditionInputSchema,
+  getMountainPassConditionsInputSchema,
+} from "./passConditions.input";
+import {
+  type PassCondition,
+  passConditionOutputSchema,
+  type TravelRestriction,
+  travelRestrictionOutputSchema,
+} from "./passConditions.output";
 
-export const passConditionsGroup: EndpointGroup = {
+export const passConditionsGroup = {
   name: "pass-conditions",
   documentation: {
     resourceDescription:
@@ -17,26 +27,26 @@ export const passConditionsGroup: EndpointGroup = {
       function: "getMountainPassConditionById",
       endpoint:
         "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
-      inputSchema: i.getMountainPassConditionSchema,
-      outputSchema: o.passConditionSchema,
+      inputSchema: getMountainPassConditionInputSchema,
+      outputSchema: passConditionOutputSchema,
       sampleParams: { PassConditionID: 12 },
       endpointDescription:
-        "Returns a single PassCondition for the specified mountain pass identifier.",
+        "Returns a single PassCondition for specified mountain pass identifier.",
     } satisfies EndpointDefinition<
-      i.GetMountainPassConditionInput,
-      o.PassCondition
+      GetMountainPassConditionInput,
+      PassCondition
     >,
     getMountainPassConditions: {
       function: "getMountainPassConditions",
       endpoint: "/getMountainPassConditionsAsJson",
-      inputSchema: i.getMountainPassConditionsSchema,
-      outputSchema: z.array(o.passConditionSchema),
+      inputSchema: getMountainPassConditionsInputSchema,
+      outputSchema: z.array(passConditionOutputSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple PassCondition items for all monitored mountain passes.",
     } satisfies EndpointDefinition<
-      i.GetMountainPassConditionsInput,
-      o.PassCondition[]
+      GetMountainPassConditionsInput,
+      PassCondition[]
     >,
   },
-};
+} satisfies EndpointGroup;

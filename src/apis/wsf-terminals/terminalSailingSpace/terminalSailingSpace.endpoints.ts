@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalSailingSpace.input";
 import * as o from "./terminalSailingSpace.output";
 
-export const terminalSailingSpaceResource: EndpointGroup = {
+export const terminalSailingSpaceResource = {
   name: "terminal-sailing-space",
   documentation: {
     resourceDescription:
@@ -37,4 +37,4 @@ export const terminalSailingSpaceResource: EndpointGroup = {
       o.TerminalSailingSpace
     >,
   },
-};
+} satisfies EndpointGroup;

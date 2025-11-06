@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalMates.input";
 import * as o from "./terminalMates.output";
 
-export const scheduleTerminalMatesResource: EndpointGroup = {
+export const scheduleTerminalMatesResource = {
   name: "schedule-terminal-mates",
   documentation: {
     resourceDescription:
@@ -24,4 +24,4 @@ export const scheduleTerminalMatesResource: EndpointGroup = {
         "Returns multiple of Terminal for specified trip date and terminal ID.",
     } satisfies EndpointDefinition<i.ScheduleTerminalMatesInput, o.Terminal[]>,
   },
-};
+} satisfies EndpointGroup;

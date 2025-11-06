@@ -4,7 +4,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./fareLineItems.input";
 import * as o from "./fareLineItems.output";
 
-export const fareLineItemsGroup: EndpointGroup = {
+export const fareLineItemsGroup = {
   name: "fare-line-items",
   documentation: {
     resourceDescription:
@@ -60,4 +60,4 @@ export const fareLineItemsGroup: EndpointGroup = {
       o.LineItemVerboseResponse
     >,
   },
-};
+} satisfies EndpointGroup;

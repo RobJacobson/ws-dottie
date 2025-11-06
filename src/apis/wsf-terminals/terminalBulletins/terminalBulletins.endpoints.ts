@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./terminalBulletins.input";
 import * as o from "./terminalBulletins.output";
 
-export const terminalBulletinsResource: EndpointGroup = {
+export const terminalBulletinsResource = {
   name: "terminal-bulletins",
   documentation: {
     resourceDescription:
@@ -38,4 +38,4 @@ export const terminalBulletinsResource: EndpointGroup = {
       o.TerminalBulletin
     >,
   },
-};
+} satisfies EndpointGroup;

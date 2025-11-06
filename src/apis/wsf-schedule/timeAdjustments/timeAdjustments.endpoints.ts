@@ -3,7 +3,7 @@ import { z } from "@/shared/zod-openapi-init";
 import * as i from "./timeAdjustments.input";
 import * as o from "./timeAdjustments.output";
 
-export const timeAdjustmentsResource: EndpointGroup = {
+export const timeAdjustmentsResource = {
   name: "time-adjustments",
   documentation: {
     resourceDescription:
@@ -42,4 +42,4 @@ export const timeAdjustmentsResource: EndpointGroup = {
       o.TimeAdjustment[]
     >,
   },
-};
+} satisfies EndpointGroup;

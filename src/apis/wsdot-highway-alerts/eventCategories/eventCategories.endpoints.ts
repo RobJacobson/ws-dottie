@@ -1,8 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./eventCategories.input";
+import {
+  type EventCategoriesInput,
+  eventCategoriesInputSchema,
+} from "./eventCategories.input";
 
-export const eventCategoriesGroup: EndpointGroup = {
+export const eventCategoriesGroup = {
   name: "event-categories",
   documentation: {
     resourceDescription:
@@ -15,11 +18,11 @@ export const eventCategoriesGroup: EndpointGroup = {
     getEventCategories: {
       function: "getEventCategories",
       endpoint: "/getEventCategoriesAsJson",
-      inputSchema: i.eventCategoriesSchema,
+      inputSchema: eventCategoriesInputSchema,
       outputSchema: z.array(z.string()),
       sampleParams: {},
       endpointDescription:
         "Returns an array of strings for all available event categories.",
-    } satisfies EndpointDefinition<i.EventCategoriesInput, string[]>,
+    } satisfies EndpointDefinition<EventCategoriesInput, string[]>,
   },
-};
+} satisfies EndpointGroup;
