@@ -15,7 +15,7 @@ import type {
 } from "@/apis/types";
 import { cacheStrategies } from "@/shared/tanstack/queryOptions";
 import type { Endpoint } from "@/shared/types";
-import { useQueryWithCacheFlushDate } from "./cacheFlushDateWrapper";
+import { useQueryWithCacheFlushDate } from "../utils/cacheFlushDateWrapper";
 import { createEndpoint } from "./endpointFactory";
 import type { FetchFunctionParams } from "./fetchFunctionFactory";
 
