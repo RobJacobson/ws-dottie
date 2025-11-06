@@ -1,0 +1,28 @@
+import type { UseQueryResult } from "@tanstack/react-query";
+import type { QueryHookOptions } from "@/shared/utils/createEndpointGroupHooks";
+import { createEndpointGroupHooks } from "@/shared/utils/createEndpointGroupHooks";
+import { wsfTerminalsApi } from "../apiDefinition";
+import { terminalWaitTimesResource } from "./terminalWaitTimes.endpoints";
+import * as fetchFunctions from "./terminalWaitTimes.fetch";
+import type {
+  TerminalWaitTimesByIdInput,
+  TerminalWaitTimesInput,
+} from "./terminalWaitTimes.input";
+import type { TerminalWaitTime } from "./terminalWaitTimes.output";
+
+const hooks = createEndpointGroupHooks(
+  wsfTerminalsApi,
+  terminalWaitTimesResource,
+  fetchFunctions
+);
+
+export const useTerminalWaitTimes = hooks.useTerminalWaitTimes as (
+  params?: TerminalWaitTimesInput,
+  options?: QueryHookOptions<TerminalWaitTime[]>
+) => UseQueryResult<TerminalWaitTime[], Error>;
+
+export const useTerminalWaitTimesByTerminalId =
+  hooks.useTerminalWaitTimesByTerminalId as (
+    params?: TerminalWaitTimesByIdInput,
+    options?: QueryHookOptions<TerminalWaitTime>
+  ) => UseQueryResult<TerminalWaitTime, Error>;

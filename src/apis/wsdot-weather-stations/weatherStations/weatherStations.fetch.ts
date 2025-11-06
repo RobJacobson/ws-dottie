@@ -1,0 +1,15 @@
+import { createEndpointGroupFetchFunctions } from "@/shared/utils/createEndpointGroupFetchFunctions";
+import type { FetchFunctionParams } from "@/shared/utils/fetchFunctionFactory";
+import { wsdotWeatherStationsApi } from "../apiDefinition";
+import { weatherStationsResource } from "./weatherStations.endpoints";
+import type { WeatherStationsInput } from "./weatherStations.input";
+import type { WeatherStation } from "./weatherStations.output";
+
+const fetchFunctions = createEndpointGroupFetchFunctions(
+  wsdotWeatherStationsApi,
+  weatherStationsResource
+);
+
+export const fetchWeatherStations = fetchFunctions.fetchWeatherStations as (
+  params?: FetchFunctionParams<WeatherStationsInput>
+) => Promise<WeatherStation[]>;

@@ -57,6 +57,4 @@ export const vesselHistorySchema = z
     "Represents historical vessel voyage information including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times. E.g., vessel Tacoma departing Bainbridge Island at 7:00 AM scheduled (7:24 AM actual) arriving Colman Dock at 7:56 AM on September 1, 2025. Used for historical voyage tracking, on-time performance analysis, and route pattern analysis. Updates as historical data is recorded."
   );
 
-export type VesselHistory = z.infer<
-  typeof vesselHistorySchema
->;
+export type VesselHistory = z.infer<typeof vesselHistorySchema>;
