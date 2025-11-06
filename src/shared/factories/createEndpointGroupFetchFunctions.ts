@@ -11,7 +11,7 @@ import type {
   EndpointDefinition,
   EndpointGroup,
 } from "@/apis/types";
-import { createEndpoint } from "./endpointFactory";
+import { createEndpoint } from "./createEndpoint";
 import { createFetchFunction } from "./fetchFunctionFactory";
 
 /**

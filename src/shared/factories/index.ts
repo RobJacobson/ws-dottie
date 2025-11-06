@@ -6,12 +6,12 @@
  * to generate strongly-typed API functions with minimal boilerplate.
  */
 
+// Endpoint factory
+export { createEndpoint } from "./createEndpoint";
 export { createEndpointGroupFetchFunctions } from "./createEndpointGroupFetchFunctions";
 export type { QueryHookOptions } from "./createEndpointGroupHooks";
 // Endpoint group factories
 export { createEndpointGroupHooks } from "./createEndpointGroupHooks";
-// Endpoint factory
-export { createEndpoint } from "./endpointFactory";
 // Fetch function factory
 export type { FetchFunctionParams } from "./fetchFunctionFactory";
 export { createFetchFunction } from "./fetchFunctionFactory";
