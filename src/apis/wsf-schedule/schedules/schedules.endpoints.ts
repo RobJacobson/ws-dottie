@@ -1,5 +1,5 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { datesHelper } from "@/shared/factories";
+import { datesHelper } from "@/shared/utils";
 import type {
   ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
   ScheduleByTripDateAndRouteIdInput,
