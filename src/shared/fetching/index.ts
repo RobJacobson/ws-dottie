@@ -8,16 +8,12 @@
 // Types
 export type {
   FetchStrategy,
-  FetchTool,
   LoggingMode,
-  ValidationStrategy,
 } from "@/shared/types";
 // Main fetch function
-export { type FetchDottieParams, fetchDottie } from "./fetchDottie";
-
+export { fetchDottie } from "./fetchDottie";
 // URL building utilities
 export { buildCompleteUrl } from "./internal/buildUrl";
-
 // Error handling
 export {
   type ApiError,
@@ -25,3 +21,4 @@ export {
   type ErrorContext,
   isApiError,
 } from "./internal/handleError";
+export type { FetchDottieParams } from "./types";
