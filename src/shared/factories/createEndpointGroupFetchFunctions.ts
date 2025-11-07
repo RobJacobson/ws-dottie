@@ -13,6 +13,7 @@ import type {
 } from "@/apis/types";
 import { createEndpoint } from "./createEndpoint";
 import { createFetchFunction } from "./fetchFunctionFactory";
+import type { FetchFunctionsMap } from "./types";
 
 /**
  * Creates fetch functions for all endpoints in an endpoint group
@@ -42,8 +43,8 @@ import { createFetchFunction } from "./fetchFunctionFactory";
 export function createEndpointGroupFetchFunctions<
   TApi extends ApiDefinition,
   TGroup extends EndpointGroup,
->(api: TApi, endpointGroup: TGroup): Record<string, unknown> {
-  const fetchFunctions: Record<string, unknown> = {};
+>(api: TApi, endpointGroup: TGroup): FetchFunctionsMap<TGroup> {
+  const fetchFunctions = {} as FetchFunctionsMap<TGroup>;
 
   // Process each endpoint in the group
   for (const [_, endpointDef] of Object.entries(endpointGroup.endpoints)) {

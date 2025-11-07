@@ -15,5 +15,3 @@ export { createEndpointGroupHooks } from "./createEndpointGroupHooks";
 // Fetch function factory
 export type { FetchFunctionParams } from "./fetchFunctionFactory";
 export { createFetchFunction } from "./fetchFunctionFactory";
-// Hook factory types
-export type { HookOptions, HookParams } from "./hookFactory";

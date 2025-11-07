@@ -15,9 +15,10 @@ import type {
 } from "@/apis/types";
 import { cacheStrategies } from "@/shared/tanstack/queryOptions";
 import type { Endpoint } from "@/shared/types";
-import { useQueryWithCacheFlushDate } from "./cacheFlushDateWrapper";
+import { useQueryWithCacheFlushDate } from "../utils/cacheFlushDateWrapper";
 import { createEndpoint } from "./createEndpoint";
 import type { FetchFunctionParams } from "./fetchFunctionFactory";
+import type { HooksMap } from "./types";
 
 /**
  * Helper type to simplify query hook options
@@ -108,8 +109,8 @@ export function createEndpointGroupHooks<
     string,
     (params?: FetchFunctionParams<unknown>) => Promise<unknown>
   >
-): Record<string, unknown> {
-  const hooks: Record<string, unknown> = {};
+): HooksMap<TGroup> {
+  const hooks = {} as HooksMap<TGroup>;
 
   // Process each endpoint in the group
   for (const [_, endpointDef] of Object.entries(endpointGroup.endpoints)) {
