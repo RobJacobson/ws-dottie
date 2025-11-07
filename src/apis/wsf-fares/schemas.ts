@@ -1,0 +1,19 @@
+/**
+ * @fileoverview wsf-fares API - Zod Schema Exports
+ *
+ * This module provides exports for all Zod schemas used in the wsf-fares API.
+ * Import these schemas when you need runtime validation in development or testing.
+ */
+
+export * from "./cacheFlushDate/cacheFlushDate.input";
+export * from "./cacheFlushDate/cacheFlushDate.output";
+export * from "./fareLineItems/fareLineItems.input";
+export * from "./fareLineItems/fareLineItems.output";
+export * from "./fareTotals/fareTotals.input";
+export * from "./fareTotals/fareTotals.output";
+export * from "./terminalCombo/terminalCombo.input";
+export * from "./terminalCombo/terminalCombo.output";
+export * from "./terminals/terminals.input";
+export * from "./terminals/terminals.output";
+export * from "./validDateRange/validDateRange.input";
+export * from "./validDateRange/validDateRange.output";
