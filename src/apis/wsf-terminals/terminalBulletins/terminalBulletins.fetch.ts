@@ -19,4 +19,5 @@ export const fetchTerminalBulletins: (
 
 export const fetchTerminalBulletinsByTerminalId: (
   params?: FetchFunctionParams<TerminalBulletinsByIdInput>
-) => Promise<TerminalBulletin> = fetchFunctions.fetchTerminalBulletinsByTerminalId;
+) => Promise<TerminalBulletin> =
+  fetchFunctions.fetchTerminalBulletinsByTerminalId;

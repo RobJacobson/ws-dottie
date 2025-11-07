@@ -27,4 +27,5 @@ export const useTerminalCombo: (
 export const useTerminalComboVerbose: (
   params?: TerminalComboVerboseInput,
   options?: QueryHookOptions<TerminalComboVerbose[]>
-) => UseQueryResult<TerminalComboVerbose[], Error> = hooks.useTerminalComboVerbose;
+) => UseQueryResult<TerminalComboVerbose[], Error> =
+  hooks.useTerminalComboVerbose;

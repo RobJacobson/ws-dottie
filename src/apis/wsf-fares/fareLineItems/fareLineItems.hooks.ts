@@ -20,7 +20,8 @@ const hooks = createEndpointGroupHooks(
 export const useFareLineItemsByTripDateAndTerminals: (
   params?: FareLineItemsByTripDateAndTerminalsInput,
   options?: QueryHookOptions<LineItem[]>
-) => UseQueryResult<LineItem[], Error> = hooks.useFareLineItemsByTripDateAndTerminals;
+) => UseQueryResult<LineItem[], Error> =
+  hooks.useFareLineItemsByTripDateAndTerminals;
 
 export const useFareLineItemsBasic: (
   params?: FareLineItemsBasicInput,

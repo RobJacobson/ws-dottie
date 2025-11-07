@@ -19,4 +19,5 @@ export const fetchTerminalTransports: (
 
 export const fetchTerminalTransportsByTerminalId: (
   params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>
-) => Promise<TerminalTransport> = fetchFunctions.fetchTerminalTransportsByTerminalId;
+) => Promise<TerminalTransport> =
+  fetchFunctions.fetchTerminalTransportsByTerminalId;

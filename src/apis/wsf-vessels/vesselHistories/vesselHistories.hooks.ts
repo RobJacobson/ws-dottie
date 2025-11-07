@@ -24,4 +24,5 @@ export const useVesselHistories: (
 export const useVesselHistoriesByVesselNameAndDateRange: (
   params?: VesselHistoriesByVesselNameAndDateRangeInput,
   options?: QueryHookOptions<VesselHistory[]>
-) => UseQueryResult<VesselHistory[], Error> = hooks.useVesselHistoriesByVesselNameAndDateRange;
+) => UseQueryResult<VesselHistory[], Error> =
+  hooks.useVesselHistoriesByVesselNameAndDateRange;

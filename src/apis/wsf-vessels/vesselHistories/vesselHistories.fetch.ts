@@ -19,4 +19,5 @@ export const fetchVesselHistories: (
 
 export const fetchVesselHistoriesByVesselNameAndDateRange: (
   params?: FetchFunctionParams<VesselHistoriesByVesselNameAndDateRangeInput>
-) => Promise<VesselHistory[]> = fetchFunctions.fetchVesselHistoriesByVesselNameAndDateRange;
+) => Promise<VesselHistory[]> =
+  fetchFunctions.fetchVesselHistoriesByVesselNameAndDateRange;

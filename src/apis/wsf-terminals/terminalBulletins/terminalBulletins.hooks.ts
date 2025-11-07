@@ -24,4 +24,5 @@ export const useTerminalBulletins: (
 export const useTerminalBulletinsByTerminalId: (
   params?: TerminalBulletinsByIdInput,
   options?: QueryHookOptions<TerminalBulletin>
-) => UseQueryResult<TerminalBulletin, Error> = hooks.useTerminalBulletinsByTerminalId;
+) => UseQueryResult<TerminalBulletin, Error> =
+  hooks.useTerminalBulletinsByTerminalId;

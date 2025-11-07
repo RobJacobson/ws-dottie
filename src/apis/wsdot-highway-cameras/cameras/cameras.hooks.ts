@@ -25,7 +25,8 @@ export const useHighwayCameras: (
 export const useSearchHighwayCamerasByRouteAndMilepost: (
   params?: HighwayCamerasByRouteAndMilepostInput,
   options?: QueryHookOptions<Camera[]>
-) => UseQueryResult<Camera[], Error> = hooks.useSearchHighwayCamerasByRouteAndMilepost;
+) => UseQueryResult<Camera[], Error> =
+  hooks.useSearchHighwayCamerasByRouteAndMilepost;
 
 export const useHighwayCameraByCameraId: (
   params?: HighwayCameraByCameraIdInput,

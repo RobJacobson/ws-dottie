@@ -24,4 +24,5 @@ export const useScheduleByTripDateAndRouteId: (
 export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
   params?: ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
   options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> = hooks.useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;
+) => UseQueryResult<Schedule, Error> =
+  hooks.useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;

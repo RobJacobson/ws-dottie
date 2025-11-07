@@ -25,9 +25,11 @@ export const useRouteDetailsByTripDate: (
 export const useRouteDetailsByTripDateAndRouteId: (
   params?: RouteDetailsByTripDateAndRouteIdInput,
   options?: QueryHookOptions<RouteDetail>
-) => UseQueryResult<RouteDetail, Error> = hooks.useRouteDetailsByTripDateAndRouteId;
+) => UseQueryResult<RouteDetail, Error> =
+  hooks.useRouteDetailsByTripDateAndRouteId;
 
 export const useRouteDetailsByTripDateAndTerminals: (
   params?: RouteDetailsByTripDateAndTerminalsInput,
   options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error> = hooks.useRouteDetailsByTripDateAndTerminals;
+) => UseQueryResult<RouteDetail[], Error> =
+  hooks.useRouteDetailsByTripDateAndTerminals;

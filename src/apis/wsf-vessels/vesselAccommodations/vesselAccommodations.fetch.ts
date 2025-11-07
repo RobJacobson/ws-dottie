@@ -19,4 +19,5 @@ export const fetchVesselAccommodations: (
 
 export const fetchVesselAccommodationsByVesselId: (
   params?: FetchFunctionParams<VesselAccommodationsByIdInput>
-) => Promise<VesselAccommodation> = fetchFunctions.fetchVesselAccommodationsByVesselId;
+) => Promise<VesselAccommodation> =
+  fetchFunctions.fetchVesselAccommodationsByVesselId;

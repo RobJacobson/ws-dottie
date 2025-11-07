@@ -24,4 +24,5 @@ export const useTerminalWaitTimes: (
 export const useTerminalWaitTimesByTerminalId: (
   params?: TerminalWaitTimesByIdInput,
   options?: QueryHookOptions<TerminalWaitTime>
-) => UseQueryResult<TerminalWaitTime, Error> = hooks.useTerminalWaitTimesByTerminalId;
+) => UseQueryResult<TerminalWaitTime, Error> =
+  hooks.useTerminalWaitTimesByTerminalId;

@@ -19,4 +19,5 @@ export const fetchScheduleByTripDateAndRouteId: (
 
 export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
   params?: FetchFunctionParams<ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput>
-) => Promise<Schedule> = fetchFunctions.fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;
+) => Promise<Schedule> =
+  fetchFunctions.fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;

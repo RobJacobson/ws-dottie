@@ -19,4 +19,5 @@ export const fetchTerminalLocations: (
 
 export const fetchTerminalLocationsByTerminalId: (
   params?: FetchFunctionParams<TerminalLocationsByIdInput>
-) => Promise<TerminalLocation> = fetchFunctions.fetchTerminalLocationsByTerminalId;
+) => Promise<TerminalLocation> =
+  fetchFunctions.fetchTerminalLocationsByTerminalId;

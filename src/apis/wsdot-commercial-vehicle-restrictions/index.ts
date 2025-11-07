@@ -5,8 +5,8 @@
  */
 
 // Re-export everything from core (fetch functions and types)
-export * from './core';
+export * from "./core";
 
 // Export hooks
-export * from './cvRestrictionData/cvRestrictionData.hooks';
-export * from './cvRestrictionDataWithId/cvRestrictionDataWithId.hooks';
+export * from "./cvRestrictionData/cvRestrictionData.hooks";
+export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.hooks";

@@ -24,4 +24,5 @@ export const useTerminalLocations: (
 export const useTerminalLocationsByTerminalId: (
   params?: TerminalLocationsByIdInput,
   options?: QueryHookOptions<TerminalLocation>
-) => UseQueryResult<TerminalLocation, Error> = hooks.useTerminalLocationsByTerminalId;
+) => UseQueryResult<TerminalLocation, Error> =
+  hooks.useTerminalLocationsByTerminalId;

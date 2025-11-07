@@ -20,8 +20,10 @@ export const fetchRouteDetailsByTripDate: (
 
 export const fetchRouteDetailsByTripDateAndRouteId: (
   params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>
-) => Promise<RouteDetail> = fetchFunctions.fetchRouteDetailsByTripDateAndRouteId;
+) => Promise<RouteDetail> =
+  fetchFunctions.fetchRouteDetailsByTripDateAndRouteId;
 
 export const fetchRouteDetailsByTripDateAndTerminals: (
   params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>
-) => Promise<RouteDetail[]> = fetchFunctions.fetchRouteDetailsByTripDateAndTerminals;
+) => Promise<RouteDetail[]> =
+  fetchFunctions.fetchRouteDetailsByTripDateAndTerminals;

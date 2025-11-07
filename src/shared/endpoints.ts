@@ -13,7 +13,11 @@
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod-openapi-init";
 
-import type { ApiDefinition, EndpointDefinition, EndpointGroup } from "@/apis/types";
+import type {
+  ApiDefinition,
+  EndpointDefinition,
+  EndpointGroup,
+} from "@/apis/types";
 // Import all API definitions
 import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
 import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/apiDefinition";
@@ -92,8 +96,8 @@ export const endpoints = API_MODULES.flatMap((apiDefinition) =>
   apiDefinition.endpointGroups.flatMap((endpointGroup) =>
     Object.values(endpointGroup.endpoints).map((endpointDefinition) =>
       createEndpointFromDefinition(
-        apiDefinition, 
-        endpointGroup, 
+        apiDefinition,
+        endpointGroup,
         endpointDefinition as EndpointDefinition<unknown, unknown>
       )
     )
@@ -106,7 +110,10 @@ export const endpoints = API_MODULES.flatMap((apiDefinition) =>
  * This object provides access to APIs grouped by name for more structured
  * access when needed by consumers that need to work with specific APIs.
  */
-export const apis = API_MODULES.reduce((acc, apiDefinition) => {
-  acc[apiDefinition.name] = apiDefinition;
-  return acc;
-}, {} as Record<string, ApiDefinition>);
+export const apis = API_MODULES.reduce(
+  (acc, apiDefinition) => {
+    acc[apiDefinition.name] = apiDefinition;
+    return acc;
+  },
+  {} as Record<string, ApiDefinition>
+);

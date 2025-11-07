@@ -5,7 +5,7 @@
  */
 
 // Re-export everything from core (fetch functions and types)
-export * from './core';
+export * from "./core";
 
 // Export hooks
-export * from './passConditions/passConditions.hooks';
+export * from "./passConditions/passConditions.hooks";

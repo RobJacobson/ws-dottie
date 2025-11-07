@@ -5,6 +5,6 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from './passConditions/passConditions.fetch';
-export * from './passConditions/passConditions.input';
-export * from './passConditions/passConditions.output';
+export * from "./passConditions/passConditions.fetch";
+export * from "./passConditions/passConditions.input";
+export * from "./passConditions/passConditions.output";

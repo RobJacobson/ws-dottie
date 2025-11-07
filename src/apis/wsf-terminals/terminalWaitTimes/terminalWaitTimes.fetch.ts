@@ -19,4 +19,5 @@ export const fetchTerminalWaitTimes: (
 
 export const fetchTerminalWaitTimesByTerminalId: (
   params?: FetchFunctionParams<TerminalWaitTimesByIdInput>
-) => Promise<TerminalWaitTime> = fetchFunctions.fetchTerminalWaitTimesByTerminalId;
+) => Promise<TerminalWaitTime> =
+  fetchFunctions.fetchTerminalWaitTimesByTerminalId;

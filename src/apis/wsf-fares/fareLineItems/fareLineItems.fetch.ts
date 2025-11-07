@@ -16,7 +16,8 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 
 export const fetchFareLineItemsByTripDateAndTerminals: (
   params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
-) => Promise<LineItem[]> = fetchFunctions.fetchFareLineItemsByTripDateAndTerminals;
+) => Promise<LineItem[]> =
+  fetchFunctions.fetchFareLineItemsByTripDateAndTerminals;
 
 export const fetchFareLineItemsBasic: (
   params?: FetchFunctionParams<FareLineItemsBasicInput>

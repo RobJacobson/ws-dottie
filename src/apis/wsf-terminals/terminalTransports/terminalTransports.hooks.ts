@@ -24,4 +24,5 @@ export const useTerminalTransports: (
 export const useTerminalTransportsByTerminalId: (
   params?: TerminalTransportsByTerminalIdInput,
   options?: QueryHookOptions<TerminalTransport>
-) => UseQueryResult<TerminalTransport, Error> = hooks.useTerminalTransportsByTerminalId;
+) => UseQueryResult<TerminalTransport, Error> =
+  hooks.useTerminalTransportsByTerminalId;

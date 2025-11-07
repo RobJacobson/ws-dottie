@@ -12,4 +12,5 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 
 export const fetchRoutesHavingServiceDisruptionsByTripDate: (
   params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
-) => Promise<ServiceDisruption[]> = fetchFunctions.fetchRoutesHavingServiceDisruptionsByTripDate;
+) => Promise<ServiceDisruption[]> =
+  fetchFunctions.fetchRoutesHavingServiceDisruptionsByTripDate;

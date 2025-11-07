@@ -24,4 +24,5 @@ export const fetchTimeAdjustmentsByRoute: (
 
 export const fetchTimeAdjustmentsBySchedRoute: (
   params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>
-) => Promise<TimeAdjustment[]> = fetchFunctions.fetchTimeAdjustmentsBySchedRoute;
+) => Promise<TimeAdjustment[]> =
+  fetchFunctions.fetchTimeAdjustmentsBySchedRoute;

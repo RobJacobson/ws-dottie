@@ -12,4 +12,5 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 
 export const fetchSubSurfaceMeasurements: (
   params?: FetchFunctionParams<SubSurfaceMeasurementsInput>
-) => Promise<SubsurfaceMeasurement[]> = fetchFunctions.fetchSubSurfaceMeasurements;
+) => Promise<SubsurfaceMeasurement[]> =
+  fetchFunctions.fetchSubSurfaceMeasurements;

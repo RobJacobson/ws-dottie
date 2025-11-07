@@ -19,9 +19,11 @@ const hooks = createEndpointGroupHooks(
 export const useVesselAccommodations: (
   params?: VesselAccommodationsInput,
   options?: QueryHookOptions<VesselAccommodation[]>
-) => UseQueryResult<VesselAccommodation[], Error> = hooks.useVesselAccommodations;
+) => UseQueryResult<VesselAccommodation[], Error> =
+  hooks.useVesselAccommodations;
 
 export const useVesselAccommodationsByVesselId: (
   params?: VesselAccommodationsByIdInput,
   options?: QueryHookOptions<VesselAccommodation>
-) => UseQueryResult<VesselAccommodation, Error> = hooks.useVesselAccommodationsByVesselId;
+) => UseQueryResult<VesselAccommodation, Error> =
+  hooks.useVesselAccommodationsByVesselId;

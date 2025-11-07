@@ -5,9 +5,9 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from './cvRestrictionData/cvRestrictionData.fetch';
-export * from './cvRestrictionData/cvRestrictionData.input';
-export * from './cvRestrictionData/cvRestrictionData.output';
-export * from './cvRestrictionDataWithId/cvRestrictionDataWithId.fetch';
-export * from './cvRestrictionDataWithId/cvRestrictionDataWithId.input';
-export * from './cvRestrictionDataWithId/cvRestrictionDataWithId.output';
+export * from "./cvRestrictionData/cvRestrictionData.fetch";
+export * from "./cvRestrictionData/cvRestrictionData.input";
+export * from "./cvRestrictionData/cvRestrictionData.output";
+export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.fetch";
+export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.input";
+export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.output";

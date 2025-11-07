@@ -5,10 +5,10 @@
  */
 
 // Re-export everything from core (fetch functions and types)
-export * from './core';
+export * from "./core";
 
 // Export hooks
-export * from './tollRates/tollRates.hooks';
-export * from './tollTripInfo/tollTripInfo.hooks';
-export * from './tollTripRates/tollTripRates.hooks';
-export * from './tollTripVersion/tollTripVersion.hooks';
+export * from "./tollRates/tollRates.hooks";
+export * from "./tollTripInfo/tollTripInfo.hooks";
+export * from "./tollTripRates/tollTripRates.hooks";
+export * from "./tollTripVersion/tollTripVersion.hooks";

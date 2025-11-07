@@ -5,6 +5,6 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
-export * from './borderCrossingData/borderCrossingData.fetch';
-export * from './borderCrossingData/borderCrossingData.input';
-export * from './borderCrossingData/borderCrossingData.output';
+export * from "./borderCrossingData/borderCrossingData.fetch";
+export * from "./borderCrossingData/borderCrossingData.input";
+export * from "./borderCrossingData/borderCrossingData.output";

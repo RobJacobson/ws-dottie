@@ -24,4 +24,5 @@ export const useTerminalVerbose: (
 export const useTerminalVerboseByTerminalId: (
   params?: TerminalVerboseByTerminalIdInput,
   options?: QueryHookOptions<TerminalVerbose>
-) => UseQueryResult<TerminalVerbose, Error> = hooks.useTerminalVerboseByTerminalId;
+) => UseQueryResult<TerminalVerbose, Error> =
+  hooks.useTerminalVerboseByTerminalId;

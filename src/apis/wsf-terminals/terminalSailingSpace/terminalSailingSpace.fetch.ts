@@ -19,4 +19,5 @@ export const fetchTerminalSailingSpace: (
 
 export const fetchTerminalSailingSpaceByTerminalId: (
   params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>
-) => Promise<TerminalSailingSpace> = fetchFunctions.fetchTerminalSailingSpaceByTerminalId;
+) => Promise<TerminalSailingSpace> =
+  fetchFunctions.fetchTerminalSailingSpaceByTerminalId;

@@ -24,4 +24,5 @@ export const useBridgeClearances: (
 export const useBridgeClearancesByRoute: (
   params?: BridgeClearancesByRouteInput,
   options?: QueryHookOptions<BridgeClearance[]>
-) => UseQueryResult<BridgeClearance[], Error> = hooks.useBridgeClearancesByRoute;
+) => UseQueryResult<BridgeClearance[], Error> =
+  hooks.useBridgeClearancesByRoute;

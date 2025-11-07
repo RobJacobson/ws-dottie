@@ -12,4 +12,5 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 
 export const fetchCommercialVehicleRestrictionsWithId: (
   params?: FetchFunctionParams<CommercialVehicleRestrictionsWithIdInput>
-) => Promise<CVRestrictionWithId[]> = fetchFunctions.fetchCommercialVehicleRestrictionsWithId;
+) => Promise<CVRestrictionWithId[]> =
+  fetchFunctions.fetchCommercialVehicleRestrictionsWithId;

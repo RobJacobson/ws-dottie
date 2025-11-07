@@ -16,4 +16,5 @@ const hooks = createEndpointGroupHooks(
 export const useSubSurfaceMeasurements: (
   params?: SubSurfaceMeasurementsInput,
   options?: QueryHookOptions<SubsurfaceMeasurement[]>
-) => UseQueryResult<SubsurfaceMeasurement[], Error> = hooks.useSubSurfaceMeasurements;
+) => UseQueryResult<SubsurfaceMeasurement[], Error> =
+  hooks.useSubSurfaceMeasurements;

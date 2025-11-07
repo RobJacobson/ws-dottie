@@ -26,7 +26,8 @@ export const useWeatherInformation: (
 export const useWeatherInformationByStationId: (
   params?: WeatherInformationByStationIdInput,
   options?: QueryHookOptions<WeatherInfo>
-) => UseQueryResult<WeatherInfo, Error> = hooks.useWeatherInformationByStationId;
+) => UseQueryResult<WeatherInfo, Error> =
+  hooks.useWeatherInformationByStationId;
 
 export const useCurrentWeatherForStations: (
   params?: CurrentWeatherForStationsInput,

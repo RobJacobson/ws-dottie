@@ -30,4 +30,5 @@ export const useTimeAdjustmentsByRoute: (
 export const useTimeAdjustmentsBySchedRoute: (
   params?: TimeAdjustmentsBySchedRouteInput,
   options?: QueryHookOptions<TimeAdjustment[]>
-) => UseQueryResult<TimeAdjustment[], Error> = hooks.useTimeAdjustmentsBySchedRoute;
+) => UseQueryResult<TimeAdjustment[], Error> =
+  hooks.useTimeAdjustmentsBySchedRoute;

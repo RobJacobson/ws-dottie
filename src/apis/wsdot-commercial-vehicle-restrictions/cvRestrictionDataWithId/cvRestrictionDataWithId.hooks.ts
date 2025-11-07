@@ -16,4 +16,5 @@ const hooks = createEndpointGroupHooks(
 export const useCommercialVehicleRestrictionsWithId: (
   params?: CommercialVehicleRestrictionsWithIdInput,
   options?: QueryHookOptions<CVRestrictionWithId[]>
-) => UseQueryResult<CVRestrictionWithId[], Error> = hooks.useCommercialVehicleRestrictionsWithId;
+) => UseQueryResult<CVRestrictionWithId[], Error> =
+  hooks.useCommercialVehicleRestrictionsWithId;
