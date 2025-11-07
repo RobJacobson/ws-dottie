@@ -14,6 +14,11 @@ export const createDefaultParametersValidationTest = (
       return;
     }
 
+    if (!endpoint.inputSchema) {
+      // Skip test if schemas are not available (lite build)
+      return;
+    }
+
     try {
       // Validate the sample parameters against the input schema
       endpoint.inputSchema.parse(endpoint.sampleParams);
