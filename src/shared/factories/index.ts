@@ -15,3 +15,5 @@ export { createEndpointGroupHooks } from "./createEndpointGroupHooks";
 // Fetch function factory
 export type { FetchFunctionParams } from "./fetchFunctionFactory";
 export { createFetchFunction } from "./fetchFunctionFactory";
+// Query options
+export { cacheStrategies } from "./queryOptions";

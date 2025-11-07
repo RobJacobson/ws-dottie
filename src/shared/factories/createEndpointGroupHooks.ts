@@ -13,11 +13,11 @@ import type {
   EndpointDefinition,
   EndpointGroup,
 } from "@/apis/types";
-import { cacheStrategies } from "@/shared/tanstack/queryOptions";
 import type { Endpoint } from "@/shared/types";
-import { useQueryWithCacheFlushDate } from "../utils/cacheFlushDateWrapper";
+import { useQueryWithCacheFlushDate } from "./cacheFlushDateWrapper";
 import { createEndpoint } from "./createEndpoint";
 import type { FetchFunctionParams } from "./fetchFunctionFactory";
+import { cacheStrategies } from "./queryOptions";
 import type { HooksMap } from "./types";
 
 /**
@@ -157,7 +157,6 @@ export function createEndpointGroupHooks<
       ): UseQueryResult<TOutput, Error> => {
         return useQueryWithCacheFlushDate(
           api,
-          endpointGroup,
           endpoint as Endpoint<TInput, TOutput>,
           (fetchParams?: { params?: TInput }) => {
             return fetchFunction({
