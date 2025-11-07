@@ -51,6 +51,12 @@ export const fetchDottie = async <TInput = never, TOutput = unknown>({
   try {
     // Validate input parameters if validation is enabled
     if (validate && params) {
+      if (!endpoint.inputSchema) {
+        throw new Error(
+          `Validation requires schemas. This endpoint was built without schemas. ` +
+            `Use the full build or import schemas from the /schemas subpath.`
+        );
+      }
       endpoint.inputSchema.parse(params);
     }
 
@@ -59,6 +65,12 @@ export const fetchDottie = async <TInput = never, TOutput = unknown>({
 
     // Handle validation and transformation based on strategy
     if (validate) {
+      if (!endpoint.outputSchema) {
+        throw new Error(
+          `Validation requires schemas. This endpoint was built without schemas. ` +
+            `Use the full build or import schemas from the /schemas subpath.`
+        );
+      }
       // Zod validation handles .NET date conversion internally
       // Skip convertDotNetDates to prevent double conversion
       return endpoint.outputSchema.parse(rawData);

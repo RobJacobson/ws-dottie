@@ -40,13 +40,16 @@ import type { Endpoint } from "@/shared/types";
 export const createEndpoint = <TInput, TOutput>(
   apiDefinition: ApiDefinition,
   endpointGroup: EndpointGroup,
-  endpointDef: EndpointDefinition<TInput, TOutput>
+  endpointDef: EndpointDefinition<TInput, TOutput>,
+  includeSchemas: boolean = true
 ): Endpoint<TInput, TOutput> => ({
   api: apiDefinition.name,
   function: endpointDef.function,
   endpoint: endpointDef.endpoint,
-  inputSchema: endpointDef.inputSchema,
-  outputSchema: endpointDef.outputSchema,
+  ...(includeSchemas && {
+    inputSchema: endpointDef.inputSchema,
+    outputSchema: endpointDef.outputSchema,
+  }),
   sampleParams: endpointDef.sampleParams,
   cacheStrategy: endpointGroup.cacheStrategy,
   functionName: endpointDef.function,
