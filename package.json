@@ -34,6 +34,11 @@
       "import": "./dist/wsf-vessels/core.mjs",
       "require": "./dist/wsf-vessels/core.js"
     },
+    "./wsf-vessels/schemas": {
+      "types": "./dist/wsf-vessels/schemas.d.ts",
+      "import": "./dist/wsf-vessels/schemas.mjs",
+      "require": "./dist/wsf-vessels/schemas.js"
+    },
     "./wsdot-border-crossings": {
       "types": "./dist/wsdot-border-crossings/index.d.ts",
       "import": "./dist/wsdot-border-crossings/index.mjs",
@@ -43,6 +48,11 @@
       "types": "./dist/wsdot-border-crossings/core.d.ts",
       "import": "./dist/wsdot-border-crossings/core.mjs",
       "require": "./dist/wsdot-border-crossings/core.js"
+    },
+    "./wsdot-border-crossings/schemas": {
+      "types": "./dist/wsdot-border-crossings/schemas.d.ts",
+      "import": "./dist/wsdot-border-crossings/schemas.mjs",
+      "require": "./dist/wsdot-border-crossings/schemas.js"
     },
     "./wsdot-bridge-clearances": {
       "types": "./dist/wsdot-bridge-clearances/index.d.ts",
@@ -54,6 +64,11 @@
       "import": "./dist/wsdot-bridge-clearances/core.mjs",
       "require": "./dist/wsdot-bridge-clearances/core.js"
     },
+    "./wsdot-bridge-clearances/schemas": {
+      "types": "./dist/wsdot-bridge-clearances/schemas.d.ts",
+      "import": "./dist/wsdot-bridge-clearances/schemas.mjs",
+      "require": "./dist/wsdot-bridge-clearances/schemas.js"
+    },
     "./wsdot-commercial-vehicle-restrictions": {
       "types": "./dist/wsdot-commercial-vehicle-restrictions/index.d.ts",
       "import": "./dist/wsdot-commercial-vehicle-restrictions/index.mjs",
@@ -63,6 +78,11 @@
       "types": "./dist/wsdot-commercial-vehicle-restrictions/core.d.ts",
       "import": "./dist/wsdot-commercial-vehicle-restrictions/core.mjs",
       "require": "./dist/wsdot-commercial-vehicle-restrictions/core.js"
+    },
+    "./wsdot-commercial-vehicle-restrictions/schemas": {
+      "types": "./dist/wsdot-commercial-vehicle-restrictions/schemas.d.ts",
+      "import": "./dist/wsdot-commercial-vehicle-restrictions/schemas.mjs",
+      "require": "./dist/wsdot-commercial-vehicle-restrictions/schemas.js"
     },
     "./wsdot-highway-alerts": {
       "types": "./dist/wsdot-highway-alerts/index.d.ts",
@@ -74,6 +94,11 @@
       "import": "./dist/wsdot-highway-alerts/core.mjs",
       "require": "./dist/wsdot-highway-alerts/core.js"
     },
+    "./wsdot-highway-alerts/schemas": {
+      "types": "./dist/wsdot-highway-alerts/schemas.d.ts",
+      "import": "./dist/wsdot-highway-alerts/schemas.mjs",
+      "require": "./dist/wsdot-highway-alerts/schemas.js"
+    },
     "./wsdot-highway-cameras": {
       "types": "./dist/wsdot-highway-cameras/index.d.ts",
       "import": "./dist/wsdot-highway-cameras/index.mjs",
@@ -83,6 +108,11 @@
       "types": "./dist/wsdot-highway-cameras/core.d.ts",
       "import": "./dist/wsdot-highway-cameras/core.mjs",
       "require": "./dist/wsdot-highway-cameras/core.js"
+    },
+    "./wsdot-highway-cameras/schemas": {
+      "types": "./dist/wsdot-highway-cameras/schemas.d.ts",
+      "import": "./dist/wsdot-highway-cameras/schemas.mjs",
+      "require": "./dist/wsdot-highway-cameras/schemas.js"
     },
     "./wsdot-mountain-pass-conditions": {
       "types": "./dist/wsdot-mountain-pass-conditions/index.d.ts",
@@ -94,6 +124,11 @@
       "import": "./dist/wsdot-mountain-pass-conditions/core.mjs",
       "require": "./dist/wsdot-mountain-pass-conditions/core.js"
     },
+    "./wsdot-mountain-pass-conditions/schemas": {
+      "types": "./dist/wsdot-mountain-pass-conditions/schemas.d.ts",
+      "import": "./dist/wsdot-mountain-pass-conditions/schemas.mjs",
+      "require": "./dist/wsdot-mountain-pass-conditions/schemas.js"
+    },
     "./wsdot-toll-rates": {
       "types": "./dist/wsdot-toll-rates/index.d.ts",
       "import": "./dist/wsdot-toll-rates/index.mjs",
@@ -104,6 +139,11 @@
       "import": "./dist/wsdot-toll-rates/core.mjs",
       "require": "./dist/wsdot-toll-rates/core.js"
     },
+    "./wsdot-toll-rates/schemas": {
+      "types": "./dist/wsdot-toll-rates/schemas.d.ts",
+      "import": "./dist/wsdot-toll-rates/schemas.mjs",
+      "require": "./dist/wsdot-toll-rates/schemas.js"
+    },
     "./wsdot-traffic-flow": {
       "types": "./dist/wsdot-traffic-flow/index.d.ts",
       "import": "./dist/wsdot-traffic-flow/index.mjs",
@@ -112,7 +152,12 @@
     "./wsdot-traffic-flow/core": {
       "types": "./dist/wsdot-traffic-flow/core.d.ts",
       "import": "./dist/wsdot-traffic-flow/core.mjs",
-      "require": "./dist/wsdot-traffic-flow/index.js"
+      "require": "./dist/wsdot-traffic-flow/core.js"
+    },
+    "./wsdot-traffic-flow/schemas": {
+      "types": "./dist/wsdot-traffic-flow/schemas.d.ts",
+      "import": "./dist/wsdot-traffic-flow/schemas.mjs",
+      "require": "./dist/wsdot-traffic-flow/schemas.js"
     },
     "./wsdot-travel-times": {
       "types": "./dist/wsdot-travel-times/index.d.ts",
@@ -122,7 +167,12 @@
     "./wsdot-travel-times/core": {
       "types": "./dist/wsdot-travel-times/core.d.ts",
       "import": "./dist/wsdot-travel-times/core.mjs",
-      "require": "./dist/wsdot-travel-times/index.js"
+      "require": "./dist/wsdot-travel-times/core.js"
+    },
+    "./wsdot-travel-times/schemas": {
+      "types": "./dist/wsdot-travel-times/schemas.d.ts",
+      "import": "./dist/wsdot-travel-times/schemas.mjs",
+      "require": "./dist/wsdot-travel-times/schemas.js"
     },
     "./wsdot-weather-information": {
       "types": "./dist/wsdot-weather-information/index.d.ts",
@@ -132,7 +182,12 @@
     "./wsdot-weather-information/core": {
       "types": "./dist/wsdot-weather-information/core.d.ts",
       "import": "./dist/wsdot-weather-information/core.mjs",
-      "require": "./dist/wsdot-weather-information/index.js"
+      "require": "./dist/wsdot-weather-information/core.js"
+    },
+    "./wsdot-weather-information/schemas": {
+      "types": "./dist/wsdot-weather-information/schemas.d.ts",
+      "import": "./dist/wsdot-weather-information/schemas.mjs",
+      "require": "./dist/wsdot-weather-information/schemas.js"
     },
     "./wsdot-weather-readings": {
       "types": "./dist/wsdot-weather-readings/index.d.ts",
@@ -142,7 +197,12 @@
     "./wsdot-weather-readings/core": {
       "types": "./dist/wsdot-weather-readings/core.d.ts",
       "import": "./dist/wsdot-weather-readings/core.mjs",
-      "require": "./dist/wsdot-weather-readings/index.js"
+      "require": "./dist/wsdot-weather-readings/core.js"
+    },
+    "./wsdot-weather-readings/schemas": {
+      "types": "./dist/wsdot-weather-readings/schemas.d.ts",
+      "import": "./dist/wsdot-weather-readings/schemas.mjs",
+      "require": "./dist/wsdot-weather-readings/schemas.js"
     },
     "./wsdot-weather-stations": {
       "types": "./dist/wsdot-weather-stations/index.d.ts",
@@ -152,7 +212,12 @@
     "./wsdot-weather-stations/core": {
       "types": "./dist/wsdot-weather-stations/core.d.ts",
       "import": "./dist/wsdot-weather-stations/core.mjs",
-      "require": "./dist/wsdot-weather-stations/index.js"
+      "require": "./dist/wsdot-weather-stations/core.js"
+    },
+    "./wsdot-weather-stations/schemas": {
+      "types": "./dist/wsdot-weather-stations/schemas.d.ts",
+      "import": "./dist/wsdot-weather-stations/schemas.mjs",
+      "require": "./dist/wsdot-weather-stations/schemas.js"
     },
     "./wsf-fares": {
       "types": "./dist/wsf-fares/index.d.ts",
@@ -162,7 +227,12 @@
     "./wsf-fares/core": {
       "types": "./dist/wsf-fares/core.d.ts",
       "import": "./dist/wsf-fares/core.mjs",
-      "require": "./dist/wsf-fares/index.js"
+      "require": "./dist/wsf-fares/core.js"
+    },
+    "./wsf-fares/schemas": {
+      "types": "./dist/wsf-fares/schemas.d.ts",
+      "import": "./dist/wsf-fares/schemas.mjs",
+      "require": "./dist/wsf-fares/schemas.js"
     },
     "./wsf-schedule": {
       "types": "./dist/wsf-schedule/index.d.ts",
@@ -172,7 +242,12 @@
     "./wsf-schedule/core": {
       "types": "./dist/wsf-schedule/core.d.ts",
       "import": "./dist/wsf-schedule/core.mjs",
-      "require": "./dist/wsf-schedule/index.js"
+      "require": "./dist/wsf-schedule/core.js"
+    },
+    "./wsf-schedule/schemas": {
+      "types": "./dist/wsf-schedule/schemas.d.ts",
+      "import": "./dist/wsf-schedule/schemas.mjs",
+      "require": "./dist/wsf-schedule/schemas.js"
     },
     "./wsf-terminals": {
       "types": "./dist/wsf-terminals/index.d.ts",
@@ -182,7 +257,12 @@
     "./wsf-terminals/core": {
       "types": "./dist/wsf-terminals/core.d.ts",
       "import": "./dist/wsf-terminals/core.mjs",
-      "require": "./dist/wsf-terminals/index.js"
+      "require": "./dist/wsf-terminals/core.js"
+    },
+    "./wsf-terminals/schemas": {
+      "types": "./dist/wsf-terminals/schemas.d.ts",
+      "import": "./dist/wsf-terminals/schemas.mjs",
+      "require": "./dist/wsf-terminals/schemas.js"
     }
   },
   "files": [
