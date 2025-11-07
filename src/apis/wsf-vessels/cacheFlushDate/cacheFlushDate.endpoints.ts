@@ -1,31 +1,36 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import type { VesselsCacheFlushDateInput } from "./cacheFlushDate.input";
-import { cacheFlushDateInputSchema } from "./cacheFlushDate.input";
-import type { VesselsCacheFlushDate } from "./cacheFlushDate.output";
-import { cacheFlushDateSchema } from "./cacheFlushDate.output";
+import {
+  type CacheFlushDateVesselsInput,
+  cacheFlushDateVesselsInputSchema,
+} from "./cacheFlushDate.input";
+import {
+  type CacheFlushDateVessels,
+  cacheFlushDateVesselsSchema,
+} from "./cacheFlushDate.output";
 
-const DESCRIPTION =
-  "Returns the date and time when the WSF vessel data was last updated. This operation helps applications coordinate caching of vessel data that changes infrequently. When the returned date changes, applications should refresh their cached data.";
-
-export const cacheFlushDateResource = {
-  name: "cache-flush-date",
+export const cacheFlushDateVesselsResource = {
+  name: "cache-flush-date-vessels",
   documentation: {
-    resourceDescription: DESCRIPTION,
-    businessContext: "",
+    resourceDescription:
+      "Represents the timestamp of when any static endpoint data for the wsf-vessels API was last updated. This information helps applications determine when to refresh cached vessels information through cache invalidation.",
+
+    businessContext:
+      "Many wsf-vessels endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-vessels data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by the ws-dottie useQuery hooks to invalidate cache.",
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getCacheFlushDate: {
-      function: "getCacheFlushDate",
+    getCacheFlushDateVessels: {
+      function: "getCacheFlushDateVessels",
       endpoint: "/cacheflushdate",
-      inputSchema: cacheFlushDateInputSchema,
-      outputSchema: cacheFlushDateSchema,
+      inputSchema: cacheFlushDateVesselsInputSchema,
+      outputSchema: cacheFlushDateVesselsSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-      description: DESCRIPTION,
+      description:
+        "Returns the timestamp of when any static endpoint data for the wsf-vessels API was last updated.",
     } satisfies EndpointDefinition<
-      VesselsCacheFlushDateInput,
-      VesselsCacheFlushDate
+      CacheFlushDateVesselsInput,
+      CacheFlushDateVessels
     >,
   },
 } satisfies EndpointGroup;
