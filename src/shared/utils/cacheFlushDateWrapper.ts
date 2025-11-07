@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import type { ApiDefinition, EndpointGroup } from "@/apis/types";
 import { cacheStrategies } from "@/shared/tanstack/queryOptions";
 import type { Endpoint } from "@/shared/types";
-import { createEndpoint } from "./endpointFactory";
+import { createEndpoint } from "../factories/createEndpoint";
 
 /**
  * Wraps a React Query hook with cache flush date polling and invalidation

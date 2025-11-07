@@ -57,21 +57,6 @@ export interface Endpoint<I, O> {
   id: string;
 }
 
-/**
- * Full API interface with computed endpoints
- *
- * This interface represents a complete API with all its endpoints converted
- * to runtime Endpoint objects with computed properties.
- */
-export interface Api {
-  /** The internal API name (e.g., "wsf-schedule") */
-  name: string;
-  /** The base URL for the API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
-  baseUrl: string;
-  /** Array of runtime endpoints with computed properties */
-  endpoints: Endpoint<unknown, unknown>[];
-}
-
 // ============================================================================
 // LOGGING TYPES
 // ============================================================================
@@ -100,21 +85,6 @@ export type LoggingMode = "none" | "info" | "debug";
 export type FetchHandler = (url: string) => Promise<string>;
 
 /**
- * Core fetch tool interface for WS-Dottie APIs
- *
- * This interface defines the standard way to fetch data from WSDOT/WSF APIs
- * with explicit control over transport strategy and validation approach.
- * All fetch tools implement this interface for consistency.
- */
-export type FetchTool = <TInput, TOutput>(
-  endpoint: Endpoint<TInput, TOutput>,
-  params: TInput | undefined,
-  fetchStrategy: FetchStrategy,
-  validationStrategy: ValidationStrategy,
-  logMode?: LoggingMode
-) => Promise<TOutput>;
-
-/**
  * Fetch strategy for data fetching
  *
  * Defines the underlying transport mechanism used to fetch data.
@@ -122,12 +92,3 @@ export type FetchTool = <TInput, TOutput>(
  * - jsonp: Uses JSONP callbacks (browser-only, bypasses CORS)
  */
 export type FetchStrategy = "native" | "jsonp";
-
-/**
- * Validation strategy for data fetching
- *
- * Defines how input and output data should be validated.
- * - none: No validation performed
- * - zod: Full validation using Zod schemas
- */
-export type ValidationStrategy = "none" | "zod";
