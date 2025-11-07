@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalMates = hooks.useTerminalMates as (
+export const useTerminalMates: (
   params?: TerminalMatesInput,
   options?: QueryHookOptions<Terminal[]>
-) => UseQueryResult<Terminal[], Error>;
+) => UseQueryResult<Terminal[], Error> = hooks.useTerminalMates;

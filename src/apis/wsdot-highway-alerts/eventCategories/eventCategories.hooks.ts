@@ -12,7 +12,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useEventCategories = hooks.useEventCategories as (
+export const useEventCategories: (
   params?: EventCategoriesInput,
   options?: QueryHookOptions<string[]>
-) => UseQueryResult<string[], Error>;
+) => UseQueryResult<string[], Error> = hooks.useEventCategories;

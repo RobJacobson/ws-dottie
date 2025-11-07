@@ -13,12 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   scheduleTodayResource
 );
 
-export const fetchScheduleTodayByRoute =
-  fetchFunctions.fetchScheduleTodayByRoute as (
-    params?: FetchFunctionParams<ScheduleTodayByRouteInput>
-  ) => Promise<Schedule>;
+export const fetchScheduleTodayByRoute: (
+  params?: FetchFunctionParams<ScheduleTodayByRouteInput>
+) => Promise<Schedule> = fetchFunctions.fetchScheduleTodayByRoute;
 
-export const fetchScheduleTodayByTerminals =
-  fetchFunctions.fetchScheduleTodayByTerminals as (
-    params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>
-  ) => Promise<Schedule>;
+export const fetchScheduleTodayByTerminals: (
+  params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>
+) => Promise<Schedule> = fetchFunctions.fetchScheduleTodayByTerminals;

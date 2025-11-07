@@ -13,12 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   passConditionsGroup
 );
 
-export const fetchMountainPassConditionById =
-  fetchFunctions.fetchMountainPassConditionById as (
-    params?: FetchFunctionParams<MountainPassConditionByIdInput>
-  ) => Promise<PassCondition>;
+export const fetchMountainPassConditionById: (
+  params?: FetchFunctionParams<MountainPassConditionByIdInput>
+) => Promise<PassCondition> = fetchFunctions.fetchMountainPassConditionById;
 
-export const fetchMountainPassConditions =
-  fetchFunctions.fetchMountainPassConditions as (
-    params?: FetchFunctionParams<MountainPassConditionsInput>
-  ) => Promise<PassCondition[]>;
+export const fetchMountainPassConditions: (
+  params?: FetchFunctionParams<MountainPassConditionsInput>
+) => Promise<PassCondition[]> = fetchFunctions.fetchMountainPassConditions;

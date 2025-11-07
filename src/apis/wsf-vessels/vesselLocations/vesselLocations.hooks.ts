@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useVesselLocations = hooks.useVesselLocations as (
+export const useVesselLocations: (
   params?: VesselLocationsInput,
   options?: QueryHookOptions<VesselLocation[]>
-) => UseQueryResult<VesselLocation[], Error>;
+) => UseQueryResult<VesselLocation[], Error> = hooks.useVesselLocations;
 
-export const useVesselLocationsByVesselId =
-  hooks.useVesselLocationsByVesselId as (
-    params?: VesselLocationsByIdInput,
-    options?: QueryHookOptions<VesselLocation>
-  ) => UseQueryResult<VesselLocation, Error>;
+export const useVesselLocationsByVesselId: (
+  params?: VesselLocationsByIdInput,
+  options?: QueryHookOptions<VesselLocation>
+) => UseQueryResult<VesselLocation, Error> = hooks.useVesselLocationsByVesselId;

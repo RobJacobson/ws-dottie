@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalLocations = hooks.useTerminalLocations as (
+export const useTerminalLocations: (
   params?: TerminalLocationsInput,
   options?: QueryHookOptions<TerminalLocation[]>
-) => UseQueryResult<TerminalLocation[], Error>;
+) => UseQueryResult<TerminalLocation[], Error> = hooks.useTerminalLocations;
 
-export const useTerminalLocationsByTerminalId =
-  hooks.useTerminalLocationsByTerminalId as (
-    params?: TerminalLocationsByIdInput,
-    options?: QueryHookOptions<TerminalLocation>
-  ) => UseQueryResult<TerminalLocation, Error>;
+export const useTerminalLocationsByTerminalId: (
+  params?: TerminalLocationsByIdInput,
+  options?: QueryHookOptions<TerminalLocation>
+) => UseQueryResult<TerminalLocation, Error> = hooks.useTerminalLocationsByTerminalId;

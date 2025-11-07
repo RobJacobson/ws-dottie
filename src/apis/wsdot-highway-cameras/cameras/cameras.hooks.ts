@@ -17,18 +17,17 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useHighwayCameras = hooks.useHighwayCameras as (
+export const useHighwayCameras: (
   params?: HighwayCamerasInput,
   options?: QueryHookOptions<Camera[]>
-) => UseQueryResult<Camera[], Error>;
+) => UseQueryResult<Camera[], Error> = hooks.useHighwayCameras;
 
-export const useSearchHighwayCamerasByRouteAndMilepost =
-  hooks.useSearchHighwayCamerasByRouteAndMilepost as (
-    params?: HighwayCamerasByRouteAndMilepostInput,
-    options?: QueryHookOptions<Camera[]>
-  ) => UseQueryResult<Camera[], Error>;
+export const useSearchHighwayCamerasByRouteAndMilepost: (
+  params?: HighwayCamerasByRouteAndMilepostInput,
+  options?: QueryHookOptions<Camera[]>
+) => UseQueryResult<Camera[], Error> = hooks.useSearchHighwayCamerasByRouteAndMilepost;
 
-export const useHighwayCameraByCameraId = hooks.useHighwayCameraByCameraId as (
+export const useHighwayCameraByCameraId: (
   params?: HighwayCameraByCameraIdInput,
   options?: QueryHookOptions<Camera>
-) => UseQueryResult<Camera, Error>;
+) => UseQueryResult<Camera, Error> = hooks.useHighwayCameraByCameraId;

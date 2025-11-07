@@ -14,16 +14,14 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   camerasGroup
 );
 
-export const fetchHighwayCameras = fetchFunctions.fetchHighwayCameras as (
+export const fetchHighwayCameras: (
   params?: FetchFunctionParams<HighwayCamerasInput>
-) => Promise<Camera[]>;
+) => Promise<Camera[]> = fetchFunctions.fetchHighwayCameras;
 
-export const searchHighwayCamerasByRouteAndMilepost =
-  fetchFunctions.searchHighwayCamerasByRouteAndMilepost as (
-    params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>
-  ) => Promise<Camera[]>;
+export const searchHighwayCamerasByRouteAndMilepost: (
+  params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>
+) => Promise<Camera[]> = fetchFunctions.searchHighwayCamerasByRouteAndMilepost;
 
-export const fetchHighwayCameraByCameraId =
-  fetchFunctions.fetchHighwayCameraByCameraId as (
-    params?: FetchFunctionParams<HighwayCameraByCameraIdInput>
-  ) => Promise<Camera>;
+export const fetchHighwayCameraByCameraId: (
+  params?: FetchFunctionParams<HighwayCameraByCameraIdInput>
+) => Promise<Camera> = fetchFunctions.fetchHighwayCameraByCameraId;

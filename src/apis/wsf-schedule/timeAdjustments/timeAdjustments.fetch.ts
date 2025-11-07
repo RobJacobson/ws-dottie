@@ -14,16 +14,14 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   timeAdjustmentsResource
 );
 
-export const fetchTimeAdjustments = fetchFunctions.fetchTimeAdjustments as (
+export const fetchTimeAdjustments: (
   params?: FetchFunctionParams<TimeAdjustmentsInput>
-) => Promise<TimeAdjustment[]>;
+) => Promise<TimeAdjustment[]> = fetchFunctions.fetchTimeAdjustments;
 
-export const fetchTimeAdjustmentsByRoute =
-  fetchFunctions.fetchTimeAdjustmentsByRoute as (
-    params?: FetchFunctionParams<TimeAdjustmentsByRouteInput>
-  ) => Promise<TimeAdjustment[]>;
+export const fetchTimeAdjustmentsByRoute: (
+  params?: FetchFunctionParams<TimeAdjustmentsByRouteInput>
+) => Promise<TimeAdjustment[]> = fetchFunctions.fetchTimeAdjustmentsByRoute;
 
-export const fetchTimeAdjustmentsBySchedRoute =
-  fetchFunctions.fetchTimeAdjustmentsBySchedRoute as (
-    params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>
-  ) => Promise<TimeAdjustment[]>;
+export const fetchTimeAdjustmentsBySchedRoute: (
+  params?: FetchFunctionParams<TimeAdjustmentsBySchedRouteInput>
+) => Promise<TimeAdjustment[]> = fetchFunctions.fetchTimeAdjustmentsBySchedRoute;

@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalWaitTimesResource
 );
 
-export const fetchTerminalWaitTimes = fetchFunctions.fetchTerminalWaitTimes as (
+export const fetchTerminalWaitTimes: (
   params?: FetchFunctionParams<TerminalWaitTimesInput>
-) => Promise<TerminalWaitTime[]>;
+) => Promise<TerminalWaitTime[]> = fetchFunctions.fetchTerminalWaitTimes;
 
-export const fetchTerminalWaitTimesByTerminalId =
-  fetchFunctions.fetchTerminalWaitTimesByTerminalId as (
-    params?: FetchFunctionParams<TerminalWaitTimesByIdInput>
-  ) => Promise<TerminalWaitTime>;
+export const fetchTerminalWaitTimesByTerminalId: (
+  params?: FetchFunctionParams<TerminalWaitTimesByIdInput>
+) => Promise<TerminalWaitTime> = fetchFunctions.fetchTerminalWaitTimesByTerminalId;

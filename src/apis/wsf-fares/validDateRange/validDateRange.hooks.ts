@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useFaresValidDateRange = hooks.useFaresValidDateRange as (
+export const useFaresValidDateRange: (
   params?: FaresValidDateRangeInput,
   options?: QueryHookOptions<ValidDateRange>
-) => UseQueryResult<ValidDateRange, Error>;
+) => UseQueryResult<ValidDateRange, Error> = hooks.useFaresValidDateRange;

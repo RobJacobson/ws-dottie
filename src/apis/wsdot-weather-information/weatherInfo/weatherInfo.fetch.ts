@@ -15,22 +15,18 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   weatherInfoResource
 );
 
-export const fetchWeatherInformation =
-  fetchFunctions.fetchWeatherInformation as (
-    params?: FetchFunctionParams<WeatherInformationInput>
-  ) => Promise<WeatherInfo[]>;
+export const fetchWeatherInformation: (
+  params?: FetchFunctionParams<WeatherInformationInput>
+) => Promise<WeatherInfo[]> = fetchFunctions.fetchWeatherInformation;
 
-export const fetchWeatherInformationByStationId =
-  fetchFunctions.fetchWeatherInformationByStationId as (
-    params?: FetchFunctionParams<WeatherInformationByStationIdInput>
-  ) => Promise<WeatherInfo>;
+export const fetchWeatherInformationByStationId: (
+  params?: FetchFunctionParams<WeatherInformationByStationIdInput>
+) => Promise<WeatherInfo> = fetchFunctions.fetchWeatherInformationByStationId;
 
-export const fetchCurrentWeatherForStations =
-  fetchFunctions.fetchCurrentWeatherForStations as (
-    params?: FetchFunctionParams<CurrentWeatherForStationsInput>
-  ) => Promise<WeatherInfo[]>;
+export const fetchCurrentWeatherForStations: (
+  params?: FetchFunctionParams<CurrentWeatherForStationsInput>
+) => Promise<WeatherInfo[]> = fetchFunctions.fetchCurrentWeatherForStations;
 
-export const searchWeatherInformation =
-  fetchFunctions.searchWeatherInformation as (
-    params?: FetchFunctionParams<SearchWeatherInformationInput>
-  ) => Promise<WeatherInfo[]>;
+export const searchWeatherInformation: (
+  params?: FetchFunctionParams<SearchWeatherInformationInput>
+) => Promise<WeatherInfo[]> = fetchFunctions.searchWeatherInformation;

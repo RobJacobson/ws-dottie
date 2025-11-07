@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useAllSailingsBySchedRouteID =
-  hooks.useAllSailingsBySchedRouteID as (
-    params?: AllSailingsBySchedRouteIDInput,
-    options?: QueryHookOptions<Sailing[]>
-  ) => UseQueryResult<Sailing[], Error>;
+export const useAllSailingsBySchedRouteID: (
+  params?: AllSailingsBySchedRouteIDInput,
+  options?: QueryHookOptions<Sailing[]>
+) => UseQueryResult<Sailing[], Error> = hooks.useAllSailingsBySchedRouteID;
 
-export const useSailingsByRouteID = hooks.useSailingsByRouteID as (
+export const useSailingsByRouteID: (
   params?: SailingsByRouteIDInput,
   options?: QueryHookOptions<Sailing[]>
-) => UseQueryResult<Sailing[], Error>;
+) => UseQueryResult<Sailing[], Error> = hooks.useSailingsByRouteID;

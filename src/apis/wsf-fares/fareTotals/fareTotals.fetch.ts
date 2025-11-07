@@ -10,7 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   fareTotalsGroup
 );
 
-export const fetchFareTotalsByTripDateAndRoute =
-  fetchFunctions.fetchFareTotalsByTripDateAndRoute as (
-    params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>
-  ) => Promise<FareTotal[]>;
+export const fetchFareTotalsByTripDateAndRoute: (
+  params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>
+) => Promise<FareTotal[]> = fetchFunctions.fetchFareTotalsByTripDateAndRoute;

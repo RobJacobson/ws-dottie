@@ -17,19 +17,17 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useRouteDetailsByTripDate = hooks.useRouteDetailsByTripDate as (
+export const useRouteDetailsByTripDate: (
   params?: RouteDetailsByTripDateInput,
   options?: QueryHookOptions<RouteDetail[]>
-) => UseQueryResult<RouteDetail[], Error>;
+) => UseQueryResult<RouteDetail[], Error> = hooks.useRouteDetailsByTripDate;
 
-export const useRouteDetailsByTripDateAndRouteId =
-  hooks.useRouteDetailsByTripDateAndRouteId as (
-    params?: RouteDetailsByTripDateAndRouteIdInput,
-    options?: QueryHookOptions<RouteDetail>
-  ) => UseQueryResult<RouteDetail, Error>;
+export const useRouteDetailsByTripDateAndRouteId: (
+  params?: RouteDetailsByTripDateAndRouteIdInput,
+  options?: QueryHookOptions<RouteDetail>
+) => UseQueryResult<RouteDetail, Error> = hooks.useRouteDetailsByTripDateAndRouteId;
 
-export const useRouteDetailsByTripDateAndTerminals =
-  hooks.useRouteDetailsByTripDateAndTerminals as (
-    params?: RouteDetailsByTripDateAndTerminalsInput,
-    options?: QueryHookOptions<RouteDetail[]>
-  ) => UseQueryResult<RouteDetail[], Error>;
+export const useRouteDetailsByTripDateAndTerminals: (
+  params?: RouteDetailsByTripDateAndTerminalsInput,
+  options?: QueryHookOptions<RouteDetail[]>
+) => UseQueryResult<RouteDetail[], Error> = hooks.useRouteDetailsByTripDateAndTerminals;

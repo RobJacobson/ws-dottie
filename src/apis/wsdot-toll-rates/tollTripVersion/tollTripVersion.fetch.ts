@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   tollTripVersionResource
 );
 
-export const fetchTollTripVersion = fetchFunctions.fetchTollTripVersion as (
+export const fetchTollTripVersion: (
   params?: FetchFunctionParams<TollTripVersionInput>
-) => Promise<TollTripVersion>;
+) => Promise<TollTripVersion> = fetchFunctions.fetchTollTripVersion;

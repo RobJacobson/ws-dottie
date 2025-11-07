@@ -14,17 +14,14 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   routeDetailsResource
 );
 
-export const fetchRouteDetailsByTripDate =
-  fetchFunctions.fetchRouteDetailsByTripDate as (
-    params?: FetchFunctionParams<RouteDetailsByTripDateInput>
-  ) => Promise<RouteDetail[]>;
+export const fetchRouteDetailsByTripDate: (
+  params?: FetchFunctionParams<RouteDetailsByTripDateInput>
+) => Promise<RouteDetail[]> = fetchFunctions.fetchRouteDetailsByTripDate;
 
-export const fetchRouteDetailsByTripDateAndRouteId =
-  fetchFunctions.fetchRouteDetailsByTripDateAndRouteId as (
-    params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>
-  ) => Promise<RouteDetail>;
+export const fetchRouteDetailsByTripDateAndRouteId: (
+  params?: FetchFunctionParams<RouteDetailsByTripDateAndRouteIdInput>
+) => Promise<RouteDetail> = fetchFunctions.fetchRouteDetailsByTripDateAndRouteId;
 
-export const fetchRouteDetailsByTripDateAndTerminals =
-  fetchFunctions.fetchRouteDetailsByTripDateAndTerminals as (
-    params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>
-  ) => Promise<RouteDetail[]>;
+export const fetchRouteDetailsByTripDateAndTerminals: (
+  params?: FetchFunctionParams<RouteDetailsByTripDateAndTerminalsInput>
+) => Promise<RouteDetail[]> = fetchFunctions.fetchRouteDetailsByTripDateAndTerminals;

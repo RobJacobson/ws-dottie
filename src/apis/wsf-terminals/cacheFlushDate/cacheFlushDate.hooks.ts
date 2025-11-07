@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useCacheFlushDate = hooks.useCacheFlushDate as (
+export const useCacheFlushDate: (
   params?: TerminalsCacheFlushDateInput,
   options?: QueryHookOptions<TerminalsCacheFlushDate>
-) => UseQueryResult<TerminalsCacheFlushDate, Error>;
+) => UseQueryResult<TerminalsCacheFlushDate, Error> = hooks.useCacheFlushDate;

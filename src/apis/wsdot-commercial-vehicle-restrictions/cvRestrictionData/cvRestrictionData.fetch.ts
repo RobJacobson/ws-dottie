@@ -10,7 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   cvRestrictionDataGroup
 );
 
-export const fetchCommercialVehicleRestrictions =
-  fetchFunctions.fetchCommercialVehicleRestrictions as (
-    params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>
-  ) => Promise<CVRestriction[]>;
+export const fetchCommercialVehicleRestrictions: (
+  params?: FetchFunctionParams<CommercialVehicleRestrictionsInput>
+) => Promise<CVRestriction[]> = fetchFunctions.fetchCommercialVehicleRestrictions;

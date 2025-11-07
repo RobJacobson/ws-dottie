@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   weatherReadingsResource
 );
 
-export const fetchWeatherReadings = fetchFunctions.fetchWeatherReadings as (
+export const fetchWeatherReadings: (
   params?: FetchFunctionParams<WeatherReadingsInput>
-) => Promise<WeatherReading[]>;
+) => Promise<WeatherReading[]> = fetchFunctions.fetchWeatherReadings;

@@ -10,10 +10,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   flowDataGroup
 );
 
-export const fetchTrafficFlows = fetchFunctions.fetchTrafficFlows as (
+export const fetchTrafficFlows: (
   params?: FetchFunctionParams<TrafficFlowsInput>
-) => Promise<FlowData[]>;
+) => Promise<FlowData[]> = fetchFunctions.fetchTrafficFlows;
 
-export const fetchTrafficFlowById = fetchFunctions.fetchTrafficFlowById as (
+export const fetchTrafficFlowById: (
   params?: FetchFunctionParams<TrafficFlowByIdInput>
-) => Promise<FlowData>;
+) => Promise<FlowData> = fetchFunctions.fetchTrafficFlowById;

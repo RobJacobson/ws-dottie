@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   vesselBasicsResource
 );
 
-export const fetchVesselBasics = fetchFunctions.fetchVesselBasics as (
+export const fetchVesselBasics: (
   params?: FetchFunctionParams<VesselBasicsInput>
-) => Promise<VesselBasic[]>;
+) => Promise<VesselBasic[]> = fetchFunctions.fetchVesselBasics;
 
-export const fetchVesselBasicsByVesselId =
-  fetchFunctions.fetchVesselBasicsByVesselId as (
-    params?: FetchFunctionParams<VesselBasicsByIdInput>
-  ) => Promise<VesselBasic>;
+export const fetchVesselBasicsByVesselId: (
+  params?: FetchFunctionParams<VesselBasicsByIdInput>
+) => Promise<VesselBasic> = fetchFunctions.fetchVesselBasicsByVesselId;

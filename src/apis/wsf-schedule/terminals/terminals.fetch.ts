@@ -14,15 +14,14 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   scheduleTerminalsResource
 );
 
-export const fetchTerminals = fetchFunctions.fetchTerminals as (
+export const fetchTerminals: (
   params?: FetchFunctionParams<TerminalsInput>
-) => Promise<Terminal[]>;
+) => Promise<Terminal[]> = fetchFunctions.fetchTerminals;
 
-export const fetchTerminalsAndMates = fetchFunctions.fetchTerminalsAndMates as (
+export const fetchTerminalsAndMates: (
   params?: FetchFunctionParams<TerminalsAndMatesInput>
-) => Promise<TerminalMate[]>;
+) => Promise<TerminalMate[]> = fetchFunctions.fetchTerminalsAndMates;
 
-export const fetchTerminalsAndMatesByRoute =
-  fetchFunctions.fetchTerminalsAndMatesByRoute as (
-    params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>
-  ) => Promise<TerminalMate[]>;
+export const fetchTerminalsAndMatesByRoute: (
+  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>
+) => Promise<TerminalMate[]> = fetchFunctions.fetchTerminalsAndMatesByRoute;

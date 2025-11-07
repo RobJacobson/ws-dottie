@@ -17,17 +17,17 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTollTripRates = hooks.useTollTripRates as (
+export const useTollTripRates: (
   params?: TollTripRatesInput,
   options?: QueryHookOptions<TollTripsRates>
-) => UseQueryResult<TollTripsRates, Error>;
+) => UseQueryResult<TollTripsRates, Error> = hooks.useTollTripRates;
 
-export const useTripRatesByDate = hooks.useTripRatesByDate as (
+export const useTripRatesByDate: (
   params?: TripRatesByDateInput,
   options?: QueryHookOptions<TollTripsRates[]>
-) => UseQueryResult<TollTripsRates[], Error>;
+) => UseQueryResult<TollTripsRates[], Error> = hooks.useTripRatesByDate;
 
-export const useTripRatesByVersion = hooks.useTripRatesByVersion as (
+export const useTripRatesByVersion: (
   params?: TripRatesByVersionInput,
   options?: QueryHookOptions<TollTripsRates>
-) => UseQueryResult<TollTripsRates, Error>;
+) => UseQueryResult<TollTripsRates, Error> = hooks.useTripRatesByVersion;

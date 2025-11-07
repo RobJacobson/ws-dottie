@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useScheduleTodayByRoute = hooks.useScheduleTodayByRoute as (
+export const useScheduleTodayByRoute: (
   params?: ScheduleTodayByRouteInput,
   options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error>;
+) => UseQueryResult<Schedule, Error> = hooks.useScheduleTodayByRoute;
 
-export const useScheduleTodayByTerminals =
-  hooks.useScheduleTodayByTerminals as (
-    params?: ScheduleTodayByTerminalsInput,
-    options?: QueryHookOptions<Schedule>
-  ) => UseQueryResult<Schedule, Error>;
+export const useScheduleTodayByTerminals: (
+  params?: ScheduleTodayByTerminalsInput,
+  options?: QueryHookOptions<Schedule>
+) => UseQueryResult<Schedule, Error> = hooks.useScheduleTodayByTerminals;

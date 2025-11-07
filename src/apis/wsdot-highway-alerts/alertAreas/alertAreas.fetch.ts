@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   alertAreasGroup
 );
 
-export const fetchMapAreas = fetchFunctions.fetchMapAreas as (
+export const fetchMapAreas: (
   params?: FetchFunctionParams<MapAreasInput>
-) => Promise<Area[]>;
+) => Promise<Area[]> = fetchFunctions.fetchMapAreas;

@@ -16,22 +16,22 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   highwayAlertsGroup
 );
 
-export const fetchAlerts = fetchFunctions.fetchAlerts as (
+export const fetchAlerts: (
   params?: FetchFunctionParams<AlertsInput>
-) => Promise<Alert[]>;
+) => Promise<Alert[]> = fetchFunctions.fetchAlerts;
 
-export const fetchAlertById = fetchFunctions.fetchAlertById as (
+export const fetchAlertById: (
   params?: FetchFunctionParams<AlertByIdInput>
-) => Promise<Alert>;
+) => Promise<Alert> = fetchFunctions.fetchAlertById;
 
-export const fetchAlertsByRegionId = fetchFunctions.fetchAlertsByRegionId as (
+export const fetchAlertsByRegionId: (
   params?: FetchFunctionParams<AlertsByRegionIDInput>
-) => Promise<Alert[]>;
+) => Promise<Alert[]> = fetchFunctions.fetchAlertsByRegionId;
 
-export const fetchAlertsByMapArea = fetchFunctions.fetchAlertsByMapArea as (
+export const fetchAlertsByMapArea: (
   params?: FetchFunctionParams<AlertsByMapAreaInput>
-) => Promise<Alert[]>;
+) => Promise<Alert[]> = fetchFunctions.fetchAlertsByMapArea;
 
-export const searchAlerts = fetchFunctions.searchAlerts as (
+export const searchAlerts: (
   params?: FetchFunctionParams<SearchAlertsInput>
-) => Promise<Alert[]>;
+) => Promise<Alert[]> = fetchFunctions.searchAlerts;

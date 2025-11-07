@@ -13,12 +13,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTrafficFlows = hooks.useTrafficFlows as (
+export const useTrafficFlows: (
   params?: TrafficFlowsInput,
   options?: QueryHookOptions<FlowData[]>
-) => UseQueryResult<FlowData[], Error>;
+) => UseQueryResult<FlowData[], Error> = hooks.useTrafficFlows;
 
-export const useTrafficFlowById = hooks.useTrafficFlowById as (
+export const useTrafficFlowById: (
   params?: TrafficFlowByIdInput,
   options?: QueryHookOptions<FlowData>
-) => UseQueryResult<FlowData, Error>;
+) => UseQueryResult<FlowData, Error> = hooks.useTrafficFlowById;

@@ -13,10 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   travelTimeRoutesGroup
 );
 
-export const fetchTravelTimeById = fetchFunctions.fetchTravelTimeById as (
+export const fetchTravelTimeById: (
   params?: FetchFunctionParams<TravelTimeByIdInput>
-) => Promise<TravelTimeRoute>;
+) => Promise<TravelTimeRoute> = fetchFunctions.fetchTravelTimeById;
 
-export const fetchTravelTimes = fetchFunctions.fetchTravelTimes as (
+export const fetchTravelTimes: (
   params?: FetchFunctionParams<TravelTimesInput>
-) => Promise<TravelTimeRoute[]>;
+) => Promise<TravelTimeRoute[]> = fetchFunctions.fetchTravelTimes;

@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useSurfaceMeasurements = hooks.useSurfaceMeasurements as (
+export const useSurfaceMeasurements: (
   params?: SurfaceMeasurementsInput,
   options?: QueryHookOptions<SurfaceMeasurement[]>
-) => UseQueryResult<SurfaceMeasurement[], Error>;
+) => UseQueryResult<SurfaceMeasurement[], Error> = hooks.useSurfaceMeasurements;

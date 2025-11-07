@@ -13,8 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useRoutesHavingServiceDisruptionsByTripDate =
-  hooks.useRoutesHavingServiceDisruptionsByTripDate as (
-    params?: RoutesHavingServiceDisruptionsByTripDateInput,
-    options?: QueryHookOptions<ServiceDisruption[]>
-  ) => UseQueryResult<ServiceDisruption[], Error>;
+export const useRoutesHavingServiceDisruptionsByTripDate: (
+  params?: RoutesHavingServiceDisruptionsByTripDateInput,
+  options?: QueryHookOptions<ServiceDisruption[]>
+) => UseQueryResult<ServiceDisruption[], Error> = hooks.useRoutesHavingServiceDisruptionsByTripDate;

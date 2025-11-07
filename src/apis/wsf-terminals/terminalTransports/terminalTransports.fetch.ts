@@ -13,12 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalTransportsResource
 );
 
-export const fetchTerminalTransports =
-  fetchFunctions.fetchTerminalTransports as (
-    params?: FetchFunctionParams<TerminalTransportsInput>
-  ) => Promise<TerminalTransport[]>;
+export const fetchTerminalTransports: (
+  params?: FetchFunctionParams<TerminalTransportsInput>
+) => Promise<TerminalTransport[]> = fetchFunctions.fetchTerminalTransports;
 
-export const fetchTerminalTransportsByTerminalId =
-  fetchFunctions.fetchTerminalTransportsByTerminalId as (
-    params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>
-  ) => Promise<TerminalTransport>;
+export const fetchTerminalTransportsByTerminalId: (
+  params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>
+) => Promise<TerminalTransport> = fetchFunctions.fetchTerminalTransportsByTerminalId;

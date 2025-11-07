@@ -14,15 +14,14 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   tollTripRatesResource
 );
 
-export const fetchTollTripRates = fetchFunctions.fetchTollTripRates as (
+export const fetchTollTripRates: (
   params?: FetchFunctionParams<TollTripRatesInput>
-) => Promise<TollTripsRates>;
+) => Promise<TollTripsRates> = fetchFunctions.fetchTollTripRates;
 
-export const fetchTripRatesByDate = fetchFunctions.fetchTripRatesByDate as (
+export const fetchTripRatesByDate: (
   params?: FetchFunctionParams<TripRatesByDateInput>
-) => Promise<TollTripsRates[]>;
+) => Promise<TollTripsRates[]> = fetchFunctions.fetchTripRatesByDate;
 
-export const fetchTripRatesByVersion =
-  fetchFunctions.fetchTripRatesByVersion as (
-    params?: FetchFunctionParams<TripRatesByVersionInput>
-  ) => Promise<TollTripsRates>;
+export const fetchTripRatesByVersion: (
+  params?: FetchFunctionParams<TripRatesByVersionInput>
+) => Promise<TollTripsRates> = fetchFunctions.fetchTripRatesByVersion;

@@ -17,18 +17,17 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminals = hooks.useTerminals as (
+export const useTerminals: (
   params?: TerminalsInput,
   options?: QueryHookOptions<Terminal[]>
-) => UseQueryResult<Terminal[], Error>;
+) => UseQueryResult<Terminal[], Error> = hooks.useTerminals;
 
-export const useTerminalsAndMates = hooks.useTerminalsAndMates as (
+export const useTerminalsAndMates: (
   params?: TerminalsAndMatesInput,
   options?: QueryHookOptions<TerminalMate[]>
-) => UseQueryResult<TerminalMate[], Error>;
+) => UseQueryResult<TerminalMate[], Error> = hooks.useTerminalsAndMates;
 
-export const useTerminalsAndMatesByRoute =
-  hooks.useTerminalsAndMatesByRoute as (
-    params?: TerminalsAndMatesByRouteInput,
-    options?: QueryHookOptions<TerminalMate[]>
-  ) => UseQueryResult<TerminalMate[], Error>;
+export const useTerminalsAndMatesByRoute: (
+  params?: TerminalsAndMatesByRouteInput,
+  options?: QueryHookOptions<TerminalMate[]>
+) => UseQueryResult<TerminalMate[], Error> = hooks.useTerminalsAndMatesByRoute;

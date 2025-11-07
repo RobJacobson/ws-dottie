@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   sailingsResource
 );
 
-export const fetchAllSailingsBySchedRouteID =
-  fetchFunctions.fetchAllSailingsBySchedRouteID as (
-    params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>
-  ) => Promise<Sailing[]>;
+export const fetchAllSailingsBySchedRouteID: (
+  params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>
+) => Promise<Sailing[]> = fetchFunctions.fetchAllSailingsBySchedRouteID;
 
-export const fetchSailingsByRouteID = fetchFunctions.fetchSailingsByRouteID as (
+export const fetchSailingsByRouteID: (
   params?: FetchFunctionParams<SailingsByRouteIDInput>
-) => Promise<Sailing[]>;
+) => Promise<Sailing[]> = fetchFunctions.fetchSailingsByRouteID;

@@ -17,18 +17,17 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTimeAdjustments = hooks.useTimeAdjustments as (
+export const useTimeAdjustments: (
   params?: TimeAdjustmentsInput,
   options?: QueryHookOptions<TimeAdjustment[]>
-) => UseQueryResult<TimeAdjustment[], Error>;
+) => UseQueryResult<TimeAdjustment[], Error> = hooks.useTimeAdjustments;
 
-export const useTimeAdjustmentsByRoute = hooks.useTimeAdjustmentsByRoute as (
+export const useTimeAdjustmentsByRoute: (
   params?: TimeAdjustmentsByRouteInput,
   options?: QueryHookOptions<TimeAdjustment[]>
-) => UseQueryResult<TimeAdjustment[], Error>;
+) => UseQueryResult<TimeAdjustment[], Error> = hooks.useTimeAdjustmentsByRoute;
 
-export const useTimeAdjustmentsBySchedRoute =
-  hooks.useTimeAdjustmentsBySchedRoute as (
-    params?: TimeAdjustmentsBySchedRouteInput,
-    options?: QueryHookOptions<TimeAdjustment[]>
-  ) => UseQueryResult<TimeAdjustment[], Error>;
+export const useTimeAdjustmentsBySchedRoute: (
+  params?: TimeAdjustmentsBySchedRouteInput,
+  options?: QueryHookOptions<TimeAdjustment[]>
+) => UseQueryResult<TimeAdjustment[], Error> = hooks.useTimeAdjustmentsBySchedRoute;

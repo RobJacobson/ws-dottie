@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   routesResource
 );
 
-export const fetchRoutesByTripDate = fetchFunctions.fetchRoutesByTripDate as (
+export const fetchRoutesByTripDate: (
   params?: FetchFunctionParams<RoutesByTripDateInput>
-) => Promise<Route[]>;
+) => Promise<Route[]> = fetchFunctions.fetchRoutesByTripDate;
 
-export const fetchRoutesByTripDateAndTerminals =
-  fetchFunctions.fetchRoutesByTripDateAndTerminals as (
-    params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>
-  ) => Promise<Route[]>;
+export const fetchRoutesByTripDateAndTerminals: (
+  params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>
+) => Promise<Route[]> = fetchFunctions.fetchRoutesByTripDateAndTerminals;

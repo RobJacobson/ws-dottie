@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useBorderCrossings = hooks.useBorderCrossings as (
+export const useBorderCrossings: (
   params?: BorderCrossingsInput,
   options?: QueryHookOptions<BorderCrossing[]>
-) => UseQueryResult<BorderCrossing[], Error>;
+) => UseQueryResult<BorderCrossing[], Error> = hooks.useBorderCrossings;

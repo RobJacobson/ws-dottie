@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useActiveSeasons = hooks.useActiveSeasons as (
+export const useActiveSeasons: (
   params?: ActiveSeasonsInput,
   options?: QueryHookOptions<ScheduleBase[]>
-) => UseQueryResult<ScheduleBase[], Error>;
+) => UseQueryResult<ScheduleBase[], Error> = hooks.useActiveSeasons;

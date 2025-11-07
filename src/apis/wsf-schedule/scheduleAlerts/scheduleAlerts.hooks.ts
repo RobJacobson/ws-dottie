@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useScheduleAlerts = hooks.useScheduleAlerts as (
+export const useScheduleAlerts: (
   params?: ScheduleAlertsInput,
   options?: QueryHookOptions<AlertDetail[]>
-) => UseQueryResult<AlertDetail[], Error>;
+) => UseQueryResult<AlertDetail[], Error> = hooks.useScheduleAlerts;

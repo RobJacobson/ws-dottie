@@ -13,8 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useCommercialVehicleRestrictions =
-  hooks.useCommercialVehicleRestrictions as (
-    params?: CommercialVehicleRestrictionsInput,
-    options?: QueryHookOptions<CVRestriction[]>
-  ) => UseQueryResult<CVRestriction[], Error>;
+export const useCommercialVehicleRestrictions: (
+  params?: CommercialVehicleRestrictionsInput,
+  options?: QueryHookOptions<CVRestriction[]>
+) => UseQueryResult<CVRestriction[], Error> = hooks.useCommercialVehicleRestrictions;

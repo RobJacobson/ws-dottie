@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalBasicsResource
 );
 
-export const fetchTerminalBasics = fetchFunctions.fetchTerminalBasics as (
+export const fetchTerminalBasics: (
   params?: FetchFunctionParams<TerminalBasicsInput>
-) => Promise<TerminalBasic[]>;
+) => Promise<TerminalBasic[]> = fetchFunctions.fetchTerminalBasics;
 
-export const fetchTerminalBasicsByTerminalId =
-  fetchFunctions.fetchTerminalBasicsByTerminalId as (
-    params?: FetchFunctionParams<TerminalBasicsByIdInput>
-  ) => Promise<TerminalBasic>;
+export const fetchTerminalBasicsByTerminalId: (
+  params?: FetchFunctionParams<TerminalBasicsByIdInput>
+) => Promise<TerminalBasic> = fetchFunctions.fetchTerminalBasicsByTerminalId;

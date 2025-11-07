@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   activeSeasonsResource
 );
 
-export const fetchActiveSeasons = fetchFunctions.fetchActiveSeasons as (
+export const fetchActiveSeasons: (
   params?: FetchFunctionParams<ActiveSeasonsInput>
-) => Promise<ScheduleBase[]>;
+) => Promise<ScheduleBase[]> = fetchFunctions.fetchActiveSeasons;

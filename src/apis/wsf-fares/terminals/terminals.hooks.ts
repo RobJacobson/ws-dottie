@@ -16,12 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useFaresTerminals = hooks.useFaresTerminals as (
+export const useFaresTerminals: (
   params?: FaresTerminalsInput,
   options?: QueryHookOptions<Terminal[]>
-) => UseQueryResult<Terminal[], Error>;
+) => UseQueryResult<Terminal[], Error> = hooks.useFaresTerminals;
 
-export const useTerminalMates = hooks.useTerminalMates as (
+export const useTerminalMates: (
   params?: TerminalMatesInput,
   options?: QueryHookOptions<Terminal[]>
-) => UseQueryResult<Terminal[], Error>;
+) => UseQueryResult<Terminal[], Error> = hooks.useTerminalMates;

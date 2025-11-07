@@ -16,14 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useScheduleByTripDateAndRouteId =
-  hooks.useScheduleByTripDateAndRouteId as (
-    params?: ScheduleByTripDateAndRouteIdInput,
-    options?: QueryHookOptions<Schedule>
-  ) => UseQueryResult<Schedule, Error>;
+export const useScheduleByTripDateAndRouteId: (
+  params?: ScheduleByTripDateAndRouteIdInput,
+  options?: QueryHookOptions<Schedule>
+) => UseQueryResult<Schedule, Error> = hooks.useScheduleByTripDateAndRouteId;
 
-export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
-  hooks.useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds as (
-    params?: ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
-    options?: QueryHookOptions<Schedule>
-  ) => UseQueryResult<Schedule, Error>;
+export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
+  params?: ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
+  options?: QueryHookOptions<Schedule>
+) => UseQueryResult<Schedule, Error> = hooks.useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;

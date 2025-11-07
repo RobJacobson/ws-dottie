@@ -10,7 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   scheduleValidDateRangeResource
 );
 
-export const fetchScheduleValidDateRange =
-  fetchFunctions.fetchScheduleValidDateRange as (
-    params?: FetchFunctionParams<ScheduleValidDateRangeInput>
-  ) => Promise<ValidDateRange>;
+export const fetchScheduleValidDateRange: (
+  params?: FetchFunctionParams<ScheduleValidDateRangeInput>
+) => Promise<ValidDateRange> = fetchFunctions.fetchScheduleValidDateRange;

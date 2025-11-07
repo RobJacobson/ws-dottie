@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTollTripVersion = hooks.useTollTripVersion as (
+export const useTollTripVersion: (
   params?: TollTripVersionInput,
   options?: QueryHookOptions<TollTripVersion>
-) => UseQueryResult<TollTripVersion, Error>;
+) => UseQueryResult<TollTripVersion, Error> = hooks.useTollTripVersion;

@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalSailingSpace = hooks.useTerminalSailingSpace as (
+export const useTerminalSailingSpace: (
   params?: TerminalSailingSpaceInput,
   options?: QueryHookOptions<TerminalSailingSpace[]>
-) => UseQueryResult<TerminalSailingSpace[], Error>;
+) => UseQueryResult<TerminalSailingSpace[], Error> = hooks.useTerminalSailingSpace;
 
-export const useTerminalSailingSpaceByTerminalId =
-  hooks.useTerminalSailingSpaceByTerminalId as (
-    params?: TerminalSailingSpaceByTerminalIdInput,
-    options?: QueryHookOptions<TerminalSailingSpace>
-  ) => UseQueryResult<TerminalSailingSpace, Error>;
+export const useTerminalSailingSpaceByTerminalId: (
+  params?: TerminalSailingSpaceByTerminalIdInput,
+  options?: QueryHookOptions<TerminalSailingSpace>
+) => UseQueryResult<TerminalSailingSpace, Error> = hooks.useTerminalSailingSpaceByTerminalId;

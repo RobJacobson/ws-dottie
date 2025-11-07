@@ -9,6 +9,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   eventCategoriesGroup
 );
 
-export const fetchEventCategories = fetchFunctions.fetchEventCategories as (
+export const fetchEventCategories: (
   params?: FetchFunctionParams<EventCategoriesInput>
-) => Promise<string[]>;
+) => Promise<string[]> = fetchFunctions.fetchEventCategories;

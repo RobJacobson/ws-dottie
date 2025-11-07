@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   weatherStationsResource
 );
 
-export const fetchWeatherStations = fetchFunctions.fetchWeatherStations as (
+export const fetchWeatherStations: (
   params?: FetchFunctionParams<WeatherStationsInput>
-) => Promise<WeatherStation[]>;
+) => Promise<WeatherStation[]> = fetchFunctions.fetchWeatherStations;

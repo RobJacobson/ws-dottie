@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useMountainPassConditionById =
-  hooks.useMountainPassConditionById as (
-    params?: MountainPassConditionByIdInput,
-    options?: QueryHookOptions<PassCondition>
-  ) => UseQueryResult<PassCondition, Error>;
+export const useMountainPassConditionById: (
+  params?: MountainPassConditionByIdInput,
+  options?: QueryHookOptions<PassCondition>
+) => UseQueryResult<PassCondition, Error> = hooks.useMountainPassConditionById;
 
-export const useMountainPassConditions = hooks.useMountainPassConditions as (
+export const useMountainPassConditions: (
   params?: MountainPassConditionsInput,
   options?: QueryHookOptions<PassCondition[]>
-) => UseQueryResult<PassCondition[], Error>;
+) => UseQueryResult<PassCondition[], Error> = hooks.useMountainPassConditions;

@@ -17,18 +17,17 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useFareLineItemsByTripDateAndTerminals =
-  hooks.useFareLineItemsByTripDateAndTerminals as (
-    params?: FareLineItemsByTripDateAndTerminalsInput,
-    options?: QueryHookOptions<LineItem[]>
-  ) => UseQueryResult<LineItem[], Error>;
+export const useFareLineItemsByTripDateAndTerminals: (
+  params?: FareLineItemsByTripDateAndTerminalsInput,
+  options?: QueryHookOptions<LineItem[]>
+) => UseQueryResult<LineItem[], Error> = hooks.useFareLineItemsByTripDateAndTerminals;
 
-export const useFareLineItemsBasic = hooks.useFareLineItemsBasic as (
+export const useFareLineItemsBasic: (
   params?: FareLineItemsBasicInput,
   options?: QueryHookOptions<LineItem[]>
-) => UseQueryResult<LineItem[], Error>;
+) => UseQueryResult<LineItem[], Error> = hooks.useFareLineItemsBasic;
 
-export const useFareLineItemsVerbose = hooks.useFareLineItemsVerbose as (
+export const useFareLineItemsVerbose: (
   params?: FareLineItemsVerboseInput,
   options?: QueryHookOptions<LineItemVerbose>
-) => UseQueryResult<LineItemVerbose, Error>;
+) => UseQueryResult<LineItemVerbose, Error> = hooks.useFareLineItemsVerbose;

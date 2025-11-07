@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   scheduledRoutesResource
 );
 
-export const fetchScheduledRoutes = fetchFunctions.fetchScheduledRoutes as (
+export const fetchScheduledRoutes: (
   params?: FetchFunctionParams<ScheduledRoutesInput>
-) => Promise<SchedRoute[]>;
+) => Promise<SchedRoute[]> = fetchFunctions.fetchScheduledRoutes;
 
-export const fetchScheduledRoutesById =
-  fetchFunctions.fetchScheduledRoutesById as (
-    params?: FetchFunctionParams<ScheduledRoutesByIdInput>
-  ) => Promise<SchedRoute[]>;
+export const fetchScheduledRoutesById: (
+  params?: FetchFunctionParams<ScheduledRoutesByIdInput>
+) => Promise<SchedRoute[]> = fetchFunctions.fetchScheduledRoutesById;

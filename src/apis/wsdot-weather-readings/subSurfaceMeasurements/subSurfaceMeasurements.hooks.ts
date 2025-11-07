@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useSubSurfaceMeasurements = hooks.useSubSurfaceMeasurements as (
+export const useSubSurfaceMeasurements: (
   params?: SubSurfaceMeasurementsInput,
   options?: QueryHookOptions<SubsurfaceMeasurement[]>
-) => UseQueryResult<SubsurfaceMeasurement[], Error>;
+) => UseQueryResult<SubsurfaceMeasurement[], Error> = hooks.useSubSurfaceMeasurements;

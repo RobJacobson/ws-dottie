@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalVerboseResource
 );
 
-export const fetchTerminalVerbose = fetchFunctions.fetchTerminalVerbose as (
+export const fetchTerminalVerbose: (
   params?: FetchFunctionParams<TerminalVerboseInput>
-) => Promise<TerminalVerbose[]>;
+) => Promise<TerminalVerbose[]> = fetchFunctions.fetchTerminalVerbose;
 
-export const fetchTerminalVerboseByTerminalId =
-  fetchFunctions.fetchTerminalVerboseByTerminalId as (
-    params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>
-  ) => Promise<TerminalVerbose>;
+export const fetchTerminalVerboseByTerminalId: (
+  params?: FetchFunctionParams<TerminalVerboseByTerminalIdInput>
+) => Promise<TerminalVerbose> = fetchFunctions.fetchTerminalVerboseByTerminalId;

@@ -13,12 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   vesselAccommodationsResource
 );
 
-export const fetchVesselAccommodations =
-  fetchFunctions.fetchVesselAccommodations as (
-    params?: FetchFunctionParams<VesselAccommodationsInput>
-  ) => Promise<VesselAccommodation[]>;
+export const fetchVesselAccommodations: (
+  params?: FetchFunctionParams<VesselAccommodationsInput>
+) => Promise<VesselAccommodation[]> = fetchFunctions.fetchVesselAccommodations;
 
-export const fetchVesselAccommodationsByVesselId =
-  fetchFunctions.fetchVesselAccommodationsByVesselId as (
-    params?: FetchFunctionParams<VesselAccommodationsByIdInput>
-  ) => Promise<VesselAccommodation>;
+export const fetchVesselAccommodationsByVesselId: (
+  params?: FetchFunctionParams<VesselAccommodationsByIdInput>
+) => Promise<VesselAccommodation> = fetchFunctions.fetchVesselAccommodationsByVesselId;

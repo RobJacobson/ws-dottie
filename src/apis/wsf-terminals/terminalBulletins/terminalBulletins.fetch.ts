@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalBulletinsResource
 );
 
-export const fetchTerminalBulletins = fetchFunctions.fetchTerminalBulletins as (
+export const fetchTerminalBulletins: (
   params?: FetchFunctionParams<TerminalBulletinsInput>
-) => Promise<TerminalBulletin[]>;
+) => Promise<TerminalBulletin[]> = fetchFunctions.fetchTerminalBulletins;
 
-export const fetchTerminalBulletinsByTerminalId =
-  fetchFunctions.fetchTerminalBulletinsByTerminalId as (
-    params?: FetchFunctionParams<TerminalBulletinsByIdInput>
-  ) => Promise<TerminalBulletin>;
+export const fetchTerminalBulletinsByTerminalId: (
+  params?: FetchFunctionParams<TerminalBulletinsByIdInput>
+) => Promise<TerminalBulletin> = fetchFunctions.fetchTerminalBulletinsByTerminalId;

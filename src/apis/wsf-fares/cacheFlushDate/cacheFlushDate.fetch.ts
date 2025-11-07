@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   cacheFlushDateGroup
 );
 
-export const fetchCacheFlushDate = fetchFunctions.fetchCacheFlushDate as (
+export const fetchCacheFlushDate: (
   params?: FetchFunctionParams<CacheFlushDateInput>
-) => Promise<FaresCacheFlushDate>;
+) => Promise<FaresCacheFlushDate> = fetchFunctions.fetchCacheFlushDate;

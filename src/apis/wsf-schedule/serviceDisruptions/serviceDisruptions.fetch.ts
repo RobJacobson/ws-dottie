@@ -10,7 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   serviceDisruptionsResource
 );
 
-export const fetchRoutesHavingServiceDisruptionsByTripDate =
-  fetchFunctions.fetchRoutesHavingServiceDisruptionsByTripDate as (
-    params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
-  ) => Promise<ServiceDisruption[]>;
+export const fetchRoutesHavingServiceDisruptionsByTripDate: (
+  params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
+) => Promise<ServiceDisruption[]> = fetchFunctions.fetchRoutesHavingServiceDisruptionsByTripDate;

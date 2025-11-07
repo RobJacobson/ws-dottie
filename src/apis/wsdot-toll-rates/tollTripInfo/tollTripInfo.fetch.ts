@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   tollTripInfoResource
 );
 
-export const fetchTollTripInfo = fetchFunctions.fetchTollTripInfo as (
+export const fetchTollTripInfo: (
   params?: FetchFunctionParams<TollTripInfoInput>
-) => Promise<TollTripInfo[]>;
+) => Promise<TollTripInfo[]> = fetchFunctions.fetchTollTripInfo;

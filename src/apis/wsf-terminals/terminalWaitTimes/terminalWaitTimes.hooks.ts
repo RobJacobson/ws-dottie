@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalWaitTimes = hooks.useTerminalWaitTimes as (
+export const useTerminalWaitTimes: (
   params?: TerminalWaitTimesInput,
   options?: QueryHookOptions<TerminalWaitTime[]>
-) => UseQueryResult<TerminalWaitTime[], Error>;
+) => UseQueryResult<TerminalWaitTime[], Error> = hooks.useTerminalWaitTimes;
 
-export const useTerminalWaitTimesByTerminalId =
-  hooks.useTerminalWaitTimesByTerminalId as (
-    params?: TerminalWaitTimesByIdInput,
-    options?: QueryHookOptions<TerminalWaitTime>
-  ) => UseQueryResult<TerminalWaitTime, Error>;
+export const useTerminalWaitTimesByTerminalId: (
+  params?: TerminalWaitTimesByIdInput,
+  options?: QueryHookOptions<TerminalWaitTime>
+) => UseQueryResult<TerminalWaitTime, Error> = hooks.useTerminalWaitTimesByTerminalId;

@@ -16,12 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTravelTimeById = hooks.useTravelTimeById as (
+export const useTravelTimeById: (
   params?: TravelTimeByIdInput,
   options?: QueryHookOptions<TravelTimeRoute>
-) => UseQueryResult<TravelTimeRoute, Error>;
+) => UseQueryResult<TravelTimeRoute, Error> = hooks.useTravelTimeById;
 
-export const useTravelTimes = hooks.useTravelTimes as (
+export const useTravelTimes: (
   params?: TravelTimesInput,
   options?: QueryHookOptions<TravelTimeRoute[]>
-) => UseQueryResult<TravelTimeRoute[], Error>;
+) => UseQueryResult<TravelTimeRoute[], Error> = hooks.useTravelTimes;

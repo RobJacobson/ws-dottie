@@ -19,12 +19,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalCombo = hooks.useTerminalCombo as (
+export const useTerminalCombo: (
   params?: TerminalComboInput,
   options?: QueryHookOptions<TerminalCombo>
-) => UseQueryResult<TerminalCombo, Error>;
+) => UseQueryResult<TerminalCombo, Error> = hooks.useTerminalCombo;
 
-export const useTerminalComboVerbose = hooks.useTerminalComboVerbose as (
+export const useTerminalComboVerbose: (
   params?: TerminalComboVerboseInput,
   options?: QueryHookOptions<TerminalComboVerbose[]>
-) => UseQueryResult<TerminalComboVerbose[], Error>;
+) => UseQueryResult<TerminalComboVerbose[], Error> = hooks.useTerminalComboVerbose;

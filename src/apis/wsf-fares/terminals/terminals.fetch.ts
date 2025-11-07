@@ -13,10 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalsGroup
 );
 
-export const fetchFaresTerminals = fetchFunctions.fetchFaresTerminals as (
+export const fetchFaresTerminals: (
   params?: FetchFunctionParams<FaresTerminalsInput>
-) => Promise<Terminal[]>;
+) => Promise<Terminal[]> = fetchFunctions.fetchFaresTerminals;
 
-export const fetchTerminalMates = fetchFunctions.fetchTerminalMates as (
+export const fetchTerminalMates: (
   params?: FetchFunctionParams<TerminalMatesInput>
-) => Promise<Terminal[]>;
+) => Promise<Terminal[]> = fetchFunctions.fetchTerminalMates;

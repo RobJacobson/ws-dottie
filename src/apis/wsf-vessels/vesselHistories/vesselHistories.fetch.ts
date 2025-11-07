@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   vesselHistoriesResource
 );
 
-export const fetchVesselHistories = fetchFunctions.fetchVesselHistories as (
+export const fetchVesselHistories: (
   params?: FetchFunctionParams<VesselHistoriesInput>
-) => Promise<VesselHistory[]>;
+) => Promise<VesselHistory[]> = fetchFunctions.fetchVesselHistories;
 
-export const fetchVesselHistoriesByVesselNameAndDateRange =
-  fetchFunctions.fetchVesselHistoriesByVesselNameAndDateRange as (
-    params?: FetchFunctionParams<VesselHistoriesByVesselNameAndDateRangeInput>
-  ) => Promise<VesselHistory[]>;
+export const fetchVesselHistoriesByVesselNameAndDateRange: (
+  params?: FetchFunctionParams<VesselHistoriesByVesselNameAndDateRangeInput>
+) => Promise<VesselHistory[]> = fetchFunctions.fetchVesselHistoriesByVesselNameAndDateRange;

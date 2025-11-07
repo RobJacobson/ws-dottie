@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   scheduleTerminalMatesResource
 );
 
-export const fetchTerminalMates = fetchFunctions.fetchTerminalMates as (
+export const fetchTerminalMates: (
   params?: FetchFunctionParams<TerminalMatesInput>
-) => Promise<Terminal[]>;
+) => Promise<Terminal[]> = fetchFunctions.fetchTerminalMates;

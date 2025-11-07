@@ -16,12 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useScheduledRoutes = hooks.useScheduledRoutes as (
+export const useScheduledRoutes: (
   params?: ScheduledRoutesInput,
   options?: QueryHookOptions<SchedRoute[]>
-) => UseQueryResult<SchedRoute[], Error>;
+) => UseQueryResult<SchedRoute[], Error> = hooks.useScheduledRoutes;
 
-export const useScheduledRoutesById = hooks.useScheduledRoutesById as (
+export const useScheduledRoutesById: (
   params?: ScheduledRoutesByIdInput,
   options?: QueryHookOptions<SchedRoute[]>
-) => UseQueryResult<SchedRoute[], Error>;
+) => UseQueryResult<SchedRoute[], Error> = hooks.useScheduledRoutesById;

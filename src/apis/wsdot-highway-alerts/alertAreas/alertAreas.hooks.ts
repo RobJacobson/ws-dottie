@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useMapAreas = hooks.useMapAreas as (
+export const useMapAreas: (
   params?: MapAreasInput,
   options?: QueryHookOptions<Area[]>
-) => UseQueryResult<Area[], Error>;
+) => UseQueryResult<Area[], Error> = hooks.useMapAreas;

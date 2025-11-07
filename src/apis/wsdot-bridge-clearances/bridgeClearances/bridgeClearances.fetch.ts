@@ -13,11 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   bridgeClearancesGroup
 );
 
-export const fetchBridgeClearances = fetchFunctions.fetchBridgeClearances as (
+export const fetchBridgeClearances: (
   params?: FetchFunctionParams<BridgeClearancesInput>
-) => Promise<BridgeClearance[]>;
+) => Promise<BridgeClearance[]> = fetchFunctions.fetchBridgeClearances;
 
-export const fetchBridgeClearancesByRoute =
-  fetchFunctions.fetchBridgeClearancesByRoute as (
-    params?: FetchFunctionParams<BridgeClearancesByRouteInput>
-  ) => Promise<BridgeClearance[]>;
+export const fetchBridgeClearancesByRoute: (
+  params?: FetchFunctionParams<BridgeClearancesByRouteInput>
+) => Promise<BridgeClearance[]> = fetchFunctions.fetchBridgeClearancesByRoute;

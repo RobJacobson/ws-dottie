@@ -16,12 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useBridgeClearances = hooks.useBridgeClearances as (
+export const useBridgeClearances: (
   params?: BridgeClearancesInput,
   options?: QueryHookOptions<BridgeClearance[]>
-) => UseQueryResult<BridgeClearance[], Error>;
+) => UseQueryResult<BridgeClearance[], Error> = hooks.useBridgeClearances;
 
-export const useBridgeClearancesByRoute = hooks.useBridgeClearancesByRoute as (
+export const useBridgeClearancesByRoute: (
   params?: BridgeClearancesByRouteInput,
   options?: QueryHookOptions<BridgeClearance[]>
-) => UseQueryResult<BridgeClearance[], Error>;
+) => UseQueryResult<BridgeClearance[], Error> = hooks.useBridgeClearancesByRoute;

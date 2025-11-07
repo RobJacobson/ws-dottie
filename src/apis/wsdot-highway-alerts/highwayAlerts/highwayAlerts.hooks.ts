@@ -19,27 +19,27 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useAlerts = hooks.useAlerts as (
+export const useAlerts: (
   params?: AlertsInput,
   options?: QueryHookOptions<Alert[]>
-) => UseQueryResult<Alert[], Error>;
+) => UseQueryResult<Alert[], Error> = hooks.useAlerts;
 
-export const useAlertById = hooks.useAlertById as (
+export const useAlertById: (
   params?: AlertByIdInput,
   options?: QueryHookOptions<Alert>
-) => UseQueryResult<Alert, Error>;
+) => UseQueryResult<Alert, Error> = hooks.useAlertById;
 
-export const useAlertsByRegionId = hooks.useAlertsByRegionId as (
+export const useAlertsByRegionId: (
   params?: AlertsByRegionIDInput,
   options?: QueryHookOptions<Alert[]>
-) => UseQueryResult<Alert[], Error>;
+) => UseQueryResult<Alert[], Error> = hooks.useAlertsByRegionId;
 
-export const useAlertsByMapArea = hooks.useAlertsByMapArea as (
+export const useAlertsByMapArea: (
   params?: AlertsByMapAreaInput,
   options?: QueryHookOptions<Alert[]>
-) => UseQueryResult<Alert[], Error>;
+) => UseQueryResult<Alert[], Error> = hooks.useAlertsByMapArea;
 
-export const useSearchAlerts = hooks.useSearchAlerts as (
+export const useSearchAlerts: (
   params?: SearchAlertsInput,
   options?: QueryHookOptions<Alert[]>
-) => UseQueryResult<Alert[], Error>;
+) => UseQueryResult<Alert[], Error> = hooks.useSearchAlerts;

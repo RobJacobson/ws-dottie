@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   borderCrossingDataResource
 );
 
-export const fetchBorderCrossings = fetchFunctions.fetchBorderCrossings as (
+export const fetchBorderCrossings: (
   params?: FetchFunctionParams<BorderCrossingsInput>
-) => Promise<BorderCrossing[]>;
+) => Promise<BorderCrossing[]> = fetchFunctions.fetchBorderCrossings;

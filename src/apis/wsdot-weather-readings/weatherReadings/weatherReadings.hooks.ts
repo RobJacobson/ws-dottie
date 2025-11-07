@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useWeatherReadings = hooks.useWeatherReadings as (
+export const useWeatherReadings: (
   params?: WeatherReadingsInput,
   options?: QueryHookOptions<WeatherReading[]>
-) => UseQueryResult<WeatherReading[], Error>;
+) => UseQueryResult<WeatherReading[], Error> = hooks.useWeatherReadings;

@@ -10,7 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   validDateRangeGroup
 );
 
-export const fetchFaresValidDateRange =
-  fetchFunctions.fetchFaresValidDateRange as (
-    params?: FetchFunctionParams<FaresValidDateRangeInput>
-  ) => Promise<ValidDateRange>;
+export const fetchFaresValidDateRange: (
+  params?: FetchFunctionParams<FaresValidDateRangeInput>
+) => Promise<ValidDateRange> = fetchFunctions.fetchFaresValidDateRange;

@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useRoutesByTripDate = hooks.useRoutesByTripDate as (
+export const useRoutesByTripDate: (
   params?: RoutesByTripDateInput,
   options?: QueryHookOptions<Route[]>
-) => UseQueryResult<Route[], Error>;
+) => UseQueryResult<Route[], Error> = hooks.useRoutesByTripDate;
 
-export const useRoutesByTripDateAndTerminals =
-  hooks.useRoutesByTripDateAndTerminals as (
-    params?: RoutesByTripDateAndTerminalsInput,
-    options?: QueryHookOptions<Route[]>
-  ) => UseQueryResult<Route[], Error>;
+export const useRoutesByTripDateAndTerminals: (
+  params?: RoutesByTripDateAndTerminalsInput,
+  options?: QueryHookOptions<Route[]>
+) => UseQueryResult<Route[], Error> = hooks.useRoutesByTripDateAndTerminals;

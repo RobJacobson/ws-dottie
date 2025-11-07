@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTollTripInfo = hooks.useTollTripInfo as (
+export const useTollTripInfo: (
   params?: TollTripInfoInput,
   options?: QueryHookOptions<TollTripInfo[]>
-) => UseQueryResult<TollTripInfo[], Error>;
+) => UseQueryResult<TollTripInfo[], Error> = hooks.useTollTripInfo;

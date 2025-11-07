@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useScheduleValidDateRange = hooks.useScheduleValidDateRange as (
+export const useScheduleValidDateRange: (
   params?: ScheduleValidDateRangeInput,
   options?: QueryHookOptions<ValidDateRange>
-) => UseQueryResult<ValidDateRange, Error>;
+) => UseQueryResult<ValidDateRange, Error> = hooks.useScheduleValidDateRange;

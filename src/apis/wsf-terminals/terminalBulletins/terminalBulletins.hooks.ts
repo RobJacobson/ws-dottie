@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalBulletins = hooks.useTerminalBulletins as (
+export const useTerminalBulletins: (
   params?: TerminalBulletinsInput,
   options?: QueryHookOptions<TerminalBulletin[]>
-) => UseQueryResult<TerminalBulletin[], Error>;
+) => UseQueryResult<TerminalBulletin[], Error> = hooks.useTerminalBulletins;
 
-export const useTerminalBulletinsByTerminalId =
-  hooks.useTerminalBulletinsByTerminalId as (
-    params?: TerminalBulletinsByIdInput,
-    options?: QueryHookOptions<TerminalBulletin>
-  ) => UseQueryResult<TerminalBulletin, Error>;
+export const useTerminalBulletinsByTerminalId: (
+  params?: TerminalBulletinsByIdInput,
+  options?: QueryHookOptions<TerminalBulletin>
+) => UseQueryResult<TerminalBulletin, Error> = hooks.useTerminalBulletinsByTerminalId;

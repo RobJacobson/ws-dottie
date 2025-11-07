@@ -14,17 +14,14 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   fareLineItemsGroup
 );
 
-export const fetchFareLineItemsByTripDateAndTerminals =
-  fetchFunctions.fetchFareLineItemsByTripDateAndTerminals as (
-    params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
-  ) => Promise<LineItem[]>;
+export const fetchFareLineItemsByTripDateAndTerminals: (
+  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
+) => Promise<LineItem[]> = fetchFunctions.fetchFareLineItemsByTripDateAndTerminals;
 
-export const fetchFareLineItemsBasic =
-  fetchFunctions.fetchFareLineItemsBasic as (
-    params?: FetchFunctionParams<FareLineItemsBasicInput>
-  ) => Promise<LineItem[]>;
+export const fetchFareLineItemsBasic: (
+  params?: FetchFunctionParams<FareLineItemsBasicInput>
+) => Promise<LineItem[]> = fetchFunctions.fetchFareLineItemsBasic;
 
-export const fetchFareLineItemsVerbose =
-  fetchFunctions.fetchFareLineItemsVerbose as (
-    params?: FetchFunctionParams<FareLineItemsVerboseInput>
-  ) => Promise<LineItemVerbose>;
+export const fetchFareLineItemsVerbose: (
+  params?: FetchFunctionParams<FareLineItemsVerboseInput>
+) => Promise<LineItemVerbose> = fetchFunctions.fetchFareLineItemsVerbose;

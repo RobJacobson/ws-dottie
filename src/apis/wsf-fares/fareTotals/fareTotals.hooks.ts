@@ -13,8 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useFareTotalsByTripDateAndRoute =
-  hooks.useFareTotalsByTripDateAndRoute as (
-    params?: FareTotalsByTripDateAndRouteInput,
-    options?: QueryHookOptions<FareTotal[]>
-  ) => UseQueryResult<FareTotal[], Error>;
+export const useFareTotalsByTripDateAndRoute: (
+  params?: FareTotalsByTripDateAndRouteInput,
+  options?: QueryHookOptions<FareTotal[]>
+) => UseQueryResult<FareTotal[], Error> = hooks.useFareTotalsByTripDateAndRoute;

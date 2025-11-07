@@ -18,25 +18,22 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useWeatherInformation = hooks.useWeatherInformation as (
+export const useWeatherInformation: (
   params?: WeatherInformationInput,
   options?: QueryHookOptions<WeatherInfo[]>
-) => UseQueryResult<WeatherInfo[], Error>;
+) => UseQueryResult<WeatherInfo[], Error> = hooks.useWeatherInformation;
 
-export const useWeatherInformationByStationId =
-  hooks.useWeatherInformationByStationId as (
-    params?: WeatherInformationByStationIdInput,
-    options?: QueryHookOptions<WeatherInfo>
-  ) => UseQueryResult<WeatherInfo, Error>;
+export const useWeatherInformationByStationId: (
+  params?: WeatherInformationByStationIdInput,
+  options?: QueryHookOptions<WeatherInfo>
+) => UseQueryResult<WeatherInfo, Error> = hooks.useWeatherInformationByStationId;
 
-export const useCurrentWeatherForStations =
-  hooks.useCurrentWeatherForStations as (
-    params?: CurrentWeatherForStationsInput,
-    options?: QueryHookOptions<WeatherInfo[]>
-  ) => UseQueryResult<WeatherInfo[], Error>;
+export const useCurrentWeatherForStations: (
+  params?: CurrentWeatherForStationsInput,
+  options?: QueryHookOptions<WeatherInfo[]>
+) => UseQueryResult<WeatherInfo[], Error> = hooks.useCurrentWeatherForStations;
 
-export const useSearchWeatherInformation =
-  hooks.useSearchWeatherInformation as (
-    params?: SearchWeatherInformationInput,
-    options?: QueryHookOptions<WeatherInfo[]>
-  ) => UseQueryResult<WeatherInfo[], Error>;
+export const useSearchWeatherInformation: (
+  params?: SearchWeatherInformationInput,
+  options?: QueryHookOptions<WeatherInfo[]>
+) => UseQueryResult<WeatherInfo[], Error> = hooks.useSearchWeatherInformation;

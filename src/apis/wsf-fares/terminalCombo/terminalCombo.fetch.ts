@@ -16,11 +16,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalComboGroup
 );
 
-export const fetchTerminalCombo = fetchFunctions.fetchTerminalCombo as (
+export const fetchTerminalCombo: (
   params?: FetchFunctionParams<TerminalComboInput>
-) => Promise<TerminalCombo>;
+) => Promise<TerminalCombo> = fetchFunctions.fetchTerminalCombo;
 
-export const fetchTerminalComboVerbose =
-  fetchFunctions.fetchTerminalComboVerbose as (
-    params?: FetchFunctionParams<TerminalComboVerboseInput>
-  ) => Promise<TerminalComboVerbose[]>;
+export const fetchTerminalComboVerbose: (
+  params?: FetchFunctionParams<TerminalComboVerboseInput>
+) => Promise<TerminalComboVerbose[]> = fetchFunctions.fetchTerminalComboVerbose;

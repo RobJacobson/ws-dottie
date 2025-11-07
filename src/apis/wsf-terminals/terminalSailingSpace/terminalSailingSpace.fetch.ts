@@ -13,12 +13,10 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   terminalSailingSpaceResource
 );
 
-export const fetchTerminalSailingSpace =
-  fetchFunctions.fetchTerminalSailingSpace as (
-    params?: FetchFunctionParams<TerminalSailingSpaceInput>
-  ) => Promise<TerminalSailingSpace[]>;
+export const fetchTerminalSailingSpace: (
+  params?: FetchFunctionParams<TerminalSailingSpaceInput>
+) => Promise<TerminalSailingSpace[]> = fetchFunctions.fetchTerminalSailingSpace;
 
-export const fetchTerminalSailingSpaceByTerminalId =
-  fetchFunctions.fetchTerminalSailingSpaceByTerminalId as (
-    params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>
-  ) => Promise<TerminalSailingSpace>;
+export const fetchTerminalSailingSpaceByTerminalId: (
+  params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>
+) => Promise<TerminalSailingSpace> = fetchFunctions.fetchTerminalSailingSpaceByTerminalId;

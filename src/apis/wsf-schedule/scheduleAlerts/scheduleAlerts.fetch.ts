@@ -10,6 +10,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
   scheduleAlertsResource
 );
 
-export const fetchScheduleAlerts = fetchFunctions.fetchScheduleAlerts as (
+export const fetchScheduleAlerts: (
   params?: FetchFunctionParams<ScheduleAlertsInput>
-) => Promise<AlertDetail[]>;
+) => Promise<AlertDetail[]> = fetchFunctions.fetchScheduleAlerts;

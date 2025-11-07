@@ -16,13 +16,12 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalVerbose = hooks.useTerminalVerbose as (
+export const useTerminalVerbose: (
   params?: TerminalVerboseInput,
   options?: QueryHookOptions<TerminalVerbose[]>
-) => UseQueryResult<TerminalVerbose[], Error>;
+) => UseQueryResult<TerminalVerbose[], Error> = hooks.useTerminalVerbose;
 
-export const useTerminalVerboseByTerminalId =
-  hooks.useTerminalVerboseByTerminalId as (
-    params?: TerminalVerboseByTerminalIdInput,
-    options?: QueryHookOptions<TerminalVerbose>
-  ) => UseQueryResult<TerminalVerbose, Error>;
+export const useTerminalVerboseByTerminalId: (
+  params?: TerminalVerboseByTerminalIdInput,
+  options?: QueryHookOptions<TerminalVerbose>
+) => UseQueryResult<TerminalVerbose, Error> = hooks.useTerminalVerboseByTerminalId;

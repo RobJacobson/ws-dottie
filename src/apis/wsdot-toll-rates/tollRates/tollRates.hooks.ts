@@ -13,7 +13,7 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTollRates = hooks.useTollRates as (
+export const useTollRates: (
   params?: TollRatesInput,
   options?: QueryHookOptions<TollRate[]>
-) => UseQueryResult<TollRate[], Error>;
+) => UseQueryResult<TollRate[], Error> = hooks.useTollRates;
