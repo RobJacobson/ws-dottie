@@ -51,7 +51,40 @@ configManager.setApiKey('your_api_key_here');
 configManager.setBaseUrl('https://your-proxy-server.com');
 ```
 
-### 4. Start Using WS-Dottie
+### 4. Choose Your Import Pattern
+
+WS-Dottie provides multiple import patterns optimized for different use cases:
+
+**For React Applications** (with hooks):
+```javascript
+import { useGetVesselLocations } from 'ws-dottie/wsf-vessels';
+```
+
+**For Server-Side Code** (no React dependencies):
+```javascript
+import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
+```
+
+**For Everything** (simplest, but larger bundle):
+```javascript
+import { useGetVesselLocations, getVesselLocations } from 'ws-dottie';
+```
+
+**Importing TypeScript Types:**
+```typescript
+// Import types along with functions
+import { 
+  getVesselLocations,
+  type VesselLocation        // Output type
+} from 'ws-dottie/wsf-vessels/core';
+
+// Or import types separately
+import type { VesselLocation } from 'ws-dottie/wsf-vessels/core';
+```
+
+See the [Import Patterns section in README.md](../../README.md#5-import-patterns) for detailed guidance on choosing the right pattern.
+
+### 5. Start Using WS-Dottie
 
 ```javascript
 import { useGetVesselLocations, useGetHighwayAlerts } from 'ws-dottie';
@@ -77,22 +110,28 @@ import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
 async function getTransportationData() {
   const vessels = await getVesselLocations({
     fetchMode: 'native',
-    validate: true
+    validate: false  // Default: faster, no validation overhead
   });
   
   const alerts = await getHighwayAlerts({
     fetchMode: 'native',
-    validate: true
+    validate: true  // Enable validation for extra safety
   });
   
   const crossings = await getBorderCrossings({
     fetchMode: 'native',
-    validate: true
+    validate: false  // Skip validation for better performance
   });
   
   return { vessels, alerts, crossings };
 }
 ```
+
+**Validation Options:**
+- `validate: false` (default) - Faster, smaller bundle, no runtime validation
+- `validate: true` - Slower but catches API response changes early
+
+For production, consider disabling validation for better performance. For development, enable validation to catch issues early. See [Production vs Development](../../README.md#-production-vs-development) for more guidance.
 
 ## 📚 Next Steps
 

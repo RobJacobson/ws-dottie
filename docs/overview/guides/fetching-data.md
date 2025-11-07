@@ -34,31 +34,31 @@ configManager.setLogLevel(process.env.LOG_LEVEL || 'info');
 ### 3. Basic Usage
 
 ```javascript
-import { getVesselLocations, getHighwayAlerts } from 'ws-dottie/wsf-vessels/fetchFunctions';
-import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings/fetchFunctions';
+import { getVesselLocations, getHighwayAlerts } from 'ws-dottie/wsf-vessels/core';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
 
 async function getTransportationData() {
   try {
-    // Fetch vessel locations
+    // Fetch vessel locations (without validation - faster)
     const vessels = await getVesselLocations({
       fetchMode: 'native',
-      validate: true
+      validate: false  // Default: faster, no validation overhead
     });
     
     console.log(`Found ${vessels.length} vessels`);
     
-    // Fetch highway alerts
+    // Fetch highway alerts (with validation - safer)
     const alerts = await getHighwayAlerts({
       fetchMode: 'native',
-      validate: true
+      validate: true  // Enable validation for extra safety
     });
     
     console.log(`Found ${alerts.length} alerts`);
     
-    // Fetch border crossings
+    // Fetch border crossings (without validation - faster)
     const crossings = await getBorderCrossings({
       fetchMode: 'native',
-      validate: true
+      validate: false  // Skip validation for better performance
     });
     
     console.log(`Found ${crossings.length} border crossings`);
@@ -73,6 +73,46 @@ async function getTransportationData() {
 // Run function
 getTransportationData();
 ```
+
+## 📦 Import Patterns
+
+WS-Dottie provides multiple import patterns optimized for different use cases. For server-side code (no React), use the `/core` subpath:
+
+**Core-Only Imports** (Recommended for server-side):
+```javascript
+import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
+```
+
+**API-Specific Imports** (Includes hooks):
+```javascript
+import { useGetVesselLocations, getVesselLocations } from 'ws-dottie/wsf-vessels';
+```
+
+**Main Package Import** (Everything):
+```javascript
+import { getVesselLocations } from 'ws-dottie';
+```
+
+**Importing TypeScript Types:**
+```typescript
+// Import types along with functions
+import { 
+  getVesselLocations,
+  type VesselLocation,           // Output type
+  type VesselLocationsInput      // Input type
+} from 'ws-dottie/wsf-vessels/core';
+
+// Use types in your code
+async function processVessels(): Promise<VesselLocation[]> {
+  const vessels = await getVesselLocations({
+    fetchMode: 'native',
+    validate: false
+  });
+  return vessels;
+}
+```
+
+See the [Import Patterns section in README.md](../../README.md#5-import-patterns) for detailed guidance.
 
 ## 🏗️ Fetch Modes
 
@@ -179,19 +219,19 @@ async function fetchBatchData() {
     const [vessels, waitTimes, alerts, crossings] = await Promise.all([
       getVesselLocations({
         fetchMode: 'native',
-        validate: true
+        validate: false  // Default: faster
       }),
       getTerminalWaitTimes({
         fetchMode: 'native',
-        validate: true
+        validate: false  // Default: faster
       }),
       getHighwayAlerts({
         fetchMode: 'native',
-        validate: true
+        validate: true  // Enable validation for critical data
       }),
       getBorderCrossings({
         fetchMode: 'native',
-        validate: true
+        validate: false  // Default: faster
       })
     ]);
     
@@ -251,25 +291,88 @@ main();
 
 ## 🔧 Validation Options
 
+WS-Dottie provides optional Zod schema validation. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
+
+### Understanding Validation
+
+**With validation enabled** (`validate: true`):
+- Validates API responses against Zod schemas at runtime
+- Catches API response shape changes immediately
+- Transforms date strings and nullable fields safely
+- Adds ~50-100KB to bundle size (Zod schemas)
+- Slightly slower due to schema parsing overhead
+
+**Without validation** (`validate: false` - default):
+- Faster performance — no schema parsing
+- Smaller bundle size — Zod schemas can be tree-shaken out
+- Still type-safe — TypeScript types are always available
+- Automatic .NET date conversion still applies
+- Perfect for production when API is stable
+
 ### Schema Validation
 
 ```javascript
 import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
-// Enable automatic validation
+// Enable automatic validation (recommended for development)
 const vessels = await getVesselLocations({
   fetchMode: 'native',
   validate: true  // Validates response against Zod schema
 });
 
-// Disable validation (faster but less safe)
+// Disable validation (recommended for production)
 const vessels = await getVesselLocations({
   fetchMode: 'native',
-  validate: false
+  validate: false  // Default: faster, no validation overhead
+});
+```
+
+### When Schemas Are Required
+
+If you request validation (`validate: true`) but schemas aren't available (e.g., using a light build), WS-Dottie will throw a clear error:
+
+```
+Validation requires schemas. This endpoint was built without schemas.
+Use the full build or import schemas from the /schemas subpath.
+```
+
+**Solutions:**
+1. Use the full build (includes schemas by default)
+2. Import schemas from the `/schemas` subpath:
+   ```javascript
+   import { vesselLocationsSchema } from 'ws-dottie/wsf-vessels/schemas';
+   ```
+3. Disable validation (`validate: false`) if you don't need it
+
+### Production vs Development Patterns
+
+**Development Pattern** (catch issues early):
+```javascript
+const vessels = await getVesselLocations({
+  fetchMode: 'native',
+  validate: process.env.NODE_ENV === 'development'
+});
+```
+
+**Production Pattern** (optimize for performance):
+```javascript
+const vessels = await getVesselLocations({
+  fetchMode: 'native',
+  validate: false  // Faster, smaller bundle
+});
+```
+
+**Conditional Pattern** (best of both worlds):
+```javascript
+const vessels = await getVesselLocations({
+  fetchMode: 'native',
+  validate: process.env.NODE_ENV !== 'production'
 });
 ```
 
 ### Custom Validation
+
+If you need custom validation logic beyond Zod schemas:
 
 ```javascript
 import { getVesselLocations } from 'ws-dottie/wsf-vessels/core';
@@ -327,7 +430,7 @@ class TransportationService {
         const data = await fetchFunction({
           ...params,
           fetchMode: 'native',
-          validate: true
+          validate: false  // Default: faster
         });
         
         return data;
