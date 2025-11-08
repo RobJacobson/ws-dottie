@@ -100,22 +100,25 @@ export const createFetchFunctions = <
   api: TApi,
   endpointGroup: TGroup
 ): FetchFunctionsMap<TGroup> => {
-  return Object.entries(endpointGroup.endpoints).reduce(
+  type EndpointEntries = {
+    [K in keyof TGroup["endpoints"]]: [K, TGroup["endpoints"][K]];
+  }[keyof TGroup["endpoints"]][];
+
+  const entries = Object.entries(endpointGroup.endpoints) as EndpointEntries;
+
+  return entries.reduce(
     (acc, [functionName, endpointDef]) => {
-      const typedEndpointDef = endpointDef as EndpointDefinition<
-        unknown,
-        unknown
-      >;
       const endpoint = createEndpoint(
         api,
         endpointGroup,
-        typedEndpointDef,
-        functionName
+        endpointDef,
+        functionName as string
       );
-      const fetchFunction = createFetchFunction(endpoint);
+      const fetchFunction = createFetchFunction(
+        endpoint
+      ) as FetchFunctionsMap<TGroup>[typeof functionName];
 
-      acc[functionName as keyof FetchFunctionsMap<TGroup>] =
-        fetchFunction as FetchFunctionsMap<TGroup>[keyof FetchFunctionsMap<TGroup>];
+      acc[functionName] = fetchFunction;
 
       return acc;
     },
