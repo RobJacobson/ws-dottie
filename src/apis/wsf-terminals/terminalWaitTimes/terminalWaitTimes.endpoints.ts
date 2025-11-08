@@ -21,8 +21,7 @@ export const terminalWaitTimesResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalWaitTimes: {
-      function: "getTerminalWaitTimes",
+    fetchTerminalWaitTimes: {
       endpoint: "/terminalWaitTimes",
       inputSchema: terminalWaitTimesInputSchema,
       outputSchema: z.array(terminalWaitTimeSchema),
@@ -30,8 +29,7 @@ export const terminalWaitTimesResource = {
       endpointDescription:
         "Returns multiple TerminalWaitTime objects for all terminals.",
     } satisfies EndpointDefinition<TerminalWaitTimesInput, TerminalWaitTime[]>,
-    getTerminalWaitTimesByTerminalId: {
-      function: "getTerminalWaitTimesByTerminalId",
+    fetchTerminalWaitTimesByTerminalId: {
       endpoint: "/terminalWaitTimes/{TerminalID}",
       inputSchema: terminalWaitTimesByIdInputSchema,
       outputSchema: terminalWaitTimeSchema,

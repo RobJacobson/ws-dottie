@@ -16,8 +16,7 @@ export const serviceDisruptionsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getRoutesHavingServiceDisruptionsByTripDate: {
-      function: "getRoutesHavingServiceDisruptionsByTripDate",
+    fetchRoutesHavingServiceDisruptionsByTripDate: {
       endpoint: "/routeshavingservicedisruptions/{TripDate}",
       inputSchema: routesHavingServiceDisruptionsByTripDateInputSchema,
       outputSchema: z.array(serviceDisruptionSchema),

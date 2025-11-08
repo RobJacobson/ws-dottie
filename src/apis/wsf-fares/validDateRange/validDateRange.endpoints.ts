@@ -1,8 +1,8 @@
+import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
+import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import type { FaresValidDateRangeInput } from "./validDateRange.input";
 import { faresValidDateRangeInputSchema } from "./validDateRange.input";
-import type { ValidDateRange } from "./validDateRange.output";
-import { validDateRangeSchema } from "./validDateRange.output";
 
 export const validDateRangeGroup = {
   name: "valid-date-range",
@@ -14,8 +14,7 @@ export const validDateRangeGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getFaresValidDateRange: {
-      function: "getFaresValidDateRange",
+    fetchFaresValidDateRange: {
       endpoint: "/validdaterange",
       inputSchema: faresValidDateRangeInputSchema,
       outputSchema: validDateRangeSchema,

@@ -1,16 +1,12 @@
-/**
- * @fileoverview Output schemas for WSF Fares API Terminals endpoints
- *
- * These schemas define the response structures for WSF Fares API Terminals endpoints.
- */
-
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * Base terminal schema for fares API
+ * Common terminal schema shared across WSF APIs.
  *
- * This operation retrieves valid departing terminals for a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const terminalBaseSchema = z
+ * Represents terminal information including identifier and human-readable
+ * description. `Description` is always present based on captured sample data.
+ */
+export const terminalSchema = z
   .object({
     TerminalID: z
       .number()
@@ -27,11 +23,17 @@ export const terminalBaseSchema = z
     "Represents base terminal information including terminal identifier and name. E.g., terminal 1 (Anacortes) or terminal 3 (Bainbridge Island). Used for terminal identification in fare queries and terminal lookups."
   );
 
-export type TerminalBase = z.infer<typeof terminalBaseSchema>;
+export type Terminal = z.infer<typeof terminalSchema>;
 
 /**
- * Terminal response schema used by multiple endpoints
+ * Common terminal list schema shared across WSF APIs.
+ *
+ * Represents arrays of terminal records returned by terminal list endpoints.
  */
-export const terminalSchema = terminalBaseSchema;
+export const terminalListSchema = z
+  .array(terminalSchema)
+  .describe(
+    "Represents a list of terminal records, such as those returned from terminal listings or terminal mates lookups."
+  );
 
-export type Terminal = z.infer<typeof terminalSchema>;
+export type TerminalList = z.infer<typeof terminalListSchema>;

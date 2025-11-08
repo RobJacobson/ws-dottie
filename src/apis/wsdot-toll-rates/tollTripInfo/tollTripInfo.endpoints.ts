@@ -14,8 +14,7 @@ export const tollTripInfoResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTollTripInfo: {
-      function: "getTollTripInfo",
+    fetchTollTripInfo: {
       endpoint: "/getTollTripInfoAsJson",
       inputSchema: tollTripInfoInputSchema,
       outputSchema: z.array(tollTripInfoSchema),

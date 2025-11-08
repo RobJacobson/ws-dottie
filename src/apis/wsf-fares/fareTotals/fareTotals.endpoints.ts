@@ -16,8 +16,7 @@ export const fareTotalsGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getFareTotalsByTripDateAndRoute: {
-      function: "getFareTotalsByTripDateAndRoute",
+    fetchFareTotalsByTripDateAndRoute: {
       endpoint:
         "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
       inputSchema: fareTotalsByTripDateAndRouteInputSchema,

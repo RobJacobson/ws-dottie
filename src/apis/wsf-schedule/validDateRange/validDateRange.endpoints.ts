@@ -1,8 +1,8 @@
+import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
+import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import type { ScheduleValidDateRangeInput } from "./validDateRange.input";
 import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
-import type { ValidDateRange } from "./validDateRange.output";
-import { validDateRangeSchema } from "./validDateRange.output";
 
 export const scheduleValidDateRangeResource = {
   name: "schedule-valid-date-range",
@@ -14,8 +14,7 @@ export const scheduleValidDateRangeResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduleValidDateRange: {
-      function: "getScheduleValidDateRange",
+    fetchScheduleValidDateRange: {
       endpoint: "/validdaterange",
       inputSchema: scheduleValidDateRangeInputSchema,
       outputSchema: validDateRangeSchema,

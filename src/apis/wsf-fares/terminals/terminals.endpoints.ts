@@ -1,16 +1,15 @@
+import type {
+  TerminalMatesInput,
+  TerminalsInput,
+} from "@/apis/shared/terminals.input";
+import {
+  terminalMatesInputSchema,
+  terminalsInputSchema,
+} from "@/apis/shared/terminals.input";
+import type { Terminal } from "@/apis/shared/terminals.output";
+import { terminalListSchema } from "@/apis/shared/terminals.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  FaresTerminalsInput,
-  TerminalMatesInput,
-} from "./terminals.input";
-import {
-  faresTerminalsInputSchema,
-  terminalMatesInputSchema,
-} from "./terminals.input";
-import type { Terminal } from "./terminals.output";
-import { terminalSchema } from "./terminals.output";
 
 export const terminalsGroup = {
   name: "terminals",
@@ -22,20 +21,18 @@ export const terminalsGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getFaresTerminals: {
-      function: "getFaresTerminals",
+    fetchTerminalFares: {
       endpoint: "/terminals/{TripDate}",
-      inputSchema: faresTerminalsInputSchema,
-      outputSchema: z.array(terminalSchema),
+      inputSchema: terminalsInputSchema,
+      outputSchema: terminalListSchema,
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns a list of valid departing terminals for the specified trip date.",
-    } satisfies EndpointDefinition<FaresTerminalsInput, Terminal[]>,
-    getTerminalMates: {
-      function: "getTerminalMates",
+    } satisfies EndpointDefinition<TerminalsInput, Terminal[]>,
+    fetchTerminalMatesFares: {
       endpoint: "/terminalMates/{TripDate}/{TerminalID}",
       inputSchema: terminalMatesInputSchema,
-      outputSchema: z.array(terminalSchema),
+      outputSchema: terminalListSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
         "Returns arriving terminals for the given departing terminal and trip date.",

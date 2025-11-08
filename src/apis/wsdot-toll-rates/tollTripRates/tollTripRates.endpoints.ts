@@ -24,8 +24,7 @@ export const tollTripRatesResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTollTripRates: {
-      function: "getTollTripRates",
+    fetchTollTripRates: {
       endpoint: "/getTollTripRatesAsJson",
       inputSchema: tollTripRatesInputSchema,
       outputSchema: tollTripsRatesSchema,
@@ -33,8 +32,7 @@ export const tollTripRatesResource = {
       endpointDescription:
         "Returns single TollTripRates item with current pricing and message data.",
     } satisfies EndpointDefinition<TollTripRatesInput, TollTripsRates>,
-    getTripRatesByDate: {
-      function: "getTripRatesByDate",
+    fetchTripRatesByDate: {
       endpoint: "/getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
       inputSchema: tripRatesByDateInputSchema,
       outputSchema: z.array(tollTripsRatesSchema),
@@ -45,8 +43,7 @@ export const tollTripRatesResource = {
       endpointDescription:
         "Returns multiple TollTripRates items for specified date range.",
     } satisfies EndpointDefinition<TripRatesByDateInput, TollTripsRates[]>,
-    getTripRatesByVersion: {
-      function: "getTripRatesByVersion",
+    fetchTripRatesByVersion: {
       endpoint: "/getTripRatesByVersionAsJson?Version={Version}",
       inputSchema: tripRatesByVersionInputSchema,
       outputSchema: tollTripsRatesSchema,

@@ -19,8 +19,7 @@ export const cacheFlushDateTerminalsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getCacheFlushDate: {
-      function: "getCacheFlushDateTerminals",
+    fetchCacheFlushDateTerminals: {
       endpoint: "/cacheflushdate",
       inputSchema: cacheFlushDateTerminalsInputSchema,
       outputSchema: cacheFlushDateTerminalsSchema,

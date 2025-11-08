@@ -21,8 +21,7 @@ export const sailingsResource = {
   // Using FREQUENT strategy because sailings can change throughout the day as schedules are adjusted
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getAllSailingsBySchedRouteID: {
-      function: "getSailingsBySchedRouteID",
+    fetchAllSailingsBySchedRouteID: {
       endpoint: "/allsailings/{SchedRouteID}",
       inputSchema: allSailingsBySchedRouteIDInputSchema,
       outputSchema: z.array(sailingSchema),
@@ -30,8 +29,7 @@ export const sailingsResource = {
       endpointDescription:
         "Returns all sailing data for the specified scheduled route ID.",
     } satisfies EndpointDefinition<AllSailingsBySchedRouteIDInput, Sailing[]>,
-    getSailingsByRouteID: {
-      function: "getSailingsBySchedRouteID",
+    fetchSailingsByRouteID: {
       endpoint: "/sailings/{SchedRouteID}",
       inputSchema: sailingsByRouteIDInputSchema,
       outputSchema: z.array(sailingSchema),

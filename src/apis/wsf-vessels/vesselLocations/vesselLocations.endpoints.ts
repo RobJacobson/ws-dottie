@@ -22,8 +22,7 @@ export const vesselLocationsGroup = {
   // Using REALTIME strategy because vessel locations update every few seconds as vessels move
   cacheStrategy: "REALTIME" as const,
   endpoints: {
-    getVesselLocations: {
-      function: "getVesselLocations",
+    fetchVesselLocations: {
       endpoint: "/vesselLocations",
       inputSchema: vesselLocationsInputSchema,
       outputSchema: z.array(vesselLocationSchema),
@@ -31,8 +30,7 @@ export const vesselLocationsGroup = {
       endpointDescription:
         "Returns multiple VesselLocation objects for all vessels in the fleet.",
     } satisfies EndpointDefinition<VesselLocationsInput, VesselLocation[]>,
-    getVesselLocationsByVesselId: {
-      function: "getVesselLocationsByVesselId",
+    fetchVesselLocationsByVesselId: {
       endpoint: "/vesselLocations/{VesselID}",
       inputSchema: vesselLocationsByIdInputSchema,
       outputSchema: vesselLocationSchema,

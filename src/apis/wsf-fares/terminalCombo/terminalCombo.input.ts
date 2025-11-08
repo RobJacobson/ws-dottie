@@ -41,7 +41,7 @@ export type TerminalComboInput = z.infer<typeof terminalComboInputSchema>;
  *
  * This operation retrieves fare collection descriptions for all terminal combinations available on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const terminalComboVerboseInputSchema = z
+export const terminalComboFaresVerboseInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -53,6 +53,6 @@ export const terminalComboVerboseInputSchema = z
     "Retrieves fare collection descriptions for all terminal combinations available on specified trip date, returning all departing/arriving terminal pairs with collection details. Use GetValidDateRange to determine valid trip dates. Use for comprehensive fare collection information lookup."
   );
 
-export type TerminalComboVerboseInput = z.infer<
-  typeof terminalComboVerboseInputSchema
+export type TerminalComboFaresVerboseInput = z.infer<
+  typeof terminalComboFaresVerboseInputSchema
 >;

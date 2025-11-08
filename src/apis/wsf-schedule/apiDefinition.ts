@@ -1,8 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
-// Import all resources
 import { activeSeasonsResource } from "./activeSeasons/activeSeasons.endpoints";
-import { scheduleCacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { cacheFlushDateSchedule } from "./cacheFlushDate/cacheFlushDate.endpoints";
 import { routeDetailsResource } from "./routeDetails/routeDetails.endpoints";
 import { routesResource } from "./routes/routes.endpoints";
 import { sailingsResource } from "./sailings/sailings.endpoints";
@@ -22,7 +21,7 @@ export const wsfScheduleApi = {
   endpointGroups: [
     activeSeasonsResource,
     sailingsResource,
-    scheduleCacheFlushDateResource,
+    cacheFlushDateSchedule,
     routeDetailsResource,
     routesResource,
     serviceDisruptionsResource,

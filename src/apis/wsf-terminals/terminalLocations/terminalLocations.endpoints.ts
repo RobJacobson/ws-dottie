@@ -22,8 +22,7 @@ export const terminalLocationsResource = {
   // Using STATIC strategy because terminal locations rarely change (only when terminals are added/removed)
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalLocations: {
-      function: "getTerminalLocations",
+    fetchTerminalLocations: {
       endpoint: "/terminalLocations",
       inputSchema: terminalLocationsInputSchema,
       outputSchema: z.array(terminalLocationSchema),
@@ -31,8 +30,7 @@ export const terminalLocationsResource = {
       endpointDescription:
         "Returns multiple TerminalLocation objects for all terminals.",
     } satisfies EndpointDefinition<TerminalLocationsInput, TerminalLocation[]>,
-    getTerminalLocationsByTerminalId: {
-      function: "getTerminalLocationsByTerminalId",
+    fetchTerminalLocationsByTerminalId: {
       endpoint: "/terminalLocations/{TerminalID}",
       inputSchema: terminalLocationsByIdInputSchema,
       outputSchema: terminalLocationSchema,

@@ -13,7 +13,4 @@ export * from "./fareTotals/fareTotals.input";
 export * from "./fareTotals/fareTotals.output";
 export * from "./terminalCombo/terminalCombo.input";
 export * from "./terminalCombo/terminalCombo.output";
-export * from "./terminals/terminals.input";
-export * from "./terminals/terminals.output";
 export * from "./validDateRange/validDateRange.input";
-export * from "./validDateRange/validDateRange.output";

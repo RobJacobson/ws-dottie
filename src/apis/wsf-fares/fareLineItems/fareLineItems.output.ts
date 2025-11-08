@@ -5,7 +5,7 @@
  */
 
 import { z } from "@/shared/zod-openapi-init";
-import { terminalComboVerboseSchema } from "../terminalCombo/terminalCombo.output";
+import { terminalComboFaresVerboseSchema } from "../terminalCombo/terminalCombo.output";
 
 /**
  * Line item response schema used by multiple endpoints
@@ -82,7 +82,7 @@ export type LineItemXref = z.infer<typeof lineItemXrefSchema>;
 export const lineItemVerboseSchema = z
   .object({
     TerminalComboVerbose: z
-      .array(terminalComboVerboseSchema)
+      .array(terminalComboFaresVerboseSchema)
       .optional()
       .describe(
         "Array of terminal combination verbose information, as terminal combo objects. E.g., array containing Anacortes-Friday Harbor combination, Anacortes-Lopez Island combination. Provides all valid terminal pairs for trip date."

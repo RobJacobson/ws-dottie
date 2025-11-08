@@ -15,8 +15,7 @@ export const borderCrossingDataResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getBorderCrossings: {
-      function: "getBorderCrossings",
+    fetchBorderCrossings: {
       endpoint: "/GetBorderCrossingsAsJson",
       inputSchema: borderCrossingsInputSchema,
       outputSchema: z.array(borderCrossingSchema),

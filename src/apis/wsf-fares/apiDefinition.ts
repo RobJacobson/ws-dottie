@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { cacheFlushDateFaresGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
 import { fareLineItemsGroup } from "./fareLineItems/fareLineItems.endpoints";
 import { fareTotalsGroup } from "./fareTotals/fareTotals.endpoints";
 import { terminalComboGroup } from "./terminalCombo/terminalCombo.endpoints";
@@ -12,7 +12,7 @@ export const wsfFaresApi = {
   name: "wsf-fares",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/fares/rest",
   endpointGroups: [
-    cacheFlushDateGroup,
+    cacheFlushDateFaresGroup,
     validDateRangeGroup,
     terminalsGroup,
     terminalComboGroup,

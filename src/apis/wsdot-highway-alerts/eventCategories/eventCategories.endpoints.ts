@@ -13,8 +13,7 @@ export const eventCategoriesGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getEventCategories: {
-      function: "getEventCategories",
+    fetchEventCategories: {
       endpoint: "/getEventCategoriesAsJson",
       inputSchema: eventCategoriesInputSchema,
       outputSchema: z.array(z.string()),

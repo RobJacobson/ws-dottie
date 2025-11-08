@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { cacheFlushDateVesselsResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
 import { vesselAccommodationsResource } from "./vesselAccommodations/vesselAccommodations.endpoints";
 import { vesselBasicsResource } from "./vesselBasics/vesselBasics.endpoints";
 import { vesselHistoriesResource } from "./vesselHistories/vesselHistories.endpoints";
@@ -13,7 +13,7 @@ export const wsfVesselsApi = {
   name: "wsf-vessels",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/vessels/rest",
   endpointGroups: [
-    cacheFlushDateResource,
+    cacheFlushDateVesselsResource,
     vesselAccommodationsResource,
     vesselBasicsResource,
     vesselHistoriesResource,

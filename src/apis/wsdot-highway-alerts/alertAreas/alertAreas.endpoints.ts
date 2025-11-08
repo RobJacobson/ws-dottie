@@ -15,8 +15,7 @@ export const alertAreasGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getMapAreas: {
-      function: "getMapAreas",
+    fetchMapAreas: {
       endpoint: "/getMapAreasAsJson",
       inputSchema: mapAreasInputSchema,
       outputSchema: z.array(areaSchema),

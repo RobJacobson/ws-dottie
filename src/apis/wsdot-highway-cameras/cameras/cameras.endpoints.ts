@@ -23,8 +23,7 @@ export const camerasGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getHighwayCameras: {
-      function: "getHighwayCameras",
+    fetchHighwayCameras: {
       endpoint: "/getCamerasAsJson",
       inputSchema: highwayCamerasInputSchema,
       outputSchema: z.array(cameraSchema),
@@ -33,7 +32,6 @@ export const camerasGroup = {
         "Returns multiple Camera items for statewide coverage.",
     } satisfies EndpointDefinition<HighwayCamerasInput, Camera[]>,
     searchHighwayCamerasByRouteAndMilepost: {
-      function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
       inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
       outputSchema: z.array(cameraSchema),
@@ -48,8 +46,7 @@ export const camerasGroup = {
       HighwayCamerasByRouteAndMilepostInput,
       Camera[]
     >,
-    getHighwayCameraByCameraId: {
-      function: "getHighwayCameraByCameraId",
+    fetchHighwayCameraByCameraId: {
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
       inputSchema: highwayCameraByCameraIdInputSchema,
       outputSchema: cameraSchema,

@@ -21,8 +21,7 @@ export const vesselBasicsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselBasics: {
-      function: "getVesselBasics",
+    fetchVesselBasics: {
       endpoint: "/vesselBasics",
       inputSchema: vesselBasicsInputSchema,
       outputSchema: z.array(vesselBasicSchema),
@@ -30,8 +29,7 @@ export const vesselBasicsResource = {
       endpointDescription:
         "Returns multiple VesselBasic objects for all vessels in the fleet.",
     } satisfies EndpointDefinition<VesselBasicsInput, VesselBasic[]>,
-    getVesselBasicsByVesselId: {
-      function: "getVesselBasicsByVesselId",
+    fetchVesselBasicsByVesselId: {
       endpoint: "/vesselBasics/{VesselID}",
       inputSchema: vesselBasicsByIdInputSchema,
       outputSchema: vesselBasicSchema,

@@ -18,8 +18,7 @@ export const flowDataGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTrafficFlows: {
-      function: "getTrafficFlows",
+    fetchTrafficFlows: {
       endpoint: "/getTrafficFlowsAsJson",
       inputSchema: trafficFlowsInputSchema,
       outputSchema: z.array(flowDataSchema),
@@ -27,8 +26,7 @@ export const flowDataGroup = {
       endpointDescription:
         "Returns multiple FlowData items for all traffic flow stations across Washington state.",
     } satisfies EndpointDefinition<TrafficFlowsInput, FlowData[]>,
-    getTrafficFlowById: {
-      function: "getTrafficFlowById",
+    fetchTrafficFlowById: {
       endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",
       inputSchema: trafficFlowByIdInputSchema,
       outputSchema: flowDataSchema,

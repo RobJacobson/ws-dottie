@@ -15,8 +15,7 @@ export const tollRatesResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTollRates: {
-      function: "getTollRates",
+    fetchTollRates: {
       endpoint: "/getTollRatesAsJson",
       inputSchema: tollRatesInputSchema,
       outputSchema: z.array(tollRateSchema),

@@ -5,30 +5,19 @@
  * Schedule API terminal operations.
  */
 
+import type {
+  Terminal as SharedTerminal,
+  TerminalList as SharedTerminalList,
+} from "@/apis/shared/terminals.output";
+import {
+  terminalSchema as sharedTerminalSchema,
+  terminalListSchema,
+} from "@/apis/shared/terminals.output";
 import { z } from "@/shared/zod-openapi-init";
 
-/**
- * Schema for Terminal - represents terminal information
- */
-export const terminalSchema = z
-  .object({
-    TerminalID: z
-      .number()
-      .describe(
-        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal, '5' for Clinton terminal, '11' for Coupeville terminal. Used as primary key for terminal identification and schedule queries."
-      ),
-    Description: z
-      .string()
-      .nullable()
-      .describe(
-        "Human-readable terminal name, as a terminal name. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, 'Clinton' for terminal 5, 'Coupeville ' for terminal 11, null when terminal name is unavailable. Provides terminal identification for display and user interfaces."
-      ),
-  })
-  .describe(
-    "Represents terminal information including terminal identifier and name. E.g., terminal 1 (Anacortes) or terminal 3 (Bainbridge Island). Used for terminal identification in schedule queries and terminal lookups."
-  );
+export const terminalSchema = sharedTerminalSchema;
 
-export type Terminal = z.infer<typeof terminalSchema>;
+export type Terminal = SharedTerminal;
 
 /**
  * Schema for TerminalMate - represents terminal mate information
@@ -72,3 +61,6 @@ export const terminalMatesListSchema = z
   );
 
 export type TerminalMateList = z.infer<typeof terminalMatesListSchema>;
+
+export const terminalsListSchema = terminalListSchema;
+export type TerminalsList = SharedTerminalList;

@@ -24,8 +24,7 @@ export const fareLineItemsGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getFareLineItemsByTripDateAndTerminals: {
-      function: "getFareLineItemsByTripDateAndTerminals",
+    fetchFareLineItemsByTripDateAndTerminals: {
       endpoint:
         "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
       inputSchema: fareLineItemsByTripDateAndTerminalsInputSchema,
@@ -42,8 +41,7 @@ export const fareLineItemsGroup = {
       FareLineItemsByTripDateAndTerminalsInput,
       LineItem[]
     >,
-    getFareLineItemsBasic: {
-      function: "getFareLineItemsBasic",
+    fetchFareLineItemsBasic: {
       endpoint:
         "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
       inputSchema: fareLineItemsBasicInputSchema,
@@ -57,8 +55,7 @@ export const fareLineItemsGroup = {
       endpointDescription:
         "Returns multiple of FareLineItem for popular fare options.",
     } satisfies EndpointDefinition<FareLineItemsBasicInput, LineItem[]>,
-    getFareLineItemsVerbose: {
-      function: "getFareLineItemsVerbose",
+    fetchFareLineItemsVerbose: {
       endpoint: "/fareLineItemsVerbose/{TripDate}",
       inputSchema: fareLineItemsVerboseInputSchema,
       outputSchema: lineItemVerboseSchema,

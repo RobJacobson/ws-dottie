@@ -3,12 +3,12 @@ import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactor
 import { wsfFaresApi } from "../apiDefinition";
 import { terminalComboGroup } from "./terminalCombo.endpoints";
 import type {
+  TerminalComboFaresVerboseInput,
   TerminalComboInput,
-  TerminalComboVerboseInput,
 } from "./terminalCombo.input";
 import type {
-  TerminalCombo,
-  TerminalComboVerbose,
+  TerminalComboFares,
+  TerminalComboFaresVerbose,
 } from "./terminalCombo.output";
 
 const fetchFunctions = createEndpointGroupFetchFunctions(
@@ -18,8 +18,9 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 
 export const fetchTerminalCombo: (
   params?: FetchFunctionParams<TerminalComboInput>
-) => Promise<TerminalCombo> = fetchFunctions.fetchTerminalCombo;
+) => Promise<TerminalComboFares> = fetchFunctions.fetchTerminalComboFares;
 
 export const fetchTerminalComboVerbose: (
-  params?: FetchFunctionParams<TerminalComboVerboseInput>
-) => Promise<TerminalComboVerbose[]> = fetchFunctions.fetchTerminalComboVerbose;
+  params?: FetchFunctionParams<TerminalComboFaresVerboseInput>
+) => Promise<TerminalComboFaresVerbose[]> =
+  fetchFunctions.fetchTerminalComboFaresVerbose;

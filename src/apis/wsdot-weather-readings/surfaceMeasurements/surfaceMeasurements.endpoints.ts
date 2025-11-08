@@ -14,8 +14,7 @@ export const surfaceMeasurementsResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getSurfaceMeasurements: {
-      function: "getSurfaceMeasurements",
+    fetchSurfaceMeasurements: {
       endpoint: "/Scanweb/SurfaceMeasurements",
       inputSchema: surfaceMeasurementsInputSchema,
       outputSchema: z.array(surfaceMeasurementSchema),

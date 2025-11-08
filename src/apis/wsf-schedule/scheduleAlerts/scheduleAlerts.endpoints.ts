@@ -14,8 +14,7 @@ export const scheduleAlertsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduleAlerts: {
-      function: "getScheduleAlerts",
+    fetchScheduleAlerts: {
       endpoint: "/alerts",
       inputSchema: scheduleAlertsInputSchema,
       outputSchema: z.array(alertDetailSchema),

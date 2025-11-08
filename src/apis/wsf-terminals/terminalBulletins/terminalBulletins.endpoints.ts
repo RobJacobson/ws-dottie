@@ -21,8 +21,7 @@ export const terminalBulletinsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalBulletins: {
-      function: "getTerminalBulletins",
+    fetchTerminalBulletins: {
       endpoint: "/terminalBulletins",
       inputSchema: terminalBulletinsInputSchema,
       outputSchema: z.array(terminalBulletinSchema),
@@ -30,8 +29,7 @@ export const terminalBulletinsResource = {
       endpointDescription:
         "Returns multiple TerminalBulletin objects for all terminals.",
     } satisfies EndpointDefinition<TerminalBulletinsInput, TerminalBulletin[]>,
-    getTerminalBulletinsByTerminalId: {
-      function: "getTerminalBulletinsByTerminalId",
+    fetchTerminalBulletinsByTerminalId: {
       endpoint: "/terminalBulletins/{TerminalID}",
       inputSchema: terminalBulletinsByIdInputSchema,
       outputSchema: terminalBulletinSchema,

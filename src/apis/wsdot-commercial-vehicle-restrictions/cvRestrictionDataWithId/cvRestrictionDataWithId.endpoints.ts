@@ -15,8 +15,7 @@ export const cvRestrictionDataWithIdGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getCommercialVehicleRestrictionsWithId: {
-      function: "getCommercialVehicleRestrictionsWithId",
+    fetchCommercialVehicleRestrictionsWithId: {
       endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
       inputSchema: commercialVehicleRestrictionsWithIdInputSchema,
       outputSchema: z.array(cvRestrictionWithIdSchema),

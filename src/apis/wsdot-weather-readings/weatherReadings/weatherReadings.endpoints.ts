@@ -14,8 +14,7 @@ export const weatherReadingsResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getWeatherReadings: {
-      function: "getWeatherReadings",
+    fetchWeatherReadings: {
       endpoint: "/Scanweb",
       inputSchema: weatherReadingsInputSchema,
       outputSchema: z.array(weatherReadingSchema),

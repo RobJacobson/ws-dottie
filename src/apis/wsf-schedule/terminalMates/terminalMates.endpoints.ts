@@ -1,10 +1,9 @@
+import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
+import { terminalMatesInputSchema } from "@/apis/shared/terminals.input";
+import type { Terminal } from "@/apis/shared/terminals.output";
+import { terminalListSchema } from "@/apis/shared/terminals.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import type { TerminalMatesInput } from "./terminalMates.input";
-import { terminalMatesInputSchema } from "./terminalMates.input";
-import type { Terminal } from "./terminalMates.output";
-import { terminalSchema } from "./terminalMates.output";
 
 export const scheduleTerminalMatesResource = {
   name: "schedule-terminal-mates",
@@ -16,11 +15,10 @@ export const scheduleTerminalMatesResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalMates: {
-      function: "getTerminalMates",
+    fetchTerminalMatesSchedule: {
       endpoint: "/terminalmates/{TripDate}/{TerminalID}",
       inputSchema: terminalMatesInputSchema,
-      outputSchema: z.array(terminalSchema),
+      outputSchema: terminalListSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
         "Returns multiple of Terminal for specified trip date and terminal ID.",

@@ -5,8 +5,8 @@ import { wsfScheduleApi } from "../apiDefinition";
 import { schedulesResource } from "./schedules.endpoints";
 import * as fetchFunctions from "./schedules.fetch";
 import type {
-  ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
   ScheduleByTripDateAndRouteIdInput,
+  ScheduleByTripDateAndTerminalsInput,
 } from "./schedules.input";
 import type { Schedule } from "./schedules.output";
 
@@ -22,7 +22,7 @@ export const useScheduleByTripDateAndRouteId: (
 ) => UseQueryResult<Schedule, Error> = hooks.useScheduleByTripDateAndRouteId;
 
 export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
-  params?: ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
+  params?: ScheduleByTripDateAndTerminalsInput,
   options?: QueryHookOptions<Schedule>
 ) => UseQueryResult<Schedule, Error> =
   hooks.useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;

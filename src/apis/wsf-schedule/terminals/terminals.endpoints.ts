@@ -23,16 +23,14 @@ export const scheduleTerminalsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminals: {
-      function: "getTerminals",
+    fetchTerminals: {
       endpoint: "/terminals/{TripDate}",
       inputSchema: terminalsInputSchema,
       outputSchema: z.array(terminalSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription: "Returns all terminals for the specified trip date.",
     } satisfies EndpointDefinition<TerminalsInput, Terminal[]>,
-    getTerminalsAndMates: {
-      function: "getTerminalsAndMates",
+    fetchTerminalsAndMates: {
       endpoint: "/terminalsandmates/{TripDate}",
       inputSchema: terminalsAndMatesInputSchema,
       outputSchema: z.array(terminalMateSchema),
@@ -40,8 +38,7 @@ export const scheduleTerminalsResource = {
       endpointDescription:
         "Returns all terminals with their mates for the specified trip date.",
     } satisfies EndpointDefinition<TerminalsAndMatesInput, TerminalMate[]>,
-    getTerminalsAndMatesByRoute: {
-      function: "getTerminalsAndMatesByRoute",
+    fetchTerminalsAndMatesByRoute: {
       endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
       inputSchema: terminalsAndMatesByRouteInputSchema,
       outputSchema: z.array(terminalMateSchema),

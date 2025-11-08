@@ -19,8 +19,7 @@ export const cacheFlushDateVesselsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getCacheFlushDateVessels: {
-      function: "getCacheFlushDateVessels",
+    fetchCacheFlushDateVessels: {
       endpoint: "/cacheflushdate",
       inputSchema: cacheFlushDateVesselsInputSchema,
       outputSchema: cacheFlushDateVesselsSchema,

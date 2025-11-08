@@ -20,8 +20,7 @@ export const vesselHistoriesResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselHistories: {
-      function: "getVesselHistories",
+    fetchVesselHistories: {
       endpoint: "/vesselHistory",
       inputSchema: vesselHistoriesInputSchema,
       outputSchema: z.array(vesselHistorySchema),
@@ -29,8 +28,7 @@ export const vesselHistoriesResource = {
       endpointDescription:
         "Returns multiple VesselHistory objects for all vessels in fleet.",
     } satisfies EndpointDefinition<VesselHistoriesInput, VesselHistory[]>,
-    getVesselHistoriesByVesselNameAndDateRange: {
-      function: "getVesselHistoriesByVesselNameAndDateRange",
+    fetchVesselHistoriesByVesselNameAndDateRange: {
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
       inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
       outputSchema: z.array(vesselHistorySchema),

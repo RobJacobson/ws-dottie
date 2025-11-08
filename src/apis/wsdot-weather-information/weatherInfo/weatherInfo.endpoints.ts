@@ -26,8 +26,7 @@ export const weatherInfoResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getWeatherInformation: {
-      function: "getWeatherInformation",
+    fetchWeatherInformation: {
       endpoint: "/GetCurrentWeatherInformationAsJson",
       inputSchema: weatherInformationInputSchema,
       outputSchema: z.array(weatherInfoSchema),
@@ -35,8 +34,7 @@ export const weatherInfoResource = {
       endpointDescription:
         "Returns multiple WeatherInfo items for all stations.",
     } satisfies EndpointDefinition<WeatherInformationInput, WeatherInfo[]>,
-    getWeatherInformationByStationId: {
-      function: "getWeatherInformationByStationId",
+    fetchWeatherInformationByStationId: {
       endpoint:
         "/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
       inputSchema: weatherInformationByStationIdInputSchema,
@@ -47,8 +45,7 @@ export const weatherInfoResource = {
       WeatherInformationByStationIdInput,
       WeatherInfo
     >,
-    getCurrentWeatherForStations: {
-      function: "getCurrentWeatherForStations",
+    fetchCurrentWeatherForStations: {
       endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
       inputSchema: currentWeatherForStationsInputSchema,
       outputSchema: z.array(weatherInfoSchema),
@@ -60,7 +57,6 @@ export const weatherInfoResource = {
       WeatherInfo[]
     >,
     searchWeatherInformation: {
-      function: "searchWeatherInformation",
       endpoint:
         "/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}",
       inputSchema: searchWeatherInformationInputSchema,

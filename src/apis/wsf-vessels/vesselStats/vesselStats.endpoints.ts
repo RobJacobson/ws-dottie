@@ -21,8 +21,7 @@ export const vesselStatsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselStats: {
-      function: "getVesselStats",
+    fetchVesselStats: {
       endpoint: "/vesselStats",
       inputSchema: vesselStatsInputSchema,
       outputSchema: z.array(vesselStatSchema),
@@ -30,8 +29,7 @@ export const vesselStatsResource = {
       endpointDescription:
         "Returns multiple VesselStat objects for all vessels in the fleet.",
     } satisfies EndpointDefinition<VesselStatsInput, VesselStat[]>,
-    getVesselStatsByVesselId: {
-      function: "getVesselStatsByVesselId",
+    fetchVesselStatsByVesselId: {
       endpoint: "/vesselStats/{VesselID}",
       inputSchema: vesselStatsByIdInputSchema,
       outputSchema: vesselStatSchema,

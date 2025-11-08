@@ -21,8 +21,7 @@ export const travelTimeRoutesGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTravelTimeById: {
-      function: "getTravelTimeById",
+    fetchTravelTimeById: {
       endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
       inputSchema: travelTimeByIdInputSchema,
       outputSchema: travelTimeRouteSchema,
@@ -30,8 +29,7 @@ export const travelTimeRoutesGroup = {
       endpointDescription:
         "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
     } satisfies EndpointDefinition<TravelTimeByIdInput, TravelTimeRoute>,
-    getTravelTimes: {
-      function: "getTravelTimes",
+    fetchTravelTimes: {
       endpoint: "/getTravelTimesAsJson",
       inputSchema: travelTimesInputSchema,
       outputSchema: z.array(travelTimeRouteSchema),

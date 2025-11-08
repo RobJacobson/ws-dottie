@@ -3,8 +3,8 @@ import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactor
 import { wsfScheduleApi } from "../apiDefinition";
 import { schedulesResource } from "./schedules.endpoints";
 import type {
-  ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
   ScheduleByTripDateAndRouteIdInput,
+  ScheduleByTripDateAndTerminalsInput,
 } from "./schedules.input";
 import type { Schedule } from "./schedules.output";
 
@@ -18,6 +18,6 @@ export const fetchScheduleByTripDateAndRouteId: (
 ) => Promise<Schedule> = fetchFunctions.fetchScheduleByTripDateAndRouteId;
 
 export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput>
+  params?: FetchFunctionParams<ScheduleByTripDateAndTerminalsInput>
 ) => Promise<Schedule> =
   fetchFunctions.fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;

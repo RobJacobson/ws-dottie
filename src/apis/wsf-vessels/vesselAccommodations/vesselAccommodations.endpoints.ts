@@ -21,8 +21,7 @@ export const vesselAccommodationsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselAccommodations: {
-      function: "getVesselAccommodations",
+    fetchVesselAccommodations: {
       endpoint: "/vesselAccommodations",
       inputSchema: vesselAccommodationsInputSchema,
       outputSchema: z.array(vesselAccommodationSchema),
@@ -33,8 +32,7 @@ export const vesselAccommodationsResource = {
       VesselAccommodationsInput,
       VesselAccommodation[]
     >,
-    getVesselAccommodationsByVesselId: {
-      function: "getVesselAccommodationsByVesselId",
+    fetchVesselAccommodationsByVesselId: {
       endpoint: "/vesselAccommodations/{VesselID}",
       inputSchema: vesselAccommodationsByIdInputSchema,
       outputSchema: vesselAccommodationSchema,

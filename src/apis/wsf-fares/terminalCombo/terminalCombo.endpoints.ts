@@ -2,20 +2,20 @@ import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
 import type {
+  TerminalComboFaresVerboseInput,
   TerminalComboInput,
-  TerminalComboVerboseInput,
 } from "./terminalCombo.input";
 import {
+  terminalComboFaresVerboseInputSchema,
   terminalComboInputSchema,
-  terminalComboVerboseInputSchema,
 } from "./terminalCombo.input";
 import type {
-  TerminalCombo,
-  TerminalComboVerbose,
+  TerminalComboFares,
+  TerminalComboFaresVerbose,
 } from "./terminalCombo.output";
 import {
-  terminalComboSchema,
-  terminalComboVerboseSchema,
+  terminalComboFaresSchema,
+  terminalComboFaresVerboseSchema,
 } from "./terminalCombo.output";
 
 export const terminalComboGroup = {
@@ -28,12 +28,11 @@ export const terminalComboGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalCombo: {
-      function: "getTerminalCombo",
+    fetchTerminalComboFares: {
       endpoint:
         "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: terminalComboInputSchema,
-      outputSchema: terminalComboSchema,
+      outputSchema: terminalComboFaresSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
@@ -41,18 +40,17 @@ export const terminalComboGroup = {
       },
       endpointDescription:
         "Returns fare collection descriptions for the specified terminal combination and trip date.",
-    } satisfies EndpointDefinition<TerminalComboInput, TerminalCombo>,
-    getTerminalComboVerbose: {
-      function: "getTerminalComboVerbose",
+    } satisfies EndpointDefinition<TerminalComboInput, TerminalComboFares>,
+    fetchTerminalComboFaresVerbose: {
       endpoint: "/terminalComboVerbose/{TripDate}",
-      inputSchema: terminalComboVerboseInputSchema,
-      outputSchema: z.array(terminalComboVerboseSchema),
+      inputSchema: terminalComboFaresVerboseInputSchema,
+      outputSchema: z.array(terminalComboFaresVerboseSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
     } satisfies EndpointDefinition<
-      TerminalComboVerboseInput,
-      TerminalComboVerbose[]
+      TerminalComboFaresVerboseInput,
+      TerminalComboFaresVerbose[]
     >,
   },
 } satisfies EndpointGroup;

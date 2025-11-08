@@ -21,8 +21,7 @@ export const passConditionsGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getMountainPassConditionById: {
-      function: "getMountainPassConditionById",
+    fetchMountainPassConditionById: {
       endpoint:
         "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
       inputSchema: mountainPassConditionByIdInputSchema,
@@ -34,8 +33,7 @@ export const passConditionsGroup = {
       MountainPassConditionByIdInput,
       PassCondition
     >,
-    getMountainPassConditions: {
-      function: "getMountainPassConditions",
+    fetchMountainPassConditions: {
       endpoint: "/getMountainPassConditionsAsJson",
       inputSchema: mountainPassConditionsInputSchema,
       outputSchema: z.array(passConditionSchema),

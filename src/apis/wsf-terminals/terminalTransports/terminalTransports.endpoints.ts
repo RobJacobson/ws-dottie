@@ -21,8 +21,7 @@ export const terminalTransportsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalTransports: {
-      function: "getTerminalTransports",
+    fetchTerminalTransports: {
       endpoint: "/terminalTransports",
       inputSchema: terminalTransportsInputSchema,
       outputSchema: z.array(terminalTransportSchema),
@@ -33,8 +32,7 @@ export const terminalTransportsResource = {
       TerminalTransportsInput,
       TerminalTransport[]
     >,
-    getTerminalTransportsByTerminalId: {
-      function: "getTerminalTransportsByTerminalId",
+    fetchTerminalTransportsByTerminalId: {
       endpoint: "/terminalTransports/{TerminalID}",
       inputSchema: terminalTransportsByTerminalIdInputSchema,
       outputSchema: terminalTransportSchema,

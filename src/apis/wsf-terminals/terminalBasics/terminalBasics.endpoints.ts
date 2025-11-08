@@ -21,8 +21,7 @@ export const terminalBasicsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalBasics: {
-      function: "getTerminalBasics",
+    fetchTerminalBasics: {
       endpoint: "/terminalBasics",
       inputSchema: terminalBasicsInputSchema,
       outputSchema: z.array(terminalBasicSchema),
@@ -30,8 +29,7 @@ export const terminalBasicsResource = {
       endpointDescription:
         "Returns multiple TerminalBasic objects for all terminals.",
     } satisfies EndpointDefinition<TerminalBasicsInput, TerminalBasic[]>,
-    getTerminalBasicsByTerminalId: {
-      function: "getTerminalBasicsByTerminalId",
+    fetchTerminalBasicsByTerminalId: {
       endpoint: "/terminalBasics/{TerminalID}",
       inputSchema: terminalBasicsByIdInputSchema,
       outputSchema: terminalBasicSchema,

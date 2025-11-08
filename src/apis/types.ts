@@ -38,7 +38,10 @@ export interface EndpointGroup {
   documentation: ResourceDocumentation;
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
-  /** Record of endpoint definitions keyed by function name */
+  /**
+   * Record of endpoint definitions keyed by canonical function name
+   * (e.g., "fetchVesselBasics" or "searchAlerts")
+   */
   endpoints: Record<string, EndpointDefinition<unknown, unknown>>;
 }
 
@@ -68,8 +71,6 @@ export interface ResourceDocumentation {
  * API definition and resource definition formats.
  */
 export interface EndpointDefinition<I, O> {
-  /** Function name (e.g., "getVesselBasics") */
-  function: string;
   /** HTTP endpoint URL template (truncated, e.g., "/vesselBasics/{VesselID}") */
   endpoint: string;
   /** Zod schema for input validation (optional - excluded in lite builds) */

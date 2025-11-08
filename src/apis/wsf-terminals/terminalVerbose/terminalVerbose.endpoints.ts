@@ -21,8 +21,7 @@ export const terminalVerboseResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalVerbose: {
-      function: "getTerminalVerbose",
+    fetchTerminalVerbose: {
       endpoint: "/terminalVerbose",
       inputSchema: terminalVerboseInputSchema,
       outputSchema: z.array(terminalVerboseSchema),
@@ -30,8 +29,7 @@ export const terminalVerboseResource = {
       endpointDescription:
         "Returns multiple TerminalVerbose objects for all terminals.",
     } satisfies EndpointDefinition<TerminalVerboseInput, TerminalVerbose[]>,
-    getTerminalVerboseByTerminalId: {
-      function: "getTerminalVerboseByTerminalId",
+    fetchTerminalVerboseByTerminalId: {
       endpoint: "/terminalVerbose/{TerminalID}",
       inputSchema: terminalVerboseByTerminalIdInputSchema,
       outputSchema: terminalVerboseSchema,

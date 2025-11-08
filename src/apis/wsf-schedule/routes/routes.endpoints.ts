@@ -22,16 +22,14 @@ export const routesResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getRoutesByTripDate: {
-      function: "getRoutesByTripDate",
+    fetchRoutesByTripDate: {
       endpoint: "/routes/{TripDate}",
       inputSchema: routesByTripDateInputSchema,
       outputSchema: z.array(routeSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription: "Returns multiple of Routes for specified date.",
     } satisfies EndpointDefinition<RoutesByTripDateInput, Route[]>,
-    getRoutesByTripDateAndTerminals: {
-      function: "getRoutesByTripDateAndTerminals",
+    fetchRoutesByTripDateAndTerminals: {
       endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: routesByTripDateAndTerminalsInputSchema,
       outputSchema: z.array(routeSchema),

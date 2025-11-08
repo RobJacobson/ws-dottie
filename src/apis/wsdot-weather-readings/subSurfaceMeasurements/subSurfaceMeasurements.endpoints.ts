@@ -15,8 +15,7 @@ export const subSurfaceMeasurementsResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getSubSurfaceMeasurements: {
-      function: "getSubSurfaceMeasurements",
+    fetchSubSurfaceMeasurements: {
       endpoint: "/Scanweb/SubSurfaceMeasurements",
       inputSchema: subSurfaceMeasurementsInputSchema,
       outputSchema: z.array(subsurfaceMeasurementSchema),

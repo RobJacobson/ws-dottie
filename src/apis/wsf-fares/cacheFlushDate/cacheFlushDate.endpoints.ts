@@ -19,8 +19,7 @@ export const cacheFlushDateFaresGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getCacheFlushDateFares: {
-      function: "getCacheFlushDateFares",
+    fetchCacheFlushDateFares: {
       endpoint: "/cacheflushdate",
       inputSchema: cacheFlushDateFaresInputSchema,
       outputSchema: cacheFlushDateFaresSchema,

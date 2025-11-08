@@ -22,16 +22,14 @@ export const timeAdjustmentsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTimeAdjustments: {
-      function: "getTimeAdjustments",
+    fetchTimeAdjustments: {
       endpoint: "/timeadj",
       inputSchema: timeAdjustmentsInputSchema,
       outputSchema: z.array(timeAdjustmentSchema),
       sampleParams: {},
       endpointDescription: "Returns all time adjustments.",
     } satisfies EndpointDefinition<TimeAdjustmentsInput, TimeAdjustment[]>,
-    getTimeAdjustmentsByRoute: {
-      function: "getTimeAdjustmentsByRoute",
+    fetchTimeAdjustmentsByRoute: {
       endpoint: "/timeadjbyroute/{RouteID}",
       inputSchema: timeAdjustmentsByRouteInputSchema,
       outputSchema: z.array(timeAdjustmentSchema),
@@ -42,8 +40,7 @@ export const timeAdjustmentsResource = {
       TimeAdjustmentsByRouteInput,
       TimeAdjustment[]
     >,
-    getTimeAdjustmentsBySchedRoute: {
-      function: "getTimeAdjustmentsBySchedRoute",
+    fetchTimeAdjustmentsBySchedRoute: {
       endpoint: "/timeadjbyschedroute/{SchedRouteID}",
       inputSchema: timeAdjustmentsBySchedRouteInputSchema,
       outputSchema: z.array(timeAdjustmentSchema),

@@ -24,8 +24,7 @@ export const routeDetailsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getRouteDetailsByTripDate: {
-      function: "getRouteDetailsByTripDate",
+    fetchRouteDetailsByTripDate: {
       endpoint: "/routedetails/{TripDate}",
       inputSchema: routeDetailsByTripDateInputSchema,
       outputSchema: z.array(routeDetailSchema),
@@ -33,8 +32,7 @@ export const routeDetailsResource = {
       endpointDescription:
         "Returns multiple of RouteDetails for specified date.",
     } satisfies EndpointDefinition<RouteDetailsByTripDateInput, RouteDetail[]>,
-    getRouteDetailsByTripDateAndRouteId: {
-      function: "getRouteDetailsByTripDateAndRouteId",
+    fetchRouteDetailsByTripDateAndRouteId: {
       endpoint: "/routedetails/{TripDate}/{RouteID}",
       inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
       outputSchema: routeDetailSchema,
@@ -45,8 +43,7 @@ export const routeDetailsResource = {
       RouteDetailsByTripDateAndRouteIdInput,
       RouteDetail
     >,
-    getRouteDetailsByTripDateAndTerminals: {
-      function: "getRouteDetailsByTripDateAndTerminals",
+    fetchRouteDetailsByTripDateAndTerminals: {
       endpoint:
         "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: routeDetailsByTripDateAndTerminalsInputSchema,

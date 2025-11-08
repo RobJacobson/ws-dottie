@@ -21,8 +21,7 @@ export const vesselVerboseResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselsVerbose: {
-      function: "getVesselsVerbose",
+    fetchVesselsVerbose: {
       endpoint: "/vesselVerbose",
       inputSchema: vesselVerboseInputSchema,
       outputSchema: z.array(vesselVerboseSchema),
@@ -30,8 +29,7 @@ export const vesselVerboseResource = {
       endpointDescription:
         "Returns multiple VesselVerbose objects for all vessels in fleet.",
     } satisfies EndpointDefinition<VesselVerboseInput, VesselVerbose[]>,
-    getVesselsVerboseByVesselId: {
-      function: "getVesselsVerboseByVesselId",
+    fetchVesselsVerboseByVesselId: {
       endpoint: "/vesselVerbose/{VesselID}",
       inputSchema: vesselVerboseByIdInputSchema,
       outputSchema: vesselVerboseSchema,

@@ -1,9 +1,9 @@
+import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
+import type { Terminal } from "@/apis/shared/terminals.output";
 import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
 import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
 import { wsfScheduleApi } from "../apiDefinition";
 import { scheduleTerminalMatesResource } from "./terminalMates.endpoints";
-import type { TerminalMatesInput } from "./terminalMates.input";
-import type { Terminal } from "./terminalMates.output";
 
 const fetchFunctions = createEndpointGroupFetchFunctions(
   wsfScheduleApi,
@@ -12,4 +12,4 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 
 export const fetchTerminalMates: (
   params?: FetchFunctionParams<TerminalMatesInput>
-) => Promise<Terminal[]> = fetchFunctions.fetchTerminalMates;
+) => Promise<Terminal[]> = fetchFunctions.fetchTerminalMatesSchedule;

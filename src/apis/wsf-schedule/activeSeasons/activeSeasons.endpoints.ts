@@ -15,8 +15,7 @@ export const activeSeasonsResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getActiveSeasons: {
-      function: "getActiveSeasons",
+    fetchActiveSeasons: {
       endpoint: "/activeseasons",
       inputSchema: activeSeasonsInputSchema,
       outputSchema: z.array(scheduleBaseSchema),

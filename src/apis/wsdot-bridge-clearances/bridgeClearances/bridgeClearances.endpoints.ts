@@ -21,8 +21,7 @@ export const bridgeClearancesGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getBridgeClearances: {
-      function: "getBridgeClearances",
+    fetchBridgeClearances: {
       endpoint: "/getClearancesAsJson",
       inputSchema: bridgeClearancesInputSchema,
       outputSchema: z.array(bridgeClearanceSchema),
@@ -30,8 +29,7 @@ export const bridgeClearancesGroup = {
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
     } satisfies EndpointDefinition<BridgeClearancesInput, BridgeClearance[]>,
-    getBridgeClearancesByRoute: {
-      function: "getBridgeClearancesByRoute",
+    fetchBridgeClearancesByRoute: {
       endpoint: "/getClearancesAsJson?Route={Route}",
       inputSchema: bridgeClearancesByRouteInputSchema,
       outputSchema: z.array(bridgeClearanceSchema),

@@ -1,12 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import type {
-  ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
   ScheduleByTripDateAndRouteIdInput,
+  ScheduleByTripDateAndTerminalsInput,
 } from "./schedules.input";
 import {
-  scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputSchema,
   scheduleByTripDateAndRouteIdInputSchema,
+  scheduleByTripDateAndTerminals,
 } from "./schedules.input";
 import type { Schedule } from "./schedules.output";
 import { scheduleSchema } from "./schedules.output";
@@ -21,20 +21,17 @@ export const schedulesResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduleByTripDateAndRouteId: {
-      function: "getScheduleByTripDateAndRouteId",
+    fetchScheduleByTripDateAndRouteId: {
       endpoint: "/schedule/{TripDate}/{RouteID}",
       inputSchema: scheduleByTripDateAndRouteIdInputSchema,
       outputSchema: scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
       endpointDescription: "Returns single of Schedules for specified route.",
     } satisfies EndpointDefinition<ScheduleByTripDateAndRouteIdInput, Schedule>,
-    getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
-      function: "getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
+    fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema:
-        scheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInputSchema,
+      inputSchema: scheduleByTripDateAndTerminals,
       outputSchema: scheduleSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
@@ -43,7 +40,7 @@ export const schedulesResource = {
       },
       endpointDescription: "Returns single of Schedules for terminal pair.",
     } satisfies EndpointDefinition<
-      ScheduleByTripDateAndDepartingTerminalIdAndTerminalIdsInput,
+      ScheduleByTripDateAndTerminalsInput,
       Schedule
     >,
   },

@@ -19,16 +19,14 @@ export const scheduleTodayResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduleTodayByRoute: {
-      function: "getScheduleTodayByRoute",
+    fetchScheduleTodayByRoute: {
       endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
       inputSchema: scheduleTodayByRouteSchema,
       outputSchema: scheduleSchema,
       sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
       endpointDescription: "Returns today's schedule for the specified route.",
     } satisfies EndpointDefinition<ScheduleTodayByRouteInput, Schedule>,
-    getScheduleTodayByTerminals: {
-      function: "getScheduleTodayByTerminals",
+    fetchScheduleTodayByTerminals: {
       endpoint:
         "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
       inputSchema: scheduleTodayByTerminalsInputSchema,

@@ -29,8 +29,7 @@ export const highwayAlertsGroup = {
   // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getAlerts: {
-      function: "getAlerts",
+    fetchAlerts: {
       endpoint: "/getAlertsAsJson",
       inputSchema: alertsInputSchema,
       outputSchema: z.array(alertSchema),
@@ -38,8 +37,7 @@ export const highwayAlertsGroup = {
       endpointDescription:
         "Returns an array of Alert objects for all current highway incidents.",
     } satisfies EndpointDefinition<AlertsInput, Alert[]>,
-    getAlertById: {
-      function: "getAlertById",
+    fetchAlertById: {
       endpoint: "/getAlertAsJson?AlertID={AlertID}",
       inputSchema: alertByIdInputSchema,
       outputSchema: alertSchema,
@@ -47,8 +45,7 @@ export const highwayAlertsGroup = {
       endpointDescription:
         "Returns a single Alert object for specified AlertID.",
     } satisfies EndpointDefinition<AlertByIdInput, Alert>,
-    getAlertsByRegionId: {
-      function: "getAlertsByRegionId",
+    fetchAlertsByRegionId: {
       endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
       inputSchema: alertsByRegionIDInputSchema,
       outputSchema: z.array(alertSchema),
@@ -56,8 +53,7 @@ export const highwayAlertsGroup = {
       endpointDescription:
         "Returns an array of Alert objects for specified WSDOT region.",
     } satisfies EndpointDefinition<AlertsByRegionIDInput, Alert[]>,
-    getAlertsByMapArea: {
-      function: "getAlertsByMapArea",
+    fetchAlertsByMapArea: {
       endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
       inputSchema: alertsByMapAreaInputSchema,
       outputSchema: z.array(alertSchema),
@@ -66,7 +62,6 @@ export const highwayAlertsGroup = {
         "Returns an array of Alert objects for specified geographic area.",
     } satisfies EndpointDefinition<AlertsByMapAreaInput, Alert[]>,
     searchAlerts: {
-      function: "searchAlerts",
       endpoint:
         "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
       inputSchema: searchAlertsInputSchema,

@@ -13,8 +13,7 @@ export const tollTripVersionResource = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTollTripVersion: {
-      function: "getTollTripVersion",
+    fetchTollTripVersion: {
       endpoint: "/getTollTripVersionAsJson",
       inputSchema: tollTripVersionInputSchema,
       outputSchema: tollTripVersionSchema,

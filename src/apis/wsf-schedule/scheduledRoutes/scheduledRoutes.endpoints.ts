@@ -20,16 +20,14 @@ export const scheduledRoutesResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduledRoutes: {
-      function: "getScheduledRoutes",
+    fetchScheduledRoutes: {
       endpoint: "/schedroutes",
       inputSchema: scheduledRoutesInputSchema,
       outputSchema: z.array(schedRouteSchema),
       sampleParams: {},
       endpointDescription: "Returns all scheduled routes.",
     } satisfies EndpointDefinition<ScheduledRoutesInput, SchedRoute[]>,
-    getScheduledRoutesById: {
-      function: "getScheduledRoutesById",
+    fetchScheduledRoutesById: {
       endpoint: "/schedroutes/{ScheduleID}",
       inputSchema: scheduledRoutesByIdInputSchema,
       outputSchema: z.array(schedRouteSchema),

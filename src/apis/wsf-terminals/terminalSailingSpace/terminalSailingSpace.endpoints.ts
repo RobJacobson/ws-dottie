@@ -20,8 +20,7 @@ export const terminalSailingSpaceResource = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalSailingSpace: {
-      function: "getTerminalSailingSpace",
+    fetchTerminalSailingSpace: {
       endpoint: "/terminalSailingSpace",
       inputSchema: terminalSailingSpaceInputSchema,
       outputSchema: z.array(terminalSailingSpaceSchema),
@@ -32,8 +31,7 @@ export const terminalSailingSpaceResource = {
       TerminalSailingSpaceInput,
       TerminalSailingSpace[]
     >,
-    getTerminalSailingSpaceByTerminalId: {
-      function: "getTerminalSailingSpaceByTerminalId",
+    fetchTerminalSailingSpaceByTerminalId: {
       endpoint: "/terminalSailingSpace/{TerminalID}",
       inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
       outputSchema: terminalSailingSpaceSchema,

@@ -5,12 +5,12 @@ import { wsfFaresApi } from "../apiDefinition";
 import { terminalComboGroup } from "./terminalCombo.endpoints";
 import * as fetchFunctions from "./terminalCombo.fetch";
 import type {
+  TerminalComboFaresVerboseInput,
   TerminalComboInput,
-  TerminalComboVerboseInput,
 } from "./terminalCombo.input";
 import type {
-  TerminalCombo,
-  TerminalComboVerbose,
+  TerminalComboFares,
+  TerminalComboFaresVerbose,
 } from "./terminalCombo.output";
 
 const hooks = createEndpointGroupHooks(
@@ -19,13 +19,13 @@ const hooks = createEndpointGroupHooks(
   fetchFunctions
 );
 
-export const useTerminalCombo: (
+export const useTerminalComboFares: (
   params?: TerminalComboInput,
-  options?: QueryHookOptions<TerminalCombo>
-) => UseQueryResult<TerminalCombo, Error> = hooks.useTerminalCombo;
+  options?: QueryHookOptions<TerminalComboFares>
+) => UseQueryResult<TerminalComboFares, Error> = hooks.useTerminalComboFares;
 
-export const useTerminalComboVerbose: (
-  params?: TerminalComboVerboseInput,
-  options?: QueryHookOptions<TerminalComboVerbose[]>
-) => UseQueryResult<TerminalComboVerbose[], Error> =
-  hooks.useTerminalComboVerbose;
+export const useTerminalComboFaresVerbose: (
+  params?: TerminalComboFaresVerboseInput,
+  options?: QueryHookOptions<TerminalComboFaresVerbose[]>
+) => UseQueryResult<TerminalComboFaresVerbose[], Error> =
+  hooks.useTerminalComboFaresVerbose;
