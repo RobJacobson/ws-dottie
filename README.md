@@ -243,7 +243,10 @@ import {
 } from 'ws-dottie/wsf-vessels';
 
 function VesselList() {
-  const { data: vessels } = useVesselLocations();
+const { data: vessels } = useVesselLocations({
+  fetchMode: 'native',
+  validate: false,
+});
   
   // TypeScript knows vessels is VesselLocation[] | undefined
   if (!vessels) return <div>Loading...</div>;
@@ -271,8 +274,14 @@ import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
-  const { data: vessels, isLoading } = useVesselLocations();
-  const { data: alerts } = useAlerts();
+  const { data: vessels, isLoading } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
+  const { data: alerts } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
 
   return (
     <div>
@@ -599,6 +608,8 @@ import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 WS-Dottie provides **zero-configuration React hooks** with transportation-optimized caching strategies. Each API endpoint automatically uses the appropriate cache strategy based on data update frequency.
 
+Every hook now accepts the same `FetchFunctionParams<T>` object as its corresponding fetch function. Pass endpoint parameters with `params`, override fetching behavior with `fetchMode`, and toggle validation with `validate`—then optionally provide TanStack Query options as the second argument.
+
 ### **Cache Strategies**
 
 ```javascript
@@ -610,13 +621,22 @@ import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
   // REALTIME: 5-second updates for vessel locations
-  const { data: vessels, isLoading: vesselsLoading } = useVesselLocations();
+  const { data: vessels, isLoading: vesselsLoading } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
   
   // FREQUENT: 5-minute updates for highway alerts  
-  const { data: alerts, isLoading: alertsLoading } = useAlerts();
+  const { data: alerts, isLoading: alertsLoading } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // STATIC: Daily updates for vessel information
-  const { data: vesselInfo } = useVesselBasics();
+  const { data: vesselInfo } = useVesselBasics({
+    fetchMode: 'native',
+    validate: true,
+  });
 
   return (
     <div>
@@ -637,17 +657,29 @@ import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function SpecificDataView() {
   // Get specific vessel location (REALTIME caching)
-  const { data: vessel } = useVesselLocationsByVesselId({ VesselID: 18 });
+  const { data: vessel } = useVesselLocationsByVesselId({
+    params: { VesselID: 18 },
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // Get specific highway alert (FREQUENT caching)
-  const { data: alert } = useAlertById({ AlertID: 468632 });
+  const { data: alert } = useAlertById({
+    params: { AlertID: 468632 },
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // Get ferry fares for specific trip (STATIC caching)
   const { data: fares } = useFareLineItemsByTripDateAndTerminals({
-    TripDate: '2025-01-28',
-    DepartingTerminalID: 3,
-    ArrivingTerminalID: 7,
-    RoundTrip: false
+    params: {
+      TripDate: '2025-01-28',
+      DepartingTerminalID: 3,
+      ArrivingTerminalID: 7,
+      RoundTrip: false
+    },
+    fetchMode: 'native',
+    validate: true,
   });
 
   return (
@@ -726,21 +758,39 @@ import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function TransportationDashboard() {
   // Real-time data with automatic caching
-  const { data: allVessels, isLoading: vesselsLoading } = useVesselLocations();
-  const { data: alerts, isLoading: alertsLoading } = useAlerts();
+  const { data: allVessels, isLoading: vesselsLoading } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
+  const { data: alerts, isLoading: alertsLoading } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
 
   // Specific vessel tracking (VesselID: 18)
-  const { data: specificVessel } = useVesselLocationsByVesselId({ VesselID: 18 });
+  const { data: specificVessel } = useVesselLocationsByVesselId({
+    params: { VesselID: 18 },
+    fetchMode: 'native',
+    validate: true,
+  });
 
   // Specific alert details (AlertID: 468632)
-  const { data: alertDetails } = useAlertById({ AlertID: 468632 });
+  const { data: alertDetails } = useAlertById({
+    params: { AlertID: 468632 },
+    fetchMode: 'native',
+    validate: true,
+  });
 
   // Ferry fare calculation for tomorrow's trip
   const { data: fares } = useFareLineItemsByTripDateAndTerminals({
-    TripDate: '2025-01-28',
-    DepartingTerminalID: 3,
-    ArrivingTerminalID: 7,
-    RoundTrip: false,
+    params: {
+      TripDate: '2025-01-28',
+      DepartingTerminalID: 3,
+      ArrivingTerminalID: 7,
+      RoundTrip: false,
+    },
+    fetchMode: 'native',
+    validate: true,
   });
 
   return (
