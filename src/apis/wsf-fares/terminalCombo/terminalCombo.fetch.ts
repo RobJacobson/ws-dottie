@@ -13,11 +13,11 @@ import type {
 
 const fetchFunctions = createFetchFunctions(wsfFaresApi, terminalComboGroup);
 
-export const fetchTerminalCombo: (
+export const fetchTerminalComboFares: (
   params?: FetchFunctionParams<TerminalComboInput>
 ) => Promise<TerminalComboFares> = fetchFunctions.fetchTerminalComboFares;
 
-export const fetchTerminalComboVerbose: (
+export const fetchTerminalComboFaresVerbose: (
   params?: FetchFunctionParams<TerminalComboFaresVerboseInput>
 ) => Promise<TerminalComboFaresVerbose[]> =
   fetchFunctions.fetchTerminalComboFaresVerbose;

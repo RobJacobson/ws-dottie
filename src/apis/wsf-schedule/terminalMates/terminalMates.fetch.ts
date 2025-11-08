@@ -10,6 +10,8 @@ const fetchFunctions = createFetchFunctions(
   scheduleTerminalMatesResource
 );
 
-export const fetchTerminalMates: (
+export const fetchTerminalMatesSchedule: (
   params?: FetchFunctionParams<TerminalMatesInput>
 ) => Promise<Terminal[]> = fetchFunctions.fetchTerminalMatesSchedule;
+
+export const fetchTerminalMates = fetchTerminalMatesSchedule;
