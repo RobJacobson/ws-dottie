@@ -7,7 +7,7 @@
  * complete OpenAPI specifications for all APIs in the ws-dottie project.
  */
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -21,7 +21,7 @@ import type {
   ApiDefinition,
   EndpointDefinition,
 } from "../../src/apis/types.ts";
-import { API_MODULES, endpoints } from "../../src/shared/endpoints.ts";
+import { apis, endpoints } from "../../src/shared/endpoints.ts";
 import { fetchDottie } from "../../src/shared/fetching/fetchDottie.ts";
 import { z } from "../../src/shared/zod-openapi-init.ts";
 
@@ -104,15 +104,31 @@ const formatSampleData = (
  * @param endpoint - The endpoint definition containing function name and sample parameters
  * @returns Promise resolving to formatted sample data with truncation metadata
  */
+const resolveFunctionName = (
+  providedName: string | undefined,
+  endpoint: EndpointDefinition<unknown, unknown>
+): string => {
+  if (providedName && providedName.trim().length > 0) {
+    return providedName.trim();
+  }
+
+  const fn = (endpoint as { function?: unknown }).function;
+  if (typeof fn === "string" && fn.length > 0) {
+    return fn;
+  }
+
+  throw new Error("Endpoint definition missing function name");
+};
+
 const fetchAndSaveSampleData = async (
   api: ApiDefinition,
+  functionName: string,
   endpoint: EndpointDefinition<unknown, unknown>
 ): Promise<{
   data: unknown;
   isTruncated: boolean;
   totalItems?: number;
 }> => {
-  const functionName = endpoint.function;
   const samplesPath = join(
     projectRoot,
     "docs",
@@ -152,6 +168,18 @@ const fetchAndSaveSampleData = async (
     // Return formatted data for use in documentation
     return formatSampleData(data);
   } catch (error) {
+    if (existsSync(samplesPath)) {
+      try {
+        const cachedData = JSON.parse(readFileSync(samplesPath, "utf-8"));
+        process.stderr.write(
+          `  [sample] using cached data for ${functionName} (fetch failed)\r`
+        );
+        return formatSampleData(cachedData);
+      } catch {
+        // If cached data can't be read, fall through to the error handling below
+      }
+    }
+
     process.stderr.write(
       `  [sample] fetch error for ${functionName}: ${JSON.stringify(error)}\r`
     );
@@ -172,10 +200,10 @@ const fetchAndSaveSampleData = async (
  * @returns A formatted string containing the complete code example
  */
 const generateCodeExample = (
-  _api: ApiDefinition,
+  api: ApiDefinition,
+  functionName: string,
   endpoint: EndpointDefinition<unknown, unknown>
 ): string => {
-  const functionName = endpoint.function;
   const sampleParams = endpoint.sampleParams;
   const hasParams =
     sampleParams &&
@@ -189,7 +217,10 @@ const generateCodeExample = (
         .join("\n")},\n`
     : "";
 
-  return `import { fetchDottie, ${functionName} } from 'ws-dottie';
+  const apiCoreImportPath = `ws-dottie/${api.name}/core`;
+
+  return `import { fetchDottie } from 'ws-dottie';
+import { ${functionName} } from '${apiCoreImportPath}';
 
 const data = await fetchDottie({
   endpoint: ${functionName},
@@ -359,19 +390,21 @@ const registerSchema = (
 const registerEndpoint = async (
   registry: OpenAPIRegistry,
   api: ApiDefinition,
+  functionName: string,
   endpoint: EndpointDefinition<unknown, unknown>,
   endpointPath: string,
   groupName: string
 ): Promise<void> => {
-  const operationId = endpoint.function;
+  const operationId = functionName;
   const summary = endpoint.endpointDescription || endpoint.description || "";
 
   // Register output schema in components/schemas
-  let responseSchema: z.ZodSchema = endpoint.outputSchema;
+  const rawOutputSchema = endpoint.outputSchema ?? z.any();
+  let responseSchema: z.ZodSchema = rawOutputSchema;
 
   // Handle array schemas - register the item schema
-  if (endpoint.outputSchema instanceof z.ZodArray) {
-    const arrayDef = endpoint.outputSchema._def as unknown as {
+  if (rawOutputSchema instanceof z.ZodArray) {
+    const arrayDef = rawOutputSchema._def as unknown as {
       element?: z.ZodTypeAny;
     };
     const itemSchema = arrayDef.element;
@@ -391,7 +424,7 @@ const registerEndpoint = async (
     const outputSchemaName = generateSchemaName(operationId, "Output");
     responseSchema = registerSchema(
       registry,
-      endpoint.outputSchema,
+      rawOutputSchema,
       outputSchemaName
     );
   }
@@ -461,12 +494,16 @@ const registerEndpoint = async (
 
   // Generate code example (may use cached samples or fetch live)
   process.stderr.write(`  Fetching sample data for ${operationId}...\r`);
-  const codeExample = generateCodeExample(api, endpoint);
+  const codeExample = generateCodeExample(api, operationId, endpoint);
   process.stderr.write(`  Fetched sample data for ${operationId}      \r`);
 
   // Get sample data for response examples
   process.stderr.write(`  Preparing sample data for ${operationId}...\r`);
-  const sampleDataResult = await fetchAndSaveSampleData(api, endpoint);
+  const sampleDataResult = await fetchAndSaveSampleData(
+    api,
+    operationId,
+    endpoint
+  );
   process.stderr.write(`  Prepared sample data for ${operationId}\r`);
 
   // Build example description with truncation info if applicable
@@ -518,7 +555,7 @@ const registerEndpoint = async (
  * Uses the shared API_MODULES array from src/shared/endpoints.ts
  * to ensure consistency with the rest of the codebase.
  */
-const ALL_APIS: readonly ApiDefinition[] = API_MODULES;
+const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
 
 /**
  * Generate OpenAPI specification for a single API
@@ -549,21 +586,23 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
 
   // Register all endpoints and wait for completion
   const endpointPromises = api.endpointGroups.map(async (group) => {
-    const groupEndpoints = Object.values(group.endpoints) as EndpointDefinition<
-      unknown,
-      unknown
-    >[];
+    const groupEntries = Object.entries(group.endpoints) as [
+      string,
+      EndpointDefinition<unknown, unknown>,
+    ][];
 
     // Register all endpoints in this group
     await Promise.all(
-      groupEndpoints.map(async (endpoint) => {
+      groupEntries.map(async ([functionName, endpoint]) => {
+        const resolvedName = resolveFunctionName(functionName, endpoint);
         endpointCount++;
         process.stderr.write(
-          `  [${endpointCount}/${totalEndpoints}] Registering ${endpoint.function}...\r`
+          `  [${endpointCount}/${totalEndpoints}] Registering ${resolvedName}...\r`
         );
         await registerEndpoint(
           registry,
           api,
+          resolvedName,
           endpoint,
           endpoint.endpoint,
           group.name
