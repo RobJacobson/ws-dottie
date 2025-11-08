@@ -1,10 +1,17 @@
+import type {
+  TerminalMatesInput,
+  TerminalsInput,
+} from "@/apis/shared/terminals.input";
+import {
+  terminalMatesInputSchema,
+  terminalsInputSchema,
+} from "@/apis/shared/terminals.input";
+import type { Terminal } from "@/apis/shared/terminals.output";
+import { terminalListSchema } from "@/apis/shared/terminals.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminals.input";
-import * as o from "./terminals.output";
 
-export const terminalsGroup: EndpointGroup = {
+export const terminalsGroup = {
   name: "terminals",
   documentation: {
     resourceDescription:
@@ -14,23 +21,21 @@ export const terminalsGroup: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getFaresTerminals: {
-      function: "getFaresTerminals",
+    fetchTerminalFares: {
       endpoint: "/terminals/{TripDate}",
-      inputSchema: i.terminalsSchema,
-      outputSchema: z.array(o.terminalResponseSchema),
+      inputSchema: terminalsInputSchema,
+      outputSchema: terminalListSchema,
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription:
         "Returns a list of valid departing terminals for the specified trip date.",
-    } satisfies EndpointDefinition<i.TerminalsInput, o.TerminalResponse[]>,
-    getTerminalMates: {
-      function: "getTerminalMates",
+    } satisfies EndpointDefinition<TerminalsInput, Terminal[]>,
+    fetchTerminalMatesFares: {
       endpoint: "/terminalMates/{TripDate}/{TerminalID}",
-      inputSchema: i.terminalMatesSchema,
-      outputSchema: z.array(o.terminalResponseSchema),
+      inputSchema: terminalMatesInputSchema,
+      outputSchema: terminalListSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
       endpointDescription:
         "Returns arriving terminals for the given departing terminal and trip date.",
-    } satisfies EndpointDefinition<i.TerminalMatesInput, o.TerminalResponse[]>,
+    } satisfies EndpointDefinition<TerminalMatesInput, Terminal[]>,
   },
-};
+} satisfies EndpointGroup;

@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import * as i from "./schedules.input";
-import * as o from "./schedules.output";
+import type {
+  ScheduleByTripDateAndRouteIdInput,
+  ScheduleByTripDateAndTerminalsInput,
+} from "./schedules.input";
+import {
+  scheduleByTripDateAndRouteIdInputSchema,
+  scheduleByTripDateAndTerminals,
+} from "./schedules.input";
+import type { Schedule } from "./schedules.output";
+import { scheduleSchema } from "./schedules.output";
 
-export const schedulesResource: EndpointGroup = {
+export const schedulesResource = {
   name: "schedules",
   documentation: {
     resourceDescription:
@@ -13,26 +21,27 @@ export const schedulesResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduleByTripDateAndRouteId: {
-      function: "getScheduleByTripDateAndRouteId",
+    fetchScheduleByTripDateAndRouteId: {
       endpoint: "/schedule/{TripDate}/{RouteID}",
-      inputSchema: i.scheduleByRouteSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleByTripDateAndRouteIdInputSchema,
+      outputSchema: scheduleSchema,
       sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
       endpointDescription: "Returns single of Schedules for specified route.",
-    } satisfies EndpointDefinition<i.ScheduleByRouteInput, o.Schedule>,
-    getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
-      function: "getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
+    } satisfies EndpointDefinition<ScheduleByTripDateAndRouteIdInput, Schedule>,
+    fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.scheduleByTerminalComboSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleByTripDateAndTerminals,
+      outputSchema: scheduleSchema,
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
       endpointDescription: "Returns single of Schedules for terminal pair.",
-    } satisfies EndpointDefinition<i.ScheduleByTerminalComboInput, o.Schedule>,
+    } satisfies EndpointDefinition<
+      ScheduleByTripDateAndTerminalsInput,
+      Schedule
+    >,
   },
-};
+} satisfies EndpointGroup;

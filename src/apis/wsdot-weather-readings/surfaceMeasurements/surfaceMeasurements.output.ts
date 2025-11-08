@@ -5,7 +5,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const scanwebSurfaceMeasurementsSchema = z
+export const surfaceMeasurementSchema = z
   .object({
     SensorId: z
       .number()
@@ -36,6 +36,4 @@ export const scanwebSurfaceMeasurementsSchema = z
     "Represents surface sensor measurements including pavement temperature, road freezing temperature, and surface condition code. E.g., sensor 1 with surface temperature 5.2°C, freezing temperature -5.0°C, and condition 102 (wet). Used for road condition monitoring, winter maintenance operations, and travel safety assessments. Measurements recorded by sensors embedded in or mounted on road surfaces."
   );
 
-export type ScanwebSurfaceMeasurements = z.infer<
-  typeof scanwebSurfaceMeasurementsSchema
->;
+export type SurfaceMeasurement = z.infer<typeof surfaceMeasurementSchema>;

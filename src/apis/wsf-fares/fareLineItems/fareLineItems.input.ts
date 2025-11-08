@@ -12,7 +12,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation retrieves the most popular fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const fareLineItemsBasicSchema = z
+export const fareLineItemsBasicInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -39,14 +39,16 @@ export const fareLineItemsBasicSchema = z
     "Retrieves most popular fare line items for specified terminal combination and trip date, returning simplified fare list with common passenger and vehicle fares. Use GetTerminals, GetTerminalMates, and GetValidDateRange to determine valid parameters. Use for quick fare lookups of common fare types."
   );
 
-export type FareLineItemsBasicInput = z.infer<typeof fareLineItemsBasicSchema>;
+export type FareLineItemsBasicInput = z.infer<
+  typeof fareLineItemsBasicInputSchema
+>;
 
 /**
  * Input schema for FareLineItems endpoint
  *
  * This operation retrieves fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const fareLineItemsSchema = z
+export const fareLineItemsByTripDateAndTerminalsInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -73,14 +75,16 @@ export const fareLineItemsSchema = z
     "Retrieves all fare line items for specified terminal combination and trip date, returning complete fare list with passenger and vehicle fares. Use GetTerminals, GetTerminalMates, and GetValidDateRange to determine valid parameters. Use for comprehensive fare lookups and fare calculation workflows."
   );
 
-export type FareLineItemsInput = z.infer<typeof fareLineItemsSchema>;
+export type FareLineItemsByTripDateAndTerminalsInput = z.infer<
+  typeof fareLineItemsByTripDateAndTerminalsInputSchema
+>;
 
 /**
  * Input schema for FareLineItemsVerbose endpoint
  *
  * This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const fareLineItemsVerboseSchema = z
+export const fareLineItemsVerboseInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -93,5 +97,5 @@ export const fareLineItemsVerboseSchema = z
   );
 
 export type FareLineItemsVerboseInput = z.infer<
-  typeof fareLineItemsVerboseSchema
+  typeof fareLineItemsVerboseInputSchema
 >;

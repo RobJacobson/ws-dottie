@@ -6,7 +6,7 @@ import { vesselBaseSchema } from "../shared/vesselBase";
  *
  * This operation retrieves details regarding vessel accommodations (bathrooms, galley, elevator, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
-export const vesselAccommodationsSchema = vesselBaseSchema
+export const vesselAccommodationSchema = vesselBaseSchema
   .extend({
     CarDeckRestroom: z
       .boolean()
@@ -60,4 +60,4 @@ export const vesselAccommodationsSchema = vesselBaseSchema
     "Represents vessel accommodation information including amenities, accessibility features, and passenger facilities. E.g., vessel Chimacum with elevator, ADA accessible restrooms on car deck and main cabin, galley, and detailed ADA information. Used for passenger information displays, accessibility planning, and determining vessel amenities. Extends vesselBaseSchema with accommodation and accessibility fields."
   );
 
-export type VesselAccommodations = z.infer<typeof vesselAccommodationsSchema>;
+export type VesselAccommodation = z.infer<typeof vesselAccommodationSchema>;

@@ -1,31 +1,34 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import * as i from "./cacheFlushDate.input";
-import * as o from "./cacheFlushDate.output";
+import {
+  type CacheFlushDateScheduleInput,
+  cacheFlushDateScheduleInputSchema,
+} from "./cacheFlushDate.input";
+import {
+  type CacheFlushDateSchedules,
+  cacheFlushDateScheduleSchema,
+} from "./cacheFlushDate.output";
 
-const DESCRIPTION =
-  "Cache flush date indicates when schedule data was last updated, helping clients determine if they need to refresh their cached schedule information.";
-
-export const scheduleCacheFlushDateResource: EndpointGroup = {
-  name: "schedule-cache-flush-date",
+export const cacheFlushDateSchedule = {
+  name: "cache-flush-date-schedule",
   documentation: {
     resourceDescription:
-      "Each ScheduleCacheFlushDate item represents last update timestamp for schedule data. This timestamp indicates when ferry schedule information was last refreshed in system.",
+      "Represents the timestamp of when any static endpoint data for the wsf-schedule API was last updated. This information helps applications determine when to refresh cached fare information through cache invalidation.",
+
     businessContext:
-      "Use to determine data freshness by providing last update timestamp for schedule cache management and data synchronization.",
+      "Many wsf-schedule endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-schedule data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by the ws-dottie useQuery hooks to invalidate cache.",
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    get: {
-      function: "getCacheFlushDate",
+    fetchCacheFlushDateSchedule: {
       endpoint: "/cacheflushdate",
-      inputSchema: i.cacheFlushDateSchema,
-      outputSchema: o.cacheFlushDateSchema,
+      inputSchema: cacheFlushDateScheduleInputSchema,
+      outputSchema: cacheFlushDateScheduleSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-      description: `Returns single of ScheduleCacheFlushDate for data freshness.`,
+      description: `Returns the timestamp of when any static endpoint data for the wsf-schedule API was last updated.`,
     } satisfies EndpointDefinition<
-      i.SchedulesCacheFlushDateInput,
-      o.SchedulesCacheFlushDate
+      CacheFlushDateScheduleInput,
+      CacheFlushDateSchedules
     >,
   },
-};
+} satisfies EndpointGroup;

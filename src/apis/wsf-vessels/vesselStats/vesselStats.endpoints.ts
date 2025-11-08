@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselStats.input";
-import * as o from "./vesselStats.output";
+import type {
+  VesselStatsByIdInput,
+  VesselStatsInput,
+} from "./vesselStats.input";
+import {
+  vesselStatsByIdInputSchema,
+  vesselStatsInputSchema,
+} from "./vesselStats.input";
+import type { VesselStat } from "./vesselStats.output";
+import { vesselStatSchema } from "./vesselStats.output";
 
-export const vesselStatsResource: EndpointGroup = {
+export const vesselStatsResource = {
   name: "vessel-stats",
   documentation: {
     resourceDescription:
@@ -13,23 +21,21 @@ export const vesselStatsResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselStats: {
-      function: "getVesselStats",
+    fetchVesselStats: {
       endpoint: "/vesselStats",
-      inputSchema: i.vesselStatsSchema,
-      outputSchema: z.array(o.vesselStatsSchema),
+      inputSchema: vesselStatsInputSchema,
+      outputSchema: z.array(vesselStatSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselStat objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselStatsInput, o.VesselStats[]>,
-    getVesselStatsByVesselId: {
-      function: "getVesselStatsByVesselId",
+    } satisfies EndpointDefinition<VesselStatsInput, VesselStat[]>,
+    fetchVesselStatsByVesselId: {
       endpoint: "/vesselStats/{VesselID}",
-      inputSchema: i.vesselStatsByIdSchema,
-      outputSchema: o.vesselStatsSchema,
+      inputSchema: vesselStatsByIdInputSchema,
+      outputSchema: vesselStatSchema,
       sampleParams: { VesselID: 32 },
       endpointDescription:
         "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
-    } satisfies EndpointDefinition<i.VesselStatsByIdInput, o.VesselStats>,
+    } satisfies EndpointDefinition<VesselStatsByIdInput, VesselStat>,
   },
-};
+} satisfies EndpointGroup;

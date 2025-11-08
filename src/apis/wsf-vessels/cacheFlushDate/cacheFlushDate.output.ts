@@ -3,11 +3,11 @@ import { zDotnetDate } from "@/apis/shared";
 
 /**
  * CacheFlushDate schema
- *
- * Some of the retrieval operations in this service return data that changes infrequently. As a result, you may wish to cache it in your application. Use the `/cacheflushdate` operation to poll for changes. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service.
  */
-export const cacheFlushDateSchema = zDotnetDate().describe(
-  "Cache flush timestamp indicating when vessel data was last updated, as a UTC datetime. E.g., '2025-09-08T05:35:01.100Z' when vessel metadata was refreshed. Use to determine when cached vessel information should be invalidated and refreshed. Poll this endpoint periodically to detect when vessel data changes."
-);
+export const cacheFlushDateVesselsSchema = zDotnetDate()
+  .optional()
+  .describe(
+    "Cache flush timestamp indicating when any static endpoint data for the wsf-vessels API was last updated, as a UTC datetime. E.g., '2025-11-02T19:45:00.517Z' when vessel metadata was refreshed."
+  );
 
-export type VesselsCacheFlushDate = z.infer<typeof cacheFlushDateSchema>;
+export type CacheFlushDateVessels = z.infer<typeof cacheFlushDateVesselsSchema>;

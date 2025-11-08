@@ -1,18 +1,11 @@
 /**
- * @fileoverview WSDOT Weather Stations API - Clean exports for types and API definition
+ * @fileoverview wsdot-weather-stations API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Weather Stations API, exporting
- * all input/output types and the main API definition.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-weather-stations API.
  */
 
-// Export the main API definition
-export { wsdotWeatherStationsApi } from "./apiDefinition";
-// Export individual resources for direct use
-export { weatherStationsResource } from "./weatherStations/weatherStations.endpoints";
-// Export all input types
-export type { GetCurrentStationsInput } from "./weatherStations/weatherStations.input";
-// Export all output types
-export type {
-  WeatherStation,
-  WeatherStationData,
-} from "./weatherStations/weatherStations.output";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+
+// Export hooks
+export * from "./weatherStations/weatherStations.hooks";

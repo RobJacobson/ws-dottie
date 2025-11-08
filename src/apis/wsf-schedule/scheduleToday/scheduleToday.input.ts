@@ -11,7 +11,7 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for TodaysScheduleByTerminalCombo input parameters
  *
  * This operation provides today's departure times for either a terminal combination or a route. Valid departing and arriving terminals may be found using `/terminalsandmates` while valid routes may be found using `/routes`. For the OnlyRemainingTimes value, please indicate 'true' if departure times prior to now should not be included in the resultset and 'false' if they should be included in the resultset. */
-export const todaysScheduleByTerminalComboSchema = z
+export const scheduleTodayByTerminalsInputSchema = z
   .object({
     /** Unique identifier for the departing terminal. */
     DepartingTerminalID: z
@@ -38,8 +38,8 @@ export const todaysScheduleByTerminalComboSchema = z
     "Retrieves today's departure times for specified terminal combination, returning sailing times, vessel information, and route details. Use GetTerminalsAndMates to find valid terminal combinations. Use for real-time schedule queries and today's sailing information."
   );
 
-export type TodaysScheduleByTerminalComboInput = z.infer<
-  typeof todaysScheduleByTerminalComboSchema
+export type ScheduleTodayByTerminalsInput = z.infer<
+  typeof scheduleTodayByTerminalsInputSchema
 >;
 
 /**

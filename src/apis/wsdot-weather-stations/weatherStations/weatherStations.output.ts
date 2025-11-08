@@ -5,7 +5,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const weatherStationDataSchema = z
+export const weatherStationSchema = z
   .object({
     Latitude: z
       .number()
@@ -33,8 +33,7 @@ export const weatherStationDataSchema = z
     "Represents weather station metadata including station identifier, name, and location coordinates. E.g., station 1909 (S 144th St on SB I-5) at location 47.4748, -122.2704. Used for weather station discovery, location-based queries, and identifying stations for weather data retrieval. Provides reference information for weather station lookups."
   );
 
-export type WeatherStationData = z.infer<typeof weatherStationDataSchema>;
+export type WeatherStation = z.infer<typeof weatherStationSchema>;
 
-// Alias for consistency with other APIs
-export const weatherStationSchema = weatherStationDataSchema;
-export type WeatherStation = WeatherStationData;
+// Alias for backward compatibility
+export type WeatherStationData = WeatherStation;

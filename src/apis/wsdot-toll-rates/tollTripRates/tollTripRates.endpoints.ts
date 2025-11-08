@@ -1,10 +1,20 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./tollTripRates.input";
-import * as o from "./tollTripRates.output";
+import type {
+  TollTripRatesInput,
+  TripRatesByDateInput,
+  TripRatesByVersionInput,
+} from "./tollTripRates.input";
+import {
+  tollTripRatesInputSchema,
+  tripRatesByDateInputSchema,
+  tripRatesByVersionInputSchema,
+} from "./tollTripRates.input";
+import type { TollTripsRates } from "./tollTripRates.output";
+import { tollTripsRatesSchema } from "./tollTripRates.output";
 
-export const tollTripRatesResource: EndpointGroup = {
+export const tollTripRatesResource = {
   name: "toll-trip-rates",
   documentation: {
     resourceDescription:
@@ -14,41 +24,32 @@ export const tollTripRatesResource: EndpointGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTollTripRates: {
-      function: "getTollTripRates",
+    fetchTollTripRates: {
       endpoint: "/getTollTripRatesAsJson",
-      inputSchema: i.getTollTripRatesSchema,
-      outputSchema: o.tollTripsRatesSchema,
+      inputSchema: tollTripRatesInputSchema,
+      outputSchema: tollTripsRatesSchema,
       sampleParams: {},
       endpointDescription:
         "Returns single TollTripRates item with current pricing and message data.",
-    } satisfies EndpointDefinition<i.GetTollTripRatesInput, o.TollTripsRates>,
-    getTripRatesByDate: {
-      function: "getTripRatesByDate",
+    } satisfies EndpointDefinition<TollTripRatesInput, TollTripsRates>,
+    fetchTripRatesByDate: {
       endpoint: "/getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
-      inputSchema: i.getTripRatesByDateSchema,
-      outputSchema: z.array(o.tollTripsRatesSchema),
+      inputSchema: tripRatesByDateInputSchema,
+      outputSchema: z.array(tollTripsRatesSchema),
       sampleParams: {
         FromDate: datesHelper.yesterday(),
         ToDate: datesHelper.today(),
       },
       endpointDescription:
         "Returns multiple TollTripRates items for specified date range.",
-    } satisfies EndpointDefinition<
-      i.GetTripRatesByDateInput,
-      o.TollTripsRates[]
-    >,
-    getTripRatesByVersion: {
-      function: "getTripRatesByVersion",
+    } satisfies EndpointDefinition<TripRatesByDateInput, TollTripsRates[]>,
+    fetchTripRatesByVersion: {
       endpoint: "/getTripRatesByVersionAsJson?Version={Version}",
-      inputSchema: i.getTripRatesByVersionSchema,
-      outputSchema: o.tollTripsRatesSchema,
+      inputSchema: tripRatesByVersionInputSchema,
+      outputSchema: tollTripsRatesSchema,
       sampleParams: { Version: 352417 },
       endpointDescription:
         "Returns single TollTripRates item for specific version.",
-    } satisfies EndpointDefinition<
-      i.GetTripRatesByVersionInput,
-      o.TollTripsRates
-    >,
+    } satisfies EndpointDefinition<TripRatesByVersionInput, TollTripsRates>,
   },
-};
+} satisfies EndpointGroup;

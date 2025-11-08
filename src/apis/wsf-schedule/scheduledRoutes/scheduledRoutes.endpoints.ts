@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./scheduledRoutes.input";
-import * as o from "./scheduledRoutes.output";
+import type {
+  ScheduledRoutesByIdInput,
+  ScheduledRoutesInput,
+} from "./scheduledRoutes.input";
+import {
+  scheduledRoutesByIdInputSchema,
+  scheduledRoutesInputSchema,
+} from "./scheduledRoutes.input";
+import type { SchedRoute } from "./scheduledRoutes.output";
+import { schedRouteSchema } from "./scheduledRoutes.output";
 
-export const scheduledRoutesResource: EndpointGroup = {
+export const scheduledRoutesResource = {
   name: "scheduled-routes",
   documentation: {
     resourceDescription:
@@ -12,25 +20,20 @@ export const scheduledRoutesResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduledRoutes: {
-      function: "getScheduledRoutes",
+    fetchScheduledRoutes: {
       endpoint: "/schedroutes",
-      inputSchema: i.scheduledRoutesSchema,
-      outputSchema: z.array(o.schedRouteSchema),
+      inputSchema: scheduledRoutesInputSchema,
+      outputSchema: z.array(schedRouteSchema),
       sampleParams: {},
       endpointDescription: "Returns all scheduled routes.",
-    } satisfies EndpointDefinition<i.ScheduledRoutesInput, o.SchedRoute[]>,
-    getScheduledRoutesById: {
-      function: "getScheduledRoutesById",
+    } satisfies EndpointDefinition<ScheduledRoutesInput, SchedRoute[]>,
+    fetchScheduledRoutesById: {
       endpoint: "/schedroutes/{ScheduleID}",
-      inputSchema: i.scheduledRoutesByScheduleIdSchema,
-      outputSchema: z.array(o.schedRouteSchema),
+      inputSchema: scheduledRoutesByIdInputSchema,
+      outputSchema: z.array(schedRouteSchema),
       sampleParams: { ScheduleID: 193 },
       endpointDescription:
         "Returns scheduled routes for the specified schedule ID.",
-    } satisfies EndpointDefinition<
-      i.ScheduledRoutesByScheduleIdInput,
-      o.SchedRoute[]
-    >,
+    } satisfies EndpointDefinition<ScheduledRoutesByIdInput, SchedRoute[]>,
   },
-};
+} satisfies EndpointGroup;

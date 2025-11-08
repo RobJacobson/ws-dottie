@@ -1,10 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./fareTotals.input";
-import * as o from "./fareTotals.output";
+import type { FareTotalsByTripDateAndRouteInput } from "./fareTotals.input";
+import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
+import type { FareTotal } from "./fareTotals.output";
+import { fareTotalSchema } from "./fareTotals.output";
 
-export const fareTotalsGroup: EndpointGroup = {
+export const fareTotalsGroup = {
   name: "fare-totals",
   documentation: {
     resourceDescription:
@@ -14,12 +16,11 @@ export const fareTotalsGroup: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getFareTotalsByTripDateAndRoute: {
-      function: "getFareTotalsByTripDateAndRoute",
+    fetchFareTotalsByTripDateAndRoute: {
       endpoint:
         "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
-      inputSchema: i.fareTotalsSchema,
-      outputSchema: z.array(o.fareTotalResponseSchema),
+      inputSchema: fareTotalsByTripDateAndRouteInputSchema,
+      outputSchema: z.array(fareTotalSchema),
       sampleParams: {
         TripDate: datesHelper.today(),
         DepartingTerminalID: 1,
@@ -30,6 +31,9 @@ export const fareTotalsGroup: EndpointGroup = {
       },
       endpointDescription:
         "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
-    } satisfies EndpointDefinition<i.FareTotalsInput, o.FareTotalResponse[]>,
+    } satisfies EndpointDefinition<
+      FareTotalsByTripDateAndRouteInput,
+      FareTotal[]
+    >,
   },
-};
+} satisfies EndpointGroup;

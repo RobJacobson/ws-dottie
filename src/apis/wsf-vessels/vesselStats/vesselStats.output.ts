@@ -6,7 +6,7 @@ import { vesselBaseSchema } from "../shared/vesselBase";
  *
  * This operation retrieves details regarding vessel specifications (engine count, length of vessel, year built, etc). A VesselID, or unique vessel identifier, may be optionally passed to retrieve a specific vessel.
  */
-export const vesselStatsSchema = vesselBaseSchema
+export const vesselStatSchema = vesselBaseSchema
   .extend({
     VesselNameDesc: z
       .string()
@@ -154,4 +154,4 @@ export const vesselStatsSchema = vesselBaseSchema
     "Represents vessel technical specifications including dimensions, capacity, speed, propulsion, and build details. E.g., vessel Chimacum built 2017 in Seattle, 362 feet 5 inches long, 1500 passenger capacity, 17 knots speed, 6000 horsepower. Used for vessel comparison, capacity planning, terminal compatibility assessment, and technical reference. Extends vesselBaseSchema with technical specification fields."
   );
 
-export type VesselStats = z.infer<typeof vesselStatsSchema>;
+export type VesselStat = z.infer<typeof vesselStatSchema>;

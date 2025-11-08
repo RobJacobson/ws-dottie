@@ -1,10 +1,24 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./highwayAlerts.input";
-import * as o from "./highwayAlerts.output";
+import type {
+  AlertByIdInput,
+  AlertsByMapAreaInput,
+  AlertsByRegionIDInput,
+  AlertsInput,
+  SearchAlertsInput,
+} from "./highwayAlerts.input";
+import {
+  alertByIdInputSchema,
+  alertsByMapAreaInputSchema,
+  alertsByRegionIDInputSchema,
+  alertsInputSchema,
+  searchAlertsInputSchema,
+} from "./highwayAlerts.input";
+import type { Alert } from "./highwayAlerts.output";
+import { alertSchema } from "./highwayAlerts.output";
 
-export const highwayAlertsGroup: EndpointGroup = {
+export const highwayAlertsGroup = {
   name: "highwayAlerts",
   documentation: {
     resourceDescription:
@@ -15,48 +29,43 @@ export const highwayAlertsGroup: EndpointGroup = {
   // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getAlerts: {
-      function: "getAlerts",
+    fetchAlerts: {
       endpoint: "/getAlertsAsJson",
-      inputSchema: i.getAlertsSchema,
-      outputSchema: z.array(o.alertSchema),
+      inputSchema: alertsInputSchema,
+      outputSchema: z.array(alertSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of Alert objects for all current highway incidents.",
-    } satisfies EndpointDefinition<i.GetAlertsInput, o.Alert[]>,
-    getAlertById: {
-      function: "getAlertById",
+    } satisfies EndpointDefinition<AlertsInput, Alert[]>,
+    fetchAlertById: {
       endpoint: "/getAlertAsJson?AlertID={AlertID}",
-      inputSchema: i.getAlertSchema,
-      outputSchema: o.alertSchema,
+      inputSchema: alertByIdInputSchema,
+      outputSchema: alertSchema,
       sampleParams: { AlertID: 468632 },
       endpointDescription:
         "Returns a single Alert object for specified AlertID.",
-    } satisfies EndpointDefinition<i.GetAlertInput, o.Alert>,
-    getAlertsByRegionId: {
-      function: "getAlertsByRegionId",
+    } satisfies EndpointDefinition<AlertByIdInput, Alert>,
+    fetchAlertsByRegionId: {
       endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
-      inputSchema: i.getAlertsByRegionIDSchema,
-      outputSchema: z.array(o.alertSchema),
+      inputSchema: alertsByRegionIDInputSchema,
+      outputSchema: z.array(alertSchema),
       sampleParams: { RegionID: 9 },
       endpointDescription:
         "Returns an array of Alert objects for specified WSDOT region.",
-    } satisfies EndpointDefinition<i.GetAlertsByRegionIDInput, o.Alert[]>,
-    getAlertsByMapArea: {
-      function: "getAlertsByMapArea",
+    } satisfies EndpointDefinition<AlertsByRegionIDInput, Alert[]>,
+    fetchAlertsByMapArea: {
       endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
-      inputSchema: i.getAlertsForMapAreaSchema,
-      outputSchema: z.array(o.alertSchema),
+      inputSchema: alertsByMapAreaInputSchema,
+      outputSchema: z.array(alertSchema),
       sampleParams: { MapArea: "Seattle" },
       endpointDescription:
         "Returns an array of Alert objects for specified geographic area.",
-    } satisfies EndpointDefinition<i.GetAlertsForMapAreaInput, o.Alert[]>,
+    } satisfies EndpointDefinition<AlertsByMapAreaInput, Alert[]>,
     searchAlerts: {
-      function: "searchAlerts",
       endpoint:
         "/searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}",
-      inputSchema: i.searchAlertsSchema,
-      outputSchema: z.array(o.alertSchema),
+      inputSchema: searchAlertsInputSchema,
+      outputSchema: z.array(alertSchema),
       sampleParams: {
         StateRoute: "405",
         StartingMilepost: 10,
@@ -66,6 +75,6 @@ export const highwayAlertsGroup: EndpointGroup = {
       },
       endpointDescription:
         "Returns an array of Alert objects matching specified search criteria.",
-    } satisfies EndpointDefinition<i.SearchAlertsInput, o.Alert[]>,
+    } satisfies EndpointDefinition<SearchAlertsInput, Alert[]>,
   },
-};
+} satisfies EndpointGroup;

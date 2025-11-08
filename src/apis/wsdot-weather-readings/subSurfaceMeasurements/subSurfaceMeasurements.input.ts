@@ -1,16 +1,16 @@
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * GetWeatherReadings input schema
+ * GetSubSurfaceMeasurements input schema
  *
- * Input parameters for getting weather readings.
+ * Input parameters for getting subsurface measurements.
  */
-export const getSubSurfaceMeasurementsSchema = z
+export const subSurfaceMeasurementsInputSchema = z
   .object({})
   .describe(
     "Retrieves subsurface sensor measurements from all weather stations statewide, returning subsurface temperature data from sensors embedded below road pavement. Use for ground temperature monitoring and winter maintenance operations."
   );
 
-export type GetSubSurfaceMeasurementsInput = z.infer<
-  typeof getSubSurfaceMeasurementsSchema
+export type SubSurfaceMeasurementsInput = z.infer<
+  typeof subSurfaceMeasurementsInputSchema
 >;

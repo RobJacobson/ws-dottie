@@ -1,15 +1,12 @@
 /**
- * @fileoverview WSDOT Commercial Vehicle Restrictions API - Clean exports for types and API definition
+ * @fileoverview wsdot-commercial-vehicle-restrictions API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Commercial Vehicle Restrictions API, exporting
- * all input/output types and the main API definition.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-commercial-vehicle-restrictions API.
  */
 
-// Export the main API definition
-export { wsdotCommercialVehicleRestrictionsApi } from "./apiDefinition";
-// Export all input types
-export type { GetCommercialVehicleRestrictionsInput } from "./cvRestrictionData/cvRestrictionData.input";
-// Export all output types
-export type { CVRestrictionData } from "./cvRestrictionData/cvRestrictionData.output";
-export type { GetCommercialVehicleRestrictionsWithIdInput } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.input";
-export type { CVRestrictionDataWithId } from "./cvRestrictionDataWithId/cvRestrictionDataWithId.output";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+
+// Export hooks
+export * from "./cvRestrictionData/cvRestrictionData.hooks";
+export * from "./cvRestrictionDataWithId/cvRestrictionDataWithId.hooks";

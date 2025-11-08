@@ -51,11 +51,12 @@ function App() {
 ### 3. Use WS-Dottie Hooks
 
 ```jsx
-import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
   const { data: vessels, isLoading, error } = useVesselLocations();
-  const { data: alerts } = useHighwayAlerts();
+  const { data: alerts } = useAlerts();
   
   if (error) return <div>Error: {error.message}</div>;
   
@@ -103,13 +104,15 @@ WS-Dottie provides four cache strategies optimized for different types of transp
 ### Using Cache Strategies
 
 ```jsx
-import { useVesselLocations, useHighwayAlerts, useTerminalLocations } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
+import { useTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 // Use default caching strategy (REALTIME for vessel locations)
 const { data: vessels } = useVesselLocations();
 
 // Override with custom caching strategy
-const { data: alerts } = useHighwayAlerts({
+const { data: alerts } = useAlerts({
   staleTime: 2 * 60 * 1000, // 2 minutes instead of 5
   refetchInterval: 2 * 60 * 1000, // 2 minutes instead of 5
 });
@@ -143,7 +146,7 @@ The `createHook` factory function automatically:
 ### Using Hooks with Automatic Cache Invalidation
 
 ```jsx
-import { useTerminalLocations } from 'ws-dottie';
+import { useTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 function FerryTerminals() {
   // Terminal locations hook includes automatic cache invalidation
@@ -170,7 +173,7 @@ function FerryTerminals() {
 ### Using with Parameters
 
 ```jsx
-import { useVesselBasics } from 'ws-dottie';
+import { useVesselBasics } from 'ws-dottie/wsf-vessels';
 
 function VesselDetails({ vesselId }) {
   // Vessel basics hook includes automatic cache invalidation
@@ -197,7 +200,7 @@ WS-Dottie hooks support all TanStack Query options for fine-grained control:
 ### Custom Query Options
 
 ```jsx
-import { useVesselLocations } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 
 function VesselTracker() {
   const { data: vessels, isLoading, error, refetch } = useVesselLocations({
@@ -258,7 +261,8 @@ function VesselTracker() {
 ### Conditional Data Fetching
 
 ```jsx
-import { useVesselLocations, useTerminalWaitTimes } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useTerminalWaitTimes } from 'ws-dottie/wsf-terminals';
 
 function FerryDashboard() {
   const [showDetails, setShowDetails] = useState(false);
@@ -305,7 +309,8 @@ function FerryDashboard() {
 ### Data Fetching with Parameters
 
 ```jsx
-import { useSchedules, useFares } from 'ws-dottie';
+import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
+import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function FerrySchedule() {
   const [route, setRoute] = useState({ 
@@ -314,16 +319,15 @@ function FerrySchedule() {
     date: new Date() 
   });
   
-  const { data: schedules } = useSchedules({ 
-    departingTerminalId: route.departing, 
-    arrivingTerminalId: route.arriving, 
-    tripDate: route.date 
+  const { data: schedules } = useScheduleByTripDateAndRouteId({ 
+    TripDate: route.date.toISOString().split('T')[0], 
+    RouteID: route.departing
   });
   
-  const { data: fares } = useFares({ 
-    tripDate: route.date, 
-    departingTerminalId: route.departing, 
-    arrivingTerminalId: route.arriving 
+  const { data: fares } = useFareLineItemsByTripDateAndTerminals({ 
+    TripDate: route.date.toISOString().split('T')[0], 
+    DepartingTerminalID: route.departing, 
+    ArrivingTerminalID: route.arriving 
   });
   
   return (
@@ -400,7 +404,7 @@ function VesselMap({ vessels, isLoading, error, onRefresh }) {
 ### Data Transformation
 
 ```jsx
-import { useWeatherInformation } from 'ws-dottie';
+import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
 
 function WeatherDashboard() {
   const { data: weather } = useWeatherInformation();
@@ -451,12 +455,9 @@ function WeatherDashboard() {
 ### 1. Choose Appropriate Caching Strategy
 
 ```jsx
-import { 
-  useVesselLocations, 
-  useTerminalWaitTimes, 
-  useSchedules,
-  useTerminalLocations
-} from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useTerminalWaitTimes, useTerminalLocations } from 'ws-dottie/wsf-terminals';
+import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
 
 function FerryApp() {
   // Real-time data for live tracking
@@ -480,7 +481,7 @@ function FerryApp() {
 
 ```jsx
 import { useQuery } from '@tanstack/react-query';
-import { fetchDottie, getVesselLocations, getTerminalWaitTimes } from 'ws-dottie';
+import { getVesselLocations, getTerminalWaitTimes } from 'ws-dottie/wsf-vessels/core';
 
 function FerryDashboard() {
   // Fetch multiple data sources in parallel with useQueries
@@ -488,12 +489,18 @@ function FerryDashboard() {
     queries: [
       {
         queryKey: ['vessels'],
-        queryFn: () => fetchDottie({ endpoint: getVesselLocations }),
+        queryFn: () => getVesselLocations({
+          fetchMode: 'native',
+          validate: true
+        }),
         staleTime: 5 * 1000, // 5 seconds
       },
       {
         queryKey: ['waitTimes'],
-        queryFn: () => fetchDottie({ endpoint: getTerminalWaitTimes }),
+        queryFn: () => getTerminalWaitTimes({
+          fetchMode: 'native',
+          validate: true
+        }),
         staleTime: 60 * 1000, // 1 minute
       },
     ],
@@ -512,11 +519,12 @@ function FerryDashboard() {
 ### 3. Manual Cache Invalidation
 
 ```jsx
-import { useSchedules, useQueryClient } from 'ws-dottie';
+import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
+import { useQueryClient } from '@tanstack/react-query';
 
 function ScheduleComponent() {
   const queryClient = useQueryClient();
-  const { data: schedules } = useSchedules();
+  const { data: schedules } = useScheduleByTripDateAndRouteId();
   
   const refreshSchedules = () => {
     queryClient.invalidateQueries(['schedules']);

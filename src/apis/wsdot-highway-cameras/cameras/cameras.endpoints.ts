@@ -1,9 +1,19 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./cameras.input";
-import * as o from "./cameras.output";
+import type {
+  HighwayCameraByCameraIdInput,
+  HighwayCamerasByRouteAndMilepostInput,
+  HighwayCamerasInput,
+} from "./cameras.input";
+import {
+  highwayCameraByCameraIdInputSchema,
+  highwayCamerasByRouteAndMilepostInputSchema,
+  highwayCamerasInputSchema,
+} from "./cameras.input";
+import type { Camera } from "./cameras.output";
+import { cameraSchema } from "./cameras.output";
 
-export const camerasGroup: EndpointGroup = {
+export const camerasGroup = {
   name: "cameras",
   documentation: {
     resourceDescription:
@@ -13,20 +23,18 @@ export const camerasGroup: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getHighwayCameras: {
-      function: "getHighwayCameras",
+    fetchHighwayCameras: {
       endpoint: "/getCamerasAsJson",
-      inputSchema: i.getCamerasSchema,
-      outputSchema: z.array(o.cameraSchema),
+      inputSchema: highwayCamerasInputSchema,
+      outputSchema: z.array(cameraSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple Camera items for statewide coverage.",
-    } satisfies EndpointDefinition<i.GetCamerasInput, o.Camera[]>,
+    } satisfies EndpointDefinition<HighwayCamerasInput, Camera[]>,
     searchHighwayCamerasByRouteAndMilepost: {
-      function: "searchHighwayCamerasByRouteAndMilepost",
       endpoint: "/searchCamerasAsJson",
-      inputSchema: i.searchCamerasSchema,
-      outputSchema: z.array(o.cameraSchema),
+      inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
+      outputSchema: z.array(cameraSchema),
       sampleParams: {
         StateRoute: "I-5",
         StartingMilepost: 10,
@@ -34,15 +42,17 @@ export const camerasGroup: EndpointGroup = {
       },
       endpointDescription:
         "Returns multiple Camera items for specified route and milepost range.",
-    } satisfies EndpointDefinition<i.SearchCamerasInput, o.Camera[]>,
-    getHighwayCameraByCameraId: {
-      function: "getHighwayCameraByCameraId",
+    } satisfies EndpointDefinition<
+      HighwayCamerasByRouteAndMilepostInput,
+      Camera[]
+    >,
+    fetchHighwayCameraByCameraId: {
       endpoint: "/getCameraAsJson?CameraID={CameraID}",
-      inputSchema: i.getCameraSchema,
-      outputSchema: o.cameraSchema,
+      inputSchema: highwayCameraByCameraIdInputSchema,
+      outputSchema: cameraSchema,
       sampleParams: { CameraID: 9818 },
       endpointDescription:
         "Returns single Camera item for specific camera identifier.",
-    } satisfies EndpointDefinition<i.GetCameraInput, o.Camera>,
+    } satisfies EndpointDefinition<HighwayCameraByCameraIdInput, Camera>,
   },
-};
+} satisfies EndpointGroup;

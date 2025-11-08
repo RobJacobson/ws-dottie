@@ -1,30 +1,16 @@
 /**
- * @fileoverview WSF Vessels API - Clean exports for types and API definition
+ * @fileoverview wsf-vessels API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSF Vessels API, exporting
- * all input/output types and the main API definition.
+ * This module provides exports for all hooks, fetch functions, and types in the wsf-vessels API.
  */
 
-// Export the main API definition
-export { wsfVesselsApi } from "./apiDefinition";
-export type { VesselsCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
-export type { VesselsCacheFlushDate } from "./cacheFlushDate/cacheFlushDate.output";
-export type {
-  VesselAccommodationsByIdInput,
-  VesselAccommodationsInput,
-} from "./vesselAccommodations/vesselAccommodations.input";
-export type { VesselAccommodations } from "./vesselAccommodations/vesselAccommodations.output";
-export type {
-  VesselBasicsByIdInput,
-  VesselBasicsInput,
-} from "./vesselBasics/vesselBasics.input";
-export type { VesselBasic } from "./vesselBasics/vesselBasics.output";
-// Export all input types
-export type { GetVesselHistoryInput } from "./vesselHistories/vesselHistories.input";
-// Export all output types
-export type { VesselHistoryResponse } from "./vesselHistories/vesselHistories.output";
-export type { VesselLocationsInput } from "./vesselLocations/vesselLocations.input";
-export type { VesselLocations } from "./vesselLocations/vesselLocations.output";
-export type { VesselStatsInput } from "./vesselStats/vesselStats.input";
-export type { VesselStats } from "./vesselStats/vesselStats.output";
-export type { VesselVerbose } from "./vesselVerbose/vesselVerbose.output";
+// Export hooks
+export * from "./cacheFlushDate/cacheFlushDate.hooks";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+export * from "./vesselAccommodations/vesselAccommodations.hooks";
+export * from "./vesselBasics/vesselBasics.hooks";
+export * from "./vesselHistories/vesselHistories.hooks";
+export * from "./vesselLocations/vesselLocations.hooks";
+export * from "./vesselStats/vesselStats.hooks";
+export * from "./vesselVerbose/vesselVerbose.hooks";

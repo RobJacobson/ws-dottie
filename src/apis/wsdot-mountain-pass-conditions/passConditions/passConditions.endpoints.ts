@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./passConditions.input";
-import * as o from "./passConditions.output";
+import type {
+  MountainPassConditionByIdInput,
+  MountainPassConditionsInput,
+} from "./passConditions.input";
+import {
+  mountainPassConditionByIdInputSchema,
+  mountainPassConditionsInputSchema,
+} from "./passConditions.input";
+import type { PassCondition } from "./passConditions.output";
+import { passConditionSchema } from "./passConditions.output";
 
-export const passConditionsGroup: EndpointGroup = {
+export const passConditionsGroup = {
   name: "pass-conditions",
   documentation: {
     resourceDescription:
@@ -13,30 +21,28 @@ export const passConditionsGroup: EndpointGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getMountainPassConditionById: {
-      function: "getMountainPassConditionById",
+    fetchMountainPassConditionById: {
       endpoint:
         "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
-      inputSchema: i.getMountainPassConditionSchema,
-      outputSchema: o.passConditionSchema,
+      inputSchema: mountainPassConditionByIdInputSchema,
+      outputSchema: passConditionSchema,
       sampleParams: { PassConditionID: 12 },
       endpointDescription:
-        "Returns a single PassCondition for the specified mountain pass identifier.",
+        "Returns a single PassCondition for specified mountain pass identifier.",
     } satisfies EndpointDefinition<
-      i.GetMountainPassConditionInput,
-      o.PassCondition
+      MountainPassConditionByIdInput,
+      PassCondition
     >,
-    getMountainPassConditions: {
-      function: "getMountainPassConditions",
+    fetchMountainPassConditions: {
       endpoint: "/getMountainPassConditionsAsJson",
-      inputSchema: i.getMountainPassConditionsSchema,
-      outputSchema: z.array(o.passConditionSchema),
+      inputSchema: mountainPassConditionsInputSchema,
+      outputSchema: z.array(passConditionSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple PassCondition items for all monitored mountain passes.",
     } satisfies EndpointDefinition<
-      i.GetMountainPassConditionsInput,
-      o.PassCondition[]
+      MountainPassConditionsInput,
+      PassCondition[]
     >,
   },
-};
+} satisfies EndpointGroup;

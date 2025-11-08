@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./bridgeClearances.input";
-import * as o from "./bridgeClearances.output";
+import type {
+  BridgeClearancesByRouteInput,
+  BridgeClearancesInput,
+} from "./bridgeClearances.input";
+import {
+  bridgeClearancesByRouteInputSchema,
+  bridgeClearancesInputSchema,
+} from "./bridgeClearances.input";
+import type { BridgeClearance } from "./bridgeClearances.output";
+import { bridgeClearanceSchema } from "./bridgeClearances.output";
 
-export const bridgeClearancesGroup: EndpointGroup = {
+export const bridgeClearancesGroup = {
   name: "bridge-clearances",
   documentation: {
     resourceDescription:
@@ -13,26 +21,24 @@ export const bridgeClearancesGroup: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getBridgeClearances: {
-      function: "getBridgeClearances",
+    fetchBridgeClearances: {
       endpoint: "/getClearancesAsJson",
-      inputSchema: i.getClearancesSchema,
-      outputSchema: z.array(o.bridgeDataGISSchema),
+      inputSchema: bridgeClearancesInputSchema,
+      outputSchema: z.array(bridgeClearanceSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
-    } satisfies EndpointDefinition<i.GetClearancesInput, o.BridgeDataGIS[]>,
-    getBridgeClearancesByRoute: {
-      function: "getBridgeClearancesByRoute",
+    } satisfies EndpointDefinition<BridgeClearancesInput, BridgeClearance[]>,
+    fetchBridgeClearancesByRoute: {
       endpoint: "/getClearancesAsJson?Route={Route}",
-      inputSchema: i.getClearancesByRouteSchema,
-      outputSchema: z.array(o.bridgeDataGISSchema),
+      inputSchema: bridgeClearancesByRouteInputSchema,
+      outputSchema: z.array(bridgeClearanceSchema),
       sampleParams: { Route: "005" },
       endpointDescription:
         "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
     } satisfies EndpointDefinition<
-      i.GetClearancesByRouteInput,
-      o.BridgeDataGIS[]
+      BridgeClearancesByRouteInput,
+      BridgeClearance[]
     >,
   },
-};
+} satisfies EndpointGroup;

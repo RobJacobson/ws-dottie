@@ -1,8 +1,16 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import * as i from "./scheduleToday.input";
-import * as o from "./scheduleToday.output";
+import type {
+  ScheduleTodayByRouteInput,
+  ScheduleTodayByTerminalsInput,
+} from "./scheduleToday.input";
+import {
+  scheduleTodayByRouteSchema,
+  scheduleTodayByTerminalsInputSchema,
+} from "./scheduleToday.input";
+import type { Schedule } from "./scheduleToday.output";
+import { scheduleSchema } from "./scheduleToday.output";
 
-export const scheduleTodayResource: EndpointGroup = {
+export const scheduleTodayResource = {
   name: "schedule-today",
   documentation: {
     resourceDescription:
@@ -11,20 +19,18 @@ export const scheduleTodayResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getScheduleTodayByRoute: {
-      function: "getScheduleTodayByRoute",
+    fetchScheduleTodayByRoute: {
       endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
-      inputSchema: i.scheduleTodayByRouteSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleTodayByRouteSchema,
+      outputSchema: scheduleSchema,
       sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
       endpointDescription: "Returns today's schedule for the specified route.",
-    } satisfies EndpointDefinition<i.ScheduleTodayByRouteInput, o.Schedule>,
-    getScheduleTodayByTerminals: {
-      function: "getScheduleTodayByTerminals",
+    } satisfies EndpointDefinition<ScheduleTodayByRouteInput, Schedule>,
+    fetchScheduleTodayByTerminals: {
       endpoint:
         "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
-      inputSchema: i.todaysScheduleByTerminalComboSchema,
-      outputSchema: o.scheduleSchema,
+      inputSchema: scheduleTodayByTerminalsInputSchema,
+      outputSchema: scheduleSchema,
       sampleParams: {
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
@@ -32,9 +38,6 @@ export const scheduleTodayResource: EndpointGroup = {
       },
       endpointDescription:
         "Returns today's schedule for the specified terminal pair.",
-    } satisfies EndpointDefinition<
-      i.TodaysScheduleByTerminalComboInput,
-      o.Schedule
-    >,
+    } satisfies EndpointDefinition<ScheduleTodayByTerminalsInput, Schedule>,
   },
-};
+} satisfies EndpointGroup;

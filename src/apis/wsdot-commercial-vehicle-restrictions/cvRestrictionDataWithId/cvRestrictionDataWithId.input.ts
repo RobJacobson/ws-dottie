@@ -1,16 +1,16 @@
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * Schema for GetCommercialVehicleRestrictionsWithId input parameters
+ * Schema for CVRestrictionDataWithId input parameters
  *
  * Provides list of restrictions for commercial vehicles. Coverage Area: Statewide.
  */
-export const getCommercialVehicleRestrictionsWithIdSchema = z
+export const commercialVehicleRestrictionsWithIdInputSchema = z
   .object({})
   .describe(
     "Retrieves all commercial vehicle restrictions statewide with unique identifiers, returning bridge and road restrictions including weight limits, height restrictions, location data, effective dates, and unique restriction IDs. Use for commercial vehicle route planning and restriction tracking with ID-based lookups."
   );
 
-export type GetCommercialVehicleRestrictionsWithIdInput = z.infer<
-  typeof getCommercialVehicleRestrictionsWithIdSchema
+export type CommercialVehicleRestrictionsWithIdInput = z.infer<
+  typeof commercialVehicleRestrictionsWithIdInputSchema
 >;

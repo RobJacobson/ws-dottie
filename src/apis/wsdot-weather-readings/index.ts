@@ -1,21 +1,13 @@
 /**
- * @fileoverview WSDOT Weather Readings API - Clean exports for types and API definition
+ * @fileoverview wsdot-weather-readings API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Weather Readings API, exporting
- * all input/output types and the main API definition.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-weather-readings API.
  */
 
-// Export the main API definition
-// Export all resources for direct use
-export {
-  subSurfaceMeasurementsResource,
-  surfaceMeasurementsResource,
-  weatherReadingsResource,
-  wsdotWeatherReadingsApi,
-} from "./apiDefinition";
-// Export all output types
-export type { ScanwebSubSurfaceMeasurements } from "./subSurfaceMeasurements/subSurfaceMeasurements.output";
-export type { ScanwebSurfaceMeasurements } from "./surfaceMeasurements/surfaceMeasurements.output";
-// Export all input types
-export type { GetWeatherReadingsInput } from "./weatherReadings/weatherReadings.input";
-export type { WeatherReading } from "./weatherReadings/weatherReadings.output";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+
+// Export hooks
+export * from "./subSurfaceMeasurements/subSurfaceMeasurements.hooks";
+export * from "./surfaceMeasurements/surfaceMeasurements.hooks";
+export * from "./weatherReadings/weatherReadings.hooks";

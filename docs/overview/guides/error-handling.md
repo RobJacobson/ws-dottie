@@ -6,17 +6,17 @@ This guide covers error handling patterns and recovery strategies for WS-Dottie 
 
 ## 🚨 Error Types
 
-### WsdotApiError
+### ApiError
 
-WS-Dottie's primary error type for API-related issues:
+WS-Dottie's primary error type for API-related issues uses a plain object that implements the `ApiError` interface:
 
 ```typescript
-interface WsdotApiError extends Error {
+interface ApiError extends Error {
   message: string;           // Human-readable error message
   status?: number;          // HTTP status code (if available)
   context?: {             // Additional error context
-    endpoint: string;      // API endpoint that was called
-    url: string;          // Full request URL
+    endpoint?: string;     // API endpoint that was called
+    url?: string;          // Full request URL
     timestamp: Date;      // When error occurred
     requestId?: string;    // Request identifier for tracking
   };
@@ -59,7 +59,7 @@ interface ValidationError extends Error {
 ### Try-Catch Pattern
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie, isApiError } from 'ws-dottie';
 
 async function fetchWithErrorHandling() {
   try {
@@ -71,12 +71,14 @@ async function fetchWithErrorHandling() {
     
     return data;
   } catch (error) {
-    if (error instanceof WsdotApiError) {
+    if (isApiError(error)) {
       console.error('API Error:', error.message);
       console.error('Status:', error.status);
       console.error('Context:', error.context);
-    } else {
+    } else if (error instanceof Error) {
       console.error('Unexpected Error:', error.message);
+    } else {
+      console.error('Unknown error', error);
     }
     
     throw error;
@@ -88,7 +90,7 @@ async function fetchWithErrorHandling() {
 
 ```javascript
 import { Component } from 'react';
-import { WsdotApiError } from 'ws-dottie';
+import { isApiError } from 'ws-dottie';
 
 class TransportationErrorBoundary extends Component {
   constructor(props) {
@@ -103,8 +105,15 @@ class TransportationErrorBoundary extends Component {
   componentDidCatch(error, errorInfo) {
     console.error('Transportation Error:', error, errorInfo);
     
-    // Log error to service
-    logErrorToService(error, errorInfo);
+    if (isApiError(error)) {
+      // Log API-specific context
+      logErrorToService(error, errorInfo, {
+        endpoint: error.context?.endpoint,
+        status: error.status,
+      });
+    } else {
+      logErrorToService(error, errorInfo);
+    }
   }
   
   render() {
@@ -141,7 +150,7 @@ function App() {
 ### Async/Await Pattern
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie, isApiError } from 'ws-dottie';
 
 async function fetchWithAsyncAwait() {
   let vessels;
@@ -153,7 +162,7 @@ async function fetchWithAsyncAwait() {
       validate: true
     });
   } catch (error) {
-    if (error instanceof WsdotApiError) {
+    if (isApiError(error)) {
       console.error('Failed to fetch vessels:', error.message);
       // Handle specific API error
       if (error.status === 401) {
@@ -181,7 +190,7 @@ async function fetchWithAsyncAwait() {
 ### Retry Logic
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie, isApiError } from 'ws-dottie';
 
 class RetryableFetch {
   constructor() {
@@ -208,12 +217,12 @@ class RetryableFetch {
         lastError = error;
         
         // Don't retry on authentication errors
-        if (error instanceof WsdotApiError && error.status === 401) {
+        if (isApiError(error) && error.status === 401) {
           throw error;
         }
         
         // Don't retry on client errors (4xx)
-        if (error instanceof WsdotApiError && error.status >= 400 && error.status < 500) {
+        if (isApiError(error) && error.status >= 400 && error.status < 500) {
           throw error;
         }
         
@@ -247,7 +256,7 @@ const vessels = await retryableFetch.fetchWithRetry(getVesselLocations);
 ### Fallback Data
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie } from 'ws-dottie';
 
 async function fetchWithFallback(endpoint, fallbackData = []) {
   try {
@@ -276,7 +285,7 @@ const vessels = await fetchWithFallback(getVesselLocations, [
 ### Graceful Degradation
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie } from 'ws-dottie';
 
 class GracefulDegradation {
   constructor() {
@@ -344,7 +353,7 @@ const vessels = await degradation.fetchWithGracefulDegradation(getVesselLocation
 ### Error Logging
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie, isApiError } from 'ws-dottie';
 
 class ErrorLogger {
   constructor() {
@@ -357,7 +366,7 @@ class ErrorLogger {
       message: error.message,
       stack: error.stack,
       context,
-      ...(error instanceof WsdotApiError && {
+      ...(isApiError(error) && {
         status: error.status,
         endpoint: error.context?.endpoint,
         url: error.context?.url
@@ -436,7 +445,7 @@ async function main() {
 ### Error Metrics
 
 ```javascript
-import { fetchDottie, WsdotApiError } from 'ws-dottie';
+import { fetchDottie, isApiError } from 'ws-dottie';
 
 class ErrorMetrics {
   constructor() {
@@ -459,12 +468,12 @@ class ErrorMetrics {
     } else {
       this.metrics.failedRequests++;
       
-      if (error instanceof WsdotApiError && error.status) {
+      if (isApiError(error) && error.status) {
         const status = error.status.toString();
         this.metrics.errorsByStatus[status] = (this.metrics.errorsByStatus[status] || 0) + 1;
       }
       
-      if (error instanceof WsdotApiError && error.context?.endpoint) {
+      if (isApiError(error) && error.context?.endpoint) {
         const endpointName = error.context.endpoint;
         this.metrics.errorsByEndpoint[endpointName] = (this.metrics.errorsByEndpoint[endpointName] || 0) + 1;
       }

@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselLocations.input";
-import * as o from "./vesselLocations.output";
+import type {
+  VesselLocationsByIdInput,
+  VesselLocationsInput,
+} from "./vesselLocations.input";
+import {
+  vesselLocationsByIdInputSchema,
+  vesselLocationsInputSchema,
+} from "./vesselLocations.input";
+import type { VesselLocation } from "./vesselLocations.output";
+import { vesselLocationSchema } from "./vesselLocations.output";
 
-export const vesselLocationsGroup: EndpointGroup = {
+export const vesselLocationsGroup = {
   name: "vessel-locations",
   documentation: {
     resourceDescription:
@@ -14,26 +22,21 @@ export const vesselLocationsGroup: EndpointGroup = {
   // Using REALTIME strategy because vessel locations update every few seconds as vessels move
   cacheStrategy: "REALTIME" as const,
   endpoints: {
-    getVesselLocations: {
-      function: "getVesselLocations",
+    fetchVesselLocations: {
       endpoint: "/vesselLocations",
-      inputSchema: i.vesselLocationsSchema,
-      outputSchema: z.array(o.vesselLocationsSchema),
+      inputSchema: vesselLocationsInputSchema,
+      outputSchema: z.array(vesselLocationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselLocation objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselLocationsInput, o.VesselLocations[]>,
-    getVesselLocationsByVesselId: {
-      function: "getVesselLocationsByVesselId",
+    } satisfies EndpointDefinition<VesselLocationsInput, VesselLocation[]>,
+    fetchVesselLocationsByVesselId: {
       endpoint: "/vesselLocations/{VesselID}",
-      inputSchema: i.vesselLocationsByIdSchema,
-      outputSchema: o.vesselLocationsSchema,
+      inputSchema: vesselLocationsByIdInputSchema,
+      outputSchema: vesselLocationSchema,
       sampleParams: { VesselID: 18 },
       endpointDescription:
         "Returns a VesselLocation object containing real-time position and status information for the specified vessel.",
-    } satisfies EndpointDefinition<
-      i.VesselLocationsByIdInput,
-      o.VesselLocations
-    >,
+    } satisfies EndpointDefinition<VesselLocationsByIdInput, VesselLocation>,
   },
-};
+} satisfies EndpointGroup;

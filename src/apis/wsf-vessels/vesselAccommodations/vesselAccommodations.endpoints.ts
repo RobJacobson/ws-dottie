@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselAccommodations.input";
-import * as o from "./vesselAccommodations.output";
+import type {
+  VesselAccommodationsByIdInput,
+  VesselAccommodationsInput,
+} from "./vesselAccommodations.input";
+import {
+  vesselAccommodationsByIdInputSchema,
+  vesselAccommodationsInputSchema,
+} from "./vesselAccommodations.input";
+import type { VesselAccommodation } from "./vesselAccommodations.output";
+import { vesselAccommodationSchema } from "./vesselAccommodations.output";
 
-export const vesselAccommodationsResource: EndpointGroup = {
+export const vesselAccommodationsResource = {
   name: "vessel-accommodations",
   documentation: {
     resourceDescription:
@@ -13,29 +21,27 @@ export const vesselAccommodationsResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselAccommodations: {
-      function: "getVesselAccommodations",
+    fetchVesselAccommodations: {
       endpoint: "/vesselAccommodations",
-      inputSchema: i.vesselAccommodationsSchema,
-      outputSchema: z.array(o.vesselAccommodationsSchema),
+      inputSchema: vesselAccommodationsInputSchema,
+      outputSchema: z.array(vesselAccommodationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselAccommodation objects for all vessels in fleet.",
     } satisfies EndpointDefinition<
-      i.VesselAccommodationsInput,
-      o.VesselAccommodations[]
+      VesselAccommodationsInput,
+      VesselAccommodation[]
     >,
-    getVesselAccommodationsByVesselId: {
-      function: "getVesselAccommodationsByVesselId",
+    fetchVesselAccommodationsByVesselId: {
       endpoint: "/vesselAccommodations/{VesselID}",
-      inputSchema: i.vesselAccommodationsByIdSchema,
-      outputSchema: o.vesselAccommodationsSchema,
+      inputSchema: vesselAccommodationsByIdInputSchema,
+      outputSchema: vesselAccommodationSchema,
       sampleParams: { VesselID: 65 },
       endpointDescription:
         "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
     } satisfies EndpointDefinition<
-      i.VesselAccommodationsByIdInput,
-      o.VesselAccommodations
+      VesselAccommodationsByIdInput,
+      VesselAccommodation
     >,
   },
-};
+} satisfies EndpointGroup;

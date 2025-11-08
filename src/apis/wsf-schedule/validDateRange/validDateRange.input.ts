@@ -11,10 +11,12 @@ import { z } from "@/shared/zod-openapi-init";
  * Schema for ValidDateRange input parameters
  *
  * This operation retrieves a date range for which schedule data is currently published & available. */
-export const validDateRangeSchema = z
+export const scheduleValidDateRangeInputSchema = z
   .object({})
   .describe(
     "Retrieves date range for which schedule data is currently published and available, returning start and end dates. Use to determine valid trip dates for schedule queries before calling other endpoints."
   );
 
-export type ScheduleValidDateRangeInput = z.infer<typeof validDateRangeSchema>;
+export type ScheduleValidDateRangeInput = z.infer<
+  typeof scheduleValidDateRangeInputSchema
+>;

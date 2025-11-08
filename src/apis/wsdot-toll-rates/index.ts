@@ -1,34 +1,14 @@
 /**
- * @fileoverview WSDOT Toll Rates API - Clean exports for types, API definition, and resources
+ * @fileoverview wsdot-toll-rates API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Toll Rates API, exporting
- * all input/output types, the main API definition, and individual resource modules.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-toll-rates API.
  */
 
-// Export the main API definition (legacy format for backward compatibility)
-// Export individual resources for direct use
-export {
-  tollRatesResource,
-  tollTripInfoResource,
-  tollTripRatesResource,
-  tollTripVersionResource,
-  wsdotTollRatesApi,
-} from "./apiDefinition";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
 
-// Export all input types
-export type { GetTollRatesInput } from "./tollRates/tollRates.input";
-// Export all output types
-export type { TollRate } from "./tollRates/tollRates.output";
-export type { GetTollTripInfoInput } from "./tollTripInfo/tollTripInfo.input";
-export type { TollTripInfo } from "./tollTripInfo/tollTripInfo.output";
-export type {
-  GetTollTripRatesInput,
-  GetTripRatesByDateInput,
-  GetTripRatesByVersionInput,
-} from "./tollTripRates/tollTripRates.input";
-export type {
-  TollTripsRates as TollTrips,
-  TripRate,
-} from "./tollTripRates/tollTripRates.output";
-export type { GetTollTripVersionInput } from "./tollTripVersion/tollTripVersion.input";
-export type { TollTripVersion } from "./tollTripVersion/tollTripVersion.output";
+// Export hooks
+export * from "./tollRates/tollRates.hooks";
+export * from "./tollTripInfo/tollTripInfo.hooks";
+export * from "./tollTripRates/tollTripRates.hooks";
+export * from "./tollTripVersion/tollTripVersion.hooks";

@@ -1,9 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./activeSeasons.input";
-import * as o from "./activeSeasons.output";
+import type { ActiveSeasonsInput } from "./activeSeasons.input";
+import { activeSeasonsInputSchema } from "./activeSeasons.input";
+import type { ScheduleBase } from "./activeSeasons.output";
+import { scheduleBaseSchema } from "./activeSeasons.output";
 
-export const activeSeasonsResource: EndpointGroup = {
+export const activeSeasonsResource = {
   name: "active-seasons",
   documentation: {
     resourceDescription:
@@ -13,17 +15,13 @@ export const activeSeasonsResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getActiveSeasons: {
-      function: "getActiveSeasons",
+    fetchActiveSeasons: {
       endpoint: "/activeseasons",
-      inputSchema: i.activeScheduledSeasonsSchema,
-      outputSchema: z.array(o.scheduleBaseSchema),
+      inputSchema: activeSeasonsInputSchema,
+      outputSchema: z.array(scheduleBaseSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple of ActiveSeasons for all scheduling periods.",
-    } satisfies EndpointDefinition<
-      i.ActiveScheduledSeasonsInput,
-      o.ScheduleBase[]
-    >,
+    } satisfies EndpointDefinition<ActiveSeasonsInput, ScheduleBase[]>,
   },
-};
+} satisfies EndpointGroup;

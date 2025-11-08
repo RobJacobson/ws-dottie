@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselHistories.input";
-import * as o from "./vesselHistories.output";
+import type {
+  VesselHistoriesByVesselNameAndDateRangeInput,
+  VesselHistoriesInput,
+} from "./vesselHistories.input";
+import {
+  vesselHistoriesByVesselNameAndDateRangeInputSchema,
+  vesselHistoriesInputSchema,
+} from "./vesselHistories.input";
+import type { VesselHistory } from "./vesselHistories.output";
+import { vesselHistorySchema } from "./vesselHistories.output";
 
-export const vesselHistoriesResource: EndpointGroup = {
+export const vesselHistoriesResource = {
   name: "vessel-histories",
   documentation: {
     resourceDescription:
@@ -12,23 +20,18 @@ export const vesselHistoriesResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselHistories: {
-      function: "getVesselHistories",
+    fetchVesselHistories: {
       endpoint: "/vesselHistory",
-      inputSchema: i.getAllVesselHistorySchema,
-      outputSchema: z.array(o.vesselHistoryResponseSchema),
+      inputSchema: vesselHistoriesInputSchema,
+      outputSchema: z.array(vesselHistorySchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselHistory objects for all vessels in fleet.",
-    } satisfies EndpointDefinition<
-      i.GetAllVesselHistoryInput,
-      o.VesselHistoryResponse[]
-    >,
-    getVesselHistoriesByVesselNameAndDateRange: {
-      function: "getVesselHistoriesByVesselNameAndDateRange",
+    } satisfies EndpointDefinition<VesselHistoriesInput, VesselHistory[]>,
+    fetchVesselHistoriesByVesselNameAndDateRange: {
       endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-      inputSchema: i.getVesselHistorySchema,
-      outputSchema: z.array(o.vesselHistoryResponseSchema),
+      inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
+      outputSchema: z.array(vesselHistorySchema),
       sampleParams: {
         VesselName: "Tacoma",
         DateStart: "2025-09-01",
@@ -37,8 +40,8 @@ export const vesselHistoriesResource: EndpointGroup = {
       endpointDescription:
         "Returns multiple VesselHistory objects for the specified vessel and date range.",
     } satisfies EndpointDefinition<
-      i.GetVesselHistoryInput,
-      o.VesselHistoryResponse[]
+      VesselHistoriesByVesselNameAndDateRangeInput,
+      VesselHistory[]
     >,
   },
-};
+} satisfies EndpointGroup;

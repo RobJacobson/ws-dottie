@@ -1,9 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./borderCrossingData.input";
-import * as o from "./borderCrossingData.output";
+import type { BorderCrossingsInput } from "./borderCrossingData.input";
+import { borderCrossingsInputSchema } from "./borderCrossingData.input";
+import type { BorderCrossing } from "./borderCrossingData.output";
+import { borderCrossingSchema } from "./borderCrossingData.output";
 
-export const borderCrossingDataResource: EndpointGroup = {
+export const borderCrossingDataResource = {
   name: "border-crossing-data",
   documentation: {
     resourceDescription:
@@ -13,17 +15,13 @@ export const borderCrossingDataResource: EndpointGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getBorderCrossings: {
-      function: "getBorderCrossings",
+    fetchBorderCrossings: {
       endpoint: "/GetBorderCrossingsAsJson",
-      inputSchema: i.getBorderCrossingsSchema,
-      outputSchema: z.array(o.borderCrossingDataSchema),
+      inputSchema: borderCrossingsInputSchema,
+      outputSchema: z.array(borderCrossingSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
-    } satisfies EndpointDefinition<
-      i.GetBorderCrossingsInput,
-      o.BorderCrossingData[]
-    >,
+    } satisfies EndpointDefinition<BorderCrossingsInput, BorderCrossing[]>,
   },
-};
+} satisfies EndpointGroup;

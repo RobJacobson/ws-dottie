@@ -5,13 +5,13 @@
  */
 
 import { z } from "@/shared/zod-openapi-init";
-import { terminalComboVerboseResponseSchema } from "../terminalCombo/terminalCombo.output";
+import { terminalComboFaresVerboseSchema } from "../terminalCombo/terminalCombo.output";
 
 /**
  * Line item response schema used by multiple endpoints
  *
  * This operation retrieves fares for either round trip or one-way departures available for a given departing terminal, arriving terminal and trip date. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const lineItemResponseSchema = z
+export const lineItemSchema = z
   .object({
     FareLineItemID: z
       .number()
@@ -45,7 +45,7 @@ export const lineItemResponseSchema = z
     "Represents fare line item information including fare identifier, description, category, direction independence, and amount. E.g., Adult fare (ID 1) in Passenger category with amount $0 (free). Used for fare lookups, fare calculation, and fare total computations."
   );
 
-export type LineItemResponse = z.infer<typeof lineItemResponseSchema>;
+export type LineItem = z.infer<typeof lineItemSchema>;
 
 /**
  * Line item cross-reference schema for GetFareLineItemsVerboseDetail endpoint
@@ -79,10 +79,10 @@ export type LineItemXref = z.infer<typeof lineItemXrefSchema>;
  * Line item verbose response schema for GetFareLineItemsVerboseDetail endpoint
  *
  * This operation retrieves round trip and one-way fares for all valid departing and arriving terminal combinations on a given trip date. A valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014). */
-export const lineItemVerboseResponseSchema = z
+export const lineItemVerboseSchema = z
   .object({
     TerminalComboVerbose: z
-      .array(terminalComboVerboseResponseSchema)
+      .array(terminalComboFaresVerboseSchema)
       .optional()
       .describe(
         "Array of terminal combination verbose information, as terminal combo objects. E.g., array containing Anacortes-Friday Harbor combination, Anacortes-Lopez Island combination. Provides all valid terminal pairs for trip date."
@@ -94,13 +94,13 @@ export const lineItemVerboseResponseSchema = z
         "Array of cross-reference mappings between terminal combinations and fare line items, as line item xref objects. E.g., array mapping each terminal combo to corresponding fare line item arrays. Used to associate fare line items with terminal combinations."
       ),
     LineItems: z
-      .array(z.array(lineItemResponseSchema))
+      .array(z.array(lineItemSchema))
       .optional()
       .describe(
         "Array of one-way fare line item arrays, where each inner array contains line items for specific terminal combination, as nested arrays of line item objects. E.g., array containing Adult, Senior, Youth fares for each terminal combo. Used for one-way fare lookups."
       ),
     RoundTripLineItems: z
-      .array(z.array(lineItemResponseSchema))
+      .array(z.array(lineItemSchema))
       .optional()
       .describe(
         "Array of round trip fare line item arrays, where each inner array contains line items for specific terminal combination, as nested arrays of line item objects. E.g., array containing Adult, Senior, Youth fares for round trip journeys. Used for round trip fare lookups."
@@ -110,6 +110,4 @@ export const lineItemVerboseResponseSchema = z
     "Represents comprehensive fare line item data for all terminal combinations including terminal combo information, cross-reference mappings, one-way fares, and round trip fares. E.g., complete fare data for all routes on November 2, 2025. Used for bulk fare lookups across all routes and comprehensive fare data access."
   );
 
-export type LineItemVerboseResponse = z.infer<
-  typeof lineItemVerboseResponseSchema
->;
+export type LineItemVerbose = z.infer<typeof lineItemVerboseSchema>;

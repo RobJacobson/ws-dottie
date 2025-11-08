@@ -1,28 +1,12 @@
 /**
- * @fileoverview WSDOT Highway Alerts API - Clean exports for types and API definition
+ * @fileoverview wsdot-highway-alerts API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Highway Alerts API, exporting
- * all input/output types and the main API definition.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-highway-alerts API.
  */
 
-// Export shared types
-export type { RoadwayLocation } from "@/apis/shared";
-
-// Export all input types
-export type {
-  GetAlertInput,
-  GetAlertsByRegionIDInput,
-  GetAlertsForMapAreaInput,
-  GetAlertsInput,
-  SearchAlertsInput,
-} from "./highwayAlerts/highwayAlerts.input";
-// Export all output types
-export type { Alert } from "./highwayAlerts/highwayAlerts.output";
-// Export the main API definition
-// Export individual resources for direct use
-export {
-  highwayAlertsGroup,
-  alertAreasGroup,
-  eventCategoriesGroup,
-  wsdotHighwayAlertsApi,
-} from "./apiDefinition";
+// Export hooks
+export * from "./alertAreas/alertAreas.hooks";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+export * from "./eventCategories/eventCategories.hooks";
+export * from "./highwayAlerts/highwayAlerts.hooks";

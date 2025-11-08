@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    WeatherStationsOutput:
+    FetchWeatherStationsOutput:
       type: object
       properties:
         Latitude:
@@ -70,16 +70,17 @@ paths:
   /GetCurrentStationsAsJson:
     get:
       summary: Returns multiple WeatherStation items for statewide coverage.
-      operationId: getWeatherStations
+      operationId: fetchWeatherStations
       tags:
         - weather-stations
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getWeatherStations } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchWeatherStations } from 'ws-dottie/wsdot-weather-stations/core';
 
             const data = await fetchDottie({
-              endpoint: getWeatherStations,
+              endpoint: fetchWeatherStations,
               fetchMode: 'native',
               validate: true
             });
@@ -93,7 +94,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/WeatherStationsOutput'
+                  $ref: '#/components/schemas/FetchWeatherStationsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response

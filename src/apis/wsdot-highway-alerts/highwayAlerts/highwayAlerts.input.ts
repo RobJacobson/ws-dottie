@@ -1,24 +1,24 @@
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * Input schema for GetAlerts endpoint
+ * Input schema for HighwayAlerts endpoint
  *
  * Retrieves an array of currently active incidents
  */
-export const getAlertsSchema = z
+export const alertsInputSchema = z
   .object({})
   .describe(
     "Retrieves all currently active highway alerts statewide, returning alert details including locations, event categories, priorities, timestamps, and descriptions. Use for monitoring current traffic incidents, construction, maintenance, and other highway events."
   );
 
-export type GetAlertsInput = z.infer<typeof getAlertsSchema>;
+export type AlertsInput = z.infer<typeof alertsInputSchema>;
 
 /**
- * Input schema for GetAlert endpoint
+ * Input schema for HighwayAlert endpoint
  *
  * Retrieves a specific incident
  */
-export const getAlertSchema = z
+export const alertByIdInputSchema = z
   .object({
     AlertID: z
       .number()
@@ -30,14 +30,14 @@ export const getAlertSchema = z
     "Retrieves specific highway alert by ID, returning alert details including locations, event category, priority, timestamps, and descriptions. Use for individual alert lookups and detailed alert information."
   );
 
-export type GetAlertInput = z.infer<typeof getAlertSchema>;
+export type AlertByIdInput = z.infer<typeof alertByIdInputSchema>;
 
 /**
- * Input schema for SearchAlerts endpoint
+ * Input schema for HighwayAlertsSearch endpoint
  *
  * Retrieves an array of incidents that match certain criteria
  */
-export const searchAlertsSchema = z
+export const searchAlertsInputSchema = z
   .object({
     StateRoute: z
       .string()
@@ -80,14 +80,14 @@ export const searchAlertsSchema = z
     "Searches highway alerts matching specified criteria including route, region, time range, and milepost range. Returns array of matching alerts with details. Use for filtered alert queries and location-specific alert searches."
   );
 
-export type SearchAlertsInput = z.infer<typeof searchAlertsSchema>;
+export type SearchAlertsInput = z.infer<typeof searchAlertsInputSchema>;
 
 /**
- * Input schema for GetAlertsForMapArea endpoint
+ * Input schema for HighwayAlertsByMapArea endpoint
  *
  * Return alerts for a specific area
  */
-export const getAlertsForMapAreaSchema = z
+export const alertsByMapAreaInputSchema = z
   .object({
     MapArea: z
       .string()
@@ -99,16 +99,14 @@ export const getAlertsForMapAreaSchema = z
     "Retrieves highway alerts for specific map area, returning alerts within that geographic region. Use for area-based alert filtering and regional alert monitoring."
   );
 
-export type GetAlertsForMapAreaInput = z.infer<
-  typeof getAlertsForMapAreaSchema
->;
+export type AlertsByMapAreaInput = z.infer<typeof alertsByMapAreaInputSchema>;
 
 /**
- * Input schema for GetAlertsByRegionID endpoint
+ * Input schema for HighwayAlertsByRegionID endpoint
  *
  * Return alerts for a specific region
  */
-export const getAlertsByRegionIDSchema = z
+export const alertsByRegionIDInputSchema = z
   .object({
     RegionID: z
       .number()
@@ -120,6 +118,4 @@ export const getAlertsByRegionIDSchema = z
     "Retrieves highway alerts for specific WSDOT region, returning alerts within that administrative region. Use for region-based alert filtering and regional traffic monitoring."
   );
 
-export type GetAlertsByRegionIDInput = z.infer<
-  typeof getAlertsByRegionIDSchema
->;
+export type AlertsByRegionIDInput = z.infer<typeof alertsByRegionIDInputSchema>;

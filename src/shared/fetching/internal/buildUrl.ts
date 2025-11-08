@@ -176,14 +176,6 @@ const buildQueryString = (
 };
 
 /**
- * Clean up any remaining template placeholders in the URL
- * @param url - URL string to clean
- * @returns URL with template placeholders removed
- */
-const removeUnusedTemplates = (url: string): string =>
-  url.replace(/\{[^}]+\}/g, "");
-
-/**
  * Inject appropriate API key based on service type
  * @param url - URL object to modify
  */

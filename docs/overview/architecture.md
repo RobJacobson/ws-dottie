@@ -11,30 +11,29 @@ WS-Dottie is a TypeScript library that provides unified access to Washington Sta
 ### Core Components
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
+┌─────────────────────────────────────────────────────────────┐
 │                        WS-Dottie Library                        │
-├─────────────────────────────────────────────────────────────────────┤
+├─────────────────────────────────────────────────────────────┤
 │  API Modules    │  React Hooks  │  Utilities & Config  │
 │  (16 APIs)     │  (TanStack)    │  (Type Safety, etc.) │
-├─────────────────────────────────────────────────────────────────────┤
+├─────────────────────────────────────────────────────────────┤
 │                    Data Access Layer                           │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
 │  │   WSDOT    │  │     WSF     │  │  Validation  │  │
 │  │   APIs      │  │    APIs      │  │   & Types    │  │
 │  └─────────────┘  └─────────────┘  └─────────────┘  │
-├─────────────────────────────────────────────────────────────────────┤
+├─────────────────────────────────────────────────────────────┤
 │                    Transport Layer                              │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  │
 │  │   Native    │  │    JSONP    │  │    CLI      │  │
 │  │   Fetch     │  │  (Browser)   │  │  Interface  │  │
 │  └─────────────┘  └─────────────┘  └─────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## 🔄 Data Flow
 
 ### Request Processing
-
 1. **API Call Initiation**
    - User calls API function or React hook
    - Parameters validated against TypeScript types
@@ -69,6 +68,56 @@ API Request → Network Error → Retry Logic → Error Context → User
                 ↓
         Validation Error → Schema Mismatch → Error Details → User
 ```
+
+## 🚀 Simplified Architecture
+
+WS-Dottie uses a simplified architecture with self-contained endpoints and fetch functions:
+
+### Endpoint Generation
+Each API exports a flattened list of self-contained endpoints with all information needed for fetchDottie:
+
+```typescript
+// src/apis/wsf-vessels/endpoints.ts
+import { generateEndpoints } from "@/shared/utils/endpointGenerator";
+import { wsfVesselsApi } from "./apiDefinition";
+
+export const endpoints = generateEndpoints(wsfVesselsApi);
+```
+
+### Fetch Function Factory
+A simple factory function creates fetch functions from self-contained endpoints:
+
+```typescript
+// src/shared/utils/fetchFunctionFactory.ts
+export function createFetchFunction<TInput, TOutput>(endpoint: Endpoint<TInput, TOutput>) {
+  return (options: {
+    params?: TInput;
+    fetchMode?: "native" | "jsonp";
+    validate?: boolean;
+  } = {}): Promise<TOutput> => {
+    const { params, fetchMode = "native", validate = false } = options;
+    return fetchDottie({ endpoint, params, fetchMode, validate });
+  };
+}
+```
+
+### API Fetch Functions
+Each API provides fetch functions using the new naming convention:
+
+```typescript
+// src/apis/wsf-vessels/fetchFunctions.ts
+import { createFetchFunction } from "@/shared/utils/fetchFunctionFactory";
+import { endpoints } from "./endpoints";
+
+export const fetchVesselStats = createFetchFunction(endpoints.getVesselStats);
+export const fetchVesselLocations = createFetchFunction(endpoints.getVesselLocations);
+```
+
+This approach provides:
+- **Simplified Architecture**: No need for centralized endpoints array
+- **Better Separation of Concerns**: Each endpoint is self-contained
+- **Cleaner API**: Fetch functions take only the endpoint object
+- **Consistent Naming**: All fetch functions use "fetchResource" convention
 
 ## 🚀 Caching Architecture
 

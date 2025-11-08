@@ -12,7 +12,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * This operation totals a set of fares & associated quantities for either a round trip or one-way journey, given a departing terminal, arriving terminal and trip date. Fare line item ID is a comma delimited array of line items you'd like to have totalled. Use `/farelineitems` to find valid fare line item ID values. Quantity is also a comma delimited array. Quantity values must be greater than or equal to zero. The same index in the fare line item ID and quantity input arrays must associate a fare with a quantity. For round trip input please use `'true'` to indicate round trip or `'false'` to indicate a one-way journey. A valid departing terminal may be found by using `/terminals` while a valid arriving terminal may be found by using `/terminalmates`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014).
  */
-export const fareTotalsSchema = z
+export const fareTotalsByTripDateAndRouteInputSchema = z
   .object({
     TripDate: z
       .string()
@@ -49,4 +49,6 @@ export const fareTotalsSchema = z
     "Calculates fare totals for specified fare line items and quantities, terminal combination, and trip date, returning breakdown of departing, return, direction-independent, and grand totals. Use GetFareLineItems to find valid fare line item IDs. Use for fare calculation and total computation workflows."
   );
 
-export type FareTotalsInput = z.infer<typeof fareTotalsSchema>;
+export type FareTotalsByTripDateAndRouteInput = z.infer<
+  typeof fareTotalsByTripDateAndRouteInputSchema
+>;

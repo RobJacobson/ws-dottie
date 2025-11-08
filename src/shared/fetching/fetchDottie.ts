@@ -6,37 +6,10 @@
  * into one easy-to-use interface.
  */
 
-import type { Endpoint, FetchStrategy, LoggingMode } from "@/shared/types";
 import { convertDotNetDates } from "@/shared/utils/dateUtils";
 import { fetchCore } from "./internal/fetchCore";
 import { createApiError } from "./internal/handleError";
-
-// ============================================================================
-// FETCH PARAMETERS INTERFACE
-// ============================================================================
-
-/**
- * Parameters for the fetchDottie function
- *
- * @template TInput - The input parameters type
- * @template TOutput - The output response type
- */
-export interface FetchDottieParams<TInput = never, TOutput = unknown> {
-  /** Complete endpoint object containing configuration and schemas */
-  endpoint: Endpoint<TInput, TOutput>;
-  /** Optional input parameters */
-  params?: TInput;
-  /** Fetch strategy - how to fetch the data (default: "native") */
-  fetchMode?: FetchStrategy;
-  /** Logging verbosity level (default: "none") */
-  logMode?: LoggingMode;
-  /** Whether to validate input/output with Zod schemas (default: false) */
-  validate?: boolean;
-}
-
-// ============================================================================
-// MAIN FETCH FUNCTION
-// ============================================================================
+import type { FetchDottieParams } from "./types";
 
 /**
  * Unified fetch function for WS-Dottie APIs
@@ -78,6 +51,12 @@ export const fetchDottie = async <TInput = never, TOutput = unknown>({
   try {
     // Validate input parameters if validation is enabled
     if (validate && params) {
+      if (!endpoint.inputSchema) {
+        throw new Error(
+          `Validation requires schemas. This endpoint was built without schemas. ` +
+            `Use the full build or import schemas from the /schemas subpath.`
+        );
+      }
       endpoint.inputSchema.parse(params);
     }
 
@@ -86,6 +65,12 @@ export const fetchDottie = async <TInput = never, TOutput = unknown>({
 
     // Handle validation and transformation based on strategy
     if (validate) {
+      if (!endpoint.outputSchema) {
+        throw new Error(
+          `Validation requires schemas. This endpoint was built without schemas. ` +
+            `Use the full build or import schemas from the /schemas subpath.`
+        );
+      }
       // Zod validation handles .NET date conversion internally
       // Skip convertDotNetDates to prevent double conversion
       return endpoint.outputSchema.parse(rawData);

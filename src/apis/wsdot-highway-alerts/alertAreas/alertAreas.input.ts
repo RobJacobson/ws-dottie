@@ -1,14 +1,14 @@
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * Input schema for GetMapAreas endpoint
+ * Input schema for AlertAreas endpoint
  *
  * Return list of areas and associated IDs
  */
-export const getMapAreasSchema = z
+export const mapAreasInputSchema = z
   .object({})
   .describe(
     "Retrieves list of available map areas with identifiers and descriptions. Use to obtain valid map area codes for filtering alerts by geographic area."
   );
 
-export type GetMapAreasInput = z.infer<typeof getMapAreasSchema>;
+export type MapAreasInput = z.infer<typeof mapAreasInputSchema>;

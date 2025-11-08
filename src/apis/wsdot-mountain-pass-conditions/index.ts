@@ -1,21 +1,11 @@
 /**
- * @fileoverview WSDOT Mountain Pass Conditions API - Clean exports for types, API definition, and resources
+ * @fileoverview wsdot-mountain-pass-conditions API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Mountain Pass Conditions API, exporting
- * all input/output types, main API definition, and individual resource modules for flexible usage.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-mountain-pass-conditions API.
  */
 
-// Export main API definition (legacy format for backward compatibility)
-export { wsdotMountainPassConditionsApi } from "./apiDefinition";
-// Export individual resources for direct use
-export { passConditionsGroup } from "./passConditions/passConditions.endpoints";
-// Export all input types
-export type {
-  GetMountainPassConditionInput,
-  GetMountainPassConditionsInput,
-} from "./passConditions/passConditions.input";
-// Export all output types
-export type {
-  PassCondition,
-  TravelRestriction,
-} from "./passConditions/passConditions.output";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+
+// Export hooks
+export * from "./passConditions/passConditions.hooks";

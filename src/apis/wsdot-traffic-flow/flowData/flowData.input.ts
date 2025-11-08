@@ -12,7 +12,7 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide.
  */
-export const getTrafficFlowSchema = z
+export const trafficFlowByIdInputSchema = z
   .object({
     FlowDataID: z
       .number()
@@ -24,17 +24,17 @@ export const getTrafficFlowSchema = z
     "Retrieves real-time traffic flow data for specific station by ID, returning flow reading value, station location, region, and timestamp. Data updated every 90 seconds. Use for individual station monitoring."
   );
 
-export type GetTrafficFlowInput = z.infer<typeof getTrafficFlowSchema>;
+export type TrafficFlowByIdInput = z.infer<typeof trafficFlowByIdInputSchema>;
 
 /**
  * Schema for GetTrafficFlows input parameters
  *
  * Provides real-time data on Traffic Flow sensors for the entire state. Data is updated every 90 seconds. Coverage Area: Statewide.
  */
-export const getTrafficFlowsSchema = z
+export const trafficFlowsInputSchema = z
   .object({})
   .describe(
     "Retrieves real-time traffic flow data for all stations statewide, returning flow reading values, station locations, regions, and timestamps. Data updated every 90 seconds. Use for traffic monitoring and flow analysis across all stations."
   );
 
-export type GetTrafficFlowsInput = z.infer<typeof getTrafficFlowsSchema>;
+export type TrafficFlowsInput = z.infer<typeof trafficFlowsInputSchema>;

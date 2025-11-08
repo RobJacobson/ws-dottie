@@ -1,8 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
-// Import all resources
 import { activeSeasonsResource } from "./activeSeasons/activeSeasons.endpoints";
-import { scheduleCacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { cacheFlushDateSchedule } from "./cacheFlushDate/cacheFlushDate.endpoints";
 import { routeDetailsResource } from "./routeDetails/routeDetails.endpoints";
 import { routesResource } from "./routes/routes.endpoints";
 import { sailingsResource } from "./sailings/sailings.endpoints";
@@ -16,13 +15,13 @@ import { scheduleTerminalsResource } from "./terminals/terminals.endpoints";
 import { timeAdjustmentsResource } from "./timeAdjustments/timeAdjustments.endpoints";
 import { scheduleValidDateRangeResource } from "./validDateRange/validDateRange.endpoints";
 
-export const wsfScheduleApi: ApiDefinition = {
+export const wsfScheduleApi = {
   name: "wsf-schedule",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
   endpointGroups: [
     activeSeasonsResource,
     sailingsResource,
-    scheduleCacheFlushDateResource,
+    cacheFlushDateSchedule,
     routeDetailsResource,
     routesResource,
     serviceDisruptionsResource,
@@ -35,22 +34,4 @@ export const wsfScheduleApi: ApiDefinition = {
     scheduleTerminalsResource,
     timeAdjustmentsResource,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  activeSeasonsResource,
-  sailingsResource,
-  scheduleCacheFlushDateResource,
-  routeDetailsResource,
-  routesResource,
-  serviceDisruptionsResource,
-  scheduleAlertsResource,
-  schedulesResource,
-  scheduledRoutesResource,
-  scheduleTodayResource,
-  scheduleValidDateRangeResource,
-  scheduleTerminalMatesResource,
-  scheduleTerminalsResource,
-  timeAdjustmentsResource,
-};
+} satisfies ApiDefinition;

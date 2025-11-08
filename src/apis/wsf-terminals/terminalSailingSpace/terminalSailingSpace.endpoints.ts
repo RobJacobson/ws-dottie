@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalSailingSpace.input";
-import * as o from "./terminalSailingSpace.output";
+import type {
+  TerminalSailingSpaceByTerminalIdInput,
+  TerminalSailingSpaceInput,
+} from "./terminalSailingSpace.input";
+import {
+  terminalSailingSpaceByTerminalIdInputSchema,
+  terminalSailingSpaceInputSchema,
+} from "./terminalSailingSpace.input";
+import type { TerminalSailingSpace } from "./terminalSailingSpace.output";
+import { terminalSailingSpaceSchema } from "./terminalSailingSpace.output";
 
-export const terminalSailingSpaceResource: EndpointGroup = {
+export const terminalSailingSpaceResource = {
   name: "terminal-sailing-space",
   documentation: {
     resourceDescription:
@@ -12,29 +20,27 @@ export const terminalSailingSpaceResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalSailingSpace: {
-      function: "getTerminalSailingSpace",
+    fetchTerminalSailingSpace: {
       endpoint: "/terminalSailingSpace",
-      inputSchema: i.terminalSailingSpaceSchema,
-      outputSchema: z.array(o.terminalSailingSpaceSchema),
+      inputSchema: terminalSailingSpaceInputSchema,
+      outputSchema: z.array(terminalSailingSpaceSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalSailingSpace objects for all terminals.",
     } satisfies EndpointDefinition<
-      i.TerminalSailingSpaceInput,
-      o.TerminalSailingSpace[]
+      TerminalSailingSpaceInput,
+      TerminalSailingSpace[]
     >,
-    getTerminalSailingSpaceByTerminalId: {
-      function: "getTerminalSailingSpaceByTerminalId",
+    fetchTerminalSailingSpaceByTerminalId: {
       endpoint: "/terminalSailingSpace/{TerminalID}",
-      inputSchema: i.terminalSailingSpaceByIdSchema,
-      outputSchema: o.terminalSailingSpaceSchema,
+      inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
+      outputSchema: terminalSailingSpaceSchema,
       sampleParams: { TerminalID: 7 },
       endpointDescription:
         "Returns TerminalSailingSpace data for the terminal with the given identifier.",
     } satisfies EndpointDefinition<
-      i.TerminalSailingSpaceByIdInput,
-      o.TerminalSailingSpace
+      TerminalSailingSpaceByTerminalIdInput,
+      TerminalSailingSpace
     >,
   },
-};
+} satisfies EndpointGroup;

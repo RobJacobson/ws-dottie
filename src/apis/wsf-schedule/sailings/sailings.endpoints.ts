@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./sailings.input";
-import * as o from "./sailings.output";
+import type {
+  AllSailingsBySchedRouteIDInput,
+  SailingsByRouteIDInput,
+} from "./sailings.input";
+import {
+  allSailingsBySchedRouteIDInputSchema,
+  sailingsByRouteIDInputSchema,
+} from "./sailings.input";
+import type { Sailing } from "./sailings.output";
+import { sailingSchema } from "./sailings.output";
 
-export const sailingsResource: EndpointGroup = {
+export const sailingsResource = {
   name: "sailings",
   documentation: {
     resourceDescription:
@@ -13,26 +21,21 @@ export const sailingsResource: EndpointGroup = {
   // Using FREQUENT strategy because sailings can change throughout the day as schedules are adjusted
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getAllSailingsBySchedRouteID: {
-      function: "getSailingsBySchedRouteID",
+    fetchAllSailingsBySchedRouteID: {
       endpoint: "/allsailings/{SchedRouteID}",
-      inputSchema: i.allSchedSailingsBySchedRouteSchema,
-      outputSchema: z.array(o.sailingSchema),
+      inputSchema: allSailingsBySchedRouteIDInputSchema,
+      outputSchema: z.array(sailingSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns all sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<
-      i.AllSchedSailingsBySchedRouteInput,
-      o.Sailing[]
-    >,
-    getSailingsByRouteID: {
-      function: "getSailingsBySchedRouteID",
+    } satisfies EndpointDefinition<AllSailingsBySchedRouteIDInput, Sailing[]>,
+    fetchSailingsByRouteID: {
       endpoint: "/sailings/{SchedRouteID}",
-      inputSchema: i.sailingsByRouteIdSchema,
-      outputSchema: z.array(o.sailingSchema),
+      inputSchema: sailingsByRouteIDInputSchema,
+      outputSchema: z.array(sailingSchema),
       sampleParams: { SchedRouteID: 2401 },
       endpointDescription:
         "Returns sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<i.SailingsByRouteIdInput, o.Sailing[]>,
+    } satisfies EndpointDefinition<SailingsByRouteIDInput, Sailing[]>,
   },
-};
+} satisfies EndpointGroup;

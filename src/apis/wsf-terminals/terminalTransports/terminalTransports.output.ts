@@ -42,11 +42,11 @@ export const transitLinkSchema = z
 export type TransitLink = z.infer<typeof transitLinkSchema>;
 
 /**
- * TerminalTransportationOption schema
+ * TerminalTransport schema
  *
  * This operation provides helpful information for terminal commuters (including parking notes, vehicle-specific tips, etc). A TerminalID, or unique terminal identifier, may be optionally passed to retrieve a specific terminal.
  */
-export const terminalTransportationOptionSchema = terminalBaseSchema
+export const terminalTransportSchema = terminalBaseSchema
   .extend({
     ParkingInfo: z
       .string()
@@ -119,33 +119,30 @@ export const terminalTransportationOptionSchema = terminalBaseSchema
     "Represents terminal transportation and commuter information including terminal identification, parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. E.g., Anacortes terminal (ID 1) with parking rates, airport directions, and Skagit Transit link. Used for terminal commuter information and transportation planning."
   );
 
-export type TerminalTransportationOption = z.infer<
-  typeof terminalTransportationOptionSchema
->;
+export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
 
 /**
- * GetAllTerminalTransportationOptions schema
+ * GetAllTerminalTransports schema
  *
  * Returns all terminal transportation options.
  */
-export const getAllTerminalTransportationOptionsSchema = z
-  .array(terminalTransportationOptionSchema)
+export const getAllTerminalTransportsSchema = z
+  .array(terminalTransportSchema)
   .describe(
     "Array of terminal transportation and commuter information including terminal IDs, parking details, vehicle-specific tips, airport information, and transit links. E.g., array containing all terminals with their transportation information. Used for terminal commuter information across all terminals."
   );
 
-export type GetAllTerminalTransportationOptions = z.infer<
-  typeof getAllTerminalTransportationOptionsSchema
+export type GetAllTerminalTransports = z.infer<
+  typeof getAllTerminalTransportsSchema
 >;
 
 /**
- * GetSpecificTerminalTransportationOption schema
+ * GetSpecificTerminalTransport schema
  *
  * Returns transportation options for a specific terminal.
  */
-export const getSpecificTerminalTransportationOptionSchema =
-  terminalTransportationOptionSchema;
+export const getSpecificTerminalTransportSchema = terminalTransportSchema;
 
-export type GetSpecificTerminalTransportationOption = z.infer<
-  typeof getSpecificTerminalTransportationOptionSchema
+export type GetSpecificTerminalTransport = z.infer<
+  typeof getSpecificTerminalTransportSchema
 >;

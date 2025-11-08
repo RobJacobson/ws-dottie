@@ -45,7 +45,7 @@ The WSDOT Border Crossings API provides real-time information about border cross
 
 #### Border Crossing Monitor
 ```javascript
-import { useBorderCrossings } from 'ws-dottie';
+import { useBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 function BorderCrossingMonitor() {
   const { data: crossings, isLoading, error } = useBorderCrossings();
@@ -134,7 +134,7 @@ function BorderCrossingMonitor() {
 
 #### Border Crossing Route Planner
 ```javascript
-import { useBorderCrossings } from 'ws-dottie';
+import { useBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 function BorderCrossingRoutePlanner() {
   const { data: crossings, isLoading, error } = useBorderCrossings();
@@ -245,7 +245,7 @@ The WSDOT Bridge Clearances API provides comprehensive information about bridge 
 
 #### Route Planning for Tall Vehicles
 ```javascript
-import { useBridgeClearances } from 'ws-dottie';
+import { useBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
 
 function TallVehicleRoutePlanner() {
   const [vehicleHeight, setVehicleHeight] = useState(12); // feet
@@ -331,7 +331,7 @@ function TallVehicleRoutePlanner() {
 
 #### Bridge Clearance Map
 ```javascript
-import { useBridgeClearances } from 'ws-dottie';
+import { useBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
 
 function BridgeClearanceMap() {
   const { data: clearances, isLoading, error } = useBridgeClearances();
@@ -427,7 +427,7 @@ The WSDOT Commercial Vehicle Restrictions API provides comprehensive information
 
 #### Commercial Vehicle Route Planner
 ```javascript
-import { useCommercialVehicleRestrictions } from 'ws-dottie';
+import { useCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions';
 
 function CommercialVehicleRoutePlanner() {
   const [vehicleWeight, setVehicleWeight] = useState(80000); // pounds
@@ -531,7 +531,7 @@ function CommercialVehicleRoutePlanner() {
 
 #### Vehicle Compliance Checker
 ```javascript
-import { useCommercialVehicleRestrictions } from 'ws-dottie';
+import { useCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions';
 
 function VehicleComplianceChecker() {
   const [vehicleSpecs, setVehicleSpecs] = useState({
@@ -659,7 +659,8 @@ Infrastructure APIs work together to provide comprehensive transportation infras
 
 ### Bridge Clearances + Commercial Vehicle Restrictions Integration
 ```javascript
-import { useBridgeClearances, useCommercialVehicleRestrictions } from 'ws-dottie';
+import { useBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances';
+import { useCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions';
 
 function ComprehensiveRoutePlanner() {
   const { data: clearances } = useBridgeClearances();

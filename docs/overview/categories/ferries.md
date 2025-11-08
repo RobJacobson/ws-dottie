@@ -62,7 +62,8 @@ The WSF Fares API provides comprehensive fare information for ferry routes, incl
 
 #### Fare Calculator
 ```javascript
-import { useFareLineItemsByTripDateAndTerminals, useTerminals } from 'ws-dottie';
+import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
+import { useTerminals } from 'ws-dottie/wsf-schedule';
 
 function FareCalculator() {
   const [tripDate, setTripDate] = useState(new Date());
@@ -269,7 +270,7 @@ The WSF Schedule API provides comprehensive schedule information for ferry route
 
 #### Schedule Display
 ```javascript
-import { useSailingsBySchedRouteID, useRoutes } from 'ws-dottie';
+import { useSailingsBySchedRouteID, useRoutes } from 'ws-dottie/wsf-schedule';
 
 function FerrySchedule() {
   const [selectedRoute, setSelectedRoute] = useState(null);
@@ -383,7 +384,7 @@ The WSF Terminals API provides comprehensive information about ferry terminals, 
 
 #### Terminal Wait Times Display
 ```javascript
-import { useTerminalWaitTimes } from 'ws-dottie';
+import { useTerminalWaitTimes } from 'ws-dottie/wsf-terminals';
 
 function TerminalWaitTimes() {
   const { data: terminals, isLoading, error } = useTerminalWaitTimes();
@@ -435,7 +436,7 @@ function TerminalWaitTimes() {
 
 #### Terminal Information Display
 ```javascript
-import { useTerminalBasics, useTerminalLocations } from 'ws-dottie';
+import { useTerminalBasics, useTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 function TerminalInfo() {
   const { data: terminals, isLoading: terminalsLoading } = useTerminalBasics();
@@ -545,7 +546,7 @@ The WSF Vessels API provides comprehensive information about Washington State Fe
 
 #### Real-time Vessel Tracking
 ```javascript
-import { useVesselLocations } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 
 function VesselMap() {
   const { data: vessels, isLoading, error } = useVesselLocations();
@@ -591,7 +592,7 @@ function VesselMap() {
 
 #### Vessel Information Display
 ```javascript
-import { useVesselBasics, useVesselAccommodations } from 'ws-dottie';
+import { useVesselBasics, useVesselAccommodations } from 'ws-dottie/wsf-vessels';
 
 function VesselInfo() {
   const { data: vessels, isLoading: vesselsLoading } = useVesselBasics();
@@ -643,7 +644,8 @@ Ferry APIs work together to provide comprehensive ferry information:
 
 ### Vessel + Terminal Integration
 ```javascript
-import { useVesselLocations, useTerminalWaitTimes } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useTerminalWaitTimes } from 'ws-dottie/wsf-terminals';
 
 function FerryDashboard() {
   const { data: vessels } = useVesselLocations();
@@ -690,7 +692,8 @@ function FerryDashboard() {
 
 ### Schedule + Fare Integration
 ```javascript
-import { useSailingsBySchedRouteID, useFareLineItemsByTripDateAndTerminals } from 'ws-dottie';
+import { useSailingsBySchedRouteID, useRoutes } from 'ws-dottie/wsf-schedule';
+import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function TripPlanner() {
   const [selectedRoute, setSelectedRoute] = useState(null);

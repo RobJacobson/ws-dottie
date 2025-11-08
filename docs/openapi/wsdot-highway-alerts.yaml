@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    AlertsOutput:
+    FetchAlertsOutput:
       type: object
       properties:
         AlertID:
@@ -187,7 +187,7 @@ components:
         - StartRoadwayLocation
         - StartTime
       description: Represents highway alert information including alert identification, event category, priority, location data, timestamps, and descriptions. E.g., alert 669625 for I-405 construction (High priority, Open status) from milepost 20.3 to 22.61 northbound starting November 1 at 6:10 PM. Used for traffic incident monitoring, construction awareness, and highway event notifications. Alerts updated in real-time as conditions change.
-    MapAreasOutput:
+    FetchMapAreasOutput:
       type: object
       properties:
         MapArea:
@@ -204,15 +204,15 @@ components:
         - MapArea
         - MapAreaDescription
       description: Represents map area information including area identifier code and geographic description. E.g., area 'L2CE' (Central) or 'L2NN' (Northwest). Used for geographic alert filtering and map area identification. Provides reference data for area-based alert queries.
-    EventCategoriesOutput:
+    FetchEventCategoriesOutput:
       type: string
-    AlertByIdInputAlertIDParam:
+    FetchAlertByIdInputAlertIDParam:
       type: number
       description: Unique highway alert identifier, as an integer ID. E.g., '669625' for I-405 construction alert, '468632' for SR-520 flammable cargo restriction, '669582' for I-405 collision alert. Used to retrieve specific alert details.
-    AlertsByRegionIdInputRegionIDParam:
+    FetchAlertsByRegionIdInputRegionIDParam:
       type: number
       description: 'WSDOT region identifier code, as an integer. Valid values: 7 (Eastern), 8 (North Central), 9 (Northwest), 10 (Olympic), 11 (South Central), 12 (Southwest). E.g., ''9'' for Northwest region, ''7'' for Eastern region. Used to filter alerts by WSDOT region.'
-    AlertsByMapAreaInputMapAreaParam:
+    FetchAlertsByMapAreaInputMapAreaParam:
       type: string
       description: Map area identifier code, as an area code. E.g., 'L2NW' for Northwest area, 'L2EA' for Eastern area, 'L2CE' for Central area. Use GetMapAreas to retrieve list of valid area codes. Used to filter alerts by geographic map area.
     SearchAlertsInputStateRouteParam:
@@ -234,23 +234,23 @@ components:
       type: number
       description: Ending milepost value for milepost range filtering, as a decimal. E.g., '22.61' for milepost 22.61, '25.91' for milepost 25.91. Used with StartingMilepost to filter alerts within milepost range.
   parameters:
-    AlertByIdInputAlertIDParam:
+    FetchAlertByIdInputAlertIDParam:
       schema:
-        $ref: '#/components/schemas/AlertByIdInputAlertIDParam'
+        $ref: '#/components/schemas/FetchAlertByIdInputAlertIDParam'
       required: true
       description: Unique highway alert identifier, as an integer ID. E.g., '669625' for I-405 construction alert, '468632' for SR-520 flammable cargo restriction, '669582' for I-405 collision alert. Used to retrieve specific alert details.
       name: AlertID
       in: path
-    AlertsByRegionIdInputRegionIDParam:
+    FetchAlertsByRegionIdInputRegionIDParam:
       schema:
-        $ref: '#/components/schemas/AlertsByRegionIdInputRegionIDParam'
+        $ref: '#/components/schemas/FetchAlertsByRegionIdInputRegionIDParam'
       required: true
       description: 'WSDOT region identifier code, as an integer. Valid values: 7 (Eastern), 8 (North Central), 9 (Northwest), 10 (Olympic), 11 (South Central), 12 (Southwest). E.g., ''9'' for Northwest region, ''7'' for Eastern region. Used to filter alerts by WSDOT region.'
       name: RegionID
       in: path
-    AlertsByMapAreaInputMapAreaParam:
+    FetchAlertsByMapAreaInputMapAreaParam:
       schema:
-        $ref: '#/components/schemas/AlertsByMapAreaInputMapAreaParam'
+        $ref: '#/components/schemas/FetchAlertsByMapAreaInputMapAreaParam'
       required: true
       description: Map area identifier code, as an area code. E.g., 'L2NW' for Northwest area, 'L2EA' for Eastern area, 'L2CE' for Central area. Use GetMapAreas to retrieve list of valid area codes. Used to filter alerts by geographic map area.
       name: MapArea
@@ -298,19 +298,192 @@ components:
       name: EndingMilepost
       in: path
 paths:
-  /getAlertAsJson?AlertID={AlertID}:
+  /getEventCategoriesAsJson:
     get:
-      summary: Returns a single Alert object for specified AlertID.
-      operationId: getAlertById
+      summary: Returns an array of strings for all available event categories.
+      operationId: fetchEventCategories
+      tags:
+        - event-categories
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchEventCategories } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchEventCategories,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchEventCategoriesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 123 total)
+                  value:
+                    - ''
+                    - _note: ... 122 more items
+  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
+    get:
+      summary: Returns an array of Alert objects for specified WSDOT region.
+      operationId: fetchAlertsByRegionId
       tags:
         - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getAlertById } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchAlertsByRegionId } from 'ws-dottie/wsdot-highway-alerts/core';
 
             const data = await fetchDottie({
-              endpoint: getAlertById,
+              endpoint: fetchAlertsByRegionId,
+              params: {
+                "RegionID": 9
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchAlertsByRegionIdInputRegionIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchAlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 71 total)
+                  value:
+                    - AlertID: 473325
+                      County: null
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: B
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: '005'
+                      EndTime: null
+                      EventCategory: Rest Area
+                      EventStatus: Open
+                      ExtendedDescription: ''
+                      HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
+                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
+                      Priority: High
+                      Region: Northwest
+                      StartRoadwayLocation:
+                        Description: SB Scale 39/Silver Lake Rest Area
+                        Direction: B
+                        Latitude: 47.907026048
+                        Longitude: -122.210954765
+                        MilePost: 188.5
+                        RoadName: '005'
+                      StartTime: 2021-09-24T13:00:00.000Z
+                    - _note: ... 70 more items
+  /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
+    get:
+      summary: Returns an array of Alert objects matching specified search criteria.
+      operationId: searchAlerts
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchDottie({
+              endpoint: searchAlerts,
+              params: {
+                "StateRoute": "405",
+                "StartingMilepost": 10,
+                "EndingMilepost": 20,
+                "SearchTimeStart": "2025-11-07",
+                "SearchTimeEnd": "2025-11-08"
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/SearchAlertsInputStateRouteParam'
+        - $ref: '#/components/parameters/SearchAlertsInputRegionParam'
+        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeStartParam'
+        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeEndParam'
+        - $ref: '#/components/parameters/SearchAlertsInputStartingMilepostParam'
+        - $ref: '#/components/parameters/SearchAlertsInputEndingMilepostParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchAlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 6 total)
+                  value:
+                    - AlertID: 669502
+                      County: null
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: S
+                        Latitude: 47.679113567
+                        Longitude: -122.184698067
+                        MilePost: 18.11
+                        RoadName: '405'
+                      EndTime: 2025-11-08T15:00:00.000Z
+                      EventCategory: Construction
+                      EventStatus: Open
+                      ExtendedDescription: ''
+                      HeadlineDescription: 'Friday, Nov. 7 to the morning of Saturday, Nov. 8: One lane of southbound I-405 between milepost 19.84 and milepost 18.11 will be closed from 8:30 p.m. – 7:00 a.m.'
+                      LastUpdatedTime: 2025-10-31T22:05:59.237Z
+                      Priority: Low
+                      Region: Northwest
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: S
+                        Latitude: 47.703842694
+                        Longitude: -122.179781665
+                        MilePost: 19.84
+                        RoadName: '405'
+                      StartTime: 2025-11-07T08:00:00.000Z
+                    - _note: ... 5 more items
+  /getAlertAsJson?AlertID={AlertID}:
+    get:
+      summary: Returns a single Alert object for specified AlertID.
+      operationId: fetchAlertById
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchAlertById,
               params: {
                 "AlertID": 468632
               },
@@ -320,14 +493,14 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/AlertByIdInputAlertIDParam'
+        - $ref: '#/components/parameters/FetchAlertByIdInputAlertIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AlertsOutput'
+                $ref: '#/components/schemas/FetchAlertsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -358,82 +531,20 @@ paths:
                       MilePost: 1
                       RoadName: '520'
                     StartTime: 2021-09-13T13:59:00.000Z
-  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
-    get:
-      summary: Returns an array of Alert objects for specified WSDOT region.
-      operationId: getAlertsByRegionId
-      tags:
-        - highwayAlerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getAlertsByRegionId } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getAlertsByRegionId,
-              params: {
-                "RegionID": 9
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/AlertsByRegionIdInputRegionIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AlertsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 85 total)
-                  value:
-                    - AlertID: 473325
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: B
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: '005'
-                      EndTime: null
-                      EventCategory: Rest Area
-                      EventStatus: Open
-                      ExtendedDescription: ''
-                      HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
-                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
-                      Priority: High
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: SB Scale 39/Silver Lake Rest Area
-                        Direction: B
-                        Latitude: 47.907026048
-                        Longitude: -122.210954765
-                        MilePost: 188.5
-                        RoadName: '005'
-                      StartTime: 2021-09-24T13:00:00.000Z
-                    - _note: ... 84 more items
   /getAlertsByMapAreaAsJson?MapArea={MapArea}:
     get:
       summary: Returns an array of Alert objects for specified geographic area.
-      operationId: getAlertsByMapArea
+      operationId: fetchAlertsByMapArea
       tags:
         - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getAlertsByMapArea } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchAlertsByMapArea } from 'ws-dottie/wsdot-highway-alerts/core';
 
             const data = await fetchDottie({
-              endpoint: getAlertsByMapArea,
+              endpoint: fetchAlertsByMapArea,
               params: {
                 "MapArea": "Seattle"
               },
@@ -443,7 +554,7 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/AlertsByMapAreaInputMapAreaParam'
+        - $ref: '#/components/parameters/FetchAlertsByMapAreaInputMapAreaParam'
       responses:
         '200':
           description: Success
@@ -452,7 +563,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AlertsOutput'
+                  $ref: '#/components/schemas/FetchAlertsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -483,53 +594,20 @@ paths:
                         MilePost: 188.5
                         RoadName: '005'
                       StartTime: 2021-09-24T13:00:00.000Z
-  /getEventCategoriesAsJson:
-    get:
-      summary: Returns an array of strings for all available event categories.
-      operationId: getEventCategories
-      tags:
-        - event-categories
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getEventCategories } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getEventCategories,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EventCategoriesOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 123 total)
-                  value:
-                    - ''
-                    - _note: ... 122 more items
   /getMapAreasAsJson:
     get:
       summary: Returns an array of Area objects for all available geographic regions.
-      operationId: getMapAreas
+      operationId: fetchMapAreas
       tags:
         - alertAreas
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getMapAreas } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';
 
             const data = await fetchDottie({
-              endpoint: getMapAreas,
+              endpoint: fetchMapAreas,
               fetchMode: 'native',
               validate: true
             });
@@ -543,7 +621,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MapAreasOutput'
+                  $ref: '#/components/schemas/FetchMapAreasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -552,91 +630,20 @@ paths:
                     - MapArea: L2CE
                       MapAreaDescription: Eastern
                     - _note: ... 50 more items
-  /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
-    get:
-      summary: Returns an array of Alert objects matching specified search criteria.
-      operationId: searchAlerts
-      tags:
-        - highwayAlerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, searchAlerts } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: searchAlerts,
-              params: {
-                "StateRoute": "405",
-                "StartingMilepost": 10,
-                "EndingMilepost": 20,
-                "SearchTimeStart": "2025-11-04",
-                "SearchTimeEnd": "2025-11-05"
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/SearchAlertsInputStateRouteParam'
-        - $ref: '#/components/parameters/SearchAlertsInputRegionParam'
-        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeStartParam'
-        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeEndParam'
-        - $ref: '#/components/parameters/SearchAlertsInputStartingMilepostParam'
-        - $ref: '#/components/parameters/SearchAlertsInputEndingMilepostParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AlertsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 4 total)
-                  value:
-                    - AlertID: 669913
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: 'N'
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: '405'
-                      EndTime: 2025-11-04T18:58:18.000Z
-                      EventCategory: Disabled vehicle
-                      EventStatus: Closed
-                      ExtendedDescription: ''
-                      HeadlineDescription: 'Cleared 10:58 AM : On I-405 northbound just south of NE 85th St (MP 18) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.'
-                      LastUpdatedTime: 2025-11-04T18:58:18.587Z
-                      Priority: Highest
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: null
-                        Direction: 'N'
-                        Latitude: 47.677393108
-                        Longitude: -122.184339333
-                        MilePost: 17.99
-                        RoadName: '405'
-                      StartTime: 2025-11-04T18:35:00.000Z
-                    - _note: ... 3 more items
   /getAlertsAsJson:
     get:
       summary: Returns an array of Alert objects for all current highway incidents.
-      operationId: getAlerts
+      operationId: fetchAlerts
       tags:
         - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getAlerts } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
 
             const data = await fetchDottie({
-              endpoint: getAlerts,
+              endpoint: fetchAlerts,
               fetchMode: 'native',
               validate: true
             });
@@ -650,38 +657,38 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AlertsOutput'
+                  $ref: '#/components/schemas/FetchAlertsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 152 total)
+                  description: Example of a successful response from the API (showing first item of 130 total)
                   value:
-                    - AlertID: 667568
+                    - AlertID: 670322
                       County: null
                       EndRoadwayLocation:
                         Description: null
-                        Direction: E
-                        Latitude: 47.578523508
-                        Longitude: -122.135691785
-                        MilePost: 11.75
-                        RoadName: '090'
-                      EndTime: 2025-11-05T12:00:00.000Z
-                      EventCategory: Construction
+                        Direction: B
+                        Latitude: 47.341001136
+                        Longitude: -122.018282392
+                        MilePost: 10.02
+                        RoadName: '169'
+                      EndTime: 2025-11-20T23:00:00.000Z
+                      EventCategory: Maintenance
                       EventStatus: Open
                       ExtendedDescription: ''
-                      HeadlineDescription: "From 11:59 p.m. Tuesday, Nov. 4, to 4 a.m. Wednesday, Nov. 5, eastbound I-90 will close at Factoria Boulevard SE for sign bridge installation. \r\n\r\nI-405 ramps to eastbound I-90 also will close during the same times. \r\n\r\nSigned detours will guide people around the closures."
-                      LastUpdatedTime: 2025-10-24T17:34:06.387Z
-                      Priority: High
+                      HeadlineDescription: Daily (except weekends) from 9 a.m. to 3 p.m. beginning Friday, Nov. 7 until 3 p.m. Thursday, Nov. 20, one left lane on both directions of State Route 169 will close between Southeast 275th Street/Power Line Road (milepost 11) and Southeast 288th Street/Southeast 291st Street/241st Avenue for Switchers Landing utilities work.
+                      LastUpdatedTime: 2025-11-07T16:47:39.413Z
+                      Priority: Low
                       Region: Northwest
                       StartRoadwayLocation:
                         Description: null
-                        Direction: E
-                        Latitude: 47.579523838
-                        Longitude: -122.183771497
-                        MilePost: 9.5
-                        RoadName: '090'
-                      StartTime: 2025-10-24T17:32:00.000Z
-                    - _note: ... 151 more items
+                        Direction: B
+                        Latitude: 47.355098711
+                        Longitude: -122.019550879
+                        MilePost: 11
+                        RoadName: '169'
+                      StartTime: 2025-11-07T16:37:00.000Z
+                    - _note: ... 129 more items
 webhooks: {}
 tags:
   - name: highwayAlerts

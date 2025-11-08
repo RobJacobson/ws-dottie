@@ -1,0 +1,29 @@
+[
+  {
+    "RouteID": 9,
+    "RouteAbbrev": "ana-sj",
+    "Description": "Anacortes / San Juan Islands",
+    "RegionID": 1,
+    "VesselWatchID": 1,
+    "ReservationFlag": true,
+    "InternationalFlag": false,
+    "PassengerOnlyFlag": false,
+    "CrossingTime": null,
+    "AdaNotes": null,
+    "GeneralRouteNotes": "<ul class=\"btttwinter2020\" style=\"font-size:.9em\"><li><a href=\"https://wsdot.wa.gov/ferries/sailing-schedules/best-travel-times/\"\ntarget=\"_blank\">Find the best times to travel by clicking here.</a></li></ul>\n\n",
+    "SeasonalRouteNotes": "The Anacortes-San Juan Islands route will operate its regular schedule on Thanksgiving and Christmas.",
+    "Alerts": [
+      {
+        "BulletinID": 110611,
+        "BulletinFlag": true,
+        "CommunicationFlag": false,
+        "PublishDate": "2025-11-06T20:57:44.763Z",
+        "AlertDescription": "Regular schedule on Veterans Day, Tuesday, Nov. 11 ",
+        "DisruptionDescription": null,
+        "AlertFullTitle": "Regular Schedule on Veterans Day, Tuesday, Nov 11",
+        "AlertFullText": "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\"> </span></p>",
+        "IVRText": null
+      }
+    ]
+  }
+]

@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalBulletins.input";
-import * as o from "./terminalBulletins.output";
+import type {
+  TerminalBulletinsByIdInput,
+  TerminalBulletinsInput,
+} from "./terminalBulletins.input";
+import {
+  terminalBulletinsByIdInputSchema,
+  terminalBulletinsInputSchema,
+} from "./terminalBulletins.input";
+import type { TerminalBulletin } from "./terminalBulletins.output";
+import { terminalBulletinSchema } from "./terminalBulletins.output";
 
-export const terminalBulletinsResource: EndpointGroup = {
+export const terminalBulletinsResource = {
   name: "terminal-bulletins",
   documentation: {
     resourceDescription:
@@ -13,29 +21,24 @@ export const terminalBulletinsResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalBulletins: {
-      function: "getTerminalBulletins",
+    fetchTerminalBulletins: {
       endpoint: "/terminalBulletins",
-      inputSchema: i.terminalBulletinsSchema,
-      outputSchema: z.array(o.terminalBulletinSchema),
+      inputSchema: terminalBulletinsInputSchema,
+      outputSchema: z.array(terminalBulletinSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalBulletin objects for all terminals.",
-    } satisfies EndpointDefinition<
-      i.TerminalBulletinsInput,
-      o.TerminalBulletin[]
-    >,
-    getTerminalBulletinsByTerminalId: {
-      function: "getTerminalBulletinsByTerminalId",
+    } satisfies EndpointDefinition<TerminalBulletinsInput, TerminalBulletin[]>,
+    fetchTerminalBulletinsByTerminalId: {
       endpoint: "/terminalBulletins/{TerminalID}",
-      inputSchema: i.terminalBulletinsByIdSchema,
-      outputSchema: o.terminalBulletinSchema,
+      inputSchema: terminalBulletinsByIdInputSchema,
+      outputSchema: terminalBulletinSchema,
       sampleParams: { TerminalID: 3 },
       endpointDescription:
         "Returns TerminalBulletin data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalBulletinsByIdInput,
-      o.TerminalBulletin
+      TerminalBulletinsByIdInput,
+      TerminalBulletin
     >,
   },
-};
+} satisfies EndpointGroup;

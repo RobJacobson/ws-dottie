@@ -1,7 +1,7 @@
 import type { ApiDefinition } from "@/apis/types";
 
 // Import all resources
-import { cacheFlushDateResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
+import { cacheFlushDateTerminalsResource } from "./cacheFlushDate/cacheFlushDate.endpoints";
 import { terminalBasicsResource } from "./terminalBasics/terminalBasics.endpoints";
 import { terminalBulletinsResource } from "./terminalBulletins/terminalBulletins.endpoints";
 import { terminalLocationsResource } from "./terminalLocations/terminalLocations.endpoints";
@@ -10,11 +10,11 @@ import { terminalTransportsResource } from "./terminalTransports/terminalTranspo
 import { terminalVerboseResource } from "./terminalVerbose/terminalVerbose.endpoints";
 import { terminalWaitTimesResource } from "./terminalWaitTimes/terminalWaitTimes.endpoints";
 
-export const wsfTerminalsApi: ApiDefinition = {
+export const wsfTerminalsApi = {
   name: "wsf-terminals",
   baseUrl: "https://www.wsdot.wa.gov/ferries/api/terminals/rest",
   endpointGroups: [
-    cacheFlushDateResource,
+    cacheFlushDateTerminalsResource,
     terminalBasicsResource,
     terminalBulletinsResource,
     terminalLocationsResource,
@@ -23,16 +23,4 @@ export const wsfTerminalsApi: ApiDefinition = {
     terminalVerboseResource,
     terminalWaitTimesResource,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  cacheFlushDateResource,
-  terminalBasicsResource,
-  terminalBulletinsResource,
-  terminalLocationsResource,
-  terminalSailingSpaceResource,
-  terminalTransportsResource,
-  terminalVerboseResource,
-  terminalWaitTimesResource,
-};
+} satisfies ApiDefinition;

@@ -1,9 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./subSurfaceMeasurements.input";
-import * as o from "./subSurfaceMeasurements.output";
+import type { SubSurfaceMeasurementsInput } from "./subSurfaceMeasurements.input";
+import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
+import type { SubsurfaceMeasurement } from "./subSurfaceMeasurements.output";
+import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
 
-export const subSurfaceMeasurementsResource: EndpointGroup = {
+export const subSurfaceMeasurementsResource = {
   name: "sub-surface-measurements",
   documentation: {
     resourceDescription:
@@ -13,17 +15,16 @@ export const subSurfaceMeasurementsResource: EndpointGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getSubSurfaceMeasurements: {
-      function: "getSubSurfaceMeasurements",
+    fetchSubSurfaceMeasurements: {
       endpoint: "/Scanweb/SubSurfaceMeasurements",
-      inputSchema: i.getSubSurfaceMeasurementsSchema,
-      outputSchema: z.array(o.scanwebSubSurfaceMeasurementsSchema),
+      inputSchema: subSurfaceMeasurementsInputSchema,
+      outputSchema: z.array(subsurfaceMeasurementSchema),
       sampleParams: {},
       endpointDescription:
         "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
     } satisfies EndpointDefinition<
-      i.GetSubSurfaceMeasurementsInput,
-      o.ScanwebSubSurfaceMeasurements[]
+      SubSurfaceMeasurementsInput,
+      SubsurfaceMeasurement[]
     >,
   },
-};
+} satisfies EndpointGroup;

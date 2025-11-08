@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    TrafficFlowsOutput:
+    FetchTrafficFlowsOutput:
       type: object
       properties:
         FlowDataID:
@@ -127,13 +127,13 @@ components:
         - StationName
         - Time
       description: Represents real-time traffic flow data from flow sensor stations including flow condition status, station location, region, and measurement timestamp. E.g., station 2482 (002es00068) on SR-2 at milepost 0.68 eastbound with wide open flow (value 1) measured at 7:25 PM. Used for traffic monitoring, congestion detection, and flow analysis. Data updated every 90 seconds statewide.
-    TrafficFlowByIdInputFlowDataIDParam:
+    FetchTrafficFlowByIdInputFlowDataIDParam:
       type: number
       description: Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station. Used to retrieve specific flow station data.
   parameters:
-    TrafficFlowByIdInputFlowDataIDParam:
+    FetchTrafficFlowByIdInputFlowDataIDParam:
       schema:
-        $ref: '#/components/schemas/TrafficFlowByIdInputFlowDataIDParam'
+        $ref: '#/components/schemas/FetchTrafficFlowByIdInputFlowDataIDParam'
       required: true
       description: Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station. Used to retrieve specific flow station data.
       name: FlowDataID
@@ -142,16 +142,17 @@ paths:
   /getTrafficFlowAsJson?FlowDataID={FlowDataID}:
     get:
       summary: Returns a single FlowData item for a specific traffic flow station by FlowDataID.
-      operationId: getTrafficFlowById
+      operationId: fetchTrafficFlowById
       tags:
         - flow-data
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getTrafficFlowById } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTrafficFlowById } from 'ws-dottie/wsdot-traffic-flow/core';
 
             const data = await fetchDottie({
-              endpoint: getTrafficFlowById,
+              endpoint: fetchTrafficFlowById,
               params: {
                 "FlowDataID": 2482
               },
@@ -161,14 +162,14 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/TrafficFlowByIdInputFlowDataIDParam'
+        - $ref: '#/components/parameters/FetchTrafficFlowByIdInputFlowDataIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TrafficFlowsOutput'
+                $ref: '#/components/schemas/FetchTrafficFlowsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -185,20 +186,21 @@ paths:
                       RoadName: '002'
                     Region: Northwest
                     StationName: 002es00068
-                    Time: 2025-11-04T23:59:22.000Z
+                    Time: 2025-11-08T08:29:22.000Z
   /getTrafficFlowsAsJson:
     get:
       summary: Returns multiple FlowData items for all traffic flow stations across Washington state.
-      operationId: getTrafficFlows
+      operationId: fetchTrafficFlows
       tags:
         - flow-data
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getTrafficFlows } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTrafficFlows } from 'ws-dottie/wsdot-traffic-flow/core';
 
             const data = await fetchDottie({
-              endpoint: getTrafficFlows,
+              endpoint: fetchTrafficFlows,
               fetchMode: 'native',
               validate: true
             });
@@ -212,11 +214,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TrafficFlowsOutput'
+                  $ref: '#/components/schemas/FetchTrafficFlowsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 1467 total)
+                  description: Example of a successful response from the API (showing first item of 1470 total)
                   value:
                     - FlowDataID: 2482
                       FlowReadingValue: 1
@@ -229,8 +231,8 @@ paths:
                         RoadName: '002'
                       Region: Northwest
                       StationName: 002es00068
-                      Time: 2025-11-04T23:59:22.000Z
-                    - _note: ... 1466 more items
+                      Time: 2025-11-08T08:29:22.000Z
+                    - _note: ... 1469 more items
 webhooks: {}
 tags:
   - name: flow-data

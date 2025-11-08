@@ -5,10 +5,10 @@ import { z } from "@/shared/zod-openapi-init";
  *
  * Input parameters for getting weather readings.
  */
-export const getWeatherReadingsSchema = z
+export const weatherReadingsInputSchema = z
   .object({})
   .describe(
     "Retrieves comprehensive weather readings from all stations including air temperature, humidity, wind conditions, visibility, precipitation, barometric pressure, and surface/subsurface measurements. Use for complete weather station data access and comprehensive weather analysis."
   );
 
-export type GetWeatherReadingsInput = z.infer<typeof getWeatherReadingsSchema>;
+export type WeatherReadingsInput = z.infer<typeof weatherReadingsInputSchema>;

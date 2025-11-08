@@ -18,7 +18,7 @@ export const travelRestrictionSchema = z
       .string()
       .nullable()
       .describe(
-        "Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel the restriction affects."
+        "Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel is restriction affects."
       ),
   })
   .describe(
@@ -28,7 +28,7 @@ export const travelRestrictionSchema = z
 export type TravelRestriction = z.infer<typeof travelRestrictionSchema>;
 
 /**
- * Schema for PassCondition - represents the conditions of a mountain pass
+ * Schema for PassCondition - represents conditions of a mountain pass
  *
  * Provides real-time data on pass conditions. The data is provided by the Mountain Pass Entry system. Coverage Area: 15 passes (see http://www.wsdot.wa.gov/traffic/passes/).
  */
@@ -66,6 +66,7 @@ export const passConditionSchema = z
       ),
     ElevationInFeet: z
       .int()
+      .nullable()
       .describe(
         "Elevation of mountain pass above sea level, as feet. E.g., '4500' for 4,500 feet elevation at White Pass. Used for understanding pass altitude and weather context."
       ),

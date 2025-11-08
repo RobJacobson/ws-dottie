@@ -1,104 +1,104 @@
-# API Endpoints Summary
+# API Endpoints Overview
 
-This table summarizes all endpoints in the codebase under `src/apis/[api-name]/apiDefinition.ts`.
+This table reflects all current endpoints defined under `src/apis` as of 2025-11-08.
 
-| API Name | Endpoint Group Name | Function Name | Endpoint URL |
-|----------|-------------------|---------------|--------------|
-| wsdot-border-crossings | border-crossing-data | getBorderCrossings | /GetBorderCrossingsAsJson |
-| wsdot-bridge-clearances | bridge-clearances | getBridgeClearances | /getClearancesAsJson |
-| wsdot-bridge-clearances | bridge-clearances | getBridgeClearancesByRoute | /getClearancesAsJson?Route={Route} |
-| wsdot-commercial-vehicle-restrictions | cv-restriction-data | getCommercialVehicleRestrictions | /getCommercialVehicleRestrictionsAsJson |
-| wsdot-commercial-vehicle-restrictions | cv-restriction-data-with-id | getCommercialVehicleRestrictionsWithId | /getCommercialVehicleRestrictionsWithIdAsJson |
-| wsdot-highway-alerts | alerts | getAlerts | /getAlertsAsJson |
-| wsdot-highway-alerts | alerts | getAlertById | /getAlertAsJson?AlertID={AlertID} |
-| wsdot-highway-alerts | alerts | getAlertsByRegionId | /getAlertsByRegionIDAsJson?RegionID={RegionID} |
-| wsdot-highway-alerts | alerts | getAlertsByMapArea | /getAlertsByMapAreaAsJson?MapArea={MapArea} |
-| wsdot-highway-alerts | alerts | searchAlerts | /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost} |
-| wsdot-highway-alerts | areas | getMapAreas | /getMapAreasAsJson |
-| wsdot-highway-alerts | event-categories | getEventCategories | /getEventCategoriesAsJson |
-| wsdot-highway-cameras | cameras | getHighwayCameras | /getCamerasAsJson |
-| wsdot-highway-cameras | cameras | searchHighwayCamerasByRouteAndMilepost | /searchCamerasAsJson |
-| wsdot-highway-cameras | cameras | getHighwayCameraByCameraId | /getCameraAsJson?CameraID={CameraID} |
-| wsdot-mountain-pass-conditions | pass-conditions | getMountainPassConditionById | /getMountainPassConditionAsJon?PassConditionID={PassConditionID} |
-| wsdot-mountain-pass-conditions | pass-conditions | getMountainPassConditions | /getMountainPassConditionsAsJson |
-| wsdot-toll-rates | toll-rates | getTollRates | /getTollRatesAsJson |
-| wsdot-toll-rates | toll-trip-info | getTollTripInfo | /getTollTripInfoAsJson |
-| wsdot-toll-rates | toll-trip-rates | getTollTripRates | /getTollTripRatesAsJson |
-| wsdot-toll-rates | toll-trip-rates | getTripRatesByDate | /getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate} |
-| wsdot-toll-rates | toll-trip-rates | getTripRatesByVersion | /getTripRatesByVersionAsJson?Version={Version} |
-| wsdot-toll-rates | toll-trip-version | getTollTripVersion | /getTollTripVersionAsJson |
-| wsdot-traffic-flow | flow-data | getTrafficFlows | /getTrafficFlowsAsJson |
-| wsdot-traffic-flow | flow-data | getTrafficFlowById | /getTrafficFlowAsJson?FlowDataID={FlowDataID} |
-| wsdot-travel-times | travel-time-routes | getTravelTimeById | /getTravelTimeAsJson?TravelTimeID={TravelTimeID} |
-| wsdot-travel-times | travel-time-routes | getTravelTimes | /getTravelTimesAsJson |
-| wsdot-weather-information | weather-info | getWeatherInformation | /GetCurrentWeatherInformationAsJson |
-| wsdot-weather-information | weather-info | getWeatherInformationByStationId | /GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID} |
-| wsdot-weather-information | weather-info | getCurrentWeatherForStations | /GetCurrentWeatherForStationsAsJson?StationList={StationList} |
-| wsdot-weather-information | weather-info | searchWeatherInformation | /SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime} |
-| wsdot-weather-readings | weather-readings | getWeatherReadings | /Scanweb |
-| wsdot-weather-readings | surface-measurements | getSurfaceMeasurements | /Scanweb/SurfaceMeasurements |
-| wsdot-weather-readings | sub-surface-measurements | getSubSurfaceMeasurements | /Scanweb/SubSurfaceMeasurements |
-| wsdot-weather-stations | weather-stations | getWeatherStations | /GetCurrentStationsAsJson |
-| wsf-fares | cache-flush-date | getCacheFlushDate | /cacheflushdate |
-| wsf-fares | valid-date-range | getFaresValidDateRange | /validdaterange |
-| wsf-fares | terminals | getFaresTerminals | /terminals/{TripDate} |
-| wsf-fares | terminals | getTerminalMates | /terminalMates/{TripDate}/{TerminalID} |
-| wsf-fares | terminal-combo | getTerminalCombo | /terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} |
-| wsf-fares | terminal-combo | getTerminalComboVerbose | /terminalComboVerbose/{TripDate} |
-| wsf-fares | fare-line-items | getFareLineItemsByTripDateAndTerminals | /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} |
-| wsf-fares | fare-line-items | getFareLineItemsBasic | /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} |
-| wsf-fares | fare-line-items | getFareLineItemsVerbose | /fareLineItemsVerbose/{TripDate} |
-| wsf-fares | fare-totals | getFareTotalsByTripDateAndRoute | /fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity} |
-| wsf-schedule | active-seasons | getActiveSeasons | /activeseasons |
-| wsf-schedule | schedule-cache-flush-date | getCacheFlushDate | /cacheflushdate |
-| wsf-schedule | route-details | getRouteDetailsByTripDate | /routedetails/{TripDate} |
-| wsf-schedule | route-details | getRouteDetailsByTripDateAndRouteId | /routedetails/{TripDate}/{RouteID} |
-| wsf-schedule | route-details | getRouteDetailsByTripDateAndTerminals | /routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} |
-| wsf-schedule | routes | getRoutesByTripDate | /routes/{TripDate} |
-| wsf-schedule | routes | getRoutesByTripDateAndTerminals | /routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} |
-| wsf-schedule | sailings | getAllSailingsBySchedRouteID | /allsailings/{SchedRouteID} |
-| wsf-schedule | sailings | getSailingsByRouteID | /sailings/{SchedRouteID} |
-| wsf-schedule | schedule-alerts | getScheduleAlerts | /alerts |
-| wsf-schedule | scheduled-routes | getScheduledRoutes | /schedroutes |
-| wsf-schedule | scheduled-routes | getScheduledRoutesById | /schedroutes/{ScheduleID} |
-| wsf-schedule | schedules | getScheduleByTripDateAndRouteId | /schedule/{TripDate}/{RouteID} |
-| wsf-schedule | schedules | getScheduleByTripDateAndDepartingTerminalIdAndTerminalIds | /schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} |
-| wsf-schedule | schedule-today | getScheduleTodayByRoute | /scheduletoday/{RouteID}/{OnlyRemainingTimes} |
-| wsf-schedule | schedule-today | getScheduleTodayByTerminals | /scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes} |
-| wsf-schedule | service-disruptions | getRoutesHavingServiceDisruptionsByTripDate | /routeshavingservicedisruptions/{TripDate} |
-| wsf-schedule | schedule-terminal-mates | getTerminalMates | /terminalmates/{TripDate}/{TerminalID} |
-| wsf-schedule | schedule-terminals | getTerminals | /terminals/{TripDate} |
-| wsf-schedule | schedule-terminals | getTerminalsAndMates | /terminalsandmates/{TripDate} |
-| wsf-schedule | schedule-terminals | getTerminalsAndMatesByRoute | /terminalsandmatesbyroute/{TripDate}/{RouteID} |
-| wsf-schedule | time-adjustments | getTimeAdjustments | /timeadj |
-| wsf-schedule | time-adjustments | getTimeAdjustmentsByRoute | /timeadjbyroute/{RouteID} |
-| wsf-schedule | time-adjustments | getTimeAdjustmentsBySchedRoute | /timeadjbyschedroute/{SchedRouteID} |
-| wsf-schedule | schedule-valid-date-range | getScheduleValidDateRange | /validdaterange |
-| wsf-terminals | cache-flush-date | getCacheFlushDate | /cacheflushdate |
-| wsf-terminals | terminal-basics | getTerminalBasics | /terminalBasics |
-| wsf-terminals | terminal-basics | getTerminalBasicsByTerminalId | /terminalBasics/{TerminalID} |
-| wsf-terminals | terminal-bulletins | getTerminalBulletins | /terminalBulletins |
-| wsf-terminals | terminal-bulletins | getTerminalBulletinsByTerminalId | /terminalBulletins/{TerminalID} |
-| wsf-terminals | terminal-locations | getTerminalLocations | /terminalLocations |
-| wsf-terminals | terminal-locations | getTerminalLocationsByTerminalId | /terminalLocations/{TerminalID} |
-| wsf-terminals | terminal-sailing-space | getTerminalSailingSpace | /terminalSailingSpace |
-| wsf-terminals | terminal-sailing-space | getTerminalSailingSpaceByTerminalId | /terminalSailingSpace/{TerminalID} |
-| wsf-terminals | terminal-transports | getTerminalTransports | /terminalTransports |
-| wsf-terminals | terminal-transports | getTerminalTransportsByTerminalId | /terminalTransports/{TerminalID} |
-| wsf-terminals | terminal-verbose | getTerminalVerbose | /terminalVerbose |
-| wsf-terminals | terminal-verbose | getTerminalVerboseByTerminalId | /terminalVerbose/{TerminalID} |
-| wsf-terminals | terminal-wait-times | getTerminalWaitTimes | /terminalWaitTimes |
-| wsf-terminals | terminal-wait-times | getTerminalWaitTimesByTerminalId | /terminalWaitTimes/{TerminalID} |
-| wsf-vessels | cache-flush-date | getCacheFlushDate | /cacheflushdate |
-| wsf-vessels | vessel-accommodations | getVesselAccommodations | /vesselAccommodations |
-| wsf-vessels | vessel-accommodations | getVesselAccommodationsByVesselId | /vesselAccommodations/{VesselID} |
-| wsf-vessels | vessel-basics | getVesselBasics | /vesselBasics |
-| wsf-vessels | vessel-basics | getVesselBasicsByVesselId | /vesselBasics/{VesselID} |
-| wsf-vessels | vessel-histories | getVesselHistories | /vesselHistory |
-| wsf-vessels | vessel-histories | getVesselHistoriesByVesselNameAndDateRange | /vesselHistory/{VesselName}/{DateStart}/{DateEnd} |
-| wsf-vessels | vessel-locations | getVesselLocations | /vesselLocations |
-| wsf-vessels | vessel-locations | getVesselLocationsByVesselId | /vesselLocations/{VesselID} |
-| wsf-vessels | vessel-stats | getVesselStats | /vesselStats |
-| wsf-vessels | vessel-stats | getVesselStatsByVesselId | /vesselStats/{VesselID} |
-| wsf-vessels | vessel-verbose | getVesselsVerbose | /vesselVerbose |
-| wsf-vessels | vessel-verbose | getVesselsVerboseByVesselId | /vesselVerbose/{VesselID} |
+| API Name | Endpoint Group Name | Function Name | Hook Name | Endpoint URL | Input Schema | Output Schema |
+| --- | --- | --- | --- | --- | --- | --- |
+| wsdot-border-crossings | border-crossing-data | fetchBorderCrossings | useBorderCrossings | /GetBorderCrossingsAsJson | borderCrossingsInputSchema | z.array(borderCrossingSchema) |
+| wsdot-bridge-clearances | bridge-clearances | fetchBridgeClearances | useBridgeClearances | /getClearancesAsJson | bridgeClearancesInputSchema | z.array(bridgeClearanceSchema) |
+| wsdot-bridge-clearances | bridge-clearances | fetchBridgeClearancesByRoute | useBridgeClearancesByRoute | /getClearancesAsJson?Route={Route} | bridgeClearancesByRouteInputSchema | z.array(bridgeClearanceSchema) |
+| wsdot-commercial-vehicle-restrictions | cv-restriction-data | fetchCommercialVehicleRestrictions | useCommercialVehicleRestrictions | /getCommercialVehicleRestrictionsAsJson | commercialVehicleRestrictionsInputSchema | z.array(cvRestrictionSchema) |
+| wsdot-commercial-vehicle-restrictions | cv-restriction-data-with-id | fetchCommercialVehicleRestrictionsWithId | useCommercialVehicleRestrictionsWithId | /getCommercialVehicleRestrictionsWithIdAsJson | commercialVehicleRestrictionsWithIdInputSchema | z.array(cvRestrictionWithIdSchema) |
+| wsdot-highway-alerts | alertAreas | fetchMapAreas | useMapAreas | /getMapAreasAsJson | mapAreasInputSchema | z.array(areaSchema) |
+| wsdot-highway-alerts | event-categories | fetchEventCategories | useEventCategories | /getEventCategoriesAsJson | eventCategoriesInputSchema | z.array(z.string()) |
+| wsdot-highway-alerts | highwayAlerts | fetchAlertById | useAlertById | /getAlertAsJson?AlertID={AlertID} | alertByIdInputSchema | alertSchema |
+| wsdot-highway-alerts | highwayAlerts | fetchAlerts | useAlerts | /getAlertsAsJson | alertsInputSchema | z.array(alertSchema) |
+| wsdot-highway-alerts | highwayAlerts | fetchAlertsByMapArea | useAlertsByMapArea | /getAlertsByMapAreaAsJson?MapArea={MapArea} | alertsByMapAreaInputSchema | z.array(alertSchema) |
+| wsdot-highway-alerts | highwayAlerts | fetchAlertsByRegionId | useAlertsByRegionId | /getAlertsByRegionIDAsJson?RegionID={RegionID} | alertsByRegionIDInputSchema | z.array(alertSchema) |
+| wsdot-highway-alerts | highwayAlerts | searchAlerts | useSearchAlerts | /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost} | searchAlertsInputSchema | z.array(alertSchema) |
+| wsdot-highway-cameras | cameras | fetchHighwayCameraByCameraId | useHighwayCameraByCameraId | /getCameraAsJson?CameraID={CameraID} | highwayCameraByCameraIdInputSchema | cameraSchema |
+| wsdot-highway-cameras | cameras | fetchHighwayCameras | useHighwayCameras | /getCamerasAsJson | highwayCamerasInputSchema | z.array(cameraSchema) |
+| wsdot-highway-cameras | cameras | searchHighwayCamerasByRouteAndMilepost | useSearchHighwayCamerasByRouteAndMilepost | /searchCamerasAsJson | highwayCamerasByRouteAndMilepostInputSchema | z.array(cameraSchema) |
+| wsdot-mountain-pass-conditions | pass-conditions | fetchMountainPassConditionById | useMountainPassConditionById | /getMountainPassConditionAsJon?PassConditionID={PassConditionID} | mountainPassConditionByIdInputSchema | passConditionSchema |
+| wsdot-mountain-pass-conditions | pass-conditions | fetchMountainPassConditions | useMountainPassConditions | /getMountainPassConditionsAsJson | mountainPassConditionsInputSchema | z.array(passConditionSchema) |
+| wsdot-toll-rates | toll-rates | fetchTollRates | useTollRates | /getTollRatesAsJson | tollRatesInputSchema | z.array(tollRateSchema) |
+| wsdot-toll-rates | toll-trip-info | fetchTollTripInfo | useTollTripInfo | /getTollTripInfoAsJson | tollTripInfoInputSchema | z.array(tollTripInfoSchema) |
+| wsdot-toll-rates | toll-trip-rates | fetchTollTripRates | useTollTripRates | /getTollTripRatesAsJson | tollTripRatesInputSchema | tollTripsRatesSchema |
+| wsdot-toll-rates | toll-trip-rates | fetchTripRatesByDate | useTripRatesByDate | /getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate} | tripRatesByDateInputSchema | z.array(tollTripsRatesSchema) |
+| wsdot-toll-rates | toll-trip-rates | fetchTripRatesByVersion | useTripRatesByVersion | /getTripRatesByVersionAsJson?Version={Version} | tripRatesByVersionInputSchema | tollTripsRatesSchema |
+| wsdot-toll-rates | toll-trip-version | fetchTollTripVersion | useTollTripVersion | /getTollTripVersionAsJson | tollTripVersionInputSchema | tollTripVersionSchema |
+| wsdot-traffic-flow | flow-data | fetchTrafficFlowById | useTrafficFlowById | /getTrafficFlowAsJson?FlowDataID={FlowDataID} | trafficFlowByIdInputSchema | flowDataSchema |
+| wsdot-traffic-flow | flow-data | fetchTrafficFlows | useTrafficFlows | /getTrafficFlowsAsJson | trafficFlowsInputSchema | z.array(flowDataSchema) |
+| wsdot-travel-times | travel-time-routes | fetchTravelTimeById | useTravelTimeById | /getTravelTimeAsJson?TravelTimeID={TravelTimeID} | travelTimeByIdInputSchema | travelTimeRouteSchema |
+| wsdot-travel-times | travel-time-routes | fetchTravelTimes | useTravelTimes | /getTravelTimesAsJson | travelTimesInputSchema | z.array(travelTimeRouteSchema) |
+| wsdot-weather-information | weather-info | fetchCurrentWeatherForStations | useCurrentWeatherForStations | /GetCurrentWeatherForStationsAsJson?StationList={StationList} | currentWeatherForStationsInputSchema | z.array(weatherInfoSchema) |
+| wsdot-weather-information | weather-info | fetchWeatherInformation | useWeatherInformation | /GetCurrentWeatherInformationAsJson | weatherInformationInputSchema | z.array(weatherInfoSchema) |
+| wsdot-weather-information | weather-info | fetchWeatherInformationByStationId | useWeatherInformationByStationId | /GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID} | weatherInformationByStationIdInputSchema | weatherInfoSchema |
+| wsdot-weather-information | weather-info | searchWeatherInformation | useSearchWeatherInformation | /SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime} | searchWeatherInformationInputSchema | z.array(weatherInfoSchema) |
+| wsdot-weather-readings | sub-surface-measurements | fetchSubSurfaceMeasurements | useSubSurfaceMeasurements | /Scanweb/SubSurfaceMeasurements | subSurfaceMeasurementsInputSchema | z.array(subsurfaceMeasurementSchema) |
+| wsdot-weather-readings | surface-measurements | fetchSurfaceMeasurements | useSurfaceMeasurements | /Scanweb/SurfaceMeasurements | surfaceMeasurementsInputSchema | z.array(surfaceMeasurementSchema) |
+| wsdot-weather-readings | weather-readings | fetchWeatherReadings | useWeatherReadings | /Scanweb | weatherReadingsInputSchema | z.array(weatherReadingSchema) |
+| wsdot-weather-stations | weather-stations | fetchWeatherStations | useWeatherStations | /GetCurrentStationsAsJson | weatherStationsInputSchema | z.array(weatherStationSchema) |
+| wsf-fares | cache-flush-date-fares | fetchCacheFlushDateFares | useCacheFlushDateFares | /cacheflushdate | cacheFlushDateFaresInputSchema | cacheFlushDateFaresSchema |
+| wsf-fares | fare-line-items | fetchFareLineItemsBasic | useFareLineItemsBasic | /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} | fareLineItemsBasicInputSchema | z.array(lineItemSchema) |
+| wsf-fares | fare-line-items | fetchFareLineItemsByTripDateAndTerminals | useFareLineItemsByTripDateAndTerminals | /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} | fareLineItemsByTripDateAndTerminalsInputSchema | z.array(lineItemSchema) |
+| wsf-fares | fare-line-items | fetchFareLineItemsVerbose | useFareLineItemsVerbose | /fareLineItemsVerbose/{TripDate} | fareLineItemsVerboseInputSchema | lineItemVerboseSchema |
+| wsf-fares | fare-totals | fetchFareTotalsByTripDateAndRoute | useFareTotalsByTripDateAndRoute | /fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity} | fareTotalsByTripDateAndRouteInputSchema | z.array(fareTotalSchema) |
+| wsf-fares | terminal-combo | fetchTerminalComboFares | useTerminalComboFares | /terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | terminalComboInputSchema | terminalComboFaresSchema |
+| wsf-fares | terminal-combo | fetchTerminalComboFaresVerbose | useTerminalComboFaresVerbose | /terminalComboVerbose/{TripDate} | terminalComboFaresVerboseInputSchema | z.array(terminalComboFaresVerboseSchema) |
+| wsf-fares | terminals | fetchTerminalFares | useTerminalFares | /terminals/{TripDate} | terminalsInputSchema | terminalListSchema |
+| wsf-fares | terminals | fetchTerminalMatesFares | useTerminalMatesFares | /terminalMates/{TripDate}/{TerminalID} | terminalMatesInputSchema | terminalListSchema |
+| wsf-fares | valid-date-range | fetchFaresValidDateRange | useFaresValidDateRange | /validdaterange | faresValidDateRangeInputSchema | validDateRangeSchema |
+| wsf-schedule | active-seasons | fetchActiveSeasons | useActiveSeasons | /activeseasons | activeSeasonsInputSchema | z.array(scheduleBaseSchema) |
+| wsf-schedule | cache-flush-date-schedule | fetchCacheFlushDateSchedule | useCacheFlushDateSchedule | /cacheflushdate | cacheFlushDateScheduleInputSchema | cacheFlushDateScheduleSchema |
+| wsf-schedule | route-details | fetchRouteDetailsByTripDate | useRouteDetailsByTripDate | /routedetails/{TripDate} | routeDetailsByTripDateInputSchema | z.array(routeDetailSchema) |
+| wsf-schedule | route-details | fetchRouteDetailsByTripDateAndRouteId | useRouteDetailsByTripDateAndRouteId | /routedetails/{TripDate}/{RouteID} | routeDetailsByTripDateAndRouteIdInputSchema | routeDetailSchema |
+| wsf-schedule | route-details | fetchRouteDetailsByTripDateAndTerminals | useRouteDetailsByTripDateAndTerminals | /routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | routeDetailsByTripDateAndTerminalsInputSchema | z.array(routeDetailSchema) |
+| wsf-schedule | routes | fetchRoutesByTripDate | useRoutesByTripDate | /routes/{TripDate} | routesByTripDateInputSchema | z.array(routeSchema) |
+| wsf-schedule | routes | fetchRoutesByTripDateAndTerminals | useRoutesByTripDateAndTerminals | /routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | routesByTripDateAndTerminalsInputSchema | z.array(routeSchema) |
+| wsf-schedule | sailings | fetchAllSailingsBySchedRouteID | useAllSailingsBySchedRouteID | /allsailings/{SchedRouteID} | allSailingsBySchedRouteIDInputSchema | z.array(sailingSchema) |
+| wsf-schedule | sailings | fetchSailingsByRouteID | useSailingsByRouteID | /sailings/{SchedRouteID} | sailingsByRouteIDInputSchema | z.array(sailingSchema) |
+| wsf-schedule | schedule-alerts | fetchScheduleAlerts | useScheduleAlerts | /alerts | scheduleAlertsInputSchema | z.array(alertDetailSchema) |
+| wsf-schedule | schedule-terminal-mates | fetchTerminalMatesSchedule | useTerminalMatesSchedule | /terminalmates/{TripDate}/{TerminalID} | terminalMatesInputSchema | terminalListSchema |
+| wsf-schedule | schedule-terminals | fetchTerminals | useTerminals | /terminals/{TripDate} | terminalsInputSchema | z.array(terminalSchema) |
+| wsf-schedule | schedule-terminals | fetchTerminalsAndMates | useTerminalsAndMates | /terminalsandmates/{TripDate} | terminalsAndMatesInputSchema | z.array(terminalMateSchema) |
+| wsf-schedule | schedule-terminals | fetchTerminalsAndMatesByRoute | useTerminalsAndMatesByRoute | /terminalsandmatesbyroute/{TripDate}/{RouteID} | terminalsAndMatesByRouteInputSchema | z.array(terminalMateSchema) |
+| wsf-schedule | schedule-today | fetchScheduleTodayByRoute | useScheduleTodayByRoute | /scheduletoday/{RouteID}/{OnlyRemainingTimes} | scheduleTodayByRouteSchema | scheduleSchema |
+| wsf-schedule | schedule-today | fetchScheduleTodayByTerminals | useScheduleTodayByTerminals | /scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes} | scheduleTodayByTerminalsInputSchema | scheduleSchema |
+| wsf-schedule | schedule-valid-date-range | fetchScheduleValidDateRange | useScheduleValidDateRange | /validdaterange | scheduleValidDateRangeInputSchema | validDateRangeSchema |
+| wsf-schedule | scheduled-routes | fetchScheduledRoutes | useScheduledRoutes | /schedroutes | scheduledRoutesInputSchema | z.array(schedRouteSchema) |
+| wsf-schedule | scheduled-routes | fetchScheduledRoutesById | useScheduledRoutesById | /schedroutes/{ScheduleID} | scheduledRoutesByIdInputSchema | z.array(schedRouteSchema) |
+| wsf-schedule | schedules | fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds | useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds | /schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | scheduleByTripDateAndTerminals | scheduleSchema |
+| wsf-schedule | schedules | fetchScheduleByTripDateAndRouteId | useScheduleByTripDateAndRouteId | /schedule/{TripDate}/{RouteID} | scheduleByTripDateAndRouteIdInputSchema | scheduleSchema |
+| wsf-schedule | service-disruptions | fetchRoutesHavingServiceDisruptionsByTripDate | useRoutesHavingServiceDisruptionsByTripDate | /routeshavingservicedisruptions/{TripDate} | routesHavingServiceDisruptionsByTripDateInputSchema | z.array(serviceDisruptionSchema) |
+| wsf-schedule | time-adjustments | fetchTimeAdjustments | useTimeAdjustments | /timeadj | timeAdjustmentsInputSchema | z.array(timeAdjustmentSchema) |
+| wsf-schedule | time-adjustments | fetchTimeAdjustmentsByRoute | useTimeAdjustmentsByRoute | /timeadjbyroute/{RouteID} | timeAdjustmentsByRouteInputSchema | z.array(timeAdjustmentSchema) |
+| wsf-schedule | time-adjustments | fetchTimeAdjustmentsBySchedRoute | useTimeAdjustmentsBySchedRoute | /timeadjbyschedroute/{SchedRouteID} | timeAdjustmentsBySchedRouteInputSchema | z.array(timeAdjustmentSchema) |
+| wsf-terminals | cache-flush-date-terminals | fetchCacheFlushDateTerminals | useCacheFlushDateTerminals | /cacheflushdate | cacheFlushDateTerminalsInputSchema | cacheFlushDateTerminalsSchema |
+| wsf-terminals | terminal-basics | fetchTerminalBasics | useTerminalBasics | /terminalBasics | terminalBasicsInputSchema | z.array(terminalBasicSchema) |
+| wsf-terminals | terminal-basics | fetchTerminalBasicsByTerminalId | useTerminalBasicsByTerminalId | /terminalBasics/{TerminalID} | terminalBasicsByIdInputSchema | terminalBasicSchema |
+| wsf-terminals | terminal-bulletins | fetchTerminalBulletins | useTerminalBulletins | /terminalBulletins | terminalBulletinsInputSchema | z.array(terminalBulletinSchema) |
+| wsf-terminals | terminal-bulletins | fetchTerminalBulletinsByTerminalId | useTerminalBulletinsByTerminalId | /terminalBulletins/{TerminalID} | terminalBulletinsByIdInputSchema | terminalBulletinSchema |
+| wsf-terminals | terminal-locations | fetchTerminalLocations | useTerminalLocations | /terminalLocations | terminalLocationsInputSchema | z.array(terminalLocationSchema) |
+| wsf-terminals | terminal-locations | fetchTerminalLocationsByTerminalId | useTerminalLocationsByTerminalId | /terminalLocations/{TerminalID} | terminalLocationsByIdInputSchema | terminalLocationSchema |
+| wsf-terminals | terminal-sailing-space | fetchTerminalSailingSpace | useTerminalSailingSpace | /terminalSailingSpace | terminalSailingSpaceInputSchema | z.array(terminalSailingSpaceSchema) |
+| wsf-terminals | terminal-sailing-space | fetchTerminalSailingSpaceByTerminalId | useTerminalSailingSpaceByTerminalId | /terminalSailingSpace/{TerminalID} | terminalSailingSpaceByTerminalIdInputSchema | terminalSailingSpaceSchema |
+| wsf-terminals | terminal-transports | fetchTerminalTransports | useTerminalTransports | /terminalTransports | terminalTransportsInputSchema | z.array(terminalTransportSchema) |
+| wsf-terminals | terminal-transports | fetchTerminalTransportsByTerminalId | useTerminalTransportsByTerminalId | /terminalTransports/{TerminalID} | terminalTransportsByTerminalIdInputSchema | terminalTransportSchema |
+| wsf-terminals | terminal-verbose | fetchTerminalVerbose | useTerminalVerbose | /terminalVerbose | terminalVerboseInputSchema | z.array(terminalVerboseSchema) |
+| wsf-terminals | terminal-verbose | fetchTerminalVerboseByTerminalId | useTerminalVerboseByTerminalId | /terminalVerbose/{TerminalID} | terminalVerboseByTerminalIdInputSchema | terminalVerboseSchema |
+| wsf-terminals | terminal-wait-times | fetchTerminalWaitTimes | useTerminalWaitTimes | /terminalWaitTimes | terminalWaitTimesInputSchema | z.array(terminalWaitTimeSchema) |
+| wsf-terminals | terminal-wait-times | fetchTerminalWaitTimesByTerminalId | useTerminalWaitTimesByTerminalId | /terminalWaitTimes/{TerminalID} | terminalWaitTimesByIdInputSchema | terminalWaitTimeSchema |
+| wsf-vessels | cache-flush-date-vessels | fetchCacheFlushDateVessels | useCacheFlushDateVessels | /cacheflushdate | cacheFlushDateVesselsInputSchema | cacheFlushDateVesselsSchema |
+| wsf-vessels | vessel-accommodations | fetchVesselAccommodations | useVesselAccommodations | /vesselAccommodations | vesselAccommodationsInputSchema | z.array(vesselAccommodationSchema) |
+| wsf-vessels | vessel-accommodations | fetchVesselAccommodationsByVesselId | useVesselAccommodationsByVesselId | /vesselAccommodations/{VesselID} | vesselAccommodationsByIdInputSchema | vesselAccommodationSchema |
+| wsf-vessels | vessel-basics | fetchVesselBasics | useVesselBasics | /vesselBasics | vesselBasicsInputSchema | z.array(vesselBasicSchema) |
+| wsf-vessels | vessel-basics | fetchVesselBasicsByVesselId | useVesselBasicsByVesselId | /vesselBasics/{VesselID} | vesselBasicsByIdInputSchema | vesselBasicSchema |
+| wsf-vessels | vessel-histories | fetchVesselHistories | useVesselHistories | /vesselHistory | vesselHistoriesInputSchema | z.array(vesselHistorySchema) |
+| wsf-vessels | vessel-histories | fetchVesselHistoriesByVesselNameAndDateRange | useVesselHistoriesByVesselNameAndDateRange | /vesselHistory/{VesselName}/{DateStart}/{DateEnd} | vesselHistoriesByVesselNameAndDateRangeInputSchema | z.array(vesselHistorySchema) |
+| wsf-vessels | vessel-locations | fetchVesselLocations | useVesselLocations | /vesselLocations | vesselLocationsInputSchema | z.array(vesselLocationSchema) |
+| wsf-vessels | vessel-locations | fetchVesselLocationsByVesselId | useVesselLocationsByVesselId | /vesselLocations/{VesselID} | vesselLocationsByIdInputSchema | vesselLocationSchema |
+| wsf-vessels | vessel-stats | fetchVesselStats | useVesselStats | /vesselStats | vesselStatsInputSchema | z.array(vesselStatSchema) |
+| wsf-vessels | vessel-stats | fetchVesselStatsByVesselId | useVesselStatsByVesselId | /vesselStats/{VesselID} | vesselStatsByIdInputSchema | vesselStatSchema |
+| wsf-vessels | vessel-verbose | fetchVesselsVerbose | useVesselsVerbose | /vesselVerbose | vesselVerboseInputSchema | z.array(vesselVerboseSchema) |
+| wsf-vessels | vessel-verbose | fetchVesselsVerboseByVesselId | useVesselsVerboseByVesselId | /vesselVerbose/{VesselID} | vesselVerboseByIdInputSchema | vesselVerboseSchema |

@@ -4,7 +4,7 @@ import { surfaceMeasurementsResource } from "./surfaceMeasurements/surfaceMeasur
 // Import all resources
 import { weatherReadingsResource } from "./weatherReadings/weatherReadings.endpoints";
 
-export const wsdotWeatherReadingsApi: ApiDefinition = {
+export const wsdotWeatherReadingsApi = {
   name: "wsdot-weather-readings",
   baseUrl: "https://www.wsdot.wa.gov/traffic/api/api",
   endpointGroups: [
@@ -12,11 +12,4 @@ export const wsdotWeatherReadingsApi: ApiDefinition = {
     surfaceMeasurementsResource,
     subSurfaceMeasurementsResource,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  weatherReadingsResource,
-  surfaceMeasurementsResource,
-  subSurfaceMeasurementsResource,
-};
+} satisfies ApiDefinition;

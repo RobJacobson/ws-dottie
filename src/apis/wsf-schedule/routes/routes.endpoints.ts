@@ -1,10 +1,18 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./routes.input";
-import * as o from "./routes.output";
+import type {
+  RoutesByTripDateAndTerminalsInput,
+  RoutesByTripDateInput,
+} from "./routes.input";
+import {
+  routesByTripDateAndTerminalsInputSchema,
+  routesByTripDateInputSchema,
+} from "./routes.input";
+import type { Route } from "./routes.output";
+import { routeSchema } from "./routes.output";
 
-export const routesResource: EndpointGroup = {
+export const routesResource = {
   name: "routes",
   documentation: {
     resourceDescription:
@@ -14,25 +22,23 @@ export const routesResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getRoutesByTripDate: {
-      function: "getRoutesByTripDate",
+    fetchRoutesByTripDate: {
       endpoint: "/routes/{TripDate}",
-      inputSchema: i.routesSchema,
-      outputSchema: z.array(o.routeSchema),
+      inputSchema: routesByTripDateInputSchema,
+      outputSchema: z.array(routeSchema),
       sampleParams: { TripDate: datesHelper.tomorrow() },
       endpointDescription: "Returns multiple of Routes for specified date.",
-    } satisfies EndpointDefinition<i.RoutesInput, o.Route[]>,
-    getRoutesByTripDateAndTerminals: {
-      function: "getRoutesByTripDateAndTerminals",
+    } satisfies EndpointDefinition<RoutesByTripDateInput, Route[]>,
+    fetchRoutesByTripDateAndTerminals: {
       endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: i.routesByTerminalsSchema,
-      outputSchema: z.array(o.routeSchema),
+      inputSchema: routesByTripDateAndTerminalsInputSchema,
+      outputSchema: z.array(routeSchema),
       sampleParams: {
         TripDate: datesHelper.tomorrow(),
         DepartingTerminalID: 1,
         ArrivingTerminalID: 10,
       },
       endpointDescription: "Returns multiple of Routes for terminal pair.",
-    } satisfies EndpointDefinition<i.RoutesByTerminalsInput, o.Route[]>,
+    } satisfies EndpointDefinition<RoutesByTripDateAndTerminalsInput, Route[]>,
   },
-};
+} satisfies EndpointGroup;

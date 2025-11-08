@@ -1,54 +1,15 @@
 /**
- * @fileoverview WSF Fares API - Clean exports for types and API definition
+ * @fileoverview wsf-fares API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSF Fares API, exporting
- * all input/output types, the main API definition, and individual resources.
+ * This module provides exports for all hooks, fetch functions, and types in the wsf-fares API.
  */
 
-// Export the main API definition and individual resources for direct use
-export {
-  cacheFlushDateGroup,
-  fareLineItemsGroup,
-  fareTotalsGroup,
-  terminalComboGroup,
-  terminalsGroup,
-  validDateRangeGroup,
-  wsfFaresApi,
-} from "./apiDefinition";
-export type { FaresCacheFlushDateInput } from "./cacheFlushDate/cacheFlushDate.input";
-// Export all output types
-export type { FaresCacheFlushDateResponse } from "./cacheFlushDate/cacheFlushDate.output";
-// Export all input types
-export type {
-  FareLineItemsBasicInput,
-  FareLineItemsInput,
-  FareLineItemsVerboseInput,
-} from "./fareLineItems/fareLineItems.input";
-export type {
-  LineItemResponse,
-  LineItemVerboseResponse,
-  LineItemXref,
-} from "./fareLineItems/fareLineItems.output";
-export type { FareTotalsInput } from "./fareTotals/fareTotals.input";
-export type {
-  FareTotalResponse,
-  FareTotalType,
-} from "./fareTotals/fareTotals.output";
-export type {
-  TerminalComboInput,
-  TerminalComboVerboseInput,
-} from "./terminalCombo/terminalCombo.input";
-export type {
-  TerminalComboResponse,
-  TerminalComboVerboseResponse,
-} from "./terminalCombo/terminalCombo.output";
-export type {
-  TerminalMatesInput,
-  TerminalsInput,
-} from "./terminals/terminals.input";
-export type {
-  TerminalBase,
-  TerminalResponse,
-} from "./terminals/terminals.output";
-export type { ValidDateRangeInput } from "./validDateRange/validDateRange.input";
-export type { ValidDateRangeResponse } from "./validDateRange/validDateRange.output";
+// Export hooks
+export * from "./cacheFlushDate/cacheFlushDate.hooks";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+export * from "./fareLineItems/fareLineItems.hooks";
+export * from "./fareTotals/fareTotals.hooks";
+export * from "./terminalCombo/terminalCombo.hooks";
+export * from "./terminals/terminals.hooks";
+export * from "./validDateRange/validDateRange.hooks";

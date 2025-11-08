@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./vesselBasics.input";
-import * as o from "./vesselBasics.output";
+import type {
+  VesselBasicsByIdInput,
+  VesselBasicsInput,
+} from "./vesselBasics.input";
+import {
+  vesselBasicsByIdInputSchema,
+  vesselBasicsInputSchema,
+} from "./vesselBasics.input";
+import type { VesselBasic } from "./vesselBasics.output";
+import { vesselBasicSchema } from "./vesselBasics.output";
 
-export const vesselBasicsResource: EndpointGroup = {
+export const vesselBasicsResource = {
   name: "vessel-basics",
   documentation: {
     resourceDescription:
@@ -13,23 +21,21 @@ export const vesselBasicsResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getVesselBasics: {
-      function: "getVesselBasics",
+    fetchVesselBasics: {
       endpoint: "/vesselBasics",
-      inputSchema: i.vesselBasicsSchema,
-      outputSchema: z.array(o.vesselBasicSchema),
+      inputSchema: vesselBasicsInputSchema,
+      outputSchema: z.array(vesselBasicSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple VesselBasic objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<i.VesselBasicsInput, o.VesselBasic[]>,
-    getVesselBasicsByVesselId: {
-      function: "getVesselBasicsByVesselId",
+    } satisfies EndpointDefinition<VesselBasicsInput, VesselBasic[]>,
+    fetchVesselBasicsByVesselId: {
       endpoint: "/vesselBasics/{VesselID}",
-      inputSchema: i.vesselBasicsByIdSchema,
-      outputSchema: o.vesselBasicSchema,
+      inputSchema: vesselBasicsByIdInputSchema,
+      outputSchema: vesselBasicSchema,
       sampleParams: { VesselID: 74 },
       endpointDescription:
         "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
-    } satisfies EndpointDefinition<i.VesselBasicsByIdInput, o.VesselBasic>,
+    } satisfies EndpointDefinition<VesselBasicsByIdInput, VesselBasic>,
   },
-};
+} satisfies EndpointGroup;

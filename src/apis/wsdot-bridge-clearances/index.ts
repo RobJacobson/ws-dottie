@@ -1,20 +1,10 @@
 /**
- * @fileoverview WSDOT Bridge Clearances API - Clean exports for types and API definition
+ * @fileoverview wsdot-bridge-clearances API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Bridge Clearances API, exporting
- * all input/output types, the main API definition, and individual resources.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-bridge-clearances API.
  */
 
-// Export the main API definition (backward compatibility)
-export { wsdotBridgeClearancesApi } from "./apiDefinition";
-// Export individual resources for direct use
-export { bridgeClearancesGroup } from "./bridgeClearances/bridgeClearances.endpoints";
-
-// Export all input types
-export type {
-  GetClearancesByRouteInput,
-  GetClearancesInput,
-} from "./bridgeClearances/bridgeClearances.input";
-
-// Export all output types
-export type { BridgeDataGIS } from "./bridgeClearances/bridgeClearances.output";
+// Export hooks
+export * from "./bridgeClearances/bridgeClearances.hooks";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";

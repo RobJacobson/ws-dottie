@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./travelTimeRoutes.input";
-import * as o from "./travelTimeRoutes.output";
+import type {
+  TravelTimeByIdInput,
+  TravelTimesInput,
+} from "./travelTimeRoutes.input";
+import {
+  travelTimeByIdInputSchema,
+  travelTimesInputSchema,
+} from "./travelTimeRoutes.input";
+import type { TravelTimeRoute } from "./travelTimeRoutes.output";
+import { travelTimeRouteSchema } from "./travelTimeRoutes.output";
 
-export const travelTimeRoutesGroup: EndpointGroup = {
+export const travelTimeRoutesGroup = {
   name: "travel-time-routes",
   documentation: {
     resourceDescription:
@@ -13,23 +21,21 @@ export const travelTimeRoutesGroup: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTravelTimeById: {
-      function: "getTravelTimeById",
+    fetchTravelTimeById: {
       endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
-      inputSchema: i.getTravelTimeSchema,
-      outputSchema: o.travelTimeRouteSchema,
+      inputSchema: travelTimeByIdInputSchema,
+      outputSchema: travelTimeRouteSchema,
       sampleParams: { TravelTimeID: 1 },
       endpointDescription:
         "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
-    } satisfies EndpointDefinition<i.GetTravelTimeInput, o.TravelTimeRoute>,
-    getTravelTimes: {
-      function: "getTravelTimes",
+    } satisfies EndpointDefinition<TravelTimeByIdInput, TravelTimeRoute>,
+    fetchTravelTimes: {
       endpoint: "/getTravelTimesAsJson",
-      inputSchema: i.getTravelTimesSchema,
-      outputSchema: z.array(o.travelTimeRouteSchema),
+      inputSchema: travelTimesInputSchema,
+      outputSchema: z.array(travelTimeRouteSchema),
       sampleParams: {},
       endpointDescription:
         "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
-    } satisfies EndpointDefinition<i.GetTravelTimesInput, o.TravelTimeRoute[]>,
+    } satisfies EndpointDefinition<TravelTimesInput, TravelTimeRoute[]>,
   },
-};
+} satisfies EndpointGroup;

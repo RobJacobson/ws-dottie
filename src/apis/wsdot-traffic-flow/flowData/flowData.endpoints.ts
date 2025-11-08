@@ -1,9 +1,14 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./flowData.input";
-import * as o from "./flowData.output";
+import type { TrafficFlowByIdInput, TrafficFlowsInput } from "./flowData.input";
+import {
+  trafficFlowByIdInputSchema,
+  trafficFlowsInputSchema,
+} from "./flowData.input";
+import type { FlowData } from "./flowData.output";
+import { flowDataSchema } from "./flowData.output";
 
-export const flowDataGroup: EndpointGroup = {
+export const flowDataGroup = {
   name: "flow-data",
   documentation: {
     resourceDescription:
@@ -13,23 +18,21 @@ export const flowDataGroup: EndpointGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getTrafficFlows: {
-      function: "getTrafficFlows",
+    fetchTrafficFlows: {
       endpoint: "/getTrafficFlowsAsJson",
-      inputSchema: i.getTrafficFlowsSchema,
-      outputSchema: z.array(o.flowDataSchema),
+      inputSchema: trafficFlowsInputSchema,
+      outputSchema: z.array(flowDataSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple FlowData items for all traffic flow stations across Washington state.",
-    } satisfies EndpointDefinition<i.GetTrafficFlowsInput, o.FlowData[]>,
-    getTrafficFlowById: {
-      function: "getTrafficFlowById",
+    } satisfies EndpointDefinition<TrafficFlowsInput, FlowData[]>,
+    fetchTrafficFlowById: {
       endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",
-      inputSchema: i.getTrafficFlowSchema,
-      outputSchema: o.flowDataSchema,
+      inputSchema: trafficFlowByIdInputSchema,
+      outputSchema: flowDataSchema,
       sampleParams: { FlowDataID: 2482 },
       endpointDescription:
         "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
-    } satisfies EndpointDefinition<i.GetTrafficFlowInput, o.FlowData>,
+    } satisfies EndpointDefinition<TrafficFlowByIdInput, FlowData>,
   },
-};
+} satisfies EndpointGroup;

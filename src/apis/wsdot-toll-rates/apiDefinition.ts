@@ -6,7 +6,7 @@ import { tollTripInfoResource } from "./tollTripInfo/tollTripInfo.endpoints";
 import { tollTripRatesResource } from "./tollTripRates/tollTripRates.endpoints";
 import { tollTripVersionResource } from "./tollTripVersion/tollTripVersion.endpoints";
 
-export const wsdotTollRatesApi: ApiDefinition = {
+export const wsdotTollRatesApi = {
   name: "wsdot-toll-rates",
   baseUrl: "https://www.wsdot.wa.gov/traffic/api/tollrates/tollratesrest.svc",
   endpointGroups: [
@@ -15,12 +15,4 @@ export const wsdotTollRatesApi: ApiDefinition = {
     tollTripRatesResource,
     tollTripVersionResource,
   ],
-};
-
-// Export individual resources for direct use
-export {
-  tollRatesResource,
-  tollTripInfoResource,
-  tollTripRatesResource,
-  tollTripVersionResource,
-};
+} satisfies ApiDefinition;

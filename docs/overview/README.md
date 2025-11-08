@@ -10,7 +10,7 @@ WS-Dottie provides unified access to Washington State Department of Transportati
 
 WS-Dottie requires a free API key from Washington State Department of Transportation (WSDOT):
 
-1. Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access)
+1. Visit [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access)
 2. Sign up with your email address (no credit card required)
 3. Copy your API access code
 
@@ -54,12 +54,12 @@ configManager.setBaseUrl('https://your-proxy-server.com');
 ### 4. Start Using WS-Dottie
 
 ```javascript
-import { useVesselLocations, useHighwayAlerts, fetchDottie } from 'ws-dottie';
+import { useGetVesselLocations, useGetHighwayAlerts } from 'ws-dottie';
 
 // React hooks (recommended for UI applications)
 function TransportationDashboard() {
-  const { data: vessels, isLoading } = useVesselLocations();
-  const { data: alerts } = useHighwayAlerts();
+  const { data: vessels, isLoading } = useGetVesselLocations();
+  const { data: alerts } = useGetHighwayAlerts();
   
   return (
     <div>
@@ -70,21 +70,27 @@ function TransportationDashboard() {
   );
 }
 
-// Server-side usage
+// Server-side usage with direct function calls
+import { getVesselLocations, getHighwayAlerts } from 'ws-dottie/wsf-vessels/core';
+import { getBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
+
 async function getTransportationData() {
-  const vessels = await fetchDottie({
-    endpoint: getVesselLocations,
+  const vessels = await getVesselLocations({
     fetchMode: 'native',
     validate: true
   });
   
-  const alerts = await fetchDottie({
-    endpoint: getHighwayAlerts,
+  const alerts = await getHighwayAlerts({
     fetchMode: 'native',
     validate: true
   });
   
-  return { vessels, alerts };
+  const crossings = await getBorderCrossings({
+    fetchMode: 'native',
+    validate: true
+  });
+  
+  return { vessels, alerts, crossings };
 }
 ```
 
@@ -148,13 +154,13 @@ Build tools for route planning with bridge clearances, toll rates, and vehicle r
 
 ## 📊 Data Update Frequencies
 
-| Category | Update Frequency | Caching Strategy |
-|-----------|------------------|------------------|
-| Real-time (Vessels, Alerts) | 5 seconds | REALTIME_UPDATES |
-| Frequent (Wait Times, Traffic) | 1-5 minutes | MINUTE_UPDATES |
-| Regular (Weather, Conditions) | 15-60 minutes | HOURLY_UPDATES |
-| Static (Terminals, Cameras) | Daily | DAILY_UPDATES |
-| Historical (Schedules, Fares) | Weekly | WEEKLY_UPDATES |
+|| Category | Update Frequency | Caching Strategy |
+||-----------|------------------|------------------|
+|| Real-time (Vessels, Alerts) | 5 seconds | REALTIME_UPDATES |
+|| Frequent (Wait Times, Traffic) | 1-5 minutes | MINUTE_UPDATES |
+|| Regular (Weather, Conditions) | 15-60 minutes | HOURLY_UPDATES |
+|| Static (Terminals, Cameras) | Daily | DAILY_UPDATES |
+|| Historical (Schedules, Fares) | Weekly | WEEKLY_UPDATES |
 
 ## 🤝 Contributing
 
@@ -162,4 +168,4 @@ We welcome contributions! Please see our development guide for setup instruction
 
 ## 📄 License
 
-MIT License - see [LICENSE](../../LICENSE) for details.
+MIT License - see [../../LICENSE](../../LICENSE) for details.

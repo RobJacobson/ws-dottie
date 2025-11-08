@@ -10,7 +10,7 @@ This guide will help you get up and running with WS-Dottie to access Washington 
 
 WS-Dottie requires a free API key from Washington State Department of Transportation (WSDOT):
 
-1. Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access)
+1. Visit [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access)
 2. Sign up with your email address (no credit card required)
 3. Copy your API access code
 
@@ -51,16 +51,47 @@ configManager.setApiKey('your_api_key_here');
 configManager.setBaseUrl('https://your-proxy-server.com');
 ```
 
-### 4. Start Using WS-Dottie
+### 4. Choose Your Import Pattern
+
+WS-Dottie provides multiple import patterns optimized for different use cases:
+
+**For React Applications** (with hooks):
+```javascript
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
+```
+
+**For Server-Side Code** (no React dependencies):
+```javascript
+import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
+import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
+```
+
+**Importing TypeScript Types:**
+```typescript
+// Import types along with functions
+import {
+  fetchVesselLocations,
+  type VesselLocation        // Output type
+} from 'ws-dottie/wsf-vessels/core';
+
+// Or import types separately
+import type { VesselLocation } from 'ws-dottie/wsf-vessels';
+```
+
+See the [Import Patterns section in README.md](../../README.md#5-import-patterns) for detailed guidance on choosing the right pattern.
+
+### 5. Start Using WS-Dottie
 
 ```javascript
-import { useVesselLocations, useHighwayAlerts, fetchDottie } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 // React hooks (recommended for UI applications)
 function TransportationDashboard() {
   const { data: vessels, isLoading } = useVesselLocations();
-  const { data: alerts } = useHighwayAlerts();
-  
+  const { data: alerts } = useAlerts();
+
   return (
     <div>
       <h2>Active Ferries: {vessels?.length || 0}</h2>
@@ -70,23 +101,36 @@ function TransportationDashboard() {
   );
 }
 
-// Server-side usage
+// Server-side usage with direct function calls
+import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
+import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
+import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
+
 async function getTransportationData() {
-  const vessels = await fetchDottie({
-    endpoint: getVesselLocations,
+  const vessels = await fetchVesselLocations({
     fetchMode: 'native',
-    validate: true
+    validate: false, // Default: faster, no validation overhead
   });
-  
-  const alerts = await fetchDottie({
-    endpoint: getHighwayAlerts,
+
+  const alerts = await fetchAlerts({
     fetchMode: 'native',
-    validate: true
+    validate: true, // Enable validation for extra safety
   });
-  
-  return { vessels, alerts };
+
+  const crossings = await fetchBorderCrossings({
+    fetchMode: 'native',
+    validate: false, // Skip validation for better performance
+  });
+
+  return { vessels, alerts, crossings };
 }
 ```
+
+**Validation Options:**
+- `validate: false` (default) - Faster, smaller bundle, no runtime validation
+- `validate: true` - Slower but catches API response changes early
+
+For production, consider disabling validation for better performance. For development, enable validation to catch issues early. See [Production vs Development](../../README.md#-production-vs-development) for more guidance.
 
 ## 📚 Next Steps
 

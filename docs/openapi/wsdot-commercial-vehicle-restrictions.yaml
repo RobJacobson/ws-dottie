@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    CommercialVehicleRestrictionsOutput:
+    FetchCommercialVehicleRestrictionsOutput:
       type: object
       properties:
         BLMaxAxle:
@@ -265,7 +265,7 @@ components:
         - TDMaxAxle
         - VehicleType
       description: Represents commercial vehicle restriction information including weight limits by classification, height/width/length restrictions, location data, effective dates, and restriction type. E.g., Teanaway River bridge (10/142) on SR-10 with 20,000 lb BL and CL-8 axle limits effective October 2011 through December 2075. Used for commercial vehicle route planning, compliance checking, and restriction awareness. Covers bridge and roadway restrictions statewide.
-    CommercialVehicleRestrictionsWithIdOutput:
+    FetchCommercialVehicleRestrictionsWithIdOutput:
       type: object
       properties:
         BLMaxAxle:
@@ -496,19 +496,20 @@ components:
       description: 'Represents commercial vehicle restriction information with unique identifier, including weight limits by classification, height/width/length restrictions, location data, effective dates, restriction type, and unique restriction ID. E.g., Teanaway River bridge restriction (ID: B-WA-010-1) on SR-10 with 20,000 lb axle limits. Used for commercial vehicle route planning, compliance checking, and restriction tracking with ID-based operations. Covers bridge and roadway restrictions statewide.'
   parameters: {}
 paths:
-  /getCommercialVehicleRestrictionsWithIdAsJson:
+  /getCommercialVehicleRestrictionsAsJson:
     get:
-      summary: Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.
-      operationId: getCommercialVehicleRestrictionsWithId
+      summary: Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.
+      operationId: fetchCommercialVehicleRestrictions
       tags:
-        - cv-restriction-data-with-id
+        - cv-restriction-data
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getCommercialVehicleRestrictionsWithId } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions/core';
 
             const data = await fetchDottie({
-              endpoint: getCommercialVehicleRestrictionsWithId,
+              endpoint: fetchCommercialVehicleRestrictions,
               fetchMode: 'native',
               validate: true
             });
@@ -522,11 +523,86 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CommercialVehicleRestrictionsWithIdOutput'
+                  $ref: '#/components/schemas/FetchCommercialVehicleRestrictionsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 351 total)
+                  description: Example of a successful response from the API (showing first item of 349 total)
+                  value:
+                    - BLMaxAxle: 20000
+                      BridgeName: Teanaway River
+                      BridgeNumber: 10/142
+                      CL8MaxAxle: 20000
+                      DateEffective: 2011-10-18T07:00:00.000Z
+                      DateExpires: 2075-12-31T08:00:00.000Z
+                      DatePosted: 2011-10-18T22:12:00.000Z
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: SR 10
+                      IsDetourAvailable: false
+                      IsExceptionsAllowed: false
+                      IsPermanentRestriction: false
+                      IsWarning: false
+                      Latitude: 47.15136148800159
+                      LocationDescription: SR 10, MP 89.33 both directions-20,000 lbs limitation
+                      LocationName: 1.3 E Jct SR 970
+                      Longitude: -120.80431521930812
+                      MaximumGrossVehicleWeightInPounds: null
+                      RestrictionComment: BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.
+                      RestrictionHeightInInches: 0
+                      RestrictionLengthInInches: 0
+                      RestrictionType: 0
+                      RestrictionWeightInPounds: 0
+                      RestrictionWidthInInches: 0
+                      SAMaxAxle: 40000
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 89.33
+                        RoadName: SR 10
+                      State: WA
+                      StateRouteID: '10'
+                      TDMaxAxle: null
+                      VehicleType: ''
+                    - _note: ... 348 more items
+  /getCommercialVehicleRestrictionsWithIdAsJson:
+    get:
+      summary: Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.
+      operationId: fetchCommercialVehicleRestrictionsWithId
+      tags:
+        - cv-restriction-data-with-id
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCommercialVehicleRestrictionsWithId } from 'ws-dottie/wsdot-commercial-vehicle-restrictions/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchCommercialVehicleRestrictionsWithId,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchCommercialVehicleRestrictionsWithIdOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 349 total)
                   value:
                     - BLMaxAxle: 20000
                       BridgeName: Teanaway River
@@ -570,81 +646,7 @@ paths:
                       TDMaxAxle: null
                       VehicleType: ''
                       UniqueID: B-WA-010-1
-                    - _note: ... 350 more items
-  /getCommercialVehicleRestrictionsAsJson:
-    get:
-      summary: Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.
-      operationId: getCommercialVehicleRestrictions
-      tags:
-        - cv-restriction-data
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getCommercialVehicleRestrictions } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getCommercialVehicleRestrictions,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CommercialVehicleRestrictionsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 351 total)
-                  value:
-                    - BLMaxAxle: 20000
-                      BridgeName: Teanaway River
-                      BridgeNumber: 10/142
-                      CL8MaxAxle: 20000
-                      DateEffective: 2011-10-18T07:00:00.000Z
-                      DateExpires: 2075-12-31T08:00:00.000Z
-                      DatePosted: 2011-10-18T22:12:00.000Z
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: Both
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: SR 10
-                      IsDetourAvailable: false
-                      IsExceptionsAllowed: false
-                      IsPermanentRestriction: false
-                      IsWarning: false
-                      Latitude: 47.15136148800159
-                      LocationDescription: SR 10, MP 89.33 both directions-20,000 lbs limitation
-                      LocationName: 1.3 E Jct SR 970
-                      Longitude: -120.80431521930812
-                      MaximumGrossVehicleWeightInPounds: null
-                      RestrictionComment: BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.
-                      RestrictionHeightInInches: 0
-                      RestrictionLengthInInches: 0
-                      RestrictionType: 0
-                      RestrictionWeightInPounds: 0
-                      RestrictionWidthInInches: 0
-                      SAMaxAxle: 40000
-                      StartRoadwayLocation:
-                        Description: null
-                        Direction: Both
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 89.33
-                        RoadName: SR 10
-                      State: WA
-                      StateRouteID: '10'
-                      TDMaxAxle: null
-                      VehicleType: ''
-                    - _note: ... 350 more items
+                    - _note: ... 348 more items
 webhooks: {}
 tags:
   - name: cv-restriction-data

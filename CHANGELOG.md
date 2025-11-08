@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.1.0] - 2025-11-08
+
+- Features
+  - **Endpoint Factory Workflow**: Added typed endpoint factory and centralized registry so APIs generate consistent fetch and hook helpers automatically
+  - **API-Specific Bundles**: Added per-API `core` and `index` modules with schema exports to support tree-shakable, strongly typed imports
+  - **Schema Flexibility**: Allow endpoints to omit input/output schemas while preserving type safety defaults, and add cache flush date helpers to simplify refresh workflows
+
+- Improvements
+  - **Type Safety Enhancements**: Introduced shared type helpers, renamed endpoint functions, and standardized schema naming for better DX across all APIs
+  - **Export Consistency**: Deprecated legacy barrels and aligned package exports and descriptions for the new factory-based structure
+  - **Shared Utilities Cleanup**: Streamlined shared fetching utilities and endpoint creation scripts for lighter runtime bundles
+
+- Docs
+  - **Sample Data Expansion**: Added generated sample datasets and updated documentation to reflect new endpoint naming and usage patterns
+  - **Documentation Refresh**: Refined README guidance, endpoint references, and import examples to highlight the new factory approach
+
+- Build/Chore
+  - **Release Tooling**: Added an endpoint summary script and updated build/package configuration to include the expanded API bundles
+
 ## [1.0.0] - 2025-11-05
 
 - Features

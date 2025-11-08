@@ -1,26 +1,26 @@
 import { z } from "@/shared/zod-openapi-init";
 
 /**
- * GetCurrentWeatherInformation input schema
+ * GetWeatherInformation input schema
  *
  * Input parameters for getting current weather information. Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const getCurrentWeatherInformationSchema = z
+export const weatherInformationInputSchema = z
   .object({})
   .describe(
     "Retrieves current weather information from all weather stations statewide, returning temperature, humidity, wind conditions, visibility, barometric pressure, and precipitation data. Use for weather monitoring and road condition assessment."
   );
 
-export type GetCurrentWeatherInformationInput = z.infer<
-  typeof getCurrentWeatherInformationSchema
+export type WeatherInformationInput = z.infer<
+  typeof weatherInformationInputSchema
 >;
 
 /**
- * GetCurrentWeatherInformationByStationID input schema
+ * GetWeatherInformationByStationId input schema
  *
  * Input parameters for getting current weather information by station ID. Provides current information from weather stations. Coverage Area: Statewide.
  */
-export const getCurrentWeatherInformationByStationIDSchema = z
+export const weatherInformationByStationIdInputSchema = z
   .object({
     StationID: z
       .int()
@@ -32,8 +32,8 @@ export const getCurrentWeatherInformationByStationIDSchema = z
     "Retrieves current weather information for specific station by ID, returning temperature, humidity, wind conditions, visibility, barometric pressure, and precipitation data. Use for individual station weather monitoring."
   );
 
-export type GetCurrentWeatherInformationByStationIDInput = z.infer<
-  typeof getCurrentWeatherInformationByStationIDSchema
+export type WeatherInformationByStationIdInput = z.infer<
+  typeof weatherInformationByStationIdInputSchema
 >;
 
 /**
@@ -41,7 +41,7 @@ export type GetCurrentWeatherInformationByStationIDInput = z.infer<
  *
  * Input parameters for searching weather information by station ID and time range.
  */
-export const searchWeatherInformationSchema = z
+export const searchWeatherInformationInputSchema = z
   .object({
     StationID: z
       .int()
@@ -66,7 +66,7 @@ export const searchWeatherInformationSchema = z
   );
 
 export type SearchWeatherInformationInput = z.infer<
-  typeof searchWeatherInformationSchema
+  typeof searchWeatherInformationInputSchema
 >;
 
 /**
@@ -74,7 +74,7 @@ export type SearchWeatherInformationInput = z.infer<
  *
  * Input parameters for getting current weather information for multiple stations.
  */
-export const getCurrentWeatherForStationsSchema = z
+export const currentWeatherForStationsInputSchema = z
   .object({
     StationList: z
       .string()
@@ -86,6 +86,6 @@ export const getCurrentWeatherForStationsSchema = z
     "Retrieves current weather information for multiple specified stations, returning temperature, humidity, wind conditions, visibility, and other weather measurements for each station. Use for batch weather queries across multiple stations."
   );
 
-export type GetCurrentWeatherForStationsInput = z.infer<
-  typeof getCurrentWeatherForStationsSchema
+export type CurrentWeatherForStationsInput = z.infer<
+  typeof currentWeatherForStationsInputSchema
 >;

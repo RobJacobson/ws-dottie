@@ -41,10 +41,10 @@ export interface Endpoint<I, O> {
   function: string;
   /** Complete HTTP endpoint URL template */
   endpoint: string;
-  /** Zod schema for input validation */
-  inputSchema: z.ZodSchema<I>;
-  /** Zod schema for output validation */
-  outputSchema: z.ZodSchema<O>;
+  /** Zod schema for input validation (optional - excluded in lite builds) */
+  inputSchema?: z.ZodSchema<I>;
+  /** Zod schema for output validation (optional - excluded in lite builds) */
+  outputSchema?: z.ZodSchema<O>;
   /** Optional sample parameters for testing */
   sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
   /** Cache strategy */
@@ -55,21 +55,6 @@ export interface Endpoint<I, O> {
   urlTemplate: string;
   /** Computed unique identifier in format "api:function" for backward compatibility */
   id: string;
-}
-
-/**
- * Full API interface with computed endpoints
- *
- * This interface represents a complete API with all its endpoints converted
- * to runtime Endpoint objects with computed properties.
- */
-export interface Api {
-  /** The internal API name (e.g., "wsf-schedule") */
-  name: string;
-  /** The base URL for the API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
-  baseUrl: string;
-  /** Array of runtime endpoints with computed properties */
-  endpoints: Endpoint<unknown, unknown>[];
 }
 
 // ============================================================================
@@ -100,21 +85,6 @@ export type LoggingMode = "none" | "info" | "debug";
 export type FetchHandler = (url: string) => Promise<string>;
 
 /**
- * Core fetch tool interface for WS-Dottie APIs
- *
- * This interface defines the standard way to fetch data from WSDOT/WSF APIs
- * with explicit control over transport strategy and validation approach.
- * All fetch tools implement this interface for consistency.
- */
-export type FetchTool = <TInput, TOutput>(
-  endpoint: Endpoint<TInput, TOutput>,
-  params: TInput | undefined,
-  fetchStrategy: FetchStrategy,
-  validationStrategy: ValidationStrategy,
-  logMode?: LoggingMode
-) => Promise<TOutput>;
-
-/**
  * Fetch strategy for data fetching
  *
  * Defines the underlying transport mechanism used to fetch data.
@@ -122,12 +92,3 @@ export type FetchTool = <TInput, TOutput>(
  * - jsonp: Uses JSONP callbacks (browser-only, bypasses CORS)
  */
 export type FetchStrategy = "native" | "jsonp";
-
-/**
- * Validation strategy for data fetching
- *
- * Defines how input and output data should be validated.
- * - none: No validation performed
- * - zod: Full validation using Zod schemas
- */
-export type ValidationStrategy = "none" | "zod";

@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    HighwayCamerasOutput:
+    FetchHighwayCamerasOutput:
       type: object
       properties:
         CameraID:
@@ -165,7 +165,7 @@ components:
         - number
         - 'null'
       description: Ending milepost value for milepost range filtering, as a decimal. E.g., '5' for milepost 5, null when not filtering by end milepost. Used with StartingMilepost to filter cameras within milepost range.
-    HighwayCameraByCameraIdInputCameraIDParam:
+    FetchHighwayCameraByCameraIdInputCameraIDParam:
       type: number
       description: Unique camera identifier, as an integer ID. E.g., '9818' for Anacortes Airport Fuel Pump camera, '8216' for Arlington Municipal Airport Northwest camera. Used to retrieve specific camera information.
   parameters:
@@ -197,9 +197,9 @@ components:
       description: Ending milepost value for milepost range filtering, as a decimal. E.g., '5' for milepost 5, null when not filtering by end milepost. Used with StartingMilepost to filter cameras within milepost range.
       name: EndingMilepost
       in: query
-    HighwayCameraByCameraIdInputCameraIDParam:
+    FetchHighwayCameraByCameraIdInputCameraIDParam:
       schema:
-        $ref: '#/components/schemas/HighwayCameraByCameraIdInputCameraIDParam'
+        $ref: '#/components/schemas/FetchHighwayCameraByCameraIdInputCameraIDParam'
       required: true
       description: Unique camera identifier, as an integer ID. E.g., '9818' for Anacortes Airport Fuel Pump camera, '8216' for Arlington Municipal Airport Northwest camera. Used to retrieve specific camera information.
       name: CameraID
@@ -214,7 +214,8 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, searchHighwayCamerasByRouteAndMilepost } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { searchHighwayCamerasByRouteAndMilepost } from 'ws-dottie/wsdot-highway-cameras/core';
 
             const data = await fetchDottie({
               endpoint: searchHighwayCamerasByRouteAndMilepost,
@@ -241,7 +242,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/HighwayCamerasOutput'
+                  $ref: '#/components/schemas/FetchHighwayCamerasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -271,16 +272,17 @@ paths:
   /getCameraAsJson?CameraID={CameraID}:
     get:
       summary: Returns single Camera item for specific camera identifier.
-      operationId: getHighwayCameraByCameraId
+      operationId: fetchHighwayCameraByCameraId
       tags:
         - cameras
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getHighwayCameraByCameraId } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchHighwayCameraByCameraId } from 'ws-dottie/wsdot-highway-cameras/core';
 
             const data = await fetchDottie({
-              endpoint: getHighwayCameraByCameraId,
+              endpoint: fetchHighwayCameraByCameraId,
               params: {
                 "CameraID": 9818
               },
@@ -290,14 +292,14 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/HighwayCameraByCameraIdInputCameraIDParam'
+        - $ref: '#/components/parameters/FetchHighwayCameraByCameraIdInputCameraIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HighwayCamerasOutput'
+                $ref: '#/components/schemas/FetchHighwayCamerasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -326,16 +328,17 @@ paths:
   /getCamerasAsJson:
     get:
       summary: Returns multiple Camera items for statewide coverage.
-      operationId: getHighwayCameras
+      operationId: fetchHighwayCameras
       tags:
         - cameras
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getHighwayCameras } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchHighwayCameras } from 'ws-dottie/wsdot-highway-cameras/core';
 
             const data = await fetchDottie({
-              endpoint: getHighwayCameras,
+              endpoint: fetchHighwayCameras,
               fetchMode: 'native',
               validate: true
             });
@@ -349,7 +352,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/HighwayCamerasOutput'
+                  $ref: '#/components/schemas/FetchHighwayCamerasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response

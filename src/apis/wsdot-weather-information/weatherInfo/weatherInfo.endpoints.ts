@@ -1,10 +1,22 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./weatherInfo.input";
-import * as o from "./weatherInfo.output";
+import type {
+  CurrentWeatherForStationsInput,
+  SearchWeatherInformationInput,
+  WeatherInformationByStationIdInput,
+  WeatherInformationInput,
+} from "./weatherInfo.input";
+import {
+  currentWeatherForStationsInputSchema,
+  searchWeatherInformationInputSchema,
+  weatherInformationByStationIdInputSchema,
+  weatherInformationInputSchema,
+} from "./weatherInfo.input";
+import type { WeatherInfo } from "./weatherInfo.output";
+import { weatherInfoSchema } from "./weatherInfo.output";
 
-export const weatherInfoResource: EndpointGroup = {
+export const weatherInfoResource = {
   name: "weather-info",
   documentation: {
     resourceDescription:
@@ -14,48 +26,41 @@ export const weatherInfoResource: EndpointGroup = {
   },
   cacheStrategy: "FREQUENT" as const,
   endpoints: {
-    getWeatherInformation: {
-      function: "getWeatherInformation",
+    fetchWeatherInformation: {
       endpoint: "/GetCurrentWeatherInformationAsJson",
-      inputSchema: i.getCurrentWeatherInformationSchema,
-      outputSchema: z.array(o.weatherInfoSchema),
+      inputSchema: weatherInformationInputSchema,
+      outputSchema: z.array(weatherInfoSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple WeatherInfo items for all stations.",
-    } satisfies EndpointDefinition<
-      i.GetCurrentWeatherInformationInput,
-      o.WeatherInfo[]
-    >,
-    getWeatherInformationByStationId: {
-      function: "getWeatherInformationByStationId",
+    } satisfies EndpointDefinition<WeatherInformationInput, WeatherInfo[]>,
+    fetchWeatherInformationByStationId: {
       endpoint:
         "/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
-      inputSchema: i.getCurrentWeatherInformationByStationIDSchema,
-      outputSchema: o.weatherInfoSchema,
+      inputSchema: weatherInformationByStationIdInputSchema,
+      outputSchema: weatherInfoSchema,
       sampleParams: { StationID: 1909 },
       endpointDescription: "Returns single WeatherInfo for specific station.",
     } satisfies EndpointDefinition<
-      i.GetCurrentWeatherInformationByStationIDInput,
-      o.WeatherInfo
+      WeatherInformationByStationIdInput,
+      WeatherInfo
     >,
-    getCurrentWeatherForStations: {
-      function: "getCurrentWeatherForStations",
+    fetchCurrentWeatherForStations: {
       endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
-      inputSchema: i.getCurrentWeatherForStationsSchema,
-      outputSchema: z.array(o.weatherInfoSchema),
+      inputSchema: currentWeatherForStationsInputSchema,
+      outputSchema: z.array(weatherInfoSchema),
       sampleParams: { StationList: "1909,1966,1970" },
       endpointDescription:
         "Returns multiple WeatherInfo for specified stations.",
     } satisfies EndpointDefinition<
-      i.GetCurrentWeatherForStationsInput,
-      o.WeatherInfo[]
+      CurrentWeatherForStationsInput,
+      WeatherInfo[]
     >,
     searchWeatherInformation: {
-      function: "searchWeatherInformation",
       endpoint:
         "/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}",
-      inputSchema: i.searchWeatherInformationSchema,
-      outputSchema: z.array(o.weatherInfoSchema),
+      inputSchema: searchWeatherInformationInputSchema,
+      outputSchema: z.array(weatherInfoSchema),
       sampleParams: {
         StationID: 1980,
         SearchStartTime: new Date(
@@ -68,8 +73,8 @@ export const weatherInfoResource: EndpointGroup = {
       endpointDescription:
         "Returns multiple WeatherInfo for historical time range.",
     } satisfies EndpointDefinition<
-      i.SearchWeatherInformationInput,
-      o.WeatherInfo[]
+      SearchWeatherInformationInput,
+      WeatherInfo[]
     >,
   },
-};
+} satisfies EndpointGroup;

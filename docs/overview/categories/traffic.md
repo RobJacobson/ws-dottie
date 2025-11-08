@@ -49,7 +49,7 @@ The WSDOT Border Crossings API provides real-time information about border cross
 
 #### Border Crossing Monitor
 ```javascript
-import { useBorderCrossings } from 'ws-dottie';
+import { useBorderCrossings } from 'ws-dottie/wsdot-border-crossings';
 
 function BorderCrossingMonitor() {
   const { data: crossings, isLoading, error } = useBorderCrossings();
@@ -152,10 +152,10 @@ The WSDOT Highway Alerts API provides real-time information about traffic incide
 
 #### Traffic Alert Dashboard
 ```javascript
-import { useHighwayAlerts } from 'ws-dottie';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TrafficAlertDashboard() {
-  const { data: alerts, isLoading, error } = useHighwayAlerts();
+  const { data: alerts, isLoading, error } = useAlerts();
   
   // Group alerts by priority
   const highPriorityAlerts = alerts?.filter(alert => 
@@ -224,11 +224,11 @@ function TrafficAlertDashboard() {
 
 #### Regional Traffic Monitoring
 ```javascript
-import { useHighwayAlertsByMapArea } from 'ws-dottie';
+import { useAlertsByMapArea } from 'ws-dottie/wsdot-highway-alerts';
 
 function RegionalTrafficMonitor() {
   const [selectedRegion, setSelectedRegion] = useState('Seattle');
-  const { data: alerts, isLoading, error } = useHighwayAlertsByMapArea(
+  const { data: alerts, isLoading, error } = useAlertsByMapArea(
     selectedRegion ? { MapArea: selectedRegion } : null
   );
   
@@ -339,7 +339,7 @@ The WSDOT Highway Cameras API provides access to live traffic camera feeds throu
 
 #### Traffic Camera Viewer
 ```javascript
-import { useHighwayCameras, useSearchHighwayCamerasByRouteAndMilepost } from 'ws-dottie';
+import { useHighwayCameras, useSearchHighwayCamerasByRouteAndMilepost } from 'ws-dottie/wsdot-highway-cameras';
 
 function TrafficCameraViewer() {
   const [selectedRoute, setSelectedRoute] = useState('I-5');
@@ -429,7 +429,7 @@ The WSDOT Mountain Pass Conditions API provides real-time information about moun
 
 #### Mountain Pass Dashboard
 ```javascript
-import { useMountainPassConditions } from 'ws-dottie';
+import { useMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions';
 
 function MountainPassDashboard() {
   const { data: passes, isLoading, error } = useMountainPassConditions();
@@ -529,7 +529,7 @@ The WSDOT Toll Rates API provides real-time information about toll pricing for m
 
 #### Toll Calculator
 ```javascript
-import { useTollRates } from 'ws-dottie';
+import { useTollRates } from 'ws-dottie/wsdot-toll-rates';
 
 function TollCalculator() {
   const [vehicleType, setVehicleType] = useState('2Axle');
@@ -634,7 +634,7 @@ The WSDOT Traffic Flow API provides real-time information about traffic speeds a
 
 #### Traffic Flow Visualization
 ```javascript
-import { useTrafficFlows } from 'ws-dottie';
+import { useTrafficFlows } from 'ws-dottie/wsdot-traffic-flow';
 
 function TrafficFlowMap() {
   const { data: trafficFlows, isLoading, error } = useTrafficFlows();
@@ -734,7 +734,7 @@ The WSDOT Travel Times API provides estimated travel times between key locations
 
 #### Route Comparison Tool
 ```javascript
-import { useTravelTimes } from 'ws-dottie';
+import { useTravelTimes } from 'ws-dottie/wsdot-travel-times';
 
 function RouteComparison() {
   const { data: travelTimes, isLoading, error } = useTravelTimes();
@@ -802,10 +802,11 @@ Traffic APIs work together to provide comprehensive transportation information:
 
 ### Alerts + Mountain Pass Conditions Integration
 ```javascript
-import { useHighwayAlerts, useMountainPassConditions } from 'ws-dottie';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
+import { useMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions';
 
 function PassAwareTrafficDashboard() {
-  const { data: alerts } = useHighwayAlerts();
+  const { data: alerts } = useAlerts();
   const { data: passes } = useMountainPassConditions();
   
   // Correlate alerts with mountain pass conditions
@@ -872,11 +873,12 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 ### Alerts + Traffic Flow Integration
 ```javascript
-import { useHighwayAlerts, useTrafficFlow } from 'ws-dottie';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
+import { useTrafficFlows } from 'ws-dottie/wsdot-traffic-flow';
 
 function TrafficDashboard() {
-  const { data: alerts } = useHighwayAlerts();
-  const { data: flow } = useTrafficFlow();
+  const { data: alerts } = useAlerts();
+  const { data: flow } = useTrafficFlows();
   
   // Correlate alerts with traffic flow data
   const alertsWithFlow = alerts?.map(alert => {
@@ -931,7 +933,8 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 ### Travel Times + Toll Rates Integration
 ```javascript
-import { useTravelTimes, useTollRates } from 'ws-dottie';
+import { useTravelTimes } from 'ws-dottie/wsdot-travel-times';
+import { useTollRates } from 'ws-dottie/wsdot-toll-rates';
 
 function RouteOptimizer() {
   const { data: travelTimes } = useTravelTimes();

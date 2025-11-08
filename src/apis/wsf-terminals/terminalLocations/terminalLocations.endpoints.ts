@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalLocations.input";
-import * as o from "./terminalLocations.output";
+import type {
+  TerminalLocationsByIdInput,
+  TerminalLocationsInput,
+} from "./terminalLocations.input";
+import {
+  terminalLocationsByIdInputSchema,
+  terminalLocationsInputSchema,
+} from "./terminalLocations.input";
+import type { TerminalLocation } from "./terminalLocations.output";
+import { terminalLocationSchema } from "./terminalLocations.output";
 
-export const terminalLocationsResource: EndpointGroup = {
+export const terminalLocationsResource = {
   name: "terminal-locations",
   documentation: {
     resourceDescription:
@@ -14,29 +22,24 @@ export const terminalLocationsResource: EndpointGroup = {
   // Using STATIC strategy because terminal locations rarely change (only when terminals are added/removed)
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalLocations: {
-      function: "getTerminalLocations",
+    fetchTerminalLocations: {
       endpoint: "/terminalLocations",
-      inputSchema: i.terminalLocationsSchema,
-      outputSchema: z.array(o.terminalLocationSchema),
+      inputSchema: terminalLocationsInputSchema,
+      outputSchema: z.array(terminalLocationSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalLocation objects for all terminals.",
-    } satisfies EndpointDefinition<
-      i.TerminalLocationsInput,
-      o.TerminalLocation[]
-    >,
-    getTerminalLocationsByTerminalId: {
-      function: "getTerminalLocationsByTerminalId",
+    } satisfies EndpointDefinition<TerminalLocationsInput, TerminalLocation[]>,
+    fetchTerminalLocationsByTerminalId: {
       endpoint: "/terminalLocations/{TerminalID}",
-      inputSchema: i.terminalLocationsByIdSchema,
-      outputSchema: o.terminalLocationSchema,
+      inputSchema: terminalLocationsByIdInputSchema,
+      outputSchema: terminalLocationSchema,
       sampleParams: { TerminalID: 5 },
       endpointDescription:
         "Returns a single TerminalLocation object for specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalLocationsByIdInput,
-      o.TerminalLocation
+      TerminalLocationsByIdInput,
+      TerminalLocation
     >,
   },
-};
+} satisfies EndpointGroup;

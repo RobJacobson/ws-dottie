@@ -18,7 +18,7 @@ Meet Dottie — your comprehensive TypeScript companion for fetching real-time W
 
 ## Why WS-Dottie is Special
 
-**🚀 Comprehensive Coverage**: Access the full spectrum of Washington State transportation data — from real-time ferry locations and traffic cameras to weather stations, highway alerts, toll rates, and border crossings.
+**🚀 Comprehensive Coverage**: Access full spectrum of Washington State transportation data — from real-time ferry locations and traffic cameras to weather stations, highway alerts, toll rates, and border crossings.
 
 **🎯 Production-Ready**: Built for real applications with smart caching strategies, comprehensive error handling, and environment-aware logging. Works seamlessly in browsers (JSONP), servers (native fetch), and CLI environments.
 
@@ -30,13 +30,37 @@ Meet Dottie — your comprehensive TypeScript companion for fetching real-time W
 
 ### Zod‑powered validation (Zod 4)
 
-WS‑Dottie uses Zod 4 schemas for optional runtime validation and type inference across all APIs. That means:                                                             
+WS‑Dottie uses Zod 4 schemas for **optional** runtime validation and type inference across all APIs. Validation is **disabled by default** (`validate: false`) for optimal performance, but you can enable it when you need extra safety.
+
+**With validation enabled** (`validate: true`):
 - Strong, generated TypeScript types from a single source of truth
 - Early detection of upstream shape drifts and edge cases
 - Safe transformations of date strings and nullable fields
 - Pass‑through philosophy for unknown fields (we don't strip upstream data)
+- Runtime type checking catches API response changes immediately
 
-Practically, API functions fetch raw data, validate and transform it with Zod, and then return fully typed results. This improves reliability without adding complexity to your app code.                                                       
+**Without validation** (`validate: false` - default):
+- Faster performance — no schema parsing overhead
+- Smaller bundle size — Zod schemas can be tree-shaken out
+- Still type-safe — TypeScript types are always available
+- Automatic .NET date conversion still applies
+- Perfect for production when you trust the API stability
+
+**When schemas are missing**: If you request validation (`validate: true`) but schemas aren't available (e.g., using a light build), WS-Dottie will throw a clear error directing you to use the full build or import schemas from the `/schemas` subpath.
+
+```javascript
+// With validation (recommended for production)
+const vessels = await fetchVesselLocations({
+  fetchMode: 'native',
+  validate: true  // Validates response against Zod schema
+});
+
+// Without validation (faster, lighter - default)
+const vessels = await fetchVesselLocations({
+  fetchMode: 'native',
+  validate: false  // Raw fetch with .NET date conversion only
+});
+```                                                       
 
 ## ✨ What You Can Build
 
@@ -52,7 +76,7 @@ Practically, API functions fetch raw data, validate and transform it with Zod, a
 
 ### 1. Get Your Free API Key
 
-Visit the [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required — the API is completely free.                                                                  
+Visit [WSDOT Developer Portal](https://wsdot.wa.gov/developers/api-access) and sign up with just your email address. No credit card required — API is completely free.                                                                  
 
 ### 2. Install WS-Dottie
 
@@ -93,25 +117,162 @@ WS‑Dottie supports both CommonJS and ES Module formats:
 
 **ES Modules (Recommended)**
 ```javascript
-import { useVesselLocations, useHighwayAlerts, configManager } from 'ws-dottie';
+import { configManager, fetchDottie } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 ```
 
 **CommonJS**
 ```javascript
-const { useVesselLocations, useHighwayAlerts, configManager } = require('ws-dottie');                                                                           
+const { configManager, fetchDottie } = require('ws-dottie');
+const { useVesselLocations } = require('ws-dottie/wsf-vessels');
+const { useAlerts } = require('ws-dottie/wsdot-highway-alerts');
 ```
 
-Modern bundlers and Node.js will choose the optimal format automatically. Deep subpath imports are not currently exposed; prefer named imports.                 
+Modern bundlers and Node.js will choose the optimal format automatically.
 
-### 5. Start Building
+### 5. Import Patterns
+
+WS-Dottie provides multiple import patterns optimized for different use cases. Choose the pattern that best fits your needs:
+
+#### Shared Utilities (Main Entry)
+
+The root package now exposes shared utilities only:
+
+```javascript
+import { configManager, fetchDottie, datesHelper } from 'ws-dottie';
+import type { ApiError } from 'ws-dottie';
+```
+
+**Use when**: You need global configuration, low-level fetching, or shared helpers.
+
+#### API Hooks and Types
+
+Import hooks, fetch functions, and types for a specific API from its package entry:
+
+```javascript
+import { useVesselLocations, type VesselLocation } from 'ws-dottie/wsf-vessels';
+import { useAlerts, type Alert } from 'ws-dottie/wsdot-highway-alerts';
+```
+
+**Use when**: You want React hooks and types for a particular API.
+
+#### Core Fetch Functions (No Hooks)
+
+Import only fetch functions and types — no React dependencies:
+
+```javascript
+import { 
+  fetchVesselLocations,   // Fetch functions only
+  type VesselLocation      // TypeScript types
+} from 'ws-dottie/wsf-vessels/core';
+```
+
+**Use when**: Building server-side code, Node.js scripts, or when you don't need React hooks. Excludes TanStack Query dependencies for smaller bundles.
+
+#### Schema Imports (Zod Schemas Only)
+
+Import Zod schemas for custom validation or type inference:
+
+```javascript
+import { 
+  vesselLocationsSchema,      // Zod schema
+  type VesselLocation         // Inferred TypeScript type
+} from 'ws-dottie/wsf-vessels/schemas';
+```
+
+**Use when**: You need Zod schemas for custom validation logic or want to build your own validation layer.
+
+### TypeScript Types
+
+WS-Dottie exports TypeScript types for all API inputs and outputs. Types are available from the same import paths as functions:
+
+**Importing Types:**
+```typescript
+// Import types along with functions
+import {
+  fetchVesselLocations,
+  type VesselLocation,           // Output type (single item)
+  type VesselLocationsInput,     // Input type
+} from 'ws-dottie/wsf-vessels/core';
+
+// Import types without functions
+import type { VesselLocation } from 'ws-dottie/wsf-vessels/schemas';
+```
+
+**Using Types in Your Code:**
+```typescript
+import {
+  fetchVesselLocations,
+  type VesselLocation,
+} from 'ws-dottie/wsf-vessels/core';
+
+// Type function parameters
+async function processVessel(vessel: VesselLocation) {
+  console.log(`Processing ${vessel.VesselName}`);
+}
+
+// Type function return values
+async function getVesselData(): Promise<VesselLocation[]> {
+  const vessels = await fetchVesselLocations({
+    fetchMode: 'native',
+    validate: false
+  });
+  return vessels;
+}
+
+// Type variables
+const vessel: VesselLocation = {
+  VesselID: 18,
+  VesselName: 'Chelan',
+  // ... other properties
+};
+```
+
+**Input vs Output Types:**
+- **Input types** (`*Input`): Parameters for API functions
+  - Example: `VesselLocationsByIdInput` for `fetchVesselLocationsByVesselId`
+- **Output types**: Response data from API functions
+  - Example: `VesselLocation` (single item) or `VesselLocation[]` (array)
+
+**Types with React Hooks:**
+```typescript
+import { 
+  useVesselLocations,
+  type VesselLocation 
+} from 'ws-dottie/wsf-vessels';
+
+function VesselList() {
+  const { data: vessels } = useVesselLocations();
+  
+  // TypeScript knows vessels is VesselLocation[] | undefined
+  if (!vessels) return <div>Loading...</div>;
+  
+  return (
+    <ul>
+      {vessels.map((vessel: VesselLocation) => (
+        <li key={vessel.VesselID}>{vessel.VesselName}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Type Naming Convention:**
+- Output types: PascalCase singular (e.g., `VesselLocation`, `HighwayAlert`)
+- Input types: PascalCase with `Input` suffix (e.g., `VesselLocationsInput`, `VesselLocationsByIdInput`)
+- Arrays: Use TypeScript array syntax (e.g., `VesselLocation[]`)
+
+### 6. Start Building
 
 **React Application (Recommended)**
 ```javascript
-import { useVesselLocations, useHighwayAlerts } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
   const { data: vessels, isLoading } = useVesselLocations();
-  const { data: alerts } = useHighwayAlerts();
+  const { data: alerts } = useAlerts();
 
   return (
     <div>
@@ -125,53 +286,60 @@ function TransportationDashboard() {
 
 **Server-Side (Node.js)**
 ```javascript
-import { fetchDottie, getVesselLocationsByVesselId, getAlertById, getFareLineItemsByTripDateAndTerminals } from 'ws-dottie';
+import {
+  fetchVesselLocationsByVesselId,
+  fetchFareLineItemsByTripDateAndTerminals,
+} from 'ws-dottie/wsf-vessels/core';
+import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';
+import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
 
 // Get specific vessel location (VesselID: 18)
-const vessel = await fetchDottie({
-  endpoint: getVesselLocationsByVesselId,
+const vessel = await fetchVesselLocationsByVesselId({
   params: { VesselID: 18 },
   fetchMode: 'native',
-  validate: true
+  validate: true,
 });
 
 // Get specific highway alert (AlertID: 468632)
-const alert = await fetchDottie({
-  endpoint: getAlertById,
+const alert = await fetchAlertById({
   params: { AlertID: 468632 },
   fetchMode: 'native',
-  validate: true
+  validate: true,
 });
 
 // Get ferry fare information for tomorrow's trip
-const fares = await fetchDottie({
- endpoint: getFareLineItemsByTripDateAndTerminals,
+const fares = await fetchFareLineItemsByTripDateAndTerminals({
   params: {
     TripDate: '2025-01-28',
     DepartingTerminalID: 3,
     ArrivingTerminalID: 7,
-    RoundTrip: false
+    RoundTrip: false,
   },
   fetchMode: 'native',
-  validate: true
+  validate: true,
+});
+
+// Get all border crossings
+const crossings = await fetchBorderCrossings({
+  fetchMode: 'native',
+  validate: true,
 });
 ```
 
 **Browser (CORS-Safe)**
 ```javascript
-import { fetchDottie, getVesselBasicsByVesselId, getBridgeClearancesByRoute } from 'ws-dottie';
+import { fetchVesselBasicsByVesselId } from 'ws-dottie/wsf-vessels/core';
+import { fetchBridgeClearancesByRoute } from 'ws-dottie/wsdot-bridge-clearances/core';
 
 // Get specific vessel details (VesselID: 74)
-const vessel = await fetchDottie({
-  endpoint: getVesselBasicsByVesselId,
+const vessel = await fetchVesselBasicsByVesselId({
   params: { VesselID: 74 },
   fetchMode: 'jsonp', // Bypasses CORS
   validate: true
 });
 
 // Get bridge clearances for I-5 (Route: "005")
-const clearances = await fetchDottie({
-  endpoint: getBridgeClearancesByRoute,
+const clearances = await fetchBridgeClearancesByRoute({
   params: { Route: "005" },
   fetchMode: 'jsonp',
   validate: true
@@ -184,16 +352,16 @@ const clearances = await fetchDottie({
 fetch-dottie --list
 
 # Test specific vessel location (VesselID: 18)
-fetch-dottie getVesselLocationsByVesselId '{"VesselID": 18}'
+fetch-dottie fetchVesselLocationsByVesselId '{"VesselID": 18}'
 
 # Get ferry fares for specific trip
-fetch-dottie getFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
+fetch-dottie fetchFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
 
 # Fast testing without validation (raw data)
-fetch-dottie getVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --pretty
+fetch-dottie fetchVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --pretty
 
 # Browser-compatible JSONP testing with parameters
-fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}' --jsonp
+fetch-dottie fetchBridgeClearancesByRoute '{"Route": "005"}' --jsonp
 ```
 
 ## 🖥️ Command Line Interface
@@ -234,55 +402,55 @@ fetch-dottie <function-name> [params] [options]
 fetch-dottie --list
 
 # Test any endpoint with full validation
-fetch-dottie getBorderCrossings
+fetch-dottie fetchBorderCrossings
 
 # Fast testing without validation (raw data)
-fetch-dottie getVesselBasics --no-validation
+fetch-dottie fetchVesselBasics --no-validation
 ```
 
 **🌐 Environment Testing**
 ```bash
 # Server-side testing (default)
-fetch-dottie getVesselLocations
+fetch-dottie fetchVesselLocations
 
 # Browser environment testing (JSONP)
-fetch-dottie getBorderCrossings --jsonp
+fetch-dottie fetchBorderCrossings --jsonp
 
 # Mixed: JSONP without validation (fastest)
-fetch-dottie getVesselBasics --jsonp --no-validation
+fetch-dottie fetchVesselBasics --jsonp --no-validation
 ```
 
 **📊 Data Exploration**
 ```bash
 # Get bridge clearances for I-5
-fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}'
+fetch-dottie fetchBridgeClearancesByRoute '{"Route": "005"}'
 
 # Get ferry fare information for specific trip
-fetch-dottie getFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
+fetch-dottie fetchFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}'
 
 # Get specific vessel location (VesselID: 18)
-fetch-dottie getVesselLocationsByVesselId '{"VesselID": 18}'
+fetch-dottie fetchVesselLocationsByVesselId '{"VesselID": 18}'
 
 # Get specific highway alert (AlertID: 468632)
-fetch-dottie getAlertById '{"AlertID": 468632}'
+fetch-dottie fetchAlertById '{"AlertID": 468632}'
 
 # Get weather from specific station (StationID: 1909)
-fetch-dottie getWeatherInformationByStationId '{"StationID": 1909}'
+fetch-dottie fetchWeatherInformationByStationId '{"StationID": 1909}'
 
 # Get vessel history for specific date range
-fetch-dottie getVesselHistoriesByVesselNameAndDateRange '{"VesselName": "Tacoma", "DateStart": "2025-09-01", "DateEnd": "2025-10-01"}'
+fetch-dottie fetchVesselHistoriesByVesselNameAndDateRange '{"VesselName": "Tacoma", "DateStart": "2025-09-01", "DateEnd": "2025-10-01"}'
 
 # Pretty-printed output
-fetch-dottie getBorderCrossings --pretty
+fetch-dottie fetchBorderCrossings --pretty
 
 # Concise array output
-fetch-dottie getVesselLocations --concise
+fetch-dottie fetchVesselLocations --concise
 
 # Silent mode (JSON only)
-fetch-dottie getBorderCrossings --silent
+fetch-dottie fetchBorderCrossings --silent
 
 # Limit output to first 5 items
-fetch-dottie getVesselLocations --limit 5
+fetch-dottie fetchVesselLocations --limit 5
 ```
 
 ### Available Functions
@@ -317,7 +485,7 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 - **Travel Times** - Estimated travel times between locations
 - **Toll Rates** - Real-time toll pricing for managed lanes
 - **Weather Information** - Road weather conditions and forecasts
-- **Highway Cameras** - Live traffic camera feeds across the state
+- **Highway Cameras** - Live traffic camera feeds across state
 - **Bridge Clearances** - Height restrictions for commercial vehicles
 - **Mountain Pass Conditions** - Pass status and travel restrictions
 - **Commercial Vehicle Restrictions** - Truck and commercial vehicle limits
@@ -349,7 +517,7 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 ### **🌐 Flexible Fetching Strategies**
 - **Native fetch** for server-side and Node.js applications
 - **JSONP support** for browser environments (bypasses CORS restrictions)
-- **Optional Zod validation** for performance vs. safety tradeoffs
+- **Optional Zod validation** for performance vs. safety tradeoffs (disabled by default)
 - **Unified API** — same code works in browser and server
 
 ### **🛠️ Production-Ready Developer Experience**
@@ -372,6 +540,61 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 - **Tree-shaking support** — only import what you need
 - **Sample parameters** provided for every endpoint                 
 
+## 🎯 Production vs Development
+
+### When to Use Validation
+
+**Use validation (`validate: true`) in production when:**
+- You need to catch API response changes early
+- Data integrity is critical for your application
+- You want runtime type safety beyond TypeScript
+- You're integrating with third-party APIs that may change
+
+**Skip validation (`validate: false`) in production when:**
+- Performance is critical and API is stable
+- Bundle size matters (validation adds ~50-100KB)
+- You trust the API provider's stability
+- You're making many rapid API calls
+
+### Development vs Production Patterns
+
+```javascript
+// Development: Use validation to catch issues early
+const vessels = await fetchVesselLocations({
+  fetchMode: 'native',
+  validate: process.env.NODE_ENV === 'development'
+});
+
+// Production: Optimize for performance
+const vessels = await fetchVesselLocations({
+  fetchMode: 'native',
+  validate: false  // Faster, smaller bundle
+});
+
+// Conditional: Best of both worlds
+const vessels = await fetchVesselLocations({
+  fetchMode: 'native',
+  validate: process.env.NODE_ENV !== 'production'
+});
+```
+
+### Bundle Size Optimization
+
+- **Full build with validation**: ~200-300KB (includes Zod schemas)
+- **Light build without validation**: ~100-150KB (schemas tree-shaken out)
+- **API-specific imports**: Further reduces bundle size by excluding unused APIs
+- **Core-only imports**: Excludes React/TanStack Query (~50KB savings)
+
+Use API-specific or core-only imports for optimal tree-shaking:
+
+```javascript
+// Smaller bundle - only includes wsf-vessels API
+import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
+
+// Even smaller - no React hooks
+import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
+```
+
 ## 🔄 TanStack Query Integration
 
 WS-Dottie provides **zero-configuration React hooks** with transportation-optimized caching strategies. Each API endpoint automatically uses the appropriate cache strategy based on data update frequency.
@@ -379,14 +602,18 @@ WS-Dottie provides **zero-configuration React hooks** with transportation-optimi
 ### **Cache Strategies**
 
 ```javascript
-import { useVesselLocations, useHighwayAlerts, useVesselBasics } from 'ws-dottie';
+import {
+  useVesselLocations,
+  useVesselBasics,
+} from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
   // REALTIME: 5-second updates for vessel locations
   const { data: vessels, isLoading: vesselsLoading } = useVesselLocations();
   
   // FREQUENT: 5-minute updates for highway alerts  
-  const { data: alerts, isLoading: alertsLoading } = useHighwayAlerts();
+  const { data: alerts, isLoading: alertsLoading } = useAlerts();
   
   // STATIC: Daily updates for vessel information
   const { data: vesselInfo } = useVesselBasics();
@@ -404,17 +631,19 @@ function TransportationDashboard() {
 ### **Parameterized Queries**
 
 ```javascript
-import { useVesselLocationsById, useGetAlert, useFareLineItems } from 'ws-dottie';
+import { useVesselLocationsByVesselId } from 'ws-dottie/wsf-vessels';
+import { useAlertById } from 'ws-dottie/wsdot-highway-alerts';
+import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function SpecificDataView() {
   // Get specific vessel location (REALTIME caching)
-  const { data: vessel } = useVesselLocationsById({ VesselID: 18 });
+  const { data: vessel } = useVesselLocationsByVesselId({ VesselID: 18 });
   
   // Get specific highway alert (FREQUENT caching)
-  const { data: alert } = useGetAlert({ AlertID: 468632 });
+  const { data: alert } = useAlertById({ AlertID: 468632 });
   
   // Get ferry fares for specific trip (STATIC caching)
-  const { data: fares } = useFareLineItems({
+  const { data: fares } = useFareLineItemsByTripDateAndTerminals({
     TripDate: '2025-01-28',
     DepartingTerminalID: 3,
     ArrivingTerminalID: 7,
@@ -435,13 +664,12 @@ function SpecificDataView() {
 
 ```javascript
 import { useQuery } from '@tanstack/react-query';
-import { fetchDottie, vesselBasicsById } from 'ws-dottie';
+import { fetchVesselBasicsByVesselId } from 'ws-dottie/wsf-vessels/core';
 
 function CustomQueryExample() {
   const { data, error, isLoading } = useQuery({
     queryKey: ['vessel', 74],
-    queryFn: () => fetchDottie({
-      endpoint: vesselBasicsById,
+    queryFn: () => fetchVesselBasicsByVesselId({
       params: { VesselID: 74 },
       fetchMode: 'native',
       validate: true
@@ -461,12 +689,12 @@ function CustomQueryExample() {
 
 ### **Cache Strategy Details**
 
-| Strategy | Update Frequency | Use Cases | Stale Time | Refetch Interval |
-|----------|------------------|-----------|------------|------------------|
-| `REALTIME` | 5 seconds | Traffic cameras, vessel locations | 5s | 5s |
-| `FREQUENT` | 5 minutes | Schedules, alerts, weather | 5m | 5m |
-| `MODERATE` | 1 hour | Weather conditions, road status | 1h | 1h |
-| `STATIC` | 1 day | Terminals, vessels, routes | 1d | 1d |
+|| Strategy | Update Frequency | Use Cases | Stale Time | Refetch Interval |
+||----------|------------------|-----------|------------|------------------|
+|| `REALTIME` | 5 seconds | Traffic cameras, vessel locations | 5s | 5s |
+|| `FREQUENT` | 5 minutes | Schedules, alerts, weather | 5m | 5m |
+|| `MODERATE` | 1 hour | Weather conditions, road status | 1h | 1h |
+|| `STATIC` | 1 day | Terminals, vessels, routes | 1d | 1d |
 
 ## 📚 Documentation
 
@@ -486,31 +714,33 @@ Our documentation is automatically generated from API definitions, ensuring it s
 
 ### **React Dashboard (Recommended)**
 ```javascript
-import { 
-  useVesselLocations, 
-  useHighwayAlerts, 
-  useVesselLocationsById,
-  useGetAlert,
-  useFareLineItems 
-} from 'ws-dottie';
+import {
+  useVesselLocations,
+  useVesselLocationsByVesselId,
+} from 'ws-dottie/wsf-vessels';
+import {
+  useAlerts,
+  useAlertById,
+} from 'ws-dottie/wsdot-highway-alerts';
+import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function TransportationDashboard() {
   // Real-time data with automatic caching
   const { data: allVessels, isLoading: vesselsLoading } = useVesselLocations();
-  const { data: alerts, isLoading: alertsLoading } = useHighwayAlerts();
-  
+  const { data: alerts, isLoading: alertsLoading } = useAlerts();
+
   // Specific vessel tracking (VesselID: 18)
-  const { data: specificVessel } = useVesselLocationsById({ VesselID: 18 });
-  
+  const { data: specificVessel } = useVesselLocationsByVesselId({ VesselID: 18 });
+
   // Specific alert details (AlertID: 468632)
-  const { data: alertDetails } = useGetAlert({ AlertID: 468632 });
-  
+  const { data: alertDetails } = useAlertById({ AlertID: 468632 });
+
   // Ferry fare calculation for tomorrow's trip
-  const { data: fares } = useFareLineItems({
+  const { data: fares } = useFareLineItemsByTripDateAndTerminals({
     TripDate: '2025-01-28',
     DepartingTerminalID: 3,
     ArrivingTerminalID: 7,
-    RoundTrip: false
+    RoundTrip: false,
   });
 
   return (
@@ -520,13 +750,13 @@ function TransportationDashboard() {
         {specificVessel && <p>Tracking: {specificVessel.VesselName}</p>}
         {vesselsLoading && <div>Loading vessels...</div>}
       </section>
-      
+
       <section>
         <h2>Highway Alerts: {alerts?.length || 0}</h2>
         {alertDetails && <p>Latest: {alertDetails.Headline}</p>}
         {alertsLoading && <div>Loading alerts...</div>}
       </section>
-      
+
       <section>
         <h2>Trip Planning</h2>
         <p>Ferry fares: {fares?.length || 0} options available</p>
@@ -538,13 +768,10 @@ function TransportationDashboard() {
 
 ### **Server-Side API Integration**
 ```javascript
-import { 
-  fetchDottie,
-  getBorderCrossings,
-  getVesselLocationsByVesselId,
-  getAlertById,
-  getBridgeClearancesByRoute
-} from 'ws-dottie';
+import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
+import { fetchVesselLocationsByVesselId } from 'ws-dottie/wsf-vessels/core';
+import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';
+import { fetchBridgeClearancesByRoute } from 'ws-dottie/wsdot-bridge-clearances/core';
 
 // Express.js route handler with parameterized queries
 app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
@@ -553,32 +780,27 @@ app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
     
     const [crossings, vessel, alert, clearances] = await Promise.all([
       // All border crossings
-      fetchDottie({
-        endpoint: getBorderCrossings,
-        params: {},
+      fetchBorderCrossings({
         fetchMode: 'native',
         validate: true
       }),
       
       // Specific vessel location
-      fetchDottie({
-        endpoint: getVesselLocationsByVesselId,
+      fetchVesselLocationsByVesselId({
         params: { VesselID: parseInt(vesselId) },
         fetchMode: 'native',
         validate: true
       }),
       
       // Specific highway alert
-      fetchDottie({
-        endpoint: getAlertById,
+      fetchAlertById({
         params: { AlertID: parseInt(alertId) },
         fetchMode: 'native',
         validate: true
       }),
       
       // Bridge clearances for I-5
-      fetchDottie({
-        endpoint: getBridgeClearancesByRoute,
+      fetchBridgeClearancesByRoute({
         params: { Route: "005" },
         fetchMode: 'native',
         validate: true
@@ -594,35 +816,29 @@ app.get('/api/transportation/:vesselId/:alertId', async (req, res) => {
 
 ### **Browser Application (CORS-Safe)**
 ```javascript
-import { 
-  fetchDottie,
-  getVesselBasicsByVesselId,
-  getWeatherInformationByStationId,
-  getAlertsByRegionId
-} from 'ws-dottie';
+import { fetchVesselBasicsByVesselId } from 'ws-dottie/wsf-vessels/core';
+import { fetchWeatherInformationByStationId } from 'ws-dottie/wsdot-weather-information/core';
+import { fetchAlertsByRegionId } from 'ws-dottie/wsdot-highway-alerts/core';
 
 // Browser-safe data fetching with parameters
 async function loadTransportationData(vesselId = 74, stationId = 1909, regionId = 9) {
   const [vessel, weather, regionalAlerts] = await Promise.all([
     // Specific vessel details
-    fetchDottie({
-      endpoint: getVesselBasicsByVesselId,
+    fetchVesselBasicsByVesselId({
       params: { VesselID: vesselId },
       fetchMode: 'jsonp', // Bypasses CORS
       validate: true
     }),
     
     // Weather from specific station
-    fetchDottie({
-      endpoint: getWeatherInformationByStationId,
+    fetchWeatherInformationByStationId({
       params: { StationID: stationId },
       fetchMode: 'jsonp',
       validate: true
     }),
     
     // Alerts from specific region
-    fetchDottie({
-      endpoint: getAlertsByRegionId,
+    fetchAlertsByRegionId({
       params: { RegionID: regionId },
       fetchMode: 'jsonp',
       validate: true
@@ -640,27 +856,27 @@ async function loadTransportationData(vesselId = 74, stationId = 1909, regionId 
 
 # Check specific vessel status (VesselID: 18)
 echo "=== Vessel Status ==="
-fetch-dottie getVesselLocationsByVesselId '{"VesselID": 18}' --concise
+fetch-dottie fetchVesselLocationsByVesselId '{"VesselID": 18}' --concise
 
 # Check highway alerts for specific region (RegionID: 9)
 echo "=== Regional Alerts ==="
-fetch-dottie getAlertsByRegionId '{"RegionID": 9}' --limit 5
+fetch-dottie fetchAlertsByRegionId '{"RegionID": 9}' --limit 5
 
 # Check weather from specific station (StationID: 1909)
 echo "=== Weather Station ==="
-fetch-dottie getWeatherInformationByStationId '{"StationID": 1909}'
+fetch-dottie fetchWeatherInformationByStationId '{"StationID": 1909}'
 
 # Get ferry fares for tomorrow's trip
 echo "=== Ferry Fares ==="
-fetch-dottie getFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}' --pretty
+fetch-dottie fetchFareLineItemsByTripDateAndTerminals '{"TripDate": "2025-01-28", "DepartingTerminalID": 3, "ArrivingTerminalID": 7, "RoundTrip": false}' --pretty
 
 # Fast testing without validation
 echo "=== Quick Test ==="
-fetch-dottie getVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --silent
+fetch-dottie fetchVesselBasicsByVesselId '{"VesselID": 74}' --no-validation --silent
 
 # Check bridge clearances for I-5
 echo "=== Bridge Clearances ==="
-fetch-dottie getBridgeClearancesByRoute '{"Route": "005"}' --concise
+fetch-dottie fetchBridgeClearancesByRoute '{"Route": "005"}' --concise
 ```
 
 ## 🚀 Example Projects
@@ -710,11 +926,11 @@ npm run docs:samples:fetch           # Fetch fresh sample data for documentation
 
 ## 🏛️ Governance
 
-Maintained by the Ferryjoy npm org. Issues and contributions welcome.
+Maintained by Ferryjoy npm org. Issues and contributions welcome.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [development guide](./docs/overview/getting-started.md) for setup instructions.                                                 
+We welcome contributions! Please see our development guide for setup instructions.                                                 
 
 ## 📄 License
 

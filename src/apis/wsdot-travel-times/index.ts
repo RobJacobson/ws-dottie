@@ -1,18 +1,11 @@
 /**
- * @fileoverview WSDOT Travel Times API - Clean exports for types and API definition
+ * @fileoverview wsdot-travel-times API - Exports hooks, fetch functions, and types
  *
- * This module provides a clean interface for the WSDOT Travel Times API, exporting
- * all input/output types and the main API definition.
+ * This module provides exports for all hooks, fetch functions, and types in the wsdot-travel-times API.
  */
 
-// Export the main API definition
-export { wsdotTravelTimesApi } from "./apiDefinition";
-// Export individual resources for direct use
-export { travelTimeRoutesGroup } from "./travelTimeRoutes/travelTimeRoutes.endpoints";
-// Export all input types
-export type {
-  GetTravelTimeInput,
-  GetTravelTimesInput,
-} from "./travelTimeRoutes/travelTimeRoutes.input";
-// Export all output types
-export type { TravelTimeRoute } from "./travelTimeRoutes/travelTimeRoutes.output";
+// Re-export everything from core (fetch functions and types)
+export * from "./core";
+
+// Export hooks
+export * from "./travelTimeRoutes/travelTimeRoutes.hooks";

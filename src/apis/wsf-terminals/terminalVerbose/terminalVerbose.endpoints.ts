@@ -1,9 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import * as i from "./terminalVerbose.input";
-import * as o from "./terminalVerbose.output";
+import type {
+  TerminalVerboseByTerminalIdInput,
+  TerminalVerboseInput,
+} from "./terminalVerbose.input";
+import {
+  terminalVerboseByTerminalIdInputSchema,
+  terminalVerboseInputSchema,
+} from "./terminalVerbose.input";
+import type { TerminalVerbose } from "./terminalVerbose.output";
+import { terminalVerboseSchema } from "./terminalVerbose.output";
 
-export const terminalVerboseResource: EndpointGroup = {
+export const terminalVerboseResource = {
   name: "terminal-verbose",
   documentation: {
     resourceDescription:
@@ -13,26 +21,24 @@ export const terminalVerboseResource: EndpointGroup = {
   },
   cacheStrategy: "STATIC" as const,
   endpoints: {
-    getTerminalVerbose: {
-      function: "getTerminalVerbose",
+    fetchTerminalVerbose: {
       endpoint: "/terminalVerbose",
-      inputSchema: i.terminalVerboseSchema,
-      outputSchema: z.array(o.terminalVerboseSchema),
+      inputSchema: terminalVerboseInputSchema,
+      outputSchema: z.array(terminalVerboseSchema),
       sampleParams: {},
       endpointDescription:
         "Returns multiple TerminalVerbose objects for all terminals.",
-    } satisfies EndpointDefinition<i.TerminalVerboseInput, o.TerminalVerbose[]>,
-    getTerminalVerboseByTerminalId: {
-      function: "getTerminalVerboseByTerminalId",
+    } satisfies EndpointDefinition<TerminalVerboseInput, TerminalVerbose[]>,
+    fetchTerminalVerboseByTerminalId: {
       endpoint: "/terminalVerbose/{TerminalID}",
-      inputSchema: i.terminalVerboseByIdSchema,
-      outputSchema: o.terminalVerboseSchema,
+      inputSchema: terminalVerboseByTerminalIdInputSchema,
+      outputSchema: terminalVerboseSchema,
       sampleParams: { TerminalID: 4 },
       endpointDescription:
         "Returns TerminalVerbose data for the terminal with the specified terminal.",
     } satisfies EndpointDefinition<
-      i.TerminalVerboseByIdInput,
-      o.TerminalVerbose
+      TerminalVerboseByTerminalIdInput,
+      TerminalVerbose
     >,
   },
-};
+} satisfies EndpointGroup;
