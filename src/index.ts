@@ -14,23 +14,13 @@
  */
 
 // ============================================================================
-// ALL APIs (WSDOT & WSF)
-// ============================================================================
-
-// Export all APIs and their types from the centralized apis directory
-export * from "./apis";
-
-// ============================================================================
 // ESSENTIAL SHARED UTILITIES
 // ============================================================================
 
-// Export error types for error handling
-export type {
-  ApiError,
-  ErrorContext,
-} from "./shared";
-// Export only essential shared utilities needed by consumers
+export type { ApiError, ErrorContext } from "./shared";
 export {
+  configManager,
   datesHelper,
   jsDateToYyyyMmDd,
 } from "./shared";
+export { fetchDottie } from "./shared/fetching";

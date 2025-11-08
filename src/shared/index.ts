@@ -11,6 +11,7 @@
 
 // Date utilities for handling .NET datetime formats
 export {
+  configManager,
   datesHelper,
   jsDateToYyyyMmDd,
 } from "./utils";
