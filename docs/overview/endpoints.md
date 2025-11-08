@@ -39,6 +39,7 @@ This table reflects all current endpoints defined under `src/apis` as of 2025-11
 | wsdot-weather-readings | surface-measurements | fetchSurfaceMeasurements | useSurfaceMeasurements | /Scanweb/SurfaceMeasurements | surfaceMeasurementsInputSchema | z.array(surfaceMeasurementSchema) |
 | wsdot-weather-readings | weather-readings | fetchWeatherReadings | useWeatherReadings | /Scanweb | weatherReadingsInputSchema | z.array(weatherReadingSchema) |
 | wsdot-weather-stations | weather-stations | fetchWeatherStations | useWeatherStations | /GetCurrentStationsAsJson | weatherStationsInputSchema | z.array(weatherStationSchema) |
+| wsf-fares | cache-flush-date-fares | fetchCacheFlushDateFares | useCacheFlushDateFares | /cacheflushdate | cacheFlushDateInputSchema | cacheFlushDateOutputSchema |
 | wsf-fares | fare-line-items | fetchFareLineItemsBasic | useFareLineItemsBasic | /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} | fareLineItemsBasicInputSchema | z.array(lineItemSchema) |
 | wsf-fares | fare-line-items | fetchFareLineItemsByTripDateAndTerminals | useFareLineItemsByTripDateAndTerminals | /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip} | fareLineItemsByTripDateAndTerminalsInputSchema | z.array(lineItemSchema) |
 | wsf-fares | fare-line-items | fetchFareLineItemsVerbose | useFareLineItemsVerbose | /fareLineItemsVerbose/{TripDate} | fareLineItemsVerboseInputSchema | lineItemVerboseSchema |
@@ -49,6 +50,7 @@ This table reflects all current endpoints defined under `src/apis` as of 2025-11
 | wsf-fares | terminals | fetchTerminalMatesFares | useTerminalMatesFares | /terminalMates/{TripDate}/{TerminalID} | terminalMatesInputSchema | terminalListSchema |
 | wsf-fares | valid-date-range | fetchFaresValidDateRange | useFaresValidDateRange | /validdaterange | faresValidDateRangeInputSchema | validDateRangeSchema |
 | wsf-schedule | active-seasons | fetchActiveSeasons | useActiveSeasons | /activeseasons | activeSeasonsInputSchema | z.array(scheduleBaseSchema) |
+| wsf-schedule | cache-flush-date-schedule | fetchCacheFlushDateSchedule | useCacheFlushDateSchedule | /cacheflushdate | cacheFlushDateInputSchema | cacheFlushDateOutputSchema |
 | wsf-schedule | route-details | fetchRouteDetailsByTripDate | useRouteDetailsByTripDate | /routedetails/{TripDate} | routeDetailsByTripDateInputSchema | z.array(routeDetailSchema) |
 | wsf-schedule | route-details | fetchRouteDetailsByTripDateAndRouteId | useRouteDetailsByTripDateAndRouteId | /routedetails/{TripDate}/{RouteID} | routeDetailsByTripDateAndRouteIdInputSchema | routeDetailSchema |
 | wsf-schedule | route-details | fetchRouteDetailsByTripDateAndTerminals | useRouteDetailsByTripDateAndTerminals | /routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID} | routeDetailsByTripDateAndTerminalsInputSchema | z.array(routeDetailSchema) |
@@ -72,6 +74,7 @@ This table reflects all current endpoints defined under `src/apis` as of 2025-11
 | wsf-schedule | time-adjustments | fetchTimeAdjustments | useTimeAdjustments | /timeadj | timeAdjustmentsInputSchema | z.array(timeAdjustmentSchema) |
 | wsf-schedule | time-adjustments | fetchTimeAdjustmentsByRoute | useTimeAdjustmentsByRoute | /timeadjbyroute/{RouteID} | timeAdjustmentsByRouteInputSchema | z.array(timeAdjustmentSchema) |
 | wsf-schedule | time-adjustments | fetchTimeAdjustmentsBySchedRoute | useTimeAdjustmentsBySchedRoute | /timeadjbyschedroute/{SchedRouteID} | timeAdjustmentsBySchedRouteInputSchema | z.array(timeAdjustmentSchema) |
+| wsf-terminals | cache-flush-date-terminals | fetchCacheFlushDateTerminals | useCacheFlushDateTerminals | /cacheflushdate | cacheFlushDateInputSchema | cacheFlushDateOutputSchema |
 | wsf-terminals | terminal-basics | fetchTerminalBasics | useTerminalBasics | /terminalBasics | terminalBasicsInputSchema | z.array(terminalBasicSchema) |
 | wsf-terminals | terminal-basics | fetchTerminalBasicsByTerminalId | useTerminalBasicsByTerminalId | /terminalBasics/{TerminalID} | terminalBasicsByIdInputSchema | terminalBasicSchema |
 | wsf-terminals | terminal-bulletins | fetchTerminalBulletins | useTerminalBulletins | /terminalBulletins | terminalBulletinsInputSchema | z.array(terminalBulletinSchema) |
@@ -86,6 +89,7 @@ This table reflects all current endpoints defined under `src/apis` as of 2025-11
 | wsf-terminals | terminal-verbose | fetchTerminalVerboseByTerminalId | useTerminalVerboseByTerminalId | /terminalVerbose/{TerminalID} | terminalVerboseByTerminalIdInputSchema | terminalVerboseSchema |
 | wsf-terminals | terminal-wait-times | fetchTerminalWaitTimes | useTerminalWaitTimes | /terminalWaitTimes | terminalWaitTimesInputSchema | z.array(terminalWaitTimeSchema) |
 | wsf-terminals | terminal-wait-times | fetchTerminalWaitTimesByTerminalId | useTerminalWaitTimesByTerminalId | /terminalWaitTimes/{TerminalID} | terminalWaitTimesByIdInputSchema | terminalWaitTimeSchema |
+| wsf-vessels | cache-flush-date-vessels | fetchCacheFlushDateVessels | useCacheFlushDateVessels | /cacheflushdate | cacheFlushDateInputSchema | cacheFlushDateOutputSchema |
 | wsf-vessels | vessel-accommodations | fetchVesselAccommodations | useVesselAccommodations | /vesselAccommodations | vesselAccommodationsInputSchema | z.array(vesselAccommodationSchema) |
 | wsf-vessels | vessel-accommodations | fetchVesselAccommodationsByVesselId | useVesselAccommodationsByVesselId | /vesselAccommodations/{VesselID} | vesselAccommodationsByIdInputSchema | vesselAccommodationSchema |
 | wsf-vessels | vessel-basics | fetchVesselBasics | useVesselBasics | /vesselBasics | vesselBasicsInputSchema | z.array(vesselBasicSchema) |
