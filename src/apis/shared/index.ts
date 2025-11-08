@@ -5,13 +5,13 @@
  * WSDOT API endpoints.
  */
 
+export { createCacheFlushDateEndpointGroup } from "@/shared/factories/createCacheFlushDateEndpoint";
 export {
   type CacheFlushDateInput,
   type CacheFlushDateOutput,
   cacheFlushDateInputSchema,
   cacheFlushDateOutputSchema,
 } from "./cacheFlushDate";
-export { createCacheFlushDateEndpointGroup } from "@/shared/factories/createCacheFlushDateEndpoint";
 export {
   type RoadwayLocation,
   roadwayLocationSchema,

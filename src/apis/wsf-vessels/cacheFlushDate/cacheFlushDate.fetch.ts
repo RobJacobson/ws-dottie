@@ -2,8 +2,8 @@ import type { FetchFunctionParams } from "@/shared/factories/createFetchFunction
 import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsfVesselsApi } from "../apiDefinition";
 import {
-  type CacheFlushDateVesselsInput,
   type CacheFlushDateVessels,
+  type CacheFlushDateVesselsInput,
   cacheFlushDateVesselsResource,
 } from "./cacheFlushDate.endpoints";
 

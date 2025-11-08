@@ -4,8 +4,8 @@ import type { QueryHookOptions } from "@/shared/factories/createHooks";
 import { createHooks } from "@/shared/factories/createHooks";
 import { wsfVesselsApi } from "../apiDefinition";
 import {
-  type CacheFlushDateVesselsInput,
   type CacheFlushDateVessels,
+  type CacheFlushDateVesselsInput,
   cacheFlushDateVesselsResource,
 } from "./cacheFlushDate.endpoints";
 import * as fetchFunctions from "./cacheFlushDate.fetch";

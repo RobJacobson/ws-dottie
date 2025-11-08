@@ -4,8 +4,8 @@ import type { QueryHookOptions } from "@/shared/factories/createHooks";
 import { createHooks } from "@/shared/factories/createHooks";
 import { wsfTerminalsApi } from "../apiDefinition";
 import {
-  type CacheFlushDateTerminalsInput,
   type CacheFlushDateTerminals,
+  type CacheFlushDateTerminalsInput,
   cacheFlushDateTerminalsResource,
 } from "./cacheFlushDate.endpoints";
 import * as fetchFunctions from "./cacheFlushDate.fetch";
