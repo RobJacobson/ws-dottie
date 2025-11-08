@@ -51,11 +51,12 @@ function App() {
 ### 3. Use WS-Dottie Hooks
 
 ```jsx
-import { useGetVesselLocations, useGetHighwayAlerts } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
-  const { data: vessels, isLoading, error } = useGetVesselLocations();
-  const { data: alerts } = useGetHighwayAlerts();
+  const { data: vessels, isLoading, error } = useVesselLocations();
+  const { data: alerts } = useAlerts();
   
   if (error) return <div>Error: {error.message}</div>;
   
@@ -103,19 +104,21 @@ WS-Dottie provides four cache strategies optimized for different types of transp
 ### Using Cache Strategies
 
 ```jsx
-import { useGetVesselLocations, useGetHighwayAlerts, useGetTerminalLocations } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
+import { useTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 // Use default caching strategy (REALTIME for vessel locations)
-const { data: vessels } = useGetVesselLocations();
+const { data: vessels } = useVesselLocations();
 
 // Override with custom caching strategy
-const { data: alerts } = useGetHighwayAlerts({
+const { data: alerts } = useAlerts({
   staleTime: 2 * 60 * 1000, // 2 minutes instead of 5
   refetchInterval: 2 * 60 * 1000, // 2 minutes instead of 5
 });
 
 // Use with static data
-const { data: terminals } = useGetTerminalLocations(); // Uses STATIC strategy
+const { data: terminals } = useTerminalLocations(); // Uses STATIC strategy
 ```
 
 ## 🔄 Cache Invalidation
@@ -143,12 +146,12 @@ The `createHook` factory function automatically:
 ### Using Hooks with Automatic Cache Invalidation
 
 ```jsx
-import { useGetTerminalLocations } from 'ws-dottie';
+import { useTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 function FerryTerminals() {
   // Terminal locations hook includes automatic cache invalidation
   // Parameters are optional for endpoints that don't require them
-  const { data: terminals, isLoading, error } = useGetTerminalLocations();
+  const { data: terminals, isLoading, error } = useTerminalLocations();
   
   if (isLoading) return <div>Loading terminals...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -170,12 +173,12 @@ function FerryTerminals() {
 ### Using with Parameters
 
 ```jsx
-import { useGetVesselBasics } from 'ws-dottie';
+import { useVesselBasics } from 'ws-dottie/wsf-vessels';
 
 function VesselDetails({ vesselId }) {
   // Vessel basics hook includes automatic cache invalidation
   // Parameters are required for endpoints that need them
-  const { data: vessel, isLoading, error } = useGetVesselBasics({ VesselID: vesselId });
+  const { data: vessel, isLoading, error } = useVesselBasics({ VesselID: vesselId });
   
   if (isLoading) return <div>Loading vessel details...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -197,10 +200,10 @@ WS-Dottie hooks support all TanStack Query options for fine-grained control:
 ### Custom Query Options
 
 ```jsx
-import { useGetVesselLocations } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 
 function VesselTracker() {
-  const { data: vessels, isLoading, error, refetch } = useGetVesselLocations({
+  const { data: vessels, isLoading, error, refetch } = useVesselLocations({
     // Override default cache strategy
     staleTime: 10 * 1000, // 10 seconds instead of 5
     refetchInterval: 10 * 1000, // 10 seconds instead of 5
@@ -258,16 +261,17 @@ function VesselTracker() {
 ### Conditional Data Fetching
 
 ```jsx
-import { useGetVesselLocations, useGetTerminalWaitTimes } from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useTerminalWaitTimes } from 'ws-dottie/wsf-terminals';
 
 function FerryDashboard() {
   const [showDetails, setShowDetails] = useState(false);
   
   // Always fetch vessel locations
-  const { data: vessels } = useGetVesselLocations();
+  const { data: vessels } = useVesselLocations();
   
   // Conditionally fetch terminal wait times
-  const { data: waitTimes } = useGetTerminalWaitTimes({
+  const { data: waitTimes } = useTerminalWaitTimes({
     enabled: showDetails // Only fetch when details are shown
   });
   
@@ -305,7 +309,8 @@ function FerryDashboard() {
 ### Data Fetching with Parameters
 
 ```jsx
-import { useGetSchedulesByTripDateAndRouteId, useGetFareLineItemsByTripDateAndTerminals } from 'ws-dottie';
+import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
+import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function FerrySchedule() {
   const [route, setRoute] = useState({ 
@@ -314,12 +319,12 @@ function FerrySchedule() {
     date: new Date() 
   });
   
-  const { data: schedules } = useGetSchedulesByTripDateAndRouteId({ 
+  const { data: schedules } = useScheduleByTripDateAndRouteId({ 
     TripDate: route.date.toISOString().split('T')[0], 
     RouteID: route.departing
   });
   
-  const { data: fares } = useGetFareLineItemsByTripDateAndTerminals({ 
+  const { data: fares } = useFareLineItemsByTripDateAndTerminals({ 
     TripDate: route.date.toISOString().split('T')[0], 
     DepartingTerminalID: route.departing, 
     ArrivingTerminalID: route.arriving 
@@ -370,7 +375,7 @@ Recommended component structure for WS-Dottie data:
 ```jsx
 // Container component - handles data fetching
 function VesselMapContainer() {
-  const { data: vessels, isLoading, error, refetch } = useGetVesselLocations();
+  const { data: vessels, isLoading, error, refetch } = useVesselLocations();
   
   return (
     <VesselMap 
@@ -399,10 +404,10 @@ function VesselMap({ vessels, isLoading, error, onRefresh }) {
 ### Data Transformation
 
 ```jsx
-import { useGetWeatherInformation } from 'ws-dottie';
+import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
 
 function WeatherDashboard() {
-  const { data: weather } = useGetWeatherInformation();
+  const { data: weather } = useWeatherInformation();
   
   // Transform data for visualization
   const weatherByRegion = useMemo(() => {
@@ -450,22 +455,19 @@ function WeatherDashboard() {
 ### 1. Choose Appropriate Caching Strategy
 
 ```jsx
-import { 
-  useGetVesselLocations, 
-  useGetTerminalWaitTimes, 
-  useGetSchedules,
-  useGetTerminalLocations
-} from 'ws-dottie';
+import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useTerminalWaitTimes, useTerminalLocations } from 'ws-dottie/wsf-terminals';
+import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
 
 function FerryApp() {
   // Real-time data for live tracking
-  const { data: vessels } = useGetVesselLocations(); // Uses REALTIME strategy
+  const { data: vessels } = useVesselLocations(); // Uses REALTIME strategy
   
   // Frequent updates for wait times
-  const { data: waitTimes } = useGetTerminalWaitTimes(); // Uses FREQUENT strategy
+  const { data: waitTimes } = useTerminalWaitTimes(); // Uses FREQUENT strategy
   
   // Static data with automatic cache invalidation
-  const { data: terminals } = useGetTerminalLocations(); // Uses cache invalidation instead of fixed interval
+  const { data: terminals } = useTerminalLocations(); // Uses cache invalidation instead of fixed interval
   
   return (
     <div>
@@ -517,11 +519,12 @@ function FerryDashboard() {
 ### 3. Manual Cache Invalidation
 
 ```jsx
-import { useGetSchedules, useQueryClient } from 'ws-dottie';
+import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
+import { useQueryClient } from '@tanstack/react-query';
 
 function ScheduleComponent() {
   const queryClient = useQueryClient();
-  const { data: schedules } = useGetSchedules();
+  const { data: schedules } = useScheduleByTripDateAndRouteId();
   
   const refreshSchedules = () => {
     queryClient.invalidateQueries(['schedules']);

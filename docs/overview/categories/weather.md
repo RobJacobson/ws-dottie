@@ -64,7 +64,7 @@ The WSDOT Weather Information API provides current weather conditions from monit
 
 #### Weather Dashboard
 ```javascript
-import { useWeatherInformation } from 'ws-dottie';
+import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
 
 function WeatherDashboard() {
   const { data: weather, isLoading, error } = useWeatherInformation();
@@ -148,7 +148,7 @@ function calculateAverage(stations, field) {
 
 #### Travel Weather Map
 ```javascript
-import { useWeatherInformation } from 'ws-dottie';
+import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
 
 function TravelWeatherMap() {
   const { data: weather, isLoading, error } = useWeatherInformation();
@@ -257,7 +257,7 @@ The WSDOT Weather Extended API provides detailed weather measurements including 
 
 #### Scientific Weather Dashboard
 ```javascript
-import { useSurfaceMeasurements, useSubsurfaceMeasurements } from 'ws-dottie';
+import { useSurfaceMeasurements, useSubsurfaceMeasurements } from 'ws-dottie/wsdot-weather-readings';
 
 function ScientificWeatherDashboard() {
   const { data: surfaceData, isLoading: surfaceLoading } = useSurfaceMeasurements();
@@ -341,7 +341,8 @@ The WSDOT Weather Stations API provides information about weather station locati
 
 #### Weather Station Locator
 ```javascript
-import { useWeatherStations, useWeatherInformation } from 'ws-dottie';
+import { useWeatherStations } from 'ws-dottie/wsdot-weather-stations';
+import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
 
 function WeatherStationLocator() {
   const { data: stations, isLoading: stationsLoading } = useWeatherStations();
@@ -446,7 +447,8 @@ Weather APIs work together to provide comprehensive weather and road condition i
 
 ### Weather Stations + Weather Information Integration
 ```javascript
-import { useWeatherInformation, useWeatherStations } from 'ws-dottie';
+import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
+import { useWeatherStations } from 'ws-dottie/wsdot-weather-stations';
 
 function ComprehensiveWeatherDashboard() {
   const { data: weather, isLoading: weatherLoading } = useWeatherInformation();
