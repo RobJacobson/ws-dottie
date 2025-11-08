@@ -11,16 +11,9 @@ import type { QueryHookOptions } from "./createEndpointGroupHooks";
 import type { FetchFunctionParams } from "./fetchFunctionFactory";
 
 /**
- * Converts "getXyz" to "fetchXyz" or keeps name as-is
+ * Converts endpoint key to hook function name
  */
-type GetToFetchName<T extends string> = T extends `get${infer Rest}`
-  ? `fetch${Rest}`
-  : T;
-
-/**
- * Converts "fetchXyz" to "useXyz" or adds "use" prefix
- */
-type FetchToHookName<T extends string> = T extends `fetch${infer Rest}`
+type EndpointKeyToHookName<T extends string> = T extends `fetch${infer Rest}`
   ? `use${Rest}`
   : `use${Capitalize<T>}`;
 
@@ -41,9 +34,7 @@ type ExtractEndpointTypes<T> = T extends EndpointDefinition<infer I, infer O>
  * }
  */
 export type FetchFunctionsMap<T extends EndpointGroup> = {
-  [K in keyof T["endpoints"] as GetToFetchName<
-    K & string
-  >]: ExtractEndpointTypes<T["endpoints"][K]> extends {
+  [K in keyof T["endpoints"]]: ExtractEndpointTypes<T["endpoints"][K]> extends {
     input: infer I;
     output: infer O;
   }
@@ -61,8 +52,8 @@ export type FetchFunctionsMap<T extends EndpointGroup> = {
  * }
  */
 export type HooksMap<T extends EndpointGroup> = {
-  [K in keyof T["endpoints"] as FetchToHookName<
-    GetToFetchName<K & string>
+  [K in keyof T["endpoints"] as EndpointKeyToHookName<
+    K & string
   >]: ExtractEndpointTypes<T["endpoints"][K]> extends {
     input: infer I;
     output: infer O;

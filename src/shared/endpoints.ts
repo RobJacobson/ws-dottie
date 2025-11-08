@@ -81,9 +81,15 @@ const API_MODULES = [
 const createEndpointFromDefinition = <I, O>(
   apiDefinition: ApiDefinition,
   endpointGroup: EndpointGroup,
+  functionName: string,
   endpointDefinition: EndpointDefinition<I, O>
 ): Endpoint<I, O> => {
-  return createEndpoint(apiDefinition, endpointGroup, endpointDefinition);
+  return createEndpoint(
+    apiDefinition,
+    endpointGroup,
+    endpointDefinition,
+    functionName
+  );
 };
 
 /**
@@ -94,12 +100,14 @@ const createEndpointFromDefinition = <I, O>(
  */
 export const endpoints = API_MODULES.flatMap((apiDefinition) =>
   apiDefinition.endpointGroups.flatMap((endpointGroup) =>
-    Object.values(endpointGroup.endpoints).map((endpointDefinition) =>
-      createEndpointFromDefinition(
-        apiDefinition,
-        endpointGroup,
-        endpointDefinition as EndpointDefinition<unknown, unknown>
-      )
+    Object.entries(endpointGroup.endpoints).map(
+      ([functionName, endpointDefinition]) =>
+        createEndpointFromDefinition(
+          apiDefinition,
+          endpointGroup,
+          functionName,
+          endpointDefinition as EndpointDefinition<unknown, unknown>
+        )
     )
   )
 );

@@ -72,8 +72,9 @@ function shouldUseCacheFlushDate(
  *
  * This utility function iterates through all endpoints in an endpoint group,
  * creates typed Endpoint objects, and generates React Query hooks that wrap
- * the provided fetch functions. It converts "fetchXyz" function names to
- * "useXyz" hook names for consistency.
+ * the provided fetch functions. Endpoint keys (e.g., "fetchVesselStats" or
+ * "searchAlerts") are treated as canonical fetch function names and converted
+ * to hook names automatically.
  *
  * @template TApi - The API definition type (inferred from parameter)
  * @template TGroup - The endpoint group type (inferred from parameter)
@@ -107,39 +108,41 @@ export function createEndpointGroupHooks<
   // unknown is safer than any as it requires explicit type checking before use.
   fetchFunctions: Record<
     string,
-    (params?: FetchFunctionParams<unknown>) => Promise<unknown>
+    // biome-ignore lint/suspicious/noExplicitAny: Above
+    (params?: FetchFunctionParams<any>) => Promise<unknown>
   >
 ): HooksMap<TGroup> {
   const hooks = {} as HooksMap<TGroup>;
 
   // Process each endpoint in the group
-  for (const [_, endpointDef] of Object.entries(endpointGroup.endpoints)) {
+  for (const [functionName, endpointDef] of Object.entries(
+    endpointGroup.endpoints
+  )) {
     // Type assertion: endpointDef is EndpointDefinition<unknown, unknown>
     const typedEndpointDef = endpointDef as EndpointDefinition<
       unknown,
       unknown
     >;
     // Create a typed endpoint object
-    const endpoint = createEndpoint(api, endpointGroup, typedEndpointDef);
-    const functionName = typedEndpointDef.function;
-
-    // Convert "getXyz" to "fetchXyz" to match fetch function names
-    const fetchFunctionName = functionName.startsWith("get")
-      ? `fetch${functionName.substring(3)}`
-      : functionName;
+    const endpoint = createEndpoint(
+      api,
+      endpointGroup,
+      typedEndpointDef,
+      functionName
+    );
 
     // Get the fetch function
-    const fetchFunction = fetchFunctions[fetchFunctionName];
+    const fetchFunction = fetchFunctions[functionName];
     if (!fetchFunction) {
       throw new Error(
-        `Fetch function "${fetchFunctionName}" not found for endpoint "${functionName}"`
+        `Fetch function "${functionName}" not found for endpoint "${functionName}"`
       );
     }
 
     // Convert "fetchXyz" to "useXyz" for hook name
-    const hookName = fetchFunctionName.startsWith("fetch")
-      ? `use${fetchFunctionName.substring(5)}`
-      : `use${fetchFunctionName.charAt(0).toUpperCase() + fetchFunctionName.slice(1)}`;
+    const hookName = functionName.startsWith("fetch")
+      ? `use${functionName.substring(5)}`
+      : `use${functionName.charAt(0).toUpperCase() + functionName.slice(1)}`;
 
     // Determine if we should use cache flush date invalidation
     const useCacheFlush = shouldUseCacheFlushDate(
@@ -151,7 +154,7 @@ export function createEndpointGroupHooks<
     // Create the hook
     if (useCacheFlush) {
       // Hook with cache flush date wrapper
-      hooks[hookName] = <TInput, TOutput>(
+      hooks[hookName as keyof HooksMap<TGroup>] = (<TInput, TOutput>(
         params?: TInput,
         options?: QueryHookOptions<TOutput>
       ): UseQueryResult<TOutput, Error> => {
@@ -166,10 +169,10 @@ export function createEndpointGroupHooks<
           params,
           options
         );
-      };
+      }) as HooksMap<TGroup>[keyof HooksMap<TGroup>];
     } else {
       // Regular hook without cache flush date
-      hooks[hookName] = <TInput, TOutput>(
+      hooks[hookName as keyof HooksMap<TGroup>] = (<TInput, TOutput>(
         params?: TInput,
         options?: QueryHookOptions<TOutput>
       ): UseQueryResult<TOutput, Error> => {
@@ -183,7 +186,7 @@ export function createEndpointGroupHooks<
           refetchOnWindowFocus: false,
           ...options,
         });
-      };
+      }) as HooksMap<TGroup>[keyof HooksMap<TGroup>];
     }
   }
 

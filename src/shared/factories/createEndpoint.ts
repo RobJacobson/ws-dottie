@@ -33,7 +33,7 @@ import type { Endpoint } from "@/shared/types";
  * const endpoint = createEndpoint(
  *   wsfVesselsApi,
  *   vesselStatsResource,
- *   vesselStatsResource.endpoints.getVesselStats
+ *   vesselStatsResource.endpoints.fetchVesselStats
  * );
  * ```
  */
@@ -41,10 +41,11 @@ export const createEndpoint = <TInput, TOutput>(
   apiDefinition: ApiDefinition,
   endpointGroup: EndpointGroup,
   endpointDef: EndpointDefinition<TInput, TOutput>,
+  functionName: string,
   includeSchemas: boolean = true
 ): Endpoint<TInput, TOutput> => ({
   api: apiDefinition.name,
-  function: endpointDef.function,
+  function: functionName,
   endpoint: endpointDef.endpoint,
   ...(includeSchemas && {
     inputSchema: endpointDef.inputSchema,
@@ -52,7 +53,7 @@ export const createEndpoint = <TInput, TOutput>(
   }),
   sampleParams: endpointDef.sampleParams,
   cacheStrategy: endpointGroup.cacheStrategy,
-  functionName: endpointDef.function,
+  functionName,
   urlTemplate: `${apiDefinition.baseUrl}${endpointDef.endpoint}`,
-  id: `${apiDefinition.name}:${endpointDef.function}`,
+  id: `${apiDefinition.name}:${functionName}`,
 });

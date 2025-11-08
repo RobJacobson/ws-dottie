@@ -10,7 +10,7 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import type { ApiDefinition } from "@/apis/types";
+import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 import type { Endpoint } from "@/shared/types";
 import { createEndpoint } from "./createEndpoint";
 import { cacheStrategies } from "./queryOptions";
@@ -27,16 +27,23 @@ const findCacheFlushEndpoint = (
       group.name === "schedule-cache-flush-date"
   );
 
-  const cacheFlushDateEndpointDef =
-    cacheFlushDateGroup?.endpoints.getCacheFlushDate;
+  if (!cacheFlushDateGroup) {
+    return null;
+  }
 
-  return cacheFlushDateEndpointDef
-    ? createEndpoint(
-        apiDefinition,
-        cacheFlushDateGroup,
-        cacheFlushDateEndpointDef
-      )
-    : null;
+  const [functionName, cacheFlushDateEndpointDef] =
+    Object.entries(cacheFlushDateGroup.endpoints)[0] ?? [];
+
+  if (!functionName || !cacheFlushDateEndpointDef) {
+    return null;
+  }
+
+  return createEndpoint(
+    apiDefinition,
+    cacheFlushDateGroup,
+    cacheFlushDateEndpointDef as EndpointDefinition<unknown, unknown>,
+    functionName
+  );
 };
 
 /**

@@ -2,8 +2,8 @@
  * @fileoverview Create Endpoint Group Fetch Functions Utility
  *
  * This module provides a utility function to create fetch functions for all
- * endpoints in an endpoint group. It converts "getXyz" function names to
- * "fetchXyz" and returns an object with strongly-typed fetch functions.
+ * endpoints in an endpoint group. Endpoint keys are treated as the canonical
+ * function names and are used directly when generating fetch functions.
  */
 
 import type {
@@ -20,7 +20,8 @@ import type { FetchFunctionsMap } from "./types";
  *
  * This utility function iterates through all endpoints in an endpoint group,
  * creates typed Endpoint objects, and generates fetch functions using the factory.
- * It converts "getXyz" function names to "fetchXyz" for consistency.
+ * Endpoint keys (e.g., \"fetchVesselStats\" or \"searchAlerts\") become the exported
+ * fetch function names.
  *
  * @template TApi - The API definition type (inferred from parameter)
  * @template TGroup - The endpoint group type (inferred from parameter)
@@ -47,26 +48,28 @@ export function createEndpointGroupFetchFunctions<
   const fetchFunctions = {} as FetchFunctionsMap<TGroup>;
 
   // Process each endpoint in the group
-  for (const [_, endpointDef] of Object.entries(endpointGroup.endpoints)) {
+  for (const [functionName, endpointDef] of Object.entries(
+    endpointGroup.endpoints
+  )) {
     // Type assertion: endpointDef is EndpointDefinition<unknown, unknown>
     const typedEndpointDef = endpointDef as EndpointDefinition<
       unknown,
       unknown
     >;
     // Create a typed endpoint object
-    const endpoint = createEndpoint(api, endpointGroup, typedEndpointDef);
-    const functionName = typedEndpointDef.function;
-
-    // Convert "getXyz" to "fetchXyz", keep other function names as-is
-    const fetchFunctionName = functionName.startsWith("get")
-      ? `fetch${functionName.substring(3)}`
-      : functionName;
+    const endpoint = createEndpoint(
+      api,
+      endpointGroup,
+      typedEndpointDef,
+      functionName
+    );
 
     // Create a strongly-typed fetch function using the factory
     const fetchFunction = createFetchFunction(endpoint);
 
-    // Store the fetch function with the converted name
-    fetchFunctions[fetchFunctionName] = fetchFunction;
+    // Store the fetch function using the canonical function name
+    fetchFunctions[functionName as keyof FetchFunctionsMap<TGroup>] =
+      fetchFunction as FetchFunctionsMap<TGroup>[keyof FetchFunctionsMap<TGroup>];
   }
 
   return fetchFunctions;
