@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsfVesselsApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
 import { vesselLocationsGroup } from "./vesselLocations.endpoints";
 import * as fetchFunctions from "./vesselLocations.fetch";
 import type {

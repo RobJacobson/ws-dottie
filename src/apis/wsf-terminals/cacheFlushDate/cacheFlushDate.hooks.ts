@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
 import {
   type CacheFlushDateTerminals,
   type CacheFlushDateTerminalsInput,

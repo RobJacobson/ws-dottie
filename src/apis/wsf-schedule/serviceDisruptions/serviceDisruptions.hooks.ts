@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsfScheduleApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import { serviceDisruptionsResource } from "./serviceDisruptions.endpoints";
 import * as fetchFunctions from "./serviceDisruptions.fetch";
 import type { RoutesHavingServiceDisruptionsByTripDateInput } from "./serviceDisruptions.input";

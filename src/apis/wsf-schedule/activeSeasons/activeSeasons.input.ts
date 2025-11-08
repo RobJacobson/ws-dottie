@@ -5,7 +5,7 @@
  * Schedule API endpoints related to active seasons operations.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for ActiveScheduledSeasons input parameters

@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/apiDefinition";
 import { eventCategoriesGroup } from "./eventCategories.endpoints";
 import * as fetchFunctions from "./eventCategories.fetch";
 import type { EventCategoriesInput } from "./eventCategories.input";

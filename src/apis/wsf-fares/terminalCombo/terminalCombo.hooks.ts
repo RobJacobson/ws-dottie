@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsfFaresApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
 import { terminalComboGroup } from "./terminalCombo.endpoints";
 import * as fetchFunctions from "./terminalCombo.fetch";
 import type {

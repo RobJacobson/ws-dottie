@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsdotWeatherReadingsApi } from "@/apis/wsdot-weather-readings/apiDefinition";
 import { weatherReadingsResource } from "./weatherReadings.endpoints";
 import type { WeatherReadingsInput } from "./weatherReadings.input";
 import type { WeatherReading } from "./weatherReadings.output";

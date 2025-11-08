@@ -1,5 +1,5 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 import {
   type HighwayCameraByCameraIdInput,
   type HighwayCamerasByRouteAndMilepostInput,

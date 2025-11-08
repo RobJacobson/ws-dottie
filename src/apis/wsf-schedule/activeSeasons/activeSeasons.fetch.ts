@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsfScheduleApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import { activeSeasonsResource } from "./activeSeasons.endpoints";
 import type { ActiveSeasonsInput } from "./activeSeasons.input";
 import type { ScheduleBase } from "./activeSeasons.output";

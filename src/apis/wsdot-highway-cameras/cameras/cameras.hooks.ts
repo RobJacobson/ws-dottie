@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsdotHighwayCamerasApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsdotHighwayCamerasApi } from "@/apis/wsdot-highway-cameras/apiDefinition";
 import { camerasGroup } from "./cameras.endpoints";
 import * as fetchFunctions from "./cameras.fetch";
 import type {

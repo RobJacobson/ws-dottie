@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
 import { terminalBulletinsResource } from "./terminalBulletins.endpoints";
 import type {
   TerminalBulletinsByIdInput,

@@ -1,5 +1,5 @@
 import { zIsoDateString } from "@/apis/shared";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * WeatherReading schema

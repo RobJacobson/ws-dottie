@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsfScheduleApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import { scheduleTodayResource } from "./scheduleToday.endpoints";
 import type {
   ScheduleTodayByRouteInput,

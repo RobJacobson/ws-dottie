@@ -1,6 +1,6 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 import {
   type FareLineItemsBasicInput,
   type FareLineItemsByTripDateAndTerminalsInput,

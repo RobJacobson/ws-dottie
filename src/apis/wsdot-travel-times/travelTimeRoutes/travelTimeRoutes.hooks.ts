@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsdotTravelTimesApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/apiDefinition";
 import { travelTimeRoutesGroup } from "./travelTimeRoutes.endpoints";
 import * as fetchFunctions from "./travelTimeRoutes.fetch";
 import type {

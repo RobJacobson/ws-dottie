@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
 import { tollTripInfoResource } from "./tollTripInfo.endpoints";
 import type { TollTripInfoInput } from "./tollTripInfo.input";
 import type { TollTripInfo } from "./tollTripInfo.output";

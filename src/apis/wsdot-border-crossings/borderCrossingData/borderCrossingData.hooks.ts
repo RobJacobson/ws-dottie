@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsdotBorderCrossingsApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
 import { borderCrossingDataResource } from "./borderCrossingData.endpoints";
 import * as fetchFunctions from "./borderCrossingData.fetch";
 import type { BorderCrossingsInput } from "./borderCrossingData.input";

@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsdotWeatherStationsApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsdotWeatherStationsApi } from "@/apis/wsdot-weather-stations/apiDefinition";
 import { weatherStationsResource } from "./weatherStations.endpoints";
 import * as fetchFunctions from "./weatherStations.fetch";
 import type { WeatherStationsInput } from "./weatherStations.input";

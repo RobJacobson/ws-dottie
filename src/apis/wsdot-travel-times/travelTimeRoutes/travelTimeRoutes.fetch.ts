@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsdotTravelTimesApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/apiDefinition";
 import { travelTimeRoutesGroup } from "./travelTimeRoutes.endpoints";
 import type {
   TravelTimeByIdInput,

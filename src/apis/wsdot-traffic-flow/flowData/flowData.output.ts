@@ -6,7 +6,7 @@
  */
 
 import { roadwayLocationSchema, zDotnetDate } from "@/apis/shared";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for FlowData - represents a traffic flow station

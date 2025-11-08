@@ -4,10 +4,8 @@ import type {
   TerminalsInput,
 } from "@/apis/shared/terminals.input";
 import type { Terminal } from "@/apis/shared/terminals.output";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsfFaresApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
 import { terminalsGroup } from "./terminals.endpoints";
 import * as fetchFunctions from "./terminals.fetch";
 

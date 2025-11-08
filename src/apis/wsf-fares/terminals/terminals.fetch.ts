@@ -3,9 +3,8 @@ import type {
   TerminalsInput,
 } from "@/apis/shared/terminals.input";
 import type { Terminal } from "@/apis/shared/terminals.output";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsfFaresApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
 import { terminalsGroup } from "./terminals.endpoints";
 
 const fetchFunctions = createFetchFunctions(wsfFaresApi, terminalsGroup);

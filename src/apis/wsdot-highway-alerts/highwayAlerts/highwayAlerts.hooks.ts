@@ -1,8 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import type { QueryHookOptions } from "@/shared/factories/createHooks";
-import { createHooks } from "@/shared/factories/createHooks";
-import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
+import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/apiDefinition";
 import { highwayAlertsGroup } from "./highwayAlerts.endpoints";
 import * as fetchFunctions from "./highwayAlerts.fetch";
 import type {

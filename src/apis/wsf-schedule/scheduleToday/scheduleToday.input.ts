@@ -5,7 +5,7 @@
  * Schedule API endpoints related to today's schedule operations.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for TodaysScheduleByTerminalCombo input parameters

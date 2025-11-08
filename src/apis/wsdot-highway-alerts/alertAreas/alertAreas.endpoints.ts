@@ -1,5 +1,5 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 import { type MapAreasInput, mapAreasInputSchema } from "./alertAreas.input";
 import { type Area, areaSchema } from "./alertAreas.output";
 

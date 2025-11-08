@@ -1,6 +1,5 @@
-import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
-import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
-import { wsdotHighwayCamerasApi } from "../apiDefinition";
+import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
+import { wsdotHighwayCamerasApi } from "@/apis/wsdot-highway-cameras/apiDefinition";
 import { camerasGroup } from "./cameras.endpoints";
 import type {
   HighwayCameraByCameraIdInput,
