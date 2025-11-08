@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsdotMountainPassConditionsApi } from "@/apis/wsdot-mountain-pass-conditions/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { passConditionsGroup } from "./passConditions.endpoints";
 import * as fetchFunctions from "./passConditions.fetch";
 import type {

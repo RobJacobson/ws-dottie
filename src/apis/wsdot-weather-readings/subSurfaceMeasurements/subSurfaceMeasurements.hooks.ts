@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsdotWeatherReadingsApi } from "@/apis/wsdot-weather-readings/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { subSurfaceMeasurementsResource } from "./subSurfaceMeasurements.endpoints";
 import * as fetchFunctions from "./subSurfaceMeasurements.fetch";
 import type { SubSurfaceMeasurementsInput } from "./subSurfaceMeasurements.input";

@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import {
   type CacheFlushDateFares,
   type CacheFlushDateFaresInput,

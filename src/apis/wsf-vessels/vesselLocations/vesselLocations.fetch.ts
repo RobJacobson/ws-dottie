@@ -1,5 +1,8 @@
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { vesselLocationsGroup } from "./vesselLocations.endpoints";
 import type {
   VesselLocationsByIdInput,

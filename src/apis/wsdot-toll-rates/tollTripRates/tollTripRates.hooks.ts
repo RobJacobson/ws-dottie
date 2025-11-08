@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { tollTripRatesResource } from "./tollTripRates.endpoints";
 import * as fetchFunctions from "./tollTripRates.fetch";
 import type {

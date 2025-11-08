@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { terminalSailingSpaceResource } from "./terminalSailingSpace.endpoints";
 import * as fetchFunctions from "./terminalSailingSpace.fetch";
 import type {

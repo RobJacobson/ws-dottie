@@ -5,11 +5,7 @@
  * for endpoints. It combines single endpoint and endpoint group functionality.
  */
 
-import type {
-  ApiDefinition,
-  EndpointDefinition,
-  EndpointGroup,
-} from "@/apis/types";
+import type { ApiDefinition, EndpointGroup } from "@/apis/types";
 import { fetchDottie } from "@/shared/fetching";
 import type { FetchDottieParams } from "@/shared/fetching/types";
 import type { Endpoint } from "@/shared/types";

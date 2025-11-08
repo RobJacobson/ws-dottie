@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { scheduleTodayResource } from "./scheduleToday.endpoints";
 import * as fetchFunctions from "./scheduleToday.fetch";
 import type {

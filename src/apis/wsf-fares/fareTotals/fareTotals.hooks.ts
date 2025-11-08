@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { fareTotalsGroup } from "./fareTotals.endpoints";
 import * as fetchFunctions from "./fareTotals.fetch";
 import type { FareTotalsByTripDateAndRouteInput } from "./fareTotals.input";

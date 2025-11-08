@@ -1,5 +1,8 @@
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { terminalVerboseResource } from "./terminalVerbose.endpoints";
 import type {
   TerminalVerboseByTerminalIdInput,

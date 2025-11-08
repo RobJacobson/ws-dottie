@@ -1,7 +1,11 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { validDateRangeGroup } from "./validDateRange.endpoints";
 import * as fetchFunctions from "./validDateRange.fetch";
 import type { FaresValidDateRangeInput } from "./validDateRange.input";

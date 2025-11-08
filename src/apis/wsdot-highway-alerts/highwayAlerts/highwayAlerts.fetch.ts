@@ -1,5 +1,8 @@
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { highwayAlertsGroup } from "./highwayAlerts.endpoints";
 import type {
   AlertByIdInput,

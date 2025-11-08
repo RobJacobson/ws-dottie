@@ -1,5 +1,8 @@
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsdotTrafficFlowApi } from "@/apis/wsdot-traffic-flow/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { flowDataGroup } from "./flowData.endpoints";
 import type { TrafficFlowByIdInput, TrafficFlowsInput } from "./flowData.input";
 import type { FlowData } from "./flowData.output";

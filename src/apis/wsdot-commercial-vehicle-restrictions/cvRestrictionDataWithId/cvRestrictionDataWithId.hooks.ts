@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsdotCommercialVehicleRestrictionsApi } from "@/apis/wsdot-commercial-vehicle-restrictions/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { cvRestrictionDataWithIdGroup } from "./cvRestrictionDataWithId.endpoints";
 import * as fetchFunctions from "./cvRestrictionDataWithId.fetch";
 import type { CommercialVehicleRestrictionsWithIdInput } from "./cvRestrictionDataWithId.input";

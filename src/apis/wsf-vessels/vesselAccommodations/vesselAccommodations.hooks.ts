@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { vesselAccommodationsResource } from "./vesselAccommodations.endpoints";
 import * as fetchFunctions from "./vesselAccommodations.fetch";
 import type {

@@ -1,8 +1,12 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
 import type { Terminal } from "@/apis/shared/terminals.output";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { scheduleTerminalMatesResource } from "./terminalMates.endpoints";
 import * as fetchFunctions from "./terminalMates.fetch";
 

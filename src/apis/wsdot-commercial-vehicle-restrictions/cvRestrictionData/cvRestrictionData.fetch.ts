@@ -1,5 +1,8 @@
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsdotCommercialVehicleRestrictionsApi } from "@/apis/wsdot-commercial-vehicle-restrictions/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { cvRestrictionDataGroup } from "./cvRestrictionData.endpoints";
 import type { CommercialVehicleRestrictionsInput } from "./cvRestrictionData.input";
 import type { CVRestriction } from "./cvRestrictionData.output";

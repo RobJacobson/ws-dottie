@@ -1,6 +1,9 @@
 import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduleValidDateRangeResource } from "./validDateRange.endpoints";
 import type { ScheduleValidDateRangeInput } from "./validDateRange.input";
 

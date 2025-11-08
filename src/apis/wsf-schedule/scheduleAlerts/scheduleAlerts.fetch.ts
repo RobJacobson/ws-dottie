@@ -1,5 +1,8 @@
-import { createFetchFunctions, type FetchFunctionParams } from "@/shared/factories";
 import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduleAlertsResource } from "./scheduleAlerts.endpoints";
 import type { ScheduleAlertsInput } from "./scheduleAlerts.input";
 import type { AlertDetail } from "./scheduleAlerts.output";

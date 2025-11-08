@@ -1,6 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { createHooks, type FetchFunctionParams, type QueryHookOptions } from "@/shared/factories";
 import { wsdotTrafficFlowApi } from "@/apis/wsdot-traffic-flow/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { flowDataGroup } from "./flowData.endpoints";
 import * as fetchFunctions from "./flowData.fetch";
 import type { TrafficFlowByIdInput, TrafficFlowsInput } from "./flowData.input";
