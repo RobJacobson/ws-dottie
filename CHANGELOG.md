@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.2.0] - 2025-11-08
+
+- Features
+  - **Cache Flush Endpoint Suite**: Consolidated cache flush date schemas and endpoint generators into shared utilities so every API exposes consistent helpers out of the box
+  - **Fetch Factory Revamp**: Rebuilt the fetch function factory to emit strongly typed functions that share the new `FetchFunctionParams` signature across all endpoints
+
+- Improvements
+  - **Endpoint Consistency**: Standardized schema imports, function names, and factory wiring across all APIs for predictable consumer ergonomics
+  - **Type Safety**: Updated Zod initialization, type exports, and fetch params to eliminate `any` fallbacks and strengthen inference in editors
+  - **Hook Alignment**: Updated TanStack Query hooks and supporting docs to mirror the new fetch parameter structure
+
+- Fixes
+  - **Package Exports**: Corrected per-API `exports` entries to point at `dist/apis/...` so installs resolve without custom path aliases
+
+- Docs
+  - **Endpoint Catalog**: Expanded documentation to cover cache flush date endpoints and refreshed the generated endpoint table
+
+- Build/Chore
+  - **TypeScript Compatibility**: Added `typesVersions` map keyed by API namespaces to keep editor IntelliSense working on older TypeScript releases
+  - **Build Paths**: Updated bundler entry paths to track the reorganized API definitions
+
 ## [1.1.0] - 2025-11-08
 
 - Features

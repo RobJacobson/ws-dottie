@@ -14,7 +14,7 @@
 [![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)                                                    
 
 
-Meet Dottie — your comprehensive TypeScript companion for fetching real-time Washington State transportation data. This production-ready library provides type-safe access to **16 WSDOT and WSF APIs** with **90+ endpoints**, transforming complex government APIs into a modern, developer-friendly interface.
+Meet Dottie — your comprehensive TypeScript companion for fetching real-time Washington State transportation data. This production-ready library provides type-safe access to **16 WSDOT and WSF APIs** with **98 endpoints**, transforming complex government APIs into a modern, developer-friendly interface.
 
 ## Why WS-Dottie is Special
 
@@ -375,7 +375,7 @@ fetch-dottie fetchBridgeClearancesByRoute '{"Route": "005"}' --jsonp
 
 ## 🖥️ Command Line Interface
 
-WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 90+ endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
+WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 98 endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
 
 ### Installation
 
@@ -464,7 +464,7 @@ fetch-dottie fetchVesselLocations --limit 5
 
 ### Available Functions
 
-The CLI supports all 90+ endpoints across 16 APIs:
+The CLI supports all 98 endpoints across 16 APIs:
 
 - **WSDOT APIs**: Border Crossings, Bridge Clearances, Highway Alerts, Traffic Cameras, Weather Stations, Travel Times, Toll Rates, Mountain Passes, Commercial Vehicle Restrictions                                                            
 - **WSF APIs**: Ferry Schedules, Vessel Locations, Terminal Information, Fare Data                                                                              
@@ -486,7 +486,7 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 **Discovery**
 - `--list` - List all available endpoints with descriptions
 
-## 📊 Available Data Sources (16 APIs, 90+ endpoints)
+## 📊 Available Data Sources (16 APIs, 98 endpoints)
 
 ### WSDOT APIs
 - **Highway Alerts** - Real-time traffic incidents and construction updates
@@ -511,7 +511,7 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 
 ### **🚀 Comprehensive API Coverage**
 - **16 distinct APIs** covering WSDOT (traffic, weather, tolls) and WSF (ferries, schedules)
-- **90+ endpoints** with full type safety and validation
+- **98 endpoints** with full type safety and validation
 - **Unified interface** — all APIs work consistently regardless of source
 
 ### **🔄 Smart Caching & React Integration**

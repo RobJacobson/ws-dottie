@@ -1,6 +1,6 @@
 {
   "name": "ws-dottie",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Your friendly TypeScript companion for Washington State transportation APIs - WSDOT and WSF data with smart caching and React Query integration",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -267,54 +267,150 @@
   },
   "typesVersions": {
     "*": {
-      "wsf-vessels": ["dist/apis/wsf-vessels/index.d.ts"],
-      "wsf-vessels/core": ["dist/apis/wsf-vessels/core.d.ts"],
-      "wsf-vessels/schemas": ["dist/apis/wsf-vessels/schemas.d.ts"],
-      "wsdot-border-crossings": ["dist/apis/wsdot-border-crossings/index.d.ts"],
-      "wsdot-border-crossings/core": ["dist/apis/wsdot-border-crossings/core.d.ts"],
-      "wsdot-border-crossings/schemas": ["dist/apis/wsdot-border-crossings/schemas.d.ts"],
-      "wsdot-bridge-clearances": ["dist/apis/wsdot-bridge-clearances/index.d.ts"],
-      "wsdot-bridge-clearances/core": ["dist/apis/wsdot-bridge-clearances/core.d.ts"],
-      "wsdot-bridge-clearances/schemas": ["dist/apis/wsdot-bridge-clearances/schemas.d.ts"],
-      "wsdot-commercial-vehicle-restrictions": ["dist/apis/wsdot-commercial-vehicle-restrictions/index.d.ts"],
-      "wsdot-commercial-vehicle-restrictions/core": ["dist/apis/wsdot-commercial-vehicle-restrictions/core.d.ts"],
-      "wsdot-commercial-vehicle-restrictions/schemas": ["dist/apis/wsdot-commercial-vehicle-restrictions/schemas.d.ts"],
-      "wsdot-highway-alerts": ["dist/apis/wsdot-highway-alerts/index.d.ts"],
-      "wsdot-highway-alerts/core": ["dist/apis/wsdot-highway-alerts/core.d.ts"],
-      "wsdot-highway-alerts/schemas": ["dist/apis/wsdot-highway-alerts/schemas.d.ts"],
-      "wsdot-highway-cameras": ["dist/apis/wsdot-highway-cameras/index.d.ts"],
-      "wsdot-highway-cameras/core": ["dist/apis/wsdot-highway-cameras/core.d.ts"],
-      "wsdot-highway-cameras/schemas": ["dist/apis/wsdot-highway-cameras/schemas.d.ts"],
-      "wsdot-mountain-pass-conditions": ["dist/apis/wsdot-mountain-pass-conditions/index.d.ts"],
-      "wsdot-mountain-pass-conditions/core": ["dist/apis/wsdot-mountain-pass-conditions/core.d.ts"],
-      "wsdot-mountain-pass-conditions/schemas": ["dist/apis/wsdot-mountain-pass-conditions/schemas.d.ts"],
-      "wsdot-toll-rates": ["dist/apis/wsdot-toll-rates/index.d.ts"],
-      "wsdot-toll-rates/core": ["dist/apis/wsdot-toll-rates/core.d.ts"],
-      "wsdot-toll-rates/schemas": ["dist/apis/wsdot-toll-rates/schemas.d.ts"],
-      "wsdot-traffic-flow": ["dist/apis/wsdot-traffic-flow/index.d.ts"],
-      "wsdot-traffic-flow/core": ["dist/apis/wsdot-traffic-flow/core.d.ts"],
-      "wsdot-traffic-flow/schemas": ["dist/apis/wsdot-traffic-flow/schemas.d.ts"],
-      "wsdot-travel-times": ["dist/apis/wsdot-travel-times/index.d.ts"],
-      "wsdot-travel-times/core": ["dist/apis/wsdot-travel-times/core.d.ts"],
-      "wsdot-travel-times/schemas": ["dist/apis/wsdot-travel-times/schemas.d.ts"],
-      "wsdot-weather-information": ["dist/apis/wsdot-weather-information/index.d.ts"],
-      "wsdot-weather-information/core": ["dist/apis/wsdot-weather-information/core.d.ts"],
-      "wsdot-weather-information/schemas": ["dist/apis/wsdot-weather-information/schemas.d.ts"],
-      "wsdot-weather-readings": ["dist/apis/wsdot-weather-readings/index.d.ts"],
-      "wsdot-weather-readings/core": ["dist/apis/wsdot-weather-readings/core.d.ts"],
-      "wsdot-weather-readings/schemas": ["dist/apis/wsdot-weather-readings/schemas.d.ts"],
-      "wsdot-weather-stations": ["dist/apis/wsdot-weather-stations/index.d.ts"],
-      "wsdot-weather-stations/core": ["dist/apis/wsdot-weather-stations/core.d.ts"],
-      "wsdot-weather-stations/schemas": ["dist/apis/wsdot-weather-stations/schemas.d.ts"],
-      "wsf-fares": ["dist/apis/wsf-fares/index.d.ts"],
-      "wsf-fares/core": ["dist/apis/wsf-fares/core.d.ts"],
-      "wsf-fares/schemas": ["dist/apis/wsf-fares/schemas.d.ts"],
-      "wsf-schedule": ["dist/apis/wsf-schedule/index.d.ts"],
-      "wsf-schedule/core": ["dist/apis/wsf-schedule/core.d.ts"],
-      "wsf-schedule/schemas": ["dist/apis/wsf-schedule/schemas.d.ts"],
-      "wsf-terminals": ["dist/apis/wsf-terminals/index.d.ts"],
-      "wsf-terminals/core": ["dist/apis/wsf-terminals/core.d.ts"],
-      "wsf-terminals/schemas": ["dist/apis/wsf-terminals/schemas.d.ts"]
+      "wsf-vessels": [
+        "dist/apis/wsf-vessels/index.d.ts"
+      ],
+      "wsf-vessels/core": [
+        "dist/apis/wsf-vessels/core.d.ts"
+      ],
+      "wsf-vessels/schemas": [
+        "dist/apis/wsf-vessels/schemas.d.ts"
+      ],
+      "wsdot-border-crossings": [
+        "dist/apis/wsdot-border-crossings/index.d.ts"
+      ],
+      "wsdot-border-crossings/core": [
+        "dist/apis/wsdot-border-crossings/core.d.ts"
+      ],
+      "wsdot-border-crossings/schemas": [
+        "dist/apis/wsdot-border-crossings/schemas.d.ts"
+      ],
+      "wsdot-bridge-clearances": [
+        "dist/apis/wsdot-bridge-clearances/index.d.ts"
+      ],
+      "wsdot-bridge-clearances/core": [
+        "dist/apis/wsdot-bridge-clearances/core.d.ts"
+      ],
+      "wsdot-bridge-clearances/schemas": [
+        "dist/apis/wsdot-bridge-clearances/schemas.d.ts"
+      ],
+      "wsdot-commercial-vehicle-restrictions": [
+        "dist/apis/wsdot-commercial-vehicle-restrictions/index.d.ts"
+      ],
+      "wsdot-commercial-vehicle-restrictions/core": [
+        "dist/apis/wsdot-commercial-vehicle-restrictions/core.d.ts"
+      ],
+      "wsdot-commercial-vehicle-restrictions/schemas": [
+        "dist/apis/wsdot-commercial-vehicle-restrictions/schemas.d.ts"
+      ],
+      "wsdot-highway-alerts": [
+        "dist/apis/wsdot-highway-alerts/index.d.ts"
+      ],
+      "wsdot-highway-alerts/core": [
+        "dist/apis/wsdot-highway-alerts/core.d.ts"
+      ],
+      "wsdot-highway-alerts/schemas": [
+        "dist/apis/wsdot-highway-alerts/schemas.d.ts"
+      ],
+      "wsdot-highway-cameras": [
+        "dist/apis/wsdot-highway-cameras/index.d.ts"
+      ],
+      "wsdot-highway-cameras/core": [
+        "dist/apis/wsdot-highway-cameras/core.d.ts"
+      ],
+      "wsdot-highway-cameras/schemas": [
+        "dist/apis/wsdot-highway-cameras/schemas.d.ts"
+      ],
+      "wsdot-mountain-pass-conditions": [
+        "dist/apis/wsdot-mountain-pass-conditions/index.d.ts"
+      ],
+      "wsdot-mountain-pass-conditions/core": [
+        "dist/apis/wsdot-mountain-pass-conditions/core.d.ts"
+      ],
+      "wsdot-mountain-pass-conditions/schemas": [
+        "dist/apis/wsdot-mountain-pass-conditions/schemas.d.ts"
+      ],
+      "wsdot-toll-rates": [
+        "dist/apis/wsdot-toll-rates/index.d.ts"
+      ],
+      "wsdot-toll-rates/core": [
+        "dist/apis/wsdot-toll-rates/core.d.ts"
+      ],
+      "wsdot-toll-rates/schemas": [
+        "dist/apis/wsdot-toll-rates/schemas.d.ts"
+      ],
+      "wsdot-traffic-flow": [
+        "dist/apis/wsdot-traffic-flow/index.d.ts"
+      ],
+      "wsdot-traffic-flow/core": [
+        "dist/apis/wsdot-traffic-flow/core.d.ts"
+      ],
+      "wsdot-traffic-flow/schemas": [
+        "dist/apis/wsdot-traffic-flow/schemas.d.ts"
+      ],
+      "wsdot-travel-times": [
+        "dist/apis/wsdot-travel-times/index.d.ts"
+      ],
+      "wsdot-travel-times/core": [
+        "dist/apis/wsdot-travel-times/core.d.ts"
+      ],
+      "wsdot-travel-times/schemas": [
+        "dist/apis/wsdot-travel-times/schemas.d.ts"
+      ],
+      "wsdot-weather-information": [
+        "dist/apis/wsdot-weather-information/index.d.ts"
+      ],
+      "wsdot-weather-information/core": [
+        "dist/apis/wsdot-weather-information/core.d.ts"
+      ],
+      "wsdot-weather-information/schemas": [
+        "dist/apis/wsdot-weather-information/schemas.d.ts"
+      ],
+      "wsdot-weather-readings": [
+        "dist/apis/wsdot-weather-readings/index.d.ts"
+      ],
+      "wsdot-weather-readings/core": [
+        "dist/apis/wsdot-weather-readings/core.d.ts"
+      ],
+      "wsdot-weather-readings/schemas": [
+        "dist/apis/wsdot-weather-readings/schemas.d.ts"
+      ],
+      "wsdot-weather-stations": [
+        "dist/apis/wsdot-weather-stations/index.d.ts"
+      ],
+      "wsdot-weather-stations/core": [
+        "dist/apis/wsdot-weather-stations/core.d.ts"
+      ],
+      "wsdot-weather-stations/schemas": [
+        "dist/apis/wsdot-weather-stations/schemas.d.ts"
+      ],
+      "wsf-fares": [
+        "dist/apis/wsf-fares/index.d.ts"
+      ],
+      "wsf-fares/core": [
+        "dist/apis/wsf-fares/core.d.ts"
+      ],
+      "wsf-fares/schemas": [
+        "dist/apis/wsf-fares/schemas.d.ts"
+      ],
+      "wsf-schedule": [
+        "dist/apis/wsf-schedule/index.d.ts"
+      ],
+      "wsf-schedule/core": [
+        "dist/apis/wsf-schedule/core.d.ts"
+      ],
+      "wsf-schedule/schemas": [
+        "dist/apis/wsf-schedule/schemas.d.ts"
+      ],
+      "wsf-terminals": [
+        "dist/apis/wsf-terminals/index.d.ts"
+      ],
+      "wsf-terminals/core": [
+        "dist/apis/wsf-terminals/core.d.ts"
+      ],
+      "wsf-terminals/schemas": [
+        "dist/apis/wsf-terminals/schemas.d.ts"
+      ]
     }
   },
   "files": [
