@@ -1,0 +1,162 @@
+{
+  "TerminalID": 7,
+  "TerminalSubjectID": 101,
+  "RegionID": 4,
+  "TerminalName": "Seattle",
+  "TerminalAbbrev": "P52",
+  "SortSeq": 20,
+  "DepartingSpaces": [
+    {
+      "Departure": "2025-11-08T06:05:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 32,
+      "VesselName": "Tacoma",
+      "MaxSpaceCount": 197,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 32,
+          "VesselName": "Tacoma",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 145,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 197,
+          "ArrivalTerminalIDs": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-08T06:30:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 17,
+      "VesselName": "Kaleetan",
+      "MaxSpaceCount": 139,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 4,
+          "TerminalName": "Bremerton",
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 138,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 139,
+          "ArrivalTerminalIDs": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-08T06:50:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 37,
+      "VesselName": "Wenatchee",
+      "MaxSpaceCount": 197,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 37,
+          "VesselName": "Wenatchee",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 197,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 197,
+          "ArrivalTerminalIDs": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-08T08:15:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 37,
+      "VesselName": "Wenatchee",
+      "MaxSpaceCount": 197,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 37,
+          "VesselName": "Wenatchee",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 197,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 197,
+          "ArrivalTerminalIDs": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-08T08:50:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 17,
+      "VesselName": "Kaleetan",
+      "MaxSpaceCount": 139,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 4,
+          "TerminalName": "Bremerton",
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 139,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 139,
+          "ArrivalTerminalIDs": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "Departure": "2025-11-08T09:35:00.000Z",
+      "IsCancelled": false,
+      "VesselID": 37,
+      "VesselName": "Wenatchee",
+      "MaxSpaceCount": 197,
+      "SpaceForArrivalTerminals": [
+        {
+          "TerminalID": 3,
+          "TerminalName": "Bainbridge Island",
+          "VesselID": 37,
+          "VesselName": "Wenatchee",
+          "DisplayReservableSpace": false,
+          "ReservableSpaceCount": null,
+          "ReservableSpaceHexColor": null,
+          "DisplayDriveUpSpace": true,
+          "DriveUpSpaceCount": 197,
+          "DriveUpSpaceHexColor": "#00FF00",
+          "MaxSpaceCount": 197,
+          "ArrivalTerminalIDs": [
+            3
+          ]
+        }
+      ]
+    }
+  ],
+  "IsNoFareCollected": null,
+  "NoFareCollectedMsg": null
+}

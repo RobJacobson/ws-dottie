@@ -1,0 +1,128 @@
+{
+  "ScheduleID": 193,
+  "ScheduleName": "Fall 2025",
+  "ScheduleSeason": 2,
+  "SchedulePDFUrl": "http://www.wsdot.wa.gov/ferries/pdf/2025Fall.pdf",
+  "ScheduleStart": "2025-09-21T07:00:00.000Z",
+  "ScheduleEnd": "2025-12-27T08:00:00.000Z",
+  "AllRoutes": [
+    9
+  ],
+  "TerminalCombos": [
+    {
+      "DepartingTerminalID": 1,
+      "DepartingTerminalName": "Anacortes",
+      "ArrivingTerminalID": 10,
+      "ArrivingTerminalName": "Friday Harbor",
+      "SailingNotes": "",
+      "Annotations": [],
+      "Times": [
+        {
+          "DepartingTime": "2025-11-08T12:05:00.000Z",
+          "ArrivingTime": "2025-11-08T13:15:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 38,
+          "VesselName": "Yakima",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 2,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-08T14:15:00.000Z",
+          "ArrivingTime": "2025-11-08T15:45:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 69,
+          "VesselName": "Samish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 3,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-08T16:40:00.000Z",
+          "ArrivingTime": "2025-11-08T17:50:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 17,
+          "VesselName": "Kaleetan",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 1,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-08T18:30:00.000Z",
+          "ArrivingTime": "2025-11-08T19:40:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 38,
+          "VesselName": "Yakima",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 2,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-08T21:35:00.000Z",
+          "ArrivingTime": "2025-11-08T22:45:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 69,
+          "VesselName": "Samish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 3,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-09T00:20:00.000Z",
+          "ArrivingTime": "2025-11-09T01:50:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 38,
+          "VesselName": "Yakima",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 2,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-09T01:35:00.000Z",
+          "ArrivingTime": "2025-11-09T03:05:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 69,
+          "VesselName": "Samish",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 3,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        },
+        {
+          "DepartingTime": "2025-11-09T04:15:00.000Z",
+          "ArrivingTime": "2025-11-09T05:45:00.000Z",
+          "LoadingRule": 3,
+          "VesselID": 38,
+          "VesselName": "Yakima",
+          "VesselHandicapAccessible": true,
+          "VesselPositionNum": 2,
+          "Routes": [
+            9
+          ],
+          "AnnotationIndexes": []
+        }
+      ],
+      "AnnotationsIVR": []
+    }
+  ]
+}

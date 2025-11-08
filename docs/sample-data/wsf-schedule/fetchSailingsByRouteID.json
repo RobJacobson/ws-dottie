@@ -1,0 +1,3631 @@
+[
+  {
+    "ScheduleID": 193,
+    "SchedRouteID": 2401,
+    "RouteID": 9,
+    "SailingID": 7793,
+    "SailingDescription": "Leave Westbound",
+    "SailingNotes": "",
+    "DisplayColNum": 0,
+    "SailingDir": 1,
+    "DayOpDescription": "Daily",
+    "DayOpUseForHoliday": false,
+    "ActiveDateRanges": [
+      {
+        "DateFrom": "2025-09-21T07:00:00.000Z",
+        "DateThru": "2025-12-27T08:00:00.000Z",
+        "EventID": null,
+        "EventDescription": null
+      }
+    ],
+    "Journs": [
+      {
+        "JourneyID": 166493,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236797,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T12:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236798,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236799,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236800,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236801,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T13:15:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166494,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236802,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T13:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236803,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236804,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T15:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236805,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T14:25:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236806,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166495,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236807,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T14:15:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236808,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T15:10:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236809,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236810,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236811,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T15:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166496,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236812,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236813,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T14:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236814,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T15:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236815,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T15:40:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236816,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T16:30:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166497,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236817,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T15:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236818,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236819,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T17:10:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236820,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T16:30:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236821,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166498,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236822,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T16:40:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236823,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236824,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236825,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236826,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T17:50:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166499,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236827,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T18:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236828,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T19:00:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236829,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236830,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T19:20:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236831,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166500,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236832,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236833,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T18:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236834,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T18:00:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236835,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T17:45:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236836,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T19:10:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166501,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236837,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T18:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236838,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236839,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236840,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236841,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T19:40:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166502,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236842,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T19:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236843,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236844,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T20:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236845,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T21:05:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236846,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166503,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236847,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236848,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T21:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236849,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T21:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236850,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T20:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236851,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T22:15:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166504,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236852,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T21:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13713,
+                "AnnotationText": "Mondays through Wednesdays <i>only</i>.",
+                "AnnotationIVRText": "Mondays through Wednesdays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/M-W.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 60
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236853,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T22:25:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13333,
+                "AnnotationText": "No interisland vehicles. Foot passenger and bikes okay.",
+                "AnnotationIVRText": "No interisland vehicles. Foot passengers and bikes okay.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/triangle_down_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 10
+              },
+              {
+                "AnnotationID": 13713,
+                "AnnotationText": "Mondays through Wednesdays <i>only</i>.",
+                "AnnotationIVRText": "Mondays through Wednesdays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/M-W.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 60
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236854,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236855,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236856,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T23:00:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13713,
+                "AnnotationText": "Mondays through Wednesdays <i>only</i>.",
+                "AnnotationIVRText": "Mondays through Wednesdays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/M-W.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 60
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "JourneyID": 172506,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 245086,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T21:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13714,
+                "AnnotationText": "Thursdays through Sundays <i>only</i>.",
+                "AnnotationIVRText": "Thursdays through Sundays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ThFSS_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 70
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 245087,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 245088,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 245089,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 245090,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T22:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13714,
+                "AnnotationText": "Thursdays through Sundays <i>only</i>.",
+                "AnnotationIVRText": "Thursdays through Sundays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ThFSS_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "JourneyID": 166505,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236857,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T21:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13714,
+                "AnnotationText": "Thursdays through Sundays <i>only</i>.",
+                "AnnotationIVRText": "Thursdays through Sundays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ThFSS_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 70
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236858,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T22:40:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13714,
+                "AnnotationText": "Thursdays through Sundays <i>only</i>.",
+                "AnnotationIVRText": "Thursdays through Sundays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ThFSS_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 70
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236859,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236860,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236861,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166506,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236862,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236863,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T23:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236864,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T23:45:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236865,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T23:55:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236866,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166508,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236872,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T23:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236873,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236874,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T00:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236875,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T00:15:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236876,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166510,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236882,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T00:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236883,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T01:15:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13333,
+                "AnnotationText": "No interisland vehicles. Foot passenger and bikes okay.",
+                "AnnotationIVRText": "No interisland vehicles. Foot passengers and bikes okay.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/triangle_down_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 10
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236884,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236885,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236886,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T01:50:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166507,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236867,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236868,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T00:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236869,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T00:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              },
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236870,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T00:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13332,
+                "AnnotationText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AnnotationIVRText": "Loads or unloads westbound traffic on eastbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/circle_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 20
+              },
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236871,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T01:30:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "JourneyID": 166511,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236887,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T01:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236888,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T02:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236889,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236890,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236891,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T03:05:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166512,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236892,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T02:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236893,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236894,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T03:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236895,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T03:15:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236896,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166513,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236897,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236898,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T03:45:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13715,
+                "AnnotationText": "Sails daily <i>except</i> Fridays.",
+                "AnnotationIVRText": "Sails daily except Fridays.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_ex_fri_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 85
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236899,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T04:10:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13715,
+                "AnnotationText": "Sails daily <i>except</i> Fridays.",
+                "AnnotationIVRText": "Sails daily except Fridays.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_ex_fri_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 85
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236900,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T04:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13715,
+                "AnnotationText": "Sails daily <i>except</i> Fridays.",
+                "AnnotationIVRText": "Sails daily except Fridays.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_ex_fri_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 85
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236901,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T05:20:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13715,
+                "AnnotationText": "Sails daily <i>except</i> Fridays.",
+                "AnnotationIVRText": "Sails daily except Fridays.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_ex_fri_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 85
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "JourneyID": 166514,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236902,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T04:15:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236903,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T05:10:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236904,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236905,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236906,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T05:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166515,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236907,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T04:40:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236908,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236909,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T05:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236910,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T05:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236911,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166516,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236912,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T06:00:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13339,
+                "AnnotationText": "Fridays <i>only</i>",
+                "AnnotationIVRText": "Fridays only",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/Fri_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 80
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236913,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236914,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236915,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236916,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T07:25:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13339,
+                "AnnotationText": "Fridays <i>only</i>",
+                "AnnotationIVRText": "Fridays only",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/Fri_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 80
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "ScheduleID": 193,
+    "SchedRouteID": 2401,
+    "RouteID": 9,
+    "SailingID": 7794,
+    "SailingDescription": "Leave Eastbound",
+    "SailingNotes": "",
+    "DisplayColNum": 0,
+    "SailingDir": 2,
+    "DayOpDescription": "Daily",
+    "DayOpUseForHoliday": false,
+    "ActiveDateRanges": [
+      {
+        "DateFrom": "2025-09-21T07:00:00.000Z",
+        "DateThru": "2025-12-27T08:00:00.000Z",
+        "EventID": null,
+        "EventDescription": null
+      }
+    ],
+    "Journs": [
+      {
+        "JourneyID": 166517,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236917,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T13:40:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13333,
+                "AnnotationText": "No interisland vehicles. Foot passenger and bikes okay.",
+                "AnnotationIVRText": "No interisland vehicles. Foot passengers and bikes okay.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/triangle_down_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 10
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236918,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236919,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236920,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T14:25:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236921,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T15:10:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166518,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236922,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T14:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236923,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T15:40:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236924,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T15:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236925,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T14:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236926,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166519,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236927,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236928,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T14:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236929,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T15:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236930,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T15:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236931,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T16:20:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166520,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236932,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T16:10:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236933,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236934,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236935,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T16:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236936,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T17:40:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166522,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236942,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T16:45:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236943,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T17:45:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236944,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T18:00:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236945,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T18:20:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236946,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166521,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236937,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236938,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T16:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13333,
+                "AnnotationText": "No interisland vehicles. Foot passenger and bikes okay.",
+                "AnnotationIVRText": "No interisland vehicles. Foot passengers and bikes okay.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/triangle_down_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 10
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236939,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T17:10:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236940,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236941,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T18:05:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166523,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236947,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T18:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236948,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236949,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236950,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236951,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T19:30:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166526,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236962,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T19:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13336,
+                "AnnotationText": "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+                "AnnotationIVRText": "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_diamond_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 50
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236963,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T20:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236964,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T21:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236965,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T21:25:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236966,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166524,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236952,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236953,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T19:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13333,
+                "AnnotationText": "No interisland vehicles. Foot passenger and bikes okay.",
+                "AnnotationIVRText": "No interisland vehicles. Foot passengers and bikes okay.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/triangle_down_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 10
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236954,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236955,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T20:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236956,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T21:05:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166525,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236957,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T20:25:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236958,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236959,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236960,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236961,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T21:35:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166528,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236972,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236973,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T21:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236974,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T20:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236975,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T22:00:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236976,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T22:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166529,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236977,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T22:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13341,
+                "AnnotationText": "Sundays <i>only</i>",
+                "AnnotationIVRText": "Sundays only",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/Sun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 100
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236978,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236979,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236980,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236981,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T23:55:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13341,
+                "AnnotationText": "Sundays <i>only</i>",
+                "AnnotationIVRText": "Sundays only",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/Sun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 100
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "JourneyID": 166530,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236982,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T22:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236983,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T23:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              },
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236984,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T23:45:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              },
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236985,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T23:10:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236986,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166527,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236967,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236968,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236969,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236970,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T23:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13714,
+                "AnnotationText": "Thursdays through Sundays <i>only</i>.",
+                "AnnotationIVRText": "Thursdays through Sundays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ThFSS_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 70
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236971,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T23:50:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13714,
+                "AnnotationText": "Thursdays through Sundays <i>only</i>.",
+                "AnnotationIVRText": "Thursdays through Sundays only.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ThFSS_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 70
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "JourneyID": 166533,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236997,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T23:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236998,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236999,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237000,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T00:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237001,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T01:05:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166532,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 236992,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 236993,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T00:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236994,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T00:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236995,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T00:40:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13338,
+                "AnnotationText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AnnotationIVRText": "This interisland trip travels in a 'T' pattern: FH-Lopez-Shaw-Orcas, then Orcas-Shaw-Lopez-FH.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/plus.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 40
+              },
+              {
+                "AnnotationID": 13342,
+                "AnnotationText": "Sails daily <i>except</i> Sundays",
+                "AnnotationIVRText": "Sails daily except Sundays",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/ExSun_blue.gif",
+                "TypeDescription": "Day Type",
+                "SortSeq": 110
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 236996,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166534,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237002,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237003,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T00:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13333,
+                "AnnotationText": "No interisland vehicles. Foot passenger and bikes okay.",
+                "AnnotationIVRText": "No interisland vehicles. Foot passengers and bikes okay.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/triangle_down_red.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 10
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 237004,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T00:50:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237005,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237006,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T01:45:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166535,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": true,
+        "VesselID": 66,
+        "VesselName": "Salish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 4,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237007,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T01:40:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13336,
+                "AnnotationText": "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+                "AnnotationIVRText": "The vessel will load, move briefly to the tie-up slip for a crew change, then sail to Orcas.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_diamond_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 50
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 237008,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T03:00:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237009,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T03:15:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237010,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T03:35:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237011,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166536,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237012,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T02:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237013,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237014,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237015,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T03:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237016,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T03:50:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166537,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237017,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237018,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T03:30:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237019,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T03:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 237020,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237021,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T04:25:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166538,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 69,
+        "VesselName": "Samish",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 3,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237022,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T03:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237023,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237024,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237025,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-02T04:20:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237026,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T05:05:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166540,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 2,
+        "VesselName": "Chelan",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 1,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237032,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237033,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-02T05:55:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237034,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-02T05:35:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": [
+              {
+                "AnnotationID": 13334,
+                "AnnotationText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AnnotationIVRText": "Loads or unloads eastbound traffic on westbound sailing.",
+                "AdjustedCrossingTime": null,
+                "AnnotationImg": "https://www.wsdot.wa.gov/ferries/images/legends/fall_circle_blue.gif",
+                "TypeDescription": "Informational",
+                "SortSeq": 30
+              }
+            ]
+          },
+          {
+            "JourneyTerminalID": 237035,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237036,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T06:50:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      },
+      {
+        "JourneyID": 166541,
+        "ReservationInd": false,
+        "InternationalInd": false,
+        "InterislandInd": false,
+        "VesselID": 38,
+        "VesselName": "Yakima",
+        "VesselHandicapAccessible": true,
+        "VesselPositionNum": 2,
+        "TerminalTimes": [
+          {
+            "JourneyTerminalID": 237037,
+            "TerminalID": 10,
+            "TerminalDescription": "Friday Harbor",
+            "TerminalBriefDescription": "Friday Harbor",
+            "Time": "1900-01-02T06:05:00.000Z",
+            "DepArrIndicator": 1,
+            "IsNA": false,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237038,
+            "TerminalID": 15,
+            "TerminalDescription": "Orcas Island",
+            "TerminalBriefDescription": "Orcas",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237039,
+            "TerminalID": 18,
+            "TerminalDescription": "Shaw Island",
+            "TerminalBriefDescription": "Shaw",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237040,
+            "TerminalID": 13,
+            "TerminalDescription": "Lopez Island",
+            "TerminalBriefDescription": "Lopez",
+            "Time": "1900-01-01T08:00:00.000Z",
+            "DepArrIndicator": null,
+            "IsNA": true,
+            "Annotations": []
+          },
+          {
+            "JourneyTerminalID": 237041,
+            "TerminalID": 1,
+            "TerminalDescription": "Anacortes",
+            "TerminalBriefDescription": "Anacortes",
+            "Time": "1900-01-02T07:15:00.000Z",
+            "DepArrIndicator": 2,
+            "IsNA": false,
+            "Annotations": []
+          }
+        ]
+      }
+    ]
+  }
+]

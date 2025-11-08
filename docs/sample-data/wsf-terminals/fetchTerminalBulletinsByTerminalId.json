@@ -1,0 +1,24 @@
+{
+  "TerminalID": 3,
+  "TerminalSubjectID": 103,
+  "RegionID": 4,
+  "TerminalName": "Bainbridge Island",
+  "TerminalAbbrev": "BBI",
+  "SortSeq": 40,
+  "Bulletins": [
+    {
+      "BulletinTitle": "Sea/BI - Wenatchee to replace Walla Walla on Friday, November 7",
+      "BulletinText": "<p><span data-contrast=\"none\">After successful repairs, the</span><i><span data-contrast=\"none\"> Wenatchee </span></i><span data-contrast=\"none\">will return to the Seattle/Bainbridge route on Friday, Nov. 7, replacing the </span><i><span data-contrast=\"none\">Walla Walla</span></i><span data-contrast=\"none\"> as the #1 vessel. We do not expect service impacts during this vessel swap. Thank you for your patience as we repair our vessels. </span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\"> </span></p>",
+      "BulletinSortSeq": 3,
+      "BulletinLastUpdated": "2025-11-07T00:46:41.003Z",
+      "BulletinLastUpdatedSortable": "20251106164641"
+    },
+    {
+      "BulletinTitle": "Regular Schedule on Veterans Day, Tuesday, Nov 11",
+      "BulletinText": "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\"> </span></p>",
+      "BulletinSortSeq": 1,
+      "BulletinLastUpdated": "2025-11-06T20:57:44.763Z",
+      "BulletinLastUpdatedSortable": "20251106125744"
+    }
+  ]
+}
