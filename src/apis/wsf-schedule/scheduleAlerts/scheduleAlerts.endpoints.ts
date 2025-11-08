@@ -1,9 +1,10 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { ScheduleAlertsInput } from "./scheduleAlerts.input";
-import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
-import type { AlertDetail } from "./scheduleAlerts.output";
-import { alertDetailSchema } from "./scheduleAlerts.output";
+import {
+  type ScheduleAlertsInput,
+  scheduleAlertsInputSchema,
+} from "./scheduleAlerts.input";
+import { type AlertDetail, alertDetailSchema } from "./scheduleAlerts.output";
 
 export const scheduleAlertsResource = {
   name: "schedule-alerts",

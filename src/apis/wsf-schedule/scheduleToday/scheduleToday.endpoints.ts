@@ -1,14 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import type {
-  ScheduleTodayByRouteInput,
-  ScheduleTodayByTerminalsInput,
-} from "./scheduleToday.input";
 import {
+  type ScheduleTodayByRouteInput,
+  type ScheduleTodayByTerminalsInput,
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
 } from "./scheduleToday.input";
-import type { Schedule } from "./scheduleToday.output";
-import { scheduleSchema } from "./scheduleToday.output";
+import { type Schedule, scheduleSchema } from "./scheduleToday.output";
 
 export const scheduleTodayResource = {
   name: "schedule-today",

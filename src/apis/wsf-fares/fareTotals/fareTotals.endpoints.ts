@@ -1,10 +1,11 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import type { FareTotalsByTripDateAndRouteInput } from "./fareTotals.input";
-import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
-import type { FareTotal } from "./fareTotals.output";
-import { fareTotalSchema } from "./fareTotals.output";
+import {
+  type FareTotalsByTripDateAndRouteInput,
+  fareTotalsByTripDateAndRouteInputSchema,
+} from "./fareTotals.input";
+import { type FareTotal, fareTotalSchema } from "./fareTotals.output";
 
 export const fareTotalsGroup = {
   name: "fare-totals",

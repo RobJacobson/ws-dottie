@@ -1,9 +1,10 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { ActiveSeasonsInput } from "./activeSeasons.input";
-import { activeSeasonsInputSchema } from "./activeSeasons.input";
-import type { ScheduleBase } from "./activeSeasons.output";
-import { scheduleBaseSchema } from "./activeSeasons.output";
+import {
+  type ActiveSeasonsInput,
+  activeSeasonsInputSchema,
+} from "./activeSeasons.input";
+import { type ScheduleBase, scheduleBaseSchema } from "./activeSeasons.output";
 
 export const activeSeasonsResource = {
   name: "active-seasons",

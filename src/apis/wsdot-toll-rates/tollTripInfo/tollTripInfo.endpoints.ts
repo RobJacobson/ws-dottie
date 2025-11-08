@@ -1,9 +1,10 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { TollTripInfoInput } from "./tollTripInfo.input";
-import { tollTripInfoInputSchema } from "./tollTripInfo.input";
-import type { TollTripInfo } from "./tollTripInfo.output";
-import { tollTripInfoSchema } from "./tollTripInfo.output";
+import {
+  type TollTripInfoInput,
+  tollTripInfoInputSchema,
+} from "./tollTripInfo.input";
+import { type TollTripInfo, tollTripInfoSchema } from "./tollTripInfo.output";
 
 export const tollTripInfoResource = {
   name: "toll-trip-info",

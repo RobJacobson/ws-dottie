@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalBulletinsByIdInput,
-  TerminalBulletinsInput,
-} from "./terminalBulletins.input";
 import {
+  type TerminalBulletinsByIdInput,
+  type TerminalBulletinsInput,
   terminalBulletinsByIdInputSchema,
   terminalBulletinsInputSchema,
 } from "./terminalBulletins.input";
-import type { TerminalBulletin } from "./terminalBulletins.output";
-import { terminalBulletinSchema } from "./terminalBulletins.output";
+import {
+  type TerminalBulletin,
+  terminalBulletinSchema,
+} from "./terminalBulletins.output";
 
 export const terminalBulletinsResource = {
   name: "terminal-bulletins",

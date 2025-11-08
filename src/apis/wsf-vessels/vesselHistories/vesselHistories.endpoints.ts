@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  VesselHistoriesByVesselNameAndDateRangeInput,
-  VesselHistoriesInput,
-} from "./vesselHistories.input";
 import {
+  type VesselHistoriesByVesselNameAndDateRangeInput,
+  type VesselHistoriesInput,
   vesselHistoriesByVesselNameAndDateRangeInputSchema,
   vesselHistoriesInputSchema,
 } from "./vesselHistories.input";
-import type { VesselHistory } from "./vesselHistories.output";
-import { vesselHistorySchema } from "./vesselHistories.output";
+import {
+  type VesselHistory,
+  vesselHistorySchema,
+} from "./vesselHistories.output";
 
 export const vesselHistoriesResource = {
   name: "vessel-histories",

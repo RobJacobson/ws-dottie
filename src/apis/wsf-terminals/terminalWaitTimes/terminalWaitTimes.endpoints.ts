@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalWaitTimesByIdInput,
-  TerminalWaitTimesInput,
-} from "./terminalWaitTimes.input";
 import {
+  type TerminalWaitTimesByIdInput,
+  type TerminalWaitTimesInput,
   terminalWaitTimesByIdInputSchema,
   terminalWaitTimesInputSchema,
 } from "./terminalWaitTimes.input";
-import type { TerminalWaitTime } from "./terminalWaitTimes.output";
-import { terminalWaitTimeSchema } from "./terminalWaitTimes.output";
+import {
+  type TerminalWaitTime,
+  terminalWaitTimeSchema,
+} from "./terminalWaitTimes.output";
 
 export const terminalWaitTimesResource = {
   name: "terminal-wait-times",

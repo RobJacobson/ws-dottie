@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalVerboseByTerminalIdInput,
-  TerminalVerboseInput,
-} from "./terminalVerbose.input";
 import {
+  type TerminalVerboseByTerminalIdInput,
+  type TerminalVerboseInput,
   terminalVerboseByTerminalIdInputSchema,
   terminalVerboseInputSchema,
 } from "./terminalVerbose.input";
-import type { TerminalVerbose } from "./terminalVerbose.output";
-import { terminalVerboseSchema } from "./terminalVerbose.output";
+import {
+  type TerminalVerbose,
+  terminalVerboseSchema,
+} from "./terminalVerbose.output";
 
 export const terminalVerboseResource = {
   name: "terminal-verbose",

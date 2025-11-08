@@ -1,9 +1,13 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { CommercialVehicleRestrictionsWithIdInput } from "./cvRestrictionDataWithId.input";
-import { commercialVehicleRestrictionsWithIdInputSchema } from "./cvRestrictionDataWithId.input";
-import type { CVRestrictionWithId } from "./cvRestrictionDataWithId.output";
-import { cvRestrictionWithIdSchema } from "./cvRestrictionDataWithId.output";
+import {
+  type CommercialVehicleRestrictionsWithIdInput,
+  commercialVehicleRestrictionsWithIdInputSchema,
+} from "./cvRestrictionDataWithId.input";
+import {
+  type CVRestrictionWithId,
+  cvRestrictionWithIdSchema,
+} from "./cvRestrictionDataWithId.output";
 
 export const cvRestrictionDataWithIdGroup = {
   name: "cv-restriction-data-with-id",

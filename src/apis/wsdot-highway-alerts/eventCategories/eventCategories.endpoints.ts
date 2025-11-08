@@ -1,7 +1,9 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { EventCategoriesInput } from "./eventCategories.input";
-import { eventCategoriesInputSchema } from "./eventCategories.input";
+import {
+  type EventCategoriesInput,
+  eventCategoriesInputSchema,
+} from "./eventCategories.input";
 
 export const eventCategoriesGroup = {
   name: "event-categories",

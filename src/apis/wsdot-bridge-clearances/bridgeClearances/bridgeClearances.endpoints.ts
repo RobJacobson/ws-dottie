@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  BridgeClearancesByRouteInput,
-  BridgeClearancesInput,
-} from "./bridgeClearances.input";
 import {
+  type BridgeClearancesByRouteInput,
+  type BridgeClearancesInput,
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
 } from "./bridgeClearances.input";
-import type { BridgeClearance } from "./bridgeClearances.output";
-import { bridgeClearanceSchema } from "./bridgeClearances.output";
+import {
+  type BridgeClearance,
+  bridgeClearanceSchema,
+} from "./bridgeClearances.output";
 
 export const bridgeClearancesGroup = {
   name: "bridge-clearances",

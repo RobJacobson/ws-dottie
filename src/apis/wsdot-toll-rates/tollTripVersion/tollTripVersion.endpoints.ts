@@ -1,8 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import type { TollTripVersionInput } from "./tollTripVersion.input";
-import { tollTripVersionInputSchema } from "./tollTripVersion.input";
-import type { TollTripVersion } from "./tollTripVersion.output";
-import { tollTripVersionSchema } from "./tollTripVersion.output";
+import {
+  type TollTripVersionInput,
+  tollTripVersionInputSchema,
+} from "./tollTripVersion.input";
+import {
+  type TollTripVersion,
+  tollTripVersionSchema,
+} from "./tollTripVersion.output";
 
 export const tollTripVersionResource = {
   name: "toll-trip-version",

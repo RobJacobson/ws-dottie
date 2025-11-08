@@ -1,19 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalComboFaresVerboseInput,
-  TerminalComboInput,
-} from "./terminalCombo.input";
 import {
+  type TerminalComboFaresVerboseInput,
+  type TerminalComboInput,
   terminalComboFaresVerboseInputSchema,
   terminalComboInputSchema,
 } from "./terminalCombo.input";
-import type {
-  TerminalComboFares,
-  TerminalComboFaresVerbose,
-} from "./terminalCombo.output";
 import {
+  type TerminalComboFares,
+  type TerminalComboFaresVerbose,
   terminalComboFaresSchema,
   terminalComboFaresVerboseSchema,
 } from "./terminalCombo.output";

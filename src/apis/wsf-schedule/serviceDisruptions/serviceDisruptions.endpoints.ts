@@ -1,10 +1,14 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import type { RoutesHavingServiceDisruptionsByTripDateInput } from "./serviceDisruptions.input";
-import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
-import type { ServiceDisruption } from "./serviceDisruptions.output";
-import { serviceDisruptionSchema } from "./serviceDisruptions.output";
+import {
+  type RoutesHavingServiceDisruptionsByTripDateInput,
+  routesHavingServiceDisruptionsByTripDateInputSchema,
+} from "./serviceDisruptions.input";
+import {
+  type ServiceDisruption,
+  serviceDisruptionSchema,
+} from "./serviceDisruptions.output";
 
 export const serviceDisruptionsResource = {
   name: "service-disruptions",

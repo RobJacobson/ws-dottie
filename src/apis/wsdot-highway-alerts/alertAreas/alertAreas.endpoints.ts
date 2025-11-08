@@ -1,9 +1,7 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { MapAreasInput } from "./alertAreas.input";
-import { mapAreasInputSchema } from "./alertAreas.input";
-import type { Area } from "./alertAreas.output";
-import { areaSchema } from "./alertAreas.output";
+import { type MapAreasInput, mapAreasInputSchema } from "./alertAreas.input";
+import { type Area, areaSchema } from "./alertAreas.output";
 
 export const alertAreasGroup = {
   name: "alertAreas",

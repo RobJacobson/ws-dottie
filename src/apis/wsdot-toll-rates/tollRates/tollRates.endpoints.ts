@@ -1,9 +1,7 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type { TollRatesInput } from "./tollRates.input";
-import { tollRatesInputSchema } from "./tollRates.input";
-import type { TollRate } from "./tollRates.output";
-import { tollRateSchema } from "./tollRates.output";
+import { type TollRatesInput, tollRatesInputSchema } from "./tollRates.input";
+import { type TollRate, tollRateSchema } from "./tollRates.output";
 
 export const tollRatesResource = {
   name: "toll-rates",

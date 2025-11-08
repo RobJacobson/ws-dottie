@@ -1,18 +1,20 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalsAndMatesByRouteInput,
-  TerminalsAndMatesInput,
-  TerminalsInput,
-} from "./terminals.input";
 import {
+  type TerminalsAndMatesByRouteInput,
+  type TerminalsAndMatesInput,
+  type TerminalsInput,
   terminalsAndMatesByRouteInputSchema,
   terminalsAndMatesInputSchema,
   terminalsInputSchema,
 } from "./terminals.input";
-import type { Terminal, TerminalMate } from "./terminals.output";
-import { terminalMateSchema, terminalSchema } from "./terminals.output";
+import {
+  type Terminal,
+  type TerminalMate,
+  terminalMateSchema,
+  terminalSchema,
+} from "./terminals.output";
 
 export const scheduleTerminalsResource = {
   name: "schedule-terminals",

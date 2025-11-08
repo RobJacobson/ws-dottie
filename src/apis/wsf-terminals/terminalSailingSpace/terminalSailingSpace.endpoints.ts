@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalSailingSpaceByTerminalIdInput,
-  TerminalSailingSpaceInput,
-} from "./terminalSailingSpace.input";
 import {
+  type TerminalSailingSpaceByTerminalIdInput,
+  type TerminalSailingSpaceInput,
   terminalSailingSpaceByTerminalIdInputSchema,
   terminalSailingSpaceInputSchema,
 } from "./terminalSailingSpace.input";
-import type { TerminalSailingSpace } from "./terminalSailingSpace.output";
-import { terminalSailingSpaceSchema } from "./terminalSailingSpace.output";
+import {
+  type TerminalSailingSpace,
+  terminalSailingSpaceSchema,
+} from "./terminalSailingSpace.output";
 
 export const terminalSailingSpaceResource = {
   name: "terminal-sailing-space",
