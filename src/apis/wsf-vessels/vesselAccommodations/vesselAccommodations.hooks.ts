@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfVesselsApi } from "../apiDefinition";
 import { vesselAccommodationsResource } from "./vesselAccommodations.endpoints";
 import * as fetchFunctions from "./vesselAccommodations.fetch";
@@ -10,20 +11,20 @@ import type {
 } from "./vesselAccommodations.input";
 import type { VesselAccommodation } from "./vesselAccommodations.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfVesselsApi,
   vesselAccommodationsResource,
   fetchFunctions
 );
 
 export const useVesselAccommodations: (
-  params?: VesselAccommodationsInput,
+  params?: FetchFunctionParams<VesselAccommodationsInput>,
   options?: QueryHookOptions<VesselAccommodation[]>
 ) => UseQueryResult<VesselAccommodation[], Error> =
   hooks.useVesselAccommodations;
 
 export const useVesselAccommodationsByVesselId: (
-  params?: VesselAccommodationsByIdInput,
+  params?: FetchFunctionParams<VesselAccommodationsByIdInput>,
   options?: QueryHookOptions<VesselAccommodation>
 ) => UseQueryResult<VesselAccommodation, Error> =
   hooks.useVesselAccommodationsByVesselId;

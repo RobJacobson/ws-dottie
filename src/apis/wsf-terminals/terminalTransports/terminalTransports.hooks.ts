@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfTerminalsApi } from "../apiDefinition";
 import { terminalTransportsResource } from "./terminalTransports.endpoints";
 import * as fetchFunctions from "./terminalTransports.fetch";
@@ -10,19 +11,19 @@ import type {
 } from "./terminalTransports.input";
 import type { TerminalTransport } from "./terminalTransports.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfTerminalsApi,
   terminalTransportsResource,
   fetchFunctions
 );
 
 export const useTerminalTransports: (
-  params?: TerminalTransportsInput,
+  params?: FetchFunctionParams<TerminalTransportsInput>,
   options?: QueryHookOptions<TerminalTransport[]>
 ) => UseQueryResult<TerminalTransport[], Error> = hooks.useTerminalTransports;
 
 export const useTerminalTransportsByTerminalId: (
-  params?: TerminalTransportsByTerminalIdInput,
+  params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>,
   options?: QueryHookOptions<TerminalTransport>
 ) => UseQueryResult<TerminalTransport, Error> =
   hooks.useTerminalTransportsByTerminalId;

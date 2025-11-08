@@ -1,19 +1,20 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
 import type { Terminal } from "@/apis/shared/terminals.output";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfScheduleApi } from "../apiDefinition";
 import { scheduleTerminalMatesResource } from "./terminalMates.endpoints";
 import * as fetchFunctions from "./terminalMates.fetch";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfScheduleApi,
   scheduleTerminalMatesResource,
   fetchFunctions
 );
 
 export const useTerminalMatesSchedule: (
-  params?: TerminalMatesInput,
+  params?: FetchFunctionParams<TerminalMatesInput>,
   options?: QueryHookOptions<Terminal[]>
 ) => UseQueryResult<Terminal[], Error> = hooks.useTerminalMatesSchedule;

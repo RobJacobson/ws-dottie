@@ -17,8 +17,7 @@
  */
 
 // Cache Flush Date schemas
-export * from "./cacheFlushDate/cacheFlushDate.input";
-export * from "./cacheFlushDate/cacheFlushDate.output";
+export * from "./cacheFlushDate/cacheFlushDate.endpoints";
 
 // Vessel Accommodations schemas
 export * from "./vesselAccommodations/vesselAccommodations.input";

@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsfTerminalsApi } from "../apiDefinition";
 import { terminalSailingSpaceResource } from "./terminalSailingSpace.endpoints";
 import type {
@@ -8,7 +8,7 @@ import type {
 } from "./terminalSailingSpace.input";
 import type { TerminalSailingSpace } from "./terminalSailingSpace.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfTerminalsApi,
   terminalSailingSpaceResource
 );

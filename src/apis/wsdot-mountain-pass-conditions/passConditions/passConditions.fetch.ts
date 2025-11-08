@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsdotMountainPassConditionsApi } from "../apiDefinition";
 import { passConditionsGroup } from "./passConditions.endpoints";
 import type {
@@ -8,7 +8,7 @@ import type {
 } from "./passConditions.input";
 import type { PassCondition } from "./passConditions.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotMountainPassConditionsApi,
   passConditionsGroup
 );

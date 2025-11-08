@@ -1,11 +1,11 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsdotCommercialVehicleRestrictionsApi } from "../apiDefinition";
 import { cvRestrictionDataGroup } from "./cvRestrictionData.endpoints";
 import type { CommercialVehicleRestrictionsInput } from "./cvRestrictionData.input";
 import type { CVRestriction } from "./cvRestrictionData.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotCommercialVehicleRestrictionsApi,
   cvRestrictionDataGroup
 );

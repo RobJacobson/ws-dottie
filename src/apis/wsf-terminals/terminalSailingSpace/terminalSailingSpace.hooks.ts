@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfTerminalsApi } from "../apiDefinition";
 import { terminalSailingSpaceResource } from "./terminalSailingSpace.endpoints";
 import * as fetchFunctions from "./terminalSailingSpace.fetch";
@@ -10,20 +11,20 @@ import type {
 } from "./terminalSailingSpace.input";
 import type { TerminalSailingSpace } from "./terminalSailingSpace.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfTerminalsApi,
   terminalSailingSpaceResource,
   fetchFunctions
 );
 
 export const useTerminalSailingSpace: (
-  params?: TerminalSailingSpaceInput,
+  params?: FetchFunctionParams<TerminalSailingSpaceInput>,
   options?: QueryHookOptions<TerminalSailingSpace[]>
 ) => UseQueryResult<TerminalSailingSpace[], Error> =
   hooks.useTerminalSailingSpace;
 
 export const useTerminalSailingSpaceByTerminalId: (
-  params?: TerminalSailingSpaceByTerminalIdInput,
+  params?: FetchFunctionParams<TerminalSailingSpaceByTerminalIdInput>,
   options?: QueryHookOptions<TerminalSailingSpace>
 ) => UseQueryResult<TerminalSailingSpace, Error> =
   hooks.useTerminalSailingSpaceByTerminalId;

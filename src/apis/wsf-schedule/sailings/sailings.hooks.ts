@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfScheduleApi } from "../apiDefinition";
 import { sailingsResource } from "./sailings.endpoints";
 import * as fetchFunctions from "./sailings.fetch";
@@ -10,18 +11,14 @@ import type {
 } from "./sailings.input";
 import type { Sailing } from "./sailings.output";
 
-const hooks = createEndpointGroupHooks(
-  wsfScheduleApi,
-  sailingsResource,
-  fetchFunctions
-);
+const hooks = createHooks(wsfScheduleApi, sailingsResource, fetchFunctions);
 
 export const useAllSailingsBySchedRouteID: (
-  params?: AllSailingsBySchedRouteIDInput,
+  params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>,
   options?: QueryHookOptions<Sailing[]>
 ) => UseQueryResult<Sailing[], Error> = hooks.useAllSailingsBySchedRouteID;
 
 export const useSailingsByRouteID: (
-  params?: SailingsByRouteIDInput,
+  params?: FetchFunctionParams<SailingsByRouteIDInput>,
   options?: QueryHookOptions<Sailing[]>
 ) => UseQueryResult<Sailing[], Error> = hooks.useSailingsByRouteID;

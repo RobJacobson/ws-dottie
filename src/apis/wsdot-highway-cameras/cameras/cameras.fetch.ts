@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsdotHighwayCamerasApi } from "../apiDefinition";
 import { camerasGroup } from "./cameras.endpoints";
 import type {
@@ -9,7 +9,7 @@ import type {
 } from "./cameras.input";
 import type { Camera } from "./cameras.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotHighwayCamerasApi,
   camerasGroup
 );

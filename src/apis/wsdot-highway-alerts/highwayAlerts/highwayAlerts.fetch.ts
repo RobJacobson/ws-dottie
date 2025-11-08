@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsdotHighwayAlertsApi } from "../apiDefinition";
 import { highwayAlertsGroup } from "./highwayAlerts.endpoints";
 import type {
@@ -11,7 +11,7 @@ import type {
 } from "./highwayAlerts.input";
 import type { Alert } from "./highwayAlerts.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotHighwayAlertsApi,
   highwayAlertsGroup
 );

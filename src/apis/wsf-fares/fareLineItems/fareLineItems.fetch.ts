@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsfFaresApi } from "../apiDefinition";
 import { fareLineItemsGroup } from "./fareLineItems.endpoints";
 import type {
@@ -9,10 +9,7 @@ import type {
 } from "./fareLineItems.input";
 import type { LineItem, LineItemVerbose } from "./fareLineItems.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
-  wsfFaresApi,
-  fareLineItemsGroup
-);
+const fetchFunctions = createFetchFunctions(wsfFaresApi, fareLineItemsGroup);
 
 export const fetchFareLineItemsByTripDateAndTerminals: (
   params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>

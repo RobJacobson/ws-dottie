@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsdotTravelTimesApi } from "../apiDefinition";
 import { travelTimeRoutesGroup } from "./travelTimeRoutes.endpoints";
 import type {
@@ -8,7 +8,7 @@ import type {
 } from "./travelTimeRoutes.input";
 import type { TravelTimeRoute } from "./travelTimeRoutes.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotTravelTimesApi,
   travelTimeRoutesGroup
 );

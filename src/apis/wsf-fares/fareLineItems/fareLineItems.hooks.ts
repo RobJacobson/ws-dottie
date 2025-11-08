@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfFaresApi } from "../apiDefinition";
 import { fareLineItemsGroup } from "./fareLineItems.endpoints";
 import * as fetchFunctions from "./fareLineItems.fetch";
@@ -11,24 +12,20 @@ import type {
 } from "./fareLineItems.input";
 import type { LineItem, LineItemVerbose } from "./fareLineItems.output";
 
-const hooks = createEndpointGroupHooks(
-  wsfFaresApi,
-  fareLineItemsGroup,
-  fetchFunctions
-);
+const hooks = createHooks(wsfFaresApi, fareLineItemsGroup, fetchFunctions);
 
 export const useFareLineItemsByTripDateAndTerminals: (
-  params?: FareLineItemsByTripDateAndTerminalsInput,
+  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>,
   options?: QueryHookOptions<LineItem[]>
 ) => UseQueryResult<LineItem[], Error> =
   hooks.useFareLineItemsByTripDateAndTerminals;
 
 export const useFareLineItemsBasic: (
-  params?: FareLineItemsBasicInput,
+  params?: FetchFunctionParams<FareLineItemsBasicInput>,
   options?: QueryHookOptions<LineItem[]>
 ) => UseQueryResult<LineItem[], Error> = hooks.useFareLineItemsBasic;
 
 export const useFareLineItemsVerbose: (
-  params?: FareLineItemsVerboseInput,
+  params?: FetchFunctionParams<FareLineItemsVerboseInput>,
   options?: QueryHookOptions<LineItemVerbose>
 ) => UseQueryResult<LineItemVerbose, Error> = hooks.useFareLineItemsVerbose;

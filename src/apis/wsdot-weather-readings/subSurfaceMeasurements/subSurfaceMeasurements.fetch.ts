@@ -1,11 +1,11 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsdotWeatherReadingsApi } from "../apiDefinition";
 import { subSurfaceMeasurementsResource } from "./subSurfaceMeasurements.endpoints";
 import type { SubSurfaceMeasurementsInput } from "./subSurfaceMeasurements.input";
 import type { SubsurfaceMeasurement } from "./subSurfaceMeasurements.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotWeatherReadingsApi,
   subSurfaceMeasurementsResource
 );

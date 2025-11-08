@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsfScheduleApi } from "../apiDefinition";
 import { routesResource } from "./routes.endpoints";
 import type {
@@ -8,10 +8,7 @@ import type {
 } from "./routes.input";
 import type { Route } from "./routes.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
-  wsfScheduleApi,
-  routesResource
-);
+const fetchFunctions = createFetchFunctions(wsfScheduleApi, routesResource);
 
 export const fetchRoutesByTripDate: (
   params?: FetchFunctionParams<RoutesByTripDateInput>

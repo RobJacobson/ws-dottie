@@ -1,19 +1,20 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsdotWeatherStationsApi } from "../apiDefinition";
 import { weatherStationsResource } from "./weatherStations.endpoints";
 import * as fetchFunctions from "./weatherStations.fetch";
 import type { WeatherStationsInput } from "./weatherStations.input";
 import type { WeatherStation } from "./weatherStations.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotWeatherStationsApi,
   weatherStationsResource,
   fetchFunctions
 );
 
 export const useWeatherStations: (
-  params?: WeatherStationsInput,
+  params?: FetchFunctionParams<WeatherStationsInput>,
   options?: QueryHookOptions<WeatherStation[]>
 ) => UseQueryResult<WeatherStation[], Error> = hooks.useWeatherStations;

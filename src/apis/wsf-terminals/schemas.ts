@@ -5,8 +5,7 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
-export * from "./cacheFlushDate/cacheFlushDate.input";
-export * from "./cacheFlushDate/cacheFlushDate.output";
+export * from "./cacheFlushDate/cacheFlushDate.endpoints";
 export * from "./terminalBasics/terminalBasics.input";
 export * from "./terminalBasics/terminalBasics.output";
 export * from "./terminalBulletins/terminalBulletins.input";

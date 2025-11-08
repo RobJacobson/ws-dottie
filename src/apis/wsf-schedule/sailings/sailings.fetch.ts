@@ -1,5 +1,5 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import { createFetchFunctions } from "@/shared/factories/createFetchFunctions";
 import { wsfScheduleApi } from "../apiDefinition";
 import { sailingsResource } from "./sailings.endpoints";
 import type {
@@ -8,10 +8,7 @@ import type {
 } from "./sailings.input";
 import type { Sailing } from "./sailings.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
-  wsfScheduleApi,
-  sailingsResource
-);
+const fetchFunctions = createFetchFunctions(wsfScheduleApi, sailingsResource);
 
 export const fetchAllSailingsBySchedRouteID: (
   params?: FetchFunctionParams<AllSailingsBySchedRouteIDInput>

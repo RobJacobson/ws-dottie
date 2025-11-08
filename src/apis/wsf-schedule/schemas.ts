@@ -23,8 +23,7 @@ export {
 } from "../shared/validDateRange.output";
 export * from "./activeSeasons/activeSeasons.input";
 export * from "./activeSeasons/activeSeasons.output";
-export * from "./cacheFlushDate/cacheFlushDate.input";
-export * from "./cacheFlushDate/cacheFlushDate.output";
+export * from "./cacheFlushDate/cacheFlushDate.endpoints";
 export * from "./routeDetails/routeDetails.input";
 export * from "./routeDetails/routeDetails.output";
 export * from "./routes/routes.input";

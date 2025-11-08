@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsdotTravelTimesApi } from "../apiDefinition";
 import { travelTimeRoutesGroup } from "./travelTimeRoutes.endpoints";
 import * as fetchFunctions from "./travelTimeRoutes.fetch";
@@ -10,18 +11,18 @@ import type {
 } from "./travelTimeRoutes.input";
 import type { TravelTimeRoute } from "./travelTimeRoutes.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotTravelTimesApi,
   travelTimeRoutesGroup,
   fetchFunctions
 );
 
 export const useTravelTimeById: (
-  params?: TravelTimeByIdInput,
+  params?: FetchFunctionParams<TravelTimeByIdInput>,
   options?: QueryHookOptions<TravelTimeRoute>
 ) => UseQueryResult<TravelTimeRoute, Error> = hooks.useTravelTimeById;
 
 export const useTravelTimes: (
-  params?: TravelTimesInput,
+  params?: FetchFunctionParams<TravelTimesInput>,
   options?: QueryHookOptions<TravelTimeRoute[]>
 ) => UseQueryResult<TravelTimeRoute[], Error> = hooks.useTravelTimes;

@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfScheduleApi } from "../apiDefinition";
 import { routesResource } from "./routes.endpoints";
 import * as fetchFunctions from "./routes.fetch";
@@ -10,18 +11,14 @@ import type {
 } from "./routes.input";
 import type { Route } from "./routes.output";
 
-const hooks = createEndpointGroupHooks(
-  wsfScheduleApi,
-  routesResource,
-  fetchFunctions
-);
+const hooks = createHooks(wsfScheduleApi, routesResource, fetchFunctions);
 
 export const useRoutesByTripDate: (
-  params?: RoutesByTripDateInput,
+  params?: FetchFunctionParams<RoutesByTripDateInput>,
   options?: QueryHookOptions<Route[]>
 ) => UseQueryResult<Route[], Error> = hooks.useRoutesByTripDate;
 
 export const useRoutesByTripDateAndTerminals: (
-  params?: RoutesByTripDateAndTerminalsInput,
+  params?: FetchFunctionParams<RoutesByTripDateAndTerminalsInput>,
   options?: QueryHookOptions<Route[]>
 ) => UseQueryResult<Route[], Error> = hooks.useRoutesByTripDateAndTerminals;

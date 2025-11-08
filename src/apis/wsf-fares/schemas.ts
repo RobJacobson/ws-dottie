@@ -21,8 +21,7 @@ export {
   type ValidDateRange,
   validDateRangeSchema,
 } from "../shared/validDateRange.output";
-export * from "./cacheFlushDate/cacheFlushDate.input";
-export * from "./cacheFlushDate/cacheFlushDate.output";
+export * from "./cacheFlushDate/cacheFlushDate.endpoints";
 export * from "./fareLineItems/fareLineItems.input";
 export * from "./fareLineItems/fareLineItems.output";
 export * from "./fareTotals/fareTotals.input";

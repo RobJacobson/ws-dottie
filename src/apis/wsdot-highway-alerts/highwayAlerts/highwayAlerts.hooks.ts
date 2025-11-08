@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsdotHighwayAlertsApi } from "../apiDefinition";
 import { highwayAlertsGroup } from "./highwayAlerts.endpoints";
 import * as fetchFunctions from "./highwayAlerts.fetch";
@@ -13,33 +14,33 @@ import type {
 } from "./highwayAlerts.input";
 import type { Alert } from "./highwayAlerts.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotHighwayAlertsApi,
   highwayAlertsGroup,
   fetchFunctions
 );
 
 export const useAlerts: (
-  params?: AlertsInput,
+  params?: FetchFunctionParams<AlertsInput>,
   options?: QueryHookOptions<Alert[]>
 ) => UseQueryResult<Alert[], Error> = hooks.useAlerts;
 
 export const useAlertById: (
-  params?: AlertByIdInput,
+  params?: FetchFunctionParams<AlertByIdInput>,
   options?: QueryHookOptions<Alert>
 ) => UseQueryResult<Alert, Error> = hooks.useAlertById;
 
 export const useAlertsByRegionId: (
-  params?: AlertsByRegionIDInput,
+  params?: FetchFunctionParams<AlertsByRegionIDInput>,
   options?: QueryHookOptions<Alert[]>
 ) => UseQueryResult<Alert[], Error> = hooks.useAlertsByRegionId;
 
 export const useAlertsByMapArea: (
-  params?: AlertsByMapAreaInput,
+  params?: FetchFunctionParams<AlertsByMapAreaInput>,
   options?: QueryHookOptions<Alert[]>
 ) => UseQueryResult<Alert[], Error> = hooks.useAlertsByMapArea;
 
 export const useSearchAlerts: (
-  params?: SearchAlertsInput,
+  params?: FetchFunctionParams<SearchAlertsInput>,
   options?: QueryHookOptions<Alert[]>
 ) => UseQueryResult<Alert[], Error> = hooks.useSearchAlerts;
