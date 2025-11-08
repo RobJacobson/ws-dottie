@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalBasicsByIdInput,
-  TerminalBasicsInput,
-} from "./terminalBasics.input";
+import { z } from "@/shared/zod";
 import {
+  type TerminalBasicsByIdInput,
+  type TerminalBasicsInput,
   terminalBasicsByIdInputSchema,
   terminalBasicsInputSchema,
 } from "./terminalBasics.input";
-import type { TerminalBasic } from "./terminalBasics.output";
-import { terminalBasicSchema } from "./terminalBasics.output";
+import {
+  type TerminalBasic,
+  terminalBasicSchema,
+} from "./terminalBasics.output";
 
 export const terminalBasicsResource = {
   name: "terminal-basics",

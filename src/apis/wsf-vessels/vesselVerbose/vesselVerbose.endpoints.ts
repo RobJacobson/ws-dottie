@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  VesselVerboseByIdInput,
-  VesselVerboseInput,
-} from "./vesselVerbose.input";
+import { z } from "@/shared/zod";
 import {
+  type VesselVerboseByIdInput,
+  type VesselVerboseInput,
   vesselVerboseByIdInputSchema,
   vesselVerboseInputSchema,
 } from "./vesselVerbose.input";
-import type { VesselVerbose } from "./vesselVerbose.output";
-import { vesselVerboseSchema } from "./vesselVerbose.output";
+import {
+  type VesselVerbose,
+  vesselVerboseSchema,
+} from "./vesselVerbose.output";
 
 export const vesselVerboseResource = {
   name: "vessel-verbose",

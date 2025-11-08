@@ -55,8 +55,14 @@ import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
-  const { data: vessels, isLoading, error } = useVesselLocations();
-  const { data: alerts } = useAlerts();
+  const { data: vessels, isLoading, error } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
+  const { data: alerts } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
   
   if (error) return <div>Error: {error.message}</div>;
   
@@ -90,6 +96,10 @@ function TransportationDashboard() {
 }
 ```
 
+### Hook Parameters Align With Fetch Functions
+
+WS-Dottie hooks accept the same `FetchFunctionParams<T>` object as their matching fetch functions. Provide endpoint parameters with the `params` property, override transport with `fetchMode`, and toggle Zod validation with `validate`. TanStack Query options remain available as an optional second argument to every hook.
+
 ## 🔄 Cache Strategies
 
 WS-Dottie provides four cache strategies optimized for different types of transportation data:
@@ -109,16 +119,25 @@ import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 import { useTerminalLocations } from 'ws-dottie/wsf-terminals';
 
 // Use default caching strategy (REALTIME for vessel locations)
-const { data: vessels } = useVesselLocations();
-
-// Override with custom caching strategy
-const { data: alerts } = useAlerts({
-  staleTime: 2 * 60 * 1000, // 2 minutes instead of 5
-  refetchInterval: 2 * 60 * 1000, // 2 minutes instead of 5
+const { data: vessels } = useVesselLocations({
+  fetchMode: 'native',
+  validate: false,
 });
 
+// Override with custom caching strategy
+const { data: alerts } = useAlerts(
+  { fetchMode: 'native', validate: true },
+  {
+    staleTime: 2 * 60 * 1000, // 2 minutes instead of 5
+    refetchInterval: 2 * 60 * 1000, // 2 minutes instead of 5
+  }
+);
+
 // Use with static data
-const { data: terminals } = useTerminalLocations(); // Uses STATIC strategy
+const { data: terminals } = useTerminalLocations({
+  fetchMode: 'native',
+  validate: true,
+}); // Uses STATIC strategy
 ```
 
 ## 🔄 Cache Invalidation
@@ -151,7 +170,10 @@ import { useTerminalLocations } from 'ws-dottie/wsf-terminals';
 function FerryTerminals() {
   // Terminal locations hook includes automatic cache invalidation
   // Parameters are optional for endpoints that don't require them
-  const { data: terminals, isLoading, error } = useTerminalLocations();
+  const { data: terminals, isLoading, error } = useTerminalLocations({
+    fetchMode: 'native',
+    validate: true,
+  });
   
   if (isLoading) return <div>Loading terminals...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -178,7 +200,11 @@ import { useVesselBasics } from 'ws-dottie/wsf-vessels';
 function VesselDetails({ vesselId }) {
   // Vessel basics hook includes automatic cache invalidation
   // Parameters are required for endpoints that need them
-  const { data: vessel, isLoading, error } = useVesselBasics({ VesselID: vesselId });
+  const { data: vessel, isLoading, error } = useVesselBasics({
+    params: { VesselID: vesselId },
+    fetchMode: 'native',
+    validate: true,
+  });
   
   if (isLoading) return <div>Loading vessel details...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -203,35 +229,38 @@ WS-Dottie hooks support all TanStack Query options for fine-grained control:
 import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 
 function VesselTracker() {
-  const { data: vessels, isLoading, error, refetch } = useVesselLocations({
-    // Override default cache strategy
-    staleTime: 10 * 1000, // 10 seconds instead of 5
-    refetchInterval: 10 * 1000, // 10 seconds instead of 5
-    
-    // Custom retry logic
-    retry: (failureCount, error) => {
-      if (error.status === 404) return false; // Don't retry 404s
-      if (failureCount < 5) return true; // Retry up to 5 times
-      return false;
-    },
-    
-    // Custom error handling
-    onError: (error) => {
-      console.error('Vessel fetch error:', error);
-      
-      // Show user-friendly message
-      if (error.status === 401) {
-        showNotification('Please check your API key configuration');
-      } else if (error.status >= 500) {
-        showNotification('Server error. Please try again later.');
-      }
-    },
-    
-    // Success callback
-    onSuccess: (data) => {
-      console.log(`Loaded ${data.length} vessels`);
-    },
-  });
+  const { data: vessels, isLoading, error, refetch } = useVesselLocations(
+    { fetchMode: 'native', validate: false },
+    {
+      // Override default cache strategy
+      staleTime: 10 * 1000, // 10 seconds instead of 5
+      refetchInterval: 10 * 1000, // 10 seconds instead of 5
+
+      // Custom retry logic
+      retry: (failureCount, error) => {
+        if (error.status === 404) return false; // Don't retry 404s
+        if (failureCount < 5) return true; // Retry up to 5 times
+        return false;
+      },
+
+      // Custom error handling
+      onError: (error) => {
+        console.error('Vessel fetch error:', error);
+
+        // Show user-friendly message
+        if (error.status === 401) {
+          showNotification('Please check your API key configuration');
+        } else if (error.status >= 500) {
+          showNotification('Server error. Please try again later.');
+        }
+      },
+
+      // Success callback
+      onSuccess: (data) => {
+        console.log(`Loaded ${data.length} vessels`);
+      },
+    }
+  );
   
   if (error) {
     return (
@@ -268,12 +297,18 @@ function FerryDashboard() {
   const [showDetails, setShowDetails] = useState(false);
   
   // Always fetch vessel locations
-  const { data: vessels } = useVesselLocations();
+  const { data: vessels } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
   
   // Conditionally fetch terminal wait times
-  const { data: waitTimes } = useTerminalWaitTimes({
-    enabled: showDetails // Only fetch when details are shown
-  });
+  const { data: waitTimes } = useTerminalWaitTimes(
+    { fetchMode: 'native', validate: true },
+    {
+      enabled: showDetails // Only fetch when details are shown
+    }
+  );
   
   return (
     <div>
@@ -320,14 +355,22 @@ function FerrySchedule() {
   });
   
   const { data: schedules } = useScheduleByTripDateAndRouteId({ 
-    TripDate: route.date.toISOString().split('T')[0], 
-    RouteID: route.departing
+    params: {
+      TripDate: route.date.toISOString().split('T')[0], 
+      RouteID: route.departing
+    },
+    fetchMode: 'native',
+    validate: true,
   });
   
   const { data: fares } = useFareLineItemsByTripDateAndTerminals({ 
-    TripDate: route.date.toISOString().split('T')[0], 
-    DepartingTerminalID: route.departing, 
-    ArrivingTerminalID: route.arriving 
+    params: {
+      TripDate: route.date.toISOString().split('T')[0], 
+      DepartingTerminalID: route.departing, 
+      ArrivingTerminalID: route.arriving 
+    },
+    fetchMode: 'native',
+    validate: true,
   });
   
   return (
@@ -375,7 +418,10 @@ Recommended component structure for WS-Dottie data:
 ```jsx
 // Container component - handles data fetching
 function VesselMapContainer() {
-  const { data: vessels, isLoading, error, refetch } = useVesselLocations();
+  const { data: vessels, isLoading, error, refetch } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
   
   return (
     <VesselMap 
@@ -407,7 +453,10 @@ function VesselMap({ vessels, isLoading, error, onRefresh }) {
 import { useWeatherInformation } from 'ws-dottie/wsdot-weather-information';
 
 function WeatherDashboard() {
-  const { data: weather } = useWeatherInformation();
+  const { data: weather } = useWeatherInformation({
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // Transform data for visualization
   const weatherByRegion = useMemo(() => {
@@ -461,13 +510,22 @@ import { useScheduleByTripDateAndRouteId } from 'ws-dottie/wsf-schedule';
 
 function FerryApp() {
   // Real-time data for live tracking
-  const { data: vessels } = useVesselLocations(); // Uses REALTIME strategy
+  const { data: vessels } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  }); // Uses REALTIME strategy
   
   // Frequent updates for wait times
-  const { data: waitTimes } = useTerminalWaitTimes(); // Uses FREQUENT strategy
+  const { data: waitTimes } = useTerminalWaitTimes({
+    fetchMode: 'native',
+    validate: true,
+  }); // Uses FREQUENT strategy
   
   // Static data with automatic cache invalidation
-  const { data: terminals } = useTerminalLocations(); // Uses cache invalidation instead of fixed interval
+  const { data: terminals } = useTerminalLocations({
+    fetchMode: 'native',
+    validate: true,
+  }); // Uses cache invalidation instead of fixed interval
   
   return (
     <div>
@@ -524,7 +582,10 @@ import { useQueryClient } from '@tanstack/react-query';
 
 function ScheduleComponent() {
   const queryClient = useQueryClient();
-  const { data: schedules } = useScheduleByTripDateAndRouteId();
+  const { data: schedules } = useScheduleByTripDateAndRouteId({
+    fetchMode: 'native',
+    validate: true,
+  });
   
   const refreshSchedules = () => {
     queryClient.invalidateQueries(['schedules']);

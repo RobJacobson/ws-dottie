@@ -1,4 +1,4 @@
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 import { cvRestrictionSchema } from "../cvRestrictionData/cvRestrictionData.output";
 
 /**

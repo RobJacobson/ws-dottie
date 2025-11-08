@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { terminalWaitTimesResource } from "./terminalWaitTimes.endpoints";
 import type {
   TerminalWaitTimesByIdInput,
@@ -8,7 +10,7 @@ import type {
 } from "./terminalWaitTimes.input";
 import type { TerminalWaitTime } from "./terminalWaitTimes.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfTerminalsApi,
   terminalWaitTimesResource
 );

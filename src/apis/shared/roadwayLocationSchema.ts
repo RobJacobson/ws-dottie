@@ -1,4 +1,4 @@
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for RoadwayLocation - represents location information for a roadway

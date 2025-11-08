@@ -5,7 +5,7 @@
  * Note: AccessCode is handled separately and is not included in these schemas.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Input schema for FareTotals endpoint

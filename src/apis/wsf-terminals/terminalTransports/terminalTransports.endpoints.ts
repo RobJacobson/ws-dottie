@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  TerminalTransportsByTerminalIdInput,
-  TerminalTransportsInput,
-} from "./terminalTransports.input";
+import { z } from "@/shared/zod";
 import {
+  type TerminalTransportsByTerminalIdInput,
+  type TerminalTransportsInput,
   terminalTransportsByTerminalIdInputSchema,
   terminalTransportsInputSchema,
 } from "./terminalTransports.input";
-import type { TerminalTransport } from "./terminalTransports.output";
-import { terminalTransportSchema } from "./terminalTransports.output";
+import {
+  type TerminalTransport,
+  terminalTransportSchema,
+} from "./terminalTransports.output";
 
 export const terminalTransportsResource = {
   name: "terminal-transports",

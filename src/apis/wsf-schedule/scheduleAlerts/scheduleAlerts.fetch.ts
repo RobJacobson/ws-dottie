@@ -1,11 +1,13 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduleAlertsResource } from "./scheduleAlerts.endpoints";
 import type { ScheduleAlertsInput } from "./scheduleAlerts.input";
 import type { AlertDetail } from "./scheduleAlerts.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfScheduleApi,
   scheduleAlertsResource
 );

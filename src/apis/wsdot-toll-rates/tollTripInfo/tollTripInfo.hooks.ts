@@ -1,19 +1,22 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { tollTripInfoResource } from "./tollTripInfo.endpoints";
 import * as fetchFunctions from "./tollTripInfo.fetch";
 import type { TollTripInfoInput } from "./tollTripInfo.input";
 import type { TollTripInfo } from "./tollTripInfo.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotTollRatesApi,
   tollTripInfoResource,
   fetchFunctions
 );
 
 export const useTollTripInfo: (
-  params?: TollTripInfoInput,
+  params?: FetchFunctionParams<TollTripInfoInput>,
   options?: QueryHookOptions<TollTripInfo[]>
 ) => UseQueryResult<TollTripInfo[], Error> = hooks.useTollTripInfo;

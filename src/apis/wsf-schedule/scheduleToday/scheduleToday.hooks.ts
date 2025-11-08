@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { scheduleTodayResource } from "./scheduleToday.endpoints";
 import * as fetchFunctions from "./scheduleToday.fetch";
 import type {
@@ -10,18 +13,18 @@ import type {
 } from "./scheduleToday.input";
 import type { Schedule } from "./scheduleToday.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfScheduleApi,
   scheduleTodayResource,
   fetchFunctions
 );
 
 export const useScheduleTodayByRoute: (
-  params?: ScheduleTodayByRouteInput,
+  params?: FetchFunctionParams<ScheduleTodayByRouteInput>,
   options?: QueryHookOptions<Schedule>
 ) => UseQueryResult<Schedule, Error> = hooks.useScheduleTodayByRoute;
 
 export const useScheduleTodayByTerminals: (
-  params?: ScheduleTodayByTerminalsInput,
+  params?: FetchFunctionParams<ScheduleTodayByTerminalsInput>,
   options?: QueryHookOptions<Schedule>
 ) => UseQueryResult<Schedule, Error> = hooks.useScheduleTodayByTerminals;

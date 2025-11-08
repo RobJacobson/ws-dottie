@@ -1,15 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  ScheduledRoutesByIdInput,
-  ScheduledRoutesInput,
-} from "./scheduledRoutes.input";
+import { z } from "@/shared/zod";
 import {
+  type ScheduledRoutesByIdInput,
+  type ScheduledRoutesInput,
   scheduledRoutesByIdInputSchema,
   scheduledRoutesInputSchema,
 } from "./scheduledRoutes.input";
-import type { SchedRoute } from "./scheduledRoutes.output";
-import { schedRouteSchema } from "./scheduledRoutes.output";
+import { type SchedRoute, schedRouteSchema } from "./scheduledRoutes.output";
 
 export const scheduledRoutesResource = {
   name: "scheduled-routes",

@@ -1,18 +1,18 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  TollTripRatesInput,
-  TripRatesByDateInput,
-  TripRatesByVersionInput,
-} from "./tollTripRates.input";
+import { z } from "@/shared/zod";
 import {
+  type TollTripRatesInput,
+  type TripRatesByDateInput,
+  type TripRatesByVersionInput,
   tollTripRatesInputSchema,
   tripRatesByDateInputSchema,
   tripRatesByVersionInputSchema,
 } from "./tollTripRates.input";
-import type { TollTripsRates } from "./tollTripRates.output";
-import { tollTripsRatesSchema } from "./tollTripRates.output";
+import {
+  type TollTripsRates,
+  tollTripsRatesSchema,
+} from "./tollTripRates.output";
 
 export const tollTripRatesResource = {
   name: "toll-trip-rates",

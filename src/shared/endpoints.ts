@@ -11,7 +11,7 @@
 
 // Import Zod OpenAPI initialization FIRST, before any schema creation
 // This ensures all schemas imported from API modules have .openapi() method
-import "@/shared/zod-openapi-init";
+import "@/shared/zod";
 
 import type {
   ApiDefinition,

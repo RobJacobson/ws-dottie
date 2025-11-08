@@ -1,19 +1,22 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { alertAreasGroup } from "./alertAreas.endpoints";
 import * as fetchFunctions from "./alertAreas.fetch";
 import type { MapAreasInput } from "./alertAreas.input";
 import type { Area } from "./alertAreas.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotHighwayAlertsApi,
   alertAreasGroup,
   fetchFunctions
 );
 
 export const useMapAreas: (
-  params?: MapAreasInput,
+  params?: FetchFunctionParams<MapAreasInput>,
   options?: QueryHookOptions<Area[]>
 ) => UseQueryResult<Area[], Error> = hooks.useMapAreas;

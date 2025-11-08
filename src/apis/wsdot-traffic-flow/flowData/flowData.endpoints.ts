@@ -1,12 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type { TrafficFlowByIdInput, TrafficFlowsInput } from "./flowData.input";
+import { z } from "@/shared/zod";
 import {
+  type TrafficFlowByIdInput,
+  type TrafficFlowsInput,
   trafficFlowByIdInputSchema,
   trafficFlowsInputSchema,
 } from "./flowData.input";
-import type { FlowData } from "./flowData.output";
-import { flowDataSchema } from "./flowData.output";
+import { type FlowData, flowDataSchema } from "./flowData.output";
 
 export const flowDataGroup = {
   name: "flow-data",

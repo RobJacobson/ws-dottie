@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfVesselsApi } from "../apiDefinition";
+import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { vesselVerboseResource } from "./vesselVerbose.endpoints";
 import type {
   VesselVerboseByIdInput,
@@ -8,7 +10,7 @@ import type {
 } from "./vesselVerbose.input";
 import type { VesselVerbose } from "./vesselVerbose.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfVesselsApi,
   vesselVerboseResource
 );

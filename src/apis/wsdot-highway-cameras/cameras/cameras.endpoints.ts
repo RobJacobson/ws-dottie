@@ -1,17 +1,14 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  HighwayCameraByCameraIdInput,
-  HighwayCamerasByRouteAndMilepostInput,
-  HighwayCamerasInput,
-} from "./cameras.input";
+import { z } from "@/shared/zod";
 import {
+  type HighwayCameraByCameraIdInput,
+  type HighwayCamerasByRouteAndMilepostInput,
+  type HighwayCamerasInput,
   highwayCameraByCameraIdInputSchema,
   highwayCamerasByRouteAndMilepostInputSchema,
   highwayCamerasInputSchema,
 } from "./cameras.input";
-import type { Camera } from "./cameras.output";
-import { cameraSchema } from "./cameras.output";
+import { type Camera, cameraSchema } from "./cameras.output";
 
 export const camerasGroup = {
   name: "cameras",

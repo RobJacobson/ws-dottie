@@ -1,6 +1,6 @@
 {
   "name": "ws-dottie",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Your friendly TypeScript companion for Washington State transportation APIs - WSDOT and WSF data with smart caching and React Query integration",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -25,244 +25,392 @@
       "default": "./dist/cli/index.mjs"
     },
     "./wsf-vessels": {
-      "types": "./dist/wsf-vessels/index.d.ts",
-      "import": "./dist/wsf-vessels/index.mjs",
-      "require": "./dist/wsf-vessels/index.js"
+      "types": "./dist/apis/wsf-vessels/index.d.ts",
+      "import": "./dist/apis/wsf-vessels/index.mjs",
+      "require": "./dist/apis/wsf-vessels/index.js"
     },
     "./wsf-vessels/core": {
-      "types": "./dist/wsf-vessels/core.d.ts",
-      "import": "./dist/wsf-vessels/core.mjs",
-      "require": "./dist/wsf-vessels/core.js"
+      "types": "./dist/apis/wsf-vessels/core.d.ts",
+      "import": "./dist/apis/wsf-vessels/core.mjs",
+      "require": "./dist/apis/wsf-vessels/core.js"
     },
     "./wsf-vessels/schemas": {
-      "types": "./dist/wsf-vessels/schemas.d.ts",
-      "import": "./dist/wsf-vessels/schemas.mjs",
-      "require": "./dist/wsf-vessels/schemas.js"
+      "types": "./dist/apis/wsf-vessels/schemas.d.ts",
+      "import": "./dist/apis/wsf-vessels/schemas.mjs",
+      "require": "./dist/apis/wsf-vessels/schemas.js"
     },
     "./wsdot-border-crossings": {
-      "types": "./dist/wsdot-border-crossings/index.d.ts",
-      "import": "./dist/wsdot-border-crossings/index.mjs",
-      "require": "./dist/wsdot-border-crossings/index.js"
+      "types": "./dist/apis/wsdot-border-crossings/index.d.ts",
+      "import": "./dist/apis/wsdot-border-crossings/index.mjs",
+      "require": "./dist/apis/wsdot-border-crossings/index.js"
     },
     "./wsdot-border-crossings/core": {
-      "types": "./dist/wsdot-border-crossings/core.d.ts",
-      "import": "./dist/wsdot-border-crossings/core.mjs",
-      "require": "./dist/wsdot-border-crossings/core.js"
+      "types": "./dist/apis/wsdot-border-crossings/core.d.ts",
+      "import": "./dist/apis/wsdot-border-crossings/core.mjs",
+      "require": "./dist/apis/wsdot-border-crossings/core.js"
     },
     "./wsdot-border-crossings/schemas": {
-      "types": "./dist/wsdot-border-crossings/schemas.d.ts",
-      "import": "./dist/wsdot-border-crossings/schemas.mjs",
-      "require": "./dist/wsdot-border-crossings/schemas.js"
+      "types": "./dist/apis/wsdot-border-crossings/schemas.d.ts",
+      "import": "./dist/apis/wsdot-border-crossings/schemas.mjs",
+      "require": "./dist/apis/wsdot-border-crossings/schemas.js"
     },
     "./wsdot-bridge-clearances": {
-      "types": "./dist/wsdot-bridge-clearances/index.d.ts",
-      "import": "./dist/wsdot-bridge-clearances/index.mjs",
-      "require": "./dist/wsdot-bridge-clearances/index.js"
+      "types": "./dist/apis/wsdot-bridge-clearances/index.d.ts",
+      "import": "./dist/apis/wsdot-bridge-clearances/index.mjs",
+      "require": "./dist/apis/wsdot-bridge-clearances/index.js"
     },
     "./wsdot-bridge-clearances/core": {
-      "types": "./dist/wsdot-bridge-clearances/core.d.ts",
-      "import": "./dist/wsdot-bridge-clearances/core.mjs",
-      "require": "./dist/wsdot-bridge-clearances/core.js"
+      "types": "./dist/apis/wsdot-bridge-clearances/core.d.ts",
+      "import": "./dist/apis/wsdot-bridge-clearances/core.mjs",
+      "require": "./dist/apis/wsdot-bridge-clearances/core.js"
     },
     "./wsdot-bridge-clearances/schemas": {
-      "types": "./dist/wsdot-bridge-clearances/schemas.d.ts",
-      "import": "./dist/wsdot-bridge-clearances/schemas.mjs",
-      "require": "./dist/wsdot-bridge-clearances/schemas.js"
+      "types": "./dist/apis/wsdot-bridge-clearances/schemas.d.ts",
+      "import": "./dist/apis/wsdot-bridge-clearances/schemas.mjs",
+      "require": "./dist/apis/wsdot-bridge-clearances/schemas.js"
     },
     "./wsdot-commercial-vehicle-restrictions": {
-      "types": "./dist/wsdot-commercial-vehicle-restrictions/index.d.ts",
-      "import": "./dist/wsdot-commercial-vehicle-restrictions/index.mjs",
-      "require": "./dist/wsdot-commercial-vehicle-restrictions/index.js"
+      "types": "./dist/apis/wsdot-commercial-vehicle-restrictions/index.d.ts",
+      "import": "./dist/apis/wsdot-commercial-vehicle-restrictions/index.mjs",
+      "require": "./dist/apis/wsdot-commercial-vehicle-restrictions/index.js"
     },
     "./wsdot-commercial-vehicle-restrictions/core": {
-      "types": "./dist/wsdot-commercial-vehicle-restrictions/core.d.ts",
-      "import": "./dist/wsdot-commercial-vehicle-restrictions/core.mjs",
-      "require": "./dist/wsdot-commercial-vehicle-restrictions/core.js"
+      "types": "./dist/apis/wsdot-commercial-vehicle-restrictions/core.d.ts",
+      "import": "./dist/apis/wsdot-commercial-vehicle-restrictions/core.mjs",
+      "require": "./dist/apis/wsdot-commercial-vehicle-restrictions/core.js"
     },
     "./wsdot-commercial-vehicle-restrictions/schemas": {
-      "types": "./dist/wsdot-commercial-vehicle-restrictions/schemas.d.ts",
-      "import": "./dist/wsdot-commercial-vehicle-restrictions/schemas.mjs",
-      "require": "./dist/wsdot-commercial-vehicle-restrictions/schemas.js"
+      "types": "./dist/apis/wsdot-commercial-vehicle-restrictions/schemas.d.ts",
+      "import": "./dist/apis/wsdot-commercial-vehicle-restrictions/schemas.mjs",
+      "require": "./dist/apis/wsdot-commercial-vehicle-restrictions/schemas.js"
     },
     "./wsdot-highway-alerts": {
-      "types": "./dist/wsdot-highway-alerts/index.d.ts",
-      "import": "./dist/wsdot-highway-alerts/index.mjs",
-      "require": "./dist/wsdot-highway-alerts/index.js"
+      "types": "./dist/apis/wsdot-highway-alerts/index.d.ts",
+      "import": "./dist/apis/wsdot-highway-alerts/index.mjs",
+      "require": "./dist/apis/wsdot-highway-alerts/index.js"
     },
     "./wsdot-highway-alerts/core": {
-      "types": "./dist/wsdot-highway-alerts/core.d.ts",
-      "import": "./dist/wsdot-highway-alerts/core.mjs",
-      "require": "./dist/wsdot-highway-alerts/core.js"
+      "types": "./dist/apis/wsdot-highway-alerts/core.d.ts",
+      "import": "./dist/apis/wsdot-highway-alerts/core.mjs",
+      "require": "./dist/apis/wsdot-highway-alerts/core.js"
     },
     "./wsdot-highway-alerts/schemas": {
-      "types": "./dist/wsdot-highway-alerts/schemas.d.ts",
-      "import": "./dist/wsdot-highway-alerts/schemas.mjs",
-      "require": "./dist/wsdot-highway-alerts/schemas.js"
+      "types": "./dist/apis/wsdot-highway-alerts/schemas.d.ts",
+      "import": "./dist/apis/wsdot-highway-alerts/schemas.mjs",
+      "require": "./dist/apis/wsdot-highway-alerts/schemas.js"
     },
     "./wsdot-highway-cameras": {
-      "types": "./dist/wsdot-highway-cameras/index.d.ts",
-      "import": "./dist/wsdot-highway-cameras/index.mjs",
-      "require": "./dist/wsdot-highway-cameras/index.js"
+      "types": "./dist/apis/wsdot-highway-cameras/index.d.ts",
+      "import": "./dist/apis/wsdot-highway-cameras/index.mjs",
+      "require": "./dist/apis/wsdot-highway-cameras/index.js"
     },
     "./wsdot-highway-cameras/core": {
-      "types": "./dist/wsdot-highway-cameras/core.d.ts",
-      "import": "./dist/wsdot-highway-cameras/core.mjs",
-      "require": "./dist/wsdot-highway-cameras/core.js"
+      "types": "./dist/apis/wsdot-highway-cameras/core.d.ts",
+      "import": "./dist/apis/wsdot-highway-cameras/core.mjs",
+      "require": "./dist/apis/wsdot-highway-cameras/core.js"
     },
     "./wsdot-highway-cameras/schemas": {
-      "types": "./dist/wsdot-highway-cameras/schemas.d.ts",
-      "import": "./dist/wsdot-highway-cameras/schemas.mjs",
-      "require": "./dist/wsdot-highway-cameras/schemas.js"
+      "types": "./dist/apis/wsdot-highway-cameras/schemas.d.ts",
+      "import": "./dist/apis/wsdot-highway-cameras/schemas.mjs",
+      "require": "./dist/apis/wsdot-highway-cameras/schemas.js"
     },
     "./wsdot-mountain-pass-conditions": {
-      "types": "./dist/wsdot-mountain-pass-conditions/index.d.ts",
-      "import": "./dist/wsdot-mountain-pass-conditions/index.mjs",
-      "require": "./dist/wsdot-mountain-pass-conditions/index.js"
+      "types": "./dist/apis/wsdot-mountain-pass-conditions/index.d.ts",
+      "import": "./dist/apis/wsdot-mountain-pass-conditions/index.mjs",
+      "require": "./dist/apis/wsdot-mountain-pass-conditions/index.js"
     },
     "./wsdot-mountain-pass-conditions/core": {
-      "types": "./dist/wsdot-mountain-pass-conditions/core.d.ts",
-      "import": "./dist/wsdot-mountain-pass-conditions/core.mjs",
-      "require": "./dist/wsdot-mountain-pass-conditions/core.js"
+      "types": "./dist/apis/wsdot-mountain-pass-conditions/core.d.ts",
+      "import": "./dist/apis/wsdot-mountain-pass-conditions/core.mjs",
+      "require": "./dist/apis/wsdot-mountain-pass-conditions/core.js"
     },
     "./wsdot-mountain-pass-conditions/schemas": {
-      "types": "./dist/wsdot-mountain-pass-conditions/schemas.d.ts",
-      "import": "./dist/wsdot-mountain-pass-conditions/schemas.mjs",
-      "require": "./dist/wsdot-mountain-pass-conditions/schemas.js"
+      "types": "./dist/apis/wsdot-mountain-pass-conditions/schemas.d.ts",
+      "import": "./dist/apis/wsdot-mountain-pass-conditions/schemas.mjs",
+      "require": "./dist/apis/wsdot-mountain-pass-conditions/schemas.js"
     },
     "./wsdot-toll-rates": {
-      "types": "./dist/wsdot-toll-rates/index.d.ts",
-      "import": "./dist/wsdot-toll-rates/index.mjs",
-      "require": "./dist/wsdot-toll-rates/index.js"
+      "types": "./dist/apis/wsdot-toll-rates/index.d.ts",
+      "import": "./dist/apis/wsdot-toll-rates/index.mjs",
+      "require": "./dist/apis/wsdot-toll-rates/index.js"
     },
     "./wsdot-toll-rates/core": {
-      "types": "./dist/wsdot-toll-rates/core.d.ts",
-      "import": "./dist/wsdot-toll-rates/core.mjs",
-      "require": "./dist/wsdot-toll-rates/core.js"
+      "types": "./dist/apis/wsdot-toll-rates/core.d.ts",
+      "import": "./dist/apis/wsdot-toll-rates/core.mjs",
+      "require": "./dist/apis/wsdot-toll-rates/core.js"
     },
     "./wsdot-toll-rates/schemas": {
-      "types": "./dist/wsdot-toll-rates/schemas.d.ts",
-      "import": "./dist/wsdot-toll-rates/schemas.mjs",
-      "require": "./dist/wsdot-toll-rates/schemas.js"
+      "types": "./dist/apis/wsdot-toll-rates/schemas.d.ts",
+      "import": "./dist/apis/wsdot-toll-rates/schemas.mjs",
+      "require": "./dist/apis/wsdot-toll-rates/schemas.js"
     },
     "./wsdot-traffic-flow": {
-      "types": "./dist/wsdot-traffic-flow/index.d.ts",
-      "import": "./dist/wsdot-traffic-flow/index.mjs",
-      "require": "./dist/wsdot-traffic-flow/index.js"
+      "types": "./dist/apis/wsdot-traffic-flow/index.d.ts",
+      "import": "./dist/apis/wsdot-traffic-flow/index.mjs",
+      "require": "./dist/apis/wsdot-traffic-flow/index.js"
     },
     "./wsdot-traffic-flow/core": {
-      "types": "./dist/wsdot-traffic-flow/core.d.ts",
-      "import": "./dist/wsdot-traffic-flow/core.mjs",
-      "require": "./dist/wsdot-traffic-flow/core.js"
+      "types": "./dist/apis/wsdot-traffic-flow/core.d.ts",
+      "import": "./dist/apis/wsdot-traffic-flow/core.mjs",
+      "require": "./dist/apis/wsdot-traffic-flow/core.js"
     },
     "./wsdot-traffic-flow/schemas": {
-      "types": "./dist/wsdot-traffic-flow/schemas.d.ts",
-      "import": "./dist/wsdot-traffic-flow/schemas.mjs",
-      "require": "./dist/wsdot-traffic-flow/schemas.js"
+      "types": "./dist/apis/wsdot-traffic-flow/schemas.d.ts",
+      "import": "./dist/apis/wsdot-traffic-flow/schemas.mjs",
+      "require": "./dist/apis/wsdot-traffic-flow/schemas.js"
     },
     "./wsdot-travel-times": {
-      "types": "./dist/wsdot-travel-times/index.d.ts",
-      "import": "./dist/wsdot-travel-times/index.mjs",
-      "require": "./dist/wsdot-travel-times/index.js"
+      "types": "./dist/apis/wsdot-travel-times/index.d.ts",
+      "import": "./dist/apis/wsdot-travel-times/index.mjs",
+      "require": "./dist/apis/wsdot-travel-times/index.js"
     },
     "./wsdot-travel-times/core": {
-      "types": "./dist/wsdot-travel-times/core.d.ts",
-      "import": "./dist/wsdot-travel-times/core.mjs",
-      "require": "./dist/wsdot-travel-times/core.js"
+      "types": "./dist/apis/wsdot-travel-times/core.d.ts",
+      "import": "./dist/apis/wsdot-travel-times/core.mjs",
+      "require": "./dist/apis/wsdot-travel-times/core.js"
     },
     "./wsdot-travel-times/schemas": {
-      "types": "./dist/wsdot-travel-times/schemas.d.ts",
-      "import": "./dist/wsdot-travel-times/schemas.mjs",
-      "require": "./dist/wsdot-travel-times/schemas.js"
+      "types": "./dist/apis/wsdot-travel-times/schemas.d.ts",
+      "import": "./dist/apis/wsdot-travel-times/schemas.mjs",
+      "require": "./dist/apis/wsdot-travel-times/schemas.js"
     },
     "./wsdot-weather-information": {
-      "types": "./dist/wsdot-weather-information/index.d.ts",
-      "import": "./dist/wsdot-weather-information/index.mjs",
-      "require": "./dist/wsdot-weather-information/index.js"
+      "types": "./dist/apis/wsdot-weather-information/index.d.ts",
+      "import": "./dist/apis/wsdot-weather-information/index.mjs",
+      "require": "./dist/apis/wsdot-weather-information/index.js"
     },
     "./wsdot-weather-information/core": {
-      "types": "./dist/wsdot-weather-information/core.d.ts",
-      "import": "./dist/wsdot-weather-information/core.mjs",
-      "require": "./dist/wsdot-weather-information/core.js"
+      "types": "./dist/apis/wsdot-weather-information/core.d.ts",
+      "import": "./dist/apis/wsdot-weather-information/core.mjs",
+      "require": "./dist/apis/wsdot-weather-information/core.js"
     },
     "./wsdot-weather-information/schemas": {
-      "types": "./dist/wsdot-weather-information/schemas.d.ts",
-      "import": "./dist/wsdot-weather-information/schemas.mjs",
-      "require": "./dist/wsdot-weather-information/schemas.js"
+      "types": "./dist/apis/wsdot-weather-information/schemas.d.ts",
+      "import": "./dist/apis/wsdot-weather-information/schemas.mjs",
+      "require": "./dist/apis/wsdot-weather-information/schemas.js"
     },
     "./wsdot-weather-readings": {
-      "types": "./dist/wsdot-weather-readings/index.d.ts",
-      "import": "./dist/wsdot-weather-readings/index.mjs",
-      "require": "./dist/wsdot-weather-readings/index.js"
+      "types": "./dist/apis/wsdot-weather-readings/index.d.ts",
+      "import": "./dist/apis/wsdot-weather-readings/index.mjs",
+      "require": "./dist/apis/wsdot-weather-readings/index.js"
     },
     "./wsdot-weather-readings/core": {
-      "types": "./dist/wsdot-weather-readings/core.d.ts",
-      "import": "./dist/wsdot-weather-readings/core.mjs",
-      "require": "./dist/wsdot-weather-readings/core.js"
+      "types": "./dist/apis/wsdot-weather-readings/core.d.ts",
+      "import": "./dist/apis/wsdot-weather-readings/core.mjs",
+      "require": "./dist/apis/wsdot-weather-readings/core.js"
     },
     "./wsdot-weather-readings/schemas": {
-      "types": "./dist/wsdot-weather-readings/schemas.d.ts",
-      "import": "./dist/wsdot-weather-readings/schemas.mjs",
-      "require": "./dist/wsdot-weather-readings/schemas.js"
+      "types": "./dist/apis/wsdot-weather-readings/schemas.d.ts",
+      "import": "./dist/apis/wsdot-weather-readings/schemas.mjs",
+      "require": "./dist/apis/wsdot-weather-readings/schemas.js"
     },
     "./wsdot-weather-stations": {
-      "types": "./dist/wsdot-weather-stations/index.d.ts",
-      "import": "./dist/wsdot-weather-stations/index.mjs",
-      "require": "./dist/wsdot-weather-stations/index.js"
+      "types": "./dist/apis/wsdot-weather-stations/index.d.ts",
+      "import": "./dist/apis/wsdot-weather-stations/index.mjs",
+      "require": "./dist/apis/wsdot-weather-stations/index.js"
     },
     "./wsdot-weather-stations/core": {
-      "types": "./dist/wsdot-weather-stations/core.d.ts",
-      "import": "./dist/wsdot-weather-stations/core.mjs",
-      "require": "./dist/wsdot-weather-stations/core.js"
+      "types": "./dist/apis/wsdot-weather-stations/core.d.ts",
+      "import": "./dist/apis/wsdot-weather-stations/core.mjs",
+      "require": "./dist/apis/wsdot-weather-stations/core.js"
     },
     "./wsdot-weather-stations/schemas": {
-      "types": "./dist/wsdot-weather-stations/schemas.d.ts",
-      "import": "./dist/wsdot-weather-stations/schemas.mjs",
-      "require": "./dist/wsdot-weather-stations/schemas.js"
+      "types": "./dist/apis/wsdot-weather-stations/schemas.d.ts",
+      "import": "./dist/apis/wsdot-weather-stations/schemas.mjs",
+      "require": "./dist/apis/wsdot-weather-stations/schemas.js"
     },
     "./wsf-fares": {
-      "types": "./dist/wsf-fares/index.d.ts",
-      "import": "./dist/wsf-fares/index.mjs",
-      "require": "./dist/wsf-fares/index.js"
+      "types": "./dist/apis/wsf-fares/index.d.ts",
+      "import": "./dist/apis/wsf-fares/index.mjs",
+      "require": "./dist/apis/wsf-fares/index.js"
     },
     "./wsf-fares/core": {
-      "types": "./dist/wsf-fares/core.d.ts",
-      "import": "./dist/wsf-fares/core.mjs",
-      "require": "./dist/wsf-fares/core.js"
+      "types": "./dist/apis/wsf-fares/core.d.ts",
+      "import": "./dist/apis/wsf-fares/core.mjs",
+      "require": "./dist/apis/wsf-fares/core.js"
     },
     "./wsf-fares/schemas": {
-      "types": "./dist/wsf-fares/schemas.d.ts",
-      "import": "./dist/wsf-fares/schemas.mjs",
-      "require": "./dist/wsf-fares/schemas.js"
+      "types": "./dist/apis/wsf-fares/schemas.d.ts",
+      "import": "./dist/apis/wsf-fares/schemas.mjs",
+      "require": "./dist/apis/wsf-fares/schemas.js"
     },
     "./wsf-schedule": {
-      "types": "./dist/wsf-schedule/index.d.ts",
-      "import": "./dist/wsf-schedule/index.mjs",
-      "require": "./dist/wsf-schedule/index.js"
+      "types": "./dist/apis/wsf-schedule/index.d.ts",
+      "import": "./dist/apis/wsf-schedule/index.mjs",
+      "require": "./dist/apis/wsf-schedule/index.js"
     },
     "./wsf-schedule/core": {
-      "types": "./dist/wsf-schedule/core.d.ts",
-      "import": "./dist/wsf-schedule/core.mjs",
-      "require": "./dist/wsf-schedule/core.js"
+      "types": "./dist/apis/wsf-schedule/core.d.ts",
+      "import": "./dist/apis/wsf-schedule/core.mjs",
+      "require": "./dist/apis/wsf-schedule/core.js"
     },
     "./wsf-schedule/schemas": {
-      "types": "./dist/wsf-schedule/schemas.d.ts",
-      "import": "./dist/wsf-schedule/schemas.mjs",
-      "require": "./dist/wsf-schedule/schemas.js"
+      "types": "./dist/apis/wsf-schedule/schemas.d.ts",
+      "import": "./dist/apis/wsf-schedule/schemas.mjs",
+      "require": "./dist/apis/wsf-schedule/schemas.js"
     },
     "./wsf-terminals": {
-      "types": "./dist/wsf-terminals/index.d.ts",
-      "import": "./dist/wsf-terminals/index.mjs",
-      "require": "./dist/wsf-terminals/index.js"
+      "types": "./dist/apis/wsf-terminals/index.d.ts",
+      "import": "./dist/apis/wsf-terminals/index.mjs",
+      "require": "./dist/apis/wsf-terminals/index.js"
     },
     "./wsf-terminals/core": {
-      "types": "./dist/wsf-terminals/core.d.ts",
-      "import": "./dist/wsf-terminals/core.mjs",
-      "require": "./dist/wsf-terminals/core.js"
+      "types": "./dist/apis/wsf-terminals/core.d.ts",
+      "import": "./dist/apis/wsf-terminals/core.mjs",
+      "require": "./dist/apis/wsf-terminals/core.js"
     },
     "./wsf-terminals/schemas": {
-      "types": "./dist/wsf-terminals/schemas.d.ts",
-      "import": "./dist/wsf-terminals/schemas.mjs",
-      "require": "./dist/wsf-terminals/schemas.js"
+      "types": "./dist/apis/wsf-terminals/schemas.d.ts",
+      "import": "./dist/apis/wsf-terminals/schemas.mjs",
+      "require": "./dist/apis/wsf-terminals/schemas.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "wsf-vessels": [
+        "dist/apis/wsf-vessels/index.d.ts"
+      ],
+      "wsf-vessels/core": [
+        "dist/apis/wsf-vessels/core.d.ts"
+      ],
+      "wsf-vessels/schemas": [
+        "dist/apis/wsf-vessels/schemas.d.ts"
+      ],
+      "wsdot-border-crossings": [
+        "dist/apis/wsdot-border-crossings/index.d.ts"
+      ],
+      "wsdot-border-crossings/core": [
+        "dist/apis/wsdot-border-crossings/core.d.ts"
+      ],
+      "wsdot-border-crossings/schemas": [
+        "dist/apis/wsdot-border-crossings/schemas.d.ts"
+      ],
+      "wsdot-bridge-clearances": [
+        "dist/apis/wsdot-bridge-clearances/index.d.ts"
+      ],
+      "wsdot-bridge-clearances/core": [
+        "dist/apis/wsdot-bridge-clearances/core.d.ts"
+      ],
+      "wsdot-bridge-clearances/schemas": [
+        "dist/apis/wsdot-bridge-clearances/schemas.d.ts"
+      ],
+      "wsdot-commercial-vehicle-restrictions": [
+        "dist/apis/wsdot-commercial-vehicle-restrictions/index.d.ts"
+      ],
+      "wsdot-commercial-vehicle-restrictions/core": [
+        "dist/apis/wsdot-commercial-vehicle-restrictions/core.d.ts"
+      ],
+      "wsdot-commercial-vehicle-restrictions/schemas": [
+        "dist/apis/wsdot-commercial-vehicle-restrictions/schemas.d.ts"
+      ],
+      "wsdot-highway-alerts": [
+        "dist/apis/wsdot-highway-alerts/index.d.ts"
+      ],
+      "wsdot-highway-alerts/core": [
+        "dist/apis/wsdot-highway-alerts/core.d.ts"
+      ],
+      "wsdot-highway-alerts/schemas": [
+        "dist/apis/wsdot-highway-alerts/schemas.d.ts"
+      ],
+      "wsdot-highway-cameras": [
+        "dist/apis/wsdot-highway-cameras/index.d.ts"
+      ],
+      "wsdot-highway-cameras/core": [
+        "dist/apis/wsdot-highway-cameras/core.d.ts"
+      ],
+      "wsdot-highway-cameras/schemas": [
+        "dist/apis/wsdot-highway-cameras/schemas.d.ts"
+      ],
+      "wsdot-mountain-pass-conditions": [
+        "dist/apis/wsdot-mountain-pass-conditions/index.d.ts"
+      ],
+      "wsdot-mountain-pass-conditions/core": [
+        "dist/apis/wsdot-mountain-pass-conditions/core.d.ts"
+      ],
+      "wsdot-mountain-pass-conditions/schemas": [
+        "dist/apis/wsdot-mountain-pass-conditions/schemas.d.ts"
+      ],
+      "wsdot-toll-rates": [
+        "dist/apis/wsdot-toll-rates/index.d.ts"
+      ],
+      "wsdot-toll-rates/core": [
+        "dist/apis/wsdot-toll-rates/core.d.ts"
+      ],
+      "wsdot-toll-rates/schemas": [
+        "dist/apis/wsdot-toll-rates/schemas.d.ts"
+      ],
+      "wsdot-traffic-flow": [
+        "dist/apis/wsdot-traffic-flow/index.d.ts"
+      ],
+      "wsdot-traffic-flow/core": [
+        "dist/apis/wsdot-traffic-flow/core.d.ts"
+      ],
+      "wsdot-traffic-flow/schemas": [
+        "dist/apis/wsdot-traffic-flow/schemas.d.ts"
+      ],
+      "wsdot-travel-times": [
+        "dist/apis/wsdot-travel-times/index.d.ts"
+      ],
+      "wsdot-travel-times/core": [
+        "dist/apis/wsdot-travel-times/core.d.ts"
+      ],
+      "wsdot-travel-times/schemas": [
+        "dist/apis/wsdot-travel-times/schemas.d.ts"
+      ],
+      "wsdot-weather-information": [
+        "dist/apis/wsdot-weather-information/index.d.ts"
+      ],
+      "wsdot-weather-information/core": [
+        "dist/apis/wsdot-weather-information/core.d.ts"
+      ],
+      "wsdot-weather-information/schemas": [
+        "dist/apis/wsdot-weather-information/schemas.d.ts"
+      ],
+      "wsdot-weather-readings": [
+        "dist/apis/wsdot-weather-readings/index.d.ts"
+      ],
+      "wsdot-weather-readings/core": [
+        "dist/apis/wsdot-weather-readings/core.d.ts"
+      ],
+      "wsdot-weather-readings/schemas": [
+        "dist/apis/wsdot-weather-readings/schemas.d.ts"
+      ],
+      "wsdot-weather-stations": [
+        "dist/apis/wsdot-weather-stations/index.d.ts"
+      ],
+      "wsdot-weather-stations/core": [
+        "dist/apis/wsdot-weather-stations/core.d.ts"
+      ],
+      "wsdot-weather-stations/schemas": [
+        "dist/apis/wsdot-weather-stations/schemas.d.ts"
+      ],
+      "wsf-fares": [
+        "dist/apis/wsf-fares/index.d.ts"
+      ],
+      "wsf-fares/core": [
+        "dist/apis/wsf-fares/core.d.ts"
+      ],
+      "wsf-fares/schemas": [
+        "dist/apis/wsf-fares/schemas.d.ts"
+      ],
+      "wsf-schedule": [
+        "dist/apis/wsf-schedule/index.d.ts"
+      ],
+      "wsf-schedule/core": [
+        "dist/apis/wsf-schedule/core.d.ts"
+      ],
+      "wsf-schedule/schemas": [
+        "dist/apis/wsf-schedule/schemas.d.ts"
+      ],
+      "wsf-terminals": [
+        "dist/apis/wsf-terminals/index.d.ts"
+      ],
+      "wsf-terminals/core": [
+        "dist/apis/wsf-terminals/core.d.ts"
+      ],
+      "wsf-terminals/schemas": [
+        "dist/apis/wsf-terminals/schemas.d.ts"
+      ]
     }
   },
   "files": [

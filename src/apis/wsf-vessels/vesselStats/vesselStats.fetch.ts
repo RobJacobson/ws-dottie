@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfVesselsApi } from "../apiDefinition";
+import { wsfVesselsApi } from "@/apis/wsf-vessels/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { vesselStatsResource } from "./vesselStats.endpoints";
 import type {
   VesselStatsByIdInput,
@@ -8,10 +10,7 @@ import type {
 } from "./vesselStats.input";
 import type { VesselStat } from "./vesselStats.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
-  wsfVesselsApi,
-  vesselStatsResource
-);
+const fetchFunctions = createFetchFunctions(wsfVesselsApi, vesselStatsResource);
 
 export const fetchVesselStats: (
   params?: FetchFunctionParams<VesselStatsInput>

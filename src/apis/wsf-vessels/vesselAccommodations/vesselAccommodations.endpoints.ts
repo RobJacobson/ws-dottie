@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  VesselAccommodationsByIdInput,
-  VesselAccommodationsInput,
-} from "./vesselAccommodations.input";
+import { z } from "@/shared/zod";
 import {
+  type VesselAccommodationsByIdInput,
+  type VesselAccommodationsInput,
   vesselAccommodationsByIdInputSchema,
   vesselAccommodationsInputSchema,
 } from "./vesselAccommodations.input";
-import type { VesselAccommodation } from "./vesselAccommodations.output";
-import { vesselAccommodationSchema } from "./vesselAccommodations.output";
+import {
+  type VesselAccommodation,
+  vesselAccommodationSchema,
+} from "./vesselAccommodations.output";
 
 export const vesselAccommodationsResource = {
   name: "vessel-accommodations",

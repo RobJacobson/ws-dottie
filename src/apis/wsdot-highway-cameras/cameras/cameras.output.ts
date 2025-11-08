@@ -1,5 +1,5 @@
 import { roadwayLocationSchema } from "@/apis/shared";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for Camera - represents a traffic camera

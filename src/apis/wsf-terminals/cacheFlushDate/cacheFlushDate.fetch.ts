@@ -1,11 +1,15 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfTerminalsApi } from "../apiDefinition";
-import { cacheFlushDateTerminalsResource } from "./cacheFlushDate.endpoints";
-import type { CacheFlushDateTerminalsInput } from "./cacheFlushDate.input";
-import type { CacheFlushDateTerminals } from "./cacheFlushDate.output";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
+import {
+  type CacheFlushDateTerminals,
+  type CacheFlushDateTerminalsInput,
+  cacheFlushDateTerminalsResource,
+} from "./cacheFlushDate.endpoints";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfTerminalsApi,
   cacheFlushDateTerminalsResource
 );
@@ -13,4 +17,6 @@ const fetchFunctions = createEndpointGroupFetchFunctions(
 export const fetchCacheFlushDateTerminals: (
   params?: FetchFunctionParams<CacheFlushDateTerminalsInput>
 ) => Promise<CacheFlushDateTerminals> =
-  fetchFunctions.fetchCacheFlushDateTerminals;
+  fetchFunctions.fetchCacheFlushDateTerminals as (
+    params?: FetchFunctionParams<CacheFlushDateTerminalsInput>
+  ) => Promise<CacheFlushDateTerminals>;

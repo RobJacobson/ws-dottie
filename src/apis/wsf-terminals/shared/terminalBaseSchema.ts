@@ -1,4 +1,4 @@
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Base terminal schema containing common fields shared across all terminal schemas

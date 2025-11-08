@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfFaresApi } from "../apiDefinition";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { terminalComboGroup } from "./terminalCombo.endpoints";
 import * as fetchFunctions from "./terminalCombo.fetch";
 import type {
@@ -13,19 +16,15 @@ import type {
   TerminalComboFaresVerbose,
 } from "./terminalCombo.output";
 
-const hooks = createEndpointGroupHooks(
-  wsfFaresApi,
-  terminalComboGroup,
-  fetchFunctions
-);
+const hooks = createHooks(wsfFaresApi, terminalComboGroup, fetchFunctions);
 
 export const useTerminalComboFares: (
-  params?: TerminalComboInput,
+  params?: FetchFunctionParams<TerminalComboInput>,
   options?: QueryHookOptions<TerminalComboFares>
 ) => UseQueryResult<TerminalComboFares, Error> = hooks.useTerminalComboFares;
 
 export const useTerminalComboFaresVerbose: (
-  params?: TerminalComboFaresVerboseInput,
+  params?: FetchFunctionParams<TerminalComboFaresVerboseInput>,
   options?: QueryHookOptions<TerminalComboFaresVerbose[]>
 ) => UseQueryResult<TerminalComboFaresVerbose[], Error> =
   hooks.useTerminalComboFaresVerbose;

@@ -6,7 +6,7 @@
  */
 
 import { zDotnetDate } from "@/apis/shared";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for ActiveDateRange - represents active date range information

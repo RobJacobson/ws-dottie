@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { tollTripRatesResource } from "./tollTripRates.endpoints";
 import * as fetchFunctions from "./tollTripRates.fetch";
 import type {
@@ -11,23 +14,23 @@ import type {
 } from "./tollTripRates.input";
 import type { TollTripsRates } from "./tollTripRates.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotTollRatesApi,
   tollTripRatesResource,
   fetchFunctions
 );
 
 export const useTollTripRates: (
-  params?: TollTripRatesInput,
+  params?: FetchFunctionParams<TollTripRatesInput>,
   options?: QueryHookOptions<TollTripsRates>
 ) => UseQueryResult<TollTripsRates, Error> = hooks.useTollTripRates;
 
 export const useTripRatesByDate: (
-  params?: TripRatesByDateInput,
+  params?: FetchFunctionParams<TripRatesByDateInput>,
   options?: QueryHookOptions<TollTripsRates[]>
 ) => UseQueryResult<TollTripsRates[], Error> = hooks.useTripRatesByDate;
 
 export const useTripRatesByVersion: (
-  params?: TripRatesByVersionInput,
+  params?: FetchFunctionParams<TripRatesByVersionInput>,
   options?: QueryHookOptions<TollTripsRates>
 ) => UseQueryResult<TollTripsRates, Error> = hooks.useTripRatesByVersion;

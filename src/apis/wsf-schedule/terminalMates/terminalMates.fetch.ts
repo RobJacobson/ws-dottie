@@ -1,15 +1,17 @@
 import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
 import type { Terminal } from "@/apis/shared/terminals.output";
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduleTerminalMatesResource } from "./terminalMates.endpoints";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfScheduleApi,
   scheduleTerminalMatesResource
 );
 
-export const fetchTerminalMates: (
+export const fetchTerminalMatesSchedule: (
   params?: FetchFunctionParams<TerminalMatesInput>
 ) => Promise<Terminal[]> = fetchFunctions.fetchTerminalMatesSchedule;

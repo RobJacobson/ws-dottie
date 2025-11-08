@@ -1,4 +1,4 @@
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * GetWeatherInformation input schema

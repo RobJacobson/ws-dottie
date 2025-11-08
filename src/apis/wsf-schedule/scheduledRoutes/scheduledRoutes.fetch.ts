@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduledRoutesResource } from "./scheduledRoutes.endpoints";
 import type {
   ScheduledRoutesByIdInput,
@@ -8,7 +10,7 @@ import type {
 } from "./scheduledRoutes.input";
 import type { SchedRoute } from "./scheduledRoutes.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfScheduleApi,
   scheduledRoutesResource
 );

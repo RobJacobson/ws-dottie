@@ -1,11 +1,13 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { tollRatesResource } from "./tollRates.endpoints";
 import type { TollRatesInput } from "./tollRates.input";
 import type { TollRate } from "./tollRates.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotTollRatesApi,
   tollRatesResource
 );

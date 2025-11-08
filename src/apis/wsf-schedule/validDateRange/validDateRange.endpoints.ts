@@ -1,8 +1,12 @@
-import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
-import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
+import {
+  type ValidDateRange,
+  validDateRangeSchema,
+} from "@/apis/shared/validDateRange.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import type { ScheduleValidDateRangeInput } from "./validDateRange.input";
-import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
+import {
+  type ScheduleValidDateRangeInput,
+  scheduleValidDateRangeInputSchema,
+} from "./validDateRange.input";
 
 export const scheduleValidDateRangeResource = {
   name: "schedule-valid-date-range",

@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { terminalBulletinsResource } from "./terminalBulletins.endpoints";
 import * as fetchFunctions from "./terminalBulletins.fetch";
 import type {
@@ -10,19 +13,19 @@ import type {
 } from "./terminalBulletins.input";
 import type { TerminalBulletin } from "./terminalBulletins.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfTerminalsApi,
   terminalBulletinsResource,
   fetchFunctions
 );
 
 export const useTerminalBulletins: (
-  params?: TerminalBulletinsInput,
+  params?: FetchFunctionParams<TerminalBulletinsInput>,
   options?: QueryHookOptions<TerminalBulletin[]>
 ) => UseQueryResult<TerminalBulletin[], Error> = hooks.useTerminalBulletins;
 
 export const useTerminalBulletinsByTerminalId: (
-  params?: TerminalBulletinsByIdInput,
+  params?: FetchFunctionParams<TerminalBulletinsByIdInput>,
   options?: QueryHookOptions<TerminalBulletin>
 ) => UseQueryResult<TerminalBulletin, Error> =
   hooks.useTerminalBulletinsByTerminalId;

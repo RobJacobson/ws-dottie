@@ -1,7 +1,11 @@
-import type { TerminalMatesInput } from "@/apis/shared/terminals.input";
-import { terminalMatesInputSchema } from "@/apis/shared/terminals.input";
-import type { Terminal } from "@/apis/shared/terminals.output";
-import { terminalListSchema } from "@/apis/shared/terminals.output";
+import {
+  type TerminalMatesInput,
+  terminalMatesInputSchema,
+} from "@/apis/shared/terminals.input";
+import {
+  type Terminal,
+  terminalListSchema,
+} from "@/apis/shared/terminals.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 

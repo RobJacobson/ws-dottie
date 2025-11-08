@@ -1,15 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  VesselBasicsByIdInput,
-  VesselBasicsInput,
-} from "./vesselBasics.input";
+import { z } from "@/shared/zod";
 import {
+  type VesselBasicsByIdInput,
+  type VesselBasicsInput,
   vesselBasicsByIdInputSchema,
   vesselBasicsInputSchema,
 } from "./vesselBasics.input";
-import type { VesselBasic } from "./vesselBasics.output";
-import { vesselBasicSchema } from "./vesselBasics.output";
+import { type VesselBasic, vesselBasicSchema } from "./vesselBasics.output";
 
 export const vesselBasicsResource = {
   name: "vessel-basics",

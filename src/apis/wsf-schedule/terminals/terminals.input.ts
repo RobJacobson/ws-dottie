@@ -13,7 +13,7 @@ import {
   terminalMatesInputSchema as sharedTerminalMatesInputSchema,
   terminalsInputSchema as sharedTerminalsInputSchema,
 } from "@/apis/shared/terminals.input";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for Terminals input parameters

@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsdotBridgeClearancesApi } from "../apiDefinition";
+import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { bridgeClearancesGroup } from "./bridgeClearances.endpoints";
 import type {
   BridgeClearancesByRouteInput,
@@ -8,7 +10,7 @@ import type {
 } from "./bridgeClearances.input";
 import type { BridgeClearance } from "./bridgeClearances.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotBridgeClearancesApi,
   bridgeClearancesGroup
 );

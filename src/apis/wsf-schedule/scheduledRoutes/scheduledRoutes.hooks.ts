@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { scheduledRoutesResource } from "./scheduledRoutes.endpoints";
 import * as fetchFunctions from "./scheduledRoutes.fetch";
 import type {
@@ -10,18 +13,18 @@ import type {
 } from "./scheduledRoutes.input";
 import type { SchedRoute } from "./scheduledRoutes.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfScheduleApi,
   scheduledRoutesResource,
   fetchFunctions
 );
 
 export const useScheduledRoutes: (
-  params?: ScheduledRoutesInput,
+  params?: FetchFunctionParams<ScheduledRoutesInput>,
   options?: QueryHookOptions<SchedRoute[]>
 ) => UseQueryResult<SchedRoute[], Error> = hooks.useScheduledRoutes;
 
 export const useScheduledRoutesById: (
-  params?: ScheduledRoutesByIdInput,
+  params?: FetchFunctionParams<ScheduledRoutesByIdInput>,
   options?: QueryHookOptions<SchedRoute[]>
 ) => UseQueryResult<SchedRoute[], Error> = hooks.useScheduledRoutesById;

@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { terminalLocationsResource } from "./terminalLocations.endpoints";
 import type {
   TerminalLocationsByIdInput,
@@ -8,7 +10,7 @@ import type {
 } from "./terminalLocations.input";
 import type { TerminalLocation } from "./terminalLocations.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfTerminalsApi,
   terminalLocationsResource
 );

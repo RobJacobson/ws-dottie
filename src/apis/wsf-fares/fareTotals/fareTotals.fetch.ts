@@ -1,14 +1,13 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfFaresApi } from "../apiDefinition";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { fareTotalsGroup } from "./fareTotals.endpoints";
 import type { FareTotalsByTripDateAndRouteInput } from "./fareTotals.input";
 import type { FareTotal } from "./fareTotals.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
-  wsfFaresApi,
-  fareTotalsGroup
-);
+const fetchFunctions = createFetchFunctions(wsfFaresApi, fareTotalsGroup);
 
 export const fetchFareTotalsByTripDateAndRoute: (
   params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>

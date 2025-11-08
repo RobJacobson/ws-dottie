@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfFaresApi } from "../apiDefinition";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { terminalComboGroup } from "./terminalCombo.endpoints";
 import type {
   TerminalComboFaresVerboseInput,
@@ -11,16 +13,13 @@ import type {
   TerminalComboFaresVerbose,
 } from "./terminalCombo.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
-  wsfFaresApi,
-  terminalComboGroup
-);
+const fetchFunctions = createFetchFunctions(wsfFaresApi, terminalComboGroup);
 
-export const fetchTerminalCombo: (
+export const fetchTerminalComboFares: (
   params?: FetchFunctionParams<TerminalComboInput>
 ) => Promise<TerminalComboFares> = fetchFunctions.fetchTerminalComboFares;
 
-export const fetchTerminalComboVerbose: (
+export const fetchTerminalComboFaresVerbose: (
   params?: FetchFunctionParams<TerminalComboFaresVerboseInput>
 ) => Promise<TerminalComboFaresVerbose[]> =
   fetchFunctions.fetchTerminalComboFaresVerbose;

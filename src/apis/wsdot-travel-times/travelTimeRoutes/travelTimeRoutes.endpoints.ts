@@ -1,15 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  TravelTimeByIdInput,
-  TravelTimesInput,
-} from "./travelTimeRoutes.input";
+import { z } from "@/shared/zod";
 import {
+  type TravelTimeByIdInput,
+  type TravelTimesInput,
   travelTimeByIdInputSchema,
   travelTimesInputSchema,
 } from "./travelTimeRoutes.input";
-import type { TravelTimeRoute } from "./travelTimeRoutes.output";
-import { travelTimeRouteSchema } from "./travelTimeRoutes.output";
+import {
+  type TravelTimeRoute,
+  travelTimeRouteSchema,
+} from "./travelTimeRoutes.output";
 
 export const travelTimeRoutesGroup = {
   name: "travel-time-routes",

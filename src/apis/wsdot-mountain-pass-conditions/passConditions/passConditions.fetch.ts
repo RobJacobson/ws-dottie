@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsdotMountainPassConditionsApi } from "../apiDefinition";
+import { wsdotMountainPassConditionsApi } from "@/apis/wsdot-mountain-pass-conditions/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { passConditionsGroup } from "./passConditions.endpoints";
 import type {
   MountainPassConditionByIdInput,
@@ -8,7 +10,7 @@ import type {
 } from "./passConditions.input";
 import type { PassCondition } from "./passConditions.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotMountainPassConditionsApi,
   passConditionsGroup
 );

@@ -1,17 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  TimeAdjustmentsByRouteInput,
-  TimeAdjustmentsBySchedRouteInput,
-  TimeAdjustmentsInput,
-} from "./timeAdjustments.input";
+import { z } from "@/shared/zod";
 import {
+  type TimeAdjustmentsByRouteInput,
+  type TimeAdjustmentsBySchedRouteInput,
+  type TimeAdjustmentsInput,
   timeAdjustmentsByRouteInputSchema,
   timeAdjustmentsBySchedRouteInputSchema,
   timeAdjustmentsInputSchema,
 } from "./timeAdjustments.input";
-import type { TimeAdjustment } from "./timeAdjustments.output";
-import { timeAdjustmentSchema } from "./timeAdjustments.output";
+import {
+  type TimeAdjustment,
+  timeAdjustmentSchema,
+} from "./timeAdjustments.output";
 
 export const timeAdjustmentsResource = {
   name: "time-adjustments",

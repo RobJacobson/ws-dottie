@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { terminalBasicsResource } from "./terminalBasics.endpoints";
 import * as fetchFunctions from "./terminalBasics.fetch";
 import type {
@@ -10,18 +13,18 @@ import type {
 } from "./terminalBasics.input";
 import type { TerminalBasic } from "./terminalBasics.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfTerminalsApi,
   terminalBasicsResource,
   fetchFunctions
 );
 
 export const useTerminalBasics: (
-  params?: TerminalBasicsInput,
+  params?: FetchFunctionParams<TerminalBasicsInput>,
   options?: QueryHookOptions<TerminalBasic[]>
 ) => UseQueryResult<TerminalBasic[], Error> = hooks.useTerminalBasics;
 
 export const useTerminalBasicsByTerminalId: (
-  params?: TerminalBasicsByIdInput,
+  params?: FetchFunctionParams<TerminalBasicsByIdInput>,
   options?: QueryHookOptions<TerminalBasic>
 ) => UseQueryResult<TerminalBasic, Error> = hooks.useTerminalBasicsByTerminalId;

@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduleTerminalsResource } from "./terminals.endpoints";
 import type {
   TerminalsAndMatesByRouteInput,
@@ -9,7 +11,7 @@ import type {
 } from "./terminals.input";
 import type { Terminal, TerminalMate } from "./terminals.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfScheduleApi,
   scheduleTerminalsResource
 );

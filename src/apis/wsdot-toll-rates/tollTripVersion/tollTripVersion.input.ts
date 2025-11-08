@@ -1,4 +1,4 @@
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Input schema for GetTollTripVersion endpoint (void input - only AccessCode)

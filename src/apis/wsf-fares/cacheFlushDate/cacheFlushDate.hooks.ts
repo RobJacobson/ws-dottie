@@ -1,19 +1,31 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfFaresApi } from "../apiDefinition";
-import { cacheFlushDateFaresGroup } from "./cacheFlushDate.endpoints";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
+import {
+  type CacheFlushDateFares,
+  type CacheFlushDateFaresInput,
+  cacheFlushDateFaresGroup,
+} from "./cacheFlushDate.endpoints";
 import * as fetchFunctions from "./cacheFlushDate.fetch";
-import type { CacheFlushDateFaresInput } from "./cacheFlushDate.input";
-import type { CacheFlushDateFares } from "./cacheFlushDate.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfFaresApi,
   cacheFlushDateFaresGroup,
-  fetchFunctions
+  fetchFunctions as Record<
+    string,
+    (params?: FetchFunctionParams<unknown>) => Promise<unknown>
+  >
 );
 
 export const useCacheFlushDateFares: (
-  params?: CacheFlushDateFaresInput,
+  params?: FetchFunctionParams<CacheFlushDateFaresInput>,
   options?: QueryHookOptions<CacheFlushDateFares>
-) => UseQueryResult<CacheFlushDateFares, Error> = hooks.useCacheFlushDateFares;
+) => UseQueryResult<CacheFlushDateFares, Error> =
+  hooks.useCacheFlushDateFares as (
+    params?: FetchFunctionParams<CacheFlushDateFaresInput>,
+    options?: QueryHookOptions<CacheFlushDateFares>
+  ) => UseQueryResult<CacheFlushDateFares, Error>;

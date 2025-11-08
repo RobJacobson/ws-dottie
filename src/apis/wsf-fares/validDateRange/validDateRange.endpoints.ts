@@ -1,8 +1,12 @@
-import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
-import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
+import {
+  type ValidDateRange,
+  validDateRangeSchema,
+} from "@/apis/shared/validDateRange.output";
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import type { FaresValidDateRangeInput } from "./validDateRange.input";
-import { faresValidDateRangeInputSchema } from "./validDateRange.input";
+import {
+  type FaresValidDateRangeInput,
+  faresValidDateRangeInputSchema,
+} from "./validDateRange.input";
 
 export const validDateRangeGroup = {
   name: "valid-date-range",

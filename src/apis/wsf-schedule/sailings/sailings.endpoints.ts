@@ -1,15 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  AllSailingsBySchedRouteIDInput,
-  SailingsByRouteIDInput,
-} from "./sailings.input";
+import { z } from "@/shared/zod";
 import {
+  type AllSailingsBySchedRouteIDInput,
   allSailingsBySchedRouteIDInputSchema,
+  type SailingsByRouteIDInput,
   sailingsByRouteIDInputSchema,
 } from "./sailings.input";
-import type { Sailing } from "./sailings.output";
-import { sailingSchema } from "./sailings.output";
+import { type Sailing, sailingSchema } from "./sailings.output";
 
 export const sailingsResource = {
   name: "sailings",

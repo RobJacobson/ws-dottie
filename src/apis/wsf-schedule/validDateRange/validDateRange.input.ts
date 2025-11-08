@@ -5,7 +5,7 @@
  * Schedule API endpoints related to valid date range operations.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Schema for ValidDateRange input parameters

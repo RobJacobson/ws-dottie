@@ -1,18 +1,15 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  RouteDetailsByTripDateAndRouteIdInput,
-  RouteDetailsByTripDateAndTerminalsInput,
-  RouteDetailsByTripDateInput,
-} from "./routeDetails.input";
+import { z } from "@/shared/zod";
 import {
+  type RouteDetailsByTripDateAndRouteIdInput,
+  type RouteDetailsByTripDateAndTerminalsInput,
+  type RouteDetailsByTripDateInput,
   routeDetailsByTripDateAndRouteIdInputSchema,
   routeDetailsByTripDateAndTerminalsInputSchema,
   routeDetailsByTripDateInputSchema,
 } from "./routeDetails.input";
-import type { RouteDetail } from "./routeDetails.output";
-import { routeDetailSchema } from "./routeDetails.output";
+import { type RouteDetail, routeDetailSchema } from "./routeDetails.output";
 
 export const routeDetailsResource = {
   name: "route-details",

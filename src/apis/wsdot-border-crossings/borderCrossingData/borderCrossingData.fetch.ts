@@ -1,11 +1,13 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsdotBorderCrossingsApi } from "../apiDefinition";
+import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { borderCrossingDataResource } from "./borderCrossingData.endpoints";
 import type { BorderCrossingsInput } from "./borderCrossingData.input";
 import type { BorderCrossing } from "./borderCrossingData.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotBorderCrossingsApi,
   borderCrossingDataResource
 );

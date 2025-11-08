@@ -1,9 +1,13 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type { WeatherStationsInput } from "./weatherStations.input";
-import { weatherStationsInputSchema } from "./weatherStations.input";
-import type { WeatherStation } from "./weatherStations.output";
-import { weatherStationSchema } from "./weatherStations.output";
+import { z } from "@/shared/zod";
+import {
+  type WeatherStationsInput,
+  weatherStationsInputSchema,
+} from "./weatherStations.input";
+import {
+  type WeatherStation,
+  weatherStationSchema,
+} from "./weatherStations.output";
 
 export const weatherStationsResource = {
   name: "weather-stations",

@@ -1,20 +1,17 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  CurrentWeatherForStationsInput,
-  SearchWeatherInformationInput,
-  WeatherInformationByStationIdInput,
-  WeatherInformationInput,
-} from "./weatherInfo.input";
+import { z } from "@/shared/zod";
 import {
+  type CurrentWeatherForStationsInput,
   currentWeatherForStationsInputSchema,
+  type SearchWeatherInformationInput,
   searchWeatherInformationInputSchema,
+  type WeatherInformationByStationIdInput,
+  type WeatherInformationInput,
   weatherInformationByStationIdInputSchema,
   weatherInformationInputSchema,
 } from "./weatherInfo.input";
-import type { WeatherInfo } from "./weatherInfo.output";
-import { weatherInfoSchema } from "./weatherInfo.output";
+import { type WeatherInfo, weatherInfoSchema } from "./weatherInfo.output";
 
 export const weatherInfoResource = {
   name: "weather-info",

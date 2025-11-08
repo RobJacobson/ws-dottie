@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { scheduleTodayResource } from "./scheduleToday.endpoints";
 import type {
   ScheduleTodayByRouteInput,
@@ -8,7 +10,7 @@ import type {
 } from "./scheduleToday.input";
 import type { Schedule } from "./scheduleToday.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsfScheduleApi,
   scheduleTodayResource
 );

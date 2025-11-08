@@ -88,7 +88,7 @@ export const endpoints = generateEndpoints(wsfVesselsApi);
 A simple factory function creates fetch functions from self-contained endpoints:
 
 ```typescript
-// src/shared/utils/fetchFunctionFactory.ts
+// src/shared/factories/createFetchFunctions.ts
 export function createFetchFunction<TInput, TOutput>(endpoint: Endpoint<TInput, TOutput>) {
   return (options: {
     params?: TInput;
@@ -106,7 +106,7 @@ Each API provides fetch functions using the new naming convention:
 
 ```typescript
 // src/apis/wsf-vessels/fetchFunctions.ts
-import { createFetchFunction } from "@/shared/utils/fetchFunctionFactory";
+import { createFetchFunction } from "@/shared/factories/createFetchFunctions";
 import { endpoints } from "./endpoints";
 
 export const fetchVesselStats = createFetchFunction(endpoints.getVesselStats);

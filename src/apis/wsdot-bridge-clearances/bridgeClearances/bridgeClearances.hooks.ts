@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsdotBridgeClearancesApi } from "../apiDefinition";
+import { wsdotBridgeClearancesApi } from "@/apis/wsdot-bridge-clearances/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { bridgeClearancesGroup } from "./bridgeClearances.endpoints";
 import * as fetchFunctions from "./bridgeClearances.fetch";
 import type {
@@ -10,19 +13,19 @@ import type {
 } from "./bridgeClearances.input";
 import type { BridgeClearance } from "./bridgeClearances.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsdotBridgeClearancesApi,
   bridgeClearancesGroup,
   fetchFunctions
 );
 
 export const useBridgeClearances: (
-  params?: BridgeClearancesInput,
+  params?: FetchFunctionParams<BridgeClearancesInput>,
   options?: QueryHookOptions<BridgeClearance[]>
 ) => UseQueryResult<BridgeClearance[], Error> = hooks.useBridgeClearances;
 
 export const useBridgeClearancesByRoute: (
-  params?: BridgeClearancesByRouteInput,
+  params?: FetchFunctionParams<BridgeClearancesByRouteInput>,
   options?: QueryHookOptions<BridgeClearance[]>
 ) => UseQueryResult<BridgeClearance[], Error> =
   hooks.useBridgeClearancesByRoute;

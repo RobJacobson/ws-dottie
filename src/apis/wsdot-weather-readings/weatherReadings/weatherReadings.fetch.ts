@@ -1,11 +1,13 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { wsdotWeatherReadingsApi } from "@/apis/wsdot-weather-readings/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { weatherReadingsResource } from "./weatherReadings.endpoints";
 import type { WeatherReadingsInput } from "./weatherReadings.input";
 import type { WeatherReading } from "./weatherReadings.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotWeatherReadingsApi,
   weatherReadingsResource
 );

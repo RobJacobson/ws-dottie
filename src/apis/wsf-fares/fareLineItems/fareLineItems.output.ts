@@ -4,7 +4,7 @@
  * These schemas define the response structures for WSF Fares API FareLineItems endpoints.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 import { terminalComboFaresVerboseSchema } from "../terminalCombo/terminalCombo.output";
 
 /**

@@ -24,9 +24,8 @@ export {
 export * from "./activeSeasons/activeSeasons.fetch";
 export * from "./activeSeasons/activeSeasons.input";
 export * from "./activeSeasons/activeSeasons.output";
+export * from "./cacheFlushDate/cacheFlushDate.endpoints";
 export * from "./cacheFlushDate/cacheFlushDate.fetch";
-export * from "./cacheFlushDate/cacheFlushDate.input";
-export * from "./cacheFlushDate/cacheFlushDate.output";
 export * from "./routeDetails/routeDetails.fetch";
 export * from "./routeDetails/routeDetails.input";
 export * from "./routeDetails/routeDetails.output";

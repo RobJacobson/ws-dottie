@@ -4,7 +4,7 @@
  * These schemas define the response structures for WSF Fares API FareTotals endpoint.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Fare total type enum for GetFareTotals endpoint

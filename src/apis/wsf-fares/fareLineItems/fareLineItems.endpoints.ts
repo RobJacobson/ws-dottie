@@ -1,18 +1,20 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod-openapi-init";
-import type {
-  FareLineItemsBasicInput,
-  FareLineItemsByTripDateAndTerminalsInput,
-  FareLineItemsVerboseInput,
-} from "./fareLineItems.input";
+import { z } from "@/shared/zod";
 import {
+  type FareLineItemsBasicInput,
+  type FareLineItemsByTripDateAndTerminalsInput,
+  type FareLineItemsVerboseInput,
   fareLineItemsBasicInputSchema,
   fareLineItemsByTripDateAndTerminalsInputSchema,
   fareLineItemsVerboseInputSchema,
 } from "./fareLineItems.input";
-import type { LineItem, LineItemVerbose } from "./fareLineItems.output";
-import { lineItemSchema, lineItemVerboseSchema } from "./fareLineItems.output";
+import {
+  type LineItem,
+  type LineItemVerbose,
+  lineItemSchema,
+  lineItemVerboseSchema,
+} from "./fareLineItems.output";
 
 export const fareLineItemsGroup = {
   name: "fare-line-items",

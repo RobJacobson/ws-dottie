@@ -1,7 +1,10 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsdotHighwayCamerasApi } from "../apiDefinition";
+import { wsdotHighwayCamerasApi } from "@/apis/wsdot-highway-cameras/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { camerasGroup } from "./cameras.endpoints";
 import * as fetchFunctions from "./cameras.fetch";
 import type {
@@ -11,24 +14,20 @@ import type {
 } from "./cameras.input";
 import type { Camera } from "./cameras.output";
 
-const hooks = createEndpointGroupHooks(
-  wsdotHighwayCamerasApi,
-  camerasGroup,
-  fetchFunctions
-);
+const hooks = createHooks(wsdotHighwayCamerasApi, camerasGroup, fetchFunctions);
 
 export const useHighwayCameras: (
-  params?: HighwayCamerasInput,
+  params?: FetchFunctionParams<HighwayCamerasInput>,
   options?: QueryHookOptions<Camera[]>
 ) => UseQueryResult<Camera[], Error> = hooks.useHighwayCameras;
 
 export const useSearchHighwayCamerasByRouteAndMilepost: (
-  params?: HighwayCamerasByRouteAndMilepostInput,
+  params?: FetchFunctionParams<HighwayCamerasByRouteAndMilepostInput>,
   options?: QueryHookOptions<Camera[]>
 ) => UseQueryResult<Camera[], Error> =
   hooks.useSearchHighwayCamerasByRouteAndMilepost;
 
 export const useHighwayCameraByCameraId: (
-  params?: HighwayCameraByCameraIdInput,
+  params?: FetchFunctionParams<HighwayCameraByCameraIdInput>,
   options?: QueryHookOptions<Camera>
 ) => UseQueryResult<Camera, Error> = hooks.useHighwayCameraByCameraId;

@@ -2,7 +2,7 @@
 
 /**
  * Regenerates the Markdown table of SDK endpoints by inspecting the
- * definitions in `src/apis/** */*.endpoints.ts`.
+ * definitions in `src/apis/<api>/<group>.endpoints.ts`.
  *
  * Usage:
  *   node scripts/generate-endpoints-table.js
@@ -89,43 +89,65 @@ function collectRows() {
 
   for (const apiDir of apiDirs) {
     const apiPath = path.join(apisRoot, apiDir);
-    const endpointFiles = walk(
-      apiPath,
-      (p) => p.endsWith(".endpoints.ts")
+    const endpointFiles = walk(apiPath, (p) =>
+      p.endsWith(".endpoints.ts")
     ).sort((a, b) => a.localeCompare(b));
 
     for (const endpointFile of endpointFiles) {
       const fileText = fs.readFileSync(endpointFile, "utf8");
       const endpointsBlock = extractEndpointsBlock(fileText);
-      if (!endpointsBlock) continue;
 
-      const groupNameMatch = fileText.match(/name:\s*"([^"]+)"/);
-      const groupName = groupNameMatch
-        ? groupNameMatch[1]
-        : path.basename(endpointFile).replace(".endpoints.ts", "");
+      if (endpointsBlock) {
+        const groupNameMatch = fileText.match(/name:\s*"([^"]+)"/);
+        const groupName = groupNameMatch
+          ? groupNameMatch[1]
+          : path.basename(endpointFile).replace(".endpoints.ts", "");
 
-      const endpointRegex =
-        /(\w+)\s*:\s*{\s*([\s\S]*?)\s*}\s*satisfies\s*EndpointDefinition<([^,>]+),\s*([^>]+)>/g;
+        const endpointRegex =
+          /(\w+)\s*:\s*{\s*([\s\S]*?)\s*}\s*satisfies\s*EndpointDefinition<([^,>]+),\s*([^>]+)>/g;
 
-      let match = endpointRegex.exec(endpointsBlock);
+        let match = endpointRegex.exec(endpointsBlock);
 
-      while (match) {
-        const [, functionName, block, rawInputType, rawOutputType] = match;
-        const endpointPathMatch = block.match(/endpoint:\s*"([^"\n]+)"/);
-        const inputSchemaMatch = block.match(/inputSchema:\s*([^,\n]+)/);
-        const outputSchemaMatch = block.match(/outputSchema:\s*([^,\n]+)/);
+        while (match) {
+          const [, functionName, block, rawInputType, rawOutputType] = match;
+          const endpointPathMatch = block.match(/endpoint:\s*"([^"\n]+)"/);
+          const inputSchemaMatch = block.match(/inputSchema:\s*([^,\n]+)/);
+          const outputSchemaMatch = block.match(/outputSchema:\s*([^,\n]+)/);
+
+          rows.push({
+            apiName: apiDir,
+            groupName,
+            functionName,
+            hookName: inferHookName(functionName),
+            endpointUrl: endpointPathMatch ? endpointPathMatch[1] : "",
+            inputSchema: inputSchemaMatch ? tidy(inputSchemaMatch[1]) : "",
+            outputSchema: outputSchemaMatch ? tidy(outputSchemaMatch[1]) : "",
+          });
+
+          match = endpointRegex.exec(endpointsBlock);
+        }
+      }
+
+      const cacheFlushFactoryRegex =
+        /createCacheFlushDateEndpointGroup\(\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\)/g;
+
+      let factoryMatch = cacheFlushFactoryRegex.exec(fileText);
+
+      while (factoryMatch) {
+        const [, apiNameFromFactory, resourceName, functionNameSuffix] =
+          factoryMatch;
 
         rows.push({
-          apiName: apiDir,
-          groupName,
-          functionName,
-          hookName: inferHookName(functionName),
-          endpointUrl: endpointPathMatch ? endpointPathMatch[1] : "",
-          inputSchema: inputSchemaMatch ? tidy(inputSchemaMatch[1]) : "",
-          outputSchema: outputSchemaMatch ? tidy(outputSchemaMatch[1]) : "",
+          apiName: apiNameFromFactory,
+          groupName: `cache-flush-date-${resourceName}`,
+          functionName: `fetchCacheFlushDate${functionNameSuffix}`,
+          hookName: inferHookName(`fetchCacheFlushDate${functionNameSuffix}`),
+          endpointUrl: "/cacheflushdate",
+          inputSchema: "cacheFlushDateInputSchema",
+          outputSchema: "cacheFlushDateOutputSchema",
         });
 
-        match = endpointRegex.exec(endpointsBlock);
+        factoryMatch = cacheFlushFactoryRegex.exec(fileText);
       }
     }
   }
@@ -144,9 +166,9 @@ function writeMarkdown(rows) {
   lines.push("# API Endpoints Overview");
   lines.push("");
   lines.push(
-    `This table reflects all current endpoints defined under \`src/apis\` as of ${new Date()
-      .toISOString()
-      .split("T")[0]}.`
+    `This table reflects all current endpoints defined under \`src/apis\` as of ${
+      new Date().toISOString().split("T")[0]
+    }.`
   );
   lines.push("");
   lines.push(
@@ -176,4 +198,3 @@ function main() {
 }
 
 main();
-

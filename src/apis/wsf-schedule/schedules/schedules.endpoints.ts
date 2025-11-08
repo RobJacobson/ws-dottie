@@ -1,15 +1,12 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import type {
-  ScheduleByTripDateAndRouteIdInput,
-  ScheduleByTripDateAndTerminalsInput,
-} from "./schedules.input";
 import {
+  type ScheduleByTripDateAndRouteIdInput,
+  type ScheduleByTripDateAndTerminalsInput,
   scheduleByTripDateAndRouteIdInputSchema,
   scheduleByTripDateAndTerminals,
 } from "./schedules.input";
-import type { Schedule } from "./schedules.output";
-import { scheduleSchema } from "./schedules.output";
+import { type Schedule, scheduleSchema } from "./schedules.output";
 
 export const schedulesResource = {
   name: "schedules",

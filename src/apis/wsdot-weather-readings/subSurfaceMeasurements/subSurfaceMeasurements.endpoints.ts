@@ -1,9 +1,13 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type { SubSurfaceMeasurementsInput } from "./subSurfaceMeasurements.input";
-import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
-import type { SubsurfaceMeasurement } from "./subSurfaceMeasurements.output";
-import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
+import { z } from "@/shared/zod";
+import {
+  type SubSurfaceMeasurementsInput,
+  subSurfaceMeasurementsInputSchema,
+} from "./subSurfaceMeasurements.input";
+import {
+  type SubsurfaceMeasurement,
+  subsurfaceMeasurementSchema,
+} from "./subSurfaceMeasurements.output";
 
 export const subSurfaceMeasurementsResource = {
   name: "sub-surface-measurements",

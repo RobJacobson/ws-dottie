@@ -1,5 +1,5 @@
 import { zDotnetDate } from "@/apis/shared";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Shared Valid Date Range schema used by multiple WSF APIs.

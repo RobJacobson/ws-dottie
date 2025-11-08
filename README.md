@@ -14,7 +14,7 @@
 [![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5+-orange.svg)](https://tanstack.com/query)                                                    
 
 
-Meet Dottie — your comprehensive TypeScript companion for fetching real-time Washington State transportation data. This production-ready library provides type-safe access to **16 WSDOT and WSF APIs** with **90+ endpoints**, transforming complex government APIs into a modern, developer-friendly interface.
+Meet Dottie — your comprehensive TypeScript companion for fetching real-time Washington State transportation data. This production-ready library provides type-safe access to **16 WSDOT and WSF APIs** with **98 endpoints**, transforming complex government APIs into a modern, developer-friendly interface.
 
 ## Why WS-Dottie is Special
 
@@ -243,7 +243,10 @@ import {
 } from 'ws-dottie/wsf-vessels';
 
 function VesselList() {
-  const { data: vessels } = useVesselLocations();
+const { data: vessels } = useVesselLocations({
+  fetchMode: 'native',
+  validate: false,
+});
   
   // TypeScript knows vessels is VesselLocation[] | undefined
   if (!vessels) return <div>Loading...</div>;
@@ -271,8 +274,14 @@ import { useVesselLocations } from 'ws-dottie/wsf-vessels';
 import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
-  const { data: vessels, isLoading } = useVesselLocations();
-  const { data: alerts } = useAlerts();
+  const { data: vessels, isLoading } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
+  const { data: alerts } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
 
   return (
     <div>
@@ -366,7 +375,7 @@ fetch-dottie fetchBridgeClearancesByRoute '{"Route": "005"}' --jsonp
 
 ## 🖥️ Command Line Interface
 
-WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 90+ endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
+WS-Dottie includes a comprehensive CLI tool (`fetch-dottie`) that provides **production-ready debugging and testing capabilities**. Access all 98 endpoints directly from your terminal with configurable transport strategies and validation options.                                                                      
 
 ### Installation
 
@@ -455,7 +464,7 @@ fetch-dottie fetchVesselLocations --limit 5
 
 ### Available Functions
 
-The CLI supports all 90+ endpoints across 16 APIs:
+The CLI supports all 98 endpoints across 16 APIs:
 
 - **WSDOT APIs**: Border Crossings, Bridge Clearances, Highway Alerts, Traffic Cameras, Weather Stations, Travel Times, Toll Rates, Mountain Passes, Commercial Vehicle Restrictions                                                            
 - **WSF APIs**: Ferry Schedules, Vessel Locations, Terminal Information, Fare Data                                                                              
@@ -477,7 +486,7 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 **Discovery**
 - `--list` - List all available endpoints with descriptions
 
-## 📊 Available Data Sources (16 APIs, 90+ endpoints)
+## 📊 Available Data Sources (16 APIs, 98 endpoints)
 
 ### WSDOT APIs
 - **Highway Alerts** - Real-time traffic incidents and construction updates
@@ -502,7 +511,7 @@ Use `fetch-dottie --help` to see all available functions with descriptions.
 
 ### **🚀 Comprehensive API Coverage**
 - **16 distinct APIs** covering WSDOT (traffic, weather, tolls) and WSF (ferries, schedules)
-- **90+ endpoints** with full type safety and validation
+- **98 endpoints** with full type safety and validation
 - **Unified interface** — all APIs work consistently regardless of source
 
 ### **🔄 Smart Caching & React Integration**
@@ -599,6 +608,8 @@ import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 WS-Dottie provides **zero-configuration React hooks** with transportation-optimized caching strategies. Each API endpoint automatically uses the appropriate cache strategy based on data update frequency.
 
+Every hook now accepts the same `FetchFunctionParams<T>` object as its corresponding fetch function. Pass endpoint parameters with `params`, override fetching behavior with `fetchMode`, and toggle validation with `validate`—then optionally provide TanStack Query options as the second argument.
+
 ### **Cache Strategies**
 
 ```javascript
@@ -610,13 +621,22 @@ import { useAlerts } from 'ws-dottie/wsdot-highway-alerts';
 
 function TransportationDashboard() {
   // REALTIME: 5-second updates for vessel locations
-  const { data: vessels, isLoading: vesselsLoading } = useVesselLocations();
+  const { data: vessels, isLoading: vesselsLoading } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
   
   // FREQUENT: 5-minute updates for highway alerts  
-  const { data: alerts, isLoading: alertsLoading } = useAlerts();
+  const { data: alerts, isLoading: alertsLoading } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // STATIC: Daily updates for vessel information
-  const { data: vesselInfo } = useVesselBasics();
+  const { data: vesselInfo } = useVesselBasics({
+    fetchMode: 'native',
+    validate: true,
+  });
 
   return (
     <div>
@@ -637,17 +657,29 @@ import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function SpecificDataView() {
   // Get specific vessel location (REALTIME caching)
-  const { data: vessel } = useVesselLocationsByVesselId({ VesselID: 18 });
+  const { data: vessel } = useVesselLocationsByVesselId({
+    params: { VesselID: 18 },
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // Get specific highway alert (FREQUENT caching)
-  const { data: alert } = useAlertById({ AlertID: 468632 });
+  const { data: alert } = useAlertById({
+    params: { AlertID: 468632 },
+    fetchMode: 'native',
+    validate: true,
+  });
   
   // Get ferry fares for specific trip (STATIC caching)
   const { data: fares } = useFareLineItemsByTripDateAndTerminals({
-    TripDate: '2025-01-28',
-    DepartingTerminalID: 3,
-    ArrivingTerminalID: 7,
-    RoundTrip: false
+    params: {
+      TripDate: '2025-01-28',
+      DepartingTerminalID: 3,
+      ArrivingTerminalID: 7,
+      RoundTrip: false
+    },
+    fetchMode: 'native',
+    validate: true,
   });
 
   return (
@@ -726,21 +758,39 @@ import { useFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares';
 
 function TransportationDashboard() {
   // Real-time data with automatic caching
-  const { data: allVessels, isLoading: vesselsLoading } = useVesselLocations();
-  const { data: alerts, isLoading: alertsLoading } = useAlerts();
+  const { data: allVessels, isLoading: vesselsLoading } = useVesselLocations({
+    fetchMode: 'native',
+    validate: false,
+  });
+  const { data: alerts, isLoading: alertsLoading } = useAlerts({
+    fetchMode: 'native',
+    validate: true,
+  });
 
   // Specific vessel tracking (VesselID: 18)
-  const { data: specificVessel } = useVesselLocationsByVesselId({ VesselID: 18 });
+  const { data: specificVessel } = useVesselLocationsByVesselId({
+    params: { VesselID: 18 },
+    fetchMode: 'native',
+    validate: true,
+  });
 
   // Specific alert details (AlertID: 468632)
-  const { data: alertDetails } = useAlertById({ AlertID: 468632 });
+  const { data: alertDetails } = useAlertById({
+    params: { AlertID: 468632 },
+    fetchMode: 'native',
+    validate: true,
+  });
 
   // Ferry fare calculation for tomorrow's trip
   const { data: fares } = useFareLineItemsByTripDateAndTerminals({
-    TripDate: '2025-01-28',
-    DepartingTerminalID: 3,
-    ArrivingTerminalID: 7,
-    RoundTrip: false,
+    params: {
+      TripDate: '2025-01-28',
+      DepartingTerminalID: 3,
+      ArrivingTerminalID: 7,
+      RoundTrip: false,
+    },
+    fetchMode: 'native',
+    validate: true,
   });
 
   return (

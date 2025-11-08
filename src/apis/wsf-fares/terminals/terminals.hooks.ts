@@ -4,24 +4,23 @@ import type {
   TerminalsInput,
 } from "@/apis/shared/terminals.input";
 import type { Terminal } from "@/apis/shared/terminals.output";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfFaresApi } from "../apiDefinition";
+import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { terminalsGroup } from "./terminals.endpoints";
 import * as fetchFunctions from "./terminals.fetch";
 
-const hooks = createEndpointGroupHooks(
-  wsfFaresApi,
-  terminalsGroup,
-  fetchFunctions
-);
+const hooks = createHooks(wsfFaresApi, terminalsGroup, fetchFunctions);
 
 export const useTerminalsFares: (
-  params?: TerminalsInput,
+  params?: FetchFunctionParams<TerminalsInput>,
   options?: QueryHookOptions<Terminal[]>
 ) => UseQueryResult<Terminal[], Error> = hooks.useTerminalFares;
 
 export const useTerminalMatesFares: (
-  params?: TerminalMatesInput,
+  params?: FetchFunctionParams<TerminalMatesInput>,
   options?: QueryHookOptions<Terminal[]>
 ) => UseQueryResult<Terminal[], Error> = hooks.useTerminalMatesFares;

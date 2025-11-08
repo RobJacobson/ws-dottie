@@ -6,7 +6,7 @@
  * transformation to JavaScript Date objects.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * ISO date string validation and transformation schema

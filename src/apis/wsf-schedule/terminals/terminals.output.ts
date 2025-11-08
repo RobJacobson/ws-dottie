@@ -13,7 +13,7 @@ import {
   terminalSchema as sharedTerminalSchema,
   terminalListSchema,
 } from "@/apis/shared/terminals.output";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 export const terminalSchema = sharedTerminalSchema;
 

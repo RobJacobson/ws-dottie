@@ -4,7 +4,7 @@
  * These schemas define the response structures for WSF Fares API TerminalCombo endpoints.
  */
 
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 
 /**
  * Terminal combo response schema for GetTerminalComboDetail endpoint

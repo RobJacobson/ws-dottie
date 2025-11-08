@@ -1,9 +1,13 @@
 import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod-openapi-init";
-import type { SurfaceMeasurementsInput } from "./surfaceMeasurements.input";
-import { surfaceMeasurementsInputSchema } from "./surfaceMeasurements.input";
-import type { SurfaceMeasurement } from "./surfaceMeasurements.output";
-import { surfaceMeasurementSchema } from "./surfaceMeasurements.output";
+import { z } from "@/shared/zod";
+import {
+  type SurfaceMeasurementsInput,
+  surfaceMeasurementsInputSchema,
+} from "./surfaceMeasurements.input";
+import {
+  type SurfaceMeasurement,
+  surfaceMeasurementSchema,
+} from "./surfaceMeasurements.output";
 
 export const surfaceMeasurementsResource = {
   name: "surface-measurements",

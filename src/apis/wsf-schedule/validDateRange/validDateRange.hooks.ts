@@ -1,19 +1,22 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
-import { wsfScheduleApi } from "../apiDefinition";
+import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
+import {
+  createHooks,
+  type FetchFunctionParams,
+  type QueryHookOptions,
+} from "@/shared/factories";
 import { scheduleValidDateRangeResource } from "./validDateRange.endpoints";
 import * as fetchFunctions from "./validDateRange.fetch";
 import type { ScheduleValidDateRangeInput } from "./validDateRange.input";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfScheduleApi,
   scheduleValidDateRangeResource,
   fetchFunctions
 );
 
 export const useScheduleValidDateRange: (
-  params?: ScheduleValidDateRangeInput,
+  params?: FetchFunctionParams<ScheduleValidDateRangeInput>,
   options?: QueryHookOptions<ValidDateRange>
 ) => UseQueryResult<ValidDateRange, Error> = hooks.useScheduleValidDateRange;

@@ -1,6 +1,8 @@
-import { createEndpointGroupFetchFunctions } from "@/shared/factories/createEndpointGroupFetchFunctions";
-import type { FetchFunctionParams } from "@/shared/factories/fetchFunctionFactory";
-import { wsdotTravelTimesApi } from "../apiDefinition";
+import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/apiDefinition";
+import {
+  createFetchFunctions,
+  type FetchFunctionParams,
+} from "@/shared/factories";
 import { travelTimeRoutesGroup } from "./travelTimeRoutes.endpoints";
 import type {
   TravelTimeByIdInput,
@@ -8,7 +10,7 @@ import type {
 } from "./travelTimeRoutes.input";
 import type { TravelTimeRoute } from "./travelTimeRoutes.output";
 
-const fetchFunctions = createEndpointGroupFetchFunctions(
+const fetchFunctions = createFetchFunctions(
   wsdotTravelTimesApi,
   travelTimeRoutesGroup
 );
