@@ -5,6 +5,22 @@
  * Import these schemas when you need runtime validation in development or testing.
  */
 
+export {
+  type TerminalMatesInput,
+  type TerminalsInput,
+  terminalMatesInputSchema,
+  terminalsInputSchema,
+} from "../shared/terminals.input";
+export {
+  type Terminal,
+  type TerminalList,
+  terminalListSchema,
+  terminalSchema,
+} from "../shared/terminals.output";
+export {
+  type ValidDateRange,
+  validDateRangeSchema,
+} from "../shared/validDateRange.output";
 export * from "./cacheFlushDate/cacheFlushDate.input";
 export * from "./cacheFlushDate/cacheFlushDate.output";
 export * from "./fareLineItems/fareLineItems.input";

@@ -5,6 +5,22 @@
  * Use this for backend/server-side code to avoid React Query dependencies.
  */
 
+export {
+  type TerminalMatesInput,
+  type TerminalsInput,
+  terminalMatesInputSchema,
+  terminalsInputSchema,
+} from "../shared/terminals.input";
+export {
+  type Terminal,
+  type TerminalList,
+  terminalListSchema,
+  terminalSchema,
+} from "../shared/terminals.output";
+export {
+  type ValidDateRange,
+  validDateRangeSchema,
+} from "../shared/validDateRange.output";
 export * from "./activeSeasons/activeSeasons.fetch";
 export * from "./activeSeasons/activeSeasons.input";
 export * from "./activeSeasons/activeSeasons.output";
