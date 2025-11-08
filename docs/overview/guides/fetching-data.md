@@ -86,8 +86,25 @@ import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
 
 **API-Specific Imports** (Includes hooks):
 ```javascript
-import { useVesselLocations } from 'ws-dottie/wsf-vessels';
+import { useVesselLocations, useVesselLocationsByVesselId } from 'ws-dottie/wsf-vessels';
 import { fetchVesselLocations } from 'ws-dottie/wsf-vessels/core';
+```
+
+Hooks now accept the same `FetchFunctionParams<T>` object as their matching fetch functions. Provide endpoint parameters with `params`, override transport with `fetchMode`, and control Zod validation with `validate`.
+
+```javascript
+// Hook without endpoint parameters
+const { data: vessels } = useVesselLocations({
+  fetchMode: 'native',
+  validate: false,
+});
+
+// Hook with endpoint parameters
+const { data: vessel } = useVesselLocationsByVesselId({
+  params: { VesselID: 18 },
+  fetchMode: 'native',
+  validate: true,
+});
 ```
 
 **Shared Utilities** (Config, fetch helper, dates):
