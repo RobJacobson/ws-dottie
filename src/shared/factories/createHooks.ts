@@ -18,7 +18,11 @@ import { useQueryWithCacheFlushDate } from "./createCacheFlushDateHook";
 import { createEndpoint } from "./createEndpoint";
 import type { FetchFunctionParams } from "./createFetchFunctions";
 import { cacheStrategies } from "./queryOptions";
-import type { HooksMap } from "./types";
+import type { FetchFunctionsMap, HooksMap } from "./types";
+
+type EndpointIO<T> = T extends EndpointDefinition<infer I, infer O>
+  ? { input: I; output: O }
+  : never;
 
 /**
  * Helper type to simplify query hook options.
@@ -101,16 +105,12 @@ const functionNameToHookName = (functionName: string): string => {
 const createHookFunction = <TInput, TOutput>(
   api: ApiDefinition,
   endpoint: Endpoint<TInput, TOutput>,
-  fetchFunction: (params?: FetchFunctionParams<unknown>) => Promise<unknown>,
+  fetchFunction: (params?: FetchFunctionParams<TInput>) => Promise<TOutput>,
   useCacheFlush: boolean
 ): ((
   params?: FetchFunctionParams<TInput>,
   options?: QueryHookOptions<TOutput>
 ) => UseQueryResult<TOutput, Error>) => {
-  const typedFetchFunction = fetchFunction as (
-    params?: FetchFunctionParams<TInput>
-  ) => Promise<TOutput>;
-
   if (useCacheFlush) {
     return (
       params?: FetchFunctionParams<TInput>,
@@ -119,7 +119,7 @@ const createHookFunction = <TInput, TOutput>(
       return useQueryWithCacheFlushDate(
         api,
         endpoint,
-        typedFetchFunction,
+        fetchFunction,
         params,
         options
       );
@@ -132,7 +132,7 @@ const createHookFunction = <TInput, TOutput>(
   ): UseQueryResult<TOutput, Error> => {
     return useQuery({
       queryKey: [endpoint.id, params?.params ?? null],
-      queryFn: () => typedFetchFunction(params),
+      queryFn: () => fetchFunction(params),
       ...cacheStrategies[endpoint.cacheStrategy],
       refetchOnWindowFocus: false,
       ...options,
@@ -172,38 +172,44 @@ export const createHooks = <
 >(
   api: TApi,
   endpointGroup: TGroup,
-  fetchFunctions: Record<
-    string,
-    (params?: FetchFunctionParams<unknown>) => Promise<unknown>
-  >
+  fetchFunctions: FetchFunctionsMap<TGroup>
 ): HooksMap<TGroup> => {
   const useCacheFlush = shouldUseCacheFlushDate(api.name, endpointGroup);
 
-  return Object.entries(endpointGroup.endpoints).reduce(
-    (acc, [functionName, endpointDef]) => {
-      const typedEndpointDef = endpointDef as EndpointDefinition<
-        unknown,
-        unknown
-      >;
-      const endpoint = createEndpoint(
-        api,
-        endpointGroup,
-        typedEndpointDef,
-        functionName
-      );
+  type EndpointKey = Extract<keyof TGroup["endpoints"], string>;
+  const endpointKeys = Object.keys(endpointGroup.endpoints) as EndpointKey[];
+
+  return endpointKeys.reduce(
+    (acc, functionName) => {
+      const endpointDef = endpointGroup.endpoints[functionName];
       const fetchFunction = fetchFunctions[functionName];
 
       if (!fetchFunction) {
         throw new Error(
-          `Fetch function "${functionName}" not found for endpoint "${functionName}"`
+          `Fetch function "${String(
+            functionName
+          )}" not found for endpoint "${String(functionName)}"`
         );
       }
 
-      const hookName = functionNameToHookName(functionName);
-      const hookFunction = createHookFunction(
+      type IO = EndpointIO<typeof endpointDef>;
+      type Input = IO extends never ? unknown : IO["input"];
+      type Output = IO extends never ? unknown : IO["output"];
+
+      const endpoint = createEndpoint(
         api,
-        endpoint as Endpoint<unknown, unknown>,
-        fetchFunction,
+        endpointGroup,
+        endpointDef as EndpointDefinition<Input, Output>,
+        functionName as string
+      );
+
+      const hookName = functionNameToHookName(functionName as string);
+      const hookFunction = createHookFunction<Input, Output>(
+        api,
+        endpoint,
+        fetchFunction as (
+          params?: FetchFunctionParams<Input>
+        ) => Promise<Output>,
         useCacheFlush
       );
 
