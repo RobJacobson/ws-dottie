@@ -1,20 +1,29 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import type { QueryHookOptions } from "@/shared/factories/createEndpointGroupHooks";
-import { createEndpointGroupHooks } from "@/shared/factories/createEndpointGroupHooks";
+import type { FetchFunctionParams } from "@/shared/factories/createFetchFunctions";
+import type { QueryHookOptions } from "@/shared/factories/createHooks";
+import { createHooks } from "@/shared/factories/createHooks";
 import { wsfScheduleApi } from "../apiDefinition";
-import { cacheFlushDateSchedule } from "./cacheFlushDate.endpoints";
+import {
+  type CacheFlushDateScheduleInput,
+  type CacheFlushDateSchedules,
+  cacheFlushDateSchedule,
+} from "./cacheFlushDate.endpoints";
 import * as fetchFunctions from "./cacheFlushDate.fetch";
-import type { CacheFlushDateScheduleInput } from "./cacheFlushDate.input";
-import type { CacheFlushDateSchedules } from "./cacheFlushDate.output";
 
-const hooks = createEndpointGroupHooks(
+const hooks = createHooks(
   wsfScheduleApi,
   cacheFlushDateSchedule,
-  fetchFunctions
+  fetchFunctions as Record<
+    string,
+    (params?: FetchFunctionParams<unknown>) => Promise<unknown>
+  >
 );
 
 export const useCacheFlushDateSchedule: (
-  params?: CacheFlushDateScheduleInput,
+  params?: FetchFunctionParams<CacheFlushDateScheduleInput>,
   options?: QueryHookOptions<CacheFlushDateSchedules>
 ) => UseQueryResult<CacheFlushDateSchedules, Error> =
-  hooks.useCacheFlushDateSchedule;
+  hooks.useCacheFlushDateSchedule as (
+    params?: FetchFunctionParams<CacheFlushDateScheduleInput>,
+    options?: QueryHookOptions<CacheFlushDateSchedules>
+  ) => UseQueryResult<CacheFlushDateSchedules, Error>;
