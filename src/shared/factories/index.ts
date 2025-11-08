@@ -6,14 +6,22 @@
  * to generate strongly-typed API functions with minimal boilerplate.
  */
 
+// Cache flush date hook
+export { useQueryWithCacheFlushDate } from "./createCacheFlushDateHook";
 // Endpoint factory
 export { createEndpoint } from "./createEndpoint";
-export { createEndpointGroupFetchFunctions } from "./createEndpointGroupFetchFunctions";
-export type { QueryHookOptions } from "./createEndpointGroupHooks";
-// Endpoint group factories
-export { createEndpointGroupHooks } from "./createEndpointGroupHooks";
-// Fetch function factory
-export type { FetchFunctionParams } from "./fetchFunctionFactory";
-export { createFetchFunction } from "./fetchFunctionFactory";
+// Fetch function factories
+export type { FetchFunctionParams } from "./createFetchFunctions";
+export {
+  createFetchFunction,
+  createFetchFunctions,
+} from "./createFetchFunctions";
+// Hook factories
+export type { QueryHookOptions } from "./createHooks";
+export { createHooks } from "./createHooks";
+
 // Query options
 export { cacheStrategies } from "./queryOptions";
+
+// Type helpers
+export type { FetchFunctionsMap, HooksMap } from "./types";

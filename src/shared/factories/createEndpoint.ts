@@ -13,27 +13,27 @@ import type {
 import type { Endpoint } from "@/shared/types";
 
 /**
- * Creates a typed endpoint for a specific endpoint definition
+ * Creates a typed endpoint for a specific endpoint definition.
  *
- * This function creates a single typed Endpoint object from an endpoint definition.
- * It preserves input and output types from endpoint definition.
+ * This is a pure function that transforms endpoint definitions into fully
+ * configured Endpoint objects with computed properties like URL templates
+ * and unique identifiers.
  *
- * @template TInput - The input parameters type
- * @template TOutput - The output response type
- * @param apiDefinition - The API definition (to get name and baseUrl)
- * @param endpointGroup - The endpoint group (to get cacheStrategy)
- * @param endpointDef - The endpoint definition
- * @returns A typed Endpoint object
+ * @template TInput - The input parameters type for the endpoint
+ * @template TOutput - The output response type for the endpoint
+ * @param apiDefinition - The API definition containing name and baseUrl
+ * @param endpointGroup - The endpoint group containing cacheStrategy
+ * @param endpointDef - The endpoint definition with path and schemas
+ * @param functionName - The canonical function name for this endpoint
+ * @returns A fully configured Endpoint object with all computed properties
  *
  * @example
  * ```typescript
- * import { vesselStatsResource } from "./vesselStats/vesselStats.endpoints";
- * import { wsfVesselsApi } from "./apiDefinition";
- *
  * const endpoint = createEndpoint(
  *   wsfVesselsApi,
  *   vesselStatsResource,
- *   vesselStatsResource.endpoints.fetchVesselStats
+ *   vesselStatsResource.endpoints.fetchVesselStats,
+ *   "fetchVesselStats"
  * );
  * ```
  */
@@ -41,16 +41,13 @@ export const createEndpoint = <TInput, TOutput>(
   apiDefinition: ApiDefinition,
   endpointGroup: EndpointGroup,
   endpointDef: EndpointDefinition<TInput, TOutput>,
-  functionName: string,
-  includeSchemas: boolean = true
+  functionName: string
 ): Endpoint<TInput, TOutput> => ({
   api: apiDefinition.name,
   function: functionName,
   endpoint: endpointDef.endpoint,
-  ...(includeSchemas && {
-    inputSchema: endpointDef.inputSchema,
-    outputSchema: endpointDef.outputSchema,
-  }),
+  inputSchema: endpointDef.inputSchema,
+  outputSchema: endpointDef.outputSchema,
   sampleParams: endpointDef.sampleParams,
   cacheStrategy: endpointGroup.cacheStrategy,
   functionName,
