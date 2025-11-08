@@ -6,7 +6,7 @@
  */
 
 import type { z as zod } from "zod";
-import { z } from "@/shared/zod-openapi-init";
+import { z } from "@/shared/zod";
 import { zDotnetDate } from "./zDotnetDateSchema";
 
 /**
