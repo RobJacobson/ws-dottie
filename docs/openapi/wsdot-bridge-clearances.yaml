@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    BridgeClearancesOutput:
+    FetchBridgeClearancesOutput:
       type: object
       properties:
         APILastUpdate:
@@ -139,13 +139,13 @@ components:
         - VerticalClearanceMinimumFeetInch
         - VerticalClearanceMinimumInches
       description: Represents bridge clearance information including location coordinates, route associations, vertical clearance measurements, and structure identification. E.g., bridge 519/101FTP at location 47.602165, -122.339587 with clearance 14 ft 3 in (171 inches) on route 519. Used for route planning, height-restricted vehicle navigation, and bridge inventory management. Data updated periodically as bridge measurements change.
-    BridgeClearancesByRouteInputRouteParam:
+    FetchBridgeClearancesByRouteInputRouteParam:
       type: string
       description: State route identifier formatted as three-digit number, as a route identifier. E.g., '005' for I-5, '167' for SR-167, '520' for SR-520. Used to filter bridge clearances for specific highway routes.
   parameters:
-    BridgeClearancesByRouteInputRouteParam:
+    FetchBridgeClearancesByRouteInputRouteParam:
       schema:
-        $ref: '#/components/schemas/BridgeClearancesByRouteInputRouteParam'
+        $ref: '#/components/schemas/FetchBridgeClearancesByRouteInputRouteParam'
       required: true
       description: State route identifier formatted as three-digit number, as a route identifier. E.g., '005' for I-5, '167' for SR-167, '520' for SR-520. Used to filter bridge clearances for specific highway routes.
       name: Route
@@ -154,16 +154,17 @@ paths:
   /getClearancesAsJson?Route={Route}:
     get:
       summary: Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.
-      operationId: getBridgeClearancesByRoute
+      operationId: fetchBridgeClearancesByRoute
       tags:
         - bridge-clearances
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getBridgeClearancesByRoute } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchBridgeClearancesByRoute } from 'ws-dottie/wsdot-bridge-clearances/core';
 
             const data = await fetchDottie({
-              endpoint: getBridgeClearancesByRoute,
+              endpoint: fetchBridgeClearancesByRoute,
               params: {
                 "Route": "005"
               },
@@ -173,7 +174,7 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/BridgeClearancesByRouteInputRouteParam'
+        - $ref: '#/components/parameters/FetchBridgeClearancesByRouteInputRouteParam'
       responses:
         '200':
           description: Success
@@ -182,13 +183,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BridgeClearancesOutput'
+                  $ref: '#/components/schemas/FetchBridgeClearancesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 972 total)
                   value:
-                    - APILastUpdate: 2025-11-05T11:30:02.307Z
+                    - APILastUpdate: 2025-11-07T11:30:01.900Z
                       BridgeNumber: 5/629A
                       ControlEntityGuid: 88ba5341-b39c-43c9-95a5-bc9584b2d798
                       CrossingDescription: I-5 S-S RAMP UNDER BROADWAY
@@ -211,16 +212,17 @@ paths:
   /getClearancesAsJson:
     get:
       summary: Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.
-      operationId: getBridgeClearances
+      operationId: fetchBridgeClearances
       tags:
         - bridge-clearances
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getBridgeClearances } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances/core';
 
             const data = await fetchDottie({
-              endpoint: getBridgeClearances,
+              endpoint: fetchBridgeClearances,
               fetchMode: 'native',
               validate: true
             });
@@ -234,13 +236,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BridgeClearancesOutput'
+                  $ref: '#/components/schemas/FetchBridgeClearancesOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 2992 total)
                   value:
-                    - APILastUpdate: 2025-11-05T11:30:02.307Z
+                    - APILastUpdate: 2025-11-07T11:30:01.900Z
                       BridgeNumber: 519/101FTP
                       ControlEntityGuid: e589eb93-c01b-4498-8243-89f48bf5c43d
                       CrossingDescription: SEATTLE SLIP 1 PASS. OHL

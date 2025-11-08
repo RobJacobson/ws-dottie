@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    MountainPassConditionByIdOutput:
+    FetchMountainPassConditionByIdOutput:
       type: object
       properties:
         MountainPassId:
@@ -68,7 +68,9 @@ components:
             - 'null'
           description: Current temperature reading at mountain pass, as degrees Fahrenheit. E.g., '34' for 34°F at White Pass, null when temperature reading is unavailable. Used for weather condition assessment and winter travel planning.
         ElevationInFeet:
-          type: integer
+          type:
+            - integer
+            - 'null'
           description: Elevation of mountain pass above sea level, as feet. E.g., '4500' for 4,500 feet elevation at White Pass. Used for understanding pass altitude and weather context.
         WeatherCondition:
           type:
@@ -97,7 +99,7 @@ components:
               type:
                 - string
                 - 'null'
-              description: Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel the restriction affects.
+              description: Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel is restriction affects.
           required:
             - RestrictionText
             - TravelDirection
@@ -116,7 +118,7 @@ components:
               type:
                 - string
                 - 'null'
-              description: Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel the restriction affects.
+              description: Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel is restriction affects.
           required:
             - RestrictionText
             - TravelDirection
@@ -135,13 +137,13 @@ components:
         - RestrictionOne
         - RestrictionTwo
       description: Represents real-time mountain pass condition information including weather conditions, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status. E.g., White Pass US 12 (ID 12) at elevation 4,500 feet with temperature 34°F, overcast weather, bare and wet road conditions, no restrictions eastbound or westbound. Used for winter travel planning, pass condition monitoring, and route decision-making. Data updated periodically throughout the day, especially during winter months.
-    MountainPassConditionByIdInputPassConditionIDParam:
+    FetchMountainPassConditionByIdInputPassConditionIDParam:
       type: integer
       description: Unique mountain pass identifier, as an integer ID. E.g., '12' for White Pass US 12. Used to retrieve specific pass condition information.
   parameters:
-    MountainPassConditionByIdInputPassConditionIDParam:
+    FetchMountainPassConditionByIdInputPassConditionIDParam:
       schema:
-        $ref: '#/components/schemas/MountainPassConditionByIdInputPassConditionIDParam'
+        $ref: '#/components/schemas/FetchMountainPassConditionByIdInputPassConditionIDParam'
       required: true
       description: Unique mountain pass identifier, as an integer ID. E.g., '12' for White Pass US 12. Used to retrieve specific pass condition information.
       name: PassConditionID
@@ -149,17 +151,18 @@ components:
 paths:
   /getMountainPassConditionAsJon?PassConditionID={PassConditionID}:
     get:
-      summary: Returns a single PassCondition for the specified mountain pass identifier.
-      operationId: getMountainPassConditionById
+      summary: Returns a single PassCondition for specified mountain pass identifier.
+      operationId: fetchMountainPassConditionById
       tags:
         - pass-conditions
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getMountainPassConditionById } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
 
             const data = await fetchDottie({
-              endpoint: getMountainPassConditionById,
+              endpoint: fetchMountainPassConditionById,
               params: {
                 "PassConditionID": 12
               },
@@ -169,14 +172,14 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/MountainPassConditionByIdInputPassConditionIDParam'
+        - $ref: '#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MountainPassConditionByIdOutput'
+                $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -186,11 +189,11 @@ paths:
                     MountainPassName: White Pass  US 12
                     Latitude: 46.638333
                     Longitude: -121.39
-                    DateUpdated: 2025-11-05T15:42:05.060Z
-                    TemperatureInFahrenheit: 39
+                    DateUpdated: 2025-11-08T07:53:17.877Z
+                    TemperatureInFahrenheit: 29
                     ElevationInFeet: 4500
-                    WeatherCondition: Light rain
-                    RoadCondition: Bare and wet
+                    WeatherCondition: Partly cloudy
+                    RoadCondition: Bare and dry, wet in places
                     TravelAdvisoryActive: true
                     RestrictionOne:
                       RestrictionText: No restrictions
@@ -201,16 +204,17 @@ paths:
   /getMountainPassConditionsAsJson:
     get:
       summary: Returns multiple PassCondition items for all monitored mountain passes.
-      operationId: getMountainPassConditions
+      operationId: fetchMountainPassConditions
       tags:
         - pass-conditions
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getMountainPassConditions } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
 
             const data = await fetchDottie({
-              endpoint: getMountainPassConditions,
+              endpoint: fetchMountainPassConditions,
               fetchMode: 'native',
               validate: true
             });
@@ -224,7 +228,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MountainPassConditionByIdOutput'
+                  $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -234,11 +238,11 @@ paths:
                       MountainPassName: Blewett Pass US 97
                       Latitude: 47.335298205
                       Longitude: -120.581068216
-                      DateUpdated: 2025-11-05T22:52:53.120Z
-                      TemperatureInFahrenheit: 42
+                      DateUpdated: 2025-11-08T06:58:38.953Z
+                      TemperatureInFahrenheit: 31
                       ElevationInFeet: 4102
-                      WeatherCondition: Rain
-                      RoadCondition: Bare and wet
+                      WeatherCondition: Cloudy.
+                      RoadCondition: Bare and dry with frost and ice in places.
                       TravelAdvisoryActive: true
                       RestrictionOne:
                         RestrictionText: No restrictions

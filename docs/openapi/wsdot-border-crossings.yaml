@@ -42,7 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    BorderCrossingsOutput:
+    FetchBorderCrossingsOutput:
       type: object
       properties:
         BorderCrossingLocation:
@@ -104,16 +104,17 @@ paths:
   /GetBorderCrossingsAsJson:
     get:
       summary: Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.
-      operationId: getBorderCrossings
+      operationId: fetchBorderCrossings
       tags:
         - border-crossing-data
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getBorderCrossings } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
 
             const data = await fetchDottie({
-              endpoint: getBorderCrossings,
+              endpoint: fetchBorderCrossings,
               fetchMode: 'native',
               validate: true
             });
@@ -127,7 +128,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BorderCrossingsOutput'
+                  $ref: '#/components/schemas/FetchBorderCrossingsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -141,7 +142,7 @@ paths:
                         MilePost: 0
                         RoadName: '005'
                       CrossingName: I5
-                      Time: 2025-11-06T00:05:00.000Z
+                      Time: 2025-11-08T08:10:00.000Z
                       WaitTime: 5
                     - _note: ... 10 more items
 webhooks: {}

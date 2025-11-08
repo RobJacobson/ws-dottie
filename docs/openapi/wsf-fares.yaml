@@ -42,23 +42,23 @@ components:
         - Longitude
         - MilePost
         - RoadName
-    CacheFlushDateOutput:
+    FetchCacheFlushDateFaresOutput:
       type: string
-      description: Cache flush timestamp indicating when fares data was last updated, as a UTC datetime. E.g., '2025-10-31T22:19:34.600Z' when fare metadata was refreshed. Use to determine when cached fare information should be invalidated and refreshed. Poll this endpoint periodically to detect when fare data changes.
-    FaresValidDateRangeOutput:
+      description: Cache flush timestamp indicating when any static endpoint data for the wsf-fares API was last updated, as a UTC datetime. E.g., '2025-11-02T19:45:00.517Z' when static wsf-fares data was last refreshed.
+    FetchFaresValidDateRangeOutput:
       type: object
       properties:
         DateFrom:
           type: string
-          description: Start date when fares information becomes available, as a UTC datetime. E.g., '2025-11-02T07:00:00.000Z' for fares available from November 2, 2025. Indicates earliest trip date for which fare data is published.
+          description: Start date when data becomes available, as a UTC datetime. E.g., '2025-11-02T07:00:00.000Z'. Indicates earliest trip date for which data is published.
         DateThru:
           type: string
-          description: End date when fares information stops being available, as a UTC datetime. E.g., '2026-03-21T07:00:00.000Z' for fares available through March 21, 2026. Indicates latest trip date for which fare data is published.
+          description: End date when data stops being available, as a UTC datetime. E.g., '2026-03-21T07:00:00.000Z'. Indicates latest trip date for which data is published.
       required:
         - DateFrom
         - DateThru
       description: Represents date range for which fares data is currently published and available, including start and end dates. E.g., fares available from November 2, 2025 through March 21, 2026. Use to determine valid trip dates for fare queries before calling other endpoints.
-    FaresTerminalsOutput:
+    FetchTerminalFaresOutput:
       type: object
       properties:
         TerminalID:
@@ -71,7 +71,7 @@ components:
         - TerminalID
         - Description
       description: Represents base terminal information including terminal identifier and name. E.g., terminal 1 (Anacortes) or terminal 3 (Bainbridge Island). Used for terminal identification in fare queries and terminal lookups.
-    TerminalComboOutput:
+    FetchTerminalComboFaresOutput:
       type: object
       properties:
         DepartingDescription:
@@ -94,7 +94,7 @@ components:
         - ArrivingDescription
         - CollectionDescription
       description: Represents fare collection description for specific terminal combination including departing/arriving terminal names and collection details. E.g., Anacortes to Friday Harbor with fares collected at Anacortes only. Used for understanding fare collection procedures and determining where fares are paid for specific routes.
-    TerminalComboVerboseOutput:
+    FetchTerminalComboFaresVerboseOutput:
       type: object
       properties:
         DepartingTerminalID:
@@ -125,7 +125,7 @@ components:
         - ArrivingDescription
         - CollectionDescription
       description: Represents fare collection description for terminal combination including terminal IDs, names, and collection details. E.g., Anacortes (ID 1) to Friday Harbor (ID 10) with fares collected at Anacortes only. Used for comprehensive fare collection information lookup and understanding collection procedures for all available routes.
-    FareLineItemsByTripDateAndTerminalsOutput:
+    FetchFareLineItemsByTripDateAndTerminalsOutput:
       type: object
       properties:
         FareLineItemID:
@@ -154,7 +154,7 @@ components:
         - DirectionIndependent
         - Amount
       description: Represents fare line item information including fare identifier, description, category, direction independence, and amount. E.g., Adult fare (ID 1) in Passenger category with amount $0 (free). Used for fare lookups, fare calculation, and fare total computations.
-    FareLineItemsVerboseOutput:
+    FetchFareLineItemsVerboseOutput:
       type: object
       properties:
         TerminalComboVerbose:
@@ -280,7 +280,7 @@ components:
               description: Represents fare line item information including fare identifier, description, category, direction independence, and amount. E.g., Adult fare (ID 1) in Passenger category with amount $0 (free). Used for fare lookups, fare calculation, and fare total computations.
           description: Array of round trip fare line item arrays, where each inner array contains line items for specific terminal combination, as nested arrays of line item objects. E.g., array containing Adult, Senior, Youth fares for round trip journeys. Used for round trip fare lookups.
       description: Represents comprehensive fare line item data for all terminal combinations including terminal combo information, cross-reference mappings, one-way fares, and round trip fares. E.g., complete fare data for all routes on November 2, 2025. Used for bulk fare lookups across all routes and comprehensive fare data access.
-    FareTotalsByTripDateAndRouteOutput:
+    FetchFareTotalsByTripDateAndRouteOutput:
       type: object
       properties:
         TotalType:
@@ -317,223 +317,223 @@ components:
         - BriefDescription
         - Amount
       description: Represents fare total breakdown including total type, description, and amount. E.g., departing total (type 1) 'Anacortes to Friday Harbor' with amount $61.25, grand total (type 4) with amount $61.25. Used for fare calculation results, total breakdowns, and payment amount determination.
-    FaresTerminalsInputTripDateParam:
+    FetchTerminalFaresInputTripDateParam:
       type: string
       description: Trip date for which to retrieve valid departing terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025, '2026-03-21' for March 21, 2026. Must be within valid date range from GetValidDateRange. Used to filter terminals by trip date availability.
-    TerminalMatesInputTripDateParam:
+    FetchTerminalMatesFaresInputTripDateParam:
       type: string
       description: Trip date for which to retrieve arriving terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter terminal mates by trip date availability.
-    TerminalMatesInputTerminalIDParam:
+    FetchTerminalMatesFaresInputTerminalIDParam:
       type: number
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to filter arriving terminals by origin terminal.
-    TerminalComboInputTripDateParam:
+    FetchTerminalComboFaresInputTripDateParam:
       type: string
       description: Trip date for fare collection description, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
-    TerminalComboInputDepartingTerminalIDParam:
+    FetchTerminalComboFaresInputDepartingTerminalIDParam:
       type: number
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare collection.
-    TerminalComboInputArrivingTerminalIDParam:
+    FetchTerminalComboFaresInputArrivingTerminalIDParam:
       type: number
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals for departing terminal. Used to identify destination terminal for fare collection.
-    TerminalComboVerboseInputTripDateParam:
+    FetchTerminalComboFaresVerboseInputTripDateParam:
       type: string
       description: Trip date for fare collection descriptions, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
-    FareLineItemsByTripDateAndTerminalsInputTripDateParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam:
       type: string
       description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
-    FareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam:
       type: number
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
-    FareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam:
       type: number
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
-    FareLineItemsByTripDateAndTerminalsInputRoundTripParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam:
       type: boolean
       description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
-    FareLineItemsBasicInputTripDateParam:
+    FetchFareLineItemsBasicInputTripDateParam:
       type: string
       description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
-    FareLineItemsBasicInputDepartingTerminalIDParam:
+    FetchFareLineItemsBasicInputDepartingTerminalIDParam:
       type: number
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
-    FareLineItemsBasicInputArrivingTerminalIDParam:
+    FetchFareLineItemsBasicInputArrivingTerminalIDParam:
       type: number
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
-    FareLineItemsBasicInputRoundTripParam:
+    FetchFareLineItemsBasicInputRoundTripParam:
       type: boolean
       description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
-    FareLineItemsVerboseInputTripDateParam:
+    FetchFareLineItemsVerboseInputTripDateParam:
       type: string
       description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
-    FareTotalsByTripDateAndRouteInputTripDateParam:
+    FetchFareTotalsByTripDateAndRouteInputTripDateParam:
       type: string
       description: Trip date for fare total calculation, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare calculations by trip date.
-    FareTotalsByTripDateAndRouteInputDepartingTerminalIDParam:
+    FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam:
       type: number
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
-    FareTotalsByTripDateAndRouteInputArrivingTerminalIDParam:
+    FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam:
       type: number
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
-    FareTotalsByTripDateAndRouteInputRoundTripParam:
+    FetchFareTotalsByTripDateAndRouteInputRoundTripParam:
       type: boolean
       description: Trip type indicator, as a boolean. E.g., true for round trip fare totals, false for one-way fare totals. Determines whether totals include return journey fares.
-    FareTotalsByTripDateAndRouteInputFareLineItemIDParam:
+    FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam:
       type: string
       description: Comma-separated list of fare line item IDs to include in total calculation, as a comma-delimited string. E.g., '1,2,3' for Adult, Senior, and Youth fares. Use GetFareLineItems to find valid fare line item IDs. Each ID corresponds to quantity at same index in Quantity array.
-    FareTotalsByTripDateAndRouteInputQuantityParam:
+    FetchFareTotalsByTripDateAndRouteInputQuantityParam:
       type: string
       description: Comma-separated list of quantities for corresponding fare line items, as a comma-delimited string. E.g., '2,1,0' for 2 adults, 1 senior, 0 youth. Values must be >= 0. Each quantity corresponds to fare line item ID at same index in FareLineItemID array.
   parameters:
-    FaresTerminalsInputTripDateParam:
+    FetchTerminalFaresInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/FaresTerminalsInputTripDateParam'
+        $ref: '#/components/schemas/FetchTerminalFaresInputTripDateParam'
       required: true
       description: Trip date for which to retrieve valid departing terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025, '2026-03-21' for March 21, 2026. Must be within valid date range from GetValidDateRange. Used to filter terminals by trip date availability.
       name: TripDate
       in: path
-    TerminalMatesInputTripDateParam:
+    FetchTerminalMatesFaresInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/TerminalMatesInputTripDateParam'
+        $ref: '#/components/schemas/FetchTerminalMatesFaresInputTripDateParam'
       required: true
       description: Trip date for which to retrieve arriving terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter terminal mates by trip date availability.
       name: TripDate
       in: path
-    TerminalMatesInputTerminalIDParam:
+    FetchTerminalMatesFaresInputTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/TerminalMatesInputTerminalIDParam'
+        $ref: '#/components/schemas/FetchTerminalMatesFaresInputTerminalIDParam'
       required: true
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to filter arriving terminals by origin terminal.
       name: TerminalID
       in: path
-    TerminalComboInputTripDateParam:
+    FetchTerminalComboFaresInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/TerminalComboInputTripDateParam'
+        $ref: '#/components/schemas/FetchTerminalComboFaresInputTripDateParam'
       required: true
       description: Trip date for fare collection description, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
       name: TripDate
       in: path
-    TerminalComboInputDepartingTerminalIDParam:
+    FetchTerminalComboFaresInputDepartingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/TerminalComboInputDepartingTerminalIDParam'
+        $ref: '#/components/schemas/FetchTerminalComboFaresInputDepartingTerminalIDParam'
       required: true
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare collection.
       name: DepartingTerminalID
       in: path
-    TerminalComboInputArrivingTerminalIDParam:
+    FetchTerminalComboFaresInputArrivingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/TerminalComboInputArrivingTerminalIDParam'
+        $ref: '#/components/schemas/FetchTerminalComboFaresInputArrivingTerminalIDParam'
       required: true
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals for departing terminal. Used to identify destination terminal for fare collection.
       name: ArrivingTerminalID
       in: path
-    TerminalComboVerboseInputTripDateParam:
+    FetchTerminalComboFaresVerboseInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/TerminalComboVerboseInputTripDateParam'
+        $ref: '#/components/schemas/FetchTerminalComboFaresVerboseInputTripDateParam'
       required: true
       description: Trip date for fare collection descriptions, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
       name: TripDate
       in: path
-    FareLineItemsByTripDateAndTerminalsInputTripDateParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsInputTripDateParam'
+        $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam'
       required: true
       description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
       name: TripDate
       in: path
-    FareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam'
+        $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam'
       required: true
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
       name: DepartingTerminalID
       in: path
-    FareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam'
+        $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam'
       required: true
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
       name: ArrivingTerminalID
       in: path
-    FareLineItemsByTripDateAndTerminalsInputRoundTripParam:
+    FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsInputRoundTripParam'
+        $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam'
       required: true
       description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
       name: RoundTrip
       in: path
-    FareLineItemsBasicInputTripDateParam:
+    FetchFareLineItemsBasicInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsBasicInputTripDateParam'
+        $ref: '#/components/schemas/FetchFareLineItemsBasicInputTripDateParam'
       required: true
       description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
       name: TripDate
       in: path
-    FareLineItemsBasicInputDepartingTerminalIDParam:
+    FetchFareLineItemsBasicInputDepartingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsBasicInputDepartingTerminalIDParam'
+        $ref: '#/components/schemas/FetchFareLineItemsBasicInputDepartingTerminalIDParam'
       required: true
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
       name: DepartingTerminalID
       in: path
-    FareLineItemsBasicInputArrivingTerminalIDParam:
+    FetchFareLineItemsBasicInputArrivingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsBasicInputArrivingTerminalIDParam'
+        $ref: '#/components/schemas/FetchFareLineItemsBasicInputArrivingTerminalIDParam'
       required: true
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
       name: ArrivingTerminalID
       in: path
-    FareLineItemsBasicInputRoundTripParam:
+    FetchFareLineItemsBasicInputRoundTripParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsBasicInputRoundTripParam'
+        $ref: '#/components/schemas/FetchFareLineItemsBasicInputRoundTripParam'
       required: true
       description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
       name: RoundTrip
       in: path
-    FareLineItemsVerboseInputTripDateParam:
+    FetchFareLineItemsVerboseInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/FareLineItemsVerboseInputTripDateParam'
+        $ref: '#/components/schemas/FetchFareLineItemsVerboseInputTripDateParam'
       required: true
       description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
       name: TripDate
       in: path
-    FareTotalsByTripDateAndRouteInputTripDateParam:
+    FetchFareTotalsByTripDateAndRouteInputTripDateParam:
       schema:
-        $ref: '#/components/schemas/FareTotalsByTripDateAndRouteInputTripDateParam'
+        $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputTripDateParam'
       required: true
       description: Trip date for fare total calculation, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare calculations by trip date.
       name: TripDate
       in: path
-    FareTotalsByTripDateAndRouteInputDepartingTerminalIDParam:
+    FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/FareTotalsByTripDateAndRouteInputDepartingTerminalIDParam'
+        $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam'
       required: true
       description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
       name: DepartingTerminalID
       in: path
-    FareTotalsByTripDateAndRouteInputArrivingTerminalIDParam:
+    FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam:
       schema:
-        $ref: '#/components/schemas/FareTotalsByTripDateAndRouteInputArrivingTerminalIDParam'
+        $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam'
       required: true
       description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
       name: ArrivingTerminalID
       in: path
-    FareTotalsByTripDateAndRouteInputRoundTripParam:
+    FetchFareTotalsByTripDateAndRouteInputRoundTripParam:
       schema:
-        $ref: '#/components/schemas/FareTotalsByTripDateAndRouteInputRoundTripParam'
+        $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputRoundTripParam'
       required: true
       description: Trip type indicator, as a boolean. E.g., true for round trip fare totals, false for one-way fare totals. Determines whether totals include return journey fares.
       name: RoundTrip
       in: path
-    FareTotalsByTripDateAndRouteInputFareLineItemIDParam:
+    FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam:
       schema:
-        $ref: '#/components/schemas/FareTotalsByTripDateAndRouteInputFareLineItemIDParam'
+        $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam'
       required: true
       description: Comma-separated list of fare line item IDs to include in total calculation, as a comma-delimited string. E.g., '1,2,3' for Adult, Senior, and Youth fares. Use GetFareLineItems to find valid fare line item IDs. Each ID corresponds to quantity at same index in Quantity array.
       name: FareLineItemID
       in: path
-    FareTotalsByTripDateAndRouteInputQuantityParam:
+    FetchFareTotalsByTripDateAndRouteInputQuantityParam:
       schema:
-        $ref: '#/components/schemas/FareTotalsByTripDateAndRouteInputQuantityParam'
+        $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputQuantityParam'
       required: true
       description: Comma-separated list of quantities for corresponding fare line items, as a comma-delimited string. E.g., '2,1,0' for 2 adults, 1 senior, 0 youth. Values must be >= 0. Each quantity corresponds to fare line item ID at same index in FareLineItemID array.
       name: Quantity
@@ -541,17 +541,18 @@ components:
 paths:
   /cacheflushdate:
     get:
-      summary: Returns a single CacheFlushDate for the WSF fares system.
-      operationId: getCacheFlushDate
+      summary: Returns the timestamp of when any static endpoint data for the wsf-fares API was last updated.
+      operationId: fetchCacheFlushDateFares
       tags:
-        - cache-flush-date
+        - cache-flush-date-fares
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getCacheFlushDate } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCacheFlushDateFares } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getCacheFlushDate,
+              endpoint: fetchCacheFlushDateFares,
               fetchMode: 'native',
               validate: true
             });
@@ -563,59 +564,29 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CacheFlushDateOutput'
+                $ref: '#/components/schemas/FetchCacheFlushDateFaresOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
-                  value: 2025-11-05T12:19:57.117Z
-  /validdaterange:
+                  value: 2025-11-08T04:24:35.480Z
+  /terminalMates/{TripDate}/{TerminalID}:
     get:
-      summary: Returns a single ValidDateRange object for the current fares data validity period.
-      operationId: getFaresValidDateRange
-      tags:
-        - valid-date-range
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getFaresValidDateRange } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getFaresValidDateRange,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FaresValidDateRangeOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    DateFrom: 2025-11-05T08:00:00.000Z
-                    DateThru: 2026-03-21T07:00:00.000Z
-  /terminals/{TripDate}:
-    get:
-      summary: Returns a list of valid departing terminals for the specified trip date.
-      operationId: getFaresTerminals
+      summary: Returns arriving terminals for the given departing terminal and trip date.
+      operationId: fetchTerminalMatesFares
       tags:
         - terminals
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getFaresTerminals } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalMatesFares } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getFaresTerminals,
+              endpoint: fetchTerminalMatesFares,
               params: {
-                "TripDate": "2025-11-07"
+                "TripDate": "2025-11-09",
+                "TerminalID": 1
               },
               fetchMode: 'native',
               validate: true
@@ -623,7 +594,8 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FaresTerminalsInputTripDateParam'
+        - $ref: '#/components/parameters/FetchTerminalMatesFaresInputTripDateParam'
+        - $ref: '#/components/parameters/FetchTerminalMatesFaresInputTerminalIDParam'
       responses:
         '200':
           description: Success
@@ -632,7 +604,48 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FaresTerminalsOutput'
+                  $ref: '#/components/schemas/FetchTerminalFaresOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 4 total)
+                  value:
+                    - TerminalID: 10
+                      Description: Friday Harbor
+                    - _note: ... 3 more items
+  /terminals/{TripDate}:
+    get:
+      summary: Returns a list of valid departing terminals for the specified trip date.
+      operationId: fetchTerminalFares
+      tags:
+        - terminals
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalFares } from 'ws-dottie/wsf-fares/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalFares,
+              params: {
+                "TripDate": "2025-11-09"
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalFaresInputTripDateParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalFaresOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -644,18 +657,19 @@ paths:
   /terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}:
     get:
       summary: Returns fare collection descriptions for the specified terminal combination and trip date.
-      operationId: getTerminalCombo
+      operationId: fetchTerminalComboFares
       tags:
         - terminal-combo
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getTerminalCombo } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalComboFares } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getTerminalCombo,
+              endpoint: fetchTerminalComboFares,
               params: {
-                "TripDate": "2025-11-07",
+                "TripDate": "2025-11-09",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10
               },
@@ -665,16 +679,16 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/TerminalComboInputTripDateParam'
-        - $ref: '#/components/parameters/TerminalComboInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/TerminalComboInputArrivingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchTerminalComboFaresInputTripDateParam'
+        - $ref: '#/components/parameters/FetchTerminalComboFaresInputDepartingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchTerminalComboFaresInputArrivingTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TerminalComboOutput'
+                $ref: '#/components/schemas/FetchTerminalComboFaresOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -683,21 +697,55 @@ paths:
                     DepartingDescription: Anacortes
                     ArrivingDescription: Friday Harbor
                     CollectionDescription: Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor.
+  /validdaterange:
+    get:
+      summary: Returns a single ValidDateRange object for the current fares data validity period.
+      operationId: fetchFaresValidDateRange
+      tags:
+        - valid-date-range
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchFaresValidDateRange } from 'ws-dottie/wsf-fares/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchFaresValidDateRange,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchFaresValidDateRangeOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    DateFrom: 2025-11-07T08:00:00.000Z
+                    DateThru: 2026-03-21T07:00:00.000Z
   /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
     get:
       summary: Returns multiple of FareLineItem for popular fare options.
-      operationId: getFareLineItemsBasic
+      operationId: fetchFareLineItemsBasic
       tags:
         - fare-line-items
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getFareLineItemsBasic } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchFareLineItemsBasic } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getFareLineItemsBasic,
+              endpoint: fetchFareLineItemsBasic,
               params: {
-                "TripDate": "2025-11-07",
+                "TripDate": "2025-11-09",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10,
                 "RoundTrip": false
@@ -708,10 +756,10 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FareLineItemsBasicInputTripDateParam'
-        - $ref: '#/components/parameters/FareLineItemsBasicInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FareLineItemsBasicInputArrivingTerminalIDParam'
-        - $ref: '#/components/parameters/FareLineItemsBasicInputRoundTripParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsBasicInputTripDateParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsBasicInputDepartingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsBasicInputArrivingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsBasicInputRoundTripParam'
       responses:
         '200':
           description: Success
@@ -720,7 +768,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsOutput'
+                  $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -732,22 +780,25 @@ paths:
                       DirectionIndependent: false
                       Amount: 17.5
                     - _note: ... 11 more items
-  /terminalMates/{TripDate}/{TerminalID}:
+  /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
     get:
-      summary: Returns arriving terminals for the given departing terminal and trip date.
-      operationId: getTerminalMates
+      summary: Returns multiple of FareLineItem for specific terminal combination.
+      operationId: fetchFareLineItemsByTripDateAndTerminals
       tags:
-        - terminals
+        - fare-line-items
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getTerminalMates } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchFareLineItemsByTripDateAndTerminals } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getTerminalMates,
+              endpoint: fetchFareLineItemsByTripDateAndTerminals,
               params: {
-                "TripDate": "2025-11-07",
-                "TerminalID": 1
+                "TripDate": "2025-11-09",
+                "DepartingTerminalID": 3,
+                "ArrivingTerminalID": 7,
+                "RoundTrip": false
               },
               fetchMode: 'native',
               validate: true
@@ -755,8 +806,10 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/TerminalMatesInputTripDateParam'
-        - $ref: '#/components/parameters/TerminalMatesInputTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam'
       responses:
         '200':
           description: Success
@@ -765,30 +818,34 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FaresTerminalsOutput'
+                  $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 4 total)
+                  description: Example of a successful response from the API (showing first item of 23 total)
                   value:
-                    - TerminalID: 10
-                      Description: Friday Harbor
-                    - _note: ... 3 more items
+                    - FareLineItemID: 1
+                      FareLineItem: Adult (age 19 - 64)
+                      Category: Passenger
+                      DirectionIndependent: false
+                      Amount: 0
+                    - _note: ... 22 more items
   /fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}:
     get:
       summary: Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.
-      operationId: getFareTotalsByTripDateAndRoute
+      operationId: fetchFareTotalsByTripDateAndRoute
       tags:
         - fare-totals
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getFareTotalsByTripDateAndRoute } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchFareTotalsByTripDateAndRoute } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getFareTotalsByTripDateAndRoute,
+              endpoint: fetchFareTotalsByTripDateAndRoute,
               params: {
-                "TripDate": "2025-11-06",
+                "TripDate": "2025-11-08",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10,
                 "RoundTrip": false,
@@ -801,12 +858,12 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FareTotalsByTripDateAndRouteInputTripDateParam'
-        - $ref: '#/components/parameters/FareTotalsByTripDateAndRouteInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FareTotalsByTripDateAndRouteInputArrivingTerminalIDParam'
-        - $ref: '#/components/parameters/FareTotalsByTripDateAndRouteInputRoundTripParam'
-        - $ref: '#/components/parameters/FareTotalsByTripDateAndRouteInputFareLineItemIDParam'
-        - $ref: '#/components/parameters/FareTotalsByTripDateAndRouteInputQuantityParam'
+        - $ref: '#/components/parameters/FetchFareTotalsByTripDateAndRouteInputTripDateParam'
+        - $ref: '#/components/parameters/FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam'
+        - $ref: '#/components/parameters/FetchFareTotalsByTripDateAndRouteInputRoundTripParam'
+        - $ref: '#/components/parameters/FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam'
+        - $ref: '#/components/parameters/FetchFareTotalsByTripDateAndRouteInputQuantityParam'
       responses:
         '200':
           description: Success
@@ -815,7 +872,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FareTotalsByTripDateAndRouteOutput'
+                  $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -826,70 +883,22 @@ paths:
                       BriefDescription: Depart
                       Amount: 61.25
                     - _note: ... 2 more items
-  /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
-    get:
-      summary: Returns multiple of FareLineItem for specific terminal combination.
-      operationId: getFareLineItemsByTripDateAndTerminals
-      tags:
-        - fare-line-items
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie, getFareLineItemsByTripDateAndTerminals } from 'ws-dottie';
-
-            const data = await fetchDottie({
-              endpoint: getFareLineItemsByTripDateAndTerminals,
-              params: {
-                "TripDate": "2025-11-07",
-                "DepartingTerminalID": 3,
-                "ArrivingTerminalID": 7,
-                "RoundTrip": false
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FareLineItemsByTripDateAndTerminalsInputTripDateParam'
-        - $ref: '#/components/parameters/FareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam'
-        - $ref: '#/components/parameters/FareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam'
-        - $ref: '#/components/parameters/FareLineItemsByTripDateAndTerminalsInputRoundTripParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FareLineItemsByTripDateAndTerminalsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 23 total)
-                  value:
-                    - FareLineItemID: 1
-                      FareLineItem: Adult (age 19 - 64)
-                      Category: Passenger
-                      DirectionIndependent: false
-                      Amount: 0
-                    - _note: ... 22 more items
   /terminalComboVerbose/{TripDate}:
     get:
       summary: Returns fare collection descriptions for all terminal combinations available on the specified trip date.
-      operationId: getTerminalComboVerbose
+      operationId: fetchTerminalComboFaresVerbose
       tags:
         - terminal-combo
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getTerminalComboVerbose } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalComboFaresVerbose } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getTerminalComboVerbose,
+              endpoint: fetchTerminalComboFaresVerbose,
               params: {
-                "TripDate": "2025-11-07"
+                "TripDate": "2025-11-09"
               },
               fetchMode: 'native',
               validate: true
@@ -897,7 +906,7 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/TerminalComboVerboseInputTripDateParam'
+        - $ref: '#/components/parameters/FetchTerminalComboFaresVerboseInputTripDateParam'
       responses:
         '200':
           description: Success
@@ -906,7 +915,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TerminalComboVerboseOutput'
+                  $ref: '#/components/schemas/FetchTerminalComboFaresVerboseOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -921,18 +930,19 @@ paths:
   /fareLineItemsVerbose/{TripDate}:
     get:
       summary: Returns multiple of FareLineItem for all terminal combinations.
-      operationId: getFareLineItemsVerbose
+      operationId: fetchFareLineItemsVerbose
       tags:
         - fare-line-items
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie, getFareLineItemsVerbose } from 'ws-dottie';
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchFareLineItemsVerbose } from 'ws-dottie/wsf-fares/core';
 
             const data = await fetchDottie({
-              endpoint: getFareLineItemsVerbose,
+              endpoint: fetchFareLineItemsVerbose,
               params: {
-                "TripDate": "2025-11-06"
+                "TripDate": "2025-11-08"
               },
               fetchMode: 'native',
               validate: true
@@ -940,14 +950,14 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FareLineItemsVerboseInputTripDateParam'
+        - $ref: '#/components/parameters/FetchFareLineItemsVerboseInputTripDateParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FareLineItemsVerboseOutput'
+                $ref: '#/components/schemas/FetchFareLineItemsVerboseOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -7233,10 +7243,10 @@ paths:
                           Amount: 2.4
 webhooks: {}
 tags:
-  - name: cache-flush-date
-    description: Each CacheFlushDate item represents the timestamp when Washington State Ferries fare data was last updated in the system. This information helps applications determine when to refresh cached fare information.
+  - name: cache-flush-date-fares
+    description: Represents the timestamp of when any static endpoint data for the wsf-fares API was last updated. This information helps applications determine when to refresh cached fare information through cache invalidation.
     externalDocs:
-      description: Use to synchronize fare data caching by providing the last update timestamp for efficient data management and ensuring fare accuracy across applications.
+      description: Many wsf-fares endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-fares data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by the ws-dottie useQuery hooks to invalidate cache.
   - name: valid-date-range
     description: Each ValidDateRange item represents the current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.
     externalDocs:
