@@ -149,58 +149,6 @@ components:
       name: PassConditionID
       in: path
 paths:
-  /getMountainPassConditionAsJon?PassConditionID={PassConditionID}:
-    get:
-      summary: Returns a single PassCondition for specified mountain pass identifier.
-      operationId: fetchMountainPassConditionById
-      tags:
-        - pass-conditions
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchMountainPassConditionById,
-              params: {
-                "PassConditionID": 12
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    MountainPassId: 12
-                    MountainPassName: White Pass  US 12
-                    Latitude: 46.638333
-                    Longitude: -121.39
-                    DateUpdated: 2025-11-08T07:53:17.877Z
-                    TemperatureInFahrenheit: 29
-                    ElevationInFeet: 4500
-                    WeatherCondition: Partly cloudy
-                    RoadCondition: Bare and dry, wet in places
-                    TravelAdvisoryActive: true
-                    RestrictionOne:
-                      RestrictionText: No restrictions
-                      TravelDirection: Eastbound
-                    RestrictionTwo:
-                      RestrictionText: No restrictions
-                      TravelDirection: Westbound
   /getMountainPassConditionsAsJson:
     get:
       summary: Returns multiple PassCondition items for all monitored mountain passes.
@@ -251,6 +199,58 @@ paths:
                         RestrictionText: No restrictions
                         TravelDirection: Southbound
                     - _note: ... 15 more items
+  /getMountainPassConditionAsJon?PassConditionID={PassConditionID}:
+    get:
+      summary: Returns a single PassCondition for specified mountain pass identifier.
+      operationId: fetchMountainPassConditionById
+      tags:
+        - pass-conditions
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchMountainPassConditionById,
+              params: {
+                "PassConditionID": 12
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchMountainPassConditionByIdInputPassConditionIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    MountainPassId: 12
+                    MountainPassName: White Pass  US 12
+                    Latitude: 46.638333
+                    Longitude: -121.39
+                    DateUpdated: 2025-11-08T07:53:17.877Z
+                    TemperatureInFahrenheit: 30
+                    ElevationInFeet: 4500
+                    WeatherCondition: Partly cloudy
+                    RoadCondition: Bare and dry, wet in places
+                    TravelAdvisoryActive: true
+                    RestrictionOne:
+                      RestrictionText: No restrictions
+                      TravelDirection: Eastbound
+                    RestrictionTwo:
+                      RestrictionText: No restrictions
+                      TravelDirection: Westbound
 webhooks: {}
 tags:
   - name: pass-conditions

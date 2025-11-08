@@ -183,57 +183,6 @@ components:
       name: SearchEndTime
       in: path
 paths:
-  /GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}:
-    get:
-      summary: Returns single WeatherInfo for specific station.
-      operationId: fetchWeatherInformationByStationId
-      tags:
-        - weather-info
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchWeatherInformationByStationId } from 'ws-dottie/wsdot-weather-information/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchWeatherInformationByStationId,
-              params: {
-                "StationID": 1909
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchWeatherInformationByStationIdInputStationIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchWeatherInformationOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    BarometricPressure: 964
-                    Latitude: 47.4748
-                    Longitude: -122.2704
-                    PrecipitationInInches: null
-                    ReadingTime: 2025-11-08T07:45:00.000Z
-                    RelativeHumidity: 99
-                    SkyCoverage: N/A
-                    StationID: 1909
-                    StationName: S 144th St on SB I-5 at mp 155.32
-                    TemperatureInFahrenheit: 46.58
-                    Visibility: 1
-                    WindDirection: 130
-                    WindDirectionCardinal: SE
-                    WindGustSpeedInMPH: 1
-                    WindSpeedInMPH: 0
   /GetCurrentWeatherForStationsAsJson?StationList={StationList}:
     get:
       summary: Returns multiple WeatherInfo for specified stations.
@@ -272,19 +221,19 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 3 total)
                   value:
-                    - BarometricPressure: 964
+                    - BarometricPressure: 963.8
                       Latitude: 47.4748
                       Longitude: -122.2704
                       PrecipitationInInches: null
-                      ReadingTime: 2025-11-08T07:45:00.000Z
+                      ReadingTime: 2025-11-08T08:15:00.000Z
                       RelativeHumidity: 99
                       SkyCoverage: N/A
                       StationID: 1909
                       StationName: S 144th St on SB I-5 at mp 155.32
-                      TemperatureInFahrenheit: 46.58
+                      TemperatureInFahrenheit: 45.86
                       Visibility: 1
-                      WindDirection: 130
-                      WindDirectionCardinal: SE
+                      WindDirection: 160
+                      WindDirectionCardinal: SSE
                       WindGustSpeedInMPH: 1
                       WindSpeedInMPH: 0
                     - _note: ... 2 more items
@@ -328,7 +277,7 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 47 total)
+                  description: Example of a successful response from the API (showing first item of 48 total)
                   value:
                     - BarometricPressure: null
                       Latitude: 47.078
@@ -345,7 +294,58 @@ paths:
                       WindDirectionCardinal: NW
                       WindGustSpeedInMPH: 14
                       WindSpeedInMPH: 11
-                    - _note: ... 46 more items
+                    - _note: ... 47 more items
+  /GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}:
+    get:
+      summary: Returns single WeatherInfo for specific station.
+      operationId: fetchWeatherInformationByStationId
+      tags:
+        - weather-info
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchWeatherInformationByStationId } from 'ws-dottie/wsdot-weather-information/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchWeatherInformationByStationId,
+              params: {
+                "StationID": 1909
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchWeatherInformationByStationIdInputStationIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchWeatherInformationOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    BarometricPressure: 963.8
+                    Latitude: 47.4748
+                    Longitude: -122.2704
+                    PrecipitationInInches: null
+                    ReadingTime: 2025-11-08T08:15:00.000Z
+                    RelativeHumidity: 99
+                    SkyCoverage: N/A
+                    StationID: 1909
+                    StationName: S 144th St on SB I-5 at mp 155.32
+                    TemperatureInFahrenheit: 45.86
+                    Visibility: 1
+                    WindDirection: 160
+                    WindDirectionCardinal: SSE
+                    WindGustSpeedInMPH: 1
+                    WindSpeedInMPH: 0
   /GetCurrentWeatherInformationAsJson:
     get:
       summary: Returns multiple WeatherInfo items for all stations.
@@ -379,19 +379,19 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 100 total)
                   value:
-                    - BarometricPressure: 964
+                    - BarometricPressure: 963.8
                       Latitude: 47.4748
                       Longitude: -122.2704
                       PrecipitationInInches: null
-                      ReadingTime: 2025-11-08T07:45:00.000Z
+                      ReadingTime: 2025-11-08T08:15:00.000Z
                       RelativeHumidity: 99
                       SkyCoverage: N/A
                       StationID: 1909
                       StationName: S 144th St on SB I-5 at mp 155.32
-                      TemperatureInFahrenheit: 46.58
+                      TemperatureInFahrenheit: 45.86
                       Visibility: 1
-                      WindDirection: 130
-                      WindDirectionCardinal: SE
+                      WindDirection: 160
+                      WindDirectionCardinal: SSE
                       WindGustSpeedInMPH: 1
                       WindSpeedInMPH: 0
                     - _note: ... 99 more items

@@ -287,20 +287,20 @@ paths:
                       Latitude: 47.427
                       Longitude: -121.418
                       Elevation: 876
-                      ReadingTime: 2025-11-08T16:08:33.000Z
-                      AirTemperature: 0.9
+                      ReadingTime: 2025-11-08T16:18:33.000Z
+                      AirTemperature: 0.8
                       RelativeHumidty: 99
                       AverageWindSpeed: 0
-                      AverageWindDirection: 120
-                      WindGust: 5
-                      Visibility: 2000
+                      AverageWindDirection: 155
+                      WindGust: 6
+                      Visibility: 1839
                       PrecipitationIntensity: 0
                       PrecipitationType: 0
                       PrecipitationPast1Hour: null
                       PrecipitationPast3Hours: null
                       PrecipitationPast6Hours: null
-                      PrecipitationPast12Hours: 0.7
-                      PrecipitationPast24Hours: 7.1
+                      PrecipitationPast12Hours: 0.6
+                      PrecipitationPast24Hours: 7
                       PrecipitationAccumulation: null
                       BarometricPressure: null
                       SnowDepth: null
@@ -310,47 +310,12 @@ paths:
                           RoadFreezingTemperature: null
                           RoadSurfaceCondition: 103
                         - SensorId: 1
-                          SurfaceTemperature: 1.2
+                          SurfaceTemperature: 1.1
                           RoadFreezingTemperature: null
                           RoadSurfaceCondition: 104
                       SubSurfaceMeasurements:
                         - SensorId: 0
                           SubSurfaceTemperature: 3.9
-                    - _note: ... 130 more items
-  /Scanweb/SurfaceMeasurements:
-    get:
-      summary: Returns surface measurements from all weather stations.
-      operationId: fetchSurfaceMeasurements
-      tags:
-        - surface-measurements
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchSurfaceMeasurements } from 'ws-dottie/wsdot-weather-readings/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchSurfaceMeasurements,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchSurfaceMeasurementsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 131 total)
-                  value:
-                    - {}
                     - _note: ... 130 more items
   /Scanweb/SubSurfaceMeasurements:
     get:
@@ -380,6 +345,41 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FetchSubSurfaceMeasurementsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 131 total)
+                  value:
+                    - {}
+                    - _note: ... 130 more items
+  /Scanweb/SurfaceMeasurements:
+    get:
+      summary: Returns surface measurements from all weather stations.
+      operationId: fetchSurfaceMeasurements
+      tags:
+        - surface-measurements
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchSurfaceMeasurements } from 'ws-dottie/wsdot-weather-readings/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchSurfaceMeasurements,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchSurfaceMeasurementsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response

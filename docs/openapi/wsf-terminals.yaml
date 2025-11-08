@@ -1290,22 +1290,22 @@ components:
       name: TerminalID
       in: path
 paths:
-  /terminalTransports/{TerminalID}:
+  /terminalBasics/{TerminalID}:
     get:
-      summary: Returns TerminalTransport data for the terminal with the specified terminal.
-      operationId: fetchTerminalTransportsByTerminalId
+      summary: Returns a TerminalBasic object containing essential identification and status information for the specified terminal.
+      operationId: fetchTerminalBasicsByTerminalId
       tags:
-        - terminal-transports
+        - terminal-basics
       x-codeSamples:
         - lang: JavaScript
           source: |-
             import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalTransportsByTerminalId } from 'ws-dottie/wsf-terminals/core';
+            import { fetchTerminalBasicsByTerminalId } from 'ws-dottie/wsf-terminals/core';
 
             const data = await fetchDottie({
-              endpoint: fetchTerminalTransportsByTerminalId,
+              endpoint: fetchTerminalBasicsByTerminalId,
               params: {
-                "TerminalID": 10
+                "TerminalID": 1
               },
               fetchMode: 'native',
               validate: true
@@ -1313,81 +1313,30 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
+        - $ref: '#/components/parameters/FetchTerminalBasicsByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+                $ref: '#/components/schemas/FetchTerminalBasicsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    TerminalID: 10
-                    TerminalSubjectID: 115
+                    TerminalID: 1
+                    TerminalSubjectID: 111
                     RegionID: 1
-                    TerminalName: Friday Harbor
-                    TerminalAbbrev: FRH
-                    SortSeq: 50
-                    ParkingInfo: There is no parking at the Friday Harbor terminal. There is limited short term on street parking available.
-                    ParkingShuttleInfo: null
-                    AirportInfo: null
-                    AirportShuttleInfo: null
-                    MotorcycleInfo: "While motorcycles are not, by Washington Administrative Code (WAC 468-300-700), a preferential loading category of users, they are often loaded prior to automobiles for operational and staging purposes. Arrival at the dock after vehicle load has commenced requires motorcycles to wait until all cars have been loaded for the next motorcycle loading opportunity. Motorcycles should proceed, while on the dock, at no more than 10 mph. Use caution when car decks are wet. The following information details specific staging for this terminal:<p> \r\n\r\n<b>Motorcycle Fare Purchase/Redemption</b><br>\r\nTickets are required for International travel to Sidney, B.C. Canada.<p>\r\n\r\n<b>Motorcycle Entry/Staging</b><br>\r\nMotorcycles are staged on the yellow curb lane in front of Cannery Landing.<p>\r\n\r\n<b>Motorcycle Loading</b><br>\r\nLoading order: bicycles, motorcycles, vehicles, late arriving motorcycles as space permits.<p> \r\n\r\n<b>Motorcycle Special Communication</b><br>\r\nRecommended arrival time is 20 minutes prior to scheduled sailing time.<br>\r\nOn high traffic sailings, vessel overloads may occur for travel to Anacortes. To avoid missing a desired sailing, motorcyclists should arrive an hour prior to scheduled sailing.<p>\r\n\r\nInter-island tickets may be used between any two islands, they are not destination specific and fare payment is required traveling westbound only. Motorcyclists travel free eastbound. "
-                    TruckInfo: "WSF requires trucks with a gross vehicle weight of over 80,000 lbs and/or over 8’6” wide to have “travel approval” before crossing any of our routes.  Vessels on this route have a limited height clearance and trucks may be loaded out of sequence.<p>\r\nTrucks that have a gross vehicle weight of over 80,000 lbs but are hauling less than 80,000 lbs will need to provide a weight slip.<p>\r\nPlease fill out our <A HREF=\"https://wsdot.wa.gov/ferries/rider-information/trucks\" class=\"content_text\">Oversized/Overweight Vehicle Travel</A> form and email it to wsfinfo@wsdot.wa.gov. Please allow three business days for completion and approval. You can contact us at anytime for status updates at (206)464-6400.</p>\r\n"
-                    BikeInfo: Bicyclists load through the passenger terminal and should bypass the vehicle holding lanes. Bicyclists should arrive 20 minutes prior to departure time to be loaded at the beginning of vehicle loading. If a bicyclist arrives after vehicle loading has begun, they will be loaded at the end of the load. The terminal has bicycle racks near the terminal along Front Street.  Bicyclists are asked to walk on and walk off the vessel.  The Agent will notify bicyclists when they may ride while offloading.
-                    TrainInfo: null
-                    TaxiInfo: null
-                    HovInfo: null
-                    TransitLinks: []
-  /terminalBasics:
-    get:
-      summary: Returns multiple TerminalBasic objects for all terminals.
-      operationId: fetchTerminalBasics
-      tags:
-        - terminal-basics
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBasics } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalBasics,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalBasicsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
-                  value:
-                    - TerminalID: 1
-                      TerminalSubjectID: 111
-                      RegionID: 1
-                      TerminalName: Anacortes
-                      TerminalAbbrev: ANA
-                      SortSeq: 10
-                      OverheadPassengerLoading: true
-                      Elevator: false
-                      WaitingRoom: true
-                      FoodService: true
-                      Restroom: true
-                    - _note: ... 19 more items
+                    TerminalName: Anacortes
+                    TerminalAbbrev: ANA
+                    SortSeq: 10
+                    OverheadPassengerLoading: true
+                    Elevator: false
+                    WaitingRoom: true
+                    FoodService: true
+                    Restroom: true
   /terminalSailingSpace/{TerminalID}:
     get:
       summary: Returns TerminalSailingSpace data for the terminal with the given identifier.
@@ -1547,6 +1496,146 @@ paths:
                               - 3
                     IsNoFareCollected: null
                     NoFareCollectedMsg: null
+  /terminalWaitTimes:
+    get:
+      summary: Returns multiple TerminalWaitTime objects for all terminals.
+      operationId: fetchTerminalWaitTimes
+      tags:
+        - terminal-wait-times
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalWaitTimes } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalWaitTimes,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      WaitTimes:
+                        - RouteID: null
+                          RouteName: null
+                          WaitTimeNotes: 'Vehicle reservations to the San Juan Islands are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk-on passengers should arrive at least 15 minutes prior to departure sailing. '
+                          WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
+                          WaitTimeIVRNotes: Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk on passengers should arrive at least 15 minutes prior to departure.  To speak with an information agent please press zero.
+                    - _note: ... 19 more items
+  /terminalBulletins:
+    get:
+      summary: Returns multiple TerminalBulletin objects for all terminals.
+      operationId: fetchTerminalBulletins
+      tags:
+        - terminal-bulletins
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalBulletins } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalBulletins,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      Bulletins:
+                        - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
+                          BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
+                          BulletinSortSeq: 1
+                          BulletinLastUpdated: 2025-11-06T20:57:44.763Z
+                          BulletinLastUpdatedSortable: '20251106125744'
+                    - _note: ... 19 more items
+  /terminalWaitTimes/{TerminalID}:
+    get:
+      summary: Returns a single TerminalWaitTime object for specified terminal.
+      operationId: fetchTerminalWaitTimesByTerminalId
+      tags:
+        - terminal-wait-times
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalWaitTimesByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalWaitTimesByTerminalId,
+              params: {
+                "TerminalID": 11
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 11
+                    TerminalSubjectID: 116
+                    RegionID: 2
+                    TerminalName: 'Coupeville '
+                    TerminalAbbrev: COU
+                    SortSeq: 40
+                    WaitTimes:
+                      - RouteID: null
+                        RouteName: null
+                        WaitTimeNotes: WSF recommends reservation holders arrive 30-45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made at www.takeaferry.com or by calling 5-1-1 at least two hours prior to departure. Walk-on passengers should arrive at least 15 minutes prior to departure.
+                        WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
+                        WaitTimeIVRNotes: W S F recommends reservation holders arrive 30 to 45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made online or by speaking to an information agent at least two hours prior to departure. Walk on passengers should arrive at least 15 minutes prior to departure.
   /cacheflushdate:
     get:
       summary: Returns the timestamp of when any static endpoint data for the wsf-terminals API was last updated.
@@ -1577,7 +1666,251 @@ paths:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
-                  value: 2025-11-08T08:10:00.533Z
+                  value: 2025-11-08T08:30:00.677Z
+  /terminalBulletins/{TerminalID}:
+    get:
+      summary: Returns TerminalBulletin data for the terminal with the specified terminal.
+      operationId: fetchTerminalBulletinsByTerminalId
+      tags:
+        - terminal-bulletins
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalBulletinsByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalBulletinsByTerminalId,
+              params: {
+                "TerminalID": 3
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 3
+                    TerminalSubjectID: 103
+                    RegionID: 4
+                    TerminalName: Bainbridge Island
+                    TerminalAbbrev: BBI
+                    SortSeq: 40
+                    Bulletins:
+                      - BulletinTitle: Sea/BI - Wenatchee to replace Walla Walla on Friday, November 7
+                        BulletinText: "<p><span data-contrast=\"none\">After successful repairs, the</span><i><span data-contrast=\"none\"> Wenatchee </span></i><span data-contrast=\"none\">will return to the Seattle/Bainbridge route on Friday, Nov. 7, replacing the </span><i><span data-contrast=\"none\">Walla Walla</span></i><span data-contrast=\"none\"> as the #1 vessel. We do not expect service impacts during this vessel swap. Thank you for your patience as we repair our vessels.\_</span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\">\_</span></p>"
+                        BulletinSortSeq: 3
+                        BulletinLastUpdated: 2025-11-07T00:46:41.003Z
+                        BulletinLastUpdatedSortable: '20251106164641'
+                      - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
+                        BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
+                        BulletinSortSeq: 1
+                        BulletinLastUpdated: 2025-11-06T20:57:44.763Z
+                        BulletinLastUpdatedSortable: '20251106125744'
+  /terminalTransports/{TerminalID}:
+    get:
+      summary: Returns TerminalTransport data for the terminal with the specified terminal.
+      operationId: fetchTerminalTransportsByTerminalId
+      tags:
+        - terminal-transports
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalTransportsByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalTransportsByTerminalId,
+              params: {
+                "TerminalID": 10
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 10
+                    TerminalSubjectID: 115
+                    RegionID: 1
+                    TerminalName: Friday Harbor
+                    TerminalAbbrev: FRH
+                    SortSeq: 50
+                    ParkingInfo: There is no parking at the Friday Harbor terminal. There is limited short term on street parking available.
+                    ParkingShuttleInfo: null
+                    AirportInfo: null
+                    AirportShuttleInfo: null
+                    MotorcycleInfo: "While motorcycles are not, by Washington Administrative Code (WAC 468-300-700), a preferential loading category of users, they are often loaded prior to automobiles for operational and staging purposes. Arrival at the dock after vehicle load has commenced requires motorcycles to wait until all cars have been loaded for the next motorcycle loading opportunity. Motorcycles should proceed, while on the dock, at no more than 10 mph. Use caution when car decks are wet. The following information details specific staging for this terminal:<p> \r\n\r\n<b>Motorcycle Fare Purchase/Redemption</b><br>\r\nTickets are required for International travel to Sidney, B.C. Canada.<p>\r\n\r\n<b>Motorcycle Entry/Staging</b><br>\r\nMotorcycles are staged on the yellow curb lane in front of Cannery Landing.<p>\r\n\r\n<b>Motorcycle Loading</b><br>\r\nLoading order: bicycles, motorcycles, vehicles, late arriving motorcycles as space permits.<p> \r\n\r\n<b>Motorcycle Special Communication</b><br>\r\nRecommended arrival time is 20 minutes prior to scheduled sailing time.<br>\r\nOn high traffic sailings, vessel overloads may occur for travel to Anacortes. To avoid missing a desired sailing, motorcyclists should arrive an hour prior to scheduled sailing.<p>\r\n\r\nInter-island tickets may be used between any two islands, they are not destination specific and fare payment is required traveling westbound only. Motorcyclists travel free eastbound. "
+                    TruckInfo: "WSF requires trucks with a gross vehicle weight of over 80,000 lbs and/or over 8’6” wide to have “travel approval” before crossing any of our routes.  Vessels on this route have a limited height clearance and trucks may be loaded out of sequence.<p>\r\nTrucks that have a gross vehicle weight of over 80,000 lbs but are hauling less than 80,000 lbs will need to provide a weight slip.<p>\r\nPlease fill out our <A HREF=\"https://wsdot.wa.gov/ferries/rider-information/trucks\" class=\"content_text\">Oversized/Overweight Vehicle Travel</A> form and email it to wsfinfo@wsdot.wa.gov. Please allow three business days for completion and approval. You can contact us at anytime for status updates at (206)464-6400.</p>\r\n"
+                    BikeInfo: Bicyclists load through the passenger terminal and should bypass the vehicle holding lanes. Bicyclists should arrive 20 minutes prior to departure time to be loaded at the beginning of vehicle loading. If a bicyclist arrives after vehicle loading has begun, they will be loaded at the end of the load. The terminal has bicycle racks near the terminal along Front Street.  Bicyclists are asked to walk on and walk off the vessel.  The Agent will notify bicyclists when they may ride while offloading.
+                    TrainInfo: null
+                    TaxiInfo: null
+                    HovInfo: null
+                    TransitLinks: []
+  /terminalSailingSpace:
+    get:
+      summary: Returns multiple TerminalSailingSpace objects for all terminals.
+      operationId: fetchTerminalSailingSpace
+      tags:
+        - terminal-sailing-space
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalSailingSpace } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalSailingSpace,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value: []
+  /terminalLocations:
+    get:
+      summary: Returns multiple TerminalLocation objects for all terminals.
+      operationId: fetchTerminalLocations
+      tags:
+        - terminal-locations
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalLocations } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalLocations,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalLocationsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      Latitude: 48.507351
+                      Longitude: -122.677
+                      AddressLineOne: 2100 Ferry Terminal Road
+                      AddressLineTwo: null
+                      City: Anacortes
+                      State: WA
+                      ZipCode: '98221'
+                      Country: USA
+                      MapLink: https://www.google.com/maps/place/Anacortes+Ferry+Terminal,+Anacortes,+WA+98221/@48.5060112,-122.6776819,15z/data=!4m2!3m1!1s0x5485790ea2748ed5:0x5c9a071494b5411f</p>
+                      Directions: "From Interstate 5 take exit 230 and follow SR 20 westbound to Anacortes. After arriving in Anacortes continue north on Commercial Ave. Turn left on 12th St, which becomes Oakes Ave, and then continue to the ferry terminal.<p>\r\n<b>Dropping off or picking up?</b><p>\r\nWhen approaching the ferry terminal to pick up or drop off and not disabled, follow Ferry Terminal Road to the left of the auto toll booths to the parking lot near the terminal. There should be parking near the sidewalk where the buses turn around for a quick pick up/drop off.</p>"
+                      DispGISZoomLoc:
+                        - ZoomLevel: 0
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 1
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 2
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 3
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 4
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 5
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 6
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 7
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 8
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 9
+                          Latitude: 48.507351
+                          Longitude: -122.677
+                        - ZoomLevel: 10
+                          Latitude: 48.499482
+                          Longitude: -122.664992
+                        - ZoomLevel: 11
+                          Latitude: 48.501302
+                          Longitude: -122.668425
+                        - ZoomLevel: 12
+                          Latitude: 48.500619
+                          Longitude: -122.678038
+                        - ZoomLevel: 13
+                          Latitude: 48.504032
+                          Longitude: -122.679068
+                        - ZoomLevel: 14
+                          Latitude: 48.506022
+                          Longitude: -122.678725
+                        - ZoomLevel: 15
+                          Latitude: 48.506591
+                          Longitude: -122.678124
+                        - ZoomLevel: 16
+                          Latitude: 48.506591
+                          Longitude: -122.677995
+                        - ZoomLevel: 17
+                          Latitude: 48.506612
+                          Longitude: -122.678006
+                    - _note: ... 19 more items
   /terminalVerbose/{TerminalID}:
     get:
       summary: Returns TerminalVerbose data for the terminal with the specified terminal.
@@ -1750,85 +2083,6 @@ paths:
                     REALTIME_SHUTOFF_FLAG: false
                     REALTIME_SHUTOFF_MESSAGE: 'The Approximate Vehicle Spaces Available in Holding Area tool is currently unavailable due to technical issues. '
                     VisitorLinks: []
-  /terminalSailingSpace:
-    get:
-      summary: Returns multiple TerminalSailingSpace objects for all terminals.
-      operationId: fetchTerminalSailingSpace
-      tags:
-        - terminal-sailing-space
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalSailingSpace } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalSailingSpace,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value: []
-  /terminalBulletins:
-    get:
-      summary: Returns multiple TerminalBulletin objects for all terminals.
-      operationId: fetchTerminalBulletins
-      tags:
-        - terminal-bulletins
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBulletins } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalBulletins,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
-                  value:
-                    - TerminalID: 1
-                      TerminalSubjectID: 111
-                      RegionID: 1
-                      TerminalName: Anacortes
-                      TerminalAbbrev: ANA
-                      SortSeq: 10
-                      Bulletins:
-                        - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
-                          BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
-                          BulletinSortSeq: 1
-                          BulletinLastUpdated: 2025-11-06T20:57:44.763Z
-                          BulletinLastUpdatedSortable: '20251106125744'
-                    - _note: ... 19 more items
   /terminalTransports:
     get:
       summary: Returns multiple TerminalTransport objects for all terminals.
@@ -1883,67 +2137,20 @@ paths:
                           LinkName: Skagit Transit
                           SortSeq: null
                     - _note: ... 19 more items
-  /terminalBasics/{TerminalID}:
+  /terminalBasics:
     get:
-      summary: Returns a TerminalBasic object containing essential identification and status information for the specified terminal.
-      operationId: fetchTerminalBasicsByTerminalId
+      summary: Returns multiple TerminalBasic objects for all terminals.
+      operationId: fetchTerminalBasics
       tags:
         - terminal-basics
       x-codeSamples:
         - lang: JavaScript
           source: |-
             import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBasicsByTerminalId } from 'ws-dottie/wsf-terminals/core';
+            import { fetchTerminalBasics } from 'ws-dottie/wsf-terminals/core';
 
             const data = await fetchDottie({
-              endpoint: fetchTerminalBasicsByTerminalId,
-              params: {
-                "TerminalID": 1
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalBasicsByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalBasicsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 1
-                    TerminalSubjectID: 111
-                    RegionID: 1
-                    TerminalName: Anacortes
-                    TerminalAbbrev: ANA
-                    SortSeq: 10
-                    OverheadPassengerLoading: true
-                    Elevator: false
-                    WaitingRoom: true
-                    FoodService: true
-                    Restroom: true
-  /terminalWaitTimes:
-    get:
-      summary: Returns multiple TerminalWaitTime objects for all terminals.
-      operationId: fetchTerminalWaitTimes
-      tags:
-        - terminal-wait-times
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalWaitTimes } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalWaitTimes,
+              endpoint: fetchTerminalBasics,
               fetchMode: 'native',
               validate: true
             });
@@ -1957,7 +2164,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+                  $ref: '#/components/schemas/FetchTerminalBasicsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
@@ -1969,134 +2176,28 @@ paths:
                       TerminalName: Anacortes
                       TerminalAbbrev: ANA
                       SortSeq: 10
-                      WaitTimes:
-                        - RouteID: null
-                          RouteName: null
-                          WaitTimeNotes: 'Vehicle reservations to the San Juan Islands are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk-on passengers should arrive at least 15 minutes prior to departure sailing. '
-                          WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
-                          WaitTimeIVRNotes: Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk on passengers should arrive at least 15 minutes prior to departure.  To speak with an information agent please press zero.
+                      OverheadPassengerLoading: true
+                      Elevator: false
+                      WaitingRoom: true
+                      FoodService: true
+                      Restroom: true
                     - _note: ... 19 more items
-  /terminalLocations:
+  /terminalLocations/{TerminalID}:
     get:
-      summary: Returns multiple TerminalLocation objects for all terminals.
-      operationId: fetchTerminalLocations
+      summary: Returns a single TerminalLocation object for specified terminal.
+      operationId: fetchTerminalLocationsByTerminalId
       tags:
         - terminal-locations
       x-codeSamples:
         - lang: JavaScript
           source: |-
             import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalLocations } from 'ws-dottie/wsf-terminals/core';
+            import { fetchTerminalLocationsByTerminalId } from 'ws-dottie/wsf-terminals/core';
 
             const data = await fetchDottie({
-              endpoint: fetchTerminalLocations,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalLocationsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
-                  value:
-                    - TerminalID: 1
-                      TerminalSubjectID: 111
-                      RegionID: 1
-                      TerminalName: Anacortes
-                      TerminalAbbrev: ANA
-                      SortSeq: 10
-                      Latitude: 48.507351
-                      Longitude: -122.677
-                      AddressLineOne: 2100 Ferry Terminal Road
-                      AddressLineTwo: null
-                      City: Anacortes
-                      State: WA
-                      ZipCode: '98221'
-                      Country: USA
-                      MapLink: https://www.google.com/maps/place/Anacortes+Ferry+Terminal,+Anacortes,+WA+98221/@48.5060112,-122.6776819,15z/data=!4m2!3m1!1s0x5485790ea2748ed5:0x5c9a071494b5411f</p>
-                      Directions: "From Interstate 5 take exit 230 and follow SR 20 westbound to Anacortes. After arriving in Anacortes continue north on Commercial Ave. Turn left on 12th St, which becomes Oakes Ave, and then continue to the ferry terminal.<p>\r\n<b>Dropping off or picking up?</b><p>\r\nWhen approaching the ferry terminal to pick up or drop off and not disabled, follow Ferry Terminal Road to the left of the auto toll booths to the parking lot near the terminal. There should be parking near the sidewalk where the buses turn around for a quick pick up/drop off.</p>"
-                      DispGISZoomLoc:
-                        - ZoomLevel: 0
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 1
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 2
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 3
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 4
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 5
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 6
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 7
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 8
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 9
-                          Latitude: 48.507351
-                          Longitude: -122.677
-                        - ZoomLevel: 10
-                          Latitude: 48.499482
-                          Longitude: -122.664992
-                        - ZoomLevel: 11
-                          Latitude: 48.501302
-                          Longitude: -122.668425
-                        - ZoomLevel: 12
-                          Latitude: 48.500619
-                          Longitude: -122.678038
-                        - ZoomLevel: 13
-                          Latitude: 48.504032
-                          Longitude: -122.679068
-                        - ZoomLevel: 14
-                          Latitude: 48.506022
-                          Longitude: -122.678725
-                        - ZoomLevel: 15
-                          Latitude: 48.506591
-                          Longitude: -122.678124
-                        - ZoomLevel: 16
-                          Latitude: 48.506591
-                          Longitude: -122.677995
-                        - ZoomLevel: 17
-                          Latitude: 48.506612
-                          Longitude: -122.678006
-                    - _note: ... 19 more items
-  /terminalWaitTimes/{TerminalID}:
-    get:
-      summary: Returns a single TerminalWaitTime object for specified terminal.
-      operationId: fetchTerminalWaitTimesByTerminalId
-      tags:
-        - terminal-wait-times
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalWaitTimesByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalWaitTimesByTerminalId,
+              endpoint: fetchTerminalLocationsByTerminalId,
               params: {
-                "TerminalID": 11
+                "TerminalID": 5
               },
               fetchMode: 'native',
               validate: true
@@ -2104,31 +2205,90 @@ paths:
 
             console.log(data);
       parameters:
-        - $ref: '#/components/parameters/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
+        - $ref: '#/components/parameters/FetchTerminalLocationsByTerminalIdInputTerminalIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+                $ref: '#/components/schemas/FetchTerminalLocationsOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    TerminalID: 11
-                    TerminalSubjectID: 116
+                    TerminalID: 5
+                    TerminalSubjectID: 112
                     RegionID: 2
-                    TerminalName: 'Coupeville '
-                    TerminalAbbrev: COU
-                    SortSeq: 40
-                    WaitTimes:
-                      - RouteID: null
-                        RouteName: null
-                        WaitTimeNotes: WSF recommends reservation holders arrive 30-45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made at www.takeaferry.com or by calling 5-1-1 at least two hours prior to departure. Walk-on passengers should arrive at least 15 minutes prior to departure.
-                        WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
-                        WaitTimeIVRNotes: W S F recommends reservation holders arrive 30 to 45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made online or by speaking to an information agent at least two hours prior to departure. Walk on passengers should arrive at least 15 minutes prior to departure.
+                    TerminalName: Clinton
+                    TerminalAbbrev: CLI
+                    SortSeq: 20
+                    Latitude: 47.9754
+                    Longitude: -122.349581
+                    AddressLineOne: 64 South Ferrydock Road
+                    AddressLineTwo: null
+                    City: Clinton
+                    State: WA
+                    ZipCode: '98236'
+                    Country: USA
+                    MapLink: http://maps.yahoo.com/#mvt=m&lat=47.97483&lon=-122.352299&zoom=18&q1=64%20S.%20Ferrydock%20Rd.%20Clinton%2C%20WA%2098236
+                    Directions: "Highway 20 on Whidbey Island turns into Highway 525 S which leads directly to the Clinton terminal.<br><p>\r\n<b>Dropping off or picking up?</b><br>\r\nThe ferry terminal pick up or drop off point is prior to the toll booth on Ferry Dock Road.<p>   "
+                    DispGISZoomLoc:
+                      - ZoomLevel: 0
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 1
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 2
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 3
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 4
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 5
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 6
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 7
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 8
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 9
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 10
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 11
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 12
+                        Latitude: 47.9754
+                        Longitude: -122.349581
+                      - ZoomLevel: 13
+                        Latitude: 47.975465
+                        Longitude: -122.352097
+                      - ZoomLevel: 14
+                        Latitude: 47.974948
+                        Longitude: -122.351496
+                      - ZoomLevel: 15
+                        Latitude: 47.974948
+                        Longitude: -122.351367
+                      - ZoomLevel: 16
+                        Latitude: 47.975034
+                        Longitude: -122.351324
+                      - ZoomLevel: 17
+                        Latitude: 47.975027
+                        Longitude: -122.351335
   /terminalVerbose:
     get:
       summary: Returns multiple TerminalVerbose objects for all terminals.
@@ -2286,166 +2446,6 @@ paths:
                       REALTIME_SHUTOFF_MESSAGE: 'The Real-Time Conditions are unavailable due to technical difficulties. '
                       VisitorLinks: []
                     - _note: ... 19 more items
-  /terminalLocations/{TerminalID}:
-    get:
-      summary: Returns a single TerminalLocation object for specified terminal.
-      operationId: fetchTerminalLocationsByTerminalId
-      tags:
-        - terminal-locations
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalLocationsByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalLocationsByTerminalId,
-              params: {
-                "TerminalID": 5
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalLocationsByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalLocationsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 5
-                    TerminalSubjectID: 112
-                    RegionID: 2
-                    TerminalName: Clinton
-                    TerminalAbbrev: CLI
-                    SortSeq: 20
-                    Latitude: 47.9754
-                    Longitude: -122.349581
-                    AddressLineOne: 64 South Ferrydock Road
-                    AddressLineTwo: null
-                    City: Clinton
-                    State: WA
-                    ZipCode: '98236'
-                    Country: USA
-                    MapLink: http://maps.yahoo.com/#mvt=m&lat=47.97483&lon=-122.352299&zoom=18&q1=64%20S.%20Ferrydock%20Rd.%20Clinton%2C%20WA%2098236
-                    Directions: "Highway 20 on Whidbey Island turns into Highway 525 S which leads directly to the Clinton terminal.<br><p>\r\n<b>Dropping off or picking up?</b><br>\r\nThe ferry terminal pick up or drop off point is prior to the toll booth on Ferry Dock Road.<p>   "
-                    DispGISZoomLoc:
-                      - ZoomLevel: 0
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 1
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 2
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 3
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 4
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 5
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 6
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 7
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 8
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 9
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 10
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 11
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 12
-                        Latitude: 47.9754
-                        Longitude: -122.349581
-                      - ZoomLevel: 13
-                        Latitude: 47.975465
-                        Longitude: -122.352097
-                      - ZoomLevel: 14
-                        Latitude: 47.974948
-                        Longitude: -122.351496
-                      - ZoomLevel: 15
-                        Latitude: 47.974948
-                        Longitude: -122.351367
-                      - ZoomLevel: 16
-                        Latitude: 47.975034
-                        Longitude: -122.351324
-                      - ZoomLevel: 17
-                        Latitude: 47.975027
-                        Longitude: -122.351335
-  /terminalBulletins/{TerminalID}:
-    get:
-      summary: Returns TerminalBulletin data for the terminal with the specified terminal.
-      operationId: fetchTerminalBulletinsByTerminalId
-      tags:
-        - terminal-bulletins
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBulletinsByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalBulletinsByTerminalId,
-              params: {
-                "TerminalID": 3
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 3
-                    TerminalSubjectID: 103
-                    RegionID: 4
-                    TerminalName: Bainbridge Island
-                    TerminalAbbrev: BBI
-                    SortSeq: 40
-                    Bulletins:
-                      - BulletinTitle: Sea/BI - Wenatchee to replace Walla Walla on Friday, November 7
-                        BulletinText: "<p><span data-contrast=\"none\">After successful repairs, the</span><i><span data-contrast=\"none\"> Wenatchee </span></i><span data-contrast=\"none\">will return to the Seattle/Bainbridge route on Friday, Nov. 7, replacing the </span><i><span data-contrast=\"none\">Walla Walla</span></i><span data-contrast=\"none\"> as the #1 vessel. We do not expect service impacts during this vessel swap. Thank you for your patience as we repair our vessels.\_</span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\">\_</span></p>"
-                        BulletinSortSeq: 3
-                        BulletinLastUpdated: 2025-11-07T00:46:41.003Z
-                        BulletinLastUpdatedSortable: '20251106164641'
-                      - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
-                        BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
-                        BulletinSortSeq: 1
-                        BulletinLastUpdated: 2025-11-06T20:57:44.763Z
-                        BulletinLastUpdatedSortable: '20251106125744'
 webhooks: {}
 tags:
   - name: cache-flush-date-terminals
