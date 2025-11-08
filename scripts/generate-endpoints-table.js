@@ -2,7 +2,7 @@
 
 /**
  * Regenerates the Markdown table of SDK endpoints by inspecting the
- * definitions in `src/apis/** */*.endpoints.ts`.
+ * definitions in `src/apis/<api>/<group>.endpoints.ts`.
  *
  * Usage:
  *   node scripts/generate-endpoints-table.js
@@ -89,9 +89,8 @@ function collectRows() {
 
   for (const apiDir of apiDirs) {
     const apiPath = path.join(apisRoot, apiDir);
-    const endpointFiles = walk(
-      apiPath,
-      (p) => p.endsWith(".endpoints.ts")
+    const endpointFiles = walk(apiPath, (p) =>
+      p.endsWith(".endpoints.ts")
     ).sort((a, b) => a.localeCompare(b));
 
     for (const endpointFile of endpointFiles) {
@@ -144,9 +143,9 @@ function writeMarkdown(rows) {
   lines.push("# API Endpoints Overview");
   lines.push("");
   lines.push(
-    `This table reflects all current endpoints defined under \`src/apis\` as of ${new Date()
-      .toISOString()
-      .split("T")[0]}.`
+    `This table reflects all current endpoints defined under \`src/apis\` as of ${
+      new Date().toISOString().split("T")[0]
+    }.`
   );
   lines.push("");
   lines.push(
@@ -176,4 +175,3 @@ function main() {
 }
 
 main();
-
