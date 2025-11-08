@@ -25,7 +25,8 @@ export const cacheFlushDateFaresGroup = {
       outputSchema: cacheFlushDateFaresSchema,
       sampleParams: {},
       cacheStrategy: "STATIC",
-      description: "Returns the timestamp of when any static endpoint data for the wsf-fares API was last updated.",
+      description:
+        "Returns the timestamp of when any static endpoint data for the wsf-fares API was last updated.",
     } satisfies EndpointDefinition<
       CacheFlushDateFaresInput,
       CacheFlushDateFares
