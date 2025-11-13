@@ -1,12 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type ActiveSeasonsInput,
-  activeSeasonsInputSchema,
-} from "./activeSeasons.input";
-import { type ScheduleBase, scheduleBaseSchema } from "./activeSeasons.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfScheduleApi } from "../apiDefinition";
+import { activeSeasonsInputSchema } from "./activeSeasons.input";
+import { scheduleBaseSchema } from "./activeSeasons.output";
 
-export const activeSeasonsResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "active-seasons",
   documentation: {
     resourceDescription:
@@ -14,15 +13,20 @@ export const activeSeasonsResource = {
     businessContext:
       "Use to identify current scheduling periods by providing season dates and availability status for ferry service planning and schedule selection.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchActiveSeasons: {
-      endpoint: "/activeseasons",
-      inputSchema: activeSeasonsInputSchema,
-      outputSchema: z.array(scheduleBaseSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple of ActiveSeasons for all scheduling periods.",
-    } satisfies EndpointDefinition<ActiveSeasonsInput, ScheduleBase[]>,
+  cacheStrategy: "STATIC",
+});
+
+export const fetchActiveSeasons = defineEndpoint({
+  group,
+  functionName: "fetchActiveSeasons",
+  definition: {
+    endpoint: "/activeseasons",
+    inputSchema: activeSeasonsInputSchema,
+    outputSchema: scheduleBaseSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple of ActiveSeasons for all scheduling periods.",
   },
-} satisfies EndpointGroup;
+});
+
+export const activeSeasonsResource = group.descriptor;

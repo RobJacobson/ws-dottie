@@ -1,19 +1,17 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
+import { wsdotWeatherInformationApi } from "../apiDefinition";
 import {
-  type CurrentWeatherForStationsInput,
   currentWeatherForStationsInputSchema,
-  type SearchWeatherInformationInput,
   searchWeatherInformationInputSchema,
-  type WeatherInformationByStationIdInput,
-  type WeatherInformationInput,
   weatherInformationByStationIdInputSchema,
   weatherInformationInputSchema,
 } from "./weatherInfo.input";
-import { type WeatherInfo, weatherInfoSchema } from "./weatherInfo.output";
+import { weatherInfoSchema } from "./weatherInfo.output";
 
-export const weatherInfoResource = {
+const group = defineEndpointGroup({
+  api: wsdotWeatherInformationApi,
   name: "weather-info",
   documentation: {
     resourceDescription:
@@ -21,57 +19,64 @@ export const weatherInfoResource = {
     businessContext:
       "Use to assess road weather conditions by providing real-time atmospheric data for transportation management and traveler safety decisions.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchWeatherInformation: {
-      endpoint: "/GetCurrentWeatherInformationAsJson",
-      inputSchema: weatherInformationInputSchema,
-      outputSchema: z.array(weatherInfoSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple WeatherInfo items for all stations.",
-    } satisfies EndpointDefinition<WeatherInformationInput, WeatherInfo[]>,
-    fetchWeatherInformationByStationId: {
-      endpoint:
-        "/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
-      inputSchema: weatherInformationByStationIdInputSchema,
-      outputSchema: weatherInfoSchema,
-      sampleParams: { StationID: 1909 },
-      endpointDescription: "Returns single WeatherInfo for specific station.",
-    } satisfies EndpointDefinition<
-      WeatherInformationByStationIdInput,
-      WeatherInfo
-    >,
-    fetchCurrentWeatherForStations: {
-      endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
-      inputSchema: currentWeatherForStationsInputSchema,
-      outputSchema: z.array(weatherInfoSchema),
-      sampleParams: { StationList: "1909,1966,1970" },
-      endpointDescription:
-        "Returns multiple WeatherInfo for specified stations.",
-    } satisfies EndpointDefinition<
-      CurrentWeatherForStationsInput,
-      WeatherInfo[]
-    >,
-    searchWeatherInformation: {
-      endpoint:
-        "/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}",
-      inputSchema: searchWeatherInformationInputSchema,
-      outputSchema: z.array(weatherInfoSchema),
-      sampleParams: {
-        StationID: 1980,
-        SearchStartTime: new Date(
-          `${datesHelper.yesterday()}T00:00:00Z`
-        ).toISOString(),
-        SearchEndTime: new Date(
-          `${datesHelper.today()}T23:59:59Z`
-        ).toISOString(),
-      },
-      endpointDescription:
-        "Returns multiple WeatherInfo for historical time range.",
-    } satisfies EndpointDefinition<
-      SearchWeatherInformationInput,
-      WeatherInfo[]
-    >,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchWeatherInformation = defineEndpoint({
+  group,
+  functionName: "fetchWeatherInformation",
+  definition: {
+    endpoint: "/GetCurrentWeatherInformationAsJson",
+    inputSchema: weatherInformationInputSchema,
+    outputSchema: weatherInfoSchema.array(),
+    sampleParams: {},
+    endpointDescription: "Returns multiple WeatherInfo items for all stations.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchWeatherInformationByStationId = defineEndpoint({
+  group,
+  functionName: "fetchWeatherInformationByStationId",
+  definition: {
+    endpoint:
+      "/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}",
+    inputSchema: weatherInformationByStationIdInputSchema,
+    outputSchema: weatherInfoSchema,
+    sampleParams: { StationID: 1909 },
+    endpointDescription: "Returns single WeatherInfo for specific station.",
+  },
+});
+
+export const fetchCurrentWeatherForStations = defineEndpoint({
+  group,
+  functionName: "fetchCurrentWeatherForStations",
+  definition: {
+    endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
+    inputSchema: currentWeatherForStationsInputSchema,
+    outputSchema: weatherInfoSchema.array(),
+    sampleParams: { StationList: "1909,1966,1970" },
+    endpointDescription: "Returns multiple WeatherInfo for specified stations.",
+  },
+});
+
+export const searchWeatherInformation = defineEndpoint({
+  group,
+  functionName: "searchWeatherInformation",
+  definition: {
+    endpoint:
+      "/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}",
+    inputSchema: searchWeatherInformationInputSchema,
+    outputSchema: weatherInfoSchema.array(),
+    sampleParams: {
+      StationID: 1980,
+      SearchStartTime: new Date(
+        `${datesHelper.yesterday()}T00:00:00Z`
+      ).toISOString(),
+      SearchEndTime: new Date(`${datesHelper.today()}T23:59:59Z`).toISOString(),
+    },
+    endpointDescription:
+      "Returns multiple WeatherInfo for historical time range.",
+  },
+});
+
+export const weatherInfoResource = group.descriptor;

@@ -1,18 +1,4 @@
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { serviceDisruptionsResource } from "./serviceDisruptions.endpoints";
-import type { RoutesHavingServiceDisruptionsByTripDateInput } from "./serviceDisruptions.input";
-import type { ServiceDisruption } from "./serviceDisruptions.output";
+import * as endpoints from "./serviceDisruptions.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsfScheduleApi,
-  serviceDisruptionsResource
-);
-
-export const fetchRoutesHavingServiceDisruptionsByTripDate: (
-  params?: FetchFunctionParams<RoutesHavingServiceDisruptionsByTripDateInput>
-) => Promise<ServiceDisruption[]> =
-  fetchFunctions.fetchRoutesHavingServiceDisruptionsByTripDate;
+export const fetchRoutesHavingServiceDisruptionsByTripDate =
+  endpoints.fetchRoutesHavingServiceDisruptionsByTripDate.fetch;

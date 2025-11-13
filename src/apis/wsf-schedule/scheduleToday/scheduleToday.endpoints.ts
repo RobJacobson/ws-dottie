@@ -1,40 +1,51 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfScheduleApi } from "../apiDefinition";
 import {
-  type ScheduleTodayByRouteInput,
-  type ScheduleTodayByTerminalsInput,
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
 } from "./scheduleToday.input";
-import { type Schedule, scheduleSchema } from "./scheduleToday.output";
+import { scheduleSchema } from "./scheduleToday.output";
 
-export const scheduleTodayResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "schedule-today",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.",
     businessContext: "",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchScheduleTodayByRoute: {
-      endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
-      inputSchema: scheduleTodayByRouteSchema,
-      outputSchema: scheduleSchema,
-      sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
-      endpointDescription: "Returns today's schedule for the specified route.",
-    } satisfies EndpointDefinition<ScheduleTodayByRouteInput, Schedule>,
-    fetchScheduleTodayByTerminals: {
-      endpoint:
-        "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
-      inputSchema: scheduleTodayByTerminalsInputSchema,
-      outputSchema: scheduleSchema,
-      sampleParams: {
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-        OnlyRemainingTimes: false,
-      },
-      endpointDescription:
-        "Returns today's schedule for the specified terminal pair.",
-    } satisfies EndpointDefinition<ScheduleTodayByTerminalsInput, Schedule>,
+});
+
+export const fetchScheduleTodayByRoute = defineEndpoint({
+  group,
+  functionName: "fetchScheduleTodayByRoute",
+  definition: {
+    endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
+    inputSchema: scheduleTodayByRouteSchema,
+    outputSchema: scheduleSchema,
+    sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
+    endpointDescription: "Returns today's schedule for the specified route.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchScheduleTodayByTerminals = defineEndpoint({
+  group,
+  functionName: "fetchScheduleTodayByTerminals",
+  definition: {
+    endpoint:
+      "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
+    inputSchema: scheduleTodayByTerminalsInputSchema,
+    outputSchema: scheduleSchema,
+    sampleParams: {
+      DepartingTerminalID: 1,
+      ArrivingTerminalID: 10,
+      OnlyRemainingTimes: false,
+    },
+    endpointDescription:
+      "Returns today's schedule for the specified terminal pair.",
+  },
+});
+
+export const scheduleTodayResource = group.descriptor;

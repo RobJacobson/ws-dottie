@@ -1,29 +1,7 @@
-import { wsdotTollRatesApi } from "@/apis/wsdot-toll-rates/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { tollTripRatesResource } from "./tollTripRates.endpoints";
-import type {
-  TollTripRatesInput,
-  TripRatesByDateInput,
-  TripRatesByVersionInput,
-} from "./tollTripRates.input";
-import type { TollTripsRates } from "./tollTripRates.output";
+import * as endpoints from "./tollTripRates.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsdotTollRatesApi,
-  tollTripRatesResource
-);
+export const fetchTollTripRates = endpoints.fetchTollTripRates.fetch;
 
-export const fetchTollTripRates: (
-  params?: FetchFunctionParams<TollTripRatesInput>
-) => Promise<TollTripsRates> = fetchFunctions.fetchTollTripRates;
+export const fetchTripRatesByDate = endpoints.fetchTripRatesByDate.fetch;
 
-export const fetchTripRatesByDate: (
-  params?: FetchFunctionParams<TripRatesByDateInput>
-) => Promise<TollTripsRates[]> = fetchFunctions.fetchTripRatesByDate;
-
-export const fetchTripRatesByVersion: (
-  params?: FetchFunctionParams<TripRatesByVersionInput>
-) => Promise<TollTripsRates> = fetchFunctions.fetchTripRatesByVersion;
+export const fetchTripRatesByVersion = endpoints.fetchTripRatesByVersion.fetch;

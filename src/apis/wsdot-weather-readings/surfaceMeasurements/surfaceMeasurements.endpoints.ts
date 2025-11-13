@@ -1,33 +1,31 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type SurfaceMeasurementsInput,
-  surfaceMeasurementsInputSchema,
-} from "./surfaceMeasurements.input";
-import {
-  type SurfaceMeasurement,
-  surfaceMeasurementSchema,
-} from "./surfaceMeasurements.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { surfaceMeasurementsInputSchema } from "./surfaceMeasurements.input";
+import { surfaceMeasurementSchema } from "./surfaceMeasurements.output";
 
-export const surfaceMeasurementsResource = {
+const group = defineEndpointGroup({
+  api: wsdotWeatherReadingsApi,
   name: "surface-measurements",
   documentation: {
     resourceDescription:
       "SurfaceMeasurements provides surface sensor data including surface temperature, road freezing temperature, and road surface condition from weather stations. Coverage Area: Statewide.",
     businessContext: "",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchSurfaceMeasurements: {
-      endpoint: "/Scanweb/SurfaceMeasurements",
-      inputSchema: surfaceMeasurementsInputSchema,
-      outputSchema: z.array(surfaceMeasurementSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns surface measurements from all weather stations.",
-    } satisfies EndpointDefinition<
-      SurfaceMeasurementsInput,
-      SurfaceMeasurement[]
-    >,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchSurfaceMeasurements = defineEndpoint({
+  group,
+  functionName: "fetchSurfaceMeasurements",
+  definition: {
+    endpoint: "/Scanweb/SurfaceMeasurements",
+    inputSchema: surfaceMeasurementsInputSchema,
+    outputSchema: surfaceMeasurementSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns surface measurements from all weather stations.",
   },
-} satisfies EndpointGroup;
+});
+
+export const surfaceMeasurementsResource = group.descriptor;

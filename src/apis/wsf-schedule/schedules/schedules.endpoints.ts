@@ -1,31 +1,42 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
+import { wsfScheduleApi } from "../apiDefinition";
 import {
-  type ScheduleByTripDateAndRouteIdInput,
-  type ScheduleByTripDateAndTerminalsInput,
   scheduleByTripDateAndRouteIdInputSchema,
   scheduleByTripDateAndTerminals,
 } from "./schedules.input";
-import { type Schedule, scheduleSchema } from "./schedules.output";
+import { scheduleSchema } from "./schedules.output";
 
-export const schedulesResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "schedules",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each Schedules item represents a complete sailing timetable for ferry routes. Each schedule includes departure times, arrival times, vessel assignments, and route-specific scheduling information for travel planning.",
     businessContext:
       "Use to plan ferry travel by providing complete sailing timetables including departure times, arrival times, and vessel assignments for trip planning.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchScheduleByTripDateAndRouteId: {
-      endpoint: "/schedule/{TripDate}/{RouteID}",
-      inputSchema: scheduleByTripDateAndRouteIdInputSchema,
-      outputSchema: scheduleSchema,
-      sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-      endpointDescription: "Returns single of Schedules for specified route.",
-    } satisfies EndpointDefinition<ScheduleByTripDateAndRouteIdInput, Schedule>,
-    fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: {
+});
+
+export const fetchScheduleByTripDateAndRouteId = defineEndpoint({
+  group,
+  functionName: "fetchScheduleByTripDateAndRouteId",
+  definition: {
+    endpoint: "/schedule/{TripDate}/{RouteID}",
+    inputSchema: scheduleByTripDateAndRouteIdInputSchema,
+    outputSchema: scheduleSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
+    endpointDescription: "Returns single of Schedules for specified route.",
+  },
+});
+
+export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
+  defineEndpoint({
+    group,
+    functionName: "fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
+    definition: {
       endpoint:
         "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
       inputSchema: scheduleByTripDateAndTerminals,
@@ -36,9 +47,7 @@ export const schedulesResource = {
         ArrivingTerminalID: 10,
       },
       endpointDescription: "Returns single of Schedules for terminal pair.",
-    } satisfies EndpointDefinition<
-      ScheduleByTripDateAndTerminalsInput,
-      Schedule
-    >,
-  },
-} satisfies EndpointGroup;
+    },
+  });
+
+export const schedulesResource = group.descriptor;

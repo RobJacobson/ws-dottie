@@ -1,15 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type SubSurfaceMeasurementsInput,
-  subSurfaceMeasurementsInputSchema,
-} from "./subSurfaceMeasurements.input";
-import {
-  type SubsurfaceMeasurement,
-  subsurfaceMeasurementSchema,
-} from "./subSurfaceMeasurements.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
+import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
 
-export const subSurfaceMeasurementsResource = {
+const group = defineEndpointGroup({
+  api: wsdotWeatherReadingsApi,
   name: "sub-surface-measurements",
   documentation: {
     resourceDescription:
@@ -17,18 +13,20 @@ export const subSurfaceMeasurementsResource = {
     businessContext:
       "Use to assess road surface conditions by providing subsurface temperature data for winter maintenance operations and travel safety assessments.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchSubSurfaceMeasurements: {
-      endpoint: "/Scanweb/SubSurfaceMeasurements",
-      inputSchema: subSurfaceMeasurementsInputSchema,
-      outputSchema: z.array(subsurfaceMeasurementSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
-    } satisfies EndpointDefinition<
-      SubSurfaceMeasurementsInput,
-      SubsurfaceMeasurement[]
-    >,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchSubSurfaceMeasurements = defineEndpoint({
+  group,
+  functionName: "fetchSubSurfaceMeasurements",
+  definition: {
+    endpoint: "/Scanweb/SubSurfaceMeasurements",
+    inputSchema: subSurfaceMeasurementsInputSchema,
+    outputSchema: subsurfaceMeasurementSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
   },
-} satisfies EndpointGroup;
+});
+
+export const subSurfaceMeasurementsResource = group.descriptor;

@@ -1,17 +1,14 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotMountainPassConditionsApi } from "../apiDefinition";
 import {
-  type MountainPassConditionByIdInput,
-  type MountainPassConditionsInput,
   mountainPassConditionByIdInputSchema,
   mountainPassConditionsInputSchema,
 } from "./passConditions.input";
-import {
-  type PassCondition,
-  passConditionSchema,
-} from "./passConditions.output";
+import { passConditionSchema } from "./passConditions.output";
 
-export const passConditionsGroup = {
+const group = defineEndpointGroup({
+  api: wsdotMountainPassConditionsApi,
   name: "pass-conditions",
   documentation: {
     resourceDescription:
@@ -19,30 +16,33 @@ export const passConditionsGroup = {
     businessContext:
       "Use to assess mountain pass conditions for travel planning by providing current weather, road status, and restriction information for safe mountain travel.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchMountainPassConditionById: {
-      endpoint:
-        "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
-      inputSchema: mountainPassConditionByIdInputSchema,
-      outputSchema: passConditionSchema,
-      sampleParams: { PassConditionID: 12 },
-      endpointDescription:
-        "Returns a single PassCondition for specified mountain pass identifier.",
-    } satisfies EndpointDefinition<
-      MountainPassConditionByIdInput,
-      PassCondition
-    >,
-    fetchMountainPassConditions: {
-      endpoint: "/getMountainPassConditionsAsJson",
-      inputSchema: mountainPassConditionsInputSchema,
-      outputSchema: z.array(passConditionSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple PassCondition items for all monitored mountain passes.",
-    } satisfies EndpointDefinition<
-      MountainPassConditionsInput,
-      PassCondition[]
-    >,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchMountainPassConditionById = defineEndpoint({
+  group,
+  functionName: "fetchMountainPassConditionById",
+  definition: {
+    endpoint: "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
+    inputSchema: mountainPassConditionByIdInputSchema,
+    outputSchema: passConditionSchema,
+    sampleParams: { PassConditionID: 12 },
+    endpointDescription:
+      "Returns a single PassCondition for specified mountain pass identifier.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchMountainPassConditions = defineEndpoint({
+  group,
+  functionName: "fetchMountainPassConditions",
+  definition: {
+    endpoint: "/getMountainPassConditionsAsJson",
+    inputSchema: mountainPassConditionsInputSchema,
+    outputSchema: passConditionSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple PassCondition items for all monitored mountain passes.",
+  },
+});
+
+export const passConditionsGroup = group.descriptor;

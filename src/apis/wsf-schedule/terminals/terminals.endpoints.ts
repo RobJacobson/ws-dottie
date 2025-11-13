@@ -1,55 +1,61 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
+import { wsfScheduleApi } from "../apiDefinition";
 import {
-  type TerminalsAndMatesByRouteInput,
-  type TerminalsAndMatesInput,
-  type TerminalsInput,
   terminalsAndMatesByRouteInputSchema,
   terminalsAndMatesInputSchema,
   terminalsInputSchema,
 } from "./terminals.input";
-import {
-  type Terminal,
-  type TerminalMate,
-  terminalMateSchema,
-  terminalSchema,
-} from "./terminals.output";
+import { terminalMateSchema, terminalSchema } from "./terminals.output";
 
-export const scheduleTerminalsResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "schedule-terminals",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.",
     businessContext: "",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminals: {
-      endpoint: "/terminals/{TripDate}",
-      inputSchema: terminalsInputSchema,
-      outputSchema: z.array(terminalSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription: "Returns all terminals for the specified trip date.",
-    } satisfies EndpointDefinition<TerminalsInput, Terminal[]>,
-    fetchTerminalsAndMates: {
-      endpoint: "/terminalsandmates/{TripDate}",
-      inputSchema: terminalsAndMatesInputSchema,
-      outputSchema: z.array(terminalMateSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription:
-        "Returns all terminals with their mates for the specified trip date.",
-    } satisfies EndpointDefinition<TerminalsAndMatesInput, TerminalMate[]>,
-    fetchTerminalsAndMatesByRoute: {
-      endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
-      inputSchema: terminalsAndMatesByRouteInputSchema,
-      outputSchema: z.array(terminalMateSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-      endpointDescription:
-        "Returns terminals and their mates for the specified trip date and route.",
-    } satisfies EndpointDefinition<
-      TerminalsAndMatesByRouteInput,
-      TerminalMate[]
-    >,
+});
+
+export const fetchTerminals = defineEndpoint({
+  group,
+  functionName: "fetchTerminals",
+  definition: {
+    endpoint: "/terminals/{TripDate}",
+    inputSchema: terminalsInputSchema,
+    outputSchema: terminalSchema.array(),
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    endpointDescription: "Returns all terminals for the specified trip date.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchTerminalsAndMates = defineEndpoint({
+  group,
+  functionName: "fetchTerminalsAndMates",
+  definition: {
+    endpoint: "/terminalsandmates/{TripDate}",
+    inputSchema: terminalsAndMatesInputSchema,
+    outputSchema: terminalMateSchema.array(),
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    endpointDescription:
+      "Returns all terminals with their mates for the specified trip date.",
+  },
+});
+
+export const fetchTerminalsAndMatesByRoute = defineEndpoint({
+  group,
+  functionName: "fetchTerminalsAndMatesByRoute",
+  definition: {
+    endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
+    inputSchema: terminalsAndMatesByRouteInputSchema,
+    outputSchema: terminalMateSchema.array(),
+    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
+    endpointDescription:
+      "Returns terminals and their mates for the specified trip date and route.",
+  },
+});
+
+export const scheduleTerminalsResource = group.descriptor;

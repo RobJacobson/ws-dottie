@@ -1,5 +1,6 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfVesselsApi } from "../apiDefinition";
 import {
   type VesselBasicsByIdInput,
   type VesselBasicsInput,
@@ -8,31 +9,48 @@ import {
 } from "./vesselBasics.input";
 import { type VesselBasic, vesselBasicSchema } from "./vesselBasics.output";
 
-export const vesselBasicsResource = {
+const group = defineEndpointGroup({
+  api: wsfVesselsApi,
   name: "vessel-basics",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each VesselBasic item represents essential identification and operational status data for Washington State Ferries vessels. These items include vessel names, identification numbers, vessel classifications, and current operational status including service availability and maintenance schedules.",
     businessContext:
       "Use to display vessel information and track fleet status by providing identification details and operational status for passenger information systems. Supports trip planning applications and fleet management tools for Washington State Ferry services.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchVesselBasics: {
-      endpoint: "/vesselBasics",
-      inputSchema: vesselBasicsInputSchema,
-      outputSchema: z.array(vesselBasicSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple VesselBasic objects for all vessels in the fleet.",
-    } satisfies EndpointDefinition<VesselBasicsInput, VesselBasic[]>,
-    fetchVesselBasicsByVesselId: {
-      endpoint: "/vesselBasics/{VesselID}",
-      inputSchema: vesselBasicsByIdInputSchema,
-      outputSchema: vesselBasicSchema,
-      sampleParams: { VesselID: 74 },
-      endpointDescription:
-        "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
-    } satisfies EndpointDefinition<VesselBasicsByIdInput, VesselBasic>,
+});
+
+export const fetchVesselBasics = defineEndpoint<
+  VesselBasicsInput,
+  VesselBasic[]
+>({
+  group,
+  functionName: "fetchVesselBasics",
+  definition: {
+    endpoint: "/vesselBasics",
+    inputSchema: vesselBasicsInputSchema,
+    outputSchema: vesselBasicSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple VesselBasic objects for all vessels in the fleet.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchVesselBasicsByVesselId = defineEndpoint<
+  VesselBasicsByIdInput,
+  VesselBasic
+>({
+  group,
+  functionName: "fetchVesselBasicsByVesselId",
+  definition: {
+    endpoint: "/vesselBasics/{VesselID}",
+    inputSchema: vesselBasicsByIdInputSchema,
+    outputSchema: vesselBasicSchema,
+    sampleParams: { VesselID: 74 },
+    endpointDescription:
+      "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
+  },
+});
+
+export const vesselBasicsResource = group.descriptor;

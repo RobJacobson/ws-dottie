@@ -1,18 +1,4 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
-import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { fareTotalsGroup } from "./fareTotals.endpoints";
-import * as fetchFunctions from "./fareTotals.fetch";
-import type { FareTotalsByTripDateAndRouteInput } from "./fareTotals.input";
-import type { FareTotal } from "./fareTotals.output";
+import { fetchFareTotalsByTripDateAndRoute } from "./fareTotals.endpoints";
 
-const hooks = createHooks(wsfFaresApi, fareTotalsGroup, fetchFunctions);
-
-export const useFareTotalsByTripDateAndRoute: (
-  params?: FetchFunctionParams<FareTotalsByTripDateAndRouteInput>,
-  options?: QueryHookOptions<FareTotal[]>
-) => UseQueryResult<FareTotal[], Error> = hooks.useFareTotalsByTripDateAndRoute;
+export const useFareTotalsByTripDateAndRoute =
+  fetchFareTotalsByTripDateAndRoute.useQuery;

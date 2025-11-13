@@ -1,25 +1,6 @@
-import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { terminalTransportsResource } from "./terminalTransports.endpoints";
-import type {
-  TerminalTransportsByTerminalIdInput,
-  TerminalTransportsInput,
-} from "./terminalTransports.input";
-import type { TerminalTransport } from "./terminalTransports.output";
+import * as endpoints from "./terminalTransports.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsfTerminalsApi,
-  terminalTransportsResource
-);
-
-export const fetchTerminalTransports: (
-  params?: FetchFunctionParams<TerminalTransportsInput>
-) => Promise<TerminalTransport[]> = fetchFunctions.fetchTerminalTransports;
-
-export const fetchTerminalTransportsByTerminalId: (
-  params?: FetchFunctionParams<TerminalTransportsByTerminalIdInput>
-) => Promise<TerminalTransport> =
-  fetchFunctions.fetchTerminalTransportsByTerminalId;
+export const fetchTerminalTransports =
+  endpoints.fetchTerminalTransports.fetch;
+export const fetchTerminalTransportsByTerminalId =
+  endpoints.fetchTerminalTransportsByTerminalId.fetch;

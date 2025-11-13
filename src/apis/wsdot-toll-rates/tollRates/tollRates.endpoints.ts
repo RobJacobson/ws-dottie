@@ -1,9 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import { type TollRatesInput, tollRatesInputSchema } from "./tollRates.input";
-import { type TollRate, tollRateSchema } from "./tollRates.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotTollRatesApi } from "../apiDefinition";
+import { tollRatesInputSchema } from "./tollRates.input";
+import { tollRateSchema } from "./tollRates.output";
 
-export const tollRatesResource = {
+const group = defineEndpointGroup({
+  api: wsdotTollRatesApi,
   name: "toll-rates",
   documentation: {
     resourceDescription:
@@ -11,15 +13,20 @@ export const tollRatesResource = {
     businessContext:
       "Use to calculate travel costs and make informed routing decisions by providing current toll amounts and trip details for high occupancy lane usage across Washington state highways.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchTollRates: {
-      endpoint: "/getTollRatesAsJson",
-      inputSchema: tollRatesInputSchema,
-      outputSchema: z.array(tollRateSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TollRate items for all high occupancy toll lanes statewide.",
-    } satisfies EndpointDefinition<TollRatesInput, TollRate[]>,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchTollRates = defineEndpoint({
+  group,
+  functionName: "fetchTollRates",
+  definition: {
+    endpoint: "/getTollRatesAsJson",
+    inputSchema: tollRatesInputSchema,
+    outputSchema: tollRateSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple TollRate items for all high occupancy toll lanes statewide.",
   },
-} satisfies EndpointGroup;
+});
+
+export const tollRatesResource = group.descriptor;

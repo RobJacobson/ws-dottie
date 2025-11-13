@@ -1,69 +1,78 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import {
-  type FareLineItemsBasicInput,
-  type FareLineItemsByTripDateAndTerminalsInput,
-  type FareLineItemsVerboseInput,
   fareLineItemsBasicInputSchema,
   fareLineItemsByTripDateAndTerminalsInputSchema,
   fareLineItemsVerboseInputSchema,
 } from "./fareLineItems.input";
 import {
-  type LineItem,
-  type LineItemVerbose,
   lineItemSchema,
   lineItemVerboseSchema,
 } from "./fareLineItems.output";
+import { wsfFaresApi } from "../apiDefinition";
 
-export const fareLineItemsGroup = {
+const group = defineEndpointGroup({
+  api: wsfFaresApi,
   name: "fare-line-items",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each FareLineItem item represents individual fare components for Washington State Ferries routes, including passenger categories, vehicle types, and pricing structures. These items form the building blocks for calculating total journey costs based on route, vehicle dimensions, and passenger demographics.",
     businessContext:
       "Use to display fare options and enable price calculations by providing detailed fare breakdowns for different passenger types, vehicle categories, and route combinations for accurate ticket pricing.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchFareLineItemsByTripDateAndTerminals: {
-      endpoint:
-        "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: fareLineItemsByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(lineItemSchema),
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 3,
-        ArrivingTerminalID: 7,
-        RoundTrip: false,
-      },
-      endpointDescription:
-        "Returns multiple of FareLineItem for specific terminal combination.",
-    } satisfies EndpointDefinition<
-      FareLineItemsByTripDateAndTerminalsInput,
-      LineItem[]
-    >,
-    fetchFareLineItemsBasic: {
-      endpoint:
-        "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
-      inputSchema: fareLineItemsBasicInputSchema,
-      outputSchema: z.array(lineItemSchema),
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-        RoundTrip: false,
-      },
-      endpointDescription:
-        "Returns multiple of FareLineItem for popular fare options.",
-    } satisfies EndpointDefinition<FareLineItemsBasicInput, LineItem[]>,
-    fetchFareLineItemsVerbose: {
-      endpoint: "/fareLineItemsVerbose/{TripDate}",
-      inputSchema: fareLineItemsVerboseInputSchema,
-      outputSchema: lineItemVerboseSchema,
-      sampleParams: { TripDate: datesHelper.today() },
-      endpointDescription:
-        "Returns multiple of FareLineItem for all terminal combinations.",
-    } satisfies EndpointDefinition<FareLineItemsVerboseInput, LineItemVerbose>,
+});
+
+export const fetchFareLineItemsByTripDateAndTerminals = defineEndpoint({
+  group,
+  functionName: "fetchFareLineItemsByTripDateAndTerminals",
+  definition: {
+    endpoint:
+      "/fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
+    inputSchema: fareLineItemsByTripDateAndTerminalsInputSchema,
+    outputSchema: lineItemSchema.array(),
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingTerminalID: 3,
+      ArrivingTerminalID: 7,
+      RoundTrip: false,
+    },
+    endpointDescription:
+      "Returns multiple of FareLineItem for specific terminal combination.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchFareLineItemsBasic = defineEndpoint({
+  group,
+  functionName: "fetchFareLineItemsBasic",
+  definition: {
+    endpoint:
+      "/fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}",
+    inputSchema: fareLineItemsBasicInputSchema,
+    outputSchema: lineItemSchema.array(),
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingTerminalID: 1,
+      ArrivingTerminalID: 10,
+      RoundTrip: false,
+    },
+    endpointDescription:
+      "Returns multiple of FareLineItem for popular fare options.",
+  },
+});
+
+export const fetchFareLineItemsVerbose = defineEndpoint({
+  group,
+  functionName: "fetchFareLineItemsVerbose",
+  definition: {
+    endpoint: "/fareLineItemsVerbose/{TripDate}",
+    inputSchema: fareLineItemsVerboseInputSchema,
+    outputSchema: lineItemVerboseSchema,
+    sampleParams: { TripDate: datesHelper.today() },
+    endpointDescription:
+      "Returns multiple of FareLineItem for all terminal combinations.",
+  },
+});
+
+export const fareLineItemsGroup = group.descriptor;

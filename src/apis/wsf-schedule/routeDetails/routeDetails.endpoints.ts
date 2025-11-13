@@ -1,17 +1,16 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfScheduleApi } from "../apiDefinition";
 import {
-  type RouteDetailsByTripDateAndRouteIdInput,
-  type RouteDetailsByTripDateAndTerminalsInput,
-  type RouteDetailsByTripDateInput,
   routeDetailsByTripDateAndRouteIdInputSchema,
   routeDetailsByTripDateAndTerminalsInputSchema,
   routeDetailsByTripDateInputSchema,
 } from "./routeDetails.input";
-import { type RouteDetail, routeDetailSchema } from "./routeDetails.output";
+import { routeDetailSchema } from "./routeDetails.output";
 
-export const routeDetailsResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "route-details",
   documentation: {
     resourceDescription:
@@ -19,42 +18,51 @@ export const routeDetailsResource = {
     businessContext:
       "Use to plan ferry travel by providing comprehensive route information including terminals, schedules, and vessel details for trip planning and navigation.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchRouteDetailsByTripDate: {
-      endpoint: "/routedetails/{TripDate}",
-      inputSchema: routeDetailsByTripDateInputSchema,
-      outputSchema: z.array(routeDetailSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription:
-        "Returns multiple of RouteDetails for specified date.",
-    } satisfies EndpointDefinition<RouteDetailsByTripDateInput, RouteDetail[]>,
-    fetchRouteDetailsByTripDateAndRouteId: {
-      endpoint: "/routedetails/{TripDate}/{RouteID}",
-      inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
-      outputSchema: routeDetailSchema,
-      sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
-      endpointDescription:
-        "Returns single of RouteDetails for specified route.",
-    } satisfies EndpointDefinition<
-      RouteDetailsByTripDateAndRouteIdInput,
-      RouteDetail
-    >,
-    fetchRouteDetailsByTripDateAndTerminals: {
-      endpoint:
-        "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: routeDetailsByTripDateAndTerminalsInputSchema,
-      outputSchema: z.array(routeDetailSchema),
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-      },
-      endpointDescription:
-        "Returns multiple of RouteDetails for terminal pair.",
-    } satisfies EndpointDefinition<
-      RouteDetailsByTripDateAndTerminalsInput,
-      RouteDetail[]
-    >,
+  cacheStrategy: "STATIC",
+});
+
+export const fetchRouteDetailsByTripDate = defineEndpoint({
+  group,
+  functionName: "fetchRouteDetailsByTripDate",
+  definition: {
+    endpoint: "/routedetails/{TripDate}",
+    inputSchema: routeDetailsByTripDateInputSchema,
+    outputSchema: routeDetailSchema.array(),
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    endpointDescription:
+      "Returns multiple of RouteDetails for specified date.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchRouteDetailsByTripDateAndRouteId = defineEndpoint({
+  group,
+  functionName: "fetchRouteDetailsByTripDateAndRouteId",
+  definition: {
+    endpoint: "/routedetails/{TripDate}/{RouteID}",
+    inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
+    outputSchema: routeDetailSchema,
+    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
+    endpointDescription:
+      "Returns single of RouteDetails for specified route.",
+  },
+});
+
+export const fetchRouteDetailsByTripDateAndTerminals = defineEndpoint({
+  group,
+  functionName: "fetchRouteDetailsByTripDateAndTerminals",
+  definition: {
+    endpoint:
+      "/routedetails/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+    inputSchema: routeDetailsByTripDateAndTerminalsInputSchema,
+    outputSchema: routeDetailSchema.array(),
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingTerminalID: 1,
+      ArrivingTerminalID: 10,
+    },
+    endpointDescription:
+      "Returns multiple of RouteDetails for terminal pair.",
+  },
+});
+
+export const routeDetailsResource = group.descriptor;

@@ -1,15 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type WeatherStationsInput,
-  weatherStationsInputSchema,
-} from "./weatherStations.input";
-import {
-  type WeatherStation,
-  weatherStationSchema,
-} from "./weatherStations.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotWeatherStationsApi } from "../apiDefinition";
+import { weatherStationsInputSchema } from "./weatherStations.input";
+import { weatherStationSchema } from "./weatherStations.output";
 
-export const weatherStationsResource = {
+const group = defineEndpointGroup({
+  api: wsdotWeatherStationsApi,
   name: "weather-stations",
   documentation: {
     resourceDescription:
@@ -17,15 +13,20 @@ export const weatherStationsResource = {
     businessContext:
       "Use to monitor weather conditions by providing location coordinates, station identifiers, and names for road weather monitoring and maintenance decision support.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchWeatherStations: {
-      endpoint: "/GetCurrentStationsAsJson",
-      inputSchema: weatherStationsInputSchema,
-      outputSchema: z.array(weatherStationSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple WeatherStation items for statewide coverage.",
-    } satisfies EndpointDefinition<WeatherStationsInput, WeatherStation[]>,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchWeatherStations = defineEndpoint({
+  group,
+  functionName: "fetchWeatherStations",
+  definition: {
+    endpoint: "/GetCurrentStationsAsJson",
+    inputSchema: weatherStationsInputSchema,
+    outputSchema: weatherStationSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple WeatherStation items for statewide coverage.",
   },
-} satisfies EndpointGroup;
+});
+
+export const weatherStationsResource = group.descriptor;

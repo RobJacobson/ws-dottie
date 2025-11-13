@@ -1,29 +1,31 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import {
-  type TollTripVersionInput,
-  tollTripVersionInputSchema,
-} from "./tollTripVersion.input";
-import {
-  type TollTripVersion,
-  tollTripVersionSchema,
-} from "./tollTripVersion.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotTollRatesApi } from "../apiDefinition";
+import { tollTripVersionInputSchema } from "./tollTripVersion.input";
+import { tollTripVersionSchema } from "./tollTripVersion.output";
 
-export const tollTripVersionResource = {
+const group = defineEndpointGroup({
+  api: wsdotTollRatesApi,
   name: "toll-trip-version",
   documentation: {
     resourceDescription:
       "TollTripVersion provides version and timestamp information for toll trip data, enabling cache management and data freshness tracking.",
     businessContext: "",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchTollTripVersion: {
-      endpoint: "/getTollTripVersionAsJson",
-      inputSchema: tollTripVersionInputSchema,
-      outputSchema: tollTripVersionSchema,
-      sampleParams: {},
-      endpointDescription:
-        "Returns current version and timestamp information for toll trip data.",
-    } satisfies EndpointDefinition<TollTripVersionInput, TollTripVersion>,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchTollTripVersion = defineEndpoint({
+  group,
+  functionName: "fetchTollTripVersion",
+  definition: {
+    endpoint: "/getTollTripVersionAsJson",
+    inputSchema: tollTripVersionInputSchema,
+    outputSchema: tollTripVersionSchema,
+    sampleParams: {},
+    endpointDescription:
+      "Returns current version and timestamp information for toll trip data.",
   },
-} satisfies EndpointGroup;
+});
+
+export const tollTripVersionResource = group.descriptor;

@@ -1,31 +1,8 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfTerminalsApi } from "@/apis/wsf-terminals/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { terminalLocationsResource } from "./terminalLocations.endpoints";
-import * as fetchFunctions from "./terminalLocations.fetch";
-import type {
-  TerminalLocationsByIdInput,
-  TerminalLocationsInput,
-} from "./terminalLocations.input";
-import type { TerminalLocation } from "./terminalLocations.output";
+  fetchTerminalLocations,
+  fetchTerminalLocationsByTerminalId,
+} from "./terminalLocations.endpoints";
 
-const hooks = createHooks(
-  wsfTerminalsApi,
-  terminalLocationsResource,
-  fetchFunctions
-);
-
-export const useTerminalLocations: (
-  params?: FetchFunctionParams<TerminalLocationsInput>,
-  options?: QueryHookOptions<TerminalLocation[]>
-) => UseQueryResult<TerminalLocation[], Error> = hooks.useTerminalLocations;
-
-export const useTerminalLocationsByTerminalId: (
-  params?: FetchFunctionParams<TerminalLocationsByIdInput>,
-  options?: QueryHookOptions<TerminalLocation>
-) => UseQueryResult<TerminalLocation, Error> =
-  hooks.useTerminalLocationsByTerminalId;
+export const useTerminalLocations = fetchTerminalLocations.useQuery;
+export const useTerminalLocationsByTerminalId =
+  fetchTerminalLocationsByTerminalId.useQuery;

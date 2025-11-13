@@ -1,17 +1,14 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotBridgeClearancesApi } from "../apiDefinition";
 import {
-  type BridgeClearancesByRouteInput,
-  type BridgeClearancesInput,
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
 } from "./bridgeClearances.input";
-import {
-  type BridgeClearance,
-  bridgeClearanceSchema,
-} from "./bridgeClearances.output";
+import { bridgeClearanceSchema } from "./bridgeClearances.output";
 
-export const bridgeClearancesGroup = {
+const group = defineEndpointGroup({
+  api: wsdotBridgeClearancesApi,
   name: "bridge-clearances",
   documentation: {
     resourceDescription:
@@ -19,26 +16,33 @@ export const bridgeClearancesGroup = {
     businessContext:
       "Use to check bridge heights and plan commercial vehicle routes by providing vertical clearance measurements, bridge location data, and route information for Washington State bridges. Verify vehicle clearance requirements and identify height restrictions before planning routes with oversize loads.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchBridgeClearances: {
-      endpoint: "/getClearancesAsJson",
-      inputSchema: bridgeClearancesInputSchema,
-      outputSchema: z.array(bridgeClearanceSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
-    } satisfies EndpointDefinition<BridgeClearancesInput, BridgeClearance[]>,
-    fetchBridgeClearancesByRoute: {
-      endpoint: "/getClearancesAsJson?Route={Route}",
-      inputSchema: bridgeClearancesByRouteInputSchema,
-      outputSchema: z.array(bridgeClearanceSchema),
-      sampleParams: { Route: "005" },
-      endpointDescription:
-        "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
-    } satisfies EndpointDefinition<
-      BridgeClearancesByRouteInput,
-      BridgeClearance[]
-    >,
+  cacheStrategy: "STATIC",
+});
+
+export const fetchBridgeClearances = defineEndpoint({
+  group,
+  functionName: "fetchBridgeClearances",
+  definition: {
+    endpoint: "/getClearancesAsJson",
+    inputSchema: bridgeClearancesInputSchema,
+    outputSchema: bridgeClearanceSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchBridgeClearancesByRoute = defineEndpoint({
+  group,
+  functionName: "fetchBridgeClearancesByRoute",
+  definition: {
+    endpoint: "/getClearancesAsJson?Route={Route}",
+    inputSchema: bridgeClearancesByRouteInputSchema,
+    outputSchema: bridgeClearanceSchema.array(),
+    sampleParams: { Route: "005" },
+    endpointDescription:
+      "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
+  },
+});
+
+export const bridgeClearancesGroup = group.descriptor;

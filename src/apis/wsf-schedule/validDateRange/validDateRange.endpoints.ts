@@ -1,30 +1,31 @@
-import {
-  type ValidDateRange,
-  validDateRangeSchema,
-} from "@/apis/shared/validDateRange.output";
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import {
-  type ScheduleValidDateRangeInput,
-  scheduleValidDateRangeInputSchema,
-} from "./validDateRange.input";
+import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfScheduleApi } from "../apiDefinition";
+import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
 
-export const scheduleValidDateRangeResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "schedule-valid-date-range",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each ValidDateRange item specifies the period for which schedule data is available and valid, helping clients understand the coverage of schedule information.",
     businessContext:
       "Use to determine schedule data availability by providing date range information for planning ferry travel.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchScheduleValidDateRange: {
-      endpoint: "/validdaterange",
-      inputSchema: scheduleValidDateRangeInputSchema,
-      outputSchema: validDateRangeSchema,
-      sampleParams: {},
-      endpointDescription:
-        "Returns single of ValidDateRange for schedule data.",
-    } satisfies EndpointDefinition<ScheduleValidDateRangeInput, ValidDateRange>,
+});
+
+export const fetchScheduleValidDateRange = defineEndpoint({
+  group,
+  functionName: "fetchScheduleValidDateRange",
+  definition: {
+    endpoint: "/validdaterange",
+    inputSchema: scheduleValidDateRangeInputSchema,
+    outputSchema: validDateRangeSchema,
+    sampleParams: {},
+    endpointDescription: "Returns single of ValidDateRange for schedule data.",
   },
-} satisfies EndpointGroup;
+});
+
+export const scheduleValidDateRangeResource = group.descriptor;

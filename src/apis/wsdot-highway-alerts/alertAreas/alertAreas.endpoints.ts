@@ -1,9 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import { type MapAreasInput, mapAreasInputSchema } from "./alertAreas.input";
-import { type Area, areaSchema } from "./alertAreas.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { mapAreasInputSchema } from "./alertAreas.input";
+import { areaSchema } from "./alertAreas.output";
 
-export const alertAreasGroup = {
+const group = defineEndpointGroup({
+  api: wsdotHighwayAlertsApi,
   name: "alertAreas",
   documentation: {
     resourceDescription:
@@ -11,15 +13,20 @@ export const alertAreasGroup = {
     businessContext:
       "Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchMapAreas: {
-      endpoint: "/getMapAreasAsJson",
-      inputSchema: mapAreasInputSchema,
-      outputSchema: z.array(areaSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of Area objects for all available geographic regions.",
-    } satisfies EndpointDefinition<MapAreasInput, Area[]>,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchMapAreas = defineEndpoint({
+  group,
+  functionName: "fetchMapAreas",
+  definition: {
+    endpoint: "/getMapAreasAsJson",
+    inputSchema: mapAreasInputSchema,
+    outputSchema: areaSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns an array of Area objects for all available geographic regions.",
   },
-} satisfies EndpointGroup;
+});
+
+export const alertAreasGroup = group.descriptor;

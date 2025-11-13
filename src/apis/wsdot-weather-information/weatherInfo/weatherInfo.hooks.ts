@@ -1,43 +1,16 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsdotWeatherInformationApi } from "@/apis/wsdot-weather-information/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { weatherInfoResource } from "./weatherInfo.endpoints";
-import * as fetchFunctions from "./weatherInfo.fetch";
-import type {
-  CurrentWeatherForStationsInput,
-  SearchWeatherInformationInput,
-  WeatherInformationByStationIdInput,
-  WeatherInformationInput,
-} from "./weatherInfo.input";
-import type { WeatherInfo } from "./weatherInfo.output";
+  fetchCurrentWeatherForStations,
+  fetchWeatherInformation,
+  fetchWeatherInformationByStationId,
+  searchWeatherInformation,
+} from "./weatherInfo.endpoints";
 
-const hooks = createHooks(
-  wsdotWeatherInformationApi,
-  weatherInfoResource,
-  fetchFunctions
-);
+export const useWeatherInformation = fetchWeatherInformation.useQuery;
 
-export const useWeatherInformation: (
-  params?: FetchFunctionParams<WeatherInformationInput>,
-  options?: QueryHookOptions<WeatherInfo[]>
-) => UseQueryResult<WeatherInfo[], Error> = hooks.useWeatherInformation;
+export const useWeatherInformationByStationId =
+  fetchWeatherInformationByStationId.useQuery;
 
-export const useWeatherInformationByStationId: (
-  params?: FetchFunctionParams<WeatherInformationByStationIdInput>,
-  options?: QueryHookOptions<WeatherInfo>
-) => UseQueryResult<WeatherInfo, Error> =
-  hooks.useWeatherInformationByStationId;
+export const useCurrentWeatherForStations =
+  fetchCurrentWeatherForStations.useQuery;
 
-export const useCurrentWeatherForStations: (
-  params?: FetchFunctionParams<CurrentWeatherForStationsInput>,
-  options?: QueryHookOptions<WeatherInfo[]>
-) => UseQueryResult<WeatherInfo[], Error> = hooks.useCurrentWeatherForStations;
-
-export const useSearchWeatherInformation: (
-  params?: FetchFunctionParams<SearchWeatherInformationInput>,
-  options?: QueryHookOptions<WeatherInfo[]>
-) => UseQueryResult<WeatherInfo[], Error> = hooks.useSearchWeatherInformation;
+export const useSearchWeatherInformation = searchWeatherInformation.useQuery;

@@ -1,24 +1,5 @@
-import { wsdotTravelTimesApi } from "@/apis/wsdot-travel-times/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { travelTimeRoutesGroup } from "./travelTimeRoutes.endpoints";
-import type {
-  TravelTimeByIdInput,
-  TravelTimesInput,
-} from "./travelTimeRoutes.input";
-import type { TravelTimeRoute } from "./travelTimeRoutes.output";
+import * as endpoints from "./travelTimeRoutes.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsdotTravelTimesApi,
-  travelTimeRoutesGroup
-);
+export const fetchTravelTimeById = endpoints.fetchTravelTimeById.fetch;
 
-export const fetchTravelTimeById: (
-  params?: FetchFunctionParams<TravelTimeByIdInput>
-) => Promise<TravelTimeRoute> = fetchFunctions.fetchTravelTimeById;
-
-export const fetchTravelTimes: (
-  params?: FetchFunctionParams<TravelTimesInput>
-) => Promise<TravelTimeRoute[]> = fetchFunctions.fetchTravelTimes;
+export const fetchTravelTimes = endpoints.fetchTravelTimes.fetch;

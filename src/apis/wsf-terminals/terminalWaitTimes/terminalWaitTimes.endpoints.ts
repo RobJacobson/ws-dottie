@@ -1,44 +1,48 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfTerminalsApi } from "../apiDefinition";
 import {
-  type TerminalWaitTimesByIdInput,
-  type TerminalWaitTimesInput,
   terminalWaitTimesByIdInputSchema,
   terminalWaitTimesInputSchema,
 } from "./terminalWaitTimes.input";
-import {
-  type TerminalWaitTime,
-  terminalWaitTimeSchema,
-} from "./terminalWaitTimes.output";
+import { terminalWaitTimeSchema } from "./terminalWaitTimes.output";
 
-export const terminalWaitTimesResource = {
+const group = defineEndpointGroup({
+  api: wsfTerminalsApi,
   name: "terminal-wait-times",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each TerminalWaitTime item represents current wait conditions and travel tips for both vehicles and walk-on passengers at Washington State Ferry terminals. These items include estimated wait times for different vehicle types, capacity constraints, and travel recommendations.",
     businessContext:
       "Use to plan ferry terminal arrivals by providing current terminal conditions and vehicle capacity information for optimal departure timing.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalWaitTimes: {
-      endpoint: "/terminalWaitTimes",
-      inputSchema: terminalWaitTimesInputSchema,
-      outputSchema: z.array(terminalWaitTimeSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TerminalWaitTime objects for all terminals.",
-    } satisfies EndpointDefinition<TerminalWaitTimesInput, TerminalWaitTime[]>,
-    fetchTerminalWaitTimesByTerminalId: {
-      endpoint: "/terminalWaitTimes/{TerminalID}",
-      inputSchema: terminalWaitTimesByIdInputSchema,
-      outputSchema: terminalWaitTimeSchema,
-      sampleParams: { TerminalID: 11 },
-      endpointDescription:
-        "Returns a single TerminalWaitTime object for specified terminal.",
-    } satisfies EndpointDefinition<
-      TerminalWaitTimesByIdInput,
-      TerminalWaitTime
-    >,
+});
+
+export const fetchTerminalWaitTimes = defineEndpoint({
+  group,
+  functionName: "fetchTerminalWaitTimes",
+  definition: {
+    endpoint: "/terminalWaitTimes",
+    inputSchema: terminalWaitTimesInputSchema,
+    outputSchema: terminalWaitTimeSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple TerminalWaitTime objects for all terminals.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchTerminalWaitTimesByTerminalId = defineEndpoint({
+  group,
+  functionName: "fetchTerminalWaitTimesByTerminalId",
+  definition: {
+    endpoint: "/terminalWaitTimes/{TerminalID}",
+    inputSchema: terminalWaitTimesByIdInputSchema,
+    outputSchema: terminalWaitTimeSchema,
+    sampleParams: { TerminalID: 11 },
+    endpointDescription:
+      "Returns a single TerminalWaitTime object for specified terminal.",
+  },
+});
+
+export const terminalWaitTimesResource = group.descriptor;

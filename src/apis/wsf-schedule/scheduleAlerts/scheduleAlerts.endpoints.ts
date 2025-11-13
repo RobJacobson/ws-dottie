@@ -1,26 +1,30 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type ScheduleAlertsInput,
-  scheduleAlertsInputSchema,
-} from "./scheduleAlerts.input";
-import { type AlertDetail, alertDetailSchema } from "./scheduleAlerts.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfScheduleApi } from "../apiDefinition";
+import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
+import { alertDetailSchema } from "./scheduleAlerts.output";
 
-export const scheduleAlertsResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "schedule-alerts",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
     businessContext: "",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchScheduleAlerts: {
-      endpoint: "/alerts",
-      inputSchema: scheduleAlertsInputSchema,
-      outputSchema: z.array(alertDetailSchema),
-      sampleParams: {},
-      endpointDescription: "Returns all current schedule alerts.",
-    } satisfies EndpointDefinition<ScheduleAlertsInput, AlertDetail[]>,
+});
+
+export const fetchScheduleAlerts = defineEndpoint({
+  group,
+  functionName: "fetchScheduleAlerts",
+  definition: {
+    endpoint: "/alerts",
+    inputSchema: scheduleAlertsInputSchema,
+    outputSchema: alertDetailSchema.array(),
+    sampleParams: {},
+    endpointDescription: "Returns all current schedule alerts.",
   },
-} satisfies EndpointGroup;
+});
+
+export const scheduleAlertsResource = group.descriptor;

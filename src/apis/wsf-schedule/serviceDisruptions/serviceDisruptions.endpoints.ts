@@ -1,35 +1,33 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { z } from "@/shared/zod";
-import {
-  type RoutesHavingServiceDisruptionsByTripDateInput,
-  routesHavingServiceDisruptionsByTripDateInputSchema,
-} from "./serviceDisruptions.input";
-import {
-  type ServiceDisruption,
-  serviceDisruptionSchema,
-} from "./serviceDisruptions.output";
+import { wsfScheduleApi } from "../apiDefinition";
+import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
+import { serviceDisruptionSchema } from "./serviceDisruptions.output";
 
-export const serviceDisruptionsResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "service-disruptions",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each ServiceDisruption item represents planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes that affect passenger travel plans.",
     businessContext:
       "Use to identify service disruptions by providing route and date information for planning alternative travel arrangements.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchRoutesHavingServiceDisruptionsByTripDate: {
-      endpoint: "/routeshavingservicedisruptions/{TripDate}",
-      inputSchema: routesHavingServiceDisruptionsByTripDateInputSchema,
-      outputSchema: z.array(serviceDisruptionSchema),
-      sampleParams: { TripDate: datesHelper.tomorrow() },
-      endpointDescription:
-        "Returns multiple of ServiceDisruption for specified trip date.",
-    } satisfies EndpointDefinition<
-      RoutesHavingServiceDisruptionsByTripDateInput,
-      ServiceDisruption[]
-    >,
+});
+
+export const fetchRoutesHavingServiceDisruptionsByTripDate = defineEndpoint({
+  group,
+  functionName: "fetchRoutesHavingServiceDisruptionsByTripDate",
+  definition: {
+    endpoint: "/routeshavingservicedisruptions/{TripDate}",
+    inputSchema: routesHavingServiceDisruptionsByTripDateInputSchema,
+    outputSchema: serviceDisruptionSchema.array(),
+    sampleParams: { TripDate: datesHelper.tomorrow() },
+    endpointDescription:
+      "Returns multiple of ServiceDisruption for specified trip date.",
   },
-} satisfies EndpointGroup;
+});
+
+export const serviceDisruptionsResource = group.descriptor;

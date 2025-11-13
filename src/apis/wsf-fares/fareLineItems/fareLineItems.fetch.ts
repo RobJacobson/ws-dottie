@@ -1,27 +1,10 @@
-import { wsfFaresApi } from "@/apis/wsf-fares/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { fareLineItemsGroup } from "./fareLineItems.endpoints";
-import type {
-  FareLineItemsBasicInput,
-  FareLineItemsByTripDateAndTerminalsInput,
-  FareLineItemsVerboseInput,
-} from "./fareLineItems.input";
-import type { LineItem, LineItemVerbose } from "./fareLineItems.output";
+import * as endpoints from "./fareLineItems.endpoints";
 
-const fetchFunctions = createFetchFunctions(wsfFaresApi, fareLineItemsGroup);
+export const fetchFareLineItemsByTripDateAndTerminals =
+  endpoints.fetchFareLineItemsByTripDateAndTerminals.fetch;
 
-export const fetchFareLineItemsByTripDateAndTerminals: (
-  params?: FetchFunctionParams<FareLineItemsByTripDateAndTerminalsInput>
-) => Promise<LineItem[]> =
-  fetchFunctions.fetchFareLineItemsByTripDateAndTerminals;
+export const fetchFareLineItemsBasic =
+  endpoints.fetchFareLineItemsBasic.fetch;
 
-export const fetchFareLineItemsBasic: (
-  params?: FetchFunctionParams<FareLineItemsBasicInput>
-) => Promise<LineItem[]> = fetchFunctions.fetchFareLineItemsBasic;
-
-export const fetchFareLineItemsVerbose: (
-  params?: FetchFunctionParams<FareLineItemsVerboseInput>
-) => Promise<LineItemVerbose> = fetchFunctions.fetchFareLineItemsVerbose;
+export const fetchFareLineItemsVerbose =
+  endpoints.fetchFareLineItemsVerbose.fetch;

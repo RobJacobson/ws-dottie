@@ -1,47 +1,48 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfTerminalsApi } from "../apiDefinition";
 import {
-  type TerminalTransportsByTerminalIdInput,
-  type TerminalTransportsInput,
   terminalTransportsByTerminalIdInputSchema,
   terminalTransportsInputSchema,
 } from "./terminalTransports.input";
-import {
-  type TerminalTransport,
-  terminalTransportSchema,
-} from "./terminalTransports.output";
+import { terminalTransportSchema } from "./terminalTransports.output";
 
-export const terminalTransportsResource = {
+const group = defineEndpointGroup({
+  api: wsfTerminalsApi,
   name: "terminal-transports",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each TerminalTransport item represents transportation options and parking information for Washington State Ferry terminals. These items include parking notes, vehicle-specific tips, transit links, and alternative transportation methods.",
     businessContext:
       "Use to plan terminal access by providing parking availability and transportation options for ferry terminal commuters.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchTerminalTransports: {
-      endpoint: "/terminalTransports",
-      inputSchema: terminalTransportsInputSchema,
-      outputSchema: z.array(terminalTransportSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns multiple TerminalTransport objects for all terminals.",
-    } satisfies EndpointDefinition<
-      TerminalTransportsInput,
-      TerminalTransport[]
-    >,
-    fetchTerminalTransportsByTerminalId: {
-      endpoint: "/terminalTransports/{TerminalID}",
-      inputSchema: terminalTransportsByTerminalIdInputSchema,
-      outputSchema: terminalTransportSchema,
-      sampleParams: { TerminalID: 10 },
-      endpointDescription:
-        "Returns TerminalTransport data for the terminal with the specified terminal.",
-    } satisfies EndpointDefinition<
-      TerminalTransportsByTerminalIdInput,
-      TerminalTransport
-    >,
+});
+
+export const fetchTerminalTransports = defineEndpoint({
+  group,
+  functionName: "fetchTerminalTransports",
+  definition: {
+    endpoint: "/terminalTransports",
+    inputSchema: terminalTransportsInputSchema,
+    outputSchema: terminalTransportSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns multiple TerminalTransport objects for all terminals.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchTerminalTransportsByTerminalId = defineEndpoint({
+  group,
+  functionName: "fetchTerminalTransportsByTerminalId",
+  definition: {
+    endpoint: "/terminalTransports/{TerminalID}",
+    inputSchema: terminalTransportsByTerminalIdInputSchema,
+    outputSchema: terminalTransportSchema,
+    sampleParams: { TerminalID: 10 },
+    endpointDescription:
+      "Returns TerminalTransport data for the terminal with the specified terminal.",
+  },
+});
+
+export const terminalTransportsResource = group.descriptor;

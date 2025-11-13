@@ -1,27 +1,10 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
 import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { schedulesResource } from "./schedules.endpoints";
-import * as fetchFunctions from "./schedules.fetch";
-import type {
-  ScheduleByTripDateAndRouteIdInput,
-  ScheduleByTripDateAndTerminalsInput,
-} from "./schedules.input";
-import type { Schedule } from "./schedules.output";
+  fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds,
+  fetchScheduleByTripDateAndRouteId,
+} from "./schedules.endpoints";
 
-const hooks = createHooks(wsfScheduleApi, schedulesResource, fetchFunctions);
+export const useScheduleByTripDateAndRouteId =
+  fetchScheduleByTripDateAndRouteId.useQuery;
 
-export const useScheduleByTripDateAndRouteId: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndRouteIdInput>,
-  options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> = hooks.useScheduleByTripDateAndRouteId;
-
-export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds: (
-  params?: FetchFunctionParams<ScheduleByTripDateAndTerminalsInput>,
-  options?: QueryHookOptions<Schedule>
-) => UseQueryResult<Schedule, Error> =
-  hooks.useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds;
+export const useScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
+  fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds.useQuery;

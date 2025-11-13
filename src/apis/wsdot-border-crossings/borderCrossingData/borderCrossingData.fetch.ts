@@ -1,17 +1,3 @@
-import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { borderCrossingDataResource } from "./borderCrossingData.endpoints";
-import type { BorderCrossingsInput } from "./borderCrossingData.input";
-import type { BorderCrossing } from "./borderCrossingData.output";
+import * as endpoints from "./borderCrossingData.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsdotBorderCrossingsApi,
-  borderCrossingDataResource
-);
-
-export const fetchBorderCrossings: (
-  params?: FetchFunctionParams<BorderCrossingsInput>
-) => Promise<BorderCrossing[]> = fetchFunctions.fetchBorderCrossings;
+export const fetchBorderCrossings = endpoints.fetchBorderCrossings.fetch;

@@ -1,15 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type CommercialVehicleRestrictionsInput,
-  commercialVehicleRestrictionsInputSchema,
-} from "./cvRestrictionData.input";
-import {
-  type CVRestriction,
-  cvRestrictionSchema,
-} from "./cvRestrictionData.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotCommercialVehicleRestrictionsApi } from "../apiDefinition";
+import { commercialVehicleRestrictionsInputSchema } from "./cvRestrictionData.input";
+import { cvRestrictionSchema } from "./cvRestrictionData.output";
 
-export const cvRestrictionDataGroup = {
+const group = defineEndpointGroup({
+  api: wsdotCommercialVehicleRestrictionsApi,
   name: "cv-restriction-data",
   documentation: {
     resourceDescription:
@@ -17,18 +13,20 @@ export const cvRestrictionDataGroup = {
     businessContext:
       "Use to check vehicle restrictions and plan commercial routes by providing weight limits, height clearances, and axle restrictions for Washington State highways. Determine route feasibility and permit requirements for trucking companies and logistics providers.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchCommercialVehicleRestrictions: {
-      endpoint: "/getCommercialVehicleRestrictionsAsJson",
-      inputSchema: commercialVehicleRestrictionsInputSchema,
-      outputSchema: z.array(cvRestrictionSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.",
-    } satisfies EndpointDefinition<
-      CommercialVehicleRestrictionsInput,
-      CVRestriction[]
-    >,
+  cacheStrategy: "STATIC",
+});
+
+export const fetchCommercialVehicleRestrictions = defineEndpoint({
+  group,
+  functionName: "fetchCommercialVehicleRestrictions",
+  definition: {
+    endpoint: "/getCommercialVehicleRestrictionsAsJson",
+    inputSchema: commercialVehicleRestrictionsInputSchema,
+    outputSchema: cvRestrictionSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.",
   },
-} satisfies EndpointGroup;
+});
+
+export const cvRestrictionDataGroup = group.descriptor;

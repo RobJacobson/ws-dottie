@@ -1,11 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { z } from "@/shared/zod";
-import {
-  type EventCategoriesInput,
-  eventCategoriesInputSchema,
-} from "./eventCategories.input";
+import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { eventCategoriesInputSchema } from "./eventCategories.input";
 
-export const eventCategoriesGroup = {
+const group = defineEndpointGroup({
+  api: wsdotHighwayAlertsApi,
   name: "event-categories",
   documentation: {
     resourceDescription:
@@ -13,15 +13,20 @@ export const eventCategoriesGroup = {
     businessContext:
       "Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.",
   },
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchEventCategories: {
-      endpoint: "/getEventCategoriesAsJson",
-      inputSchema: eventCategoriesInputSchema,
-      outputSchema: z.array(z.string()),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of strings for all available event categories.",
-    } satisfies EndpointDefinition<EventCategoriesInput, string[]>,
+  cacheStrategy: "FREQUENT",
+});
+
+export const fetchEventCategories = defineEndpoint({
+  group,
+  functionName: "fetchEventCategories",
+  definition: {
+    endpoint: "/getEventCategoriesAsJson",
+    inputSchema: eventCategoriesInputSchema,
+    outputSchema: z.string().array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns an array of strings for all available event categories.",
   },
-} satisfies EndpointGroup;
+});
+
+export const eventCategoriesGroup = group.descriptor;

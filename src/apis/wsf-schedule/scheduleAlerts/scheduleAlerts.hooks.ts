@@ -1,22 +1,3 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createHooks,
-  type FetchFunctionParams,
-  type QueryHookOptions,
-} from "@/shared/factories";
-import { scheduleAlertsResource } from "./scheduleAlerts.endpoints";
-import * as fetchFunctions from "./scheduleAlerts.fetch";
-import type { ScheduleAlertsInput } from "./scheduleAlerts.input";
-import type { AlertDetail } from "./scheduleAlerts.output";
+import { fetchScheduleAlerts } from "./scheduleAlerts.endpoints";
 
-const hooks = createHooks(
-  wsfScheduleApi,
-  scheduleAlertsResource,
-  fetchFunctions
-);
-
-export const useScheduleAlerts: (
-  params?: FetchFunctionParams<ScheduleAlertsInput>,
-  options?: QueryHookOptions<AlertDetail[]>
-) => UseQueryResult<AlertDetail[], Error> = hooks.useScheduleAlerts;
+export const useScheduleAlerts = fetchScheduleAlerts.useQuery;

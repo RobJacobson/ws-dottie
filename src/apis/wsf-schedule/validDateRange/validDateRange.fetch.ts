@@ -1,17 +1,4 @@
-import type { ValidDateRange } from "@/apis/shared/validDateRange.output";
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { scheduleValidDateRangeResource } from "./validDateRange.endpoints";
-import type { ScheduleValidDateRangeInput } from "./validDateRange.input";
+import * as endpoints from "./validDateRange.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsfScheduleApi,
-  scheduleValidDateRangeResource
-);
-
-export const fetchScheduleValidDateRange: (
-  params?: FetchFunctionParams<ScheduleValidDateRangeInput>
-) => Promise<ValidDateRange> = fetchFunctions.fetchScheduleValidDateRange;
+export const fetchScheduleValidDateRange =
+  endpoints.fetchScheduleValidDateRange.fetch;

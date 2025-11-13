@@ -1,22 +1,4 @@
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import {
-  type CacheFlushDateScheduleInput,
-  type CacheFlushDateSchedules,
-  cacheFlushDateSchedule,
-} from "./cacheFlushDate.endpoints";
+import * as endpoints from "./cacheFlushDate.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsfScheduleApi,
-  cacheFlushDateSchedule
-);
-
-export const fetchCacheFlushDateSchedule: (
-  params?: FetchFunctionParams<CacheFlushDateScheduleInput>
-) => Promise<CacheFlushDateSchedules> =
-  fetchFunctions.fetchCacheFlushDateSchedule as (
-    params?: FetchFunctionParams<CacheFlushDateScheduleInput>
-  ) => Promise<CacheFlushDateSchedules>;
+export const fetchCacheFlushDateSchedule =
+  endpoints.fetchCacheFlushDateSchedule.fetch;

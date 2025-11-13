@@ -1,29 +1,8 @@
-import { wsfScheduleApi } from "@/apis/wsf-schedule/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { scheduleTerminalsResource } from "./terminals.endpoints";
-import type {
-  TerminalsAndMatesByRouteInput,
-  TerminalsAndMatesInput,
-  TerminalsInput,
-} from "./terminals.input";
-import type { Terminal, TerminalMate } from "./terminals.output";
+import * as endpoints from "./terminals.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsfScheduleApi,
-  scheduleTerminalsResource
-);
+export const fetchTerminals = endpoints.fetchTerminals.fetch;
 
-export const fetchTerminals: (
-  params?: FetchFunctionParams<TerminalsInput>
-) => Promise<Terminal[]> = fetchFunctions.fetchTerminals;
+export const fetchTerminalsAndMates = endpoints.fetchTerminalsAndMates.fetch;
 
-export const fetchTerminalsAndMates: (
-  params?: FetchFunctionParams<TerminalsAndMatesInput>
-) => Promise<TerminalMate[]> = fetchFunctions.fetchTerminalsAndMates;
-
-export const fetchTerminalsAndMatesByRoute: (
-  params?: FetchFunctionParams<TerminalsAndMatesByRouteInput>
-) => Promise<TerminalMate[]> = fetchFunctions.fetchTerminalsAndMatesByRoute;
+export const fetchTerminalsAndMatesByRoute =
+  endpoints.fetchTerminalsAndMatesByRoute.fetch;

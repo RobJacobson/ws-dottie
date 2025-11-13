@@ -1,38 +1,47 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsfScheduleApi } from "../apiDefinition";
 import {
-  type AllSailingsBySchedRouteIDInput,
   allSailingsBySchedRouteIDInputSchema,
-  type SailingsByRouteIDInput,
   sailingsByRouteIDInputSchema,
 } from "./sailings.input";
-import { type Sailing, sailingSchema } from "./sailings.output";
+import { sailingSchema } from "./sailings.output";
 
-export const sailingsResource = {
+const group = defineEndpointGroup({
+  api: wsfScheduleApi,
   name: "sailings",
+  cacheStrategy: "FREQUENT",
   documentation: {
     resourceDescription:
       "Sailing information represents individual ferry trips with departure and arrival times, vessel assignments, and route details for scheduled ferry services.",
     businessContext: "",
   },
-  // Using FREQUENT strategy because sailings can change throughout the day as schedules are adjusted
-  cacheStrategy: "FREQUENT" as const,
-  endpoints: {
-    fetchAllSailingsBySchedRouteID: {
-      endpoint: "/allsailings/{SchedRouteID}",
-      inputSchema: allSailingsBySchedRouteIDInputSchema,
-      outputSchema: z.array(sailingSchema),
-      sampleParams: { SchedRouteID: 2401 },
-      endpointDescription:
-        "Returns all sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<AllSailingsBySchedRouteIDInput, Sailing[]>,
-    fetchSailingsByRouteID: {
-      endpoint: "/sailings/{SchedRouteID}",
-      inputSchema: sailingsByRouteIDInputSchema,
-      outputSchema: z.array(sailingSchema),
-      sampleParams: { SchedRouteID: 2401 },
-      endpointDescription:
-        "Returns sailing data for the specified scheduled route ID.",
-    } satisfies EndpointDefinition<SailingsByRouteIDInput, Sailing[]>,
+});
+
+export const fetchAllSailingsBySchedRouteID = defineEndpoint({
+  group,
+  functionName: "fetchAllSailingsBySchedRouteID",
+  definition: {
+    endpoint: "/allsailings/{SchedRouteID}",
+    inputSchema: allSailingsBySchedRouteIDInputSchema,
+    outputSchema: sailingSchema.array(),
+    sampleParams: { SchedRouteID: 2401 },
+    endpointDescription:
+      "Returns all sailing data for the specified scheduled route ID.",
   },
-} satisfies EndpointGroup;
+});
+
+export const fetchSailingsByRouteID = defineEndpoint({
+  group,
+  functionName: "fetchSailingsByRouteID",
+  definition: {
+    endpoint: "/sailings/{SchedRouteID}",
+    inputSchema: sailingsByRouteIDInputSchema,
+    outputSchema: sailingSchema.array(),
+    sampleParams: { SchedRouteID: 2401 },
+    endpointDescription:
+      "Returns sailing data for the specified scheduled route ID.",
+  },
+});
+
+export const sailingsResource = group.descriptor;

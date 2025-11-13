@@ -1,15 +1,11 @@
-import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
-import { z } from "@/shared/zod";
-import {
-  type CommercialVehicleRestrictionsWithIdInput,
-  commercialVehicleRestrictionsWithIdInputSchema,
-} from "./cvRestrictionDataWithId.input";
-import {
-  type CVRestrictionWithId,
-  cvRestrictionWithIdSchema,
-} from "./cvRestrictionDataWithId.output";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { wsdotCommercialVehicleRestrictionsApi } from "../apiDefinition";
+import { commercialVehicleRestrictionsWithIdInputSchema } from "./cvRestrictionDataWithId.input";
+import { cvRestrictionWithIdSchema } from "./cvRestrictionDataWithId.output";
 
-export const cvRestrictionDataWithIdGroup = {
+const group = defineEndpointGroup({
+  api: wsdotCommercialVehicleRestrictionsApi,
   name: "cv-restriction-data-with-id",
   documentation: {
     resourceDescription:
@@ -17,18 +13,20 @@ export const cvRestrictionDataWithIdGroup = {
     businessContext:
       "Use to check vehicle restrictions and track specific limitations by providing weight limits, height clearances, and unique identifiers for Washington State highways. Monitor restriction changes and manage permit requirements for trucking companies and logistics providers.",
   },
-  cacheStrategy: "STATIC" as const,
-  endpoints: {
-    fetchCommercialVehicleRestrictionsWithId: {
-      endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
-      inputSchema: commercialVehicleRestrictionsWithIdInputSchema,
-      outputSchema: z.array(cvRestrictionWithIdSchema),
-      sampleParams: {},
-      endpointDescription:
-        "Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.",
-    } satisfies EndpointDefinition<
-      CommercialVehicleRestrictionsWithIdInput,
-      CVRestrictionWithId[]
-    >,
+  cacheStrategy: "STATIC",
+});
+
+export const fetchCommercialVehicleRestrictionsWithId = defineEndpoint({
+  group,
+  functionName: "fetchCommercialVehicleRestrictionsWithId",
+  definition: {
+    endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
+    inputSchema: commercialVehicleRestrictionsWithIdInputSchema,
+    outputSchema: cvRestrictionWithIdSchema.array(),
+    sampleParams: {},
+    endpointDescription:
+      "Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.",
   },
-} satisfies EndpointGroup;
+});
+
+export const cvRestrictionDataWithIdGroup = group.descriptor;

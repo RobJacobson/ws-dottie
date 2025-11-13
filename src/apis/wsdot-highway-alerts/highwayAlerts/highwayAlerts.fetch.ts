@@ -1,39 +1,11 @@
-import { wsdotHighwayAlertsApi } from "@/apis/wsdot-highway-alerts/apiDefinition";
-import {
-  createFetchFunctions,
-  type FetchFunctionParams,
-} from "@/shared/factories";
-import { highwayAlertsGroup } from "./highwayAlerts.endpoints";
-import type {
-  AlertByIdInput,
-  AlertsByMapAreaInput,
-  AlertsByRegionIDInput,
-  AlertsInput,
-  SearchAlertsInput,
-} from "./highwayAlerts.input";
-import type { Alert } from "./highwayAlerts.output";
+import * as endpoints from "./highwayAlerts.endpoints";
 
-const fetchFunctions = createFetchFunctions(
-  wsdotHighwayAlertsApi,
-  highwayAlertsGroup
-);
+export const fetchAlerts = endpoints.fetchAlerts.fetch;
 
-export const fetchAlerts: (
-  params?: FetchFunctionParams<AlertsInput>
-) => Promise<Alert[]> = fetchFunctions.fetchAlerts;
+export const fetchAlertById = endpoints.fetchAlertById.fetch;
 
-export const fetchAlertById: (
-  params?: FetchFunctionParams<AlertByIdInput>
-) => Promise<Alert> = fetchFunctions.fetchAlertById;
+export const fetchAlertsByRegionId = endpoints.fetchAlertsByRegionId.fetch;
 
-export const fetchAlertsByRegionId: (
-  params?: FetchFunctionParams<AlertsByRegionIDInput>
-) => Promise<Alert[]> = fetchFunctions.fetchAlertsByRegionId;
+export const fetchAlertsByMapArea = endpoints.fetchAlertsByMapArea.fetch;
 
-export const fetchAlertsByMapArea: (
-  params?: FetchFunctionParams<AlertsByMapAreaInput>
-) => Promise<Alert[]> = fetchFunctions.fetchAlertsByMapArea;
-
-export const searchAlerts: (
-  params?: FetchFunctionParams<SearchAlertsInput>
-) => Promise<Alert[]> = fetchFunctions.searchAlerts;
+export const searchAlerts = endpoints.searchAlerts.fetch;
