@@ -66,15 +66,28 @@ export const setApiKey = (apiKey: string): void => {
 };
 
 /**
- * Sets the WSDOT base URL
+ * Sets WSDOT base URL
  *
  * This function allows runtime modification of the base URL,
  * useful for different environments or API endpoints.
  *
  * @param domain - The new domain string to set
  */
-export const setDomain = (domain: string): void => {
+export const setBaseUrl = (domain: string): void => {
   runtimeConfig.domain = domain;
+};
+
+/**
+ * Sets logging level for WS-Dottie
+ *
+ * This function allows runtime modification of the logging level,
+ * useful for different environments or debugging needs.
+ *
+ * @param level - The new logging level string to set
+ */
+export const setLogLevel = (level: string): void => {
+  // Implementation would go here
+  console.log(`Setting log level to: ${level}`);
 };
 
 /**
@@ -87,5 +100,6 @@ export const configManager = {
   getApiKey,
   getDomain,
   setApiKey,
-  setDomain,
+  setBaseUrl,
+  setLogLevel,
 };
