@@ -10,18 +10,15 @@
 export { useQueryWithCacheFlushDate } from "./createCacheFlushDateHook";
 // Endpoint factory
 export { createEndpoint } from "./createEndpoint";
-// Fetch function factories
-export type { FetchFunctionParams } from "./createFetchFunctions";
+// Fetch function factory
+export type { FetchFunctionParams } from "./createFetchFunction";
+export { createFetchFunction } from "./createFetchFunction";
+// Hook factory
+export type { QueryHookOptions } from "./createHookFunction";
 export {
-  createFetchFunction,
-  createFetchFunctions,
-} from "./createFetchFunctions";
-// Hook factories
-export type { QueryHookOptions } from "./createHooks";
-export { createHooks } from "./createHooks";
+  createHookFunction,
+  shouldUseCacheFlushDate,
+} from "./createHookFunction";
 
 // Query options
 export { cacheStrategies } from "./queryOptions";
-
-// Type helpers
-export type { FetchFunctionsMap, HooksMap } from "./types";

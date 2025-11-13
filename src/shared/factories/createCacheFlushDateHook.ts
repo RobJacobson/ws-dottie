@@ -13,7 +13,7 @@ import React, { useEffect } from "react";
 import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 import type { Endpoint } from "@/shared/types";
 import { createEndpoint } from "./createEndpoint";
-import type { FetchFunctionParams } from "./createFetchFunctions";
+import type { FetchFunctionParams } from "./createFetchFunction";
 import { cacheStrategies } from "./queryOptions";
 
 /**
