@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { tollRatesInputSchema } from "./tollRates.input";
 import { tollRateSchema } from "./tollRates.output";
 
@@ -16,8 +16,7 @@ export const tollRatesGroup = defineEndpointGroup({
 });
 
 export const fetchTollRates = defineEndpoint({
-  apiName: wsdotTollRatesApi.name,
-  baseUrl: wsdotTollRatesApi.baseUrl,
+  api: API,
   group: tollRatesGroup,
   functionName: "fetchTollRates",
   endpoint: "/getTollRatesAsJson",
@@ -27,4 +26,3 @@ export const fetchTollRates = defineEndpoint({
   endpointDescription:
     "Returns multiple TollRate items for all high occupancy toll lanes statewide.",
 });
-

@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalWaitTimesByIdInputSchema,
   terminalWaitTimesInputSchema,
@@ -19,8 +19,7 @@ export const terminalWaitTimesGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalWaitTimes = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimes",
   endpoint: "/terminalWaitTimes",
@@ -32,8 +31,7 @@ export const fetchTerminalWaitTimes = defineEndpoint({
 });
 
 export const fetchTerminalWaitTimesByTerminalId = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimesByTerminalId",
   endpoint: "/terminalWaitTimes/{TerminalID}",
@@ -43,4 +41,3 @@ export const fetchTerminalWaitTimesByTerminalId = defineEndpoint({
   endpointDescription:
     "Returns a single TerminalWaitTime object for specified terminal.",
 });
-

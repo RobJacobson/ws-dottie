@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { mapAreasInputSchema } from "./alertAreas.input";
 import { areaSchema } from "./alertAreas.output";
 
@@ -16,8 +16,7 @@ export const alertAreasGroup = defineEndpointGroup({
 });
 
 export const fetchMapAreas = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: alertAreasGroup,
   functionName: "fetchMapAreas",
   endpoint: "/getMapAreasAsJson",
@@ -27,4 +26,3 @@ export const fetchMapAreas = defineEndpoint({
   endpointDescription:
     "Returns an array of Area objects for all available geographic regions.",
 });
-

@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotWeatherStationsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { weatherStationsInputSchema } from "./weatherStations.input";
 import { weatherStationSchema } from "./weatherStations.output";
 
@@ -16,8 +16,7 @@ export const weatherStationsGroup = defineEndpointGroup({
 });
 
 export const fetchWeatherStations = defineEndpoint({
-  apiName: wsdotWeatherStationsApi.name,
-  baseUrl: wsdotWeatherStationsApi.baseUrl,
+  api: API,
   group: weatherStationsGroup,
   functionName: "fetchWeatherStations",
   endpoint: "/GetCurrentStationsAsJson",
@@ -27,4 +26,3 @@ export const fetchWeatherStations = defineEndpoint({
   endpointDescription:
     "Returns multiple WeatherStation items for statewide coverage.",
 });
-

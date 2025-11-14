@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   tollTripRatesInputSchema,
   tripRatesByDateInputSchema,
@@ -21,8 +21,7 @@ export const tollTripRatesGroup = defineEndpointGroup({
 });
 
 export const fetchTollTripRates = defineEndpoint({
-  apiName: wsdotTollRatesApi.name,
-  baseUrl: wsdotTollRatesApi.baseUrl,
+  api: API,
   group: tollTripRatesGroup,
   functionName: "fetchTollTripRates",
   endpoint: "/getTollTripRatesAsJson",
@@ -32,10 +31,8 @@ export const fetchTollTripRates = defineEndpoint({
   endpointDescription:
     "Returns single TollTripRates item with current pricing and message data.",
 });
-
 export const fetchTripRatesByDate = defineEndpoint({
-  apiName: wsdotTollRatesApi.name,
-  baseUrl: wsdotTollRatesApi.baseUrl,
+  api: API,
   group: tollTripRatesGroup,
   functionName: "fetchTripRatesByDate",
   endpoint: "/getTripRatesByDateAsJson?FromDate={FromDate}&ToDate={ToDate}",
@@ -50,8 +47,7 @@ export const fetchTripRatesByDate = defineEndpoint({
 });
 
 export const fetchTripRatesByVersion = defineEndpoint({
-  apiName: wsdotTollRatesApi.name,
-  baseUrl: wsdotTollRatesApi.baseUrl,
+  api: API,
   group: tollTripRatesGroup,
   functionName: "fetchTripRatesByVersion",
   endpoint: "/getTripRatesByVersionAsJson?Version={Version}",
@@ -61,4 +57,3 @@ export const fetchTripRatesByVersion = defineEndpoint({
   endpointDescription:
     "Returns single TollTripRates item for specific version.",
 });
-

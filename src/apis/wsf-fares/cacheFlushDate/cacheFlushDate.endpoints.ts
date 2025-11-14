@@ -6,7 +6,7 @@ import {
 } from "@/apis/shared/cacheFlushDate";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfFaresApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 
 export const cacheFlushDateFaresGroup = defineEndpointGroup({
   name: "cache-flush-date-fares",
@@ -20,8 +20,7 @@ export const cacheFlushDateFaresGroup = defineEndpointGroup({
 });
 
 export const fetchCacheFlushDateFares = defineEndpoint({
-  apiName: wsfFaresApi.name,
-  baseUrl: wsfFaresApi.baseUrl,
+  api: API,
   group: cacheFlushDateFaresGroup,
   functionName: "fetchCacheFlushDateFares",
   endpoint: "/cacheflushdate",
@@ -31,7 +30,6 @@ export const fetchCacheFlushDateFares = defineEndpoint({
   endpointDescription:
     "Returns the timestamp of when any static endpoint data for the wsf-fares API was last updated.",
 });
-
 
 // Re-export with API-specific names for backward compatibility
 export type CacheFlushDateFaresInput = CacheFlushDateInput;

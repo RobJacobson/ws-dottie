@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   routeDetailsByTripDateAndRouteIdInputSchema,
   routeDetailsByTripDateAndTerminalsInputSchema,
@@ -21,8 +21,7 @@ export const routeDetailsGroup = defineEndpointGroup({
 });
 
 export const fetchRouteDetailsByTripDate = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: routeDetailsGroup,
   functionName: "fetchRouteDetailsByTripDate",
   endpoint: "/routedetails/{TripDate}",
@@ -33,8 +32,7 @@ export const fetchRouteDetailsByTripDate = defineEndpoint({
 });
 
 export const fetchRouteDetailsByTripDateAndRouteId = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: routeDetailsGroup,
   functionName: "fetchRouteDetailsByTripDateAndRouteId",
   endpoint: "/routedetails/{TripDate}/{RouteID}",
@@ -45,8 +43,7 @@ export const fetchRouteDetailsByTripDateAndRouteId = defineEndpoint({
 });
 
 export const fetchRouteDetailsByTripDateAndTerminals = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: routeDetailsGroup,
   functionName: "fetchRouteDetailsByTripDateAndTerminals",
   endpoint:
@@ -60,4 +57,3 @@ export const fetchRouteDetailsByTripDateAndTerminals = defineEndpoint({
   },
   endpointDescription: "Returns multiple of RouteDetails for terminal pair.",
 });
-

@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalsAndMatesByRouteInputSchema,
   terminalsAndMatesInputSchema,
@@ -20,8 +20,7 @@ export const scheduleTerminalsGroup = defineEndpointGroup({
 });
 
 export const fetchTerminals = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleTerminalsGroup,
   functionName: "fetchTerminals",
   endpoint: "/terminals/{TripDate}",
@@ -32,8 +31,7 @@ export const fetchTerminals = defineEndpoint({
 });
 
 export const fetchTerminalsAndMates = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleTerminalsGroup,
   functionName: "fetchTerminalsAndMates",
   endpoint: "/terminalsandmates/{TripDate}",
@@ -45,8 +43,7 @@ export const fetchTerminalsAndMates = defineEndpoint({
 });
 
 export const fetchTerminalsAndMatesByRoute = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleTerminalsGroup,
   functionName: "fetchTerminalsAndMatesByRoute",
   endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
@@ -56,4 +53,3 @@ export const fetchTerminalsAndMatesByRoute = defineEndpoint({
   endpointDescription:
     "Returns terminals and their mates for the specified trip date and route.",
 });
-

@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalVerboseByTerminalIdInputSchema,
   terminalVerboseInputSchema,
@@ -19,8 +19,7 @@ export const terminalVerboseGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalVerbose = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalVerboseGroup,
   functionName: "fetchTerminalVerbose",
   endpoint: "/terminalVerbose",
@@ -32,8 +31,7 @@ export const fetchTerminalVerbose = defineEndpoint({
 });
 
 export const fetchTerminalVerboseByTerminalId = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalVerboseGroup,
   functionName: "fetchTerminalVerboseByTerminalId",
   endpoint: "/terminalVerbose/{TerminalID}",
@@ -43,4 +41,3 @@ export const fetchTerminalVerboseByTerminalId = defineEndpoint({
   endpointDescription:
     "Returns TerminalVerbose data for the terminal with the specified terminal.",
 });
-

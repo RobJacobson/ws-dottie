@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsdotWeatherInformationApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   currentWeatherForStationsInputSchema,
   searchWeatherInformationInputSchema,
@@ -22,8 +22,7 @@ export const weatherInfoGroup = defineEndpointGroup({
 });
 
 export const fetchWeatherInformation = defineEndpoint({
-  apiName: wsdotWeatherInformationApi.name,
-  baseUrl: wsdotWeatherInformationApi.baseUrl,
+  api: API,
   group: weatherInfoGroup,
   functionName: "fetchWeatherInformation",
   endpoint: "/GetCurrentWeatherInformationAsJson",
@@ -34,8 +33,7 @@ export const fetchWeatherInformation = defineEndpoint({
 });
 
 export const fetchWeatherInformationByStationId = defineEndpoint({
-  apiName: wsdotWeatherInformationApi.name,
-  baseUrl: wsdotWeatherInformationApi.baseUrl,
+  api: API,
   group: weatherInfoGroup,
   functionName: "fetchWeatherInformationByStationId",
   endpoint:
@@ -47,8 +45,7 @@ export const fetchWeatherInformationByStationId = defineEndpoint({
 });
 
 export const fetchCurrentWeatherForStations = defineEndpoint({
-  apiName: wsdotWeatherInformationApi.name,
-  baseUrl: wsdotWeatherInformationApi.baseUrl,
+  api: API,
   group: weatherInfoGroup,
   functionName: "fetchCurrentWeatherForStations",
   endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
@@ -59,8 +56,7 @@ export const fetchCurrentWeatherForStations = defineEndpoint({
 });
 
 export const searchWeatherInformation = defineEndpoint({
-  apiName: wsdotWeatherInformationApi.name,
-  baseUrl: wsdotWeatherInformationApi.baseUrl,
+  api: API,
   group: weatherInfoGroup,
   functionName: "searchWeatherInformation",
   endpoint:
@@ -77,4 +73,3 @@ export const searchWeatherInformation = defineEndpoint({
   endpointDescription:
     "Returns multiple WeatherInfo for historical time range.",
 });
-

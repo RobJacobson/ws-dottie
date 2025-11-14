@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
 import { alertDetailSchema } from "./scheduleAlerts.output";
 
@@ -15,8 +15,7 @@ export const scheduleAlertsGroup = defineEndpointGroup({
 });
 
 export const fetchScheduleAlerts = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleAlertsGroup,
   functionName: "fetchScheduleAlerts",
   endpoint: "/alerts",
@@ -25,4 +24,3 @@ export const fetchScheduleAlerts = defineEndpoint({
   sampleParams: {},
   endpointDescription: "Returns all current schedule alerts.",
 });
-

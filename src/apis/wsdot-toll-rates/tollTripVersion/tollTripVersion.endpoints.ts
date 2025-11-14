@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { tollTripVersionInputSchema } from "./tollTripVersion.input";
 import { tollTripVersionSchema } from "./tollTripVersion.output";
 
@@ -15,8 +15,7 @@ export const tollTripVersionGroup = defineEndpointGroup({
 });
 
 export const fetchTollTripVersion = defineEndpoint({
-  apiName: wsdotTollRatesApi.name,
-  baseUrl: wsdotTollRatesApi.baseUrl,
+  api: API,
   group: tollTripVersionGroup,
   functionName: "fetchTollTripVersion",
   endpoint: "/getTollTripVersionAsJson",
@@ -26,4 +25,3 @@ export const fetchTollTripVersion = defineEndpoint({
   endpointDescription:
     "Returns current version and timestamp information for toll trip data.",
 });
-

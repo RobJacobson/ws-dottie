@@ -6,7 +6,7 @@ import { terminalListSchema } from "@/apis/shared/terminals.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsfFaresApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 
 export const terminalsGroup = defineEndpointGroup({
   name: "terminals",
@@ -20,8 +20,7 @@ export const terminalsGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalFares = defineEndpoint({
-  apiName: wsfFaresApi.name,
-  baseUrl: wsfFaresApi.baseUrl,
+  api: API,
   group: terminalsGroup,
   functionName: "fetchTerminalFares",
   endpoint: "/terminals/{TripDate}",
@@ -33,8 +32,7 @@ export const fetchTerminalFares = defineEndpoint({
 });
 
 export const fetchTerminalMatesFares = defineEndpoint({
-  apiName: wsfFaresApi.name,
-  baseUrl: wsfFaresApi.baseUrl,
+  api: API,
   group: terminalsGroup,
   functionName: "fetchTerminalMatesFares",
   endpoint: "/terminalMates/{TripDate}/{TerminalID}",
@@ -44,4 +42,3 @@ export const fetchTerminalMatesFares = defineEndpoint({
   endpointDescription:
     "Returns arriving terminals for the given departing terminal and trip date.",
 });
-

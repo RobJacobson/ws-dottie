@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   allSailingsBySchedRouteIDInputSchema,
   sailingsByRouteIDInputSchema,
@@ -18,8 +18,7 @@ export const sailingsGroup = defineEndpointGroup({
 });
 
 export const fetchAllSailingsBySchedRouteID = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: sailingsGroup,
   functionName: "fetchAllSailingsBySchedRouteID",
   endpoint: "/allsailings/{SchedRouteID}",
@@ -27,19 +26,16 @@ export const fetchAllSailingsBySchedRouteID = defineEndpoint({
   outputSchema: sailingSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
   endpointDescription:
-    "Returns all sailing data for the specified scheduled route ID.",
+    "Returns all sailing data for specified scheduled route ID.",
 });
 
 export const fetchSailingsByRouteID = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: sailingsGroup,
   functionName: "fetchSailingsByRouteID",
   endpoint: "/sailings/{SchedRouteID}",
   inputSchema: sailingsByRouteIDInputSchema,
   outputSchema: sailingSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
-  endpointDescription:
-    "Returns sailing data for the specified scheduled route ID.",
+  endpointDescription: "Returns sailing data for specified scheduled route ID.",
 });
-

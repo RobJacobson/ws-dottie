@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   timeAdjustmentsByRouteInputSchema,
   timeAdjustmentsBySchedRouteInputSchema,
@@ -19,8 +19,7 @@ export const timeAdjustmentsGroup = defineEndpointGroup({
 });
 
 export const fetchTimeAdjustments = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustments",
   endpoint: "/timeadj",
@@ -31,20 +30,18 @@ export const fetchTimeAdjustments = defineEndpoint({
 });
 
 export const fetchTimeAdjustmentsByRoute = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsByRoute",
   endpoint: "/timeadjbyroute/{RouteID}",
   inputSchema: timeAdjustmentsByRouteInputSchema,
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: { RouteID: 1 },
-  endpointDescription: "Returns time adjustments for the specified route ID.",
+  endpointDescription: "Returns time adjustments for specified route ID.",
 });
 
 export const fetchTimeAdjustmentsBySchedRoute = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsBySchedRoute",
   endpoint: "/timeadjbyschedroute/{SchedRouteID}",
@@ -52,6 +49,5 @@ export const fetchTimeAdjustmentsBySchedRoute = defineEndpoint({
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
   endpointDescription:
-    "Returns time adjustments for the specified scheduled route ID.",
+    "Returns time adjustments for specified scheduled route ID.",
 });
-

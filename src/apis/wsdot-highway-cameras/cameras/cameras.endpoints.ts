@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotHighwayCamerasApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   highwayCameraByCameraIdInputSchema,
   highwayCamerasByRouteAndMilepostInputSchema,
@@ -20,8 +20,7 @@ export const camerasGroup = defineEndpointGroup({
 });
 
 export const fetchHighwayCameras = defineEndpoint({
-  apiName: wsdotHighwayCamerasApi.name,
-  baseUrl: wsdotHighwayCamerasApi.baseUrl,
+  api: API,
   group: camerasGroup,
   functionName: "fetchHighwayCameras",
   endpoint: "/getCamerasAsJson",
@@ -32,8 +31,7 @@ export const fetchHighwayCameras = defineEndpoint({
 });
 
 export const searchHighwayCamerasByRouteAndMilepost = defineEndpoint({
-  apiName: wsdotHighwayCamerasApi.name,
-  baseUrl: wsdotHighwayCamerasApi.baseUrl,
+  api: API,
   group: camerasGroup,
   functionName: "searchHighwayCamerasByRouteAndMilepost",
   endpoint: "/searchCamerasAsJson",
@@ -49,8 +47,7 @@ export const searchHighwayCamerasByRouteAndMilepost = defineEndpoint({
 });
 
 export const fetchHighwayCameraByCameraId = defineEndpoint({
-  apiName: wsdotHighwayCamerasApi.name,
-  baseUrl: wsdotHighwayCamerasApi.baseUrl,
+  api: API,
   group: camerasGroup,
   functionName: "fetchHighwayCameraByCameraId",
   endpoint: "/getCameraAsJson?CameraID={CameraID}",
@@ -60,4 +57,3 @@ export const fetchHighwayCameraByCameraId = defineEndpoint({
   endpointDescription:
     "Returns single Camera item for specific camera identifier.",
 });
-

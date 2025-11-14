@@ -10,16 +10,29 @@ import type { z } from "zod";
 import type { CacheStrategy } from "@/shared/types";
 
 /**
+ * API metadata containing name and base URL
+ *
+ * This type is used to pass API information to endpoint definitions
+ * without creating circular dependencies.
+ */
+export interface ApiMetadata {
+  /** The internal API name (e.g., "wsf-vessels") */
+  name: string;
+  /** The base URL for API (e.g., "https://www.wsdot.wa.gov/ferries/api/vessels/rest") */
+  baseUrl: string;
+}
+
+/**
  * API definition structure for endpoint files
  *
  * This interface defines the structure that endpoint files return as POJOs,
- * containing the API name, base URL, and array of endpoint group definitions with
+ * containing API name, base URL, and array of endpoint group definitions with
  * truncated URLs that can be combined with the base URL.
  */
 export interface ApiDefinition {
   /** The internal API name (e.g., "wsf-schedule") */
   name: string;
-  /** The base URL for the API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
+  /** The base URL for API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
   baseUrl: string;
   /** Array of endpoint group definitions */
   endpointGroups: EndpointGroup[];

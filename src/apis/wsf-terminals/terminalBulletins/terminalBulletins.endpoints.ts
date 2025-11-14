@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalBulletinsByIdInputSchema,
   terminalBulletinsInputSchema,
@@ -19,8 +19,7 @@ export const terminalBulletinsGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalBulletins = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalBulletinsGroup,
   functionName: "fetchTerminalBulletins",
   endpoint: "/terminalBulletins",
@@ -32,8 +31,7 @@ export const fetchTerminalBulletins = defineEndpoint({
 });
 
 export const fetchTerminalBulletinsByTerminalId = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalBulletinsGroup,
   functionName: "fetchTerminalBulletinsByTerminalId",
   endpoint: "/terminalBulletins/{TerminalID}",
@@ -41,6 +39,5 @@ export const fetchTerminalBulletinsByTerminalId = defineEndpoint({
   outputSchema: terminalBulletinSchema,
   sampleParams: { TerminalID: 3 },
   endpointDescription:
-    "Returns TerminalBulletin data for the terminal with the specified terminal.",
+    "Returns TerminalBulletin data for terminal with the specified terminal.",
 });
-

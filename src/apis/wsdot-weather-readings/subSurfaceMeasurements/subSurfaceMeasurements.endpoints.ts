@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
 import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
 
@@ -16,8 +16,7 @@ export const subSurfaceMeasurementsGroup = defineEndpointGroup({
 });
 
 export const fetchSubSurfaceMeasurements = defineEndpoint({
-  apiName: wsdotWeatherReadingsApi.name,
-  baseUrl: wsdotWeatherReadingsApi.baseUrl,
+  api: API,
   group: subSurfaceMeasurementsGroup,
   functionName: "fetchSubSurfaceMeasurements",
   endpoint: "/Scanweb/SubSurfaceMeasurements",
@@ -27,4 +26,3 @@ export const fetchSubSurfaceMeasurements = defineEndpoint({
   endpointDescription:
     "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
 });
-

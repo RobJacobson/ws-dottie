@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { z } from "@/shared/zod";
-import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { eventCategoriesInputSchema } from "./eventCategories.input";
 
 export const eventCategoriesGroup = defineEndpointGroup({
@@ -16,8 +16,7 @@ export const eventCategoriesGroup = defineEndpointGroup({
 });
 
 export const fetchEventCategories = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: eventCategoriesGroup,
   functionName: "fetchEventCategories",
   endpoint: "/getEventCategoriesAsJson",
@@ -27,4 +26,3 @@ export const fetchEventCategories = defineEndpoint({
   endpointDescription:
     "Returns an array of strings for all available event categories.",
 });
-

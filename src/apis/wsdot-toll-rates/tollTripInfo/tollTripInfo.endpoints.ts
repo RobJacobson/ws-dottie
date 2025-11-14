@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotTollRatesApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { tollTripInfoInputSchema } from "./tollTripInfo.input";
 import { tollTripInfoSchema } from "./tollTripInfo.output";
 
@@ -15,14 +15,12 @@ export const tollTripInfoGroup = defineEndpointGroup({
 });
 
 export const fetchTollTripInfo = defineEndpoint({
-  apiName: wsdotTollRatesApi.name,
-  baseUrl: wsdotTollRatesApi.baseUrl,
+  api: API,
   group: tollTripInfoGroup,
   functionName: "fetchTollTripInfo",
   endpoint: "/getTollTripInfoAsJson",
   inputSchema: tollTripInfoInputSchema,
   outputSchema: tollTripInfoSchema.array(),
   sampleParams: {},
-  endpointDescription: "Returns trip information for all toll trips.",
+  endpointDescription: "Returns trip information for all toll trips statewide.",
 });
-

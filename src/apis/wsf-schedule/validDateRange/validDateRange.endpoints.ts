@@ -1,7 +1,7 @@
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
 
 export const scheduleValidDateRangeGroup = defineEndpointGroup({
@@ -16,8 +16,7 @@ export const scheduleValidDateRangeGroup = defineEndpointGroup({
 });
 
 export const fetchScheduleValidDateRange = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleValidDateRangeGroup,
   functionName: "fetchScheduleValidDateRange",
   endpoint: "/validdaterange",
@@ -26,4 +25,3 @@ export const fetchScheduleValidDateRange = defineEndpoint({
   sampleParams: {},
   endpointDescription: "Returns single of ValidDateRange for schedule data.",
 });
-

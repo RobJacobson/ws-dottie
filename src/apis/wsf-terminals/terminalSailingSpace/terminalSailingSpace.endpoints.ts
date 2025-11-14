@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalSailingSpaceByTerminalIdInputSchema,
   terminalSailingSpaceInputSchema,
@@ -18,8 +18,7 @@ export const terminalSailingSpaceGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalSailingSpace = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpace",
   endpoint: "/terminalSailingSpace",
@@ -31,8 +30,7 @@ export const fetchTerminalSailingSpace = defineEndpoint({
 });
 
 export const fetchTerminalSailingSpaceByTerminalId = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpaceByTerminalId",
   endpoint: "/terminalSailingSpace/{TerminalID}",
@@ -42,4 +40,3 @@ export const fetchTerminalSailingSpaceByTerminalId = defineEndpoint({
   endpointDescription:
     "Returns TerminalSailingSpace data for the terminal with the given identifier.",
 });
-

@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalLocationsByIdInputSchema,
   terminalLocationsInputSchema,
@@ -19,8 +19,7 @@ export const terminalLocationsGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalLocations = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalLocationsGroup,
   functionName: "fetchTerminalLocations",
   endpoint: "/terminalLocations",
@@ -32,8 +31,7 @@ export const fetchTerminalLocations = defineEndpoint({
 });
 
 export const fetchTerminalLocationsByTerminalId = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalLocationsGroup,
   functionName: "fetchTerminalLocationsByTerminalId",
   endpoint: "/terminalLocations/{TerminalID}",
@@ -43,4 +41,3 @@ export const fetchTerminalLocationsByTerminalId = defineEndpoint({
   endpointDescription:
     "Returns a single TerminalLocation object for specified terminal.",
 });
-

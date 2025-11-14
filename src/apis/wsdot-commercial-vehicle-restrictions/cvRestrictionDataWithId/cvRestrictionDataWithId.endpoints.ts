@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotCommercialVehicleRestrictionsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { commercialVehicleRestrictionsWithIdInputSchema } from "./cvRestrictionDataWithId.input";
 import { cvRestrictionWithIdSchema } from "./cvRestrictionDataWithId.output";
 
@@ -16,8 +16,7 @@ export const cvRestrictionDataWithIdGroup = defineEndpointGroup({
 });
 
 export const fetchCommercialVehicleRestrictionsWithId = defineEndpoint({
-  apiName: wsdotCommercialVehicleRestrictionsApi.name,
-  baseUrl: wsdotCommercialVehicleRestrictionsApi.baseUrl,
+  api: API,
   group: cvRestrictionDataWithIdGroup,
   functionName: "fetchCommercialVehicleRestrictionsWithId",
   endpoint: "/getCommercialVehicleRestrictionsWithIdAsJson",
@@ -27,4 +26,3 @@ export const fetchCommercialVehicleRestrictionsWithId = defineEndpoint({
   endpointDescription:
     "Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.",
 });
-

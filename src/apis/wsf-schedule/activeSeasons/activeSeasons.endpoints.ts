@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { activeSeasonsInputSchema } from "./activeSeasons.input";
 import { scheduleBaseSchema } from "./activeSeasons.output";
 
@@ -16,8 +16,7 @@ export const activeSeasonsGroup = defineEndpointGroup({
 });
 
 export const fetchActiveSeasons = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: activeSeasonsGroup,
   functionName: "fetchActiveSeasons",
   endpoint: "/activeseasons",
@@ -27,4 +26,3 @@ export const fetchActiveSeasons = defineEndpoint({
   endpointDescription:
     "Returns multiple of ActiveSeasons for all scheduling periods.",
 });
-

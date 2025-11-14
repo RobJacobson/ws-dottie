@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotTravelTimesApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   travelTimeByIdInputSchema,
   travelTimesInputSchema,
@@ -19,8 +19,7 @@ export const travelTimeRoutesGroup = defineEndpointGroup({
 });
 
 export const fetchTravelTimeById = defineEndpoint({
-  apiName: wsdotTravelTimesApi.name,
-  baseUrl: wsdotTravelTimesApi.baseUrl,
+  api: API,
   group: travelTimeRoutesGroup,
   functionName: "fetchTravelTimeById",
   endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
@@ -32,8 +31,7 @@ export const fetchTravelTimeById = defineEndpoint({
 });
 
 export const fetchTravelTimes = defineEndpoint({
-  apiName: wsdotTravelTimesApi.name,
-  baseUrl: wsdotTravelTimesApi.baseUrl,
+  api: API,
   group: travelTimeRoutesGroup,
   functionName: "fetchTravelTimes",
   endpoint: "/getTravelTimesAsJson",
@@ -43,4 +41,3 @@ export const fetchTravelTimes = defineEndpoint({
   endpointDescription:
     "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
 });
-

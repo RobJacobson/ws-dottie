@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotBridgeClearancesApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
@@ -19,8 +19,7 @@ export const bridgeClearancesGroup = defineEndpointGroup({
 });
 
 export const fetchBridgeClearances = defineEndpoint({
-  apiName: wsdotBridgeClearancesApi.name,
-  baseUrl: wsdotBridgeClearancesApi.baseUrl,
+  api: API,
   group: bridgeClearancesGroup,
   functionName: "fetchBridgeClearances",
   endpoint: "/getClearancesAsJson",
@@ -32,8 +31,7 @@ export const fetchBridgeClearances = defineEndpoint({
 });
 
 export const fetchBridgeClearancesByRoute = defineEndpoint({
-  apiName: wsdotBridgeClearancesApi.name,
-  baseUrl: wsdotBridgeClearancesApi.baseUrl,
+  api: API,
   group: bridgeClearancesGroup,
   functionName: "fetchBridgeClearancesByRoute",
   endpoint: "/getClearancesAsJson?Route={Route}",

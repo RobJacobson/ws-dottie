@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfVesselsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   vesselLocationsByIdInputSchema,
   vesselLocationsInputSchema,
@@ -19,8 +19,7 @@ export const vesselLocationsGroup = defineEndpointGroup({
 });
 
 export const fetchVesselLocations = defineEndpoint({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselLocationsGroup,
   functionName: "fetchVesselLocations",
   endpoint: "/vesselLocations",
@@ -32,8 +31,7 @@ export const fetchVesselLocations = defineEndpoint({
 });
 
 export const fetchVesselLocationsByVesselId = defineEndpoint({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselLocationsGroup,
   functionName: "fetchVesselLocationsByVesselId",
   endpoint: "/vesselLocations/{VesselID}",
@@ -43,4 +41,3 @@ export const fetchVesselLocationsByVesselId = defineEndpoint({
   endpointDescription:
     "Returns a VesselLocation object containing real-time position and status information for specified vessel.",
 });
-

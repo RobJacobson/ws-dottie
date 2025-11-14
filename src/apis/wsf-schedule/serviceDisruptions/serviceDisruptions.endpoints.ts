@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
 import { serviceDisruptionSchema } from "./serviceDisruptions.output";
 
@@ -17,8 +17,7 @@ export const serviceDisruptionsGroup = defineEndpointGroup({
 });
 
 export const fetchRoutesHavingServiceDisruptionsByTripDate = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: serviceDisruptionsGroup,
   functionName: "fetchRoutesHavingServiceDisruptionsByTripDate",
   endpoint: "/routeshavingservicedisruptions/{TripDate}",

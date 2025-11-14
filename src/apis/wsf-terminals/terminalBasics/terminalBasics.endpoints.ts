@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfTerminalsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   terminalBasicsByIdInputSchema,
   terminalBasicsInputSchema,
@@ -19,8 +19,7 @@ export const terminalBasicsGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalBasics = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalBasicsGroup,
   functionName: "fetchTerminalBasics",
   endpoint: "/terminalBasics",
@@ -32,8 +31,7 @@ export const fetchTerminalBasics = defineEndpoint({
 });
 
 export const fetchTerminalBasicsByTerminalId = defineEndpoint({
-  apiName: wsfTerminalsApi.name,
-  baseUrl: wsfTerminalsApi.baseUrl,
+  api: API,
   group: terminalBasicsGroup,
   functionName: "fetchTerminalBasicsByTerminalId",
   endpoint: "/terminalBasics/{TerminalID}",
@@ -43,4 +41,3 @@ export const fetchTerminalBasicsByTerminalId = defineEndpoint({
   endpointDescription:
     "Returns a TerminalBasic object containing essential identification and status information for the specified terminal.",
 });
-

@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotBorderCrossingsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { borderCrossingsInputSchema } from "./borderCrossingData.input";
 import { borderCrossingSchema } from "./borderCrossingData.output";
 
@@ -16,8 +16,7 @@ export const borderCrossingDataGroup = defineEndpointGroup({
 });
 
 export const fetchBorderCrossings = defineEndpoint({
-  apiName: wsdotBorderCrossingsApi.name,
-  baseUrl: wsdotBorderCrossingsApi.baseUrl,
+  api: API,
   group: borderCrossingDataGroup,
   functionName: "fetchBorderCrossings",
   endpoint: "/GetBorderCrossingsAsJson",
@@ -27,4 +26,3 @@ export const fetchBorderCrossings = defineEndpoint({
   endpointDescription:
     "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
 });
-

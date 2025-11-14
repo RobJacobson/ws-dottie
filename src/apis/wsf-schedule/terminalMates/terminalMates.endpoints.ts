@@ -3,7 +3,7 @@ import { terminalListSchema } from "@/apis/shared/terminals.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 
 export const scheduleTerminalMatesGroup = defineEndpointGroup({
   name: "schedule-terminal-mates",
@@ -17,8 +17,7 @@ export const scheduleTerminalMatesGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalMatesSchedule = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleTerminalMatesGroup,
   functionName: "fetchTerminalMatesSchedule",
   endpoint: "/terminalmates/{TripDate}/{TerminalID}",
@@ -28,4 +27,3 @@ export const fetchTerminalMatesSchedule = defineEndpoint({
   endpointDescription:
     "Returns multiple of Terminal for specified trip date and terminal ID.",
 });
-

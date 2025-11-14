@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsfFaresApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
 import { fareTotalSchema } from "./fareTotals.output";
 
@@ -17,8 +17,7 @@ export const fareTotalsGroup = defineEndpointGroup({
 });
 
 export const fetchFareTotalsByTripDateAndRoute = defineEndpoint({
-  apiName: wsfFaresApi.name,
-  baseUrl: wsfFaresApi.baseUrl,
+  api: API,
   group: fareTotalsGroup,
   functionName: "fetchFareTotalsByTripDateAndRoute",
   endpoint:
@@ -34,6 +33,5 @@ export const fetchFareTotalsByTripDateAndRoute = defineEndpoint({
     Quantity: "3,1",
   },
   endpointDescription:
-    "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
+    "Calculates total fares for specified terminal combination, trip type, and selected fare line items with quantities.",
 });
-

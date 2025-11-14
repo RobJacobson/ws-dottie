@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfVesselsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   type VesselStatsByIdInput,
   type VesselStatsInput,
@@ -21,8 +21,7 @@ export const vesselStatsGroup = defineEndpointGroup({
 });
 
 export const fetchVesselStats = defineEndpoint<VesselStatsInput, VesselStat[]>({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselStatsGroup,
   functionName: "fetchVesselStats",
   endpoint: "/vesselStats",
@@ -37,15 +36,13 @@ export const fetchVesselStatsByVesselId = defineEndpoint<
   VesselStatsByIdInput,
   VesselStat
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselStatsGroup,
   functionName: "fetchVesselStatsByVesselId",
   endpoint: "/vesselStats/{VesselID}",
   inputSchema: vesselStatsByIdInputSchema,
-  outputSchema: vesselStatSchema,
   sampleParams: { VesselID: 32 },
+  outputSchema: vesselStatSchema,
   endpointDescription:
     "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
 });
-

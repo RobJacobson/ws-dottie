@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { weatherReadingsInputSchema } from "./weatherReadings.input";
 import { weatherReadingSchema } from "./weatherReadings.output";
 
@@ -15,8 +15,7 @@ export const weatherReadingsGroup = defineEndpointGroup({
 });
 
 export const fetchWeatherReadings = defineEndpoint({
-  apiName: wsdotWeatherReadingsApi.name,
-  baseUrl: wsdotWeatherReadingsApi.baseUrl,
+  api: API,
   group: weatherReadingsGroup,
   functionName: "fetchWeatherReadings",
   endpoint: "/Scanweb",
@@ -26,4 +25,3 @@ export const fetchWeatherReadings = defineEndpoint({
   endpointDescription:
     "Returns current weather readings from all weather stations.",
 });
-

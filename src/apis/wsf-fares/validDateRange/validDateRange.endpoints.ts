@@ -1,7 +1,7 @@
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfFaresApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { faresValidDateRangeInputSchema } from "./validDateRange.input";
 
 export const validDateRangeGroup = defineEndpointGroup({
@@ -9,15 +9,14 @@ export const validDateRangeGroup = defineEndpointGroup({
   cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
-      "Each ValidDateRange item represents the current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.",
+      "Each ValidDateRange item represents current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.",
     businessContext:
       "Use to determine valid fare calculation periods by providing DateFrom and DateThru dates for accurate fare queries and booking systems.",
   },
 });
 
 export const fetchFaresValidDateRange = defineEndpoint({
-  apiName: wsfFaresApi.name,
-  baseUrl: wsfFaresApi.baseUrl,
+  api: API,
   group: validDateRangeGroup,
   functionName: "fetchFaresValidDateRange",
   endpoint: "/validdaterange",

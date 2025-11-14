@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfVesselsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import type {
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
@@ -27,8 +27,7 @@ export const fetchVesselAccommodations = defineEndpoint<
   VesselAccommodationsInput,
   VesselAccommodation[]
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselAccommodationsGroup,
   functionName: "fetchVesselAccommodations",
   endpoint: "/vesselAccommodations",
@@ -36,15 +35,14 @@ export const fetchVesselAccommodations = defineEndpoint<
   outputSchema: vesselAccommodationSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple VesselAccommodation objects for all vessels in fleet.",
+    "Returns multiple VesselAccommodation objects for all vessels in the fleet.",
 });
 
 export const fetchVesselAccommodationsByVesselId = defineEndpoint<
   VesselAccommodationsByIdInput,
   VesselAccommodation
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselAccommodationsGroup,
   functionName: "fetchVesselAccommodationsByVesselId",
   endpoint: "/vesselAccommodations/{VesselID}",
@@ -54,4 +52,3 @@ export const fetchVesselAccommodationsByVesselId = defineEndpoint<
   endpointDescription:
     "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
 });
-

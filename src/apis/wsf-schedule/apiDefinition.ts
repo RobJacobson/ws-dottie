@@ -1,5 +1,13 @@
-import type { ApiDefinition } from "@/apis/types";
+import type { ApiDefinition, ApiMetadata } from "@/apis/types";
 
+// Export API metadata FIRST (before importing groups)
+// This allows endpoint files to import API without circular dependency
+export const API: ApiMetadata = {
+  name: "wsf-schedule",
+  baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
+} as const;
+
+// THEN import groups (which can use API constant)
 import { activeSeasonsGroup } from "./activeSeasons/activeSeasons.endpoints";
 import { cacheFlushDateScheduleGroup } from "./cacheFlushDate/cacheFlushDate.endpoints";
 import { routeDetailsGroup } from "./routeDetails/routeDetails.endpoints";
@@ -15,9 +23,10 @@ import { scheduleTerminalsGroup } from "./terminals/terminals.endpoints";
 import { timeAdjustmentsGroup } from "./timeAdjustments/timeAdjustments.endpoints";
 import { scheduleValidDateRangeGroup } from "./validDateRange/validDateRange.endpoints";
 
+// Finally, construct full API definition using API constant
 export const wsfScheduleApi = {
-  name: "wsf-schedule",
-  baseUrl: "https://www.wsdot.wa.gov/ferries/api/schedule/rest",
+  name: API.name,
+  baseUrl: API.baseUrl,
   endpointGroups: [
     activeSeasonsGroup,
     sailingsGroup,

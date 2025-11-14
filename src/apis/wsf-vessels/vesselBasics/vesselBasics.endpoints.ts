@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfVesselsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   type VesselBasicsByIdInput,
   type VesselBasicsInput,
@@ -24,8 +24,7 @@ export const fetchVesselBasics = defineEndpoint<
   VesselBasicsInput,
   VesselBasic[]
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselBasicsGroup,
   functionName: "fetchVesselBasics",
   endpoint: "/vesselBasics",
@@ -33,15 +32,14 @@ export const fetchVesselBasics = defineEndpoint<
   outputSchema: vesselBasicSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple VesselBasic objects for all vessels in the fleet.",
+    "Returns multiple VesselBasic objects for all vessels in fleet.",
 });
 
 export const fetchVesselBasicsByVesselId = defineEndpoint<
   VesselBasicsByIdInput,
   VesselBasic
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselBasicsGroup,
   functionName: "fetchVesselBasicsByVesselId",
   endpoint: "/vesselBasics/{VesselID}",
@@ -51,4 +49,3 @@ export const fetchVesselBasicsByVesselId = defineEndpoint<
   endpointDescription:
     "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
 });
-

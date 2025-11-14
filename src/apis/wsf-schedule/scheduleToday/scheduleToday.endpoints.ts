@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfScheduleApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
@@ -18,8 +18,7 @@ export const scheduleTodayGroup = defineEndpointGroup({
 });
 
 export const fetchScheduleTodayByRoute = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByRoute",
   endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
@@ -30,8 +29,7 @@ export const fetchScheduleTodayByRoute = defineEndpoint({
 });
 
 export const fetchScheduleTodayByTerminals = defineEndpoint({
-  apiName: wsfScheduleApi.name,
-  baseUrl: wsfScheduleApi.baseUrl,
+  api: API,
   group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByTerminals",
   endpoint:
@@ -46,4 +44,3 @@ export const fetchScheduleTodayByTerminals = defineEndpoint({
   endpointDescription:
     "Returns today's schedule for the specified terminal pair.",
 });
-

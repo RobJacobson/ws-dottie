@@ -1,7 +1,7 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { wsdotHighwayAlertsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   alertByIdInputSchema,
   alertsByMapAreaInputSchema,
@@ -24,8 +24,7 @@ export const highwayAlertsGroup = defineEndpointGroup({
 });
 
 export const fetchAlerts = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: highwayAlertsGroup,
   functionName: "fetchAlerts",
   endpoint: "/getAlertsAsJson",
@@ -37,8 +36,7 @@ export const fetchAlerts = defineEndpoint({
 });
 
 export const fetchAlertById = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: highwayAlertsGroup,
   functionName: "fetchAlertById",
   endpoint: "/getAlertAsJson?AlertID={AlertID}",
@@ -49,8 +47,7 @@ export const fetchAlertById = defineEndpoint({
 });
 
 export const fetchAlertsByRegionId = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByRegionId",
   endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
@@ -62,8 +59,7 @@ export const fetchAlertsByRegionId = defineEndpoint({
 });
 
 export const fetchAlertsByMapArea = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByMapArea",
   endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
@@ -75,8 +71,7 @@ export const fetchAlertsByMapArea = defineEndpoint({
 });
 
 export const searchAlerts = defineEndpoint({
-  apiName: wsdotHighwayAlertsApi.name,
-  baseUrl: wsdotHighwayAlertsApi.baseUrl,
+  api: API,
   group: highwayAlertsGroup,
   functionName: "searchAlerts",
   endpoint:
@@ -93,4 +88,3 @@ export const searchAlerts = defineEndpoint({
   endpointDescription:
     "Returns an array of Alert objects matching specified search criteria.",
 });
-

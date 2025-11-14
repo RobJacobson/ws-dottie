@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsfVesselsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   type VesselVerboseByIdInput,
   type VesselVerboseInput,
@@ -27,8 +27,7 @@ export const fetchVesselsVerbose = defineEndpoint<
   VesselVerboseInput,
   VesselVerbose[]
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselVerboseGroup,
   functionName: "fetchVesselsVerbose",
   endpoint: "/vesselVerbose",
@@ -43,8 +42,7 @@ export const fetchVesselsVerboseByVesselId = defineEndpoint<
   VesselVerboseByIdInput,
   VesselVerbose
 >({
-  apiName: wsfVesselsApi.name,
-  baseUrl: wsfVesselsApi.baseUrl,
+  api: API,
   group: vesselVerboseGroup,
   functionName: "fetchVesselsVerboseByVesselId",
   endpoint: "/vesselVerbose/{VesselID}",
@@ -52,6 +50,5 @@ export const fetchVesselsVerboseByVesselId = defineEndpoint<
   outputSchema: vesselVerboseSchema,
   sampleParams: { VesselID: 68 },
   endpointDescription:
-    "Returns a single VesselVerbose object for the specified vessel identifier.",
+    "Returns a single VesselVerbose object for specified vessel identifier.",
 });
-

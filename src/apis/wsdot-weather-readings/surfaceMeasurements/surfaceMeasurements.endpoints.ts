@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotWeatherReadingsApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import { surfaceMeasurementsInputSchema } from "./surfaceMeasurements.input";
 import { surfaceMeasurementSchema } from "./surfaceMeasurements.output";
 
@@ -15,8 +15,7 @@ export const surfaceMeasurementsGroup = defineEndpointGroup({
 });
 
 export const fetchSurfaceMeasurements = defineEndpoint({
-  apiName: wsdotWeatherReadingsApi.name,
-  baseUrl: wsdotWeatherReadingsApi.baseUrl,
+  api: API,
   group: surfaceMeasurementsGroup,
   functionName: "fetchSurfaceMeasurements",
   endpoint: "/Scanweb/SurfaceMeasurements",
@@ -26,4 +25,3 @@ export const fetchSurfaceMeasurements = defineEndpoint({
   endpointDescription:
     "Returns surface measurements from all weather stations.",
 });
-

@@ -1,6 +1,6 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { wsdotTrafficFlowApi } from "../apiDefinition";
+import { API } from "../apiDefinition";
 import {
   trafficFlowByIdInputSchema,
   trafficFlowsInputSchema,
@@ -19,8 +19,7 @@ export const flowDataGroup = defineEndpointGroup({
 });
 
 export const fetchTrafficFlows = defineEndpoint({
-  apiName: wsdotTrafficFlowApi.name,
-  baseUrl: wsdotTrafficFlowApi.baseUrl,
+  api: API,
   group: flowDataGroup,
   functionName: "fetchTrafficFlows",
   endpoint: "/getTrafficFlowsAsJson",
@@ -32,8 +31,7 @@ export const fetchTrafficFlows = defineEndpoint({
 });
 
 export const fetchTrafficFlowById = defineEndpoint({
-  apiName: wsdotTrafficFlowApi.name,
-  baseUrl: wsdotTrafficFlowApi.baseUrl,
+  api: API,
   group: flowDataGroup,
   functionName: "fetchTrafficFlowById",
   endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",
@@ -43,4 +41,3 @@ export const fetchTrafficFlowById = defineEndpoint({
   endpointDescription:
     "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
 });
-
