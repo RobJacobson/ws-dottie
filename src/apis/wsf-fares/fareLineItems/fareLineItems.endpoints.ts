@@ -1,16 +1,13 @@
-import { datesHelper } from "@/shared/utils";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { datesHelper } from "@/shared/utils";
+import { wsfFaresApi } from "../apiDefinition";
 import {
   fareLineItemsBasicInputSchema,
   fareLineItemsByTripDateAndTerminalsInputSchema,
   fareLineItemsVerboseInputSchema,
 } from "./fareLineItems.input";
-import {
-  lineItemSchema,
-  lineItemVerboseSchema,
-} from "./fareLineItems.output";
-import { wsfFaresApi } from "../apiDefinition";
+import { lineItemSchema, lineItemVerboseSchema } from "./fareLineItems.output";
 
 const group = defineEndpointGroup({
   api: wsfFaresApi,

@@ -4,8 +4,7 @@ import {
   fetchRouteDetailsByTripDateAndTerminals,
 } from "./routeDetails.endpoints";
 
-export const useRouteDetailsByTripDate =
-  fetchRouteDetailsByTripDate.useQuery;
+export const useRouteDetailsByTripDate = fetchRouteDetailsByTripDate.useQuery;
 
 export const useRouteDetailsByTripDateAndRouteId =
   fetchRouteDetailsByTripDateAndRouteId.useQuery;

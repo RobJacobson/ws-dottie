@@ -6,8 +6,8 @@
  */
 
 export {
-  CacheFlushDateOutput as CacheFlushDateTerminals,
   CacheFlushDateInput as CacheFlushDateTerminalsInput,
+  CacheFlushDateOutput as CacheFlushDateTerminals,
 } from "@/apis/shared/cacheFlushDate";
 export { fetchCacheFlushDateTerminals } from "./cacheFlushDate/cacheFlushDate.fetch";
 export * from "./terminalBasics/terminalBasics.fetch";

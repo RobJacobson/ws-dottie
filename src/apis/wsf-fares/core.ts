@@ -6,6 +6,10 @@
  */
 
 export {
+  CacheFlushDateInput as CacheFlushDateFaresInput,
+  CacheFlushDateOutput as CacheFlushDateFares,
+} from "@/apis/shared/cacheFlushDate";
+export {
   type TerminalMatesInput,
   type TerminalsInput,
   terminalMatesInputSchema,
@@ -21,10 +25,6 @@ export {
   type ValidDateRange,
   validDateRangeSchema,
 } from "../shared/validDateRange.output";
-export {
-  CacheFlushDateOutput as CacheFlushDateFares,
-  CacheFlushDateInput as CacheFlushDateFaresInput,
-} from "@/apis/shared/cacheFlushDate";
 export { fetchCacheFlushDateFares } from "./cacheFlushDate/cacheFlushDate.fetch";
 export * from "./fareLineItems/fareLineItems.fetch";
 export * from "./fareLineItems/fareLineItems.input";

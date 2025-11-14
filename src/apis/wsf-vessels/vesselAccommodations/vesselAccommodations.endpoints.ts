@@ -1,13 +1,13 @@
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { wsfVesselsApi } from "../apiDefinition";
-import {
-  vesselAccommodationsByIdInputSchema,
-  vesselAccommodationsInputSchema,
-} from "./vesselAccommodations.input";
 import type {
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
+} from "./vesselAccommodations.input";
+import {
+  vesselAccommodationsByIdInputSchema,
+  vesselAccommodationsInputSchema,
 } from "./vesselAccommodations.input";
 import type { VesselAccommodation } from "./vesselAccommodations.output";
 import { vesselAccommodationSchema } from "./vesselAccommodations.output";

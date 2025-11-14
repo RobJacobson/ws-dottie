@@ -1,6 +1,6 @@
-import { datesHelper } from "@/shared/utils";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApi } from "../apiDefinition";
 import {
   routeDetailsByTripDateAndRouteIdInputSchema,
@@ -29,8 +29,7 @@ export const fetchRouteDetailsByTripDate = defineEndpoint({
     inputSchema: routeDetailsByTripDateInputSchema,
     outputSchema: routeDetailSchema.array(),
     sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription:
-      "Returns multiple of RouteDetails for specified date.",
+    endpointDescription: "Returns multiple of RouteDetails for specified date.",
   },
 });
 
@@ -42,8 +41,7 @@ export const fetchRouteDetailsByTripDateAndRouteId = defineEndpoint({
     inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
     outputSchema: routeDetailSchema,
     sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
-    endpointDescription:
-      "Returns single of RouteDetails for specified route.",
+    endpointDescription: "Returns single of RouteDetails for specified route.",
   },
 });
 
@@ -60,8 +58,7 @@ export const fetchRouteDetailsByTripDateAndTerminals = defineEndpoint({
       DepartingTerminalID: 1,
       ArrivingTerminalID: 10,
     },
-    endpointDescription:
-      "Returns multiple of RouteDetails for terminal pair.",
+    endpointDescription: "Returns multiple of RouteDetails for terminal pair.",
   },
 });
 

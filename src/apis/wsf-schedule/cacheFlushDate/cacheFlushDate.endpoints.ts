@@ -1,8 +1,8 @@
 import {
-  cacheFlushDateInputSchema,
-  cacheFlushDateOutputSchema,
   type CacheFlushDateInput,
   type CacheFlushDateOutput,
+  cacheFlushDateInputSchema,
+  cacheFlushDateOutputSchema,
 } from "@/apis/shared/cacheFlushDate";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";

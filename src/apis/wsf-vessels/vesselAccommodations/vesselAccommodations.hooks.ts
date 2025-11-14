@@ -3,7 +3,6 @@ import {
   fetchVesselAccommodationsByVesselId,
 } from "./vesselAccommodations.endpoints";
 
-export const useVesselAccommodations =
-  fetchVesselAccommodations.useQuery;
+export const useVesselAccommodations = fetchVesselAccommodations.useQuery;
 export const useVesselAccommodationsByVesselId =
   fetchVesselAccommodationsByVesselId.useQuery;

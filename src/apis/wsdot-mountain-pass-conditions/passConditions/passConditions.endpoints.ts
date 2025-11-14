@@ -23,7 +23,8 @@ export const fetchMountainPassConditionById = defineEndpoint({
   group,
   functionName: "fetchMountainPassConditionById",
   definition: {
-    endpoint: "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
+    endpoint:
+      "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
     inputSchema: mountainPassConditionByIdInputSchema,
     outputSchema: passConditionSchema,
     sampleParams: { PassConditionID: 12 },

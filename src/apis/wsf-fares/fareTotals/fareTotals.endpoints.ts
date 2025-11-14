@@ -1,11 +1,9 @@
-import { datesHelper } from "@/shared/utils";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import {
-  fareTotalsByTripDateAndRouteInputSchema,
-} from "./fareTotals.input";
-import { fareTotalSchema } from "./fareTotals.output";
+import { datesHelper } from "@/shared/utils";
 import { wsfFaresApi } from "../apiDefinition";
+import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
+import { fareTotalSchema } from "./fareTotals.output";
 
 const group = defineEndpointGroup({
   api: wsfFaresApi,

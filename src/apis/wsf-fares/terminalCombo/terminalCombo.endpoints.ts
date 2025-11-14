@@ -1,6 +1,7 @@
-import { datesHelper } from "@/shared/utils";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import { datesHelper } from "@/shared/utils";
+import { wsfFaresApi } from "../apiDefinition";
 import {
   terminalComboFaresVerboseInputSchema,
   terminalComboInputSchema,
@@ -9,7 +10,6 @@ import {
   terminalComboFaresSchema,
   terminalComboFaresVerboseSchema,
 } from "./terminalCombo.output";
-import { wsfFaresApi } from "../apiDefinition";
 
 const group = defineEndpointGroup({
   api: wsfFaresApi,

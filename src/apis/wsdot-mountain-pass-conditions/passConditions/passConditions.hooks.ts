@@ -6,5 +6,4 @@ import {
 export const useMountainPassConditionById =
   fetchMountainPassConditionById.useQuery;
 
-export const useMountainPassConditions =
-  fetchMountainPassConditions.useQuery;
+export const useMountainPassConditions = fetchMountainPassConditions.useQuery;
