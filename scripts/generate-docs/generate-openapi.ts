@@ -17,13 +17,11 @@ import {
 import yaml from "js-yaml";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
-import type {
-  ApiDefinition,
-  EndpointDefinition,
-} from "../../src/apis/types.ts";
+import type { ApiDefinition } from "../../src/apis/types.ts";
 import { apis, endpoints } from "../../src/shared/endpoints.ts";
 import { fetchDottie } from "../../src/shared/fetching/fetchDottie.ts";
-import { z } from "../../src/shared/zod-openapi-init.ts";
+import type { Endpoint } from "../../src/shared/types.ts";
+import { z } from "../../src/shared/zod.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -95,35 +93,48 @@ const formatSampleData = (
 };
 
 /**
- * Fetch actual API response data using fetchDottie and save to sample-data directory
+ * Finds the endpoint group name for a given endpoint
  *
- * Downloads real API responses for all endpoints and saves them to the
- * docs/sample-data directory for use in documentation generation.
+ * This function matches endpoints to their groups by examining the endpoint's
+ * function name and matching it to group patterns. Since endpoints don't directly
+ * reference their groups, we match them based on function name patterns.
  *
  * @param api - The API definition containing endpoint groups
- * @param endpoint - The endpoint definition containing function name and sample parameters
- * @returns Promise resolving to formatted sample data with truncation metadata
+ * @param endpoint - The endpoint to find the group for
+ * @returns The group name, or a default group name if not found
  */
-const resolveFunctionName = (
-  providedName: string | undefined,
-  endpoint: EndpointDefinition<unknown, unknown>
+const findEndpointGroup = (
+  api: ApiDefinition,
+  endpoint: Endpoint<unknown, unknown>
 ): string => {
-  if (providedName && providedName.trim().length > 0) {
-    return providedName.trim();
+  // Try to match endpoint to a group by checking function name patterns
+  // This is a heuristic approach - we match based on common naming patterns
+  const functionNameLower = endpoint.functionName
+    .toLowerCase()
+    .replace(/^fetch/, "");
+
+  for (const group of api.endpointGroups) {
+    // Check if the function name matches common patterns for this group
+    // For example, "fetchVesselLocations" might belong to "vessel-locations" group
+    const groupNameLower = group.name.toLowerCase().replace(/-/g, "");
+
+    // Check if function name contains group name keywords (after removing "fetch" prefix)
+    if (
+      functionNameLower.includes(groupNameLower) ||
+      groupNameLower.includes(functionNameLower)
+    ) {
+      return group.name;
+    }
   }
 
-  const fn = (endpoint as { function?: unknown }).function;
-  if (typeof fn === "string" && fn.length > 0) {
-    return fn;
-  }
-
-  throw new Error("Endpoint definition missing function name");
+  // Fallback: use the first group or create a default
+  return api.endpointGroups[0]?.name || "default";
 };
 
 const fetchAndSaveSampleData = async (
   api: ApiDefinition,
   functionName: string,
-  endpoint: EndpointDefinition<unknown, unknown>
+  endpoint: Endpoint<unknown, unknown>
 ): Promise<{
   data: unknown;
   isTruncated: boolean;
@@ -138,18 +149,10 @@ const fetchAndSaveSampleData = async (
   );
 
   try {
-    // Find the endpoint object from the endpoints array
-    const endpointObj = endpoints.find(
-      (e) => e.api === api.name && e.function === functionName
-    );
-
-    if (!endpointObj) {
-      throw new Error(`Endpoint not found: ${api.name}:${functionName}`);
-    }
-
+    // Use the endpoint object directly (it's already from the registry)
     // Fetch fresh data using fetchDottie with the endpoint object
     const data = await fetchDottie({
-      endpoint: endpointObj,
+      endpoint,
       params: endpoint.sampleParams || {},
       fetchMode: "native",
       validate: true,
@@ -202,7 +205,7 @@ const fetchAndSaveSampleData = async (
 const generateCodeExample = (
   api: ApiDefinition,
   functionName: string,
-  endpoint: EndpointDefinition<unknown, unknown>
+  endpoint: Endpoint<unknown, unknown>
 ): string => {
   const sampleParams = endpoint.sampleParams;
   const hasParams =
@@ -390,16 +393,15 @@ const registerSchema = (
 const registerEndpoint = async (
   registry: OpenAPIRegistry,
   api: ApiDefinition,
-  functionName: string,
-  endpoint: EndpointDefinition<unknown, unknown>,
-  endpointPath: string,
+  endpoint: Endpoint<unknown, unknown>,
   groupName: string
 ): Promise<void> => {
-  const operationId = functionName;
-  const summary = endpoint.endpointDescription || endpoint.description || "";
+  const operationId = endpoint.functionName;
+  const summary = endpoint.endpointDescription || "";
 
   // Register output schema in components/schemas
   const rawOutputSchema = endpoint.outputSchema ?? z.any();
+  const endpointPath = endpoint.endpoint;
   let responseSchema: z.ZodSchema = rawOutputSchema;
 
   // Handle array schemas - register the item schema
@@ -577,38 +579,20 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     registerSchema(registry, roadwayLocationSchema, "RoadwayLocation");
   }
 
-  // Register all endpoints from all groups
-  let endpointCount = 0;
-  const totalEndpoints = api.endpointGroups.reduce(
-    (sum, group) => sum + Object.keys(group.endpoints).length,
-    0
-  );
+  // Filter endpoints for this API from the flat registry
+  const apiEndpoints = endpoints.filter((e) => e.api === api.name);
+  const totalEndpoints = apiEndpoints.length;
 
   // Register all endpoints and wait for completion
-  const endpointPromises = api.endpointGroups.map(async (group) => {
-    const groupEntries = Object.entries(group.endpoints) as [
-      string,
-      EndpointDefinition<unknown, unknown>,
-    ][];
-
-    // Register all endpoints in this group
-    await Promise.all(
-      groupEntries.map(async ([functionName, endpoint]) => {
-        const resolvedName = resolveFunctionName(functionName, endpoint);
-        endpointCount++;
-        process.stderr.write(
-          `  [${endpointCount}/${totalEndpoints}] Registering ${resolvedName}...\r`
-        );
-        await registerEndpoint(
-          registry,
-          api,
-          resolvedName,
-          endpoint,
-          endpoint.endpoint,
-          group.name
-        );
-      })
+  const endpointPromises = apiEndpoints.map(async (endpoint, index) => {
+    process.stderr.write(
+      `  [${index + 1}/${totalEndpoints}] Registering ${endpoint.functionName}...\r`
     );
+
+    // Find the group name for this endpoint
+    const groupName = findEndpointGroup(api, endpoint);
+
+    await registerEndpoint(registry, api, endpoint, groupName);
   });
 
   // Wait for all endpoints to be registered
