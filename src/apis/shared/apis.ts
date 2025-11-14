@@ -1,4 +1,4 @@
-import type { ApiMetadata } from "@/apis/types";
+import type { ApiMetadata, EndpointGroup } from "@/apis/types";
 
 export const apis: Record<string, ApiMetadata> = {
   wsfSchedule: {
@@ -75,3 +75,17 @@ export const apis: Record<string, ApiMetadata> = {
       "https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc",
   },
 };
+
+/**
+ * API definition structure for endpoint files
+ *
+ * This interface defines the structure that endpoint files return as POJOs,
+ * containing API metadata and array of endpoint group definitions with
+ * truncated URLs that can be combined with the base URL.
+ */
+export interface ApiDefinition {
+  /** The API metadata containing name and baseUrl */
+  api: ApiMetadata;
+  /** Array of endpoint group definitions */
+  endpointGroups: EndpointGroup[];
+}

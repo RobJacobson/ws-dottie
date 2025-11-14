@@ -27,4 +27,3 @@ export const fetchRoutesHavingServiceDisruptionsByTripDate = defineEndpoint({
   endpointDescription:
     "Returns multiple of ServiceDisruption for specified trip date.",
 });
-

@@ -23,22 +23,6 @@ export interface ApiMetadata {
 }
 
 /**
- * API definition structure for endpoint files
- *
- * This interface defines the structure that endpoint files return as POJOs,
- * containing API name, base URL, and array of endpoint group definitions with
- * truncated URLs that can be combined with the base URL.
- */
-export interface ApiDefinition {
-  /** The internal API name (e.g., "wsf-schedule") */
-  name: string;
-  /** The base URL for API (e.g., "http://www.wsdot.wa.gov/ferries/api/schedule/rest") */
-  baseUrl: string;
-  /** Array of endpoint group definitions */
-  endpointGroups: EndpointGroup[];
-}
-
-/**
  * Endpoint group definition structure for resource-based architecture
  *
  * This interface defines the structure for endpoint group files in the new

@@ -1,19 +1,8 @@
-import type { ApiDefinition, ApiMetadata } from "@/apis/types";
-
-// Export API metadata FIRST (before importing groups)
-// This allows endpoint files to import API without circular dependency
-export const API: ApiMetadata = {
-  name: "wsdot-weather-stations",
-  baseUrl:
-    "https://wsdot.wa.gov/traffic/api/WeatherStations/WeatherStationsREST.svc",
-} as const;
-
-// THEN import groups (which can use API constant)
+import type { ApiDefinition } from "@/apis/shared/apis";
+import { apis } from "@/apis/shared/apis";
 import { weatherStationsGroup } from "./weatherStations/weatherStations.endpoints";
 
-// Finally, construct full API definition using API constant
 export const wsdotWeatherStationsApi = {
-  name: API.name,
-  baseUrl: API.baseUrl,
+  api: apis.wsdotWeatherStations,
   endpointGroups: [weatherStationsGroup],
 } satisfies ApiDefinition;

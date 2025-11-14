@@ -1,7 +1,7 @@
 /**
  * @fileoverview Endpoint Registry
  *
- * This module provides a centralized registry of all endpoints from the refactored
+ * This module provides a centralized registry of all endpoints from refactored
  * API structure. It creates a flat array of Endpoint objects for CLI and
  * e2e test consumption.
  *
@@ -13,7 +13,7 @@
 // This ensures all schemas imported from API modules have .openapi() method
 import "@/shared/zod";
 
-import type { ApiDefinition } from "@/apis/types";
+import type { ApiDefinition } from "@/apis/shared/apis";
 // Import all API definitions
 import { wsdotBorderCrossingsApi } from "@/apis/wsdot-border-crossings/apiDefinition";
 // ============================================================================
@@ -389,21 +389,21 @@ export const endpoints: Endpoint<unknown, unknown>[] = [
  * access when needed by consumers that need to work with specific APIs.
  */
 export const apis = {
-  [wsdotBorderCrossingsApi.name]: wsdotBorderCrossingsApi,
-  [wsdotBridgeClearancesApi.name]: wsdotBridgeClearancesApi,
-  [wsdotCommercialVehicleRestrictionsApi.name]:
+  [wsdotBorderCrossingsApi.api.name]: wsdotBorderCrossingsApi,
+  [wsdotBridgeClearancesApi.api.name]: wsdotBridgeClearancesApi,
+  [wsdotCommercialVehicleRestrictionsApi.api.name]:
     wsdotCommercialVehicleRestrictionsApi,
-  [wsdotHighwayAlertsApi.name]: wsdotHighwayAlertsApi,
-  [wsdotHighwayCamerasApi.name]: wsdotHighwayCamerasApi,
-  [wsdotMountainPassConditionsApi.name]: wsdotMountainPassConditionsApi,
-  [wsdotTollRatesApi.name]: wsdotTollRatesApi,
-  [wsdotTrafficFlowApi.name]: wsdotTrafficFlowApi,
-  [wsdotTravelTimesApi.name]: wsdotTravelTimesApi,
-  [wsdotWeatherInformationApi.name]: wsdotWeatherInformationApi,
-  [wsdotWeatherReadingsApi.name]: wsdotWeatherReadingsApi,
-  [wsdotWeatherStationsApi.name]: wsdotWeatherStationsApi,
-  [wsfFaresApi.name]: wsfFaresApi,
-  [wsfScheduleApi.name]: wsfScheduleApi,
-  [wsfTerminalsApi.name]: wsfTerminalsApi,
-  [wsfVesselsApi.name]: wsfVesselsApi,
+  [wsdotHighwayAlertsApi.api.name]: wsdotHighwayAlertsApi,
+  [wsdotHighwayCamerasApi.api.name]: wsdotHighwayCamerasApi,
+  [wsdotMountainPassConditionsApi.api.name]: wsdotMountainPassConditionsApi,
+  [wsdotTollRatesApi.api.name]: wsdotTollRatesApi,
+  [wsdotTrafficFlowApi.api.name]: wsdotTrafficFlowApi,
+  [wsdotTravelTimesApi.api.name]: wsdotTravelTimesApi,
+  [wsdotWeatherInformationApi.api.name]: wsdotWeatherInformationApi,
+  [wsdotWeatherReadingsApi.api.name]: wsdotWeatherReadingsApi,
+  [wsdotWeatherStationsApi.api.name]: wsdotWeatherStationsApi,
+  [wsfFaresApi.api.name]: wsfFaresApi,
+  [wsfScheduleApi.api.name]: wsfScheduleApi,
+  [wsfTerminalsApi.api.name]: wsfTerminalsApi,
+  [wsfVesselsApi.api.name]: wsfVesselsApi,
 } as const satisfies Record<string, ApiDefinition>;
