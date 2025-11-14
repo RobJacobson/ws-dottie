@@ -53,4 +53,5 @@ export const createEndpoint = <TInput, TOutput>(
   functionName,
   urlTemplate: `${apiDefinition.baseUrl}${endpointDef.endpoint}`,
   id: `${apiDefinition.name}:${functionName}`,
+  endpointDescription: endpointDef.endpointDescription,
 });

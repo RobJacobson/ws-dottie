@@ -10,47 +10,52 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import type { ApiDefinition, EndpointDefinition } from "@/apis/types";
 import type { Endpoint } from "@/shared/types";
-import { createEndpoint } from "./createEndpoint";
 import type { FetchFunctionParams } from "./createFetchFunction";
 import { cacheStrategies } from "./queryOptions";
 
 /**
- * Finds the cache flush date endpoint for an API.
+ * Finds the cache flush date endpoint for an API from the endpoints registry.
  *
- * This is a pure function that searches through endpoint groups to find
- * the cache flush date endpoint. Returns null if not found.
+ * This function looks up the cache flush date endpoint by constructing the
+ * expected function name based on the API name and searching the endpoints registry.
  *
- * @param apiDefinition - The API definition to search
+ * @param apiName - The API name (e.g., "wsf-vessels")
  * @returns The cache flush date endpoint, or null if not found
  */
 const findCacheFlushEndpoint = (
-  apiDefinition: ApiDefinition
+  apiName: string
 ): Endpoint<unknown, unknown> | null => {
-  const cacheFlushDateGroup = apiDefinition.endpointGroups.find(
-    (group) =>
-      group.name === "cache-flush-date" ||
-      group.name === "schedule-cache-flush-date"
-  );
+  // Import endpoints registry dynamically to avoid circular dependency
+  // The registry imports endpoint files which may import hooks that use this function
+  try {
+    // Construct expected function name based on API name
+    const functionNameMap: Record<string, string> = {
+      "wsf-vessels": "fetchCacheFlushDateVessels",
+      "wsf-fares": "fetchCacheFlushDateFares",
+      "wsf-schedule": "fetchCacheFlushDateSchedule",
+      "wsf-terminals": "fetchCacheFlushDateTerminals",
+    };
 
-  if (!cacheFlushDateGroup) {
+    const functionName = functionNameMap[apiName];
+    if (!functionName) {
+      return null;
+    }
+
+    // Dynamically import endpoints registry to avoid circular dependency
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { endpoints } = require("@/shared/endpoints");
+
+    // Look up endpoint from registry using api name and function name
+    const endpoint = endpoints.find(
+      (ep: Endpoint<unknown, unknown>) =>
+        ep.api === apiName && ep.functionName === functionName
+    );
+
+    return endpoint || null;
+  } catch {
     return null;
   }
-
-  const [functionName, cacheFlushDateEndpointDef] =
-    Object.entries(cacheFlushDateGroup.endpoints)[0] ?? [];
-
-  if (!functionName || !cacheFlushDateEndpointDef) {
-    return null;
-  }
-
-  return createEndpoint(
-    apiDefinition,
-    cacheFlushDateGroup,
-    cacheFlushDateEndpointDef as EndpointDefinition<unknown, unknown>,
-    functionName
-  );
 };
 
 /**
@@ -125,7 +130,8 @@ const useCacheInvalidation = (
  *
  * @template TInput - The input parameters type for the endpoint
  * @template TOutput - The output response type for the endpoint
- * @param apiDefinition - The API definition (to find cache flush endpoint)
+ * @param apiName - The API name (e.g., "wsf-vessels")
+ * @param baseUrl - The base URL for the API (currently unused, will be used in Phase 3)
  * @param endpoint - The endpoint to create a hook for
  * @param fetchFunction - The fetch function to wrap
  * @param params - Parameters to pass to the fetch function
@@ -133,13 +139,14 @@ const useCacheInvalidation = (
  * @returns A React Query result with cache invalidation support
  */
 export const useQueryWithCacheFlushDate = <TInput, TOutput>(
-  apiDefinition: ApiDefinition,
+  apiName: string,
+  _baseUrl: string, // Will be used in Phase 3 when findCacheFlushEndpoint is fully implemented
   endpoint: Endpoint<TInput, TOutput>,
   fetchFunction: (params?: FetchFunctionParams<TInput>) => Promise<TOutput>,
   params?: FetchFunctionParams<TInput>,
   options?: Omit<UseQueryOptions<TOutput>, "queryKey" | "queryFn">
 ): UseQueryResult<TOutput, Error> => {
-  const cacheFlushEndpoint = findCacheFlushEndpoint(apiDefinition);
+  const cacheFlushEndpoint = findCacheFlushEndpoint(apiName);
   const flushDateQuery = useCacheFlushDateQuery(cacheFlushEndpoint);
 
   useCacheInvalidation(endpoint.id, flushDateQuery);

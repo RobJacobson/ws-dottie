@@ -5,12 +5,9 @@
  * fetch and hook methods, using a shared endpoint group.
  */
 
-import type {
-  ApiDefinition,
-  EndpointDefinition,
-  EndpointGroup,
-} from "@/apis/types";
+import type { EndpointDefinition, EndpointGroup } from "@/apis/types";
 import type { Endpoint } from "@/shared/types";
+import { createEndpoint } from "./createEndpoint";
 import type { FetchFunctionParams } from "./createFetchFunction";
 import { createFetchFunction } from "./createFetchFunction";
 import {
@@ -21,22 +18,25 @@ import {
 /**
  * Configuration for defining an endpoint
  */
-type EndpointConfig<I, O> = {
+export type DefineEndpointConfig<I, O> = {
+  /** The API name (e.g., "wsf-vessels") */
+  apiName: string;
+  /** The base URL for the API */
+  baseUrl: string;
   /** The endpoint group this endpoint belongs to */
-  group: {
-    /** The API definition this group belongs to */
-    api: ApiDefinition;
-    /** The endpoint group descriptor */
-    descriptor: EndpointGroup;
-    collect: <I, O>(
-      def: EndpointDefinition<I, O>,
-      fn: string
-    ) => { endpoint: Endpoint<I, O> };
-  };
+  group: EndpointGroup;
   /** The function name for this endpoint */
   functionName: string;
-  /** The endpoint definition */
-  definition: EndpointDefinition<I, O>;
+  /** The endpoint path (truncated, e.g., "/vesselLocations") */
+  endpoint: string;
+  /** Zod schema for input validation (optional) */
+  inputSchema?: EndpointDefinition<I, O>["inputSchema"];
+  /** Zod schema for output validation (optional) */
+  outputSchema?: EndpointDefinition<I, O>["outputSchema"];
+  /** Optional sample parameters for testing */
+  sampleParams?: EndpointDefinition<I, O>["sampleParams"];
+  /** One-sentence description of what this specific endpoint does */
+  endpointDescription?: string;
 };
 
 /**
@@ -58,8 +58,8 @@ type EndpointResult<I, O> = {
  * Defines an endpoint with fetch and hook methods
  *
  * This factory function creates an endpoint object with descriptor, fetch,
- * and useQuery methods. It uses the endpoint group's collect method
- * to register the endpoint for documentation generation.
+ * and useQuery methods. It builds the endpoint descriptor directly without
+ * using group.collect.
  *
  * @param config - Configuration for endpoint
  * @returns An object with descriptor, fetch, and useQuery methods
@@ -67,37 +67,52 @@ type EndpointResult<I, O> = {
  * @example
  * ```typescript
  * const endpoint = defineEndpoint({
- *   group,
+ *   apiName: wsfVesselsApi.name,
+ *   baseUrl: wsfVesselsApi.baseUrl,
+ *   group: vesselLocationsGroup,
  *   functionName: "fetchVesselLocations",
- *   definition: {
- *     endpoint: "/vesselLocations",
- *     inputSchema: vesselLocationsInputSchema,
- *     outputSchema: vesselLocationSchema.array(),
- *   },
+ *   endpoint: "/vesselLocations",
+ *   inputSchema: vesselLocationsInputSchema,
+ *   outputSchema: vesselLocationSchema.array(),
  * });
  * ```
  */
 export function defineEndpoint<I, O>(
-  config: EndpointConfig<I, O>
+  config: DefineEndpointConfig<I, O>
 ): EndpointResult<I, O> {
-  const { endpoint } = config.group.collect(
-    config.definition,
+  // Build endpoint definition from config
+  const endpointDef: EndpointDefinition<I, O> = {
+    endpoint: config.endpoint,
+    inputSchema: config.inputSchema,
+    outputSchema: config.outputSchema,
+    sampleParams: config.sampleParams,
+    endpointDescription: config.endpointDescription,
+  };
+
+  // Create a temporary ApiDefinition object for createEndpoint
+  // (createEndpoint expects ApiDefinition but we only need name and baseUrl)
+  const apiDefinition = {
+    name: config.apiName,
+    baseUrl: config.baseUrl,
+    endpointGroups: [],
+  };
+
+  // Build endpoint descriptor using createEndpoint helper
+  const endpoint = createEndpoint<I, O>(
+    apiDefinition,
+    config.group,
+    endpointDef,
     config.functionName
   );
 
   const fetchFn = createFetchFunction<I, O>(endpoint);
 
-  // Use the full API definition from the group
-  const apiDefinition = config.group.api;
-
   // Determine if cache flush should be used based on API and cache strategy
-  const useCacheFlush = shouldUseCacheFlushDate(
-    apiDefinition.name,
-    config.group.descriptor
-  );
+  const useCacheFlush = shouldUseCacheFlushDate(config.apiName, config.group);
 
   const hookFn = createHookFunction<I, O>(
-    apiDefinition,
+    config.apiName,
+    config.baseUrl,
     endpoint,
     fetchFn,
     useCacheFlush

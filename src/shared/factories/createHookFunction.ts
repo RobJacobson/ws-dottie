@@ -8,7 +8,7 @@
 
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
-import type { ApiDefinition, EndpointGroup } from "@/apis/types";
+import type { EndpointGroup } from "@/apis/types";
 import type { Endpoint } from "@/shared/types";
 import { useQueryWithCacheFlushDate } from "./createCacheFlushDateHook";
 import type { FetchFunctionParams } from "./createFetchFunction";
@@ -62,22 +62,6 @@ export const shouldUseCacheFlushDate = (
 };
 
 /**
- * Converts endpoint function name to hook name.
- *
- * This is a pure function that transforms function names following the pattern:
- * - "fetchXyz" -> "useXyz"
- * - "xyz" -> "useXyz" (capitalized)
- *
- * @param functionName - The original function name (e.g., "fetchVesselStats")
- * @returns The corresponding hook name (e.g., "useVesselStats")
- */
-const functionNameToHookName = (functionName: string): string => {
-  return functionName.startsWith("fetch")
-    ? `use${functionName.substring(5)}`
-    : `use${functionName.charAt(0).toUpperCase() + functionName.slice(1)}`;
-};
-
-/**
  * Creates a typed hook function for an endpoint.
  *
  * This is a higher-order function that returns a React Query hook configured
@@ -86,14 +70,16 @@ const functionNameToHookName = (functionName: string): string => {
  *
  * @template TInput - The input parameters type for endpoint
  * @template TOutput - The output response type for endpoint
- * @param api - The API definition (needed for cache flush date lookup)
+ * @param apiName - The API name (e.g., "wsf-vessels")
+ * @param baseUrl - The base URL for the API
  * @param endpoint - The endpoint to create a hook for
  * @param fetchFunction - The fetch function to wrap with React Query
  * @param useCacheFlush - Whether to use cache flush date invalidation
  * @returns A React Query hook function for the endpoint
  */
 export const createHookFunction = <TInput, TOutput>(
-  api: ApiDefinition,
+  apiName: string,
+  baseUrl: string,
   endpoint: Endpoint<TInput, TOutput>,
   fetchFunction: (params?: FetchFunctionParams<TInput>) => Promise<TOutput>,
   useCacheFlush: boolean
@@ -107,7 +93,8 @@ export const createHookFunction = <TInput, TOutput>(
       options?: QueryHookOptions<TOutput>
     ): UseQueryResult<TOutput, Error> => {
       return useQueryWithCacheFlushDate(
-        api,
+        apiName,
+        baseUrl,
         endpoint,
         fetchFunction,
         params,
