@@ -8,8 +8,7 @@ import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
 import { wsfFaresApi } from "../apiDefinition";
 
-const group = defineEndpointGroup({
-  api: wsfFaresApi,
+export const terminalsGroup = defineEndpointGroup({
   name: "terminals",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,29 +20,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalFares = defineEndpoint({
-  group,
+  apiName: wsfFaresApi.name,
+  baseUrl: wsfFaresApi.baseUrl,
+  group: terminalsGroup,
   functionName: "fetchTerminalFares",
-  definition: {
-    endpoint: "/terminals/{TripDate}",
-    inputSchema: terminalsInputSchema,
-    outputSchema: terminalListSchema,
-    sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription:
-      "Returns a list of valid departing terminals for the specified trip date.",
-  },
+  endpoint: "/terminals/{TripDate}",
+  inputSchema: terminalsInputSchema,
+  outputSchema: terminalListSchema,
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription:
+    "Returns a list of valid departing terminals for the specified trip date.",
 });
 
 export const fetchTerminalMatesFares = defineEndpoint({
-  group,
+  apiName: wsfFaresApi.name,
+  baseUrl: wsfFaresApi.baseUrl,
+  group: terminalsGroup,
   functionName: "fetchTerminalMatesFares",
-  definition: {
-    endpoint: "/terminalMates/{TripDate}/{TerminalID}",
-    inputSchema: terminalMatesInputSchema,
-    outputSchema: terminalListSchema,
-    sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
-    endpointDescription:
-      "Returns arriving terminals for the given departing terminal and trip date.",
-  },
+  endpoint: "/terminalMates/{TripDate}/{TerminalID}",
+  inputSchema: terminalMatesInputSchema,
+  outputSchema: terminalListSchema,
+  sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
+  endpointDescription:
+    "Returns arriving terminals for the given departing terminal and trip date.",
 });
 
-export const terminalsGroup = group.descriptor;

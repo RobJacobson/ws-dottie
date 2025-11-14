@@ -9,8 +9,7 @@ import {
 } from "./vesselStats.input";
 import { type VesselStat, vesselStatSchema } from "./vesselStats.output";
 
-const group = defineEndpointGroup({
-  api: wsfVesselsApi,
+export const vesselStatsGroup = defineEndpointGroup({
   name: "vessel-stats",
   cacheStrategy: "STATIC",
   documentation: {
@@ -22,32 +21,31 @@ const group = defineEndpointGroup({
 });
 
 export const fetchVesselStats = defineEndpoint<VesselStatsInput, VesselStat[]>({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselStatsGroup,
   functionName: "fetchVesselStats",
-  definition: {
-    endpoint: "/vesselStats",
-    inputSchema: vesselStatsInputSchema,
-    outputSchema: vesselStatSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple VesselStat objects for all vessels in the fleet.",
-  },
+  endpoint: "/vesselStats",
+  inputSchema: vesselStatsInputSchema,
+  outputSchema: vesselStatSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple VesselStat objects for all vessels in the fleet.",
 });
 
 export const fetchVesselStatsByVesselId = defineEndpoint<
   VesselStatsByIdInput,
   VesselStat
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselStatsGroup,
   functionName: "fetchVesselStatsByVesselId",
-  definition: {
-    endpoint: "/vesselStats/{VesselID}",
-    inputSchema: vesselStatsByIdInputSchema,
-    outputSchema: vesselStatSchema,
-    sampleParams: { VesselID: 32 },
-    endpointDescription:
-      "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
-  },
+  endpoint: "/vesselStats/{VesselID}",
+  inputSchema: vesselStatsByIdInputSchema,
+  outputSchema: vesselStatSchema,
+  sampleParams: { VesselID: 32 },
+  endpointDescription:
+    "Returns a VesselStat object containing detailed technical specifications and performance characteristics for the specified vessel.",
 });
 
-export const vesselStatsResource = group.descriptor;

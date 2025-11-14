@@ -7,8 +7,7 @@ import {
 } from "./scheduleToday.input";
 import { scheduleSchema } from "./scheduleToday.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const scheduleTodayGroup = defineEndpointGroup({
   name: "schedule-today",
   cacheStrategy: "STATIC",
   documentation: {
@@ -19,33 +18,32 @@ const group = defineEndpointGroup({
 });
 
 export const fetchScheduleTodayByRoute = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByRoute",
-  definition: {
-    endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
-    inputSchema: scheduleTodayByRouteSchema,
-    outputSchema: scheduleSchema,
-    sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
-    endpointDescription: "Returns today's schedule for the specified route.",
-  },
+  endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
+  inputSchema: scheduleTodayByRouteSchema,
+  outputSchema: scheduleSchema,
+  sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
+  endpointDescription: "Returns today's schedule for the specified route.",
 });
 
 export const fetchScheduleTodayByTerminals = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByTerminals",
-  definition: {
-    endpoint:
-      "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
-    inputSchema: scheduleTodayByTerminalsInputSchema,
-    outputSchema: scheduleSchema,
-    sampleParams: {
-      DepartingTerminalID: 1,
-      ArrivingTerminalID: 10,
-      OnlyRemainingTimes: false,
-    },
-    endpointDescription:
-      "Returns today's schedule for the specified terminal pair.",
+  endpoint:
+    "/scheduletoday/{DepartingTerminalID}/{ArrivingTerminalID}/{OnlyRemainingTimes}",
+  inputSchema: scheduleTodayByTerminalsInputSchema,
+  outputSchema: scheduleSchema,
+  sampleParams: {
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
+    OnlyRemainingTimes: false,
   },
+  endpointDescription:
+    "Returns today's schedule for the specified terminal pair.",
 });
 
-export const scheduleTodayResource = group.descriptor;

@@ -4,8 +4,7 @@ import { wsdotBorderCrossingsApi } from "../apiDefinition";
 import { borderCrossingsInputSchema } from "./borderCrossingData.input";
 import { borderCrossingSchema } from "./borderCrossingData.output";
 
-const group = defineEndpointGroup({
-  api: wsdotBorderCrossingsApi,
+export const borderCrossingDataGroup = defineEndpointGroup({
   name: "border-crossing-data",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -17,16 +16,15 @@ const group = defineEndpointGroup({
 });
 
 export const fetchBorderCrossings = defineEndpoint({
-  group,
+  apiName: wsdotBorderCrossingsApi.name,
+  baseUrl: wsdotBorderCrossingsApi.baseUrl,
+  group: borderCrossingDataGroup,
   functionName: "fetchBorderCrossings",
-  definition: {
-    endpoint: "/GetBorderCrossingsAsJson",
-    inputSchema: borderCrossingsInputSchema,
-    outputSchema: borderCrossingSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
-  },
+  endpoint: "/GetBorderCrossingsAsJson",
+  inputSchema: borderCrossingsInputSchema,
+  outputSchema: borderCrossingSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.",
 });
 
-export const borderCrossingDataResource = group.descriptor;

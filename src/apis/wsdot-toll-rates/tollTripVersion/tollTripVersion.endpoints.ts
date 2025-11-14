@@ -4,28 +4,26 @@ import { wsdotTollRatesApi } from "../apiDefinition";
 import { tollTripVersionInputSchema } from "./tollTripVersion.input";
 import { tollTripVersionSchema } from "./tollTripVersion.output";
 
-const group = defineEndpointGroup({
-  api: wsdotTollRatesApi,
+export const tollTripVersionGroup = defineEndpointGroup({
   name: "toll-trip-version",
+  cacheStrategy: "FREQUENT",
   documentation: {
     resourceDescription:
       "TollTripVersion provides version and timestamp information for toll trip data, enabling cache management and data freshness tracking.",
     businessContext: "",
   },
-  cacheStrategy: "FREQUENT",
 });
 
 export const fetchTollTripVersion = defineEndpoint({
-  group,
+  apiName: wsdotTollRatesApi.name,
+  baseUrl: wsdotTollRatesApi.baseUrl,
+  group: tollTripVersionGroup,
   functionName: "fetchTollTripVersion",
-  definition: {
-    endpoint: "/getTollTripVersionAsJson",
-    inputSchema: tollTripVersionInputSchema,
-    outputSchema: tollTripVersionSchema,
-    sampleParams: {},
-    endpointDescription:
-      "Returns current version and timestamp information for toll trip data.",
-  },
+  endpoint: "/getTollTripVersionAsJson",
+  inputSchema: tollTripVersionInputSchema,
+  outputSchema: tollTripVersionSchema,
+  sampleParams: {},
+  endpointDescription:
+    "Returns current version and timestamp information for toll trip data.",
 });
 
-export const tollTripVersionResource = group.descriptor;

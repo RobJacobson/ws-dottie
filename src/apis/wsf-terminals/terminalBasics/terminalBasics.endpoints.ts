@@ -7,8 +7,7 @@ import {
 } from "./terminalBasics.input";
 import { terminalBasicSchema } from "./terminalBasics.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalBasicsGroup = defineEndpointGroup({
   name: "terminal-basics",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalBasics = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalBasicsGroup,
   functionName: "fetchTerminalBasics",
-  definition: {
-    endpoint: "/terminalBasics",
-    inputSchema: terminalBasicsInputSchema,
-    outputSchema: terminalBasicSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalBasic objects for all terminals.",
-  },
+  endpoint: "/terminalBasics",
+  inputSchema: terminalBasicsInputSchema,
+  outputSchema: terminalBasicSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalBasic objects for all terminals.",
 });
 
 export const fetchTerminalBasicsByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalBasicsGroup,
   functionName: "fetchTerminalBasicsByTerminalId",
-  definition: {
-    endpoint: "/terminalBasics/{TerminalID}",
-    inputSchema: terminalBasicsByIdInputSchema,
-    outputSchema: terminalBasicSchema,
-    sampleParams: { TerminalID: 1 },
-    endpointDescription:
-      "Returns a TerminalBasic object containing essential identification and status information for the specified terminal.",
-  },
+  endpoint: "/terminalBasics/{TerminalID}",
+  inputSchema: terminalBasicsByIdInputSchema,
+  outputSchema: terminalBasicSchema,
+  sampleParams: { TerminalID: 1 },
+  endpointDescription:
+    "Returns a TerminalBasic object containing essential identification and status information for the specified terminal.",
 });
 
-export const terminalBasicsResource = group.descriptor;

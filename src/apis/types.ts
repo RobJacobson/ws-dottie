@@ -38,11 +38,6 @@ export interface EndpointGroup {
   documentation: ResourceDocumentation;
   /** Cache strategy for the entire endpoint group */
   cacheStrategy: CacheStrategy;
-  /**
-   * Record of endpoint definitions keyed by canonical function name
-   * (e.g., "fetchVesselBasics" or "searchAlerts")
-   */
-  endpoints: Record<string, EndpointDefinition<unknown, unknown>>;
 }
 
 /**

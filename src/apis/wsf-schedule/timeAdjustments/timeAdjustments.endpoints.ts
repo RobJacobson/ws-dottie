@@ -8,8 +8,7 @@ import {
 } from "./timeAdjustments.input";
 import { timeAdjustmentSchema } from "./timeAdjustments.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const timeAdjustmentsGroup = defineEndpointGroup({
   name: "time-adjustments",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,40 +19,39 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTimeAdjustments = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustments",
-  definition: {
-    endpoint: "/timeadj",
-    inputSchema: timeAdjustmentsInputSchema,
-    outputSchema: timeAdjustmentSchema.array(),
-    sampleParams: {},
-    endpointDescription: "Returns all time adjustments.",
-  },
+  endpoint: "/timeadj",
+  inputSchema: timeAdjustmentsInputSchema,
+  outputSchema: timeAdjustmentSchema.array(),
+  sampleParams: {},
+  endpointDescription: "Returns all time adjustments.",
 });
 
 export const fetchTimeAdjustmentsByRoute = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsByRoute",
-  definition: {
-    endpoint: "/timeadjbyroute/{RouteID}",
-    inputSchema: timeAdjustmentsByRouteInputSchema,
-    outputSchema: timeAdjustmentSchema.array(),
-    sampleParams: { RouteID: 1 },
-    endpointDescription: "Returns time adjustments for the specified route ID.",
-  },
+  endpoint: "/timeadjbyroute/{RouteID}",
+  inputSchema: timeAdjustmentsByRouteInputSchema,
+  outputSchema: timeAdjustmentSchema.array(),
+  sampleParams: { RouteID: 1 },
+  endpointDescription: "Returns time adjustments for the specified route ID.",
 });
 
 export const fetchTimeAdjustmentsBySchedRoute = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsBySchedRoute",
-  definition: {
-    endpoint: "/timeadjbyschedroute/{SchedRouteID}",
-    inputSchema: timeAdjustmentsBySchedRouteInputSchema,
-    outputSchema: timeAdjustmentSchema.array(),
-    sampleParams: { SchedRouteID: 2401 },
-    endpointDescription:
-      "Returns time adjustments for the specified scheduled route ID.",
-  },
+  endpoint: "/timeadjbyschedroute/{SchedRouteID}",
+  inputSchema: timeAdjustmentsBySchedRouteInputSchema,
+  outputSchema: timeAdjustmentSchema.array(),
+  sampleParams: { SchedRouteID: 2401 },
+  endpointDescription:
+    "Returns time adjustments for the specified scheduled route ID.",
 });
 
-export const timeAdjustmentsResource = group.descriptor;

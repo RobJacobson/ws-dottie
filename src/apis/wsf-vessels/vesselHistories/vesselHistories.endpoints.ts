@@ -12,8 +12,7 @@ import {
   vesselHistorySchema,
 } from "./vesselHistories.output";
 
-const group = defineEndpointGroup({
-  api: wsfVesselsApi,
+export const vesselHistoriesGroup = defineEndpointGroup({
   name: "vessel-histories",
   cacheStrategy: "STATIC",
   documentation: {
@@ -27,36 +26,35 @@ export const fetchVesselHistories = defineEndpoint<
   VesselHistoriesInput,
   VesselHistory[]
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselHistoriesGroup,
   functionName: "fetchVesselHistories",
-  definition: {
-    endpoint: "/vesselHistory",
-    inputSchema: vesselHistoriesInputSchema,
-    outputSchema: vesselHistorySchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple VesselHistory objects for all vessels in fleet.",
-  },
+  endpoint: "/vesselHistory",
+  inputSchema: vesselHistoriesInputSchema,
+  outputSchema: vesselHistorySchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple VesselHistory objects for all vessels in fleet.",
 });
 
 export const fetchVesselHistoriesByVesselNameAndDateRange = defineEndpoint<
   VesselHistoriesByVesselNameAndDateRangeInput,
   VesselHistory[]
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselHistoriesGroup,
   functionName: "fetchVesselHistoriesByVesselNameAndDateRange",
-  definition: {
-    endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
-    inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
-    outputSchema: vesselHistorySchema.array(),
-    sampleParams: {
-      VesselName: "Tacoma",
-      DateStart: "2025-09-01",
-      DateEnd: "2025-10-01",
-    },
-    endpointDescription:
-      "Returns multiple VesselHistory objects for the specified vessel and date range.",
+  endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",
+  inputSchema: vesselHistoriesByVesselNameAndDateRangeInputSchema,
+  outputSchema: vesselHistorySchema.array(),
+  sampleParams: {
+    VesselName: "Tacoma",
+    DateStart: "2025-09-01",
+    DateEnd: "2025-10-01",
   },
+  endpointDescription:
+    "Returns multiple VesselHistory objects for the specified vessel and date range.",
 });
 
-export const vesselHistoriesResource = group.descriptor;

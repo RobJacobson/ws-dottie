@@ -12,8 +12,7 @@ import {
 import type { VesselAccommodation } from "./vesselAccommodations.output";
 import { vesselAccommodationSchema } from "./vesselAccommodations.output";
 
-const group = defineEndpointGroup({
-  api: wsfVesselsApi,
+export const vesselAccommodationsGroup = defineEndpointGroup({
   name: "vessel-accommodations",
   cacheStrategy: "STATIC",
   documentation: {
@@ -28,32 +27,31 @@ export const fetchVesselAccommodations = defineEndpoint<
   VesselAccommodationsInput,
   VesselAccommodation[]
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselAccommodationsGroup,
   functionName: "fetchVesselAccommodations",
-  definition: {
-    endpoint: "/vesselAccommodations",
-    inputSchema: vesselAccommodationsInputSchema,
-    outputSchema: vesselAccommodationSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple VesselAccommodation objects for all vessels in fleet.",
-  },
+  endpoint: "/vesselAccommodations",
+  inputSchema: vesselAccommodationsInputSchema,
+  outputSchema: vesselAccommodationSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple VesselAccommodation objects for all vessels in fleet.",
 });
 
 export const fetchVesselAccommodationsByVesselId = defineEndpoint<
   VesselAccommodationsByIdInput,
   VesselAccommodation
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselAccommodationsGroup,
   functionName: "fetchVesselAccommodationsByVesselId",
-  definition: {
-    endpoint: "/vesselAccommodations/{VesselID}",
-    inputSchema: vesselAccommodationsByIdInputSchema,
-    outputSchema: vesselAccommodationSchema,
-    sampleParams: { VesselID: 65 },
-    endpointDescription:
-      "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
-  },
+  endpoint: "/vesselAccommodations/{VesselID}",
+  inputSchema: vesselAccommodationsByIdInputSchema,
+  outputSchema: vesselAccommodationSchema,
+  sampleParams: { VesselID: 65 },
+  endpointDescription:
+    "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
 });
 
-export const vesselAccommodationsResource = group.descriptor;

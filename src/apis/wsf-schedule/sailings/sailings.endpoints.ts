@@ -7,8 +7,7 @@ import {
 } from "./sailings.input";
 import { sailingSchema } from "./sailings.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const sailingsGroup = defineEndpointGroup({
   name: "sailings",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -19,29 +18,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchAllSailingsBySchedRouteID = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: sailingsGroup,
   functionName: "fetchAllSailingsBySchedRouteID",
-  definition: {
-    endpoint: "/allsailings/{SchedRouteID}",
-    inputSchema: allSailingsBySchedRouteIDInputSchema,
-    outputSchema: sailingSchema.array(),
-    sampleParams: { SchedRouteID: 2401 },
-    endpointDescription:
-      "Returns all sailing data for the specified scheduled route ID.",
-  },
+  endpoint: "/allsailings/{SchedRouteID}",
+  inputSchema: allSailingsBySchedRouteIDInputSchema,
+  outputSchema: sailingSchema.array(),
+  sampleParams: { SchedRouteID: 2401 },
+  endpointDescription:
+    "Returns all sailing data for the specified scheduled route ID.",
 });
 
 export const fetchSailingsByRouteID = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: sailingsGroup,
   functionName: "fetchSailingsByRouteID",
-  definition: {
-    endpoint: "/sailings/{SchedRouteID}",
-    inputSchema: sailingsByRouteIDInputSchema,
-    outputSchema: sailingSchema.array(),
-    sampleParams: { SchedRouteID: 2401 },
-    endpointDescription:
-      "Returns sailing data for the specified scheduled route ID.",
-  },
+  endpoint: "/sailings/{SchedRouteID}",
+  inputSchema: sailingsByRouteIDInputSchema,
+  outputSchema: sailingSchema.array(),
+  sampleParams: { SchedRouteID: 2401 },
+  endpointDescription:
+    "Returns sailing data for the specified scheduled route ID.",
 });
 
-export const sailingsResource = group.descriptor;

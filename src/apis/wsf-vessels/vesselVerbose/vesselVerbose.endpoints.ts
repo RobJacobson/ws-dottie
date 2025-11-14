@@ -12,8 +12,7 @@ import {
   vesselVerboseSchema,
 } from "./vesselVerbose.output";
 
-const group = defineEndpointGroup({
-  api: wsfVesselsApi,
+export const vesselVerboseGroup = defineEndpointGroup({
   name: "vessel-verbose",
   cacheStrategy: "STATIC",
   documentation: {
@@ -28,32 +27,31 @@ export const fetchVesselsVerbose = defineEndpoint<
   VesselVerboseInput,
   VesselVerbose[]
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselVerboseGroup,
   functionName: "fetchVesselsVerbose",
-  definition: {
-    endpoint: "/vesselVerbose",
-    inputSchema: vesselVerboseInputSchema,
-    outputSchema: vesselVerboseSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple VesselVerbose objects for all vessels in fleet.",
-  },
+  endpoint: "/vesselVerbose",
+  inputSchema: vesselVerboseInputSchema,
+  outputSchema: vesselVerboseSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple VesselVerbose objects for all vessels in fleet.",
 });
 
 export const fetchVesselsVerboseByVesselId = defineEndpoint<
   VesselVerboseByIdInput,
   VesselVerbose
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselVerboseGroup,
   functionName: "fetchVesselsVerboseByVesselId",
-  definition: {
-    endpoint: "/vesselVerbose/{VesselID}",
-    inputSchema: vesselVerboseByIdInputSchema,
-    outputSchema: vesselVerboseSchema,
-    sampleParams: { VesselID: 68 },
-    endpointDescription:
-      "Returns a single VesselVerbose object for the specified vessel identifier.",
-  },
+  endpoint: "/vesselVerbose/{VesselID}",
+  inputSchema: vesselVerboseByIdInputSchema,
+  outputSchema: vesselVerboseSchema,
+  sampleParams: { VesselID: 68 },
+  endpointDescription:
+    "Returns a single VesselVerbose object for the specified vessel identifier.",
 });
 
-export const vesselVerboseResource = group.descriptor;

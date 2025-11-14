@@ -7,8 +7,7 @@ import {
 } from "./terminalLocations.input";
 import { terminalLocationSchema } from "./terminalLocations.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalLocationsGroup = defineEndpointGroup({
   name: "terminal-locations",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalLocations = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalLocationsGroup,
   functionName: "fetchTerminalLocations",
-  definition: {
-    endpoint: "/terminalLocations",
-    inputSchema: terminalLocationsInputSchema,
-    outputSchema: terminalLocationSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalLocation objects for all terminals.",
-  },
+  endpoint: "/terminalLocations",
+  inputSchema: terminalLocationsInputSchema,
+  outputSchema: terminalLocationSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalLocation objects for all terminals.",
 });
 
 export const fetchTerminalLocationsByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalLocationsGroup,
   functionName: "fetchTerminalLocationsByTerminalId",
-  definition: {
-    endpoint: "/terminalLocations/{TerminalID}",
-    inputSchema: terminalLocationsByIdInputSchema,
-    outputSchema: terminalLocationSchema,
-    sampleParams: { TerminalID: 5 },
-    endpointDescription:
-      "Returns a single TerminalLocation object for specified terminal.",
-  },
+  endpoint: "/terminalLocations/{TerminalID}",
+  inputSchema: terminalLocationsByIdInputSchema,
+  outputSchema: terminalLocationSchema,
+  sampleParams: { TerminalID: 5 },
+  endpointDescription:
+    "Returns a single TerminalLocation object for specified terminal.",
 });
 
-export const terminalLocationsResource = group.descriptor;

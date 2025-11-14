@@ -5,8 +5,7 @@ import { wsfFaresApi } from "../apiDefinition";
 import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
 import { fareTotalSchema } from "./fareTotals.output";
 
-const group = defineEndpointGroup({
-  api: wsfFaresApi,
+export const fareTotalsGroup = defineEndpointGroup({
   name: "fare-totals",
   cacheStrategy: "STATIC",
   documentation: {
@@ -18,24 +17,23 @@ const group = defineEndpointGroup({
 });
 
 export const fetchFareTotalsByTripDateAndRoute = defineEndpoint({
-  group,
+  apiName: wsfFaresApi.name,
+  baseUrl: wsfFaresApi.baseUrl,
+  group: fareTotalsGroup,
   functionName: "fetchFareTotalsByTripDateAndRoute",
-  definition: {
-    endpoint:
-      "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
-    inputSchema: fareTotalsByTripDateAndRouteInputSchema,
-    outputSchema: fareTotalSchema.array(),
-    sampleParams: {
-      TripDate: datesHelper.today(),
-      DepartingTerminalID: 1,
-      ArrivingTerminalID: 10,
-      RoundTrip: false,
-      FareLineItemID: "1,2",
-      Quantity: "3,1",
-    },
-    endpointDescription:
-      "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
+  endpoint:
+    "/fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}",
+  inputSchema: fareTotalsByTripDateAndRouteInputSchema,
+  outputSchema: fareTotalSchema.array(),
+  sampleParams: {
+    TripDate: datesHelper.today(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
+    RoundTrip: false,
+    FareLineItemID: "1,2",
+    Quantity: "3,1",
   },
+  endpointDescription:
+    "Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.",
 });
 
-export const fareTotalsGroup = group.descriptor;

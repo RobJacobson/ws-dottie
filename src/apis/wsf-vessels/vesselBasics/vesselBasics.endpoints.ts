@@ -9,8 +9,7 @@ import {
 } from "./vesselBasics.input";
 import { type VesselBasic, vesselBasicSchema } from "./vesselBasics.output";
 
-const group = defineEndpointGroup({
-  api: wsfVesselsApi,
+export const vesselBasicsGroup = defineEndpointGroup({
   name: "vessel-basics",
   cacheStrategy: "STATIC",
   documentation: {
@@ -25,32 +24,31 @@ export const fetchVesselBasics = defineEndpoint<
   VesselBasicsInput,
   VesselBasic[]
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselBasicsGroup,
   functionName: "fetchVesselBasics",
-  definition: {
-    endpoint: "/vesselBasics",
-    inputSchema: vesselBasicsInputSchema,
-    outputSchema: vesselBasicSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple VesselBasic objects for all vessels in the fleet.",
-  },
+  endpoint: "/vesselBasics",
+  inputSchema: vesselBasicsInputSchema,
+  outputSchema: vesselBasicSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple VesselBasic objects for all vessels in the fleet.",
 });
 
 export const fetchVesselBasicsByVesselId = defineEndpoint<
   VesselBasicsByIdInput,
   VesselBasic
 >({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselBasicsGroup,
   functionName: "fetchVesselBasicsByVesselId",
-  definition: {
-    endpoint: "/vesselBasics/{VesselID}",
-    inputSchema: vesselBasicsByIdInputSchema,
-    outputSchema: vesselBasicSchema,
-    sampleParams: { VesselID: 74 },
-    endpointDescription:
-      "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
-  },
+  endpoint: "/vesselBasics/{VesselID}",
+  inputSchema: vesselBasicsByIdInputSchema,
+  outputSchema: vesselBasicSchema,
+  sampleParams: { VesselID: 74 },
+  endpointDescription:
+    "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
 });
 
-export const vesselBasicsResource = group.descriptor;

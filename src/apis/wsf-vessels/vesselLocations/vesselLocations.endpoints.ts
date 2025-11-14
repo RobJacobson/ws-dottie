@@ -7,8 +7,7 @@ import {
 } from "./vesselLocations.input";
 import { vesselLocationSchema } from "./vesselLocations.output";
 
-const group = defineEndpointGroup({
-  api: wsfVesselsApi,
+export const vesselLocationsGroup = defineEndpointGroup({
   name: "vessel-locations",
   cacheStrategy: "REALTIME",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchVesselLocations = defineEndpoint({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselLocationsGroup,
   functionName: "fetchVesselLocations",
-  definition: {
-    endpoint: "/vesselLocations",
-    inputSchema: vesselLocationsInputSchema,
-    outputSchema: vesselLocationSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple VesselLocation objects for all vessels in fleet.",
-  },
+  endpoint: "/vesselLocations",
+  inputSchema: vesselLocationsInputSchema,
+  outputSchema: vesselLocationSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple VesselLocation objects for all vessels in fleet.",
 });
 
 export const fetchVesselLocationsByVesselId = defineEndpoint({
-  group,
+  apiName: wsfVesselsApi.name,
+  baseUrl: wsfVesselsApi.baseUrl,
+  group: vesselLocationsGroup,
   functionName: "fetchVesselLocationsByVesselId",
-  definition: {
-    endpoint: "/vesselLocations/{VesselID}",
-    inputSchema: vesselLocationsByIdInputSchema,
-    outputSchema: vesselLocationSchema,
-    sampleParams: { VesselID: 18 },
-    endpointDescription:
-      "Returns a VesselLocation object containing real-time position and status information for specified vessel.",
-  },
+  endpoint: "/vesselLocations/{VesselID}",
+  inputSchema: vesselLocationsByIdInputSchema,
+  outputSchema: vesselLocationSchema,
+  sampleParams: { VesselID: 18 },
+  endpointDescription:
+    "Returns a VesselLocation object containing real-time position and status information for specified vessel.",
 });
 
-export const vesselLocationsGroup = group.descriptor;

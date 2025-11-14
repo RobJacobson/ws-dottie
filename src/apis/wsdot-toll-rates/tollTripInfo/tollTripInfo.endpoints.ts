@@ -4,27 +4,25 @@ import { wsdotTollRatesApi } from "../apiDefinition";
 import { tollTripInfoInputSchema } from "./tollTripInfo.input";
 import { tollTripInfoSchema } from "./tollTripInfo.output";
 
-const group = defineEndpointGroup({
-  api: wsdotTollRatesApi,
+export const tollTripInfoGroup = defineEndpointGroup({
   name: "toll-trip-info",
+  cacheStrategy: "FREQUENT",
   documentation: {
     resourceDescription:
       "TollTripInfo provides detailed trip information including geographical data, location names, mileposts, and geometry information for toll trips across statewide coverage areas.",
     businessContext: "",
   },
-  cacheStrategy: "FREQUENT",
 });
 
 export const fetchTollTripInfo = defineEndpoint({
-  group,
+  apiName: wsdotTollRatesApi.name,
+  baseUrl: wsdotTollRatesApi.baseUrl,
+  group: tollTripInfoGroup,
   functionName: "fetchTollTripInfo",
-  definition: {
-    endpoint: "/getTollTripInfoAsJson",
-    inputSchema: tollTripInfoInputSchema,
-    outputSchema: tollTripInfoSchema.array(),
-    sampleParams: {},
-    endpointDescription: "Returns trip information for all toll trips.",
-  },
+  endpoint: "/getTollTripInfoAsJson",
+  inputSchema: tollTripInfoInputSchema,
+  outputSchema: tollTripInfoSchema.array(),
+  sampleParams: {},
+  endpointDescription: "Returns trip information for all toll trips.",
 });
 
-export const tollTripInfoResource = group.descriptor;

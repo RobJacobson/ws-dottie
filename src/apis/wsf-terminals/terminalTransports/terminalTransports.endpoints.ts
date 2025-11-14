@@ -7,8 +7,7 @@ import {
 } from "./terminalTransports.input";
 import { terminalTransportSchema } from "./terminalTransports.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalTransportsGroup = defineEndpointGroup({
   name: "terminal-transports",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalTransports = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalTransportsGroup,
   functionName: "fetchTerminalTransports",
-  definition: {
-    endpoint: "/terminalTransports",
-    inputSchema: terminalTransportsInputSchema,
-    outputSchema: terminalTransportSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalTransport objects for all terminals.",
-  },
+  endpoint: "/terminalTransports",
+  inputSchema: terminalTransportsInputSchema,
+  outputSchema: terminalTransportSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalTransport objects for all terminals.",
 });
 
 export const fetchTerminalTransportsByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalTransportsGroup,
   functionName: "fetchTerminalTransportsByTerminalId",
-  definition: {
-    endpoint: "/terminalTransports/{TerminalID}",
-    inputSchema: terminalTransportsByTerminalIdInputSchema,
-    outputSchema: terminalTransportSchema,
-    sampleParams: { TerminalID: 10 },
-    endpointDescription:
-      "Returns TerminalTransport data for the terminal with the specified terminal.",
-  },
+  endpoint: "/terminalTransports/{TerminalID}",
+  inputSchema: terminalTransportsByTerminalIdInputSchema,
+  outputSchema: terminalTransportSchema,
+  sampleParams: { TerminalID: 10 },
+  endpointDescription:
+    "Returns TerminalTransport data for the terminal with the specified terminal.",
 });
 
-export const terminalTransportsResource = group.descriptor;

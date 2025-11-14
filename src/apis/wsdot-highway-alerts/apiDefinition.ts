@@ -8,5 +8,9 @@ export const wsdotHighwayAlertsApi = {
   name: "wsdot-highway-alerts",
   baseUrl:
     "https://www.wsdot.wa.gov/traffic/api/highwayalerts/highwayalertsrest.svc",
-  endpointGroups: [highwayAlertsGroup, alertAreasGroup, eventCategoriesGroup],
+  endpointGroups: [
+    highwayAlertsGroup,
+    alertAreasGroup,
+    eventCategoriesGroup,
+  ],
 } satisfies ApiDefinition;

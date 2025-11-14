@@ -9,8 +9,7 @@ import {
 } from "./terminals.input";
 import { terminalMateSchema, terminalSchema } from "./terminals.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const scheduleTerminalsGroup = defineEndpointGroup({
   name: "schedule-terminals",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,41 +20,40 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminals = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleTerminalsGroup,
   functionName: "fetchTerminals",
-  definition: {
-    endpoint: "/terminals/{TripDate}",
-    inputSchema: terminalsInputSchema,
-    outputSchema: terminalSchema.array(),
-    sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription: "Returns all terminals for the specified trip date.",
-  },
+  endpoint: "/terminals/{TripDate}",
+  inputSchema: terminalsInputSchema,
+  outputSchema: terminalSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription: "Returns all terminals for the specified trip date.",
 });
 
 export const fetchTerminalsAndMates = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleTerminalsGroup,
   functionName: "fetchTerminalsAndMates",
-  definition: {
-    endpoint: "/terminalsandmates/{TripDate}",
-    inputSchema: terminalsAndMatesInputSchema,
-    outputSchema: terminalMateSchema.array(),
-    sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription:
-      "Returns all terminals with their mates for the specified trip date.",
-  },
+  endpoint: "/terminalsandmates/{TripDate}",
+  inputSchema: terminalsAndMatesInputSchema,
+  outputSchema: terminalMateSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription:
+    "Returns all terminals with their mates for the specified trip date.",
 });
 
 export const fetchTerminalsAndMatesByRoute = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleTerminalsGroup,
   functionName: "fetchTerminalsAndMatesByRoute",
-  definition: {
-    endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
-    inputSchema: terminalsAndMatesByRouteInputSchema,
-    outputSchema: terminalMateSchema.array(),
-    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-    endpointDescription:
-      "Returns terminals and their mates for the specified trip date and route.",
-  },
+  endpoint: "/terminalsandmatesbyroute/{TripDate}/{RouteID}",
+  inputSchema: terminalsAndMatesByRouteInputSchema,
+  outputSchema: terminalMateSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
+  endpointDescription:
+    "Returns terminals and their mates for the specified trip date and route.",
 });
 
-export const scheduleTerminalsResource = group.descriptor;

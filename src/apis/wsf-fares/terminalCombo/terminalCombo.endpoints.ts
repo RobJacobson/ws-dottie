@@ -11,8 +11,7 @@ import {
   terminalComboFaresVerboseSchema,
 } from "./terminalCombo.output";
 
-const group = defineEndpointGroup({
-  api: wsfFaresApi,
+export const terminalComboGroup = defineEndpointGroup({
   name: "terminal-combo",
   cacheStrategy: "STATIC",
   documentation: {
@@ -24,34 +23,33 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalComboFares = defineEndpoint({
-  group,
+  apiName: wsfFaresApi.name,
+  baseUrl: wsfFaresApi.baseUrl,
+  group: terminalComboGroup,
   functionName: "fetchTerminalComboFares",
-  definition: {
-    endpoint:
-      "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-    inputSchema: terminalComboInputSchema,
-    outputSchema: terminalComboFaresSchema,
-    sampleParams: {
-      TripDate: datesHelper.tomorrow(),
-      DepartingTerminalID: 1,
-      ArrivingTerminalID: 10,
-    },
-    endpointDescription:
-      "Returns fare collection descriptions for the specified terminal combination and trip date.",
+  endpoint:
+    "/terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+  inputSchema: terminalComboInputSchema,
+  outputSchema: terminalComboFaresSchema,
+  sampleParams: {
+    TripDate: datesHelper.tomorrow(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
   },
+  endpointDescription:
+    "Returns fare collection descriptions for the specified terminal combination and trip date.",
 });
 
 export const fetchTerminalComboFaresVerbose = defineEndpoint({
-  group,
+  apiName: wsfFaresApi.name,
+  baseUrl: wsfFaresApi.baseUrl,
+  group: terminalComboGroup,
   functionName: "fetchTerminalComboFaresVerbose",
-  definition: {
-    endpoint: "/terminalComboVerbose/{TripDate}",
-    inputSchema: terminalComboFaresVerboseInputSchema,
-    outputSchema: terminalComboFaresVerboseSchema.array(),
-    sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription:
-      "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
-  },
+  endpoint: "/terminalComboVerbose/{TripDate}",
+  inputSchema: terminalComboFaresVerboseInputSchema,
+  outputSchema: terminalComboFaresVerboseSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription:
+    "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
 });
 
-export const terminalComboGroup = group.descriptor;

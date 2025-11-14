@@ -8,59 +8,56 @@ import {
 } from "./cameras.input";
 import { cameraSchema } from "./cameras.output";
 
-const group = defineEndpointGroup({
-  api: wsdotHighwayCamerasApi,
+export const camerasGroup = defineEndpointGroup({
   name: "cameras",
+  cacheStrategy: "STATIC",
   documentation: {
     resourceDescription:
       "Each Camera item represents a traffic monitoring camera located on Washington state highways. Cameras provide real-time visual information about current traffic conditions, weather impacts, and roadway status for travelers and traffic management centers.",
     businessContext:
       "Use to monitor real-time traffic conditions by providing camera locations, images, and metadata for route planning and traffic management decisions.",
   },
-  cacheStrategy: "STATIC",
 });
 
 export const fetchHighwayCameras = defineEndpoint({
-  group,
+  apiName: wsdotHighwayCamerasApi.name,
+  baseUrl: wsdotHighwayCamerasApi.baseUrl,
+  group: camerasGroup,
   functionName: "fetchHighwayCameras",
-  definition: {
-    endpoint: "/getCamerasAsJson",
-    inputSchema: highwayCamerasInputSchema,
-    outputSchema: cameraSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple Camera items for statewide coverage.",
-  },
+  endpoint: "/getCamerasAsJson",
+  inputSchema: highwayCamerasInputSchema,
+  outputSchema: cameraSchema.array(),
+  sampleParams: {},
+  endpointDescription: "Returns multiple Camera items for statewide coverage.",
 });
 
 export const searchHighwayCamerasByRouteAndMilepost = defineEndpoint({
-  group,
+  apiName: wsdotHighwayCamerasApi.name,
+  baseUrl: wsdotHighwayCamerasApi.baseUrl,
+  group: camerasGroup,
   functionName: "searchHighwayCamerasByRouteAndMilepost",
-  definition: {
-    endpoint: "/searchCamerasAsJson",
-    inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
-    outputSchema: cameraSchema.array(),
-    sampleParams: {
-      StateRoute: "I-5",
-      StartingMilepost: 10,
-      EndingMilepost: 20,
-    },
-    endpointDescription:
-      "Returns multiple Camera items for specified route and milepost range.",
+  endpoint: "/searchCamerasAsJson",
+  inputSchema: highwayCamerasByRouteAndMilepostInputSchema,
+  outputSchema: cameraSchema.array(),
+  sampleParams: {
+    StateRoute: "I-5",
+    StartingMilepost: 10,
+    EndingMilepost: 20,
   },
+  endpointDescription:
+    "Returns multiple Camera items for specified route and milepost range.",
 });
 
 export const fetchHighwayCameraByCameraId = defineEndpoint({
-  group,
+  apiName: wsdotHighwayCamerasApi.name,
+  baseUrl: wsdotHighwayCamerasApi.baseUrl,
+  group: camerasGroup,
   functionName: "fetchHighwayCameraByCameraId",
-  definition: {
-    endpoint: "/getCameraAsJson?CameraID={CameraID}",
-    inputSchema: highwayCameraByCameraIdInputSchema,
-    outputSchema: cameraSchema,
-    sampleParams: { CameraID: 9818 },
-    endpointDescription:
-      "Returns single Camera item for specific camera identifier.",
-  },
+  endpoint: "/getCameraAsJson?CameraID={CameraID}",
+  inputSchema: highwayCameraByCameraIdInputSchema,
+  outputSchema: cameraSchema,
+  sampleParams: { CameraID: 9818 },
+  endpointDescription:
+    "Returns single Camera item for specific camera identifier.",
 });
 
-export const camerasGroup = group.descriptor;

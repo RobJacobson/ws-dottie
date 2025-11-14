@@ -4,8 +4,7 @@ import { wsfScheduleApi } from "../apiDefinition";
 import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
 import { alertDetailSchema } from "./scheduleAlerts.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const scheduleAlertsGroup = defineEndpointGroup({
   name: "schedule-alerts",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,15 +15,14 @@ const group = defineEndpointGroup({
 });
 
 export const fetchScheduleAlerts = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleAlertsGroup,
   functionName: "fetchScheduleAlerts",
-  definition: {
-    endpoint: "/alerts",
-    inputSchema: scheduleAlertsInputSchema,
-    outputSchema: alertDetailSchema.array(),
-    sampleParams: {},
-    endpointDescription: "Returns all current schedule alerts.",
-  },
+  endpoint: "/alerts",
+  inputSchema: scheduleAlertsInputSchema,
+  outputSchema: alertDetailSchema.array(),
+  sampleParams: {},
+  endpointDescription: "Returns all current schedule alerts.",
 });
 
-export const scheduleAlertsResource = group.descriptor;

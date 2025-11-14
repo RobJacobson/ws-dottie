@@ -7,8 +7,7 @@ import {
 } from "./terminalSailingSpace.input";
 import { terminalSailingSpaceSchema } from "./terminalSailingSpace.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalSailingSpaceGroup = defineEndpointGroup({
   name: "terminal-sailing-space",
   cacheStrategy: "STATIC",
   documentation: {
@@ -19,29 +18,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalSailingSpace = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpace",
-  definition: {
-    endpoint: "/terminalSailingSpace",
-    inputSchema: terminalSailingSpaceInputSchema,
-    outputSchema: terminalSailingSpaceSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalSailingSpace objects for all terminals.",
-  },
+  endpoint: "/terminalSailingSpace",
+  inputSchema: terminalSailingSpaceInputSchema,
+  outputSchema: terminalSailingSpaceSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalSailingSpace objects for all terminals.",
 });
 
 export const fetchTerminalSailingSpaceByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpaceByTerminalId",
-  definition: {
-    endpoint: "/terminalSailingSpace/{TerminalID}",
-    inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
-    outputSchema: terminalSailingSpaceSchema,
-    sampleParams: { TerminalID: 7 },
-    endpointDescription:
-      "Returns TerminalSailingSpace data for the terminal with the given identifier.",
-  },
+  endpoint: "/terminalSailingSpace/{TerminalID}",
+  inputSchema: terminalSailingSpaceByTerminalIdInputSchema,
+  outputSchema: terminalSailingSpaceSchema,
+  sampleParams: { TerminalID: 7 },
+  endpointDescription:
+    "Returns TerminalSailingSpace data for the terminal with the given identifier.",
 });
 
-export const terminalSailingSpaceResource = group.descriptor;

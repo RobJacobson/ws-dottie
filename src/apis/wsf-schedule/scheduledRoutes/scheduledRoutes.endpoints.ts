@@ -7,8 +7,7 @@ import {
 } from "./scheduledRoutes.input";
 import { schedRouteSchema } from "./scheduledRoutes.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const scheduledRoutesGroup = defineEndpointGroup({
   name: "scheduled-routes",
   cacheStrategy: "STATIC",
   documentation: {
@@ -19,28 +18,27 @@ const group = defineEndpointGroup({
 });
 
 export const fetchScheduledRoutes = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduledRoutesGroup,
   functionName: "fetchScheduledRoutes",
-  definition: {
-    endpoint: "/schedroutes",
-    inputSchema: scheduledRoutesInputSchema,
-    outputSchema: schedRouteSchema.array(),
-    sampleParams: {},
-    endpointDescription: "Returns all scheduled routes.",
-  },
+  endpoint: "/schedroutes",
+  inputSchema: scheduledRoutesInputSchema,
+  outputSchema: schedRouteSchema.array(),
+  sampleParams: {},
+  endpointDescription: "Returns all scheduled routes.",
 });
 
 export const fetchScheduledRoutesById = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduledRoutesGroup,
   functionName: "fetchScheduledRoutesById",
-  definition: {
-    endpoint: "/schedroutes/{ScheduleID}",
-    inputSchema: scheduledRoutesByIdInputSchema,
-    outputSchema: schedRouteSchema.array(),
-    sampleParams: { ScheduleID: 193 },
-    endpointDescription:
-      "Returns scheduled routes for the specified schedule ID.",
-  },
+  endpoint: "/schedroutes/{ScheduleID}",
+  inputSchema: scheduledRoutesByIdInputSchema,
+  outputSchema: schedRouteSchema.array(),
+  sampleParams: { ScheduleID: 193 },
+  endpointDescription:
+    "Returns scheduled routes for the specified schedule ID.",
 });
 
-export const scheduledRoutesResource = group.descriptor;

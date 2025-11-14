@@ -5,8 +5,7 @@ import { wsfScheduleApi } from "../apiDefinition";
 import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
 import { serviceDisruptionSchema } from "./serviceDisruptions.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const serviceDisruptionsGroup = defineEndpointGroup({
   name: "service-disruptions",
   cacheStrategy: "STATIC",
   documentation: {
@@ -18,16 +17,15 @@ const group = defineEndpointGroup({
 });
 
 export const fetchRoutesHavingServiceDisruptionsByTripDate = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: serviceDisruptionsGroup,
   functionName: "fetchRoutesHavingServiceDisruptionsByTripDate",
-  definition: {
-    endpoint: "/routeshavingservicedisruptions/{TripDate}",
-    inputSchema: routesHavingServiceDisruptionsByTripDateInputSchema,
-    outputSchema: serviceDisruptionSchema.array(),
-    sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription:
-      "Returns multiple of ServiceDisruption for specified trip date.",
-  },
+  endpoint: "/routeshavingservicedisruptions/{TripDate}",
+  inputSchema: routesHavingServiceDisruptionsByTripDateInputSchema,
+  outputSchema: serviceDisruptionSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription:
+    "Returns multiple of ServiceDisruption for specified trip date.",
 });
 
-export const serviceDisruptionsResource = group.descriptor;

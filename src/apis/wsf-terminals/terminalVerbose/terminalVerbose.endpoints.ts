@@ -7,8 +7,7 @@ import {
 } from "./terminalVerbose.input";
 import { terminalVerboseSchema } from "./terminalVerbose.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalVerboseGroup = defineEndpointGroup({
   name: "terminal-verbose",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalVerbose = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalVerboseGroup,
   functionName: "fetchTerminalVerbose",
-  definition: {
-    endpoint: "/terminalVerbose",
-    inputSchema: terminalVerboseInputSchema,
-    outputSchema: terminalVerboseSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalVerbose objects for all terminals.",
-  },
+  endpoint: "/terminalVerbose",
+  inputSchema: terminalVerboseInputSchema,
+  outputSchema: terminalVerboseSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalVerbose objects for all terminals.",
 });
 
 export const fetchTerminalVerboseByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalVerboseGroup,
   functionName: "fetchTerminalVerboseByTerminalId",
-  definition: {
-    endpoint: "/terminalVerbose/{TerminalID}",
-    inputSchema: terminalVerboseByTerminalIdInputSchema,
-    outputSchema: terminalVerboseSchema,
-    sampleParams: { TerminalID: 4 },
-    endpointDescription:
-      "Returns TerminalVerbose data for the terminal with the specified terminal.",
-  },
+  endpoint: "/terminalVerbose/{TerminalID}",
+  inputSchema: terminalVerboseByTerminalIdInputSchema,
+  outputSchema: terminalVerboseSchema,
+  sampleParams: { TerminalID: 4 },
+  endpointDescription:
+    "Returns TerminalVerbose data for the terminal with the specified terminal.",
 });
 
-export const terminalVerboseResource = group.descriptor;

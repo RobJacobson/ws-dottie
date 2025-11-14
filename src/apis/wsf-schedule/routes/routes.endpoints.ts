@@ -8,8 +8,7 @@ import {
 } from "./routes.input";
 import { routeSchema } from "./routes.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const routesGroup = defineEndpointGroup({
   name: "routes",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,31 +20,30 @@ const group = defineEndpointGroup({
 });
 
 export const fetchRoutesByTripDate = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: routesGroup,
   functionName: "fetchRoutesByTripDate",
-  definition: {
-    endpoint: "/routes/{TripDate}",
-    inputSchema: routesByTripDateInputSchema,
-    outputSchema: routeSchema.array(),
-    sampleParams: { TripDate: datesHelper.tomorrow() },
-    endpointDescription: "Returns multiple of Routes for specified date.",
-  },
+  endpoint: "/routes/{TripDate}",
+  inputSchema: routesByTripDateInputSchema,
+  outputSchema: routeSchema.array(),
+  sampleParams: { TripDate: datesHelper.tomorrow() },
+  endpointDescription: "Returns multiple of Routes for specified date.",
 });
 
 export const fetchRoutesByTripDateAndTerminals = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: routesGroup,
   functionName: "fetchRoutesByTripDateAndTerminals",
-  definition: {
-    endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-    inputSchema: routesByTripDateAndTerminalsInputSchema,
-    outputSchema: routeSchema.array(),
-    sampleParams: {
-      TripDate: datesHelper.tomorrow(),
-      DepartingTerminalID: 1,
-      ArrivingTerminalID: 10,
-    },
-    endpointDescription: "Returns multiple of Routes for terminal pair.",
+  endpoint: "/routes/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+  inputSchema: routesByTripDateAndTerminalsInputSchema,
+  outputSchema: routeSchema.array(),
+  sampleParams: {
+    TripDate: datesHelper.tomorrow(),
+    DepartingTerminalID: 1,
+    ArrivingTerminalID: 10,
   },
+  endpointDescription: "Returns multiple of Routes for terminal pair.",
 });
 
-export const routesResource = group.descriptor;

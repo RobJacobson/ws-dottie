@@ -7,8 +7,7 @@ import {
 } from "./terminalWaitTimes.input";
 import { terminalWaitTimeSchema } from "./terminalWaitTimes.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalWaitTimesGroup = defineEndpointGroup({
   name: "terminal-wait-times",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalWaitTimes = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimes",
-  definition: {
-    endpoint: "/terminalWaitTimes",
-    inputSchema: terminalWaitTimesInputSchema,
-    outputSchema: terminalWaitTimeSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalWaitTime objects for all terminals.",
-  },
+  endpoint: "/terminalWaitTimes",
+  inputSchema: terminalWaitTimesInputSchema,
+  outputSchema: terminalWaitTimeSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalWaitTime objects for all terminals.",
 });
 
 export const fetchTerminalWaitTimesByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimesByTerminalId",
-  definition: {
-    endpoint: "/terminalWaitTimes/{TerminalID}",
-    inputSchema: terminalWaitTimesByIdInputSchema,
-    outputSchema: terminalWaitTimeSchema,
-    sampleParams: { TerminalID: 11 },
-    endpointDescription:
-      "Returns a single TerminalWaitTime object for specified terminal.",
-  },
+  endpoint: "/terminalWaitTimes/{TerminalID}",
+  inputSchema: terminalWaitTimesByIdInputSchema,
+  outputSchema: terminalWaitTimeSchema,
+  sampleParams: { TerminalID: 11 },
+  endpointDescription:
+    "Returns a single TerminalWaitTime object for specified terminal.",
 });
 
-export const terminalWaitTimesResource = group.descriptor;

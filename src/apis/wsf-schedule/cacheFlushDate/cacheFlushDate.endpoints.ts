@@ -8,8 +8,7 @@ import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { wsfScheduleApi } from "../apiDefinition";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const cacheFlushDateScheduleGroup = defineEndpointGroup({
   name: "cache-flush-date-schedule",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,19 +20,18 @@ const group = defineEndpointGroup({
 });
 
 export const fetchCacheFlushDateSchedule = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: cacheFlushDateScheduleGroup,
   functionName: "fetchCacheFlushDateSchedule",
-  definition: {
-    endpoint: "/cacheflushdate",
-    inputSchema: cacheFlushDateInputSchema,
-    outputSchema: cacheFlushDateOutputSchema,
-    sampleParams: {},
-    endpointDescription:
-      "Returns the timestamp of when any static endpoint data for the wsf-schedule API was last updated.",
-  },
+  endpoint: "/cacheflushdate",
+  inputSchema: cacheFlushDateInputSchema,
+  outputSchema: cacheFlushDateOutputSchema,
+  sampleParams: {},
+  endpointDescription:
+    "Returns the timestamp of when any static endpoint data for the wsf-schedule API was last updated.",
 });
 
-export const cacheFlushDateSchedule = group.descriptor;
 
 // Re-export with API-specific names for backward compatibility
 export type CacheFlushDateScheduleInput = CacheFlushDateInput;

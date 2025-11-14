@@ -5,8 +5,7 @@ import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
 import { wsfScheduleApi } from "../apiDefinition";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const scheduleTerminalMatesGroup = defineEndpointGroup({
   name: "schedule-terminal-mates",
   cacheStrategy: "STATIC",
   documentation: {
@@ -18,16 +17,15 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalMatesSchedule = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleTerminalMatesGroup,
   functionName: "fetchTerminalMatesSchedule",
-  definition: {
-    endpoint: "/terminalmates/{TripDate}/{TerminalID}",
-    inputSchema: terminalMatesInputSchema,
-    outputSchema: terminalListSchema,
-    sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
-    endpointDescription:
-      "Returns multiple of Terminal for specified trip date and terminal ID.",
-  },
+  endpoint: "/terminalmates/{TripDate}/{TerminalID}",
+  inputSchema: terminalMatesInputSchema,
+  outputSchema: terminalListSchema,
+  sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
+  endpointDescription:
+    "Returns multiple of Terminal for specified trip date and terminal ID.",
 });
 
-export const scheduleTerminalMatesResource = group.descriptor;

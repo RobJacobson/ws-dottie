@@ -7,8 +7,7 @@ import {
 } from "./terminalBulletins.input";
 import { terminalBulletinSchema } from "./terminalBulletins.output";
 
-const group = defineEndpointGroup({
-  api: wsfTerminalsApi,
+export const terminalBulletinsGroup = defineEndpointGroup({
   name: "terminal-bulletins",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,29 +19,28 @@ const group = defineEndpointGroup({
 });
 
 export const fetchTerminalBulletins = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalBulletinsGroup,
   functionName: "fetchTerminalBulletins",
-  definition: {
-    endpoint: "/terminalBulletins",
-    inputSchema: terminalBulletinsInputSchema,
-    outputSchema: terminalBulletinSchema.array(),
-    sampleParams: {},
-    endpointDescription:
-      "Returns multiple TerminalBulletin objects for all terminals.",
-  },
+  endpoint: "/terminalBulletins",
+  inputSchema: terminalBulletinsInputSchema,
+  outputSchema: terminalBulletinSchema.array(),
+  sampleParams: {},
+  endpointDescription:
+    "Returns multiple TerminalBulletin objects for all terminals.",
 });
 
 export const fetchTerminalBulletinsByTerminalId = defineEndpoint({
-  group,
+  apiName: wsfTerminalsApi.name,
+  baseUrl: wsfTerminalsApi.baseUrl,
+  group: terminalBulletinsGroup,
   functionName: "fetchTerminalBulletinsByTerminalId",
-  definition: {
-    endpoint: "/terminalBulletins/{TerminalID}",
-    inputSchema: terminalBulletinsByIdInputSchema,
-    outputSchema: terminalBulletinSchema,
-    sampleParams: { TerminalID: 3 },
-    endpointDescription:
-      "Returns TerminalBulletin data for the terminal with the specified terminal.",
-  },
+  endpoint: "/terminalBulletins/{TerminalID}",
+  inputSchema: terminalBulletinsByIdInputSchema,
+  outputSchema: terminalBulletinSchema,
+  sampleParams: { TerminalID: 3 },
+  endpointDescription:
+    "Returns TerminalBulletin data for the terminal with the specified terminal.",
 });
 
-export const terminalBulletinsResource = group.descriptor;

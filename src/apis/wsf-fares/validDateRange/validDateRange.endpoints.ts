@@ -4,8 +4,7 @@ import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { wsfFaresApi } from "../apiDefinition";
 import { faresValidDateRangeInputSchema } from "./validDateRange.input";
 
-const group = defineEndpointGroup({
-  api: wsfFaresApi,
+export const validDateRangeGroup = defineEndpointGroup({
   name: "valid-date-range",
   cacheStrategy: "STATIC",
   documentation: {
@@ -17,16 +16,14 @@ const group = defineEndpointGroup({
 });
 
 export const fetchFaresValidDateRange = defineEndpoint({
-  group,
+  apiName: wsfFaresApi.name,
+  baseUrl: wsfFaresApi.baseUrl,
+  group: validDateRangeGroup,
   functionName: "fetchFaresValidDateRange",
-  definition: {
-    endpoint: "/validdaterange",
-    inputSchema: faresValidDateRangeInputSchema,
-    outputSchema: validDateRangeSchema,
-    sampleParams: {},
-    endpointDescription:
-      "Returns a single ValidDateRange object for the current fares data validity period.",
-  },
+  endpoint: "/validdaterange",
+  inputSchema: faresValidDateRangeInputSchema,
+  outputSchema: validDateRangeSchema,
+  sampleParams: {},
+  endpointDescription:
+    "Returns a single ValidDateRange object for the current fares data validity period.",
 });
-
-export const validDateRangeGroup = group.descriptor;

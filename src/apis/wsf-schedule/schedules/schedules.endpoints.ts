@@ -8,8 +8,7 @@ import {
 } from "./schedules.input";
 import { scheduleSchema } from "./schedules.output";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const schedulesGroup = defineEndpointGroup({
   name: "schedules",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,33 +20,31 @@ const group = defineEndpointGroup({
 });
 
 export const fetchScheduleByTripDateAndRouteId = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: schedulesGroup,
   functionName: "fetchScheduleByTripDateAndRouteId",
-  definition: {
-    endpoint: "/schedule/{TripDate}/{RouteID}",
-    inputSchema: scheduleByTripDateAndRouteIdInputSchema,
-    outputSchema: scheduleSchema,
-    sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
-    endpointDescription: "Returns single of Schedules for specified route.",
-  },
+  endpoint: "/schedule/{TripDate}/{RouteID}",
+  inputSchema: scheduleByTripDateAndRouteIdInputSchema,
+  outputSchema: scheduleSchema,
+  sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
+  endpointDescription: "Returns single of Schedules for specified route.",
 });
 
 export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
   defineEndpoint({
-    group,
+    apiName: wsfScheduleApi.name,
+    baseUrl: wsfScheduleApi.baseUrl,
+    group: schedulesGroup,
     functionName: "fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
-    definition: {
-      endpoint:
-        "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
-      inputSchema: scheduleByTripDateAndTerminals,
-      outputSchema: scheduleSchema,
-      sampleParams: {
-        TripDate: datesHelper.tomorrow(),
-        DepartingTerminalID: 1,
-        ArrivingTerminalID: 10,
-      },
-      endpointDescription: "Returns single of Schedules for terminal pair.",
+    endpoint: "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",
+    inputSchema: scheduleByTripDateAndTerminals,
+    outputSchema: scheduleSchema,
+    sampleParams: {
+      TripDate: datesHelper.tomorrow(),
+      DepartingTerminalID: 1,
+      ArrivingTerminalID: 10,
     },
+    endpointDescription: "Returns single of Schedules for terminal pair.",
   });
 
-export const schedulesResource = group.descriptor;

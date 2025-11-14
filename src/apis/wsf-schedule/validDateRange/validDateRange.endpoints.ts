@@ -4,8 +4,7 @@ import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { wsfScheduleApi } from "../apiDefinition";
 import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
 
-const group = defineEndpointGroup({
-  api: wsfScheduleApi,
+export const scheduleValidDateRangeGroup = defineEndpointGroup({
   name: "schedule-valid-date-range",
   cacheStrategy: "STATIC",
   documentation: {
@@ -17,15 +16,14 @@ const group = defineEndpointGroup({
 });
 
 export const fetchScheduleValidDateRange = defineEndpoint({
-  group,
+  apiName: wsfScheduleApi.name,
+  baseUrl: wsfScheduleApi.baseUrl,
+  group: scheduleValidDateRangeGroup,
   functionName: "fetchScheduleValidDateRange",
-  definition: {
-    endpoint: "/validdaterange",
-    inputSchema: scheduleValidDateRangeInputSchema,
-    outputSchema: validDateRangeSchema,
-    sampleParams: {},
-    endpointDescription: "Returns single of ValidDateRange for schedule data.",
-  },
+  endpoint: "/validdaterange",
+  inputSchema: scheduleValidDateRangeInputSchema,
+  outputSchema: validDateRangeSchema,
+  sampleParams: {},
+  endpointDescription: "Returns single of ValidDateRange for schedule data.",
 });
 
-export const scheduleValidDateRangeResource = group.descriptor;
