@@ -115,7 +115,6 @@ This section defines the *goal* state for descriptions, inspired by OpenAPI 3.1 
    - Structured fields (optional but recommended):
      - `useCases`: short bullet list (“Show live vessel positions in rider apps.”).
      - `updateFrequency`: short string (“5s”, “5m”, “daily”).
-     - `dataFreshnessNotes`: short caveat (“Approximate; not suitable for legal records.”).
    - These follow the “skill” idea from Claude Agent Skills: compact description + when-to-use hints.
 
 3. **Endpoint-level**
@@ -236,10 +235,10 @@ For **WSF endpoint groups**, the group documentation should also include a **sta
 
 - For WSF groups with `cacheStrategy: "STATIC"`:
   - Include a short, standard sentence in `description` or `useCases` indicating that clients **should use the corresponding `cacheFlushDate` endpoint** to know when to invalidate cached responses for this group.
-  - Example pattern: “Use the `cacheFlushDate` endpoint for this API to determine when to invalidate cached data for this group.”
+  - Recommended sentence: “Use the `cacheFlushDate` endpoint for this API to determine when to invalidate cached data for this group.”
 - For WSF groups with `cacheStrategy: "REALTIME"`:
   - Include a short sentence clarifying that `cacheFlushDate` is **not used** to invalidate this data, and that clients should rely on the real-time cache strategy instead.
-  - Example pattern: “This endpoint is real-time; `cacheFlushDate` is not used for cache invalidation.”
+  - Recommended sentence: “This endpoint is real-time; `cacheFlushDate` is not used for cache invalidation.”
 
 Agents updating docs should consult the official WSF `cacheFlushDate` docs for wording and intent, but treat our Zod schemas and cache strategies as canonical for behavior.
 
@@ -249,7 +248,6 @@ OpenAPI mapping (to implement in step 3):
 - Custom OpenAPI extensions:
   - `x-useCases`
   - `x-updateFrequency`
-  - `x-dataFreshnessNotes`
 
 #### 4.2 Endpoint-level documentation
 
@@ -444,7 +442,7 @@ For each group (for example `vessel-locations`):
      - Optional `description`: 1 sentence that adds nuance.
      - `useCases`: 2–4 bullets, each a short phrase starting with a verb.
      - `updateFrequency`: short identifier (“5s”, “5m”, “1h”, “daily”).
-     - `dataFreshnessNotes`: short caveat if relevant.
+     - For WSF groups, include the appropriate `cacheFlushDate` sentence from section 4.1.
    - Pattern examples:
      - Summary: “Real-time vessel locations and status for the WSF fleet.”
      - Use case bullets:
@@ -522,6 +520,48 @@ To reduce inconsistent styles while allowing per-field flexibility:
   - Only include value examples when:
     - They clarify unusual behavior or code mapping.
   - Use a single example if needed; avoid long “E.g. this, that, and that” lists.
+
+#### 6.4 Common field description patterns
+
+To maximize consistency, use these patterns by default and only deviate when necessary:
+
+- **IDs**
+  - Pattern: `"Numeric ID of the <entity>."`
+  - Examples:
+    - `VesselID`: “Numeric ID of the vessel.”
+    - `DepartingTerminalID`: “Numeric ID of the departing terminal.”
+
+- **Names / labels**
+  - Pattern: `"Display name of the <entity>."`
+  - Examples:
+    - `VesselName`: “Display name of the vessel.”
+    - `DepartingTerminalName`: “Display name of the departing terminal.”
+
+- **Timestamps / datetimes**
+  - Pattern: `"UTC datetime when <event> occurs/occurred."`
+  - Examples:
+    - `TimeStamp`: “UTC datetime when this record was last updated.”
+    - `LeftDock`: “UTC datetime when the vessel last departed its origin terminal.”
+
+- **Booleans**
+  - Pattern: `"True if <condition>, otherwise false."`
+  - Examples:
+    - `AtDock`: “True if the vessel is currently docked at a terminal; otherwise false.”
+    - `InService`: “True if the vessel is currently in service; otherwise false.”
+
+- **Numeric measurements with units**
+  - Pattern: `"<Quantity> in <unit>."`
+  - Examples:
+    - `Speed`: “Vessel speed over ground in knots.”
+    - `Height`: “Bridge clearance height in feet.”
+
+- **Enum-like codes**
+  - Pattern: `"Code indicating <meaning>: X = ..., Y = ..."`
+  - Examples:
+    - `ManagedBy`: “Code indicating management owner: 1 = WSF, 2 = KCM.”
+    - `StatusCode`: “Code indicating alert status: 0 = normal, 1 = warning, 2 = critical.”
+
+These patterns should be applied wherever they make sense; when a field has unusual behavior, start from the closest pattern and add just enough detail to capture the nuance.
 
 ---
 
