@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,6 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
     FetchBorderCrossingsOutput:
       type: object
       properties:
@@ -54,26 +55,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -81,29 +82,29 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: Roadway location information for border crossing, as a roadway location object. E.g., I-5 General Purpose at latitude 49.004776, longitude -122.756964, null when location data is unavailable like SR539Nexus. Provides geographic and route information for crossing identification.
+          description: Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane.
         CrossingName:
           type:
             - string
             - 'null'
-          description: Common name identifier for border crossing, as a crossing code. E.g., 'I5' for I-5 General Purpose, 'I5Nexus' for I-5 Nexus Lane, 'SR543TrucksFast' for SR-543 Trucks FAST Lane, 'SR9' for SR-9 General Purpose, null when crossing name is unavailable. Used for crossing identification and user display.
+          description: Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable.
         Time:
           type: string
-          description: Timestamp when border crossing wait time reading was taken, as a UTC datetime. E.g., '2025-11-02T19:10:00.000Z' for reading at 7:10 PM on November 2, 2025. Indicates data freshness and when wait time measurement occurred.
+          description: UTC datetime when this border crossing wait time observation was recorded.
         WaitTime:
           type: integer
-          description: Current border crossing wait time, as minutes. E.g., '15' for 15 minutes at I-5 General Purpose, '5' for 5 minutes at I-5 Nexus Lane, '10' for 10 minutes at SR-543 Trucks, '-1' when wait time is unavailable or not applicable. Negative values indicate wait time data is not available for that crossing.
+          description: Current estimated wait time for this crossing in minutes; -1 when a wait time is not available.
       required:
         - BorderCrossingLocation
         - CrossingName
         - Time
         - WaitTime
-      description: Represents border crossing wait time data including crossing identification, location information, current wait times, and measurement timestamp. E.g., I-5 General Purpose crossing (I5) at location 49.004776, -122.756964 with 15 minute wait time measured at 7:10 PM. Used for border crossing planning, route selection, and wait time monitoring. Updates approximately every minute.
+      description: Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes.
   parameters: {}
 paths:
   /GetBorderCrossingsAsJson:
     get:
-      summary: Returns an array of BorderCrossingData objects containing current wait times for all Washington State border crossings into Canada.
+      summary: List current wait times for all Washington border crossings into Canada.
       operationId: fetchBorderCrossings
       tags:
         - border-crossing-data
@@ -142,12 +143,14 @@ paths:
                         MilePost: 0
                         RoadName: '005'
                       CrossingName: I5
-                      Time: 2025-11-08T08:30:00.000Z
+                      Time: 2025-11-15T16:55:00.000Z
                       WaitTime: 5
-                    - _note: ... 10 more items
 webhooks: {}
 tags:
   - name: border-crossing-data
-    description: Each BorderCrossingData item represents current border crossing wait time information for Washington State crossings into Canada, including crossing identification (name and type), location coordinates, timestamp data, and wait time measurements in minutes. These items provide real-time traffic flow data for I-5, SR-543, SR-539, and SR-9 crossings, supporting both general purpose and specialized lanes (Nexus, Trucks, FAST).
-    externalDocs:
-      description: Use to plan border crossing routes and estimate wait times by providing real-time wait time data, crossing location information, and timestamp measurements for Washington State crossings into Canada. Compare wait times across different crossing types (general purpose, Nexus, truck lanes) and select optimal crossing points for travel planning.
+    description: Current wait times for Washington border crossings into Canada by crossing and lane type.
+    x-useCases:
+      - Plan trips into Canada based on current border wait times.
+      - Compare wait times across crossings and lane types.
+      - Show live wait-time information in traveler or operations dashboards.
+    x-updateFrequency: 1m

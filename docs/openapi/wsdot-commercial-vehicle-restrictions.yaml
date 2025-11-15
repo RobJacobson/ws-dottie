@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,6 +42,7 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
     FetchCommercialVehicleRestrictionsOutput:
       type: object
       properties:
@@ -49,31 +50,31 @@ components:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for BL (Bridge Legal) classification, as pounds. E.g., '20000' for 20,000 lb per axle limit on Teanaway River bridge, '21500' for 21,500 lb limit on South Nemah River bridge, null when BL classification does not apply. Used for bridge legal weight compliance.
+          description: Maximum axle weight for Bridge Legal classification in pounds.
         BridgeName:
           type:
             - string
             - 'null'
-          description: Name of bridge associated with restriction, as a bridge name. E.g., 'Teanaway River' for bridge 10/142, 'Bear River' for bridge 101/16, 'Greenhead Slough' for bridge 101/18, empty string when restriction is not bridge-specific. Provides bridge identification for restriction lookup.
+          description: Name of the bridge associated with the restriction.
         BridgeNumber:
           type:
             - string
             - 'null'
-          description: WSDOT bridge identifier, as a bridge identifier. E.g., '10/142' for Teanaway River bridge, '101/16' for Bear River bridge, '101/18' for Greenhead Slough bridge, empty string when restriction is not bridge-specific. Used for bridge identification and cross-referencing with bridge clearance data.
+          description: WSDOT bridge identifier in format 'route/bridge' (e.g., '10/142').
         CL8MaxAxle:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for CL-8 classification, as pounds. E.g., '20000' for 20,000 lb per axle limit, '18000' for 18,000 lb limit, null when CL-8 classification does not apply. Used for commercial vehicle class 8 weight compliance.
+          description: Maximum axle weight for CL-8 classification in pounds.
         DateEffective:
           type: string
-          description: Date when commercial vehicle restriction becomes effective, as a UTC datetime. E.g., '2011-10-18T07:00:00.000Z' for October 18, 2011, '2024-06-26T07:00:00.000Z' for June 26, 2024. Indicates when restriction enforcement begins.
+          description: UTC datetime when the commercial vehicle restriction becomes effective.
         DateExpires:
           type: string
-          description: Date when commercial vehicle restriction expires, as a UTC datetime. E.g., '2075-12-31T08:00:00.000Z' for December 31, 2075 (long-term restriction), '2013-10-24T07:00:00.000Z' for October 24, 2013 (temporary restriction). Indicates when restriction is no longer in force.
+          description: UTC datetime when the commercial vehicle restriction expires.
         DatePosted:
           type: string
-          description: Date when commercial vehicle restriction was first posted, as a UTC datetime. E.g., '2011-10-19T05:12:00.000Z' for October 18, 2011 at 10:12 PM, '2014-08-27T05:43:00.000Z' for August 26, 2014 at 10:43 PM. Indicates when restriction information was published.
+          description: UTC datetime when the commercial vehicle restriction was first posted.
         EndRoadwayLocation:
           type:
             - object
@@ -83,26 +84,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -110,73 +111,73 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: End location of restriction along roadway, as a roadway location object. E.g., SR 10 at milepost 0 for restriction end point, null when end location is not specified. Provides termination point for restriction zone along highway.
+          description: End location of the restriction along the roadway.
         IsDetourAvailable:
           type: boolean
-          description: Indicator whether detour route is available around restriction, as a boolean. E.g., false for most restrictions like Teanaway River bridge, true when alternate route exists. Used for route planning when restriction must be avoided.
+          description: True if a detour route is available around the restriction; otherwise false.
         IsExceptionsAllowed:
           type: boolean
-          description: Indicator whether exceptions are permitted for restriction, as a boolean. E.g., false for most restrictions indicating strict enforcement, true when special permits or exceptions may be granted. Used for determining if restriction can be bypassed with authorization.
+          description: True if exceptions are permitted for the restriction; otherwise false.
         IsPermanentRestriction:
           type: boolean
-          description: Indicator whether restriction is permanent or temporary, as a boolean. E.g., false for temporary restrictions with expiration dates, true for permanent restrictions like railroad trestle height limits. Determines if restriction requires long-term route planning.
+          description: True if the restriction is permanent; otherwise false (temporary).
         IsWarning:
           type: boolean
-          description: Indicator whether restriction is a warning rather than enforceable limit, as a boolean. E.g., false for enforceable restrictions, true when restriction serves as advisory warning. Used for distinguishing advisory versus mandatory restrictions.
+          description: True if the restriction is a warning rather than an enforceable limit; otherwise false.
         Latitude:
           type: number
-          description: GPS latitude coordinate for restriction location, in decimal degrees. E.g., '47.15136148800159' for Teanaway River bridge near SR 10, '46.348343747148334' for Bear River bridge on US 101.
+          description: GPS latitude coordinate for the restriction location in decimal degrees.
         LocationDescription:
           type:
             - string
             - 'null'
-          description: Human-readable description of restriction location, as a location description. E.g., 'SR 10, MP 89.33 both directions-20,000 lbs limitation' for Teanaway River, 'US 101 MP 18.65 BD - Legal axle weights only. Max GVW 105,500lbs' for Bear River, null when description is unavailable. Provides detailed location context for restriction.
+          description: Human-readable description of the restriction location.
         LocationName:
           type:
             - string
             - 'null'
-          description: Name of location where restriction applies, as a location name. E.g., '1.3 E Jct SR 970' for Teanaway River location, '5.2 N JCT SR 103' for Bear River location, 'Railroad Trestle - Thorp Area' for SR-10 height restriction, null when location name is unavailable. Provides landmark reference for restriction identification.
+          description: Name of the location where the restriction applies.
         Longitude:
           type: number
-          description: GPS longitude coordinate for restriction location, in decimal degrees. E.g., '-120.80431521930812' for Teanaway River bridge, '-123.95870200417737' for Bear River bridge.
+          description: GPS longitude coordinate for the restriction location in decimal degrees.
         MaximumGrossVehicleWeightInPounds:
           type:
             - number
             - 'null'
-          description: Maximum gross vehicle weight limit in pounds, as pounds. E.g., '105500' for 105,500 lb maximum GVW on Bear River bridge, null when GVW limit is not specified. Used for total vehicle weight compliance checking.
+          description: Maximum gross vehicle weight limit in pounds.
         RestrictionComment:
           type:
             - string
             - 'null'
-          description: 'Additional details and comments about restriction, as a human-readable description. E.g., ''BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.'' for axle weight breakdown, ''CAUTION: Bridge height is 15''. If your height is over 14''10" alternate route is advised.'' for height warning, null when comments are unavailable. Provides detailed restriction information and compliance guidance.'
+          description: Additional details and comments about the restriction.
         RestrictionHeightInInches:
           type:
             - number
             - 'null'
-          description: 'Maximum load height restriction in inches, as inches. E.g., null when height restriction is not specified, ''180'' for 15-foot height limit (180 inches). Used for height-restricted vehicle routing. Note: Height restrictions may be specified in comments rather than this field.'
+          description: Maximum load height restriction in inches.
         RestrictionLengthInInches:
           type:
             - number
             - 'null'
-          description: Maximum load length restriction in inches, as inches. E.g., null when length restriction is not specified. Used for length-restricted vehicle routing.
+          description: Maximum load length restriction in inches.
         RestrictionType:
           type: number
-          description: 'Type of commercial vehicle restriction, as a restriction type code. Valid values: 0 (BridgeRestriction), 1 (RoadRestriction). E.g., ''0'' indicates bridge-specific restriction like Teanaway River bridge, ''1'' indicates roadway restriction like SR-10 height restriction. Determines whether restriction applies to bridge structure or roadway segment.'
+          description: 'Code indicating restriction type: 0 = BridgeRestriction, 1 = RoadRestriction.'
         RestrictionWeightInPounds:
           type:
             - number
             - 'null'
-          description: Maximum load weight restriction in pounds, as pounds. E.g., '0' when weight restriction uses axle classifications instead, null when weight restriction is not specified. Used for weight-restricted vehicle routing.
+          description: Maximum load weight restriction in pounds.
         RestrictionWidthInInches:
           type:
             - number
             - 'null'
-          description: Maximum load width restriction in inches, as inches. E.g., null when width restriction is not specified. Used for width-restricted vehicle routing.
+          description: Maximum load width restriction in inches.
         SAMaxAxle:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for SA (Semi-Automatic) classification, as pounds. E.g., '40000' for 40,000 lb per axle limit, '38000' for 38,000 lb limit, '44500' for 44,500 lb limit, null when SA classification does not apply. Used for semi-automatic vehicle weight compliance.
+          description: Maximum axle weight for Semi-Automatic classification in pounds.
         StartRoadwayLocation:
           type:
             - object
@@ -186,26 +187,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -213,27 +214,27 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: Start location of restriction along roadway, as a roadway location object. E.g., SR 10 at milepost 89.33 for restriction start point, US 101 at milepost 18.65 for Bear River restriction. Provides origin point for restriction zone along highway.
+          description: Start location of the restriction along the roadway.
         State:
           type:
             - string
             - 'null'
-          description: State where commercial vehicle restriction is located, as a state code. E.g., 'WA' for Washington state restrictions, null when state is not specified. Used for multi-state restriction filtering.
+          description: State code where the commercial vehicle restriction is located.
         StateRouteID:
           type:
             - string
             - 'null'
-          description: State route identifier where restriction applies, as a route identifier. E.g., '10' for SR-10, '101' for US-101. Used for route-specific restriction filtering and identification.
+          description: State route identifier where the restriction applies.
         TDMaxAxle:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for TD (Tandem Drive) classification, as pounds. E.g., null when TD classification does not apply. Used for tandem drive vehicle weight compliance.
+          description: Maximum axle weight for Tandem Drive classification in pounds.
         VehicleType:
           type:
             - string
             - 'null'
-          description: Type of vehicle affected by restriction, as a vehicle type code. E.g., empty string when restriction applies to all commercial vehicles, null when vehicle type is not specified. Used for vehicle-specific restriction filtering.
+          description: Type of vehicle affected by the restriction.
       required:
         - BLMaxAxle
         - BridgeName
@@ -264,7 +265,7 @@ components:
         - StateRouteID
         - TDMaxAxle
         - VehicleType
-      description: Represents commercial vehicle restriction information including weight limits by classification, height/width/length restrictions, location data, effective dates, and restriction type. E.g., Teanaway River bridge (10/142) on SR-10 with 20,000 lb BL and CL-8 axle limits effective October 2011 through December 2075. Used for commercial vehicle route planning, compliance checking, and restriction awareness. Covers bridge and roadway restrictions statewide.
+      description: Commercial vehicle restriction information including weight limits by classification, height/width/length restrictions, location data, effective dates, and restriction type for bridge and roadway restrictions statewide.
     FetchCommercialVehicleRestrictionsWithIdOutput:
       type: object
       properties:
@@ -272,31 +273,31 @@ components:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for BL (Bridge Legal) classification, as pounds. E.g., '20000' for 20,000 lb per axle limit on Teanaway River bridge, '21500' for 21,500 lb limit on South Nemah River bridge, null when BL classification does not apply. Used for bridge legal weight compliance.
+          description: Maximum axle weight for Bridge Legal classification in pounds.
         BridgeName:
           type:
             - string
             - 'null'
-          description: Name of bridge associated with restriction, as a bridge name. E.g., 'Teanaway River' for bridge 10/142, 'Bear River' for bridge 101/16, 'Greenhead Slough' for bridge 101/18, empty string when restriction is not bridge-specific. Provides bridge identification for restriction lookup.
+          description: Name of the bridge associated with the restriction.
         BridgeNumber:
           type:
             - string
             - 'null'
-          description: WSDOT bridge identifier, as a bridge identifier. E.g., '10/142' for Teanaway River bridge, '101/16' for Bear River bridge, '101/18' for Greenhead Slough bridge, empty string when restriction is not bridge-specific. Used for bridge identification and cross-referencing with bridge clearance data.
+          description: WSDOT bridge identifier in format 'route/bridge' (e.g., '10/142').
         CL8MaxAxle:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for CL-8 classification, as pounds. E.g., '20000' for 20,000 lb per axle limit, '18000' for 18,000 lb limit, null when CL-8 classification does not apply. Used for commercial vehicle class 8 weight compliance.
+          description: Maximum axle weight for CL-8 classification in pounds.
         DateEffective:
           type: string
-          description: Date when commercial vehicle restriction becomes effective, as a UTC datetime. E.g., '2011-10-18T07:00:00.000Z' for October 18, 2011, '2024-06-26T07:00:00.000Z' for June 26, 2024. Indicates when restriction enforcement begins.
+          description: UTC datetime when the commercial vehicle restriction becomes effective.
         DateExpires:
           type: string
-          description: Date when commercial vehicle restriction expires, as a UTC datetime. E.g., '2075-12-31T08:00:00.000Z' for December 31, 2075 (long-term restriction), '2013-10-24T07:00:00.000Z' for October 24, 2013 (temporary restriction). Indicates when restriction is no longer in force.
+          description: UTC datetime when the commercial vehicle restriction expires.
         DatePosted:
           type: string
-          description: Date when commercial vehicle restriction was first posted, as a UTC datetime. E.g., '2011-10-19T05:12:00.000Z' for October 18, 2011 at 10:12 PM, '2014-08-27T05:43:00.000Z' for August 26, 2014 at 10:43 PM. Indicates when restriction information was published.
+          description: UTC datetime when the commercial vehicle restriction was first posted.
         EndRoadwayLocation:
           type:
             - object
@@ -306,26 +307,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -333,73 +334,73 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: End location of restriction along roadway, as a roadway location object. E.g., SR 10 at milepost 0 for restriction end point, null when end location is not specified. Provides termination point for restriction zone along highway.
+          description: End location of the restriction along the roadway.
         IsDetourAvailable:
           type: boolean
-          description: Indicator whether detour route is available around restriction, as a boolean. E.g., false for most restrictions like Teanaway River bridge, true when alternate route exists. Used for route planning when restriction must be avoided.
+          description: True if a detour route is available around the restriction; otherwise false.
         IsExceptionsAllowed:
           type: boolean
-          description: Indicator whether exceptions are permitted for restriction, as a boolean. E.g., false for most restrictions indicating strict enforcement, true when special permits or exceptions may be granted. Used for determining if restriction can be bypassed with authorization.
+          description: True if exceptions are permitted for the restriction; otherwise false.
         IsPermanentRestriction:
           type: boolean
-          description: Indicator whether restriction is permanent or temporary, as a boolean. E.g., false for temporary restrictions with expiration dates, true for permanent restrictions like railroad trestle height limits. Determines if restriction requires long-term route planning.
+          description: True if the restriction is permanent; otherwise false (temporary).
         IsWarning:
           type: boolean
-          description: Indicator whether restriction is a warning rather than enforceable limit, as a boolean. E.g., false for enforceable restrictions, true when restriction serves as advisory warning. Used for distinguishing advisory versus mandatory restrictions.
+          description: True if the restriction is a warning rather than an enforceable limit; otherwise false.
         Latitude:
           type: number
-          description: GPS latitude coordinate for restriction location, in decimal degrees. E.g., '47.15136148800159' for Teanaway River bridge near SR 10, '46.348343747148334' for Bear River bridge on US 101.
+          description: GPS latitude coordinate for the restriction location in decimal degrees.
         LocationDescription:
           type:
             - string
             - 'null'
-          description: Human-readable description of restriction location, as a location description. E.g., 'SR 10, MP 89.33 both directions-20,000 lbs limitation' for Teanaway River, 'US 101 MP 18.65 BD - Legal axle weights only. Max GVW 105,500lbs' for Bear River, null when description is unavailable. Provides detailed location context for restriction.
+          description: Human-readable description of the restriction location.
         LocationName:
           type:
             - string
             - 'null'
-          description: Name of location where restriction applies, as a location name. E.g., '1.3 E Jct SR 970' for Teanaway River location, '5.2 N JCT SR 103' for Bear River location, 'Railroad Trestle - Thorp Area' for SR-10 height restriction, null when location name is unavailable. Provides landmark reference for restriction identification.
+          description: Name of the location where the restriction applies.
         Longitude:
           type: number
-          description: GPS longitude coordinate for restriction location, in decimal degrees. E.g., '-120.80431521930812' for Teanaway River bridge, '-123.95870200417737' for Bear River bridge.
+          description: GPS longitude coordinate for the restriction location in decimal degrees.
         MaximumGrossVehicleWeightInPounds:
           type:
             - number
             - 'null'
-          description: Maximum gross vehicle weight limit in pounds, as pounds. E.g., '105500' for 105,500 lb maximum GVW on Bear River bridge, null when GVW limit is not specified. Used for total vehicle weight compliance checking.
+          description: Maximum gross vehicle weight limit in pounds.
         RestrictionComment:
           type:
             - string
             - 'null'
-          description: 'Additional details and comments about restriction, as a human-readable description. E.g., ''BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.'' for axle weight breakdown, ''CAUTION: Bridge height is 15''. If your height is over 14''10" alternate route is advised.'' for height warning, null when comments are unavailable. Provides detailed restriction information and compliance guidance.'
+          description: Additional details and comments about the restriction.
         RestrictionHeightInInches:
           type:
             - number
             - 'null'
-          description: 'Maximum load height restriction in inches, as inches. E.g., null when height restriction is not specified, ''180'' for 15-foot height limit (180 inches). Used for height-restricted vehicle routing. Note: Height restrictions may be specified in comments rather than this field.'
+          description: Maximum load height restriction in inches.
         RestrictionLengthInInches:
           type:
             - number
             - 'null'
-          description: Maximum load length restriction in inches, as inches. E.g., null when length restriction is not specified. Used for length-restricted vehicle routing.
+          description: Maximum load length restriction in inches.
         RestrictionType:
           type: number
-          description: 'Type of commercial vehicle restriction, as a restriction type code. Valid values: 0 (BridgeRestriction), 1 (RoadRestriction). E.g., ''0'' indicates bridge-specific restriction like Teanaway River bridge, ''1'' indicates roadway restriction like SR-10 height restriction. Determines whether restriction applies to bridge structure or roadway segment.'
+          description: 'Code indicating restriction type: 0 = BridgeRestriction, 1 = RoadRestriction.'
         RestrictionWeightInPounds:
           type:
             - number
             - 'null'
-          description: Maximum load weight restriction in pounds, as pounds. E.g., '0' when weight restriction uses axle classifications instead, null when weight restriction is not specified. Used for weight-restricted vehicle routing.
+          description: Maximum load weight restriction in pounds.
         RestrictionWidthInInches:
           type:
             - number
             - 'null'
-          description: Maximum load width restriction in inches, as inches. E.g., null when width restriction is not specified. Used for width-restricted vehicle routing.
+          description: Maximum load width restriction in inches.
         SAMaxAxle:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for SA (Semi-Automatic) classification, as pounds. E.g., '40000' for 40,000 lb per axle limit, '38000' for 38,000 lb limit, '44500' for 44,500 lb limit, null when SA classification does not apply. Used for semi-automatic vehicle weight compliance.
+          description: Maximum axle weight for Semi-Automatic classification in pounds.
         StartRoadwayLocation:
           type:
             - object
@@ -409,26 +410,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -436,32 +437,32 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: Start location of restriction along roadway, as a roadway location object. E.g., SR 10 at milepost 89.33 for restriction start point, US 101 at milepost 18.65 for Bear River restriction. Provides origin point for restriction zone along highway.
+          description: Start location of the restriction along the roadway.
         State:
           type:
             - string
             - 'null'
-          description: State where commercial vehicle restriction is located, as a state code. E.g., 'WA' for Washington state restrictions, null when state is not specified. Used for multi-state restriction filtering.
+          description: State code where the commercial vehicle restriction is located.
         StateRouteID:
           type:
             - string
             - 'null'
-          description: State route identifier where restriction applies, as a route identifier. E.g., '10' for SR-10, '101' for US-101. Used for route-specific restriction filtering and identification.
+          description: State route identifier where the restriction applies.
         TDMaxAxle:
           type:
             - number
             - 'null'
-          description: Maximum axle weight for TD (Tandem Drive) classification, as pounds. E.g., null when TD classification does not apply. Used for tandem drive vehicle weight compliance.
+          description: Maximum axle weight for Tandem Drive classification in pounds.
         VehicleType:
           type:
             - string
             - 'null'
-          description: Type of vehicle affected by restriction, as a vehicle type code. E.g., empty string when restriction applies to all commercial vehicles, null when vehicle type is not specified. Used for vehicle-specific restriction filtering.
+          description: Type of vehicle affected by the restriction.
         UniqueID:
           type:
             - string
             - 'null'
-          description: 'Unique identifier for commercial vehicle restriction, as a restriction ID. E.g., ''B-WA-010-1'' for bridge restriction on SR-10, ''R-WA-010-1'' for road restriction on SR-10, ''B-WA-101-40'' for bridge restriction on US-101, null when unique ID is unavailable. Format: [Type]-[State]-[Route]-[Sequence]. Used for restriction tracking and ID-based lookups.'
+          description: Unique identifier for the commercial vehicle restriction in format 'Type-State-Route-Sequence' (e.g., 'B-WA-010-1').
       required:
         - BLMaxAxle
         - BridgeName
@@ -493,90 +494,15 @@ components:
         - TDMaxAxle
         - VehicleType
         - UniqueID
-      description: 'Represents commercial vehicle restriction information with unique identifier, including weight limits by classification, height/width/length restrictions, location data, effective dates, restriction type, and unique restriction ID. E.g., Teanaway River bridge restriction (ID: B-WA-010-1) on SR-10 with 20,000 lb axle limits. Used for commercial vehicle route planning, compliance checking, and restriction tracking with ID-based operations. Covers bridge and roadway restrictions statewide.'
+      description: Commercial vehicle restriction information with unique identifier, including weight limits by classification, height/width/length restrictions, location data, effective dates, restriction type, and unique restriction ID for bridge and roadway restrictions statewide.
   parameters: {}
 paths:
-  /getCommercialVehicleRestrictionsAsJson:
-    get:
-      summary: Returns an array of CVRestrictionData objects containing restriction information for all Washington State highways.
-      operationId: fetchCommercialVehicleRestrictions
-      tags:
-        - cv-restriction-data
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchCommercialVehicleRestrictions,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchCommercialVehicleRestrictionsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 349 total)
-                  value:
-                    - BLMaxAxle: 20000
-                      BridgeName: Teanaway River
-                      BridgeNumber: 10/142
-                      CL8MaxAxle: 20000
-                      DateEffective: 2011-10-18T07:00:00.000Z
-                      DateExpires: 2075-12-31T08:00:00.000Z
-                      DatePosted: 2011-10-18T22:12:00.000Z
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: Both
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: SR 10
-                      IsDetourAvailable: false
-                      IsExceptionsAllowed: false
-                      IsPermanentRestriction: false
-                      IsWarning: false
-                      Latitude: 47.15136148800159
-                      LocationDescription: SR 10, MP 89.33 both directions-20,000 lbs limitation
-                      LocationName: 1.3 E Jct SR 970
-                      Longitude: -120.80431521930812
-                      MaximumGrossVehicleWeightInPounds: null
-                      RestrictionComment: BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.
-                      RestrictionHeightInInches: 0
-                      RestrictionLengthInInches: 0
-                      RestrictionType: 0
-                      RestrictionWeightInPounds: 0
-                      RestrictionWidthInInches: 0
-                      SAMaxAxle: 40000
-                      StartRoadwayLocation:
-                        Description: null
-                        Direction: Both
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 89.33
-                        RoadName: SR 10
-                      State: WA
-                      StateRouteID: '10'
-                      TDMaxAxle: null
-                      VehicleType: ''
-                    - _note: ... 348 more items
   /getCommercialVehicleRestrictionsWithIdAsJson:
     get:
-      summary: Returns an array of CVRestrictionDataWithId objects containing restriction information with unique identifiers for all Washington State highways.
+      summary: List commercial vehicle restrictions with unique identifiers for all Washington State highways.
       operationId: fetchCommercialVehicleRestrictionsWithId
       tags:
-        - cv-restriction-data-with-id
+        - cv-restriction-data
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -602,7 +528,7 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 349 total)
+                  description: Example of a successful response from the API (showing first item of 343 total)
                   value:
                     - BLMaxAxle: 20000
                       BridgeName: Teanaway River
@@ -646,14 +572,93 @@ paths:
                       TDMaxAxle: null
                       VehicleType: ''
                       UniqueID: B-WA-010-1
-                    - _note: ... 348 more items
+  /getCommercialVehicleRestrictionsAsJson:
+    get:
+      summary: List commercial vehicle restrictions for all Washington State highways.
+      operationId: fetchCommercialVehicleRestrictions
+      tags:
+        - cv-restriction-data
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchCommercialVehicleRestrictions,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchCommercialVehicleRestrictionsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 343 total)
+                  value:
+                    - BLMaxAxle: 20000
+                      BridgeName: Teanaway River
+                      BridgeNumber: 10/142
+                      CL8MaxAxle: 20000
+                      DateEffective: 2011-10-18T07:00:00.000Z
+                      DateExpires: 2075-12-31T08:00:00.000Z
+                      DatePosted: 2011-10-18T22:12:00.000Z
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: SR 10
+                      IsDetourAvailable: false
+                      IsExceptionsAllowed: false
+                      IsPermanentRestriction: false
+                      IsWarning: false
+                      Latitude: 47.15136148800159
+                      LocationDescription: SR 10, MP 89.33 both directions-20,000 lbs limitation
+                      LocationName: 1.3 E Jct SR 970
+                      Longitude: -120.80431521930812
+                      MaximumGrossVehicleWeightInPounds: null
+                      RestrictionComment: BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.
+                      RestrictionHeightInInches: 0
+                      RestrictionLengthInInches: 0
+                      RestrictionType: 0
+                      RestrictionWeightInPounds: 0
+                      RestrictionWidthInInches: 0
+                      SAMaxAxle: 40000
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 89.33
+                        RoadName: SR 10
+                      State: WA
+                      StateRouteID: '10'
+                      TDMaxAxle: null
+                      VehicleType: ''
 webhooks: {}
 tags:
   - name: cv-restriction-data
-    description: Each CVRestrictionData item represents current commercial vehicle restrictions for Washington State highways, including weight limits, height clearances, axle restrictions, and location details. These items provide essential regulatory information for bridge and road restrictions needed for commercial vehicle routing and permit processing.
-    externalDocs:
-      description: Use to check vehicle restrictions and plan commercial routes by providing weight limits, height clearances, and axle restrictions for Washington State highways. Determine route feasibility and permit requirements for trucking companies and logistics providers.
+    description: Commercial vehicle restrictions for Washington State highways.
+    x-useCases:
+      - Check vehicle restrictions for commercial route planning.
+      - Determine route feasibility and permit requirements.
+      - Identify weight and height limitations for trucking operations.
+    x-updateFrequency: daily
   - name: cv-restriction-data-with-id
-    description: Each CVRestrictionDataWithId item represents current commercial vehicle restrictions for Washington State highways with unique tracking identifiers. These include weight limits, height clearances, axle restrictions, and restriction details for both bridge and road restrictions across the statewide coverage area.
-    externalDocs:
-      description: Use to check vehicle restrictions and track specific limitations by providing weight limits, height clearances, and unique identifiers for Washington State highways. Monitor restriction changes and manage permit requirements for trucking companies and logistics providers.
+    description: Commercial vehicle restrictions with unique identifiers for Washington State highways.
+    x-useCases:
+      - Track specific restrictions using unique identifiers.
+      - Monitor restriction changes over time.
+      - Manage permit requirements with ID-based lookups.
+    x-updateFrequency: daily

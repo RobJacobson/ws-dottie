@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,118 +42,39 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
     FetchCacheFlushDateFaresOutput:
       type: string
-      description: Cache flush timestamp indicating when any static endpoint data for the wsf-fares API was last updated, as a UTC datetime. E.g., '2025-11-02T19:45:00.517Z' when static wsf-fares data was last refreshed.
-    FetchFaresValidDateRangeOutput:
-      type: object
-      properties:
-        DateFrom:
-          type: string
-          description: Start date when data becomes available, as a UTC datetime. E.g., '2025-11-02T07:00:00.000Z'. Indicates earliest trip date for which data is published.
-        DateThru:
-          type: string
-          description: End date when data stops being available, as a UTC datetime. E.g., '2026-03-21T07:00:00.000Z'. Indicates latest trip date for which data is published.
-      required:
-        - DateFrom
-        - DateThru
-      description: Represents date range for which fares data is currently published and available, including start and end dates. E.g., fares available from November 2, 2025 through March 21, 2026. Use to determine valid trip dates for fare queries before calling other endpoints.
-    FetchTerminalFaresOutput:
-      type: object
-      properties:
-        TerminalID:
-          type: number
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal, '5' for Clinton terminal, '11' for Coupeville terminal. Used as primary key for terminal identification and fare queries.
-        Description:
-          type: string
-          description: Human-readable terminal name, as a terminal name. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, 'Clinton' for terminal 5, 'Coupeville ' for terminal 11. Provides terminal identification for display and user interfaces.
-      required:
-        - TerminalID
-        - Description
-      description: Represents base terminal information including terminal identifier and name. E.g., terminal 1 (Anacortes) or terminal 3 (Bainbridge Island). Used for terminal identification in fare queries and terminal lookups.
-    FetchTerminalComboFaresOutput:
-      type: object
-      properties:
-        DepartingDescription:
-          type:
-            - string
-            - 'null'
-          description: Human-readable name of departing terminal, as a terminal name. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, null when departing terminal name is unavailable. Provides origin terminal identification for fare collection description.
-        ArrivingDescription:
-          type:
-            - string
-            - 'null'
-          description: Human-readable name of arriving terminal, as a terminal name. E.g., 'Friday Harbor' for terminal 10, 'Lopez Island' for terminal 13, 'Orcas Island' for terminal 15, null when arriving terminal name is unavailable. Provides destination terminal identification for fare collection description.
-        CollectionDescription:
-          type:
-            - string
-            - 'null'
-          description: Text description of fare collection procedures for terminal combination, as a collection description. E.g., 'Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor' for Anacortes-Friday Harbor route, null when collection description is unavailable. Explains which fares are collected at which terminal and collection procedures.
-      required:
-        - DepartingDescription
-        - ArrivingDescription
-        - CollectionDescription
-      description: Represents fare collection description for specific terminal combination including departing/arriving terminal names and collection details. E.g., Anacortes to Friday Harbor with fares collected at Anacortes only. Used for understanding fare collection procedures and determining where fares are paid for specific routes.
-    FetchTerminalComboFaresVerboseOutput:
-      type: object
-      properties:
-        DepartingTerminalID:
-          type: number
-          description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Used as primary key for terminal identification in verbose response.
-        DepartingDescription:
-          type:
-            - string
-            - 'null'
-          description: Human-readable name of departing terminal, as a terminal name. E.g., 'Anacortes' for terminal 1, null when departing terminal name is unavailable. Provides origin terminal identification for fare collection description.
-        ArrivingTerminalID:
-          type: number
-          description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal, '15' for Orcas Island terminal. Used as primary key for terminal identification in verbose response.
-        ArrivingDescription:
-          type:
-            - string
-            - 'null'
-          description: Human-readable name of arriving terminal, as a terminal name. E.g., 'Friday Harbor' for terminal 10, 'Lopez Island' for terminal 13, null when arriving terminal name is unavailable. Provides destination terminal identification for fare collection description.
-        CollectionDescription:
-          type:
-            - string
-            - 'null'
-          description: Text description of fare collection procedures for terminal combination, as a collection description. E.g., 'Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor' for Anacortes-Friday Harbor route, null when collection description is unavailable. Explains which fares are collected at which terminal and collection procedures.
-      required:
-        - DepartingTerminalID
-        - DepartingDescription
-        - ArrivingTerminalID
-        - ArrivingDescription
-        - CollectionDescription
-      description: Represents fare collection description for terminal combination including terminal IDs, names, and collection details. E.g., Anacortes (ID 1) to Friday Harbor (ID 10) with fares collected at Anacortes only. Used for comprehensive fare collection information lookup and understanding collection procedures for all available routes.
+      description: UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.
     FetchFareLineItemsByTripDateAndTerminalsOutput:
       type: object
       properties:
         FareLineItemID:
           type: number
-          description: Unique fare line item identifier, as an integer ID. E.g., '1' for Adult fare, '2' for Senior/Disability fare, '3' for Youth fare. Used as primary key for fare line item identification and fare total calculations.
+          description: Numeric ID of the fare line item.
         FareLineItem:
           type:
             - string
             - 'null'
-          description: Human-readable description of fare line item, as a fare description. E.g., 'Adult (age 19 - 64)' for adult passenger fare, 'Senior (age 65 & over) / <a href=...>Disability</a>' for senior/disability fare, 'Youth (age 18 and under)' for youth fare, null when fare description is unavailable. Provides fare type identification for display and user selection.
+          description: Display name of the fare line item, or null if unavailable.
         Category:
           type:
             - string
             - 'null'
-          description: Logical grouping category for fare line item, as a category name. E.g., 'Passenger' for passenger fares, 'Vehicle' for vehicle fares, null when category is unavailable. Used for fare type organization and filtering.
+          description: Category grouping for the fare (e.g., 'Passenger', 'Vehicle'), or null if unavailable.
         DirectionIndependent:
           type: boolean
-          description: Indicator whether fare amount is independent of departure direction, as a boolean. E.g., false when fare amount varies by departing terminal (Anacortes vs Friday Harbor), true when fare amount is same regardless of departure terminal. Used to determine if fare calculation depends on departure direction.
+          description: True if fare amount is the same regardless of departure direction, false if it varies by terminal.
         Amount:
           type: number
-          description: Fare cost amount, as dollars. E.g., '0' for free fares (when no fare collected at departing terminal), fare amount in dollars for paid fares. Used for fare calculation and total computation.
+          description: Fare cost in dollars.
       required:
         - FareLineItemID
         - FareLineItem
         - Category
         - DirectionIndependent
         - Amount
-      description: Represents fare line item information including fare identifier, description, category, direction independence, and amount. E.g., Adult fare (ID 1) in Passenger category with amount $0 (free). Used for fare lookups, fare calculation, and fare total computations.
+      description: Fare line item with identifier, description, category, direction independence, and cost.
     FetchFareLineItemsVerboseOutput:
       type: object
       properties:
@@ -164,33 +85,33 @@ components:
             properties:
               DepartingTerminalID:
                 type: number
-                description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Used as primary key for terminal identification in verbose response.
+                description: Numeric ID of the departing terminal.
               DepartingDescription:
                 type:
                   - string
                   - 'null'
-                description: Human-readable name of departing terminal, as a terminal name. E.g., 'Anacortes' for terminal 1, null when departing terminal name is unavailable. Provides origin terminal identification for fare collection description.
+                description: Display name of the departing terminal, or null if unavailable.
               ArrivingTerminalID:
                 type: number
-                description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal, '15' for Orcas Island terminal. Used as primary key for terminal identification in verbose response.
+                description: Numeric ID of the arriving terminal.
               ArrivingDescription:
                 type:
                   - string
                   - 'null'
-                description: Human-readable name of arriving terminal, as a terminal name. E.g., 'Friday Harbor' for terminal 10, 'Lopez Island' for terminal 13, null when arriving terminal name is unavailable. Provides destination terminal identification for fare collection description.
+                description: Display name of the arriving terminal, or null if unavailable.
               CollectionDescription:
                 type:
                   - string
                   - 'null'
-                description: Text description of fare collection procedures for terminal combination, as a collection description. E.g., 'Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor' for Anacortes-Friday Harbor route, null when collection description is unavailable. Explains which fares are collected at which terminal and collection procedures.
+                description: Text description of fare collection procedures for this terminal combination, or null if unavailable.
             required:
               - DepartingTerminalID
               - DepartingDescription
               - ArrivingTerminalID
               - ArrivingDescription
               - CollectionDescription
-            description: Represents fare collection description for terminal combination including terminal IDs, names, and collection details. E.g., Anacortes (ID 1) to Friday Harbor (ID 10) with fares collected at Anacortes only. Used for comprehensive fare collection information lookup and understanding collection procedures for all available routes.
-          description: Array of terminal combination verbose information, as terminal combo objects. E.g., array containing Anacortes-Friday Harbor combination, Anacortes-Lopez Island combination. Provides all valid terminal pairs for trip date.
+            description: Fare collection description for a terminal combination with IDs, names, and collection procedures.
+          description: Array of terminal combination information for the trip date.
         LineItemLookup:
           type: array
           items:
@@ -198,19 +119,19 @@ components:
             properties:
               TerminalComboIndex:
                 type: number
-                description: Array index referencing terminal combination in TerminalComboVerbose array, as an integer index. E.g., '0' for first terminal combination, '1' for second terminal combination. Used to cross-reference fare line items with terminal combinations in verbose response.
+                description: Array index of terminal combination in TerminalComboVerbose array.
               LineItemIndex:
                 type: number
-                description: Array index referencing one-way fare line items in LineItems array, as an integer index. E.g., '0' for first line item array, '1' for second line item array. Used to identify which line items apply to which terminal combination for one-way fares.
+                description: Array index of one-way fare line items in LineItems array.
               RoundTripLineItemIndex:
                 type: number
-                description: Array index referencing round trip fare line items in RoundTripLineItems array, as an integer index. E.g., '0' for first round trip line item array, '1' for second round trip line item array. Used to identify which line items apply to which terminal combination for round trip fares.
+                description: Array index of round trip fare line items in RoundTripLineItems array.
             required:
               - TerminalComboIndex
               - LineItemIndex
               - RoundTripLineItemIndex
-            description: Represents cross-reference mapping between terminal combinations and fare line items, including indices for terminal combo, one-way line items, and round trip line items. E.g., terminal combo index 0 maps to line item index 0 and round trip line item index 0. Used for associating fare line items with specific terminal combinations in verbose response.
-          description: Array of cross-reference mappings between terminal combinations and fare line items, as line item xref objects. E.g., array mapping each terminal combo to corresponding fare line item arrays. Used to associate fare line items with terminal combinations.
+            description: Cross-reference mapping between terminal combinations and fare line item arrays.
+          description: Array of cross-reference mappings between terminal combinations and fare line items.
         LineItems:
           type: array
           items:
@@ -220,31 +141,31 @@ components:
               properties:
                 FareLineItemID:
                   type: number
-                  description: Unique fare line item identifier, as an integer ID. E.g., '1' for Adult fare, '2' for Senior/Disability fare, '3' for Youth fare. Used as primary key for fare line item identification and fare total calculations.
+                  description: Numeric ID of the fare line item.
                 FareLineItem:
                   type:
                     - string
                     - 'null'
-                  description: Human-readable description of fare line item, as a fare description. E.g., 'Adult (age 19 - 64)' for adult passenger fare, 'Senior (age 65 & over) / <a href=...>Disability</a>' for senior/disability fare, 'Youth (age 18 and under)' for youth fare, null when fare description is unavailable. Provides fare type identification for display and user selection.
+                  description: Display name of the fare line item, or null if unavailable.
                 Category:
                   type:
                     - string
                     - 'null'
-                  description: Logical grouping category for fare line item, as a category name. E.g., 'Passenger' for passenger fares, 'Vehicle' for vehicle fares, null when category is unavailable. Used for fare type organization and filtering.
+                  description: Category grouping for the fare (e.g., 'Passenger', 'Vehicle'), or null if unavailable.
                 DirectionIndependent:
                   type: boolean
-                  description: Indicator whether fare amount is independent of departure direction, as a boolean. E.g., false when fare amount varies by departing terminal (Anacortes vs Friday Harbor), true when fare amount is same regardless of departure terminal. Used to determine if fare calculation depends on departure direction.
+                  description: True if fare amount is the same regardless of departure direction, false if it varies by terminal.
                 Amount:
                   type: number
-                  description: Fare cost amount, as dollars. E.g., '0' for free fares (when no fare collected at departing terminal), fare amount in dollars for paid fares. Used for fare calculation and total computation.
+                  description: Fare cost in dollars.
               required:
                 - FareLineItemID
                 - FareLineItem
                 - Category
                 - DirectionIndependent
                 - Amount
-              description: Represents fare line item information including fare identifier, description, category, direction independence, and amount. E.g., Adult fare (ID 1) in Passenger category with amount $0 (free). Used for fare lookups, fare calculation, and fare total computations.
-          description: Array of one-way fare line item arrays, where each inner array contains line items for specific terminal combination, as nested arrays of line item objects. E.g., array containing Adult, Senior, Youth fares for each terminal combo. Used for one-way fare lookups.
+              description: Fare line item with identifier, description, category, direction independence, and cost.
+          description: Array of one-way fare line item arrays, one per terminal combination.
         RoundTripLineItems:
           type: array
           items:
@@ -254,32 +175,32 @@ components:
               properties:
                 FareLineItemID:
                   type: number
-                  description: Unique fare line item identifier, as an integer ID. E.g., '1' for Adult fare, '2' for Senior/Disability fare, '3' for Youth fare. Used as primary key for fare line item identification and fare total calculations.
+                  description: Numeric ID of the fare line item.
                 FareLineItem:
                   type:
                     - string
                     - 'null'
-                  description: Human-readable description of fare line item, as a fare description. E.g., 'Adult (age 19 - 64)' for adult passenger fare, 'Senior (age 65 & over) / <a href=...>Disability</a>' for senior/disability fare, 'Youth (age 18 and under)' for youth fare, null when fare description is unavailable. Provides fare type identification for display and user selection.
+                  description: Display name of the fare line item, or null if unavailable.
                 Category:
                   type:
                     - string
                     - 'null'
-                  description: Logical grouping category for fare line item, as a category name. E.g., 'Passenger' for passenger fares, 'Vehicle' for vehicle fares, null when category is unavailable. Used for fare type organization and filtering.
+                  description: Category grouping for the fare (e.g., 'Passenger', 'Vehicle'), or null if unavailable.
                 DirectionIndependent:
                   type: boolean
-                  description: Indicator whether fare amount is independent of departure direction, as a boolean. E.g., false when fare amount varies by departing terminal (Anacortes vs Friday Harbor), true when fare amount is same regardless of departure terminal. Used to determine if fare calculation depends on departure direction.
+                  description: True if fare amount is the same regardless of departure direction, false if it varies by terminal.
                 Amount:
                   type: number
-                  description: Fare cost amount, as dollars. E.g., '0' for free fares (when no fare collected at departing terminal), fare amount in dollars for paid fares. Used for fare calculation and total computation.
+                  description: Fare cost in dollars.
               required:
                 - FareLineItemID
                 - FareLineItem
                 - Category
                 - DirectionIndependent
                 - Amount
-              description: Represents fare line item information including fare identifier, description, category, direction independence, and amount. E.g., Adult fare (ID 1) in Passenger category with amount $0 (free). Used for fare lookups, fare calculation, and fare total computations.
-          description: Array of round trip fare line item arrays, where each inner array contains line items for specific terminal combination, as nested arrays of line item objects. E.g., array containing Adult, Senior, Youth fares for round trip journeys. Used for round trip fare lookups.
-      description: Represents comprehensive fare line item data for all terminal combinations including terminal combo information, cross-reference mappings, one-way fares, and round trip fares. E.g., complete fare data for all routes on November 2, 2025. Used for bulk fare lookups across all routes and comprehensive fare data access.
+              description: Fare line item with identifier, description, category, direction independence, and cost.
+          description: Array of round trip fare line item arrays, one per terminal combination.
+      description: Comprehensive fare line item data for all terminal combinations on a trip date.
     FetchFareTotalsByTripDateAndRouteOutput:
       type: object
       properties:
@@ -297,251 +218,331 @@ components:
             - type: number
               enum:
                 - 4
-          description: 'Fare total type code indicating logical grouping for total amount, as a total type code. Valid values: 1 (Departing), 2 (Return), 3 (Either - direction independent), 4 (Grand Total). E.g., ''1'' for departing leg total, ''4'' for grand total. Used for fare total categorization.'
+          description: 'Code indicating total type: 1 = Departing, 2 = Return, 3 = Either (direction independent), 4 = Grand Total.'
         Description:
           type:
             - string
             - 'null'
-          description: Human-readable description of fare total, as a total description. E.g., 'Anacortes to Friday Harbor' for departing total, 'Either' for direction-independent total, 'Grand Total' for grand total, null when description is unavailable. Provides context for total amount.
+          description: Display name of the fare total (e.g., 'Anacortes to Friday Harbor', 'Grand Total'), or null if unavailable.
         BriefDescription:
           type:
             - string
             - 'null'
-          description: Short string representation of fare total type, as a brief description. E.g., 'Depart' for departing total (type 1), 'Either' for direction-independent total (type 3), 'Total' for grand total (type 4), null when brief description is unavailable. Used for compact total type display.
+          description: Short string representation of total type (e.g., 'Depart', 'Either', 'Total'), or null if unavailable.
         Amount:
           type: number
-          description: Total fare amount for this total type, as dollars. E.g., '61.25' for $61.25 departing total, '0' for $0 direction-independent total, '61.25' for $61.25 grand total. Used for fare total display and payment calculation.
+          description: Total fare amount in dollars for this total type.
       required:
         - TotalType
         - Description
         - BriefDescription
         - Amount
-      description: Represents fare total breakdown including total type, description, and amount. E.g., departing total (type 1) 'Anacortes to Friday Harbor' with amount $61.25, grand total (type 4) with amount $61.25. Used for fare calculation results, total breakdowns, and payment amount determination.
-    FetchTerminalFaresInputTripDateParam:
-      type: string
-      description: Trip date for which to retrieve valid departing terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025, '2026-03-21' for March 21, 2026. Must be within valid date range from GetValidDateRange. Used to filter terminals by trip date availability.
-    FetchTerminalMatesFaresInputTripDateParam:
-      type: string
-      description: Trip date for which to retrieve arriving terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter terminal mates by trip date availability.
-    FetchTerminalMatesFaresInputTerminalIDParam:
-      type: number
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to filter arriving terminals by origin terminal.
-    FetchTerminalComboFaresInputTripDateParam:
-      type: string
-      description: Trip date for fare collection description, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
-    FetchTerminalComboFaresInputDepartingTerminalIDParam:
-      type: number
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare collection.
-    FetchTerminalComboFaresInputArrivingTerminalIDParam:
-      type: number
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals for departing terminal. Used to identify destination terminal for fare collection.
-    FetchTerminalComboFaresVerboseInputTripDateParam:
-      type: string
-      description: Trip date for fare collection descriptions, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
+      description: Fare total breakdown with type, description, and amount.
+    FetchTerminalComboFaresOutput:
+      type: object
+      properties:
+        DepartingDescription:
+          type:
+            - string
+            - 'null'
+          description: Display name of the departing terminal, or null if unavailable.
+        ArrivingDescription:
+          type:
+            - string
+            - 'null'
+          description: Display name of the arriving terminal, or null if unavailable.
+        CollectionDescription:
+          type:
+            - string
+            - 'null'
+          description: Text description of fare collection procedures for this terminal combination, or null if unavailable.
+      required:
+        - DepartingDescription
+        - ArrivingDescription
+        - CollectionDescription
+      description: Fare collection description for a terminal combination with terminal names and collection procedures.
+    FetchTerminalComboFaresVerboseOutput:
+      type: object
+      properties:
+        DepartingTerminalID:
+          type: number
+          description: Numeric ID of the departing terminal.
+        DepartingDescription:
+          type:
+            - string
+            - 'null'
+          description: Display name of the departing terminal, or null if unavailable.
+        ArrivingTerminalID:
+          type: number
+          description: Numeric ID of the arriving terminal.
+        ArrivingDescription:
+          type:
+            - string
+            - 'null'
+          description: Display name of the arriving terminal, or null if unavailable.
+        CollectionDescription:
+          type:
+            - string
+            - 'null'
+          description: Text description of fare collection procedures for this terminal combination, or null if unavailable.
+      required:
+        - DepartingTerminalID
+        - DepartingDescription
+        - ArrivingTerminalID
+        - ArrivingDescription
+        - CollectionDescription
+      description: Fare collection description for a terminal combination with IDs, names, and collection procedures.
+    FetchTerminalFaresOutput:
+      type: object
+      properties:
+        TerminalID:
+          type: number
+          description: Numeric ID of the terminal.
+        Description:
+          type: string
+          description: Display name of the terminal.
+      required:
+        - TerminalID
+        - Description
+      description: Terminal information with identifier and display name.
+    FetchFaresValidDateRangeOutput:
+      type: object
+      properties:
+        DateFrom:
+          type: string
+          description: UTC datetime when data becomes available (earliest valid trip date).
+        DateThru:
+          type: string
+          description: UTC datetime when data stops being available (latest valid trip date).
+      required:
+        - DateFrom
+        - DateThru
+      description: Date range for which fares data is currently published and available.
     FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam:
       type: string
-      description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
     FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam:
       type: number
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
+      description: Numeric ID of the departing terminal.
     FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam:
       type: number
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
+      description: Numeric ID of the arriving terminal.
     FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam:
       type: boolean
-      description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
+      description: True for round trip fares, false for one-way fares.
     FetchFareLineItemsBasicInputTripDateParam:
       type: string
-      description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
     FetchFareLineItemsBasicInputDepartingTerminalIDParam:
       type: number
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
+      description: Numeric ID of the departing terminal.
     FetchFareLineItemsBasicInputArrivingTerminalIDParam:
       type: number
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
+      description: Numeric ID of the arriving terminal.
     FetchFareLineItemsBasicInputRoundTripParam:
       type: boolean
-      description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
+      description: True for round trip fares, false for one-way fares.
     FetchFareLineItemsVerboseInputTripDateParam:
       type: string
-      description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
     FetchFareTotalsByTripDateAndRouteInputTripDateParam:
       type: string
-      description: Trip date for fare total calculation, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare calculations by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
     FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam:
       type: number
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
+      description: Numeric ID of the departing terminal.
     FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam:
       type: number
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
+      description: Numeric ID of the arriving terminal.
     FetchFareTotalsByTripDateAndRouteInputRoundTripParam:
       type: boolean
-      description: Trip type indicator, as a boolean. E.g., true for round trip fare totals, false for one-way fare totals. Determines whether totals include return journey fares.
+      description: True for round trip totals, false for one-way totals.
     FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam:
       type: string
-      description: Comma-separated list of fare line item IDs to include in total calculation, as a comma-delimited string. E.g., '1,2,3' for Adult, Senior, and Youth fares. Use GetFareLineItems to find valid fare line item IDs. Each ID corresponds to quantity at same index in Quantity array.
+      description: Comma-separated list of fare line item IDs (e.g., '1,2,3').
     FetchFareTotalsByTripDateAndRouteInputQuantityParam:
       type: string
-      description: Comma-separated list of quantities for corresponding fare line items, as a comma-delimited string. E.g., '2,1,0' for 2 adults, 1 senior, 0 youth. Values must be >= 0. Each quantity corresponds to fare line item ID at same index in FareLineItemID array.
-  parameters:
-    FetchTerminalFaresInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalFaresInputTripDateParam'
-      required: true
-      description: Trip date for which to retrieve valid departing terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025, '2026-03-21' for March 21, 2026. Must be within valid date range from GetValidDateRange. Used to filter terminals by trip date availability.
-      name: TripDate
-      in: path
-    FetchTerminalMatesFaresInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalMatesFaresInputTripDateParam'
-      required: true
-      description: Trip date for which to retrieve arriving terminals, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter terminal mates by trip date availability.
-      name: TripDate
-      in: path
-    FetchTerminalMatesFaresInputTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalMatesFaresInputTerminalIDParam'
-      required: true
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to filter arriving terminals by origin terminal.
-      name: TerminalID
-      in: path
+      description: Comma-separated list of quantities matching FareLineItemID order (e.g., '2,1,0'). Values must be >= 0.
     FetchTerminalComboFaresInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalComboFaresInputTripDateParam'
-      required: true
-      description: Trip date for fare collection description, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
-      name: TripDate
-      in: path
+      type: string
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
     FetchTerminalComboFaresInputDepartingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalComboFaresInputDepartingTerminalIDParam'
-      required: true
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare collection.
-      name: DepartingTerminalID
-      in: path
+      type: number
+      description: Numeric ID of the departing terminal.
     FetchTerminalComboFaresInputArrivingTerminalIDParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalComboFaresInputArrivingTerminalIDParam'
-      required: true
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals for departing terminal. Used to identify destination terminal for fare collection.
-      name: ArrivingTerminalID
-      in: path
+      type: number
+      description: Numeric ID of the arriving terminal.
     FetchTerminalComboFaresVerboseInputTripDateParam:
-      schema:
-        $ref: '#/components/schemas/FetchTerminalComboFaresVerboseInputTripDateParam'
-      required: true
-      description: Trip date for fare collection descriptions, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare collection information by trip date.
-      name: TripDate
-      in: path
+      type: string
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
+    FetchTerminalFaresInputTripDateParam:
+      type: string
+      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
+    FetchTerminalMatesFaresInputTripDateParam:
+      type: string
+      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
+    FetchTerminalMatesFaresInputTerminalIDParam:
+      type: number
+      description: Numeric ID of the departing terminal.
+  parameters:
     FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputTripDateParam'
       required: true
-      description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
       name: TripDate
       in: path
     FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputDepartingTerminalIDParam'
       required: true
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
+      description: Numeric ID of the departing terminal.
       name: DepartingTerminalID
       in: path
     FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputArrivingTerminalIDParam'
       required: true
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
+      description: Numeric ID of the arriving terminal.
       name: ArrivingTerminalID
       in: path
     FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsByTripDateAndTerminalsInputRoundTripParam'
       required: true
-      description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
+      description: True for round trip fares, false for one-way fares.
       name: RoundTrip
       in: path
     FetchFareLineItemsBasicInputTripDateParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsBasicInputTripDateParam'
       required: true
-      description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
       name: TripDate
       in: path
     FetchFareLineItemsBasicInputDepartingTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsBasicInputDepartingTerminalIDParam'
       required: true
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
+      description: Numeric ID of the departing terminal.
       name: DepartingTerminalID
       in: path
     FetchFareLineItemsBasicInputArrivingTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsBasicInputArrivingTerminalIDParam'
       required: true
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
+      description: Numeric ID of the arriving terminal.
       name: ArrivingTerminalID
       in: path
     FetchFareLineItemsBasicInputRoundTripParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsBasicInputRoundTripParam'
       required: true
-      description: Trip type indicator, as a boolean. E.g., true for round trip fares, false for one-way fares. Determines whether returned fares are for round trip or one-way journeys.
+      description: True for round trip fares, false for one-way fares.
       name: RoundTrip
       in: path
     FetchFareLineItemsVerboseInputTripDateParam:
       schema:
         $ref: '#/components/schemas/FetchFareLineItemsVerboseInputTripDateParam'
       required: true
-      description: Trip date for fare line items, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fares by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
       name: TripDate
       in: path
     FetchFareTotalsByTripDateAndRouteInputTripDateParam:
       schema:
         $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputTripDateParam'
       required: true
-      description: Trip date for fare total calculation, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetValidDateRange. Used to filter fare calculations by trip date.
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
       name: TripDate
       in: path
     FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputDepartingTerminalIDParam'
       required: true
-      description: Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminals to retrieve valid departing terminals. Used to identify origin terminal for fare calculation.
+      description: Numeric ID of the departing terminal.
       name: DepartingTerminalID
       in: path
     FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputArrivingTerminalIDParam'
       required: true
-      description: Unique identifier for arriving terminal, as an integer ID. E.g., '10' for Friday Harbor terminal, '13' for Lopez Island terminal. Use GetTerminalMates to retrieve valid arriving terminals. Used to identify destination terminal for fare calculation.
+      description: Numeric ID of the arriving terminal.
       name: ArrivingTerminalID
       in: path
     FetchFareTotalsByTripDateAndRouteInputRoundTripParam:
       schema:
         $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputRoundTripParam'
       required: true
-      description: Trip type indicator, as a boolean. E.g., true for round trip fare totals, false for one-way fare totals. Determines whether totals include return journey fares.
+      description: True for round trip totals, false for one-way totals.
       name: RoundTrip
       in: path
     FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam:
       schema:
         $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputFareLineItemIDParam'
       required: true
-      description: Comma-separated list of fare line item IDs to include in total calculation, as a comma-delimited string. E.g., '1,2,3' for Adult, Senior, and Youth fares. Use GetFareLineItems to find valid fare line item IDs. Each ID corresponds to quantity at same index in Quantity array.
+      description: Comma-separated list of fare line item IDs (e.g., '1,2,3').
       name: FareLineItemID
       in: path
     FetchFareTotalsByTripDateAndRouteInputQuantityParam:
       schema:
         $ref: '#/components/schemas/FetchFareTotalsByTripDateAndRouteInputQuantityParam'
       required: true
-      description: Comma-separated list of quantities for corresponding fare line items, as a comma-delimited string. E.g., '2,1,0' for 2 adults, 1 senior, 0 youth. Values must be >= 0. Each quantity corresponds to fare line item ID at same index in FareLineItemID array.
+      description: Comma-separated list of quantities matching FareLineItemID order (e.g., '2,1,0'). Values must be >= 0.
       name: Quantity
+      in: path
+    FetchTerminalComboFaresInputTripDateParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalComboFaresInputTripDateParam'
+      required: true
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
+      name: TripDate
+      in: path
+    FetchTerminalComboFaresInputDepartingTerminalIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalComboFaresInputDepartingTerminalIDParam'
+      required: true
+      description: Numeric ID of the departing terminal.
+      name: DepartingTerminalID
+      in: path
+    FetchTerminalComboFaresInputArrivingTerminalIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalComboFaresInputArrivingTerminalIDParam'
+      required: true
+      description: Numeric ID of the arriving terminal.
+      name: ArrivingTerminalID
+      in: path
+    FetchTerminalComboFaresVerboseInputTripDateParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalComboFaresVerboseInputTripDateParam'
+      required: true
+      description: Trip date in YYYY-MM-DD format. Must be within valid date range.
+      name: TripDate
+      in: path
+    FetchTerminalFaresInputTripDateParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalFaresInputTripDateParam'
+      required: true
+      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
+      name: TripDate
+      in: path
+    FetchTerminalMatesFaresInputTripDateParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalMatesFaresInputTripDateParam'
+      required: true
+      description: Trip date in YYYY-MM-DD format; must be within valid date range from GetValidDateRange.
+      name: TripDate
+      in: path
+    FetchTerminalMatesFaresInputTerminalIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchTerminalMatesFaresInputTerminalIDParam'
+      required: true
+      description: Numeric ID of the departing terminal.
+      name: TerminalID
       in: path
 paths:
   /cacheflushdate:
     get:
-      summary: Returns the timestamp of when any static endpoint data for the wsf-fares API was last updated.
+      summary: Get cache flush timestamp for static fares data.
       operationId: fetchCacheFlushDateFares
       tags:
         - cache-flush-date-fares
@@ -569,13 +570,13 @@ paths:
                 sampleResponse:
                   summary: Sample response
                   description: Example of a successful response from the API
-                  value: 2025-11-08T04:24:35.480Z
+                  value: 2025-11-14T19:42:45.737Z
   /terminals/{TripDate}:
     get:
-      summary: Returns a list of valid departing terminals for the specified trip date.
+      summary: List valid departing terminals for a trip date.
       operationId: fetchTerminalFares
       tags:
-        - terminals
+        - cache-flush-date-fares
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -585,7 +586,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchTerminalFares,
               params: {
-                "TripDate": "2025-11-09"
+                "TripDate": "2025-11-16"
               },
               fetchMode: 'native',
               validate: true
@@ -610,10 +611,9 @@ paths:
                   value:
                     - TerminalID: 1
                       Description: Anacortes
-                    - _note: ... 18 more items
   /validdaterange:
     get:
-      summary: Returns a single ValidDateRange object for the current fares data validity period.
+      summary: Get the validity date range for published fares data.
       operationId: fetchFaresValidDateRange
       tags:
         - valid-date-range
@@ -642,14 +642,14 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API
                   value:
-                    DateFrom: 2025-11-07T08:00:00.000Z
+                    DateFrom: 2025-11-15T08:00:00.000Z
                     DateThru: 2026-03-21T07:00:00.000Z
   /terminalMates/{TripDate}/{TerminalID}:
     get:
-      summary: Returns arriving terminals for the given departing terminal and trip date.
+      summary: List arriving terminals for a given departing terminal and trip date.
       operationId: fetchTerminalMatesFares
       tags:
-        - terminals
+        - cache-flush-date-fares
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -659,7 +659,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchTerminalMatesFares,
               params: {
-                "TripDate": "2025-11-09",
+                "TripDate": "2025-11-16",
                 "TerminalID": 1
               },
               fetchMode: 'native',
@@ -686,10 +686,9 @@ paths:
                   value:
                     - TerminalID: 10
                       Description: Friday Harbor
-                    - _note: ... 3 more items
   /terminalCombo/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}:
     get:
-      summary: Returns fare collection descriptions for the specified terminal combination and trip date.
+      summary: Get fare collection description for a specific terminal combination and trip date.
       operationId: fetchTerminalComboFares
       tags:
         - terminal-combo
@@ -702,7 +701,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchTerminalComboFares,
               params: {
-                "TripDate": "2025-11-09",
+                "TripDate": "2025-11-16",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10
               },
@@ -732,10 +731,10 @@ paths:
                     CollectionDescription: Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor.
   /fareLineItems/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
     get:
-      summary: Returns multiple of FareLineItem for specific terminal combination.
+      summary: List all fare line items for a specific terminal combination and trip type.
       operationId: fetchFareLineItemsByTripDateAndTerminals
       tags:
-        - fare-line-items
+        - terminals
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -745,7 +744,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchFareLineItemsByTripDateAndTerminals,
               params: {
-                "TripDate": "2025-11-09",
+                "TripDate": "2025-11-16",
                 "DepartingTerminalID": 3,
                 "ArrivingTerminalID": 7,
                 "RoundTrip": false
@@ -779,10 +778,9 @@ paths:
                       Category: Passenger
                       DirectionIndependent: false
                       Amount: 0
-                    - _note: ... 22 more items
   /fareLineItemsBasic/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}:
     get:
-      summary: Returns multiple of FareLineItem for popular fare options.
+      summary: List popular fare line items for a terminal combination.
       operationId: fetchFareLineItemsBasic
       tags:
         - fare-line-items
@@ -795,7 +793,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchFareLineItemsBasic,
               params: {
-                "TripDate": "2025-11-09",
+                "TripDate": "2025-11-16",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10,
                 "RoundTrip": false
@@ -829,10 +827,9 @@ paths:
                       Category: Passenger
                       DirectionIndependent: false
                       Amount: 17.5
-                    - _note: ... 11 more items
   /fareTotals/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}/{RoundTrip}/{FareLineItemID}/{Quantity}:
     get:
-      summary: Calculates total fares for the specified terminal combination, trip type, and selected fare line items with quantities.
+      summary: Calculate fare totals for a terminal combination with selected line items and quantities.
       operationId: fetchFareTotalsByTripDateAndRoute
       tags:
         - fare-totals
@@ -845,7 +842,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchFareTotalsByTripDateAndRoute,
               params: {
-                "TripDate": "2025-11-08",
+                "TripDate": "2025-11-15",
                 "DepartingTerminalID": 1,
                 "ArrivingTerminalID": 10,
                 "RoundTrip": false,
@@ -882,10 +879,9 @@ paths:
                       Description: Anacortes to Friday Harbor
                       BriefDescription: Depart
                       Amount: 61.25
-                    - _note: ... 2 more items
   /terminalComboVerbose/{TripDate}:
     get:
-      summary: Returns fare collection descriptions for all terminal combinations available on the specified trip date.
+      summary: Get fare collection descriptions for all terminal combinations on a trip date.
       operationId: fetchTerminalComboFaresVerbose
       tags:
         - terminal-combo
@@ -898,7 +894,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchTerminalComboFaresVerbose,
               params: {
-                "TripDate": "2025-11-09"
+                "TripDate": "2025-11-16"
               },
               fetchMode: 'native',
               validate: true
@@ -926,10 +922,9 @@ paths:
                       ArrivingTerminalID: 10
                       ArrivingDescription: Friday Harbor
                       CollectionDescription: Passenger and vehicle/driver fares are collected at Anacortes, while no fares are collected at Friday Harbor.
-                    - _note: ... 37 more items
   /fareLineItemsVerbose/{TripDate}:
     get:
-      summary: Returns multiple of FareLineItem for all terminal combinations.
+      summary: Get all fare line items for all terminal combinations on a trip date.
       operationId: fetchFareLineItemsVerbose
       tags:
         - fare-line-items
@@ -942,7 +937,7 @@ paths:
             const data = await fetchDottie({
               endpoint: fetchFareLineItemsVerbose,
               params: {
-                "TripDate": "2025-11-08"
+                "TripDate": "2025-11-15"
               },
               fetchMode: 'native',
               validate: true
@@ -7244,26 +7239,44 @@ paths:
 webhooks: {}
 tags:
   - name: cache-flush-date-fares
-    description: Represents the timestamp of when any static endpoint data for the wsf-fares API was last updated. This information helps applications determine when to refresh cached fare information through cache invalidation.
-    externalDocs:
-      description: Many wsf-fares endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-fares data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by the ws-dottie useQuery hooks to invalidate cache.
+    description: Cache invalidation timestamp for static WSF fares data.
+    x-useCases:
+      - Poll periodically to detect when static fares data has changed.
+      - Invalidate application cache when the returned date changes.
+      - Coordinate cache refresh across multiple static endpoints.
+    x-updateFrequency: daily
   - name: valid-date-range
-    description: Each ValidDateRange item represents the current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.
-    externalDocs:
-      description: Use to determine valid fare calculation periods by providing DateFrom and DateThru dates for accurate fare queries and booking systems.
+    description: Validity period for published WSF fare data.
+    x-useCases:
+      - Determine valid trip dates for fare queries.
+      - Validate trip date inputs before calling other endpoints.
+      - Display available date ranges in booking interfaces.
+    x-updateFrequency: daily
   - name: terminals
-    description: Each Terminal item represents a Washington State Ferries port facility with unique identification, location details, and operational status. These terminals serve as departure and arrival points for ferry routes throughout the Puget Sound and San Juan Islands.
-    externalDocs:
-      description: Use to display terminal options and route connections by providing terminal details and mate relationships for trip planning and schedule navigation.
+    description: WSF terminal facilities serving as departure and arrival points for ferry routes.
+    x-useCases:
+      - Display terminal options for trip planning interfaces.
+      - Determine valid terminal pairs for route selection.
+      - Build terminal lookup and navigation features.
+    x-updateFrequency: daily
   - name: terminal-combo
-    description: Each TerminalCombo item represents valid route pairings between Washington State Ferries terminals with associated fare collection methods and scheduling details. These combinations define which terminals are connected and how fares are collected for specific routes.
-    externalDocs:
-      description: Use to determine route availability and fare collection requirements by providing terminal pairing information for journey planning and ticket purchasing systems.
+    description: Valid terminal pairings with fare collection procedures for WSF routes.
+    x-useCases:
+      - Determine route availability between terminal pairs.
+      - Understand fare collection procedures for specific routes.
+      - Build journey planning interfaces with fare collection details.
+    x-updateFrequency: daily
   - name: fare-line-items
-    description: Each FareLineItem item represents individual fare components for Washington State Ferries routes, including passenger categories, vehicle types, and pricing structures. These items form the building blocks for calculating total journey costs based on route, vehicle dimensions, and passenger demographics.
-    externalDocs:
-      description: Use to display fare options and enable price calculations by providing detailed fare breakdowns for different passenger types, vehicle categories, and route combinations for accurate ticket pricing.
+    description: Individual fare components for WSF routes by passenger and vehicle types.
+    x-useCases:
+      - Display fare options for different passenger and vehicle types.
+      - Calculate journey costs based on route and demographics.
+      - Build fare selection interfaces for ticket purchasing.
+    x-updateFrequency: daily
   - name: fare-totals
-    description: Each FareTotal item represents calculated fare costs for Washington State Ferries journeys based on selected fare line items and passenger quantities. These totals combine individual fare components to provide complete pricing for specific routes and travel scenarios.
-    externalDocs:
-      description: Use to calculate complete journey costs by providing fare totals based on selected line items, quantities, and trip parameters for accurate ticket pricing and payment processing.
+    description: Calculated fare totals for WSF journeys by selected line items and quantities.
+    x-useCases:
+      - Calculate complete journey costs for ticket pricing.
+      - Display fare breakdowns by leg and total amount.
+      - Process payment amounts for ferry trips.
+    x-updateFrequency: daily

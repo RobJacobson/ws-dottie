@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,12 +42,13 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
     FetchTrafficFlowsOutput:
       type: object
       properties:
         FlowDataID:
           type: number
-          description: Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station, '2483' for Homeacres Rd westbound station. Used as primary key for flow station identification and lookups.
+          description: Numeric ID of the traffic flow station.
         FlowReadingValue:
           anyOf:
             - type: number
@@ -68,7 +69,7 @@ components:
             - type: number
               enum:
                 - 5
-          description: 'Current traffic flow condition at station, as a flow status code. Valid values: 0 (Unknown), 1 (WideOpen), 2 (Moderate), 3 (Heavy), 4 (StopAndGo), 5 (NoData). E.g., ''1'' indicates wide open traffic flow with no congestion, ''2'' indicates moderate traffic, ''3'' indicates heavy traffic, ''4'' indicates stop-and-go conditions. Used for traffic condition assessment and congestion monitoring.'
+          description: 'Code indicating traffic flow condition: 0 = Unknown, 1 = WideOpen, 2 = Moderate, 3 = Heavy, 4 = StopAndGo, 5 = NoData.'
         FlowStationLocation:
           type:
             - object
@@ -78,26 +79,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -105,20 +106,20 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: Roadway location information for traffic flow station, as a roadway location object. E.g., SR-2 (RoadName '002') at milepost 0.68 eastbound near Homeacres Rd, SR-2 at milepost 3.6 westbound near Bickford Ave, null when location data is unavailable. Provides route, milepost, and direction information for station positioning.
+          description: Roadway location information for the traffic flow station.
         Region:
           type:
             - string
             - 'null'
-          description: WSDOT region that maintains traffic flow station, as a region name. E.g., 'Northwest' for stations in northwest region, null when region is not specified. Used for regional station organization and maintenance tracking.
+          description: WSDOT region that maintains the traffic flow station.
         StationName:
           type:
             - string
             - 'null'
-          description: Unique name identifier for traffic flow station, as a station code. E.g., '002es00068' for SR-2 eastbound station at milepost 0.68, '002es00360' for SR-2 eastbound station at milepost 3.6, null when station name is unavailable. Format typically combines route, direction, and milepost information.
+          description: Station identifier code combining route, direction, and milepost.
         Time:
           type: string
-          description: Timestamp when traffic flow reading was taken, as a UTC datetime. E.g., '2025-11-02T19:25:22.000Z' for reading at 7:25 PM on November 2, 2025. Indicates data freshness and when flow measurement occurred. Updates every 90 seconds.
+          description: UTC datetime when the traffic flow reading was taken.
       required:
         - FlowDataID
         - FlowReadingValue
@@ -126,22 +127,22 @@ components:
         - Region
         - StationName
         - Time
-      description: Represents real-time traffic flow data from flow sensor stations including flow condition status, station location, region, and measurement timestamp. E.g., station 2482 (002es00068) on SR-2 at milepost 0.68 eastbound with wide open flow (value 1) measured at 7:25 PM. Used for traffic monitoring, congestion detection, and flow analysis. Data updated every 90 seconds statewide.
+      description: Real-time traffic flow data from a sensor station, including flow condition, location, region, and measurement timestamp.
     FetchTrafficFlowByIdInputFlowDataIDParam:
       type: number
-      description: Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station. Used to retrieve specific flow station data.
+      description: Numeric ID of the traffic flow station.
   parameters:
     FetchTrafficFlowByIdInputFlowDataIDParam:
       schema:
         $ref: '#/components/schemas/FetchTrafficFlowByIdInputFlowDataIDParam'
       required: true
-      description: Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station. Used to retrieve specific flow station data.
+      description: Numeric ID of the traffic flow station.
       name: FlowDataID
       in: path
 paths:
   /getTrafficFlowAsJson?FlowDataID={FlowDataID}:
     get:
-      summary: Returns a single FlowData item for a specific traffic flow station by FlowDataID.
+      summary: Get current traffic flow condition for a specific station by ID.
       operationId: fetchTrafficFlowById
       tags:
         - flow-data
@@ -186,10 +187,10 @@ paths:
                       RoadName: '002'
                     Region: Northwest
                     StationName: 002es00068
-                    Time: 2025-11-08T08:29:22.000Z
+                    Time: 2025-11-15T16:57:22.000Z
   /getTrafficFlowsAsJson:
     get:
-      summary: Returns multiple FlowData items for all traffic flow stations across Washington state.
+      summary: List current traffic flow conditions for all stations statewide.
       operationId: fetchTrafficFlows
       tags:
         - flow-data
@@ -218,7 +219,7 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 1470 total)
+                  description: Example of a successful response from the API (showing first item of 1462 total)
                   value:
                     - FlowDataID: 2482
                       FlowReadingValue: 1
@@ -231,11 +232,13 @@ paths:
                         RoadName: '002'
                       Region: Northwest
                       StationName: 002es00068
-                      Time: 2025-11-08T08:29:22.000Z
-                    - _note: ... 1469 more items
+                      Time: 2025-11-15T16:57:22.000Z
 webhooks: {}
 tags:
   - name: flow-data
-    description: Each FlowData item represents real-time traffic flow information from sensor stations across Washington state. Data includes traffic conditions, station locations, timestamps, and regional maintenance information for traffic monitoring.
-    externalDocs:
-      description: Use to monitor current traffic conditions by providing real-time flow data and station information for traffic management and traveler information systems.
+    description: Real-time traffic flow conditions from sensor stations across Washington state.
+    x-useCases:
+      - Monitor real-time traffic flow conditions across Washington highways.
+      - Detect congestion and traffic patterns for route planning.
+      - Display current traffic status in traveler information systems.
+    x-updateFrequency: 90s

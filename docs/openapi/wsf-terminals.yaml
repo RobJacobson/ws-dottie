@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,49 +42,50 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
     FetchCacheFlushDateTerminalsOutput:
       type: string
-      description: Cache flush timestamp indicating when any static endpoint data for the wsf-terminals API was last updated, as a UTC datetime. E.g., '2025-11-02T19:45:00.517Z' when terminals metadata was refreshed.
+      description: UTC datetime when static endpoint data was last updated, or undefined if no update has occurred.
     FetchTerminalBasicsOutput:
       type: object
       properties:
         TerminalID:
           type: integer
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+          description: Numeric ID of the terminal.
         TerminalSubjectID:
           type: integer
-          description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+          description: Numeric ID of the terminal in the WSF subject management system.
         RegionID:
           type: integer
-          description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+          description: Numeric ID of the geographical region where the terminal is located.
         TerminalName:
           type:
             - string
             - 'null'
-          description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+          description: Display name of the terminal.
         TerminalAbbrev:
           type:
             - string
             - 'null'
-          description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+          description: Abbreviation code for the terminal.
         SortSeq:
           type: integer
-          description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+          description: Display sort order; lower values appear first in lists.
         OverheadPassengerLoading:
           type: boolean
-          description: Indicator whether overhead passenger loading facility is available, as a boolean. E.g., true for terminals with overhead walkway/ramp for passenger boarding, false for terminals without overhead loading. Used to determine passenger boarding method and accessibility.
+          description: True if overhead passenger loading facility is available; otherwise false.
         Elevator:
           type: boolean
-          description: Indicator whether terminal has elevator access, as a boolean. E.g., false for terminals without elevators, true for terminals with elevator access. Used to determine accessibility for passengers with mobility needs.
+          description: True if terminal has elevator access; otherwise false.
         WaitingRoom:
           type: boolean
-          description: Indicator whether terminal has waiting room facility, as a boolean. E.g., true for terminals with indoor waiting areas, false for terminals without waiting rooms. Used to determine passenger comfort amenities.
+          description: True if terminal has waiting room facility; otherwise false.
         FoodService:
           type: boolean
-          description: Indicator whether terminal offers food service, as a boolean. E.g., true for terminals with cafés or food vendors, false for terminals without food service. Used to determine passenger amenities.
+          description: True if terminal offers food service; otherwise false.
         Restroom:
           type: boolean
-          description: Indicator whether terminal has restroom facilities, as a boolean. E.g., true for terminals with restrooms, false for terminals without restrooms. Used to determine passenger amenities.
+          description: True if terminal has restroom facilities; otherwise false.
       required:
         - TerminalID
         - TerminalSubjectID
@@ -97,32 +98,32 @@ components:
         - WaitingRoom
         - FoodService
         - Restroom
-      description: Represents basic terminal information including terminal identification, region, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. E.g., Anacortes terminal (ID 1) with overhead loading, waiting room, food service, and restrooms. Used for terminal discovery, terminal identification, and amenity display.
+      description: Basic terminal information including identification, amenities, and regional assignments.
     FetchTerminalBulletinsOutput:
       type: object
       properties:
         TerminalID:
           type: integer
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+          description: Numeric ID of the terminal.
         TerminalSubjectID:
           type: integer
-          description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+          description: Numeric ID of the terminal in the WSF subject management system.
         RegionID:
           type: integer
-          description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+          description: Numeric ID of the geographical region where the terminal is located.
         TerminalName:
           type:
             - string
             - 'null'
-          description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+          description: Display name of the terminal.
         TerminalAbbrev:
           type:
             - string
             - 'null'
-          description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+          description: Abbreviation code for the terminal.
         SortSeq:
           type: integer
-          description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+          description: Display sort order; lower values appear first in lists.
         Bulletins:
           type: array
           items:
@@ -132,33 +133,33 @@ components:
                 type:
                   - string
                   - 'null'
-                description: Title of bulletin, as a bulletin title. E.g., 'Vehicle reservations for the winter season opened Oct 28 at 10am' for reservation bulletin, null when title is unavailable. Provides bulletin identification for display.
+                description: Title of the bulletin.
               BulletinText:
                 type:
                   - string
                   - 'null'
-                description: Content of bulletin, as HTML-formatted bulletin text. E.g., '<p><a href="...">Vehicle reservations</a> for the winter 2025 schedule...</p>' for reservation details, null when content is unavailable. HTML-formatted text for bulletin display.
+                description: HTML-formatted content of the bulletin.
               BulletinSortSeq:
                 type: integer
-                description: Preferred sort order for bulletin display, as an integer. E.g., '4' for fourth bulletin priority. Lower values appear first when sorting bulletins in ascending order. Used for bulletin display ordering.
+                description: Display sort order for the bulletin; lower values appear first.
               BulletinLastUpdated:
                 type:
                   - string
                   - 'null'
-                description: Date when bulletin was last updated, as a UTC datetime. E.g., '2025-10-30T22:28:21.497Z' for bulletin updated at 10:28 PM on October 30, 2025, null when update date is unavailable. Indicates when bulletin information was last modified.
+                description: UTC datetime when the bulletin was last updated.
               BulletinLastUpdatedSortable:
                 type:
                   - string
                   - 'null'
-                description: Legacy string representation of bulletin last updated date, as a sortable date string. E.g., '20251030152821' for October 30, 2025 at 15:28:21, null when sortable date is unavailable. Used for legacy sorting systems.
+                description: Legacy sortable string representation of the bulletin update date.
             required:
               - BulletinTitle
               - BulletinText
               - BulletinSortSeq
               - BulletinLastUpdated
               - BulletinLastUpdatedSortable
-            description: Represents bulletin information including title, HTML-formatted content, sort order, update date, and legacy sortable date string. E.g., bulletin 'Vehicle reservations for the winter season opened Oct 28 at 10am' (sort 4, updated October 30, 2025). Used for bulletin display and alert notifications.
-          description: Array of bulletins and alerts associated with terminal, as bulletin objects. E.g., array containing reservation bulletin, empty array when terminal has no bulletins. Used for displaying terminal alerts and bulletins.
+            description: Bulletin information including title, HTML content, sort order, and update date.
+          description: Array of bulletins and alerts associated with the terminal.
       required:
         - TerminalID
         - TerminalSubjectID
@@ -167,82 +168,82 @@ components:
         - TerminalAbbrev
         - SortSeq
         - Bulletins
-      description: Represents terminal information with associated bulletins including terminal identification, region, and bulletin list. E.g., Anacortes terminal (ID 1) with reservation bulletin. Used for terminal alert and bulletin display.
+      description: Terminal information with associated bulletins and alerts.
     FetchTerminalLocationsOutput:
       type: object
       properties:
         TerminalID:
           type: integer
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+          description: Numeric ID of the terminal.
         TerminalSubjectID:
           type: integer
-          description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+          description: Numeric ID of the terminal in the WSF subject management system.
         RegionID:
           type: integer
-          description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+          description: Numeric ID of the geographical region where the terminal is located.
         TerminalName:
           type:
             - string
             - 'null'
-          description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+          description: Display name of the terminal.
         TerminalAbbrev:
           type:
             - string
             - 'null'
-          description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+          description: Abbreviation code for the terminal.
         SortSeq:
           type: integer
-          description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+          description: Display sort order; lower values appear first in lists.
         Latitude:
           type:
             - number
             - 'null'
-          description: Terminal latitude coordinate, as a decimal degrees. E.g., 48.507351 for Anacortes terminal, 47.622339 for Bainbridge Island terminal, null when coordinate is unavailable. Used for terminal location mapping and GPS navigation.
+          description: Latitude of the terminal in decimal degrees.
         Longitude:
           type:
             - number
             - 'null'
-          description: Terminal longitude coordinate, as a decimal degrees. E.g., -122.677 for Anacortes terminal, -122.509617 for Bainbridge Island terminal, null when coordinate is unavailable. Used for terminal location mapping and GPS navigation.
+          description: Longitude of the terminal in decimal degrees.
         AddressLineOne:
           type:
             - string
             - 'null'
-          description: First line of terminal street address, as an address line. E.g., '2100 Ferry Terminal Road' for Anacortes terminal, '270 Olympic Drive SE' for Bainbridge Island terminal, null when address is unavailable. Used for address display and navigation.
+          description: First line of the terminal street address.
         AddressLineTwo:
           type:
             - string
             - 'null'
-          description: Second line of terminal street address, as an address line. E.g., null when no second address line, suite or building information when available. Used for complete address display.
+          description: Second line of the terminal street address.
         City:
           type:
             - string
             - 'null'
-          description: City where terminal is located, as a city name. E.g., 'Anacortes' for Anacortes terminal, 'Bainbridge Island' for Bainbridge Island terminal, null when city is unavailable. Used for address display and location identification.
+          description: City where the terminal is located.
         State:
           type:
             - string
             - 'null'
-          description: State where terminal is located, as a state code. E.g., 'WA' for Washington state terminals, null when state is unavailable. Used for address display and location identification.
+          description: State code where the terminal is located.
         ZipCode:
           type:
             - string
             - 'null'
-          description: Terminal postal zip code, as a zip code string. E.g., '98221' for Anacortes terminal, '98110' for Bainbridge Island terminal, null when zip code is unavailable. Used for address display and location identification.
+          description: Postal zip code for the terminal location.
         Country:
           type:
             - string
             - 'null'
-          description: Country where terminal is located, as a country code. E.g., 'USA' for United States terminals, null when country is unavailable. Used for address display and location identification.
+          description: Country code where the terminal is located.
         MapLink:
           type:
             - string
             - 'null'
-          description: URL to page displaying terminal on GIS map, as a map URL. E.g., 'https://www.google.com/maps/place/Anacortes+Ferry+Terminal...' for Google Maps link, null when map link is unavailable. Used for terminal location mapping and navigation.
+          description: URL to a map displaying the terminal location.
         Directions:
           type:
             - string
             - 'null'
-          description: HTML-formatted driving directions to terminal, as driving directions. E.g., 'From Interstate 5 take exit 230...' for Anacortes directions, null when directions are unavailable. HTML-formatted text for navigation instructions.
+          description: HTML-formatted driving directions to the terminal.
         DispGISZoomLoc:
           type:
             - array
@@ -252,23 +253,23 @@ components:
             properties:
               ZoomLevel:
                 type: integer
-                description: GIS zoom level for map display, as an integer zoom level. E.g., '0' for world view, '10' for city view, '17' for street view. Used to determine appropriate map zoom level for terminal display.
+                description: GIS zoom level for map display.
               Latitude:
                 type:
                   - number
                   - 'null'
-                description: Terminal latitude coordinate for this zoom level, as a decimal degrees. E.g., 48.507351 for Anacortes terminal, 47.622339 for Bainbridge Island terminal, null when coordinate is unavailable. Used for GIS map positioning at specific zoom levels.
+                description: Latitude coordinate for this zoom level in decimal degrees.
               Longitude:
                 type:
                   - number
                   - 'null'
-                description: Terminal longitude coordinate for this zoom level, as a decimal degrees. E.g., -122.677 for Anacortes terminal, -122.509617 for Bainbridge Island terminal, null when coordinate is unavailable. Used for GIS map positioning at specific zoom levels.
+                description: Longitude coordinate for this zoom level in decimal degrees.
             required:
               - ZoomLevel
               - Latitude
               - Longitude
-            description: Represents GIS zoom level location information including zoom level and coordinates. E.g., zoom level 17 with coordinates (48.507351, -122.677) for Anacortes terminal. Used for dynamic map positioning at different zoom levels.
-          description: Array of GIS zoom level locations for terminal, as zoom level location objects. E.g., array containing coordinates for zoom levels 0-17, null when zoom level locations are unavailable. Used for dynamic map positioning at different zoom levels.
+            description: GIS zoom level location information including zoom level and coordinates.
+          description: Array of GIS zoom level locations for the terminal.
       required:
         - TerminalID
         - TerminalSubjectID
@@ -287,32 +288,32 @@ components:
         - MapLink
         - Directions
         - DispGISZoomLoc
-      description: Represents detailed terminal location information including terminal identification, coordinates, address, map link, driving directions, and GIS zoom level locations. E.g., Anacortes terminal (ID 1) at 2100 Ferry Terminal Road, Anacortes, WA 98221 with coordinates (48.507351, -122.677). Used for terminal location mapping, navigation, and GIS display.
+      description: Detailed terminal location information including coordinates, address, map link, driving directions, and GIS zoom level locations.
     FetchTerminalSailingSpaceOutput:
       type: object
       properties:
         TerminalID:
           type: integer
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+          description: Numeric ID of the terminal.
         TerminalSubjectID:
           type: integer
-          description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+          description: Numeric ID of the terminal in the WSF subject management system.
         RegionID:
           type: integer
-          description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+          description: Numeric ID of the geographical region where the terminal is located.
         TerminalName:
           type:
             - string
             - 'null'
-          description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+          description: Display name of the terminal.
         TerminalAbbrev:
           type:
             - string
             - 'null'
-          description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+          description: Abbreviation code for the terminal.
         SortSeq:
           type: integer
-          description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+          description: Display sort order; lower values appear first in lists.
         DepartingSpaces:
           type:
             - array
@@ -439,32 +440,32 @@ components:
         - SortSeq
         - IsNoFareCollected
         - NoFareCollectedMsg
-      description: Represents terminal sailing space information including terminal identification, upcoming departures with space availability, and fare collection status. E.g., Anacortes terminal (ID 1) with multiple departures showing drive-up and reservation space availability. Used for real-time terminal condition monitoring and space availability display.
+      description: Terminal sailing space information including terminal identification, upcoming departures with space availability, and fare collection status.
     FetchTerminalTransportsOutput:
       type: object
       properties:
         TerminalID:
           type: integer
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+          description: Numeric ID of the terminal.
         TerminalSubjectID:
           type: integer
-          description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+          description: Numeric ID of the terminal in the WSF subject management system.
         RegionID:
           type: integer
-          description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+          description: Numeric ID of the geographical region where the terminal is located.
         TerminalName:
           type:
             - string
             - 'null'
-          description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+          description: Display name of the terminal.
         TerminalAbbrev:
           type:
             - string
             - 'null'
-          description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+          description: Abbreviation code for the terminal.
         SortSeq:
           type: integer
-          description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+          description: Display sort order; lower values appear first in lists.
         ParkingInfo:
           type:
             - string
@@ -561,33 +562,33 @@ components:
         - TaxiInfo
         - HovInfo
         - TransitLinks
-      description: Represents terminal transportation and commuter information including terminal identification, parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. E.g., Anacortes terminal (ID 1) with parking rates, airport directions, and Skagit Transit link. Used for terminal commuter information and transportation planning.
+      description: Terminal transportation and commuter information including parking details, vehicle-specific tips, airport information, transit links, and HOV/carpool information.
     FetchTerminalVerboseOutput:
       allOf:
         - type: object
           properties:
             TerminalID:
               type: integer
-              description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+              description: Numeric ID of the terminal.
             TerminalSubjectID:
               type: integer
-              description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+              description: Numeric ID of the terminal in the WSF subject management system.
             RegionID:
               type: integer
-              description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+              description: Numeric ID of the geographical region where the terminal is located.
             TerminalName:
               type:
                 - string
                 - 'null'
-              description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+              description: Display name of the terminal.
             TerminalAbbrev:
               type:
                 - string
                 - 'null'
-              description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+              description: Abbreviation code for the terminal.
             SortSeq:
               type: integer
-              description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+              description: Display sort order; lower values appear first in lists.
             OverheadPassengerLoading:
               type: boolean
               description: Indicator whether terminal supports overhead passenger loading from upper vehicle deck, as a boolean. E.g., true for terminals with overhead walkways like Anacortes and Bainbridge Island, false for terminals without overhead loading capability. Used to determine passenger boarding capabilities and accessibility features.
@@ -626,32 +627,32 @@ components:
                     type:
                       - string
                       - 'null'
-                    description: Title of bulletin, as a bulletin title. E.g., 'Vehicle reservations for the winter season opened Oct 28 at 10am' for reservation bulletin, null when title is unavailable. Provides bulletin identification for display.
+                    description: Title of the bulletin.
                   BulletinText:
                     type:
                       - string
                       - 'null'
-                    description: Content of bulletin, as HTML-formatted bulletin text. E.g., '<p><a href="...">Vehicle reservations</a> for the winter 2025 schedule...</p>' for reservation details, null when content is unavailable. HTML-formatted text for bulletin display.
+                    description: HTML-formatted content of the bulletin.
                   BulletinSortSeq:
                     type: integer
-                    description: Preferred sort order for bulletin display, as an integer. E.g., '4' for fourth bulletin priority. Lower values appear first when sorting bulletins in ascending order. Used for bulletin display ordering.
+                    description: Display sort order for the bulletin; lower values appear first.
                   BulletinLastUpdated:
                     type:
                       - string
                       - 'null'
-                    description: Date when bulletin was last updated, as a UTC datetime. E.g., '2025-10-30T22:28:21.497Z' for bulletin updated at 10:28 PM on October 30, 2025, null when update date is unavailable. Indicates when bulletin information was last modified.
+                    description: UTC datetime when the bulletin was last updated.
                   BulletinLastUpdatedSortable:
                     type:
                       - string
                       - 'null'
-                    description: Legacy string representation of bulletin last updated date, as a sortable date string. E.g., '20251030152821' for October 30, 2025 at 15:28:21, null when sortable date is unavailable. Used for legacy sorting systems.
+                    description: Legacy sortable string representation of the bulletin update date.
                 required:
                   - BulletinTitle
                   - BulletinText
                   - BulletinSortSeq
                   - BulletinLastUpdated
                   - BulletinLastUpdatedSortable
-                description: Represents bulletin information including title, HTML-formatted content, sort order, update date, and legacy sortable date string. E.g., bulletin 'Vehicle reservations for the winter season opened Oct 28 at 10am' (sort 4, updated October 30, 2025). Used for bulletin display and alert notifications.
+                description: Bulletin information including title, HTML content, sort order, and update date.
               description: Active bulletins and alerts associated with terminal, as an array of bulletin objects. E.g., array containing vehicle reservation notices for Anacortes terminal, empty array for terminals without active bulletins. Used to display important terminal information, service changes, and passenger notifications.
           required:
             - Bulletins
@@ -716,22 +717,22 @@ components:
                 properties:
                   ZoomLevel:
                     type: integer
-                    description: GIS zoom level for map display, as an integer zoom level. E.g., '0' for world view, '10' for city view, '17' for street view. Used to determine appropriate map zoom level for terminal display.
+                    description: GIS zoom level for map display.
                   Latitude:
                     type:
                       - number
                       - 'null'
-                    description: Terminal latitude coordinate for this zoom level, as a decimal degrees. E.g., 48.507351 for Anacortes terminal, 47.622339 for Bainbridge Island terminal, null when coordinate is unavailable. Used for GIS map positioning at specific zoom levels.
+                    description: Latitude coordinate for this zoom level in decimal degrees.
                   Longitude:
                     type:
                       - number
                       - 'null'
-                    description: Terminal longitude coordinate for this zoom level, as a decimal degrees. E.g., -122.677 for Anacortes terminal, -122.509617 for Bainbridge Island terminal, null when coordinate is unavailable. Used for GIS map positioning at specific zoom levels.
+                    description: Longitude coordinate for this zoom level in decimal degrees.
                 required:
                   - ZoomLevel
                   - Latitude
                   - Longitude
-                description: Represents GIS zoom level location information including zoom level and coordinates. E.g., zoom level 17 with coordinates (48.507351, -122.677) for Anacortes terminal. Used for dynamic map positioning at different zoom levels.
+                description: GIS zoom level location information including zoom level and coordinates.
               description: GIS map display coordinates for terminal at various zoom levels, as an array of zoom-level coordinates. E.g., array with 18 zoom levels for Anacortes terminal, null when zoom-level data is unavailable. Used for optimized map rendering at different zoom levels.
           required:
             - Latitude
@@ -972,34 +973,34 @@ components:
                     type:
                       - integer
                       - 'null'
-                    description: Unique identifier for route associated with wait time, as an integer ID. E.g., null when wait time applies to all routes from terminal, route ID when wait time is route-specific. Used to identify route for wait time context.
+                    description: Numeric ID of the route associated with the wait time.
                   RouteName:
                     type:
                       - string
                       - 'null'
-                    description: Human-readable name of route associated with wait time, as a route name. E.g., null when wait time applies to all routes, route name when wait time is route-specific. Provides route identification for wait time context.
+                    description: Display name of the route associated with the wait time.
                   WaitTimeNotes:
                     type:
                       - string
                       - 'null'
-                    description: Text notes detailing wait time conditions and tips for vehicles and passengers, as wait time notes. E.g., 'Vehicle reservations to the San Juan Islands are available...' for Anacortes wait time notes, 'The morning departures are extremely heavy...' for Bainbridge Island wait time notes, null when notes are unavailable. Used for wait time information display.
+                    description: Text notes detailing wait time conditions and tips for vehicles and passengers.
                   WaitTimeLastUpdated:
                     type:
                       - string
                       - 'null'
-                    description: Date when wait time information was last updated, as a UTC datetime. E.g., '2020-08-18T19:31:10.000Z' for wait time updated at 7:31 PM on August 18, 2020, null when update date is unavailable. Indicates when wait time information was last modified.
+                    description: UTC datetime when the wait time information was last updated.
                   WaitTimeIVRNotes:
                     type:
                       - string
                       - 'null'
-                    description: Wait time notes formatted for Interactive Voice Response systems, as IVR notes. E.g., 'Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent...' for IVR playback, null when IVR notes are unavailable. Used for telephone-based wait time information systems.
+                    description: Wait time notes formatted for Interactive Voice Response systems.
                 required:
                   - RouteID
                   - RouteName
                   - WaitTimeNotes
                   - WaitTimeLastUpdated
                   - WaitTimeIVRNotes
-                description: Represents wait time information including route association, wait time notes, IVR notes, and update date. E.g., wait time for Anacortes terminal with reservation and arrival time guidance (updated August 18, 2020). Used for wait time information display and passenger guidance.
+                description: Wait time information including route association, notes, IVR notes, and update date.
               description: Current wait time information and arrival recommendations for terminal, as an array of wait time objects. E.g., array containing vehicle reservation requirements and arrival time recommendations for Anacortes terminal, null when wait time data is unavailable. Used for trip planning and arrival time guidance.
           required:
             - WaitTimes
@@ -1143,32 +1144,32 @@ components:
             - REALTIME_SHUTOFF_FLAG
             - REALTIME_SHUTOFF_MESSAGE
             - VisitorLinks
-      description: Represents comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints. Includes terminal identification, amenities (overhead loading, elevator, waiting room, food service, restrooms), bulletins, location details (address, coordinates, map links, directions, GIS zoom levels), sailing space information (departures, vessel details, space availability), transportation information (parking, vehicle tips, airport info, transit links), wait times, and additional terminal details (lost and found, security, construction, food service, ADA, fare discounts, chamber of commerce, real-time status). E.g., Anacortes terminal (ID 1) with complete information including amenities, bulletins, location, transportation options, sailing space, and wait times. Used for comprehensive terminal information when reducing API calls is desired.
+      description: Comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints.
     FetchTerminalWaitTimesOutput:
       type: object
       properties:
         TerminalID:
           type: integer
-          description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal, '4' for Bremerton terminal. Used as primary key for all terminal-related API calls and terminal identification.
+          description: Numeric ID of the terminal.
         TerminalSubjectID:
           type: integer
-          description: Unique WSF subject identifier for terminal, as an integer ID. E.g., '111' for Anacortes subject, '103' for Bainbridge Island subject, '102' for Bremerton subject. Identifies terminal as unique entity within WSF subject management system.
+          description: Numeric ID of the terminal in the WSF subject management system.
         RegionID:
           type: integer
-          description: Geographical region identifier where terminal is located, as an integer ID. E.g., '1' for region 1 (Anacortes area), '4' for region 4 (Puget Sound central), '2' for region 2 (Whidbey Island area). Used for regional terminal grouping and filtering.
+          description: Numeric ID of the geographical region where the terminal is located.
         TerminalName:
           type:
             - string
             - 'null'
-          description: Terminal name, as a human-readable description. E.g., 'Anacortes' for terminal 1, 'Bainbridge Island' for terminal 3, 'Bremerton' for terminal 4, null when terminal name is unavailable. Provides terminal identification for display and user interfaces.
+          description: Display name of the terminal.
         TerminalAbbrev:
           type:
             - string
             - 'null'
-          description: Terminal abbreviation code, as a terminal abbreviation. E.g., 'ANA' for Anacortes, 'BBI' for Bainbridge Island, 'BRE' for Bremerton, 'CLI' for Clinton, null when abbreviation is unavailable. Used for compact terminal identification in displays and route codes.
+          description: Abbreviation code for the terminal.
         SortSeq:
           type: integer
-          description: Preferred sort order for terminal display, as an integer. E.g., '10' for Anacortes, '40' for Bainbridge Island, '30' for Bremerton, '20' for Clinton. Lower values appear first when sorting terminals in ascending order.
+          description: Display sort order; lower values appear first in lists.
         WaitTimes:
           type:
             - array
@@ -1180,35 +1181,35 @@ components:
                 type:
                   - integer
                   - 'null'
-                description: Unique identifier for route associated with wait time, as an integer ID. E.g., null when wait time applies to all routes from terminal, route ID when wait time is route-specific. Used to identify route for wait time context.
+                description: Numeric ID of the route associated with the wait time.
               RouteName:
                 type:
                   - string
                   - 'null'
-                description: Human-readable name of route associated with wait time, as a route name. E.g., null when wait time applies to all routes, route name when wait time is route-specific. Provides route identification for wait time context.
+                description: Display name of the route associated with the wait time.
               WaitTimeNotes:
                 type:
                   - string
                   - 'null'
-                description: Text notes detailing wait time conditions and tips for vehicles and passengers, as wait time notes. E.g., 'Vehicle reservations to the San Juan Islands are available...' for Anacortes wait time notes, 'The morning departures are extremely heavy...' for Bainbridge Island wait time notes, null when notes are unavailable. Used for wait time information display.
+                description: Text notes detailing wait time conditions and tips for vehicles and passengers.
               WaitTimeLastUpdated:
                 type:
                   - string
                   - 'null'
-                description: Date when wait time information was last updated, as a UTC datetime. E.g., '2020-08-18T19:31:10.000Z' for wait time updated at 7:31 PM on August 18, 2020, null when update date is unavailable. Indicates when wait time information was last modified.
+                description: UTC datetime when the wait time information was last updated.
               WaitTimeIVRNotes:
                 type:
                   - string
                   - 'null'
-                description: Wait time notes formatted for Interactive Voice Response systems, as IVR notes. E.g., 'Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent...' for IVR playback, null when IVR notes are unavailable. Used for telephone-based wait time information systems.
+                description: Wait time notes formatted for Interactive Voice Response systems.
             required:
               - RouteID
               - RouteName
               - WaitTimeNotes
               - WaitTimeLastUpdated
               - WaitTimeIVRNotes
-            description: Represents wait time information including route association, wait time notes, IVR notes, and update date. E.g., wait time for Anacortes terminal with reservation and arrival time guidance (updated August 18, 2020). Used for wait time information display and passenger guidance.
-          description: Array of wait time information associated with terminal, as wait time objects. E.g., array containing wait time notes for Anacortes terminal, array containing wait time notes for Bainbridge Island terminal, null when wait time information is unavailable. Used for displaying terminal wait time conditions and passenger guidance.
+            description: Wait time information including route association, notes, IVR notes, and update date.
+          description: Array of wait time information associated with the terminal.
       required:
         - TerminalID
         - TerminalSubjectID
@@ -1217,82 +1218,240 @@ components:
         - TerminalAbbrev
         - SortSeq
         - WaitTimes
-      description: Represents terminal wait time information including terminal identification and wait time list. E.g., Anacortes terminal (ID 1) with wait time notes for San Juan Islands routes. Used for terminal wait time information and passenger guidance.
+      description: Terminal wait time information including terminal identification and wait time list.
     FetchTerminalBasicsByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for basic information lookup.
+      description: Numeric ID of the terminal.
     FetchTerminalBulletinsByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for bulletin lookup.
+      description: Numeric ID of the terminal.
     FetchTerminalLocationsByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for location lookup.
+      description: Numeric ID of the terminal.
     FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for sailing space lookup.
+      description: Numeric ID of the terminal.
     FetchTerminalTransportsByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for transportation information lookup.
+      description: Numeric ID of the terminal.
     FetchTerminalVerboseByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for comprehensive information lookup.
+      description: Numeric ID of the terminal.
     FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam:
       type: integer
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for wait time lookup.
+      description: Numeric ID of the terminal.
   parameters:
     FetchTerminalBasicsByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalBasicsByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for basic information lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
     FetchTerminalBulletinsByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for bulletin lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
     FetchTerminalLocationsByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalLocationsByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for location lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
     FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for sailing space lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
     FetchTerminalTransportsByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for transportation information lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
     FetchTerminalVerboseByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalVerboseByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for comprehensive information lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
     FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam:
       schema:
         $ref: '#/components/schemas/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
       required: true
-      description: Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for wait time lookup.
+      description: Numeric ID of the terminal.
       name: TerminalID
       in: path
 paths:
+  /terminalBulletins/{TerminalID}:
+    get:
+      summary: Get bulletins and alerts for a specific terminal by ID.
+      operationId: fetchTerminalBulletinsByTerminalId
+      tags:
+        - terminal-bulletins
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalBulletinsByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalBulletinsByTerminalId,
+              params: {
+                "TerminalID": 3
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 3
+                    TerminalSubjectID: 103
+                    RegionID: 4
+                    TerminalName: Bainbridge Island
+                    TerminalAbbrev: BBI
+                    SortSeq: 40
+                    Bulletins: []
+  /terminalBulletins:
+    get:
+      summary: List bulletins and alerts for all terminals.
+      operationId: fetchTerminalBulletins
+      tags:
+        - terminal-bulletins
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalBulletins } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalBulletins,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      Bulletins: []
+  /cacheflushdate:
+    get:
+      summary: Get cache invalidation timestamp for static wsf-terminals data.
+      operationId: fetchCacheFlushDateTerminals
+      tags:
+        - cache-flush-date-terminals
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCacheFlushDateTerminals } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchCacheFlushDateTerminals,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchCacheFlushDateTerminalsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value: 2025-11-15T16:55:01.027Z
+  /terminalBasics:
+    get:
+      summary: List basic information for all terminals.
+      operationId: fetchTerminalBasics
+      tags:
+        - terminal-basics
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalBasics } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalBasics,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalBasicsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      OverheadPassengerLoading: true
+                      Elevator: false
+                      WaitingRoom: true
+                      FoodService: true
+                      Restroom: true
   /terminalBasics/{TerminalID}:
     get:
-      summary: Returns a TerminalBasic object containing essential identification and status information for the specified terminal.
+      summary: Get basic information for a specific terminal by ID.
       operationId: fetchTerminalBasicsByTerminalId
       tags:
         - terminal-basics
@@ -1337,478 +1496,9 @@ paths:
                     WaitingRoom: true
                     FoodService: true
                     Restroom: true
-  /terminalSailingSpace/{TerminalID}:
-    get:
-      summary: Returns TerminalSailingSpace data for the terminal with the given identifier.
-      operationId: fetchTerminalSailingSpaceByTerminalId
-      tags:
-        - terminal-sailing-space
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalSailingSpaceByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalSailingSpaceByTerminalId,
-              params: {
-                "TerminalID": 7
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 7
-                    TerminalSubjectID: 101
-                    RegionID: 4
-                    TerminalName: Seattle
-                    TerminalAbbrev: P52
-                    SortSeq: 20
-                    DepartingSpaces:
-                      - Departure: '2025-11-08T06:05:00.000Z'
-                        IsCancelled: false
-                        VesselID: 32
-                        VesselName: Tacoma
-                        MaxSpaceCount: 197
-                        SpaceForArrivalTerminals:
-                          - TerminalID: 3
-                            TerminalName: Bainbridge Island
-                            VesselID: 32
-                            VesselName: Tacoma
-                            DisplayReservableSpace: false
-                            ReservableSpaceCount: null
-                            ReservableSpaceHexColor: null
-                            DisplayDriveUpSpace: true
-                            DriveUpSpaceCount: 145
-                            DriveUpSpaceHexColor: '#00FF00'
-                            MaxSpaceCount: 197
-                            ArrivalTerminalIDs:
-                              - 3
-                      - Departure: '2025-11-08T06:30:00.000Z'
-                        IsCancelled: false
-                        VesselID: 17
-                        VesselName: Kaleetan
-                        MaxSpaceCount: 139
-                        SpaceForArrivalTerminals:
-                          - TerminalID: 4
-                            TerminalName: Bremerton
-                            VesselID: 17
-                            VesselName: Kaleetan
-                            DisplayReservableSpace: false
-                            ReservableSpaceCount: null
-                            ReservableSpaceHexColor: null
-                            DisplayDriveUpSpace: true
-                            DriveUpSpaceCount: 138
-                            DriveUpSpaceHexColor: '#00FF00'
-                            MaxSpaceCount: 139
-                            ArrivalTerminalIDs:
-                              - 4
-                      - Departure: '2025-11-08T06:50:00.000Z'
-                        IsCancelled: false
-                        VesselID: 37
-                        VesselName: Wenatchee
-                        MaxSpaceCount: 197
-                        SpaceForArrivalTerminals:
-                          - TerminalID: 3
-                            TerminalName: Bainbridge Island
-                            VesselID: 37
-                            VesselName: Wenatchee
-                            DisplayReservableSpace: false
-                            ReservableSpaceCount: null
-                            ReservableSpaceHexColor: null
-                            DisplayDriveUpSpace: true
-                            DriveUpSpaceCount: 197
-                            DriveUpSpaceHexColor: '#00FF00'
-                            MaxSpaceCount: 197
-                            ArrivalTerminalIDs:
-                              - 3
-                      - Departure: '2025-11-08T08:15:00.000Z'
-                        IsCancelled: false
-                        VesselID: 37
-                        VesselName: Wenatchee
-                        MaxSpaceCount: 197
-                        SpaceForArrivalTerminals:
-                          - TerminalID: 3
-                            TerminalName: Bainbridge Island
-                            VesselID: 37
-                            VesselName: Wenatchee
-                            DisplayReservableSpace: false
-                            ReservableSpaceCount: null
-                            ReservableSpaceHexColor: null
-                            DisplayDriveUpSpace: true
-                            DriveUpSpaceCount: 197
-                            DriveUpSpaceHexColor: '#00FF00'
-                            MaxSpaceCount: 197
-                            ArrivalTerminalIDs:
-                              - 3
-                      - Departure: '2025-11-08T08:50:00.000Z'
-                        IsCancelled: false
-                        VesselID: 17
-                        VesselName: Kaleetan
-                        MaxSpaceCount: 139
-                        SpaceForArrivalTerminals:
-                          - TerminalID: 4
-                            TerminalName: Bremerton
-                            VesselID: 17
-                            VesselName: Kaleetan
-                            DisplayReservableSpace: false
-                            ReservableSpaceCount: null
-                            ReservableSpaceHexColor: null
-                            DisplayDriveUpSpace: true
-                            DriveUpSpaceCount: 139
-                            DriveUpSpaceHexColor: '#00FF00'
-                            MaxSpaceCount: 139
-                            ArrivalTerminalIDs:
-                              - 4
-                      - Departure: '2025-11-08T09:35:00.000Z'
-                        IsCancelled: false
-                        VesselID: 37
-                        VesselName: Wenatchee
-                        MaxSpaceCount: 197
-                        SpaceForArrivalTerminals:
-                          - TerminalID: 3
-                            TerminalName: Bainbridge Island
-                            VesselID: 37
-                            VesselName: Wenatchee
-                            DisplayReservableSpace: false
-                            ReservableSpaceCount: null
-                            ReservableSpaceHexColor: null
-                            DisplayDriveUpSpace: true
-                            DriveUpSpaceCount: 197
-                            DriveUpSpaceHexColor: '#00FF00'
-                            MaxSpaceCount: 197
-                            ArrivalTerminalIDs:
-                              - 3
-                    IsNoFareCollected: null
-                    NoFareCollectedMsg: null
-  /terminalWaitTimes:
-    get:
-      summary: Returns multiple TerminalWaitTime objects for all terminals.
-      operationId: fetchTerminalWaitTimes
-      tags:
-        - terminal-wait-times
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalWaitTimes } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalWaitTimes,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
-                  value:
-                    - TerminalID: 1
-                      TerminalSubjectID: 111
-                      RegionID: 1
-                      TerminalName: Anacortes
-                      TerminalAbbrev: ANA
-                      SortSeq: 10
-                      WaitTimes:
-                        - RouteID: null
-                          RouteName: null
-                          WaitTimeNotes: 'Vehicle reservations to the San Juan Islands are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk-on passengers should arrive at least 15 minutes prior to departure sailing. '
-                          WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
-                          WaitTimeIVRNotes: Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk on passengers should arrive at least 15 minutes prior to departure.  To speak with an information agent please press zero.
-                    - _note: ... 19 more items
-  /terminalBulletins:
-    get:
-      summary: Returns multiple TerminalBulletin objects for all terminals.
-      operationId: fetchTerminalBulletins
-      tags:
-        - terminal-bulletins
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBulletins } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalBulletins,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
-                  value:
-                    - TerminalID: 1
-                      TerminalSubjectID: 111
-                      RegionID: 1
-                      TerminalName: Anacortes
-                      TerminalAbbrev: ANA
-                      SortSeq: 10
-                      Bulletins:
-                        - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
-                          BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
-                          BulletinSortSeq: 1
-                          BulletinLastUpdated: 2025-11-06T20:57:44.763Z
-                          BulletinLastUpdatedSortable: '20251106125744'
-                    - _note: ... 19 more items
-  /terminalWaitTimes/{TerminalID}:
-    get:
-      summary: Returns a single TerminalWaitTime object for specified terminal.
-      operationId: fetchTerminalWaitTimesByTerminalId
-      tags:
-        - terminal-wait-times
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalWaitTimesByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalWaitTimesByTerminalId,
-              params: {
-                "TerminalID": 11
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 11
-                    TerminalSubjectID: 116
-                    RegionID: 2
-                    TerminalName: 'Coupeville '
-                    TerminalAbbrev: COU
-                    SortSeq: 40
-                    WaitTimes:
-                      - RouteID: null
-                        RouteName: null
-                        WaitTimeNotes: WSF recommends reservation holders arrive 30-45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made at www.takeaferry.com or by calling 5-1-1 at least two hours prior to departure. Walk-on passengers should arrive at least 15 minutes prior to departure.
-                        WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
-                        WaitTimeIVRNotes: W S F recommends reservation holders arrive 30 to 45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made online or by speaking to an information agent at least two hours prior to departure. Walk on passengers should arrive at least 15 minutes prior to departure.
-  /cacheflushdate:
-    get:
-      summary: Returns the timestamp of when any static endpoint data for the wsf-terminals API was last updated.
-      operationId: fetchCacheFlushDateTerminals
-      tags:
-        - cache-flush-date-terminals
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchCacheFlushDateTerminals } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchCacheFlushDateTerminals,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchCacheFlushDateTerminalsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value: 2025-11-08T08:30:00.677Z
-  /terminalBulletins/{TerminalID}:
-    get:
-      summary: Returns TerminalBulletin data for the terminal with the specified terminal.
-      operationId: fetchTerminalBulletinsByTerminalId
-      tags:
-        - terminal-bulletins
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBulletinsByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalBulletinsByTerminalId,
-              params: {
-                "TerminalID": 3
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalBulletinsByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalBulletinsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 3
-                    TerminalSubjectID: 103
-                    RegionID: 4
-                    TerminalName: Bainbridge Island
-                    TerminalAbbrev: BBI
-                    SortSeq: 40
-                    Bulletins:
-                      - BulletinTitle: Sea/BI - Wenatchee to replace Walla Walla on Friday, November 7
-                        BulletinText: "<p><span data-contrast=\"none\">After successful repairs, the</span><i><span data-contrast=\"none\"> Wenatchee </span></i><span data-contrast=\"none\">will return to the Seattle/Bainbridge route on Friday, Nov. 7, replacing the </span><i><span data-contrast=\"none\">Walla Walla</span></i><span data-contrast=\"none\"> as the #1 vessel. We do not expect service impacts during this vessel swap. Thank you for your patience as we repair our vessels.\_</span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\">\_</span></p>"
-                        BulletinSortSeq: 3
-                        BulletinLastUpdated: 2025-11-07T00:46:41.003Z
-                        BulletinLastUpdatedSortable: '20251106164641'
-                      - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
-                        BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
-                        BulletinSortSeq: 1
-                        BulletinLastUpdated: 2025-11-06T20:57:44.763Z
-                        BulletinLastUpdatedSortable: '20251106125744'
-  /terminalTransports/{TerminalID}:
-    get:
-      summary: Returns TerminalTransport data for the terminal with the specified terminal.
-      operationId: fetchTerminalTransportsByTerminalId
-      tags:
-        - terminal-transports
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalTransportsByTerminalId } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalTransportsByTerminalId,
-              params: {
-                "TerminalID": 10
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchTerminalTransportsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    TerminalID: 10
-                    TerminalSubjectID: 115
-                    RegionID: 1
-                    TerminalName: Friday Harbor
-                    TerminalAbbrev: FRH
-                    SortSeq: 50
-                    ParkingInfo: There is no parking at the Friday Harbor terminal. There is limited short term on street parking available.
-                    ParkingShuttleInfo: null
-                    AirportInfo: null
-                    AirportShuttleInfo: null
-                    MotorcycleInfo: "While motorcycles are not, by Washington Administrative Code (WAC 468-300-700), a preferential loading category of users, they are often loaded prior to automobiles for operational and staging purposes. Arrival at the dock after vehicle load has commenced requires motorcycles to wait until all cars have been loaded for the next motorcycle loading opportunity. Motorcycles should proceed, while on the dock, at no more than 10 mph. Use caution when car decks are wet. The following information details specific staging for this terminal:<p> \r\n\r\n<b>Motorcycle Fare Purchase/Redemption</b><br>\r\nTickets are required for International travel to Sidney, B.C. Canada.<p>\r\n\r\n<b>Motorcycle Entry/Staging</b><br>\r\nMotorcycles are staged on the yellow curb lane in front of Cannery Landing.<p>\r\n\r\n<b>Motorcycle Loading</b><br>\r\nLoading order: bicycles, motorcycles, vehicles, late arriving motorcycles as space permits.<p> \r\n\r\n<b>Motorcycle Special Communication</b><br>\r\nRecommended arrival time is 20 minutes prior to scheduled sailing time.<br>\r\nOn high traffic sailings, vessel overloads may occur for travel to Anacortes. To avoid missing a desired sailing, motorcyclists should arrive an hour prior to scheduled sailing.<p>\r\n\r\nInter-island tickets may be used between any two islands, they are not destination specific and fare payment is required traveling westbound only. Motorcyclists travel free eastbound. "
-                    TruckInfo: "WSF requires trucks with a gross vehicle weight of over 80,000 lbs and/or over 8’6” wide to have “travel approval” before crossing any of our routes.  Vessels on this route have a limited height clearance and trucks may be loaded out of sequence.<p>\r\nTrucks that have a gross vehicle weight of over 80,000 lbs but are hauling less than 80,000 lbs will need to provide a weight slip.<p>\r\nPlease fill out our <A HREF=\"https://wsdot.wa.gov/ferries/rider-information/trucks\" class=\"content_text\">Oversized/Overweight Vehicle Travel</A> form and email it to wsfinfo@wsdot.wa.gov. Please allow three business days for completion and approval. You can contact us at anytime for status updates at (206)464-6400.</p>\r\n"
-                    BikeInfo: Bicyclists load through the passenger terminal and should bypass the vehicle holding lanes. Bicyclists should arrive 20 minutes prior to departure time to be loaded at the beginning of vehicle loading. If a bicyclist arrives after vehicle loading has begun, they will be loaded at the end of the load. The terminal has bicycle racks near the terminal along Front Street.  Bicyclists are asked to walk on and walk off the vessel.  The Agent will notify bicyclists when they may ride while offloading.
-                    TrainInfo: null
-                    TaxiInfo: null
-                    HovInfo: null
-                    TransitLinks: []
-  /terminalSailingSpace:
-    get:
-      summary: Returns multiple TerminalSailingSpace objects for all terminals.
-      operationId: fetchTerminalSailingSpace
-      tags:
-        - terminal-sailing-space
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalSailingSpace } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalSailingSpace,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value: []
   /terminalLocations:
     get:
-      summary: Returns multiple TerminalLocation objects for all terminals.
+      summary: List location information for all terminals.
       operationId: fetchTerminalLocations
       tags:
         - terminal-locations
@@ -1910,10 +1600,155 @@ paths:
                         - ZoomLevel: 17
                           Latitude: 48.506612
                           Longitude: -122.678006
-                    - _note: ... 19 more items
+  /terminalWaitTimes:
+    get:
+      summary: List wait time information for all terminals.
+      operationId: fetchTerminalWaitTimes
+      tags:
+        - terminal-wait-times
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalWaitTimes } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalWaitTimes,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      WaitTimes:
+                        - RouteID: null
+                          RouteName: null
+                          WaitTimeNotes: 'Vehicle reservations to the San Juan Islands are available at www.takeaferry.com or by calling 511, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk-on passengers should arrive at least 15 minutes prior to departure sailing. '
+                          WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
+                          WaitTimeIVRNotes: Vehicle reservations to the San Juan Islands are available online or by speaking to an information agent, and must be made at least 2 hours prior to sailing time.  A 45 to 60 minute advance arrival is advised for reservation holders. Reservation holders who check in later than 30 minutes prior to sailing time will travel stand by. Walk on passengers should arrive at least 15 minutes prior to departure.  To speak with an information agent please press zero.
+  /terminalTransports/{TerminalID}:
+    get:
+      summary: Get transportation information for a specific terminal by ID.
+      operationId: fetchTerminalTransportsByTerminalId
+      tags:
+        - terminal-transports
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalTransportsByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalTransportsByTerminalId,
+              params: {
+                "TerminalID": 10
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalTransportsByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 10
+                    TerminalSubjectID: 115
+                    RegionID: 1
+                    TerminalName: Friday Harbor
+                    TerminalAbbrev: FRH
+                    SortSeq: 50
+                    ParkingInfo: There is no parking at the Friday Harbor terminal. There is limited short term on street parking available.
+                    ParkingShuttleInfo: null
+                    AirportInfo: null
+                    AirportShuttleInfo: null
+                    MotorcycleInfo: "While motorcycles are not, by Washington Administrative Code (WAC 468-300-700), a preferential loading category of users, they are often loaded prior to automobiles for operational and staging purposes. Arrival at the dock after vehicle load has commenced requires motorcycles to wait until all cars have been loaded for the next motorcycle loading opportunity. Motorcycles should proceed, while on the dock, at no more than 10 mph. Use caution when car decks are wet. The following information details specific staging for this terminal:<p> \r\n\r\n<b>Motorcycle Fare Purchase/Redemption</b><br>\r\nTickets are required for International travel to Sidney, B.C. Canada.<p>\r\n\r\n<b>Motorcycle Entry/Staging</b><br>\r\nMotorcycles are staged on the yellow curb lane in front of Cannery Landing.<p>\r\n\r\n<b>Motorcycle Loading</b><br>\r\nLoading order: bicycles, motorcycles, vehicles, late arriving motorcycles as space permits.<p> \r\n\r\n<b>Motorcycle Special Communication</b><br>\r\nRecommended arrival time is 20 minutes prior to scheduled sailing time.<br>\r\nOn high traffic sailings, vessel overloads may occur for travel to Anacortes. To avoid missing a desired sailing, motorcyclists should arrive an hour prior to scheduled sailing.<p>\r\n\r\nInter-island tickets may be used between any two islands, they are not destination specific and fare payment is required traveling westbound only. Motorcyclists travel free eastbound. "
+                    TruckInfo: "WSF requires trucks with a gross vehicle weight of over 80,000 lbs and/or over 8’6” wide to have “travel approval” before crossing any of our routes.  Vessels on this route have a limited height clearance and trucks may be loaded out of sequence.<p>\r\nTrucks that have a gross vehicle weight of over 80,000 lbs but are hauling less than 80,000 lbs will need to provide a weight slip.<p>\r\nPlease fill out our <A HREF=\"https://wsdot.wa.gov/ferries/rider-information/trucks\" class=\"content_text\">Oversized/Overweight Vehicle Travel</A> form and email it to wsfinfo@wsdot.wa.gov. Please allow three business days for completion and approval. You can contact us at anytime for status updates at (206)464-6400.</p>\r\n"
+                    BikeInfo: Bicyclists load through the passenger terminal and should bypass the vehicle holding lanes. Bicyclists should arrive 20 minutes prior to departure time to be loaded at the beginning of vehicle loading. If a bicyclist arrives after vehicle loading has begun, they will be loaded at the end of the load. The terminal has bicycle racks near the terminal along Front Street.  Bicyclists are asked to walk on and walk off the vessel.  The Agent will notify bicyclists when they may ride while offloading.
+                    TrainInfo: null
+                    TaxiInfo: null
+                    HovInfo: null
+                    TransitLinks: []
+  /terminalWaitTimes/{TerminalID}:
+    get:
+      summary: Get wait time information for a specific terminal by ID.
+      operationId: fetchTerminalWaitTimesByTerminalId
+      tags:
+        - terminal-wait-times
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalWaitTimesByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalWaitTimesByTerminalId,
+              params: {
+                "TerminalID": 11
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalWaitTimesByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalWaitTimesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 11
+                    TerminalSubjectID: 116
+                    RegionID: 2
+                    TerminalName: 'Coupeville '
+                    TerminalAbbrev: COU
+                    SortSeq: 40
+                    WaitTimes:
+                      - RouteID: null
+                        RouteName: null
+                        WaitTimeNotes: WSF recommends reservation holders arrive 30-45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made at www.takeaferry.com or by calling 5-1-1 at least two hours prior to departure. Walk-on passengers should arrive at least 15 minutes prior to departure.
+                        WaitTimeLastUpdated: 2020-08-18T19:31:10.000Z
+                        WaitTimeIVRNotes: W S F recommends reservation holders arrive 30 to 45 minutes prior to departure to ensure timely processing and boarding. Reservations for vehicles and motorcycles can be made online or by speaking to an information agent at least two hours prior to departure. Walk on passengers should arrive at least 15 minutes prior to departure.
   /terminalVerbose/{TerminalID}:
     get:
-      summary: Returns TerminalVerbose data for the terminal with the specified terminal.
+      summary: Get comprehensive information for a specific terminal by ID.
       operationId: fetchTerminalVerboseByTerminalId
       tags:
         - terminal-verbose
@@ -1959,16 +1794,11 @@ paths:
                     FoodService: true
                     Restroom: true
                     Bulletins:
-                      - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
-                        BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
-                        BulletinSortSeq: 1
-                        BulletinLastUpdated: 2025-11-06T20:57:44.763Z
-                        BulletinLastUpdatedSortable: '20251106125744'
                       - BulletinTitle: 'Sea/Brem-ADA Alert: Elevator on the Kaleetan is temporarily unavailable.'
-                        BulletinText: "<p>The elevator on the Kaleetan is temporarily unavailable. There are facilities located on the car deck level of the ferry. \_Updates will occur when more information is available.</p>"
-                        BulletinSortSeq: 3
-                        BulletinLastUpdated: 2025-11-06T17:02:38.977Z
-                        BulletinLastUpdatedSortable: '20251106090238'
+                        BulletinText: "<p>The elevator on the <em>Kaleetan</em> is temporarily unavailable. There are facilities located on the car deck level of the ferry. \_Updates will occur when more information is available.</p>"
+                        BulletinSortSeq: 8
+                        BulletinLastUpdated: 2025-11-12T12:42:41.987Z
+                        BulletinLastUpdatedSortable: '20251112044241'
                       - BulletinTitle: Sea/Brem - Changes to Seattle/Bremerton Route Schedule This Winter
                         BulletinText: "<p><span data-contrast=\"none\">For our upcoming winter sailing season starting Dec. 28, there will be changes to the </span><a href=\"https://wsdot.com/ferries/schedule/scheduledetailbyroute.aspx?route=sea-br\"><span data-contrast=\"none\">Seattle/Bremerton route schedule</span></a><span data-contrast=\"auto\"> due to construction. </span><span data-contrast=\"none\">While we're replacing two in-water terminal structures at Bremerton in January, we cannot tie up two boats there overnight. The route’s #1 boat will dock in Seattle during this work.</span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\">\_</span></p>\r\n<p><span data-contrast=\"none\">Winter schedule changes from Dec. 28, 2025 through March 21, 2026:</span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\">\_</span></p>\r\n<ul>\r\n<li><span data-contrast=\"none\">No 4:50 a.m. Bremerton departure (early morning commuters can take the </span><a href=\"https://www.kitsaptransit.com/service/fast-ferry/bremerton-fast-ferry\"><span data-contrast=\"none\">Kitsap Fast Ferry’</span></a><span data-contrast=\"none\">s 4:40 a.m. sailing).</span><span data-ccp-props=\"{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335557856&quot;:16777215,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}\">\_</span></li>\r\n<li><span data-contrast=\"none\">The 3:00 p.m. out of Bremerton will leave at 2:40 p.m.</span><span data-ccp-props=\"{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335557856&quot;:16777215,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}\">\_</span></li>\r\n<li><span data-contrast=\"none\">Added 10:15 p.m. Bremerton to Seattle sailing.</span><span data-ccp-props=\"{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335557856&quot;:16777215,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}\">\_</span></li>\r\n<li><span data-contrast=\"none\">On Sundays, the 8:35 a.m. Seattle and 9:50 a.m. Bremerton departures are canceled for refueling (normally done overnight in Bremerton).</span><span data-ccp-props=\"{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335557856&quot;:16777215,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}\">\_</span></li>\r\n</ul>\r\n<p><span data-ccp-props=\"{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335557856&quot;:16777215,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}\">\_</span><span data-contrast=\"none\">We will send additional reminders about these schedule changes, including when they are live on the schedule webpage.<br /></span></p>"
                         BulletinSortSeq: 5
@@ -2083,20 +1913,20 @@ paths:
                     REALTIME_SHUTOFF_FLAG: false
                     REALTIME_SHUTOFF_MESSAGE: 'The Approximate Vehicle Spaces Available in Holding Area tool is currently unavailable due to technical issues. '
                     VisitorLinks: []
-  /terminalTransports:
+  /terminalSailingSpace:
     get:
-      summary: Returns multiple TerminalTransport objects for all terminals.
-      operationId: fetchTerminalTransports
+      summary: List sailing space availability for all terminals.
+      operationId: fetchTerminalSailingSpace
       tags:
-        - terminal-transports
+        - terminal-sailing-space
       x-codeSamples:
         - lang: JavaScript
           source: |-
             import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalTransports } from 'ws-dottie/wsf-terminals/core';
+            import { fetchTerminalSailingSpace } from 'ws-dottie/wsf-terminals/core';
 
             const data = await fetchDottie({
-              endpoint: fetchTerminalTransports,
+              endpoint: fetchTerminalSailingSpace,
               fetchMode: 'native',
               validate: true
             });
@@ -2110,11 +1940,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+                  $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
+                  description: Example of a successful response from the API (showing first item of 13 total)
                   value:
                     - TerminalID: 1
                       TerminalSubjectID: 111
@@ -2122,69 +1952,230 @@ paths:
                       TerminalName: Anacortes
                       TerminalAbbrev: ANA
                       SortSeq: 10
-                      ParkingInfo: "Off-Peak rates effective October 1 through April 30, 2026:<br>\r\n<ul>\r\n<li>1 day rate  (car) - $8.00</li>\r\n<li>2 day rate (car) - $13.00</li>\r\n<li>3 day rate (car) - $15.00</li>\r\n<li>4 day rate (car) - $19.00</li>\r\n<li>7 day rate (car) - $24.00</li>\r\n<li>8 day rate (car) - $30.00</li>\r\n<li>9 day rate (car) - $35.00</li>\r\n<li>10 day rate (car) - $40.00</li>\r\n<li>14 day rate (car) - $46.00</li>\r\n<li>15 day rate (car) - $51.00</li>\r\n<li>16 day rate (car) - $57.00</li>\r\n<li>17 day rate (car) - $62.00</li>\r\n<li>21 day rate (car) - $67.00</li><p>\r\n\r\n\r\n\r\n<li>1 day rate (RV) - $13.00</li>\r\n<li>2 day rate (RV) - $24.00</li>\r\n<li>3 day rate (RV) - $28.00</li>\r\n<li>4 day rate (RV) - $92.00</li>\r\n<li>7 day rate (RV) - $46.00</li>\r\n<li>8 day rate (RV) - $57.00</li>\r\n<li>9 day rate (RV) - $67.00</li>\r\n<li>10 day rate (RV) - $78.00</li>\r\n<li>14 day rate (RV) - $87.00</li>\r\n<li>15 day rate (RV) - $98.00</li>\r\n<li>16 day rate (RV) - $112.00</li><p>\r\n\r\nThere are two ways to either initially pay for parking or to extend your current parking session remotely via your cell phone or mobile app:<p>\r\n\r\n<ul>Use the PayByPhone mobile app or call 1-888-680-7275.  The automated system will ask for the Station #1644, the Stall # you parked in and the number of day(s) needed.</ul><p>\r\n \r\n<b>Contact 509-295-6490 for additional parking information.</b></p>\r\n\r\nCustomers wishing to purchase a Monthly, Seasonal, or RV/Boat Storage permits, please call Diamond Parking Services at (206) 729-0590 or 1-800-828-4197 and press option 2. Customer Service Representatives are available Monday – Friday 7:30 am to 7:00 pm PST or by email at Monthly@DiamondParking.com<p>\r\n\r\nThere is no charge for disabled parking customers displaying a valid disabled parking placard or license plate in this parking lot only. It’s important to note that when all the sign posted ADA spaces are filled in this WSF lot, customers are allowed to park in any empty space in this lot, for free, with their ADA placard, except those spaces reserved for other uses (e.g., carpool and Ferry System employee vehicles).</p> "
-                      ParkingShuttleInfo: null
-                      AirportInfo: From the Seattle-Tacoma International Airport, allow a minimum of 2 1/2 hours driving time to Anacortes and plan to arrive at least 45 minutes before your ferry is scheduled to depart. Follow road signs to the freeway. Drive north to enter eastbound on 518. You will need to get on I-5 North, just follow the road signs. Take I-5 North for approximately 85 miles to state route 20. Take exit 230, turn left at the light and follow the signs into downtown Anacortes. Turn left on 12th Street. Our terminal is 4 to 5 miles outside town.</p>
-                      AirportShuttleInfo: When traveling from Sea-Tac Airport to Anacortes there is a shuttle from Sea-Tac Airport to our Anacortes Dock. For schedule and fare information call 1-866-235-5247 or check <a href="http://www.airporter.com/" class="content_text">Bellair Airporter</a>.<p>Island Airporter is another service that provides transportation from Sea-Tac Airport to Friday Harbor. To contact them for fare and schedule information, call (360) 378-7438 or check <a href="http://www.islandairporter.com/"class=content_text">Island Airporter</a>.</p>
-                      MotorcycleInfo: "While motorcycles are not, by Washington Administrative Code (WAC 468-300-700), a preferential loading category of users, they are often loaded prior to automobiles for operational and staging purposes. Arrival at the dock after vehicle load has commenced requires motorcycles to wait until all cars have been loaded for the next motorcycle loading opportunity. Motorcycles should proceed, while on the dock, at no more than 10 mph. Use caution when car decks are wet. The following information details specific staging for this terminal:<p>\r\n<strong>Entry/Staging:</strong><br>\r\nMotorcyclists queue, along with vehicles, in traffic line prior to tollbooths. Proceed to motorcycle staging area in front of holding lanes as directed by ticket seller or traffic attendant.<p>\r\n<strong>Loading:</strong><br>\r\nLoading order: bicycles, motorcycles, vehicles, late arriving motorcycles as space permits. \r\nSpace may be limited to 30 motorcycles per sailing.</p>\r\n\r\n"
-                      TruckInfo: "Expect heavy truck traffic on the first 3 sailings in the morning. Trucks going standby are advised to travel between the 7:40 am to 11:00 am time frame.<p>WSF requires trucks with a gross vehicle weight of over 80,000 lbs and/or over 8’6” wide to have “travel approval” before crossing any of our routes.  Vessels on this route have a limited height clearance and trucks may be loaded out of sequence.<p>\r\nTrucks that have a gross vehicle weight of over 80,000 lbs but are hauling less than 80,000 lbs will need to provide a weight slip.<p>\r\nPlease fill out our <A HREF=\"https://wsdot.wa.gov/ferries/rider-information/trucks\" class=\"content_text\">Oversized/Overweight Vehicle Travel</A> form and email it to wsfinfo@wsdot.wa.gov. Please allow three business days for completion and approval. You can contact us at anytime for status updates at (206)464-6400 (Seattle).<p>The Canada Border Service Agency does not provide Commercial Services at the Sidney Terminal, as this office is not a designated commercial office.</p>"
-                      BikeInfo: "Approaching the Anacortes Terminal, you will arrive at the vehicle tollbooths first on the right. Bicyclists may bypass these and the line of vehicle traffic at the vehicle tollbooths to get onto the ferry dock when the passenger tollbooth in the terminal is open, but must go through a vehicle tollbooth if the terminal and passenger tollbooth are closed. Signage at the vehicle tollbooth will indicate if the passenger tollbooth is open. If passenger booth is open, bicyclists should secure their bikes at the terminal and go into the terminal to purchase their tickets.<p>\r\nThere is one bike rack at the terminal which holds 12 bikes. Bicyclists should arrive 20 minutes prior to departure time to be loaded at the beginning of loading process to be certain they are loaded for their specific destination and multi-destination sailings. If a bicyclist arrives after vehicle loading has begun, they may not be loaded for their desired destination.</p>"
-                      TrainInfo: null
-                      TaxiInfo: null
-                      HovInfo: null
-                      TransitLinks:
-                        - LinkURL: http://www.skagittransit.org/
-                          LinkName: Skagit Transit
-                          SortSeq: null
-                    - _note: ... 19 more items
-  /terminalBasics:
-    get:
-      summary: Returns multiple TerminalBasic objects for all terminals.
-      operationId: fetchTerminalBasics
-      tags:
-        - terminal-basics
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchTerminalBasics } from 'ws-dottie/wsf-terminals/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchTerminalBasics,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchTerminalBasicsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 20 total)
-                  value:
-                    - TerminalID: 1
-                      TerminalSubjectID: 111
-                      RegionID: 1
-                      TerminalName: Anacortes
-                      TerminalAbbrev: ANA
-                      SortSeq: 10
-                      OverheadPassengerLoading: true
-                      Elevator: false
-                      WaitingRoom: true
-                      FoodService: true
-                      Restroom: true
-                    - _note: ... 19 more items
+                      DepartingSpaces:
+                        - Departure: 2025-11-15T18:05:00.000Z
+                          IsCancelled: false
+                          VesselID: 69
+                          VesselName: Samish
+                          MaxSpaceCount: 141
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Lopez Island -> Orcas Island
+                              VesselID: 69
+                              VesselName: Samish
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: null
+                              ReservableSpaceHexColor: '#888888'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 54
+                              DriveUpSpaceHexColor: '#FFFF00'
+                              MaxSpaceCount: 141
+                              ArrivalTerminalIDs:
+                                - 13
+                                - 15
+                        - Departure: 2025-11-15T18:30:00.000Z
+                          IsCancelled: false
+                          VesselID: 38
+                          VesselName: Yakima
+                          MaxSpaceCount: 139
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Friday Harbor
+                              VesselID: 38
+                              VesselName: Yakima
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: null
+                              ReservableSpaceHexColor: '#888888'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 92
+                              DriveUpSpaceHexColor: '#00FF00'
+                              MaxSpaceCount: 139
+                              ArrivalTerminalIDs:
+                                - 10
+                        - Departure: 2025-11-15T19:55:00.000Z
+                          IsCancelled: false
+                          VesselID: 2
+                          VesselName: Chelan
+                          MaxSpaceCount: 120
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Shaw Island -> Orcas Island -> Anacortes
+                              VesselID: 2
+                              VesselName: Chelan
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 59
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 75
+                              DriveUpSpaceHexColor: '#00FF00'
+                              MaxSpaceCount: 120
+                              ArrivalTerminalIDs:
+                                - 18
+                                - 15
+                                - 13
+                        - Departure: 2025-11-15T21:35:00.000Z
+                          IsCancelled: false
+                          VesselID: 69
+                          VesselName: Samish
+                          MaxSpaceCount: 141
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Friday Harbor
+                              VesselID: 69
+                              VesselName: Samish
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 56
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 75
+                              DriveUpSpaceHexColor: '#FFFF00'
+                              MaxSpaceCount: 141
+                              ArrivalTerminalIDs:
+                                - 10
+                        - Departure: 2025-11-15T21:55:00.000Z
+                          IsCancelled: false
+                          VesselID: 38
+                          VesselName: Yakima
+                          MaxSpaceCount: 139
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Lopez Island
+                              VesselID: 38
+                              VesselName: Yakima
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 94
+                              ReservableSpaceHexColor: '#00FF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 113
+                              DriveUpSpaceHexColor: '#00FF00'
+                              MaxSpaceCount: 139
+                              ArrivalTerminalIDs:
+                                - 13
+                        - Departure: 2025-11-15T23:20:00.000Z
+                          IsCancelled: false
+                          VesselID: 2
+                          VesselName: Chelan
+                          MaxSpaceCount: 120
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Orcas Island -> Shaw Island -> Anacortes
+                              VesselID: 2
+                              VesselName: Chelan
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 29
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 45
+                              DriveUpSpaceHexColor: '#FFFF00'
+                              MaxSpaceCount: 120
+                              ArrivalTerminalIDs:
+                                - 15
+                                - 18
+                        - Departure: 2025-11-16T00:20:00.000Z
+                          IsCancelled: false
+                          VesselID: 38
+                          VesselName: Yakima
+                          MaxSpaceCount: 139
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Lopez Island -> Friday Harbor
+                              VesselID: 38
+                              VesselName: Yakima
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 38
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 57
+                              DriveUpSpaceHexColor: '#FFFF00'
+                              MaxSpaceCount: 139
+                              ArrivalTerminalIDs:
+                                - 13
+                                - 10
+                        - Departure: 2025-11-16T01:35:00.000Z
+                          IsCancelled: false
+                          VesselID: 69
+                          VesselName: Samish
+                          MaxSpaceCount: 141
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Lopez Island -> Friday Harbor
+                              VesselID: 69
+                              VesselName: Samish
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 66
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 85
+                              DriveUpSpaceHexColor: '#00FF00'
+                              MaxSpaceCount: 141
+                              ArrivalTerminalIDs:
+                                - 13
+                                - 10
+                        - Departure: 2025-11-16T02:05:00.000Z
+                          IsCancelled: false
+                          VesselID: 2
+                          VesselName: Chelan
+                          MaxSpaceCount: 120
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Shaw Island -> Orcas Island -> Anacortes
+                              VesselID: 2
+                              VesselName: Chelan
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 44
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 60
+                              DriveUpSpaceHexColor: '#FFFF00'
+                              MaxSpaceCount: 120
+                              ArrivalTerminalIDs:
+                                - 18
+                                - 15
+                        - Departure: 2025-11-16T04:15:00.000Z
+                          IsCancelled: false
+                          VesselID: 38
+                          VesselName: Yakima
+                          MaxSpaceCount: 139
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Lopez Island -> Friday Harbor
+                              VesselID: 38
+                              VesselName: Yakima
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 57
+                              ReservableSpaceHexColor: '#FFFF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 76
+                              DriveUpSpaceHexColor: '#FFFF00'
+                              MaxSpaceCount: 139
+                              ArrivalTerminalIDs:
+                                - 13
+                                - 10
+                        - Departure: 2025-11-16T04:40:00.000Z
+                          IsCancelled: false
+                          VesselID: 2
+                          VesselName: Chelan
+                          MaxSpaceCount: 120
+                          SpaceForArrivalTerminals:
+                            - TerminalID: 1
+                              TerminalName: Anacortes -> Shaw Island -> Orcas Island -> Anacortes
+                              VesselID: 2
+                              VesselName: Chelan
+                              DisplayReservableSpace: true
+                              ReservableSpaceCount: 90
+                              ReservableSpaceHexColor: '#00FF00'
+                              DisplayDriveUpSpace: true
+                              DriveUpSpaceCount: 106
+                              DriveUpSpaceHexColor: '#00FF00'
+                              MaxSpaceCount: 120
+                              ArrivalTerminalIDs:
+                                - 18
+                                - 15
+                      IsNoFareCollected: null
+                      NoFareCollectedMsg: null
   /terminalLocations/{TerminalID}:
     get:
-      summary: Returns a single TerminalLocation object for specified terminal.
+      summary: Get location information for a specific terminal by ID.
       operationId: fetchTerminalLocationsByTerminalId
       tags:
         - terminal-locations
@@ -2289,9 +2280,658 @@ paths:
                       - ZoomLevel: 17
                         Latitude: 47.975027
                         Longitude: -122.351335
+  /terminalTransports:
+    get:
+      summary: List transportation information for all terminals.
+      operationId: fetchTerminalTransports
+      tags:
+        - terminal-transports
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalTransports } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalTransports,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchTerminalTransportsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 20 total)
+                  value:
+                    - TerminalID: 1
+                      TerminalSubjectID: 111
+                      RegionID: 1
+                      TerminalName: Anacortes
+                      TerminalAbbrev: ANA
+                      SortSeq: 10
+                      ParkingInfo: "Off-Peak rates effective October 1 through April 30, 2026:<br>\r\n<ul>\r\n<li>1 day rate  (car) - $8.00</li>\r\n<li>2 day rate (car) - $13.00</li>\r\n<li>3 day rate (car) - $15.00</li>\r\n<li>4 day rate (car) - $19.00</li>\r\n<li>7 day rate (car) - $24.00</li>\r\n<li>8 day rate (car) - $30.00</li>\r\n<li>9 day rate (car) - $35.00</li>\r\n<li>10 day rate (car) - $40.00</li>\r\n<li>14 day rate (car) - $46.00</li>\r\n<li>15 day rate (car) - $51.00</li>\r\n<li>16 day rate (car) - $57.00</li>\r\n<li>17 day rate (car) - $62.00</li>\r\n<li>21 day rate (car) - $67.00</li><p>\r\n\r\n\r\n\r\n<li>1 day rate (RV) - $13.00</li>\r\n<li>2 day rate (RV) - $24.00</li>\r\n<li>3 day rate (RV) - $28.00</li>\r\n<li>4 day rate (RV) - $92.00</li>\r\n<li>7 day rate (RV) - $46.00</li>\r\n<li>8 day rate (RV) - $57.00</li>\r\n<li>9 day rate (RV) - $67.00</li>\r\n<li>10 day rate (RV) - $78.00</li>\r\n<li>14 day rate (RV) - $87.00</li>\r\n<li>15 day rate (RV) - $98.00</li>\r\n<li>16 day rate (RV) - $112.00</li><p>\r\n\r\nThere are two ways to either initially pay for parking or to extend your current parking session remotely via your cell phone or mobile app:<p>\r\n\r\n<ul>Use the PayByPhone mobile app or call 1-888-680-7275.  The automated system will ask for the Station #1644, the Stall # you parked in and the number of day(s) needed.</ul><p>\r\n \r\n<b>Contact 509-295-6490 for additional parking information.</b></p>\r\n\r\nCustomers wishing to purchase a Monthly, Seasonal, or RV/Boat Storage permits, please call Diamond Parking Services at (206) 729-0590 or 1-800-828-4197 and press option 2. Customer Service Representatives are available Monday – Friday 7:30 am to 7:00 pm PST or by email at Monthly@DiamondParking.com<p>\r\n\r\nThere is no charge for disabled parking customers displaying a valid disabled parking placard or license plate in this parking lot only. It’s important to note that when all the sign posted ADA spaces are filled in this WSF lot, customers are allowed to park in any empty space in this lot, for free, with their ADA placard, except those spaces reserved for other uses (e.g., carpool and Ferry System employee vehicles).</p> "
+                      ParkingShuttleInfo: null
+                      AirportInfo: From the Seattle-Tacoma International Airport, allow a minimum of 2 1/2 hours driving time to Anacortes and plan to arrive at least 45 minutes before your ferry is scheduled to depart. Follow road signs to the freeway. Drive north to enter eastbound on 518. You will need to get on I-5 North, just follow the road signs. Take I-5 North for approximately 85 miles to state route 20. Take exit 230, turn left at the light and follow the signs into downtown Anacortes. Turn left on 12th Street. Our terminal is 4 to 5 miles outside town.</p>
+                      AirportShuttleInfo: When traveling from Sea-Tac Airport to Anacortes there is a shuttle from Sea-Tac Airport to our Anacortes Dock. For schedule and fare information call 1-866-235-5247 or check <a href="http://www.airporter.com/" class="content_text">Bellair Airporter</a>.<p>Island Airporter is another service that provides transportation from Sea-Tac Airport to Friday Harbor. To contact them for fare and schedule information, call (360) 378-7438 or check <a href="http://www.islandairporter.com/"class=content_text">Island Airporter</a>.</p>
+                      MotorcycleInfo: "While motorcycles are not, by Washington Administrative Code (WAC 468-300-700), a preferential loading category of users, they are often loaded prior to automobiles for operational and staging purposes. Arrival at the dock after vehicle load has commenced requires motorcycles to wait until all cars have been loaded for the next motorcycle loading opportunity. Motorcycles should proceed, while on the dock, at no more than 10 mph. Use caution when car decks are wet. The following information details specific staging for this terminal:<p>\r\n<strong>Entry/Staging:</strong><br>\r\nMotorcyclists queue, along with vehicles, in traffic line prior to tollbooths. Proceed to motorcycle staging area in front of holding lanes as directed by ticket seller or traffic attendant.<p>\r\n<strong>Loading:</strong><br>\r\nLoading order: bicycles, motorcycles, vehicles, late arriving motorcycles as space permits. \r\nSpace may be limited to 30 motorcycles per sailing.</p>\r\n\r\n"
+                      TruckInfo: "Expect heavy truck traffic on the first 3 sailings in the morning. Trucks going standby are advised to travel between the 7:40 am to 11:00 am time frame.<p>WSF requires trucks with a gross vehicle weight of over 80,000 lbs and/or over 8’6” wide to have “travel approval” before crossing any of our routes.  Vessels on this route have a limited height clearance and trucks may be loaded out of sequence.<p>\r\nTrucks that have a gross vehicle weight of over 80,000 lbs but are hauling less than 80,000 lbs will need to provide a weight slip.<p>\r\nPlease fill out our <A HREF=\"https://wsdot.wa.gov/ferries/rider-information/trucks\" class=\"content_text\">Oversized/Overweight Vehicle Travel</A> form and email it to wsfinfo@wsdot.wa.gov. Please allow three business days for completion and approval. You can contact us at anytime for status updates at (206)464-6400 (Seattle).<p>The Canada Border Service Agency does not provide Commercial Services at the Sidney Terminal, as this office is not a designated commercial office.</p>"
+                      BikeInfo: "Approaching the Anacortes Terminal, you will arrive at the vehicle tollbooths first on the right. Bicyclists may bypass these and the line of vehicle traffic at the vehicle tollbooths to get onto the ferry dock when the passenger tollbooth in the terminal is open, but must go through a vehicle tollbooth if the terminal and passenger tollbooth are closed. Signage at the vehicle tollbooth will indicate if the passenger tollbooth is open. If passenger booth is open, bicyclists should secure their bikes at the terminal and go into the terminal to purchase their tickets.<p>\r\nThere is one bike rack at the terminal which holds 12 bikes. Bicyclists should arrive 20 minutes prior to departure time to be loaded at the beginning of loading process to be certain they are loaded for their specific destination and multi-destination sailings. If a bicyclist arrives after vehicle loading has begun, they may not be loaded for their desired destination.</p>"
+                      TrainInfo: null
+                      TaxiInfo: null
+                      HovInfo: null
+                      TransitLinks:
+                        - LinkURL: http://www.skagittransit.org/
+                          LinkName: Skagit Transit
+                          SortSeq: null
+  /terminalSailingSpace/{TerminalID}:
+    get:
+      summary: Get sailing space availability for a specific terminal by ID.
+      operationId: fetchTerminalSailingSpaceByTerminalId
+      tags:
+        - terminal-sailing-space
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchTerminalSailingSpaceByTerminalId } from 'ws-dottie/wsf-terminals/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchTerminalSailingSpaceByTerminalId,
+              params: {
+                "TerminalID": 7
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchTerminalSailingSpaceByTerminalIdInputTerminalIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchTerminalSailingSpaceOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    TerminalID: 7
+                    TerminalSubjectID: 101
+                    RegionID: 4
+                    TerminalName: Seattle
+                    TerminalAbbrev: P52
+                    SortSeq: 20
+                    DepartingSpaces:
+                      - Departure: 2025-11-15T16:55:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 84
+                            DriveUpSpaceHexColor: '#FFFF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T17:35:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T18:00:00.000Z
+                        IsCancelled: false
+                        VesselID: 36
+                        VesselName: Walla Walla
+                        MaxSpaceCount: 186
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 36
+                            VesselName: Walla Walla
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 186
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 186
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-15T18:40:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T19:10:00.000Z
+                        IsCancelled: false
+                        VesselID: 17
+                        VesselName: Kaleetan
+                        MaxSpaceCount: 139
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 17
+                            VesselName: Kaleetan
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 139
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 139
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-15T19:25:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T20:20:00.000Z
+                        IsCancelled: false
+                        VesselID: 36
+                        VesselName: Walla Walla
+                        MaxSpaceCount: 186
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 36
+                            VesselName: Walla Walla
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 186
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 186
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-15T20:30:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T21:15:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T21:30:00.000Z
+                        IsCancelled: false
+                        VesselID: 17
+                        VesselName: Kaleetan
+                        MaxSpaceCount: 139
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 17
+                            VesselName: Kaleetan
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 139
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 139
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-15T22:10:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T22:50:00.000Z
+                        IsCancelled: false
+                        VesselID: 36
+                        VesselName: Walla Walla
+                        MaxSpaceCount: 186
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 36
+                            VesselName: Walla Walla
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 186
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 186
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-15T23:05:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-15T23:50:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T00:15:00.000Z
+                        IsCancelled: false
+                        VesselID: 17
+                        VesselName: Kaleetan
+                        MaxSpaceCount: 139
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 17
+                            VesselName: Kaleetan
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 139
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 139
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-16T00:45:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T01:30:00.000Z
+                        IsCancelled: false
+                        VesselID: 36
+                        VesselName: Walla Walla
+                        MaxSpaceCount: 186
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 36
+                            VesselName: Walla Walla
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 186
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 186
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-16T01:35:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T02:25:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T02:45:00.000Z
+                        IsCancelled: false
+                        VesselID: 17
+                        VesselName: Kaleetan
+                        MaxSpaceCount: 139
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 17
+                            VesselName: Kaleetan
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 139
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 139
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-16T03:20:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T03:50:00.000Z
+                        IsCancelled: false
+                        VesselID: 36
+                        VesselName: Walla Walla
+                        MaxSpaceCount: 186
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 36
+                            VesselName: Walla Walla
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 186
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 186
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-16T04:10:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T05:00:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T05:05:00.000Z
+                        IsCancelled: false
+                        VesselID: 17
+                        VesselName: Kaleetan
+                        MaxSpaceCount: 139
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 17
+                            VesselName: Kaleetan
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 139
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 139
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-16T05:45:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T06:30:00.000Z
+                        IsCancelled: false
+                        VesselID: 36
+                        VesselName: Walla Walla
+                        MaxSpaceCount: 186
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 4
+                            TerminalName: Bremerton
+                            VesselID: 36
+                            VesselName: Walla Walla
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 186
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 186
+                            ArrivalTerminalIDs:
+                              - 4
+                      - Departure: 2025-11-16T06:40:00.000Z
+                        IsCancelled: false
+                        VesselID: 32
+                        VesselName: Tacoma
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 32
+                            VesselName: Tacoma
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                      - Departure: 2025-11-16T07:15:00.000Z
+                        IsCancelled: false
+                        VesselID: 37
+                        VesselName: Wenatchee
+                        MaxSpaceCount: 197
+                        SpaceForArrivalTerminals:
+                          - TerminalID: 3
+                            TerminalName: Bainbridge Island
+                            VesselID: 37
+                            VesselName: Wenatchee
+                            DisplayReservableSpace: false
+                            ReservableSpaceCount: null
+                            ReservableSpaceHexColor: null
+                            DisplayDriveUpSpace: true
+                            DriveUpSpaceCount: 197
+                            DriveUpSpaceHexColor: '#00FF00'
+                            MaxSpaceCount: 197
+                            ArrivalTerminalIDs:
+                              - 3
+                    IsNoFareCollected: null
+                    NoFareCollectedMsg: null
   /terminalVerbose:
     get:
-      summary: Returns multiple TerminalVerbose objects for all terminals.
+      summary: List comprehensive information for all terminals.
       operationId: fetchTerminalVerbose
       tags:
         - terminal-verbose
@@ -2333,12 +2973,7 @@ paths:
                       WaitingRoom: true
                       FoodService: true
                       Restroom: true
-                      Bulletins:
-                        - BulletinTitle: Regular Schedule on Veterans Day, Tuesday, Nov 11
-                          BulletinText: "<p><span data-contrast=\"none\">We are running a regular Tuesday schedule on Veterans Day, Tuesday, Nov. 11. Visit our </span><a href=\"https://wsdot.com/ferries/schedule/\"><span data-contrast=\"none\">schedules webpage</span></a><span data-contrast=\"none\"> to view your route schedule and learn more about our holiday schedules.</span><span data-ccp-props=\"{}\">\_</span></p>"
-                          BulletinSortSeq: 1
-                          BulletinLastUpdated: 2025-11-06T20:57:44.763Z
-                          BulletinLastUpdatedSortable: '20251106125744'
+                      Bulletins: []
                       Latitude: 48.507351
                       Longitude: -122.677
                       AddressLineOne: 2100 Ferry Terminal Road
@@ -2445,36 +3080,53 @@ paths:
                       REALTIME_SHUTOFF_FLAG: false
                       REALTIME_SHUTOFF_MESSAGE: 'The Real-Time Conditions are unavailable due to technical difficulties. '
                       VisitorLinks: []
-                    - _note: ... 19 more items
 webhooks: {}
 tags:
   - name: cache-flush-date-terminals
-    description: Represents the timestamp of when any static endpoint data for the wsf-terminals API was last updated. This information helps applications determine when to refresh cached terminals information through cache invalidation.
-    externalDocs:
-      description: Many wsf-terminals endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-terminals data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by the ws-dottie useQuery hooks to invalidate cache.
+    description: Cache invalidation timestamp for static wsf-terminals data.
+    x-useCases:
+      - Detect when static terminal data has changed and invalidate caches.
+      - Poll periodically to refresh cached terminal information.
+      - Coordinate cache invalidation across multiple terminal endpoints.
   - name: terminal-basics
-    description: Each TerminalBasic item represents essential terminal details for Washington State Ferry terminals, including terminal identification, operational status, facility amenities, and regional assignments. These items provide foundational information needed for trip planning and accessibility compliance.
-    externalDocs:
-      description: Use to plan ferry trips and ensure accessibility compliance by providing terminal facility information including amenities and regional assignments for WSF travelers and operators.
+    description: Essential terminal details including identification, amenities, and regional assignments.
+    x-useCases:
+      - Display terminal lists with basic identification and amenities.
+      - Plan ferry trips with accessibility and facility information.
+      - Filter terminals by region or amenities.
   - name: terminal-bulletins
-    description: Each TerminalBulletin item represents important notices and alerts associated with Washington State Ferry terminals. These items include service updates, travel advisories, and critical announcements for terminal users.
-    externalDocs:
-      description: Use to inform travelers of terminal conditions by providing current alerts and service notices for ferry terminal planning.
+    description: Service alerts and notifications for ferry terminals.
+    x-useCases:
+      - Display terminal alerts and service notices in rider apps.
+      - Show travel advisories and critical announcements.
+      - Monitor terminal-specific and system-wide notifications.
   - name: terminal-locations
-    description: Each TerminalLocation item represents geographical location data for Washington State Ferry terminals, including coordinates, address details, and mapping information. These items enable precise terminal identification and navigation for travelers.
-    externalDocs:
-      description: Use to locate ferry terminals and plan travel routes by providing geographical coordinates, address details, and GIS mapping data for navigation systems.
+    description: Geographical location data for ferry terminals.
+    x-useCases:
+      - Display terminal locations on maps and navigation systems.
+      - Provide driving directions and address information.
+      - Integrate with GIS mapping applications.
   - name: terminal-sailing-space
-    description: Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability.
+    description: Real-time sailing space availability for upcoming departures.
+    x-useCases:
+      - Display real-time space availability for upcoming sailings.
+      - Show drive-up and reservation space counts with color indicators.
+      - Monitor vessel assignments and departure cancellations.
   - name: terminal-transports
-    description: Each TerminalTransport item represents transportation options and parking information for Washington State Ferry terminals. These items include parking notes, vehicle-specific tips, transit links, and alternative transportation methods.
-    externalDocs:
-      description: Use to plan terminal access by providing parking availability and transportation options for ferry terminal commuters.
+    description: Transportation options and parking information for terminals.
+    x-useCases:
+      - Display parking information and rates for terminal planning.
+      - Provide vehicle-specific tips for motorcycles, trucks, and bicycles.
+      - Show transit links and airport connection information.
   - name: terminal-verbose
-    description: Each TerminalVerbose item represents comprehensive terminal information for Washington State Ferry terminals. These items include basic details, bulletins, location data, sailing space information, transportation options, wait times, and facility information.
-    externalDocs:
-      description: Use to retrieve comprehensive terminal information by providing complete facility details for integrated ferry terminal planning.
+    description: Comprehensive terminal information combining all terminal data types.
+    x-useCases:
+      - Retrieve all terminal information in a single API call.
+      - Reduce application chattiness when comprehensive data is needed.
+      - Build integrated terminal information displays.
   - name: terminal-wait-times
-    description: Each TerminalWaitTime item represents current wait conditions and travel tips for both vehicles and walk-on passengers at Washington State Ferry terminals. These items include estimated wait times for different vehicle types, capacity constraints, and travel recommendations.
-    externalDocs:
-      description: Use to plan ferry terminal arrivals by providing current terminal conditions and vehicle capacity information for optimal departure timing.
+    description: Wait time conditions and travel tips for vehicles and passengers.
+    x-useCases:
+      - Display wait time information and arrival recommendations.
+      - Provide travel tips for optimal departure timing.
+      - Show route-specific wait time conditions.

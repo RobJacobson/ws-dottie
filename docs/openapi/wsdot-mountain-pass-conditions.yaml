@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,49 +42,50 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
     FetchMountainPassConditionByIdOutput:
       type: object
       properties:
         MountainPassId:
           type: integer
-          description: Unique mountain pass identifier, as an integer ID. E.g., '12' for White Pass US 12. Used as primary key for pass condition lookups and pass identification.
+          description: Numeric ID of the mountain pass.
         MountainPassName:
           type:
             - string
             - 'null'
-          description: Human-readable name for mountain pass, as a pass name. E.g., 'White Pass  US 12' for pass ID 12, null when pass name is unavailable. Provides pass identification for display and user interfaces.
+          description: Display name of the mountain pass.
         Latitude:
           type: number
-          description: GPS latitude coordinate for mountain pass location, in decimal degrees. E.g., '46.638333' for White Pass.
+          description: Latitude of the mountain pass in decimal degrees.
         Longitude:
           type: number
-          description: GPS longitude coordinate for mountain pass location, in decimal degrees. E.g., '-121.39' for White Pass.
+          description: Longitude of the mountain pass in decimal degrees.
         DateUpdated:
           type: string
-          description: Timestamp when pass condition data was last updated for public display, as a UTC datetime. E.g., '2025-11-02T15:57:09.547Z' for update on November 2, 2025 at 3:57 PM. Indicates data freshness and when condition information was last refreshed.
+          description: UTC datetime when the pass condition data was last updated.
         TemperatureInFahrenheit:
           type:
             - integer
             - 'null'
-          description: Current temperature reading at mountain pass, as degrees Fahrenheit. E.g., '34' for 34°F at White Pass, null when temperature reading is unavailable. Used for weather condition assessment and winter travel planning.
+          description: Current temperature at the mountain pass in degrees Fahrenheit.
         ElevationInFeet:
           type:
             - integer
             - 'null'
-          description: Elevation of mountain pass above sea level, as feet. E.g., '4500' for 4,500 feet elevation at White Pass. Used for understanding pass altitude and weather context.
+          description: Elevation of the mountain pass above sea level in feet.
         WeatherCondition:
           type:
             - string
             - 'null'
-          description: Current weather conditions at mountain pass, as a weather description. E.g., 'Overcast' for cloudy conditions at White Pass, null when weather condition is unavailable. Describes atmospheric conditions affecting pass travel.
+          description: Current weather conditions at the mountain pass.
         RoadCondition:
           type:
             - string
             - 'null'
-          description: Current roadway surface conditions at mountain pass, as a road condition description. E.g., 'Bare and wet with frost in places' for White Pass conditions, null when road condition is unavailable. Describes driving surface conditions for travel planning.
+          description: Current roadway surface conditions at the mountain pass.
         TravelAdvisoryActive:
           type: boolean
-          description: Indicator whether travel advisory is currently active for pass, as a boolean. E.g., true when advisory is active at White Pass, false when no advisory warnings. Used to determine if special travel conditions or warnings are in effect.
+          description: True if a travel advisory is currently active for the pass; otherwise false.
         RestrictionOne:
           type:
             - object
@@ -94,16 +95,16 @@ components:
               type:
                 - string
                 - 'null'
-              description: Text description of travel restriction for pass direction, as a restriction message. E.g., 'No restrictions' when pass is open, null when restriction text is unavailable. Provides details about vehicle restrictions, chain requirements, or closure information for specific travel direction.
+              description: Text description of travel restrictions for this direction, such as 'No restrictions', 'Closed for the season', or chain requirements.
             TravelDirection:
               type:
                 - string
                 - 'null'
-              description: Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel is restriction affects.
+              description: Direction of travel for which this restriction applies, such as 'Eastbound', 'Westbound', 'Northbound', or 'Southbound'.
           required:
             - RestrictionText
             - TravelDirection
-          description: Travel restriction information for primary direction of pass, as a travel restriction object. E.g., 'No restrictions' for Eastbound travel on White Pass, null when restriction information is unavailable. Provides primary direction restriction details.
+          description: Travel restriction information for the primary direction of the pass.
         RestrictionTwo:
           type:
             - object
@@ -113,16 +114,16 @@ components:
               type:
                 - string
                 - 'null'
-              description: Text description of travel restriction for pass direction, as a restriction message. E.g., 'No restrictions' when pass is open, null when restriction text is unavailable. Provides details about vehicle restrictions, chain requirements, or closure information for specific travel direction.
+              description: Text description of travel restrictions for this direction, such as 'No restrictions', 'Closed for the season', or chain requirements.
             TravelDirection:
               type:
                 - string
                 - 'null'
-              description: Direction of travel for which restriction applies, as a direction code. E.g., 'Eastbound' for eastbound travel restriction, 'Westbound' for westbound travel restriction, null when direction is not specified. Indicates which direction of pass travel is restriction affects.
+              description: Direction of travel for which this restriction applies, such as 'Eastbound', 'Westbound', 'Northbound', or 'Southbound'.
           required:
             - RestrictionText
             - TravelDirection
-          description: Travel restriction information for secondary direction of pass, as a travel restriction object. E.g., 'No restrictions' for Westbound travel on White Pass, null when restriction information is unavailable. Provides secondary direction restriction details.
+          description: Travel restriction information for the secondary direction of the pass.
       required:
         - MountainPassId
         - MountainPassName
@@ -136,72 +137,22 @@ components:
         - TravelAdvisoryActive
         - RestrictionOne
         - RestrictionTwo
-      description: Represents real-time mountain pass condition information including weather conditions, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status. E.g., White Pass US 12 (ID 12) at elevation 4,500 feet with temperature 34°F, overcast weather, bare and wet road conditions, no restrictions eastbound or westbound. Used for winter travel planning, pass condition monitoring, and route decision-making. Data updated periodically throughout the day, especially during winter months.
+      description: Real-time mountain pass condition information including weather, road surface conditions, temperature, elevation, travel restrictions by direction, and advisory status.
     FetchMountainPassConditionByIdInputPassConditionIDParam:
       type: integer
-      description: Unique mountain pass identifier, as an integer ID. E.g., '12' for White Pass US 12. Used to retrieve specific pass condition information.
+      description: Numeric ID of the mountain pass.
   parameters:
     FetchMountainPassConditionByIdInputPassConditionIDParam:
       schema:
         $ref: '#/components/schemas/FetchMountainPassConditionByIdInputPassConditionIDParam'
       required: true
-      description: Unique mountain pass identifier, as an integer ID. E.g., '12' for White Pass US 12. Used to retrieve specific pass condition information.
+      description: Numeric ID of the mountain pass.
       name: PassConditionID
       in: path
 paths:
-  /getMountainPassConditionsAsJson:
-    get:
-      summary: Returns multiple PassCondition items for all monitored mountain passes.
-      operationId: fetchMountainPassConditions
-      tags:
-        - pass-conditions
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchMountainPassConditions,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 16 total)
-                  value:
-                    - MountainPassId: 1
-                      MountainPassName: Blewett Pass US 97
-                      Latitude: 47.335298205
-                      Longitude: -120.581068216
-                      DateUpdated: 2025-11-08T06:58:38.953Z
-                      TemperatureInFahrenheit: 31
-                      ElevationInFeet: 4102
-                      WeatherCondition: Cloudy.
-                      RoadCondition: Bare and dry with frost and ice in places.
-                      TravelAdvisoryActive: true
-                      RestrictionOne:
-                        RestrictionText: No restrictions
-                        TravelDirection: Northbound
-                      RestrictionTwo:
-                        RestrictionText: No restrictions
-                        TravelDirection: Southbound
-                    - _note: ... 15 more items
   /getMountainPassConditionAsJon?PassConditionID={PassConditionID}:
     get:
-      summary: Returns a single PassCondition for specified mountain pass identifier.
+      summary: Get current conditions for a specific mountain pass by ID.
       operationId: fetchMountainPassConditionById
       tags:
         - pass-conditions
@@ -239,11 +190,11 @@ paths:
                     MountainPassName: White Pass  US 12
                     Latitude: 46.638333
                     Longitude: -121.39
-                    DateUpdated: 2025-11-08T07:53:17.877Z
-                    TemperatureInFahrenheit: 30
+                    DateUpdated: 2025-11-15T16:32:50.010Z
+                    TemperatureInFahrenheit: 43
                     ElevationInFeet: 4500
-                    WeatherCondition: Partly cloudy
-                    RoadCondition: Bare and dry, wet in places
+                    WeatherCondition: Raining
+                    RoadCondition: Bare and wet
                     TravelAdvisoryActive: true
                     RestrictionOne:
                       RestrictionText: No restrictions
@@ -251,9 +202,61 @@ paths:
                     RestrictionTwo:
                       RestrictionText: No restrictions
                       TravelDirection: Westbound
+  /getMountainPassConditionsAsJson:
+    get:
+      summary: List current conditions for all monitored mountain passes.
+      operationId: fetchMountainPassConditions
+      tags:
+        - pass-conditions
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchMountainPassConditions,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchMountainPassConditionByIdOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 16 total)
+                  value:
+                    - MountainPassId: 1
+                      MountainPassName: Blewett Pass US 97
+                      Latitude: 47.335298205
+                      Longitude: -120.581068216
+                      DateUpdated: 2025-11-15T14:49:36.827Z
+                      TemperatureInFahrenheit: 43
+                      ElevationInFeet: 4102
+                      WeatherCondition: Partly cloudy.
+                      RoadCondition: Bare and wet.
+                      TravelAdvisoryActive: true
+                      RestrictionOne:
+                        RestrictionText: No restrictions
+                        TravelDirection: Northbound
+                      RestrictionTwo:
+                        RestrictionText: No restrictions
+                        TravelDirection: Southbound
 webhooks: {}
 tags:
   - name: pass-conditions
-    description: Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by the Mountain Pass Entry system covering 15 passes.
-    externalDocs:
-      description: Use to assess mountain pass conditions for travel planning by providing current weather, road status, and restriction information for safe mountain travel.
+    description: Real-time mountain pass conditions including weather, road status, and travel restrictions.
+    x-useCases:
+      - Assess pass conditions for winter travel planning.
+      - Monitor weather and road conditions for route decisions.
+      - Check travel restrictions and advisories before mountain travel.
+    x-updateFrequency: 15m

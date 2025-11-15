@@ -15,26 +15,26 @@ components:
           type:
             - string
             - 'null'
-          description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
         Direction:
           type:
             - string
             - 'null'
-          description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
         Latitude:
           type: number
-          description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Latitude of the roadway location in decimal degrees.
         Longitude:
           type: number
-          description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+          description: Longitude of the roadway location in decimal degrees.
         MilePost:
           type: number
-          description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
         RoadName:
           type:
             - string
             - 'null'
-          description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
       required:
         - Description
         - Direction
@@ -42,17 +42,37 @@ components:
         - Longitude
         - MilePost
         - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
+    FetchMapAreasOutput:
+      type: object
+      properties:
+        MapArea:
+          type:
+            - string
+            - 'null'
+          description: Map area identifier code for geographic filtering, or null when unavailable.
+        MapAreaDescription:
+          type:
+            - string
+            - 'null'
+          description: Display name of the map area, or null when unavailable.
+      required:
+        - MapArea
+        - MapAreaDescription
+      description: Geographic map area with identifier code and display name for filtering highway alerts by region.
+    FetchEventCategoriesOutput:
+      type: string
     FetchAlertsOutput:
       type: object
       properties:
         AlertID:
           type: integer
-          description: Unique highway alert identifier, as an integer ID. E.g., '669625' for I-405 construction alert, '468632' for SR-520 flammable cargo restriction, '669582' for I-405 collision alert. Used as primary key for alert identification and lookups.
+          description: Numeric ID of the highway alert.
         County:
           type:
             - string
             - 'null'
-          description: County name for countywide alerts, as a county name. E.g., null when alert is route-specific rather than countywide. Used to identify alerts that affect entire county rather than specific routes.
+          description: County name for countywide alerts, or null when alert is route-specific.
         EndRoadwayLocation:
           type:
             - object
@@ -62,26 +82,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -89,47 +109,47 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: Roadway location where alert ends, as a roadway location object. E.g., I-405 at milepost 22.61 northbound for construction alert end point, SR-520 at milepost 5 both directions for cargo restriction, null when alert is point-specific or end location is unavailable. Provides termination point for alert zone along highway.
+          description: Roadway location where the alert ends, or null when alert is point-specific or end location is unavailable.
         EndTime:
           type:
             - string
             - 'null'
-          description: Estimated end time for alert impact, as a UTC datetime. E.g., '2025-11-03T13:00:00.000Z' for alert ending at 1:00 PM on November 3, 2025, null when end time is not estimated or alert is ongoing. Used for alert duration tracking and expected resolution time.
+          description: UTC datetime when the alert impact is estimated to end, or null when end time is not estimated or alert is ongoing.
         EventCategory:
           type:
             - string
             - 'null'
-          description: Category classification for alert event, as an event category. E.g., 'Construction' for construction alerts, 'Collision' for traffic accidents, 'Maintenance' for maintenance work, 'Rest Area' for rest area closures, 'Flammable Cargo Restriction' for cargo restrictions, null when category is unavailable. Used for alert type filtering and categorization.
+          description: Category classification for the alert event type, or null when category is unavailable.
         EventStatus:
           type:
             - string
             - 'null'
-          description: 'Current operational status of alert, as a status code. Valid values: ''Open'' (active), ''Closed'' (resolved). E.g., ''Open'' for active alerts like construction work, ''Closed'' for resolved incidents like cleared collisions, null when status is unavailable. Used to determine if alert is currently active.'
+          description: 'Code indicating alert status: ''Open'' = active, ''Closed'' = resolved, or null when status is unavailable.'
         ExtendedDescription:
           type:
             - string
             - 'null'
-          description: Additional detailed information about alert, as a human-readable description. E.g., empty string when extended description is not provided, null when extended description is unavailable. Provides supplementary details beyond headline description for comprehensive alert information.
+          description: Additional detailed information about the alert, or null when extended description is unavailable.
         HeadlineDescription:
           type:
             - string
             - 'null'
-          description: 'Primary description of alert issue, as a headline description. E.g., ''Up to three lanes of northbound I-405 will close overnight between Northeast 124th Street and Northeast 160th Street'' for construction alert, ''Cleared 12:24 AM : On I-405 northbound just south of SR 520 (MP 14) there is a collision blocking the HOV lane'' for collision alert, null when headline is unavailable. Provides main alert information for display and user notification.'
+          description: Primary description of the alert issue, or null when headline is unavailable.
         LastUpdatedTime:
           type:
             - string
             - 'null'
-          description: Timestamp when alert was last modified or updated, as a UTC datetime. E.g., '2025-11-01T18:18:10.253Z' for update on November 1, 2025 at 6:18 PM, '2025-11-01T07:24:35.000Z' for update at 7:24 AM. Indicates data freshness and when alert information was last changed.
+          description: UTC datetime when the alert was last modified or updated.
         Priority:
           type:
             - string
             - 'null'
-          description: 'Expected traffic impact priority level, as a priority code. Valid values: ''Highest'' (severe impact), ''High'' (significant impact), ''Medium'' (moderate impact), ''Low'' (minimal impact). E.g., ''Highest'' for collisions blocking lanes, ''High'' for major closures, ''Low'' for minor congestion alerts, null when priority is unavailable. Used for alert prioritization and impact assessment.'
+          description: 'Code indicating traffic impact priority: ''Highest'' = severe, ''High'' = significant, ''Medium'' = moderate, ''Low'' = minimal, or null when priority is unavailable.'
         Region:
           type:
             - string
             - 'null'
-          description: 'WSDOT region code that entered alert, as a region code. Valid values: ''EA'' (Eastern), ''NC'' (North Central), ''NW'' (Northwest), ''OL'' (Olympic), ''SC'' (South Central), ''SW'' (Southwest). E.g., ''NW'' for Northwest region alerts, ''EA'' for Eastern region alerts, null when region is unavailable. Used for regional alert organization and filtering.'
+          description: 'Code indicating WSDOT region: ''EA'' = Eastern, ''NC'' = North Central, ''NW'' = Northwest, ''OL'' = Olympic, ''SC'' = South Central, ''SW'' = Southwest, or null when region is unavailable.'
         StartRoadwayLocation:
           type:
             - object
@@ -139,26 +159,26 @@ components:
               type:
                 - string
                 - 'null'
-              description: Human-readable description of the roadway location, as a string. E.g., 'I-5 interchange' for major highway junctions, 'Bellevue Way SE' for cross streets. Provides context for precise location identification when milepost alone is insufficient.
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
             Direction:
               type:
                 - string
                 - 'null'
-              description: Traffic direction designation for the roadway location, as a string. E.g., 'N' for northbound, 'S' for southbound, 'B' for both directions, 'NB' for northbound, 'SB' for southbound. Indicates which side of the highway the alert affects, regardless of actual compass orientation.
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
             Latitude:
               type: number
-              description: Latitude coordinate for the roadway location, in decimal degrees. E.g., '47.6062' for Seattle area, '48.7519' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Latitude of the roadway location in decimal degrees.
             Longitude:
               type: number
-              description: Longitude coordinate for the roadway location, in decimal degrees. E.g., '-122.3321' for Seattle area, '-122.4785' for Bellingham region. Enables precise geographic mapping and distance calculations for navigation systems.
+              description: Longitude of the roadway location in decimal degrees.
             MilePost:
               type: number
-              description: Milepost marker for the roadway location, as a number. E.g., '12.5' for milepost 12.5, '0' for route terminus. Provides precise location reference along highway corridors for accurate incident reporting and navigation.
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
             RoadName:
               type:
                 - string
                 - 'null'
-              description: Highway or route designation for the roadway location, as a string. E.g., '005' for I-5, '090' for I-90, '520' for SR-520. Identifies the specific highway corridor where the alert is located.
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
           required:
             - Description
             - Direction
@@ -166,12 +186,12 @@ components:
             - Longitude
             - MilePost
             - RoadName
-          description: Roadway location where alert begins, as a roadway location object. E.g., I-405 at milepost 20.3 northbound for construction alert start point, SR-520 at milepost 1 both directions for cargo restriction, null when alert is point-specific or start location is unavailable. Provides origin point for alert zone along highway.
+          description: Roadway location where the alert begins, or null when alert is point-specific or start location is unavailable.
         StartTime:
           type:
             - string
             - 'null'
-          description: Timestamp when alert impact on traffic began, as a UTC datetime. E.g., '2025-11-01T18:10:00.000Z' for alert starting at 6:10 PM on November 1, 2025, '2025-11-01T07:18:00.000Z' for collision at 7:18 AM. Indicates when alert became active and traffic impact commenced.
+          description: UTC datetime when the alert impact on traffic began.
       required:
         - AlertID
         - County
@@ -186,177 +206,118 @@ components:
         - Region
         - StartRoadwayLocation
         - StartTime
-      description: Represents highway alert information including alert identification, event category, priority, location data, timestamps, and descriptions. E.g., alert 669625 for I-405 construction (High priority, Open status) from milepost 20.3 to 22.61 northbound starting November 1 at 6:10 PM. Used for traffic incident monitoring, construction awareness, and highway event notifications. Alerts updated in real-time as conditions change.
-    FetchMapAreasOutput:
-      type: object
-      properties:
-        MapArea:
-          type:
-            - string
-            - 'null'
-          description: Unique map area identifier code, as an area code. E.g., 'L2CE' for Central area, 'L2CL' for Central area variant, 'L2LO' for Western area, 'L2NE' for Northeast area, 'L2NN' for Northwest area, null when area code is unavailable. Used for filtering alerts by geographic map area.
-        MapAreaDescription:
-          type:
-            - string
-            - 'null'
-          description: Human-readable description of map area, as an area name. E.g., 'Eastern' for Eastern Washington area, 'Central' for Central Washington area, 'Western' for Western Washington area, 'Northeast' for Northeast area, 'Northwest' for Northwest area, null when description is unavailable. Provides geographic identification for map area.
-      required:
-        - MapArea
-        - MapAreaDescription
-      description: Represents map area information including area identifier code and geographic description. E.g., area 'L2CE' (Central) or 'L2NN' (Northwest). Used for geographic alert filtering and map area identification. Provides reference data for area-based alert queries.
-    FetchEventCategoriesOutput:
-      type: string
+      description: Highway alert with identification, event category, priority, location data, timestamps, and descriptions for traffic incidents and road conditions.
     FetchAlertByIdInputAlertIDParam:
       type: number
-      description: Unique highway alert identifier, as an integer ID. E.g., '669625' for I-405 construction alert, '468632' for SR-520 flammable cargo restriction, '669582' for I-405 collision alert. Used to retrieve specific alert details.
+      description: Numeric ID of the highway alert.
     FetchAlertsByRegionIdInputRegionIDParam:
       type: number
-      description: 'WSDOT region identifier code, as an integer. Valid values: 7 (Eastern), 8 (North Central), 9 (Northwest), 10 (Olympic), 11 (South Central), 12 (Southwest). E.g., ''9'' for Northwest region, ''7'' for Eastern region. Used to filter alerts by WSDOT region.'
+      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest.'
     FetchAlertsByMapAreaInputMapAreaParam:
       type: string
-      description: Map area identifier code, as an area code. E.g., 'L2NW' for Northwest area, 'L2EA' for Eastern area, 'L2CE' for Central area. Use GetMapAreas to retrieve list of valid area codes. Used to filter alerts by geographic map area.
+      description: Map area identifier code for geographic filtering.
     SearchAlertsInputStateRouteParam:
       type: string
-      description: State route identifier formatted as three-digit number, as a route identifier. E.g., '005' for I-5, '405' for I-405, '090' for I-90. Used to filter alerts by specific highway route.
+      description: State route identifier as three-digit number, or undefined to include all routes.
     SearchAlertsInputRegionParam:
       type: integer
-      description: 'WSDOT region identifier code, as an integer. Valid values: 7 (Eastern), 8 (North Central), 9 (Northwest), 10 (Olympic), 11 (South Central), 12 (Southwest). E.g., ''9'' for Northwest region, ''7'' for Eastern region. Used to filter alerts by WSDOT region.'
+      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest, or undefined to include all regions.'
     SearchAlertsInputSearchTimeStartParam:
       type: string
-      description: Start time for alert search range, in ISO datetime format. E.g., '2025-11-01T00:00:00Z' for November 1, 2025 midnight UTC. Used to filter alerts occurring after this time.
+      description: UTC datetime when the search time range begins, in ISO format, or undefined for no start limit.
     SearchAlertsInputSearchTimeEndParam:
       type: string
-      description: End time for alert search range, in ISO datetime format. E.g., '2025-11-02T23:59:59Z' for November 2, 2025 end of day UTC. Used to filter alerts occurring before this time.
+      description: UTC datetime when the search time range ends, in ISO format, or undefined for no end limit.
     SearchAlertsInputStartingMilepostParam:
       type: number
-      description: Starting milepost value for milepost range filtering, as a decimal. E.g., '20.3' for milepost 20.3, '11.5' for milepost 11.5. Used with EndingMilepost to filter alerts within milepost range.
+      description: Starting milepost value for range filtering, or undefined for no start limit.
     SearchAlertsInputEndingMilepostParam:
       type: number
-      description: Ending milepost value for milepost range filtering, as a decimal. E.g., '22.61' for milepost 22.61, '25.91' for milepost 25.91. Used with StartingMilepost to filter alerts within milepost range.
+      description: Ending milepost value for range filtering, or undefined for no end limit.
   parameters:
     FetchAlertByIdInputAlertIDParam:
       schema:
         $ref: '#/components/schemas/FetchAlertByIdInputAlertIDParam'
       required: true
-      description: Unique highway alert identifier, as an integer ID. E.g., '669625' for I-405 construction alert, '468632' for SR-520 flammable cargo restriction, '669582' for I-405 collision alert. Used to retrieve specific alert details.
+      description: Numeric ID of the highway alert.
       name: AlertID
       in: path
     FetchAlertsByRegionIdInputRegionIDParam:
       schema:
         $ref: '#/components/schemas/FetchAlertsByRegionIdInputRegionIDParam'
       required: true
-      description: 'WSDOT region identifier code, as an integer. Valid values: 7 (Eastern), 8 (North Central), 9 (Northwest), 10 (Olympic), 11 (South Central), 12 (Southwest). E.g., ''9'' for Northwest region, ''7'' for Eastern region. Used to filter alerts by WSDOT region.'
+      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest.'
       name: RegionID
       in: path
     FetchAlertsByMapAreaInputMapAreaParam:
       schema:
         $ref: '#/components/schemas/FetchAlertsByMapAreaInputMapAreaParam'
       required: true
-      description: Map area identifier code, as an area code. E.g., 'L2NW' for Northwest area, 'L2EA' for Eastern area, 'L2CE' for Central area. Use GetMapAreas to retrieve list of valid area codes. Used to filter alerts by geographic map area.
+      description: Map area identifier code for geographic filtering.
       name: MapArea
       in: path
     SearchAlertsInputStateRouteParam:
       schema:
         $ref: '#/components/schemas/SearchAlertsInputStateRouteParam'
       required: true
-      description: State route identifier formatted as three-digit number, as a route identifier. E.g., '005' for I-5, '405' for I-405, '090' for I-90. Used to filter alerts by specific highway route.
+      description: State route identifier as three-digit number, or undefined to include all routes.
       name: StateRoute
       in: path
     SearchAlertsInputRegionParam:
       schema:
         $ref: '#/components/schemas/SearchAlertsInputRegionParam'
       required: true
-      description: 'WSDOT region identifier code, as an integer. Valid values: 7 (Eastern), 8 (North Central), 9 (Northwest), 10 (Olympic), 11 (South Central), 12 (Southwest). E.g., ''9'' for Northwest region, ''7'' for Eastern region. Used to filter alerts by WSDOT region.'
+      description: 'WSDOT region identifier code: 7 = Eastern, 8 = North Central, 9 = Northwest, 10 = Olympic, 11 = South Central, 12 = Southwest, or undefined to include all regions.'
       name: Region
       in: path
     SearchAlertsInputSearchTimeStartParam:
       schema:
         $ref: '#/components/schemas/SearchAlertsInputSearchTimeStartParam'
       required: true
-      description: Start time for alert search range, in ISO datetime format. E.g., '2025-11-01T00:00:00Z' for November 1, 2025 midnight UTC. Used to filter alerts occurring after this time.
+      description: UTC datetime when the search time range begins, in ISO format, or undefined for no start limit.
       name: SearchTimeStart
       in: path
     SearchAlertsInputSearchTimeEndParam:
       schema:
         $ref: '#/components/schemas/SearchAlertsInputSearchTimeEndParam'
       required: true
-      description: End time for alert search range, in ISO datetime format. E.g., '2025-11-02T23:59:59Z' for November 2, 2025 end of day UTC. Used to filter alerts occurring before this time.
+      description: UTC datetime when the search time range ends, in ISO format, or undefined for no end limit.
       name: SearchTimeEnd
       in: path
     SearchAlertsInputStartingMilepostParam:
       schema:
         $ref: '#/components/schemas/SearchAlertsInputStartingMilepostParam'
       required: true
-      description: Starting milepost value for milepost range filtering, as a decimal. E.g., '20.3' for milepost 20.3, '11.5' for milepost 11.5. Used with EndingMilepost to filter alerts within milepost range.
+      description: Starting milepost value for range filtering, or undefined for no start limit.
       name: StartingMilepost
       in: path
     SearchAlertsInputEndingMilepostParam:
       schema:
         $ref: '#/components/schemas/SearchAlertsInputEndingMilepostParam'
       required: true
-      description: Ending milepost value for milepost range filtering, as a decimal. E.g., '22.61' for milepost 22.61, '25.91' for milepost 25.91. Used with StartingMilepost to filter alerts within milepost range.
+      description: Ending milepost value for range filtering, or undefined for no end limit.
       name: EndingMilepost
       in: path
 paths:
-  /getEventCategoriesAsJson:
+  /getMapAreasAsJson:
     get:
-      summary: Returns an array of strings for all available event categories.
-      operationId: fetchEventCategories
-      tags:
-        - event-categories
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchEventCategories } from 'ws-dottie/wsdot-highway-alerts/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchEventCategories,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchEventCategoriesOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 123 total)
-                  value:
-                    - ''
-                    - _note: ... 122 more items
-  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
-    get:
-      summary: Returns an array of Alert objects for specified WSDOT region.
-      operationId: fetchAlertsByRegionId
+      summary: List all available geographic map areas for filtering alerts.
+      operationId: fetchMapAreas
       tags:
         - highwayAlerts
       x-codeSamples:
         - lang: JavaScript
           source: |-
             import { fetchDottie } from 'ws-dottie';
-            import { fetchAlertsByRegionId } from 'ws-dottie/wsdot-highway-alerts/core';
+            import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';
 
             const data = await fetchDottie({
-              endpoint: fetchAlertsByRegionId,
-              params: {
-                "RegionID": 9
-              },
+              endpoint: fetchMapAreas,
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchAlertsByRegionIdInputRegionIDParam'
       responses:
         '200':
           description: Success
@@ -365,114 +326,17 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
+                  $ref: '#/components/schemas/FetchMapAreasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 71 total)
+                  description: Example of a successful response from the API (showing first item of 51 total)
                   value:
-                    - AlertID: 473325
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: B
-                        Latitude: 0
-                        Longitude: 0
-                        MilePost: 0
-                        RoadName: '005'
-                      EndTime: null
-                      EventCategory: Rest Area
-                      EventStatus: Open
-                      ExtendedDescription: ''
-                      HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
-                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
-                      Priority: High
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: SB Scale 39/Silver Lake Rest Area
-                        Direction: B
-                        Latitude: 47.907026048
-                        Longitude: -122.210954765
-                        MilePost: 188.5
-                        RoadName: '005'
-                      StartTime: 2021-09-24T13:00:00.000Z
-                    - _note: ... 70 more items
-  /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
-    get:
-      summary: Returns an array of Alert objects matching specified search criteria.
-      operationId: searchAlerts
-      tags:
-        - highwayAlerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
-
-            const data = await fetchDottie({
-              endpoint: searchAlerts,
-              params: {
-                "StateRoute": "405",
-                "StartingMilepost": 10,
-                "EndingMilepost": 20,
-                "SearchTimeStart": "2025-11-07",
-                "SearchTimeEnd": "2025-11-08"
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/SearchAlertsInputStateRouteParam'
-        - $ref: '#/components/parameters/SearchAlertsInputRegionParam'
-        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeStartParam'
-        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeEndParam'
-        - $ref: '#/components/parameters/SearchAlertsInputStartingMilepostParam'
-        - $ref: '#/components/parameters/SearchAlertsInputEndingMilepostParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 6 total)
-                  value:
-                    - AlertID: 669502
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: S
-                        Latitude: 47.679113567
-                        Longitude: -122.184698067
-                        MilePost: 18.11
-                        RoadName: '405'
-                      EndTime: 2025-11-08T15:00:00.000Z
-                      EventCategory: Construction
-                      EventStatus: Open
-                      ExtendedDescription: ''
-                      HeadlineDescription: 'Friday, Nov. 7 to the morning of Saturday, Nov. 8: One lane of southbound I-405 between milepost 19.84 and milepost 18.11 will be closed from 8:30 p.m. – 7:00 a.m.'
-                      LastUpdatedTime: 2025-10-31T22:05:59.237Z
-                      Priority: Low
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: null
-                        Direction: S
-                        Latitude: 47.703842694
-                        Longitude: -122.179781665
-                        MilePost: 19.84
-                        RoadName: '405'
-                      StartTime: 2025-11-07T08:00:00.000Z
-                    - _note: ... 5 more items
+                    - MapArea: L2CE
+                      MapAreaDescription: Eastern
   /getAlertAsJson?AlertID={AlertID}:
     get:
-      summary: Returns a single Alert object for specified AlertID.
+      summary: Get highway alert details for a specific alert ID.
       operationId: fetchAlertById
       tags:
         - highwayAlerts
@@ -531,9 +395,81 @@ paths:
                       MilePost: 1
                       RoadName: '520'
                     StartTime: 2021-09-13T13:59:00.000Z
+  /getEventCategoriesAsJson:
+    get:
+      summary: List all available event category names for filtering alerts.
+      operationId: fetchEventCategories
+      tags:
+        - event-categories
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchEventCategories } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchEventCategories,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchEventCategoriesOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 123 total)
+                  value:
+                    - ''
+  /getAlertsByRegionIDAsJson?RegionID={RegionID}:
+    get:
+      summary: List highway alerts filtered by WSDOT region ID.
+      operationId: fetchAlertsByRegionId
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchAlertsByRegionId } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchAlertsByRegionId,
+              params: {
+                "RegionID": 4
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchAlertsByRegionIdInputRegionIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchAlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value: []
   /getAlertsByMapAreaAsJson?MapArea={MapArea}:
     get:
-      summary: Returns an array of Alert objects for specified geographic area.
+      summary: List highway alerts filtered by map area code.
       operationId: fetchAlertsByMapArea
       tags:
         - highwayAlerts
@@ -594,45 +530,9 @@ paths:
                         MilePost: 188.5
                         RoadName: '005'
                       StartTime: 2021-09-24T13:00:00.000Z
-  /getMapAreasAsJson:
-    get:
-      summary: Returns an array of Area objects for all available geographic regions.
-      operationId: fetchMapAreas
-      tags:
-        - alertAreas
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchMapAreas,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchMapAreasOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 51 total)
-                  value:
-                    - MapArea: L2CE
-                      MapAreaDescription: Eastern
-                    - _note: ... 50 more items
   /getAlertsAsJson:
     get:
-      summary: Returns an array of Alert objects for all current highway incidents.
+      summary: List all current highway alerts statewide.
       operationId: fetchAlerts
       tags:
         - highwayAlerts
@@ -661,45 +561,126 @@ paths:
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 130 total)
+                  description: Example of a successful response from the API (showing first item of 118 total)
                   value:
-                    - AlertID: 670322
+                    - AlertID: 670961
                       County: null
                       EndRoadwayLocation:
                         Description: null
-                        Direction: B
-                        Latitude: 47.341001136
-                        Longitude: -122.018282392
-                        MilePost: 10.02
-                        RoadName: '169'
-                      EndTime: 2025-11-20T23:00:00.000Z
+                        Direction: 'N'
+                        Latitude: 48.703758665
+                        Longitude: -122.474705077
+                        MilePost: 250
+                        RoadName: '005'
+                      EndTime: 2025-11-21T00:00:00.000Z
                       EventCategory: Maintenance
                       EventStatus: Open
                       ExtendedDescription: ''
-                      HeadlineDescription: Daily (except weekends) from 9 a.m. to 3 p.m. beginning Friday, Nov. 7 until 3 p.m. Thursday, Nov. 20, one left lane on both directions of State Route 169 will close between Southeast 275th Street/Power Line Road (milepost 11) and Southeast 288th Street/Southeast 291st Street/241st Avenue for Switchers Landing utilities work.
-                      LastUpdatedTime: 2025-11-07T16:47:39.413Z
-                      Priority: Low
+                      HeadlineDescription: Daily from 8 a.m. to 4 p.m. on Wednesday, Nov. 19 and Thursday, Nov. 20, maintenance crews will close one right lane of northbound Interstate 5 from North Lake Samish Overpass (milepost 246) to State Route 11/Chuckanut Drive (milepost 250) for rock removal.
+                      LastUpdatedTime: 2025-11-13T20:14:26.087Z
+                      Priority: Medium
                       Region: Northwest
                       StartRoadwayLocation:
                         Description: null
-                        Direction: B
-                        Latitude: 47.355098711
-                        Longitude: -122.019550879
-                        MilePost: 11
-                        RoadName: '169'
-                      StartTime: 2025-11-07T16:37:00.000Z
-                    - _note: ... 129 more items
+                        Direction: 'N'
+                        Latitude: 48.690337506
+                        Longitude: -122.41057518
+                        MilePost: 246.8
+                        RoadName: '005'
+                      StartTime: 2025-11-13T20:08:00.000Z
+  /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
+    get:
+      summary: Search highway alerts by route, region, time range, and milepost.
+      operationId: searchAlerts
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchDottie({
+              endpoint: searchAlerts,
+              params: {
+                "StateRoute": "405",
+                "StartingMilepost": 10,
+                "EndingMilepost": 20,
+                "SearchTimeStart": "2025-11-14",
+                "SearchTimeEnd": "2025-11-15"
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/SearchAlertsInputStateRouteParam'
+        - $ref: '#/components/parameters/SearchAlertsInputRegionParam'
+        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeStartParam'
+        - $ref: '#/components/parameters/SearchAlertsInputSearchTimeEndParam'
+        - $ref: '#/components/parameters/SearchAlertsInputStartingMilepostParam'
+        - $ref: '#/components/parameters/SearchAlertsInputEndingMilepostParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchAlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 14 total)
+                  value:
+                    - AlertID: 671050
+                      County: null
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: S
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: '405'
+                      EndTime: 2025-11-14T15:22:31.000Z
+                      EventCategory: Disabled vehicle
+                      EventStatus: Closed
+                      ExtendedDescription: ''
+                      HeadlineDescription: 'Cleared 7:22 AM : On I-405 southbound at NE 70th Pl (MP 17) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.'
+                      LastUpdatedTime: 2025-11-14T15:22:31.560Z
+                      Priority: Highest
+                      Region: Northwest
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: S
+                        Latitude: 47.670427237
+                        Longitude: -122.187174248
+                        MilePost: 17.49
+                        RoadName: '405'
+                      StartTime: 2025-11-14T14:54:00.000Z
 webhooks: {}
 tags:
   - name: highwayAlerts
-    description: Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.
-    externalDocs:
-      description: Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.
+    description: Real-time highway alerts for traffic incidents and road conditions.
+    x-useCases:
+      - Monitor real-time traffic incidents and road conditions.
+      - Plan alternate routes based on current highway alerts.
+      - Display active alerts filtered by location, region, or category.
+      - Track alert status and estimated resolution times.
+    x-updateFrequency: 5m
   - name: alertAreas
-    description: Each Area item represents a geographic region used for organizing and filtering highway alerts across Washington State. These include unique area codes and descriptive names for different regions.
-    externalDocs:
-      description: Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.
+    description: Geographic map areas for filtering highway alerts by region.
+    x-useCases:
+      - Filter highway alerts by geographic map area.
+      - Obtain valid area codes for alert queries.
+      - Display regional alert organization in user interfaces.
+    x-updateFrequency: 5m
   - name: event-categories
-    description: Each EventCategory item represents a classification type for highway alerts including collisions, maintenance work, construction, weather-related events, and other traffic incidents. These categories help organize and filter alerts by incident type.
-    externalDocs:
-      description: Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.
+    description: Event category classifications for highway alerts.
+    x-useCases:
+      - Filter highway alerts by event category type.
+      - Obtain valid category names for alert searches.
+      - Categorize alerts in user interfaces by incident type.
+    x-updateFrequency: 5m
