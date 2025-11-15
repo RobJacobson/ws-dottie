@@ -5,6 +5,7 @@
  */
 
 import type { z } from "zod";
+import type { ApiMetadata } from "@/apis/types";
 
 // ============================================================================
 // CACHE STRATEGY TYPES
@@ -31,14 +32,12 @@ export type CacheStrategy =
  * Runtime endpoint interface with computed properties
  *
  * This interface defines the structure for runtime endpoint objects that are
- * created from ApiDefinition and EndpointDefinition structures. It includes
- * all necessary information for validation, caching, and URL generation.
+ * created from endpoint configurations. It includes all necessary information
+ * for validation, caching, and URL generation.
  */
 export interface Endpoint<I, O> {
-  /** API group name (e.g., "wsdot-bridge-clearances") */
-  api: string;
-  /** Function name (e.g., "getBridgeClearances") */
-  function: string;
+  /** API configuration */
+  api: ApiMetadata;
   /** Complete HTTP endpoint URL template */
   endpoint: string;
   /** Zod schema for input validation (optional - excluded in lite builds) */
@@ -49,7 +48,7 @@ export interface Endpoint<I, O> {
   sampleParams?: Partial<I> | (() => Promise<Partial<I>>);
   /** Cache strategy */
   cacheStrategy: CacheStrategy;
-  /** Function name (alias for function field) */
+  /** Function name */
   functionName: string;
   /** Complete URL template with domain */
   urlTemplate: string;

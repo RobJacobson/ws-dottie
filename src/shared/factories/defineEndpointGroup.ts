@@ -5,20 +5,8 @@
  * metadata for documentation generation.
  */
 
-import type { EndpointGroup, ResourceDocumentation } from "@/apis/types";
-import type { CacheStrategy } from "@/shared/types";
-
-/**
- * Configuration for defining an endpoint group
- */
-export type DefineEndpointGroupConfig = {
-  /** The name of endpoint group */
-  name: string;
-  /** Cache strategy for all endpoints in this group */
-  cacheStrategy: CacheStrategy;
-  /** Documentation for endpoint group */
-  documentation: ResourceDocumentation;
-};
+import type { EndpointGroup } from "@/apis/types";
+import type { DefineEndpointGroupConfig } from "./types";
 
 /**
  * Defines an endpoint group with shared metadata

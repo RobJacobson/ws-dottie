@@ -2,7 +2,7 @@
  * @fileoverview Cache Flush Date Hook for React Query
  *
  * This module provides a hook that polls cache flush date endpoints and
- * invalidates queries when the flush date changes. Used for WSF APIs
+ * invalidates queries when flush date changes. Used for WSF APIs
  * (wsf-fares, wsf-schedule, wsf-terminals, wsf-vessels) with STATIC cache
  * strategy endpoints.
  */
@@ -11,8 +11,8 @@ import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import type { Endpoint } from "@/shared/types";
-import type { FetchFunctionParams } from "./createFetchFunction";
-import { cacheStrategies } from "./queryOptions";
+import type { EndpointConfig, FetchFunctionParams } from "./types";
+import { cacheStrategies } from "./types";
 
 /**
  * Finds the cache flush date endpoint for an API from the endpoints registry.
@@ -49,7 +49,7 @@ const findCacheFlushEndpoint = (
     // Look up endpoint from registry using api name and function name
     const endpoint = endpoints.find(
       (ep: Endpoint<unknown, unknown>) =>
-        ep.api === apiName && ep.functionName === functionName
+        ep.api.name === apiName && ep.functionName === functionName
     );
 
     return endpoint || null;
@@ -59,13 +59,13 @@ const findCacheFlushEndpoint = (
 };
 
 /**
- * Hook to poll the cache flush date endpoint.
+ * Hook to poll cache flush date endpoint.
  *
  * This hook queries the cache flush date endpoint every 5 minutes to detect
  * when the cache has been invalidated on the server side.
  *
  * @param cacheFlushEndpoint - The cache flush date endpoint to poll, or null
- * @returns Query result with the cache flush date
+ * @returns Query result with cache flush date
  */
 const useCacheFlushDateQuery = (
   cacheFlushEndpoint: Endpoint<unknown, unknown> | null
@@ -93,7 +93,7 @@ const useCacheFlushDateQuery = (
  * flush date value.
  *
  * @param endpointId - The ID of the endpoint to invalidate
- * @param flushDateQuery - Query result with the cache flush date
+ * @param flushDateQuery - Query result with cache flush date
  */
 const useCacheInvalidation = (
   endpointId: string,
@@ -125,38 +125,34 @@ const useCacheInvalidation = (
  * Wraps a React Query hook with cache flush date polling and invalidation.
  *
  * This hook polls the cache flush date endpoint every 5 minutes and invalidates
- * the data query when the flush date changes. It stores the last flush date
+ * data query when the flush date changes. It stores the last flush date
  * in a ref to detect changes.
  *
- * @template TInput - The input parameters type for the endpoint
- * @template TOutput - The output response type for the endpoint
- * @param apiName - The API name (e.g., "wsf-vessels")
- * @param baseUrl - The base URL for the API (currently unused, will be used in Phase 3)
- * @param endpoint - The endpoint to create a hook for
+ * @template TInput - The input parameters type for endpoint
+ * @template TOutput - The output response type for endpoint
+ * @param config - The endpoint configuration object
  * @param fetchFunction - The fetch function to wrap
  * @param params - Parameters to pass to the fetch function
  * @param options - Additional React Query options
  * @returns A React Query result with cache invalidation support
  */
 export const useQueryWithCacheFlushDate = <TInput, TOutput>(
-  apiName: string,
-  _baseUrl: string, // Will be used in Phase 3 when findCacheFlushEndpoint is fully implemented
-  endpoint: Endpoint<TInput, TOutput>,
+  config: EndpointConfig<TInput, TOutput>,
   fetchFunction: (params?: FetchFunctionParams<TInput>) => Promise<TOutput>,
   params?: FetchFunctionParams<TInput>,
   options?: Omit<UseQueryOptions<TOutput>, "queryKey" | "queryFn">
 ): UseQueryResult<TOutput, Error> => {
-  const cacheFlushEndpoint = findCacheFlushEndpoint(apiName);
+  const cacheFlushEndpoint = findCacheFlushEndpoint(config.api.name);
   const flushDateQuery = useCacheFlushDateQuery(cacheFlushEndpoint);
 
-  useCacheInvalidation(endpoint.id, flushDateQuery);
+  useCacheInvalidation(config.id, flushDateQuery);
 
   return useQuery({
-    queryKey: [endpoint.id, params?.params ?? null],
+    queryKey: [config.id, params?.params ?? null],
     queryFn: () => fetchFunction(params),
     ...(cacheFlushEndpoint
       ? cacheStrategies.STATIC
-      : cacheStrategies[endpoint.cacheStrategy]),
+      : cacheStrategies[config.cacheStrategy]),
     refetchOnWindowFocus: false,
     ...options,
   });
