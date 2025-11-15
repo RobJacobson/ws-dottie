@@ -1,0 +1,18 @@
+[
+  {
+    "TerminalID": 10,
+    "Description": "Friday Harbor"
+  },
+  {
+    "TerminalID": 13,
+    "Description": "Lopez Island"
+  },
+  {
+    "TerminalID": 15,
+    "Description": "Orcas Island"
+  },
+  {
+    "TerminalID": 18,
+    "Description": "Shaw Island"
+  }
+]

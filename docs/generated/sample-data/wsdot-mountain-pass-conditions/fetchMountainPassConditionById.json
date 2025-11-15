@@ -1,0 +1,20 @@
+{
+  "MountainPassId": 12,
+  "MountainPassName": "White Pass  US 12",
+  "Latitude": 46.638333,
+  "Longitude": -121.39,
+  "DateUpdated": "2025-11-15T16:32:50.010Z",
+  "TemperatureInFahrenheit": 44,
+  "ElevationInFeet": 4500,
+  "WeatherCondition": "Raining",
+  "RoadCondition": "Bare and wet",
+  "TravelAdvisoryActive": true,
+  "RestrictionOne": {
+    "RestrictionText": "No restrictions",
+    "TravelDirection": "Eastbound"
+  },
+  "RestrictionTwo": {
+    "RestrictionText": "No restrictions",
+    "TravelDirection": "Westbound"
+  }
+}

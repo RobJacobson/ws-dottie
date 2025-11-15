@@ -1,0 +1,408 @@
+[
+  {
+    "AlertID": 671050,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-14T15:22:31.000Z",
+    "EventCategory": "Disabled vehicle",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Cleared 7:22 AM : On I-405 southbound at NE 70th Pl (MP 17) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.",
+    "LastUpdatedTime": "2025-11-14T15:22:31.560Z",
+    "Priority": "Highest",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.670427237,
+      "Longitude": -122.187174248,
+      "MilePost": 17.49,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T14:54:00.000Z"
+  },
+  {
+    "AlertID": 671164,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": "NE 8th St",
+      "Direction": "S",
+      "Latitude": 47.617342463,
+      "Longitude": -122.188928562,
+      "MilePost": 13.82,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-21T14:00:00.000Z",
+    "EventCategory": "Maintenance",
+    "EventStatus": "Open",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "From 9 p.m. Thursday, Nov. 20 to 6 a.m. Friday, Nov. 21, maintenance crews will close one right lane of Interstate 405 between Northeast 14th Street and Northeast 12th Street (milepost 14) and the southbound I-405 off-ramp to Northeast 8th Street for attenuator repair.",
+    "LastUpdatedTime": "2025-11-15T00:05:32.587Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "NE 14th St",
+      "Direction": "S",
+      "Latitude": 47.624166363,
+      "Longitude": -122.188848669,
+      "MilePost": 14.29,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-15T00:01:00.000Z"
+  },
+  {
+    "AlertID": 671052,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-14T15:36:11.000Z",
+    "EventCategory": "Collision",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Cleared 7:36 AM : On I-405 southbound at SR 520 (MP 15) there is a collision blocking both toll lanes and the left general purpose lane.  The Incident Response Team and the State Patrol have arrived on the scene.",
+    "LastUpdatedTime": "2025-11-14T15:36:12.087Z",
+    "Priority": "Highest",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.633103319,
+      "Longitude": -122.187890432,
+      "MilePost": 14.9,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T15:07:00.000Z"
+  },
+  {
+    "AlertID": 671229,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T04:42:27.000Z",
+    "EventCategory": "Collision",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Cleared 8:42 PM : On the I-405 northbound on-ramp from NE 4th St (MP 14) there is a collision partially blocking the ramp.  The Incident Response Team and the State Patrol have arrived on the scene.",
+    "LastUpdatedTime": "2025-11-15T04:42:27.277Z",
+    "Priority": "Highest",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.61996931,
+      "Longitude": -122.188553602,
+      "MilePost": 14,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-15T04:20:00.000Z"
+  },
+  {
+    "AlertID": 671175,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T00:42:48.000Z",
+    "EventCategory": "Collision",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Cleared 4:42 PM : On I-405 northbound at SE 8th St (MP 13) there is a collision blocking the right lane.  The Incident Response Team and the State Patrol have arrived on the scene.",
+    "LastUpdatedTime": "2025-11-15T00:42:48.833Z",
+    "Priority": "Highest",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.604763736,
+      "Longitude": -122.185246124,
+      "MilePost": 12.9,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-15T00:19:00.000Z"
+  },
+  {
+    "AlertID": 670423,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.689007809,
+      "Longitude": -122.181623433,
+      "MilePost": 18.8,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T16:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Friday, Nov. 14 to the morning of Saturday, Nov. 15: One lane of northbound I-405 between milepost 17.2 and milepost 18.8 will be closed from 10 p.m. – 8 a.m.",
+    "LastUpdatedTime": "2025-11-15T16:00:00.200Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 47.665945245,
+      "Longitude": -122.186901317,
+      "MilePost": 17.2,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670430,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T15:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Friday, Nov. 14 to the morning of Saturday, Nov. 15: The Northeast 85th Street on- ramp to northbound I-405 will be closed from 11 p.m. – 7 a.m.",
+    "LastUpdatedTime": "2025-11-15T15:00:00.177Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "NE 85th/NE Redmond way/SR 908",
+      "Direction": "N",
+      "Latitude": 47.679488357,
+      "Longitude": -122.184379668,
+      "MilePost": 18.14,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670388,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.578503696,
+      "Longitude": -122.174652622,
+      "MilePost": 11,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T16:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Up to four lanes of southbound I-405 from milepost 13.35 to milepost 11 will be closed overnight, 10 p.m. Friday, Nov. 14 – 8 a.m. Saturday, Nov. 15.",
+    "LastUpdatedTime": "2025-11-15T16:00:00.200Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.610623934,
+      "Longitude": -122.188699915,
+      "MilePost": 13.35,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670406,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T13:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The Northeast Fourth Street on-ramp to northbound I-405 will be closed overnight, 10 p.m. Thursday, Nov. 13 – 5 a.m. Friday, Nov. 14. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-11-15T13:00:00.563Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "NE 4th St",
+      "Direction": "N",
+      "Latitude": 47.61342334,
+      "Longitude": -122.18843498,
+      "MilePost": 13.55,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670432,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T15:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Friday, Nov. 14 to the morning of Saturday, Nov. 15: The northbound I-405 off-ramp to Northeast 85th Steet will be closed from 11 p.m. – 7 a.m.",
+    "LastUpdatedTime": "2025-11-15T15:00:00.177Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "NE 85th/NE Redmond way/SR 908",
+      "Direction": "N",
+      "Latitude": 47.679488357,
+      "Longitude": -122.184379668,
+      "MilePost": 18.14,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670426,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.679113567,
+      "Longitude": -122.184698067,
+      "MilePost": 18.11,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T13:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Friday, Nov. 14 to the morning of Saturday, Nov. 15: Up to two lanes of southbound I-405 between milepost 19.84 and milepost 18.11 will be closed from 11:30 p.m. – 5 a.m.",
+    "LastUpdatedTime": "2025-11-15T13:00:00.563Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 47.703842694,
+      "Longitude": -122.179781665,
+      "MilePost": 19.84,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670410,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T13:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The Northeast Sixth Street on-ramp to southbound I-405 HOV will be closed overnight, 9 p.m. Friday, Nov. 14 – 5 a.m. Saturday, Nov. 15. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-11-15T13:00:00.563Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "NE 6th St",
+      "Direction": "S",
+      "Latitude": 47.615326464,
+      "Longitude": -122.18891608,
+      "MilePost": 13.68,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670428,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "S",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T14:00:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "Friday, Nov. 14 to the morning of Saturday, Nov 15: The Northeast 85th Street on- ramp to southbound I-405 will be closed from 10 p.m. – 6 a.m.",
+    "LastUpdatedTime": "2025-11-15T14:00:00.180Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "NE 85th/NE Redmond way/SR 908",
+      "Direction": "S",
+      "Latitude": 47.679470371,
+      "Longitude": -122.184684349,
+      "MilePost": 18.14,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  },
+  {
+    "AlertID": 670405,
+    "County": null,
+    "EndRoadwayLocation": {
+      "Description": null,
+      "Direction": "N",
+      "Latitude": 0,
+      "Longitude": 0,
+      "MilePost": 0,
+      "RoadName": "405"
+    },
+    "EndTime": "2025-11-15T15:30:00.000Z",
+    "EventCategory": "Construction",
+    "EventStatus": "Closed",
+    "ExtendedDescription": "",
+    "HeadlineDescription": "The Southeast Eighth Street on-ramp to northbound I-405 will be closed overnight, 9 p.m. Friday, Nov. 14 – 7:30 a.m. Saturday, Nov. 15. A signed detour will be in place.",
+    "LastUpdatedTime": "2025-11-15T15:30:00.477Z",
+    "Priority": "Low",
+    "Region": "Northwest",
+    "StartRoadwayLocation": {
+      "Description": "SE 8th/Richards Rd",
+      "Direction": "N",
+      "Latitude": 47.603953008,
+      "Longitude": -122.184537191,
+      "MilePost": 12.84,
+      "RoadName": "405"
+    },
+    "StartTime": "2025-11-14T08:00:00.000Z"
+  }
+]

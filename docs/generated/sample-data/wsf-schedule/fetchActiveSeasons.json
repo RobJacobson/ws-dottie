@@ -1,0 +1,18 @@
+[
+  {
+    "ScheduleID": 193,
+    "ScheduleName": "Fall 2025",
+    "ScheduleSeason": 2,
+    "SchedulePDFUrl": "http://www.wsdot.wa.gov/ferries/pdf/2025Fall.pdf",
+    "ScheduleStart": "2025-09-21T07:00:00.000Z",
+    "ScheduleEnd": "2025-12-27T08:00:00.000Z"
+  },
+  {
+    "ScheduleID": 194,
+    "ScheduleName": "Winter 2026",
+    "ScheduleSeason": 3,
+    "SchedulePDFUrl": "http://www.wsdot.wa.gov/ferries/pdf/2025Winter.pdf",
+    "ScheduleStart": "2025-12-28T08:00:00.000Z",
+    "ScheduleEnd": "2026-03-21T07:00:00.000Z"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "RouteID": 9,
+    "RouteAbbrev": "ana-sj",
+    "Description": "Anacortes / San Juan Islands",
+    "RegionID": 1,
+    "VesselWatchID": 1,
+    "ReservationFlag": true,
+    "InternationalFlag": false,
+    "PassengerOnlyFlag": false,
+    "CrossingTime": null,
+    "AdaNotes": null,
+    "GeneralRouteNotes": "<ul class=\"btttwinter2020\" style=\"font-size:.9em\"><li><a href=\"https://wsdot.wa.gov/ferries/sailing-schedules/best-travel-times/\"\ntarget=\"_blank\">Find the best times to travel by clicking here.</a></li></ul>\n\n",
+    "SeasonalRouteNotes": "The Anacortes-San Juan Islands route will operate its regular schedule on Thanksgiving and Christmas.",
+    "Alerts": [
+      {
+        "BulletinID": 110675,
+        "BulletinFlag": true,
+        "CommunicationFlag": false,
+        "PublishDate": "2025-11-15T17:08:11.927Z",
+        "AlertDescription": "Ana/SJs - Kaleetan to replace Samish this Sunday, Nov. 16",
+        "DisruptionDescription": null,
+        "AlertFullTitle": "Ana/SJs - Kaleetan to replace Samish this Sunday, Nov. 16",
+        "AlertFullText": "<p><span data-contrast=\"none\">This Sunday, Nov. 16, the <em>Kaleetan</em> will replace the<em> Samish</em> on the Anacortes/San Juan Islands route. We do not expect service impacts during this vessel swap. Thank you for your patience as we move boats around the system to complete maintenance, repairs, and inspections.<br /></span><span data-ccp-props=\"{&quot;335557856&quot;:16777215,&quot;335559739&quot;:0}\"><br /></span></p>",
+        "IVRText": null
+      }
+    ]
+  }
+]
