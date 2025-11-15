@@ -144,7 +144,7 @@ const fetchAndSaveSampleData = async (
     projectRoot,
     "docs",
     "sample-data",
-    api.name,
+    api.api.name,
     `${functionName}.json`
   );
 
@@ -220,7 +220,7 @@ const generateCodeExample = (
         .join("\n")},\n`
     : "";
 
-  const apiCoreImportPath = `ws-dottie/${api.name}/core`;
+  const apiCoreImportPath = `ws-dottie/${api.api.name}/core`;
 
   return `import { fetchDottie } from 'ws-dottie';
 import { ${functionName} } from '${apiCoreImportPath}';
@@ -570,7 +570,7 @@ const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
  * @returns The complete OpenAPI specification object
  */
 const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
-  process.stderr.write(`Processing ${api.name}...\r`);
+  process.stderr.write(`Processing ${api.api.name}...\r`);
   const registry = new OpenAPIRegistry();
 
   // Pre-register shared schemas with canonical names to enable deduplication
@@ -580,7 +580,7 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
   }
 
   // Filter endpoints for this API from the flat registry
-  const apiEndpoints = endpoints.filter((e) => e.api === api.name);
+  const apiEndpoints = endpoints.filter((e) => e.api.name === api.api.name);
   const totalEndpoints = apiEndpoints.length;
 
   // Register all endpoints and wait for completion
@@ -598,13 +598,13 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
   // Wait for all endpoints to be registered
   await Promise.all(endpointPromises);
 
-  process.stderr.write(`  Generating OpenAPI spec for ${api.name}...\r`);
+  process.stderr.write(`  Generating OpenAPI spec for ${api.api.name}...\r`);
   const generator = new OpenApiGeneratorV31(registry.definitions);
 
   // Create a title from the API name (e.g., "wsf-vessels" -> "WSF Vessels API")
   const title =
     // biome-ignore lint/style/useTemplate: OK here
-    api.name
+    api.api.name
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ") + " API";
@@ -618,22 +618,38 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     },
     servers: [
       {
-        url: api.baseUrl,
+        url: api.api.baseUrl,
         description: "Production server",
       },
     ],
   });
 
   // Add tags with descriptions
-  const tags = api.endpointGroups.map((group) => ({
-    name: group.name,
-    description: group.documentation.resourceDescription,
-    ...(group.documentation.businessContext && {
-      externalDocs: {
-        description: group.documentation.businessContext,
-      },
-    }),
-  }));
+  const tags = api.endpointGroups.map((group) => {
+    const documentation = group.documentation ?? {};
+
+    const description =
+      documentation.summary ??
+      documentation.description ??
+      documentation.resourceDescription ??
+      "";
+
+    return {
+      name: group.name,
+      description,
+      ...(documentation.businessContext && {
+        externalDocs: {
+          description: documentation.businessContext,
+        },
+      }),
+      ...(documentation.useCases && {
+        "x-useCases": documentation.useCases,
+      }),
+      ...(documentation.updateFrequency && {
+        "x-updateFrequency": documentation.updateFrequency,
+      }),
+    };
+  });
 
   return {
     ...openApiDoc,
@@ -652,13 +668,13 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
 const generateAndSaveOpenApiSpec = async (
   api: ApiDefinition
 ): Promise<void> => {
-  process.stderr.write(`Generating spec for ${api.name}...\r`);
+  process.stderr.write(`Generating spec for ${api.api.name}...\r`);
   const spec = await generateOpenApiSpec(api);
   const outputDir = join(projectRoot, "docs", "openapi");
   mkdirSync(outputDir, { recursive: true });
 
-  const outputPath = join(outputDir, `${api.name}.yaml`);
-  process.stderr.write(`  Writing ${api.name}.yaml...\r`);
+  const outputPath = join(outputDir, `${api.api.name}.yaml`);
+  process.stderr.write(`  Writing ${api.api.name}.yaml...\r`);
   writeFileSync(
     outputPath,
     yaml.dump(spec, { indent: 2, lineWidth: -1, noRefs: false }),
@@ -674,7 +690,7 @@ const generateAndSaveOpenApiSpec = async (
       ?.schemas || {}
   ).length;
 
-  console.log(`✓ ${api.name}: ${outputPath}`);
+  console.log(`✓ ${api.api.name}: ${outputPath}`);
   console.log(
     `  - ${pathsCount} paths, ${tagsCount} tags, ${schemasCount} schemas`
   );
@@ -695,7 +711,7 @@ const main = async (): Promise<void> => {
     ALL_APIS.map(async (api, index) => {
       try {
         process.stderr.write(
-          `[${index + 1}/${ALL_APIS.length}] Processing ${api.name}...\n`
+          `[${index + 1}/${ALL_APIS.length}] Processing ${api.api.name}...\n`
         );
         await generateAndSaveOpenApiSpec(api);
         const spec = await generateOpenApiSpec(api);
@@ -713,11 +729,11 @@ const main = async (): Promise<void> => {
           errors: [] as Array<{ api: string; error: unknown }>,
         };
       } catch (error) {
-        process.stderr.write(`  ✗ Error in ${api.name}\n`);
-        console.error(`✗ Error generating spec for ${api.name}:`, error);
+        process.stderr.write(`  ✗ Error in ${api.api.name}\n`);
+        console.error(`✗ Error generating spec for ${api.api.name}:`, error);
         return {
           totals: { paths: 0, tags: 0, schemas: 0 },
-          errors: [{ api: api.name, error }],
+          errors: [{ api: api.api.name, error }],
         };
       }
     })
