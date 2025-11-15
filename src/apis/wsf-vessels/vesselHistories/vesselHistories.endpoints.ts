@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   type VesselHistoriesByVesselNameAndDateRangeInput,
   type VesselHistoriesInput,
@@ -26,7 +26,7 @@ export const fetchVesselHistories = defineEndpoint<
   VesselHistoriesInput,
   VesselHistory[]
 >({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: vesselHistoriesGroup,
   functionName: "fetchVesselHistories",
   endpoint: "/vesselHistory",
@@ -41,7 +41,7 @@ export const fetchVesselHistoriesByVesselNameAndDateRange = defineEndpoint<
   VesselHistoriesByVesselNameAndDateRangeInput,
   VesselHistory[]
 >({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: vesselHistoriesGroup,
   functionName: "fetchVesselHistoriesByVesselNameAndDateRange",
   endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",

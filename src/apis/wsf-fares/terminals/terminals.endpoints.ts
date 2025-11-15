@@ -1,4 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import {
+  type TerminalMatesInput,
+  type TerminalsInput,
   terminalMatesInputSchema,
   terminalsInputSchema,
 } from "@/apis/shared/terminals.input";
@@ -6,7 +9,6 @@ import { terminalListSchema } from "@/apis/shared/terminals.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 
 export const terminalsGroup = defineEndpointGroup({
   name: "terminals",
@@ -19,8 +21,8 @@ export const terminalsGroup = defineEndpointGroup({
   },
 });
 
-export const fetchTerminalFares = defineEndpoint({
-  api: API,
+export const fetchTerminalFares = defineEndpoint<TerminalsInput, any>({
+  api: apis.wsdotBorderCrossings,
   group: terminalsGroup,
   functionName: "fetchTerminalFares",
   endpoint: "/terminals/{TripDate}",
@@ -28,17 +30,17 @@ export const fetchTerminalFares = defineEndpoint({
   outputSchema: terminalListSchema,
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription:
-    "Returns a list of valid departing terminals for the specified trip date.",
+    "Returns a list of valid departing terminals for specified trip date.",
 });
 
-export const fetchTerminalMatesFares = defineEndpoint({
-  api: API,
+export const fetchTerminalMatesFares = defineEndpoint<TerminalMatesInput, any>({
+  api: apis.wsdotBorderCrossings,
   group: terminalsGroup,
   functionName: "fetchTerminalMatesFares",
   endpoint: "/terminalMates/{TripDate}/{TerminalID}",
   inputSchema: terminalMatesInputSchema,
-  outputSchema: terminalListSchema,
   sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
+  outputSchema: terminalListSchema,
   endpointDescription:
     "Returns arriving terminals for the given departing terminal and trip date.",
 });

@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   terminalSailingSpaceByTerminalIdInputSchema,
   terminalSailingSpaceInputSchema,
@@ -18,7 +18,7 @@ export const terminalSailingSpaceGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalSailingSpace = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpace",
   endpoint: "/terminalSailingSpace",
@@ -30,7 +30,7 @@ export const fetchTerminalSailingSpace = defineEndpoint({
 });
 
 export const fetchTerminalSailingSpaceByTerminalId = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpaceByTerminalId",
   endpoint: "/terminalSailingSpace/{TerminalID}",

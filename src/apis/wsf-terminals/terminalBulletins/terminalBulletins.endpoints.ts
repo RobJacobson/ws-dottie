@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   terminalBulletinsByIdInputSchema,
   terminalBulletinsInputSchema,
@@ -19,7 +19,7 @@ export const terminalBulletinsGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalBulletins = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalBulletinsGroup,
   functionName: "fetchTerminalBulletins",
   endpoint: "/terminalBulletins",
@@ -31,7 +31,7 @@ export const fetchTerminalBulletins = defineEndpoint({
 });
 
 export const fetchTerminalBulletinsByTerminalId = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalBulletinsGroup,
   functionName: "fetchTerminalBulletinsByTerminalId",
   endpoint: "/terminalBulletins/{TerminalID}",

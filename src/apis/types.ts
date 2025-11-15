@@ -10,6 +10,20 @@ import type { z } from "zod";
 import type { CacheStrategy } from "@/shared/types";
 
 /**
+ * API definition structure for endpoint files
+ *
+ * This interface defines the structure that endpoint files return as POJOs,
+ * containing API metadata and array of endpoint group definitions with
+ * truncated URLs that can be combined with the base URL.
+ */
+export interface ApiDefinition {
+  /** The API metadata containing name and baseUrl */
+  api: ApiMetadata;
+  /** Array of endpoint group definitions */
+  endpointGroups: EndpointGroup[];
+}
+
+/**
  * API metadata containing name and base URL
  *
  * This type is used to pass API information to endpoint definitions

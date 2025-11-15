@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import { borderCrossingsInputSchema } from "./borderCrossingData.input";
 import { borderCrossingSchema } from "./borderCrossingData.output";
 
@@ -16,7 +16,7 @@ export const borderCrossingDataGroup = defineEndpointGroup({
 });
 
 export const fetchBorderCrossings = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: borderCrossingDataGroup,
   functionName: "fetchBorderCrossings",
   endpoint: "/GetBorderCrossingsAsJson",

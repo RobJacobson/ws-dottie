@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   mountainPassConditionByIdInputSchema,
   mountainPassConditionsInputSchema,
@@ -19,7 +19,7 @@ export const passConditionsGroup = defineEndpointGroup({
 });
 
 export const fetchMountainPassConditionById = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: passConditionsGroup,
   functionName: "fetchMountainPassConditionById",
   endpoint: "/getMountainPassConditionAsJon?PassConditionID={PassConditionID}",
@@ -31,7 +31,7 @@ export const fetchMountainPassConditionById = defineEndpoint({
 });
 
 export const fetchMountainPassConditions = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: passConditionsGroup,
   functionName: "fetchMountainPassConditions",
   endpoint: "/getMountainPassConditionsAsJson",

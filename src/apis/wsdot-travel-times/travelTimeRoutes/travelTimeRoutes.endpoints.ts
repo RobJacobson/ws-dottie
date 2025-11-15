@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   travelTimeByIdInputSchema,
   travelTimesInputSchema,
@@ -19,7 +19,7 @@ export const travelTimeRoutesGroup = defineEndpointGroup({
 });
 
 export const fetchTravelTimeById = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: travelTimeRoutesGroup,
   functionName: "fetchTravelTimeById",
   endpoint: "/getTravelTimeAsJson?TravelTimeID={TravelTimeID}",
@@ -31,7 +31,7 @@ export const fetchTravelTimeById = defineEndpoint({
 });
 
 export const fetchTravelTimes = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: travelTimeRoutesGroup,
   functionName: "fetchTravelTimes",
   endpoint: "/getTravelTimesAsJson",

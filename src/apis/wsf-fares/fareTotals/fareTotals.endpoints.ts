@@ -1,7 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
 import { fareTotalSchema } from "./fareTotals.output";
 
@@ -17,7 +17,7 @@ export const fareTotalsGroup = defineEndpointGroup({
 });
 
 export const fetchFareTotalsByTripDateAndRoute = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: fareTotalsGroup,
   functionName: "fetchFareTotalsByTripDateAndRoute",
   endpoint:

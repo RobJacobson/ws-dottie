@@ -1,9 +1,10 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 import {
   alertByIdInputSchema,
+  alertsByCountyInputSchema,
   alertsByMapAreaInputSchema,
   alertsByRegionIDInputSchema,
   alertsInputSchema,
@@ -24,7 +25,7 @@ export const highwayAlertsGroup = defineEndpointGroup({
 });
 
 export const fetchAlerts = defineEndpoint({
-  api: API,
+  api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlerts",
   endpoint: "/getAlertsAsJson",
@@ -36,7 +37,7 @@ export const fetchAlerts = defineEndpoint({
 });
 
 export const fetchAlertById = defineEndpoint({
-  api: API,
+  api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertById",
   endpoint: "/getAlertAsJson?AlertID={AlertID}",
@@ -47,19 +48,31 @@ export const fetchAlertById = defineEndpoint({
 });
 
 export const fetchAlertsByRegionId = defineEndpoint({
-  api: API,
+  api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByRegionId",
   endpoint: "/getAlertsByRegionIDAsJson?RegionID={RegionID}",
   inputSchema: alertsByRegionIDInputSchema,
   outputSchema: alertSchema.array(),
-  sampleParams: { RegionID: 9 },
+  sampleParams: { RegionID: 4 },
   endpointDescription:
-    "Returns an array of Alert objects for specified WSDOT region.",
+    "Returns an array of Alert objects for specified region.",
+});
+
+export const fetchAlertsByCounty = defineEndpoint({
+  api: apis.wsdotHighwayAlerts,
+  group: highwayAlertsGroup,
+  functionName: "fetchAlertsByCounty",
+  endpoint: "/getAlertsByCountyAsJson?County={County}",
+  inputSchema: alertsByCountyInputSchema,
+  outputSchema: alertSchema.array(),
+  sampleParams: { County: "King" },
+  endpointDescription:
+    "Returns an array of Alert objects for specified county.",
 });
 
 export const fetchAlertsByMapArea = defineEndpoint({
-  api: API,
+  api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByMapArea",
   endpoint: "/getAlertsByMapAreaAsJson?MapArea={MapArea}",
@@ -71,7 +84,7 @@ export const fetchAlertsByMapArea = defineEndpoint({
 });
 
 export const searchAlerts = defineEndpoint({
-  api: API,
+  api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "searchAlerts",
   endpoint:

@@ -1,7 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 import {
   currentWeatherForStationsInputSchema,
   searchWeatherInformationInputSchema,
@@ -22,7 +22,7 @@ export const weatherInfoGroup = defineEndpointGroup({
 });
 
 export const fetchWeatherInformation = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: weatherInfoGroup,
   functionName: "fetchWeatherInformation",
   endpoint: "/GetCurrentWeatherInformationAsJson",
@@ -33,7 +33,7 @@ export const fetchWeatherInformation = defineEndpoint({
 });
 
 export const fetchWeatherInformationByStationId = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: weatherInfoGroup,
   functionName: "fetchWeatherInformationByStationId",
   endpoint:
@@ -45,7 +45,7 @@ export const fetchWeatherInformationByStationId = defineEndpoint({
 });
 
 export const fetchCurrentWeatherForStations = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: weatherInfoGroup,
   functionName: "fetchCurrentWeatherForStations",
   endpoint: "/GetCurrentWeatherForStationsAsJson?StationList={StationList}",
@@ -56,7 +56,7 @@ export const fetchCurrentWeatherForStations = defineEndpoint({
 });
 
 export const searchWeatherInformation = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: weatherInfoGroup,
   functionName: "searchWeatherInformation",
   endpoint:

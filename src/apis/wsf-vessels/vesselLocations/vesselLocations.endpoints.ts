@@ -1,11 +1,16 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
+  type VesselLocationsByIdInput,
+  type VesselLocationsInput,
   vesselLocationsByIdInputSchema,
   vesselLocationsInputSchema,
 } from "./vesselLocations.input";
-import { vesselLocationSchema } from "./vesselLocations.output";
+import {
+  type VesselLocation,
+  vesselLocationSchema,
+} from "./vesselLocations.output";
 
 export const vesselLocationsGroup = defineEndpointGroup({
   name: "vessel-locations",
@@ -18,8 +23,11 @@ export const vesselLocationsGroup = defineEndpointGroup({
   },
 });
 
-export const fetchVesselLocations = defineEndpoint({
-  api: API,
+export const fetchVesselLocations = defineEndpoint<
+  VesselLocationsInput,
+  VesselLocation[]
+>({
+  api: apis.wsdotBorderCrossings,
   group: vesselLocationsGroup,
   functionName: "fetchVesselLocations",
   endpoint: "/vesselLocations",
@@ -30,14 +38,17 @@ export const fetchVesselLocations = defineEndpoint({
     "Returns multiple VesselLocation objects for all vessels in fleet.",
 });
 
-export const fetchVesselLocationsByVesselId = defineEndpoint({
-  api: API,
+export const fetchVesselLocationsByVesselId = defineEndpoint<
+  VesselLocationsByIdInput,
+  VesselLocation
+>({
+  api: apis.wsdotBorderCrossings,
   group: vesselLocationsGroup,
   functionName: "fetchVesselLocationsByVesselId",
   endpoint: "/vesselLocations/{VesselID}",
   inputSchema: vesselLocationsByIdInputSchema,
-  outputSchema: vesselLocationSchema,
   sampleParams: { VesselID: 18 },
+  outputSchema: vesselLocationSchema,
   endpointDescription:
     "Returns a VesselLocation object containing real-time position and status information for specified vessel.",
 });

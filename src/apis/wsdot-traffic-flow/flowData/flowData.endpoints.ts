@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   trafficFlowByIdInputSchema,
   trafficFlowsInputSchema,
@@ -19,7 +19,7 @@ export const flowDataGroup = defineEndpointGroup({
 });
 
 export const fetchTrafficFlows = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: flowDataGroup,
   functionName: "fetchTrafficFlows",
   endpoint: "/getTrafficFlowsAsJson",
@@ -31,7 +31,7 @@ export const fetchTrafficFlows = defineEndpoint({
 });
 
 export const fetchTrafficFlowById = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: flowDataGroup,
   functionName: "fetchTrafficFlowById",
   endpoint: "/getTrafficFlowAsJson?FlowDataID={FlowDataID}",

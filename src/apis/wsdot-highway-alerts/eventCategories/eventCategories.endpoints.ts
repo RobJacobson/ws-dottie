@@ -1,7 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { z } from "@/shared/zod";
-import { API } from "../apiDefinition";
 import { eventCategoriesInputSchema } from "./eventCategories.input";
 
 export const eventCategoriesGroup = defineEndpointGroup({
@@ -16,7 +16,7 @@ export const eventCategoriesGroup = defineEndpointGroup({
 });
 
 export const fetchEventCategories = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: eventCategoriesGroup,
   functionName: "fetchEventCategories",
   endpoint: "/getEventCategoriesAsJson",

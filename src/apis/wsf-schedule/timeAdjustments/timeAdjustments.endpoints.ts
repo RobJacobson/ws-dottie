@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   timeAdjustmentsByRouteInputSchema,
   timeAdjustmentsBySchedRouteInputSchema,
@@ -19,7 +19,7 @@ export const timeAdjustmentsGroup = defineEndpointGroup({
 });
 
 export const fetchTimeAdjustments = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustments",
   endpoint: "/timeadj",
@@ -30,7 +30,7 @@ export const fetchTimeAdjustments = defineEndpoint({
 });
 
 export const fetchTimeAdjustmentsByRoute = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsByRoute",
   endpoint: "/timeadjbyroute/{RouteID}",
@@ -41,7 +41,7 @@ export const fetchTimeAdjustmentsByRoute = defineEndpoint({
 });
 
 export const fetchTimeAdjustmentsBySchedRoute = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsBySchedRoute",
   endpoint: "/timeadjbyschedroute/{SchedRouteID}",

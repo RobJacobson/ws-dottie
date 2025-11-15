@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import { weatherStationsInputSchema } from "./weatherStations.input";
 import { weatherStationSchema } from "./weatherStations.output";
 
@@ -16,7 +16,7 @@ export const weatherStationsGroup = defineEndpointGroup({
 });
 
 export const fetchWeatherStations = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: weatherStationsGroup,
   functionName: "fetchWeatherStations",
   endpoint: "/GetCurrentStationsAsJson",

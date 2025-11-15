@@ -1,7 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 import {
   fareLineItemsBasicInputSchema,
   fareLineItemsByTripDateAndTerminalsInputSchema,
@@ -21,7 +21,7 @@ export const fareLineItemsGroup = defineEndpointGroup({
 });
 
 export const fetchFareLineItemsByTripDateAndTerminals = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: fareLineItemsGroup,
   functionName: "fetchFareLineItemsByTripDateAndTerminals",
   endpoint:
@@ -39,7 +39,7 @@ export const fetchFareLineItemsByTripDateAndTerminals = defineEndpoint({
 });
 
 export const fetchFareLineItemsBasic = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: fareLineItemsGroup,
   functionName: "fetchFareLineItemsBasic",
   endpoint:
@@ -57,7 +57,7 @@ export const fetchFareLineItemsBasic = defineEndpoint({
 });
 
 export const fetchFareLineItemsVerbose = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: fareLineItemsGroup,
   functionName: "fetchFareLineItemsVerbose",
   endpoint: "/fareLineItemsVerbose/{TripDate}",

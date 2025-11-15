@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
@@ -18,7 +18,7 @@ export const scheduleTodayGroup = defineEndpointGroup({
 });
 
 export const fetchScheduleTodayByRoute = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByRoute",
   endpoint: "/scheduletoday/{RouteID}/{OnlyRemainingTimes}",
@@ -29,7 +29,7 @@ export const fetchScheduleTodayByRoute = defineEndpoint({
 });
 
 export const fetchScheduleTodayByTerminals = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByTerminals",
   endpoint:

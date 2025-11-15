@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   allSailingsBySchedRouteIDInputSchema,
   sailingsByRouteIDInputSchema,
@@ -18,7 +18,7 @@ export const sailingsGroup = defineEndpointGroup({
 });
 
 export const fetchAllSailingsBySchedRouteID = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: sailingsGroup,
   functionName: "fetchAllSailingsBySchedRouteID",
   endpoint: "/allsailings/{SchedRouteID}",
@@ -30,7 +30,7 @@ export const fetchAllSailingsBySchedRouteID = defineEndpoint({
 });
 
 export const fetchSailingsByRouteID = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: sailingsGroup,
   functionName: "fetchSailingsByRouteID",
   endpoint: "/sailings/{SchedRouteID}",

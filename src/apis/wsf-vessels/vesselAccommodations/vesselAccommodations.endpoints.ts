@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import type {
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
@@ -27,7 +27,7 @@ export const fetchVesselAccommodations = defineEndpoint<
   VesselAccommodationsInput,
   VesselAccommodation[]
 >({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: vesselAccommodationsGroup,
   functionName: "fetchVesselAccommodations",
   endpoint: "/vesselAccommodations",
@@ -42,7 +42,7 @@ export const fetchVesselAccommodationsByVesselId = defineEndpoint<
   VesselAccommodationsByIdInput,
   VesselAccommodation
 >({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: vesselAccommodationsGroup,
   functionName: "fetchVesselAccommodationsByVesselId",
   endpoint: "/vesselAccommodations/{VesselID}",

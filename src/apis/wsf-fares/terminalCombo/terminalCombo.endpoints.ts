@@ -1,7 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 import {
   terminalComboFaresVerboseInputSchema,
   terminalComboInputSchema,
@@ -23,7 +23,7 @@ export const terminalComboGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalComboFares = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalComboGroup,
   functionName: "fetchTerminalComboFares",
   endpoint:
@@ -40,7 +40,7 @@ export const fetchTerminalComboFares = defineEndpoint({
 });
 
 export const fetchTerminalComboFaresVerbose = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalComboGroup,
   functionName: "fetchTerminalComboFaresVerbose",
   endpoint: "/terminalComboVerbose/{TripDate}",

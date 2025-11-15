@@ -1,3 +1,4 @@
+import { apis } from "@/apis/shared/apis";
 import {
   type CacheFlushDateInput,
   type CacheFlushDateOutput,
@@ -6,7 +7,6 @@ import {
 } from "@/apis/shared/cacheFlushDate";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 
 export const cacheFlushDateScheduleGroup = defineEndpointGroup({
   name: "cache-flush-date-schedule",
@@ -20,7 +20,7 @@ export const cacheFlushDateScheduleGroup = defineEndpointGroup({
 });
 
 export const fetchCacheFlushDateSchedule = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: cacheFlushDateScheduleGroup,
   functionName: "fetchCacheFlushDateSchedule",
   endpoint: "/cacheflushdate",

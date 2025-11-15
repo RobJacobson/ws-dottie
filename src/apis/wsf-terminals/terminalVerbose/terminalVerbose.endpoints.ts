@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import {
   terminalVerboseByTerminalIdInputSchema,
   terminalVerboseInputSchema,
@@ -19,7 +19,7 @@ export const terminalVerboseGroup = defineEndpointGroup({
 });
 
 export const fetchTerminalVerbose = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalVerboseGroup,
   functionName: "fetchTerminalVerbose",
   endpoint: "/terminalVerbose",
@@ -31,7 +31,7 @@ export const fetchTerminalVerbose = defineEndpoint({
 });
 
 export const fetchTerminalVerboseByTerminalId = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: terminalVerboseGroup,
   functionName: "fetchTerminalVerboseByTerminalId",
   endpoint: "/terminalVerbose/{TerminalID}",

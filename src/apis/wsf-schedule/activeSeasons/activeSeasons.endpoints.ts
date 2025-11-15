@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import { activeSeasonsInputSchema } from "./activeSeasons.input";
 import { scheduleBaseSchema } from "./activeSeasons.output";
 
@@ -16,7 +16,7 @@ export const activeSeasonsGroup = defineEndpointGroup({
 });
 
 export const fetchActiveSeasons = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: activeSeasonsGroup,
   functionName: "fetchActiveSeasons",
   endpoint: "/activeseasons",

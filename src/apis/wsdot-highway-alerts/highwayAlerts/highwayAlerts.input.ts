@@ -119,3 +119,22 @@ export const alertsByRegionIDInputSchema = z
   );
 
 export type AlertsByRegionIDInput = z.infer<typeof alertsByRegionIDInputSchema>;
+
+/**
+ * Input schema for HighwayAlertsByCounty endpoint
+ *
+ * Return alerts for a specific county
+ */
+export const alertsByCountyInputSchema = z
+  .object({
+    County: z
+      .string()
+      .describe(
+        "County name for filtering alerts by county. E.g., 'King' for King County, 'Pierce' for Pierce County. Used to filter alerts by specific county within Washington State."
+      ),
+  })
+  .describe(
+    "Retrieves highway alerts for specific county, returning alerts within that county boundary. Use for county-specific alert monitoring and local traffic information."
+  );
+
+export type AlertsByCountyInput = z.infer<typeof alertsByCountyInputSchema>;

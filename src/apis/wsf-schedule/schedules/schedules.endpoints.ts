@@ -1,7 +1,7 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
-import { API } from "../apiDefinition";
 import {
   scheduleByTripDateAndRouteIdInputSchema,
   scheduleByTripDateAndTerminals,
@@ -20,7 +20,7 @@ export const schedulesGroup = defineEndpointGroup({
 });
 
 export const fetchScheduleByTripDateAndRouteId = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: schedulesGroup,
   functionName: "fetchScheduleByTripDateAndRouteId",
   endpoint: "/schedule/{TripDate}/{RouteID}",
@@ -32,7 +32,7 @@ export const fetchScheduleByTripDateAndRouteId = defineEndpoint({
 
 export const fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds =
   defineEndpoint({
-    api: API,
+    api: apis.wsdotBorderCrossings,
     group: schedulesGroup,
     functionName: "fetchScheduleByTripDateAndDepartingTerminalIdAndTerminalIds",
     endpoint: "/schedule/{TripDate}/{DepartingTerminalID}/{ArrivingTerminalID}",

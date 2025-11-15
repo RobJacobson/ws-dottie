@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
 import { alertDetailSchema } from "./scheduleAlerts.output";
 
@@ -15,7 +15,7 @@ export const scheduleAlertsGroup = defineEndpointGroup({
 });
 
 export const fetchScheduleAlerts = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: scheduleAlertsGroup,
   functionName: "fetchScheduleAlerts",
   endpoint: "/alerts",

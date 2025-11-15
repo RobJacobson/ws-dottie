@@ -1,6 +1,6 @@
+import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
-import { API } from "../apiDefinition";
 import { mapAreasInputSchema } from "./alertAreas.input";
 import { areaSchema } from "./alertAreas.output";
 
@@ -16,7 +16,7 @@ export const alertAreasGroup = defineEndpointGroup({
 });
 
 export const fetchMapAreas = defineEndpoint({
-  api: API,
+  api: apis.wsdotBorderCrossings,
   group: alertAreasGroup,
   functionName: "fetchMapAreas",
   endpoint: "/getMapAreasAsJson",
