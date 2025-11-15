@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import {
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
@@ -19,7 +19,7 @@ export const bridgeClearancesGroup: EndpointGroup = {
 };
 
 export const fetchBridgeClearances = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsdotBridgeClearances,
   group: bridgeClearancesGroup,
   functionName: "fetchBridgeClearances",
   endpoint: "/getClearancesAsJson",
@@ -31,7 +31,7 @@ export const fetchBridgeClearances = defineEndpoint({
 });
 
 export const fetchBridgeClearancesByRoute = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsdotBridgeClearances,
   group: bridgeClearancesGroup,
   functionName: "fetchBridgeClearancesByRoute",
   endpoint: "/getClearancesAsJson?Route={Route}",

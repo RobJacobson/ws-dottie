@@ -27,7 +27,7 @@ export const fetchVesselsVerbose = defineEndpoint<
   VesselVerboseInput,
   VesselVerbose[]
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselVerboseGroup,
   functionName: "fetchVesselsVerbose",
   endpoint: "/vesselVerbose",
@@ -42,7 +42,7 @@ export const fetchVesselsVerboseByVesselId = defineEndpoint<
   VesselVerboseByIdInput,
   VesselVerbose
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselVerboseGroup,
   functionName: "fetchVesselsVerboseByVesselId",
   endpoint: "/vesselVerbose/{VesselID}",

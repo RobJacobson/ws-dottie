@@ -1,7 +1,7 @@
 import { apis } from "@/apis/shared/apis";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
 
 export const scheduleValidDateRangeGroup: EndpointGroup = {
@@ -16,7 +16,7 @@ export const scheduleValidDateRangeGroup: EndpointGroup = {
 };
 
 export const fetchScheduleValidDateRange = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfSchedule,
   group: scheduleValidDateRangeGroup,
   functionName: "fetchScheduleValidDateRange",
   endpoint: "/validdaterange",

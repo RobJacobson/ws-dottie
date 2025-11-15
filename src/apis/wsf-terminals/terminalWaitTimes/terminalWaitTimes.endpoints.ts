@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import {
   terminalWaitTimesByIdInputSchema,
   terminalWaitTimesInputSchema,
@@ -19,7 +19,7 @@ export const terminalWaitTimesGroup: EndpointGroup = {
 };
 
 export const fetchTerminalWaitTimes = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfTerminals,
   group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimes",
   endpoint: "/terminalWaitTimes",
@@ -31,7 +31,7 @@ export const fetchTerminalWaitTimes = defineEndpoint({
 });
 
 export const fetchTerminalWaitTimesByTerminalId = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfTerminals,
   group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimesByTerminalId",
   endpoint: "/terminalWaitTimes/{TerminalID}",

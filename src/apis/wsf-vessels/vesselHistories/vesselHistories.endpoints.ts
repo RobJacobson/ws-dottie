@@ -26,7 +26,7 @@ export const fetchVesselHistories = defineEndpoint<
   VesselHistoriesInput,
   VesselHistory[]
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselHistoriesGroup,
   functionName: "fetchVesselHistories",
   endpoint: "/vesselHistory",
@@ -41,7 +41,7 @@ export const fetchVesselHistoriesByVesselNameAndDateRange = defineEndpoint<
   VesselHistoriesByVesselNameAndDateRangeInput,
   VesselHistory[]
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselHistoriesGroup,
   functionName: "fetchVesselHistoriesByVesselNameAndDateRange",
   endpoint: "/vesselHistory/{VesselName}/{DateStart}/{DateEnd}",

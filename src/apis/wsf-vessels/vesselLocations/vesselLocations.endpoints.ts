@@ -27,7 +27,7 @@ export const fetchVesselLocations = defineEndpoint<
   VesselLocationsInput,
   VesselLocation[]
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselLocationsGroup,
   functionName: "fetchVesselLocations",
   endpoint: "/vesselLocations",
@@ -42,7 +42,7 @@ export const fetchVesselLocationsByVesselId = defineEndpoint<
   VesselLocationsByIdInput,
   VesselLocation
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselLocationsGroup,
   functionName: "fetchVesselLocationsByVesselId",
   endpoint: "/vesselLocations/{VesselID}",

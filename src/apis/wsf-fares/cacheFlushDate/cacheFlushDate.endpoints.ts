@@ -5,8 +5,8 @@ import {
   cacheFlushDateInputSchema,
   cacheFlushDateOutputSchema,
 } from "@/apis/shared/cacheFlushDate";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 
 export const cacheFlushDateFaresGroup: EndpointGroup = {
   name: "cache-flush-date-fares",
@@ -20,7 +20,7 @@ export const cacheFlushDateFaresGroup: EndpointGroup = {
 };
 
 export const fetchCacheFlushDateFares = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfFares,
   group: cacheFlushDateFaresGroup,
   functionName: "fetchCacheFlushDateFares",
   endpoint: "/cacheflushdate",

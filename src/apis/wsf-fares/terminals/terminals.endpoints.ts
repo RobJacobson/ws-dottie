@@ -6,8 +6,8 @@ import {
   terminalsInputSchema,
 } from "@/apis/shared/terminals.input";
 import { terminalListSchema } from "@/apis/shared/terminals.output";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { datesHelper } from "@/shared/utils";
 
 export const terminalsGroup: EndpointGroup = {
@@ -22,7 +22,7 @@ export const terminalsGroup: EndpointGroup = {
 };
 
 export const fetchTerminalFares = defineEndpoint<TerminalsInput, any>({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfFares,
   group: terminalsGroup,
   functionName: "fetchTerminalFares",
   endpoint: "/terminals/{TripDate}",
@@ -34,7 +34,7 @@ export const fetchTerminalFares = defineEndpoint<TerminalsInput, any>({
 });
 
 export const fetchTerminalMatesFares = defineEndpoint<TerminalMatesInput, any>({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfFares,
   group: terminalsGroup,
   functionName: "fetchTerminalMatesFares",
   endpoint: "/terminalMates/{TripDate}/{TerminalID}",

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import {
   scheduledRoutesByIdInputSchema,
   scheduledRoutesInputSchema,
@@ -18,7 +18,7 @@ export const scheduledRoutesGroup: EndpointGroup = {
 };
 
 export const fetchScheduledRoutes = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfSchedule,
   group: scheduledRoutesGroup,
   functionName: "fetchScheduledRoutes",
   endpoint: "/schedroutes",
@@ -29,7 +29,7 @@ export const fetchScheduledRoutes = defineEndpoint({
 });
 
 export const fetchScheduledRoutesById = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfSchedule,
   group: scheduledRoutesGroup,
   functionName: "fetchScheduledRoutesById",
   endpoint: "/schedroutes/{ScheduleID}",

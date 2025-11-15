@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { commercialVehicleRestrictionsInputSchema } from "./cvRestrictionData.input";
 import { cvRestrictionSchema } from "./cvRestrictionData.output";
 
@@ -16,7 +16,7 @@ export const cvRestrictionDataGroup: EndpointGroup = {
 };
 
 export const fetchCommercialVehicleRestrictions = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsdotCommercialVehicleRestrictions,
   group: cvRestrictionDataGroup,
   functionName: "fetchCommercialVehicleRestrictions",
   endpoint: "/getCommercialVehicleRestrictionsAsJson",

@@ -19,7 +19,7 @@ export const terminalBasicsGroup: EndpointGroup = {
 };
 
 export const fetchTerminalBasics = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfTerminals,
   group: terminalBasicsGroup,
   functionName: "fetchTerminalBasics",
   endpoint: "/terminalBasics",
@@ -31,7 +31,7 @@ export const fetchTerminalBasics = defineEndpoint({
 });
 
 export const fetchTerminalBasicsByTerminalId = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfTerminals,
   group: terminalBasicsGroup,
   functionName: "fetchTerminalBasicsByTerminalId",
   endpoint: "/terminalBasics/{TerminalID}",

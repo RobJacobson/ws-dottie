@@ -23,7 +23,7 @@ export const fetchCacheFlushDateVessels = defineEndpoint<
   CacheFlushDateInput,
   CacheFlushDateOutput
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: cacheFlushDateVesselsGroup,
   functionName: "fetchCacheFlushDateVessels",
   endpoint: "/cacheflushdate",

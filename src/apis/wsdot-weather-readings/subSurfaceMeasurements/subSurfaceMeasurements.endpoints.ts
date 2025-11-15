@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
 import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
 
@@ -16,7 +16,7 @@ export const subSurfaceMeasurementsGroup: EndpointGroup = {
 };
 
 export const fetchSubSurfaceMeasurements = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsdotWeatherReadings,
   group: subSurfaceMeasurementsGroup,
   functionName: "fetchSubSurfaceMeasurements",
   endpoint: "/Scanweb/SubSurfaceMeasurements",

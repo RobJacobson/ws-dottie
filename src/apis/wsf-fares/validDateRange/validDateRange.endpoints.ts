@@ -1,7 +1,7 @@
 import { apis } from "@/apis/shared/apis";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import {
   type FaresValidDateRangeInput,
   faresValidDateRangeInputSchema,
@@ -22,7 +22,7 @@ export const fetchFaresValidDateRange = defineEndpoint<
   FaresValidDateRangeInput,
   any
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfFares,
   group: validDateRangeGroup,
   functionName: "fetchFaresValidDateRange",
   endpoint: "/validdaterange",

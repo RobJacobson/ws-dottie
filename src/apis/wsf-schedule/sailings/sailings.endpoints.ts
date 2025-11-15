@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import {
   allSailingsBySchedRouteIDInputSchema,
   sailingsByRouteIDInputSchema,
@@ -18,7 +18,7 @@ export const sailingsGroup: EndpointGroup = {
 };
 
 export const fetchAllSailingsBySchedRouteID = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfSchedule,
   group: sailingsGroup,
   functionName: "fetchAllSailingsBySchedRouteID",
   endpoint: "/allsailings/{SchedRouteID}",
@@ -30,7 +30,7 @@ export const fetchAllSailingsBySchedRouteID = defineEndpoint({
 });
 
 export const fetchSailingsByRouteID = defineEndpoint({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfSchedule,
   group: sailingsGroup,
   functionName: "fetchSailingsByRouteID",
   endpoint: "/sailings/{SchedRouteID}",

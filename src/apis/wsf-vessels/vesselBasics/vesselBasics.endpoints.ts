@@ -24,7 +24,7 @@ export const fetchVesselBasics = defineEndpoint<
   VesselBasicsInput,
   VesselBasic[]
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselBasicsGroup,
   functionName: "fetchVesselBasics",
   endpoint: "/vesselBasics",
@@ -39,7 +39,7 @@ export const fetchVesselBasicsByVesselId = defineEndpoint<
   VesselBasicsByIdInput,
   VesselBasic
 >({
-  api: apis.wsdotBorderCrossings,
+  api: apis.wsfVessels,
   group: vesselBasicsGroup,
   functionName: "fetchVesselBasicsByVesselId",
   endpoint: "/vesselBasics/{VesselID}",
@@ -47,5 +47,5 @@ export const fetchVesselBasicsByVesselId = defineEndpoint<
   outputSchema: vesselBasicSchema,
   sampleParams: { VesselID: 74 },
   endpointDescription:
-    "Returns a VesselBasic object containing essential identification and status information for the specified vessel.",
+    "Returns a VesselBasic object containing essential identification and status information for specified vessel.",
 });
