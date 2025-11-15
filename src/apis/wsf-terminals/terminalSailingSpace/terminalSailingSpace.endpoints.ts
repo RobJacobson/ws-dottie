@@ -11,9 +11,14 @@ export const terminalSailingSpaceGroup: EndpointGroup = {
   name: "terminal-sailing-space",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability.",
-    businessContext: "",
+    summary: "Real-time sailing space availability for upcoming departures.",
+    description:
+      "Terminal condition data including drive-up and reservation spaces available for select departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group. Do not cache results for extended periods.",
+    useCases: [
+      "Display real-time space availability for upcoming sailings.",
+      "Show drive-up and reservation space counts with color indicators.",
+      "Monitor vessel assignments and departure cancellations.",
+    ],
   },
 };
 
@@ -25,8 +30,7 @@ export const fetchTerminalSailingSpace = createEndpoint({
   inputSchema: terminalSailingSpaceInputSchema,
   outputSchema: terminalSailingSpaceSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple TerminalSailingSpace objects for all terminals.",
+  endpointDescription: "List sailing space availability for all terminals.",
 });
 
 export const fetchTerminalSailingSpaceByTerminalId = createEndpoint({
@@ -38,5 +42,5 @@ export const fetchTerminalSailingSpaceByTerminalId = createEndpoint({
   outputSchema: terminalSailingSpaceSchema,
   sampleParams: { TerminalID: 7 },
   endpointDescription:
-    "Returns TerminalSailingSpace data for the terminal with the given identifier.",
+    "Get sailing space availability for a specific terminal by ID.",
 });

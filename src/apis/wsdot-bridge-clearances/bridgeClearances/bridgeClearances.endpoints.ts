@@ -11,10 +11,15 @@ export const bridgeClearancesGroup: EndpointGroup = {
   name: "bridge-clearances",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each BridgeDataGIS item represents vertical clearance measurements for Washington State bridges, including bridge identification numbers, GPS coordinates, route information, and clearance height data in both feet-inches and inches formats. These items provide essential height restriction information needed for commercial vehicle routing and oversize load permit applications.",
-    businessContext:
-      "Use to check bridge heights and plan commercial vehicle routes by providing vertical clearance measurements, bridge location data, and route information for Washington State bridges. Verify vehicle clearance requirements and identify height restrictions before planning routes with oversize loads.",
+    summary: "Vertical clearance measurements for Washington State bridges.",
+    description:
+      "Bridge height restrictions including location data, route associations, and clearance measurements in both feet-inches and inches formats.",
+    useCases: [
+      "Plan commercial vehicle routes with height restrictions.",
+      "Verify clearance requirements for oversize load permits.",
+      "Identify bridge height limitations for route planning.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -27,7 +32,7 @@ export const fetchBridgeClearances = createEndpoint({
   outputSchema: bridgeClearanceSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
+    "List vertical clearance data for all Washington State bridges.",
 });
 
 export const fetchBridgeClearancesByRoute = createEndpoint({
@@ -39,5 +44,5 @@ export const fetchBridgeClearancesByRoute = createEndpoint({
   outputSchema: bridgeClearanceSchema.array(),
   sampleParams: { Route: "005" },
   endpointDescription:
-    "Returns an array of BridgeDataGIS objects containing vertical clearance data filtered by specified state route.",
+    "Get vertical clearance data for bridges on a specific state route.",
 });

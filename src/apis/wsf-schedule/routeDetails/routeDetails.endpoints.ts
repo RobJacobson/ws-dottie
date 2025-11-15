@@ -13,10 +13,15 @@ export const routeDetailsGroup: EndpointGroup = {
   name: "route-details",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each RouteDetails item represents a ferry route with complete service information. Each route includes departure and arrival terminals, sailing times, vessel assignments, and route-specific details for travel planning.",
-    businessContext:
-      "Use to plan ferry travel by providing comprehensive route information including terminals, schedules, and vessel details for trip planning and navigation.",
+    summary: "Detailed ferry route information with service details.",
+    description:
+      "Comprehensive route data including terminals, crossing times, vessel assignments, alerts, and route-specific notes for trip planning.",
+    useCases: [
+      "Display detailed route information for trip planning.",
+      "Show route alerts and service disruptions.",
+      "Access route-specific notes and accessibility information.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -28,7 +33,8 @@ export const fetchRouteDetailsByTripDate = createEndpoint({
   inputSchema: routeDetailsByTripDateInputSchema,
   outputSchema: routeDetailSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
-  endpointDescription: "Returns multiple of RouteDetails for specified date.",
+  endpointDescription:
+    "List detailed route information for all routes on specified date.",
 });
 
 export const fetchRouteDetailsByTripDateAndRouteId = createEndpoint({
@@ -39,7 +45,8 @@ export const fetchRouteDetailsByTripDateAndRouteId = createEndpoint({
   inputSchema: routeDetailsByTripDateAndRouteIdInputSchema,
   outputSchema: routeDetailSchema,
   sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 1 },
-  endpointDescription: "Returns single of RouteDetails for specified route.",
+  endpointDescription:
+    "Get detailed route information for specific route on date.",
 });
 
 export const fetchRouteDetailsByTripDateAndTerminals = createEndpoint({
@@ -55,5 +62,6 @@ export const fetchRouteDetailsByTripDateAndTerminals = createEndpoint({
     DepartingTerminalID: 1,
     ArrivingTerminalID: 10,
   },
-  endpointDescription: "Returns multiple of RouteDetails for terminal pair.",
+  endpointDescription:
+    "List detailed route information for terminal pair on date.",
 });

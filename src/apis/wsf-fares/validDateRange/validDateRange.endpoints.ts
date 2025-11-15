@@ -11,10 +11,15 @@ export const validDateRangeGroup: EndpointGroup = {
   name: "valid-date-range",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each ValidDateRange item represents current validity period for Washington State Ferries fare data. This endpoint provides the start and end dates between which fare information is accurate and published for all ferry routes.",
-    businessContext:
-      "Use to determine valid fare calculation periods by providing DateFrom and DateThru dates for accurate fare queries and booking systems.",
+    summary: "Validity period for published WSF fare data.",
+    description:
+      "Returns the start and end dates between which fare information is accurate and available for all ferry routes. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Determine valid trip dates for fare queries.",
+      "Validate trip date inputs before calling other endpoints.",
+      "Display available date ranges in booking interfaces.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -29,6 +34,5 @@ export const fetchFaresValidDateRange = createEndpoint<
   inputSchema: faresValidDateRangeInputSchema,
   outputSchema: validDateRangeSchema,
   sampleParams: {},
-  endpointDescription:
-    "Returns a single ValidDateRange object for the current fares data validity period.",
+  endpointDescription: "Get the validity date range for published fares data.",
 });

@@ -17,7 +17,7 @@ import { z } from "@/shared/zod";
 export const terminalSailingSpaceInputSchema = z
   .object({})
   .describe(
-    "Retrieves real-time terminal condition data including drive-up and reservation spaces available for upcoming departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Returns all terminals or specific terminal if TerminalID is provided. Use for real-time space availability display. Do not cache results for extended periods."
+    "Input parameters for retrieving terminal sailing space availability."
   );
 
 export type TerminalSailingSpaceInput = z.infer<
@@ -33,15 +33,10 @@ export type TerminalSailingSpaceInput = z.infer<
  */
 export const terminalSailingSpaceByTerminalIdInputSchema = z
   .object({
-    TerminalID: z
-      .number()
-      .int()
-      .describe(
-        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for sailing space lookup."
-      ),
+    TerminalID: z.number().int().describe("Numeric ID of the terminal."),
   })
   .describe(
-    "Retrieves real-time terminal condition data for specified terminal including drive-up and reservation spaces available for upcoming departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific real-time space availability display. Do not cache results for extended periods."
+    "Input parameters for retrieving sailing space availability for a specific terminal."
   );
 
 export type TerminalSailingSpaceByTerminalIdInput = z.infer<

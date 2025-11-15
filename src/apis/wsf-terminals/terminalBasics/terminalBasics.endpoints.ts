@@ -11,10 +11,15 @@ export const terminalBasicsGroup: EndpointGroup = {
   name: "terminal-basics",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalBasic item represents essential terminal details for Washington State Ferry terminals, including terminal identification, operational status, facility amenities, and regional assignments. These items provide foundational information needed for trip planning and accessibility compliance.",
-    businessContext:
-      "Use to plan ferry trips and ensure accessibility compliance by providing terminal facility information including amenities and regional assignments for WSF travelers and operators.",
+    summary:
+      "Essential terminal details including identification, amenities, and regional assignments.",
+    description:
+      "Basic terminal information for Washington State Ferry terminals including IDs, names, abbreviations, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display terminal lists with basic identification and amenities.",
+      "Plan ferry trips with accessibility and facility information.",
+      "Filter terminals by region or amenities.",
+    ],
   },
 };
 
@@ -26,8 +31,7 @@ export const fetchTerminalBasics = createEndpoint({
   inputSchema: terminalBasicsInputSchema,
   outputSchema: terminalBasicSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple TerminalBasic objects for all terminals.",
+  endpointDescription: "List basic information for all terminals.",
 });
 
 export const fetchTerminalBasicsByTerminalId = createEndpoint({
@@ -38,6 +42,5 @@ export const fetchTerminalBasicsByTerminalId = createEndpoint({
   inputSchema: terminalBasicsByIdInputSchema,
   outputSchema: terminalBasicSchema,
   sampleParams: { TerminalID: 1 },
-  endpointDescription:
-    "Returns a TerminalBasic object containing essential identification and status information for the specified terminal.",
+  endpointDescription: "Get basic information for a specific terminal by ID.",
 });

@@ -12,10 +12,15 @@ export const cacheFlushDateScheduleGroup: EndpointGroup = {
   name: "cache-flush-date-schedule",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Represents the timestamp of when any static endpoint data for the wsf-schedule API was last updated. This information helps applications determine when to refresh cached schedule information through cache invalidation.",
-    businessContext:
-      "Many wsf-schedule endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-schedule data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by ws-dottie useQuery hooks to invalidate cache.",
+    summary: "Cache invalidation timestamp for wsf-schedule static data.",
+    description:
+      "Timestamp indicating when static endpoint data for the wsf-schedule API was last updated. Use to determine when to invalidate cached schedule information.",
+    useCases: [
+      "Poll periodically to detect when static schedule data has changed.",
+      "Invalidate application cache when timestamp changes.",
+      "Optimize cache refresh strategy for schedule endpoints.",
+    ],
+    updateFrequency: "on-change",
   },
 };
 
@@ -28,7 +33,7 @@ export const fetchCacheFlushDateSchedule = createEndpoint({
   outputSchema: cacheFlushDateOutputSchema,
   sampleParams: {},
   endpointDescription:
-    "Returns the timestamp of when any static endpoint data for the wsf-schedule API was last updated.",
+    "Get timestamp of when static wsf-schedule data was last updated.",
 });
 
 // Re-export with API-specific names for backward compatibility

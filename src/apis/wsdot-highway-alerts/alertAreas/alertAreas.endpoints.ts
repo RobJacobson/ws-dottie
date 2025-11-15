@@ -8,10 +8,15 @@ export const alertAreasGroup: EndpointGroup = {
   name: "alertAreas",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each Area item represents a geographic region used for organizing and filtering highway alerts across Washington State. These include unique area codes and descriptive names for different regions.",
-    businessContext:
-      "Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.",
+    summary: "Geographic map areas for filtering highway alerts by region.",
+    description:
+      "Area codes and names used to organize and filter highway alerts across Washington State geographic regions.",
+    useCases: [
+      "Filter highway alerts by geographic map area.",
+      "Obtain valid area codes for alert queries.",
+      "Display regional alert organization in user interfaces.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -24,5 +29,5 @@ export const fetchMapAreas = createEndpoint({
   outputSchema: areaSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns an array of Area objects for all available geographic regions.",
+    "List all available geographic map areas for filtering alerts.",
 });

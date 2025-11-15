@@ -17,10 +17,17 @@ export const highwayAlertsGroup: EndpointGroup = {
   // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each Alert item represents real-time traffic incidents, road conditions, construction, and other events affecting Washington State highways. These include location details, impact levels, start/end times, and estimated duration.",
-    businessContext:
-      "Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.",
+    summary:
+      "Real-time highway alerts for traffic incidents and road conditions.",
+    description:
+      "Traffic incidents, construction, maintenance, and other events affecting Washington State highways, including location details, impact levels, timestamps, and event classifications.",
+    useCases: [
+      "Monitor real-time traffic incidents and road conditions.",
+      "Plan alternate routes based on current highway alerts.",
+      "Display active alerts filtered by location, region, or category.",
+      "Track alert status and estimated resolution times.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -32,8 +39,7 @@ export const fetchAlerts = createEndpoint({
   inputSchema: alertsInputSchema,
   outputSchema: alertSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns an array of Alert objects for all current highway incidents.",
+  endpointDescription: "List all current highway alerts statewide.",
 });
 
 export const fetchAlertById = createEndpoint({
@@ -44,7 +50,7 @@ export const fetchAlertById = createEndpoint({
   inputSchema: alertByIdInputSchema,
   outputSchema: alertSchema,
   sampleParams: { AlertID: 468632 },
-  endpointDescription: "Returns a single Alert object for specified AlertID.",
+  endpointDescription: "Get highway alert details for a specific alert ID.",
 });
 
 export const fetchAlertsByRegionId = createEndpoint({
@@ -55,8 +61,7 @@ export const fetchAlertsByRegionId = createEndpoint({
   inputSchema: alertsByRegionIDInputSchema,
   outputSchema: alertSchema.array(),
   sampleParams: { RegionID: 4 },
-  endpointDescription:
-    "Returns an array of Alert objects for specified region.",
+  endpointDescription: "List highway alerts filtered by WSDOT region ID.",
 });
 
 export const fetchAlertsByCounty = createEndpoint({
@@ -67,8 +72,7 @@ export const fetchAlertsByCounty = createEndpoint({
   inputSchema: alertsByCountyInputSchema,
   outputSchema: alertSchema.array(),
   sampleParams: { County: "King" },
-  endpointDescription:
-    "Returns an array of Alert objects for specified county.",
+  endpointDescription: "List highway alerts filtered by county name.",
 });
 
 export const fetchAlertsByMapArea = createEndpoint({
@@ -79,8 +83,7 @@ export const fetchAlertsByMapArea = createEndpoint({
   inputSchema: alertsByMapAreaInputSchema,
   outputSchema: alertSchema.array(),
   sampleParams: { MapArea: "Seattle" },
-  endpointDescription:
-    "Returns an array of Alert objects for specified geographic area.",
+  endpointDescription: "List highway alerts filtered by map area code.",
 });
 
 export const searchAlerts = createEndpoint({
@@ -99,5 +102,5 @@ export const searchAlerts = createEndpoint({
     SearchTimeEnd: datesHelper.today(),
   },
   endpointDescription:
-    "Returns an array of Alert objects matching specified search criteria.",
+    "Search highway alerts by route, region, time range, and milepost.",
 });

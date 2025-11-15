@@ -171,7 +171,7 @@ export const terminalSailingSpaceSchema = terminalBaseSchema
       ),
   })
   .describe(
-    "Represents terminal sailing space information including terminal identification, upcoming departures with space availability, and fare collection status. E.g., Anacortes terminal (ID 1) with multiple departures showing drive-up and reservation space availability. Used for real-time terminal condition monitoring and space availability display."
+    "Terminal sailing space information including terminal identification, upcoming departures with space availability, and fare collection status."
   );
 
 export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
@@ -183,9 +183,7 @@ export type TerminalSailingSpace = z.infer<typeof terminalSailingSpaceSchema>;
  */
 export const getAllTerminalSailingSpaceSchema = z
   .array(terminalSailingSpaceSchema)
-  .describe(
-    "Array of terminal sailing space information including terminal IDs, upcoming departures with space availability, and fare collection status. E.g., array containing all terminals with their real-time space data. Used for real-time terminal condition monitoring across all terminals."
-  );
+  .describe("Array of sailing space information for all terminals.");
 
 export type GetAllTerminalSailingSpace = z.infer<
   typeof getAllTerminalSailingSpaceSchema

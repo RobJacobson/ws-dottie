@@ -8,9 +8,16 @@ export const surfaceMeasurementsGroup: EndpointGroup = {
   name: "surface-measurements",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "SurfaceMeasurements provides surface sensor data including surface temperature, road freezing temperature, and road surface condition from weather stations. Coverage Area: Statewide.",
-    businessContext: "",
+    summary:
+      "Surface sensor measurements from WSDOT weather stations statewide.",
+    description:
+      "Pavement surface temperature, road freezing temperature, and road surface condition codes from sensors embedded in or mounted on road surfaces.",
+    useCases: [
+      "Monitor road surface conditions for winter maintenance operations.",
+      "Assess pavement temperature and freezing risk.",
+      "Evaluate travel safety based on surface condition codes.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -22,6 +29,5 @@ export const fetchSurfaceMeasurements = createEndpoint({
   inputSchema: surfaceMeasurementsInputSchema,
   outputSchema: surfaceMeasurementSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns surface measurements from all weather stations.",
+  endpointDescription: "List surface measurements from all weather stations.",
 });

@@ -11,9 +11,14 @@ export const scheduleTodayGroup: EndpointGroup = {
   name: "schedule-today",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.",
-    businessContext: "",
+    summary: "Today's sailing schedule for ferry routes.",
+    description:
+      "Current day sailing information with option to show only remaining departures. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Show today's remaining sailings in real-time apps.",
+      "Display current day schedule with all departures.",
+      "Filter to only upcoming sailings for today.",
+    ],
   },
 };
 
@@ -25,7 +30,7 @@ export const fetchScheduleTodayByRoute = createEndpoint({
   inputSchema: scheduleTodayByRouteSchema,
   outputSchema: scheduleSchema,
   sampleParams: { RouteID: 9, OnlyRemainingTimes: false },
-  endpointDescription: "Returns today's schedule for the specified route.",
+  endpointDescription: "Get today's schedule for a specific route.",
 });
 
 export const fetchScheduleTodayByTerminals = createEndpoint({
@@ -41,6 +46,5 @@ export const fetchScheduleTodayByTerminals = createEndpoint({
     ArrivingTerminalID: 10,
     OnlyRemainingTimes: false,
   },
-  endpointDescription:
-    "Returns today's schedule for the specified terminal pair.",
+  endpointDescription: "Get today's schedule for a terminal pair.",
 });

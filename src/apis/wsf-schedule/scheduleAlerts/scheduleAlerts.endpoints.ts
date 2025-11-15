@@ -8,9 +8,14 @@ export const scheduleAlertsGroup: EndpointGroup = {
   name: "schedule-alerts",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Schedule alerts provide important notifications about ferry service including delays, cancellations, terminal updates, and other service-related announcements.",
-    businessContext: "",
+    summary: "Service alerts and notifications for ferry schedules.",
+    description:
+      "Important notifications about ferry service including delays, cancellations, terminal updates, and service-related announcements. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display service alerts and notifications in rider apps.",
+      "Monitor schedule changes and disruptions.",
+      "Show route-specific and system-wide announcements.",
+    ],
   },
 };
 
@@ -22,5 +27,5 @@ export const fetchScheduleAlerts = createEndpoint({
   inputSchema: scheduleAlertsInputSchema,
   outputSchema: alertDetailSchema.array(),
   sampleParams: {},
-  endpointDescription: "Returns all current schedule alerts.",
+  endpointDescription: "List all current schedule alerts.",
 });

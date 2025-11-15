@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
 export const subSurfaceMeasurementsInputSchema = z
   .object({})
   .describe(
-    "Retrieves subsurface sensor measurements from all weather stations statewide, returning subsurface temperature data from sensors embedded below road pavement. Use for ground temperature monitoring and winter maintenance operations."
+    "Input parameters for listing subsurface measurements from all stations."
   );
 
 export type SubSurfaceMeasurementsInput = z.infer<

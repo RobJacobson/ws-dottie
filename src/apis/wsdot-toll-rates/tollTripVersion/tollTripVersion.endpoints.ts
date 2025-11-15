@@ -8,9 +8,15 @@ export const tollTripVersionGroup: EndpointGroup = {
   name: "toll-trip-version",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "TollTripVersion provides version and timestamp information for toll trip data, enabling cache management and data freshness tracking.",
-    businessContext: "",
+    summary: "Version and timestamp information for toll trip data.",
+    description:
+      "Current version number and timestamp for toll trip rates data, enabling cache management and data freshness tracking.",
+    useCases: [
+      "Check data freshness before fetching toll rates.",
+      "Determine when to invalidate cached toll rate data.",
+      "Track version changes for toll trip rates.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -22,6 +28,5 @@ export const fetchTollTripVersion = createEndpoint({
   inputSchema: tollTripVersionInputSchema,
   outputSchema: tollTripVersionSchema,
   sampleParams: {},
-  endpointDescription:
-    "Returns current version and timestamp information for toll trip data.",
+  endpointDescription: "Get current version and timestamp for toll trip data.",
 });

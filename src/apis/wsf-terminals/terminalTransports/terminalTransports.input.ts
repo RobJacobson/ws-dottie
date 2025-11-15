@@ -15,7 +15,7 @@ import { z } from "@/shared/zod";
 export const terminalTransportsInputSchema = z
   .object({})
   .describe(
-    "Retrieves transportation and commuter information for terminals including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Returns all terminals or specific terminal if TerminalID is provided. Use for terminal commuter information and transportation planning."
+    "Input parameters for retrieving terminal transportation information."
   );
 
 export type TerminalTransportsInput = z.infer<
@@ -29,15 +29,10 @@ export type TerminalTransportsInput = z.infer<
  */
 export const terminalTransportsByTerminalIdInputSchema = z
   .object({
-    TerminalID: z
-      .number()
-      .int()
-      .describe(
-        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for transportation information lookup."
-      ),
+    TerminalID: z.number().int().describe("Numeric ID of the terminal."),
   })
   .describe(
-    "Retrieves transportation and commuter information for specified terminal including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific commuter information and transportation planning."
+    "Input parameters for retrieving transportation information for a specific terminal."
   );
 
 export type TerminalTransportsByTerminalIdInput = z.infer<

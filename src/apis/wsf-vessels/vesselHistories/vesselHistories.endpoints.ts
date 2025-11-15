@@ -16,9 +16,14 @@ export const vesselHistoriesGroup: EndpointGroup = {
   name: "vessel-histories",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselHistory item represents a historical record for a single sailing between terminals, including vessel, departure details (including departure terminal, scheduled departure time, and actual departure time), and arrival details (including arrival terminal and estimated arrival time).",
-    businessContext: "",
+    summary: "Historical sailing records for WSF vessels.",
+    description:
+      "Historical voyage data including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Analyze on-time performance and voyage patterns.",
+      "Track historical vessel movements and routes.",
+      "Generate reports on operational history.",
+    ],
   },
 };
 
@@ -33,8 +38,7 @@ export const fetchVesselHistories = createEndpoint<
   inputSchema: vesselHistoriesInputSchema,
   outputSchema: vesselHistorySchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple VesselHistory objects for all vessels in fleet.",
+  endpointDescription: "List historical sailing records for all vessels.",
 });
 
 export const fetchVesselHistoriesByVesselNameAndDateRange = createEndpoint<
@@ -53,5 +57,5 @@ export const fetchVesselHistoriesByVesselNameAndDateRange = createEndpoint<
     DateEnd: "2025-10-01",
   },
   endpointDescription:
-    "Returns multiple VesselHistory objects for specified vessel and date range.",
+    "Get historical sailing records for a vessel within a date range.",
 });

@@ -8,10 +8,16 @@ export const tollRatesGroup: EndpointGroup = {
   name: "toll-rates",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each TollRate item represents current toll pricing information for high occupancy toll lanes across Washington state. Each rate contains dynamic pricing data, trip location details, and real-time update timestamps for congestion management.",
-    businessContext:
-      "Use to calculate travel costs and make informed routing decisions by providing current toll amounts and trip details for high occupancy lane usage across Washington state highways.",
+    summary:
+      "Current toll rates for high occupancy vehicle (HOV) toll lanes statewide.",
+    description:
+      "Real-time toll pricing data including trip locations, current toll amounts, route associations, and update timestamps for congestion management.",
+    useCases: [
+      "Calculate travel costs for HOV toll lane usage.",
+      "Display current toll amounts in navigation apps.",
+      "Make informed routing decisions based on toll pricing.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -24,5 +30,5 @@ export const fetchTollRates = createEndpoint({
   outputSchema: tollRateSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple TollRate items for all high occupancy toll lanes statewide.",
+    "List current toll rates for all HOV toll lanes statewide.",
 });

@@ -12,10 +12,15 @@ export const camerasGroup: EndpointGroup = {
   name: "cameras",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each Camera item represents a traffic monitoring camera located on Washington state highways. Cameras provide real-time visual information about current traffic conditions, weather impacts, and roadway status for travelers and traffic management centers.",
-    businessContext:
-      "Use to monitor real-time traffic conditions by providing camera locations, images, and metadata for route planning and traffic management decisions.",
+    summary: "Traffic monitoring cameras on Washington state highways.",
+    description:
+      "Camera locations, image URLs, status, and metadata for real-time traffic condition visibility.",
+    useCases: [
+      "Display live camera feeds in traffic monitoring applications.",
+      "Show road conditions and weather impacts for route planning.",
+      "Provide visual traffic status in traveler information systems.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -27,7 +32,7 @@ export const fetchHighwayCameras = createEndpoint({
   inputSchema: highwayCamerasInputSchema,
   outputSchema: cameraSchema.array(),
   sampleParams: {},
-  endpointDescription: "Returns multiple Camera items for statewide coverage.",
+  endpointDescription: "List all highway cameras statewide.",
 });
 
 export const searchHighwayCamerasByRouteAndMilepost = createEndpoint({
@@ -42,8 +47,7 @@ export const searchHighwayCamerasByRouteAndMilepost = createEndpoint({
     StartingMilepost: 10,
     EndingMilepost: 20,
   },
-  endpointDescription:
-    "Returns multiple Camera items for specified route and milepost range.",
+  endpointDescription: "Search cameras by route and milepost range.",
 });
 
 export const fetchHighwayCameraByCameraId = createEndpoint({
@@ -54,6 +58,5 @@ export const fetchHighwayCameraByCameraId = createEndpoint({
   inputSchema: highwayCameraByCameraIdInputSchema,
   outputSchema: cameraSchema,
   sampleParams: { CameraID: 9818 },
-  endpointDescription:
-    "Returns single Camera item for specific camera identifier.",
+  endpointDescription: "Get camera details by camera ID.",
 });

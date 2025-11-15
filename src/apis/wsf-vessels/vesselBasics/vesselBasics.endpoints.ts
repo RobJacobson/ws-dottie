@@ -13,10 +13,14 @@ export const vesselBasicsGroup: EndpointGroup = {
   name: "vessel-basics",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselBasic item represents essential identification and operational status data for Washington State Ferries vessels. These items include vessel names, identification numbers, vessel classifications, and current operational status including service availability and maintenance schedules.",
-    businessContext:
-      "Use to display vessel information and track fleet status by providing identification details and operational status for passenger information systems. Supports trip planning applications and fleet management tools for Washington State Ferry services.",
+    summary: "Essential vessel identification and operational status.",
+    description:
+      "Basic vessel information including names, IDs, classifications, and operational status. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display vessel lists and status in passenger information systems.",
+      "Track fleet operational status and availability.",
+      "Provide foundation data for vessel selection.",
+    ],
   },
 };
 
@@ -31,8 +35,7 @@ export const fetchVesselBasics = createEndpoint<
   inputSchema: vesselBasicsInputSchema,
   outputSchema: vesselBasicSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple VesselBasic objects for all vessels in fleet.",
+  endpointDescription: "List basic information for all vessels in the fleet.",
 });
 
 export const fetchVesselBasicsByVesselId = createEndpoint<
@@ -46,6 +49,5 @@ export const fetchVesselBasicsByVesselId = createEndpoint<
   inputSchema: vesselBasicsByIdInputSchema,
   outputSchema: vesselBasicSchema,
   sampleParams: { VesselID: 74 },
-  endpointDescription:
-    "Returns a VesselBasic object containing essential identification and status information for specified vessel.",
+  endpointDescription: "Get basic information for a specific vessel by ID.",
 });

@@ -11,10 +11,15 @@ export const terminalWaitTimesGroup: EndpointGroup = {
   name: "terminal-wait-times",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalWaitTime item represents current wait conditions and travel tips for both vehicles and walk-on passengers at Washington State Ferry terminals. These items include estimated wait times for different vehicle types, capacity constraints, and travel recommendations.",
-    businessContext:
-      "Use to plan ferry terminal arrivals by providing current terminal conditions and vehicle capacity information for optimal departure timing.",
+    summary:
+      "Wait time conditions and travel tips for vehicles and passengers.",
+    description:
+      "Current wait conditions and travel recommendations for both vehicles and walk-on passengers at Washington State Ferry terminals including wait time notes, IVR notes, route information, and update dates. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display wait time information and arrival recommendations.",
+      "Provide travel tips for optimal departure timing.",
+      "Show route-specific wait time conditions.",
+    ],
   },
 };
 
@@ -26,8 +31,7 @@ export const fetchTerminalWaitTimes = createEndpoint({
   inputSchema: terminalWaitTimesInputSchema,
   outputSchema: terminalWaitTimeSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple TerminalWaitTime objects for all terminals.",
+  endpointDescription: "List wait time information for all terminals.",
 });
 
 export const fetchTerminalWaitTimesByTerminalId = createEndpoint({
@@ -39,5 +43,5 @@ export const fetchTerminalWaitTimesByTerminalId = createEndpoint({
   outputSchema: terminalWaitTimeSchema,
   sampleParams: { TerminalID: 11 },
   endpointDescription:
-    "Returns a single TerminalWaitTime object for specified terminal.",
+    "Get wait time information for a specific terminal by ID.",
 });

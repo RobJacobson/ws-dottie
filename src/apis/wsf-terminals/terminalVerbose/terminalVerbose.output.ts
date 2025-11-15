@@ -500,7 +500,7 @@ export const terminalVerboseSchema = terminalBaseSchema
     })
   )
   .describe(
-    "Represents comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints. Includes terminal identification, amenities (overhead loading, elevator, waiting room, food service, restrooms), bulletins, location details (address, coordinates, map links, directions, GIS zoom levels), sailing space information (departures, vessel details, space availability), transportation information (parking, vehicle tips, airport info, transit links), wait times, and additional terminal details (lost and found, security, construction, food service, ADA, fare discounts, chamber of commerce, real-time status). E.g., Anacortes terminal (ID 1) with complete information including amenities, bulletins, location, transportation options, sailing space, and wait times. Used for comprehensive terminal information when reducing API calls is desired."
+    "Comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints."
   );
 
 export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
@@ -512,8 +512,6 @@ export type TerminalVerbose = z.infer<typeof terminalVerboseSchema>;
  */
 export const getAllTerminalVerboseSchema = z
   .array(terminalVerboseSchema)
-  .describe(
-    "Array of comprehensive terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints. E.g., array containing all terminals with their complete information. Used for comprehensive terminal information when reducing API calls is desired."
-  );
+  .describe("Array of comprehensive terminal information for all terminals.");
 
 export type GetAllTerminalVerbose = z.infer<typeof getAllTerminalVerboseSchema>;

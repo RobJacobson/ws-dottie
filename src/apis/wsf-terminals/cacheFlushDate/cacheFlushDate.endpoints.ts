@@ -12,10 +12,14 @@ export const cacheFlushDateTerminalsGroup: EndpointGroup = {
   name: "cache-flush-date-terminals",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Represents timestamp of when any static endpoint data for wsf-terminals API was last updated. This information helps applications determine when to refresh cached terminals information through cache invalidation.",
-    businessContext:
-      "Many wsf-terminals endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-terminals data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by ws-dottie useQuery hooks to invalidate cache.",
+    summary: "Cache invalidation timestamp for static wsf-terminals data.",
+    description:
+      "Timestamp indicating when static endpoint data for the wsf-terminals API was last updated. Use this endpoint to determine when to invalidate cached terminal information. When the returned date changes, refresh your cached data. Polled automatically by ws-dottie useQuery hooks.",
+    useCases: [
+      "Detect when static terminal data has changed and invalidate caches.",
+      "Poll periodically to refresh cached terminal information.",
+      "Coordinate cache invalidation across multiple terminal endpoints.",
+    ],
   },
 };
 
@@ -28,7 +32,7 @@ export const fetchCacheFlushDateTerminals = createEndpoint({
   outputSchema: cacheFlushDateOutputSchema,
   sampleParams: {},
   endpointDescription:
-    "Returns timestamp of when any static endpoint data for the wsf-terminals API was last updated.",
+    "Get cache invalidation timestamp for static wsf-terminals data.",
 });
 
 // Re-export with API-specific names for backward compatibility

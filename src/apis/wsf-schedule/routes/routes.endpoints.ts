@@ -12,10 +12,15 @@ export const routesGroup: EndpointGroup = {
   name: "routes",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each Routes item represents a ferry path between terminals. Each route includes route identification, terminal connections, and route-specific scheduling information for travel planning.",
-    businessContext:
-      "Use to identify ferry routes by providing route paths and terminal connections for travel planning and schedule selection.",
+    summary: "Basic ferry route information between terminals.",
+    description:
+      "Route identification including route IDs, abbreviations, descriptions, region associations, and service disruptions.",
+    useCases: [
+      "Discover available routes for a trip date.",
+      "Identify routes by terminal combinations.",
+      "Check for active service disruptions on routes.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -27,7 +32,7 @@ export const fetchRoutesByTripDate = createEndpoint({
   inputSchema: routesByTripDateInputSchema,
   outputSchema: routeSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
-  endpointDescription: "Returns multiple of Routes for specified date.",
+  endpointDescription: "List all routes available for specified trip date.",
 });
 
 export const fetchRoutesByTripDateAndTerminals = createEndpoint({
@@ -42,5 +47,5 @@ export const fetchRoutesByTripDateAndTerminals = createEndpoint({
     DepartingTerminalID: 1,
     ArrivingTerminalID: 10,
   },
-  endpointDescription: "Returns multiple of Routes for terminal pair.",
+  endpointDescription: "List routes matching terminal pair for specified date.",
 });

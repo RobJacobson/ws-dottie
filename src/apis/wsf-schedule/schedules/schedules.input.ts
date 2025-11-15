@@ -16,21 +16,17 @@ export const scheduleByTripDateAndTerminals = z
     TripDate: z
       .string()
       .describe(
-        "Trip date for schedule lookup, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter schedules by trip date."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range."
       ),
     DepartingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '10' for Friday Harbor terminal. Use GetTerminalsAndMates to retrieve valid departing terminals. Used to identify origin terminal for schedule lookup."
-      ),
+      .describe("Numeric ID of the departing terminal."),
     ArrivingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for arriving terminal, as an integer ID. E.g., '13' for Lopez Island terminal, '15' for Orcas Island terminal. Use GetTerminalsAndMates to retrieve valid arriving terminals. Used to identify destination terminal for schedule lookup."
-      ),
+      .describe("Numeric ID of the arriving terminal."),
   })
   .describe(
-    "Retrieves departure times for specified trip date and terminal combination, accounting for contingencies, sailing date ranges, and time adjustments. Returns scheduled departures with vessel information, loading rules, and annotations. Use GetTerminalsAndMates and GetScheduleValidDateRange to determine valid parameters. Use for terminal-pair schedule lookups."
+    "Input parameters for retrieving schedule by trip date and terminal pair."
   );
 
 export type ScheduleByTripDateAndTerminalsInput = z.infer<
@@ -46,17 +42,11 @@ export const scheduleByTripDateAndRouteIdInputSchema = z
     TripDate: z
       .string()
       .describe(
-        "Trip date for schedule lookup, as a date string in YYYY-MM-DD format. E.g., '2025-11-02' for November 2, 2025. Must be within valid date range from GetScheduleValidDateRange. Used to filter schedules by trip date."
+        "Trip date in YYYY-MM-DD format. Must be within valid date range."
       ),
-    RouteID: z
-      .number()
-      .describe(
-        "Unique identifier for route, as an integer ID. E.g., '9' for Anacortes/San Juan Islands route, '6' for Edmonds/Kingston route. Use GetRoutes to retrieve valid routes. Used to identify route for schedule lookup."
-      ),
+    RouteID: z.number().describe("Numeric ID of the route."),
   })
-  .describe(
-    "Retrieves departure times for specified trip date and route, accounting for contingencies, sailing date ranges, and time adjustments. Returns scheduled departures for all terminal combinations on route with vessel information, loading rules, and annotations. Use GetRoutes and GetScheduleValidDateRange to determine valid parameters. Use for route-based schedule lookups."
-  );
+  .describe("Input parameters for retrieving schedule by trip date and route.");
 
 export type ScheduleByTripDateAndRouteIdInput = z.infer<
   typeof scheduleByTripDateAndRouteIdInputSchema

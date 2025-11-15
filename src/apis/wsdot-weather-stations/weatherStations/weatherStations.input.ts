@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
 export const weatherStationsInputSchema = z
   .object({})
   .describe(
-    "Retrieves metadata for all weather stations statewide, returning station identifiers, names, and location coordinates. Use for weather station discovery and location-based station queries."
+    "Input parameters for listing weather station metadata from all stations."
   );
 
 export type WeatherStationsInput = z.infer<typeof weatherStationsInputSchema>;

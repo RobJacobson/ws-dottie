@@ -12,9 +12,15 @@ export const timeAdjustmentsGroup: EndpointGroup = {
   name: "time-adjustments",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Time adjustments represent modifications to scheduled sailing times, including delays, early departures, and other timing changes that affect the published schedule.",
-    businessContext: "",
+    summary: "Modifications to scheduled sailing times for specific dates.",
+    description:
+      "Time adjustments include additions, cancellations, and timing changes that deviate from published schedules, such as tidal cancellations. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display schedule deviations and special date modifications.",
+      "Identify tidal adjustments and event-based cancellations.",
+      "Show accurate sailing times that differ from published schedules.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -26,7 +32,7 @@ export const fetchTimeAdjustments = createEndpoint({
   inputSchema: timeAdjustmentsInputSchema,
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: {},
-  endpointDescription: "Returns all time adjustments.",
+  endpointDescription: "List all time adjustments across all routes.",
 });
 
 export const fetchTimeAdjustmentsByRoute = createEndpoint({
@@ -37,7 +43,7 @@ export const fetchTimeAdjustmentsByRoute = createEndpoint({
   inputSchema: timeAdjustmentsByRouteInputSchema,
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: { RouteID: 1 },
-  endpointDescription: "Returns time adjustments for specified route ID.",
+  endpointDescription: "List time adjustments for a specific route.",
 });
 
 export const fetchTimeAdjustmentsBySchedRoute = createEndpoint({
@@ -48,6 +54,5 @@ export const fetchTimeAdjustmentsBySchedRoute = createEndpoint({
   inputSchema: timeAdjustmentsBySchedRouteInputSchema,
   outputSchema: timeAdjustmentSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
-  endpointDescription:
-    "Returns time adjustments for specified scheduled route ID.",
+  endpointDescription: "List time adjustments for a specific scheduled route.",
 });

@@ -16,10 +16,15 @@ export const vesselVerboseGroup: EndpointGroup = {
   name: "vessel-verbose",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselVerbose item represents complete vessel information combining basic details, technical specifications, and accommodation data. These items provide comprehensive vessel profiles in a single response for Washington State Ferries fleet.",
-    businessContext:
-      "Use to display complete vessel information by providing comprehensive vessel data for passenger information applications. Supports trip planning tools and fleet management systems for Washington State Ferry services.",
+    summary:
+      "Complete vessel information combining basics, stats, and accommodations.",
+    description:
+      "Comprehensive vessel profiles combining identification, operational status, technical specifications, and amenities in a single response. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display complete vessel profiles in passenger information systems.",
+      "Reduce API calls by fetching all vessel data at once.",
+      "Support comprehensive vessel comparison and selection.",
+    ],
   },
 };
 
@@ -34,8 +39,7 @@ export const fetchVesselsVerbose = createEndpoint<
   inputSchema: vesselVerboseInputSchema,
   outputSchema: vesselVerboseSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple VesselVerbose objects for all vessels in fleet.",
+  endpointDescription: "List complete vessel information for all vessels.",
 });
 
 export const fetchVesselsVerboseByVesselId = createEndpoint<
@@ -50,5 +54,5 @@ export const fetchVesselsVerboseByVesselId = createEndpoint<
   outputSchema: vesselVerboseSchema,
   sampleParams: { VesselID: 68 },
   endpointDescription:
-    "Returns a single VesselVerbose object for specified vessel identifier.",
+    "Get complete vessel information for a specific vessel by ID.",
 });

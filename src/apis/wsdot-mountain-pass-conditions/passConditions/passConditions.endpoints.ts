@@ -11,10 +11,16 @@ export const passConditionsGroup: EndpointGroup = {
   name: "pass-conditions",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each PassCondition item represents real-time mountain pass conditions including weather, road conditions, temperature, elevation, and travel restrictions. Data is provided by Mountain Pass Entry system covering 15 passes.",
-    businessContext:
-      "Use to assess mountain pass conditions for travel planning by providing current weather, road status, and restriction information for safe mountain travel.",
+    summary:
+      "Real-time mountain pass conditions including weather, road status, and travel restrictions.",
+    description:
+      "Current conditions for 15 monitored mountain passes statewide, including temperature, elevation, weather, road surface conditions, and direction-specific travel restrictions.",
+    useCases: [
+      "Assess pass conditions for winter travel planning.",
+      "Monitor weather and road conditions for route decisions.",
+      "Check travel restrictions and advisories before mountain travel.",
+    ],
+    updateFrequency: "15m",
   },
 };
 
@@ -27,7 +33,7 @@ export const fetchMountainPassConditionById = createEndpoint({
   outputSchema: passConditionSchema,
   sampleParams: { PassConditionID: 12 },
   endpointDescription:
-    "Returns a single PassCondition for specified mountain pass identifier.",
+    "Get current conditions for a specific mountain pass by ID.",
 });
 
 export const fetchMountainPassConditions = createEndpoint({
@@ -39,5 +45,5 @@ export const fetchMountainPassConditions = createEndpoint({
   outputSchema: passConditionSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple PassCondition items for all monitored mountain passes.",
+    "List current conditions for all monitored mountain passes.",
 });

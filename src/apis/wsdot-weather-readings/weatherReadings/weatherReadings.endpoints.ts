@@ -8,9 +8,16 @@ export const weatherReadingsGroup: EndpointGroup = {
   name: "weather-readings",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "WeatherReading provides current information from weather stations including temperature, humidity, wind conditions, visibility, precipitation data, and atmospheric pressure. Coverage Area: Statewide.",
-    businessContext: "",
+    summary:
+      "Comprehensive weather readings from all WSDOT weather stations statewide.",
+    description:
+      "Complete weather data including air temperature, humidity, wind conditions, visibility, precipitation across multiple time periods, barometric pressure, snow depth, and surface/subsurface sensor measurements.",
+    useCases: [
+      "Access complete weather station data for comprehensive analysis.",
+      "Monitor atmospheric and surface conditions for transportation operations.",
+      "Track precipitation across multiple time periods (1h, 3h, 6h, 12h, 24h).",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -23,5 +30,5 @@ export const fetchWeatherReadings = createEndpoint({
   outputSchema: weatherReadingSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns current weather readings from all weather stations.",
+    "List comprehensive weather readings from all weather stations.",
 });

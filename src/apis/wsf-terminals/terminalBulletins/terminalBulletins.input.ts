@@ -14,9 +14,7 @@ import { z } from "@/shared/zod";
  */
 export const terminalBulletinsInputSchema = z
   .object({})
-  .describe(
-    "Retrieves alerts and bulletins associated with terminals including bulletin titles, content, update dates, and sort order. Each terminal may have zero or more bulletins. Returns all terminals with their bulletins or specific terminal if TerminalID is provided. Use for terminal alert and bulletin display."
-  );
+  .describe("Input parameters for retrieving terminal bulletins and alerts.");
 
 export type TerminalBulletinsInput = z.infer<
   typeof terminalBulletinsInputSchema
@@ -29,15 +27,10 @@ export type TerminalBulletinsInput = z.infer<
  */
 export const terminalBulletinsByIdInputSchema = z
   .object({
-    TerminalID: z
-      .number()
-      .int()
-      .describe(
-        "Unique terminal identifier, as an integer ID. E.g., '1' for Anacortes terminal, '3' for Bainbridge Island terminal. Use GetTerminalBasics to retrieve valid terminal IDs. Used to identify specific terminal for bulletin lookup."
-      ),
+    TerminalID: z.number().int().describe("Numeric ID of the terminal."),
   })
   .describe(
-    "Retrieves alerts and bulletins for specified terminal including bulletin titles, content, update dates, and sort order. Each terminal may have zero or more bulletins. Use GetTerminalBasics to find valid terminal IDs. Use for terminal-specific alert and bulletin display."
+    "Input parameters for retrieving bulletins and alerts for a specific terminal."
   );
 
 export type TerminalBulletinsByIdInput = z.infer<

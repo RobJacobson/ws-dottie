@@ -13,10 +13,14 @@ export const vesselStatsGroup: EndpointGroup = {
   name: "vessel-stats",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselStat item represents technical specifications and capacity data for Washington State Ferries vessels. These items include physical dimensions, engine details, passenger and vehicle capacity, and construction information for each vessel in the fleet.",
-    businessContext:
-      "Use to compare vessel capabilities and plan capacity by providing technical specifications and capacity data for fleet management applications. Supports vessel selection tools and maintenance planning systems for Washington State Ferry services.",
+    summary: "Technical specifications and capacity data for WSF vessels.",
+    description:
+      "Physical dimensions, engine details, passenger and vehicle capacity, and construction information. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Compare vessel capabilities and specifications.",
+      "Plan capacity and route assignments.",
+      "Support maintenance and technical reference.",
+    ],
   },
 };
 
@@ -28,8 +32,7 @@ export const fetchVesselStats = createEndpoint<VesselStatsInput, VesselStat[]>({
   inputSchema: vesselStatsInputSchema,
   outputSchema: vesselStatSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple VesselStat objects for all vessels in the fleet.",
+  endpointDescription: "List technical specifications for all vessels.",
 });
 
 export const fetchVesselStatsByVesselId = createEndpoint<
@@ -44,5 +47,5 @@ export const fetchVesselStatsByVesselId = createEndpoint<
   sampleParams: { VesselID: 32 },
   outputSchema: vesselStatSchema,
   endpointDescription:
-    "Returns a VesselStat object containing detailed technical specifications and performance characteristics for specified vessel.",
+    "Get technical specifications for a specific vessel by ID.",
 });

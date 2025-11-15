@@ -14,14 +14,10 @@ import { z } from "@/shared/zod";
  */
 export const travelTimeByIdInputSchema = z
   .object({
-    TravelTimeID: z
-      .number()
-      .describe(
-        "Unique travel time route identifier, as an integer ID. E.g., '1' for Everett-Seattle route, '2' for Everett-Seattle HOV route, '5' for Bellevue-Issaquah route. Used to retrieve specific route travel time data."
-      ),
+    TravelTimeID: z.number().describe("Numeric ID of the travel time route."),
   })
   .describe(
-    "Retrieves current travel time data for specific route by ID, returning current and average travel times, route distance, start/end points, and update timestamp. Coverage includes Seattle, Tacoma, and Snoqualmie Pass areas. Use for individual route travel time lookups."
+    "Input parameters for retrieving travel time data for a specific route by ID."
   );
 
 export type TravelTimeByIdInput = z.infer<typeof travelTimeByIdInputSchema>;
@@ -33,8 +29,6 @@ export type TravelTimeByIdInput = z.infer<typeof travelTimeByIdInputSchema>;
  */
 export const travelTimesInputSchema = z
   .object({})
-  .describe(
-    "Retrieves current travel time data for all routes, returning current and average travel times, route distances, start/end points, and update timestamps. Coverage includes Seattle, Tacoma, and Snoqualmie Pass areas. Use for route planning and travel time monitoring."
-  );
+  .describe("Input parameters for retrieving travel time data for all routes.");
 
 export type TravelTimesInput = z.infer<typeof travelTimesInputSchema>;

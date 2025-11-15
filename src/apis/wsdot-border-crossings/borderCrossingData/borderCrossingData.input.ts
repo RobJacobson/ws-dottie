@@ -1,14 +1,15 @@
 import { z } from "@/shared/zod";
 
 /**
- * Schema for BorderCrossingData input parameters
+ * Schema for border crossing wait time query parameters.
  *
- * Provides current wait times for the various border crossings into Canada. Coverage Area: I-5, SR-543, SR-539, and SR-9 crossings.
+ * No parameters are required; call this endpoint to get current wait times
+ * for Washington border crossings into Canada.
  */
 export const borderCrossingsInputSchema = z
   .object({})
   .describe(
-    "Retrieves current wait times for all border crossings into Canada, returning crossing names, locations, wait times, and timestamp data. Coverage includes I-5, SR-543, SR-539, and SR-9 crossings. Use for border crossing planning and wait time monitoring applications."
+    "Input parameters for fetching current wait times for Washington border crossings into Canada on I-5, SR-543, SR-539, and SR-9."
   );
 
 export type BorderCrossingsInput = z.infer<typeof borderCrossingsInputSchema>;

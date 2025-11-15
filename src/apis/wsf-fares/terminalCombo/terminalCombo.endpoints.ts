@@ -15,10 +15,16 @@ export const terminalComboGroup: EndpointGroup = {
   name: "terminal-combo",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalCombo item represents valid route pairings between Washington State Ferries terminals with associated fare collection methods and scheduling details. These combinations define which terminals are connected and how fares are collected for specific routes.",
-    businessContext:
-      "Use to determine route availability and fare collection requirements by providing terminal pairing information for journey planning and ticket purchasing systems.",
+    summary:
+      "Valid terminal pairings with fare collection procedures for WSF routes.",
+    description:
+      "Terminal combinations define which terminals are connected and describe where and how fares are collected for each route. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Determine route availability between terminal pairs.",
+      "Understand fare collection procedures for specific routes.",
+      "Build journey planning interfaces with fare collection details.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -36,7 +42,7 @@ export const fetchTerminalComboFares = createEndpoint({
     ArrivingTerminalID: 10,
   },
   endpointDescription:
-    "Returns fare collection descriptions for specified terminal combination and trip date.",
+    "Get fare collection description for a specific terminal combination and trip date.",
 });
 
 export const fetchTerminalComboFaresVerbose = createEndpoint({
@@ -48,5 +54,5 @@ export const fetchTerminalComboFaresVerbose = createEndpoint({
   outputSchema: terminalComboFaresVerboseSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription:
-    "Returns fare collection descriptions for all terminal combinations available on the specified trip date.",
+    "Get fare collection descriptions for all terminal combinations on a trip date.",
 });

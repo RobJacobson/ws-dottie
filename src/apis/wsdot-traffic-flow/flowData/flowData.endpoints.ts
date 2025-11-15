@@ -11,10 +11,16 @@ export const flowDataGroup: EndpointGroup = {
   name: "flow-data",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each FlowData item represents real-time traffic flow information from sensor stations across Washington state. Data includes traffic conditions, station locations, timestamps, and regional maintenance information for traffic monitoring.",
-    businessContext:
-      "Use to monitor current traffic conditions by providing real-time flow data and station information for traffic management and traveler information systems.",
+    summary:
+      "Real-time traffic flow conditions from sensor stations across Washington state.",
+    description:
+      "Current traffic flow readings, station locations, and timestamps for traffic monitoring and congestion detection.",
+    useCases: [
+      "Monitor real-time traffic flow conditions across Washington highways.",
+      "Detect congestion and traffic patterns for route planning.",
+      "Display current traffic status in traveler information systems.",
+    ],
+    updateFrequency: "90s",
   },
 };
 
@@ -27,7 +33,7 @@ export const fetchTrafficFlows = createEndpoint({
   outputSchema: flowDataSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple FlowData items for all traffic flow stations across Washington state.",
+    "List current traffic flow conditions for all stations statewide.",
 });
 
 export const fetchTrafficFlowById = createEndpoint({
@@ -39,5 +45,5 @@ export const fetchTrafficFlowById = createEndpoint({
   outputSchema: flowDataSchema,
   sampleParams: { FlowDataID: 2482 },
   endpointDescription:
-    "Returns a single FlowData item for a specific traffic flow station by FlowDataID.",
+    "Get current traffic flow condition for a specific station by ID.",
 });

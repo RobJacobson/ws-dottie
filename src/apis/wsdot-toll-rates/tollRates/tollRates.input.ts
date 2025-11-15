@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
 export const tollRatesInputSchema = z
   .object({})
   .describe(
-    "Retrieves current toll rates for all HOV (high occupancy vehicle) toll lanes statewide, returning trip information, current toll amounts in cents, route associations, and update timestamps. Use for real-time toll rate monitoring and toll calculation."
+    "Input parameters for retrieving current toll rates for all HOV toll lanes."
   );
 
 export type TollRatesInput = z.infer<typeof tollRatesInputSchema>;

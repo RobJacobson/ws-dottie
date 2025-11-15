@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
 export const tollTripVersionInputSchema = z
   .object({})
   .describe(
-    "Retrieves current version information for toll trip rates data, returning version number and timestamp. Use for checking data freshness and version tracking."
+    "Input parameters for retrieving current version information for toll trip rates data."
   );
 
 export type TollTripVersionInput = z.infer<typeof tollTripVersionInputSchema>;

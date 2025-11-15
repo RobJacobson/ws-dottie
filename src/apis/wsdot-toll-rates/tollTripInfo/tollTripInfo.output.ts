@@ -13,14 +13,14 @@ export const tollTripInfoSchema = tollTripBaseSchema
       .string()
       .nullable()
       .describe(
-        "Geometric shape data for toll trip route, as a geometry string. E.g., empty string when geometry data is not available, null when geometry is unavailable. Typically contains encoded route geometry for mapping and visualization. Used for displaying trip routes on maps."
+        "Encoded route geometry data for mapping. Empty string or null when geometry is unavailable."
       ),
     ModifiedDate: zDotnetDate().describe(
-      "Timestamp when toll trip information was last modified, as a UTC datetime. E.g., '2025-10-21T05:00:00.000Z' for modification on October 20, 2025 at 10:00 PM. Indicates when trip route information was updated or changed."
+      "UTC datetime when trip route information was last modified."
     ),
   })
   .describe(
-    "Represents toll trip information including trip route details, location coordinates, geometry data, and modification timestamp. E.g., trip 'Tmptp02565' from I-405 milepost 25.65 to SR 516 milepost 21.94 with geometry data modified October 20, 2025. Used for toll trip route discovery, trip information lookups, and route mapping. Provides reference information for toll trip routes."
+    "Trip route information for a single toll trip, including locations, coordinates, and optional geometry."
   );
 
 export type TollTripInfo = z.infer<typeof tollTripInfoSchema>;

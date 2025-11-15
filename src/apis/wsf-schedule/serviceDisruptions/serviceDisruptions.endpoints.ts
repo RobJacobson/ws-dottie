@@ -9,10 +9,14 @@ export const serviceDisruptionsGroup: EndpointGroup = {
   name: "service-disruptions",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each ServiceDisruption item represents planned or unplanned interruptions to normal ferry service, including cancellations, delays, and route changes that affect passenger travel plans.",
-    businessContext:
-      "Use to identify service disruptions by providing route and date information for planning alternative travel arrangements.",
+    summary: "Service disruptions affecting ferry routes.",
+    description:
+      "Planned or unplanned interruptions to normal ferry service including cancellations, delays, and route changes. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Identify routes with service disruptions for a specific date.",
+      "Plan alternative travel arrangements when disruptions occur.",
+      "Display disruption information to passengers.",
+    ],
   },
 };
 
@@ -25,5 +29,5 @@ export const fetchRoutesHavingServiceDisruptionsByTripDate = createEndpoint({
   outputSchema: serviceDisruptionSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
   endpointDescription:
-    "Returns multiple of ServiceDisruption for specified trip date.",
+    "List routes with service disruptions for a specific trip date.",
 });

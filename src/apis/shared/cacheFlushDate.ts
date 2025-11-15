@@ -16,9 +16,7 @@ import { zDotnetDate } from "./zDotnetDateSchema";
  */
 export const cacheFlushDateInputSchema = z
   .object({})
-  .describe(
-    "Retrieves cache flush timestamp indicating when static endpoint data was last updated."
-  );
+  .describe("Input parameters for cache flush date endpoint.");
 
 export type CacheFlushDateInput = zod.infer<typeof cacheFlushDateInputSchema>;
 
@@ -31,7 +29,7 @@ export type CacheFlushDateInput = zod.infer<typeof cacheFlushDateInputSchema>;
 export const cacheFlushDateOutputSchema = zDotnetDate()
   .optional()
   .describe(
-    "Cache flush timestamp indicating when any static endpoint data was last updated, as a UTC datetime."
+    "UTC datetime when static endpoint data was last updated, or undefined if no update has occurred."
   );
 
 export type CacheFlushDateOutput = zod.infer<typeof cacheFlushDateOutputSchema>;

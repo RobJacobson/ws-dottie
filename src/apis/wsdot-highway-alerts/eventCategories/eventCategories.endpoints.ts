@@ -8,10 +8,15 @@ export const eventCategoriesGroup: EndpointGroup = {
   name: "event-categories",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each EventCategory item represents a classification type for highway alerts including collisions, maintenance work, construction, weather-related events, and other traffic incidents. These categories help organize and filter alerts by incident type.",
-    businessContext:
-      "Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.",
+    summary: "Event category classifications for highway alerts.",
+    description:
+      "Standardized category names used to classify and filter highway alerts by incident type, such as construction, collisions, maintenance, and weather events.",
+    useCases: [
+      "Filter highway alerts by event category type.",
+      "Obtain valid category names for alert searches.",
+      "Categorize alerts in user interfaces by incident type.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -24,5 +29,5 @@ export const fetchEventCategories = createEndpoint({
   outputSchema: z.string().array(),
   sampleParams: {},
   endpointDescription:
-    "Returns an array of strings for all available event categories.",
+    "List all available event category names for filtering alerts.",
 });

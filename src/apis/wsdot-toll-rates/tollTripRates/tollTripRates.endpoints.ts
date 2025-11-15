@@ -13,10 +13,16 @@ export const tollTripRatesGroup: EndpointGroup = {
   name: "toll-trip-rates",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each TollTripRates item represents comprehensive toll rate data for specific trips including pricing details, informational messages, and version tracking. Each container supports current data retrieval, historical date ranges, and version-specific queries.",
-    businessContext:
-      "Use to analyze toll pricing trends and retrieve historical rate data by providing detailed trip information, version tracking, and date range filtering for transportation planning.",
+    summary:
+      "Comprehensive toll rate data for all trips including pricing, messages, and version tracking.",
+    description:
+      "Container for toll trip rates supporting current data, historical date ranges, and version-specific queries. Includes pricing details, informational messages, and version tracking for transportation planning.",
+    useCases: [
+      "Retrieve current toll rates for all trips.",
+      "Analyze historical toll pricing trends.",
+      "Access version-specific rate data for change tracking.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -28,9 +34,9 @@ export const fetchTollTripRates = createEndpoint({
   inputSchema: tollTripRatesInputSchema,
   outputSchema: tollTripsRatesSchema,
   sampleParams: {},
-  endpointDescription:
-    "Returns single TollTripRates item with current pricing and message data.",
+  endpointDescription: "Get current toll rates for all trips.",
 });
+
 export const fetchTripRatesByDate = createEndpoint({
   api: apis.wsdotTollRates,
   group: tollTripRatesGroup,
@@ -42,8 +48,7 @@ export const fetchTripRatesByDate = createEndpoint({
     FromDate: datesHelper.yesterday(),
     ToDate: datesHelper.today(),
   },
-  endpointDescription:
-    "Returns multiple TollTripRates items for specified date range.",
+  endpointDescription: "Get historical toll rates for a specified date range.",
 });
 
 export const fetchTripRatesByVersion = createEndpoint({
@@ -54,6 +59,5 @@ export const fetchTripRatesByVersion = createEndpoint({
   inputSchema: tripRatesByVersionInputSchema,
   outputSchema: tollTripsRatesSchema,
   sampleParams: { Version: 352417 },
-  endpointDescription:
-    "Returns single TollTripRates item for specific version.",
+  endpointDescription: "Get toll rates for a specific version number.",
 });

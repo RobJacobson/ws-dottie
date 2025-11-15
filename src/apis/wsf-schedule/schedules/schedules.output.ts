@@ -15,97 +15,79 @@ export const terminalComboSchema = z
   .object({
     DepartingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for departing terminal, as an integer ID. E.g., '1' for Anacortes terminal, '10' for Friday Harbor terminal. Used as primary key for terminal identification in terminal combo."
-      ),
+      .describe("Numeric ID of the departing terminal."),
     DepartingTerminalName: z
       .string()
-      .describe(
-        "Human-readable name of departing terminal, as a terminal name. E.g., 'Anacortes' for terminal 1, 'Friday Harbor' for terminal 10. Provides origin terminal identification for schedule display."
-      ),
+      .describe("Display name of the departing terminal."),
     ArrivingTerminalID: z
       .number()
-      .describe(
-        "Unique identifier for arriving terminal, as an integer ID. E.g., '13' for Lopez Island terminal, '15' for Orcas Island terminal. Used as primary key for terminal identification in terminal combo."
-      ),
+      .describe("Numeric ID of the arriving terminal."),
     ArrivingTerminalName: z
       .string()
-      .describe(
-        "Human-readable name of arriving terminal, as a terminal name. E.g., 'Lopez Island' for terminal 13, 'Orcas Island' for terminal 15. Provides destination terminal identification for schedule display."
-      ),
+      .describe("Display name of the arriving terminal."),
     SailingNotes: z
       .string()
-      .describe(
-        "Informational text associated with underlying sailing, as sailing notes. E.g., empty string when no notes, notes when special conditions apply. Provides additional sailing information for terminal combination."
-      ),
+      .describe("Informational text for this terminal combination."),
     Annotations: z
       .array(z.string())
       .describe(
-        "Array of annotation strings assigned to one or more departures in Times list, as annotation descriptions. E.g., array containing 'No interisland vehicles. Foot passenger and bikes okay.' annotation, empty array when no annotations. Used for displaying additional departure information."
+        "Array of annotation strings assigned to departures in Times list."
       ),
     Times: z
       .array(
         z
           .object({
             DepartingTime: zDotnetDate().describe(
-              "Date and time of departure, as a UTC datetime. E.g., '2025-11-02T14:15:00.000Z' for departure at 2:15 PM on November 2, 2025. Used for departure schedule display."
+              "UTC datetime of the departure."
             ),
             ArrivingTime: zDotnetDate()
               .nullable()
-              .describe(
-                "Date and time of arrival, as a UTC datetime. E.g., '2025-11-02T15:10:00.000Z' for arrival at 3:10 PM, null when arrival time is unavailable. Used for arrival schedule display."
-              ),
+              .describe("UTC datetime of the arrival."),
             LoadingRule: z
               .union([z.literal(1), z.literal(2), z.literal(3)])
               .describe(
-                "Category of travelers supported by departure, as a loading rule code. Valid values: 1 (Passenger), 2 (Vehicle), 3 (Both). E.g., '1' for passenger-only departure, '3' for both passenger and vehicle departure. Used to determine what types of travelers can board."
+                "Code indicating traveler types: 1 = Passenger, 2 = Vehicle, 3 = Both."
               ),
             VesselID: z
               .number()
-              .describe(
-                "Unique identifier for vessel planned to service departure, as an integer ID. E.g., '69' for Samish vessel, '38' for Yakima vessel, '2' for Chelan vessel. Used to identify which vessel operates departure."
-              ),
+              .describe("Numeric ID of the vessel planned for this departure."),
             VesselName: z
               .string()
               .describe(
-                "Human-readable name of vessel planned to service departure, as a vessel name. E.g., 'Samish' for vessel 69, 'Yakima' for vessel 38, 'Chelan' for vessel 2. Provides vessel identification for display."
+                "Display name of the vessel planned for this departure."
               ),
             VesselHandicapAccessible: z
               .boolean()
-              .describe(
-                "Indicator whether vessel is ADA accessible, as a boolean. E.g., true for accessible vessels like Samish, Yakima, Chelan. Used to determine accessibility for passengers with disabilities."
-              ),
+              .describe("True if vessel is ADA accessible; otherwise false."),
             VesselPositionNum: z
               .number()
               .describe(
-                "Position number representing single vessel servicing all stops in journey, as an integer. E.g., '1' for first vessel position, '2' for second vessel position, '3' for third vessel position. Used for vessel scheduling and position tracking."
+                "Position number of the vessel servicing all stops in journey."
               ),
             Routes: z
               .array(z.number())
-              .describe(
-                "Array of route IDs serviced by departure, as route ID integers. E.g., array containing route 9 for Anacortes/San Juan Islands, subset of AllRoutes when departure only serves some routes. Used to identify which routes this departure covers."
-              ),
+              .describe("Array of route IDs serviced by this departure."),
             AnnotationIndexes: z
               .array(z.number())
               .describe(
-                "Array of index integers indicating which elements in Annotations array apply to departure, as annotation indexes. E.g., array containing index 0 when first annotation applies, empty array when no annotations apply. Used to associate annotations with specific departures."
+                "Array of indexes into Annotations array that apply to this departure."
               ),
           })
           .describe(
-            "Represents scheduled departure detail including departure/arrival times, loading rule, vessel information, routes, and annotation indexes. E.g., departure at 2:15 PM with Samish vessel (ID 69) supporting both passengers and vehicles on route 9."
+            "Scheduled departure detail with times, vessel, and loading rules."
           )
       )
       .describe(
-        "Array of scheduled departure details including departure times, vessel information, loading rules, and annotations. E.g., array containing multiple departures throughout day for terminal combination. Used for schedule display and departure lookups."
+        "Array of scheduled departure details for this terminal combination."
       ),
     AnnotationsIVR: z
       .array(z.string())
       .describe(
-        "Array of annotation strings formatted for Interactive Voice Response systems, as IVR descriptions. E.g., array containing 'No interisland vehicles. Foot passengers and bikes okay.' for IVR playback, empty array when no IVR annotations. Used for telephone-based schedule information systems."
+        "Array of annotation strings formatted for Interactive Voice Response systems."
       ),
   })
   .describe(
-    "Represents terminal combination schedule information including departing/arriving terminal IDs and names, sailing notes, annotations, departure times, and IVR annotations. E.g., Anacortes (ID 1) to Lopez Island (ID 13) with multiple departures throughout day. Used for schedule display and terminal-pair schedule lookups."
+    "Terminal combination schedule with terminal IDs and names, sailing notes, annotations, and departure times."
   );
 
 export type TerminalCombo = z.infer<typeof terminalComboSchema>;
@@ -115,9 +97,7 @@ export type TerminalCombo = z.infer<typeof terminalComboSchema>;
  */
 export const terminalCombosListSchema = z
   .array(terminalComboSchema)
-  .describe(
-    "This operation provides departure times for either a trip date and route or a trip date and terminal combination. The resultset accounts for all contingencies, sailing date ranges and time adjustments. Valid departing and arriving terminals may be found using `/terminalsandmates` while valid routes may be found using `/routes`. Similarly, a valid trip date may be determined using `/validdaterange`. Please format the trip date input as `'YYYY-MM-DD'` (eg. `'2014-04-01'` for a trip date occurring on April 1, 2014)."
-  );
+  .describe("Array of terminal combination schedules.");
 
 export type TerminalComboList = z.infer<typeof terminalCombosListSchema>;
 
@@ -126,43 +106,29 @@ export type TerminalComboList = z.infer<typeof terminalCombosListSchema>;
  */
 export const scheduleSchema = z
   .object({
-    ScheduleID: z
-      .number()
-      .describe(
-        "Unique schedule season identifier, as an integer ID. E.g., '193' for Fall 2025 schedule. Used to identify which schedule season this schedule belongs to."
-      ),
-    ScheduleName: z
-      .string()
-      .describe(
-        "Human-readable schedule season name, as a season name. E.g., 'Fall 2025' for schedule 193. Provides season identification for display."
-      ),
+    ScheduleID: z.number().describe("Numeric ID of the schedule season."),
+    ScheduleName: z.string().describe("Display name of the schedule season."),
     ScheduleSeason: z
       .union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)])
       .describe(
-        "Quarterly season identifier code, as a season code. Valid values: 0 (Spring), 1 (Summer), 2 (Fall), 3 (Winter). E.g., '2' for Fall schedule. Used for seasonal schedule organization."
+        "Code indicating season: 0 = Spring, 1 = Summer, 2 = Fall, 3 = Winter."
       ),
-    SchedulePDFUrl: z
-      .string()
-      .describe(
-        "URL to schedule PDF document, as a PDF URL. E.g., 'http://www.wsdot.wa.gov/ferries/pdf/2025Fall.pdf' for Fall 2025 schedule. Used for accessing printable schedule documents."
-      ),
+    SchedulePDFUrl: z.string().describe("URL to the schedule PDF document."),
     ScheduleStart: zDotnetDate().describe(
-      "Start date when schedule season becomes effective, as a UTC datetime. E.g., '2025-09-21T07:00:00.000Z' for Fall 2025 season starting September 21, 2025 at 3:00 AM. If consumer needs specific time, translate trip date value to 3:00 AM on that date. Indicates when season schedule begins."
+      "UTC datetime when the schedule season becomes effective."
     ),
     ScheduleEnd: zDotnetDate().describe(
-      "End date when schedule season stops being effective, as a UTC datetime. E.g., '2025-12-27T08:00:00.000Z' for Fall 2025 season ending December 27, 2025 at 2:59 AM. If consumer needs specific time, translate trip date value to next calendar date at 2:59 AM. Indicates when season schedule ends."
+      "UTC datetime when the schedule season stops being effective."
     ),
     AllRoutes: z
       .array(z.number())
-      .describe(
-        "Array of route IDs representing all routes accounted for in schedule resultset, as route ID integers. E.g., array containing route 9 for Anacortes/San Juan Islands route. Used to identify which routes are included in schedule."
-      ),
+      .describe("Array of route IDs included in this schedule."),
     TerminalCombos: terminalCombosListSchema.describe(
-      "Array of departure and arrival terminal pair groupings, as terminal combo objects. E.g., array containing Anacortes-Lopez Island combo, Anacortes-Friday Harbor combo, all terminal pairs for route. Used for schedule display and terminal-pair lookups."
+      "Array of terminal combination schedules with departure times."
     ),
   })
   .describe(
-    "Represents schedule information including schedule season details, route list, and terminal combination schedules. E.g., Fall 2025 schedule (ID 193) for route 9 with all terminal combinations and departure times. Used for schedule lookups and schedule display."
+    "Complete schedule information including season details, routes, and terminal combination schedules with departure times."
   );
 
 export type Schedule = z.infer<typeof scheduleSchema>;

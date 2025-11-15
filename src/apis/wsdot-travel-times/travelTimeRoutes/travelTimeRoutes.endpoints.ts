@@ -11,10 +11,16 @@ export const travelTimeRoutesGroup: EndpointGroup = {
   name: "travel-time-routes",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TravelTimeRoute item represents current travel time data for a specific route in Washington State, including average and current travel times, distance information, and start/end point locations. These routes cover major corridors in Seattle, Tacoma, and Snoqualmie Pass areas, helping travelers make informed routing decisions.",
-    businessContext:
-      "Use to plan travel routes and estimate arrival times by providing current travel times, average times, distance, and route location information for Washington State highways. Compare current conditions against historical averages to identify traffic delays and optimize departure times.",
+    summary:
+      "Current and average travel times for major Washington State highway routes.",
+    description:
+      "Travel time data for routes in Seattle, Tacoma, and Snoqualmie Pass areas, including distance, start/end points, and comparison of current vs. average times.",
+    useCases: [
+      "Plan travel routes and estimate arrival times.",
+      "Compare current conditions against historical averages to identify delays.",
+      "Optimize departure times based on real-time traffic conditions.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -26,8 +32,7 @@ export const fetchTravelTimeById = createEndpoint({
   inputSchema: travelTimeByIdInputSchema,
   outputSchema: travelTimeRouteSchema,
   sampleParams: { TravelTimeID: 1 },
-  endpointDescription:
-    "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
+  endpointDescription: "Get travel time data for a specific route by ID.",
 });
 
 export const fetchTravelTimes = createEndpoint({
@@ -38,6 +43,5 @@ export const fetchTravelTimes = createEndpoint({
   inputSchema: travelTimesInputSchema,
   outputSchema: travelTimeRouteSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns an array of TravelTimeRoute objects containing travel time data for all available routes.",
+  endpointDescription: "List travel time data for all available routes.",
 });

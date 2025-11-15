@@ -14,10 +14,16 @@ export const terminalsGroup: EndpointGroup = {
   name: "terminals",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each Terminal item represents a Washington State Ferries port facility with unique identification, location details, and operational status. These terminals serve as departure and arrival points for ferry routes throughout the Puget Sound and San Juan Islands.",
-    businessContext:
-      "Use to display terminal options and route connections by providing terminal details and mate relationships for trip planning and schedule navigation.",
+    summary:
+      "WSF terminal facilities serving as departure and arrival points for ferry routes.",
+    description:
+      "Terminals represent port facilities with unique identifiers and names. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display terminal options for trip planning interfaces.",
+      "Determine valid terminal pairs for route selection.",
+      "Build terminal lookup and navigation features.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -29,8 +35,7 @@ export const fetchTerminalFares = createEndpoint<TerminalsInput, any>({
   inputSchema: terminalsInputSchema,
   outputSchema: terminalListSchema,
   sampleParams: { TripDate: datesHelper.tomorrow() },
-  endpointDescription:
-    "Returns a list of valid departing terminals for specified trip date.",
+  endpointDescription: "List valid departing terminals for a trip date.",
 });
 
 export const fetchTerminalMatesFares = createEndpoint<TerminalMatesInput, any>({
@@ -42,5 +47,5 @@ export const fetchTerminalMatesFares = createEndpoint<TerminalMatesInput, any>({
   sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
   outputSchema: terminalListSchema,
   endpointDescription:
-    "Returns arriving terminals for the given departing terminal and trip date.",
+    "List arriving terminals for a given departing terminal and trip date.",
 });

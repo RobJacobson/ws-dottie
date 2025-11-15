@@ -11,10 +11,14 @@ export const terminalTransportsGroup: EndpointGroup = {
   name: "terminal-transports",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalTransport item represents transportation options and parking information for Washington State Ferry terminals. These items include parking notes, vehicle-specific tips, transit links, and alternative transportation methods.",
-    businessContext:
-      "Use to plan terminal access by providing parking availability and transportation options for ferry terminal commuters.",
+    summary: "Transportation options and parking information for terminals.",
+    description:
+      "Commuter information for Washington State Ferry terminals including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display parking information and rates for terminal planning.",
+      "Provide vehicle-specific tips for motorcycles, trucks, and bicycles.",
+      "Show transit links and airport connection information.",
+    ],
   },
 };
 
@@ -26,8 +30,7 @@ export const fetchTerminalTransports = createEndpoint({
   inputSchema: terminalTransportsInputSchema,
   outputSchema: terminalTransportSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple TerminalTransport objects for all terminals.",
+  endpointDescription: "List transportation information for all terminals.",
 });
 
 export const fetchTerminalTransportsByTerminalId = createEndpoint({
@@ -39,5 +42,5 @@ export const fetchTerminalTransportsByTerminalId = createEndpoint({
   outputSchema: terminalTransportSchema,
   sampleParams: { TerminalID: 10 },
   endpointDescription:
-    "Returns TerminalTransport data for the terminal with the specified terminal.",
+    "Get transportation information for a specific terminal by ID.",
 });

@@ -11,9 +11,15 @@ export const sailingsGroup: EndpointGroup = {
   name: "sailings",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Sailing information represents individual ferry trips with departure and arrival times, vessel assignments, and route details for scheduled ferry services.",
-    businessContext: "",
+    summary: "Scheduled ferry sailings organized by route and direction.",
+    description:
+      "Departure times organized by direction, days of operation, and date ranges, mirroring printed PDF schedule groupings.",
+    useCases: [
+      "Display schedule structure with sailing groups.",
+      "Show departure times by direction and day type.",
+      "Access journey details with vessel assignments and terminal stops.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -26,7 +32,7 @@ export const fetchAllSailingsBySchedRouteID = createEndpoint({
   outputSchema: sailingSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
   endpointDescription:
-    "Returns all sailing data for specified scheduled route ID.",
+    "List all sailings for scheduled route including inactive sailings.",
 });
 
 export const fetchSailingsByRouteID = createEndpoint({
@@ -37,5 +43,5 @@ export const fetchSailingsByRouteID = createEndpoint({
   inputSchema: sailingsByRouteIDInputSchema,
   outputSchema: sailingSchema.array(),
   sampleParams: { SchedRouteID: 2401 },
-  endpointDescription: "Returns sailing data for specified scheduled route ID.",
+  endpointDescription: "List active sailings for specified scheduled route.",
 });

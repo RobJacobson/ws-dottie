@@ -13,9 +13,16 @@ export const scheduleTerminalsGroup: EndpointGroup = {
   name: "schedule-terminals",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.",
-    businessContext: "",
+    summary:
+      "Ferry terminal facilities serving as departure and arrival points.",
+    description:
+      "Terminals represent dock locations where passengers board and disembark. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display terminal options for trip planning interfaces.",
+      "Determine valid terminal pairs for route selection.",
+      "Build terminal lookup and navigation features.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -27,7 +34,7 @@ export const fetchTerminals = createEndpoint({
   inputSchema: terminalsInputSchema,
   outputSchema: terminalSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
-  endpointDescription: "Returns all terminals for the specified trip date.",
+  endpointDescription: "List valid departing terminals for a trip date.",
 });
 
 export const fetchTerminalsAndMates = createEndpoint({
@@ -38,8 +45,7 @@ export const fetchTerminalsAndMates = createEndpoint({
   inputSchema: terminalsAndMatesInputSchema,
   outputSchema: terminalMateSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow() },
-  endpointDescription:
-    "Returns all terminals with their mates for the specified trip date.",
+  endpointDescription: "List all valid terminal pairs for a trip date.",
 });
 
 export const fetchTerminalsAndMatesByRoute = createEndpoint({
@@ -51,5 +57,5 @@ export const fetchTerminalsAndMatesByRoute = createEndpoint({
   outputSchema: terminalMateSchema.array(),
   sampleParams: { TripDate: datesHelper.tomorrow(), RouteID: 9 },
   endpointDescription:
-    "Returns terminals and their mates for the specified trip date and route.",
+    "List valid terminal pairs for a specific route and trip date.",
 });

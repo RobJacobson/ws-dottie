@@ -8,10 +8,15 @@ export const activeSeasonsGroup: EndpointGroup = {
   name: "active-seasons",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each ActiveSeasons item represents a scheduling period for Washington State Ferry routes. Each season defines the time period when specific schedules are active and available for passenger travel planning.",
-    businessContext:
-      "Use to identify current scheduling periods by providing season dates and availability status for ferry service planning and schedule selection.",
+    summary: "Active schedule seasons for WSF routes.",
+    description:
+      "Scheduling periods defining when specific ferry schedules are active, including season dates, names, and PDF URLs.",
+    useCases: [
+      "Identify which schedule seasons are currently active.",
+      "Determine valid date ranges for schedule queries.",
+      "Access printable schedule PDF documents.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -24,5 +29,5 @@ export const fetchActiveSeasons = createEndpoint({
   outputSchema: scheduleBaseSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple of ActiveSeasons for all scheduling periods.",
+    "List all active schedule seasons with dates and PDF URLs.",
 });

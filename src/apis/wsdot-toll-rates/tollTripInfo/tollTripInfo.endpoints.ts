@@ -8,9 +8,16 @@ export const tollTripInfoGroup: EndpointGroup = {
   name: "toll-trip-info",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "TollTripInfo provides detailed trip information including geographical data, location names, mileposts, and geometry information for toll trips across statewide coverage areas.",
-    businessContext: "",
+    summary:
+      "Trip route information for HOV toll lanes including locations, mileposts, and geometry.",
+    description:
+      "Reference data for toll trip routes including start and end locations, coordinates, mileposts, travel direction, and optional geometry data for mapping.",
+    useCases: [
+      "Display toll trip routes on maps.",
+      "Look up trip information by location or route.",
+      "Build trip selection interfaces for toll rate queries.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -22,5 +29,5 @@ export const fetchTollTripInfo = createEndpoint({
   inputSchema: tollTripInfoInputSchema,
   outputSchema: tollTripInfoSchema.array(),
   sampleParams: {},
-  endpointDescription: "Returns trip information for all toll trips statewide.",
+  endpointDescription: "List trip information for all toll trips statewide.",
 });

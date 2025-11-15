@@ -54,20 +54,43 @@ export interface EndpointGroup {
 /**
  * Documentation structure for API resources
  *
- * This interface defines the documentation fields for API resources,
- * providing comprehensive information about the resource and its usage.
+ * This interface defines the documentation fields for API resources.
+ * It supports both the new Proposal B shape (summary, description, etc.)
+ * and legacy fields for backward compatibility during migration.
  */
 export interface ResourceDocumentation {
-  /** Description of the resource being returned */
-  resourceDescription: string;
-  /** Business context for the resource */
-  businessContext: string;
-  /** Update frequency for the resource */
-  // updateFrequency: string;
-  /** Related endpoints for the resource */
-  // relatedEndpoints: string[];
-  /** Usage examples for the resource */
-  // usageExamples: string[];
+  /**
+   * Short, high-signal summary of this endpoint group.
+   *
+   * Prefer this over legacy resourceDescription when adding new docs.
+   */
+  summary?: string;
+  /**
+   * Optional longer description adding nuance or caveats.
+   */
+  description?: string;
+  /**
+   * Recommended use cases for this group, kept as short phrases.
+   */
+  useCases?: string[];
+  /**
+   * Approximate update frequency identifier (for example "5s", "5m").
+   */
+  updateFrequency?: string;
+
+  /**
+   * Deprecated: legacy description of the resource being returned.
+   *
+   * Existing groups may still populate this; new code should prefer summary.
+   */
+  resourceDescription?: string;
+  /**
+   * Deprecated: legacy business context for the resource.
+   *
+   * Existing groups may still populate this; new code should prefer
+   * description and useCases.
+   */
+  businessContext?: string;
 }
 
 /**

@@ -8,10 +8,16 @@ export const weatherStationsGroup: EndpointGroup = {
   name: "weather-stations",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each WeatherStation item represents a road weather information system station location across Washington state. These stations collect atmospheric and pavement condition data to support transportation operations and traveler safety.",
-    businessContext:
-      "Use to monitor weather conditions by providing location coordinates, station identifiers, and names for road weather monitoring and maintenance decision support.",
+    summary:
+      "Weather station metadata and location information for WSDOT Road Weather Information System stations statewide.",
+    description:
+      "Station identifiers, names, and location coordinates for weather stations that collect atmospheric and pavement condition data.",
+    useCases: [
+      "Discover weather stations by location for weather data queries.",
+      "Identify station identifiers and names for weather data lookups.",
+      "Support location-based weather station searches.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -24,5 +30,5 @@ export const fetchWeatherStations = createEndpoint({
   outputSchema: weatherStationSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple WeatherStation items for statewide coverage.",
+    "List weather station metadata for all stations statewide.",
 });

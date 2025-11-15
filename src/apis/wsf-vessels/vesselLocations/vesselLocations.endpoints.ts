@@ -16,10 +16,15 @@ export const vesselLocationsGroup: EndpointGroup = {
   name: "vessel-locations",
   cacheStrategy: "REALTIME",
   documentation: {
-    resourceDescription:
-      "Each VesselLocation item represents real-time vessel tracking data for Washington State Ferries. These include current position (latitude and longitude), speed and heading information, whether or not vessel is at dock, departure and arrival terminal details, and estimated time of arrival.",
-    businessContext:
-      "Use to track real-time vessel positions and calculate arrival times by providing GPS coordinates, speed/heading data, and terminal departure/arrival information for WSF fleet monitoring. Determine current trip status, including start terminal, destination terminal, scheduled departure, at-dock status and ETA for this trip.",
+    summary: "Real-time vessel positions and status for WSF fleet.",
+    description:
+      "Current GPS coordinates, speed, heading, terminal assignments, and ETAs. This endpoint is real-time; cacheFlushDate is not used for cache invalidation.",
+    useCases: [
+      "Show live vessel positions and ETAs in rider apps.",
+      "Monitor fleet operations in internal dashboards.",
+      "Calculate arrival times and voyage progress.",
+    ],
+    updateFrequency: "5s",
   },
 };
 
@@ -35,7 +40,7 @@ export const fetchVesselLocations = createEndpoint<
   outputSchema: vesselLocationSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple VesselLocation objects for all vessels in fleet.",
+    "List current locations and status for all active vessels.",
 });
 
 export const fetchVesselLocationsByVesselId = createEndpoint<
@@ -50,5 +55,5 @@ export const fetchVesselLocationsByVesselId = createEndpoint<
   sampleParams: { VesselID: 18 },
   outputSchema: vesselLocationSchema,
   endpointDescription:
-    "Returns a VesselLocation object containing real-time position and status information for specified vessel.",
+    "Get current location and status for a specific vessel by ID.",
 });

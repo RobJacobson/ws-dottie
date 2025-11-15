@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
 export const tollTripRatesInputSchema = z
   .object({})
   .describe(
-    "Retrieves current toll trip rates for all trips, returning trip names, toll amounts, rate messages, update timestamps, and version information. Use for real-time toll rate monitoring across all trips."
+    "Input parameters for retrieving current toll rates for all trips."
   );
 
 export type TollTripRatesInput = z.infer<typeof tollTripRatesInputSchema>;
@@ -22,17 +22,13 @@ export const tripRatesByDateInputSchema = z
   .object({
     FromDate: z
       .string()
-      .describe(
-        "Start date for historical trip rates query, as a date string. E.g., '2025-11-01' for November 1, 2025. Used to define beginning of date range for historical toll rate queries."
-      ),
+      .describe("Start date for historical query in YYYY-MM-DD format."),
     ToDate: z
       .string()
-      .describe(
-        "End date for historical trip rates query, as a date string. E.g., '2025-11-02' for November 2, 2025. Used to define end of date range for historical toll rate queries."
-      ),
+      .describe("End date for historical query in YYYY-MM-DD format."),
   })
   .describe(
-    "Retrieves historical toll trip rates within specified date range, returning trip rates, toll amounts, and timestamps for the time period. Use for historical toll rate analysis and trend tracking."
+    "Input parameters for retrieving historical toll rates within a date range."
   );
 
 export type TripRatesByDateInput = z.infer<typeof tripRatesByDateInputSchema>;
@@ -46,12 +42,11 @@ export const tripRatesByVersionInputSchema = z
   .object({
     Version: z
       .number()
-      .describe(
-        "Version number for toll trip rates query, as an integer. E.g., '371529' for version 371529. Used to retrieve specific version of toll trip rates data."
-      ),
+      .int()
+      .describe("Version number for toll trip rates data."),
   })
   .describe(
-    "Retrieves toll trip rates for specific version number, returning trip rates, toll amounts, and timestamps for that version. Use for version-specific toll rate lookups and data versioning."
+    "Input parameters for retrieving toll rates for a specific version number."
   );
 
 export type TripRatesByVersionInput = z.infer<

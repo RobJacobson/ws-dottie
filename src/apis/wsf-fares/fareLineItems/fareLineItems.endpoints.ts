@@ -13,10 +13,16 @@ export const fareLineItemsGroup: EndpointGroup = {
   name: "fare-line-items",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each FareLineItem item represents individual fare components for Washington State Ferries routes, including passenger categories, vehicle types, and pricing structures. These items form the building blocks for calculating total journey costs based on route, vehicle dimensions, and passenger demographics.",
-    businessContext:
-      "Use to display fare options and enable price calculations by providing detailed fare breakdowns for different passenger types, vehicle categories, and route combinations for accurate ticket pricing.",
+    summary:
+      "Individual fare components for WSF routes by passenger and vehicle types.",
+    description:
+      "Fare line items represent pricing components for different passenger categories, vehicle types, and route combinations. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display fare options for different passenger and vehicle types.",
+      "Calculate journey costs based on route and demographics.",
+      "Build fare selection interfaces for ticket purchasing.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -35,7 +41,7 @@ export const fetchFareLineItemsByTripDateAndTerminals = createEndpoint({
     RoundTrip: false,
   },
   endpointDescription:
-    "Returns multiple of FareLineItem for specific terminal combination.",
+    "List all fare line items for a specific terminal combination and trip type.",
 });
 
 export const fetchFareLineItemsBasic = createEndpoint({
@@ -53,7 +59,7 @@ export const fetchFareLineItemsBasic = createEndpoint({
     RoundTrip: false,
   },
   endpointDescription:
-    "Returns multiple of FareLineItem for popular fare options.",
+    "List popular fare line items for a terminal combination.",
 });
 
 export const fetchFareLineItemsVerbose = createEndpoint({
@@ -65,5 +71,5 @@ export const fetchFareLineItemsVerbose = createEndpoint({
   outputSchema: lineItemVerboseSchema,
   sampleParams: { TripDate: datesHelper.today() },
   endpointDescription:
-    "Returns multiple of FareLineItem for all terminal combinations.",
+    "Get all fare line items for all terminal combinations on a trip date.",
 });

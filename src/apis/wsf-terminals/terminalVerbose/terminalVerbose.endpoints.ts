@@ -11,10 +11,15 @@ export const terminalVerboseGroup: EndpointGroup = {
   name: "terminal-verbose",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalVerbose item represents comprehensive terminal information for Washington State Ferry terminals. These items include basic details, bulletins, location data, sailing space information, transportation options, wait times, and facility information.",
-    businessContext:
-      "Use to retrieve comprehensive terminal information by providing complete facility details for integrated ferry terminal planning.",
+    summary:
+      "Comprehensive terminal information combining all terminal data types.",
+    description:
+      "Complete terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints. Includes identification, amenities, bulletins, locations, transportation info, sailing space, wait times, and additional details. Use when you need to reduce API calls and don't mind larger payloads. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Retrieve all terminal information in a single API call.",
+      "Reduce application chattiness when comprehensive data is needed.",
+      "Build integrated terminal information displays.",
+    ],
   },
 };
 
@@ -26,8 +31,7 @@ export const fetchTerminalVerbose = createEndpoint({
   inputSchema: terminalVerboseInputSchema,
   outputSchema: terminalVerboseSchema.array(),
   sampleParams: {},
-  endpointDescription:
-    "Returns multiple TerminalVerbose objects for all terminals.",
+  endpointDescription: "List comprehensive information for all terminals.",
 });
 
 export const fetchTerminalVerboseByTerminalId = createEndpoint({
@@ -39,5 +43,5 @@ export const fetchTerminalVerboseByTerminalId = createEndpoint({
   outputSchema: terminalVerboseSchema,
   sampleParams: { TerminalID: 4 },
   endpointDescription:
-    "Returns TerminalVerbose data for the terminal with the specified terminal.",
+    "Get comprehensive information for a specific terminal by ID.",
 });

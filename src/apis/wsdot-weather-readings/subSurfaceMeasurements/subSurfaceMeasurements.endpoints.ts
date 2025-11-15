@@ -8,10 +8,16 @@ export const subSurfaceMeasurementsGroup: EndpointGroup = {
   name: "sub-surface-measurements",
   cacheStrategy: "FREQUENT",
   documentation: {
-    resourceDescription:
-      "Each SubSurfaceMeasurements item represents temperature data collected from sensors embedded 12-18 inches below road pavement surfaces. These measurements help transportation officials monitor ground temperature conditions that affect road safety and maintenance decisions.",
-    businessContext:
-      "Use to assess road surface conditions by providing subsurface temperature data for winter maintenance operations and travel safety assessments.",
+    summary:
+      "Subsurface temperature measurements from sensors embedded below road pavement.",
+    description:
+      "Ground temperature data from sensors embedded 12-18 inches below road pavement surfaces for monitoring ground temperature conditions.",
+    useCases: [
+      "Monitor ground temperature conditions for winter maintenance operations.",
+      "Predict road surface conditions based on subsurface temperature trends.",
+      "Assess travel safety by understanding ground temperature patterns.",
+    ],
+    updateFrequency: "5m",
   },
 };
 
@@ -24,5 +30,5 @@ export const fetchSubSurfaceMeasurements = createEndpoint({
   outputSchema: subsurfaceMeasurementSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns array of SubSurfaceMeasurements for all weather stations statewide.",
+    "List subsurface measurements from all weather stations statewide.",
 });

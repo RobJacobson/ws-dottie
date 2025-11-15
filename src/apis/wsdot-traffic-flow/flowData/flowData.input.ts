@@ -14,14 +14,10 @@ import { z } from "@/shared/zod";
  */
 export const trafficFlowByIdInputSchema = z
   .object({
-    FlowDataID: z
-      .number()
-      .describe(
-        "Unique traffic flow station identifier, as an integer ID. E.g., '2482' for Homeacres Rd eastbound station, '4828' for Bickford Ave westbound station. Used to retrieve specific flow station data."
-      ),
+    FlowDataID: z.number().describe("Numeric ID of the traffic flow station."),
   })
   .describe(
-    "Retrieves real-time traffic flow data for specific station by ID, returning flow reading value, station location, region, and timestamp. Data updated every 90 seconds. Use for individual station monitoring."
+    "Input parameters for retrieving traffic flow data for a specific station by ID."
   );
 
 export type TrafficFlowByIdInput = z.infer<typeof trafficFlowByIdInputSchema>;
@@ -34,7 +30,7 @@ export type TrafficFlowByIdInput = z.infer<typeof trafficFlowByIdInputSchema>;
 export const trafficFlowsInputSchema = z
   .object({})
   .describe(
-    "Retrieves real-time traffic flow data for all stations statewide, returning flow reading values, station locations, regions, and timestamps. Data updated every 90 seconds. Use for traffic monitoring and flow analysis across all stations."
+    "Input parameters for retrieving traffic flow data for all stations statewide."
   );
 
 export type TrafficFlowsInput = z.infer<typeof trafficFlowsInputSchema>;

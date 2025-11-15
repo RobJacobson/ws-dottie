@@ -116,7 +116,7 @@ export const terminalTransportSchema = terminalBaseSchema
       ),
   })
   .describe(
-    "Represents terminal transportation and commuter information including terminal identification, parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. E.g., Anacortes terminal (ID 1) with parking rates, airport directions, and Skagit Transit link. Used for terminal commuter information and transportation planning."
+    "Terminal transportation and commuter information including parking details, vehicle-specific tips, airport information, transit links, and HOV/carpool information."
   );
 
 export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
@@ -128,9 +128,7 @@ export type TerminalTransport = z.infer<typeof terminalTransportSchema>;
  */
 export const getAllTerminalTransportsSchema = z
   .array(terminalTransportSchema)
-  .describe(
-    "Array of terminal transportation and commuter information including terminal IDs, parking details, vehicle-specific tips, airport information, and transit links. E.g., array containing all terminals with their transportation information. Used for terminal commuter information across all terminals."
-  );
+  .describe("Array of transportation information for all terminals.");
 
 export type GetAllTerminalTransports = z.infer<
   typeof getAllTerminalTransportsSchema

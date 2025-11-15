@@ -16,10 +16,14 @@ export const vesselAccommodationsGroup: EndpointGroup = {
   name: "vessel-accommodations",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each VesselAccommodation item represents passenger amenity and accessibility information for Washington State Ferries vessels. These items include ADA compliance features, restroom facilities, food service availability, and connectivity options for each vessel.",
-    businessContext:
-      "Use to plan accessible travel by providing amenity and accessibility information for passenger information applications. Supports trip planning tools and accessibility compliance systems for Washington State Ferry services.",
+    summary: "Passenger amenities and accessibility features for WSF vessels.",
+    description:
+      "Amenity and accessibility information including ADA compliance, restrooms, food service, elevators, and connectivity. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Display vessel amenities in passenger information systems.",
+      "Plan accessible travel for passengers with disabilities.",
+      "Compare vessel features for trip planning.",
+    ],
   },
 };
 
@@ -35,7 +39,7 @@ export const fetchVesselAccommodations = createEndpoint<
   outputSchema: vesselAccommodationSchema.array(),
   sampleParams: {},
   endpointDescription:
-    "Returns multiple VesselAccommodation objects for all vessels in the fleet.",
+    "List amenities and accessibility features for all vessels.",
 });
 
 export const fetchVesselAccommodationsByVesselId = createEndpoint<
@@ -50,5 +54,5 @@ export const fetchVesselAccommodationsByVesselId = createEndpoint<
   outputSchema: vesselAccommodationSchema,
   sampleParams: { VesselID: 65 },
   endpointDescription:
-    "Returns VesselAccommodation data for the vesselaccommodation with the given identifier.",
+    "Get amenities and accessibility features for a specific vessel.",
 });

@@ -9,10 +9,16 @@ export const scheduleTerminalMatesGroup: EndpointGroup = {
   name: "schedule-terminal-mates",
   cacheStrategy: "STATIC",
   documentation: {
-    resourceDescription:
-      "Each TerminalMate item represents terminals that can be used interchangeably or as alternatives for ferry departures and arrivals, providing flexibility in route planning.",
-    businessContext:
-      "Use to find alternative terminal options by providing terminal ID and date information for flexible route selection.",
+    summary:
+      "Arriving terminals that can be reached from a given departing terminal.",
+    description:
+      "Terminal mates represent valid destination terminals for a specific origin terminal and trip date. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.",
+    useCases: [
+      "Find valid destination terminals for trip planning interfaces.",
+      "Build terminal selection workflows for route queries.",
+      "Determine available terminal pairs for schedule lookups.",
+    ],
+    updateFrequency: "daily",
   },
 };
 
@@ -25,5 +31,5 @@ export const fetchTerminalMatesSchedule = createEndpoint({
   outputSchema: terminalListSchema,
   sampleParams: { TripDate: datesHelper.tomorrow(), TerminalID: 1 },
   endpointDescription:
-    "Returns multiple of Terminal for specified trip date and terminal ID.",
+    "List valid arriving terminals for a departing terminal and trip date.",
 });

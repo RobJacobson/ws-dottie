@@ -8,7 +8,7 @@ import { z } from "@/shared/zod";
 export const surfaceMeasurementsInputSchema = z
   .object({})
   .describe(
-    "Retrieves surface sensor measurements from all weather stations statewide, returning surface temperature, road freezing temperature, and road surface condition data. Use for road condition monitoring and winter maintenance operations."
+    "Input parameters for listing surface measurements from all stations."
   );
 
 export type SurfaceMeasurementsInput = z.infer<
