@@ -107,16 +107,3 @@ export const alertsByRegionIDInputSchema = z
   .describe("Input for retrieving highway alerts filtered by WSDOT region ID.");
 
 export type AlertsByRegionIDInput = z.infer<typeof alertsByRegionIDInputSchema>;
-
-/**
- * Input schema for HighwayAlertsByCounty endpoint
- *
- * Return alerts for a specific county
- */
-export const alertsByCountyInputSchema = z
-  .object({
-    County: z.string().describe("County name for filtering alerts by county."),
-  })
-  .describe("Input for retrieving highway alerts filtered by county name.");
-
-export type AlertsByCountyInput = z.infer<typeof alertsByCountyInputSchema>;

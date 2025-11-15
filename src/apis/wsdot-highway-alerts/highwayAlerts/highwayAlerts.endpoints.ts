@@ -4,7 +4,6 @@ import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   alertByIdInputSchema,
-  alertsByCountyInputSchema,
   alertsByMapAreaInputSchema,
   alertsByRegionIDInputSchema,
   alertsInputSchema,
@@ -62,17 +61,6 @@ export const fetchAlertsByRegionId = createEndpoint({
   outputSchema: alertSchema.array(),
   sampleParams: { RegionID: 4 },
   endpointDescription: "List highway alerts filtered by WSDOT region ID.",
-});
-
-export const fetchAlertsByCounty = createEndpoint({
-  api: apis.wsdotHighwayAlerts,
-  group: highwayAlertsGroup,
-  functionName: "fetchAlertsByCounty",
-  endpoint: "/getAlertsByCountyAsJson?County={County}",
-  inputSchema: alertsByCountyInputSchema,
-  outputSchema: alertSchema.array(),
-  sampleParams: { County: "King" },
-  endpointDescription: "List highway alerts filtered by county name.",
 });
 
 export const fetchAlertsByMapArea = createEndpoint({
