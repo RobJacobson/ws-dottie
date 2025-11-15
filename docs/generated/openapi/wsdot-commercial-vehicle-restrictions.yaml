@@ -1,0 +1,609 @@
+openapi: 3.0.0
+info:
+  title: Wsdot Commercial Vehicle Restrictions API
+  version: 1.0.0
+  description: Wsdot Commercial Vehicle Restrictions API - Washington State Department of Transportation APIs
+servers:
+  - url: https://www.wsdot.wa.gov/traffic/api/cvrestrictions/cvrestrictionsrest.svc
+    description: Production server
+components:
+  schemas:
+    RoadwayLocation:
+      type: object
+      properties:
+        Description:
+          type: string
+          nullable: true
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+        Direction:
+          type: string
+          nullable: true
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+        Latitude:
+          type: number
+          description: Latitude of the roadway location in decimal degrees.
+        Longitude:
+          type: number
+          description: Longitude of the roadway location in decimal degrees.
+        MilePost:
+          type: number
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+        RoadName:
+          type: string
+          nullable: true
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+      required:
+        - Description
+        - Direction
+        - Latitude
+        - Longitude
+        - MilePost
+        - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
+    FetchCommercialVehicleRestrictionsOutput:
+      type: object
+      properties:
+        BLMaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for Bridge Legal classification in pounds.
+        BridgeName:
+          type: string
+          nullable: true
+          description: Name of the bridge associated with the restriction.
+        BridgeNumber:
+          type: string
+          nullable: true
+          description: WSDOT bridge identifier in format 'route/bridge' (e.g., '10/142').
+        CL8MaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for CL-8 classification in pounds.
+        DateEffective:
+          type: string
+          description: UTC datetime when the commercial vehicle restriction becomes effective.
+        DateExpires:
+          type: string
+          description: UTC datetime when the commercial vehicle restriction expires.
+        DatePosted:
+          type: string
+          description: UTC datetime when the commercial vehicle restriction was first posted.
+        EndRoadwayLocation:
+          type: object
+          nullable: true
+          properties:
+            Description:
+              type: string
+              nullable: true
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
+            Direction:
+              type: string
+              nullable: true
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+            Latitude:
+              type: number
+              description: Latitude of the roadway location in decimal degrees.
+            Longitude:
+              type: number
+              description: Longitude of the roadway location in decimal degrees.
+            MilePost:
+              type: number
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+            RoadName:
+              type: string
+              nullable: true
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+          required:
+            - Description
+            - Direction
+            - Latitude
+            - Longitude
+            - MilePost
+            - RoadName
+          description: End location of the restriction along the roadway.
+        IsDetourAvailable:
+          type: boolean
+          description: True if a detour route is available around the restriction; otherwise false.
+        IsExceptionsAllowed:
+          type: boolean
+          description: True if exceptions are permitted for the restriction; otherwise false.
+        IsPermanentRestriction:
+          type: boolean
+          description: True if the restriction is permanent; otherwise false (temporary).
+        IsWarning:
+          type: boolean
+          description: True if the restriction is a warning rather than an enforceable limit; otherwise false.
+        Latitude:
+          type: number
+          description: GPS latitude coordinate for the restriction location in decimal degrees.
+        LocationDescription:
+          type: string
+          nullable: true
+          description: Human-readable description of the restriction location.
+        LocationName:
+          type: string
+          nullable: true
+          description: Name of the location where the restriction applies.
+        Longitude:
+          type: number
+          description: GPS longitude coordinate for the restriction location in decimal degrees.
+        MaximumGrossVehicleWeightInPounds:
+          type: number
+          nullable: true
+          description: Maximum gross vehicle weight limit in pounds.
+        RestrictionComment:
+          type: string
+          nullable: true
+          description: Additional details and comments about the restriction.
+        RestrictionHeightInInches:
+          type: number
+          nullable: true
+          description: Maximum load height restriction in inches.
+        RestrictionLengthInInches:
+          type: number
+          nullable: true
+          description: Maximum load length restriction in inches.
+        RestrictionType:
+          type: number
+          description: 'Code indicating restriction type: 0 = BridgeRestriction, 1 = RoadRestriction.'
+        RestrictionWeightInPounds:
+          type: number
+          nullable: true
+          description: Maximum load weight restriction in pounds.
+        RestrictionWidthInInches:
+          type: number
+          nullable: true
+          description: Maximum load width restriction in inches.
+        SAMaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for Semi-Automatic classification in pounds.
+        StartRoadwayLocation:
+          type: object
+          nullable: true
+          properties:
+            Description:
+              type: string
+              nullable: true
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
+            Direction:
+              type: string
+              nullable: true
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+            Latitude:
+              type: number
+              description: Latitude of the roadway location in decimal degrees.
+            Longitude:
+              type: number
+              description: Longitude of the roadway location in decimal degrees.
+            MilePost:
+              type: number
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+            RoadName:
+              type: string
+              nullable: true
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+          required:
+            - Description
+            - Direction
+            - Latitude
+            - Longitude
+            - MilePost
+            - RoadName
+          description: Start location of the restriction along the roadway.
+        State:
+          type: string
+          nullable: true
+          description: State code where the commercial vehicle restriction is located.
+        StateRouteID:
+          type: string
+          nullable: true
+          description: State route identifier where the restriction applies.
+        TDMaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for Tandem Drive classification in pounds.
+        VehicleType:
+          type: string
+          nullable: true
+          description: Type of vehicle affected by the restriction.
+      required:
+        - BLMaxAxle
+        - BridgeName
+        - BridgeNumber
+        - CL8MaxAxle
+        - DateEffective
+        - DateExpires
+        - DatePosted
+        - EndRoadwayLocation
+        - IsDetourAvailable
+        - IsExceptionsAllowed
+        - IsPermanentRestriction
+        - IsWarning
+        - Latitude
+        - LocationDescription
+        - LocationName
+        - Longitude
+        - MaximumGrossVehicleWeightInPounds
+        - RestrictionComment
+        - RestrictionHeightInInches
+        - RestrictionLengthInInches
+        - RestrictionType
+        - RestrictionWeightInPounds
+        - RestrictionWidthInInches
+        - SAMaxAxle
+        - StartRoadwayLocation
+        - State
+        - StateRouteID
+        - TDMaxAxle
+        - VehicleType
+      description: Commercial vehicle restriction information including weight limits by classification, height/width/length restrictions, location data, effective dates, and restriction type for bridge and roadway restrictions statewide.
+    FetchCommercialVehicleRestrictionsWithIdOutput:
+      type: object
+      properties:
+        BLMaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for Bridge Legal classification in pounds.
+        BridgeName:
+          type: string
+          nullable: true
+          description: Name of the bridge associated with the restriction.
+        BridgeNumber:
+          type: string
+          nullable: true
+          description: WSDOT bridge identifier in format 'route/bridge' (e.g., '10/142').
+        CL8MaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for CL-8 classification in pounds.
+        DateEffective:
+          type: string
+          description: UTC datetime when the commercial vehicle restriction becomes effective.
+        DateExpires:
+          type: string
+          description: UTC datetime when the commercial vehicle restriction expires.
+        DatePosted:
+          type: string
+          description: UTC datetime when the commercial vehicle restriction was first posted.
+        EndRoadwayLocation:
+          type: object
+          nullable: true
+          properties:
+            Description:
+              type: string
+              nullable: true
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
+            Direction:
+              type: string
+              nullable: true
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+            Latitude:
+              type: number
+              description: Latitude of the roadway location in decimal degrees.
+            Longitude:
+              type: number
+              description: Longitude of the roadway location in decimal degrees.
+            MilePost:
+              type: number
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+            RoadName:
+              type: string
+              nullable: true
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+          required:
+            - Description
+            - Direction
+            - Latitude
+            - Longitude
+            - MilePost
+            - RoadName
+          description: End location of the restriction along the roadway.
+        IsDetourAvailable:
+          type: boolean
+          description: True if a detour route is available around the restriction; otherwise false.
+        IsExceptionsAllowed:
+          type: boolean
+          description: True if exceptions are permitted for the restriction; otherwise false.
+        IsPermanentRestriction:
+          type: boolean
+          description: True if the restriction is permanent; otherwise false (temporary).
+        IsWarning:
+          type: boolean
+          description: True if the restriction is a warning rather than an enforceable limit; otherwise false.
+        Latitude:
+          type: number
+          description: GPS latitude coordinate for the restriction location in decimal degrees.
+        LocationDescription:
+          type: string
+          nullable: true
+          description: Human-readable description of the restriction location.
+        LocationName:
+          type: string
+          nullable: true
+          description: Name of the location where the restriction applies.
+        Longitude:
+          type: number
+          description: GPS longitude coordinate for the restriction location in decimal degrees.
+        MaximumGrossVehicleWeightInPounds:
+          type: number
+          nullable: true
+          description: Maximum gross vehicle weight limit in pounds.
+        RestrictionComment:
+          type: string
+          nullable: true
+          description: Additional details and comments about the restriction.
+        RestrictionHeightInInches:
+          type: number
+          nullable: true
+          description: Maximum load height restriction in inches.
+        RestrictionLengthInInches:
+          type: number
+          nullable: true
+          description: Maximum load length restriction in inches.
+        RestrictionType:
+          type: number
+          description: 'Code indicating restriction type: 0 = BridgeRestriction, 1 = RoadRestriction.'
+        RestrictionWeightInPounds:
+          type: number
+          nullable: true
+          description: Maximum load weight restriction in pounds.
+        RestrictionWidthInInches:
+          type: number
+          nullable: true
+          description: Maximum load width restriction in inches.
+        SAMaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for Semi-Automatic classification in pounds.
+        StartRoadwayLocation:
+          type: object
+          nullable: true
+          properties:
+            Description:
+              type: string
+              nullable: true
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
+            Direction:
+              type: string
+              nullable: true
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+            Latitude:
+              type: number
+              description: Latitude of the roadway location in decimal degrees.
+            Longitude:
+              type: number
+              description: Longitude of the roadway location in decimal degrees.
+            MilePost:
+              type: number
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+            RoadName:
+              type: string
+              nullable: true
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+          required:
+            - Description
+            - Direction
+            - Latitude
+            - Longitude
+            - MilePost
+            - RoadName
+          description: Start location of the restriction along the roadway.
+        State:
+          type: string
+          nullable: true
+          description: State code where the commercial vehicle restriction is located.
+        StateRouteID:
+          type: string
+          nullable: true
+          description: State route identifier where the restriction applies.
+        TDMaxAxle:
+          type: number
+          nullable: true
+          description: Maximum axle weight for Tandem Drive classification in pounds.
+        VehicleType:
+          type: string
+          nullable: true
+          description: Type of vehicle affected by the restriction.
+        UniqueID:
+          type: string
+          nullable: true
+          description: Unique identifier for the commercial vehicle restriction in format 'Type-State-Route-Sequence' (e.g., 'B-WA-010-1').
+      required:
+        - BLMaxAxle
+        - BridgeName
+        - BridgeNumber
+        - CL8MaxAxle
+        - DateEffective
+        - DateExpires
+        - DatePosted
+        - EndRoadwayLocation
+        - IsDetourAvailable
+        - IsExceptionsAllowed
+        - IsPermanentRestriction
+        - IsWarning
+        - Latitude
+        - LocationDescription
+        - LocationName
+        - Longitude
+        - MaximumGrossVehicleWeightInPounds
+        - RestrictionComment
+        - RestrictionHeightInInches
+        - RestrictionLengthInInches
+        - RestrictionType
+        - RestrictionWeightInPounds
+        - RestrictionWidthInInches
+        - SAMaxAxle
+        - StartRoadwayLocation
+        - State
+        - StateRouteID
+        - TDMaxAxle
+        - VehicleType
+        - UniqueID
+      description: Commercial vehicle restriction information with unique identifier, including weight limits by classification, height/width/length restrictions, location data, effective dates, restriction type, and unique restriction ID for bridge and roadway restrictions statewide.
+  parameters: {}
+paths:
+  /getCommercialVehicleRestrictionsWithIdAsJson:
+    get:
+      summary: List commercial vehicle restrictions with unique identifiers for all Washington State highways.
+      operationId: fetchCommercialVehicleRestrictionsWithId
+      tags:
+        - cv-restriction-data
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCommercialVehicleRestrictionsWithId } from 'ws-dottie/wsdot-commercial-vehicle-restrictions/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchCommercialVehicleRestrictionsWithId,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchCommercialVehicleRestrictionsWithIdOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 343 total)
+                  value:
+                    - BLMaxAxle: 20000
+                      BridgeName: Teanaway River
+                      BridgeNumber: 10/142
+                      CL8MaxAxle: 20000
+                      DateEffective: 2011-10-18T07:00:00.000Z
+                      DateExpires: 2075-12-31T08:00:00.000Z
+                      DatePosted: 2011-10-18T22:12:00.000Z
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: SR 10
+                      IsDetourAvailable: false
+                      IsExceptionsAllowed: false
+                      IsPermanentRestriction: false
+                      IsWarning: false
+                      Latitude: 47.15136148800159
+                      LocationDescription: SR 10, MP 89.33 both directions-20,000 lbs limitation
+                      LocationName: 1.3 E Jct SR 970
+                      Longitude: -120.80431521930812
+                      MaximumGrossVehicleWeightInPounds: null
+                      RestrictionComment: BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.
+                      RestrictionHeightInInches: 0
+                      RestrictionLengthInInches: 0
+                      RestrictionType: 0
+                      RestrictionWeightInPounds: 0
+                      RestrictionWidthInInches: 0
+                      SAMaxAxle: 40000
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 89.33
+                        RoadName: SR 10
+                      State: WA
+                      StateRouteID: '10'
+                      TDMaxAxle: null
+                      VehicleType: ''
+                      UniqueID: B-WA-010-1
+  /getCommercialVehicleRestrictionsAsJson:
+    get:
+      summary: List commercial vehicle restrictions for all Washington State highways.
+      operationId: fetchCommercialVehicleRestrictions
+      tags:
+        - cv-restriction-data
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchCommercialVehicleRestrictions } from 'ws-dottie/wsdot-commercial-vehicle-restrictions/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchCommercialVehicleRestrictions,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchCommercialVehicleRestrictionsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 343 total)
+                  value:
+                    - BLMaxAxle: 20000
+                      BridgeName: Teanaway River
+                      BridgeNumber: 10/142
+                      CL8MaxAxle: 20000
+                      DateEffective: 2011-10-18T07:00:00.000Z
+                      DateExpires: 2075-12-31T08:00:00.000Z
+                      DatePosted: 2011-10-18T22:12:00.000Z
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
+                        RoadName: SR 10
+                      IsDetourAvailable: false
+                      IsExceptionsAllowed: false
+                      IsPermanentRestriction: false
+                      IsWarning: false
+                      Latitude: 47.15136148800159
+                      LocationDescription: SR 10, MP 89.33 both directions-20,000 lbs limitation
+                      LocationName: 1.3 E Jct SR 970
+                      Longitude: -120.80431521930812
+                      MaximumGrossVehicleWeightInPounds: null
+                      RestrictionComment: BL =20,000 lbs, CL-8 =20,000 lbs, SA = 40,000 lbs.
+                      RestrictionHeightInInches: 0
+                      RestrictionLengthInInches: 0
+                      RestrictionType: 0
+                      RestrictionWeightInPounds: 0
+                      RestrictionWidthInInches: 0
+                      SAMaxAxle: 40000
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: Both
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 89.33
+                        RoadName: SR 10
+                      State: WA
+                      StateRouteID: '10'
+                      TDMaxAxle: null
+                      VehicleType: ''
+tags:
+  - name: cv-restriction-data
+    description: Commercial vehicle restrictions for Washington State highways.
+    x-useCases:
+      - Check vehicle restrictions for commercial route planning.
+      - Determine route feasibility and permit requirements.
+      - Identify weight and height limitations for trucking operations.
+    x-updateFrequency: daily
+  - name: cv-restriction-data-with-id
+    description: Commercial vehicle restrictions with unique identifiers for Washington State highways.
+    x-useCases:
+      - Track specific restrictions using unique identifiers.
+      - Monitor restriction changes over time.
+      - Manage permit requirements with ID-based lookups.
+    x-updateFrequency: daily

@@ -1,0 +1,373 @@
+openapi: 3.0.0
+info:
+  title: Wsdot Highway Cameras API
+  version: 1.0.0
+  description: Wsdot Highway Cameras API - Washington State Department of Transportation APIs
+servers:
+  - url: https://www.wsdot.wa.gov/traffic/api/highwaycameras/highwaycamerasrest.svc
+    description: Production server
+components:
+  schemas:
+    RoadwayLocation:
+      type: object
+      properties:
+        Description:
+          type: string
+          nullable: true
+          description: Human-readable description of the roadway location, such as interchange names or cross streets.
+        Direction:
+          type: string
+          nullable: true
+          description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+        Latitude:
+          type: number
+          description: Latitude of the roadway location in decimal degrees.
+        Longitude:
+          type: number
+          description: Longitude of the roadway location in decimal degrees.
+        MilePost:
+          type: number
+          description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+        RoadName:
+          type: string
+          nullable: true
+          description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+      required:
+        - Description
+        - Direction
+        - Latitude
+        - Longitude
+        - MilePost
+        - RoadName
+      description: Roadway location information including route, milepost, coordinates, and direction.
+    FetchHighwayCamerasOutput:
+      type: object
+      properties:
+        CameraID:
+          type: number
+          description: Numeric ID of the camera.
+        CameraLocation:
+          type: object
+          nullable: true
+          properties:
+            Description:
+              type: string
+              nullable: true
+              description: Human-readable description of the roadway location, such as interchange names or cross streets.
+            Direction:
+              type: string
+              nullable: true
+              description: 'Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected.'
+            Latitude:
+              type: number
+              description: Latitude of the roadway location in decimal degrees.
+            Longitude:
+              type: number
+              description: Longitude of the roadway location in decimal degrees.
+            MilePost:
+              type: number
+              description: Milepost marker along the highway corridor, with 0 indicating route terminus.
+            RoadName:
+              type: string
+              nullable: true
+              description: Highway or route designation code, such as '005' for I-5 or '090' for I-90.
+          required:
+            - Description
+            - Direction
+            - Latitude
+            - Longitude
+            - MilePost
+            - RoadName
+          description: Roadway location information for camera placement, including route and milepost.
+        CameraOwner:
+          type: string
+          nullable: true
+          description: Organization or agency that owns the camera.
+        Description:
+          type: string
+          nullable: true
+          description: Short descriptive text about the camera's purpose or location.
+        DisplayLatitude:
+          type: number
+          description: Latitude of the camera display position in decimal degrees.
+        DisplayLongitude:
+          type: number
+          description: Longitude of the camera display position in decimal degrees.
+        ImageHeight:
+          type: number
+          description: Pixel height of the camera image.
+        ImageURL:
+          type: string
+          nullable: true
+          description: URL where the camera image is stored and accessible.
+        ImageWidth:
+          type: number
+          description: Pixel width of the camera image.
+        IsActive:
+          type: boolean
+          description: True if the camera is currently active and being updated; otherwise false.
+        OwnerURL:
+          type: string
+          nullable: true
+          description: Website URL for the camera owner organization.
+        Region:
+          type: string
+          nullable: true
+          description: WSDOT region code that owns the camera.
+        SortOrder:
+          type: number
+          description: Display sort order; lower values appear first when sorting cameras by location.
+        Title:
+          type: string
+          nullable: true
+          description: Display name of the camera.
+      required:
+        - CameraID
+        - CameraLocation
+        - CameraOwner
+        - Description
+        - DisplayLatitude
+        - DisplayLongitude
+        - ImageHeight
+        - ImageURL
+        - ImageWidth
+        - IsActive
+        - OwnerURL
+        - Region
+        - SortOrder
+        - Title
+      description: Highway camera information including location data, image URLs, status, ownership, and display metadata.
+    SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam:
+      type: string
+      description: State route identifier for filtering cameras (e.g., 'I-5', 'I-90').
+    SearchHighwayCamerasByRouteAndMilepostInputRegionParam:
+      type: string
+      description: WSDOT region code for filtering cameras by geographic region.
+    SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam:
+      type: number
+      nullable: true
+      description: Starting milepost value for milepost range filtering.
+    SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam:
+      type: number
+      nullable: true
+      description: Ending milepost value for milepost range filtering.
+    FetchHighwayCameraByCameraIdInputCameraIDParam:
+      type: number
+      description: Numeric ID of the camera.
+  parameters:
+    SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam:
+      schema:
+        $ref: '#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam'
+      required: false
+      description: State route identifier for filtering cameras (e.g., 'I-5', 'I-90').
+      name: StateRoute
+      in: query
+    SearchHighwayCamerasByRouteAndMilepostInputRegionParam:
+      schema:
+        $ref: '#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputRegionParam'
+      required: false
+      description: WSDOT region code for filtering cameras by geographic region.
+      name: Region
+      in: query
+    SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam:
+      schema:
+        $ref: '#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam'
+      required: false
+      description: Starting milepost value for milepost range filtering.
+      name: StartingMilepost
+      in: query
+    SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam:
+      schema:
+        $ref: '#/components/schemas/SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam'
+      required: false
+      description: Ending milepost value for milepost range filtering.
+      name: EndingMilepost
+      in: query
+    FetchHighwayCameraByCameraIdInputCameraIDParam:
+      schema:
+        $ref: '#/components/schemas/FetchHighwayCameraByCameraIdInputCameraIDParam'
+      required: true
+      description: Numeric ID of the camera.
+      name: CameraID
+      in: path
+paths:
+  /getCameraAsJson?CameraID={CameraID}:
+    get:
+      summary: Get camera details by camera ID.
+      operationId: fetchHighwayCameraByCameraId
+      tags:
+        - cameras
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchHighwayCameraByCameraId } from 'ws-dottie/wsdot-highway-cameras/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchHighwayCameraByCameraId,
+              params: {
+                "CameraID": 9818
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchHighwayCameraByCameraIdInputCameraIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchHighwayCamerasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    CameraID: 9818
+                    CameraLocation:
+                      Description: null
+                      Direction: W
+                      Latitude: 48.498333
+                      Longitude: -122.6625
+                      MilePost: 1
+                      RoadName: Airports
+                    CameraOwner: WSDOT Aviation
+                    Description: null
+                    DisplayLatitude: 48.498333
+                    DisplayLongitude: -122.6625
+                    ImageHeight: 208
+                    ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
+                    ImageWidth: 352
+                    IsActive: true
+                    OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
+                    Region: WA
+                    SortOrder: 5300
+                    Title: Anacortes Airport Fuel Pump
+  /searchCamerasAsJson:
+    get:
+      summary: Search cameras by route and milepost range.
+      operationId: searchHighwayCamerasByRouteAndMilepost
+      tags:
+        - cameras
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { searchHighwayCamerasByRouteAndMilepost } from 'ws-dottie/wsdot-highway-cameras/core';
+
+            const data = await fetchDottie({
+              endpoint: searchHighwayCamerasByRouteAndMilepost,
+              params: {
+                "StateRoute": "I-5",
+                "StartingMilepost": 10,
+                "EndingMilepost": 20
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputStateRouteParam'
+        - $ref: '#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputRegionParam'
+        - $ref: '#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputStartingMilepostParam'
+        - $ref: '#/components/parameters/SearchHighwayCamerasByRouteAndMilepostInputEndingMilepostParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchHighwayCamerasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 12 total)
+                  value:
+                    - CameraID: 9290
+                      CameraLocation:
+                        Description: null
+                        Direction: B
+                        Latitude: 45.753907
+                        Longitude: -122.66372
+                        MilePost: 10
+                        RoadName: I-5
+                      CameraOwner: null
+                      Description: null
+                      DisplayLatitude: 45.753907
+                      DisplayLongitude: -122.66372
+                      ImageHeight: 249
+                      ImageURL: https://images.wsdot.wa.gov/sw/005vc00976.jpg
+                      ImageWidth: 335
+                      IsActive: true
+                      OwnerURL: null
+                      Region: SW
+                      SortOrder: 1000
+                      Title: 'I-5 at MP 9.7: N of 179th St'
+  /getCamerasAsJson:
+    get:
+      summary: List all highway cameras statewide.
+      operationId: fetchHighwayCameras
+      tags:
+        - cameras
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchDottie } from 'ws-dottie';
+            import { fetchHighwayCameras } from 'ws-dottie/wsdot-highway-cameras/core';
+
+            const data = await fetchDottie({
+              endpoint: fetchHighwayCameras,
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchHighwayCamerasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 1648 total)
+                  value:
+                    - CameraID: 9818
+                      CameraLocation:
+                        Description: null
+                        Direction: W
+                        Latitude: 48.498333
+                        Longitude: -122.6625
+                        MilePost: 1
+                        RoadName: Airports
+                      CameraOwner: WSDOT Aviation
+                      Description: null
+                      DisplayLatitude: 48.498333
+                      DisplayLongitude: -122.6625
+                      ImageHeight: 208
+                      ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
+                      ImageWidth: 352
+                      IsActive: true
+                      OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
+                      Region: WA
+                      SortOrder: 5300
+                      Title: Anacortes Airport Fuel Pump
+tags:
+  - name: cameras
+    description: Traffic monitoring cameras on Washington state highways.
+    x-useCases:
+      - Display live camera feeds in traffic monitoring applications.
+      - Show road conditions and weather impacts for route planning.
+      - Provide visual traffic status in traveler information systems.
+    x-updateFrequency: 5m
