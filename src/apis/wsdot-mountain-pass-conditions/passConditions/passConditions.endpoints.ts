@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   mountainPassConditionByIdInputSchema,
   mountainPassConditionsInputSchema,
@@ -18,7 +18,7 @@ export const passConditionsGroup: EndpointGroup = {
   },
 };
 
-export const fetchMountainPassConditionById = defineEndpoint({
+export const fetchMountainPassConditionById = createEndpoint({
   api: apis.wsdotMountainPassConditions,
   group: passConditionsGroup,
   functionName: "fetchMountainPassConditionById",
@@ -30,7 +30,7 @@ export const fetchMountainPassConditionById = defineEndpoint({
     "Returns a single PassCondition for specified mountain pass identifier.",
 });
 
-export const fetchMountainPassConditions = defineEndpoint({
+export const fetchMountainPassConditions = createEndpoint({
   api: apis.wsdotMountainPassConditions,
   group: passConditionsGroup,
   functionName: "fetchMountainPassConditions",

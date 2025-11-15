@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { mapAreasInputSchema } from "./alertAreas.input";
 import { areaSchema } from "./alertAreas.output";
 
@@ -15,7 +15,7 @@ export const alertAreasGroup: EndpointGroup = {
   },
 };
 
-export const fetchMapAreas = defineEndpoint({
+export const fetchMapAreas = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: alertAreasGroup,
   functionName: "fetchMapAreas",

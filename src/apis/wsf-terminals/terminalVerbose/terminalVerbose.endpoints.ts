@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   terminalVerboseByTerminalIdInputSchema,
   terminalVerboseInputSchema,
@@ -18,7 +18,7 @@ export const terminalVerboseGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalVerbose = defineEndpoint({
+export const fetchTerminalVerbose = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalVerboseGroup,
   functionName: "fetchTerminalVerbose",
@@ -30,7 +30,7 @@ export const fetchTerminalVerbose = defineEndpoint({
     "Returns multiple TerminalVerbose objects for all terminals.",
 });
 
-export const fetchTerminalVerboseByTerminalId = defineEndpoint({
+export const fetchTerminalVerboseByTerminalId = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalVerboseGroup,
   functionName: "fetchTerminalVerboseByTerminalId",

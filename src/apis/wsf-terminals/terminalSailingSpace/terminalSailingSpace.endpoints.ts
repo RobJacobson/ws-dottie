@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   terminalSailingSpaceByTerminalIdInputSchema,
   terminalSailingSpaceInputSchema,
@@ -17,7 +17,7 @@ export const terminalSailingSpaceGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalSailingSpace = defineEndpoint({
+export const fetchTerminalSailingSpace = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpace",
@@ -29,7 +29,7 @@ export const fetchTerminalSailingSpace = defineEndpoint({
     "Returns multiple TerminalSailingSpace objects for all terminals.",
 });
 
-export const fetchTerminalSailingSpaceByTerminalId = defineEndpoint({
+export const fetchTerminalSailingSpaceByTerminalId = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalSailingSpaceGroup,
   functionName: "fetchTerminalSailingSpaceByTerminalId",

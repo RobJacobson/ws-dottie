@@ -6,7 +6,7 @@ import {
   cacheFlushDateOutputSchema,
 } from "@/apis/shared/cacheFlushDate";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 
 export const cacheFlushDateTerminalsGroup: EndpointGroup = {
   name: "cache-flush-date-terminals",
@@ -19,7 +19,7 @@ export const cacheFlushDateTerminalsGroup: EndpointGroup = {
   },
 };
 
-export const fetchCacheFlushDateTerminals = defineEndpoint({
+export const fetchCacheFlushDateTerminals = createEndpoint({
   api: apis.wsfTerminals,
   group: cacheFlushDateTerminalsGroup,
   functionName: "fetchCacheFlushDateTerminals",

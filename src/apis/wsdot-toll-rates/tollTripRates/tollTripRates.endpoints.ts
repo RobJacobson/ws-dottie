@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   tollTripRatesInputSchema,
@@ -20,7 +20,7 @@ export const tollTripRatesGroup: EndpointGroup = {
   },
 };
 
-export const fetchTollTripRates = defineEndpoint({
+export const fetchTollTripRates = createEndpoint({
   api: apis.wsdotTollRates,
   group: tollTripRatesGroup,
   functionName: "fetchTollTripRates",
@@ -31,7 +31,7 @@ export const fetchTollTripRates = defineEndpoint({
   endpointDescription:
     "Returns single TollTripRates item with current pricing and message data.",
 });
-export const fetchTripRatesByDate = defineEndpoint({
+export const fetchTripRatesByDate = createEndpoint({
   api: apis.wsdotTollRates,
   group: tollTripRatesGroup,
   functionName: "fetchTripRatesByDate",
@@ -46,7 +46,7 @@ export const fetchTripRatesByDate = defineEndpoint({
     "Returns multiple TollTripRates items for specified date range.",
 });
 
-export const fetchTripRatesByVersion = defineEndpoint({
+export const fetchTripRatesByVersion = createEndpoint({
   api: apis.wsdotTollRates,
   group: tollTripRatesGroup,
   functionName: "fetchTripRatesByVersion",

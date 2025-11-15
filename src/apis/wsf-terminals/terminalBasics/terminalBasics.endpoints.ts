@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   terminalBasicsByIdInputSchema,
   terminalBasicsInputSchema,
@@ -18,7 +18,7 @@ export const terminalBasicsGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalBasics = defineEndpoint({
+export const fetchTerminalBasics = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalBasicsGroup,
   functionName: "fetchTerminalBasics",
@@ -30,7 +30,7 @@ export const fetchTerminalBasics = defineEndpoint({
     "Returns multiple TerminalBasic objects for all terminals.",
 });
 
-export const fetchTerminalBasicsByTerminalId = defineEndpoint({
+export const fetchTerminalBasicsByTerminalId = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalBasicsGroup,
   functionName: "fetchTerminalBasicsByTerminalId",

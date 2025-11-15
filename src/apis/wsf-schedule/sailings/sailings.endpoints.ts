@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   allSailingsBySchedRouteIDInputSchema,
   sailingsByRouteIDInputSchema,
@@ -17,7 +17,7 @@ export const sailingsGroup: EndpointGroup = {
   },
 };
 
-export const fetchAllSailingsBySchedRouteID = defineEndpoint({
+export const fetchAllSailingsBySchedRouteID = createEndpoint({
   api: apis.wsfSchedule,
   group: sailingsGroup,
   functionName: "fetchAllSailingsBySchedRouteID",
@@ -29,7 +29,7 @@ export const fetchAllSailingsBySchedRouteID = defineEndpoint({
     "Returns all sailing data for specified scheduled route ID.",
 });
 
-export const fetchSailingsByRouteID = defineEndpoint({
+export const fetchSailingsByRouteID = createEndpoint({
   api: apis.wsfSchedule,
   group: sailingsGroup,
   functionName: "fetchSailingsByRouteID",

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   travelTimeByIdInputSchema,
   travelTimesInputSchema,
@@ -18,7 +18,7 @@ export const travelTimeRoutesGroup: EndpointGroup = {
   },
 };
 
-export const fetchTravelTimeById = defineEndpoint({
+export const fetchTravelTimeById = createEndpoint({
   api: apis.wsdotTravelTimes,
   group: travelTimeRoutesGroup,
   functionName: "fetchTravelTimeById",
@@ -30,7 +30,7 @@ export const fetchTravelTimeById = defineEndpoint({
     "Returns a TravelTimeRoute object containing travel time data for a specified route ID.",
 });
 
-export const fetchTravelTimes = defineEndpoint({
+export const fetchTravelTimes = createEndpoint({
   api: apis.wsdotTravelTimes,
   group: travelTimeRoutesGroup,
   functionName: "fetchTravelTimes",

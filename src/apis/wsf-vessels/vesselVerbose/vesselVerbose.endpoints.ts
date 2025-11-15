@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselVerboseByIdInput,
   type VesselVerboseInput,
@@ -23,7 +23,7 @@ export const vesselVerboseGroup: EndpointGroup = {
   },
 };
 
-export const fetchVesselsVerbose = defineEndpoint<
+export const fetchVesselsVerbose = createEndpoint<
   VesselVerboseInput,
   VesselVerbose[]
 >({
@@ -38,7 +38,7 @@ export const fetchVesselsVerbose = defineEndpoint<
     "Returns multiple VesselVerbose objects for all vessels in fleet.",
 });
 
-export const fetchVesselsVerboseByVesselId = defineEndpoint<
+export const fetchVesselsVerboseByVesselId = createEndpoint<
   VesselVerboseByIdInput,
   VesselVerbose
 >({

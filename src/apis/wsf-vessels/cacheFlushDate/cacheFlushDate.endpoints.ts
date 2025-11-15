@@ -5,8 +5,8 @@ import {
   cacheFlushDateInputSchema,
   cacheFlushDateOutputSchema,
 } from "@/apis/shared/cacheFlushDate";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 
 export const cacheFlushDateVesselsGroup: EndpointGroup = {
   name: "cache-flush-date-vessels",
@@ -19,7 +19,7 @@ export const cacheFlushDateVesselsGroup: EndpointGroup = {
   },
 };
 
-export const fetchCacheFlushDateVessels = defineEndpoint<
+export const fetchCacheFlushDateVessels = createEndpoint<
   CacheFlushDateInput,
   CacheFlushDateOutput
 >({

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { activeSeasonsInputSchema } from "./activeSeasons.input";
 import { scheduleBaseSchema } from "./activeSeasons.output";
 
@@ -15,7 +15,7 @@ export const activeSeasonsGroup: EndpointGroup = {
   },
 };
 
-export const fetchActiveSeasons = defineEndpoint({
+export const fetchActiveSeasons = createEndpoint({
   api: apis.wsfSchedule,
   group: activeSeasonsGroup,
   functionName: "fetchActiveSeasons",

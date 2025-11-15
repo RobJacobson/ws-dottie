@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { scheduleAlertsInputSchema } from "./scheduleAlerts.input";
 import { alertDetailSchema } from "./scheduleAlerts.output";
 
@@ -14,7 +14,7 @@ export const scheduleAlertsGroup: EndpointGroup = {
   },
 };
 
-export const fetchScheduleAlerts = defineEndpoint({
+export const fetchScheduleAlerts = createEndpoint({
   api: apis.wsfSchedule,
   group: scheduleAlertsGroup,
   functionName: "fetchScheduleAlerts",

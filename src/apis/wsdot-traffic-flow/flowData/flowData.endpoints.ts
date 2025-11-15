@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   trafficFlowByIdInputSchema,
   trafficFlowsInputSchema,
@@ -18,7 +18,7 @@ export const flowDataGroup: EndpointGroup = {
   },
 };
 
-export const fetchTrafficFlows = defineEndpoint({
+export const fetchTrafficFlows = createEndpoint({
   api: apis.wsdotTrafficFlow,
   group: flowDataGroup,
   functionName: "fetchTrafficFlows",
@@ -30,7 +30,7 @@ export const fetchTrafficFlows = defineEndpoint({
     "Returns multiple FlowData items for all traffic flow stations across Washington state.",
 });
 
-export const fetchTrafficFlowById = defineEndpoint({
+export const fetchTrafficFlowById = createEndpoint({
   api: apis.wsdotTrafficFlow,
   group: flowDataGroup,
   functionName: "fetchTrafficFlowById",

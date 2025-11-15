@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   routeDetailsByTripDateAndRouteIdInputSchema,
@@ -20,7 +20,7 @@ export const routeDetailsGroup: EndpointGroup = {
   },
 };
 
-export const fetchRouteDetailsByTripDate = defineEndpoint({
+export const fetchRouteDetailsByTripDate = createEndpoint({
   api: apis.wsfSchedule,
   group: routeDetailsGroup,
   functionName: "fetchRouteDetailsByTripDate",
@@ -31,7 +31,7 @@ export const fetchRouteDetailsByTripDate = defineEndpoint({
   endpointDescription: "Returns multiple of RouteDetails for specified date.",
 });
 
-export const fetchRouteDetailsByTripDateAndRouteId = defineEndpoint({
+export const fetchRouteDetailsByTripDateAndRouteId = createEndpoint({
   api: apis.wsfSchedule,
   group: routeDetailsGroup,
   functionName: "fetchRouteDetailsByTripDateAndRouteId",
@@ -42,7 +42,7 @@ export const fetchRouteDetailsByTripDateAndRouteId = defineEndpoint({
   endpointDescription: "Returns single of RouteDetails for specified route.",
 });
 
-export const fetchRouteDetailsByTripDateAndTerminals = defineEndpoint({
+export const fetchRouteDetailsByTripDateAndTerminals = createEndpoint({
   api: apis.wsfSchedule,
   group: routeDetailsGroup,
   functionName: "fetchRouteDetailsByTripDateAndTerminals",

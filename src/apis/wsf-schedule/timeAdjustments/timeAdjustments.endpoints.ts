@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   timeAdjustmentsByRouteInputSchema,
   timeAdjustmentsBySchedRouteInputSchema,
@@ -18,7 +18,7 @@ export const timeAdjustmentsGroup: EndpointGroup = {
   },
 };
 
-export const fetchTimeAdjustments = defineEndpoint({
+export const fetchTimeAdjustments = createEndpoint({
   api: apis.wsfSchedule,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustments",
@@ -29,7 +29,7 @@ export const fetchTimeAdjustments = defineEndpoint({
   endpointDescription: "Returns all time adjustments.",
 });
 
-export const fetchTimeAdjustmentsByRoute = defineEndpoint({
+export const fetchTimeAdjustmentsByRoute = createEndpoint({
   api: apis.wsfSchedule,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsByRoute",
@@ -40,7 +40,7 @@ export const fetchTimeAdjustmentsByRoute = defineEndpoint({
   endpointDescription: "Returns time adjustments for specified route ID.",
 });
 
-export const fetchTimeAdjustmentsBySchedRoute = defineEndpoint({
+export const fetchTimeAdjustmentsBySchedRoute = createEndpoint({
   api: apis.wsfSchedule,
   group: timeAdjustmentsGroup,
   functionName: "fetchTimeAdjustmentsBySchedRoute",

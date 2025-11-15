@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselStatsByIdInput,
   type VesselStatsInput,
@@ -20,7 +20,7 @@ export const vesselStatsGroup: EndpointGroup = {
   },
 };
 
-export const fetchVesselStats = defineEndpoint<VesselStatsInput, VesselStat[]>({
+export const fetchVesselStats = createEndpoint<VesselStatsInput, VesselStat[]>({
   api: apis.wsfVessels,
   group: vesselStatsGroup,
   functionName: "fetchVesselStats",
@@ -32,7 +32,7 @@ export const fetchVesselStats = defineEndpoint<VesselStatsInput, VesselStat[]>({
     "Returns multiple VesselStat objects for all vessels in the fleet.",
 });
 
-export const fetchVesselStatsByVesselId = defineEndpoint<
+export const fetchVesselStatsByVesselId = createEndpoint<
   VesselStatsByIdInput,
   VesselStat
 >({

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   highwayCameraByCameraIdInputSchema,
   highwayCamerasByRouteAndMilepostInputSchema,
@@ -19,7 +19,7 @@ export const camerasGroup: EndpointGroup = {
   },
 };
 
-export const fetchHighwayCameras = defineEndpoint({
+export const fetchHighwayCameras = createEndpoint({
   api: apis.wsdotHighwayCameras,
   group: camerasGroup,
   functionName: "fetchHighwayCameras",
@@ -30,7 +30,7 @@ export const fetchHighwayCameras = defineEndpoint({
   endpointDescription: "Returns multiple Camera items for statewide coverage.",
 });
 
-export const searchHighwayCamerasByRouteAndMilepost = defineEndpoint({
+export const searchHighwayCamerasByRouteAndMilepost = createEndpoint({
   api: apis.wsdotHighwayCameras,
   group: camerasGroup,
   functionName: "searchHighwayCamerasByRouteAndMilepost",
@@ -46,7 +46,7 @@ export const searchHighwayCamerasByRouteAndMilepost = defineEndpoint({
     "Returns multiple Camera items for specified route and milepost range.",
 });
 
-export const fetchHighwayCameraByCameraId = defineEndpoint({
+export const fetchHighwayCameraByCameraId = createEndpoint({
   api: apis.wsdotHighwayCameras,
   group: camerasGroup,
   functionName: "fetchHighwayCameraByCameraId",

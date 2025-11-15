@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import { fareTotalsByTripDateAndRouteInputSchema } from "./fareTotals.input";
 import { fareTotalSchema } from "./fareTotals.output";
@@ -16,7 +16,7 @@ export const fareTotalsGroup: EndpointGroup = {
   },
 };
 
-export const fetchFareTotalsByTripDateAndRoute = defineEndpoint({
+export const fetchFareTotalsByTripDateAndRoute = createEndpoint({
   api: apis.wsfFares,
   group: fareTotalsGroup,
   functionName: "fetchFareTotalsByTripDateAndRoute",

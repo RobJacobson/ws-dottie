@@ -1,7 +1,7 @@
 import { apis } from "@/apis/shared/apis";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type FaresValidDateRangeInput,
   faresValidDateRangeInputSchema,
@@ -18,7 +18,7 @@ export const validDateRangeGroup: EndpointGroup = {
   },
 };
 
-export const fetchFaresValidDateRange = defineEndpoint<
+export const fetchFaresValidDateRange = createEndpoint<
   FaresValidDateRangeInput,
   any
 >({

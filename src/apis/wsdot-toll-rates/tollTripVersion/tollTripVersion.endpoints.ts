@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { tollTripVersionInputSchema } from "./tollTripVersion.input";
 import { tollTripVersionSchema } from "./tollTripVersion.output";
 
@@ -14,7 +14,7 @@ export const tollTripVersionGroup: EndpointGroup = {
   },
 };
 
-export const fetchTollTripVersion = defineEndpoint({
+export const fetchTollTripVersion = createEndpoint({
   api: apis.wsdotTollRates,
   group: tollTripVersionGroup,
   functionName: "fetchTollTripVersion",

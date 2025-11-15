@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   currentWeatherForStationsInputSchema,
@@ -21,7 +21,7 @@ export const weatherInfoGroup: EndpointGroup = {
   },
 };
 
-export const fetchWeatherInformation = defineEndpoint({
+export const fetchWeatherInformation = createEndpoint({
   api: apis.wsdotWeatherInformation,
   group: weatherInfoGroup,
   functionName: "fetchWeatherInformation",
@@ -32,7 +32,7 @@ export const fetchWeatherInformation = defineEndpoint({
   endpointDescription: "Returns multiple WeatherInfo items for all stations.",
 });
 
-export const fetchWeatherInformationByStationId = defineEndpoint({
+export const fetchWeatherInformationByStationId = createEndpoint({
   api: apis.wsdotWeatherInformation,
   group: weatherInfoGroup,
   functionName: "fetchWeatherInformationByStationId",
@@ -44,7 +44,7 @@ export const fetchWeatherInformationByStationId = defineEndpoint({
   endpointDescription: "Returns single WeatherInfo for specific station.",
 });
 
-export const fetchCurrentWeatherForStations = defineEndpoint({
+export const fetchCurrentWeatherForStations = createEndpoint({
   api: apis.wsdotWeatherInformation,
   group: weatherInfoGroup,
   functionName: "fetchCurrentWeatherForStations",
@@ -55,7 +55,7 @@ export const fetchCurrentWeatherForStations = defineEndpoint({
   endpointDescription: "Returns multiple WeatherInfo for specified stations.",
 });
 
-export const searchWeatherInformation = defineEndpoint({
+export const searchWeatherInformation = createEndpoint({
   api: apis.wsdotWeatherInformation,
   group: weatherInfoGroup,
   functionName: "searchWeatherInformation",

@@ -2,7 +2,7 @@ import { apis } from "@/apis/shared/apis";
 import { terminalMatesInputSchema } from "@/apis/shared/terminals.input";
 import { terminalListSchema } from "@/apis/shared/terminals.output";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 
 export const scheduleTerminalMatesGroup: EndpointGroup = {
@@ -16,7 +16,7 @@ export const scheduleTerminalMatesGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalMatesSchedule = defineEndpoint({
+export const fetchTerminalMatesSchedule = createEndpoint({
   api: apis.wsfSchedule,
   group: scheduleTerminalMatesGroup,
   functionName: "fetchTerminalMatesSchedule",

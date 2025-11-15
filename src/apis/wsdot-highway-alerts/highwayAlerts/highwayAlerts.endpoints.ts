@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   alertByIdInputSchema,
@@ -24,7 +24,7 @@ export const highwayAlertsGroup: EndpointGroup = {
   },
 };
 
-export const fetchAlerts = defineEndpoint({
+export const fetchAlerts = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlerts",
@@ -36,7 +36,7 @@ export const fetchAlerts = defineEndpoint({
     "Returns an array of Alert objects for all current highway incidents.",
 });
 
-export const fetchAlertById = defineEndpoint({
+export const fetchAlertById = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertById",
@@ -47,7 +47,7 @@ export const fetchAlertById = defineEndpoint({
   endpointDescription: "Returns a single Alert object for specified AlertID.",
 });
 
-export const fetchAlertsByRegionId = defineEndpoint({
+export const fetchAlertsByRegionId = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByRegionId",
@@ -59,7 +59,7 @@ export const fetchAlertsByRegionId = defineEndpoint({
     "Returns an array of Alert objects for specified region.",
 });
 
-export const fetchAlertsByCounty = defineEndpoint({
+export const fetchAlertsByCounty = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByCounty",
@@ -71,7 +71,7 @@ export const fetchAlertsByCounty = defineEndpoint({
     "Returns an array of Alert objects for specified county.",
 });
 
-export const fetchAlertsByMapArea = defineEndpoint({
+export const fetchAlertsByMapArea = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "fetchAlertsByMapArea",
@@ -83,7 +83,7 @@ export const fetchAlertsByMapArea = defineEndpoint({
     "Returns an array of Alert objects for specified geographic area.",
 });
 
-export const searchAlerts = defineEndpoint({
+export const searchAlerts = createEndpoint({
   api: apis.wsdotHighwayAlerts,
   group: highwayAlertsGroup,
   functionName: "searchAlerts",

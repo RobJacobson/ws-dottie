@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselLocationsByIdInput,
   type VesselLocationsInput,
@@ -23,7 +23,7 @@ export const vesselLocationsGroup: EndpointGroup = {
   },
 };
 
-export const fetchVesselLocations = defineEndpoint<
+export const fetchVesselLocations = createEndpoint<
   VesselLocationsInput,
   VesselLocation[]
 >({
@@ -38,7 +38,7 @@ export const fetchVesselLocations = defineEndpoint<
     "Returns multiple VesselLocation objects for all vessels in fleet.",
 });
 
-export const fetchVesselLocationsByVesselId = defineEndpoint<
+export const fetchVesselLocationsByVesselId = createEndpoint<
   VesselLocationsByIdInput,
   VesselLocation
 >({

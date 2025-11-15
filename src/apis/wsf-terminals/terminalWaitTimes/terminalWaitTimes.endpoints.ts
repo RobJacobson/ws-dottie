@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   terminalWaitTimesByIdInputSchema,
   terminalWaitTimesInputSchema,
@@ -18,7 +18,7 @@ export const terminalWaitTimesGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalWaitTimes = defineEndpoint({
+export const fetchTerminalWaitTimes = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimes",
@@ -30,7 +30,7 @@ export const fetchTerminalWaitTimes = defineEndpoint({
     "Returns multiple TerminalWaitTime objects for all terminals.",
 });
 
-export const fetchTerminalWaitTimesByTerminalId = defineEndpoint({
+export const fetchTerminalWaitTimesByTerminalId = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalWaitTimesGroup,
   functionName: "fetchTerminalWaitTimesByTerminalId",

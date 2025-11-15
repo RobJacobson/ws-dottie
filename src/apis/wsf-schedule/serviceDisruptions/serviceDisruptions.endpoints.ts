@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
 import { serviceDisruptionSchema } from "./serviceDisruptions.output";
@@ -16,7 +16,7 @@ export const serviceDisruptionsGroup: EndpointGroup = {
   },
 };
 
-export const fetchRoutesHavingServiceDisruptionsByTripDate = defineEndpoint({
+export const fetchRoutesHavingServiceDisruptionsByTripDate = createEndpoint({
   api: apis.wsfSchedule,
   group: serviceDisruptionsGroup,
   functionName: "fetchRoutesHavingServiceDisruptionsByTripDate",

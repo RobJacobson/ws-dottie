@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
@@ -18,7 +18,7 @@ export const bridgeClearancesGroup: EndpointGroup = {
   },
 };
 
-export const fetchBridgeClearances = defineEndpoint({
+export const fetchBridgeClearances = createEndpoint({
   api: apis.wsdotBridgeClearances,
   group: bridgeClearancesGroup,
   functionName: "fetchBridgeClearances",
@@ -30,7 +30,7 @@ export const fetchBridgeClearances = defineEndpoint({
     "Returns an array of BridgeDataGIS objects containing vertical clearance data for all Washington State bridges.",
 });
 
-export const fetchBridgeClearancesByRoute = defineEndpoint({
+export const fetchBridgeClearancesByRoute = createEndpoint({
   api: apis.wsdotBridgeClearances,
   group: bridgeClearancesGroup,
   functionName: "fetchBridgeClearancesByRoute",

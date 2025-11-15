@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   terminalLocationsByIdInputSchema,
   terminalLocationsInputSchema,
@@ -18,7 +18,7 @@ export const terminalLocationsGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalLocations = defineEndpoint({
+export const fetchTerminalLocations = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalLocationsGroup,
   functionName: "fetchTerminalLocations",
@@ -30,7 +30,7 @@ export const fetchTerminalLocations = defineEndpoint({
     "Returns multiple TerminalLocation objects for all terminals.",
 });
 
-export const fetchTerminalLocationsByTerminalId = defineEndpoint({
+export const fetchTerminalLocationsByTerminalId = createEndpoint({
   api: apis.wsfTerminals,
   group: terminalLocationsGroup,
   functionName: "fetchTerminalLocationsByTerminalId",

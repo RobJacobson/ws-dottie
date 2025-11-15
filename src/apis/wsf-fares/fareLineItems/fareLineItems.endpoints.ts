@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   fareLineItemsBasicInputSchema,
@@ -20,7 +20,7 @@ export const fareLineItemsGroup: EndpointGroup = {
   },
 };
 
-export const fetchFareLineItemsByTripDateAndTerminals = defineEndpoint({
+export const fetchFareLineItemsByTripDateAndTerminals = createEndpoint({
   api: apis.wsfFares,
   group: fareLineItemsGroup,
   functionName: "fetchFareLineItemsByTripDateAndTerminals",
@@ -38,7 +38,7 @@ export const fetchFareLineItemsByTripDateAndTerminals = defineEndpoint({
     "Returns multiple of FareLineItem for specific terminal combination.",
 });
 
-export const fetchFareLineItemsBasic = defineEndpoint({
+export const fetchFareLineItemsBasic = createEndpoint({
   api: apis.wsfFares,
   group: fareLineItemsGroup,
   functionName: "fetchFareLineItemsBasic",
@@ -56,7 +56,7 @@ export const fetchFareLineItemsBasic = defineEndpoint({
     "Returns multiple of FareLineItem for popular fare options.",
 });
 
-export const fetchFareLineItemsVerbose = defineEndpoint({
+export const fetchFareLineItemsVerbose = createEndpoint({
   api: apis.wsfFares,
   group: fareLineItemsGroup,
   functionName: "fetchFareLineItemsVerbose",

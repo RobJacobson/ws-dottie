@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import { datesHelper } from "@/shared/utils";
 import {
   terminalComboFaresVerboseInputSchema,
@@ -22,7 +22,7 @@ export const terminalComboGroup: EndpointGroup = {
   },
 };
 
-export const fetchTerminalComboFares = defineEndpoint({
+export const fetchTerminalComboFares = createEndpoint({
   api: apis.wsfFares,
   group: terminalComboGroup,
   functionName: "fetchTerminalComboFares",
@@ -39,7 +39,7 @@ export const fetchTerminalComboFares = defineEndpoint({
     "Returns fare collection descriptions for specified terminal combination and trip date.",
 });
 
-export const fetchTerminalComboFaresVerbose = defineEndpoint({
+export const fetchTerminalComboFaresVerbose = createEndpoint({
   api: apis.wsfFares,
   group: terminalComboGroup,
   functionName: "fetchTerminalComboFaresVerbose",

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import type { EndpointGroup } from "@/apis/types";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
@@ -17,7 +17,7 @@ export const scheduleTodayGroup: EndpointGroup = {
   },
 };
 
-export const fetchScheduleTodayByRoute = defineEndpoint({
+export const fetchScheduleTodayByRoute = createEndpoint({
   api: apis.wsfSchedule,
   group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByRoute",
@@ -28,7 +28,7 @@ export const fetchScheduleTodayByRoute = defineEndpoint({
   endpointDescription: "Returns today's schedule for the specified route.",
 });
 
-export const fetchScheduleTodayByTerminals = defineEndpoint({
+export const fetchScheduleTodayByTerminals = createEndpoint({
   api: apis.wsfSchedule,
   group: scheduleTodayGroup,
   functionName: "fetchScheduleTodayByTerminals",

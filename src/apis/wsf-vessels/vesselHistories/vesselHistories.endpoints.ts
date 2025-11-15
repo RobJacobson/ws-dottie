@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
-import { defineEndpoint } from "@/shared/factories/defineEndpoint";
 import type { EndpointGroup } from "@/apis/types";
+import { createEndpoint } from "@/shared/factories/createEndpoint";
 import {
   type VesselHistoriesByVesselNameAndDateRangeInput,
   type VesselHistoriesInput,
@@ -22,7 +22,7 @@ export const vesselHistoriesGroup: EndpointGroup = {
   },
 };
 
-export const fetchVesselHistories = defineEndpoint<
+export const fetchVesselHistories = createEndpoint<
   VesselHistoriesInput,
   VesselHistory[]
 >({
@@ -37,7 +37,7 @@ export const fetchVesselHistories = defineEndpoint<
     "Returns multiple VesselHistory objects for all vessels in fleet.",
 });
 
-export const fetchVesselHistoriesByVesselNameAndDateRange = defineEndpoint<
+export const fetchVesselHistoriesByVesselNameAndDateRange = createEndpoint<
   VesselHistoriesByVesselNameAndDateRangeInput,
   VesselHistory[]
 >({
