@@ -18,7 +18,7 @@ import { createStandardEndpointTests, SKIP_ALL_TESTS } from "./test-templates";
 export const createApiTestSuite = (apiName: string, apiDescription: string) => {
   // Get all endpoints for the specified API
   const apiEndpoints = endpoints.filter(
-    (ep: Endpoint<unknown, unknown>) => ep.api === apiName
+    (ep: Endpoint<unknown, unknown>) => ep.api.name === apiName
   );
 
   describe(apiDescription, () => {
