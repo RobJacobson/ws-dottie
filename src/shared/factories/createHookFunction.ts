@@ -9,13 +9,16 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import type { EndpointGroup } from "@/apis/types";
-import { useQueryWithCacheFlushDate } from "./createCacheFlushDateHook";
+import {
+  useCacheFlushDateQuery,
+  useCacheInvalidation,
+} from "@/shared/cache/cacheManager";
+import { cacheStrategies } from "@/shared/factories/types";
 import type {
   EndpointConfig,
   FetchFunctionParams,
   QueryHookOptions,
 } from "./types";
-import { cacheStrategies } from "./types";
 
 /**
  * Determines if an endpoint should use cache flush date invalidation.
@@ -79,7 +82,16 @@ export const createHookFunction = <TInput, TOutput>(
       params?: FetchFunctionParams<TInput>,
       options?: QueryHookOptions<TOutput>
     ): UseQueryResult<TOutput, Error> => {
-      return useQueryWithCacheFlushDate(config, fetchFunction, params, options);
+      const flushDateQuery = useCacheFlushDateQuery(config.api.name);
+      useCacheInvalidation(config.id, flushDateQuery);
+
+      return useQuery({
+        queryKey: [config.id, params?.params ?? null],
+        queryFn: () => fetchFunction(params),
+        ...cacheStrategies.STATIC,
+        refetchOnWindowFocus: false,
+        ...options,
+      });
     };
   }
 

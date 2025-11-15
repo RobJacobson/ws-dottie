@@ -10,9 +10,9 @@
 import type { UseQueryOptions, UseQueryResult } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
+import { cacheStrategies } from "@/shared/factories/types";
 import type { Endpoint } from "@/shared/types";
 import type { EndpointConfig, FetchFunctionParams } from "./types";
-import { cacheStrategies } from "./types";
 
 /**
  * Finds the cache flush date endpoint for an API from the endpoints registry.
@@ -152,8 +152,8 @@ export const useQueryWithCacheFlushDate = <TInput, TOutput>(
     queryFn: () => fetchFunction(params),
     ...(cacheFlushEndpoint
       ? cacheStrategies.STATIC
-      : cacheStrategies[config.cacheStrategy]),
+      : cacheStrategies[config.cacheStrategy as keyof typeof cacheStrategies]),
     refetchOnWindowFocus: false,
     ...options,
-  });
+  }) as UseQueryResult<TOutput, Error>;
 };

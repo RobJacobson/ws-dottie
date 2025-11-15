@@ -55,25 +55,6 @@ export type EndpointConfig<I, O> = DefineEndpointConfig<I, O> & {
 };
 
 // ============================================================================
-// RESULT TYPES
-// ============================================================================
-
-/**
- * Result of defining an endpoint
- */
-export type EndpointResult<I, O> = {
-  /** The endpoint descriptor for documentation */
-  descriptor: Endpoint<I, O>;
-  /** Fetch function for this endpoint */
-  fetch: (params?: FetchFunctionParams<I>) => Promise<O>;
-  /** React Query hook for this endpoint */
-  useQuery: (
-    params?: FetchFunctionParams<I>,
-    options?: QueryHookOptions<O>
-  ) => UseQueryResult<O, Error>;
-};
-
-// ============================================================================
 // PARAMETER TYPES
 // ============================================================================
 
@@ -100,7 +81,26 @@ export type QueryHookOptions<TData> = Omit<
 >;
 
 // ============================================================================
-// CACHE STRATEGY TYPES
+// RESULT TYPES
+// ============================================================================
+
+/**
+ * Result of defining an endpoint
+ */
+export type EndpointResult<I, O> = {
+  /** The endpoint descriptor for documentation */
+  descriptor: Endpoint<I, O>;
+  /** Fetch function for this endpoint */
+  fetch: (params?: FetchFunctionParams<I>) => Promise<O>;
+  /** React Query hook for this endpoint */
+  useQuery: (
+    params?: FetchFunctionParams<I>,
+    options?: QueryHookOptions<O>
+  ) => UseQueryResult<O, Error>;
+};
+
+// ============================================================================
+// CACHE STRATEGY CONFIGURATIONS
 // ============================================================================
 
 /**

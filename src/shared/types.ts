@@ -15,7 +15,7 @@ import type { ApiMetadata } from "@/apis/types";
  * Cache strategies for different data update frequencies
  *
  * These strategies define how frequently data should be refreshed based on
- * the nature of the transportation data. Each strategy includes appropriate
+ * nature of transportation data. Each strategy includes appropriate
  * stale time, garbage collection time, and refetch intervals.
  */
 export type CacheStrategy =
