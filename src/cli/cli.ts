@@ -210,7 +210,7 @@ const findEndpoint = (
   if (api) {
     // Namespace specified - find exact match
     endpoint = allEndpoints.find(
-      (ep) => ep.api === api && ep.functionName === endpointName
+      (ep) => ep.api.name === api && ep.functionName === endpointName
     );
   } else {
     // No namespace - check for collisions

@@ -162,7 +162,7 @@ const getGenericErrorTip = (message: string): void => {
 export const displayCollisionError = (
   endpointName: string,
   matchingEndpoints: Array<{
-    api: string;
+    api: { name: string };
     functionName: string;
     urlTemplate: string;
   }>
