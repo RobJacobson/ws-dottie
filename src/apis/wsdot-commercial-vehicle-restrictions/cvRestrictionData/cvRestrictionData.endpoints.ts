@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { commercialVehicleRestrictionsInputSchema } from "./cvRestrictionData.input";
 import { cvRestrictionSchema } from "./cvRestrictionData.output";
 
-export const cvRestrictionDataGroup = defineEndpointGroup({
+export const cvRestrictionDataGroup: EndpointGroup = {
   name: "cv-restriction-data",
   cacheStrategy: "STATIC",
   documentation: {
@@ -13,7 +13,7 @@ export const cvRestrictionDataGroup = defineEndpointGroup({
     businessContext:
       "Use to check vehicle restrictions and plan commercial routes by providing weight limits, height clearances, and axle restrictions for Washington State highways. Determine route feasibility and permit requirements for trucking companies and logistics providers.",
   },
-});
+};
 
 export const fetchCommercialVehicleRestrictions = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import {
   tollTripRatesInputSchema,
@@ -9,7 +9,7 @@ import {
 } from "./tollTripRates.input";
 import { tollTripsRatesSchema } from "./tollTripRates.output";
 
-export const tollTripRatesGroup = defineEndpointGroup({
+export const tollTripRatesGroup: EndpointGroup = {
   name: "toll-trip-rates",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -18,7 +18,7 @@ export const tollTripRatesGroup = defineEndpointGroup({
     businessContext:
       "Use to analyze toll pricing trends and retrieve historical rate data by providing detailed trip information, version tracking, and date range filtering for transportation planning.",
   },
-});
+};
 
 export const fetchTollTripRates = defineEndpoint({
   api: apis.wsdotBorderCrossings,

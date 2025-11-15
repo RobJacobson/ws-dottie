@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   travelTimeByIdInputSchema,
   travelTimesInputSchema,
 } from "./travelTimeRoutes.input";
 import { travelTimeRouteSchema } from "./travelTimeRoutes.output";
 
-export const travelTimeRoutesGroup = defineEndpointGroup({
+export const travelTimeRoutesGroup: EndpointGroup = {
   name: "travel-time-routes",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const travelTimeRoutesGroup = defineEndpointGroup({
     businessContext:
       "Use to plan travel routes and estimate arrival times by providing current travel times, average times, distance, and route location information for Washington State highways. Compare current conditions against historical averages to identify traffic delays and optimize departure times.",
   },
-});
+};
 
 export const fetchTravelTimeById = defineEndpoint({
   api: apis.wsdotBorderCrossings,

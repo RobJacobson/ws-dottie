@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { datesHelper } from "@/shared/utils";
 import {
   alertByIdInputSchema,
@@ -12,7 +12,7 @@ import {
 } from "./highwayAlerts.input";
 import { alertSchema } from "./highwayAlerts.output";
 
-export const highwayAlertsGroup = defineEndpointGroup({
+export const highwayAlertsGroup: EndpointGroup = {
   name: "highwayAlerts",
   // Using FREQUENT strategy because highway alerts can change every few minutes as incidents occur
   cacheStrategy: "FREQUENT",
@@ -22,7 +22,7 @@ export const highwayAlertsGroup = defineEndpointGroup({
     businessContext:
       "Use to monitor traffic incidents and plan alternate routes by providing real-time highway alerts, incident locations, and impact assessments for Washington State roads.",
   },
-});
+};
 
 export const fetchAlerts = defineEndpoint({
   api: apis.wsdotHighwayAlerts,

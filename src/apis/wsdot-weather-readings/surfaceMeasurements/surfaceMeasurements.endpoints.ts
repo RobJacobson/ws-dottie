@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { surfaceMeasurementsInputSchema } from "./surfaceMeasurements.input";
 import { surfaceMeasurementSchema } from "./surfaceMeasurements.output";
 
-export const surfaceMeasurementsGroup = defineEndpointGroup({
+export const surfaceMeasurementsGroup: EndpointGroup = {
   name: "surface-measurements",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -12,7 +12,7 @@ export const surfaceMeasurementsGroup = defineEndpointGroup({
       "SurfaceMeasurements provides surface sensor data including surface temperature, road freezing temperature, and road surface condition from weather stations. Coverage Area: Statewide.",
     businessContext: "",
   },
-});
+};
 
 export const fetchSurfaceMeasurements = defineEndpoint({
   api: apis.wsdotBorderCrossings,

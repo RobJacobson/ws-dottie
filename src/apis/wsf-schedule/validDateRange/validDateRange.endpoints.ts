@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { scheduleValidDateRangeInputSchema } from "./validDateRange.input";
 
-export const scheduleValidDateRangeGroup = defineEndpointGroup({
+export const scheduleValidDateRangeGroup: EndpointGroup = {
   name: "schedule-valid-date-range",
   cacheStrategy: "STATIC",
   documentation: {
@@ -13,7 +13,7 @@ export const scheduleValidDateRangeGroup = defineEndpointGroup({
     businessContext:
       "Use to determine schedule data availability by providing date range information for planning ferry travel.",
   },
-});
+};
 
 export const fetchScheduleValidDateRange = defineEndpoint({
   api: apis.wsdotBorderCrossings,

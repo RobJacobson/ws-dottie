@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { commercialVehicleRestrictionsWithIdInputSchema } from "./cvRestrictionDataWithId.input";
 import { cvRestrictionWithIdSchema } from "./cvRestrictionDataWithId.output";
 
-export const cvRestrictionDataWithIdGroup = defineEndpointGroup({
+export const cvRestrictionDataWithIdGroup: EndpointGroup = {
   name: "cv-restriction-data-with-id",
   cacheStrategy: "STATIC",
   documentation: {
@@ -13,7 +13,7 @@ export const cvRestrictionDataWithIdGroup = defineEndpointGroup({
     businessContext:
       "Use to check vehicle restrictions and track specific limitations by providing weight limits, height clearances, and unique identifiers for Washington State highways. Monitor restriction changes and manage permit requirements for trucking companies and logistics providers.",
   },
-});
+};
 
 export const fetchCommercialVehicleRestrictionsWithId = defineEndpoint({
   api: apis.wsdotBorderCrossings,

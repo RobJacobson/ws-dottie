@@ -19,23 +19,6 @@ export { ApiMetadata } from "@/apis/types";
 // ============================================================================
 
 /**
- * Configuration for defining an endpoint group
- */
-export type DefineEndpointGroupConfig = {
-  /** The name of endpoint group */
-  name: string;
-  /** Cache strategy for all endpoints in this group */
-  cacheStrategy: CacheStrategy;
-  /** Documentation for endpoint group */
-  documentation: {
-    /** Description of the resource being returned */
-    resourceDescription: string;
-    /** Business context for the resource */
-    businessContext: string;
-  };
-};
-
-/**
  * Configuration for defining an endpoint
  */
 export type DefineEndpointConfig<I, O> = {

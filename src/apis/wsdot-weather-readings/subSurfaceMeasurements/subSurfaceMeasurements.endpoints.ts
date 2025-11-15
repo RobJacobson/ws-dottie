@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { subSurfaceMeasurementsInputSchema } from "./subSurfaceMeasurements.input";
 import { subsurfaceMeasurementSchema } from "./subSurfaceMeasurements.output";
 
-export const subSurfaceMeasurementsGroup = defineEndpointGroup({
+export const subSurfaceMeasurementsGroup: EndpointGroup = {
   name: "sub-surface-measurements",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -13,7 +13,7 @@ export const subSurfaceMeasurementsGroup = defineEndpointGroup({
     businessContext:
       "Use to assess road surface conditions by providing subsurface temperature data for winter maintenance operations and travel safety assessments.",
   },
-});
+};
 
 export const fetchSubSurfaceMeasurements = defineEndpoint({
   api: apis.wsdotBorderCrossings,

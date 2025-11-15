@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import {
   fareLineItemsBasicInputSchema,
@@ -9,7 +9,7 @@ import {
 } from "./fareLineItems.input";
 import { lineItemSchema, lineItemVerboseSchema } from "./fareLineItems.output";
 
-export const fareLineItemsGroup = defineEndpointGroup({
+export const fareLineItemsGroup: EndpointGroup = {
   name: "fare-line-items",
   cacheStrategy: "STATIC",
   documentation: {
@@ -18,7 +18,7 @@ export const fareLineItemsGroup = defineEndpointGroup({
     businessContext:
       "Use to display fare options and enable price calculations by providing detailed fare breakdowns for different passenger types, vehicle categories, and route combinations for accurate ticket pricing.",
   },
-});
+};
 
 export const fetchFareLineItemsByTripDateAndTerminals = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { validDateRangeSchema } from "@/apis/shared/validDateRange.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   type FaresValidDateRangeInput,
   faresValidDateRangeInputSchema,
 } from "./validDateRange.input";
 
-export const validDateRangeGroup = defineEndpointGroup({
+export const validDateRangeGroup: EndpointGroup = {
   name: "valid-date-range",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const validDateRangeGroup = defineEndpointGroup({
     businessContext:
       "Use to determine valid fare calculation periods by providing DateFrom and DateThru dates for accurate fare queries and booking systems.",
   },
-});
+};
 
 export const fetchFaresValidDateRange = defineEndpoint<
   FaresValidDateRangeInput,

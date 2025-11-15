@@ -7,10 +7,10 @@ import {
 } from "@/apis/shared/terminals.input";
 import { terminalListSchema } from "@/apis/shared/terminals.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 
-export const terminalsGroup = defineEndpointGroup({
+export const terminalsGroup: EndpointGroup = {
   name: "terminals",
   cacheStrategy: "STATIC",
   documentation: {
@@ -19,7 +19,7 @@ export const terminalsGroup = defineEndpointGroup({
     businessContext:
       "Use to display terminal options and route connections by providing terminal details and mate relationships for trip planning and schedule navigation.",
   },
-});
+};
 
 export const fetchTerminalFares = defineEndpoint<TerminalsInput, any>({
   api: apis.wsdotBorderCrossings,

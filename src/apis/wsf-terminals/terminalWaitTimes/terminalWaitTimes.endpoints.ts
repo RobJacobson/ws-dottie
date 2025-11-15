@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   terminalWaitTimesByIdInputSchema,
   terminalWaitTimesInputSchema,
 } from "./terminalWaitTimes.input";
 import { terminalWaitTimeSchema } from "./terminalWaitTimes.output";
 
-export const terminalWaitTimesGroup = defineEndpointGroup({
+export const terminalWaitTimesGroup: EndpointGroup = {
   name: "terminal-wait-times",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const terminalWaitTimesGroup = defineEndpointGroup({
     businessContext:
       "Use to plan ferry terminal arrivals by providing current terminal conditions and vehicle capacity information for optimal departure timing.",
   },
-});
+};
 
 export const fetchTerminalWaitTimes = defineEndpoint({
   api: apis.wsdotBorderCrossings,

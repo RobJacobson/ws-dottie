@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   highwayCameraByCameraIdInputSchema,
   highwayCamerasByRouteAndMilepostInputSchema,
@@ -8,7 +8,7 @@ import {
 } from "./cameras.input";
 import { cameraSchema } from "./cameras.output";
 
-export const camerasGroup = defineEndpointGroup({
+export const camerasGroup: EndpointGroup = {
   name: "cameras",
   cacheStrategy: "STATIC",
   documentation: {
@@ -17,7 +17,7 @@ export const camerasGroup = defineEndpointGroup({
     businessContext:
       "Use to monitor real-time traffic conditions by providing camera locations, images, and metadata for route planning and traffic management decisions.",
   },
-});
+};
 
 export const fetchHighwayCameras = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import {
   type VesselBasicsByIdInput,
   type VesselBasicsInput,
@@ -9,7 +9,7 @@ import {
 } from "./vesselBasics.input";
 import { type VesselBasic, vesselBasicSchema } from "./vesselBasics.output";
 
-export const vesselBasicsGroup = defineEndpointGroup({
+export const vesselBasicsGroup: EndpointGroup = {
   name: "vessel-basics",
   cacheStrategy: "STATIC",
   documentation: {
@@ -18,7 +18,7 @@ export const vesselBasicsGroup = defineEndpointGroup({
     businessContext:
       "Use to display vessel information and track fleet status by providing identification details and operational status for passenger information systems. Supports trip planning applications and fleet management tools for Washington State Ferry services.",
   },
-});
+};
 
 export const fetchVesselBasics = defineEndpoint<
   VesselBasicsInput,

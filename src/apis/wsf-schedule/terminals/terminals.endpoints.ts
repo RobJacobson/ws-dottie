@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import {
   terminalsAndMatesByRouteInputSchema,
@@ -9,7 +9,7 @@ import {
 } from "./terminals.input";
 import { terminalMateSchema, terminalSchema } from "./terminals.output";
 
-export const scheduleTerminalsGroup = defineEndpointGroup({
+export const scheduleTerminalsGroup: EndpointGroup = {
   name: "schedule-terminals",
   cacheStrategy: "STATIC",
   documentation: {
@@ -17,7 +17,7 @@ export const scheduleTerminalsGroup = defineEndpointGroup({
       "Terminals represent the ferry dock locations where passengers board and disembark, including terminal identification, location information, and service details.",
     businessContext: "",
   },
-});
+};
 
 export const fetchTerminals = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   trafficFlowByIdInputSchema,
   trafficFlowsInputSchema,
 } from "./flowData.input";
 import { flowDataSchema } from "./flowData.output";
 
-export const flowDataGroup = defineEndpointGroup({
+export const flowDataGroup: EndpointGroup = {
   name: "flow-data",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -16,7 +16,7 @@ export const flowDataGroup = defineEndpointGroup({
     businessContext:
       "Use to monitor current traffic conditions by providing real-time flow data and station information for traffic management and traveler information systems.",
   },
-});
+};
 
 export const fetchTrafficFlows = defineEndpoint({
   api: apis.wsdotBorderCrossings,

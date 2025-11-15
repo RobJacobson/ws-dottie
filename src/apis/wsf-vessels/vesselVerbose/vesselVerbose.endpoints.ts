@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   type VesselVerboseByIdInput,
   type VesselVerboseInput,
@@ -12,7 +12,7 @@ import {
   vesselVerboseSchema,
 } from "./vesselVerbose.output";
 
-export const vesselVerboseGroup = defineEndpointGroup({
+export const vesselVerboseGroup: EndpointGroup = {
   name: "vessel-verbose",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,7 +21,7 @@ export const vesselVerboseGroup = defineEndpointGroup({
     businessContext:
       "Use to display complete vessel information by providing comprehensive vessel data for passenger information applications. Supports trip planning tools and fleet management systems for Washington State Ferry services.",
   },
-});
+};
 
 export const fetchVesselsVerbose = defineEndpoint<
   VesselVerboseInput,

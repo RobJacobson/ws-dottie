@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   mountainPassConditionByIdInputSchema,
   mountainPassConditionsInputSchema,
 } from "./passConditions.input";
 import { passConditionSchema } from "./passConditions.output";
 
-export const passConditionsGroup = defineEndpointGroup({
+export const passConditionsGroup: EndpointGroup = {
   name: "pass-conditions",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -16,7 +16,7 @@ export const passConditionsGroup = defineEndpointGroup({
     businessContext:
       "Use to assess mountain pass conditions for travel planning by providing current weather, road status, and restriction information for safe mountain travel.",
   },
-});
+};
 
 export const fetchMountainPassConditionById = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { tollRatesInputSchema } from "./tollRates.input";
 import { tollRateSchema } from "./tollRates.output";
 
-export const tollRatesGroup = defineEndpointGroup({
+export const tollRatesGroup: EndpointGroup = {
   name: "toll-rates",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -13,7 +13,7 @@ export const tollRatesGroup = defineEndpointGroup({
     businessContext:
       "Use to calculate travel costs and make informed routing decisions by providing current toll amounts and trip details for high occupancy lane usage across Washington state highways.",
   },
-});
+};
 
 export const fetchTollRates = defineEndpoint({
   api: apis.wsdotBorderCrossings,

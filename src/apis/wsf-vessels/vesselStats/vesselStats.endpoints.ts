@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   type VesselStatsByIdInput,
   type VesselStatsInput,
@@ -9,7 +9,7 @@ import {
 } from "./vesselStats.input";
 import { type VesselStat, vesselStatSchema } from "./vesselStats.output";
 
-export const vesselStatsGroup = defineEndpointGroup({
+export const vesselStatsGroup: EndpointGroup = {
   name: "vessel-stats",
   cacheStrategy: "STATIC",
   documentation: {
@@ -18,7 +18,7 @@ export const vesselStatsGroup = defineEndpointGroup({
     businessContext:
       "Use to compare vessel capabilities and plan capacity by providing technical specifications and capacity data for fleet management applications. Supports vessel selection tools and maintenance planning systems for Washington State Ferry services.",
   },
-});
+};
 
 export const fetchVesselStats = defineEndpoint<VesselStatsInput, VesselStat[]>({
   api: apis.wsfVessels,

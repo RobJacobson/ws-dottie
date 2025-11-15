@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   terminalTransportsByTerminalIdInputSchema,
   terminalTransportsInputSchema,
 } from "./terminalTransports.input";
 import { terminalTransportSchema } from "./terminalTransports.output";
 
-export const terminalTransportsGroup = defineEndpointGroup({
+export const terminalTransportsGroup: EndpointGroup = {
   name: "terminal-transports",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const terminalTransportsGroup = defineEndpointGroup({
     businessContext:
       "Use to plan terminal access by providing parking availability and transportation options for ferry terminal commuters.",
   },
-});
+};
 
 export const fetchTerminalTransports = defineEndpoint({
   api: apis.wsdotBorderCrossings,

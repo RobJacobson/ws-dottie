@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   terminalSailingSpaceByTerminalIdInputSchema,
   terminalSailingSpaceInputSchema,
 } from "./terminalSailingSpace.input";
 import { terminalSailingSpaceSchema } from "./terminalSailingSpace.output";
 
-export const terminalSailingSpaceGroup = defineEndpointGroup({
+export const terminalSailingSpaceGroup: EndpointGroup = {
   name: "terminal-sailing-space",
   cacheStrategy: "STATIC",
   documentation: {
@@ -15,7 +15,7 @@ export const terminalSailingSpaceGroup = defineEndpointGroup({
       "Contains terminal condition data including the number of drive-up and reservation spaces available for select departures. This real-time information helps travelers plan their ferry trips and understand space availability.",
     businessContext: "",
   },
-});
+};
 
 export const fetchTerminalSailingSpace = defineEndpoint({
   api: apis.wsdotBorderCrossings,

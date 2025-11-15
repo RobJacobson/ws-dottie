@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { mapAreasInputSchema } from "./alertAreas.input";
 import { areaSchema } from "./alertAreas.output";
 
-export const alertAreasGroup = defineEndpointGroup({
+export const alertAreasGroup: EndpointGroup = {
   name: "alertAreas",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -13,7 +13,7 @@ export const alertAreasGroup = defineEndpointGroup({
     businessContext:
       "Use to filter highway alerts by geographic region by providing area codes and descriptions for targeted traffic information retrieval.",
   },
-});
+};
 
 export const fetchMapAreas = defineEndpoint({
   api: apis.wsdotBorderCrossings,

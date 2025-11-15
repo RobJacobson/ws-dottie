@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { weatherStationsInputSchema } from "./weatherStations.input";
 import { weatherStationSchema } from "./weatherStations.output";
 
-export const weatherStationsGroup = defineEndpointGroup({
+export const weatherStationsGroup: EndpointGroup = {
   name: "weather-stations",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -13,7 +13,7 @@ export const weatherStationsGroup = defineEndpointGroup({
     businessContext:
       "Use to monitor weather conditions by providing location coordinates, station identifiers, and names for road weather monitoring and maintenance decision support.",
   },
-});
+};
 
 export const fetchWeatherStations = defineEndpoint({
   api: apis.wsdotBorderCrossings,

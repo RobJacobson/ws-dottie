@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   terminalLocationsByIdInputSchema,
   terminalLocationsInputSchema,
 } from "./terminalLocations.input";
 import { terminalLocationSchema } from "./terminalLocations.output";
 
-export const terminalLocationsGroup = defineEndpointGroup({
+export const terminalLocationsGroup: EndpointGroup = {
   name: "terminal-locations",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const terminalLocationsGroup = defineEndpointGroup({
     businessContext:
       "Use to locate ferry terminals and plan travel routes by providing geographical coordinates, address details, and GIS mapping data for navigation systems.",
   },
-});
+};
 
 export const fetchTerminalLocations = defineEndpoint({
   api: apis.wsdotBorderCrossings,

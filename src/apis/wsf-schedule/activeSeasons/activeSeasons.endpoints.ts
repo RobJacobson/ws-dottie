@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { activeSeasonsInputSchema } from "./activeSeasons.input";
 import { scheduleBaseSchema } from "./activeSeasons.output";
 
-export const activeSeasonsGroup = defineEndpointGroup({
+export const activeSeasonsGroup: EndpointGroup = {
   name: "active-seasons",
   cacheStrategy: "STATIC",
   documentation: {
@@ -13,7 +13,7 @@ export const activeSeasonsGroup = defineEndpointGroup({
     businessContext:
       "Use to identify current scheduling periods by providing season dates and availability status for ferry service planning and schedule selection.",
   },
-});
+};
 
 export const fetchActiveSeasons = defineEndpoint({
   api: apis.wsdotBorderCrossings,

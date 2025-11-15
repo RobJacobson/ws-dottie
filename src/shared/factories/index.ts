@@ -18,7 +18,6 @@ export {
 // Export all consolidated types
 export type {
   DefineEndpointConfig,
-  DefineEndpointGroupConfig,
   EndpointResult,
   FetchFunctionParams,
   QueryHookOptions,

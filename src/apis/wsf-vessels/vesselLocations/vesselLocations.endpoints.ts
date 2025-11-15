@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import {
   type VesselLocationsByIdInput,
   type VesselLocationsInput,
@@ -12,7 +12,7 @@ import {
   vesselLocationSchema,
 } from "./vesselLocations.output";
 
-export const vesselLocationsGroup = defineEndpointGroup({
+export const vesselLocationsGroup: EndpointGroup = {
   name: "vessel-locations",
   cacheStrategy: "REALTIME",
   documentation: {
@@ -21,7 +21,7 @@ export const vesselLocationsGroup = defineEndpointGroup({
     businessContext:
       "Use to track real-time vessel positions and calculate arrival times by providing GPS coordinates, speed/heading data, and terminal departure/arrival information for WSF fleet monitoring. Determine current trip status, including start terminal, destination terminal, scheduled departure, at-dock status and ETA for this trip.",
   },
-});
+};
 
 export const fetchVesselLocations = defineEndpoint<
   VesselLocationsInput,

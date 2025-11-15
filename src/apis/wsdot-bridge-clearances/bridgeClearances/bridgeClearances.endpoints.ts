@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   bridgeClearancesByRouteInputSchema,
   bridgeClearancesInputSchema,
 } from "./bridgeClearances.input";
 import { bridgeClearanceSchema } from "./bridgeClearances.output";
 
-export const bridgeClearancesGroup = defineEndpointGroup({
+export const bridgeClearancesGroup: EndpointGroup = {
   name: "bridge-clearances",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const bridgeClearancesGroup = defineEndpointGroup({
     businessContext:
       "Use to check bridge heights and plan commercial vehicle routes by providing vertical clearance measurements, bridge location data, and route information for Washington State bridges. Verify vehicle clearance requirements and identify height restrictions before planning routes with oversize loads.",
   },
-});
+};
 
 export const fetchBridgeClearances = defineEndpoint({
   api: apis.wsdotBorderCrossings,

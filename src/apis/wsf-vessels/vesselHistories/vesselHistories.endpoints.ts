@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   type VesselHistoriesByVesselNameAndDateRangeInput,
   type VesselHistoriesInput,
@@ -12,7 +12,7 @@ import {
   vesselHistorySchema,
 } from "./vesselHistories.output";
 
-export const vesselHistoriesGroup = defineEndpointGroup({
+export const vesselHistoriesGroup: EndpointGroup = {
   name: "vessel-histories",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,7 +20,7 @@ export const vesselHistoriesGroup = defineEndpointGroup({
       "Each VesselHistory item represents a historical record for a single sailing between terminals, including vessel, departure details (including departure terminal, scheduled departure time, and actual departure time), and arrival details (including arrival terminal and estimated arrival time).",
     businessContext: "",
   },
-});
+};
 
 export const fetchVesselHistories = defineEndpoint<
   VesselHistoriesInput,

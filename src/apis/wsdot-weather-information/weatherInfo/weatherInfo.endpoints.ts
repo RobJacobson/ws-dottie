@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import {
   currentWeatherForStationsInputSchema,
@@ -10,7 +10,7 @@ import {
 } from "./weatherInfo.input";
 import { weatherInfoSchema } from "./weatherInfo.output";
 
-export const weatherInfoGroup = defineEndpointGroup({
+export const weatherInfoGroup: EndpointGroup = {
   name: "weather-info",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -19,7 +19,7 @@ export const weatherInfoGroup = defineEndpointGroup({
     businessContext:
       "Use to assess road weather conditions by providing real-time atmospheric data for transportation management and traveler safety decisions.",
   },
-});
+};
 
 export const fetchWeatherInformation = defineEndpoint({
   api: apis.wsdotBorderCrossings,

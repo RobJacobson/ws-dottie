@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import {
   terminalBasicsByIdInputSchema,
   terminalBasicsInputSchema,
 } from "./terminalBasics.input";
 import { terminalBasicSchema } from "./terminalBasics.output";
 
-export const terminalBasicsGroup = defineEndpointGroup({
+export const terminalBasicsGroup: EndpointGroup = {
   name: "terminal-basics",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const terminalBasicsGroup = defineEndpointGroup({
     businessContext:
       "Use to plan ferry trips and ensure accessibility compliance by providing terminal facility information including amenities and regional assignments for WSF travelers and operators.",
   },
-});
+};
 
 export const fetchTerminalBasics = defineEndpoint({
   api: apis.wsdotBorderCrossings,

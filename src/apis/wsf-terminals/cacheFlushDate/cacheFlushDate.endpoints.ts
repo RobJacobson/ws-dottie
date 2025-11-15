@@ -6,9 +6,9 @@ import {
   cacheFlushDateOutputSchema,
 } from "@/apis/shared/cacheFlushDate";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 
-export const cacheFlushDateTerminalsGroup = defineEndpointGroup({
+export const cacheFlushDateTerminalsGroup: EndpointGroup = {
   name: "cache-flush-date-terminals",
   cacheStrategy: "STATIC",
   documentation: {
@@ -17,7 +17,7 @@ export const cacheFlushDateTerminalsGroup = defineEndpointGroup({
     businessContext:
       "Many wsf-terminals endpoints return data that changes infrequently. As a result, you may wish to cache it in your application. Poll this endpoint periodically to detect when static wsf-terminals data has changed. When the date returned from this operation is modified, drop your application cache and retrieve fresh data from the service. Polled automatically by ws-dottie useQuery hooks to invalidate cache.",
   },
-});
+};
 
 export const fetchCacheFlushDateTerminals = defineEndpoint({
   api: apis.wsdotBorderCrossings,

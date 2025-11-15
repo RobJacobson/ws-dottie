@@ -1,11 +1,11 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import { routesHavingServiceDisruptionsByTripDateInputSchema } from "./serviceDisruptions.input";
 import { serviceDisruptionSchema } from "./serviceDisruptions.output";
 
-export const serviceDisruptionsGroup = defineEndpointGroup({
+export const serviceDisruptionsGroup: EndpointGroup = {
   name: "service-disruptions",
   cacheStrategy: "STATIC",
   documentation: {
@@ -14,7 +14,7 @@ export const serviceDisruptionsGroup = defineEndpointGroup({
     businessContext:
       "Use to identify service disruptions by providing route and date information for planning alternative travel arrangements.",
   },
-});
+};
 
 export const fetchRoutesHavingServiceDisruptionsByTripDate = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
+import type { EndpointGroup } from "@/apis/types";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
 import { borderCrossingsInputSchema } from "./borderCrossingData.input";
 import { borderCrossingSchema } from "./borderCrossingData.output";
 
-export const borderCrossingDataGroup = defineEndpointGroup({
+export const borderCrossingDataGroup: EndpointGroup = {
   name: "border-crossing-data",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -13,7 +13,7 @@ export const borderCrossingDataGroup = defineEndpointGroup({
     businessContext:
       "Use to plan border crossing routes and estimate wait times by providing real-time wait time data, crossing location information, and timestamp measurements for Washington State crossings into Canada. Compare wait times across different crossing types (general purpose, Nexus, truck lanes) and select optimal crossing points for travel planning.",
   },
-});
+};
 
 export const fetchBorderCrossings = defineEndpoint({
   api: apis.wsdotBorderCrossings,

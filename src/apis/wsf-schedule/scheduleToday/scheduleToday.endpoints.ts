@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   scheduleTodayByRouteSchema,
   scheduleTodayByTerminalsInputSchema,
 } from "./scheduleToday.input";
 import { scheduleSchema } from "./scheduleToday.output";
 
-export const scheduleTodayGroup = defineEndpointGroup({
+export const scheduleTodayGroup: EndpointGroup = {
   name: "schedule-today",
   cacheStrategy: "STATIC",
   documentation: {
@@ -15,7 +15,7 @@ export const scheduleTodayGroup = defineEndpointGroup({
       "Today's schedule provides current day sailing information for ferry routes, with options to show only remaining times for real-time schedule information.",
     businessContext: "",
   },
-});
+};
 
 export const fetchScheduleTodayByRoute = defineEndpoint({
   api: apis.wsdotBorderCrossings,

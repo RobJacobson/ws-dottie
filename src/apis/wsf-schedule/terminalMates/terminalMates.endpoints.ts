@@ -2,10 +2,10 @@ import { apis } from "@/apis/shared/apis";
 import { terminalMatesInputSchema } from "@/apis/shared/terminals.input";
 import { terminalListSchema } from "@/apis/shared/terminals.output";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 
-export const scheduleTerminalMatesGroup = defineEndpointGroup({
+export const scheduleTerminalMatesGroup: EndpointGroup = {
   name: "schedule-terminal-mates",
   cacheStrategy: "STATIC",
   documentation: {
@@ -14,7 +14,7 @@ export const scheduleTerminalMatesGroup = defineEndpointGroup({
     businessContext:
       "Use to find alternative terminal options by providing terminal ID and date information for flexible route selection.",
   },
-});
+};
 
 export const fetchTerminalMatesSchedule = defineEndpoint({
   api: apis.wsdotBorderCrossings,

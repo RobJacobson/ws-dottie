@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import {
   terminalComboFaresVerboseInputSchema,
@@ -11,7 +11,7 @@ import {
   terminalComboFaresVerboseSchema,
 } from "./terminalCombo.output";
 
-export const terminalComboGroup = defineEndpointGroup({
+export const terminalComboGroup: EndpointGroup = {
   name: "terminal-combo",
   cacheStrategy: "STATIC",
   documentation: {
@@ -20,7 +20,7 @@ export const terminalComboGroup = defineEndpointGroup({
     businessContext:
       "Use to determine route availability and fare collection requirements by providing terminal pairing information for journey planning and ticket purchasing systems.",
   },
-});
+};
 
 export const fetchTerminalComboFares = defineEndpoint({
   api: apis.wsdotBorderCrossings,

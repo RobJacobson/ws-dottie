@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   terminalVerboseByTerminalIdInputSchema,
   terminalVerboseInputSchema,
 } from "./terminalVerbose.input";
 import { terminalVerboseSchema } from "./terminalVerbose.output";
 
-export const terminalVerboseGroup = defineEndpointGroup({
+export const terminalVerboseGroup: EndpointGroup = {
   name: "terminal-verbose",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const terminalVerboseGroup = defineEndpointGroup({
     businessContext:
       "Use to retrieve comprehensive terminal information by providing complete facility details for integrated ferry terminal planning.",
   },
-});
+};
 
 export const fetchTerminalVerbose = defineEndpoint({
   api: apis.wsdotBorderCrossings,

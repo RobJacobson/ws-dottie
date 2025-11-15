@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   scheduledRoutesByIdInputSchema,
   scheduledRoutesInputSchema,
 } from "./scheduledRoutes.input";
 import { schedRouteSchema } from "./scheduledRoutes.output";
 
-export const scheduledRoutesGroup = defineEndpointGroup({
+export const scheduledRoutesGroup: EndpointGroup = {
   name: "scheduled-routes",
   cacheStrategy: "STATIC",
   documentation: {
@@ -15,7 +15,7 @@ export const scheduledRoutesGroup = defineEndpointGroup({
       "Scheduled routes represent predefined ferry routes with their associated schedule identifiers, used for organizing and retrieving sailing schedules.",
     businessContext: "",
   },
-});
+};
 
 export const fetchScheduledRoutes = defineEndpoint({
   api: apis.wsdotBorderCrossings,

@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { datesHelper } from "@/shared/utils";
 import {
   routesByTripDateAndTerminalsInputSchema,
@@ -8,7 +8,7 @@ import {
 } from "./routes.input";
 import { routeSchema } from "./routes.output";
 
-export const routesGroup = defineEndpointGroup({
+export const routesGroup: EndpointGroup = {
   name: "routes",
   cacheStrategy: "STATIC",
   documentation: {
@@ -17,7 +17,7 @@ export const routesGroup = defineEndpointGroup({
     businessContext:
       "Use to identify ferry routes by providing route paths and terminal connections for travel planning and schedule selection.",
   },
-});
+};
 
 export const fetchRoutesByTripDate = defineEndpoint({
   api: apis.wsdotBorderCrossings,

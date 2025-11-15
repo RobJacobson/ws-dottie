@@ -1,13 +1,13 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   terminalBulletinsByIdInputSchema,
   terminalBulletinsInputSchema,
 } from "./terminalBulletins.input";
 import { terminalBulletinSchema } from "./terminalBulletins.output";
 
-export const terminalBulletinsGroup = defineEndpointGroup({
+export const terminalBulletinsGroup: EndpointGroup = {
   name: "terminal-bulletins",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const terminalBulletinsGroup = defineEndpointGroup({
     businessContext:
       "Use to inform travelers of terminal conditions by providing current alerts and service notices for ferry terminal planning.",
   },
-});
+};
 
 export const fetchTerminalBulletins = defineEndpoint({
   api: apis.wsdotBorderCrossings,

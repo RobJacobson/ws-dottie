@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import type {
   VesselAccommodationsByIdInput,
   VesselAccommodationsInput,
@@ -12,7 +12,7 @@ import {
 import type { VesselAccommodation } from "./vesselAccommodations.output";
 import { vesselAccommodationSchema } from "./vesselAccommodations.output";
 
-export const vesselAccommodationsGroup = defineEndpointGroup({
+export const vesselAccommodationsGroup: EndpointGroup = {
   name: "vessel-accommodations",
   cacheStrategy: "STATIC",
   documentation: {
@@ -21,7 +21,7 @@ export const vesselAccommodationsGroup = defineEndpointGroup({
     businessContext:
       "Use to plan accessible travel by providing amenity and accessibility information for passenger information applications. Supports trip planning tools and accessibility compliance systems for Washington State Ferry services.",
   },
-});
+};
 
 export const fetchVesselAccommodations = defineEndpoint<
   VesselAccommodationsInput,

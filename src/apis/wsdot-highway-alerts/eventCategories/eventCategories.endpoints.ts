@@ -1,10 +1,10 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import { z } from "@/shared/zod";
 import { eventCategoriesInputSchema } from "./eventCategories.input";
 
-export const eventCategoriesGroup = defineEndpointGroup({
+export const eventCategoriesGroup: EndpointGroup = {
   name: "event-categories",
   cacheStrategy: "FREQUENT",
   documentation: {
@@ -13,7 +13,7 @@ export const eventCategoriesGroup = defineEndpointGroup({
     businessContext:
       "Use to categorize and filter highway alerts by incident type by providing standardized event classifications for targeted traffic information retrieval.",
   },
-});
+};
 
 export const fetchEventCategories = defineEndpoint({
   api: apis.wsdotBorderCrossings,

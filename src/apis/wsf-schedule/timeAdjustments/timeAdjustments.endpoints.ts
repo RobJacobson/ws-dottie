@@ -1,6 +1,6 @@
 import { apis } from "@/apis/shared/apis";
 import { defineEndpoint } from "@/shared/factories/defineEndpoint";
-import { defineEndpointGroup } from "@/shared/factories/defineEndpointGroup";
+import type { EndpointGroup } from "@/apis/types";
 import {
   timeAdjustmentsByRouteInputSchema,
   timeAdjustmentsBySchedRouteInputSchema,
@@ -8,7 +8,7 @@ import {
 } from "./timeAdjustments.input";
 import { timeAdjustmentSchema } from "./timeAdjustments.output";
 
-export const timeAdjustmentsGroup = defineEndpointGroup({
+export const timeAdjustmentsGroup: EndpointGroup = {
   name: "time-adjustments",
   cacheStrategy: "STATIC",
   documentation: {
@@ -16,7 +16,7 @@ export const timeAdjustmentsGroup = defineEndpointGroup({
       "Time adjustments represent modifications to scheduled sailing times, including delays, early departures, and other timing changes that affect the published schedule.",
     businessContext: "",
   },
-});
+};
 
 export const fetchTimeAdjustments = defineEndpoint({
   api: apis.wsdotBorderCrossings,
