@@ -164,11 +164,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchTravelTimeById } from 'ws-dottie/wsdot-travel-times/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchTravelTimeById,
+            const data = await fetchTravelTimeById({
               params: {
                 "TravelTimeID": 1
               },
@@ -210,7 +208,7 @@ paths:
                       Longitude: -122.199237
                       MilePost: 192.55
                       RoadName: '005'
-                    TimeUpdated: 2025-11-15T17:40:00.000Z
+                    TimeUpdated: '2025-11-15T17:40:00.000Z'
                     TravelTimeID: 1
   /getTravelTimesAsJson:
     get:
@@ -221,11 +219,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchTravelTimes } from 'ws-dottie/wsdot-travel-times/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchTravelTimes,
+            const data = await fetchTravelTimes({
               fetchMode: 'native',
               validate: true
             });
@@ -264,7 +260,7 @@ paths:
                         Longitude: -122.199237
                         MilePost: 192.55
                         RoadName: '005'
-                      TimeUpdated: 2025-11-15T17:40:00.000Z
+                      TimeUpdated: '2025-11-15T17:40:00.000Z'
                       TravelTimeID: 2
 tags:
   - name: travel-time-routes

@@ -224,6 +224,71 @@ components:
       description: Subsurface sensor measurements including ground temperature from sensors embedded below road pavement.
   parameters: {}
 paths:
+  /Scanweb:
+    get:
+      summary: List comprehensive weather readings from all weather stations.
+      operationId: fetchWeatherReadings
+      tags:
+        - weather-readings
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchWeatherReadings } from 'ws-dottie/wsdot-weather-readings/core';
+
+            const data = await fetchWeatherReadings({
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchWeatherReadingsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 131 total)
+                  value:
+                    - StationId: TALPE
+                      StationName: 090ws05226 - Alpental
+                      Latitude: 47.427
+                      Longitude: -121.418
+                      Elevation: 876
+                      ReadingTime: '2025-11-16T01:38:33.000Z'
+                      AirTemperature: 8.2
+                      RelativeHumidty: 100
+                      AverageWindSpeed: 3
+                      AverageWindDirection: 355
+                      WindGust: 7
+                      Visibility: 828
+                      PrecipitationIntensity: 0
+                      PrecipitationType: 0
+                      PrecipitationPast1Hour: 0.1
+                      PrecipitationPast3Hours: 0.8
+                      PrecipitationPast6Hours: 2.7
+                      PrecipitationPast12Hours: 6.6
+                      PrecipitationPast24Hours: 20.9
+                      PrecipitationAccumulation: null
+                      BarometricPressure: null
+                      SnowDepth: null
+                      SurfaceMeasurements:
+                        - SensorId: 0
+                          SurfaceTemperature: 10
+                          RoadFreezingTemperature: null
+                          RoadSurfaceCondition: 104
+                        - SensorId: 1
+                          SurfaceTemperature: 8.7
+                          RoadFreezingTemperature: null
+                          RoadSurfaceCondition: 105
+                      SubSurfaceMeasurements:
+                        - SensorId: 0
+                          SubSurfaceTemperature: 6.8
   /Scanweb/SurfaceMeasurements:
     get:
       summary: List surface measurements from all weather stations.
@@ -233,11 +298,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchSurfaceMeasurements } from 'ws-dottie/wsdot-weather-readings/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchSurfaceMeasurements,
+            const data = await fetchSurfaceMeasurements({
               fetchMode: 'native',
               validate: true
             });
@@ -267,11 +330,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchSubSurfaceMeasurements } from 'ws-dottie/wsdot-weather-readings/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchSubSurfaceMeasurements,
+            const data = await fetchSubSurfaceMeasurements({
               fetchMode: 'native',
               validate: true
             });
@@ -292,73 +353,6 @@ paths:
                   description: Example of a successful response from the API (showing first item of 131 total)
                   value:
                     - {}
-  /Scanweb:
-    get:
-      summary: List comprehensive weather readings from all weather stations.
-      operationId: fetchWeatherReadings
-      tags:
-        - weather-readings
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchWeatherReadings } from 'ws-dottie/wsdot-weather-readings/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchWeatherReadings,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchWeatherReadingsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 131 total)
-                  value:
-                    - StationId: TALPE
-                      StationName: 090ws05226 - Alpental
-                      Latitude: 47.427
-                      Longitude: -121.418
-                      Elevation: 876
-                      ReadingTime: 2025-11-16T01:38:33.000Z
-                      AirTemperature: 8.2
-                      RelativeHumidty: 100
-                      AverageWindSpeed: 3
-                      AverageWindDirection: 355
-                      WindGust: 7
-                      Visibility: 828
-                      PrecipitationIntensity: 0
-                      PrecipitationType: 0
-                      PrecipitationPast1Hour: 0.1
-                      PrecipitationPast3Hours: 0.8
-                      PrecipitationPast6Hours: 2.7
-                      PrecipitationPast12Hours: 6.6
-                      PrecipitationPast24Hours: 20.9
-                      PrecipitationAccumulation: null
-                      BarometricPressure: null
-                      SnowDepth: null
-                      SurfaceMeasurements:
-                        - SensorId: 0
-                          SurfaceTemperature: 10
-                          RoadFreezingTemperature: null
-                          RoadSurfaceCondition: 104
-                        - SensorId: 1
-                          SurfaceTemperature: 8.7
-                          RoadFreezingTemperature: null
-                          RoadSurfaceCondition: 105
-                      SubSurfaceMeasurements:
-                        - SensorId: 0
-                          SubSurfaceTemperature: 6.8
 tags:
   - name: weather-readings
     description: Comprehensive weather readings from all WSDOT weather stations statewide.

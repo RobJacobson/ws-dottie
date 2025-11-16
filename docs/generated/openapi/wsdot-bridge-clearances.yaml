@@ -150,11 +150,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchBridgeClearances } from 'ws-dottie/wsdot-bridge-clearances/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchBridgeClearances,
+            const data = await fetchBridgeClearances({
               fetchMode: 'native',
               validate: true
             });
@@ -174,7 +172,7 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 2992 total)
                   value:
-                    - APILastUpdate: 2025-11-14T11:30:02.387Z
+                    - APILastUpdate: '2025-11-14T11:30:02.387Z'
                       BridgeNumber: 519/101FTP
                       ControlEntityGuid: e589eb93-c01b-4498-8243-89f48bf5c43d
                       CrossingDescription: SEATTLE SLIP 1 PASS. OHL
@@ -184,7 +182,7 @@ paths:
                       Latitude: 47.602165
                       LocationGuid: dcf13720-32a4-40e3-b824-663775ab2bbc
                       Longitude: -122.339587
-                      RouteDate: 2016-12-31T08:00:00.000Z
+                      RouteDate: '2016-12-31T08:00:00.000Z'
                       SRMP: 0
                       SRMPAheadBackIndicator: null
                       StateRouteID: null
@@ -202,11 +200,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchBridgeClearancesByRoute } from 'ws-dottie/wsdot-bridge-clearances/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchBridgeClearancesByRoute,
+            const data = await fetchBridgeClearancesByRoute({
               params: {
                 "Route": "005"
               },
@@ -231,7 +227,7 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 972 total)
                   value:
-                    - APILastUpdate: 2025-11-14T11:30:02.387Z
+                    - APILastUpdate: '2025-11-14T11:30:02.387Z'
                       BridgeNumber: 5/629A
                       ControlEntityGuid: 88ba5341-b39c-43c9-95a5-bc9584b2d798
                       CrossingDescription: I-5 S-S RAMP UNDER BROADWAY
@@ -241,7 +237,7 @@ paths:
                       Latitude: 47.961343
                       LocationGuid: dad9f2c9-ae79-4efb-8f3e-587e402e0f80
                       Longitude: -122.200516
-                      RouteDate: 2016-12-31T08:00:00.000Z
+                      RouteDate: '2016-12-31T08:00:00.000Z'
                       SRMP: 0
                       SRMPAheadBackIndicator: A
                       StateRouteID: 005S119195

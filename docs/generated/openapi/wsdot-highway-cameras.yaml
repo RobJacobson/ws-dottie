@@ -191,62 +191,57 @@ components:
       name: CameraID
       in: path
 paths:
-  /getCameraAsJson?CameraID={CameraID}:
+  /getCamerasAsJson:
     get:
-      summary: Get camera details by camera ID.
-      operationId: fetchHighwayCameraByCameraId
+      summary: List all highway cameras statewide.
+      operationId: fetchHighwayCameras
       tags:
         - cameras
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchHighwayCameraByCameraId } from 'ws-dottie/wsdot-highway-cameras/core';
+            import { fetchHighwayCameras } from 'ws-dottie/wsdot-highway-cameras/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchHighwayCameraByCameraId,
-              params: {
-                "CameraID": 9818
-              },
+            const data = await fetchHighwayCameras({
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchHighwayCameraByCameraIdInputCameraIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FetchHighwayCamerasOutput'
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchHighwayCamerasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API
+                  description: Example of a successful response from the API (showing first item of 1648 total)
                   value:
-                    CameraID: 9818
-                    CameraLocation:
+                    - CameraID: 9818
+                      CameraLocation:
+                        Description: null
+                        Direction: W
+                        Latitude: 48.498333
+                        Longitude: -122.6625
+                        MilePost: 1
+                        RoadName: Airports
+                      CameraOwner: WSDOT Aviation
                       Description: null
-                      Direction: W
-                      Latitude: 48.498333
-                      Longitude: -122.6625
-                      MilePost: 1
-                      RoadName: Airports
-                    CameraOwner: WSDOT Aviation
-                    Description: null
-                    DisplayLatitude: 48.498333
-                    DisplayLongitude: -122.6625
-                    ImageHeight: 208
-                    ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
-                    ImageWidth: 352
-                    IsActive: true
-                    OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
-                    Region: WA
-                    SortOrder: 5300
-                    Title: Anacortes Airport Fuel Pump
+                      DisplayLatitude: 48.498333
+                      DisplayLongitude: -122.6625
+                      ImageHeight: 208
+                      ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
+                      ImageWidth: 352
+                      IsActive: true
+                      OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
+                      Region: WA
+                      SortOrder: 5300
+                      Title: Anacortes Airport Fuel Pump
   /searchCamerasAsJson:
     get:
       summary: Search cameras by route and milepost range.
@@ -256,11 +251,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { searchHighwayCamerasByRouteAndMilepost } from 'ws-dottie/wsdot-highway-cameras/core';
 
-            const data = await fetchDottie({
-              endpoint: searchHighwayCamerasByRouteAndMilepost,
+            const data = await searchHighwayCamerasByRouteAndMilepost({
               params: {
                 "StateRoute": "I-5",
                 "StartingMilepost": 10,
@@ -310,59 +303,60 @@ paths:
                       Region: SW
                       SortOrder: 1000
                       Title: 'I-5 at MP 9.7: N of 179th St'
-  /getCamerasAsJson:
+  /getCameraAsJson?CameraID={CameraID}:
     get:
-      summary: List all highway cameras statewide.
-      operationId: fetchHighwayCameras
+      summary: Get camera details by camera ID.
+      operationId: fetchHighwayCameraByCameraId
       tags:
         - cameras
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchHighwayCameras } from 'ws-dottie/wsdot-highway-cameras/core';
+            import { fetchHighwayCameraByCameraId } from 'ws-dottie/wsdot-highway-cameras/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchHighwayCameras,
+            const data = await fetchHighwayCameraByCameraId({
+              params: {
+                "CameraID": 9818
+              },
               fetchMode: 'native',
               validate: true
             });
 
             console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchHighwayCameraByCameraIdInputCameraIDParam'
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchHighwayCamerasOutput'
+                $ref: '#/components/schemas/FetchHighwayCamerasOutput'
               examples:
                 sampleResponse:
                   summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 1648 total)
+                  description: Example of a successful response from the API
                   value:
-                    - CameraID: 9818
-                      CameraLocation:
-                        Description: null
-                        Direction: W
-                        Latitude: 48.498333
-                        Longitude: -122.6625
-                        MilePost: 1
-                        RoadName: Airports
-                      CameraOwner: WSDOT Aviation
+                    CameraID: 9818
+                    CameraLocation:
                       Description: null
-                      DisplayLatitude: 48.498333
-                      DisplayLongitude: -122.6625
-                      ImageHeight: 208
-                      ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
-                      ImageWidth: 352
-                      IsActive: true
-                      OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
-                      Region: WA
-                      SortOrder: 5300
-                      Title: Anacortes Airport Fuel Pump
+                      Direction: W
+                      Latitude: 48.498333
+                      Longitude: -122.6625
+                      MilePost: 1
+                      RoadName: Airports
+                    CameraOwner: WSDOT Aviation
+                    Description: null
+                    DisplayLatitude: 48.498333
+                    DisplayLongitude: -122.6625
+                    ImageHeight: 208
+                    ImageURL: https://images.wsdot.wa.gov/airports/anafuel.jpg
+                    ImageWidth: 352
+                    IsActive: true
+                    OwnerURL: https://wsdot.wa.gov/travel/aviation/airports-list/anacortes
+                    Region: WA
+                    SortOrder: 5300
+                    Title: Anacortes Airport Fuel Pump
 tags:
   - name: cameras
     description: Traffic monitoring cameras on Washington state highways.

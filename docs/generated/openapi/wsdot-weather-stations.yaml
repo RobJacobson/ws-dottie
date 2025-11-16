@@ -73,11 +73,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchWeatherStations } from 'ws-dottie/wsdot-weather-stations/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchWeatherStations,
+            const data = await fetchWeatherStations({
               fetchMode: 'native',
               validate: true
             });

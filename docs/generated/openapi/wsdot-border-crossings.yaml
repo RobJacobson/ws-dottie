@@ -103,11 +103,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchBorderCrossings,
+            const data = await fetchBorderCrossings({
               fetchMode: 'native',
               validate: true
             });
@@ -135,7 +133,7 @@ paths:
                         MilePost: 0
                         RoadName: '005'
                       CrossingName: I5
-                      Time: 2025-11-15T17:40:00.000Z
+                      Time: '2025-11-15T17:40:00.000Z'
                       WaitTime: 5
 tags:
   - name: border-crossing-data

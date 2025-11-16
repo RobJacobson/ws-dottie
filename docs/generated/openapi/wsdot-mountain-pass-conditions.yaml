@@ -145,11 +145,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchMountainPassConditionById } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchMountainPassConditionById,
+            const data = await fetchMountainPassConditionById({
               params: {
                 "PassConditionID": 12
               },
@@ -176,7 +174,7 @@ paths:
                     MountainPassName: White Pass  US 12
                     Latitude: 46.638333
                     Longitude: -121.39
-                    DateUpdated: 2025-11-15T16:32:50.010Z
+                    DateUpdated: '2025-11-15T16:32:50.010Z'
                     TemperatureInFahrenheit: 44
                     ElevationInFeet: 4500
                     WeatherCondition: Raining
@@ -197,11 +195,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchMountainPassConditions } from 'ws-dottie/wsdot-mountain-pass-conditions/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchMountainPassConditions,
+            const data = await fetchMountainPassConditions({
               fetchMode: 'native',
               validate: true
             });
@@ -225,7 +221,7 @@ paths:
                       MountainPassName: Blewett Pass US 97
                       Latitude: 47.335298205
                       Longitude: -120.581068216
-                      DateUpdated: 2025-11-15T14:49:36.827Z
+                      DateUpdated: '2025-11-15T14:49:36.827Z'
                       TemperatureInFahrenheit: 43
                       ElevationInFeet: 4102
                       WeatherCondition: Partly cloudy.

@@ -276,6 +276,39 @@ components:
       name: EndingMilepost
       in: path
 paths:
+  /getMapAreasAsJson:
+    get:
+      summary: List all available geographic map areas for filtering alerts.
+      operationId: fetchMapAreas
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchMapAreas({
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchMapAreasOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 51 total)
+                  value:
+                    - MapArea: L2CE
+                      MapAreaDescription: Eastern
   /getEventCategoriesAsJson:
     get:
       summary: List all available event category names for filtering alerts.
@@ -285,11 +318,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchEventCategories } from 'ws-dottie/wsdot-highway-alerts/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchEventCategories,
+            const data = await fetchEventCategories({
               fetchMode: 'native',
               validate: true
             });
@@ -310,6 +341,121 @@ paths:
                   description: Example of a successful response from the API (showing first item of 123 total)
                   value:
                     - ''
+  /getAlertsAsJson:
+    get:
+      summary: List all current highway alerts statewide.
+      operationId: fetchAlerts
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchAlerts({
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FetchAlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API (showing first item of 118 total)
+                  value:
+                    - AlertID: 670961
+                      County: null
+                      EndRoadwayLocation:
+                        Description: null
+                        Direction: 'N'
+                        Latitude: 48.703758665
+                        Longitude: -122.474705077
+                        MilePost: 250
+                        RoadName: '005'
+                      EndTime: '2025-11-21T00:00:00.000Z'
+                      EventCategory: Maintenance
+                      EventStatus: Open
+                      ExtendedDescription: ''
+                      HeadlineDescription: Daily from 8 a.m. to 4 p.m. on Wednesday, Nov. 19 and Thursday, Nov. 20, maintenance crews will close one right lane of northbound Interstate 5 from North Lake Samish Overpass (milepost 246) to State Route 11/Chuckanut Drive (milepost 250) for rock removal.
+                      LastUpdatedTime: '2025-11-13T20:14:26.087Z'
+                      Priority: Medium
+                      Region: Northwest
+                      StartRoadwayLocation:
+                        Description: null
+                        Direction: 'N'
+                        Latitude: 48.690337506
+                        Longitude: -122.41057518
+                        MilePost: 246.8
+                        RoadName: '005'
+                      StartTime: '2025-11-13T20:08:00.000Z'
+  /getAlertAsJson?AlertID={AlertID}:
+    get:
+      summary: Get highway alert details for a specific alert ID.
+      operationId: fetchAlertById
+      tags:
+        - highwayAlerts
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';
+
+            const data = await fetchAlertById({
+              params: {
+                "AlertID": 468632
+              },
+              fetchMode: 'native',
+              validate: true
+            });
+
+            console.log(data);
+      parameters:
+        - $ref: '#/components/parameters/FetchAlertByIdInputAlertIDParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchAlertsOutput'
+              examples:
+                sampleResponse:
+                  summary: Sample response
+                  description: Example of a successful response from the API
+                  value:
+                    AlertID: 468632
+                    County: null
+                    EndRoadwayLocation:
+                      Description: null
+                      Direction: B
+                      Latitude: 47.6390387
+                      Longitude: -122.220590099
+                      MilePost: 5
+                      RoadName: '520'
+                    EndTime: null
+                    EventCategory: Flammable Cargo Restriction
+                    EventStatus: Closed
+                    ExtendedDescription: ''
+                    HeadlineDescription: Flammable cargo is prohibited on SR 520 eastbound & westbound from Montlake Blvd (MP 1) to 84th Ave NE (MP 5).
+                    LastUpdatedTime: '2025-09-03T04:40:03.430Z'
+                    Priority: High
+                    Region: Northwest
+                    StartRoadwayLocation:
+                      Description: null
+                      Direction: B
+                      Latitude: 47.644373883
+                      Longitude: -122.303082155
+                      MilePost: 1
+                      RoadName: '520'
+                    StartTime: '2021-09-13T13:59:00.000Z'
   /getAlertsByRegionIDAsJson?RegionID={RegionID}:
     get:
       summary: List highway alerts filtered by WSDOT region ID.
@@ -319,11 +465,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchAlertsByRegionId } from 'ws-dottie/wsdot-highway-alerts/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchAlertsByRegionId,
+            const data = await fetchAlertsByRegionId({
               params: {
                 "RegionID": 4
               },
@@ -357,11 +501,9 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { fetchAlertsByMapArea } from 'ws-dottie/wsdot-highway-alerts/core';
 
-            const data = await fetchDottie({
-              endpoint: fetchAlertsByMapArea,
+            const data = await fetchAlertsByMapArea({
               params: {
                 "MapArea": "Seattle"
               },
@@ -400,7 +542,7 @@ paths:
                       EventStatus: Open
                       ExtendedDescription: ''
                       HeadlineDescription: Until further notice - The Interstate 5 Silver Lake Rest Area is closed for maintenance indefinitely. There is no access for recreational vehicle dumping at this location.
-                      LastUpdatedTime: 2023-07-24T22:25:55.483Z
+                      LastUpdatedTime: '2023-07-24T22:25:55.483Z'
                       Priority: High
                       Region: Northwest
                       StartRoadwayLocation:
@@ -410,103 +552,7 @@ paths:
                         Longitude: -122.210954765
                         MilePost: 188.5
                         RoadName: '005'
-                      StartTime: 2021-09-24T13:00:00.000Z
-  /getMapAreasAsJson:
-    get:
-      summary: List all available geographic map areas for filtering alerts.
-      operationId: fetchMapAreas
-      tags:
-        - highwayAlerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchMapAreas } from 'ws-dottie/wsdot-highway-alerts/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchMapAreas,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchMapAreasOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 51 total)
-                  value:
-                    - MapArea: L2CE
-                      MapAreaDescription: Eastern
-  /getAlertAsJson?AlertID={AlertID}:
-    get:
-      summary: Get highway alert details for a specific alert ID.
-      operationId: fetchAlertById
-      tags:
-        - highwayAlerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchAlertById } from 'ws-dottie/wsdot-highway-alerts/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchAlertById,
-              params: {
-                "AlertID": 468632
-              },
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      parameters:
-        - $ref: '#/components/parameters/FetchAlertByIdInputAlertIDParam'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FetchAlertsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API
-                  value:
-                    AlertID: 468632
-                    County: null
-                    EndRoadwayLocation:
-                      Description: null
-                      Direction: B
-                      Latitude: 47.6390387
-                      Longitude: -122.220590099
-                      MilePost: 5
-                      RoadName: '520'
-                    EndTime: null
-                    EventCategory: Flammable Cargo Restriction
-                    EventStatus: Closed
-                    ExtendedDescription: ''
-                    HeadlineDescription: Flammable cargo is prohibited on SR 520 eastbound & westbound from Montlake Blvd (MP 1) to 84th Ave NE (MP 5).
-                    LastUpdatedTime: 2025-09-03T04:40:03.430Z
-                    Priority: High
-                    Region: Northwest
-                    StartRoadwayLocation:
-                      Description: null
-                      Direction: B
-                      Latitude: 47.644373883
-                      Longitude: -122.303082155
-                      MilePost: 1
-                      RoadName: '520'
-                    StartTime: 2021-09-13T13:59:00.000Z
+                      StartTime: '2021-09-24T13:00:00.000Z'
   /searchAlertsAsJson?StateRoute={StateRoute}&Region={Region}&SearchTimeStart={SearchTimeStart}&SearchTimeEnd={SearchTimeEnd}&StartingMilepost={StartingMilepost}&EndingMilepost={EndingMilepost}:
     get:
       summary: Search highway alerts by route, region, time range, and milepost.
@@ -516,17 +562,15 @@ paths:
       x-codeSamples:
         - lang: JavaScript
           source: |-
-            import { fetchDottie } from 'ws-dottie';
             import { searchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
 
-            const data = await fetchDottie({
-              endpoint: searchAlerts,
+            const data = await searchAlerts({
               params: {
                 "StateRoute": "405",
                 "StartingMilepost": 10,
                 "EndingMilepost": 20,
-                "SearchTimeStart": "2025-11-14",
-                "SearchTimeEnd": "2025-11-15"
+                "SearchTimeStart": "2025-11-15",
+                "SearchTimeEnd": "2025-11-16"
               },
               fetchMode: 'native',
               validate: true
@@ -554,89 +598,31 @@ paths:
                   summary: Sample response
                   description: Example of a successful response from the API (showing first item of 14 total)
                   value:
-                    - AlertID: 670388
+                    - AlertID: 671050
                       County: null
                       EndRoadwayLocation:
                         Description: null
                         Direction: S
-                        Latitude: 47.578503696
-                        Longitude: -122.174652622
-                        MilePost: 11
+                        Latitude: 0
+                        Longitude: 0
+                        MilePost: 0
                         RoadName: '405'
-                      EndTime: 2025-11-15T16:00:00.000Z
-                      EventCategory: Construction
+                      EndTime: '2025-11-14T15:22:31.000Z'
+                      EventCategory: Disabled vehicle
                       EventStatus: Closed
                       ExtendedDescription: ''
-                      HeadlineDescription: Up to four lanes of southbound I-405 from milepost 13.35 to milepost 11 will be closed overnight, 10 p.m. Friday, Nov. 14 – 8 a.m. Saturday, Nov. 15.
-                      LastUpdatedTime: 2025-11-15T16:00:00.200Z
-                      Priority: Low
+                      HeadlineDescription: 'Cleared 7:22 AM : On I-405 southbound at NE 70th Pl (MP 17) there is a disabled vehicle blocking the right lane.  The State Patrol has arrived on the scene.'
+                      LastUpdatedTime: '2025-11-14T15:22:31.560Z'
+                      Priority: Highest
                       Region: Northwest
                       StartRoadwayLocation:
                         Description: null
                         Direction: S
-                        Latitude: 47.610623934
-                        Longitude: -122.188699915
-                        MilePost: 13.35
+                        Latitude: 47.670427237
+                        Longitude: -122.187174248
+                        MilePost: 17.49
                         RoadName: '405'
-                      StartTime: 2025-11-14T08:00:00.000Z
-  /getAlertsAsJson:
-    get:
-      summary: List all current highway alerts statewide.
-      operationId: fetchAlerts
-      tags:
-        - highwayAlerts
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import { fetchDottie } from 'ws-dottie';
-            import { fetchAlerts } from 'ws-dottie/wsdot-highway-alerts/core';
-
-            const data = await fetchDottie({
-              endpoint: fetchAlerts,
-              fetchMode: 'native',
-              validate: true
-            });
-
-            console.log(data);
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FetchAlertsOutput'
-              examples:
-                sampleResponse:
-                  summary: Sample response
-                  description: Example of a successful response from the API (showing first item of 118 total)
-                  value:
-                    - AlertID: 670961
-                      County: null
-                      EndRoadwayLocation:
-                        Description: null
-                        Direction: 'N'
-                        Latitude: 48.703758665
-                        Longitude: -122.474705077
-                        MilePost: 250
-                        RoadName: '005'
-                      EndTime: 2025-11-21T00:00:00.000Z
-                      EventCategory: Maintenance
-                      EventStatus: Open
-                      ExtendedDescription: ''
-                      HeadlineDescription: Daily from 8 a.m. to 4 p.m. on Wednesday, Nov. 19 and Thursday, Nov. 20, maintenance crews will close one right lane of northbound Interstate 5 from North Lake Samish Overpass (milepost 246) to State Route 11/Chuckanut Drive (milepost 250) for rock removal.
-                      LastUpdatedTime: 2025-11-13T20:14:26.087Z
-                      Priority: Medium
-                      Region: Northwest
-                      StartRoadwayLocation:
-                        Description: null
-                        Direction: 'N'
-                        Latitude: 48.690337506
-                        Longitude: -122.41057518
-                        MilePost: 246.8
-                        RoadName: '005'
-                      StartTime: 2025-11-13T20:08:00.000Z
+                      StartTime: '2025-11-14T14:54:00.000Z'
 tags:
   - name: highwayAlerts
     description: Real-time highway alerts for traffic incidents and road conditions.
