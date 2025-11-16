@@ -610,6 +610,15 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
     return {
       name: group.name,
       description,
+      // Add extended description as a custom field
+      ...(documentation.description && documentation.description !== documentation.summary && {
+        "x-description": documentation.description,
+      }),
+      // Add cache strategy information
+      ...(group.cacheStrategy && {
+        "x-cacheStrategy": group.cacheStrategy,
+      }),
+      // Keep existing fields for backward compatibility
       ...(documentation.businessContext && {
         externalDocs: {
           description: documentation.businessContext,

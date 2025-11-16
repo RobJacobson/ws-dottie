@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Roboto, sans-serif;
+    }
+    
+    /* Custom styles for enhanced tag documentation */
+    .tag-description {
+      background-color: #f8f9fa;
+      border-left: 4px solid #3f51b5;
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+    
+    .tag-use-cases {
+      margin-top: 12px;
+    }
+    
+    .tag-use-cases h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #3f51b5;
+    }
+    
+    .tag-use-cases ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    
+    .tag-use-cases li {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    
+    .tag-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .tag-meta-item {
+      display: flex;
+      align-items: center;
+    }
+    
+    .tag-meta-label {
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    
+    .cache-strategy {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .update-frequency {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    /* Hide default Redoc tag description to use our custom one */
+    .redoc-tag-description {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="redoc-container"></div>
+  <script src="https://cdn.redocly.com/redoc/v2.5.1/bundles/redoc.standalone.js"></script>
+  <script>
+    // Custom script to enhance tag documentation display
+    window.addEventListener('DOMContentLoaded', () => {
+      // Redoc will automatically initialize with the spec
+      // We'll enhance the tag descriptions after Redoc loads
+      setTimeout(() => {
+        enhanceTagDescriptions();
+      }, 1000);
+    });
+    
+    function enhanceTagDescriptions() {
+      // Find all tag elements in the DOM
+      const tagElements = document.querySelectorAll('[data-testid="tag"]');
+      
+      tagElements.forEach(tagElement => {
+        const tagName = tagElement.querySelector('h3')?.textContent;
+        if (!tagName) return;
+        
+        // Find the corresponding tag in the OpenAPI spec
+        const specTag = window.__redoc_spec?.tags?.find(tag => tag.name === tagName);
+        if (!specTag) return;
+        
+        // Create enhanced description with use cases and metadata
+        let enhancedDescription = '<div class="tag-description">';
+        
+        if (specTag.description) {
+          enhancedDescription += '<p>' + specTag.description + '</p>';
+        }
+        
+        // Add extended description if available
+        if (specTag['x-description']) {
+          enhancedDescription += '<p>' + specTag['x-description'] + '</p>';
+        }
+        
+        // Add use cases if available
+        if (specTag['x-useCases'] && specTag['x-useCases'].length > 0) {
+          enhancedDescription += '<div class="tag-use-cases">' +
+            '<h4>Use Cases:</h4>' +
+            '<ul>' +
+              specTag['x-useCases'].map(function(useCase) { return '<li>' + useCase + '</li>'; }).join('') +
+            '</ul>' +
+          '</div>';
+        }
+        
+        // Add metadata
+        const metaItems = [];
+        
+        if (specTag['x-cacheStrategy']) {
+          metaItems.push('<div class="tag-meta-item">' +
+            '<span class="tag-meta-label">Cache:</span>' +
+            '<span class="cache-strategy">' + specTag['x-cacheStrategy'] + '</span>' +
+          '</div>');
+        }
+        
+        if (specTag['x-updateFrequency']) {
+          metaItems.push('<div class="tag-meta-item">' +
+            '<span class="tag-meta-label">Updates:</span>' +
+            '<span class="update-frequency">' + specTag['x-updateFrequency'] + '</span>' +
+          '</div>');
+        }
+        
+        if (metaItems.length > 0) {
+          enhancedDescription += '<div class="tag-meta">' + metaItems.join('') + '</div>';
+        }
+        
+        enhancedDescription += '</div>';
+        
+        // Find the description element and replace it
+        const descriptionElement = tagElement.querySelector('.redoc-tag-description');
+        if (descriptionElement) {
+          descriptionElement.innerHTML = enhancedDescription;
+          descriptionElement.style.display = 'block';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
