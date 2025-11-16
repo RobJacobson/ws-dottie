@@ -15,8 +15,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, "../..");
 
-const openApiSpecDir = join(projectRoot, "docs", "openapi");
-const outputDir = join(projectRoot, "docs", "redoc");
+const openApiSpecDir = join(projectRoot, "docs", "generated", "openapi");
+const outputDir = join(projectRoot, "docs", "api-reference");
 
 /**
  * Generate HTML documentation for a single OpenAPI spec

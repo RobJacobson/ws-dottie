@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Generate OpenAPI 3.1 specifications from all API definitions
+ * Generate OpenAPI 3.0 specifications from all API definitions
  *
  * This script converts Zod schemas to OpenAPI format and generates
  * complete OpenAPI specifications for all APIs in the ws-dottie project.
@@ -12,14 +12,13 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   OpenAPIRegistry,
-  OpenApiGeneratorV31,
+  OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi";
 import yaml from "js-yaml";
 // Import shared schemas for canonical registration
 import { roadwayLocationSchema } from "../../src/apis/shared/roadwayLocationSchema.ts";
 import type { ApiDefinition } from "../../src/apis/types.ts";
 import { apis, endpoints } from "../../src/shared/endpoints.ts";
-import { fetchDottie } from "../../src/shared/fetching/fetchDottie.ts";
 import type { Endpoint } from "../../src/shared/types.ts";
 import { z } from "../../src/shared/zod.ts";
 
@@ -57,13 +56,8 @@ const formatSampleData = (
   const isArray = Array.isArray(data);
 
   if (isArray && data.length > 1) {
-    // For arrays with multiple items, return first item + truncation indicator
-    const truncatedArray = [
-      data[0],
-      {
-        _note: `... ${data.length - 1} more item${data.length - 1 === 1 ? "" : "s"}`,
-      },
-    ];
+    // For arrays with multiple items, return first item only
+    const truncatedArray = [data[0]];
     return {
       data: truncatedArray,
       isTruncated: true,
@@ -134,7 +128,7 @@ const findEndpointGroup = (
 const fetchAndSaveSampleData = async (
   api: ApiDefinition,
   functionName: string,
-  endpoint: Endpoint<unknown, unknown>
+  _endpoint: Endpoint<unknown, unknown>
 ): Promise<{
   data: unknown;
   isTruncated: boolean;
@@ -143,62 +137,43 @@ const fetchAndSaveSampleData = async (
   const samplesPath = join(
     projectRoot,
     "docs",
+    "generated",
     "sample-data",
     api.api.name,
     `${functionName}.json`
   );
 
   try {
-    // Use the endpoint object directly (it's already from the registry)
-    // Fetch fresh data using fetchDottie with the endpoint object
-    const data = await fetchDottie({
-      endpoint,
-      params: endpoint.sampleParams || {},
-      fetchMode: "native",
-      validate: true,
-    });
-
-    // Ensure directory exists
-    const dirPath = dirname(samplesPath);
-    if (!existsSync(dirPath)) {
-      mkdirSync(dirPath, { recursive: true });
+    // Read existing sample data from file instead of fetching fresh data
+    if (!existsSync(samplesPath)) {
+      throw new Error(
+        `Sample data file not found: ${samplesPath}. Please ensure sample data exists.`
+      );
     }
 
-    // Save the sample data
-    writeFileSync(samplesPath, JSON.stringify(data, null, 2), "utf-8");
-    process.stderr.write(`  [sample] fetched and saved for ${functionName}\r`);
+    const data = JSON.parse(readFileSync(samplesPath, "utf-8"));
+    process.stderr.write(`  [sample] loaded from file for ${functionName}\r`);
 
     // Return formatted data for use in documentation
     return formatSampleData(data);
   } catch (error) {
-    if (existsSync(samplesPath)) {
-      try {
-        const cachedData = JSON.parse(readFileSync(samplesPath, "utf-8"));
-        process.stderr.write(
-          `  [sample] using cached data for ${functionName} (fetch failed)\r`
-        );
-        return formatSampleData(cachedData);
-      } catch {
-        // If cached data can't be read, fall through to the error handling below
-      }
-    }
-
     process.stderr.write(
-      `  [sample] fetch error for ${functionName}: ${JSON.stringify(error)}\r`
+      `  [sample] error loading ${functionName}: ${error instanceof Error ? error.message : JSON.stringify(error)}\r`
     );
     throw new Error(
-      `Failed to fetch sample data for ${functionName}: ${JSON.stringify(error)}`
+      `Failed to load sample data for ${functionName}: ${error instanceof Error ? error.message : JSON.stringify(error)}`
     );
   }
 };
 
 /**
- * Generate fetchDottie code example as a template string
+ * Generate code example as a template string
  *
  * Creates a complete, executable code example showing how to use the endpoint
- * with fetchDottie, including imports, function call, and proper formatting.
+ * with the fetch function directly, including imports, function call, and proper formatting.
+ * Matches the format used in README.md and documentation.
  *
- * @param api - The API definition (needed for sample cache lookup)
+ * @param api - The API definition (needed for import path)
  * @param endpoint - The endpoint definition containing function name and sample parameters
  * @returns A formatted string containing the complete code example
  */
@@ -222,11 +197,9 @@ const generateCodeExample = (
 
   const apiCoreImportPath = `ws-dottie/${api.api.name}/core`;
 
-  return `import { fetchDottie } from 'ws-dottie';
-import { ${functionName} } from '${apiCoreImportPath}';
+  return `import { ${functionName} } from '${apiCoreImportPath}';
 
-const data = await fetchDottie({
-  endpoint: ${functionName},
+const data = await ${functionName}({
 ${paramsLine}  fetchMode: 'native',
   validate: true
 });
@@ -562,7 +535,7 @@ const ALL_APIS: readonly ApiDefinition[] = Object.values(apis);
 /**
  * Generate OpenAPI specification for a single API
  *
- * Creates a complete OpenAPI 3.1 specification document from an API definition,
+ * Creates a complete OpenAPI 3.0 specification document from an API definition,
  * including all endpoints, schemas, tags, and metadata. The zod-to-openapi library
  * handles automatic schema conversion.
  *
@@ -599,7 +572,7 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
   await Promise.all(endpointPromises);
 
   process.stderr.write(`  Generating OpenAPI spec for ${api.api.name}...\r`);
-  const generator = new OpenApiGeneratorV31(registry.definitions);
+  const generator = new OpenApiGeneratorV3(registry.definitions);
 
   // Create a title from the API name (e.g., "wsf-vessels" -> "WSF Vessels API")
   const title =
@@ -610,7 +583,7 @@ const generateOpenApiSpec = async (api: ApiDefinition): Promise<unknown> => {
       .join(" ") + " API";
 
   const openApiDoc = generator.generateDocument({
-    openapi: "3.1.0",
+    openapi: "3.0.0",
     info: {
       title,
       version: "1.0.0",
@@ -670,7 +643,7 @@ const generateAndSaveOpenApiSpec = async (
 ): Promise<void> => {
   process.stderr.write(`Generating spec for ${api.api.name}...\r`);
   const spec = await generateOpenApiSpec(api);
-  const outputDir = join(projectRoot, "docs", "openapi");
+  const outputDir = join(projectRoot, "docs", "generated", "openapi");
   mkdirSync(outputDir, { recursive: true });
 
   const outputPath = join(outputDir, `${api.api.name}.yaml`);

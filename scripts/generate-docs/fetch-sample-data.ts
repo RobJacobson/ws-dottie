@@ -23,7 +23,7 @@ import type { Endpoint } from "../../src/shared/types.ts";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, "../..");
-const docsRoot = join(projectRoot, "docs", "sample-data");
+const docsRoot = join(projectRoot, "docs", "generated", "sample-data");
 
 /**
  * Endpoints that should be skipped due to known server-side issues
