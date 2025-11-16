@@ -647,9 +647,9 @@ console<span class="token punctuation">.</span><span class="token function">log<
               
               enhancedDescription += '</div></div>';
               
-              // Find the description element within the tag section
-              // The description is in a div with class "sc-eVqvcJ sc-fszimp kIppRw kbZred redoc-markdown"
-              const descriptionElement = tagElement.querySelector('.sc-eVqvcJ.sc-fszimp.kIppRw.kbZred.redoc-markdown');
+              // Find description element within tag section
+              // The description is in a div with classes including "redoc-markdown"
+              const descriptionElement = tagElement.querySelector('div[class*="redoc-markdown"]');
               if (descriptionElement) {
                 descriptionElement.innerHTML = enhancedDescription;
                 console.log('Enhanced description for tag:', tagName);
