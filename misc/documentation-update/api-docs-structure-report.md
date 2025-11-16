@@ -265,7 +265,7 @@ These apply regardless of which proposal you choose:
 - Top-level schema `.describe`: 1–2 sentences, ≤200 characters.
 - Property `.describe`: a single sentence, ideally ≤120 characters.
 - Route long stories and multi-step usage patterns into:
-  - Sample data (`docs/sample-data` / ReDoc examples).
+  - Sample data (`docs/generated/sample-data` / ReDoc examples).
   - Higher-level guides (`docs/overview`) instead of per-field text.
 
 ---

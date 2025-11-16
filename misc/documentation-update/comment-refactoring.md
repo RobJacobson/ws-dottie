@@ -52,7 +52,7 @@ This section summarizes how documentation is currently structured across `src/ap
   - Uses `group.documentation.businessContext` as `externalDocs.description` for the tag.
   - Uses `endpoint.endpointDescription` (or `endpoint.description`) as the operation `summary`.
   - Uses Zod `.describe()` text for schemas and properties via `zod-to-openapi` (on top-level objects and fields).
-- `docs/openapi/*.yaml` and `docs/redoc/*.html` therefore reflect:
+- `docs/generated/openapi/*.yaml` and `docs/api-reference/redoc/*.html` therefore reflect:
   - Long tag descriptions per group.
   - Single-line but sometimes redundant endpoint summaries.
   - Very verbose schema and field descriptions with heavy repetition and many examples.
