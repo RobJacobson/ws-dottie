@@ -518,7 +518,7 @@
     "docs:html": "npx tsx scripts/generate-docs/generate-docs.ts",
     "docs:samples:fetch": "npx tsx scripts/generate-docs/fetch-sample-data.ts",
     "build:openapi": "npm run docs:openapi:json && npm run copy:openapi",
-    "copy:openapi": "node -e \"const { copyFileSync, existsSync, mkdirSync, readdirSync } = require('fs'); const { join } = require('path'); const sourceDir = join(__dirname, 'docs', 'generated', 'openapi-json'); const targetDir = join(__dirname, 'dist', 'openapi'); if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true }); if (existsSync(sourceDir)) { const files = readdirSync(sourceDir).filter(f => f.endsWith('.json')); let count = 0; files.forEach(file => { copyFileSync(join(sourceDir, file), join(targetDir, file)); count++; }); console.log(`Copied \${count} OpenAPI JSON files to dist/openapi/`); } else { console.warn('OpenAPI JSON source directory not found. Run npm run docs:openapi:json first.'); }\""
+    "copy:openapi": "node -e \"const { copyFileSync, existsSync, mkdirSync, readdirSync } = require('fs'); const { join } = require('path'); const sourceDir = join(__dirname, 'docs', 'generated', 'openapi-json'); const targetDir = join(__dirname, 'dist', 'openapi'); if (!existsSync(targetDir)) mkdirSync(targetDir, { recursive: true }); if (existsSync(sourceDir)) { const files = readdirSync(sourceDir).filter(f => f.endsWith('.json')); let count = 0; files.forEach(file => { copyFileSync(join(sourceDir, file), join(targetDir, file)); count++; }); console.log(`Copied \\${count} OpenAPI JSON files to dist/openapi/`); } else { console.warn('OpenAPI JSON source directory not found. Run npm run docs:openapi:json first.'); }\""
   },
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
