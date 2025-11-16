@@ -236,6 +236,8 @@ paths:
 tags:
   - name: pass-conditions
     description: Real-time mountain pass conditions including weather, road status, and travel restrictions.
+    x-description: Current conditions for 15 monitored mountain passes statewide, including temperature, elevation, weather, road surface conditions, and direction-specific travel restrictions.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Assess pass conditions for winter travel planning.
       - Monitor weather and road conditions for route decisions.

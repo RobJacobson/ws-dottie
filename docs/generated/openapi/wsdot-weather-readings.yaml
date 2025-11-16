@@ -356,6 +356,8 @@ paths:
 tags:
   - name: weather-readings
     description: Comprehensive weather readings from all WSDOT weather stations statewide.
+    x-description: Complete weather data including air temperature, humidity, wind conditions, visibility, precipitation across multiple time periods, barometric pressure, snow depth, and surface/subsurface sensor measurements.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Access complete weather station data for comprehensive analysis.
       - Monitor atmospheric and surface conditions for transportation operations.
@@ -363,6 +365,8 @@ tags:
     x-updateFrequency: 5m
   - name: surface-measurements
     description: Surface sensor measurements from WSDOT weather stations statewide.
+    x-description: Pavement surface temperature, road freezing temperature, and road surface condition codes from sensors embedded in or mounted on road surfaces.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Monitor road surface conditions for winter maintenance operations.
       - Assess pavement temperature and freezing risk.
@@ -370,6 +374,8 @@ tags:
     x-updateFrequency: 5m
   - name: sub-surface-measurements
     description: Subsurface temperature measurements from sensors embedded below road pavement.
+    x-description: Ground temperature data from sensors embedded 12-18 inches below road pavement surfaces for monitoring ground temperature conditions.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Monitor ground temperature conditions for winter maintenance operations.
       - Predict road surface conditions based on subsurface temperature trends.

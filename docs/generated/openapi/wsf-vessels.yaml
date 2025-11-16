@@ -1752,30 +1752,40 @@ paths:
 tags:
   - name: cache-flush-date-vessels
     description: Cache invalidation timestamp for static wsf-vessels data.
+    x-description: Timestamp indicating when any static endpoint data for the wsf-vessels API was last updated. Use this endpoint to determine when to invalidate cached vessel information. When the returned date changes, refresh cached data from static endpoints.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Poll periodically to detect when static vessel data has changed.
       - Invalidate application cache when timestamp changes.
       - Coordinate cache refresh across multiple static endpoints.
   - name: vessel-accommodations
     description: Passenger amenities and accessibility features for WSF vessels.
+    x-description: Amenity and accessibility information including ADA compliance, restrooms, food service, elevators, and connectivity. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display vessel amenities in passenger information systems.
       - Plan accessible travel for passengers with disabilities.
       - Compare vessel features for trip planning.
   - name: vessel-basics
     description: Essential vessel identification and operational status.
+    x-description: Basic vessel information including names, IDs, classifications, and operational status. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display vessel lists and status in passenger information systems.
       - Track fleet operational status and availability.
       - Provide foundation data for vessel selection.
   - name: vessel-histories
     description: Historical sailing records for WSF vessels.
+    x-description: Historical voyage data including departure and arrival terminals, scheduled and actual departure times, and estimated arrival times. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Analyze on-time performance and voyage patterns.
       - Track historical vessel movements and routes.
       - Generate reports on operational history.
   - name: vessel-locations
     description: Real-time vessel positions and status for WSF fleet.
+    x-description: Current GPS coordinates, speed, heading, terminal assignments, and ETAs. This endpoint is real-time; cacheFlushDate is not used for cache invalidation.
+    x-cacheStrategy: REALTIME
     x-useCases:
       - Show live vessel positions and ETAs in rider apps.
       - Monitor fleet operations in internal dashboards.
@@ -1783,12 +1793,16 @@ tags:
     x-updateFrequency: 5s
   - name: vessel-stats
     description: Technical specifications and capacity data for WSF vessels.
+    x-description: Physical dimensions, engine details, passenger and vehicle capacity, and construction information. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Compare vessel capabilities and specifications.
       - Plan capacity and route assignments.
       - Support maintenance and technical reference.
   - name: vessel-verbose
     description: Complete vessel information combining basics, stats, and accommodations.
+    x-description: Comprehensive vessel profiles combining identification, operational status, technical specifications, and amenities in a single response. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display complete vessel profiles in passenger information systems.
       - Reduce API calls by fetching all vessel data at once.

@@ -374,6 +374,8 @@ paths:
 tags:
   - name: weather-info
     description: Current atmospheric conditions from WSDOT Road Weather Information System stations.
+    x-description: Real-time temperature, humidity, wind conditions, visibility, barometric pressure, and precipitation data for transportation operations.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Assess road weather conditions for transportation management.
       - Monitor atmospheric data for traveler safety decisions.

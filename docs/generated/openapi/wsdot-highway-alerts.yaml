@@ -626,6 +626,8 @@ paths:
 tags:
   - name: highwayAlerts
     description: Real-time highway alerts for traffic incidents and road conditions.
+    x-description: Traffic incidents, construction, maintenance, and other events affecting Washington State highways, including location details, impact levels, timestamps, and event classifications.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Monitor real-time traffic incidents and road conditions.
       - Plan alternate routes based on current highway alerts.
@@ -634,6 +636,8 @@ tags:
     x-updateFrequency: 5m
   - name: alertAreas
     description: Geographic map areas for filtering highway alerts by region.
+    x-description: Area codes and names used to organize and filter highway alerts across Washington State geographic regions.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Filter highway alerts by geographic map area.
       - Obtain valid area codes for alert queries.
@@ -641,6 +645,8 @@ tags:
     x-updateFrequency: 5m
   - name: event-categories
     description: Event category classifications for highway alerts.
+    x-description: Standardized category names used to classify and filter highway alerts by incident type, such as construction, collisions, maintenance, and weather events.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Filter highway alerts by event category type.
       - Obtain valid category names for alert searches.

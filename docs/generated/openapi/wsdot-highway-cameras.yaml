@@ -360,6 +360,8 @@ paths:
 tags:
   - name: cameras
     description: Traffic monitoring cameras on Washington state highways.
+    x-description: Camera locations, image URLs, status, and metadata for real-time traffic condition visibility.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display live camera feeds in traffic monitoring applications.
       - Show road conditions and weather impacts for route planning.

@@ -2894,48 +2894,64 @@ paths:
 tags:
   - name: cache-flush-date-terminals
     description: Cache invalidation timestamp for static wsf-terminals data.
+    x-description: Timestamp indicating when static endpoint data for the wsf-terminals API was last updated. Use this endpoint to determine when to invalidate cached terminal information. When the returned date changes, refresh your cached data. Polled automatically by ws-dottie useQuery hooks.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Detect when static terminal data has changed and invalidate caches.
       - Poll periodically to refresh cached terminal information.
       - Coordinate cache invalidation across multiple terminal endpoints.
   - name: terminal-basics
     description: Essential terminal details including identification, amenities, and regional assignments.
+    x-description: Basic terminal information for Washington State Ferry terminals including IDs, names, abbreviations, amenities (overhead passenger loading, elevator, waiting room, food service, restrooms), and sort order. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display terminal lists with basic identification and amenities.
       - Plan ferry trips with accessibility and facility information.
       - Filter terminals by region or amenities.
   - name: terminal-bulletins
     description: Service alerts and notifications for ferry terminals.
+    x-description: Important notices and alerts associated with Washington State Ferry terminals including service updates, travel advisories, and critical announcements. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display terminal alerts and service notices in rider apps.
       - Show travel advisories and critical announcements.
       - Monitor terminal-specific and system-wide notifications.
   - name: terminal-locations
     description: Geographical location data for ferry terminals.
+    x-description: Location information for Washington State Ferry terminals including coordinates, addresses, map links, driving directions, and GIS zoom-level coordinates. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display terminal locations on maps and navigation systems.
       - Provide driving directions and address information.
       - Integrate with GIS mapping applications.
   - name: terminal-sailing-space
     description: Real-time sailing space availability for upcoming departures.
+    x-description: Terminal condition data including drive-up and reservation spaces available for select departures, vessel information, and cancellation status. Data changes frequently (potentially every 5 seconds). Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group. Do not cache results for extended periods.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display real-time space availability for upcoming sailings.
       - Show drive-up and reservation space counts with color indicators.
       - Monitor vessel assignments and departure cancellations.
   - name: terminal-transports
     description: Transportation options and parking information for terminals.
+    x-description: Commuter information for Washington State Ferry terminals including parking details, vehicle-specific tips (motorcycle, truck, bike), airport information, transit links, and HOV/carpool information. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display parking information and rates for terminal planning.
       - Provide vehicle-specific tips for motorcycles, trucks, and bicycles.
       - Show transit links and airport connection information.
   - name: terminal-verbose
     description: Comprehensive terminal information combining all terminal data types.
+    x-description: Complete terminal information combining data from terminalBasics, terminalBulletins, terminalLocations, terminalTransports, and terminalWaitTimes endpoints. Includes identification, amenities, bulletins, locations, transportation info, sailing space, wait times, and additional details. Use when you need to reduce API calls and don't mind larger payloads. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Retrieve all terminal information in a single API call.
       - Reduce application chattiness when comprehensive data is needed.
       - Build integrated terminal information displays.
   - name: terminal-wait-times
     description: Wait time conditions and travel tips for vehicles and passengers.
+    x-description: Current wait conditions and travel recommendations for both vehicles and walk-on passengers at Washington State Ferry terminals including wait time notes, IVR notes, route information, and update dates. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display wait time information and arrival recommendations.
       - Provide travel tips for optimal departure timing.

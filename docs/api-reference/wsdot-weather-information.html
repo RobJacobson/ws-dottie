@@ -345,7 +345,77 @@ data-styled.g137[id="sc-lhsSio"]{content:"iOkeQy,"}/*!sc*/
 data-styled.g138[id="sc-enPhjR"]{content:"SikXG,"}/*!sc*/
 </style>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
-</head>
+
+      <style>
+        /* Custom styles for enhanced tag documentation */
+        .tag-description {
+          background-color: #f8f9fa;
+          border-left: 4px solid #3f51b5;
+          padding: 16px;
+          margin: 16px 0;
+          border-radius: 4px;
+        }
+        
+        .tag-use-cases {
+          margin-top: 12px;
+        }
+        
+        .tag-use-cases h4 {
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 8px;
+          color: #3f51b5;
+        }
+        
+        .tag-use-cases ul {
+          margin: 0;
+          padding-left: 20px;
+        }
+        
+        .tag-use-cases li {
+          margin-bottom: 6px;
+          font-size: 14px;
+        }
+        
+        .tag-meta {
+          display: flex;
+          gap: 16px;
+          margin-top: 12px;
+          font-size: 12px;
+          color: #666;
+        }
+        
+        .tag-meta-item {
+          display: flex;
+          align-items: center;
+        }
+        
+        .tag-meta-label {
+          font-weight: 600;
+          margin-right: 4px;
+        }
+        
+        .cache-strategy {
+          background-color: #e3f2fd;
+          color: #0d47a1;
+          padding: 2px 6px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+        
+        .update-frequency {
+          background-color: #e8f5e9;
+          color: #2e7d32;
+          padding: 2px 6px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+        }
+      </style>
+    
+  </head>
 
 <body>
   
@@ -446,12 +516,129 @@ console<span class="token punctuation">.</span><span class="token function">log<
 " class="sc-eVqvcJ sc-fszimp kIppRw kbZred"><p>Example of a successful response from the API (showing first item of 47 total)</p>
 </div><div class="sc-dClGHI fdRrNy"><div class="sc-bbbBoY bBWkcI"><button><div class="sc-fYmhhH iNCOCX">Copy</div></button><button> Expand all </button><button> Collapse all </button></div><div tabindex="0" class="sc-eVqvcJ kIppRw sc-fhfEft dFvLDb"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">[</span><span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable "><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable collapsed"><span class="property token string">"BarometricPressure"</span>: <span class="token keyword">null</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Latitude"</span>: <span class="token number">47.078</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Longitude"</span>: <span class="token number">-120.724</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"PrecipitationInInches"</span>: <span class="token keyword">null</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"ReadingTime"</span>: <span class="token string">&quot;2025-11-14T18:30:00.000Z&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"RelativeHumidity"</span>: <span class="token number">66</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"SkyCoverage"</span>: <span class="token string">&quot;N/A&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"StationID"</span>: <span class="token number">1980</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"StationName"</span>: <span class="token string">&quot;Rocky Canyon on I-90 at mp 95.74&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"TemperatureInFahrenheit"</span>: <span class="token number">54.14</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Visibility"</span>: <span class="token number">1</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"WindDirection"</span>: <span class="token number">310</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"WindDirectionCardinal"</span>: <span class="token string">&quot;NW&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"WindGustSpeedInMPH"</span>: <span class="token number">9</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"WindSpeedInMPH"</span>: <span class="token number">4</span></div></li></ul><span class="token punctuation">}</span></div></li></ul><span class="token punctuation">]</span></code></div></div></div></div></div></div></div></div></div></div></div></div><div class="sc-evkzZa iZqpqg"></div></div></div>
       <script>
-      const __redoc_state = {"menu":{"activeItemIdx":-1},"spec":{"data":{"openapi":"3.0.0","info":{"title":"Wsdot Weather Information API","version":"1.0.0","description":"Wsdot Weather Information API - Washington State Department of Transportation APIs"},"servers":[{"url":"https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc","description":"Production server"}],"components":{"schemas":{"RoadwayLocation":{"type":"object","properties":{"Description":{"type":"string","nullable":true,"description":"Human-readable description of the roadway location, such as interchange names or cross streets."},"Direction":{"type":"string","nullable":true,"description":"Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."},"Latitude":{"type":"number","description":"Latitude of the roadway location in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the roadway location in decimal degrees."},"MilePost":{"type":"number","description":"Milepost marker along the highway corridor, with 0 indicating route terminus."},"RoadName":{"type":"string","nullable":true,"description":"Highway or route designation code, such as '005' for I-5 or '090' for I-90."}},"required":["Description","Direction","Latitude","Longitude","MilePost","RoadName"],"description":"Roadway location information including route, milepost, coordinates, and direction."},"FetchWeatherInformationOutput":{"type":"object","properties":{"BarometricPressure":{"type":"number","nullable":true,"description":"Atmospheric pressure in millibars (not adjusted for elevation)."},"Latitude":{"type":"number","description":"Latitude of the weather station in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the weather station in decimal degrees."},"PrecipitationInInches":{"type":"number","nullable":true,"description":"Precipitation amount in inches."},"ReadingTime":{"type":"string","description":"UTC datetime when the weather reading was taken."},"RelativeHumidity":{"type":"number","nullable":true,"description":"Relative humidity as a percentage (0-100)."},"SkyCoverage":{"type":"string","nullable":true,"description":"Sky coverage condition code."},"StationID":{"type":"integer","description":"Numeric ID of the weather station."},"StationName":{"type":"string","nullable":true,"description":"Display name of the weather station."},"TemperatureInFahrenheit":{"type":"number","nullable":true,"description":"Current air temperature in degrees Fahrenheit."},"Visibility":{"type":"integer","nullable":true,"description":"Average visibility distance in meters (computed every 3 minutes)."},"WindDirection":{"type":"number","nullable":true,"description":"Wind direction in degrees clockwise from north (0-359)."},"WindDirectionCardinal":{"type":"string","nullable":true,"description":"Wind direction in cardinal format (e.g., 'N', 'S', 'WSW')."},"WindGustSpeedInMPH":{"type":"number","nullable":true,"description":"Maximum wind gust speed in miles per hour."},"WindSpeedInMPH":{"type":"number","nullable":true,"description":"Average wind speed in miles per hour."}},"required":["BarometricPressure","Latitude","Longitude","PrecipitationInInches","ReadingTime","RelativeHumidity","SkyCoverage","StationID","StationName","TemperatureInFahrenheit","Visibility","WindDirection","WindDirectionCardinal","WindGustSpeedInMPH","WindSpeedInMPH"],"description":"Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation."},"FetchWeatherInformationByStationIdInputStationIDParam":{"type":"integer","description":"Numeric ID of the weather station."},"FetchCurrentWeatherForStationsInputStationListParam":{"type":"string","description":"Comma-separated list of weather station IDs."},"SearchWeatherInformationInputStationIDParam":{"type":"integer","description":"Numeric ID of the weather station."},"SearchWeatherInformationInputSearchStartTimeParam":{"type":"string","format":"date-time","description":"UTC datetime when the search time range begins (ISO-8601 format)."},"SearchWeatherInformationInputSearchEndTimeParam":{"type":"string","format":"date-time","description":"UTC datetime when the search time range ends (ISO-8601 format)."}},"parameters":{"FetchWeatherInformationByStationIdInputStationIDParam":{"schema":{"$ref":"#/components/schemas/FetchWeatherInformationByStationIdInputStationIDParam"},"required":true,"description":"Numeric ID of the weather station.","name":"StationID","in":"path"},"FetchCurrentWeatherForStationsInputStationListParam":{"schema":{"$ref":"#/components/schemas/FetchCurrentWeatherForStationsInputStationListParam"},"required":true,"description":"Comma-separated list of weather station IDs.","name":"StationList","in":"path"},"SearchWeatherInformationInputStationIDParam":{"schema":{"$ref":"#/components/schemas/SearchWeatherInformationInputStationIDParam"},"required":true,"description":"Numeric ID of the weather station.","name":"StationID","in":"path"},"SearchWeatherInformationInputSearchStartTimeParam":{"schema":{"$ref":"#/components/schemas/SearchWeatherInformationInputSearchStartTimeParam"},"required":true,"description":"UTC datetime when the search time range begins (ISO-8601 format).","name":"SearchStartTime","in":"path"},"SearchWeatherInformationInputSearchEndTimeParam":{"schema":{"$ref":"#/components/schemas/SearchWeatherInformationInputSearchEndTimeParam"},"required":true,"description":"UTC datetime when the search time range ends (ISO-8601 format).","name":"SearchEndTime","in":"path"}}},"paths":{"/GetCurrentWeatherInformationAsJson":{"get":{"summary":"List current weather information for all stations.","operationId":"fetchWeatherInformation","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchWeatherInformation({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 101 total)","value":[{"BarometricPressure":957.5,"Latitude":47.4748,"Longitude":-122.2704,"PrecipitationInInches":null,"ReadingTime":"2025-11-15T17:30:00.000Z","RelativeHumidity":99,"SkyCoverage":"N/A","StationID":1909,"StationName":"S 144th St on SB I-5 at mp 155.32","TemperatureInFahrenheit":56.84,"Visibility":1,"WindDirection":200,"WindDirectionCardinal":"SSW","WindGustSpeedInMPH":0,"WindSpeedInMPH":0}]}}}}}}}},"/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}":{"get":{"summary":"Get current weather information for a specific station by ID.","operationId":"fetchWeatherInformationByStationId","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchWeatherInformationByStationId } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchWeatherInformationByStationId({\n  params: {\n    \"StationID\": 1909\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"parameters":[{"$ref":"#/components/parameters/FetchWeatherInformationByStationIdInputStationIDParam"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API","value":{"BarometricPressure":957.5,"Latitude":47.4748,"Longitude":-122.2704,"PrecipitationInInches":null,"ReadingTime":"2025-11-15T17:30:00.000Z","RelativeHumidity":99,"SkyCoverage":"N/A","StationID":1909,"StationName":"S 144th St on SB I-5 at mp 155.32","TemperatureInFahrenheit":56.84,"Visibility":1,"WindDirection":200,"WindDirectionCardinal":"SSW","WindGustSpeedInMPH":0,"WindSpeedInMPH":0}}}}}}}}},"/GetCurrentWeatherForStationsAsJson?StationList={StationList}":{"get":{"summary":"Get current weather information for multiple specified stations.","operationId":"fetchCurrentWeatherForStations","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchCurrentWeatherForStations } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchCurrentWeatherForStations({\n  params: {\n    \"StationList\": \"1909,1966,1970\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"parameters":[{"$ref":"#/components/parameters/FetchCurrentWeatherForStationsInputStationListParam"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 3 total)","value":[{"BarometricPressure":957.5,"Latitude":47.4748,"Longitude":-122.2704,"PrecipitationInInches":null,"ReadingTime":"2025-11-15T17:30:00.000Z","RelativeHumidity":99,"SkyCoverage":"N/A","StationID":1909,"StationName":"S 144th St on SB I-5 at mp 155.32","TemperatureInFahrenheit":56.84,"Visibility":1,"WindDirection":200,"WindDirectionCardinal":"SSW","WindGustSpeedInMPH":0,"WindSpeedInMPH":0}]}}}}}}}},"/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}":{"get":{"summary":"Search historical weather information for a station within a time range.","operationId":"searchWeatherInformation","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-11-15T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-11-16T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"parameters":[{"$ref":"#/components/parameters/SearchWeatherInformationInputStationIDParam"},{"$ref":"#/components/parameters/SearchWeatherInformationInputSearchStartTimeParam"},{"$ref":"#/components/parameters/SearchWeatherInformationInputSearchEndTimeParam"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 47 total)","value":[{"BarometricPressure":null,"Latitude":47.078,"Longitude":-120.724,"PrecipitationInInches":null,"ReadingTime":"2025-11-14T18:30:00.000Z","RelativeHumidity":66,"SkyCoverage":"N/A","StationID":1980,"StationName":"Rocky Canyon on I-90 at mp 95.74","TemperatureInFahrenheit":54.14,"Visibility":1,"WindDirection":310,"WindDirectionCardinal":"NW","WindGustSpeedInMPH":9,"WindSpeedInMPH":4}]}}}}}}}}},"tags":[{"name":"weather-info","description":"Current atmospheric conditions from WSDOT Road Weather Information System stations.","x-useCases":["Assess road weather conditions for transportation management.","Monitor atmospheric data for traveler safety decisions.","Display current weather conditions at specific stations.","Query historical weather data by station and time range."],"x-updateFrequency":"5m"}]}},"searchIndex":{"store":["tag/weather-info","tag/weather-info/operation/fetchWeatherInformation","tag/weather-info/operation/fetchWeatherInformationByStationId","tag/weather-info/operation/fetchCurrentWeatherForStations","tag/weather-info/operation/searchWeatherInformation"],"index":{"version":"2.3.9","fields":["title","description"],"fieldVectors":[["title/0",[0,2.07]],["description/0",[1,0.143,2,0.691,3,0.691,4,0.691,5,0.691,6,0.043,7,0.043,8,0.691,9,0.043]],["title/1",[1,0.292,6,0.088,7,0.088,9,0.088,10,1.408]],["description/1",[11,1.853]],["title/2",[1,0.271,6,0.082,7,0.082,9,0.082,12,1.304,13,1.304]],["description/2",[14,1.853]],["title/3",[1,0.271,6,0.082,7,0.082,9,0.082,15,1.304,16,1.304]],["description/3",[17,1.853]],["title/4",[6,0.071,7,0.071,9,0.071,18,1.136,19,1.136,20,1.136,21,1.136,22,1.136]],["description/4",[23,1.853]]],"invertedIndex":[["atmospher",{"_index":2,"title":{},"description":{"0":{}}}],["condit",{"_index":3,"title":{},"description":{"0":{}}}],["current",{"_index":1,"title":{"1":{},"2":{},"3":{}},"description":{"0":{}}}],["getcurrentweatherforstationsasjson?stationlist={stationlist",{"_index":17,"title":{},"description":{"3":{}}}],["getcurrentweatherinformationasjson",{"_index":11,"title":{},"description":{"1":{}}}],["getcurrentweatherinformationbystationidasjson?stationid={stationid",{"_index":14,"title":{},"description":{"2":{}}}],["histor",{"_index":19,"title":{"4":{}},"description":{}}],["id",{"_index":13,"title":{"2":{}},"description":{}}],["inform",{"_index":7,"title":{"1":{},"2":{},"3":{},"4":{}},"description":{"0":{}}}],["list",{"_index":10,"title":{"1":{}},"description":{}}],["multipl",{"_index":15,"title":{"3":{}},"description":{}}],["rang",{"_index":22,"title":{"4":{}},"description":{}}],["road",{"_index":5,"title":{},"description":{"0":{}}}],["search",{"_index":18,"title":{"4":{}},"description":{}}],["searchweatherinformationasjson?stationid={stationid}&searchstarttime={searchstarttime}&searchendtime={searchendtim",{"_index":23,"title":{},"description":{"4":{}}}],["specif",{"_index":12,"title":{"2":{}},"description":{}}],["specifi",{"_index":16,"title":{"3":{}},"description":{}}],["station",{"_index":9,"title":{"1":{},"2":{},"3":{},"4":{}},"description":{"0":{}}}],["system",{"_index":8,"title":{},"description":{"0":{}}}],["time",{"_index":21,"title":{"4":{}},"description":{}}],["weather",{"_index":6,"title":{"1":{},"2":{},"3":{},"4":{}},"description":{"0":{}}}],["weather-info",{"_index":0,"title":{"0":{}},"description":{}}],["within",{"_index":20,"title":{"4":{}},"description":{}}],["wsdot",{"_index":4,"title":{},"description":{"0":{}}}]],"pipeline":[]}},"options":{"expandResponses":200}};
+      const __redoc_state = {"menu":{"activeItemIdx":-1},"spec":{"data":{"openapi":"3.0.0","info":{"title":"Wsdot Weather Information API","version":"1.0.0","description":"Wsdot Weather Information API - Washington State Department of Transportation APIs"},"servers":[{"url":"https://wsdot.wa.gov/traffic/api/WeatherInformation/WeatherInformationREST.svc","description":"Production server"}],"components":{"schemas":{"RoadwayLocation":{"type":"object","properties":{"Description":{"type":"string","nullable":true,"description":"Human-readable description of the roadway location, such as interchange names or cross streets."},"Direction":{"type":"string","nullable":true,"description":"Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."},"Latitude":{"type":"number","description":"Latitude of the roadway location in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the roadway location in decimal degrees."},"MilePost":{"type":"number","description":"Milepost marker along the highway corridor, with 0 indicating route terminus."},"RoadName":{"type":"string","nullable":true,"description":"Highway or route designation code, such as '005' for I-5 or '090' for I-90."}},"required":["Description","Direction","Latitude","Longitude","MilePost","RoadName"],"description":"Roadway location information including route, milepost, coordinates, and direction."},"FetchWeatherInformationOutput":{"type":"object","properties":{"BarometricPressure":{"type":"number","nullable":true,"description":"Atmospheric pressure in millibars (not adjusted for elevation)."},"Latitude":{"type":"number","description":"Latitude of the weather station in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the weather station in decimal degrees."},"PrecipitationInInches":{"type":"number","nullable":true,"description":"Precipitation amount in inches."},"ReadingTime":{"type":"string","description":"UTC datetime when the weather reading was taken."},"RelativeHumidity":{"type":"number","nullable":true,"description":"Relative humidity as a percentage (0-100)."},"SkyCoverage":{"type":"string","nullable":true,"description":"Sky coverage condition code."},"StationID":{"type":"integer","description":"Numeric ID of the weather station."},"StationName":{"type":"string","nullable":true,"description":"Display name of the weather station."},"TemperatureInFahrenheit":{"type":"number","nullable":true,"description":"Current air temperature in degrees Fahrenheit."},"Visibility":{"type":"integer","nullable":true,"description":"Average visibility distance in meters (computed every 3 minutes)."},"WindDirection":{"type":"number","nullable":true,"description":"Wind direction in degrees clockwise from north (0-359)."},"WindDirectionCardinal":{"type":"string","nullable":true,"description":"Wind direction in cardinal format (e.g., 'N', 'S', 'WSW')."},"WindGustSpeedInMPH":{"type":"number","nullable":true,"description":"Maximum wind gust speed in miles per hour."},"WindSpeedInMPH":{"type":"number","nullable":true,"description":"Average wind speed in miles per hour."}},"required":["BarometricPressure","Latitude","Longitude","PrecipitationInInches","ReadingTime","RelativeHumidity","SkyCoverage","StationID","StationName","TemperatureInFahrenheit","Visibility","WindDirection","WindDirectionCardinal","WindGustSpeedInMPH","WindSpeedInMPH"],"description":"Current atmospheric conditions from a WSDOT Road Weather Information System station, including temperature, humidity, wind, visibility, barometric pressure, and precipitation."},"FetchWeatherInformationByStationIdInputStationIDParam":{"type":"integer","description":"Numeric ID of the weather station."},"FetchCurrentWeatherForStationsInputStationListParam":{"type":"string","description":"Comma-separated list of weather station IDs."},"SearchWeatherInformationInputStationIDParam":{"type":"integer","description":"Numeric ID of the weather station."},"SearchWeatherInformationInputSearchStartTimeParam":{"type":"string","format":"date-time","description":"UTC datetime when the search time range begins (ISO-8601 format)."},"SearchWeatherInformationInputSearchEndTimeParam":{"type":"string","format":"date-time","description":"UTC datetime when the search time range ends (ISO-8601 format)."}},"parameters":{"FetchWeatherInformationByStationIdInputStationIDParam":{"schema":{"$ref":"#/components/schemas/FetchWeatherInformationByStationIdInputStationIDParam"},"required":true,"description":"Numeric ID of the weather station.","name":"StationID","in":"path"},"FetchCurrentWeatherForStationsInputStationListParam":{"schema":{"$ref":"#/components/schemas/FetchCurrentWeatherForStationsInputStationListParam"},"required":true,"description":"Comma-separated list of weather station IDs.","name":"StationList","in":"path"},"SearchWeatherInformationInputStationIDParam":{"schema":{"$ref":"#/components/schemas/SearchWeatherInformationInputStationIDParam"},"required":true,"description":"Numeric ID of the weather station.","name":"StationID","in":"path"},"SearchWeatherInformationInputSearchStartTimeParam":{"schema":{"$ref":"#/components/schemas/SearchWeatherInformationInputSearchStartTimeParam"},"required":true,"description":"UTC datetime when the search time range begins (ISO-8601 format).","name":"SearchStartTime","in":"path"},"SearchWeatherInformationInputSearchEndTimeParam":{"schema":{"$ref":"#/components/schemas/SearchWeatherInformationInputSearchEndTimeParam"},"required":true,"description":"UTC datetime when the search time range ends (ISO-8601 format).","name":"SearchEndTime","in":"path"}}},"paths":{"/GetCurrentWeatherInformationAsJson":{"get":{"summary":"List current weather information for all stations.","operationId":"fetchWeatherInformation","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchWeatherInformation({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 101 total)","value":[{"BarometricPressure":957.5,"Latitude":47.4748,"Longitude":-122.2704,"PrecipitationInInches":null,"ReadingTime":"2025-11-15T17:30:00.000Z","RelativeHumidity":99,"SkyCoverage":"N/A","StationID":1909,"StationName":"S 144th St on SB I-5 at mp 155.32","TemperatureInFahrenheit":56.84,"Visibility":1,"WindDirection":200,"WindDirectionCardinal":"SSW","WindGustSpeedInMPH":0,"WindSpeedInMPH":0}]}}}}}}}},"/GetCurrentWeatherInformationByStationIDAsJson?StationID={StationID}":{"get":{"summary":"Get current weather information for a specific station by ID.","operationId":"fetchWeatherInformationByStationId","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchWeatherInformationByStationId } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchWeatherInformationByStationId({\n  params: {\n    \"StationID\": 1909\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"parameters":[{"$ref":"#/components/parameters/FetchWeatherInformationByStationIdInputStationIDParam"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API","value":{"BarometricPressure":957.5,"Latitude":47.4748,"Longitude":-122.2704,"PrecipitationInInches":null,"ReadingTime":"2025-11-15T17:30:00.000Z","RelativeHumidity":99,"SkyCoverage":"N/A","StationID":1909,"StationName":"S 144th St on SB I-5 at mp 155.32","TemperatureInFahrenheit":56.84,"Visibility":1,"WindDirection":200,"WindDirectionCardinal":"SSW","WindGustSpeedInMPH":0,"WindSpeedInMPH":0}}}}}}}}},"/GetCurrentWeatherForStationsAsJson?StationList={StationList}":{"get":{"summary":"Get current weather information for multiple specified stations.","operationId":"fetchCurrentWeatherForStations","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchCurrentWeatherForStations } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await fetchCurrentWeatherForStations({\n  params: {\n    \"StationList\": \"1909,1966,1970\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"parameters":[{"$ref":"#/components/parameters/FetchCurrentWeatherForStationsInputStationListParam"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 3 total)","value":[{"BarometricPressure":957.5,"Latitude":47.4748,"Longitude":-122.2704,"PrecipitationInInches":null,"ReadingTime":"2025-11-15T17:30:00.000Z","RelativeHumidity":99,"SkyCoverage":"N/A","StationID":1909,"StationName":"S 144th St on SB I-5 at mp 155.32","TemperatureInFahrenheit":56.84,"Visibility":1,"WindDirection":200,"WindDirectionCardinal":"SSW","WindGustSpeedInMPH":0,"WindSpeedInMPH":0}]}}}}}}}},"/SearchWeatherInformationAsJson?StationID={StationID}&SearchStartTime={SearchStartTime}&SearchEndTime={SearchEndTime}":{"get":{"summary":"Search historical weather information for a station within a time range.","operationId":"searchWeatherInformation","tags":["weather-info"],"x-codeSamples":[{"lang":"JavaScript","source":"import { searchWeatherInformation } from 'ws-dottie/wsdot-weather-information/core';\n\nconst data = await searchWeatherInformation({\n  params: {\n    \"StationID\": 1980,\n    \"SearchStartTime\": \"2025-11-15T00:00:00.000Z\",\n    \"SearchEndTime\": \"2025-11-16T23:59:59.000Z\"\n  },\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"parameters":[{"$ref":"#/components/parameters/SearchWeatherInformationInputStationIDParam"},{"$ref":"#/components/parameters/SearchWeatherInformationInputSearchStartTimeParam"},{"$ref":"#/components/parameters/SearchWeatherInformationInputSearchEndTimeParam"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchWeatherInformationOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 47 total)","value":[{"BarometricPressure":null,"Latitude":47.078,"Longitude":-120.724,"PrecipitationInInches":null,"ReadingTime":"2025-11-14T18:30:00.000Z","RelativeHumidity":66,"SkyCoverage":"N/A","StationID":1980,"StationName":"Rocky Canyon on I-90 at mp 95.74","TemperatureInFahrenheit":54.14,"Visibility":1,"WindDirection":310,"WindDirectionCardinal":"NW","WindGustSpeedInMPH":9,"WindSpeedInMPH":4}]}}}}}}}}},"tags":[{"name":"weather-info","description":"Current atmospheric conditions from WSDOT Road Weather Information System stations.","x-description":"Real-time temperature, humidity, wind conditions, visibility, barometric pressure, and precipitation data for transportation operations.","x-cacheStrategy":"FREQUENT","x-useCases":["Assess road weather conditions for transportation management.","Monitor atmospheric data for traveler safety decisions.","Display current weather conditions at specific stations.","Query historical weather data by station and time range."],"x-updateFrequency":"5m"}]}},"searchIndex":{"store":["tag/weather-info","tag/weather-info/operation/fetchWeatherInformation","tag/weather-info/operation/fetchWeatherInformationByStationId","tag/weather-info/operation/fetchCurrentWeatherForStations","tag/weather-info/operation/searchWeatherInformation"],"index":{"version":"2.3.9","fields":["title","description"],"fieldVectors":[["title/0",[0,2.07]],["description/0",[1,0.143,2,0.691,3,0.691,4,0.691,5,0.691,6,0.043,7,0.043,8,0.691,9,0.043]],["title/1",[1,0.292,6,0.088,7,0.088,9,0.088,10,1.408]],["description/1",[11,1.853]],["title/2",[1,0.271,6,0.082,7,0.082,9,0.082,12,1.304,13,1.304]],["description/2",[14,1.853]],["title/3",[1,0.271,6,0.082,7,0.082,9,0.082,15,1.304,16,1.304]],["description/3",[17,1.853]],["title/4",[6,0.071,7,0.071,9,0.071,18,1.136,19,1.136,20,1.136,21,1.136,22,1.136]],["description/4",[23,1.853]]],"invertedIndex":[["atmospher",{"_index":2,"title":{},"description":{"0":{}}}],["condit",{"_index":3,"title":{},"description":{"0":{}}}],["current",{"_index":1,"title":{"1":{},"2":{},"3":{}},"description":{"0":{}}}],["getcurrentweatherforstationsasjson?stationlist={stationlist",{"_index":17,"title":{},"description":{"3":{}}}],["getcurrentweatherinformationasjson",{"_index":11,"title":{},"description":{"1":{}}}],["getcurrentweatherinformationbystationidasjson?stationid={stationid",{"_index":14,"title":{},"description":{"2":{}}}],["histor",{"_index":19,"title":{"4":{}},"description":{}}],["id",{"_index":13,"title":{"2":{}},"description":{}}],["inform",{"_index":7,"title":{"1":{},"2":{},"3":{},"4":{}},"description":{"0":{}}}],["list",{"_index":10,"title":{"1":{}},"description":{}}],["multipl",{"_index":15,"title":{"3":{}},"description":{}}],["rang",{"_index":22,"title":{"4":{}},"description":{}}],["road",{"_index":5,"title":{},"description":{"0":{}}}],["search",{"_index":18,"title":{"4":{}},"description":{}}],["searchweatherinformationasjson?stationid={stationid}&searchstarttime={searchstarttime}&searchendtime={searchendtim",{"_index":23,"title":{},"description":{"4":{}}}],["specif",{"_index":12,"title":{"2":{}},"description":{}}],["specifi",{"_index":16,"title":{"3":{}},"description":{}}],["station",{"_index":9,"title":{"1":{},"2":{},"3":{},"4":{}},"description":{"0":{}}}],["system",{"_index":8,"title":{},"description":{"0":{}}}],["time",{"_index":21,"title":{"4":{}},"description":{}}],["weather",{"_index":6,"title":{"1":{},"2":{},"3":{},"4":{}},"description":{"0":{}}}],["weather-info",{"_index":0,"title":{"0":{}},"description":{}}],["within",{"_index":20,"title":{"4":{}},"description":{}}],["wsdot",{"_index":4,"title":{},"description":{"0":{}}}]],"pipeline":[]}},"options":{"expandResponses":200}};
 
       var container = document.getElementById('redoc');
       Redoc.hydrate(__redoc_state, container);
 
       </script>
+
+      <script>
+        // Custom script to enhance tag documentation display
+        window.addEventListener('DOMContentLoaded', () => {
+          // Wait for Redoc to fully load
+          setTimeout(() => {
+            enhanceTagDescriptions();
+          }, 2000);
+        });
+        
+        function enhanceTagDescriptions() {
+          // Debug: Log the available global variables
+          console.log('Available global variables:', Object.keys(window));
+          
+          // Try to access the OpenAPI spec from __redoc_state
+          if (typeof __redoc_state !== 'undefined') {
+            console.log('Found __redoc_state:', __redoc_state);
+            
+            // Extract the tags from the spec
+            const tags = __redoc_state.spec.data.tags;
+            console.log('Tags from spec:', tags);
+            
+            // Create a map of tag names to metadata for easy lookup
+            const tagMetadataMap = {};
+            if (tags && Array.isArray(tags)) {
+              tags.forEach(tag => {
+                tagMetadataMap[tag.name] = {
+                  description: tag.description,
+                  xDescription: tag['x-description'],
+                  cacheStrategy: tag['x-cacheStrategy'],
+                  useCases: tag['x-useCases'],
+                  updateFrequency: tag['x-updateFrequency']
+                };
+              });
+            }
+            
+            console.log('Tag metadata map:', tagMetadataMap);
+            
+            // Find all tag elements in DOM
+            const tagElements = document.querySelectorAll('[id^="tag/"]');
+            console.log('Found tag elements:', tagElements.length);
+            
+            tagElements.forEach(tagElement => {
+              // Extract tag name from the ID (remove "tag/" prefix)
+              const tagId = tagElement.id;
+              const tagName = tagId.replace('tag/', '');
+              
+              console.log('Processing tag:', tagName);
+              
+              if (!tagName || !tagMetadataMap[tagName]) {
+                console.log('No metadata found for tag:', tagName);
+                return;
+              }
+              
+              const metadata = tagMetadataMap[tagName];
+              console.log('Metadata for tag:', tagName, metadata);
+              
+              // Generate enhanced description with actual metadata
+              let enhancedDescription = '<div class="tag-description">';
+              
+              // Add extended description if available
+              if (metadata.xDescription) {
+                enhancedDescription += '<p>' + metadata.xDescription + '</p>';
+              } else if (metadata.description) {
+                enhancedDescription += '<p>' + metadata.description + '</p>';
+              }
+              
+              // Add use cases if available
+              if (metadata.useCases && Array.isArray(metadata.useCases) && metadata.useCases.length > 0) {
+                enhancedDescription += '<div class="tag-use-cases">' +
+                  '<h4>Use Cases:</h4>' +
+                  '<ul>';
+                
+                metadata.useCases.forEach(useCase => {
+                  enhancedDescription += '<li>' + useCase + '</li>';
+                });
+                
+                enhancedDescription += '</ul></div>';
+              }
+              
+              // Add metadata badges
+              enhancedDescription += '<div class="tag-meta">';
+              
+              // Add cache strategy if available
+              if (metadata.cacheStrategy) {
+                enhancedDescription += '<div class="tag-meta-item">' +
+                  '<span class="tag-meta-label">Cache:</span>' +
+                  '<span class="cache-strategy">' + metadata.cacheStrategy + '</span>' +
+                  '</div>';
+              }
+              
+              // Add update frequency if available
+              if (metadata.updateFrequency) {
+                enhancedDescription += '<div class="tag-meta-item">' +
+                  '<span class="tag-meta-label">Updates:</span>' +
+                  '<span class="update-frequency">' + metadata.updateFrequency + '</span>' +
+                  '</div>';
+              }
+              
+              enhancedDescription += '</div></div>';
+              
+              // Find the description element within the tag section
+              // The description is in a div with class "sc-eVqvcJ sc-fszimp kIppRw kbZred redoc-markdown"
+              const descriptionElement = tagElement.querySelector('.sc-eVqvcJ.sc-fszimp.kIppRw.kbZred.redoc-markdown');
+              if (descriptionElement) {
+                descriptionElement.innerHTML = enhancedDescription;
+                console.log('Enhanced description for tag:', tagName);
+              } else {
+                console.log('Could not find description element for tag:', tagName);
+              }
+            });
+          } else {
+            console.error('__redoc_state not found');
+          }
+        }
+      </script>
+    
 </body>
 
 </html>

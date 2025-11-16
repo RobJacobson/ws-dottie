@@ -102,6 +102,8 @@ paths:
 tags:
   - name: weather-stations
     description: Weather station metadata and location information for WSDOT Road Weather Information System stations statewide.
+    x-description: Station identifiers, names, and location coordinates for weather stations that collect atmospheric and pavement condition data.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Discover weather stations by location for weather data queries.
       - Identify station identifiers and names for weather data lookups.

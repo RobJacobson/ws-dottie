@@ -591,6 +591,8 @@ paths:
 tags:
   - name: cv-restriction-data
     description: Commercial vehicle restrictions for Washington State highways.
+    x-description: Weight limits, height clearances, axle restrictions, and location details for bridge and road restrictions statewide.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Check vehicle restrictions for commercial route planning.
       - Determine route feasibility and permit requirements.
@@ -598,6 +600,8 @@ tags:
     x-updateFrequency: daily
   - name: cv-restriction-data-with-id
     description: Commercial vehicle restrictions with unique identifiers for Washington State highways.
+    x-description: Weight limits, height clearances, axle restrictions, and location details with unique tracking IDs for bridge and road restrictions statewide.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Track specific restrictions using unique identifiers.
       - Monitor restriction changes over time.

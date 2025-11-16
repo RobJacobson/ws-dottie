@@ -223,6 +223,8 @@ paths:
 tags:
   - name: flow-data
     description: Real-time traffic flow conditions from sensor stations across Washington state.
+    x-description: Current traffic flow readings, station locations, and timestamps for traffic monitoring and congestion detection.
+    x-cacheStrategy: FREQUENT
     x-useCases:
       - Monitor real-time traffic flow conditions across Washington highways.
       - Detect congestion and traffic patterns for route planning.

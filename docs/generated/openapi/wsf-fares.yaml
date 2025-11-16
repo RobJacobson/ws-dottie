@@ -7199,6 +7199,8 @@ paths:
 tags:
   - name: cache-flush-date-fares
     description: Cache invalidation timestamp for static WSF fares data.
+    x-description: Returns the UTC datetime when static endpoint data for the wsf-fares API was last updated. Use this endpoint to determine when to invalidate cached fares information.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Poll periodically to detect when static fares data has changed.
       - Invalidate application cache when the returned date changes.
@@ -7206,6 +7208,8 @@ tags:
     x-updateFrequency: daily
   - name: valid-date-range
     description: Validity period for published WSF fare data.
+    x-description: Returns the start and end dates between which fare information is accurate and available for all ferry routes. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Determine valid trip dates for fare queries.
       - Validate trip date inputs before calling other endpoints.
@@ -7213,6 +7217,8 @@ tags:
     x-updateFrequency: daily
   - name: terminals
     description: WSF terminal facilities serving as departure and arrival points for ferry routes.
+    x-description: Terminals represent port facilities with unique identifiers and names. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display terminal options for trip planning interfaces.
       - Determine valid terminal pairs for route selection.
@@ -7220,6 +7226,8 @@ tags:
     x-updateFrequency: daily
   - name: terminal-combo
     description: Valid terminal pairings with fare collection procedures for WSF routes.
+    x-description: Terminal combinations define which terminals are connected and describe where and how fares are collected for each route. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Determine route availability between terminal pairs.
       - Understand fare collection procedures for specific routes.
@@ -7227,6 +7235,8 @@ tags:
     x-updateFrequency: daily
   - name: fare-line-items
     description: Individual fare components for WSF routes by passenger and vehicle types.
+    x-description: Fare line items represent pricing components for different passenger categories, vehicle types, and route combinations. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Display fare options for different passenger and vehicle types.
       - Calculate journey costs based on route and demographics.
@@ -7234,6 +7244,8 @@ tags:
     x-updateFrequency: daily
   - name: fare-totals
     description: Calculated fare totals for WSF journeys by selected line items and quantities.
+    x-description: Fare totals combine individual fare line items with quantities to provide complete pricing breakdowns including departing, return, direction-independent, and grand totals. Use the cacheFlushDate endpoint for this API to determine when to invalidate cached data for this group.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Calculate complete journey costs for ticket pricing.
       - Display fare breakdowns by leg and total amount.

@@ -295,7 +295,77 @@ data-styled.g137[id="sc-lhsSio"]{content:"iOkeQy,"}/*!sc*/
 data-styled.g138[id="sc-enPhjR"]{content:"SikXG,"}/*!sc*/
 </style>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
-</head>
+
+      <style>
+        /* Custom styles for enhanced tag documentation */
+        .tag-description {
+          background-color: #f8f9fa;
+          border-left: 4px solid #3f51b5;
+          padding: 16px;
+          margin: 16px 0;
+          border-radius: 4px;
+        }
+        
+        .tag-use-cases {
+          margin-top: 12px;
+        }
+        
+        .tag-use-cases h4 {
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 8px;
+          color: #3f51b5;
+        }
+        
+        .tag-use-cases ul {
+          margin: 0;
+          padding-left: 20px;
+        }
+        
+        .tag-use-cases li {
+          margin-bottom: 6px;
+          font-size: 14px;
+        }
+        
+        .tag-meta {
+          display: flex;
+          gap: 16px;
+          margin-top: 12px;
+          font-size: 12px;
+          color: #666;
+        }
+        
+        .tag-meta-item {
+          display: flex;
+          align-items: center;
+        }
+        
+        .tag-meta-label {
+          font-weight: 600;
+          margin-right: 4px;
+        }
+        
+        .cache-strategy {
+          background-color: #e3f2fd;
+          color: #0d47a1;
+          padding: 2px 6px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+        
+        .update-frequency {
+          background-color: #e8f5e9;
+          color: #2e7d32;
+          padding: 2px 6px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+        }
+      </style>
+    
+  </head>
 
 <body>
   
@@ -336,12 +406,129 @@ console<span class="token punctuation">.</span><span class="token function">log<
 " class="sc-eVqvcJ sc-fszimp kIppRw kbZred"><p>Example of a successful response from the API (showing first item of 11 total)</p>
 </div><div class="sc-dClGHI fdRrNy"><div class="sc-bbbBoY bBWkcI"><button><div class="sc-fYmhhH iNCOCX">Copy</div></button><button> Expand all </button><button> Collapse all </button></div><div tabindex="0" class="sc-eVqvcJ kIppRw sc-fhfEft dFvLDb"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">[</span><span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable "><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable collapsed"><span class="property token string">"BorderCrossingLocation"</span>: <button class="collapser" aria-label="expand"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable collapsed"><span class="property token string">"Description"</span>: <span class="token string">&quot;I-5 General Purpose&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Direction"</span>: <span class="token keyword">null</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Latitude"</span>: <span class="token number">49.004776</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Longitude"</span>: <span class="token number">-122.756964</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"MilePost"</span>: <span class="token number">0</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"RoadName"</span>: <span class="token string">&quot;005&quot;</span></div></li></ul><span class="token punctuation">}</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"CrossingName"</span>: <span class="token string">&quot;I5&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"Time"</span>: <span class="token string">&quot;2025-11-15T17:40:00.000Z&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"WaitTime"</span>: <span class="token number">5</span></div></li></ul><span class="token punctuation">}</span></div></li></ul><span class="token punctuation">]</span></code></div></div></div></div></div></div></div></div></div></div></div></div><div class="sc-evkzZa iZqpqg"></div></div></div>
       <script>
-      const __redoc_state = {"menu":{"activeItemIdx":-1},"spec":{"data":{"openapi":"3.0.0","info":{"title":"Wsdot Border Crossings API","version":"1.0.0","description":"Wsdot Border Crossings API - Washington State Department of Transportation APIs"},"servers":[{"url":"https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc","description":"Production server"}],"components":{"schemas":{"RoadwayLocation":{"type":"object","properties":{"Description":{"type":"string","nullable":true,"description":"Human-readable description of the roadway location, such as interchange names or cross streets."},"Direction":{"type":"string","nullable":true,"description":"Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."},"Latitude":{"type":"number","description":"Latitude of the roadway location in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the roadway location in decimal degrees."},"MilePost":{"type":"number","description":"Milepost marker along the highway corridor, with 0 indicating route terminus."},"RoadName":{"type":"string","nullable":true,"description":"Highway or route designation code, such as '005' for I-5 or '090' for I-90."}},"required":["Description","Direction","Latitude","Longitude","MilePost","RoadName"],"description":"Roadway location information including route, milepost, coordinates, and direction."},"FetchBorderCrossingsOutput":{"type":"object","properties":{"BorderCrossingLocation":{"type":"object","nullable":true,"properties":{"Description":{"type":"string","nullable":true,"description":"Human-readable description of the roadway location, such as interchange names or cross streets."},"Direction":{"type":"string","nullable":true,"description":"Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."},"Latitude":{"type":"number","description":"Latitude of the roadway location in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the roadway location in decimal degrees."},"MilePost":{"type":"number","description":"Milepost marker along the highway corridor, with 0 indicating route terminus."},"RoadName":{"type":"string","nullable":true,"description":"Highway or route designation code, such as '005' for I-5 or '090' for I-90."}},"required":["Description","Direction","Latitude","Longitude","MilePost","RoadName"],"description":"Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane."},"CrossingName":{"type":"string","nullable":true,"description":"Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable."},"Time":{"type":"string","description":"UTC datetime when this border crossing wait time observation was recorded."},"WaitTime":{"type":"integer","description":"Current estimated wait time for this crossing in minutes; -1 when a wait time is not available."}},"required":["BorderCrossingLocation","CrossingName","Time","WaitTime"],"description":"Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes."}},"parameters":{}},"paths":{"/GetBorderCrossingsAsJson":{"get":{"summary":"List current wait times for all Washington border crossings into Canada.","operationId":"fetchBorderCrossings","tags":["border-crossing-data"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';\n\nconst data = await fetchBorderCrossings({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchBorderCrossingsOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 11 total)","value":[{"BorderCrossingLocation":{"Description":"I-5 General Purpose","Direction":null,"Latitude":49.004776,"Longitude":-122.756964,"MilePost":0,"RoadName":"005"},"CrossingName":"I5","Time":"2025-11-15T17:40:00.000Z","WaitTime":5}]}}}}}}}}},"tags":[{"name":"border-crossing-data","description":"Current wait times for Washington border crossings into Canada by crossing and lane type.","x-useCases":["Plan trips into Canada based on current border wait times.","Compare wait times across crossings and lane types.","Show live wait-time information in traveler or operations dashboards."],"x-updateFrequency":"1m"}]}},"searchIndex":{"store":["tag/border-crossing-data","tag/border-crossing-data/operation/fetchBorderCrossings"],"index":{"version":"2.3.9","fields":["title","description"],"fieldVectors":[["title/0",[0,1.017]],["description/0",[1,0.137,2,0.137,3,0.137,4,0.137,5,0.137,6,0.204,7,0.137,8,0.519,9,0.519]],["title/1",[1,0.138,2,0.138,3,0.138,4,0.138,5,0.138,6,0.138,7,0.138,10,0.526]],["description/1",[11,1.042]]],"invertedIndex":[["border",{"_index":5,"title":{"1":{}},"description":{"0":{}}}],["border-crossing-data",{"_index":0,"title":{"0":{}},"description":{}}],["canada",{"_index":7,"title":{"1":{}},"description":{"0":{}}}],["cross",{"_index":6,"title":{"1":{}},"description":{"0":{}}}],["current",{"_index":1,"title":{"1":{}},"description":{"0":{}}}],["getbordercrossingsasjson",{"_index":11,"title":{},"description":{"1":{}}}],["lane",{"_index":8,"title":{},"description":{"0":{}}}],["list",{"_index":10,"title":{"1":{}},"description":{}}],["time",{"_index":3,"title":{"1":{}},"description":{"0":{}}}],["type",{"_index":9,"title":{},"description":{"0":{}}}],["wait",{"_index":2,"title":{"1":{}},"description":{"0":{}}}],["washington",{"_index":4,"title":{"1":{}},"description":{"0":{}}}]],"pipeline":[]}},"options":{"expandResponses":200}};
+      const __redoc_state = {"menu":{"activeItemIdx":-1},"spec":{"data":{"openapi":"3.0.0","info":{"title":"Wsdot Border Crossings API","version":"1.0.0","description":"Wsdot Border Crossings API - Washington State Department of Transportation APIs"},"servers":[{"url":"https://wsdot.wa.gov/Traffic/api/BorderCrossings/BorderCrossingsREST.svc","description":"Production server"}],"components":{"schemas":{"RoadwayLocation":{"type":"object","properties":{"Description":{"type":"string","nullable":true,"description":"Human-readable description of the roadway location, such as interchange names or cross streets."},"Direction":{"type":"string","nullable":true,"description":"Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."},"Latitude":{"type":"number","description":"Latitude of the roadway location in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the roadway location in decimal degrees."},"MilePost":{"type":"number","description":"Milepost marker along the highway corridor, with 0 indicating route terminus."},"RoadName":{"type":"string","nullable":true,"description":"Highway or route designation code, such as '005' for I-5 or '090' for I-90."}},"required":["Description","Direction","Latitude","Longitude","MilePost","RoadName"],"description":"Roadway location information including route, milepost, coordinates, and direction."},"FetchBorderCrossingsOutput":{"type":"object","properties":{"BorderCrossingLocation":{"type":"object","nullable":true,"properties":{"Description":{"type":"string","nullable":true,"description":"Human-readable description of the roadway location, such as interchange names or cross streets."},"Direction":{"type":"string","nullable":true,"description":"Traffic direction designation: N, S, B, NB, or SB, indicating which side of the highway is affected."},"Latitude":{"type":"number","description":"Latitude of the roadway location in decimal degrees."},"Longitude":{"type":"number","description":"Longitude of the roadway location in decimal degrees."},"MilePost":{"type":"number","description":"Milepost marker along the highway corridor, with 0 indicating route terminus."},"RoadName":{"type":"string","nullable":true,"description":"Highway or route designation code, such as '005' for I-5 or '090' for I-90."}},"required":["Description","Direction","Latitude","Longitude","MilePost","RoadName"],"description":"Roadway location of the border crossing, including route, milepost, and coordinates, or null when location data is not provided for this lane."},"CrossingName":{"type":"string","nullable":true,"description":"Display code for the border crossing or lane (for example I5, I5Nexus, SR543TrucksFast), or null when unavailable."},"Time":{"type":"string","description":"UTC datetime when this border crossing wait time observation was recorded."},"WaitTime":{"type":"integer","description":"Current estimated wait time for this crossing in minutes; -1 when a wait time is not available."}},"required":["BorderCrossingLocation","CrossingName","Time","WaitTime"],"description":"Border crossing wait-time record for a Washington crossing into Canada, including location, crossing code, observation time, and wait time in minutes."}},"parameters":{}},"paths":{"/GetBorderCrossingsAsJson":{"get":{"summary":"List current wait times for all Washington border crossings into Canada.","operationId":"fetchBorderCrossings","tags":["border-crossing-data"],"x-codeSamples":[{"lang":"JavaScript","source":"import { fetchBorderCrossings } from 'ws-dottie/wsdot-border-crossings/core';\n\nconst data = await fetchBorderCrossings({\n  fetchMode: 'native',\n  validate: true\n});\n\nconsole.log(data);"}],"responses":{"200":{"description":"Success","content":{"application/json":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FetchBorderCrossingsOutput"}},"examples":{"sampleResponse":{"summary":"Sample response","description":"Example of a successful response from the API (showing first item of 11 total)","value":[{"BorderCrossingLocation":{"Description":"I-5 General Purpose","Direction":null,"Latitude":49.004776,"Longitude":-122.756964,"MilePost":0,"RoadName":"005"},"CrossingName":"I5","Time":"2025-11-15T17:40:00.000Z","WaitTime":5}]}}}}}}}}},"tags":[{"name":"border-crossing-data","description":"Current wait times for Washington border crossings into Canada by crossing and lane type.","x-description":"Snapshot wait-time data for I-5, SR-543, SR-539, and SR-9 crossings, covering general, Nexus, and truck lanes.","x-cacheStrategy":"FREQUENT","x-useCases":["Plan trips into Canada based on current border wait times.","Compare wait times across crossings and lane types.","Show live wait-time information in traveler or operations dashboards."],"x-updateFrequency":"1m"}]}},"searchIndex":{"store":["tag/border-crossing-data","tag/border-crossing-data/operation/fetchBorderCrossings"],"index":{"version":"2.3.9","fields":["title","description"],"fieldVectors":[["title/0",[0,1.017]],["description/0",[1,0.137,2,0.137,3,0.137,4,0.137,5,0.137,6,0.204,7,0.137,8,0.519,9,0.519]],["title/1",[1,0.138,2,0.138,3,0.138,4,0.138,5,0.138,6,0.138,7,0.138,10,0.526]],["description/1",[11,1.042]]],"invertedIndex":[["border",{"_index":5,"title":{"1":{}},"description":{"0":{}}}],["border-crossing-data",{"_index":0,"title":{"0":{}},"description":{}}],["canada",{"_index":7,"title":{"1":{}},"description":{"0":{}}}],["cross",{"_index":6,"title":{"1":{}},"description":{"0":{}}}],["current",{"_index":1,"title":{"1":{}},"description":{"0":{}}}],["getbordercrossingsasjson",{"_index":11,"title":{},"description":{"1":{}}}],["lane",{"_index":8,"title":{},"description":{"0":{}}}],["list",{"_index":10,"title":{"1":{}},"description":{}}],["time",{"_index":3,"title":{"1":{}},"description":{"0":{}}}],["type",{"_index":9,"title":{},"description":{"0":{}}}],["wait",{"_index":2,"title":{"1":{}},"description":{"0":{}}}],["washington",{"_index":4,"title":{"1":{}},"description":{"0":{}}}]],"pipeline":[]}},"options":{"expandResponses":200}};
 
       var container = document.getElementById('redoc');
       Redoc.hydrate(__redoc_state, container);
 
       </script>
+
+      <script>
+        // Custom script to enhance tag documentation display
+        window.addEventListener('DOMContentLoaded', () => {
+          // Wait for Redoc to fully load
+          setTimeout(() => {
+            enhanceTagDescriptions();
+          }, 2000);
+        });
+        
+        function enhanceTagDescriptions() {
+          // Debug: Log the available global variables
+          console.log('Available global variables:', Object.keys(window));
+          
+          // Try to access the OpenAPI spec from __redoc_state
+          if (typeof __redoc_state !== 'undefined') {
+            console.log('Found __redoc_state:', __redoc_state);
+            
+            // Extract the tags from the spec
+            const tags = __redoc_state.spec.data.tags;
+            console.log('Tags from spec:', tags);
+            
+            // Create a map of tag names to metadata for easy lookup
+            const tagMetadataMap = {};
+            if (tags && Array.isArray(tags)) {
+              tags.forEach(tag => {
+                tagMetadataMap[tag.name] = {
+                  description: tag.description,
+                  xDescription: tag['x-description'],
+                  cacheStrategy: tag['x-cacheStrategy'],
+                  useCases: tag['x-useCases'],
+                  updateFrequency: tag['x-updateFrequency']
+                };
+              });
+            }
+            
+            console.log('Tag metadata map:', tagMetadataMap);
+            
+            // Find all tag elements in DOM
+            const tagElements = document.querySelectorAll('[id^="tag/"]');
+            console.log('Found tag elements:', tagElements.length);
+            
+            tagElements.forEach(tagElement => {
+              // Extract tag name from the ID (remove "tag/" prefix)
+              const tagId = tagElement.id;
+              const tagName = tagId.replace('tag/', '');
+              
+              console.log('Processing tag:', tagName);
+              
+              if (!tagName || !tagMetadataMap[tagName]) {
+                console.log('No metadata found for tag:', tagName);
+                return;
+              }
+              
+              const metadata = tagMetadataMap[tagName];
+              console.log('Metadata for tag:', tagName, metadata);
+              
+              // Generate enhanced description with actual metadata
+              let enhancedDescription = '<div class="tag-description">';
+              
+              // Add extended description if available
+              if (metadata.xDescription) {
+                enhancedDescription += '<p>' + metadata.xDescription + '</p>';
+              } else if (metadata.description) {
+                enhancedDescription += '<p>' + metadata.description + '</p>';
+              }
+              
+              // Add use cases if available
+              if (metadata.useCases && Array.isArray(metadata.useCases) && metadata.useCases.length > 0) {
+                enhancedDescription += '<div class="tag-use-cases">' +
+                  '<h4>Use Cases:</h4>' +
+                  '<ul>';
+                
+                metadata.useCases.forEach(useCase => {
+                  enhancedDescription += '<li>' + useCase + '</li>';
+                });
+                
+                enhancedDescription += '</ul></div>';
+              }
+              
+              // Add metadata badges
+              enhancedDescription += '<div class="tag-meta">';
+              
+              // Add cache strategy if available
+              if (metadata.cacheStrategy) {
+                enhancedDescription += '<div class="tag-meta-item">' +
+                  '<span class="tag-meta-label">Cache:</span>' +
+                  '<span class="cache-strategy">' + metadata.cacheStrategy + '</span>' +
+                  '</div>';
+              }
+              
+              // Add update frequency if available
+              if (metadata.updateFrequency) {
+                enhancedDescription += '<div class="tag-meta-item">' +
+                  '<span class="tag-meta-label">Updates:</span>' +
+                  '<span class="update-frequency">' + metadata.updateFrequency + '</span>' +
+                  '</div>';
+              }
+              
+              enhancedDescription += '</div></div>';
+              
+              // Find the description element within the tag section
+              // The description is in a div with class "sc-eVqvcJ sc-fszimp kIppRw kbZred redoc-markdown"
+              const descriptionElement = tagElement.querySelector('.sc-eVqvcJ.sc-fszimp.kIppRw.kbZred.redoc-markdown');
+              if (descriptionElement) {
+                descriptionElement.innerHTML = enhancedDescription;
+                console.log('Enhanced description for tag:', tagName);
+              } else {
+                console.log('Could not find description element for tag:', tagName);
+              }
+            });
+          } else {
+            console.error('__redoc_state not found');
+          }
+        }
+      </script>
+    
 </body>
 
 </html>

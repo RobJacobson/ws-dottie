@@ -265,6 +265,8 @@ paths:
 tags:
   - name: travel-time-routes
     description: Current and average travel times for major Washington State highway routes.
+    x-description: Travel time data for routes in Seattle, Tacoma, and Snoqualmie Pass areas, including distance, start/end points, and comparison of current vs. average times.
+    x-cacheStrategy: STATIC
     x-useCases:
       - Plan travel routes and estimate arrival times.
       - Compare current conditions against historical averages to identify delays.
