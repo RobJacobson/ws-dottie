@@ -1,4 +1,5 @@
-import { resolve } from "node:path";
+import { copyFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
@@ -138,5 +139,49 @@ export default defineConfig({
       "@": resolve(__dirname, "src"),
     };
     return options;
+  },
+  // Custom post-build hook to copy OpenAPI JSON files
+  async onSuccess() {
+    console.log("Copying OpenAPI JSON files to dist/openapi...");
+
+    const sourceDir = join(__dirname, "docs", "generated", "openapi-json");
+    const targetDir = join(__dirname, "dist", "openapi");
+
+    // Create target directory if it doesn't exist
+    if (!existsSync(targetDir)) {
+      mkdirSync(targetDir, { recursive: true });
+    }
+
+    // Check if source directory exists
+    if (!existsSync(sourceDir)) {
+      console.warn(
+        `Warning: OpenAPI JSON source directory not found at ${sourceDir}`
+      );
+      console.warn(
+        "Please run 'npm run docs:openapi:json' first to generate OpenAPI specifications."
+      );
+      return;
+    }
+
+    // Copy all JSON files
+    const jsonFiles = readdirSync(sourceDir).filter((file) =>
+      file.endsWith(".json")
+    );
+    let copiedCount = 0;
+
+    for (const file of jsonFiles) {
+      const sourcePath = join(sourceDir, file);
+      const targetPath = join(targetDir, file);
+
+      try {
+        copyFileSync(sourcePath, targetPath);
+        copiedCount++;
+        console.log(`  Copied ${file}`);
+      } catch (error) {
+        console.error(`  Failed to copy ${file}:`, error);
+      }
+    }
+
+    console.log(`✓ Copied ${copiedCount} OpenAPI JSON files to dist/openapi/`);
   },
 });

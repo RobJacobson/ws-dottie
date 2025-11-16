@@ -3,7 +3,7 @@
  * Generate Redoc HTML documentation from OpenAPI specifications
  *
  * This script uses @redocly/cli to generate static HTML documentation
- * from all OpenAPI YAML specifications.
+ * from all OpenAPI JSON specifications.
  */
 
 import { execSync } from "node:child_process";
@@ -15,15 +15,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, "../..");
 
-const openApiSpecDir = join(projectRoot, "docs", "generated", "openapi");
+const openApiSpecDir = join(projectRoot, "docs", "generated", "openapi-json");
 const outputDir = join(projectRoot, "docs", "api-reference");
 
 /**
  * Generate HTML documentation for a single OpenAPI spec
  */
-function generateHtmlForSpec(yamlFile: string): void {
-  const apiName = yamlFile.replace(".yaml", "");
-  const openApiSpecPath = join(openApiSpecDir, yamlFile);
+function generateHtmlForSpec(jsonFile: string): void {
+  const apiName = jsonFile.replace(".json", "");
+  const openApiSpecPath = join(openApiSpecDir, jsonFile);
   const outputPath = join(outputDir, `${apiName}.html`);
   const templatePath = join(__dirname, "templates", "redoc-template.html");
 
@@ -47,7 +47,7 @@ function generateHtmlForSpec(yamlFile: string): void {
 
     console.log(`✓ ${apiName}: ${outputPath}`);
 
-    // Post-process the generated HTML to enhance tag documentation
+    // Post-process generated HTML to enhance tag documentation
     console.log(`  Post-processing ${apiName}...`);
     try {
       execSync(
@@ -84,7 +84,7 @@ function main() {
         `Error: OpenAPI spec directory not found at ${openApiSpecDir}`
       );
       console.error(
-        "Please run 'npm run docs:openapi' first to generate the OpenAPI specifications."
+        "Please run 'npm run docs:openapi' first to generate OpenAPI specifications."
       );
       process.exit(1);
     }
@@ -95,27 +95,27 @@ function main() {
       mkdirSync(outputDir, { recursive: true });
     }
 
-    // Get all YAML files from the OpenAPI directory
-    const yamlFiles = readdirSync(openApiSpecDir).filter((file) =>
-      file.endsWith(".yaml")
+    // Get all JSON files from OpenAPI directory
+    const jsonFiles = readdirSync(openApiSpecDir).filter((file) =>
+      file.endsWith(".json")
     );
 
-    if (yamlFiles.length === 0) {
-      console.error(`Error: No OpenAPI YAML files found in ${openApiSpecDir}`);
+    if (jsonFiles.length === 0) {
+      console.error(`Error: No OpenAPI JSON files found in ${openApiSpecDir}`);
       console.error(
-        "Please run 'npm run docs:openapi' first to generate the OpenAPI specifications."
+        "Please run 'npm run docs:openapi' first to generate OpenAPI specifications."
       );
       process.exit(1);
     }
 
-    console.log(`Found ${yamlFiles.length} OpenAPI specification(s)\n`);
+    console.log(`Found ${jsonFiles.length} OpenAPI specification(s)\n`);
 
     let successCount = 0;
     let errorCount = 0;
 
-    for (const yamlFile of yamlFiles) {
+    for (const jsonFile of jsonFiles) {
       try {
-        generateHtmlForSpec(yamlFile);
+        generateHtmlForSpec(jsonFile);
         successCount++;
       } catch (error) {
         errorCount++;

@@ -7,6 +7,18 @@ This file serves as the single source of truth for both internal tracking and Gi
 - Format: Keep entries concise and high‑signal. Group by type: Features, Improvements, Fixes, Docs, Build/Chore.
 - Dates are in YYYY‑MM‑DD.
 
+## [1.3.1] - 2025-11-16
+
+- Features
+  - **OpenAPI JSON Export**: Added exports for OpenAPI 3.0 specifications as JSON files, enabling consumption by external tools like ws-dottie-mcp
+  - **Package Exports**: Added npm package exports for all 16 API specifications under the `./openapi/` subpath
+  - **Build Integration**: Updated build process to automatically copy OpenAPI JSON files to the distribution directory
+  - **Documentation**: Added comprehensive documentation for importing and using OpenAPI specifications
+
+- Improvements
+  - **Developer Experience**: Simplified access to API specifications for tool developers and integrators
+  - **Package Structure**: Enhanced package organization with dedicated OpenAPI export paths
+
 ## [1.3.0] - 2025-11-16
 
 - Features
